@@ -18,7 +18,7 @@ class AbstractSocket : public AnyData {
 
 public:
   enum State : uint8_t { Unconnected, Listening, Connecting, Connected, Active, Closing };
-  enum Error : uint8_t { ConnectionRefused, RemoteHostClosed };
+  enum Error : uint8_t { None, Finished, Closed, Refused, PollErr, PollInval, Read, Write, Unknown };
 
   AbstractSocket(SocketThread * = nullptr);
   AbstractSocket(int, int, int, SocketThread * = nullptr);
@@ -37,8 +37,7 @@ public:
   int write(const uint8_t *, int);
   int write(const DataArray &);
 
-  int error();
-  void setErrorString(const std::string &);
+  int errorCode();
   std::string errorString() const;
 
   int pendingRead() const;
@@ -58,6 +57,9 @@ public:
   uint16_t peerPort() const;
 
 protected:
+  void setErrorCode(int);
+  void setErrorString(const std::string &);
+
   virtual int read_available_fd() const;
   virtual int read_fd(void *_p, int _s);
   virtual int write_fd(const void *_p, int _s);

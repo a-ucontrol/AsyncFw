@@ -58,7 +58,7 @@ struct AbstractSocket::Private {
   DataArray rda_;
   DataArray wda_;
   int tid_ = -1;
-  std::any data_;
+  int errorCode_;
   std::string errorString_;
   int w_        = 0;
   int type_     = SOCK_STREAM;
@@ -318,7 +318,9 @@ void AbstractSocket::close() {
   stateEvent();
 }
 
-int AbstractSocket::error() { return errno; }
+void AbstractSocket::setErrorCode(int code) { private_->errorCode_ = code; }
+
+int AbstractSocket::errorCode() { return private_->errorCode_; }
 
 void AbstractSocket::setErrorString(const std::string &error) { private_->errorString_ = error; }
 
@@ -436,7 +438,13 @@ void AbstractSocket::pollEvent(int _e) {
     return;
   }
   if (_e & AbstractThread::PollHup) {
-    private_->errorString_ = "PollHup";
+    if (state_ == State::Connecting) {
+      private_->errorString_ = "Connection refused";
+      private_->errorCode_   = Error::Refused;
+    } else {
+      private_->errorString_ = "Connection closed";
+      private_->errorCode_   = Error::Closed;
+    }
     ucTrace() << LogStream::Color::Red << private_->errorString_;
     errorEvent();
     close();
@@ -444,6 +452,7 @@ void AbstractSocket::pollEvent(int _e) {
   }
   if (_e & AbstractThread::PollErr) {
     private_->errorString_ = "PollErr";
+    private_->errorCode_   = Error::PollErr;
     ucDebug() << LogStream::Color::Red << private_->errorString_;
     errorEvent();
     close();
@@ -458,7 +467,8 @@ void AbstractSocket::pollEvent(int _e) {
     if (_e & AbstractThread::PollIn) {
       AbstractSocket::read_available_fd();
       if (rs_ < 0) {
-        private_->errorString_ = "Peer closed connection";
+        private_->errorString_ = "Connection closed (not accepted)";
+        private_->errorCode_   = Error::Closed;
         ucDebug() << LogStream::Color::Red << private_->errorString_ << "not active" << errno;
         errorEvent();
         close();
@@ -471,7 +481,8 @@ void AbstractSocket::pollEvent(int _e) {
   if (_e & AbstractThread::PollIn) {
     int r = read_available_fd();
     if (rs_ < 0) {
-      private_->errorString_ = "Peer closed connection";
+      private_->errorString_ = "Connection finished";
+      private_->errorCode_   = Error::Finished;
       ucTrace() << LogStream::Color::Red << private_->errorString_ << r << rs_ << errno;
       errorEvent();
       close();
@@ -485,6 +496,7 @@ void AbstractSocket::pollEvent(int _e) {
           int r = read_fd(private_->rda_.data() + private_->rda_.size() - rs_, rs_);
           if (r != rs_) {
             private_->errorString_ = "Read error";
+            private_->errorCode_   = Error::Read;
             ucDebug() << LogStream::Color::Red << private_->errorString_ << r << rs_ << errno;
             errorEvent();
             close();
@@ -493,6 +505,7 @@ void AbstractSocket::pollEvent(int _e) {
       }
     } else if (r < 0) {
       private_->errorString_ = "Unknown error";
+      private_->errorCode_   = Error::Unknown;
       ucDebug() << LogStream::Color::Red << private_->errorString_ << r << errno;
       errorEvent();
       close();
@@ -518,6 +531,7 @@ void AbstractSocket::pollEvent(int _e) {
     }
     if (r < 0) {
       private_->errorString_ = "Write error";
+      private_->errorCode_   = Error::Write;
       ucDebug() << LogStream::Color::Red << private_->errorString_ << r << errno;
       errorEvent();
       close();

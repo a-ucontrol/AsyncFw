@@ -98,7 +98,6 @@ private:
   void connectToHost();
   void connectToHost(int timeout);
   void writeSocket();
-  void error(AbstractSocket::Error);
   void sendMessage(const std::string &, uint8_t);
   void transmitKeepAlive(bool);
   std::string peerString() const;

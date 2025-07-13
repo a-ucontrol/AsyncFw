@@ -239,7 +239,10 @@ void DataArraySocket::readEvent() {
   if (readTimeoutInterval > 0) startTimer(readTimeoutInterval);
 }
 
-void DataArraySocket::errorEvent() { sendMessage(errorString(), LogStream::Error); }
+void DataArraySocket::errorEvent() {
+  LogStream::MessageType t = (errorCode() == AbstractSocket::Finished) ? LogStream::Info : LogStream::Error;
+  sendMessage(errorString(), t);
+}
 
 void DataArraySocket::disconnectFromHost() {
   if (state_ == AbstractSocket::Unconnected) {
@@ -344,13 +347,6 @@ void DataArraySocket::clearBuffer_(const DataArray *da) const {
     }
   }
   logWarning("DataArraySocket: tried clear missing buffer");
-}
-
-void DataArraySocket::error(AbstractSocket::Error error) {
-  std::string e = errorString() + ' ' + peerString() + ')';
-  setErrorString(e);
-  LogStream::MessageType t = (error == AbstractSocket::RemoteHostClosed) ? LogStream::Info : LogStream::Error;
-  sendMessage(e, t);
 }
 
 void DataArraySocket::sendMessage(const std::string &m, uint8_t t) {
