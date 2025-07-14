@@ -124,16 +124,16 @@ void DataArraySocket::timerEvent() {
 }
 
 void DataArraySocket::installReceiveFilter(ReceiveFilter *rf) {
-  std::lock_guard<std::mutex> lock(mutex);
+  /*checkCurrentThread();
   receiveFilters.emplace_back(rf);
-  ucTrace("filters: " + std::to_string(receiveFilters.size()));
+  ucTrace("filters: " + std::to_string(receiveFilters.size()));*/
 }
 
 void DataArraySocket::removeReceiveFilter(ReceiveFilter *rf) {
-  std::lock_guard<std::mutex> lock(mutex);
+  /*checkCurrentThread();
   std::vector<ReceiveFilter *>::iterator it = std::find(receiveFilters.begin(), receiveFilters.end(), rf);
   if (it != receiveFilters.end()) receiveFilters.erase(it);
-  ucTrace("filters: " + std::to_string(receiveFilters.size()));
+  ucTrace("filters: " + std::to_string(receiveFilters.size()));*/
 }
 
 void DataArraySocket::transmitKeepAlive(bool request) {
@@ -208,16 +208,13 @@ void DataArraySocket::readEvent() {
     if (static_cast<uint32_t>(receiveByteArray->size()) == readSize) {
       readSize = 0;
       if (receiveData(receiveByteArray, &readId)) {
-        mutex.lock();
         if (!receiveFilters.empty()) {
           for (ReceiveFilter *rf : receiveFilters)
             if (rf->received(receiveByteArray, readId)) {
-              mutex.unlock();
               clearBuffer(receiveByteArray);
               goto L1;
             }
         }
-        mutex.unlock();
         received(receiveByteArray, readId);
       L1:
         receiveByteArray = nullptr;
@@ -250,20 +247,13 @@ void DataArraySocket::disconnectFromHost() {
 void DataArraySocket::writeSocket() {
   for (;;) {
     if (state_ != AbstractSocket::Active) {
-      mutex.lock();
       transmitList = {};
-      mutex.unlock();
       logWarning("tried write to unconnected socket");
       return;
     }
-    mutex.lock();
-    if (transmitList.empty()) {
-      mutex.unlock();
-      break;
-    }
+    if (transmitList.empty()) { break; }
     write(transmitList.front());
     transmitList.pop_front();
-    mutex.unlock();
   }
   if (pendingWrite() > maxWriteSize) {
     sendMessage("Write buffer overflow (" + peerString() + ')', LogStream::Error);
@@ -290,34 +280,39 @@ bool DataArraySocket::transmit(const DataArray &ba, uint32_t pi, bool wait) cons
     if (!hostPort_v) const_cast<DataArraySocket *>(this)->disconnectFromHost();
     return false;
   }
-  std::unique_lock<std::mutex> lock(mutex);
-  int buffers = transmitList.size();
-  if (buffers >= maxWriteBuffers) {
-    const_cast<DataArraySocket *>(this)->sendMessage("Many transmit buffers (" + peerString() + ')', LogStream::Error);
-    if (!hostPort_v) const_cast<DataArraySocket *>(this)->disconnectFromHost();
-    return false;
-  }
-  int size = 0;
-  for (const DataArray &t : transmitList) {
-    size += t.size() - 8;
-    if (size > maxWriteSize) {
-      const_cast<DataArraySocket *>(this)->sendMessage("Transmit overflow (" + peerString() + ')', LogStream::Error);
-      if (!hostPort_v) const_cast<DataArraySocket *>(this)->disconnectFromHost();
-      return false;
-    }
-  }
+  bool _r = false;
+  thread_->invokeMethod(
+      [this, &_r, &ba, pi, wait]() {
+        int buffers = transmitList.size();
+        if (buffers >= maxWriteBuffers) {
+          const_cast<DataArraySocket *>(this)->sendMessage("Many transmit buffers (" + peerString() + ')', LogStream::Error);
+          if (!hostPort_v) const_cast<DataArraySocket *>(this)->disconnectFromHost();
+          return;
+        }
+        int size = 0;
+        for (const DataArray &t : transmitList) {
+          size += t.size() - 8;
+          if (size > maxWriteSize) {
+            const_cast<DataArraySocket *>(this)->sendMessage("Transmit overflow (" + peerString() + ')', LogStream::Error);
+            if (!hostPort_v) const_cast<DataArraySocket *>(this)->disconnectFromHost();
+            return;
+          }
+        }
 
-  uint64_t _v = pi;
-  _v <<= 32;
-  _v |= static_cast<uint32_t>(ba.size());
-  DataArray _da(((uint8_t *)&_v), ((uint8_t *)&_v) + 8);
-  _da += ba;
-  transmitList.push_back(_da);
-  if (buffers == 0) thread_->invokeMethod([this]() { const_cast<DataArraySocket *>(this)->writeSocket(); }, wait);
-  else {
-    if (wait) thread_->invokeMethod([]() {}, wait);
-  }
-  return true;
+        uint64_t _v = pi;
+        _v <<= 32;
+        _v |= static_cast<uint32_t>(ba.size());
+        DataArray _da(((uint8_t *)&_v), ((uint8_t *)&_v) + 8);
+        _da += ba;
+        transmitList.push_back(_da);
+        if (buffers == 0) thread_->invokeMethod([this]() { const_cast<DataArraySocket *>(this)->writeSocket(); }, wait);
+        else {
+          if (wait) thread_->invokeMethod([]() {}, wait);
+        }
+        _r = true;
+      },
+      true);
+  return _r;
 }
 
 void DataArraySocket::clearBuffer(const DataArray *da) const {
@@ -416,11 +411,11 @@ void DataArraySocket::connectToHost(int timeout) {
 void DataArraySocket::disableTls() { sslConnection = 0; }
 
 bool DataArraySocket::initTls(const TlsContext &data) {
-  if (!data.verify()) {
-    sslConnection = 1;
-    ucError("certificate verify error");
-    return false;
-  }
+  //if (!data.verify()) {
+  //  sslConnection = 1;
+  //  ucError("certificate verify error");
+  //  return false;
+  //}
   setContext(&data);
   sslConnection = 2;
   setIgnoreErrors(data.ignoreErrors());

@@ -85,7 +85,6 @@ private:
   uint32_t readSize;
   uint32_t readId;
   mutable bool waitForTransmit;
-  mutable std::mutex mutex;
   mutable std::condition_variable waitCondition;
   mutable std::vector<DataArray *> receiveList;
   mutable std::string address;

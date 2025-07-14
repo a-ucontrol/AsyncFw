@@ -90,7 +90,7 @@ DataArraySocket *DataArrayTcpClient::Thread::createSocket() {
   tcpSocket->installReceiveFilter(tcpExchange);
   socketInit(const_cast<DataArraySocket *>(tcpSocket));
   tcpSocket->setStateChanged([this, tcpSocket](AbstractSocket::State state) {
-    if (!tcpSocket->filters().empty()) {
+    if (tcpSocket->thread_ && !tcpSocket->filters().empty()) {
       TcpExchange *tcpExchange = static_cast<TcpExchange *>(tcpSocket->filters().at(0));
       if (tcpExchange->isWait() && (state == AbstractSocket::Closing || state == AbstractSocket::Unconnected)) tcpExchange->wake();
     }
@@ -102,8 +102,8 @@ DataArraySocket *DataArrayTcpClient::Thread::createSocket() {
 
 void DataArrayTcpClient::Thread::removeSocket(DataArraySocket *socket) {
   checkCurrentThread();
-  removeFilters(socket);
   SocketThread::removeSocket(socket);
+  removeFilters(socket);
   if (sockets_.empty()) destroy();
   pool->thread()->invokeMethod([socket]() {
     socket->destroy();
