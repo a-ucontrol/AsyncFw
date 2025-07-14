@@ -43,15 +43,6 @@ DataArraySocket::~DataArraySocket() {
   trace();
 }
 
-void DataArraySocket::destroy() {
-  checkCurrentThread();
-  if (receiveList.empty()) {
-    AbstractTlsSocket::destroy();
-    return;
-  }
-  thread_->removeSocket(this);
-}
-
 void DataArraySocket::stateEvent() {
   if (state_ == Connected) {
     if (waitTimerType & 0x04) {
@@ -330,12 +321,7 @@ bool DataArraySocket::transmit(const DataArray &ba, uint32_t pi, bool wait) cons
 }
 
 void DataArraySocket::clearBuffer(const DataArray *da) const {
-  if (thread_ && thread_->running()) {
-    thread_->invokeMethod([this, da]() { clearBuffer_(da); });
-    return;
-  }
-  clearBuffer_(da);
-  if (receiveList.empty()) const_cast<DataArraySocket *>(this)->AbstractTlsSocket::destroy();
+  if (thread_) thread_->invokeMethod([this, da]() { clearBuffer_(da); });
 }
 
 void DataArraySocket::clearBuffer_(const DataArray *da) const {

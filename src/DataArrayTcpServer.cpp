@@ -67,8 +67,9 @@ void DataArrayTcpServer::Thread::createSocket(int socketDescriptor, bool encrypt
 
 void DataArrayTcpServer::Thread::removeSocket(DataArraySocket *socket) {
   checkCurrentThread();
-  pool->thread()->invokeMethod([this, socket]() {
-    delete socket;
-    if (sockets_.empty()) destroy();
+  SocketThread::removeSocket(socket);
+  if (sockets_.empty()) destroy();
+  pool->thread()->invokeMethod([socket]() {
+    socket->destroy();
   });
 }

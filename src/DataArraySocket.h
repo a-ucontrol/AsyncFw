@@ -20,7 +20,6 @@ public:
   };
   DataArraySocket(SocketThread * = nullptr);
   ~DataArraySocket() override;
-  void destroy() override;
 
   bool initTls(const TlsContext &data);
   void disableTls();

@@ -103,8 +103,11 @@ DataArraySocket *DataArrayTcpClient::Thread::createSocket() {
 void DataArrayTcpClient::Thread::removeSocket(DataArraySocket *socket) {
   checkCurrentThread();
   removeFilters(socket);
-  socket->destroy();
+  SocketThread::removeSocket(socket);
   if (sockets_.empty()) destroy();
+  pool->thread()->invokeMethod([socket]() {
+    socket->destroy();
+  });
 }
 
 void DataArrayTcpClient::Thread::removeFilters(DataArraySocket *socket) {
