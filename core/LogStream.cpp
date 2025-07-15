@@ -44,20 +44,10 @@ void LogStream::console_output(const Message &message, uint8_t flags) {
 
   std::ostream *out = (i != Info && i != Notice) ? &std::cerr : &std::cout;
 
-#ifdef uC_LOGGER
-  #ifdef EXTEND_LOGSTREAM_TRACE
-  if (!AbstractLog::instance() && !(flags & LOG_STREAM_CONSOLE_ONLY)) str = "Logger destroyed or not initialized: " + str;
-  #endif
-#endif
-
 #ifdef Q_OS_WIN
   str = QString::fromStdString(str).toLocal8Bit().toStdString();
 #endif
 
-// #ifdef uC_LOGGER
-//   if (AbstractLog::instance()) (*out << str << std::endl).flush();
-//   else
-// #endif
     (std::osyncstream(*out) << str << std::endl).flush();
 }
 
