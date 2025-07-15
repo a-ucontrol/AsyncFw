@@ -11,13 +11,6 @@ class DataArraySocket : public AbstractTlsSocket {
   friend class DataArrayTcpClient;
 
 public:
-  class ReceiveFilter {
-    friend class DataArraySocket;
-    virtual bool received(const DataArray *, uint32_t) = 0;
-
-  protected:
-    virtual ~ReceiveFilter();
-  };
   DataArraySocket(SocketThread * = nullptr);
   ~DataArraySocket() override;
 
@@ -49,10 +42,7 @@ public:
   }
   const std::string hostAddress() const { return hostAddress_v; }
   uint16_t hostPort() const { return hostPort_v; }
-  void installReceiveFilter(ReceiveFilter *);
-  void removeReceiveFilter(ReceiveFilter *);
   void transmitKeepAlive() { transmitKeepAlive(true); }
-  std::vector<ReceiveFilter *> filters() const { return receiveFilters; }
 
   void setStateChanged(std::function<void(AbstractSocket::State)> _stateChanged) { stateChanged = _stateChanged; }
   void setReceived(std::function<void(const DataArray *, uint32_t)> _received) { received = _received; }
@@ -99,7 +89,6 @@ private:
   void sendMessage(const std::string &, uint8_t);
   void transmitKeepAlive(bool);
   std::string peerString() const;
-  std::vector<ReceiveFilter *> receiveFilters;
   std::function<void(AbstractSocket::State)> stateChanged;
   std::function<void(const DataArray *, uint32_t)> received;
 

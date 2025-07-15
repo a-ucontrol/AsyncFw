@@ -17,7 +17,6 @@
 #undef uC_THREAD
 #define uC_THREAD this->thread()
 using namespace AsyncFw;
-DataArraySocket::ReceiveFilter::~ReceiveFilter() { ucTrace(); }
 
 DataArraySocket::DataArraySocket(SocketThread *_thread) : AbstractTlsSocket(_thread) {
   sslConnection                      = 0;
@@ -123,19 +122,6 @@ void DataArraySocket::timerEvent() {
   }
 }
 
-void DataArraySocket::installReceiveFilter(ReceiveFilter *rf) {
-  /*checkCurrentThread();
-  receiveFilters.emplace_back(rf);
-  ucTrace("filters: " + std::to_string(receiveFilters.size()));*/
-}
-
-void DataArraySocket::removeReceiveFilter(ReceiveFilter *rf) {
-  /*checkCurrentThread();
-  std::vector<ReceiveFilter *>::iterator it = std::find(receiveFilters.begin(), receiveFilters.end(), rf);
-  if (it != receiveFilters.end()) receiveFilters.erase(it);
-  ucTrace("filters: " + std::to_string(receiveFilters.size()));*/
-}
-
 void DataArraySocket::transmitKeepAlive(bool request) {
   if (state_ != AbstractSocket::Active) {
     logWarning("DataArraySocket: tried transmit keep alive to inactive socket");
@@ -208,15 +194,7 @@ void DataArraySocket::readEvent() {
     if (static_cast<uint32_t>(receiveByteArray->size()) == readSize) {
       readSize = 0;
       if (receiveData(receiveByteArray, &readId)) {
-        if (!receiveFilters.empty()) {
-          for (ReceiveFilter *rf : receiveFilters)
-            if (rf->received(receiveByteArray, readId)) {
-              clearBuffer(receiveByteArray);
-              goto L1;
-            }
-        }
         received(receiveByteArray, readId);
-      L1:
         receiveByteArray = nullptr;
       } else {
         disconnectFromHost();
