@@ -6,12 +6,9 @@
 #else
   #include <chrono>
 #endif
+
 #include <syncstream>
-#ifndef uC_LOGGER
-  #include "LogStream.h"
-#else
-  #include "LogStream.h"
-#endif
+#include "LogStream.h"
 
 #define IGNORE_SENDER_NAME_PREFIX "LRW::"
 
@@ -48,7 +45,7 @@ void LogStream::console_output(const Message &message, uint8_t flags) {
   str = QString::fromStdString(str).toLocal8Bit().toStdString();
 #endif
 
-    (std::osyncstream(*out) << str << std::endl).flush();
+  (std::osyncstream(*out) << str << std::endl).flush();
 }
 
 LogStream::Message::Message(uint8_t type, const std::string &name, const std::string &string, const std::string &note) : type(type), name(name), string(string), note(note) { time = LOG_STREAM_CURRENT_TIME; }
