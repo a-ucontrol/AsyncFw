@@ -81,7 +81,7 @@ DataArrayTcpClient::Thread::~Thread() { ucTrace(); }
 DataArraySocket *DataArrayTcpClient::Thread::createSocket() {
   DataArraySocket *tcpSocket = new DataArraySocket(this);
   socketInit(const_cast<DataArraySocket *>(tcpSocket));
-  tcpSocket->setStateChanged([this, tcpSocket](AbstractSocket::State state) {
+  tcpSocket->stateChanged([this, tcpSocket](AbstractSocket::State state) {
     if (state != AbstractSocket::Connected && state != AbstractSocket::Active && state != AbstractSocket::Unconnected) return;
     client()->socketStateChanged(tcpSocket);
   });
@@ -92,7 +92,5 @@ void DataArrayTcpClient::Thread::removeSocket(DataArraySocket *socket) {
   checkCurrentThread();
   SocketThread::removeSocket(socket);
   if (sockets_.empty()) destroy();
-  pool->thread()->invokeMethod([socket]() {
-    socket->destroy();
-  });
+  pool->thread()->invokeMethod([socket]() { socket->destroy(); });
 }

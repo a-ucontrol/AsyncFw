@@ -44,10 +44,8 @@ public:
   uint16_t hostPort() const { return hostPort_v; }
   void transmitKeepAlive() { transmitKeepAlive(true); }
 
-  void setStateChanged(std::function<void(AbstractSocket::State)> _stateChanged) { stateChanged = _stateChanged; }
-  void setReceived(std::function<void(const DataArray *, uint32_t)> _received) { received = _received; }
-
-  mutable FunctionConnectorProtected<DataArraySocket>::Connector<> disconnected;
+  FunctionConnectorProtected<DataArraySocket>::Connector<AbstractSocket::State> stateChanged {true};
+  FunctionConnectorProtected<DataArraySocket>::Connector<const DataArray *, uint32_t> received {true};
 
 protected:
   virtual bool receiveData(DataArray *, uint32_t *) { return true; }
@@ -89,8 +87,6 @@ private:
   void sendMessage(const std::string &, uint8_t);
   void transmitKeepAlive(bool);
   std::string peerString() const;
-  std::function<void(AbstractSocket::State)> stateChanged;
-  std::function<void(const DataArray *, uint32_t)> received;
 
   AsyncFw::ExecLoopThread::Holder *wait_holder_ = nullptr;  //!!! Private
 };

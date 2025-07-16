@@ -71,7 +71,7 @@ void DataArrayAbstractTcp::Thread::socketInit(DataArraySocket *socket) {
   socket->setWaitForEncryptedTimeout(tcp->waitForEncryptedTimeout);
   socket->setReadBuffers(tcp->maxReadBuffers, tcp->maxReadSize);
   socket->setWriteBuffers(tcp->maxWriteBuffers, tcp->maxWriteSize);
-  socket->setReceived([tcp, socket](const DataArray *da, uint32_t pi) {
+  socket->received([tcp, socket](const DataArray *da, uint32_t pi) {
     tcp->thread_->invokeMethod([tcp, socket, da, pi]() {
       tcp->received(socket, da, pi);
       socket->clearBuffer(da);
@@ -81,6 +81,13 @@ void DataArrayAbstractTcp::Thread::socketInit(DataArraySocket *socket) {
 
 void DataArrayAbstractTcp::Thread::destroy() {
   ucTrace();
+
+  std::vector<AbstractThread *>::iterator it = std::find(static_cast<DataArrayAbstractTcp *>(pool)->threads_.begin(), static_cast<DataArrayAbstractTcp *>(pool)->threads_.end(), this);
+  if (it == static_cast<DataArrayAbstractTcp *>(pool)->threads_.end()) {
+    ucError() << "thread not found";
+    return;
+  }
+
   static_cast<DataArrayAbstractTcp *>(pool)->removeThread(this);
   SocketThread::quit();
 

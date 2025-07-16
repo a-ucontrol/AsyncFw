@@ -63,7 +63,6 @@ void DataArraySocket::stateEvent() {
     if (readTimeoutInterval > 0) startTimer(readTimeoutInterval);
     else if (reconnectTimeoutInterval > 0) { removeTimer(); }
   } else if (state_ == AbstractSocket::Unconnected) {
-    disconnected();
     if (!(waitTimerType & 0x08)) {
       if (reconnectTimeoutInterval > 0) startTimer(reconnectTimeoutInterval);
       else if (readTimeoutInterval > 0) { removeTimer(); }
@@ -389,11 +388,11 @@ void DataArraySocket::connectToHost(int timeout) {
 void DataArraySocket::disableTls() { sslConnection = 0; }
 
 bool DataArraySocket::initTls(const TlsContext &data) {
-  //if (!data.verify()) {
-  //  sslConnection = 1;
-  //  ucError("certificate verify error");
-  //  return false;
-  //}
+  if (!data.verify()) {
+    sslConnection = 1;
+    ucError("certificate verify error");
+    return false;
+  }
   setContext(&data);
   sslConnection = 2;
   setIgnoreErrors(data.ignoreErrors());

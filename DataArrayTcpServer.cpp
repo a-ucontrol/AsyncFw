@@ -51,7 +51,7 @@ void DataArrayTcpServer::Thread::createSocket(int socketDescriptor, bool encrypt
   socketInit(tcpSocket);
   tcpSocket->initServerConnection();
 
-  tcpSocket->setStateChanged([tcpSocket, thread = this, server = server()](AbstractSocket::State state) {
+  tcpSocket->stateChanged([tcpSocket, thread = this, server = server()](AbstractSocket::State state) {
     if (state != AbstractSocket::Unconnected) return;
     thread->removeSocket(tcpSocket);
   });

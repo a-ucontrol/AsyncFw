@@ -415,6 +415,8 @@ bool TlsContext::verify() const {
     ucError() << "error get certificate";
     return false;
   }
+  X509_STORE *_store = SSL_CTX_get_cert_store(private_->ctx_);
+  X509_STORE_lock(_store);
   EVP_PKEY *_ck = X509_get_pubkey(_c);
   if (!_ck) {
     ucError() << "error get certificate pubkey";
@@ -425,6 +427,7 @@ bool TlsContext::verify() const {
   BIGNUM *bnc = nullptr;
   EVP_PKEY_get_bn_param(_ck, OSSL_PKEY_PARAM_RSA_N, &bnc);
   EVP_PKEY_free(_ck);
+  X509_STORE_unlock(_store);
   bool result = BN_cmp(bnk, bnc) == 0;
   BN_free(bnk);
   BN_free(bnc);

@@ -18,7 +18,10 @@ using namespace AsyncFw;
 
 struct AbstractTlsSocket::Private {
   ~Private() {
+    X509_STORE *_store = SSL_CTX_get_cert_store(ctx_->opensslCtx());
+    X509_STORE_lock(_store);
     if (ssl_) SSL_free(ssl_);
+    X509_STORE_unlock(_store);
   }
   const TlsContext *ctx_ = nullptr;
   SSL *ssl_              = nullptr;
