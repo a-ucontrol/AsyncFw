@@ -20,9 +20,6 @@ public:
 
   void setContext(const TlsContext *) const;
 
-  void setVerifyName(const std::string &);
-  void setIgnoreErrors(uint8_t);
-
 protected:
   void acceptEvent() override;
 

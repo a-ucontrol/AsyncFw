@@ -395,8 +395,6 @@ bool DataArraySocket::initTls(const TlsContext &data) {
   }
   setContext(&data);
   sslConnection = 2;
-  setIgnoreErrors(data.ignoreErrors());
-  if (!data.verifyName().empty()) setVerifyName(data.verifyName());
   trace();
   return true;
 }

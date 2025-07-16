@@ -42,7 +42,7 @@ public:
   std::string infoTrusted() const;
   static std::string infoRequest(const DataArray &);
 
-  std::string verifyName() const;
+  std::string &verifyName() const;
   void setVerifyName(const std::string &) const;
   uint8_t ignoreErrors() const;
   void setIgnoreErrors(uint8_t) const;

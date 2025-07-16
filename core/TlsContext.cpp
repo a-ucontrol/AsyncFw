@@ -389,7 +389,7 @@ std::string TlsContext::infoRequest(const DataArray &req) {
   return std::string(_da.view());
 }
 
-std::string TlsContext::verifyName() const { return private_->verifyName_; }
+std::string &TlsContext::verifyName() const { return private_->verifyName_; }
 
 void TlsContext::setVerifyName(const std::string &name) const { private_->verifyName_ = name; }
 

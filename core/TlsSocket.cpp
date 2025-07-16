@@ -26,8 +26,6 @@ struct AbstractTlsSocket::Private {
   const TlsContext *ctx_ = nullptr;
   SSL *ssl_              = nullptr;
   uint8_t encrypt_       = 0;  // 0 - noencrypt, 1 - server, 2 - client
-  uint8_t ignoreErrors   = 0;
-  std::string verifyName_;
 
   static int ignoreTimeValidityErrors(int ok, X509_STORE_CTX *ctx);
 };
@@ -81,10 +79,6 @@ void AbstractTlsSocket::close() {
 
 void AbstractTlsSocket::setContext(const TlsContext *ctx) const { private_->ctx_ = ctx; }
 
-void AbstractTlsSocket::setVerifyName(const std::string &name) { private_->verifyName_ = name; }
-
-void AbstractTlsSocket::setIgnoreErrors(uint8_t _e) { private_->ignoreErrors = _e; }
-
 void AbstractTlsSocket::acceptEvent() {
   if (state_ != Connected) {
     logError() << "void AbstractTlsSocket::acceptEvent";
@@ -101,14 +95,14 @@ void AbstractTlsSocket::acceptEvent() {
     if (private_->encrypt_ == 1) SSL_set_ssl_method(private_->ssl_, TLS_server_method());
     else { SSL_set_ssl_method(private_->ssl_, TLS_client_method()); }
 
-    if (private_->ignoreErrors == 0x01) SSL_set_verify(private_->ssl_, SSL_VERIFY_PEER, Private::ignoreTimeValidityErrors);
+    if (private_->ctx_->ignoreErrors() == 0x01) SSL_set_verify(private_->ssl_, SSL_VERIFY_PEER, Private::ignoreTimeValidityErrors);
     else { SSL_set_verify(private_->ssl_, SSL_VERIFY_PEER, nullptr); }
 
     SSL_set_fd(private_->ssl_, fd_);
-    if (!private_->verifyName_.empty()) {
-      ucTrace() << fd_ << "verify name" << LogStream::Color::Green << private_->verifyName_;
+    if (!private_->ctx_->verifyName().empty()) {
+      ucTrace() << fd_ << "verify name" << LogStream::Color::Green << private_->ctx_->verifyName();
       SSL_set_hostflags(private_->ssl_, X509_CHECK_FLAG_NO_PARTIAL_WILDCARDS);
-      if (!SSL_set1_host(private_->ssl_, private_->verifyName_.c_str())) ucError();
+      if (!SSL_set1_host(private_->ssl_, private_->ctx_->verifyName().c_str())) ucError();
     }
   }
   private_->ctx_->lock();
