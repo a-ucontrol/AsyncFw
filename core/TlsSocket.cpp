@@ -18,10 +18,12 @@ using namespace AsyncFw;
 
 struct AbstractTlsSocket::Private {
   ~Private() {
-    X509_STORE *_store = SSL_CTX_get_cert_store(ctx_->opensslCtx());
-    X509_STORE_lock(_store);
-    if (ssl_) SSL_free(ssl_);
-    X509_STORE_unlock(_store);
+    if (ssl_) {
+      X509_STORE *_store = SSL_CTX_get_cert_store(ctx_->opensslCtx());
+      X509_STORE_lock(_store);
+      SSL_free(ssl_);
+      X509_STORE_unlock(_store);
+    }
   }
   const TlsContext *ctx_ = nullptr;
   SSL *ssl_              = nullptr;
@@ -65,13 +67,16 @@ bool AbstractTlsSocket::connect(const std::string &address, uint16_t port) {
 }
 
 void AbstractTlsSocket::disconnect() {
-  if (private_->ssl_) SSL_shutdown(private_->ssl_);
+  if (private_->ssl_ && state_ == Active) SSL_shutdown(private_->ssl_);
   AbstractSocket::disconnect();
 }
 
 void AbstractTlsSocket::close() {
   if (private_->ssl_) {
+    X509_STORE *_store = SSL_CTX_get_cert_store(private_->ctx_->opensslCtx());
+    X509_STORE_lock(_store);
     SSL_free(private_->ssl_);
+    X509_STORE_unlock(_store);
     private_->ssl_ = nullptr;
   }
   AbstractSocket::close();

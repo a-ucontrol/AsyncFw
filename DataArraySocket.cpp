@@ -210,8 +210,8 @@ void DataArraySocket::errorEvent() {
 }
 
 void DataArraySocket::disconnectFromHost() {
-  if (state_ == AbstractSocket::Unconnected) {
-    logWarning("tried disconnect unconnected socket");
+  if (state_ == AbstractSocket::Closing || state_ == AbstractSocket::Unconnected) {
+    ucWarning("tried disconnect closing or unconnected socket");
     return;
   }
   if (waitTimerType & 0x40) return;
