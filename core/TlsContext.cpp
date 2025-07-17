@@ -25,7 +25,6 @@ struct TlsContext::Private {
 
   int serial_ = 0;
   int ref_    = 0;
-  std::mutex mutex;
 };
 
 DataArray TlsContext::Private::key(EVP_PKEY *_k) {
@@ -100,7 +99,6 @@ TlsContext &TlsContext::operator=(const TlsContext &_d) {
 }
 
 bool TlsContext::empty() const {
-  std::lock_guard<std::mutex> lock(private_->mutex);
   EVP_PKEY *_k = SSL_CTX_get0_privatekey(private_->ctx_);
   if (_k) return false;
   X509 *_c = SSL_CTX_get0_certificate(private_->ctx_);
@@ -399,12 +397,7 @@ void TlsContext::setIgnoreErrors(uint8_t errors) const { private_->ignoreErrors_
 
 ssl_ctx_st *TlsContext::opensslCtx() const { return private_->ctx_; }
 
-void TlsContext::lock() const { private_->mutex.lock(); }
-
-void TlsContext::unlock() const { private_->mutex.unlock(); }
-
 bool TlsContext::verify() const {
-  std::lock_guard<std::mutex> lock(private_->mutex);
   EVP_PKEY *_k = SSL_CTX_get0_privatekey(private_->ctx_);
   if (!_k) {
     ucError() << "error get key";
@@ -415,8 +408,6 @@ bool TlsContext::verify() const {
     ucError() << "error get certificate";
     return false;
   }
-  X509_STORE *_store = SSL_CTX_get_cert_store(private_->ctx_);
-  X509_STORE_lock(_store);
   EVP_PKEY *_ck = X509_get_pubkey(_c);
   if (!_ck) {
     ucError() << "error get certificate pubkey";
@@ -427,7 +418,6 @@ bool TlsContext::verify() const {
   BIGNUM *bnc = nullptr;
   EVP_PKEY_get_bn_param(_ck, OSSL_PKEY_PARAM_RSA_N, &bnc);
   EVP_PKEY_free(_ck);
-  X509_STORE_unlock(_store);
   bool result = BN_cmp(bnk, bnc) == 0;
   BN_free(bnk);
   BN_free(bnc);

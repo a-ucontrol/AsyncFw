@@ -18,12 +18,7 @@ using namespace AsyncFw;
 
 struct AbstractTlsSocket::Private {
   ~Private() {
-    if (ssl_) {
-      X509_STORE *_store = SSL_CTX_get_cert_store(ctx_->opensslCtx());
-      X509_STORE_lock(_store);
-      SSL_free(ssl_);
-      X509_STORE_unlock(_store);
-    }
+    if (ssl_) { SSL_free(ssl_); }
   }
   const TlsContext *ctx_ = nullptr;
   SSL *ssl_              = nullptr;
@@ -73,10 +68,7 @@ void AbstractTlsSocket::disconnect() {
 
 void AbstractTlsSocket::close() {
   if (private_->ssl_) {
-    X509_STORE *_store = SSL_CTX_get_cert_store(private_->ctx_->opensslCtx());
-    X509_STORE_lock(_store);
     SSL_free(private_->ssl_);
-    X509_STORE_unlock(_store);
     private_->ssl_ = nullptr;
   }
   AbstractSocket::close();
@@ -110,23 +102,17 @@ void AbstractTlsSocket::acceptEvent() {
       if (!SSL_set1_host(private_->ssl_, private_->ctx_->verifyName().c_str())) ucError();
     }
   }
-  private_->ctx_->lock();
   int r = (private_->encrypt_ == 1) ? SSL_accept(private_->ssl_) : SSL_connect(private_->ssl_);
   //SIGPIPE if (private_->encrypt_ == 1) ::close(fd_); void SocketThread::startedEvent() disabled it
   if (r <= 0) {
     r = ERR_peek_error();
-    if (!r && SSL_want_read(private_->ssl_)) {
-      private_->ctx_->unlock();
-      return;
-    }
+    if (!r && SSL_want_read(private_->ssl_)) { return; }
     if (r) setErrorString(ERR_error_string(ERR_get_error(), nullptr));
     else { setErrorString("Unknown TLS error"); }
-    private_->ctx_->unlock();
     errorEvent();
     close();
     return;
   }
-  private_->ctx_->unlock();
   char name[64];
   X509 *_pc = SSL_get_peer_certificate(private_->ssl_);
   if (_pc) {

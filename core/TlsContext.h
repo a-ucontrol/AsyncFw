@@ -47,9 +47,6 @@ public:
   uint8_t ignoreErrors() const;
   void setIgnoreErrors(uint8_t) const;
 
-  void lock() const;
-  void unlock() const;
-
 private:
   Private *private_;
   ssl_ctx_st *opensslCtx() const;
