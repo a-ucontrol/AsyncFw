@@ -21,7 +21,7 @@ protected:
   virtual void socketStateChanged(const DataArraySocket *);
 
 public:
-  enum Result { ErrorExchangeNotConnected = -103, ErrorExchangeTransmit = -104, ErrorExchangeWait = -105, ErrorExchangeTimeout = -106, ErrorExchangeFromSocketThread = -107 };
+  enum Result { ErrorExchangeNotActive = -103, ErrorExchangeTransmit = -104, ErrorExchangeConnectionClose = -105, ErrorExchangeTimeout = -106, ErrorExchangeThread = -107 };
   DataArrayTcpClient(SocketThread * = nullptr, bool init = true);
   void connectToHost(DataArraySocket *socket, const std::string &, uint16_t, int = 0);
   void connectToHost(const DataArraySocket *, int = 0);
@@ -29,5 +29,6 @@ public:
   DataArraySocket *createSocket(Thread *thread = nullptr);
   void removeSocket(DataArraySocket *);
   FunctionConnectorProtected<DataArrayTcpClient>::Connector<const DataArraySocket *> connectionStateChanged;
+  int exchange(const DataArraySocket *, const DataArray &, const DataArray *, uint32_t, int = 5000);
 };
 }  // namespace AsyncFw

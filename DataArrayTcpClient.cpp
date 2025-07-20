@@ -1,4 +1,6 @@
-#include "core/LogStream.h"
+#include "Timer.h"
+#include "Coroutine.h"
+#include "LogStream.h"
 
 #include "DataArrayTcpClient.h"
 
@@ -57,6 +59,44 @@ DataArraySocket *DataArrayTcpClient::createSocket(Thread *thread) {
 void DataArrayTcpClient::removeSocket(DataArraySocket *socket) {
   Thread *thread = static_cast<Thread *>(socket->thread());
   if (thread) thread->invokeMethod([thread, socket]() { thread->removeSocket(socket); }, true);
+}
+
+int DataArrayTcpClient::exchange(const DataArraySocket *socket, const DataArray &wda, const DataArray *rda, uint32_t pi, int timeout) {
+  if (AbstractThread::currentThread() != thread_) return ErrorExchangeThread;
+  if (socket->state_ != AbstractSocket::Active) return ErrorExchangeNotActive;
+  FunctionConnectionGuardList _gl;
+  std::coroutine_handle<> h;
+  Timer t;
+  int ret = 0;
+  _gl += socket->received([pi, &rda, &h](const DataArray *_rda, uint32_t _pi) {
+    if (!h || _pi != pi) return;
+    rda = _rda;
+    h.resume();
+  });
+  _gl += socket->stateChanged([&h, &ret](AbstractSocket::State state) {
+    if (!h || state != AbstractSocket::Unconnected) return;
+    ret = ErrorExchangeConnectionClose;
+    h.resume();
+  });
+  _gl += t.timeout([&h, &ret]() {
+    ret = ErrorExchangeTimeout;
+    h.resume();
+  });
+  auto _ct([&h, &wda, &ret, socket, pi, timeout, &t]() -> CoroutineTask {
+    co_await CoroutineAwait([&h, &wda, &ret, socket, pi, timeout, &t](std::coroutine_handle<> _h) {
+      h = _h;
+      if (!socket->transmit(wda, pi)) {
+        ret = ErrorExchangeTransmit;
+        _h.resume();
+        return;
+      }
+      t.start(timeout);
+    });
+    h = nullptr;
+  });
+  _ct().wait();
+  ucDebug() << ret;
+  return ret;
 }
 
 void DataArrayTcpClient::connectToHost(DataArraySocket *socket, const std::string &address, uint16_t port, int timeout) {
