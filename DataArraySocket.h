@@ -44,8 +44,8 @@ public:
   uint16_t hostPort() const { return hostPort_v; }
   void transmitKeepAlive() { transmitKeepAlive(true); }
 
-  FunctionConnectorProtected<DataArraySocket>::Connector<AbstractSocket::State> stateChanged {true};
-  FunctionConnectorProtected<DataArraySocket>::Connector<const DataArray *, uint32_t> received {true};
+  mutable FunctionConnectorProtected<DataArraySocket>::Connector<AbstractSocket::State> stateChanged {true};
+  mutable FunctionConnectorProtected<DataArraySocket>::Connector<const DataArray *, uint32_t> received {true};
 
 protected:
   virtual bool receiveData(DataArray *, uint32_t *) { return true; }
