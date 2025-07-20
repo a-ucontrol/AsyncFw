@@ -35,8 +35,8 @@ namespace AsyncFw {
 class AbstractTask {
   friend class AbstractThread;
   friend class ExecLoopThread;
-  friend class AbstractSocket;
   friend class MainThread;
+  friend class AbstractSocket;
 
 public:
   virtual void invoke() = 0;
@@ -50,9 +50,7 @@ class AbstractThread {
   friend class ExecLoopThread;
   friend class MainThread;
   friend class AbstractSocket;
-  friend class AbstractLog;
   friend class AbstractThreadPool;
-//  friend struct CoroutineTask;
 
 public:
   using MutexType = std::mutex;
@@ -104,6 +102,9 @@ public:
   int appendTimerTask(int timeout, M method) {
     return appendTimer(timeout, new InternalTask(method));
   }
+
+  void lock() { mutex.lock(); }
+  void unlock() { mutex.unlock(); }
 
 protected:
   template <typename M, typename T = std::invoke_result<M>::type>
@@ -165,8 +166,8 @@ protected:
   template <typename M>
   class InternalPoolTask : public AbstractTask {
     friend class ExecLoopThread;
-    friend class MainThread;
     friend class AbstractSocket;
+    friend class MainThread;
 
   public:
     InternalPoolTask(M method) : method(method) {}
@@ -191,9 +192,7 @@ private:
 };
 
 class ExecLoopThread : public AbstractThread {
-  friend class DataArraySocket;
   friend class MainThread;
-  friend struct CoroutineTask;
   using ConditionVariableType = std::condition_variable;
   struct Private;
 
@@ -220,7 +219,6 @@ public:
   void waitFinished() const;
   int queuedTasks() const;
 
-protected:
   class Holder {
   public:
     void complete();
@@ -230,6 +228,8 @@ protected:
     ExecLoopThread *thread;
     bool waiting;
   };
+
+protected:
   bool invokeTask(AbstractTask *) override;
   virtual void startedEvent() {}
   virtual void finishedEvent() {}
@@ -248,7 +248,6 @@ class AbstractSocket;
 
 class SocketThread : public ExecLoopThread {
   friend AbstractSocket;
-  friend class DataArraySocket;
 
 public:
   SocketThread(const std::string & = {});
@@ -315,8 +314,6 @@ private:
 };
 
 class AbstractThreadPool {
-  friend class DataArrayAbstractTcp;
-
 public:
   static int threadCount(AbstractThreadPool * = nullptr);
   static std::vector<AbstractThreadPool *> pools() { return pools_; }
@@ -327,8 +324,6 @@ public:
 
 protected:
   class Thread : public SocketThread {
-    friend class AbstractThreadPool;
-
   public:
     void quit();
 

@@ -96,7 +96,7 @@ void DataArrayAbstractTcp::Thread::destroy() {
     delete this;
     return;
   }
-  pool->thread_->invokeMethod([this]() {
+  pool->thread()->invokeMethod([this]() {
     SocketThread::waitFinished();
     delete this;
   });

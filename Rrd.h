@@ -24,8 +24,6 @@ public:
   void writeToArray(uint32_t, const Item &);
   uint32_t append(const Item &data, uint32_t index = 0);
   void save(const std::string &fn = {});
-  void lock() { mutex.lock(); }
-  void unlock() { mutex.unlock(); }
   void clear();
   uint32_t lastIndex();
 

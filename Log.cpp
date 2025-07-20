@@ -21,14 +21,14 @@ AbstractLog::~AbstractLog() {}
 
 void AbstractLog::flush() {
   for (;;) {
-    obj_->mutex.lock();
+    obj_->lock();
     if (messages.empty()) {
-      obj_->mutex.unlock();
+      obj_->unlock();
       break;
     }
     Message m = messages.front();
     messages.pop();
-    obj_->mutex.unlock();
+    obj_->unlock();
     process(m);
   }
 }
@@ -60,19 +60,19 @@ void AbstractLog::append(const Message &m) {
     if (!b) return;
   }
 
-  obj_->mutex.lock();
+  obj_->lock();
   int size = messages.size();
   if (size >= 128) {
     console_msg("AbstractLog::append: many messages in queue");
   #ifndef uC_NO_TRACE
     console_msg(m.string);
   #endif
-    obj_->mutex.unlock();
+    obj_->unlock();
     return;
   }
   messages.push(m);
   if (!senderPrefix.empty()) messages.back().name.insert(0, senderPrefix);
-  obj_->mutex.unlock();
+  obj_->unlock();
   if (size == 0)
     obj_->invokeMethod([this]() {
       flush();
@@ -117,7 +117,7 @@ void AbstractLog::process(const Message &m) {
 }
 
 void AbstractLog::output(const Message &m) {
-  if (obj_->running() && std::this_thread::get_id() != obj_->id_) { console_msg("AbstractLog::output: error: executed from different thread"); }
+  if (obj_->running() && std::this_thread::get_id() != obj_->id()) { console_msg("AbstractLog::output: error: executed from different thread"); }
   if ((m.type & 0x0F) <= consoleLevel) { LogStream::console_output(m, flags | LOG_STREAM_CONSOLE_EXTEND); }
 }
 
