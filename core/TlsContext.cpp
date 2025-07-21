@@ -337,6 +337,7 @@ DataArrayList TlsContext::trusted() const {
   for (int i = 0; i < _s; i++) {
     X509 *_c = sk_X509_value(_t, i);
     _l.push_back(Private::certificate(_c));
+    X509_free(_c);
   }
   sk_X509_free(_t);
   return _l;
