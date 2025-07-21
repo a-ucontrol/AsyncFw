@@ -38,7 +38,7 @@ DataArraySocket::DataArraySocket(SocketThread *_thread) : AbstractTlsSocket(_thr
 }
 
 DataArraySocket::~DataArraySocket() {
-  removeTimer();
+  if (thread_) removeTimer();
   while (!receiveList.empty()) clearBuffer_(receiveList.back());
   trace();
 }
