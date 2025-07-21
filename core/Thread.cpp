@@ -757,7 +757,6 @@ void SocketThread::removeSocket(AbstractSocket *_socket) {
   if (it != sockets_.end() && (*it) == _socket) {
     if (_socket->fd_) removePollDescriptor(_socket->fd_);
     sockets_.erase(it);
-    _socket->removeTimer();
     _socket->thread_ = nullptr;
     return;
   }

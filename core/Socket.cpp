@@ -119,12 +119,12 @@ bool AbstractSocket::listen(const std::string &_address, uint16_t _port) {
 
   return true;
 }
-
+/*
 void AbstractSocket::timerEvent() {
   removeTimer();
   ucWarning("not implemented, timer removed");
 }
-
+*/
 void AbstractSocket::errorEvent() { ucWarning("not implemented"); }
 
 void AbstractSocket::acceptEvent() {
@@ -225,9 +225,6 @@ bool AbstractSocket::connect(const std::string &_address, uint16_t _port) {
 */
   reinterpret_cast<sockaddr_in *>(&private_->pa_)->sin_port        = htons(_port);
   reinterpret_cast<sockaddr_in *>(&private_->pa_)->sin_addr.s_addr = inet_addr(_address.c_str());
-
-  int _timeout = 60 * 1000;
-  setsockopt(_fd, SOL_SOCKET, SO_RCVTIMEO, setsockopt_ptr(&_timeout), sizeof(_timeout));
 
   if (::connect(_fd, reinterpret_cast<struct sockaddr *>(&private_->pa_), sizeof(private_->pa_)) == -1) {
     if (errno != CONNECT_PROGRESS) {
@@ -352,19 +349,6 @@ int AbstractSocket::descriptorWriteSize() {
   int r        = getsockopt(fd_, SOL_SOCKET, SO_SNDBUF, &_s, &_l);
   if (r == 0) return _s;
   return r;
-}
-
-void AbstractSocket::startTimer(int _ms) {
-  if (private_->tid_ < 0) private_->tid_ = thread_->appendTimerTask(_ms, [this]() { timerEvent(); });
-  else
-    thread_->modifyTimer(private_->tid_, _ms);
-}
-
-void AbstractSocket::removeTimer() {
-  if (private_->tid_ >= 0) {
-    thread_->removeTimer(private_->tid_);
-    private_->tid_ = -1;
-  }
 }
 
 std::string AbstractSocket::address() const {

@@ -51,7 +51,8 @@ protected:
   virtual bool receiveData(DataArray *, uint32_t *) { return true; }
   virtual bool transmitData(DataArray *, uint32_t *) { return true; }
 
-  void timerEvent() override;
+  void timerEvent();
+
   void stateEvent() override;
   void readEvent() override;
   void errorEvent() override;
@@ -89,5 +90,8 @@ private:
   std::string peerString() const;
 
   AsyncFw::ExecLoopThread::Holder *wait_holder_ = nullptr;  //!!! Private
+  void startTimer(int _ms);
+  void removeTimer();
+  int tid_ = -1;
 };
 }  // namespace AsyncFw

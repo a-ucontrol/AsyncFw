@@ -48,9 +48,6 @@ public:
   State state() const { return state_; }
   SocketThread *thread() const { return thread_; }
 
-  void startTimer(int);
-  void removeTimer();
-
   std::string address() const;
   uint16_t port() const;
   std::string peerAddress() const;
@@ -65,7 +62,6 @@ protected:
   virtual int write_fd(const void *_p, int _s);
 
   virtual void acceptEvent();
-  virtual void timerEvent();
   virtual void errorEvent();
 
   virtual void incomingEvent() {}
