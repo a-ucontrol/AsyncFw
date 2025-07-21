@@ -25,14 +25,14 @@ LogTcpClient::LogTcpClient(DataArrayTcpClient *client, int size, const std::stri
     if (socket == tcpSocket) connectionStateChanged();
   });
 
-  requestTimerId = tcpSocket->thread()->appendTimerTask(0, [this]() {
-    tcpSocket->thread()->modifyTimer(requestTimerId, 0);
-    log_->invokeMethod([this]() { request(); });
+  requestTimerId = log_->appendTimerTask(0, [this]() {
+    log_->modifyTimer(requestTimerId, 0);
+    request();
   });
 }
 
 LogTcpClient::~LogTcpClient() {
-  if (tcpSocket->thread()) tcpSocket->thread()->removeTimer(requestTimerId);
+  log_->removeTimer(requestTimerId);
   tcpClient->removeSocket(tcpSocket);
   delete log_;
   ucTrace();

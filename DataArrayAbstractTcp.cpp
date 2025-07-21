@@ -82,12 +82,6 @@ void DataArrayAbstractTcp::Thread::socketInit(DataArraySocket *socket) {
 void DataArrayAbstractTcp::Thread::destroy() {
   ucTrace();
 
-  std::vector<AbstractThread *>::iterator it = std::find(static_cast<DataArrayAbstractTcp *>(pool)->threads_.begin(), static_cast<DataArrayAbstractTcp *>(pool)->threads_.end(), this);
-  if (it == static_cast<DataArrayAbstractTcp *>(pool)->threads_.end()) {
-    ucError() << "thread not found";
-    return;
-  }
-
   static_cast<DataArrayAbstractTcp *>(pool)->removeThread(this);
   SocketThread::quit();
 
