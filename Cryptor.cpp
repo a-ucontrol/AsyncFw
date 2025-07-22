@@ -74,7 +74,7 @@ bool Cryptor::decrypt(const DataArray &key, const DataArray &ctext, DataArray &t
   try {
     decrypt(key, DataArrayView(ctext.data() + ctext.size() - i, i), DataArrayView(ctext.data(), ctext.size() - i), text);
   } catch (const std::exception &e) {
-    ucError() << e.what();
+    ucDebug() << e.what();
     return false;
   }
   return true;

@@ -347,6 +347,4 @@ constexpr AbstractThread::PollEvents operator|(AbstractThread::PollEvents f1, Ab
 constexpr AbstractThread::PollEvents operator==(AbstractThread::PollEvents, AbstractThread::PollEvents) = delete;
 }  // namespace AsyncFw
 
-#ifndef _uC_BUILD_LIBS_
-  #include "main-thread.hpp"
-#endif
+#include "main-thread.hpp"
