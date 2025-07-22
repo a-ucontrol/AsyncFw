@@ -6,11 +6,12 @@
 #include "LogStream.h"
 
 namespace AsyncFw {
-LogStream &operator<<(LogStream &log, const DataArray &v);
-LogStream &operator<<(LogStream &log, const DataArrayList &v);
+LogStream &operator<<(LogStream &, const DataArray &);
+LogStream &operator<<(LogStream &, const DataArrayList &);
 
-LogStream &operator<<(LogStream &log, const DataStream &v);
-LogStream &operator<<(LogStream &log, const std::thread::id &v);
+LogStream &operator<<(LogStream &, const DataStream &);
+LogStream &operator<<(LogStream &, const std::thread::id &);
+LogStream &operator<<(LogStream &, const std::wstring &);
 }  // namespace AsyncFw
 
 #ifdef USE_QAPPLICATION

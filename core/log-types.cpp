@@ -34,4 +34,15 @@ LogStream &operator<<(LogStream &log, const DataStream &v) { return (log << v.ar
 
 LogStream &operator<<(LogStream &log, const std::thread::id &v) { return (log << *static_cast<const std::thread::native_handle_type *>(static_cast<const void *>(&v))); }
 
+LogStream &operator<<(LogStream &log, const std::wstring &v) {
+  if (v.empty()) {
+    log << "\"\"";
+    return log;
+  }
+  std::string str;
+  str.resize(std::wcstombs(nullptr, v.data(), 0));
+  std::wcstombs(str.data(), v.data(), str.size());
+  log << str;
+  return log;
+}
 }  // namespace AsyncFw
