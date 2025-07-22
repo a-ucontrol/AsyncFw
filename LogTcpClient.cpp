@@ -97,10 +97,7 @@ void LogTcpClient::tcpReadWrite(const DataArray *rba, uint32_t pi) {
         return;
       }
     }
-    tcpSocket->thread()->modifyTimer(requestTimerId, 1000);
-    return;
-
-    tcpSocket->thread()->modifyTimer(requestTimerId, 1000);
+    log_->modifyTimer(requestTimerId, 1000);
   });
 }
 
@@ -113,7 +110,6 @@ void LogTcpClient::request(int pi) {
 
 void LogTcpClient::connectionStateChanged() {
   if (tcpSocket->state() == AbstractSocket::Active) request();
-  else
-    tcpSocket->thread()->modifyTimer(requestTimerId, 0);
+  else { log_->modifyTimer(requestTimerId, 0); }
 }
 #endif
