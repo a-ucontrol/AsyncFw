@@ -346,5 +346,3 @@ private:
 constexpr AbstractThread::PollEvents operator|(AbstractThread::PollEvents f1, AbstractThread::PollEvents f2) { return static_cast<AbstractThread::PollEvents>(static_cast<uint8_t>(f1) | static_cast<uint8_t>(f2)); }
 constexpr AbstractThread::PollEvents operator==(AbstractThread::PollEvents, AbstractThread::PollEvents) = delete;
 }  // namespace AsyncFw
-
-#include "main-thread.hpp"

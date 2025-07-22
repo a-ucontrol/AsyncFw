@@ -10,7 +10,6 @@ set(AsyncFw_CORE_HEADERS
   "core/TlsSocket.h"
   "core/Thread.h"
   "core/AnyData.h"
-  "core/main-thread.hpp"
   "core/TlsContext.h"
   "core/FunctionConnector.h"
   "core/LogStream.h"
@@ -37,6 +36,8 @@ set(AsyncFw_HEADERS
   "ThreadPool.h"
   "File.h"
   "Cryptor.h"
+
+  "core/MainThread.h"
 
   "linux/SystemProcess.h"
   "linux/FileSystemWatcher.h"
