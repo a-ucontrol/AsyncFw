@@ -50,6 +50,7 @@ Rrd::~Rrd() {
 
 bool Rrd::createFile() {
   count_v = 0;
+  dataBase.clear();
   dataBase.resize(dbSize);
   last = 0;
   if (readOnly || !saveToFile()) return false;
