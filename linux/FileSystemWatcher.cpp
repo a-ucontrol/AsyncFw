@@ -22,13 +22,13 @@ FileSystemWatcher::WatchPath::WatchPath(const std::string &path) {
   size_t i = path.find_last_of('/');
   if (i == std::string::npos) return;
   directory = path.substr(0, i);
-  name      = path.substr(i + 1);
+  name = path.substr(i + 1);
 }
 
 FileSystemWatcher::FileSystemWatcher(const std::vector<std::string> &paths) {
   fileSystemWatcher = this;
-  thread_           = AbstractThread::currentThread();
-  timerid_          = thread_->appendTimerTask(0, [this]() {
+  thread_ = AbstractThread::currentThread();
+  timerid_ = thread_->appendTimerTask(0, [this]() {
     thread_->modifyTimer(timerid_, 0);
     for (const Watch *f : we_) watch(f->directory + '/' + f->name, 0);
     trace() << LogStream::Color::DarkRed << "timer event" << we_.size();
@@ -83,12 +83,12 @@ FileSystemWatcher::FileSystemWatcher(const std::vector<std::string> &paths) {
       }
 
       WatchPath wp;
-      wp.directory                       = (*itd)->directory;
-      wp.name                            = e->name;
+      wp.directory = (*itd)->directory;
+      wp.name = e->name;
       std::vector<Watch *>::iterator itw = std::lower_bound(files_.begin(), files_.end(), wp, CompareWatch());
       if (itw == files_.end() || (*itw)->name != wp.name || (*itw)->directory != wp.directory) {
         wp.name = "*";
-        itw     = std::lower_bound(files_.begin(), files_.end(), wp, CompareWatch());
+        itw = std::lower_bound(files_.begin(), files_.end(), wp, CompareWatch());
         if (itw == files_.end() || (*itw)->name != wp.name || (*itw)->directory != wp.directory) continue;
       }
       if (e->mask & IN_CREATE) {
@@ -135,7 +135,7 @@ FileSystemWatcher::~FileSystemWatcher() {
 }
 
 bool FileSystemWatcher::addPath(const std::string &path) {
-  Watch *w                          = new Watch(path);
+  Watch *w = new Watch(path);
   std::vector<Watch *>::iterator it = std::lower_bound(files_.begin(), files_.end(), w, CompareWatch());
   if (it != files_.end() && (*it)->name == w->name && (*it)->directory == w->directory) {
     delete w;
@@ -149,10 +149,10 @@ bool FileSystemWatcher::addPath(const std::string &path) {
       delete w;
       return false;
     }
-    w->d                               = i;
-    Watch *dw                          = new Watch();
-    dw->d                              = i;
-    dw->directory                      = w->directory;
+    w->d = i;
+    Watch *dw = new Watch();
+    dw->d = i;
+    dw->directory = w->directory;
     std::vector<Watch *>::iterator itd = std::lower_bound(wds_.begin(), wds_.end(), dw->d, CompareWatchDescriptor());
     if (itd == wds_.end() || (*itd)->d != dw->d) {
       wds_.insert(itd, dw);
@@ -186,7 +186,7 @@ bool FileSystemWatcher::removePath(const std::string &path) {
   if (!(*itd)->name.empty()) wds_.erase(itd);
   else {
     WatchPath wp;
-    wp.directory                                                                  = (*itd)->directory;
+    wp.directory = (*itd)->directory;
     std::pair<std::vector<Watch *>::iterator, std::vector<Watch *>::iterator> itp = std::equal_range(files_.begin(), files_.end(), wp, CompareWatch());
     if (itp.second - itp.first == 1) {
       inotify_rm_watch(notifyfd_, (*itp.first)->d);

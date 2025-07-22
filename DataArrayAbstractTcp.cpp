@@ -15,7 +15,7 @@ DataArrayAbstractTcp::Thread *DataArrayAbstractTcp::findMinimalSocketsThread() {
     int size = static_cast<Thread *>(threads_.at(i))->sockets_.size();
     static_cast<Thread *>(threads_.at(i))->mutex.unlock();
     if (size < m) {
-      m     = size;
+      m = size;
       index = i;
       if (m == 0) {
         logError("Empty sockets list in thread");

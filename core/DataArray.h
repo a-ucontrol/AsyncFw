@@ -92,8 +92,8 @@ private:
   void sw_(std::size_t);
   void sr_(std::size_t *);
   DataArray *data_;
-  bool fail_       = false;
-  bool read_       = false;
+  bool fail_ = false;
+  bool read_ = false;
   std::size_t pos_ = 0;
 };
 }  // namespace AsyncFw

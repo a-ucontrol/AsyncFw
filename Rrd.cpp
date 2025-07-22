@@ -86,7 +86,7 @@ uint32_t Rrd::append(const Item &data, uint32_t index) {
     }
   }
   dataBase[index % dbSize] = data;
-  last                     = index;
+  last = index;
   mutex.unlock();
   updated();
 
@@ -118,7 +118,7 @@ void Rrd::writeToArray(uint32_t index, const Item &ba) {
 void Rrd::clear() {
   std::lock_guard<MutexType> lock(mutex);
   for (uint32_t i = 0; i != dbSize; ++i) dataBase[i].clear();
-  last    = 0;
+  last = 0;
   count_v = 0;
 }
 
@@ -178,7 +178,7 @@ bool Rrd::readFromFile() {
   if (static_cast<uint32_t>(dataBase.size()) != dbSize) {
     console_msg("Rrd: error database size: " + std::to_string(dataBase.size()));
   } else {
-    ok      = true;
+    ok = true;
     count_v = 0;
     for (const Item &ba : dataBase)
       if (!ba.empty()) count_v++;
@@ -194,7 +194,7 @@ bool Rrd::saveToFile(const std::string &_fileToSave) {
 
 #ifdef EXTEND_RRD_TRACE
   std::chrono::time_point<std::chrono::steady_clock> t = std::chrono::steady_clock::now();
-  int size                                             = _ds.array().size();
+  int size = _ds.array().size();
 #endif
 
 #ifdef Rrd_COMPRESS_FILE
@@ -223,8 +223,8 @@ bool Rrd::saveToFile(const std::string &_fileToSave) {
 void Rrd::setAverage(QObject *obj, QByteArray (QObject::*ptr)(QList<QByteArray> &, Rrd *), int interval, int offset) {
   average_obj = obj;
   average_ptr = ptr;
-  aInterval   = interval;
-  aOffset     = offset;
+  aInterval = interval;
+  aOffset = offset;
 }
 #endif
 

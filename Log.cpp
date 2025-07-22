@@ -101,7 +101,7 @@ void AbstractLog::process(const Message &m) {
           output({m.time, l->message.type, l->message.name, "Repeated message " + std::to_string(l->count) + " times: " + (l->message.string.empty() ? "Empty message" : l->message.string), l->message.note});
         }
       }
-      l->marked       = true;
+      l->marked = true;
       l->message.time = m.time;
       return;
     }
@@ -109,8 +109,8 @@ void AbstractLog::process(const Message &m) {
     stopTimer(&l->timerId);
     output(m);
     l->message = m;
-    l->count   = 1;
-    l->marked  = true;
+    l->count = 1;
+    l->marked = true;
     return;
   }
   output(m);
@@ -129,7 +129,7 @@ void AbstractLog::timerTask(int timerId) {
       int count = lastMessages[i].count;
       if (count > 1 && count % 1000 && count != 100 && count != 10) output({lastMessages[i].message.type, lastMessages[i].message.name, "Repeated message " + std::to_string(lastMessages[i].count) + " times (last: " + std::to_string(LOG_CURRENT_TIME - lastMessages[i].message.time) + "ms ago): " + (lastMessages[i].message.string.empty() ? "Empty message" : lastMessages[i].message.string), lastMessages[i].message.note});
       lastMessages[i].message = {};
-      lastMessages[i].count   = 0;
+      lastMessages[i].count = 0;
       return;
     }
   }

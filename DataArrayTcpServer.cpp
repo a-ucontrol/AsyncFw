@@ -47,7 +47,7 @@ bool DataArrayTcpServer::incomingConnection(int socketDescriptor, const std::str
 
 void DataArrayTcpServer::Thread::createSocket(int socketDescriptor, bool encrypt) {
   DataArraySocket *tcpSocket = new DataArraySocket(this);
-  std::string address        = tcpSocket->peerAddress();
+  std::string address = tcpSocket->peerAddress();
   socketInit(tcpSocket);
   tcpSocket->initServerConnection();
 
@@ -69,7 +69,5 @@ void DataArrayTcpServer::Thread::removeSocket(DataArraySocket *socket) {
   checkCurrentThread();
   SocketThread::removeSocket(socket);
   if (sockets_.empty()) destroy();
-  pool->thread()->invokeMethod([socket]() {
-    socket->destroy();
-  });
+  pool->thread()->invokeMethod([socket]() { socket->destroy(); });
 }

@@ -23,7 +23,7 @@ ThreadPool::ThreadPool() : AbstractThreadPool() {
 ThreadPool::~ThreadPool() { logTrace() << "Destroyed"; }
 
 ThreadPool::Thread *ThreadPool::createThread(const std::string &name) {
-  int i          = AbstractThreadPool::threadCount(this);
+  int i = AbstractThreadPool::threadCount(this);
   Thread *thread = new Thread(this);
   if (!name.empty()) thread->setName(name);
   else { thread->setName("thread " + std::to_string(AbstractThreadPool::threadCount(this))); }
@@ -47,12 +47,12 @@ ThreadPool::Thread *ThreadPool::getThread() {
     return workThreads_.back();
   }
   ThreadPool::Thread *_t = nullptr;
-  int _tasks             = INT_MAX;
+  int _tasks = INT_MAX;
   for (int i = 0; i != _s; ++i) {
     int _qt = static_cast<ThreadPool::Thread *>(workThreads_[i])->queuedTasks();
     if (_qt < _tasks) {
       _tasks = _qt;
-      _t     = static_cast<ThreadPool::Thread *>(workThreads_[i]);
+      _t = static_cast<ThreadPool::Thread *>(workThreads_[i]);
     }
   }
   return _t;

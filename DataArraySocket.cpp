@@ -19,19 +19,19 @@
 using namespace AsyncFw;
 
 DataArraySocket::DataArraySocket(SocketThread *_thread) : AbstractTlsSocket(_thread) {
-  sslConnection                      = 0;
-  receiveByteArray                   = nullptr;
-  waitTimerType                      = 0;
-  waitForConnectTimeoutInterval      = 0;
-  reconnectTimeoutInterval           = 0;
-  readTimeoutInterval                = 0;
+  sslConnection = 0;
+  receiveByteArray = nullptr;
+  waitTimerType = 0;
+  waitForConnectTimeoutInterval = 0;
+  reconnectTimeoutInterval = 0;
+  readTimeoutInterval = 0;
   waitKeepAliveAnswerTimeoutInterval = 0;
-  waitForEncryptedTimeoutInterval    = 10000;
-  timerId                            = 0;
-  port                               = 0;
-  hostPort_v                         = 0;
-  readSize                           = 0;
-  readId                             = 0;
+  waitForEncryptedTimeoutInterval = 10000;
+  timerId = 0;
+  port = 0;
+  hostPort_v = 0;
+  readSize = 0;
+  readId = 0;
   setReadBuffers(16, 1024 * 1024);
   setWriteBuffers(16, 1024 * 1024);
   trace();
@@ -81,7 +81,7 @@ void DataArraySocket::stateEvent() {
       if (reconnectTimeoutInterval > 0) startTimer(reconnectTimeoutInterval);
       else if (readTimeoutInterval > 0) { removeTimer(); }
     }
-    readSize                              = 0;
+    readSize = 0;
     std::vector<DataArray *>::iterator it = std::find(receiveList.begin(), receiveList.end(), receiveByteArray);
     if (receiveByteArray && it != receiveList.end()) {
       receiveList.erase(it);
@@ -331,7 +331,7 @@ void DataArraySocket::sendMessage(const std::string &m, uint8_t t) {
 
 void DataArraySocket::initServerConnection() {
   address = peerAddress();
-  port    = peerPort();
+  port = peerPort();
   if (sslConnection) {
     sslConnection = 3;
     startTimer(waitForEncryptedTimeoutInterval);
@@ -358,7 +358,7 @@ void DataArraySocket::connectToHost() {
   }
 
   address = hostAddress_v;
-  port    = hostPort_v;
+  port = hostPort_v;
   if (sslConnection == 1) {
     sendMessage("SSL configuration error", LogStream::Error);
     return;

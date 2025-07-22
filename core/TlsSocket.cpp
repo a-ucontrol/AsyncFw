@@ -21,8 +21,8 @@ struct AbstractTlsSocket::Private {
     if (ssl_) { SSL_free(ssl_); }
   }
   const TlsContext *ctx_ = nullptr;
-  SSL *ssl_              = nullptr;
-  uint8_t encrypt_       = 0;  // 0 - noencrypt, 1 - server, 2 - client
+  SSL *ssl_ = nullptr;
+  uint8_t encrypt_ = 0;  // 0 - noencrypt, 1 - server, 2 - client
 
   static int ignoreTimeValidityErrors(int ok, X509_STORE_CTX *ctx);
 };

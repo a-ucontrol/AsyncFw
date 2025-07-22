@@ -31,6 +31,6 @@ bool PollNotifier::setEvents(AbstractThread::PollEvents e) { return !(fail_ = !t
 
 void PollNotifier::removeDescriptor() {
   thread_->removePollDescriptor(fd_);
-  fd_   = -1;
+  fd_ = -1;
   fail_ = false;
 }

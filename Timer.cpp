@@ -17,9 +17,9 @@ void Timer::single(int ms, const std::function<void()> &f) {
     logError() << "Single: wrong timeout:" << ms;
     return;
   }
-  AbstractThread *_t  = AbstractThread::currentThread();
+  AbstractThread *_t = AbstractThread::currentThread();
   SingleTimerTask *_s = new SingleTimerTask();
-  int tid             = _t->appendTimer(0, _s);
+  int tid = _t->appendTimer(0, _s);
   _s->init([f, _t, tid]() {
     f();
     _t->removeTimer(tid);

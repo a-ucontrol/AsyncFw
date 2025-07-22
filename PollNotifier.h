@@ -19,8 +19,7 @@ public:
 
 private:
   AbstractThread *thread_;
-  int fd_    = -1;
+  int fd_ = -1;
   bool fail_ = false;
 };
-
-}  // namespace LRW
+}  // namespace AsyncFw

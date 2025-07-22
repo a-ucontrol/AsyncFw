@@ -68,7 +68,7 @@ protected:
   virtual void writeEvent() {}
 
   virtual void stateEvent() = 0;
-  virtual void readEvent()  = 0;
+  virtual void readEvent() = 0;
 
   void changeDescriptor(int);
 
@@ -78,7 +78,7 @@ protected:
 private:
   void pollEvent(int);
   Private *private_;
-  int fd_         = 0;
+  int fd_ = 0;
   mutable int rs_ = 0;
 };
 

@@ -5,8 +5,8 @@
 #ifdef uC_LOGGER
 using namespace AsyncFw;
 LogTcpClient::LogTcpClient(DataArrayTcpClient *client, int size, const std::string &file, DataArraySocket *socket) {
-  log_      = new Log(size, file.data(), true);
-  lastTime  = log_->lastIndex();
+  log_ = new Log(size, file.data(), true);
+  lastTime = log_->lastIndex();
   tcpClient = client;
   if (!socket) {
     tcpSocket = tcpClient->createSocket();

@@ -57,7 +57,7 @@ std::string LogStream::sender(const char *function) {
   std::size_t i;
   str = str.substr(0, str.find_first_of('<'));
   str = str.substr(0, str.find_first_of('('));
-  i   = str.find_last_of(' ');
+  i = str.find_last_of(' ');
   if (i != std::string::npos) str = str.substr(i + 1);
 #ifdef IGNORE_SENDER_NAME_PREFIX
   if (str.starts_with(IGNORE_SENDER_NAME_PREFIX)) str.erase(0, sizeof(IGNORE_SENDER_NAME_PREFIX) - 1);

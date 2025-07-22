@@ -40,5 +40,4 @@ private:
   inline static ThreadPool *instance_;
   std::vector<Thread *> workThreads_;
 };
-
-}  // namespace LRW
+}  // namespace AsyncFw

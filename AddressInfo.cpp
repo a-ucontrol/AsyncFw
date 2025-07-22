@@ -28,7 +28,7 @@ struct AddressInfo::Private {
     memset(&options, 0, sizeof(options));
     options.sock_state_cb = [](void *data, int s, int read, int write) {
       ucTrace("change state fd %d read:%d write:%d", s, read, write);
-      AbstractThread::PollEvents e                                     = (read) ? AbstractThread::PollIn : AbstractThread::PollNo | (write) ? AbstractThread::PollOut : AbstractThread::PollNo;
+      AbstractThread::PollEvents e = (read) ? AbstractThread::PollIn : AbstractThread::PollNo | (write) ? AbstractThread::PollOut : AbstractThread::PollNo;
       std::unordered_map<int, AbstractThread::PollEvents>::iterator it = static_cast<cbData *>(data)->m.find(s);
       if (it != static_cast<cbData *>(data)->m.end()) {
         if (!e) {
@@ -64,7 +64,7 @@ struct AddressInfo::Private {
 };
 
 AddressInfo::AddressInfo() {
-  private_         = new Private();
+  private_ = new Private();
   private_->thread = AbstractThread::currentThread();
   ucTrace();
 }
@@ -76,7 +76,7 @@ AddressInfo::~AddressInfo() {
 
 void AddressInfo::resolve(const std::string &name) {
   Private::cbData *_data = new Private::cbData;
-  _data->ai              = this;
+  _data->ai = this;
 
   _data->tid = private_->thread->appendTimerTask(timeout_, [_data]() { ares_cancel(_data->c); });
 
@@ -112,11 +112,11 @@ void AddressInfo::resolve(const std::string &name) {
             const void *ptr = nullptr;
             if (node->ai_family == AF_INET) {
               const struct sockaddr_in *in_addr = (const struct sockaddr_in *)((void *)node->ai_addr);
-              ptr                               = &in_addr->sin_addr;
+              ptr = &in_addr->sin_addr;
               addr_buf.resize(INET_ADDRSTRLEN);
             } else if (node->ai_family == AF_INET6) {
               const struct sockaddr_in6 *in_addr = (const struct sockaddr_in6 *)((void *)node->ai_addr);
-              ptr                                = &in_addr->sin6_addr;
+              ptr = &in_addr->sin6_addr;
               addr_buf.resize(INET6_ADDRSTRLEN);
             } else
               continue;

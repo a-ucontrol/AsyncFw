@@ -3,9 +3,9 @@
 #include <queue>
 
 #include "core/LogStream.h"
-  #include "Rrd.h"
+#include "Rrd.h"
 
-  #define _messages_ 8
+#define _messages_ 8
 
 namespace AsyncFw {
 class AbstractLog {
@@ -41,12 +41,12 @@ protected:
 private:
   struct LastMessage {
     Message message;
-    int count   = 1;
+    int count = 1;
     int timerId = -1;
     bool marked = false;
   };
   static void append_(const Message &m, uint8_t t);
-  uint8_t flags    = 0;
+  uint8_t flags = 0;
   int consoleLevel = LogStream::Trace;
 
   std::queue<Message> messages;
@@ -67,9 +67,9 @@ public:
 
 class Log : public Rrd, public AbstractLog {
 public:
-  using Message     = LogStream::Message;
+  using Message = LogStream::Message;
   using MessageType = LogStream::MessageType;
-  using Color       = LogStream::Color;
+  using Color = LogStream::Color;
 
   using AbstractLog::append;
   inline static Log *instance() { return static_cast<Log *>(AbstractLog::instance()); }
@@ -86,8 +86,7 @@ public:
 
 protected:
   std::atomic_int autoSave = 100;
-  int timerIdAutosave      = -1;
+  int timerIdAutosave = -1;
   virtual void output(const Message &m) override;
 };
 }  // namespace AsyncFw
-

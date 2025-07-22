@@ -12,5 +12,4 @@ protected:
   static void encrypt(const DataArray &key, const DataArrayView &iv, const DataArrayView &text, DataArray &ctext);
   static void decrypt(const DataArray &key, const DataArrayView &iv, const DataArrayView &ctext, DataArray &text);
 };
-
-}  // namespace LRW
+}  // namespace AsyncFw

@@ -19,5 +19,4 @@ private:
   int timerId = -1;
   bool single_;
 };
-
-}  // namespace LRW
+}  // namespace AsyncFw

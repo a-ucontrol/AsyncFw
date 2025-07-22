@@ -35,7 +35,7 @@ struct SystemProcess::Private {
 };
 
 SystemProcess::SystemProcess() {
-  private_          = new Private;
+  private_ = new Private;
   private_->thread_ = AbstractThread::currentThread();
   ucTrace();
 }
@@ -47,17 +47,17 @@ SystemProcess::~SystemProcess() {
 
 bool SystemProcess::start(const std::string &_cmdline, const std::vector<std::string> &_args) {
   private_->cmdline_ = _cmdline;
-  private_->args     = _args;
+  private_->args = _args;
   return start();
 }
 
 bool SystemProcess::start() {
   private_->state_ = None;
-  private_->code_  = 0;
+  private_->code_ = 0;
 
   if (!private_->process()) {
     private_->state_ = Error;
-    private_->code_  = -1;
+    private_->code_ = -1;
     return false;
   }
 
@@ -111,7 +111,7 @@ void SystemProcess::wait() {
     logWarning("Process not running");
     return;
   }
-  CoroutineTask ct     = private_->waitTask();
+  CoroutineTask ct = private_->waitTask();
   private_->wait_task_ = &ct;
   ct.wait();
   private_->wait_task_ = nullptr;
@@ -123,8 +123,8 @@ FunctionConnectorProtected<SystemProcess>::Connector<int, SystemProcess::State, 
   FunctionConnectorProtected<SystemProcess>::Connector<int, SystemProcess::State, const std::string &, const std::string &> *fc = new FunctionConnectorProtected<SystemProcess>::Connector<int, SystemProcess::State, const std::string &, const std::string &>(false);
 
   SystemProcess *process = new SystemProcess();
-  std::string *_out      = new std::string();
-  std::string *_err      = new std::string();
+  std::string *_out = new std::string();
+  std::string *_err = new std::string();
   process->output([_out, _err](const std::string &msg, bool err) {
     if (!err) *_out += msg;
     else { *_err += msg; }
@@ -157,10 +157,10 @@ void SystemProcess::finality() {
   int r;
   if (waitpid(private_->pid_, &r, 0) == private_->pid_) {
     private_->state_ = (WIFEXITED(r)) ? Finished : Crashed;
-    private_->code_  = WEXITSTATUS(r);
+    private_->code_ = WEXITSTATUS(r);
   } else {
     private_->state_ = Crashed;
-    private_->code_  = -1;
+    private_->code_ = -1;
     logError() << "error waitpid";
   }
 

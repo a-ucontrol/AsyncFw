@@ -14,7 +14,7 @@ struct File::Private {
 };
 
 File::File(const std::string &fn) {
-  private_      = new Private;
+  private_ = new Private;
   private_->fn_ = fn;
   ucTrace();
 }

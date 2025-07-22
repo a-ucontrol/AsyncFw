@@ -29,5 +29,4 @@ public:
 private:
   Private *private_;
 };
-
-}  // namespace LRW
+}  // namespace AsyncFw

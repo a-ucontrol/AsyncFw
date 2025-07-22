@@ -7,8 +7,8 @@
 using namespace AsyncFw;
 DataArray DataArray::compress(const DataArrayView &_u) {
   std::size_t _size = _u.size();
-  uLongf _uLongf    = compressBound(_size);
-  uint8_t j         = 0;
+  uLongf _uLongf = compressBound(_size);
+  uint8_t j = 0;
   for (;; ++j) {
     if (!(_size >> (5 + j * 8))) break;
   }
@@ -28,7 +28,7 @@ DataArray DataArray::compress(const DataArrayView &_u) {
 DataArray DataArray::uncompress(const DataArrayView &_c) {
   if (_c.empty()) return {};
   std::size_t _size = 0;
-  uint8_t j         = (_c[0] & 0x07);
+  uint8_t j = (_c[0] & 0x07);
   if (j) {
     if (_c.size() < sizeof(uint8_t) + j) return {};
     for (int i = 0; i != j; ++i) (reinterpret_cast<char *>(&_size))[i] = _c[sizeof(uint8_t) + i];

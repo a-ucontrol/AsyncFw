@@ -23,7 +23,7 @@ void Cryptor::encrypt(const DataArray &key, const DataArrayView &iv, const DataA
   if (rc != 1) throw std::runtime_error("EVP_EncryptUpdate failed");
 
   int out_len2 = ctext.size() - out_len1;
-  rc           = EVP_EncryptFinal_ex(ctx.get(), reinterpret_cast<unsigned char *>(ctext.data()) + out_len1, &out_len2);
+  rc = EVP_EncryptFinal_ex(ctx.get(), reinterpret_cast<unsigned char *>(ctext.data()) + out_len1, &out_len2);
   if (rc != 1) throw std::runtime_error("EVP_EncryptFinal_ex failed");
 
   // Set cipher text size now that we know it
@@ -44,7 +44,7 @@ void Cryptor::decrypt(const DataArray &key, const DataArrayView &iv, const DataA
   if (rc != 1) throw std::runtime_error("EVP_DecryptUpdate failed");
 
   int out_len2 = text.size() - out_len1;
-  rc           = EVP_DecryptFinal_ex(ctx.get(), reinterpret_cast<unsigned char *>(text.data()) + out_len1, &out_len2);
+  rc = EVP_DecryptFinal_ex(ctx.get(), reinterpret_cast<unsigned char *>(text.data()) + out_len1, &out_len2);
   if (rc != 1) throw std::runtime_error("EVP_DecryptFinal_ex failed");
 
   // Set recovered text size now that we know it

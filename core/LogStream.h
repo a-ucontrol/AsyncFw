@@ -22,22 +22,22 @@
 #define LOG_STREAM_CONSOLE_COLOR 0x04
 
 #define LOG_STREAM_CONSOLE_EXTEND 0x10
-#define LOG_STREAM_CONSOLE_NOTE   0x20
-#define LOG_STREAM_CONSOLE_LINE   LOG_STREAM_CONSOLE_NOTE
-#define LOG_STREAM_CONSOLE_ONLY   0x40
+#define LOG_STREAM_CONSOLE_NOTE 0x20
+#define LOG_STREAM_CONSOLE_LINE LOG_STREAM_CONSOLE_NOTE
+#define LOG_STREAM_CONSOLE_ONLY 0x40
 
 namespace AsyncFw {
 class LogStream {
 public:
   enum MessageType : uint8_t {
     Emergency = 0x00,
-    Alert     = 0x01,
-    Error     = 0x02,
-    Warning   = 0x03,
-    Notice    = 0x04,
-    Info      = 0x05,
-    Debug     = 0x06,
-    Trace     = 0x07,
+    Alert = 0x01,
+    Error = 0x02,
+    Warning = 0x03,
+    Notice = 0x04,
+    Info = 0x05,
+    Debug = 0x06,
+    Trace = 0x07,
   };
 
   enum Output : uint8_t {
@@ -47,21 +47,21 @@ public:
   //color names
   //https://doc.qt.io/qt-6/qcolor.html, Predefined Colors
   enum Color : uint8_t {
-    White       = 0x10,
-    Gray        = 0x20,
-    Black       = 0x30,
-    Red         = 0x40,
-    Green       = 0x50,
-    Blue        = 0x60,
-    Cyan        = 0x70,
-    Magenta     = 0x80,
-    Yellow      = 0x90,
-    DarkRed     = 0xa0,
-    DarkGreen   = 0xb0,
-    DarkBlue    = 0xc0,
-    DarkCyan    = 0xd0,
+    White = 0x10,
+    Gray = 0x20,
+    Black = 0x30,
+    Red = 0x40,
+    Green = 0x50,
+    Blue = 0x60,
+    Cyan = 0x70,
+    Magenta = 0x80,
+    Yellow = 0x90,
+    DarkRed = 0xa0,
+    DarkGreen = 0xb0,
+    DarkBlue = 0xc0,
+    DarkCyan = 0xd0,
     DarkMagenta = 0xe0,
-    DarkYellow  = 0xf0,
+    DarkYellow = 0xf0,
   };
 
 public:
@@ -159,13 +159,13 @@ private:
 };
 }  // namespace AsyncFw
 
-#define logTrace     AsyncFw::LogStream(+AsyncFw::LogStream::Trace | AsyncFw::LogStream::Gray, __PRETTY_FUNCTION__, __FILE__, __LINE__, 3).output
-#define logDebug     AsyncFw::LogStream(+AsyncFw::LogStream::Debug | AsyncFw::LogStream::DarkYellow, __PRETTY_FUNCTION__, __FILE__, __LINE__, 3).output
-#define logInfo      AsyncFw::LogStream(+AsyncFw::LogStream::Info | AsyncFw::LogStream::DarkGreen, __PRETTY_FUNCTION__, __FILE__, __LINE__, 3).output
-#define logNotice    AsyncFw::LogStream(+AsyncFw::LogStream::Notice | AsyncFw::LogStream::Green, __PRETTY_FUNCTION__, __FILE__, __LINE__, 3).output
-#define logWarning   AsyncFw::LogStream(+AsyncFw::LogStream::Warning | AsyncFw::LogStream::DarkBlue, __PRETTY_FUNCTION__, __FILE__, __LINE__, 3).output
-#define logError     AsyncFw::LogStream(+AsyncFw::LogStream::Error | AsyncFw::LogStream::DarkRed, __PRETTY_FUNCTION__, __FILE__, __LINE__, 3).output
-#define logAlert     AsyncFw::LogStream(+AsyncFw::LogStream::Alert | AsyncFw::LogStream::Red, __PRETTY_FUNCTION__, __FILE__, __LINE__, 3).output
+#define logTrace AsyncFw::LogStream(+AsyncFw::LogStream::Trace | AsyncFw::LogStream::Gray, __PRETTY_FUNCTION__, __FILE__, __LINE__, 3).output
+#define logDebug AsyncFw::LogStream(+AsyncFw::LogStream::Debug | AsyncFw::LogStream::DarkYellow, __PRETTY_FUNCTION__, __FILE__, __LINE__, 3).output
+#define logInfo AsyncFw::LogStream(+AsyncFw::LogStream::Info | AsyncFw::LogStream::DarkGreen, __PRETTY_FUNCTION__, __FILE__, __LINE__, 3).output
+#define logNotice AsyncFw::LogStream(+AsyncFw::LogStream::Notice | AsyncFw::LogStream::Green, __PRETTY_FUNCTION__, __FILE__, __LINE__, 3).output
+#define logWarning AsyncFw::LogStream(+AsyncFw::LogStream::Warning | AsyncFw::LogStream::DarkBlue, __PRETTY_FUNCTION__, __FILE__, __LINE__, 3).output
+#define logError AsyncFw::LogStream(+AsyncFw::LogStream::Error | AsyncFw::LogStream::DarkRed, __PRETTY_FUNCTION__, __FILE__, __LINE__, 3).output
+#define logAlert AsyncFw::LogStream(+AsyncFw::LogStream::Alert | AsyncFw::LogStream::Red, __PRETTY_FUNCTION__, __FILE__, __LINE__, 3).output
 #define logEmergency AsyncFw::LogStream(+AsyncFw::LogStream::Emergency | AsyncFw::LogStream::Red, __PRETTY_FUNCTION__, __FILE__, __LINE__, 3).output
 
 #ifndef __GNUG__
@@ -189,11 +189,11 @@ private:
     if constexpr (0) AsyncFw::LogStream()
 #endif
 #ifndef uC_NO_INFO
-  #define ucInfo        AsyncFw::LogStream(+AsyncFw::LogStream::Info | AsyncFw::LogStream::DarkYellow, __PRETTY_FUNCTION__, __FILE__, __LINE__, 6).output
-  #define ucInfoRed     AsyncFw::LogStream(+AsyncFw::LogStream::Info | AsyncFw::LogStream::DarkRed, __PRETTY_FUNCTION__, __FILE__, __LINE__, 6).output
-  #define ucInfoGreen   AsyncFw::LogStream(+AsyncFw::LogStream::Info | AsyncFw::LogStream::DarkGreen, __PRETTY_FUNCTION__, __FILE__, __LINE__, 6).output
-  #define ucInfoBlue    AsyncFw::LogStream(+AsyncFw::LogStream::Info | AsyncFw::LogStream::DarkBlue, __PRETTY_FUNCTION__, __FILE__, __LINE__, 6).output
-  #define ucInfoCyan    AsyncFw::LogStream(+AsyncFw::LogStream::Info | AsyncFw::LogStream::DarkCyan, __PRETTY_FUNCTION__, __FILE__, __LINE__, 6).output
+  #define ucInfo AsyncFw::LogStream(+AsyncFw::LogStream::Info | AsyncFw::LogStream::DarkYellow, __PRETTY_FUNCTION__, __FILE__, __LINE__, 6).output
+  #define ucInfoRed AsyncFw::LogStream(+AsyncFw::LogStream::Info | AsyncFw::LogStream::DarkRed, __PRETTY_FUNCTION__, __FILE__, __LINE__, 6).output
+  #define ucInfoGreen AsyncFw::LogStream(+AsyncFw::LogStream::Info | AsyncFw::LogStream::DarkGreen, __PRETTY_FUNCTION__, __FILE__, __LINE__, 6).output
+  #define ucInfoBlue AsyncFw::LogStream(+AsyncFw::LogStream::Info | AsyncFw::LogStream::DarkBlue, __PRETTY_FUNCTION__, __FILE__, __LINE__, 6).output
+  #define ucInfoCyan AsyncFw::LogStream(+AsyncFw::LogStream::Info | AsyncFw::LogStream::DarkCyan, __PRETTY_FUNCTION__, __FILE__, __LINE__, 6).output
   #define ucInfoMagenta AsyncFw::LogStream(+AsyncFw::LogStream::Info | AsyncFw::LogStream::DarkMagenta, __PRETTY_FUNCTION__, __FILE__, __LINE__, 6).output
 #else
   #define ucInfo(...) \

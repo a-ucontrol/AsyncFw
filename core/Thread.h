@@ -5,18 +5,18 @@
 #include "AnyData.h"
 
 #ifndef _WIN32
-  #define POLLIN_   0x001
-  #define POLLPRI_  0x002
-  #define POLLOUT_  0x004
-  #define POLLERR_  0x008
-  #define POLLHUP_  0x010
+  #define POLLIN_ 0x001
+  #define POLLPRI_ 0x002
+  #define POLLOUT_ 0x004
+  #define POLLERR_ 0x008
+  #define POLLHUP_ 0x010
   #define POLLNVAL_ 0x020
 #else
-  #define POLLIN_   0x0100
-  #define POLLPRI_  0x0400
-  #define POLLOUT_  0x0010
-  #define POLLERR_  0x0001
-  #define POLLHUP_  0x0002
+  #define POLLIN_ 0x0100
+  #define POLLPRI_ 0x0400
+  #define POLLOUT_ 0x0010
+  #define POLLERR_ 0x0001
+  #define POLLHUP_ 0x0002
   #define POLLNVAL_ 0x0004
 #endif
 
@@ -73,7 +73,7 @@ public:
     }
     std::promise<void> promise;
     std::future<void> future = promise.get_future();
-    AbstractTask *_t         = new InternalSyncTask(method, &promise);
+    AbstractTask *_t = new InternalSyncTask(method, &promise);
     if (!invokeTask(_t)) {
       delete _t;
       return false;
@@ -179,9 +179,9 @@ protected:
   };
 
   AbstractThread();
-  virtual ~AbstractThread()               = 0;
+  virtual ~AbstractThread() = 0;
   virtual bool invokeTask(AbstractTask *) = 0;
-  virtual void destroy()                  = 0;
+  virtual void destroy() = 0;
   mutable MutexType mutex;
 
 private:

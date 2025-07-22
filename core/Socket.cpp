@@ -12,7 +12,7 @@
   #include <netinet/tcp.h>
   #include <linux/sockios.h>
 
-  #define close_fd         ::close
+  #define close_fd ::close
   #define CONNECT_PROGRESS EINPROGRESS
   #define setsockopt_ptr
 #else
@@ -28,9 +28,9 @@ struct start_wsa {
   ~start_wsa() { WSACleanup(); }
 } start_wsa;
 
-  #define close_fd         ::closesocket
+  #define close_fd ::closesocket
   #define CONNECT_PROGRESS 0
-  #define setsockopt_ptr   reinterpret_cast<const char *>
+  #define setsockopt_ptr reinterpret_cast<const char *>
 #endif
 
 #include "Socket.h"
@@ -60,8 +60,8 @@ struct AbstractSocket::Private {
   int tid_ = -1;
   int errorCode_;
   std::string errorString_;
-  int w_        = 0;
-  int type_     = SOCK_STREAM;
+  int w_ = 0;
+  int type_ = SOCK_STREAM;
   int protocol_ = IPPROTO_TCP;
 };
 
@@ -69,10 +69,10 @@ struct AbstractSocket::Private {
 #define uC_THREAD this->thread()
 
 AbstractSocket::AbstractSocket(SocketThread *_thread) {
-  private_                = new Private;
+  private_ = new Private;
   private_->la_.ss_family = AF_INET;
   private_->pa_.ss_family = AF_INET;
-  thread_                 = (_thread) ? _thread : static_cast<SocketThread *>(AbstractThread::currentThread());
+  thread_ = (_thread) ? _thread : static_cast<SocketThread *>(AbstractThread::currentThread());
   thread_->appendSocket(this);
   trace();
 }
@@ -80,8 +80,8 @@ AbstractSocket::AbstractSocket(SocketThread *_thread) {
 AbstractSocket::AbstractSocket(int _family, int _type, int _protocol, SocketThread *_thread) : AbstractSocket(_thread) {
   private_->la_.ss_family = _family;
   private_->pa_.ss_family = _family;
-  private_->type_         = _type;
-  private_->protocol_     = _protocol;
+  private_->type_ = _type;
+  private_->protocol_ = _protocol;
 }
 
 AbstractSocket::~AbstractSocket() {
@@ -101,7 +101,7 @@ bool AbstractSocket::listen(const std::string &_address, uint16_t _port) {
   if (setsockopt(_fd, SOL_SOCKET, SO_REUSEADDR, setsockopt_ptr(&_val), sizeof _val) < 0) ucError("set SO_REUSEADDR");
   //if (setsockopt(_fd, SOL_SOCKET, SO_REUSEPORT, &_val, sizeof _val) < 0) ucError("set SO_REUSEPORT");
 
-  reinterpret_cast<sockaddr_in *>(&private_->la_)->sin_port        = htons(_port);
+  reinterpret_cast<sockaddr_in *>(&private_->la_)->sin_port = htons(_port);
   reinterpret_cast<sockaddr_in *>(&private_->la_)->sin_addr.s_addr = inet_addr(_address.c_str());
 
   if (::bind(_fd, reinterpret_cast<struct sockaddr *>(&private_->la_), sizeof(private_->la_)) || ::listen(_fd, SOCKET_CONNECTION_QUEUED)) {
@@ -142,7 +142,7 @@ void AbstractSocket::changeDescriptor(int _fd) {
   if (it != thread_->sockets_.end()) {
     thread_->sockets_.erase(it);
     fd_ = _fd;
-    it  = std::lower_bound(thread_->sockets_.begin(), thread_->sockets_.end(), this, SocketThread::Compare());
+    it = std::lower_bound(thread_->sockets_.begin(), thread_->sockets_.end(), this, SocketThread::Compare());
     thread_->sockets_.insert(it, this);
   }
 }
@@ -223,7 +223,7 @@ bool AbstractSocket::connect(const std::string &_address, uint16_t _port) {
   if (getsockopt(_fd, SOL_SOCKET, SO_RCVBUF, &_val, &_l) < 0) ucError("SO_RCVBUF");
   else { ucDebug() << "SO_RCVBUF" << LogStream::Color::Red << _val; }
 */
-  reinterpret_cast<sockaddr_in *>(&private_->pa_)->sin_port        = htons(_port);
+  reinterpret_cast<sockaddr_in *>(&private_->pa_)->sin_port = htons(_port);
   reinterpret_cast<sockaddr_in *>(&private_->pa_)->sin_addr.s_addr = inet_addr(_address.c_str());
 
   if (::connect(_fd, reinterpret_cast<struct sockaddr *>(&private_->pa_), sizeof(private_->pa_)) == -1) {
@@ -309,7 +309,7 @@ void AbstractSocket::close() {
   ucTrace() << LogStream::Color::Red << fd_;
   changeDescriptor(0);
   state_ = State::Unconnected;
-  rs_    = 0;
+  rs_ = 0;
   private_->rda_.clear();
   private_->wda_.clear();
   stateEvent();
@@ -346,7 +346,7 @@ int AbstractSocket::descriptorWriteSize() {
   char _s;
 #endif
   socklen_t _l = sizeof(_s);
-  int r        = getsockopt(fd_, SOL_SOCKET, SO_SNDBUF, &_s, &_l);
+  int r = getsockopt(fd_, SOL_SOCKET, SO_SNDBUF, &_s, &_l);
   if (r == 0) return _s;
   return r;
 }
@@ -424,10 +424,10 @@ void AbstractSocket::pollEvent(int _e) {
   if (_e & AbstractThread::PollHup) {
     if (state_ == State::Connecting) {
       private_->errorString_ = "Connection refused";
-      private_->errorCode_   = Error::Refused;
+      private_->errorCode_ = Error::Refused;
     } else {
       private_->errorString_ = "Connection closed";
-      private_->errorCode_   = Error::Closed;
+      private_->errorCode_ = Error::Closed;
     }
     ucTrace() << LogStream::Color::Red << private_->errorString_;
     errorEvent();
@@ -436,7 +436,7 @@ void AbstractSocket::pollEvent(int _e) {
   }
   if (_e & AbstractThread::PollErr) {
     private_->errorString_ = "PollErr";
-    private_->errorCode_   = Error::PollErr;
+    private_->errorCode_ = Error::PollErr;
     ucDebug() << LogStream::Color::Red << private_->errorString_;
     errorEvent();
     close();
@@ -452,7 +452,7 @@ void AbstractSocket::pollEvent(int _e) {
       AbstractSocket::read_available_fd();
       if (rs_ < 0) {
         private_->errorString_ = "Connection closed (not accepted)";
-        private_->errorCode_   = Error::Closed;
+        private_->errorCode_ = Error::Closed;
         ucDebug() << LogStream::Color::Red << private_->errorString_ << "not active" << errno;
         errorEvent();
         close();
@@ -466,7 +466,7 @@ void AbstractSocket::pollEvent(int _e) {
     int r = read_available_fd();
     if (rs_ < 0) {
       private_->errorString_ = "Connection finished";
-      private_->errorCode_   = Error::Finished;
+      private_->errorCode_ = Error::Finished;
       ucTrace() << LogStream::Color::Red << private_->errorString_ << r << rs_ << errno;
       errorEvent();
       close();
@@ -480,7 +480,7 @@ void AbstractSocket::pollEvent(int _e) {
           int r = read_fd(private_->rda_.data() + private_->rda_.size() - rs_, rs_);
           if (r != rs_) {
             private_->errorString_ = "Read error";
-            private_->errorCode_   = Error::Read;
+            private_->errorCode_ = Error::Read;
             ucDebug() << LogStream::Color::Red << private_->errorString_ << r << rs_ << errno;
             errorEvent();
             close();
@@ -489,7 +489,7 @@ void AbstractSocket::pollEvent(int _e) {
       }
     } else if (r < 0) {
       private_->errorString_ = "Unknown error";
-      private_->errorCode_   = Error::Unknown;
+      private_->errorCode_ = Error::Unknown;
       ucDebug() << LogStream::Color::Red << private_->errorString_ << r << errno;
       errorEvent();
       close();
@@ -515,7 +515,7 @@ void AbstractSocket::pollEvent(int _e) {
     }
     if (r < 0) {
       private_->errorString_ = "Write error";
-      private_->errorCode_   = Error::Write;
+      private_->errorCode_ = Error::Write;
       ucDebug() << LogStream::Color::Red << private_->errorString_ << r << errno;
       errorEvent();
       close();
@@ -526,7 +526,7 @@ void AbstractSocket::pollEvent(int _e) {
 void ListenSocket::incomingEvent() {
   sockaddr_storage _a;
   socklen_t _l = sizeof _a;
-  int _cd      = accept(fd_, (struct sockaddr *)&_a, &_l);
+  int _cd = accept(fd_, (struct sockaddr *)&_a, &_l);
   std::string _pa;
   if (_a.ss_family == AF_INET) {
     char _ip[INET_ADDRSTRLEN];

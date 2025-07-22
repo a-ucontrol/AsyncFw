@@ -29,16 +29,16 @@ public:
   void setWaitKeepAliveAnswerTimeout(int timeout) { ((waitKeepAliveAnswerTimeoutInterval = timeout) > 0) ? waitTimerType |= 0x80 : waitTimerType &= ~0x80; }
   void setReadBuffers(int buffers, int size) {
     maxReadBuffers = buffers;
-    maxReadSize    = size;
+    maxReadSize = size;
   }
   void setWriteBuffers(int buffers, int size) {
     maxWriteBuffers = buffers;
-    maxWriteSize    = size;
+    maxWriteSize = size;
   }
   void initServerConnection();
   void setHost(const std::string &address, uint16_t port) const {
     hostAddress_v = address;
-    hostPort_v    = port;
+    hostPort_v = port;
   }
   const std::string hostAddress() const { return hostAddress_v; }
   uint16_t hostPort() const { return hostPort_v; }

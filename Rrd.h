@@ -8,7 +8,7 @@
 namespace AsyncFw {
 class Rrd : public ExecLoopThread {
 public:
-  using Item     = DataArray;
+  using Item = DataArray;
   using ItemList = DataArrayList;
   Rrd(int size, const std::string &name = {});
   ~Rrd() override;
@@ -43,8 +43,8 @@ private:
 #ifdef AVERAGE_RRD
   QByteArray (QObject::*average_ptr)(QList<QByteArray> &, Rrd *);
   QObject *average_obj = nullptr;
-  int aInterval        = 0;
-  int aOffset          = 0;
+  int aInterval = 0;
+  int aOffset = 0;
 #endif
   std::string file;
   bool createFile();

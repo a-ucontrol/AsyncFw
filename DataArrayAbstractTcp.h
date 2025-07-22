@@ -10,22 +10,22 @@ class DataArraySocket;
 class DataArrayAbstractTcp : public AbstractThreadPool {
 public:
   enum Result {
-    ErrorTransmitInvoke    = -100,
+    ErrorTransmitInvoke = -100,
     ErrorTransmitNotActive = -101,
-    ErrorTransmit          = -102,
+    ErrorTransmit = -102,
   };
   DataArrayAbstractTcp(SocketThread * = nullptr);
   void init(int readTimeout = 30000, int waitKeepAliveAnswerTimeout = 0, int waitForEncryptedTimeout = 10000, int maxThreads = 4, int maxSockets = 8, int maxReadBuffers = 16, int maxReadSize = 16 * 1024 * 1024, int maxWriteBuffers = 16, int maxWriteSize = 16 * 1024 * 1024, int socketReadBufferSize = 1024 * 512) {
-    this->readTimeout                = readTimeout;
+    this->readTimeout = readTimeout;
     this->waitKeepAliveAnswerTimeout = waitKeepAliveAnswerTimeout;
-    this->waitForEncryptedTimeout    = waitForEncryptedTimeout;
-    this->maxThreads                 = maxThreads;
-    this->maxSockets                 = maxSockets;
-    this->maxReadBuffers             = maxReadBuffers;
-    this->maxReadSize                = maxReadSize;
-    this->maxWriteBuffers            = maxWriteBuffers;
-    this->maxWriteSize               = maxWriteSize;
-    this->socketReadBufferSize       = socketReadBufferSize;
+    this->waitForEncryptedTimeout = waitForEncryptedTimeout;
+    this->maxThreads = maxThreads;
+    this->maxSockets = maxSockets;
+    this->maxReadBuffers = maxReadBuffers;
+    this->maxReadSize = maxReadSize;
+    this->maxWriteBuffers = maxWriteBuffers;
+    this->maxWriteSize = maxWriteSize;
+    this->socketReadBufferSize = socketReadBufferSize;
   }
   int transmit(const DataArraySocket *, const DataArray &, uint32_t, bool = false);
   void disconnectFromHost(const DataArraySocket *);

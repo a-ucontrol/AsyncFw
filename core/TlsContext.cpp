@@ -24,7 +24,7 @@ struct TlsContext::Private {
   uint8_t ignoreErrors_ = 0;
 
   int serial_ = 0;
-  int ref_    = 0;
+  int ref_ = 0;
 };
 
 DataArray TlsContext::Private::key(EVP_PKEY *_k) {
@@ -105,7 +105,7 @@ bool TlsContext::empty() const {
   if (_c) return false;
   X509_STORE *_store = SSL_CTX_get_cert_store(private_->ctx_);
   STACK_OF(X509) *_t = X509_STORE_get1_all_certs(_store);
-  int _s             = sk_X509_num(_t);
+  int _s = sk_X509_num(_t);
   sk_X509_free(_t);
   if (_s) return false;
   return true;
@@ -248,7 +248,7 @@ DataArray TlsContext::signRequest(DataArray &req, int days) {
     ucError() << "error get certificate";
     return {};
   }
-  BIO *_bio      = BIO_new_mem_buf(req.data(), req.size());
+  BIO *_bio = BIO_new_mem_buf(req.data(), req.size());
   X509_REQ *_req = PEM_read_bio_X509_REQ(_bio, nullptr, nullptr, nullptr);
   BIO_free(_bio);
   if (!_req) {
@@ -332,7 +332,7 @@ DataArray TlsContext::certificate() const {
 DataArrayList TlsContext::trusted() const {
   X509_STORE *_store = SSL_CTX_get_cert_store(private_->ctx_);
   STACK_OF(X509) *_t = X509_STORE_get1_all_certs(_store);
-  int _s             = sk_X509_num(_t);
+  int _s = sk_X509_num(_t);
   DataArrayList _l;
   for (int i = 0; i < _s; i++) {
     X509 *_c = sk_X509_value(_t, i);
@@ -375,7 +375,7 @@ std::string TlsContext::infoTrusted() const {
 }
 
 std::string TlsContext::infoRequest(const DataArray &req) {
-  BIO *_bio    = BIO_new_mem_buf(req.data(), req.size());
+  BIO *_bio = BIO_new_mem_buf(req.data(), req.size());
   X509_REQ *_r = PEM_read_bio_X509_REQ(_bio, NULL, NULL, NULL);
   BIO_free(_bio);
   _bio = BIO_new(BIO_s_mem());
@@ -426,7 +426,7 @@ bool TlsContext::verify() const {
 }
 
 bool TlsContext::setKey(const DataArray &_da) {
-  BIO *_bio    = BIO_new_mem_buf(_da.data(), _da.size());
+  BIO *_bio = BIO_new_mem_buf(_da.data(), _da.size());
   EVP_PKEY *_k = PEM_read_bio_PrivateKey(_bio, nullptr, nullptr, nullptr);
   BIO_free(_bio);
   if (!_k) return false;
@@ -439,7 +439,7 @@ bool TlsContext::setKey(const DataArray &_da) {
 
 bool TlsContext::setCertificate(const DataArray &_da) {
   BIO *_bio = BIO_new_mem_buf(_da.data(), _da.size());
-  X509 *_c  = PEM_read_bio_X509(_bio, NULL, NULL, NULL);
+  X509 *_c = PEM_read_bio_X509(_bio, NULL, NULL, NULL);
   BIO_free(_bio);
   if (!_c) return false;
   int r = SSL_CTX_use_certificate(private_->ctx_, _c);
@@ -451,11 +451,11 @@ bool TlsContext::setCertificate(const DataArray &_da) {
 
 bool TlsContext::appendTrusted(const DataArray &_da) {
   BIO *_bio = BIO_new_mem_buf(_da.data(), _da.size());
-  X509 *_c  = PEM_read_bio_X509(_bio, NULL, NULL, NULL);
+  X509 *_c = PEM_read_bio_X509(_bio, NULL, NULL, NULL);
   BIO_free(_bio);
   if (!_c) return false;
   X509_STORE *_store = SSL_CTX_get_cert_store(private_->ctx_);
-  int r              = X509_STORE_add_cert(_store, _c);
+  int r = X509_STORE_add_cert(_store, _c);
   X509_free(_c);
   if (r == 1) return true;
   ucError() << LogStream::Color::Red << ERR_error_string(ERR_get_error(), nullptr);

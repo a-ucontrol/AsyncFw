@@ -117,4 +117,4 @@ class FunctionConnectionGuardList : public std::vector<FunctionConnectionGuard> 
 public:
   void operator+=(FunctionConnectionGuard &&);
 };
-}
+}  // namespace AsyncFw

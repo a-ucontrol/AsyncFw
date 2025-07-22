@@ -10,7 +10,7 @@ struct CoroutineTask::promise_type::Private {
   CoroutineTask *task;
   AbstractThread *thread;
   ExecLoopThread::Holder *holder = nullptr;
-  bool finished                  = false;
+  bool finished = false;
 };
 
 CoroutineAwait::~CoroutineAwait() { ucTrace(); }
@@ -18,7 +18,7 @@ CoroutineAwait::~CoroutineAwait() { ucTrace(); }
 CoroutineAwait::CoroutineAwait(std::function<void(std::coroutine_handle<CoroutineTask::promise_type>)> f) : f_(f) { ucTrace(); }
 
 void CoroutineAwait::await_suspend(std::coroutine_handle<CoroutineTask::promise_type> h) const noexcept {
-  h_                          = h;
+  h_ = h;
   h.promise().private_->await = const_cast<CoroutineAwait *>(this);
   if (f_) f_(h);
 }
@@ -55,7 +55,7 @@ bool CoroutineTask::finished() { return promise->private_->finished; }
 CoroutineAwait &CoroutineTask::await() { return *promise->private_->await; }
 
 CoroutineTask::promise_type::promise_type() {
-  private_         = new Private;
+  private_ = new Private;
   private_->thread = AbstractThread::currentThread();
   ucTrace();
 }
@@ -67,7 +67,7 @@ CoroutineTask::promise_type::~promise_type() {
 
 CoroutineTask CoroutineTask::promise_type::get_return_object() {
   CoroutineTask t;
-  t.promise      = this;
+  t.promise = this;
   private_->task = &t;
   return t;
 }

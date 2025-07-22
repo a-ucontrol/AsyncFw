@@ -136,7 +136,7 @@ struct ExecLoopThread::Private {
   std::queue<AbstractTask *> tasks;
   std::vector<Timer> timers;
   std::chrono::time_point<std::chrono::steady_clock> wakeup = std::chrono::time_point<std::chrono::steady_clock>::max();
-  bool wake_                                                = true;
+  bool wake_ = true;
 
   std::vector<PollTask *> poll_tasks;
 
@@ -207,7 +207,7 @@ ExecLoopThread::ExecLoopThread(const std::string &name) {
   private_->wake_task.fd = private_->pipe[0];
   #endif
   private_->wake_task.task = nullptr;
-  event.data.ptr           = &private_->wake_task;
+  event.data.ptr = &private_->wake_task;
   epoll_ctl(private_->epoll_fd, EPOLL_CTL_ADD, WAKE_FD, &event);
 #endif
 
@@ -331,7 +331,7 @@ void ExecLoopThread::exec() {
               if (pfd.action == 1) {
                 private_->fdts_.insert(private_->fdts_.begin() + (it - 1 - private_->fds_.begin()), pfd.task);
                 pollfd _pfd;
-                _pfd.fd     = pfd.fd;
+                _pfd.fd = pfd.fd;
                 _pfd.events = pfd.events;
                 private_->fds_.insert(it, _pfd);
                 continue;
@@ -614,17 +614,17 @@ bool ExecLoopThread::appendPollDescriptor(int fd, PollEvents events, AbstractTas
     return false;
   }
   struct pollfd pollfd;
-  pollfd.fd             = fd;
-  pollfd.events         = events;
+  pollfd.fd = fd;
+  pollfd.events = events;
   Private::PollTask *_d = new Private::PollTask(pollfd.fd, task);
   private_->update_pollfd.push_back({fd, pollfd.events, task, 1});
   wake();
   private_->poll_tasks.insert(it, _d);
 #else
   struct epoll_event event;
-  event.events          = events;
+  event.events = events;
   Private::PollTask *_d = new Private::PollTask(fd, task);
-  event.data.ptr        = _d;
+  event.data.ptr = _d;
   if (epoll_ctl(private_->epoll_fd, EPOLL_CTL_ADD, fd, &event) != 0) {
   ERR:
     delete _d;
@@ -650,7 +650,7 @@ bool ExecLoopThread::modifyPollDescriptor(int fd, PollEvents events) {
     return false;
   }
   struct Private::update_pollfd v;
-  v.fd     = fd;
+  v.fd = fd;
   v.events = events;
   v.action = 0;
   private_->update_pollfd.push_back(v);
@@ -685,7 +685,7 @@ void ExecLoopThread::removePollDescriptor(int fd) {
     }
     _t = new InternalTask([p = *it] { delete p; });
     struct Private::update_pollfd v;
-    v.fd     = fd;
+    v.fd = fd;
     v.action = -1;
     private_->update_pollfd.push_back(v);
     wake();
@@ -865,7 +865,7 @@ void ExecLoopThread::Holder::complete() {
 
 void ExecLoopThread::Holder::wait() {
   waiting = true;
-  thread  = static_cast<ExecLoopThread *>(AbstractThread::currentThread());
+  thread = static_cast<ExecLoopThread *>(AbstractThread::currentThread());
   bool _q = false;
   for (;;) {
     thread->exec();

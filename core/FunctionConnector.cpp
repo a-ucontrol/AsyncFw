@@ -52,7 +52,7 @@ void AbstractFunctionConnector::Connection::queued(const std::function<void()> &
 FunctionConnectionGuard::FunctionConnectionGuard() { c_ = nullptr; }
 
 FunctionConnectionGuard::FunctionConnectionGuard(FunctionConnectionGuard &&_g) {
-  c_    = _g.c_;
+  c_ = _g.c_;
   _g.c_ = nullptr;
   if (c_) c_->guarg_ = this;
 }
@@ -80,13 +80,13 @@ void FunctionConnectionGuard::disconnect_queued() {
 
 void FunctionConnectionGuard::operator=(AbstractFunctionConnector::Connection &_c) {
   if (c_) delete c_;
-  c_         = &_c;
+  c_ = &_c;
   c_->guarg_ = this;
 }
 
 void FunctionConnectionGuard::operator=(FunctionConnectionGuard &&_g) {
   if (c_) delete c_;
-  c_    = _g.c_;
+  c_ = _g.c_;
   _g.c_ = nullptr;
   if (c_) c_->guarg_ = this;
 }
