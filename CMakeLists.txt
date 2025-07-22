@@ -37,7 +37,7 @@ set(AsyncFw_HEADERS
   "File.h"
   "Cryptor.h"
 
-  "core/MainThread.h"
+  "MainThread.h"
 
   "linux/SystemProcess.h"
   "linux/FileSystemWatcher.h"
