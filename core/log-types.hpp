@@ -1,15 +1,9 @@
 #pragma once
 
 #include <thread>
+
 #include "DataArray.h"
 #include "LogStream.h"
-
-#ifndef _WIN32
-  #if __has_include(<core/NetworkInterface.hpp>)
-    #include <core/NetworkInterface.hpp>
-    #define _NetworkInterface
-  #endif
-#endif
 
 namespace AsyncFw {
 LogStream &operator<<(LogStream &log, const DataArray &v);
@@ -17,30 +11,22 @@ LogStream &operator<<(LogStream &log, const DataArrayList &v);
 
 LogStream &operator<<(LogStream &log, const DataStream &v);
 LogStream &operator<<(LogStream &log, const std::thread::id &v);
-
-#ifdef _NetworkInterface
-LogStream &operator<<(LogStream &log, const LRW::NetworkInterface::MacAddress &v);
-LogStream &operator<<(LogStream &log, const LRW::NetworkInterface::Address &v);
-LogStream &operator<<(LogStream &log, const LRW::NetworkInterface::Route &v);
-#endif
-
-LogStream &operator<<(LogStream &log, const std::wstring &v);
 }  // namespace AsyncFw
 
 #ifdef USE_QAPPLICATION
 
   #include <QDebug>
-  #include <QJsonObject>
   #include <QJsonDocument>
+  #include <QJsonObject>
 
   #undef qDebug
   #undef qInfo
   #undef qWarning
   #undef qCritical
 
-  #define qDebug    QMessageLogger(__FILE__, __LINE__, Q_FUNC_INFO).debug
-  #define qInfo     QMessageLogger(__FILE__, __LINE__, Q_FUNC_INFO).info
-  #define qWarning  QMessageLogger(__FILE__, __LINE__, Q_FUNC_INFO).warning
+  #define qDebug QMessageLogger(__FILE__, __LINE__, Q_FUNC_INFO).debug
+  #define qInfo QMessageLogger(__FILE__, __LINE__, Q_FUNC_INFO).info
+  #define qWarning QMessageLogger(__FILE__, __LINE__, Q_FUNC_INFO).warning
   #define qCritical QMessageLogger(__FILE__, __LINE__, Q_FUNC_INFO).critical
 
 namespace AsyncFw {

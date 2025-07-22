@@ -1,8 +1,8 @@
 #pragma once
 
 #include <queue>
-#include <AsyncFw/core/DataArray.h>
-#include <AsyncFw/core/FunctionConnector.h>
+#include "core/DataArray.h"
+#include "core/FunctionConnector.h"
 
 namespace AsyncFw {
 class DataArraySocket;

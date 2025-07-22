@@ -1,7 +1,7 @@
 #pragma once
 
-#include <AsyncFw/core/Thread.h>
-#include <AsyncFw/core/FunctionConnector.h>
+#include "core/Thread.h"
+#include "core/FunctionConnector.h"
 
 namespace AsyncFw {
 class PollNotifier {

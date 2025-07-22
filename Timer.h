@@ -1,6 +1,6 @@
 #pragma once
 
-#include <AsyncFw/core/FunctionConnector.h>
+#include "core/FunctionConnector.h"
 
 namespace AsyncFw {
 class Timer {

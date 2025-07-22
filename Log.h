@@ -1,9 +1,8 @@
 #pragma once
 
-#include <AsyncFw/core/LogStream.h>
+#include <queue>
 
-#ifdef uC_LOGGER
-  #include <queue>
+#include "core/LogStream.h"
   #include "Rrd.h"
 
   #define _messages_ 8
@@ -91,4 +90,4 @@ protected:
   virtual void output(const Message &m) override;
 };
 }  // namespace AsyncFw
-#endif
+
