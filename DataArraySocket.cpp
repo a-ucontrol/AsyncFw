@@ -88,7 +88,7 @@ void DataArraySocket::stateEvent() {
       receiveByteArray = nullptr;
       logWarning("DataArraySocket: disconnected while receive");
     }
-    ucWarning("socket unconnected (" + peerString() + ')');
+    ucDebug() << LogStream::Blue << "socket unconnected (" + peerString() + ')';
   } else if (state_ == AbstractSocket::Connecting) {
     if (!receiveList.empty()) logWarning("DataArraySocket: receive buffer not empty during connect");
   }
