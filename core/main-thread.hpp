@@ -31,7 +31,7 @@ public:
   static MainThread *instance() { return instance_; }
   MainThread() : SocketThread("Main") {
     AbstractThread::id_ = std::this_thread::get_id();
-    instance_           = this;
+    instance_ = this;
 #ifdef EXIT_ON_UNIX_SIGNAL
     eventfd_ = eventfd(0, EFD_NONBLOCK);
     invokeMethod([this]() {
@@ -68,7 +68,7 @@ public:
   std::map<int, AbstractTask *> polls;
 
   virtual int appendTimer(int msec, AbstractTask *task) override {
-    int id  = 0;
+    int id = 0;
     int qid = -1;
     std::unique_lock<MutexType> lock(mutex);
     std::vector<Timer>::iterator it = timers.begin();
@@ -190,8 +190,12 @@ public:
     quit();
   }
   void quit() {
-#ifdef EXIT_ON_UNIX_SIGNAL
+#ifndef USE_QAPPLICATION
+  #ifdef EXIT_ON_UNIX_SIGNAL
     if (eventfd_ >= 0) eventfd_write(eventfd_, 1);
+  #else
+    SocketThread::quit();
+  #endif
 #else
     qApp->quit();
 #endif
