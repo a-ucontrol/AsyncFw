@@ -48,14 +48,10 @@ public:
   mutable FunctionConnectorProtected<DataArraySocket>::Connector<const DataArray *, uint32_t> received {true};
 
 protected:
-  virtual bool receiveData(DataArray *, uint32_t *) { return true; }
-  virtual bool transmitData(DataArray *, uint32_t *) { return true; }
-
-  void timerEvent();
-
   void stateEvent() override;
   void readEvent() override;
   void errorEvent() override;
+  void disconnect() override;
 
 private:
   int sslConnection;
@@ -88,11 +84,10 @@ private:
   void sendMessage(const std::string &, uint8_t);
   void transmitKeepAlive(bool);
   std::string peerString() const;
-
-  AsyncFw::ExecLoopThread::Holder *wait_holder_ = nullptr;  //!!! Private
   void startTimer(int _ms);
   void removeTimer();
-  void disconnectFromHost();
+  void timerEvent();
   int tid_ = -1;
+  AsyncFw::ExecLoopThread::Holder *wait_holder_ = nullptr;
 };
 }  // namespace AsyncFw

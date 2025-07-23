@@ -110,7 +110,7 @@ void DataArraySocket::timerEvent() {
       setErrorString(e);
       sendMessage(e, LogStream::Error);
       waitTimerType |= 0x01;
-      disconnectFromHost();
+      disconnect();
     }
   } else if (state_ == AbstractSocket::Unconnected) {
     if (reconnectTimeoutInterval > 0) connectToHost();
@@ -128,7 +128,7 @@ void DataArraySocket::timerEvent() {
     if (wait_holder_) wait_holder_->complete();
 
     waitTimerType |= 0x01;
-    disconnectFromHost();
+    disconnect();
     e += " (" + peerString() + ')';
     setErrorString(e);
     sendMessage(e, LogStream::Error);
@@ -193,7 +193,7 @@ void DataArraySocket::readEvent() {
       }
       if (e) {
         readSize = 0;
-        disconnectFromHost();
+        disconnect();
         return;
       }
       receiveByteArray = new DataArray;
@@ -206,13 +206,8 @@ void DataArraySocket::readEvent() {
     }
     if (static_cast<uint32_t>(receiveByteArray->size()) == readSize) {
       readSize = 0;
-      if (receiveData(receiveByteArray, &readId)) {
-        received(receiveByteArray, readId);
-        receiveByteArray = nullptr;
-      } else {
-        disconnectFromHost();
-        return;
-      }
+      received(receiveByteArray, readId);
+      receiveByteArray = nullptr;
     }
   }
   if (readTimeoutInterval > 0) startTimer(readTimeoutInterval);
@@ -223,7 +218,7 @@ void DataArraySocket::errorEvent() {
   sendMessage(errorString(), t);
 }
 
-void DataArraySocket::disconnectFromHost() {
+void DataArraySocket::disconnect() {
   if (state_ == AbstractSocket::Closing || state_ == AbstractSocket::Unconnected) {
     ucWarning("tried disconnect closing or unconnected socket");
     return;
@@ -232,7 +227,7 @@ void DataArraySocket::disconnectFromHost() {
   waitTimerType |= 0x40;
   if (!(waitTimerType & 0x01)) removeTimer();
   else { waitTimerType &= ~0x01; }
-  disconnect();
+  AbstractTlsSocket::disconnect();
 }
 
 void DataArraySocket::writeSocket() {
@@ -248,7 +243,7 @@ void DataArraySocket::writeSocket() {
   }
   if (pendingWrite() > maxWriteSize) {
     sendMessage("Write buffer overflow (" + peerString() + ')', LogStream::Error);
-    disconnectFromHost();
+    disconnect();
   }
 }
 
@@ -268,7 +263,7 @@ bool DataArraySocket::transmit(const DataArray &ba, uint32_t pi, bool wait) cons
   warning_if(ba.empty()) << "transmit array empty (" + peerString() + ')';
   if (static_cast<int>(ba.size()) > maxWriteSize) {
     const_cast<DataArraySocket *>(this)->sendMessage("Big transmit size: " + std::to_string(ba.size()) + " (" + peerString() + ')', LogStream::Error);
-    if (!hostPort_v) const_cast<DataArraySocket *>(this)->disconnectFromHost();
+    if (!hostPort_v) const_cast<DataArraySocket *>(this)->disconnect();
     return false;
   }
   bool _r = false;
@@ -277,7 +272,7 @@ bool DataArraySocket::transmit(const DataArray &ba, uint32_t pi, bool wait) cons
         int buffers = transmitList.size();
         if (buffers >= maxWriteBuffers) {
           const_cast<DataArraySocket *>(this)->sendMessage("Many transmit buffers (" + peerString() + ')', LogStream::Error);
-          if (!hostPort_v) const_cast<DataArraySocket *>(this)->disconnectFromHost();
+          if (!hostPort_v) const_cast<DataArraySocket *>(this)->disconnect();
           return;
         }
         int size = 0;
@@ -285,7 +280,7 @@ bool DataArraySocket::transmit(const DataArray &ba, uint32_t pi, bool wait) cons
           size += t.size() - 8;
           if (size > maxWriteSize) {
             const_cast<DataArraySocket *>(this)->sendMessage("Transmit overflow (" + peerString() + ')', LogStream::Error);
-            if (!hostPort_v) const_cast<DataArraySocket *>(this)->disconnectFromHost();
+            if (!hostPort_v) const_cast<DataArraySocket *>(this)->disconnect();
             return;
           }
         }
