@@ -30,5 +30,6 @@ public:
   void removeSocket(DataArraySocket *);
   FunctionConnectorProtected<DataArrayTcpClient>::Connector<const DataArraySocket *> connectionStateChanged;
   int exchange(const DataArraySocket *, const DataArray &, const DataArray *, uint32_t, int = 5000);
+  std::size_t socketLimit() { return maxSockets; }
 };
 }  // namespace AsyncFw
