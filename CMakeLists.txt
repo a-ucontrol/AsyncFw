@@ -75,11 +75,17 @@ set(AsyncFw_SOURCES
 if(NOT PLATFORM STREQUAL "AMD64")
   set(AsyncFw_HEADERS ${AsyncFw_HEADERS}
     "AddressInfo.h" #need build cares for AMD64
+    "linux/FileSystemWatcher.h"
+    "linux/SystemProcess.h"
   )
   set(AsyncFw_SOURCES ${AsyncFw_SOURCES}
     "AddressInfo.cpp" #need build cares for AMD64
+    "linux/FileSystemWatcher.cpp"
+    "linux/SystemProcess.cpp"
   )
 endif()
+
+include_directories(.)
 
 set(PROJECT_SOURCES ${AsyncFw_CORE_SOURCES} ${AsyncFw_SOURCES} ${AsyncFw_CORE_HEADERS} ${AsyncFw_HEADERS})
 
