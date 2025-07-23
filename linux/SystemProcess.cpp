@@ -125,19 +125,23 @@ FunctionConnectorProtected<SystemProcess>::Connector<int, SystemProcess::State, 
   SystemProcess *process = new SystemProcess();
   std::string *_out = new std::string();
   std::string *_err = new std::string();
-  process->output([_out, _err](const std::string &msg, bool err) {
-    if (!err) *_out += msg;
-    else { *_err += msg; }
-  });
-  process->stateChanged([fc, process, _out, _err](SystemProcess::State state) {
-    if (state != SystemProcess::Running) {
-      (*fc)(process->exitCode(), state, *_out, *_err);
-      delete fc;
-      process->private_->thread_->invokeMethod([process]() { delete process; });
-      delete _out;
-      delete _err;
-    }
-  });
+  process->output(
+      [_out, _err](const std::string &msg, bool err) {
+        if (!err) *_out += msg;
+        else { *_err += msg; }
+      },
+      nullptr);
+  process->stateChanged(
+      [fc, process, _out, _err](SystemProcess::State state) {
+        if (state != SystemProcess::Running) {
+          (*fc)(process->exitCode(), state, *_out, *_err);
+          delete fc;
+          process->private_->thread_->invokeMethod([process]() { delete process; });
+          delete _out;
+          delete _err;
+        }
+      },
+      nullptr);
 #ifndef __clang_analyzer__
   process->private_->thread_->invokeMethod([_cmdline, _args, process, fc, _out, _err]() {
     if (!process->start(_cmdline, _args))

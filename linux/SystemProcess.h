@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include <AsyncFw/core/FunctionConnector.h>
+#include "core/FunctionConnector.h"
 
 namespace AsyncFw {
 class SystemProcess {
@@ -16,8 +16,8 @@ public:
   void wait();
   int exitCode();
 
-  FunctionConnectorProtected<SystemProcess>::Connector<State> stateChanged {true};
-  FunctionConnectorProtected<SystemProcess>::Connector<const std::string &, bool /*stdout: 0, stderr: 1*/> output {true};
+  FunctionConnectorProtected<SystemProcess>::Connector<State> stateChanged;
+  FunctionConnectorProtected<SystemProcess>::Connector<const std::string &, bool /*stdout: 0, stderr: 1*/> output;
 
   static FunctionConnectorProtected<SystemProcess>::Connector<int, State, const std::string &, const std::string &> &exec(const std::string &, const std::vector<std::string> &);
 

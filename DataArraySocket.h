@@ -8,6 +8,7 @@
 
 namespace AsyncFw {
 class DataArraySocket : public AbstractTlsSocket {
+  friend class DataArrayAbstractTcp;
   friend class DataArrayTcpClient;
 
 public:
@@ -17,7 +18,6 @@ public:
   bool initTls(const TlsContext &data);
   void disableTls();
 
-  void disconnectFromHost();
   bool transmit(const DataArray &, uint32_t, bool = false) const;
   void clearBuffer(const DataArray *) const;
   int connectTimeout() const { return waitForConnectTimeoutInterval; }
@@ -92,6 +92,7 @@ private:
   AsyncFw::ExecLoopThread::Holder *wait_holder_ = nullptr;  //!!! Private
   void startTimer(int _ms);
   void removeTimer();
+  void disconnectFromHost();
   int tid_ = -1;
 };
 }  // namespace AsyncFw
