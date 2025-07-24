@@ -2,7 +2,6 @@
 #include <openssl/err.h>
 #include <openssl/core_names.h>
 #include <openssl/x509v3.h>
-#include <mutex>
 
 #include "LogStream.h"
 
@@ -122,7 +121,7 @@ bool TlsContext::generateKey(int bits) {
   return r == 1;
 }
 
-bool TlsContext::generateCertificate(const std::vector<std::pair<std::string, std::string>> &subject, const std::string &san, bool ca, int days) {
+bool TlsContext::generateCertificate(const std::vector<std::pair<std::string, std::string>> &subject, const std::string &san, const std::string &ca, int days) {
   EVP_PKEY *_k = SSL_CTX_get0_privatekey(private_->ctx_);
   if (!_k) {
     ucError() << "error get key";
@@ -147,14 +146,16 @@ bool TlsContext::generateCertificate(const std::vector<std::pair<std::string, st
     if (!X509_add_ext(_c, ext, -1)) {
       X509_EXTENSION_free(ext);
       X509_free(_c);
+      ucError() << "error add san ext";
       return false;
     }
     X509_EXTENSION_free(ext);
   }
-  if (ca) {
-    ext = X509V3_EXT_conf(NULL, NULL, SN_basic_constraints, "CA:TRUE,pathlen:1");
+  if (!ca.empty()) {
+    ext = X509V3_EXT_conf(NULL, NULL, SN_basic_constraints, ca.c_str());
     if (!X509_add_ext(_c, ext, -1)) {
       X509_EXTENSION_free(ext);
+      ucError() << "error add ca ext";
       return false;
     }
     X509_EXTENSION_free(ext);
@@ -169,7 +170,7 @@ bool TlsContext::generateCertificate(const std::vector<std::pair<std::string, st
   return r == 1;
 }
 
-DataArray TlsContext::generateRequest(const std::vector<std::pair<std::string, std::string>> &subject, const std::string &san, bool ca) {
+DataArray TlsContext::generateRequest(const std::vector<std::pair<std::string, std::string>> &subject, const std::string &san, const std::string &ca) {
   EVP_PKEY *_k = SSL_CTX_get0_privatekey(private_->ctx_);
   if (!_k) {
     ucError() << "error get key";
@@ -189,12 +190,13 @@ DataArray TlsContext::generateRequest(const std::vector<std::pair<std::string, s
     return {};
   }
   X509_EXTENSION *ext_ca = nullptr;
-  if (ca) {
-    ext_ca = X509V3_EXT_conf(NULL, NULL, SN_basic_constraints, "CA:TRUE,pathlen:0");
+  if (!ca.empty()) {
+    ext_ca = X509V3_EXT_conf(NULL, NULL, SN_basic_constraints, ca.c_str());
     if (!ext_ca) {
       sk_X509_EXTENSION_free(extlist);
       return {};
     };
+    ucError() << "error add ca ext";
     sk_X509_EXTENSION_push(extlist, ext_ca);
   }
   X509_EXTENSION *ext_san = nullptr;
@@ -203,6 +205,7 @@ DataArray TlsContext::generateRequest(const std::vector<std::pair<std::string, s
     if (!ext_san) {
       if (ext_ca) X509_EXTENSION_free(ext_ca);
       sk_X509_EXTENSION_free(extlist);
+      ucError() << "error add san ext";
       return {};
     };
     sk_X509_EXTENSION_push(extlist, ext_san);
