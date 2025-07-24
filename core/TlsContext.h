@@ -32,7 +32,7 @@ public:
 
   bool generateKey(int = 2048);
   bool generateCertificate(const std::vector<std::pair<std::string, std::string>> & = {{"CN", "Root-CA"}}, const std::string & = {}, const std::string & = "CA:TRUE,pathlen:1", int = 365);
-  DataArray generateRequest(const std::vector<std::pair<std::string, std::string>> &, const std::string & = {}, const std::string & = "CA:TRUE,pathlen:0");
+  DataArray generateRequest(const std::vector<std::pair<std::string, std::string>> &, const std::string & = {}, const std::string & = {} /*for ca: "CA:TRUE,pathlen:0"*/);
   DataArray signRequest(DataArray &, int = 365);
 
   std::string commonName() const;
