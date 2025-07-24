@@ -36,17 +36,19 @@ private:
   promise_type *promise;
 };
 
+using CoroutineHandle = std::coroutine_handle<CoroutineTask::promise_type>;
+
 struct CoroutineAwait : public AnyData {
-  CoroutineAwait(std::function<void(std::coroutine_handle<CoroutineTask::promise_type>)> = nullptr);
+  CoroutineAwait(std::function<void(CoroutineHandle)> = nullptr);
   virtual ~CoroutineAwait();
-  virtual void await_suspend(std::coroutine_handle<CoroutineTask::promise_type>) const noexcept;
+  virtual void await_suspend(CoroutineHandle) const noexcept;
   virtual bool await_ready() const noexcept;
-  virtual std::coroutine_handle<CoroutineTask::promise_type> await_resume() const noexcept;
+  virtual CoroutineHandle await_resume() const noexcept;
 
 protected:
-  mutable std::coroutine_handle<CoroutineTask::promise_type> h_;
+  mutable CoroutineHandle h_;
 
 private:
-  std::function<void(std::coroutine_handle<CoroutineTask::promise_type>)> f_;
+  std::function<void(CoroutineHandle)> f_;
 };
 }  // namespace AsyncFw
