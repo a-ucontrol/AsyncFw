@@ -422,13 +422,9 @@ void AbstractSocket::pollEvent(int _e) {
     return;
   }
   if (_e & AbstractThread::PollHup) {
-    if (state_ == State::Connecting) {
-      private_->errorString_ = "Connection refused";
-      private_->errorCode_ = Error::Refused;
-    } else {
-      private_->errorString_ = "Connection closed";
-      private_->errorCode_ = Error::Closed;
-    }
+    private_->errorCode_ = Error::Refused;
+    if (state_ == State::Connecting) private_->errorString_ = "Connection refused (not connected)";
+    else { private_->errorString_ = "Connection refused"; }
     ucTrace() << LogStream::Color::Red << private_->errorString_;
     errorEvent();
     close();
@@ -465,8 +461,8 @@ void AbstractSocket::pollEvent(int _e) {
   if (_e & AbstractThread::PollIn) {
     int r = read_available_fd();
     if (rs_ < 0) {
-      private_->errorString_ = "Connection finished";
-      private_->errorCode_ = Error::Finished;
+      private_->errorString_ = "Connection closed";
+      private_->errorCode_ = Error::Closed;
       ucTrace() << LogStream::Color::Red << private_->errorString_ << r << rs_ << errno;
       errorEvent();
       close();

@@ -18,7 +18,7 @@ class AbstractSocket : public AnyData {
 
 public:
   enum State : uint8_t { Unconnected, Listening, Connecting, Connected, Active, Closing };
-  enum Error : uint8_t { None, Finished, Closed, Refused, PollErr, PollInval, Read, Write, Unknown };
+  enum Error : uint8_t { None, Closed, Refused, PollErr, PollInval, Read, Write, Unknown };
 
   AbstractSocket(SocketThread * = nullptr);
   AbstractSocket(int, int, int, SocketThread * = nullptr);

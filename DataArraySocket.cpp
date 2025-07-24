@@ -214,7 +214,7 @@ void DataArraySocket::readEvent() {
 }
 
 void DataArraySocket::errorEvent() {
-  LogStream::MessageType t = (errorCode() == AbstractSocket::Finished) ? LogStream::Info : LogStream::Error;
+  LogStream::MessageType t = (errorCode() == AbstractSocket::Closed) ? LogStream::Info : LogStream::Error;
   sendMessage(errorString(), t);
 }
 
