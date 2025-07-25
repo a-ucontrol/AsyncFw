@@ -10,9 +10,10 @@
 using namespace AsyncFw;
 
 struct TlsContext::Private {
-  Private() { ctx_ = SSL_CTX_new(TLS_method()); }
-  ~Private() { SSL_CTX_free(ctx_); }
-  SSL_CTX *ctx_;
+  ~Private() {
+    if (ctx_) SSL_CTX_free(ctx_);
+  }
+  SSL_CTX *ctx_ = nullptr;
 
   DataArray key(EVP_PKEY *);
   DataArray certificate(X509 *);
@@ -97,18 +98,7 @@ TlsContext &TlsContext::operator=(const TlsContext &_d) {
   return *this;
 }
 
-bool TlsContext::empty() const {
-  EVP_PKEY *_k = SSL_CTX_get0_privatekey(private_->ctx_);
-  if (_k) return false;
-  X509 *_c = SSL_CTX_get0_certificate(private_->ctx_);
-  if (_c) return false;
-  X509_STORE *_store = SSL_CTX_get_cert_store(private_->ctx_);
-  STACK_OF(X509) *_t = X509_STORE_get1_all_certs(_store);
-  int _s = sk_X509_num(_t);
-  sk_X509_free(_t);
-  if (_s) return false;
-  return true;
-}
+bool TlsContext::empty() const { return !private_->ctx_; }
 
 bool TlsContext::generateKey(int bits) {
   EVP_PKEY *_k = EVP_RSA_gen(bits);
@@ -116,6 +106,7 @@ bool TlsContext::generateKey(int bits) {
     ucError() << "error generate key";
     return false;
   }
+  if (!private_->ctx_) private_->ctx_ = SSL_CTX_new(TLS_method());
   int r = SSL_CTX_use_PrivateKey(private_->ctx_, _k);
   EVP_PKEY_free(_k);
   return r == 1;
@@ -445,6 +436,7 @@ bool TlsContext::setKey(const DataArray &_da) {
   EVP_PKEY *_k = PEM_read_bio_PrivateKey(_bio, nullptr, nullptr, nullptr);
   BIO_free(_bio);
   if (!_k) return false;
+  if (!private_->ctx_) private_->ctx_ = SSL_CTX_new(TLS_method());
   int r = SSL_CTX_use_PrivateKey(private_->ctx_, _k);
   EVP_PKEY_free(_k);
   if (r == 1) return true;
@@ -457,6 +449,7 @@ bool TlsContext::setCertificate(const DataArray &_da) {
   X509 *_c = PEM_read_bio_X509(_bio, NULL, NULL, NULL);
   BIO_free(_bio);
   if (!_c) return false;
+  if (!private_->ctx_) private_->ctx_ = SSL_CTX_new(TLS_method());
   int r = SSL_CTX_use_certificate(private_->ctx_, _c);
   X509_free(_c);
   if (r == 1) return true;
@@ -469,6 +462,7 @@ bool TlsContext::appendTrusted(const DataArray &_da) {
   X509 *_c = PEM_read_bio_X509(_bio, NULL, NULL, NULL);
   BIO_free(_bio);
   if (!_c) return false;
+  if (!private_->ctx_) private_->ctx_ = SSL_CTX_new(TLS_method());
   X509_STORE *_store = SSL_CTX_get_cert_store(private_->ctx_);
   int r = X509_STORE_add_cert(_store, _c);
   X509_free(_c);
