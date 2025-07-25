@@ -14,10 +14,10 @@ struct TlsContext::Private {
   ~Private() { SSL_CTX_free(ctx_); }
   SSL_CTX *ctx_;
 
-  static DataArray key(EVP_PKEY *);
-  static DataArray certificate(X509 *);
-  static std::string info(EVP_PKEY *);
-  static std::string info(X509 *);
+  DataArray key(EVP_PKEY *);
+  DataArray certificate(X509 *);
+  std::string info(EVP_PKEY *);
+  std::string info(X509 *);
 
   std::string verifyName_;
   uint8_t ignoreErrors_ = 0;
@@ -320,7 +320,7 @@ DataArray TlsContext::key() const {
     ucError() << "error get key";
     return {};
   }
-  return Private::key(_k);
+  return private_->key(_k);
 }
 
 DataArray TlsContext::certificate() const {
@@ -329,7 +329,7 @@ DataArray TlsContext::certificate() const {
     ucError() << "error get certificate";
     return {};
   }
-  return Private::certificate(_c);
+  return private_->certificate(_c);
 }
 
 DataArrayList TlsContext::trusted() const {
@@ -339,7 +339,7 @@ DataArrayList TlsContext::trusted() const {
   DataArrayList _l;
   for (int i = 0; i < _s; i++) {
     X509 *_c = sk_X509_value(_t, i);
-    _l.push_back(Private::certificate(_c));
+    _l.push_back(private_->certificate(_c));
     X509_free(_c);
   }
   sk_X509_free(_t);
@@ -352,7 +352,7 @@ std::string TlsContext::infoKey() const {
     ucError() << "error get key";
     return {};
   }
-  return Private::info(_k);
+  return private_->info(_k);
 }
 
 std::string TlsContext::infoCertificate() const {
@@ -361,7 +361,7 @@ std::string TlsContext::infoCertificate() const {
     ucError() << "error get certificate";
     return {};
   }
-  return Private::info(_c);
+  return private_->info(_c);
 }
 
 std::string TlsContext::infoTrusted() const {
@@ -371,10 +371,22 @@ std::string TlsContext::infoTrusted() const {
   int _s = sk_X509_num(_t);
   for (int i = 0; i < _s; i++) {
     X509 *_c = sk_X509_value(_t, i);
-    str += Private::info(_c);
+    str += private_->info(_c);
   }
   sk_X509_free(_t);
   return str;
+}
+
+std::string TlsContext::infoKey(const DataArray &_da) {
+  TlsContext _c;
+  _c.setKey(_da);
+  return _c.infoKey();
+}
+
+std::string TlsContext::infoCertificate(const DataArray &_da) {
+  TlsContext _c;
+  _c.setCertificate(_da);
+  return _c.infoCertificate();
 }
 
 std::string TlsContext::infoRequest(const DataArray &req) {

@@ -40,6 +40,9 @@ public:
   std::string infoKey() const;
   std::string infoCertificate() const;
   std::string infoTrusted() const;
+
+  static std::string infoKey(const DataArray &);
+  static std::string infoCertificate(const DataArray &);
   static std::string infoRequest(const DataArray &);
 
   std::string &verifyName() const;
