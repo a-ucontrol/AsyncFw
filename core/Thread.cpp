@@ -543,13 +543,13 @@ void ExecLoopThread::waitFinished() const {
 }
 
 int ExecLoopThread::queuedTasks() const {
-  std::unique_lock<MutexType> lock(mutex);
+  std::lock_guard<MutexType> lock(mutex);
   return private_->tasks.size();
 }
 
 int ExecLoopThread::appendTimer(int ms, AbstractTask *task) {
   int id = 0;
-  std::unique_lock<MutexType> lock(mutex);
+  std::lock_guard<MutexType> lock(mutex);
   std::vector<Private::Timer>::iterator it = private_->timers.begin();
   for (; it != private_->timers.end(); ++it, ++id)
     if (it->id != id) break;
@@ -567,7 +567,7 @@ int ExecLoopThread::appendTimer(int ms, AbstractTask *task) {
 }
 
 bool ExecLoopThread::modifyTimer(int id, int ms) {
-  std::unique_lock<MutexType> lock(mutex);
+  std::lock_guard<MutexType> lock(mutex);
   std::vector<Private::Timer>::iterator it = std::lower_bound(private_->timers.begin(), private_->timers.end(), id, Private::Compare());
   if (it != private_->timers.end() && it->id == id) {
     it->timeout = std::chrono::milliseconds(ms);
@@ -588,7 +588,7 @@ void ExecLoopThread::removeTimer(int id) {
   std::vector<Private::Timer>::iterator it;
   AbstractTask *_t;
   {  //lock scope
-    std::unique_lock<MutexType> lock(mutex);
+    std::lock_guard<MutexType> lock(mutex);
     it = std::lower_bound(private_->timers.begin(), private_->timers.end(), id, Private::Compare());
     if (it == private_->timers.end() || it->id != id) {
       ucError() << "timer:" << id << "not found";
@@ -606,7 +606,7 @@ void ExecLoopThread::removeTimer(int id) {
 
 bool ExecLoopThread::appendPollDescriptor(int fd, PollEvents events, AbstractTask *task) {
 #ifndef EPOLL_WAIT
-  std::unique_lock<MutexType> lock(mutex);
+  std::lock_guard<MutexType> lock(mutex);
   std::vector<Private::PollTask *>::iterator it = std::lower_bound(private_->poll_tasks.begin(), private_->poll_tasks.end(), fd, Private::Compare());
   if (it != private_->poll_tasks.end() && (*it)->fd == fd) {
     delete task;
@@ -631,7 +631,7 @@ bool ExecLoopThread::appendPollDescriptor(int fd, PollEvents events, AbstractTas
     logError() << "Append error, descriptor:" << fd;
     return false;
   }
-  std::unique_lock<MutexType> lock(mutex);
+  std::lock_guard<MutexType> lock(mutex);
   std::vector<Private::PollTask *>::iterator it = std::lower_bound(private_->poll_tasks.begin(), private_->poll_tasks.end(), fd, Private::Compare());
   if (it != private_->poll_tasks.end() && (*it)->fd == fd) goto ERR;
   if (private_->poll_tasks.empty()) wake();
@@ -643,7 +643,7 @@ bool ExecLoopThread::appendPollDescriptor(int fd, PollEvents events, AbstractTas
 
 bool ExecLoopThread::modifyPollDescriptor(int fd, PollEvents events) {
 #ifndef EPOLL_WAIT
-  std::unique_lock<MutexType> lock(mutex);
+  std::lock_guard<MutexType> lock(mutex);
   std::vector<Private::PollTask *>::iterator it = std::lower_bound(private_->poll_tasks.begin(), private_->poll_tasks.end(), fd, Private::Compare());
   if (it != private_->poll_tasks.end() && (*it)->fd != fd) {
     logError("Modify: descriptor not found");
@@ -659,7 +659,7 @@ bool ExecLoopThread::modifyPollDescriptor(int fd, PollEvents events) {
   struct epoll_event event;
   event.events = events;
   {  //lock scope
-    std::unique_lock<MutexType> lock(mutex);
+    std::lock_guard<MutexType> lock(mutex);
     std::vector<Private::PollTask *>::iterator it = std::lower_bound(private_->poll_tasks.begin(), private_->poll_tasks.end(), fd, Private::Compare());
     if (it == private_->poll_tasks.end() || (*it)->fd != fd) {
       logError("Modify: descriptor not found");
@@ -677,7 +677,7 @@ void ExecLoopThread::removePollDescriptor(int fd) {
 #ifndef EPOLL_WAIT
   AbstractTask *_t;
   {  //lock scope
-    std::unique_lock<MutexType> lock(mutex);
+    std::lock_guard<MutexType> lock(mutex);
     std::vector<Private::PollTask *>::iterator it = std::lower_bound(private_->poll_tasks.begin(), private_->poll_tasks.end(), fd, Private::Compare());
     if (it != private_->poll_tasks.end() && (*it)->fd != fd) {
       logError("Remove: descriptor not found");
@@ -699,7 +699,7 @@ void ExecLoopThread::removePollDescriptor(int fd) {
   epoll_ctl(private_->epoll_fd, EPOLL_CTL_DEL, fd, nullptr);
   AbstractTask *_t;
   {  //lock scope
-    std::unique_lock<MutexType> lock(mutex);
+    std::lock_guard<MutexType> lock(mutex);
     std::vector<Private::PollTask *>::iterator it = std::lower_bound(private_->poll_tasks.begin(), private_->poll_tasks.end(), fd, Private::Compare());
     if (it == private_->poll_tasks.end() || (*it)->fd != fd) {
       logError("Remove: descriptor not found");

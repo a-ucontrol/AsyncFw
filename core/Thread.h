@@ -1,6 +1,7 @@
 #pragma once
 
-#include <future>
+#include <condition_variable>
+
 #include "FunctionConnector.h"
 #include "AnyData.h"
 
@@ -54,6 +55,7 @@ class AbstractThread {
 
 public:
   using MutexType = std::mutex;
+  using ConditionVariableType = std::condition_variable;
   enum PollEvents : uint16_t { PollNo = 0, PollIn = POLLIN_, PollPri = POLLPRI_, PollOut = POLLOUT_, PollErr = POLLERR_, PollHup = POLLHUP_, PollInval = POLLNVAL_ };
   enum State : uint8_t { None = 0, WaitStarted, Running, WaitInterrupted, WaitFinished, Interrupted, Finalize, Finished };
 
@@ -71,14 +73,19 @@ public:
       method();
       return true;
     }
-    std::promise<void> promise;
-    std::future<void> future = promise.get_future();
-    AbstractTask *_t = new InternalSyncTask(method, &promise);
+    bool finished = false;
+    AbstractTask *_t = new InternalTask([method, &finished, this]() {
+      method();
+      finished = true;
+      std::lock_guard<MutexType> lock(mutex);
+      condition_variable.notify_all();
+    });
     if (!invokeTask(_t)) {
       delete _t;
       return false;
     }
-    future.get();
+    std::unique_lock<MutexType> lock(mutex);
+    while (!finished) condition_variable.wait(lock);
     return true;
   }
 
@@ -154,16 +161,6 @@ protected:
   };
 
   template <typename M>
-  class InternalSyncTask : private InternalTask<M> {
-    friend class AbstractThread;
-
-  private:
-    InternalSyncTask(M method, std::promise<void> *promise) : InternalTask<M>(method), promise(promise) {}
-    ~InternalSyncTask() override { promise->set_value(); }
-    std::promise<void> *promise;
-  };
-
-  template <typename M>
   class InternalPoolTask : public AbstractTask {
     friend class ExecLoopThread;
     friend class AbstractSocket;
@@ -183,6 +180,7 @@ protected:
   virtual bool invokeTask(AbstractTask *) = 0;
   virtual void destroy() = 0;
   mutable MutexType mutex;
+  mutable ConditionVariableType condition_variable;
 
 private:
   int state = None;
@@ -193,7 +191,6 @@ private:
 
 class ExecLoopThread : public AbstractThread {
   friend class MainThread;
-  using ConditionVariableType = std::condition_variable;
   struct Private;
 
 public:
@@ -233,7 +230,6 @@ protected:
   bool invokeTask(AbstractTask *) override;
   virtual void startedEvent() {}
   virtual void finishedEvent() {}
-  mutable ConditionVariableType condition_variable;
 
 private:
   void exec();
