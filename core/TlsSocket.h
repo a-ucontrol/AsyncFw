@@ -18,7 +18,7 @@ public:
   void disconnect() override;
   void close() override;
 
-  void setContext(const TlsContext *) const;
+  void setContext(const TlsContext &) const;
 
 protected:
   void acceptEvent() override;

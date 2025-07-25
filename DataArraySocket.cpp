@@ -402,7 +402,7 @@ bool DataArraySocket::initTls(const TlsContext &data) {
     ucError("certificate verify error");
     return false;
   }
-  setContext(&data);
+  setContext(data);
   sslConnection = 2;
   trace();
   return true;

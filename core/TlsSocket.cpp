@@ -20,7 +20,7 @@ struct AbstractTlsSocket::Private {
   ~Private() {
     if (ssl_) { SSL_free(ssl_); }
   }
-  const TlsContext *ctx_ = nullptr;
+  TlsContext ctx_;
   SSL *ssl_ = nullptr;
   uint8_t encrypt_ = 0;  // 0 - noencrypt, 1 - server, 2 - client
 
@@ -52,12 +52,12 @@ AbstractTlsSocket::~AbstractTlsSocket() {
 }
 
 void AbstractTlsSocket::setDescriptor(int _fd) {
-  if (private_->ctx_) private_->encrypt_ = 1;  //server
+  if (private_->ctx_.opensslCtx()) private_->encrypt_ = 1;  //server
   AbstractSocket::setDescriptor(_fd);
 }
 
 bool AbstractTlsSocket::connect(const std::string &address, uint16_t port) {
-  if (private_->ctx_) private_->encrypt_ = 2;  //client
+  if (private_->ctx_.opensslCtx()) private_->encrypt_ = 2;  //client
   return AbstractSocket::connect(address, port);
 }
 
@@ -74,7 +74,7 @@ void AbstractTlsSocket::close() {
   AbstractSocket::close();
 }
 
-void AbstractTlsSocket::setContext(const TlsContext *ctx) const { private_->ctx_ = ctx; }
+void AbstractTlsSocket::setContext(const TlsContext &ctx) const { private_->ctx_ = ctx; }
 
 void AbstractTlsSocket::acceptEvent() {
   if (state_ != Connected) {
@@ -88,18 +88,18 @@ void AbstractTlsSocket::acceptEvent() {
   }
   trace() << fd_;
   if (!private_->ssl_) {
-    private_->ssl_ = SSL_new(private_->ctx_->opensslCtx());
+    private_->ssl_ = SSL_new(private_->ctx_.opensslCtx());
     if (private_->encrypt_ == 1) SSL_set_ssl_method(private_->ssl_, TLS_server_method());
     else { SSL_set_ssl_method(private_->ssl_, TLS_client_method()); }
 
-    if (private_->ctx_->ignoreErrors() == 0x01) SSL_set_verify(private_->ssl_, SSL_VERIFY_PEER, Private::ignoreTimeValidityErrors);
+    if (private_->ctx_.ignoreErrors() == 0x01) SSL_set_verify(private_->ssl_, SSL_VERIFY_PEER, Private::ignoreTimeValidityErrors);
     else { SSL_set_verify(private_->ssl_, SSL_VERIFY_PEER, nullptr); }
 
     SSL_set_fd(private_->ssl_, fd_);
-    if (!private_->ctx_->verifyName().empty()) {
-      ucTrace() << fd_ << "verify name" << LogStream::Color::Green << private_->ctx_->verifyName();
+    if (!private_->ctx_.verifyName().empty()) {
+      ucTrace() << fd_ << "verify name" << LogStream::Color::Green << private_->ctx_.verifyName();
       SSL_set_hostflags(private_->ssl_, X509_CHECK_FLAG_NO_PARTIAL_WILDCARDS);
-      if (!SSL_set1_host(private_->ssl_, private_->ctx_->verifyName().c_str())) ucError();
+      if (!SSL_set1_host(private_->ssl_, private_->ctx_.verifyName().c_str())) ucError();
     }
   }
   int r = (private_->encrypt_ == 1) ? SSL_accept(private_->ssl_) : SSL_connect(private_->ssl_);
