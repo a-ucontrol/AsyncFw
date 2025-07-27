@@ -109,7 +109,8 @@ void AbstractTlsSocket::acceptEvent() {
   if (r <= 0) {
     r = ERR_peek_error();
     if (!r && SSL_want_read(private_->ssl_)) { return; }
-    if (r) setErrorString(ERR_error_string(ERR_get_error(), nullptr));
+    setErrorCode(AbstractSocket::Error::Unknown);
+    if (r) setErrorString("TLS error");
     else { setErrorString("Unknown TLS error"); }
     errorEvent();
     close();
