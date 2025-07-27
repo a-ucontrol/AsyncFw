@@ -45,6 +45,11 @@ public:
   static std::string infoCertificate(const DataArray &);
   static std::string infoRequest(const DataArray &);
 
+  static std::string errorString();
+  static std::string allErrorStrings();
+
+  bool verifyPeer();
+  void setVerifyPeer(bool);
   std::string &verifyName() const;
   void setVerifyName(const std::string &) const;
   uint8_t ignoreErrors() const;

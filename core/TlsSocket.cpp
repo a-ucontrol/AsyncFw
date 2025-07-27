@@ -92,9 +92,11 @@ void AbstractTlsSocket::acceptEvent() {
     if (private_->encrypt_ == 1) SSL_set_ssl_method(private_->ssl_, TLS_server_method());
     else { SSL_set_ssl_method(private_->ssl_, TLS_client_method()); }
 
-    if (private_->ctx_.ignoreErrors() == 0x01) SSL_set_verify(private_->ssl_, SSL_VERIFY_PEER, Private::ignoreTimeValidityErrors);
-    else { SSL_set_verify(private_->ssl_, SSL_VERIFY_PEER, nullptr); }
+    int _vm = private_->ctx_.verifyPeer() ? SSL_VERIFY_PEER : SSL_VERIFY_NONE;
+    if (private_->ctx_.ignoreErrors() == 0x01) SSL_set_verify(private_->ssl_, _vm, Private::ignoreTimeValidityErrors);
+    else { SSL_set_verify(private_->ssl_, _vm, nullptr); }
 
+    SSL_set_verify(private_->ssl_, SSL_VERIFY_PEER, Private::ignoreTimeValidityErrors);
     SSL_set_fd(private_->ssl_, fd_);
     if (!private_->ctx_.verifyName().empty()) {
       ucTrace() << fd_ << "verify name" << LogStream::Color::Green << private_->ctx_.verifyName();
