@@ -108,7 +108,7 @@ void AbstractTlsSocket::acceptEvent() {
   //SIGPIPE if (private_->encrypt_ == 1) ::close(fd_); void SocketThread::startedEvent() disabled it
   if (r <= 0) {
     r = ERR_peek_error();
-    if (!r && SSL_want_read(private_->ssl_)) { return; }
+    if (!r && SSL_want_read(private_->ssl_)) return;
     setErrorCode(AbstractSocket::Error::Unknown);
     if (r) setErrorString("TLS error");
     else { setErrorString("Unknown TLS error"); }
