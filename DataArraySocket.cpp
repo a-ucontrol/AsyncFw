@@ -397,7 +397,7 @@ void DataArraySocket::connectToHost(int timeout) {
 void DataArraySocket::disableTls() { sslConnection = 0; }
 
 bool DataArraySocket::initTls(const TlsContext &data) {
-  if (!data.verify()) {
+  if (!data.verifyCertificate()) {
     sslConnection = 1;
     ucError("certificate verify error");
     return false;

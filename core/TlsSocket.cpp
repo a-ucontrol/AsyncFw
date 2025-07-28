@@ -23,23 +23,8 @@ struct AbstractTlsSocket::Private {
   TlsContext ctx_;
   SSL *ssl_ = nullptr;
   uint8_t encrypt_ = 0;  // 0 - noencrypt, 1 - server, 2 - client
-
-  static int ignoreTimeValidityErrors(int ok, X509_STORE_CTX *ctx);
+  int dataIndex;
 };
-
-int AbstractTlsSocket::Private::ignoreTimeValidityErrors(int ok, X509_STORE_CTX *ctx) {
-  if (ok) return ok;
-  int _e = X509_STORE_CTX_get_error(ctx);
-  if (_e == X509_V_ERR_CERT_NOT_YET_VALID) {
-    logWarning("Certificate not yet valid");
-    return 1;
-  }
-  if (_e == X509_V_ERR_CERT_HAS_EXPIRED) {
-    logWarning("Certificate has expired");
-    return 1;
-  }
-  return 0;
-}
 
 AbstractTlsSocket::AbstractTlsSocket(SocketThread *_thread) : AbstractSocket(_thread) {
   private_ = new Private;
@@ -76,6 +61,10 @@ void AbstractTlsSocket::close() {
 
 void AbstractTlsSocket::setContext(const TlsContext &ctx) const { private_->ctx_ = ctx; }
 
+struct ie {
+  int operator()(int, X509_STORE_CTX *) const { return 1; }
+};
+
 void AbstractTlsSocket::acceptEvent() {
   if (state_ != Connected) {
     logError() << "void AbstractTlsSocket::acceptEvent";
@@ -92,9 +81,8 @@ void AbstractTlsSocket::acceptEvent() {
     if (private_->encrypt_ == 1) SSL_set_ssl_method(private_->ssl_, TLS_server_method());
     else { SSL_set_ssl_method(private_->ssl_, TLS_client_method()); }
 
-    int _vm = private_->ctx_.verifyPeer() ? SSL_VERIFY_PEER : SSL_VERIFY_NONE;
-    if (private_->ctx_.ignoreErrors() == 0x01) SSL_set_verify(private_->ssl_, _vm, Private::ignoreTimeValidityErrors);
-    else { SSL_set_verify(private_->ssl_, _vm, nullptr); }
+    if (private_->ctx_.verifyPeer()) SSL_set_verify(private_->ssl_, SSL_VERIFY_PEER, TlsContext::verify);
+    else { SSL_set_verify(private_->ssl_, SSL_VERIFY_NONE, nullptr); }
 
     SSL_set_fd(private_->ssl_, fd_);
     if (!private_->ctx_.verifyName().empty()) {

@@ -3,6 +3,7 @@
 #include "DataArray.h"
 
 struct ssl_ctx_st;
+struct x509_store_ctx_st;
 namespace std {
 class mutex;
 }
@@ -28,7 +29,7 @@ public:
   bool appendTrusted(const DataArray &);
 
   bool empty() const;
-  bool verify() const;
+  bool verifyCertificate() const;
 
   bool generateKey(int = 2048);
   bool generateCertificate(const std::vector<std::pair<std::string, std::string>> & = {{"CN", "Root-CA"}}, const std::string & = {}, const std::string & = "CA:TRUE,pathlen:1", int = 365);
@@ -52,8 +53,10 @@ public:
   void setVerifyPeer(bool);
   std::string &verifyName() const;
   void setVerifyName(const std::string &) const;
-  uint8_t ignoreErrors() const;
   void setIgnoreErrors(uint8_t) const;
+
+protected:
+  static int verify(int ok, x509_store_ctx_st *ctx);
 
 private:
   Private *private_;

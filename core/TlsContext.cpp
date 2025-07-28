@@ -1,3 +1,6 @@
+#include <map>
+#include <functional>
+
 #include <openssl/ssl.h>
 #include <openssl/err.h>
 #include <openssl/core_names.h>
@@ -22,10 +25,11 @@ struct TlsContext::Private {
 
   bool vefifyPeer_ = true;
   std::string verifyName_;
-  uint8_t ignoreErrors_ = 0;
 
   int serial_ = 0;
   int ref_ = 0;
+
+  inline static std::map<SSL_CTX *, std::function<int(int, X509_STORE_CTX *)>> verify_;
 };
 
 DataArray TlsContext::Private::key(EVP_PKEY *_k) {
@@ -369,6 +373,14 @@ std::string TlsContext::infoTrusted() const {
   return str;
 }
 
+int TlsContext::verify(int ok, X509_STORE_CTX *ctx) {
+  SSL *ssl = static_cast<SSL *>(X509_STORE_CTX_get_ex_data(ctx, SSL_get_ex_data_X509_STORE_CTX_idx()));
+  SSL_CTX *ssl_ctx = SSL_get_SSL_CTX(ssl);
+  std::map<SSL_CTX *, std::function<int(int, X509_STORE_CTX *)>>::iterator it = Private::verify_.find(ssl_ctx);
+  if (it != Private::verify_.end()) { return it->second(ok, ctx); }
+  return ok;
+}
+
 std::string TlsContext::infoKey(const DataArray &_da) {
   TlsContext _c;
   if (!_c.setKey(_da)) return {};
@@ -416,13 +428,35 @@ std::string &TlsContext::verifyName() const { return private_->verifyName_; }
 
 void TlsContext::setVerifyName(const std::string &name) const { private_->verifyName_ = name; }
 
-uint8_t TlsContext::ignoreErrors() const { return private_->ignoreErrors_; }
-
-void TlsContext::setIgnoreErrors(uint8_t errors) const { private_->ignoreErrors_ = errors; }
+void TlsContext::setIgnoreErrors(uint8_t errors) const {
+  if (errors == 0x01) {
+    if (!private_->ctx_) private_->ctx_ = SSL_CTX_new(TLS_method());
+    std::map<SSL_CTX *, std::function<int(int, X509_STORE_CTX *)>>::iterator it = Private::verify_.find(private_->ctx_);
+    if (it != Private::verify_.end()) {
+      ucWarning() << "already exists, change";
+      Private::verify_.erase(it);
+    }
+    Private::verify_.emplace(private_->ctx_, [errors](int ok, X509_STORE_CTX *ctx) {
+      if (ok) return ok;
+      int _e = X509_STORE_CTX_get_error(ctx);
+      if (errors & 0x01) {  // ignore time validity errors
+        if (_e == X509_V_ERR_CERT_NOT_YET_VALID) {
+          logWarning("Certificate not yet valid");
+          return 1;
+        }
+        if (_e == X509_V_ERR_CERT_HAS_EXPIRED) {
+          logWarning("Certificate has expired");
+          return 1;
+        }
+      }
+      return 0;
+    });
+  }
+}
 
 ssl_ctx_st *TlsContext::opensslCtx() const { return private_->ctx_; }
 
-bool TlsContext::verify() const {
+bool TlsContext::verifyCertificate() const {
   EVP_PKEY *_k = SSL_CTX_get0_privatekey(private_->ctx_);
   if (!_k) {
     ucError() << "get key";
