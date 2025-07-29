@@ -106,7 +106,7 @@ bool AbstractSocket::listen(const std::string &_address, uint16_t _port) {
 
   if (::bind(_fd, reinterpret_cast<struct sockaddr *>(&private_->la_), sizeof(private_->la_)) || ::listen(_fd, SOCKET_CONNECTION_QUEUED)) {
     close_fd(_fd);
-    ucError() << "listen error :" << _port;
+    ucError() << "listen error:" << _port;
     return false;
   }
 
