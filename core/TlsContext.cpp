@@ -14,7 +14,11 @@ using namespace AsyncFw;
 
 struct TlsContext::Private {
   ~Private() {
-    if (ctx_) SSL_CTX_free(ctx_);
+    if (ctx_) {
+      std::map<SSL_CTX *, std::function<int(int, X509_STORE_CTX *)>>::iterator it = verify_.find(ctx_);
+      if (it != verify_.end()) { verify_.erase(it); }
+      SSL_CTX_free(ctx_);
+    }
   }
   SSL_CTX *ctx_ = nullptr;
 
