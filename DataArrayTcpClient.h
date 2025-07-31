@@ -31,5 +31,13 @@ public:
   FunctionConnectorProtected<DataArrayTcpClient>::Connector<const DataArraySocket *> connectionStateChanged;
   int exchange(const DataArraySocket *, const DataArray &, const DataArray *, uint32_t, int = 5000);
   std::size_t socketLimit() { return maxSockets; }
+  int connectTimeout() const { return waitForConnectTimeoutInterval; }
+  void setConnectTimeout(int timeout) { waitForConnectTimeoutInterval = timeout; }
+  int reconnectTimeout() const { return reconnectTimeoutInterval; }
+  void setReconnectTimeout(int timeout) { reconnectTimeoutInterval = timeout; }
+
+private:
+  int waitForConnectTimeoutInterval = 10000;
+  int reconnectTimeoutInterval = 10000;
 };
 }  // namespace AsyncFw

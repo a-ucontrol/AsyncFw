@@ -120,6 +120,8 @@ DataArrayTcpClient::Thread::~Thread() { ucTrace(); }
 
 DataArraySocket *DataArrayTcpClient::Thread::createSocket() {
   DataArraySocket *tcpSocket = new DataArraySocket(this);
+  tcpSocket->setConnectTimeout(client()->waitForConnectTimeoutInterval);
+  tcpSocket->setReconnectTimeout(client()->reconnectTimeoutInterval);
   socketInit(const_cast<DataArraySocket *>(tcpSocket));
   tcpSocket->stateChanged([this, tcpSocket](AbstractSocket::State state) {
     if (state != AbstractSocket::Connected && state != AbstractSocket::Active && state != AbstractSocket::Unconnected) return;
