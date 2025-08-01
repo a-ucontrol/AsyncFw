@@ -107,7 +107,6 @@ void DataArraySocket::timerEvent() {
       else
         e = (waitTimerType & 0x02) ? "Connection lost" : "Read timeout";
       e += " (" + peerString() + ')';
-      setErrorString(e);
       sendMessage(e, LogStream::Error);
       waitTimerType |= 0x01;
       disconnect();
@@ -130,7 +129,6 @@ void DataArraySocket::timerEvent() {
     waitTimerType |= 0x01;
     disconnect();
     e += " (" + peerString() + ')';
-    setErrorString(e);
     sendMessage(e, LogStream::Error);
   }
 }
@@ -317,8 +315,9 @@ void DataArraySocket::clearBuffer_(const DataArray *da) const {
 }
 
 void DataArraySocket::sendMessage(const std::string &m, uint8_t t) {
+  setErrorString(m);
   if (t == LogStream::Error) {
-    ucError() << m;
+    ucDebug() << m;
     return;
   }
   ucTrace() << LogStream::Color::Red << LogStream::levelName(t) << LogStream::Color::DarkRed << m << fd_;
