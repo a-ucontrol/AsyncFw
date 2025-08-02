@@ -370,8 +370,11 @@ void ExecLoopThread::exec() {
           }
 
           if (r > 0) {
-            for (std::vector<pollfd>::const_iterator it = private_->fds_.begin() + 1; i != r; ++it, ++i)
-              if (it->revents) private_->process_poll_tasks.push({it->fd, it->revents, *(private_->fdts_.begin() + (it - 1 - private_->fds_.begin()))});
+            for (std::vector<pollfd>::const_iterator it = private_->fds_.begin() + 1; i != r; ++it)
+              if (it->revents) {
+                private_->process_poll_tasks.push({it->fd, it->revents, *(private_->fdts_.begin() + (it - 1 - private_->fds_.begin()))});
+                i++;
+              }
 #else
           struct epoll_event event[EPOLL_WAIT_EVENTS];
           mutex.unlock();
