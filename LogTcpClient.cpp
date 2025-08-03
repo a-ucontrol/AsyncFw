@@ -3,6 +3,18 @@
 #include "LogTcpClient.h"
 
 #ifdef uC_LOGGER
+
+  #ifdef EXTEND_LOG_TRACE
+    #define trace LogStream(+LogStream::Trace | LogStream::Gray, __PRETTY_FUNCTION__, __FILE__, __LINE__, 6 | LOG_STREAM_CONSOLE_ONLY).output
+    #define warning_if(x) \
+if (x) LogStream(+LogStream::Warning | LogStream::DarkBlue, __PRETTY_FUNCTION__, __FILE__, __LINE__, 6 | LOG_STREAM_CONSOLE_ONLY).output()
+  #else
+    #define trace(x) \
+if constexpr (0) LogStream()
+    #define warning_if(x) \
+    if constexpr (0) LogStream()
+  #endif
+
 using namespace AsyncFw;
 LogTcpClient::LogTcpClient(DataArrayTcpClient *client, int size, const std::string &file, DataArraySocket *socket) {
   log_ = new Log(size, file.data(), true);
@@ -106,6 +118,7 @@ void LogTcpClient::request(int pi) {
   ba.resize(5);
   *reinterpret_cast<uint32_t *>(ba.data() + 1) = lastTime + 1;
   tcpSocket->transmit(ba, pi);
+  trace() << lastTime;
 }
 
 void LogTcpClient::connectionStateChanged() {
