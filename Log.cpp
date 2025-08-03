@@ -62,7 +62,7 @@ void AbstractLog::append(const Message &m) {
 
   obj_->lock();
   int size = messages.size();
-  if (size >= 128) {
+  if (size >= queueLimit) {
     console_msg("AbstractLog::append: many messages in queue");
   #ifndef uC_NO_TRACE
     console_msg(m.string);
@@ -153,6 +153,7 @@ void AbstractLog::append_(const Message &m, uint8_t f) {
 }
 
 LogMinimal::LogMinimal() {
+  queueLimit = 128;
   obj_ = this;
   start();
   ucTrace();
@@ -165,6 +166,7 @@ LogMinimal::~LogMinimal() {
 }
 
 Log::Log(int size, const std::string &name, bool noInstance) : Rrd(size, name), AbstractLog(noInstance) {
+  queueLimit = size / 2;
   obj_ = this;
   ucTrace();
 }

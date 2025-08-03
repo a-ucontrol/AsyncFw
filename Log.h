@@ -37,6 +37,7 @@ protected:
   void stopTimer(int *);
   AbstractThread *obj_;
   int level = LogStream::Trace;
+  int queueLimit;
 
 private:
   struct LastMessage {
