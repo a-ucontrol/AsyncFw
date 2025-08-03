@@ -365,8 +365,10 @@ void ExecLoopThread::exec() {
   #else
             WAKE_FD = socket(AF_INET, 0, 0);
   #endif
-            if (r == 1) goto CONTINUE;
-            i = 1;
+            if (private_->fds_[0].revents) {
+              if (r == 1) goto CONTINUE;
+              i = 1;
+            }
           }
 
           if (r > 0) {
