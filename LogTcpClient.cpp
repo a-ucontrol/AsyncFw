@@ -7,12 +7,12 @@
   #ifdef EXTEND_LOG_TRACE
     #define trace LogStream(+LogStream::Trace | LogStream::Gray, __PRETTY_FUNCTION__, __FILE__, __LINE__, 6 | LOG_STREAM_CONSOLE_ONLY).output
     #define warning_if(x) \
-if (x) LogStream(+LogStream::Warning | LogStream::DarkBlue, __PRETTY_FUNCTION__, __FILE__, __LINE__, 6 | LOG_STREAM_CONSOLE_ONLY).output()
+      if (x) LogStream(+LogStream::Warning | LogStream::DarkBlue, __PRETTY_FUNCTION__, __FILE__, __LINE__, 6 | LOG_STREAM_CONSOLE_ONLY).output()
   #else
     #define trace(x) \
-if constexpr (0) LogStream()
+      if constexpr (0) LogStream()
     #define warning_if(x) \
-    if constexpr (0) LogStream()
+      if constexpr (0) LogStream()
   #endif
 
 using namespace AsyncFw;
@@ -45,8 +45,14 @@ LogTcpClient::LogTcpClient(DataArrayTcpClient *client, int size, const std::stri
 
 LogTcpClient::~LogTcpClient() {
   log_->removeTimer(requestTimerId);
-  tcpClient->removeSocket(tcpSocket);
   delete log_;
+  tcpSocket->stateChanged(
+      [c = tcpClient, s = tcpSocket](AbstractSocket::State state) {
+        if (state != AbstractSocket::Unconnected) return;
+        c->removeSocket(s);
+      },
+      AbstractThread::currentThread());
+  disconnectFromHost();
   ucTrace();
 }
 

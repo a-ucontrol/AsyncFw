@@ -37,7 +37,10 @@ int DataArrayAbstractTcp::transmit(const DataArraySocket *socket, const DataArra
 void DataArrayAbstractTcp::disconnectFromHost(const DataArraySocket *socket) {
   Thread *thread = static_cast<Thread *>(socket->thread());
   if (!thread) return;
-  thread->invokeMethod([socket]() { const_cast<DataArraySocket *>(socket)->disconnect(); });
+  thread->invokeMethod([socket]() {
+    const_cast<DataArraySocket *>(socket)->waitTimerType |= 0x08;
+    const_cast<DataArraySocket *>(socket)->disconnect();
+  });
 }
 
 void DataArrayAbstractTcp::setEncryptDisabled(const std::string &address, bool disabled) {

@@ -88,7 +88,7 @@ void DataArraySocket::stateEvent() {
       receiveByteArray = nullptr;
       logWarning("DataArraySocket: disconnected while receive");
     }
-    ucDebug() << LogStream::Blue << "socket unconnected (" + peerString() + ')';
+    ucTrace() << LogStream::Blue << "socket unconnected (" + peerString() + ')';
   } else if (state_ == AbstractSocket::Connecting) {
     if (!receiveList.empty()) logWarning("DataArraySocket: receive buffer not empty during connect");
   }
@@ -317,10 +317,10 @@ void DataArraySocket::clearBuffer_(const DataArray *da) const {
 void DataArraySocket::sendMessage(const std::string &m, uint8_t t) {
   setErrorString(m);
   if (t == LogStream::Error) {
-    ucDebug() << m;
+    ucDebug() << LogStream::Color::Red << LogStream::levelName(t) << LogStream::Color::DarkRed << m << fd_;
     return;
   }
-  ucTrace() << LogStream::Color::Red << LogStream::levelName(t) << LogStream::Color::DarkRed << m << fd_;
+  ucDebug() << LogStream::Color::DarkGreen << LogStream::levelName(t) << LogStream::Color::DarkGreen << m << fd_;
 }
 
 void DataArraySocket::initServerConnection() {
