@@ -153,7 +153,6 @@ void AbstractLog::append_(const Message &m, uint8_t f) {
 }
 
 LogMinimal::LogMinimal() {
-  queueLimit = 128;
   obj_ = this;
   start();
   ucTrace();
