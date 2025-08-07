@@ -86,7 +86,7 @@ AbstractSocket::AbstractSocket(int _family, int _type, int _protocol, SocketThre
 
 AbstractSocket::~AbstractSocket() {
   if (thread_) thread_->removeSocket(this);
-  if (fd_) close_fd(fd_);
+  if (fd_ >= 0) close_fd(fd_);
   delete private_;
   trace();
 }
@@ -303,11 +303,11 @@ int AbstractSocket::write(const uint8_t *_p, int _s) {
 int AbstractSocket::write(const DataArray &_da) { return write(_da.data(), _da.size()); }
 
 void AbstractSocket::close() {
-  if (!fd_ || !thread_) return;
+  if (fd_ == -1 || !thread_) return;
   thread_->removePollDescriptor(fd_);
   close_fd(fd_);
   ucTrace() << LogStream::Color::Red << fd_;
-  changeDescriptor(0);
+  changeDescriptor(-1);
   state_ = State::Unconnected;
   rs_ = 0;
   private_->rda_.clear();
@@ -533,7 +533,7 @@ void ListenSocket::incomingEvent() {
     inet_ntop(AF_INET6, &reinterpret_cast<const sockaddr_in6 *>(&_a)->sin6_addr, _ip, sizeof _ip);
     _pa = _ip;
   }
-  if (_cd > 0) {
+  if (_cd >= 0) {
     if (!incomingConnection || !incomingConnection(_cd, _pa)) {
       ucDebug("failed incoming connection") << LogStream::Color::Red << (incomingConnection != nullptr) << _cd;
       close_fd(_cd);

@@ -464,7 +464,7 @@ bool TlsContext::verifyCertificate() const {
   EVP_PKEY *_k = SSL_CTX_get0_privatekey(private_->ctx_);
   if (!_k) {
     ucError() << "get key";
-    return {};
+    return false;
   }
   X509 *_c = SSL_CTX_get0_certificate(private_->ctx_);
   if (!_c) {

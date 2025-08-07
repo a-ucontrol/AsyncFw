@@ -78,7 +78,7 @@ protected:
 private:
   void pollEvent(int);
   Private *private_;
-  int fd_ = 0;
+  int fd_ = -1;
   mutable int rs_ = 0;
 };
 

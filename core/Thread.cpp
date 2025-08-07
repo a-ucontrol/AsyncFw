@@ -760,7 +760,7 @@ void SocketThread::appendSocket(AbstractSocket *_socket) {
 void SocketThread::removeSocket(AbstractSocket *_socket) {
   std::vector<AbstractSocket *>::iterator it = std::lower_bound(sockets_.begin(), sockets_.end(), _socket, Compare());
   if (it != sockets_.end() && (*it) == _socket) {
-    if (_socket->fd_) removePollDescriptor(_socket->fd_);
+    if (_socket->fd_ >= 0) removePollDescriptor(_socket->fd_);
     sockets_.erase(it);
     _socket->thread_ = nullptr;
     return;
