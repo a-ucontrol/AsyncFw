@@ -80,10 +80,11 @@ void DataArrayAbstractTcp::Thread::socketInit(DataArraySocket *socket) {
       socket->clearBuffer(da);
     });
   });
+  ucTrace() << LogStream::Color::Green << this << LogStream::Color::Magenta << sockets_.size();
 }
 
 void DataArrayAbstractTcp::Thread::destroy() {
-  ucTrace();
+  ucTrace() << LogStream::Color::Green << this << LogStream::Color::Magenta << sockets_.size();
 
   static_cast<DataArrayAbstractTcp *>(pool)->removeThread(this);
   SocketThread::quit();
