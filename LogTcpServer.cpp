@@ -2,20 +2,18 @@
 #include "Log.h"
 #include "LogTcpServer.h"
 
-#ifdef uC_LOGGER
+#ifdef EXTEND_LOG_TRACE
+  #define trace LogStream(+LogStream::Trace | LogStream::Gray, __PRETTY_FUNCTION__, __FILE__, __LINE__, 6 | LOG_STREAM_CONSOLE_ONLY).output
+  #define warning_if(x) \
+    if (x) LogStream(+LogStream::Warning | LogStream::DarkBlue, __PRETTY_FUNCTION__, __FILE__, __LINE__, 6 | LOG_STREAM_CONSOLE_ONLY).output()
+#else
+  #define trace(x) \
+    if constexpr (0) LogStream()
+  #define warning_if(x) \
+    if constexpr (0) LogStream()
+#endif
 
-  #ifdef EXTEND_LOG_TRACE
-    #define trace LogStream(+LogStream::Trace | LogStream::Gray, __PRETTY_FUNCTION__, __FILE__, __LINE__, 6 | LOG_STREAM_CONSOLE_ONLY).output
-    #define warning_if(x) \
-      if (x) LogStream(+LogStream::Warning | LogStream::DarkBlue, __PRETTY_FUNCTION__, __FILE__, __LINE__, 6 | LOG_STREAM_CONSOLE_ONLY).output()
-  #else
-    #define trace(x) \
-      if constexpr (0) LogStream()
-    #define warning_if(x) \
-      if constexpr (0) LogStream()
-  #endif
-
-  #define TRANSMIT_COUNT 100
+#define TRANSMIT_COUNT 100
 
 using namespace AsyncFw;
 LogTcpServer::LogTcpServer(DataArrayTcpServer *_tcpServer, Log *_log) : tcpServer(_tcpServer), log(_log) {
@@ -54,4 +52,3 @@ void LogTcpServer::transmit(uint32_t index, uint32_t lastIndex, const DataArrayL
   tcpServer->transmit(sockets.front(), _da, 0, wait);
   sockets.pop();
 }
-#endif

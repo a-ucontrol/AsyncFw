@@ -2,18 +2,16 @@
 #include "Log.h"
 #include "LogTcpClient.h"
 
-#ifdef uC_LOGGER
-
-  #ifdef EXTEND_LOG_TRACE
-    #define trace LogStream(+LogStream::Trace | LogStream::Gray, __PRETTY_FUNCTION__, __FILE__, __LINE__, 6 | LOG_STREAM_CONSOLE_ONLY).output
-    #define warning_if(x) \
-      if (x) LogStream(+LogStream::Warning | LogStream::DarkBlue, __PRETTY_FUNCTION__, __FILE__, __LINE__, 6 | LOG_STREAM_CONSOLE_ONLY).output()
-  #else
-    #define trace(x) \
-      if constexpr (0) LogStream()
-    #define warning_if(x) \
-      if constexpr (0) LogStream()
-  #endif
+#ifdef EXTEND_LOG_TRACE
+  #define trace LogStream(+LogStream::Trace | LogStream::Gray, __PRETTY_FUNCTION__, __FILE__, __LINE__, 6 | LOG_STREAM_CONSOLE_ONLY).output
+  #define warning_if(x) \
+    if (x) LogStream(+LogStream::Warning | LogStream::DarkBlue, __PRETTY_FUNCTION__, __FILE__, __LINE__, 6 | LOG_STREAM_CONSOLE_ONLY).output()
+#else
+  #define trace(x) \
+    if constexpr (0) LogStream()
+  #define warning_if(x) \
+    if constexpr (0) LogStream()
+#endif
 
 using namespace AsyncFw;
 LogTcpClient::LogTcpClient(DataArrayTcpClient *client, int size, const std::string &file, DataArraySocket *socket) {
@@ -131,4 +129,3 @@ void LogTcpClient::connectionStateChanged() {
   if (tcpSocket->state() == AbstractSocket::Active) request();
   else { log_->modifyTimer(requestTimerId, 0); }
 }
-#endif

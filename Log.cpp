@@ -8,8 +8,6 @@
 
 #define LOG_CURRENT_TIME (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count())
 
-#ifdef uC_LOGGER
-
 using namespace AsyncFw;
 
 AbstractLog::AbstractLog(bool noInstance) {
@@ -64,9 +62,9 @@ void AbstractLog::append(const Message &m) {
   int size = messages.size();
   if (size >= queueLimit) {
     console_msg("AbstractLog::append: many messages in queue");
-  #ifndef uC_NO_TRACE
+#ifndef uC_NO_TRACE
     console_msg(m.string);
-  #endif
+#endif
     obj_->unlock();
     return;
   }
@@ -216,4 +214,3 @@ AbstractLog::Message Log::messageFromRrdItem(const Item &_v) const {
   if (!ds.fail()) return m;
   return {};
 }
-#endif
