@@ -10,8 +10,6 @@
 #include <syncstream>
 #include "LogStream.h"
 
-#define IGNORE_SENDER_NAME_PREFIX "LRW::"
-
 using namespace AsyncFw;
 void LogStream::console_output(const Message &message, uint8_t flags) {
   if ((message.type & 0x07) > LOG_STREAM_CONSOLE_LEVEL) return;
@@ -59,9 +57,12 @@ std::string LogStream::sender(const char *function) {
   str = str.substr(0, str.find_first_of('('));
   i = str.find_last_of(' ');
   if (i != std::string::npos) str = str.substr(i + 1);
-#ifdef IGNORE_SENDER_NAME_PREFIX
-  if (str.starts_with(IGNORE_SENDER_NAME_PREFIX)) str.erase(0, sizeof(IGNORE_SENDER_NAME_PREFIX) - 1);
-#endif
+  for (const std::string &_str : senderPrefixIgnoreList_) {
+    if (str.starts_with(_str)) {
+      str.erase(0, _str.size());
+      break;
+    }
+  }
   i = str.find_first_of("::");
   if (i == std::string::npos) return "Application";
   str = str.substr(0, i);

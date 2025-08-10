@@ -2,6 +2,7 @@
 
 #include <sstream>
 #include <cstdint>
+#include <vector>
 
 #if __has_include(<format>)
   #include <format>
@@ -146,6 +147,7 @@ public:
 #endif
   LogStream &space();
   LogStream &nospace();
+  static void setSenderPrefixIgnoreList(const std::vector<std::string> &list) { senderPrefixIgnoreList_ = list; }
 
 private:
   void before();
@@ -156,6 +158,7 @@ private:
   const char *file;
   int line;
   uint16_t flags;
+  inline static std::vector<std::string> senderPrefixIgnoreList_;
 };
 }  // namespace AsyncFw
 
