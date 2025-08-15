@@ -13,7 +13,7 @@
 
 //#include <cxxabi.h>
 
-//#define STD_FOMAT_TIME_STRING
+#define STD_FOMAT_TIME_STRING
 #define LOG_STREAM_CURRENT_TIME (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count())
 
 #define LOG_STREAM_CONSOLE_LEVEL 7

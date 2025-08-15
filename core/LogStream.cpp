@@ -1,5 +1,9 @@
 #include <iostream>
 #include <regex>
+#include <syncstream>
+
+#include "LogStream.h"
+
 #ifndef STD_FOMAT_TIME_STRING
   #include <iomanip>
   #include <time.h>
@@ -7,8 +11,6 @@
   #include <chrono>
 #endif
 
-#include <syncstream>
-#include "LogStream.h"
 
 using namespace AsyncFw;
 void LogStream::console_output(const Message &message, uint8_t flags) {
