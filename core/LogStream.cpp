@@ -4,7 +4,7 @@
 
 #include "LogStream.h"
 
-//#define STD_FOMAT_TIME_STRING
+#define STD_FOMAT_TIME_STRING
 
 #ifndef STD_FOMAT_TIME_STRING
   #include <iomanip>
@@ -74,8 +74,11 @@ std::string LogStream::sender(const char *function) {
 
 std::string LogStream::timeString(const uint64_t time, const std::string &format, bool show_ms) {
 #ifdef STD_FOMAT_TIME_STRING
-  std::chrono::time_point _tp = show_ms ? std::chrono::sys_time<std::chrono::milliseconds> {std::chrono::milliseconds(time)} : std::chrono::sys_time<std::chrono::milliseconds> {std::chrono::milliseconds(time / 1000)};
-  std::chrono::zoned_time _zt {std::chrono::current_zone(), _tp};
+  if (!show_ms) {
+    std::chrono::zoned_time _zt {std::chrono::current_zone(), std::chrono::sys_time<std::chrono::seconds> {std::chrono::seconds(time / 1000)}};
+    return std::vformat("{:" + format + '}', std::make_format_args(_zt));
+  }
+  std::chrono::zoned_time _zt {std::chrono::current_zone(), std::chrono::sys_time<std::chrono::milliseconds> {std::chrono::milliseconds(time)}};
   return std::vformat("{:" + format + '}', std::make_format_args(_zt));
 #else
   std::string str;
