@@ -4,13 +4,14 @@
 
 #include "LogStream.h"
 
+//#define STD_FOMAT_TIME_STRING
+
 #ifndef STD_FOMAT_TIME_STRING
   #include <iomanip>
   #include <time.h>
 #else
   #include <chrono>
 #endif
-
 
 using namespace AsyncFw;
 void LogStream::console_output(const Message &message, uint8_t flags) {
@@ -71,26 +72,27 @@ std::string LogStream::sender(const char *function) {
   return str;
 }
 
-std::string LogStream::timeString(const uint64_t time, const char *format) {
+std::string LogStream::timeString(const uint64_t time, const std::string &format, bool show_ms) {
 #ifdef STD_FOMAT_TIME_STRING
-  std::chrono::zoned_time _t {std::chrono::current_zone(), std::chrono::sys_time<std::chrono::milliseconds> {std::chrono::milliseconds(time)}};
-  return std::vformat(format, std::make_format_args(_t));
+  std::chrono::time_point _tp = show_ms ? std::chrono::sys_time<std::chrono::milliseconds> {std::chrono::milliseconds(time)} : std::chrono::sys_time<std::chrono::milliseconds> {std::chrono::milliseconds(time / 1000)};
+  std::chrono::zoned_time _zt {std::chrono::current_zone(), _tp};
+  return std::vformat("{:" + format + '}', std::make_format_args(_zt));
 #else
   std::string str;
   std::time_t t = time / 1000;
   #ifndef _WIN32
   struct tm tm;
-  str += (std::stringstream() << std::put_time(localtime_r(&t, &tm), format)).str();
+  str += (std::stringstream() << std::put_time(localtime_r(&t, &tm), format.c_str())).str();
   #else
-  str += (std::stringstream() << std::put_time(localtime(&t), format)).str();
+  str += (std::stringstream() << std::put_time(localtime(&t), format.c_str())).str();
   #endif
-  #if 0
+  if (show_ms) {
     int i = time % 1000;
     str += ".";
     if (i < 100) str += "0";
     if (i < 10) str += "0";
     str += std::to_string(i);
-  #endif
+  }
   return str;
 #endif
 }

@@ -13,7 +13,6 @@
 
 //#include <cxxabi.h>
 
-#define STD_FOMAT_TIME_STRING
 #define LOG_STREAM_CURRENT_TIME (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count())
 
 #define LOG_STREAM_CONSOLE_LEVEL 7
@@ -68,7 +67,7 @@ public:
 public:
   struct Message {
     Message() = default;
-    Message(uint8_t type, const std::string &name, const std::string &string, const std::string &note);
+    Message(uint8_t, const std::string &, const std::string &, const std::string &);
     Message(uint64_t time, uint8_t type, const std::string &name, const std::string &string, const std::string &note) : time(time), type(type), name(name), string(string), note(note) {}
     uint64_t time;
     uint8_t type;
@@ -79,24 +78,20 @@ public:
   };
 
   static void console_output(const Message &, uint8_t = LOG_STREAM_CONSOLE_COLOR | LOG_STREAM_CONSOLE_EXTEND);
-  static std::string levelName(uint8_t l);
-  static std::string colorString(Color c);
-  static std::string sender(const char *function);
-#ifdef STD_FOMAT_TIME_STRING
-  static std::string timeString(const uint64_t time, const char *format = "{:%m.%d %H:%M:%OS}");
-#else
-  static std::string timeString(const uint64_t time, const char *format = "%d.%m %H:%M:%S");
-#endif
+  static std::string levelName(uint8_t);
+  static std::string colorString(Color);
+  static std::string sender(const char *);
+  static std::string timeString(const uint64_t, const std::string & = "%m.%d %H:%M:%S", bool = false);
   inline static void (*completed)(const Message &, uint8_t) = &console_output;
   inline static void setCompleted(void (*_completed)(const Message &, uint8_t)) { completed = _completed; }
 
-  LogStream(uint8_t type, const char *function, const char *file, int line, uint8_t flags = 0);
+  LogStream(uint8_t, const char *, const char *, int, uint8_t = 0);
   LogStream() = default;
   ~LogStream();
   LogStream &operator<<(decltype(std::endl<char, std::char_traits<char>>) &);
-  LogStream &operator<<(const Color val);
-  LogStream &operator<<(const char *val);
-  LogStream &operator<<(char *val);
+  LogStream &operator<<(const Color);
+  LogStream &operator<<(const char *);
+  LogStream &operator<<(char *);
   template <typename T>
   inline LogStream &operator<<(T val) {
     typedef const typename std::remove_reference<T>::type type;
@@ -116,7 +111,7 @@ public:
     return *this;
   }
   LogStream &output() { return *this; }
-  LogStream &output(const std::string &msg);
+  LogStream &output(const std::string &);
 #ifndef __cpp_lib_format
   LogStream &output(const char *msg, ...) {
     char str[256];
