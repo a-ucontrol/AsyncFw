@@ -4,7 +4,7 @@
 
 #include "LogStream.h"
 
-//#define STD_FOMAT_TIME_STRING
+#define STD_FOMAT_TIME_STRING
 
 #ifndef STD_FOMAT_TIME_STRING
   #include <iomanip>
