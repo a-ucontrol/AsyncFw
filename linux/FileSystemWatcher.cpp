@@ -64,19 +64,27 @@ FileSystemWatcher::FileSystemWatcher(const std::vector<std::string> &paths) {
           inotify_rm_watch(notifyfd_, (*itd)->d);
           watch((*itd)->directory + '/' + (*itd)->name, -1);
           remove_(*itd);
-          ucDebug() << "file removed" << (*itd)->directory + '/' + (*itd)->name << (*itd)->d;
+          ucDebug() << "removed" << (*itd)->directory + '/' + (*itd)->name << (*itd)->d;
           (*itd)->d = -1;
           wds_.erase(itd);
           continue;
         }
+        if (e->mask & IN_CLOSE_WRITE) {
+          watch((*itd)->directory + '/' + (*itd)->name, 0);
+          remove_(*itd);
+          ucDebug() << "close write" << (*itd)->directory + '/' + (*itd)->name << (*itd)->d;
+          continue;
+        }
         if (e->mask & IN_MODIFY) {
           append_(*itd);
-          ucDebug() << "file changed" << (*itd)->directory + '/' + (*itd)->name << (*itd)->d;
+          ucDebug() << "modify" << (*itd)->directory + '/' + (*itd)->name << (*itd)->d;
           continue;
         }
         if (e->mask & IN_ATTRIB) {
-          append_(*itd);
-          ucDebug() << "file attributes changed" << (*itd)->directory + '/' + (*itd)->name << (*itd)->d;
+          watch((*itd)->directory + '/' + (*itd)->name, 0);
+          remove_(*itd);
+          //append_(*itd);
+          ucDebug() << "attributes changed" << (*itd)->directory + '/' + (*itd)->name << (*itd)->d;
           continue;
         }
         continue;
@@ -93,7 +101,7 @@ FileSystemWatcher::FileSystemWatcher(const std::vector<std::string> &paths) {
       }
       if (e->mask & IN_CREATE) {
         if ((*itw)->name == e->name) {
-          (*itw)->d = inotify_add_watch(notifyfd_, (wp.directory + '/' + e->name).c_str(), IN_ATTRIB | IN_MODIFY | IN_DELETE_SELF);
+          (*itw)->d = inotify_add_watch(notifyfd_, (wp.directory + '/' + e->name).c_str(), IN_ATTRIB | IN_MODIFY | IN_CLOSE_WRITE | IN_DELETE_SELF);
           if ((*itw)->d < 0) {
             logWarning() << "Inotify add watch error:" << (*itw)->d;
             (*itw)->d = (*itd)->d;
@@ -103,15 +111,15 @@ FileSystemWatcher::FileSystemWatcher(const std::vector<std::string> &paths) {
           }
         }
         watch(wp.directory + '/' + e->name, 1);
-        ucDebug() << "file created" << wp.directory + '/' + wp.name;
+        ucDebug() << "created" << wp.directory + '/' + wp.name;
         continue;
       }
       if (e->mask & IN_DELETE) {
         if ((*itw)->d == (*itd)->d) {
           watch(wp.directory + '/' + e->name, -1);
-          ucDebug() << "file removed" << wp.directory + '/' + wp.name;
-          continue;
+          ucDebug() << "removed" << wp.directory + '/' + wp.name;
         }
+        continue;
       }
 
       trace() << LogStream::Color::DarkRed << "unknown event" << wp.directory + '/' + wp.name << (*itd)->d << ((e->len) ? e->name : "") << e->wd << e->mask;
@@ -142,7 +150,7 @@ bool FileSystemWatcher::addPath(const std::string &path) {
     return false;
   }
 
-  w->d = (w->name != "*") ? inotify_add_watch(notifyfd_, path.c_str(), IN_MODIFY) : -1;
+  w->d = (w->name != "*") ? inotify_add_watch(notifyfd_, path.c_str(), IN_ATTRIB | IN_MODIFY | IN_CLOSE_WRITE | IN_DELETE_SELF) : -1;
   if (w->d < 0) {
     int i = inotify_add_watch(notifyfd_, w->directory.c_str(), IN_CREATE | IN_DELETE);
     if (i < 0) {
@@ -222,13 +230,15 @@ std::string FileSystemWatcher::info() const {
 }
 
 void FileSystemWatcher::append_(const Watch *_w) {
-  thread_->modifyTimer(timerid_, 100);
+  trace() << LogStream::Color::DarkRed << _w->directory << _w->name << _w->d;
+  thread_->modifyTimer(timerid_, 1000);
   std::vector<const Watch *>::iterator it = std::find(we_.begin(), we_.end(), _w);
   if (it != we_.end()) return;
   we_.emplace_back(_w);
 }
 
 void FileSystemWatcher::remove_(const Watch *_w) {
+  trace() << LogStream::Color::DarkRed << _w->directory << _w->name << _w->d;
   std::vector<const Watch *>::iterator it = std::find(we_.begin(), we_.end(), _w);
   if (it != we_.end()) we_.erase(it);
 }
