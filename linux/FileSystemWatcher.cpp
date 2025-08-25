@@ -65,8 +65,22 @@ FileSystemWatcher::FileSystemWatcher(const std::vector<std::string> &paths) {
           watch((*itd)->directory + '/' + (*itd)->name, -1);
           remove_(*itd);
           ucDebug() << "removed" << (*itd)->directory + '/' + (*itd)->name << (*itd)->d;
+
+          std::string dir = (*itd)->directory;
           (*itd)->d = -1;
           wds_.erase(itd);
+
+          int i = inotify_add_watch(notifyfd_, dir.c_str(), IN_CREATE | IN_DELETE);
+          if (i < 0) continue;
+          Watch *dw = new Watch();
+          dw->d = i;
+          dw->directory = dir;
+          itd = std::lower_bound(wds_.begin(), wds_.end(), dw->d, CompareWatchDescriptor());
+          if (itd == wds_.end() || (*itd)->d != dw->d) {
+            wds_.insert(itd, dw);
+          } else {
+            delete dw;
+          }
           continue;
         }
         if (e->mask & IN_CLOSE_WRITE) {
