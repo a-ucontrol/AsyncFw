@@ -61,26 +61,32 @@ FileSystemWatcher::FileSystemWatcher(const std::vector<std::string> &paths) {
 
       if (!(*itd)->name.empty()) {
         if (e->mask & (IN_IGNORED | IN_DELETE_SELF)) {
-          inotify_rm_watch(notifyfd_, (*itd)->d);
-          watch((*itd)->directory + '/' + (*itd)->name, -1);
-          remove_(*itd);
-          ucDebug() << "removed" << (*itd)->directory + '/' + (*itd)->name << (*itd)->d;
-
-          std::string dir = (*itd)->directory;
-          (*itd)->d = -1;
+          Watch *w = *itd;
           wds_.erase(itd);
+          int i = inotify_add_watch(notifyfd_, w->directory.c_str(), IN_CREATE | IN_DELETE);
+          inotify_rm_watch(notifyfd_, w->d);
+          watch(w->directory + '/' + w->name, -1);
+          remove_(*itd);
+          wds_.erase(itd);
+          ucDebug() << "removed" << w->directory + '/' + w->name << w->d;
 
-          int i = inotify_add_watch(notifyfd_, dir.c_str(), IN_CREATE | IN_DELETE);
+          w->d = inotify_add_watch(notifyfd_, (w->directory + '/' + w->name).c_str(), IN_ATTRIB | IN_MODIFY | IN_CLOSE_WRITE | IN_DELETE_SELF);
+          if (w->d >= 0) {
+            inotify_rm_watch(notifyfd_, i);
+            watch(w->directory + '/' + w->name, 1);
+            ucDebug() << "created (event missed)" << w->directory + '/' + w->name << w->d;
+            itd = std::lower_bound(wds_.begin(), wds_.end(), w->d, CompareWatchDescriptor());
+            wds_.insert(itd, w);
+            continue;
+          }
+
           if (i < 0) continue;
+
           Watch *dw = new Watch();
           dw->d = i;
-          dw->directory = dir;
+          dw->directory = w->directory;
           itd = std::lower_bound(wds_.begin(), wds_.end(), dw->d, CompareWatchDescriptor());
-          if (itd == wds_.end() || (*itd)->d != dw->d) {
-            wds_.insert(itd, dw);
-          } else {
-            delete dw;
-          }
+          wds_.insert(itd, dw);
           continue;
         }
         if (e->mask & IN_CLOSE_WRITE) {
@@ -125,7 +131,7 @@ FileSystemWatcher::FileSystemWatcher(const std::vector<std::string> &paths) {
           }
         }
         watch(wp.directory + '/' + e->name, 1);
-        ucDebug() << "created" << wp.directory + '/' + wp.name;
+        ucDebug() << "created (watch directory)" << wp.directory + '/' + wp.name;
         continue;
       }
       if (e->mask & IN_DELETE) {
