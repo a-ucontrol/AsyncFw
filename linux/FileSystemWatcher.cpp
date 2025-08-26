@@ -65,16 +65,15 @@ FileSystemWatcher::FileSystemWatcher(const std::vector<std::string> &paths) {
           wds_.erase(itd);
           int i = inotify_add_watch(notifyfd_, w->directory.c_str(), IN_CREATE | IN_DELETE);
           inotify_rm_watch(notifyfd_, w->d);
+          remove_(w);
           watch(w->directory + '/' + w->name, -1);
-          remove_(*itd);
-          wds_.erase(itd);
-          ucDebug() << "removed" << w->directory + '/' + w->name << w->d;
+          ucInfoCyan() << "removed" << w->directory + '/' + w->name << w->d;
 
           w->d = inotify_add_watch(notifyfd_, (w->directory + '/' + w->name).c_str(), IN_ATTRIB | IN_MODIFY | IN_CLOSE_WRITE | IN_DELETE_SELF);
           if (w->d >= 0) {
             inotify_rm_watch(notifyfd_, i);
             watch(w->directory + '/' + w->name, 1);
-            ucDebug() << "created (event missed)" << w->directory + '/' + w->name << w->d;
+            ucInfoCyan() << "created (event missed)" << w->directory + '/' + w->name << w->d;
             itd = std::lower_bound(wds_.begin(), wds_.end(), w->d, CompareWatchDescriptor());
             wds_.insert(itd, w);
             continue;
