@@ -31,6 +31,8 @@ struct start_wsa {
   #define close_fd ::closesocket
   #define CONNECT_PROGRESS 0
   #define setsockopt_ptr reinterpret_cast<const char *>
+  #define SHUT_RD SD_RECEIVE
+  #define SHUT_RDWR SD_BOTH
 #endif
 
 #include "Socket.h"
@@ -259,7 +261,12 @@ void AbstractSocket::disconnect() {
   state_ = Closing;
   stateEvent();
   trace() << LogStream::Color::Red << fd_;
-  if (private_->wda_.empty()) close();
+  if (private_->wda_.empty()) {
+    shutdown(fd_, SHUT_RDWR);
+    close();
+    return;
+  }
+  shutdown(fd_, SHUT_RD);
 }
 
 int AbstractSocket::read(uint8_t *_p, int _s) {
