@@ -99,8 +99,9 @@ bool AbstractSocket::listen(const std::string &_address, uint16_t _port) {
   }
   int _val = 1;
   if (setsockopt(_fd, SOL_SOCKET, SO_REUSEADDR, setsockopt_ptr(&_val), sizeof _val) < 0) ucError("set SO_REUSEADDR");
-  //if (setsockopt(_fd, SOL_SOCKET, SO_REUSEPORT, &_val, sizeof _val) < 0) ucError("set SO_REUSEPORT");
-
+#ifndef _WIN32
+  if (setsockopt(_fd, SOL_SOCKET, SO_REUSEPORT, &_val, sizeof _val) < 0) ucError("set SO_REUSEPORT");
+#endif
   reinterpret_cast<sockaddr_in *>(&private_->la_)->sin_port = htons(_port);
   reinterpret_cast<sockaddr_in *>(&private_->la_)->sin_addr.s_addr = inet_addr(_address.c_str());
 
