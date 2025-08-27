@@ -31,7 +31,6 @@ struct start_wsa {
   #define close_fd ::closesocket
   #define CONNECT_PROGRESS 0
   #define setsockopt_ptr reinterpret_cast<const char *>
-  #define SHUT_RD SD_RECEIVE
   #define SHUT_RDWR SD_BOTH
 #endif
 
@@ -259,9 +258,7 @@ void AbstractSocket::disconnect() {
   if (private_->wda_.empty()) {
     shutdown(fd_, SHUT_RDWR);
     close();
-    return;
   }
-  shutdown(fd_, SHUT_RD);
 }
 
 int AbstractSocket::read(uint8_t *_p, int _s) {
@@ -500,7 +497,10 @@ void AbstractSocket::pollEvent(int _e) {
     if (private_->wda_.empty()) {
       private_->w_--;
       if (!private_->w_) thread_->modifyPollDescriptor(fd_, AbstractThread::PollIn);
-      if (state_ == State::Closing) close();
+      if (state_ == State::Closing) {
+        shutdown(fd_, SHUT_RDWR);
+        close();
+      }
       return;
     }
     int r = write_fd(private_->wda_.data(), private_->wda_.size());
