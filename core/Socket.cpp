@@ -122,12 +122,7 @@ bool AbstractSocket::listen(const std::string &_address, uint16_t _port) {
 
   return true;
 }
-/*
-void AbstractSocket::timerEvent() {
-  removeTimer();
-  ucWarning("not implemented, timer removed");
-}
-*/
+
 void AbstractSocket::errorEvent() { ucWarning("not implemented"); }
 
 void AbstractSocket::acceptEvent() {
