@@ -339,6 +339,6 @@ private:
   inline static std::vector<AbstractThreadPool *> pools_;
 };
 
-constexpr AbstractThread::PollEvents operator|(AbstractThread::PollEvents f1, AbstractThread::PollEvents f2) { return static_cast<AbstractThread::PollEvents>(static_cast<uint8_t>(f1) | static_cast<uint8_t>(f2)); }
-constexpr AbstractThread::PollEvents operator==(AbstractThread::PollEvents, AbstractThread::PollEvents) = delete;
+constexpr AbstractThread::PollEvents operator|(AbstractThread::PollEvents e1, AbstractThread::PollEvents e2) { return static_cast<AbstractThread::PollEvents>(static_cast<uint8_t>(e1) | static_cast<uint8_t>(e2)); }
+constexpr bool operator==(AbstractThread::PollEvents, AbstractThread::PollEvents) = delete;
 }  // namespace AsyncFw
