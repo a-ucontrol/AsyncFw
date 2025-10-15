@@ -175,6 +175,20 @@ LogStream &LogStream::operator<<(const Color val) {
   return *this;
 }
 
+LogStream &LogStream::operator<<(int8_t val) {
+  before();
+  stream << static_cast<int>(val);
+  after();
+  return *this;
+}
+
+LogStream &LogStream::operator<<(uint8_t val) {
+  before();
+  stream << static_cast<unsigned int>(val);
+  after();
+  return *this;
+}
+
 LogStream &LogStream::operator<<(const char *val) {
   before();
   if (!val) stream << "NULL";

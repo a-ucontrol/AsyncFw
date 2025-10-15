@@ -90,6 +90,8 @@ public:
   ~LogStream();
   LogStream &operator<<(decltype(std::endl<char, std::char_traits<char>>) &);
   LogStream &operator<<(const Color);
+  LogStream &operator<<(const int8_t);
+  LogStream &operator<<(const uint8_t);
   LogStream &operator<<(const char *);
   LogStream &operator<<(char *);
   template <typename T>
