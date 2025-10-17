@@ -16,7 +16,7 @@
 #define TRANSMIT_COUNT 100
 
 using namespace AsyncFw;
-LogTcpServer::LogTcpServer(DataArrayTcpServer *_tcpServer, Log *_log) : tcpServer(_tcpServer), log(_log) {
+LogTcpServer::LogTcpServer(DataArrayTcpServer *_tcpServer, Rrd *_log) : tcpServer(_tcpServer), log(_log) {
   rf_ = tcpServer->received([this](const DataArraySocket *socket, const DataArray *da, uint32_t pi) {
     if (pi != 0 && pi != 3) return;
     if (da->size() == 0) return;

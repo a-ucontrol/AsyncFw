@@ -7,11 +7,11 @@
 namespace AsyncFw {
 class DataArraySocket;
 class DataArrayTcpServer;
-class Log;
+class Rrd;
 
 class LogTcpServer {
 public:
-  LogTcpServer(DataArrayTcpServer *, Log *);
+  LogTcpServer(DataArrayTcpServer *, Rrd *);
   virtual ~LogTcpServer();
   void quit();
 
@@ -20,7 +20,7 @@ protected:
   void transmit(uint32_t index, uint32_t lastIndex, const DataArrayList &list, bool wait = false);
   DataArrayTcpServer *tcpServer;
   std::queue<const DataArraySocket *> sockets;
-  Log *log;
+  Rrd *log;
   FunctionConnectionGuard rf_;
 };
 }  // namespace AsyncFw
