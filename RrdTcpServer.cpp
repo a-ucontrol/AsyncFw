@@ -20,14 +20,11 @@ using namespace AsyncFw;
 RrdTcpServer::RrdTcpServer(DataArrayTcpServer *_tcpServer, const std::vector<Rrd *> &_rrd) : tcpServer(_tcpServer), rrd(_rrd) {
   rf_ = tcpServer->received([this](const DataArraySocket *socket, const DataArray *da, uint32_t pi) {
     int v = pi & 0x0F;
-    if (v > rrd.size()) {
+    if (v >= rrd.size()) {
       ucError() << "failed rrd index";
       return;
     }
-
-    uint64_t from = *(uint64_t *)(da->data());
-    sockets.push(socket);
-    rrdRead(from, TRANSMIT_COUNT);
+    transmit(socket, *(uint64_t *)(da->data()), TRANSMIT_COUNT, pi);
   });
   ucTrace();
 }
@@ -36,25 +33,18 @@ RrdTcpServer::~RrdTcpServer() { ucTrace(); }
 
 void RrdTcpServer::quit() { tcpServer->quit(); }
 
-void RrdTcpServer::rrdRead(uint64_t index, int size) {
+void RrdTcpServer::transmit(const DataArraySocket *socket, uint64_t index, uint32_t size, uint32_t pi) {
   uint64_t lastIndex;
-  DataArrayList _v;
-  uint64_t i = rrd[0]->read(&_v, index, size, &lastIndex);
+  DataArrayList _list;
+  uint64_t i = rrd[0]->read(&_list, index, size, &lastIndex);
 
-  logAlert() << index << _v.size();
-
-  transmit(i, lastIndex, _v);
-}
-
-void RrdTcpServer::transmit(uint64_t index, uint64_t lastIndex, const DataArrayList &list, bool wait) {
   DataStream _ds;
-  _ds << index;
-  _ds << list;
+  _ds << i;
+  _ds << _list;
   _ds << lastIndex;
 
   DataArray _da = DataArray::compress(_ds.array());
 
-  trace() << lastIndex << list.size();
-  tcpServer->transmit(sockets.front(), _da, 0, wait);
-  sockets.pop();
+  trace() << lastIndex << _list.size();
+  tcpServer->transmit(socket, _da, pi);
 }
