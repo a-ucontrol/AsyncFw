@@ -25,7 +25,7 @@ Rrd::Rrd(int size, const std::string &name) : dbSize(size) {
 #ifdef AVERAGE_RRD
   setAverage(nullptr, nullptr, 0, 0);
 #endif
-  last = 0;
+  last_ = 0;
   if (!name.empty()) {
     file = name;
     if (!readFromFile()) {
@@ -52,19 +52,19 @@ bool Rrd::createFile() {
   count_v = 0;
   dataBase.clear();
   dataBase.resize(dbSize);
-  last = 0;
+  last_ = 0;
   if (readOnly || !saveToFile()) return false;
   return true;
 }
 
-uint32_t Rrd::append(const Item &data, uint32_t index) {
+uint32_t Rrd::append(const Item &data, uint64_t index) {
   mutex.lock();
-  if (index == 0) index = last + 1;
-  uint32_t pos = index;
+  if (index == 0) index = last_ + 1;
+  uint64_t pos = index;
 #ifdef AVERAGE_RRD
   bool needAverage = (aInterval && (((static_cast<qint64>(index) + aOffset) / aInterval) - ((static_cast<qint64>(last) + aOffset) / aInterval)) > 0) ? true : false;
 #endif
-  int64_t empty = static_cast<int64_t>(pos) - last;
+  int64_t empty = pos - last_;
 
   if (empty > dbSize) empty = dbSize;
   if (empty < -static_cast<int64_t>(dbSize)) empty = -static_cast<int64_t>(dbSize);
@@ -87,7 +87,7 @@ uint32_t Rrd::append(const Item &data, uint32_t index) {
     }
   }
   dataBase[index % dbSize] = data;
-  last = index;
+  last_ = index;
   mutex.unlock();
   updated();
 
@@ -104,14 +104,14 @@ uint32_t Rrd::append(const Item &data, uint32_t index) {
   return index;
 }
 
-Rrd::Item Rrd::readFromArray(uint32_t index) {
-  uint32_t i = 1 + last + index - count_v;
+Rrd::Item Rrd::readFromArray(uint64_t index) {
+  uint64_t i = 1 + last_ + index - count_v;
   //if (i > last) i = last;
   return dataBase[i % dbSize];
 }
 
-void Rrd::writeToArray(uint32_t index, const Item &ba) {
-  uint32_t i = 1 + last + index - count_v;
+void Rrd::writeToArray(uint64_t index, const Item &ba) {
+  uint64_t i = 1 + last_ + index - count_v;
   //if (i > last) i = last;
   dataBase[i % dbSize] = ba;
 }
@@ -119,13 +119,13 @@ void Rrd::writeToArray(uint32_t index, const Item &ba) {
 void Rrd::clear() {
   std::lock_guard<MutexType> lock(mutex);
   for (uint32_t i = 0; i != dbSize; ++i) dataBase[i].clear();
-  last = 0;
+  last_ = 0;
   count_v = 0;
 }
 
-uint32_t Rrd::lastIndex() {
+uint64_t Rrd::lastIndex() {
   std::lock_guard<MutexType> lock(mutex);
-  return last;
+  return last_;
 }
 
 uint32_t Rrd::count() {
@@ -133,17 +133,17 @@ uint32_t Rrd::count() {
   return count_v;
 }
 
-uint32_t Rrd::read(DataArrayList *list, uint32_t val, int size, uint32_t *lastIndex) {
+uint64_t Rrd::read(DataArrayList *list, uint64_t val, uint32_t size, uint64_t *lastIndex) {
   if (!size) size = dbSize;
   std::lock_guard<MutexType> lock(mutex);
-  if (lastIndex) *lastIndex = last;
-  if (val > last) return last;
-  if ((last - val) > (uint32_t)dbSize) val = 1 + last - dbSize;
+  if (lastIndex) *lastIndex = last_;
+  if (val > last_) return last_;
+  if ((last_ - val) > dbSize) val = 1 + last_ - dbSize;
   uint32_t i = val % dbSize;
   while (size--) {
     list->push_back(dataBase[i++]);
     if (i == dbSize) i = 0;
-    if ((++val) > last) break;
+    if ((++val) > last_) break;
   }
   return val - 1;
 }
@@ -166,7 +166,7 @@ bool Rrd::readFromFile() {
 
   if (!_buf.empty()) {
     DataStream ds(_buf);
-    ds >> last;
+    ds >> last_;
     ds >> dataBase;
     if (ds.fail()) dataBase.clear();
   }
@@ -190,7 +190,7 @@ bool Rrd::readFromFile() {
 
 bool Rrd::saveToFile(const std::string &_fileToSave) {
   DataStream _ds;
-  _ds << last;
+  _ds << last_;
   _ds << dataBase;
 
 #ifdef EXTEND_RRD_TRACE

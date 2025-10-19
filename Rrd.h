@@ -12,7 +12,7 @@ public:
   using ItemList = DataArrayList;
   Rrd(int size, const std::string &name = {});
   ~Rrd() override;
-  uint32_t read(DataArrayList *list, uint32_t from = 0, int size = 0, uint32_t *lastIndex = nullptr);
+  uint64_t read(DataArrayList *list, uint64_t from = 0, uint32_t size = 0, uint64_t *lastIndex = nullptr);
 #ifdef AVERAGE_RRD
   void setAverage(QObject *, QByteArray (QObject::*)(QList<QByteArray> &, Rrd *), int interval, int offset = 0);
   void setAverageOffset(int offset) { aOffset = offset; }
@@ -20,12 +20,12 @@ public:
 #endif
   uint32_t size() { return dbSize; }
   uint32_t count();
-  Item readFromArray(uint32_t);
-  void writeToArray(uint32_t, const Item &);
-  uint32_t append(const Item &data, uint32_t index = 0);
+  Item readFromArray(uint64_t);
+  void writeToArray(uint64_t, const Item &);
+  uint32_t append(const Item &data, uint64_t index = 0);
   void save(const std::string &fn = {});
   void clear();
-  uint32_t lastIndex();
+  uint64_t lastIndex();
 
   void setUpdated(std::function<void()> _updated) { updated_ = _updated; }
   void updated() {
@@ -33,7 +33,7 @@ public:
   }
 
 protected:
-  uint32_t last;
+  uint64_t last_;
   uint32_t dbSize;
   ItemList dataBase;
   uint32_t count_v;
