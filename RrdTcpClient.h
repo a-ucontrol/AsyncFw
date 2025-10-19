@@ -4,16 +4,16 @@
 #include "core/TlsContext.h"
 
 namespace AsyncFw {
-class Log;
+class Rrd;
 class DataArraySocket;
 class DataArrayTcpClient;
 
-class LogTcpClient {
+class RrdTcpClient {
 public:
-  LogTcpClient(DataArrayTcpClient *, int, const std::string & = {}, DataArraySocket *socket = nullptr);
-  ~LogTcpClient();
+  RrdTcpClient(DataArrayTcpClient *, int, const std::string & = {}, DataArraySocket *socket = nullptr);
+  ~RrdTcpClient();
   void clear();
-  Log *log() { return log_; }
+  Rrd *rrd() { return rrd_; }
 
   void connectToHost(const std::string &, uint16_t);
   void connectToHost();
@@ -25,11 +25,11 @@ public:
   void disableTls();
 
 private:
-  Log *log_;
+  Rrd *rrd_;
   DataArraySocket *tcpSocket;
   DataArrayTcpClient *tcpClient;
   int requestTimerId;
-  uint32_t lastTime;
+  uint64_t lastTime;
   void tcpReadWrite(const DataArray *, uint32_t);
   void connectionStateChanged();
   void request(int = 0);

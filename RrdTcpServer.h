@@ -9,18 +9,21 @@ class DataArraySocket;
 class DataArrayTcpServer;
 class Rrd;
 
-class LogTcpServer {
+class RrdTcpServer {
 public:
-  LogTcpServer(DataArrayTcpServer *, Rrd *);
-  virtual ~LogTcpServer();
+  RrdTcpServer(DataArrayTcpServer *, const std::vector<Rrd *> &Rrd);
+  virtual ~RrdTcpServer();
   void quit();
 
 protected:
-  virtual void logRead(uint32_t index, int size);
-  void transmit(uint32_t index, uint32_t lastIndex, const DataArrayList &list, bool wait = false);
+  virtual void rrdRead(uint64_t index, int size);
+  void transmit(uint64_t index, uint64_t lastIndex, const DataArrayList &list, bool wait = false);
   DataArrayTcpServer *tcpServer;
   std::queue<const DataArraySocket *> sockets;
-  Rrd *log;
+  std::vector<Rrd *> rrd;
   FunctionConnectionGuard rf_;
+
+private:
+  int rrdIndex;
 };
 }  // namespace AsyncFw

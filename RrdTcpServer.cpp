@@ -1,6 +1,7 @@
 #include "DataArrayTcpServer.h"
-#include "Log.h"
-#include "LogTcpServer.h"
+#include "Rrd.h"
+#include "core/LogStream.h"
+#include "RrdTcpServer.h"
 
 #ifdef EXTEND_LOG_TRACE
   #define trace LogStream(+LogStream::Trace | LogStream::Gray, __PRETTY_FUNCTION__, __FILE__, __LINE__, 6 | LOG_STREAM_CONSOLE_ONLY).output
@@ -16,31 +17,36 @@
 #define TRANSMIT_COUNT 100
 
 using namespace AsyncFw;
-LogTcpServer::LogTcpServer(DataArrayTcpServer *_tcpServer, Rrd *_log) : tcpServer(_tcpServer), log(_log) {
+RrdTcpServer::RrdTcpServer(DataArrayTcpServer *_tcpServer, const std::vector<Rrd *> &_rrd) : tcpServer(_tcpServer), rrd(_rrd) {
   rf_ = tcpServer->received([this](const DataArraySocket *socket, const DataArray *da, uint32_t pi) {
-    if (pi != 0 && pi != 3) return;
-    if (da->size() == 0) return;
-    if (da->at(0) == 1) {
-      uint32_t from = *(uint32_t *)(da->data() + 1);
-      sockets.push(socket);
-      logRead(from, (pi == 0) ? TRANSMIT_COUNT : 0);
+    int v = pi & 0x0F;
+    if (v > rrd.size()) {
+      ucError() << "failed rrd index";
+      return;
     }
+
+    uint64_t from = *(uint64_t *)(da->data());
+    sockets.push(socket);
+    rrdRead(from, TRANSMIT_COUNT);
   });
   ucTrace();
 }
 
-LogTcpServer::~LogTcpServer() { ucTrace(); }
+RrdTcpServer::~RrdTcpServer() { ucTrace(); }
 
-void LogTcpServer::quit() { tcpServer->quit(); }
+void RrdTcpServer::quit() { tcpServer->quit(); }
 
-void LogTcpServer::logRead(uint32_t index, int size) {
-  uint32_t lastIndex;
+void RrdTcpServer::rrdRead(uint64_t index, int size) {
+  uint64_t lastIndex;
   DataArrayList _v;
-  uint32_t i = static_cast<Log *>(log)->read(&_v, index, size, &lastIndex);
+  uint64_t i = rrd[0]->read(&_v, index, size, &lastIndex);
+
+  logAlert() << index << _v.size();
+
   transmit(i, lastIndex, _v);
 }
 
-void LogTcpServer::transmit(uint32_t index, uint32_t lastIndex, const DataArrayList &list, bool wait) {
+void RrdTcpServer::transmit(uint64_t index, uint64_t lastIndex, const DataArrayList &list, bool wait) {
   DataStream _ds;
   _ds << index;
   _ds << list;
