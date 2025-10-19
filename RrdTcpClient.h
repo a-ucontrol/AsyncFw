@@ -10,10 +10,9 @@ class DataArrayTcpClient;
 
 class RrdTcpClient {
 public:
-  RrdTcpClient(DataArrayTcpClient *, int, const std::string & = {}, DataArraySocket *socket = nullptr);
+  RrdTcpClient(DataArraySocket *, const std::vector<Rrd *> &);
   ~RrdTcpClient();
   void clear();
-  Rrd *rrd() { return rrd_; }
 
   void connectToHost(const std::string &, uint16_t);
   void connectToHost();
@@ -25,7 +24,7 @@ public:
   void disableTls();
 
 private:
-  Rrd *rrd_;
+  std::vector<Rrd *> rrd_;
   DataArraySocket *tcpSocket;
   DataArrayTcpClient *tcpClient;
   int requestTimerId;
