@@ -24,6 +24,8 @@ RrdTcpClient::RrdTcpClient(DataArraySocket *socket, const std::vector<Rrd *> &rr
     rrd_[0]->modifyTimer(requestTimerId, 0);
     request();
   });
+  if (tcpSocket->state() == AbstractSocket::Active) request();
+  ucTrace();
 }
 
 RrdTcpClient::~RrdTcpClient() {
@@ -77,6 +79,7 @@ void RrdTcpClient::tcpReadWrite(const DataArray *rba, uint32_t pi) {
       return;
     }
 
+    uint32_t dbSize = rrd_[n]->size();
     uint64_t li = rrd_[n]->lastIndex();
     if (li && (val < lastTime || val - lastTime > static_cast<unsigned int>(dbSize))) {
       rrd_[n]->clear();

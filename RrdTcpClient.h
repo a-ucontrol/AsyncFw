@@ -29,7 +29,6 @@ private:
   void tcpReadWrite(const DataArray *, uint32_t);
   void connectionStateChanged();
   void request(int = 0);
-  uint32_t dbSize;
   FunctionConnectionGuardList gl_;
 };
 }  // namespace AsyncFw
