@@ -1,9 +1,10 @@
+#include "DataArraySocket.h"
 #include "DataArrayTcpServer.h"
 #include "Rrd.h"
 #include "core/LogStream.h"
 #include "RrdTcpServer.h"
 
-#ifdef EXTEND_LOG_TRACE
+#ifdef EXTEND_RRD_TRACE
   #define trace LogStream(+LogStream::Trace | LogStream::Gray, __PRETTY_FUNCTION__, __FILE__, __LINE__, 6 | LOG_STREAM_CONSOLE_ONLY).output
   #define warning_if(x) \
     if (x) LogStream(+LogStream::Warning | LogStream::DarkBlue, __PRETTY_FUNCTION__, __FILE__, __LINE__, 6 | LOG_STREAM_CONSOLE_ONLY).output()
@@ -19,9 +20,8 @@
 using namespace AsyncFw;
 RrdTcpServer::RrdTcpServer(DataArrayTcpServer *_tcpServer, const std::vector<Rrd *> &_rrd) : tcpServer(_tcpServer), rrd(_rrd) {
   rf_ = tcpServer->received([this](const DataArraySocket *socket, const DataArray *da, uint32_t pi) {
-    int v = pi & 0x0F;
-    if (v >= rrd.size()) {
-      ucError() << "failed rrd index";
+    if (pi >= rrd.size()) {
+      trace() << "failed rrd index" << LogStream::Color::Red << pi;
       return;
     }
     transmit(socket, *reinterpret_cast<const uint64_t *>(da->data()), TRANSMIT_COUNT, pi);
@@ -45,6 +45,6 @@ void RrdTcpServer::transmit(const DataArraySocket *socket, uint64_t index, uint3
 
   DataArray _da = DataArray::compress(_ds.array());
 
-  trace() << index << i << lastIndex << _list.size();
+  trace() << index << i << lastIndex << _list.size() << LogStream::Color::Red << pi;
   tcpServer->transmit(socket, _da, pi);
 }

@@ -25,7 +25,7 @@ private:
   std::vector<Rrd *> rrd_;
   DataArraySocket *tcpSocket;
   int requestTimerId;
-  uint64_t lastTime;
+  uint64_t lastTime = 0;
   void tcpReadWrite(const DataArray *, uint32_t);
   void connectionStateChanged();
   void request(int = 0);

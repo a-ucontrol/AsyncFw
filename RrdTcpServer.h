@@ -1,6 +1,5 @@
 #pragma once
 
-#include <queue>
 #include "core/FunctionConnector.h"
 
 namespace AsyncFw {
@@ -17,7 +16,6 @@ public:
 protected:
   void transmit(const DataArraySocket *socket, uint64_t index, uint32_t size, uint32_t pi);
   DataArrayTcpServer *tcpServer;
-  std::queue<const DataArraySocket *> sockets;
   std::vector<Rrd *> rrd;
   FunctionConnectionGuard rf_;
 };

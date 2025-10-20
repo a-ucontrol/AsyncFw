@@ -3,7 +3,7 @@
 #include "core/LogStream.h"
 #include "RrdTcpClient.h"
 
-#ifdef EXTEND_LOG_TRACE
+#ifdef EXTEND_RRD_TRACE
   #define trace LogStream(+LogStream::Trace | LogStream::Gray, __PRETTY_FUNCTION__, __FILE__, __LINE__, 6 | LOG_STREAM_CONSOLE_ONLY).output
   #define warning_if(x) \
     if (x) LogStream(+LogStream::Warning | LogStream::DarkBlue, __PRETTY_FUNCTION__, __FILE__, __LINE__, 6 | LOG_STREAM_CONSOLE_ONLY).output()
@@ -28,7 +28,6 @@ RrdTcpClient::RrdTcpClient(DataArraySocket *socket, const std::vector<Rrd *> &rr
 
 RrdTcpClient::~RrdTcpClient() {
   rrd_[0]->removeTimer(requestTimerId);
-  disconnectFromHost();
   ucTrace();
 }
 
