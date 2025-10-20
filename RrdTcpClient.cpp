@@ -1,4 +1,4 @@
-#include "DataArrayTcpClient.h"
+#include "DataArraySocket.h"
 #include "Rrd.h"
 #include "core/LogStream.h"
 #include "RrdTcpClient.h"
@@ -16,13 +16,9 @@
 
 using namespace AsyncFw;
 RrdTcpClient::RrdTcpClient(DataArraySocket *socket, const std::vector<Rrd *> &rrd) : rrd_(rrd), tcpSocket(socket) {
-  gl_ += tcpClient->received([this](const DataArraySocket *socket, const DataArray *da, uint32_t pi) {
-    if (socket == tcpSocket) tcpReadWrite(da, pi);
-  });
+  gl_ += socket->received([this](const DataArray *da, uint32_t pi) { tcpReadWrite(da, pi); });
 
-  gl_ += tcpClient->connectionStateChanged([this](const DataArraySocket *socket) {
-    if (socket == tcpSocket) connectionStateChanged();
-  });
+  gl_ += socket->stateChanged([this](AbstractSocket::State) { connectionStateChanged(); });
 
   requestTimerId = rrd_[0]->appendTimerTask(0, [this]() {
     rrd_[0]->modifyTimer(requestTimerId, 0);
@@ -32,13 +28,13 @@ RrdTcpClient::RrdTcpClient(DataArraySocket *socket, const std::vector<Rrd *> &rr
 
 RrdTcpClient::~RrdTcpClient() {
   rrd_[0]->removeTimer(requestTimerId);
-  tcpSocket->stateChanged(
-      [c = tcpClient, s = tcpSocket](AbstractSocket::State state) {
-        if (state != AbstractSocket::Unconnected) return;
-        c->removeSocket(s);
-      },
-      AbstractThread::currentThread());
-  disconnectFromHost();
+  //tcpSocket->stateChanged(
+  //    [c = tcpClient, s = tcpSocket](AbstractSocket::State state) {
+  //      if (state != AbstractSocket::Unconnected) return;
+  //      c->removeSocket(s);
+  //    },
+  //    AbstractThread::currentThread());
+  //disconnectFromHost();
   ucTrace();
 }
 
@@ -48,15 +44,24 @@ void RrdTcpClient::clear() {
   rrd_[0]->invokeMethod([this]() { rrd_[0]->updated(); });
 }
 
-void RrdTcpClient::connectToHost(const std::string &address, uint16_t port) { tcpClient->connectToHost(tcpSocket, address, port, 0); }
+void RrdTcpClient::connectToHost(const std::string &address, uint16_t port) {
+  tcpSocket->thread()->invokeMethod([this, address, port]() {
+    tcpSocket->setHost(address, port);
+    tcpSocket->connectToHost();
+  });
+}
 
-void RrdTcpClient::connectToHost() { tcpClient->connectToHost(tcpSocket, 0); }
+void RrdTcpClient::connectToHost() {
+  tcpSocket->thread()->invokeMethod([this]() { tcpSocket->connectToHost(); });
+}
 
-void RrdTcpClient::disconnectFromHost() { tcpClient->disconnectFromHost(tcpSocket); }
+void RrdTcpClient::disconnectFromHost() {
+  tcpSocket->thread()->invokeMethod([this]() { tcpSocket->disconnect(); });
+}
 
-int RrdTcpClient::transmit(const DataArray &ba, uint32_t pi, bool wait) { return tcpClient->transmit(tcpSocket, ba, pi, wait); }
+int RrdTcpClient::transmit(const DataArray &ba, uint32_t pi, bool wait) { return tcpSocket->transmit(ba, pi, wait); }
 
-void RrdTcpClient::tlsSetup(const TlsContext &data) { tcpClient->initTls(tcpSocket, data); }
+void RrdTcpClient::tlsSetup(const TlsContext &data) { tcpSocket->initTls(data); }
 
 void RrdTcpClient::disableTls() { tcpSocket->disableTls(); }
 
@@ -65,7 +70,7 @@ void RrdTcpClient::clearHost() { tcpSocket->setHost("", 0); }
 void RrdTcpClient::tcpReadWrite(const DataArray *rba, uint32_t pi) {
   if (pi == 2) request(3);
   if (pi != 0) return;
-  rrd_[0]->invokeMethod([this, rba(*rba), n = pi & 0x0F]() {
+  rrd_[0]->invokeMethod([this, rba(*rba), n = (pi & 0x0F)]() {
     DataArray _da = DataArray::uncompress(rba);
     if (_da.empty()) {
       logError() << "Error read log";
@@ -84,7 +89,7 @@ void RrdTcpClient::tcpReadWrite(const DataArray *rba, uint32_t pi) {
       return;
     }
 
-    uint64_t li = rrd_[0]->lastIndex();
+    uint64_t li = rrd_[n]->lastIndex();
     if (li && (val < lastTime || val - lastTime > static_cast<unsigned int>(dbSize))) {
       rrd_[n]->clear();
       rrd_[n]->updated();
@@ -108,7 +113,7 @@ void RrdTcpClient::tcpReadWrite(const DataArray *rba, uint32_t pi) {
 void RrdTcpClient::request(int pi) {
   DataArray ba;
   ba.resize(8);
-  *reinterpret_cast<uint64_t *>(ba.data() + 1) = lastTime + 1;
+  *reinterpret_cast<uint64_t *>(ba.data()) = lastTime + 1;
   tcpSocket->transmit(ba, pi);
   trace() << lastTime;
 }

@@ -24,7 +24,7 @@ RrdTcpServer::RrdTcpServer(DataArrayTcpServer *_tcpServer, const std::vector<Rrd
       ucError() << "failed rrd index";
       return;
     }
-    transmit(socket, *(uint64_t *)(da->data()), TRANSMIT_COUNT, pi);
+    transmit(socket, *reinterpret_cast<const uint64_t *>(da->data()), TRANSMIT_COUNT, pi);
   });
   ucTrace();
 }
@@ -45,6 +45,6 @@ void RrdTcpServer::transmit(const DataArraySocket *socket, uint64_t index, uint3
 
   DataArray _da = DataArray::compress(_ds.array());
 
-  trace() << lastIndex << _list.size();
+  trace() << index << i << lastIndex << _list.size();
   tcpServer->transmit(socket, _da, pi);
 }

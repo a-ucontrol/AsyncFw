@@ -44,6 +44,10 @@ public:
   uint16_t hostPort() const { return hostPort_v; }
   void transmitKeepAlive() { transmitKeepAlive(true); }
 
+  void connectToHost();
+  void connectToHost(int timeout);
+  void disconnect() override;
+
   mutable FunctionConnectorProtected<DataArraySocket>::Connector<AbstractSocket::State> stateChanged {true};
   mutable FunctionConnectorProtected<DataArraySocket>::Connector<const DataArray *, uint32_t> received {true};
 
@@ -51,7 +55,7 @@ protected:
   void stateEvent() override;
   void readEvent() override;
   void errorEvent() override;
-  void disconnect() override;
+  using AbstractTlsSocket::connect;
 
 private:
   int sslConnection;
@@ -78,8 +82,6 @@ private:
   mutable uint16_t hostPort_v;
   mutable std::deque<DataArray> transmitList;
   void clearBuffer_(const DataArray *) const;
-  void connectToHost();
-  void connectToHost(int timeout);
   void writeSocket();
   void sendMessage(const std::string &, uint8_t);
   void transmitKeepAlive(bool);

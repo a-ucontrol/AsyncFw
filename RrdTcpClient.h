@@ -6,7 +6,6 @@
 namespace AsyncFw {
 class Rrd;
 class DataArraySocket;
-class DataArrayTcpClient;
 
 class RrdTcpClient {
 public:
@@ -26,7 +25,6 @@ public:
 private:
   std::vector<Rrd *> rrd_;
   DataArraySocket *tcpSocket;
-  DataArrayTcpClient *tcpClient;
   int requestTimerId;
   uint64_t lastTime;
   void tcpReadWrite(const DataArray *, uint32_t);
