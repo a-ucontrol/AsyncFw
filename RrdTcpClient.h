@@ -17,7 +17,6 @@ public:
   void connectToHost();
   void disconnectFromHost();
   int transmit(const DataArray &, uint32_t, bool = false);
-  void clearHost();
 
   void tlsSetup(const TlsContext &);
   void disableTls();

@@ -28,13 +28,7 @@ RrdTcpClient::RrdTcpClient(DataArraySocket *socket, const std::vector<Rrd *> &rr
 
 RrdTcpClient::~RrdTcpClient() {
   rrd_[0]->removeTimer(requestTimerId);
-  //tcpSocket->stateChanged(
-  //    [c = tcpClient, s = tcpSocket](AbstractSocket::State state) {
-  //      if (state != AbstractSocket::Unconnected) return;
-  //      c->removeSocket(s);
-  //    },
-  //    AbstractThread::currentThread());
-  //disconnectFromHost();
+  disconnectFromHost();
   ucTrace();
 }
 
@@ -45,14 +39,11 @@ void RrdTcpClient::clear() {
 }
 
 void RrdTcpClient::connectToHost(const std::string &address, uint16_t port) {
-  tcpSocket->thread()->invokeMethod([this, address, port]() {
-    tcpSocket->setHost(address, port);
-    tcpSocket->connectToHost();
-  });
+  tcpSocket->thread()->invokeMethod([this, address, port]() { tcpSocket->connect(address, port); });
 }
 
 void RrdTcpClient::connectToHost() {
-  tcpSocket->thread()->invokeMethod([this]() { tcpSocket->connectToHost(); });
+  tcpSocket->thread()->invokeMethod([this]() { tcpSocket->connect(tcpSocket->hostAddress(), tcpSocket->hostPort()); });
 }
 
 void RrdTcpClient::disconnectFromHost() {
@@ -64,8 +55,6 @@ int RrdTcpClient::transmit(const DataArray &ba, uint32_t pi, bool wait) { return
 void RrdTcpClient::tlsSetup(const TlsContext &data) { tcpSocket->initTls(data); }
 
 void RrdTcpClient::disableTls() { tcpSocket->disableTls(); }
-
-void RrdTcpClient::clearHost() { tcpSocket->setHost("", 0); }
 
 void RrdTcpClient::tcpReadWrite(const DataArray *rba, uint32_t pi) {
   if (pi == 2) request(3);

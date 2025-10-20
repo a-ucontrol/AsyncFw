@@ -333,15 +333,15 @@ void DataArraySocket::initServerConnection() {
   }
 }
 
-void DataArraySocket::connectToHost() {
+bool DataArraySocket::connectToHost() {
   checkCurrentThread();
   if (hostAddress_v.empty() || !hostPort_v) {
     ucWarning("empty host address or port");
-    return;
+    return false;
   }
   if (state_ != AbstractSocket::Unconnected) {
     ucWarning("trying connect while not unconnected state");
-    return;
+    return false;
   }
   waitTimerType &= 0x84;
 
@@ -355,26 +355,27 @@ void DataArraySocket::connectToHost() {
   port = hostPort_v;
   if (sslConnection == 1) {
     sendMessage("SSL configuration error", LogStream::Error);
-    return;
+    return false;
   }
+
+  ucTrace() << address << port;
+
   if (sslConnection) {
     sslConnection = 3;
-    AbstractTlsSocket::connect(address, port);
+    return AbstractTlsSocket::connect(address, port);
   } else
-    AbstractSocket::connect(address, port);
-
-  ucTrace();
+    return AbstractSocket::connect(address, port);
 }
 
-void DataArraySocket::connectToHost(int timeout) {
+bool DataArraySocket::connectToHost(int timeout) {
   if (wait_holder_) {
     logError() << "Connect in process";
-    return;
+    return false;
   }
 
   if (!timeout) {
     connectToHost();
-    return;
+    return false;
   }
 
   thread_->invokeMethod(
@@ -391,6 +392,12 @@ void DataArraySocket::connectToHost(int timeout) {
   wait_holder_ = nullptr;
 
   ucTrace();
+  return true;
+}
+
+bool DataArraySocket::connect(const std::string &address, uint16_t port) {
+  setHost(address, port);
+  return connectToHost();
 }
 
 void DataArraySocket::disableTls() { sslConnection = 0; }

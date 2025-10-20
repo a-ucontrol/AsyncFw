@@ -44,8 +44,7 @@ public:
   uint16_t hostPort() const { return hostPort_v; }
   void transmitKeepAlive() { transmitKeepAlive(true); }
 
-  void connectToHost();
-  void connectToHost(int timeout);
+  bool connect(const std::string &, uint16_t) override;
   void disconnect() override;
 
   mutable FunctionConnectorProtected<DataArraySocket>::Connector<AbstractSocket::State> stateChanged {true};
@@ -81,6 +80,8 @@ private:
   mutable std::string hostAddress_v;
   mutable uint16_t hostPort_v;
   mutable std::deque<DataArray> transmitList;
+  bool connectToHost();
+  bool connectToHost(int timeout);
   void clearBuffer_(const DataArray *) const;
   void writeSocket();
   void sendMessage(const std::string &, uint8_t);
