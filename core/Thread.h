@@ -112,6 +112,7 @@ public:
 
   void lock() { mutex.lock(); }
   void unlock() { mutex.unlock(); }
+  std::lock_guard<MutexType> lockGuard() const { return std::lock_guard<MutexType> {mutex}; }
 
 protected:
   template <typename M, typename T = std::invoke_result<M>::type>
