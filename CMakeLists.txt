@@ -44,8 +44,8 @@ set(AsyncFw_HEADERS
 
   "Rrd.h"
   "Log.h"
-  "RrdTcpServer.h"
-  "RrdTcpClient.h"
+  "RrdServer.h"
+  "RrdClient.h"
 
   "DataArraySocket.h"
   "DataArrayTcpServer.h"
@@ -61,8 +61,8 @@ set(AsyncFw_SOURCES
 
   "Rrd.cpp"
   "Log.cpp"
-  "RrdTcpServer.cpp"
-  "RrdTcpClient.cpp"
+  "RrdServer.cpp"
+  "RrdClient.cpp"
 
   "Coroutine.cpp"
   "Timer.cpp"

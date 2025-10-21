@@ -1,7 +1,7 @@
 #include "DataArraySocket.h"
 #include "Rrd.h"
 #include "core/LogStream.h"
-#include "RrdTcpClient.h"
+#include "RrdClient.h"
 
 #ifdef EXTEND_RRD_TRACE
   #define trace LogStream(+LogStream::Trace | LogStream::Gray, __PRETTY_FUNCTION__, __FILE__, __LINE__, 6 | LOG_STREAM_CONSOLE_ONLY).output
@@ -15,7 +15,7 @@
 #endif
 
 using namespace AsyncFw;
-RrdTcpClient::RrdTcpClient(DataArraySocket *socket, const std::vector<Rrd *> &rrd) : rrd_(rrd), tcpSocket(socket) {
+RrdClient::RrdClient(DataArraySocket *socket, const std::vector<Rrd *> &rrd) : rrd_(rrd), tcpSocket(socket) {
   gl_ += socket->received([this](const DataArray *da, uint32_t pi) { tcpReadWrite(da, pi); });
 
   gl_ += socket->stateChanged([this](AbstractSocket::State) { connectionStateChanged(); });
@@ -28,36 +28,36 @@ RrdTcpClient::RrdTcpClient(DataArraySocket *socket, const std::vector<Rrd *> &rr
   ucTrace();
 }
 
-RrdTcpClient::~RrdTcpClient() {
+RrdClient::~RrdClient() {
   rrd_[0]->removeTimer(requestTimerId);
   ucTrace();
 }
 
-void RrdTcpClient::clear() {
+void RrdClient::clear() {
   rrd_[0]->clear();
   lastTime = 0;
   rrd_[0]->invokeMethod([this]() { rrd_[0]->updated(); });
 }
 
-void RrdTcpClient::connectToHost(const std::string &address, uint16_t port) {
+void RrdClient::connectToHost(const std::string &address, uint16_t port) {
   tcpSocket->thread()->invokeMethod([this, address, port]() { tcpSocket->connect(address, port); });
 }
 
-void RrdTcpClient::connectToHost() {
+void RrdClient::connectToHost() {
   tcpSocket->thread()->invokeMethod([this]() { tcpSocket->connect(tcpSocket->hostAddress(), tcpSocket->hostPort()); });
 }
 
-void RrdTcpClient::disconnectFromHost() {
+void RrdClient::disconnectFromHost() {
   tcpSocket->thread()->invokeMethod([this]() { tcpSocket->disconnect(); });
 }
 
-int RrdTcpClient::transmit(const DataArray &ba, uint32_t pi, bool wait) { return tcpSocket->transmit(ba, pi, wait); }
+int RrdClient::transmit(const DataArray &ba, uint32_t pi, bool wait) { return tcpSocket->transmit(ba, pi, wait); }
 
-void RrdTcpClient::tlsSetup(const TlsContext &data) { tcpSocket->initTls(data); }
+void RrdClient::tlsSetup(const TlsContext &data) { tcpSocket->initTls(data); }
 
-void RrdTcpClient::disableTls() { tcpSocket->disableTls(); }
+void RrdClient::disableTls() { tcpSocket->disableTls(); }
 
-void RrdTcpClient::tcpReadWrite(const DataArray *rba, uint32_t pi) {
+void RrdClient::tcpReadWrite(const DataArray *rba, uint32_t pi) {
   if (pi == 2) request(3);
   if (pi != 0) return;
   rrd_[0]->invokeMethod([this, rba(*rba), n = (pi & 0x0F)]() {
@@ -101,7 +101,7 @@ void RrdTcpClient::tcpReadWrite(const DataArray *rba, uint32_t pi) {
   });
 }
 
-void RrdTcpClient::request(int pi) {
+void RrdClient::request(int pi) {
   DataArray ba;
   ba.resize(8);
   *reinterpret_cast<uint64_t *>(ba.data()) = lastTime + 1;
@@ -109,7 +109,7 @@ void RrdTcpClient::request(int pi) {
   trace() << lastTime;
 }
 
-void RrdTcpClient::connectionStateChanged() {
+void RrdClient::connectionStateChanged() {
   if (tcpSocket->state() == AbstractSocket::Active) request();
   else { rrd_[0]->modifyTimer(requestTimerId, 0); }
 }

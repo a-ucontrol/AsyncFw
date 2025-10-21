@@ -7,10 +7,10 @@ namespace AsyncFw {
 class Rrd;
 class DataArraySocket;
 
-class RrdTcpClient {
+class RrdClient {
 public:
-  RrdTcpClient(DataArraySocket *, const std::vector<Rrd *> &);
-  ~RrdTcpClient();
+  RrdClient(DataArraySocket *, const std::vector<Rrd *> &);
+  ~RrdClient();
   void clear();
 
   void connectToHost(const std::string &, uint16_t);

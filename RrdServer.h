@@ -7,10 +7,10 @@ class DataArraySocket;
 class DataArrayTcpServer;
 class Rrd;
 
-class RrdTcpServer {
+class RrdServer {
 public:
-  RrdTcpServer(DataArrayTcpServer *, const std::vector<Rrd *> &Rrd);
-  virtual ~RrdTcpServer();
+  RrdServer(DataArrayTcpServer *, const std::vector<Rrd *> &Rrd);
+  virtual ~RrdServer();
   void quit();
 
 protected:
