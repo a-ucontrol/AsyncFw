@@ -11,7 +11,7 @@ class RrdClient {
 public:
   RrdClient(DataArraySocket *, const std::vector<Rrd *> &);
   ~RrdClient();
-  void clear();
+  void clear(int);
 
   void connectToHost(const std::string &, uint16_t);
   void connectToHost();
@@ -25,10 +25,10 @@ private:
   std::vector<Rrd *> rrd_;
   DataArraySocket *tcpSocket;
   int requestTimerId;
-  uint64_t lastTime = 0;
+  std::vector<uint64_t> lastTime;
   void tcpReadWrite(const DataArray *, uint32_t);
   void connectionStateChanged();
-  void request(int = 0);
+  void request(int);
   FunctionConnectionGuardList gl_;
 };
 }  // namespace AsyncFw

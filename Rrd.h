@@ -8,17 +8,11 @@ class Rrd {
 public:
   using Item = DataArray;
   using ItemList = DataArrayList;
-  Rrd(int size, const std::string &name = {});
+  Rrd(int size, const std::string &name, AsyncFw::ExecLoopThread *thread = nullptr);
+  Rrd(int size, AsyncFw::ExecLoopThread *thread = nullptr);
   ~Rrd();
   uint64_t read(DataArrayList *list, uint64_t from = 0, uint32_t size = 0, uint64_t *lastIndex = nullptr);
-  void setAverage(int interval, int offset = 0) {
-    aInterval = interval;
-    aOffset = offset;
-  }
-#ifdef AVERAGE_RRD
-  void setAverageOffset(int offset) { aOffset = offset; }
-  int averageOffset() { return aOffset; }
-#endif
+  void setAverage(int interval, int offset = 0);
   uint32_t size() { return dbSize; }
   uint32_t count();
 
@@ -46,11 +40,12 @@ protected:
   bool readOnly = false;
 
 private:
+  bool ownThread = false;
   int aInterval = 0;
   int aOffset = 0;
   std::string file;
   bool createFile();
   bool readFromFile();
-  bool saveToFile(const std::string &fileToSave = {});
+  bool saveToFile(const std::string &fn = {});
 };
 }  // namespace AsyncFw

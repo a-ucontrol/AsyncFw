@@ -14,10 +14,14 @@
 #define Rrd_COMPRESS_FILE
 
 using namespace AsyncFw;
-Rrd::Rrd(int size, const std::string &name) : dbSize(size) {
+Rrd::Rrd(int size, const std::string &name, ExecLoopThread *thread) : dbSize(size) {
   trace(__PRETTY_FUNCTION__);
-  thread_ = new ExecLoopThread("Rrd");
-  thread_->start();
+  if (thread) thread_ = thread;
+  else {
+    ownThread = true;
+    thread_ = new ExecLoopThread("Rrd");
+    thread_->start();
+  }
   if (size == 0) {
     if (name.empty()) return;
     readOnly = true;
@@ -36,10 +40,14 @@ Rrd::Rrd(int size, const std::string &name) : dbSize(size) {
   }
 }
 
+Rrd::Rrd(int size, ExecLoopThread *thread) : Rrd(size, "", thread) {}
+
 Rrd::~Rrd() {
-  if (thread_->running()) {
-    thread_->quit();
-    thread_->waitFinished();
+  if (ownThread) {
+    if (thread_->running()) {
+      thread_->quit();
+      thread_->waitFinished();
+    }
   }
   trace(__PRETTY_FUNCTION__);
   if (!file.empty() && !readOnly) { saveToFile(); }
@@ -139,6 +147,11 @@ uint64_t Rrd::read(DataArrayList *list, uint64_t val, uint32_t size, uint64_t *l
     if ((++val) > last_) break;
   }
   return val - 1;
+}
+
+void Rrd::setAverage(int interval, int offset) {
+  aInterval = interval;
+  aOffset = offset;
 }
 
 bool Rrd::readFromFile() {

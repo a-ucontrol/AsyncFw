@@ -15,16 +15,23 @@
 #endif
 
 using namespace AsyncFw;
-RrdClient::RrdClient(DataArraySocket *socket, const std::vector<Rrd *> &rrd) : rrd_(rrd), tcpSocket(socket) {
-  gl_ += socket->received([this](const DataArray *da, uint32_t pi) { tcpReadWrite(da, pi); });
+RrdClient::RrdClient(DataArraySocket *socket, const std::vector<Rrd *> &rrd) : rrd_(rrd), tcpSocket(socket), lastTime(rrd.size(), 0) {
+  gl_ += socket->received([this](const DataArray *da, uint32_t pi) {
+    if (pi > 0x0F) {
+      ucError() << "(pi > 0x0F)" << pi;
+      return;
+    }
+    tcpReadWrite(da, pi);
+  });
 
   gl_ += socket->stateChanged([this](AbstractSocket::State) { connectionStateChanged(); });
 
   requestTimerId = tcpSocket->thread()->appendTimerTask(0, [this]() {
     tcpSocket->thread()->modifyTimer(requestTimerId, 0);
-    request();
+    for (int i = 0; i != rrd_.size(); ++i) request(i);
   });
-  if (tcpSocket->state() == AbstractSocket::Active) request();
+  if (tcpSocket->state() == AbstractSocket::Active)
+    for (int i = 0; i != rrd_.size(); ++i) request(i);
   ucTrace();
 }
 
@@ -33,9 +40,9 @@ RrdClient::~RrdClient() {
   ucTrace();
 }
 
-void RrdClient::clear() {
-  lastTime = 0;
-  rrd_[0]->clear();
+void RrdClient::clear(int n) {
+  lastTime[n] = 0;
+  rrd_[n]->clear();
 }
 
 void RrdClient::connectToHost(const std::string &address, uint16_t port) {
@@ -56,58 +63,55 @@ void RrdClient::tlsSetup(const TlsContext &data) { tcpSocket->initTls(data); }
 
 void RrdClient::disableTls() { tcpSocket->disableTls(); }
 
-void RrdClient::tcpReadWrite(const DataArray *rba, uint32_t pi) {
-  if (pi == 2) request(3);
-  if (pi != 0) return;
-  rrd_[0]->thread()->invokeMethod([this, rba(*rba), n = (pi & 0x0F)]() {
-    DataArray _da = DataArray::uncompress(rba);
-    if (_da.empty()) {
-      logError() << "Error read log";
+void RrdClient::tcpReadWrite(const DataArray *rba, uint32_t n) {
+  DataArray _da = DataArray::uncompress(*rba);
+  if (_da.empty()) {
+    logError() << "Error read log";
+    return;
+  }
+  DataStream _ds(_da);
+  uint64_t val;
+  DataArrayList list;
+  uint64_t dbLastTime;
+  _ds >> val;
+  _ds >> list;
+  _ds >> dbLastTime;
+
+  if (_ds.fail()) {
+    logError() << "Error read message list";
+    return;
+  }
+
+  uint32_t dbSize = rrd_[n]->size();
+  if (val < lastTime[n] || val - lastTime[n] > dbSize) {
+    rrd_[n]->clear();
+    lastTime[n] = (dbLastTime > dbSize) ? dbLastTime - dbSize : 0;
+    request(n);
+    return;
+  }
+  if (list.size() > 0) {
+    uint64_t li = 0;
+    for (std::size_t i = 0; i != list.size(); ++i) li = rrd_[n]->Rrd::append(list[i], val - list.size() + i + 1);
+
+    lastTime[n] = li;
+    if (val != dbLastTime) {
+      request(n);
       return;
     }
-    DataStream _ds(_da);
-    uint64_t val;
-    DataArrayList list;
-    uint64_t dbLastTime;
-    _ds >> val;
-    _ds >> list;
-    _ds >> dbLastTime;
-
-    if (_ds.fail()) {
-      logError() << "Error read message list";
-      return;
-    }
-
-    uint32_t dbSize = rrd_[n]->size();
-    uint64_t li = rrd_[n]->lastIndex();
-    if (li && (val < lastTime || val - lastTime > static_cast<unsigned int>(dbSize))) {
-      rrd_[n]->clear();
-      lastTime = (dbLastTime > dbSize) ? dbLastTime - dbSize : 0;
-      request();
-      return;
-    }
-    if (list.size() > 0) {
-      for (std::size_t i = 0; i != list.size(); ++i) li = rrd_[n]->Rrd::append(list[i], val - list.size() + i + 1);
-
-      lastTime = li;
-      if (val != dbLastTime) {
-        request();
-        return;
-      }
-    }
-    tcpSocket->thread()->modifyTimer(requestTimerId, 1000);
-  });
+  }
+  tcpSocket->thread()->modifyTimer(requestTimerId, 1000);
 }
 
-void RrdClient::request(int pi) {
+void RrdClient::request(int n) {
   DataArray ba;
   ba.resize(8);
-  *reinterpret_cast<uint64_t *>(ba.data()) = lastTime + 1;
-  tcpSocket->transmit(ba, pi);
+  *reinterpret_cast<uint64_t *>(ba.data()) = lastTime[n] + 1;
+  tcpSocket->transmit(ba, n);
   trace() << lastTime;
 }
 
 void RrdClient::connectionStateChanged() {
-  if (tcpSocket->state() == AbstractSocket::Active) request();
+  if (tcpSocket->state() == AbstractSocket::Active)
+    for (int i = 0; i != rrd_.size(); ++i) request(i);
   else { tcpSocket->thread()->modifyTimer(requestTimerId, 0); }
 }
