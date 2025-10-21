@@ -164,20 +164,15 @@ LogMinimal::~LogMinimal() {
 
 Log::Log(int size, const std::string &name, bool noInstance) : Rrd(size, name), AbstractLog(noInstance) {
   queueLimit = size / 2;
-  obj_ = this;
+  obj_ = thread_;
   ucTrace();
 }
 
 Log::~Log() {
   ucTrace();
-  quit();
-  waitFinished();
-}
-
-void Log::finishedEvent() {
   autoSave = -1;
   stopTimer(&timerIdAutosave);
-  finality();
+  thread()->invokeMethod([this]() { finality(); }, true);
 }
 
 void Log::output(const Message &m) {
@@ -186,9 +181,9 @@ void Log::output(const Message &m) {
     Rrd::append(rrdItemFromMessage(m));
     if (autoSave > 0) {
       autoSave--;
-      if (timerIdAutosave >= 0) modifyTimer(timerIdAutosave, 15000);
+      if (timerIdAutosave >= 0) thread_->modifyTimer(timerIdAutosave, 15000);
       else {
-        timerIdAutosave = appendTimerTask(15000, [this]() {
+        timerIdAutosave = thread_->appendTimerTask(15000, [this]() {
           stopTimer(&timerIdAutosave);
           if (autoSave < 0) return;
           save();

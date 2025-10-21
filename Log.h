@@ -76,8 +76,6 @@ public:
   inline static Log *instance() { return static_cast<Log *>(AbstractLog::instance()); }
   Log(int size, const std::string &name, bool noInstance = false);
   ~Log() override;
-  void finishedEvent() override;
-  void destroy() override {}
   void setAutoSave(bool b) { autoSave = (b) ? 100 : -1; }
 
   Rrd::Item rrdItemFromMessage(const Message &m) const;

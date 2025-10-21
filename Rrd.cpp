@@ -16,8 +16,8 @@
 using namespace AsyncFw;
 Rrd::Rrd(int size, const std::string &name) : dbSize(size) {
   trace(__PRETTY_FUNCTION__);
-  setName("Rrd");
-  start();
+  thread_ = new ExecLoopThread("Rrd");
+  thread_->start();
   if (size == 0) {
     if (name.empty()) return;
     readOnly = true;
@@ -37,9 +37,9 @@ Rrd::Rrd(int size, const std::string &name) : dbSize(size) {
 }
 
 Rrd::~Rrd() {
-  if (running()) {
-    quit();
-    waitFinished();
+  if (thread_->running()) {
+    thread_->quit();
+    thread_->waitFinished();
   }
   trace(__PRETTY_FUNCTION__);
   if (!file.empty() && !readOnly) { saveToFile(); }
@@ -55,7 +55,7 @@ bool Rrd::createFile() {
 }
 
 uint32_t Rrd::append(const Item &data, uint64_t index) {
-  mutex.lock();
+  thread_->lock();
   if (index == 0) index = last_ + 1;
   uint64_t pos = index;
 
@@ -85,7 +85,7 @@ uint32_t Rrd::append(const Item &data, uint64_t index) {
   }
   dataBase[index % dbSize] = data;
   last_ = index;
-  mutex.unlock();
+  thread_->unlock();
   updated();
 
   if (_average) {
@@ -108,27 +108,27 @@ void Rrd::writeToArray(uint32_t index, const Item &ba) {  //Must lock the thread
 }
 
 void Rrd::clear() {
-  mutex.lock();
+  thread_->lock();
   for (uint32_t i = 0; i != dbSize; ++i) dataBase[i].clear();
   last_ = 0;
   count_v = 0;
-  mutex.unlock();
+  thread_->unlock();
   updated();
 }
 
 uint64_t Rrd::lastIndex() {
-  std::lock_guard<MutexType> lock(mutex);
+  std::lock_guard<AbstractThread::MutexType> lock = thread_->lockGuard();
   return last_;
 }
 
 uint32_t Rrd::count() {
-  std::lock_guard<MutexType> lock(mutex);
+  std::lock_guard<AbstractThread::MutexType> lock = thread_->lockGuard();
   return count_v;
 }
 
 uint64_t Rrd::read(DataArrayList *list, uint64_t val, uint32_t size, uint64_t *lastIndex) {
   if (!size) size = dbSize;
-  std::lock_guard<MutexType> lock(mutex);
+  std::lock_guard<AbstractThread::MutexType> lock = thread_->lockGuard();
   if (lastIndex) *lastIndex = last_;
   if (val > last_) return last_;
   if ((last_ - val) > dbSize) val = 1 + last_ - dbSize;
@@ -222,9 +222,9 @@ void Rrd::save(const std::string &fn) {
     console_msg("Rrd: save error, empty file name");
     return;
   }
-  if (std::this_thread::get_id() != this->id()) {
-    if (running()) {
-      invokeMethod([this, fn]() { saveToFile(fn); }, true);
+  if (std::this_thread::get_id() != thread_->id()) {
+    if (thread_->running()) {
+      thread_->invokeMethod([this, fn]() { saveToFile(fn); }, true);
       return;
     }
     console_msg("Rrd: executed from different thread and own thread not running");

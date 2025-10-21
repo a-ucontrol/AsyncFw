@@ -59,7 +59,7 @@ void RrdClient::disableTls() { tcpSocket->disableTls(); }
 void RrdClient::tcpReadWrite(const DataArray *rba, uint32_t pi) {
   if (pi == 2) request(3);
   if (pi != 0) return;
-  rrd_[0]->invokeMethod([this, rba(*rba), n = (pi & 0x0F)]() {
+  rrd_[0]->thread()->invokeMethod([this, rba(*rba), n = (pi & 0x0F)]() {
     DataArray _da = DataArray::uncompress(rba);
     if (_da.empty()) {
       logError() << "Error read log";

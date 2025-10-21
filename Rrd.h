@@ -3,15 +3,13 @@
 #include "core/Thread.h"
 #include "core/DataArray.h"
 
-//#define AVERAGE_RRD //!!!
-
 namespace AsyncFw {
-class Rrd : public ExecLoopThread {
+class Rrd {
 public:
   using Item = DataArray;
   using ItemList = DataArrayList;
   Rrd(int size, const std::string &name = {});
-  ~Rrd() override;
+  ~Rrd();
   uint64_t read(DataArrayList *list, uint64_t from = 0, uint32_t size = 0, uint64_t *lastIndex = nullptr);
   void setAverage(int interval, int offset = 0) {
     aInterval = interval;
@@ -37,7 +35,10 @@ public:
   AsyncFw::FunctionConnectorProtected<Rrd>::Connector<> updated {false};
   AsyncFw::FunctionConnectorProtected<Rrd>::Connector<const ItemList &> average {true};
 
+  AsyncFw::ExecLoopThread *thread() { return thread_; }
+
 protected:
+  AsyncFw::ExecLoopThread *thread_;
   uint64_t last_;
   uint32_t dbSize;
   ItemList dataBase;
