@@ -34,9 +34,8 @@ RrdClient::~RrdClient() {
 }
 
 void RrdClient::clear() {
-  rrd_[0]->clear();
   lastTime = 0;
-  rrd_[0]->invokeMethod([this]() { rrd_[0]->updated(); });
+  rrd_[0]->clear();
 }
 
 void RrdClient::connectToHost(const std::string &address, uint16_t port) {
@@ -83,7 +82,6 @@ void RrdClient::tcpReadWrite(const DataArray *rba, uint32_t pi) {
     uint64_t li = rrd_[n]->lastIndex();
     if (li && (val < lastTime || val - lastTime > static_cast<unsigned int>(dbSize))) {
       rrd_[n]->clear();
-      rrd_[n]->updated();
       lastTime = (dbLastTime > dbSize) ? dbLastTime - dbSize : 0;
       request();
       return;

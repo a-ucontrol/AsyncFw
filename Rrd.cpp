@@ -22,9 +22,6 @@ Rrd::Rrd(int size, const std::string &name) : dbSize(size) {
     if (name.empty()) return;
     readOnly = true;
   }
-#ifdef AVERAGE_RRD
-  setAverage(nullptr, nullptr, 0, 0);
-#endif
   last_ = 0;
   if (!name.empty()) {
     file = name;
@@ -61,9 +58,9 @@ uint32_t Rrd::append(const Item &data, uint64_t index) {
   mutex.lock();
   if (index == 0) index = last_ + 1;
   uint64_t pos = index;
-#ifdef AVERAGE_RRD
-  bool needAverage = (aInterval && (((static_cast<qint64>(index) + aOffset) / aInterval) - ((static_cast<qint64>(last) + aOffset) / aInterval)) > 0) ? true : false;
-#endif
+
+  bool _average = (aInterval && (((index + aOffset) / aInterval) - ((last_ + aOffset) / aInterval)) > 0);
+
   int64_t empty = pos - last_;
 
   if (empty > dbSize) empty = dbSize;
@@ -91,36 +88,32 @@ uint32_t Rrd::append(const Item &data, uint64_t index) {
   mutex.unlock();
   updated();
 
-#ifdef AVERAGE_RRD
-  if (needAverage) {
-    if (average_ptr) {
-      QList<QByteArray> list;
-      read(&list, index - index % aInterval - aInterval, aInterval);
-      QByteArray ba = (average_obj->*average_ptr)(list, this);
-      emit averaged(ba, (index + aOffset) / aInterval);
-    }
+  if (_average) {
+    ItemList list;
+    read(&list, index - index % aInterval - aInterval, aInterval);
+    average(list);
   }
-#endif
+
   return index;
 }
 
-Rrd::Item Rrd::readFromArray(uint64_t index) {
+Rrd::Item Rrd::readFromArray(uint32_t index) {  //Must lock the thread before calling this method
   uint64_t i = 1 + last_ + index - count_v;
-  //if (i > last) i = last;
   return dataBase[i % dbSize];
 }
 
-void Rrd::writeToArray(uint64_t index, const Item &ba) {
+void Rrd::writeToArray(uint32_t index, const Item &ba) {  //Must lock the thread before calling this method
   uint64_t i = 1 + last_ + index - count_v;
-  //if (i > last) i = last;
   dataBase[i % dbSize] = ba;
 }
 
 void Rrd::clear() {
-  std::lock_guard<MutexType> lock(mutex);
+  mutex.lock();
   for (uint32_t i = 0; i != dbSize; ++i) dataBase[i].clear();
   last_ = 0;
   count_v = 0;
+  mutex.unlock();
+  updated();
 }
 
 uint64_t Rrd::lastIndex() {
@@ -219,15 +212,6 @@ bool Rrd::saveToFile(const std::string &_fileToSave) {
   trace("Rrd: saved: " + fileToSave + ' ' + std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - t).count()) + "ms, mem size: " + std::to_string(size) + ", count:" + std::to_string(count_v) + '/' + std::to_string(dbSize) + ", file size:" + std::to_string(_buf.size()) + ", ratio: " + std::to_string(size / static_cast<int>(_buf.size())));
   return true;
 }
-
-#ifdef AVERAGE_RRD
-void Rrd::setAverage(QObject *obj, QByteArray (QObject::*ptr)(QList<QByteArray> &, Rrd *), int interval, int offset) {
-  average_obj = obj;
-  average_ptr = ptr;
-  aInterval = interval;
-  aOffset = offset;
-}
-#endif
 
 void Rrd::save(const std::string &fn) {
   if (readOnly && fn.empty()) {
