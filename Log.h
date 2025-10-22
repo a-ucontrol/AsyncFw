@@ -35,7 +35,7 @@ protected:
   void timerTask(int);
   void startTimer(int *, int);
   void stopTimer(int *);
-  AbstractThread *obj_;
+  AbstractThread *thread_;
   int level = LogStream::Trace;
   int queueLimit = 128;
 
@@ -84,6 +84,7 @@ public:
   void writeMessage(uint32_t index, const Message &message) { writeToArray(index, rrdItemFromMessage(message)); }
 
 protected:
+  using AbstractLog::thread_;
   std::atomic_int autoSave = 100;
   int timerIdAutosave = -1;
   virtual void output(const Message &m) override;

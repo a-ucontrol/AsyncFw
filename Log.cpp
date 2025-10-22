@@ -19,14 +19,14 @@ AbstractLog::~AbstractLog() {}
 
 void AbstractLog::flush() {
   for (;;) {
-    obj_->lock();
+    thread_->lock();
     if (messages.empty()) {
-      obj_->unlock();
+      thread_->unlock();
       break;
     }
     Message m = messages.front();
     messages.pop();
-    obj_->unlock();
+    thread_->unlock();
     process(m);
   }
 }
@@ -58,21 +58,21 @@ void AbstractLog::append(const Message &m) {
     if (!b) return;
   }
 
-  obj_->lock();
+  thread_->lock();
   int size = messages.size();
   if (size >= queueLimit) {
     console_msg("AbstractLog::append: many messages in queue");
 #ifndef uC_NO_TRACE
     console_msg(m.string);
 #endif
-    obj_->unlock();
+    thread_->unlock();
     return;
   }
   messages.push(m);
   if (!senderPrefix.empty()) messages.back().name.insert(0, senderPrefix);
-  obj_->unlock();
+  thread_->unlock();
   if (size == 0)
-    obj_->invokeMethod([this]() {
+    thread_->invokeMethod([this]() {
       flush();
       if (hideDuplicates) {
         for (int i = 0; i != _messages_; ++i) {
@@ -115,7 +115,7 @@ void AbstractLog::process(const Message &m) {
 }
 
 void AbstractLog::output(const Message &m) {
-  if (obj_->running() && std::this_thread::get_id() != obj_->id()) { console_msg("AbstractLog::output: error: executed from different thread"); }
+  if (thread_->running() && std::this_thread::get_id() != thread_->id()) { console_msg("AbstractLog::output: error: executed from different thread"); }
   if ((m.type & 0x0F) <= consoleLevel) { LogStream::console_output(m, flags | LOG_STREAM_CONSOLE_EXTEND); }
 }
 
@@ -134,13 +134,13 @@ void AbstractLog::timerTask(int timerId) {
 }
 
 void AbstractLog::startTimer(int *timerId, int msec) {
-  if (*timerId >= 0) obj_->removeTimer(*timerId);
-  *timerId = obj_->appendTimerTask(msec, [this, timerId]() { timerTask(*timerId); });
+  if (*timerId >= 0) thread_->removeTimer(*timerId);
+  *timerId = thread_->appendTimerTask(msec, [this, timerId]() { timerTask(*timerId); });
 }
 
 void AbstractLog::stopTimer(int *timerId) {
   if (*timerId >= 0) {
-    obj_->removeTimer(*timerId);
+    thread_->removeTimer(*timerId);
     *timerId = -1;
   }
 }
@@ -151,7 +151,7 @@ void AbstractLog::append_(const Message &m, uint8_t f) {
 }
 
 LogMinimal::LogMinimal() {
-  obj_ = this;
+  thread_ = this;
   start();
   ucTrace();
 }
@@ -164,7 +164,7 @@ LogMinimal::~LogMinimal() {
 
 Log::Log(int size, const std::string &name, bool noInstance) : Rrd(size, name), AbstractLog(noInstance) {
   queueLimit = size / 2;
-  obj_ = thread_;
+  thread_ = Rrd::thread_;
   ucTrace();
 }
 
