@@ -228,7 +228,11 @@ ExecLoopThread::~ExecLoopThread() {
 #endif
 
   warning_if(std::this_thread::get_id() == id_) << LogStream::Color::Red << "executed from own thread (" + private_->name + ")";
-  if (running()) logError() << "Destroing running thread";
+  if (running()) {
+    logWarning() << "Destroing running thread";
+    quit();
+    waitFinished();
+  }
 
   ucTrace() << private_->name << "-" << private_->tasks.size() << private_->timers.size() << private_->poll_tasks.size() << private_->process_tasks.size() << private_->process_timer_tasks.size() << private_->process_poll_tasks.size();
 
