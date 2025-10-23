@@ -200,6 +200,26 @@ DataStream &DataStream::operator>>(uint64_t &v) {
   return *this;
 }
 
+DataStream &DataStream::operator<<(float v) {
+  w_(sizeof(float), reinterpret_cast<uint8_t *>(&v));
+  return *this;
+}
+
+DataStream &DataStream::operator>>(float &v) {
+  r_(sizeof(float), reinterpret_cast<uint8_t *>(&v));
+  return *this;
+}
+
+DataStream &DataStream::operator<<(double v) {
+  w_(sizeof(double), reinterpret_cast<uint8_t *>(&v));
+  return *this;
+}
+
+DataStream &DataStream::operator>>(double &v) {
+  r_(sizeof(double), reinterpret_cast<uint8_t *>(&v));
+  return *this;
+}
+
 DataStream &DataStream::operator>>(std::string &v) {
   std::size_t _s;
   sr_(&_s);

@@ -62,6 +62,10 @@ public:
   DataStream &operator>>(int64_t &);
   DataStream &operator<<(uint64_t);
   DataStream &operator>>(uint64_t &);
+  DataStream &operator<<(float);
+  DataStream &operator>>(float &);
+  DataStream &operator<<(double);
+  DataStream &operator>>(double &);
   DataStream &operator<<(const std::string &);
   DataStream &operator>>(std::string &);
   DataStream &operator<<(const DataArrayView &);
