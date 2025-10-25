@@ -21,7 +21,7 @@ public:
   //Must lock the thread before calling this method
   void writeToArray(uint32_t, const Item &);
 
-  uint32_t append(const Item &data, uint64_t index = 0);
+  uint32_t append(const Item &data, uint64_t index = 0, int fillInterval = 0);
   void save(const std::string &fn = {});
   void clear();
   uint64_t lastIndex();

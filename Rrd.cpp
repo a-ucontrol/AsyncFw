@@ -62,7 +62,7 @@ bool Rrd::createFile() {
   return true;
 }
 
-uint32_t Rrd::append(const Item &data, uint64_t index) {
+uint32_t Rrd::append(const Item &data, uint64_t index, int fillInterval) {
   thread_->lock();
   if (index == 0) index = last_ + 1;
   uint64_t pos = index;
@@ -79,10 +79,12 @@ uint32_t Rrd::append(const Item &data, uint64_t index) {
   pos %= dbSize;
 
   if (empty > 0) {
+    bool _fill = empty <= fillInterval;
     while (--empty) {
       if (pos == 0) pos = dbSize;
       pos--;
-      dataBase[pos].clear();
+      if (!_fill) dataBase[pos].clear();
+      else { dataBase[pos] = data; }
     }
   } else if (empty < 0) {
     while (empty++) {
