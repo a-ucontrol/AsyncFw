@@ -4,6 +4,8 @@
 
 #include "LogStream.h"
 
+#define LOG_STREAM_CURRENT_TIME (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count())
+
 #define STD_FOMAT_TIME_STRING
 
 #ifndef STD_FOMAT_TIME_STRING

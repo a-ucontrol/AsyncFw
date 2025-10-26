@@ -6,16 +6,20 @@
 #include "Rrd.h"
 
 #ifdef EXTEND_RRD_TRACE
-  #define trace console_msg
+  #include "LogStream.h"
+  #define trace LogStream(+LogStream::Trace | LogStream::Gray, __PRETTY_FUNCTION__, __FILE__, __LINE__, 6 | LOG_STREAM_CONSOLE_ONLY).output
 #else
   #define trace(...)
 #endif
 
+#define Rrd_CURRENT_TIME (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count())
+
 #define Rrd_COMPRESS_FILE
 
 using namespace AsyncFw;
-Rrd::Rrd(int size, const std::string &name, ExecLoopThread *thread) : dbSize(size) {
-  trace(__PRETTY_FUNCTION__);
+
+Rrd::Rrd(int size, int interval, int fillInterval, const std::string &name, ExecLoopThread *thread) : dbSize(size), interval(interval), fill(interval ? fillInterval / interval : 0) {
+  trace();
   if (thread) thread_ = thread;
   else {
     ownThread = true;
@@ -39,8 +43,7 @@ Rrd::Rrd(int size, const std::string &name, ExecLoopThread *thread) : dbSize(siz
     dataBase.resize(dbSize);
   }
 }
-
-Rrd::Rrd(int size, ExecLoopThread *thread) : Rrd(size, "", thread) {}
+Rrd::Rrd(int size, int interval, int fillInterval, ExecLoopThread *thread) : Rrd(size, interval, fillInterval, {}, thread) {}
 
 Rrd::~Rrd() {
   if (ownThread) {
@@ -49,9 +52,13 @@ Rrd::~Rrd() {
       thread_->waitFinished();
     }
   }
-  trace(__PRETTY_FUNCTION__);
+  trace();
   if (!file.empty() && !readOnly) { saveToFile(); }
 }
+
+Rrd::Rrd(int size, const std::string &name, ExecLoopThread *thread) : Rrd(size, 0, 0, name, thread) {}
+
+Rrd::Rrd(int size, ExecLoopThread *thread) : Rrd(size, 0, 0, {}, thread) {}
 
 bool Rrd::createFile() {
   count_v = 0;
@@ -62,49 +69,54 @@ bool Rrd::createFile() {
   return true;
 }
 
-uint32_t Rrd::append(const Item &data, uint64_t index, int fillInterval) {
+void Rrd::append(const Item &data, uint64_t index) {
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
+  uint64_t pos;
+  if (!index && interval) pos = Rrd_CURRENT_TIME / interval;
   thread_->lock();
-  if (index == 0) index = last_ + 1;
-  uint64_t pos = index;
+  if (index) pos = index;
+  else if (!interval) { pos = last_ + 1; }
 
-  bool _average = (aInterval && (((index + aOffset) / aInterval) - ((last_ + aOffset) / aInterval)) > 0);
+  uint32_t empty;
+  if (pos > last_) {
+    uint64_t v = pos - last_;
+    if (v > dbSize) v = dbSize;
+    empty = v;
+  } else {
+    trace() << "error index";
+    thread_->unlock();
+    return;
+  }
 
-  int64_t empty = pos - last_;
+  if (count_v < dbSize && count_v < pos) count_v += 1;
+  uint32_t i = pos % dbSize;
+  dataBase[i] = data;
 
-  if (empty > dbSize) empty = dbSize;
-  if (empty < -static_cast<int64_t>(dbSize)) empty = -static_cast<int64_t>(dbSize);
-
-  if (count_v < dbSize && count_v < index) count_v += 1;
-
-  pos %= dbSize;
-
-  if (empty > 0) {
-    bool _fill = empty <= fillInterval;
+  if (empty > 1) {
+    bool _fill = empty <= fill;
     while (--empty) {
-      if (pos == 0) pos = dbSize;
-      pos--;
-      if (!_fill) dataBase[pos].clear();
-      else { dataBase[pos] = data; }
-    }
-  } else if (empty < 0) {
-    while (empty++) {
-      pos++;
-      if (pos == dbSize) pos = 0;
-      dataBase[pos].clear();
+      if (i == 0) i = dbSize;
+      i--;
+      if (!_fill) dataBase[i].clear();
+      else { dataBase[i] = data; }
     }
   }
-  dataBase[index % dbSize] = data;
-  last_ = index;
+
+  bool _average = (aInterval && (((pos + aOffset) / aInterval) - ((last_ + aOffset) / aInterval)) > 0);
+
+  last_ = pos;
   thread_->unlock();
   updated();
 
   if (_average) {
     ItemList list;
-    read(&list, index - index % aInterval - aInterval, aInterval);
+    read(&list, pos - pos % aInterval - aInterval, aInterval);
     average(list);
   }
 
-  return index;
+#pragma GCC diagnostic pop
+  return;
 }
 
 Rrd::Item Rrd::readFromArray(uint32_t index) {  //Must lock the thread before calling this method
@@ -182,7 +194,7 @@ bool Rrd::readFromFile() {
   bool ok = false;
   if (readOnly) {
     dbSize = dataBase.size();
-    trace("Rrd: size: " + std::to_string(dbSize));
+    trace() << "Rrd: size:" << dbSize;
   }
   if (static_cast<uint32_t>(dataBase.size()) != dbSize) {
     console_msg("Rrd: error database size: " + std::to_string(dataBase.size()));
@@ -200,11 +212,6 @@ bool Rrd::saveToFile(const std::string &_fileToSave) {
   DataStream _ds;
   _ds << last_;
   _ds << dataBase;
-
-#ifdef EXTEND_RRD_TRACE
-  std::chrono::time_point<std::chrono::steady_clock> t = std::chrono::steady_clock::now();
-  int size = _ds.array().size();
-#endif
 
 #ifdef Rrd_COMPRESS_FILE
   DataArray _buf = DataArray::compress(_ds.array());
@@ -224,7 +231,12 @@ bool Rrd::saveToFile(const std::string &_fileToSave) {
     console_msg("Rrd: save failed: " + file);
     return false;
   }
-  trace("Rrd: saved: " + fileToSave + ' ' + std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - t).count()) + "ms, mem size: " + std::to_string(size) + ", count:" + std::to_string(count_v) + '/' + std::to_string(dbSize) + ", file size:" + std::to_string(_buf.size()) + ", ratio: " + std::to_string(size / static_cast<int>(_buf.size())));
+
+#ifdef EXTEND_RRD_TRACE
+  std::chrono::time_point<std::chrono::steady_clock> t = std::chrono::steady_clock::now();
+  int size = _ds.array().size();
+#endif
+  trace() << "Rrd: saved:" << fileToSave << std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - t).count()) + "ms, mem size: " + std::to_string(size) + ", count:" + std::to_string(count_v) + '/' + std::to_string(dbSize) + ", file size:" + std::to_string(_buf.size()) + ", ratio: " + std::to_string(size / static_cast<int>(_buf.size()));
   return true;
 }
 

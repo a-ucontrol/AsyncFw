@@ -8,11 +8,14 @@ class Rrd {
 public:
   using Item = DataArray;
   using ItemList = DataArrayList;
+  Rrd(int size, int interval, int fillInterval, const std::string &name, AsyncFw::ExecLoopThread *thread = nullptr);
+  Rrd(int size, int interval, int fillInterval, AsyncFw::ExecLoopThread *thread = nullptr);
   Rrd(int size, const std::string &name, AsyncFw::ExecLoopThread *thread = nullptr);
   Rrd(int size, AsyncFw::ExecLoopThread *thread = nullptr);
   ~Rrd();
   uint64_t read(DataArrayList *list, uint64_t from = 0, uint32_t size = 0, uint64_t *lastIndex = nullptr);
   void setAverage(int interval, int offset = 0);
+  void setFillInterval(int interval);
   uint32_t size() { return dbSize; }
   uint32_t count();
 
@@ -21,7 +24,7 @@ public:
   //Must lock the thread before calling this method
   void writeToArray(uint32_t, const Item &);
 
-  uint32_t append(const Item &data, uint64_t index = 0, int fillInterval = 0);
+  void append(const Item &data, uint64_t index = 0);
   void save(const std::string &fn = {});
   void clear();
   uint64_t lastIndex();
@@ -43,6 +46,8 @@ private:
   bool ownThread = false;
   int aInterval = 0;
   int aOffset = 0;
+  int interval;
+  int fill;
   std::string file;
   bool createFile();
   bool readFromFile();

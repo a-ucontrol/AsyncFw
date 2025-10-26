@@ -13,8 +13,6 @@
 
 //#include <cxxabi.h>
 
-#define LOG_STREAM_CURRENT_TIME (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count())
-
 #define LOG_STREAM_CONSOLE_LEVEL 7
 
 //#define LOG_STREAM_CONSOLE_SENDER 0x01

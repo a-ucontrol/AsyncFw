@@ -90,10 +90,9 @@ void RrdClient::tcpReadWrite(const DataArray *rba, uint32_t n) {
     return;
   }
   if (list.size() > 0) {
-    uint64_t li = 0;
-    for (std::size_t i = 0; i != list.size(); ++i) li = rrd_[n]->Rrd::append(list[i], val - list.size() + i + 1);
+    for (std::size_t i = 0; i != list.size(); ++i) rrd_[n]->Rrd::append(list[i], val - list.size() + i + 1);
 
-    lastTime[n] = li;
+    lastTime[n] = val;
     if (val != dbLastTime) {
       request(n);
       return;
@@ -107,7 +106,7 @@ void RrdClient::request(int n) {
   ba.resize(8);
   *reinterpret_cast<uint64_t *>(ba.data()) = lastTime[n] + 1;
   tcpSocket->transmit(ba, n);
-  trace() << lastTime;
+  trace() << lastTime[n];
 }
 
 void RrdClient::connectionStateChanged() {
