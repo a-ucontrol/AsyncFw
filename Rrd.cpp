@@ -1,15 +1,16 @@
 #include <filesystem>
 #include <fstream>
 
-#include "core/console_msg.hpp"
-
+#include "LogStream.h"
 #include "Rrd.h"
 
+#include "core/console_msg.hpp"
+
 #ifdef EXTEND_RRD_TRACE
-  #include "LogStream.h"
   #define trace LogStream(+LogStream::Trace | LogStream::Gray, __PRETTY_FUNCTION__, __FILE__, __LINE__, 6 | LOG_STREAM_CONSOLE_ONLY).output
 #else
-  #define trace(...)
+  #define trace(x) \
+    if constexpr (0) LogStream()
 #endif
 
 #define Rrd_CURRENT_TIME (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count())
@@ -235,8 +236,8 @@ bool Rrd::saveToFile(const std::string &_fileToSave) {
 #ifdef EXTEND_RRD_TRACE
   std::chrono::time_point<std::chrono::steady_clock> t = std::chrono::steady_clock::now();
   int size = _ds.array().size();
-#endif
   trace() << "Rrd: saved:" << fileToSave << std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - t).count()) + "ms, mem size: " + std::to_string(size) + ", count:" + std::to_string(count_v) + '/' + std::to_string(dbSize) + ", file size:" + std::to_string(_buf.size()) + ", ratio: " + std::to_string(size / static_cast<int>(_buf.size()));
+#endif
   return true;
 }
 
