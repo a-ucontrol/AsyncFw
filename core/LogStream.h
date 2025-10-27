@@ -80,6 +80,7 @@ public:
   static std::string colorString(Color);
   static std::string sender(const char *);
   static std::string timeString(const uint64_t, const std::string & = "%m.%d %H:%M:%S", bool = false);
+  static std::string currentTimeString(const std::string & = "%m.%d %H:%M:%S", bool = false);
   inline static void (*completed)(const Message &, uint8_t) = &console_output;
   inline static void setCompleted(void (*_completed)(const Message &, uint8_t)) { completed = _completed; }
 

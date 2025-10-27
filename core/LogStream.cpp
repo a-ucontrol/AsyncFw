@@ -102,6 +102,8 @@ std::string LogStream::timeString(const uint64_t time, const std::string &format
 #endif
 }
 
+std::string LogStream::currentTimeString(const std::string &format, bool show_ms) { return timeString(LOG_STREAM_CURRENT_TIME, format, show_ms); }
+
 std::string LogStream::levelName(uint8_t l) {
   if (l == Trace) return "trace";
   else if (l == Debug)
