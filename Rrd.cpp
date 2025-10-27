@@ -71,13 +71,9 @@ bool Rrd::createFile() {
 }
 
 void Rrd::append(const Item &data, uint64_t index) {
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
-  uint64_t pos;
-  if (!index && interval) pos = Rrd_CURRENT_TIME / interval;
+  uint64_t pos = index ? index : interval ? Rrd_CURRENT_TIME / interval : 1;
   thread_->lock();
-  if (index) pos = index;
-  else if (!interval) { pos = last_ + 1; }
+  if (!index && !interval) pos += last_;
 
   uint32_t empty;
   if (pos > last_) {
@@ -115,9 +111,6 @@ void Rrd::append(const Item &data, uint64_t index) {
     read(&list, pos - pos % aInterval - aInterval, aInterval);
     average(list);
   }
-
-#pragma GCC diagnostic pop
-  return;
 }
 
 Rrd::Item Rrd::readFromArray(uint32_t index) {  //Must lock the thread before calling this method
