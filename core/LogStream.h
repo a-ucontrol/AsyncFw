@@ -1,15 +1,10 @@
 #pragma once
 
+#include <iostream>
 #include <sstream>
 #include <cstdint>
 #include <vector>
-
-#if __has_include(<format>)
-  #include <format>
-#endif
-#ifndef __cpp_lib_format
-  #include <cstdarg>
-#endif
+#include <format>
 
 //#include <cxxabi.h>
 
@@ -113,34 +108,13 @@ public:
   }
   LogStream &output() { return *this; }
   LogStream &output(const std::string &);
-#ifndef __cpp_lib_format
-  LogStream &output(const char *msg, ...) {
-    char str[256];
-    va_list list;
-    va_start(list, msg);
-    int r = vsnprintf(str, sizeof(str), msg, list);
-    va_end(list);
-    before();
-    stream << str;
-    if (r >= static_cast<int>(sizeof(str))) { stream << "..."; }
-    after();
-    return *this;
-  }
-#else
   template <typename... Args>
   LogStream &output(std::format_string<Args...> msg, Args &&...args) {
     before();
-    if (msg.get().find('{') != std::string::npos) stream << std::vformat(msg.get(), std::make_format_args(args...));
-    else {
-      char str[256];
-      int r = snprintf(str, sizeof(str), msg.get().data(), args...);
-      stream << str;
-      if (r >= static_cast<int>(sizeof(str))) { stream << "..."; }
-    }
+    stream << std::vformat(msg.get(), std::make_format_args(args...));
     after();
     return *this;
   }
-#endif
   LogStream &space();
   LogStream &nospace();
   static void setSenderPrefixIgnoreList(const std::vector<std::string> &list) { senderPrefixIgnoreList_ = list; }
