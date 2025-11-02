@@ -22,7 +22,7 @@ protected:
 
 public:
   enum Result { ErrorExchangeNotActive = -103, ErrorExchangeTransmit = -104, ErrorExchangeConnectionClose = -105, ErrorExchangeTimeout = -106, ErrorExchangeThread = -107 };
-  DataArrayTcpClient(SocketThread * = nullptr, bool init = true);
+  DataArrayTcpClient(SocketThread * = nullptr);
   void connectToHost(DataArraySocket *socket, const std::string &, uint16_t, int = 0);
   void connectToHost(const DataArraySocket *, int = 0);
   Thread *createThread() { return new Thread(this); }

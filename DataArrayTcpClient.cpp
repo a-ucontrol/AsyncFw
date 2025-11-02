@@ -6,7 +6,7 @@
 
 using namespace AsyncFw;
 
-DataArrayTcpClient::DataArrayTcpClient(SocketThread *thread, bool) : DataArrayAbstractTcp(thread) { ucTrace(); }
+DataArrayTcpClient::DataArrayTcpClient(SocketThread *thread) : DataArrayAbstractTcp(thread) { ucTrace(); }
 
 void DataArrayTcpClient::socketStateChanged(const DataArraySocket *socket) {
   bool connected = socket->state() == DataArraySocket::Active;
