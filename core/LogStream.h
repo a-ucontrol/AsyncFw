@@ -19,6 +19,10 @@
 #define LOG_STREAM_CONSOLE_LINE LOG_STREAM_CONSOLE_NOTE
 #define LOG_STREAM_CONSOLE_ONLY 0x40
 
+#ifndef LOG_STREAM_DEFAULT_TIME_FORMAT
+  #define LOG_STREAM_DEFAULT_TIME_FORMAT "%d.%m %H:%M:%S"
+#endif
+
 namespace AsyncFw {
 class LogStream {
 public:
@@ -74,8 +78,8 @@ public:
   static std::string levelName(uint8_t);
   static std::string colorString(Color);
   static std::string sender(const char *);
-  static std::string timeString(const uint64_t, const std::string & = "%m.%d %H:%M:%S", bool = false);
-  static std::string currentTimeString(const std::string & = "%m.%d %H:%M:%S", bool = false);
+  static std::string timeString(const uint64_t, const std::string & = LOG_STREAM_DEFAULT_TIME_FORMAT, bool = false);
+  static std::string currentTimeString(const std::string & = LOG_STREAM_DEFAULT_TIME_FORMAT, bool = false);
   inline static void (*completed)(const Message &, uint8_t) = &console_output;
   inline static void setCompleted(void (*_completed)(const Message &, uint8_t)) { completed = _completed; }
 
