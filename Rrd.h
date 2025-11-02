@@ -14,7 +14,7 @@ public:
   Rrd(int size, AsyncFw::ExecLoopThread *thread = nullptr);
   ~Rrd();
   uint64_t read(DataArrayList *list, uint64_t from = 0, uint32_t size = 0, uint64_t *lastIndex = nullptr);
-  void setAverage(int interval, int offset = 0);
+  void setAverage(int interval, const std::function<void(const ItemList &)> &f, int offset = 0);
   void setFillInterval(int interval);
   uint32_t size() { return dbSize; }
   uint32_t count();
@@ -30,7 +30,6 @@ public:
   uint64_t lastIndex();
 
   AsyncFw::FunctionConnectorProtected<Rrd>::Connector<> updated {false};
-  AsyncFw::FunctionConnectorProtected<Rrd>::Connector<const ItemList &> average {true};
 
   AsyncFw::ExecLoopThread *thread() { return thread_; }
 
@@ -52,5 +51,6 @@ private:
   bool createFile();
   bool readFromFile();
   bool saveToFile(const std::string &fn = {});
+  std::function<void(const ItemList &)> average;
 };
 }  // namespace AsyncFw
