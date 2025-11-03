@@ -17,7 +17,7 @@ class AbstractSocket : public AnyData {
   struct Private;
 
 public:
-  enum State : uint8_t { Unconnected, Listening, Connecting, Connected, Active, Closing };
+  enum State : uint8_t { Unconnected, Listening, Connecting, Connected, Active, Closing, Destroy };
   enum Error : uint8_t { None, Closed, Refused, PollErr, PollInval, Read, Write, Unknown };
 
   AbstractSocket(SocketThread * = nullptr);
@@ -27,11 +27,11 @@ public:
   virtual void setDescriptor(int);
   virtual bool connect(const std::string &, uint16_t);
   virtual void disconnect();
-  virtual void destroy();
   virtual void close();
 
   bool listen(const std::string &, uint16_t);
 
+  void destroy();
   int read(uint8_t *, int);
   DataArray read(int = INT_MAX);
   int write(const uint8_t *, int);

@@ -32,6 +32,10 @@ AbstractTlsSocket::AbstractTlsSocket(SocketThread *_thread) : AbstractSocket(_th
 }
 
 AbstractTlsSocket::~AbstractTlsSocket() {
+  if (state_ != State::Destroy) {
+    state_ = Destroy;
+    ucError() << "not Destroy state:" << static_cast<int>(state_);
+  }
   delete private_;
   trace() << fd_;
 }

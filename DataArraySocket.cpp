@@ -38,6 +38,11 @@ DataArraySocket::DataArraySocket(SocketThread *_thread) : AbstractTlsSocket(_thr
 }
 
 DataArraySocket::~DataArraySocket() {
+  if (state_ != State::Destroy) {
+    state_ = Destroy;
+    DataArraySocket::stateEvent();
+    ucError() << "not Destroy state:" << static_cast<int>(state_);
+  }
   if (thread_) removeTimer();
   while (!receiveList.empty()) clearBuffer_(receiveList.back());
   trace();

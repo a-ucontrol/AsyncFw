@@ -86,6 +86,7 @@ AbstractSocket::AbstractSocket(int _family, int _type, int _protocol, SocketThre
 }
 
 AbstractSocket::~AbstractSocket() {
+  if (state_ != State::Destroy) ucError() << "not Destroy state:" << static_cast<int>(state_);
   if (thread_) thread_->removeSocket(this);
   if (fd_ >= 0) close_fd(fd_);
   delete private_;
@@ -401,6 +402,8 @@ int AbstractSocket::write_fd(const void *_p, int _s) {
 
 void AbstractSocket::destroy() {
   close();
+  state_ = State::Destroy;
+  stateEvent();
   if (!thread_) {
     ucTrace() << LogStream::Color::Red << "nullptr thread";
     AbstractTask *_t = new AbstractThread::InternalTask([this]() { delete this; });
