@@ -36,7 +36,7 @@ RrdClient::RrdClient(DataArraySocket *socket, const std::vector<Rrd *> &rrd) : r
 }
 
 RrdClient::~RrdClient() {
-  tcpSocket->thread()->removeTimer(requestTimerId);
+  if (tcpSocket) tcpSocket->thread()->removeTimer(requestTimerId);
   ucTrace();
 }
 
@@ -110,6 +110,10 @@ void RrdClient::request(int n) {
 }
 
 void RrdClient::connectionStateChanged() {
+  if (tcpSocket->state() == AbstractSocket::Destroy) {
+    tcpSocket = nullptr;
+    return;
+  }
   if (tcpSocket->state() == AbstractSocket::Active)
     for (int i = 0; i != rrd_.size(); ++i) request(i);
   else { tcpSocket->thread()->modifyTimer(requestTimerId, 0); }
