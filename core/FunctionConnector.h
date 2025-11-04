@@ -11,6 +11,7 @@ class AbstractFunctionConnector {
   friend FunctionConnectionGuard;
 
 public:
+  enum ConnectionType : uint8_t { DefaultQueued, DefaultDirect, QueuedOnly, DirectOnly };
   class Connection {
     friend AbstractFunctionConnector;
     friend FunctionConnectionGuard;
@@ -26,13 +27,13 @@ public:
     FunctionConnectionGuard *guarg_ = nullptr;
   };
 
-  AbstractFunctionConnector(bool = false);
+  AbstractFunctionConnector(ConnectionType = DefaultQueued);
 
 protected:
   virtual ~AbstractFunctionConnector() = 0;
   AbstractThread *defaultConnectionThread_();
   std::vector<Connection *> list_;
-  bool default_direct_connection_;
+  ConnectionType connectionType;
   std::mutex mutex;
 };
 

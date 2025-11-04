@@ -47,8 +47,8 @@ public:
   bool connect(const std::string &, uint16_t) override;
   void disconnect() override;
 
-  mutable FunctionConnectorProtected<DataArraySocket>::Connector<AbstractSocket::State> stateChanged {true};
-  mutable FunctionConnectorProtected<DataArraySocket>::Connector<const DataArray *, uint32_t> received {true};
+  mutable FunctionConnectorProtected<DataArraySocket>::Connector<AbstractSocket::State> stateChanged {AbstractFunctionConnector::DirectOnly};
+  mutable FunctionConnectorProtected<DataArraySocket>::Connector<const DataArray *, uint32_t> received {AbstractFunctionConnector::DirectOnly};
 
 protected:
   void stateEvent() override;

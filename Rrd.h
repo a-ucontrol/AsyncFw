@@ -29,7 +29,7 @@ public:
   void clear();
   uint64_t lastIndex();
 
-  AsyncFw::FunctionConnectorProtected<Rrd>::Connector<> updated {false};
+  AsyncFw::FunctionConnectorProtected<Rrd>::Connector<> updated;
 
   AsyncFw::ExecLoopThread *thread() { return thread_; }
 

@@ -15,10 +15,10 @@
 
 using namespace AsyncFw;
 
-AbstractFunctionConnector::AbstractFunctionConnector(bool direct) : default_direct_connection_(direct) { trace() << this; }
+AbstractFunctionConnector::AbstractFunctionConnector(ConnectionType type) : connectionType(type) { trace() << this; }
 
 AbstractThread *AbstractFunctionConnector::defaultConnectionThread_() {
-  if (default_direct_connection_) return nullptr;
+  if (connectionType == DefaultDirect || connectionType == DirectOnly) return nullptr;
   AbstractThread *t = AbstractThread::currentThread();
   warning_if(!_t) << LogStream::Color::Red << "unknown thread, direct connection used by default";
   return t;
@@ -34,6 +34,18 @@ AbstractFunctionConnector::~AbstractFunctionConnector() {
 }
 
 AbstractFunctionConnector::Connection::Connection(AbstractFunctionConnector *_connector, AbstractThread *_thread) : thread_(_thread), connector_(_connector) {
+  if (_connector->connectionType == QueuedOnly) {
+    if (!_thread) {
+      logAlert() << "AbstractFunctionConnector: default connection type: QueuedOnly, ignore...";
+      return;
+    }
+  } else if (_connector->connectionType == DirectOnly) {
+    if (_thread) {
+      logAlert() << "AbstractFunctionConnector: default connection type: DirectOnly, ignore...";
+      return;
+    }
+  }
+
   connector_->list_.push_back(this);
   trace() << this << connector_ << connector_->list_.size();
 }
