@@ -34,18 +34,12 @@ AbstractFunctionConnector::~AbstractFunctionConnector() {
 }
 
 AbstractFunctionConnector::Connection::Connection(AbstractFunctionConnector *_connector, AbstractThread *_thread) : thread_(_thread), connector_(_connector) {
-  if (_connector->connectionType == QueuedOnly) {
-    if (!_thread) {
-      logAlert() << "AbstractFunctionConnector: default connection type: QueuedOnly, ignore...";
-      return;
-    }
-  } else if (_connector->connectionType == DirectOnly) {
+  if (_connector->connectionType == DirectOnly) {
     if (_thread) {
       logAlert() << "AbstractFunctionConnector: default connection type: DirectOnly, ignore...";
       return;
     }
   }
-
   connector_->list_.push_back(this);
   trace() << this << connector_ << connector_->list_.size();
 }

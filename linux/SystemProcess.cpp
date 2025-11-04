@@ -120,7 +120,7 @@ void SystemProcess::wait() {
 int SystemProcess::exitCode() { return private_->code_; }
 
 FunctionConnectorProtected<SystemProcess>::Connector<int, SystemProcess::State, const std::string &, const std::string &> &SystemProcess::exec(const std::string &_cmdline, const std::vector<std::string> &_args) {
-  FunctionConnectorProtected<SystemProcess>::Connector<int, SystemProcess::State, const std::string &, const std::string &> *fc = new FunctionConnectorProtected<SystemProcess>::Connector<int, SystemProcess::State, const std::string &, const std::string &>(AbstractFunctionConnector::QueuedOnly);
+  FunctionConnectorProtected<SystemProcess>::Connector<int, SystemProcess::State, const std::string &, const std::string &> *fc = new FunctionConnectorProtected<SystemProcess>::Connector<int, SystemProcess::State, const std::string &, const std::string &>(AbstractFunctionConnector::DefaultQueued);
 
   SystemProcess *process = new SystemProcess();
   std::string *_out = new std::string();

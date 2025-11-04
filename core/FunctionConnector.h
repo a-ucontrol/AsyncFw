@@ -11,7 +11,7 @@ class AbstractFunctionConnector {
   friend FunctionConnectionGuard;
 
 public:
-  enum ConnectionType : uint8_t { DefaultQueued, DefaultDirect, QueuedOnly, DirectOnly };
+  enum ConnectionType : uint8_t { DefaultQueued, DefaultDirect, DirectOnly };
   class Connection {
     friend AbstractFunctionConnector;
     friend FunctionConnectionGuard;
