@@ -8,8 +8,6 @@
 
 #define STD_FOMAT_TIME_STRING
 
-#define LOG_STREAM_LEVEL_EMERGENCY_TERMINATE
-
 #ifndef STD_FOMAT_TIME_STRING
   #include <iomanip>
   #include <time.h>
@@ -167,14 +165,13 @@ LogStream::LogStream(uint8_t type, const char *function, const char *file, int l
 }
 
 LogStream::~LogStream() {
-#ifdef LOG_STREAM_LEVEL_EMERGENCY_TERMINATE
+  completed({type, name, ((flags & 0x8000) ? stream.str() : ""), std::string(file) + ":" + std::to_string(line)}, flags | LOG_STREAM_CONSOLE_EXTEND);
+#ifdef LOG_STREAM_EMERGENCY_TERMINATE
   if ((type & 0x07) == Emergency) {
-    std::cerr << stream.str() << std::endl;
     std::cerr << "Log level Emergency, terminate..." << std::endl;
-    std::terminate();
+    std::abort();
   }
 #endif
-  completed({type, name, ((flags & 0x8000) ? stream.str() : ""), std::string(file) + ":" + std::to_string(line)}, flags | LOG_STREAM_CONSOLE_EXTEND);
 }
 
 LogStream &LogStream::operator<<(decltype(std::endl<char, std::char_traits<char>>) &) {

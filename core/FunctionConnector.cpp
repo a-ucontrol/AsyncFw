@@ -36,7 +36,7 @@ AbstractFunctionConnector::~AbstractFunctionConnector() {
 AbstractFunctionConnector::Connection::Connection(AbstractFunctionConnector *_connector, AbstractThread *_thread) : thread_(_thread), connector_(_connector) {
   if (_connector->connectionType == DirectOnly) {
     if (_thread) {
-      logAlert() << "AbstractFunctionConnector: default connection type: DirectOnly, ignore...";
+      logEmergency() << "AbstractFunctionConnector: default connection type: DirectOnly...";
       return;
     }
   }

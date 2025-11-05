@@ -46,6 +46,15 @@ void AbstractLog::append(uint8_t type, const std::string &message, const std::st
 
 void AbstractLog::append(const Message &m) {
   int i = m.type & 0x07;
+#ifdef LOG_STREAM_EMERGENCY_TERMINATE
+  if (i == LogStream::Emergency) {
+    thread_->lock();
+    messages.push(m);
+    thread_->unlock();
+    thread_->invokeMethod([this]() { finality(); }, true);
+    return;
+  }
+#endif
   if (i > level && i > consoleLevel) return;
   if (!filter.empty()) {
     bool b = false;
@@ -177,8 +186,15 @@ Log::~Log() {
 
 void Log::output(const Message &m) {
   int i = m.type & 0x07;
+  AbstractLog::output(m);
   if (i <= level) {
     Rrd::append(rrdItemFromMessage(m));
+#ifdef LOG_STREAM_EMERGENCY_TERMINATE
+    if (i == LogStream::Emergency) {
+      save();
+      return;
+    }
+#endif
     if (autoSave > 0) {
       autoSave--;
       if (timerIdAutosave >= 0) thread_->modifyTimer(timerIdAutosave, 15000);
@@ -192,7 +208,6 @@ void Log::output(const Message &m) {
       }
     }
   }
-  AbstractLog::output(m);
 }
 
 Rrd::Item Log::rrdItemFromMessage(const Message &m) const {

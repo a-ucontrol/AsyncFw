@@ -8,6 +8,8 @@
 
 //#include <cxxabi.h>
 
+#define LOG_STREAM_EMERGENCY_TERMINATE
+
 #define LOG_STREAM_CONSOLE_LEVEL 7
 
 //#define LOG_STREAM_CONSOLE_SENDER 0x01
