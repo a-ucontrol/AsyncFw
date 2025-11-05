@@ -2,6 +2,7 @@
 #include <regex>
 #include <syncstream>
 
+#include "core/console_msg.hpp"
 #include "LogStream.h"
 
 #define LOG_STREAM_EMERGENCY_TERMINATE
@@ -245,6 +246,9 @@ LogStream &LogStream::nospace() {
 }
 
 LogStream &LogStream::flush() {
+#ifndef uC_NO_TRACE
+  console_msg("LogStream: flush flag enable");
+#endif
   flags |= LOG_STREAM_FLUSH;
   return *this;
 }
