@@ -36,7 +36,7 @@ RrdClient::RrdClient(DataArraySocket *socket, const std::vector<Rrd *> &rrd) : r
 }
 
 RrdClient::~RrdClient() {
-  if (tcpSocket) tcpSocket->thread()->removeTimer(requestTimerId);
+  if (tcpSocket && tcpSocket->thread()) tcpSocket->thread()->removeTimer(requestTimerId);
   ucTrace();
 }
 
