@@ -86,7 +86,7 @@ AbstractSocket::AbstractSocket(int _family, int _type, int _protocol, SocketThre
 }
 
 AbstractSocket::~AbstractSocket() {
-  if (state_ != State::Destroy) ucError() << "not Destroy state:" << static_cast<int>(state_);
+  if (state_ != State::Destroy) ucError() << this << "not Destroy state:" << static_cast<int>(state_);
   if (thread_) thread_->removeSocket(this);
   if (fd_ >= 0) close_fd(fd_);
   delete private_;
