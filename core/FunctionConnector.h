@@ -105,8 +105,6 @@ public:
   FunctionConnectionGuard(FunctionConnectionGuard &&);
   FunctionConnectionGuard(AbstractFunctionConnector::Connection &);
   ~FunctionConnectionGuard();
-  void disconnect();
-  void disconnect_queued();
   void operator=(AbstractFunctionConnector::Connection &);
   void operator=(FunctionConnectionGuard &&);
 

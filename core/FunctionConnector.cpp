@@ -74,16 +74,6 @@ FunctionConnectionGuard::~FunctionConnectionGuard() {
   trace() << this;
 }
 
-void FunctionConnectionGuard::disconnect() {
-  if (!c_) return;
-  delete c_;
-  c_ = nullptr;
-}
-
-void FunctionConnectionGuard::disconnect_queued() {
-  AbstractThread::currentThread()->invokeMethod([this]() { disconnect(); });
-}
-
 void FunctionConnectionGuard::operator=(AbstractFunctionConnector::Connection &_c) {
   if (c_) delete c_;
   c_ = &_c;
@@ -91,7 +81,10 @@ void FunctionConnectionGuard::operator=(AbstractFunctionConnector::Connection &_
 }
 
 void FunctionConnectionGuard::operator=(FunctionConnectionGuard &&_g) {
-  if (c_) delete c_;
+  if (c_) {
+    if (!c_->thread_) AbstractThread::currentThread()->invokeMethod([_p = c_]() { delete _p; });
+    else { delete c_; }
+  }
   c_ = _g.c_;
   _g.c_ = nullptr;
   if (c_) c_->guarg_ = this;
