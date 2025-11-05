@@ -4,6 +4,8 @@
 
 #include "LogStream.h"
 
+#define LOG_STREAM_EMERGENCY_TERMINATE
+
 #define LOG_STREAM_CURRENT_TIME (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count())
 
 #define STD_FOMAT_TIME_STRING
@@ -17,7 +19,7 @@
 
 using namespace AsyncFw;
 void LogStream::console_output(const Message &message, uint8_t flags) {
-  if ((message.type & 0x07) > LOG_STREAM_CONSOLE_LEVEL) return;
+  if (!(flags & 0x80) && (message.type & 0x07) > LOG_STREAM_CONSOLE_LEVEL) return;
   std::string _message = message.string;
   std::string str;
   if (flags & LOG_STREAM_CONSOLE_COLOR) { str = colorString(static_cast<Color>(message.type & 0xF8)); }
@@ -48,7 +50,8 @@ void LogStream::console_output(const Message &message, uint8_t flags) {
   str = QString::fromStdString(str).toLocal8Bit().toStdString();
 #endif
 
-  (std::osyncstream(*out) << str << std::endl).flush();
+  std::osyncstream(*out) << str << std::endl;
+  if (flags & 0x80) std::osyncstream(*out).flush();
 }
 
 LogStream::Message::Message(uint8_t type, const std::string &name, const std::string &string, const std::string &note) : type(type), name(name), string(string), note(note) { time = LOG_STREAM_CURRENT_TIME; }
@@ -165,13 +168,14 @@ LogStream::LogStream(uint8_t type, const char *function, const char *file, int l
 }
 
 LogStream::~LogStream() {
-  completed({type, name, ((flags & 0x8000) ? stream.str() : ""), std::string(file) + ":" + std::to_string(line)}, flags | LOG_STREAM_CONSOLE_EXTEND);
 #ifdef LOG_STREAM_EMERGENCY_TERMINATE
   if ((type & 0x07) == Emergency) {
+    completed({type, name, ((flags & 0x8000) ? stream.str() : ""), std::string(file) + ":" + std::to_string(line)}, flags | LOG_STREAM_CONSOLE_EXTEND | LOG_STREAM_FLUSH);
     std::cerr << "Log level Emergency, terminate..." << std::endl;
     std::abort();
-  }
+  } else
 #endif
+    completed({type, name, ((flags & 0x8000) ? stream.str() : ""), std::string(file) + ":" + std::to_string(line)}, flags | LOG_STREAM_CONSOLE_EXTEND);
 }
 
 LogStream &LogStream::operator<<(decltype(std::endl<char, std::char_traits<char>>) &) {
@@ -237,6 +241,11 @@ LogStream &LogStream::space() {
 
 LogStream &LogStream::nospace() {
   flags &= ~0x02;
+  return *this;
+}
+
+LogStream &LogStream::flush() {
+  flags |= LOG_STREAM_FLUSH;
   return *this;
 }
 

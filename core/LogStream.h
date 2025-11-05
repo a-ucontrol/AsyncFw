@@ -8,8 +8,6 @@
 
 //#include <cxxabi.h>
 
-#define LOG_STREAM_EMERGENCY_TERMINATE
-
 #define LOG_STREAM_CONSOLE_LEVEL 7
 
 //#define LOG_STREAM_CONSOLE_SENDER 0x01
@@ -20,6 +18,8 @@
 #define LOG_STREAM_CONSOLE_NOTE 0x20
 #define LOG_STREAM_CONSOLE_LINE LOG_STREAM_CONSOLE_NOTE
 #define LOG_STREAM_CONSOLE_ONLY 0x40
+
+#define LOG_STREAM_FLUSH 0x80
 
 #ifndef LOG_STREAM_DEFAULT_TIME_FORMAT
   #define LOG_STREAM_DEFAULT_TIME_FORMAT "%d.%m %H:%M:%S"
@@ -123,6 +123,7 @@ public:
   }
   LogStream &space();
   LogStream &nospace();
+  LogStream &flush();
   static void setSenderPrefixIgnoreList(const std::vector<std::string> &list) { senderPrefixIgnoreList_ = list; }
 
 private:

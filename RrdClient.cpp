@@ -22,7 +22,7 @@ RrdClient::RrdClient(DataArraySocket *socket, const std::vector<Rrd *> &rrd) : r
       return;
     }
     tcpReadWrite(da, pi);
-  });
+  }, AbstractThread::currentThread());
 
   gl_ += socket->stateChanged([this](AbstractSocket::State) { connectionStateChanged(); });
 

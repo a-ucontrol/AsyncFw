@@ -30,6 +30,7 @@ protected:
   void append(const Message &m);
   virtual void flush();
   virtual void output(const Message &message);
+  virtual void save() {}
   void process(const Message &);
   void finality();
   void timerTask(int);
@@ -82,6 +83,8 @@ public:
   Message messageFromRrdItem(const Rrd::Item &_v) const;
   Message readMessage(uint32_t index) { return messageFromRrdItem(readFromArray(index)); }
   void writeMessage(uint32_t index, const Message &message) { writeToArray(index, rrdItemFromMessage(message)); }
+
+  void save() override { Rrd::save(); }
 
 protected:
   using AbstractLog::thread_;

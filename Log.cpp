@@ -46,15 +46,6 @@ void AbstractLog::append(uint8_t type, const std::string &message, const std::st
 
 void AbstractLog::append(const Message &m) {
   int i = m.type & 0x07;
-#ifdef LOG_STREAM_EMERGENCY_TERMINATE
-  if (i == LogStream::Emergency) {
-    thread_->lock();
-    messages.push(m);
-    thread_->unlock();
-    thread_->invokeMethod([this]() { finality(); }, true);
-    return;
-  }
-#endif
   if (i > level && i > consoleLevel) return;
   if (!filter.empty()) {
     bool b = false;
@@ -155,8 +146,23 @@ void AbstractLog::stopTimer(int *timerId) {
 }
 
 void AbstractLog::append_(const Message &m, uint8_t f) {
-  if (log_ && !(f & LOG_STREAM_CONSOLE_ONLY)) log_->append(m);
-  else { LogStream::console_output(m, f); }
+  if (log_ && !(f & LOG_STREAM_CONSOLE_ONLY)) {
+    if (f & 0x80) {
+      log_->thread_->lock();
+      log_->messages.push(m);
+      log_->thread_->unlock();
+      log_->thread_->invokeMethod(
+          []() {
+            log_->flush();
+            log_->save();
+          },
+          true);
+      return;
+    }
+    log_->append(m);
+  } else {
+    LogStream::console_output(m, f);
+  }
 }
 
 LogMinimal::LogMinimal() {
@@ -189,12 +195,6 @@ void Log::output(const Message &m) {
   AbstractLog::output(m);
   if (i <= level) {
     Rrd::append(rrdItemFromMessage(m));
-#ifdef LOG_STREAM_EMERGENCY_TERMINATE
-    if (i == LogStream::Emergency) {
-      save();
-      return;
-    }
-#endif
     if (autoSave > 0) {
       autoSave--;
       if (timerIdAutosave >= 0) thread_->modifyTimer(timerIdAutosave, 15000);
