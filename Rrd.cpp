@@ -81,7 +81,7 @@ void Rrd::append(const Item &data, uint64_t index) {
     if (v > dbSize) v = dbSize;
     empty = v;
   } else {
-    trace() << "error index";
+    trace() << ((pos == last_) ? "index exists:" : "error index:") << index;
     thread_->unlock();
     return;
   }
