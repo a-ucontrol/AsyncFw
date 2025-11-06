@@ -89,8 +89,8 @@ public:
     return true;
   }
 
-  static AbstractThread *thread(std::thread::native_handle_type);
-  static AbstractThread *currentThread() { return thread(0); }
+  static AbstractThread *currentThread();
+  static std::lock_guard<MutexType> threads(std::vector<AbstractThread *> **);
 
   virtual int appendTimer(int, AbstractTask *);
   virtual bool modifyTimer(int, int);
@@ -186,7 +186,7 @@ protected:
 private:
   int state = None;
   static inline MutexType list_mutex;
-  static inline std::vector<AbstractThread *> threads;
+  static inline std::vector<AbstractThread *> threads_;
   std::thread::id id_;
 };
 

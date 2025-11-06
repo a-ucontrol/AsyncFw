@@ -53,19 +53,19 @@ AbstractTask::~AbstractTask() {
 
 AbstractThread::AbstractThread() {
   std::lock_guard<MutexType> lock(list_mutex);
-  threads.emplace_back(this);
-  trace() << "threads:" << std::to_string(threads.size());
+  threads_.emplace_back(this);
+  trace() << "threads:" << std::to_string(threads_.size());
 }
 
 AbstractThread::~AbstractThread() {
   std::lock_guard<MutexType> lock(list_mutex);
-  for (std::vector<AbstractThread *>::iterator it = threads.begin(); it != threads.end(); it++) {
+  for (std::vector<AbstractThread *>::iterator it = threads_.begin(); it != threads_.end(); it++) {
     if ((*it) == this) {
-      threads.erase(it);
+      threads_.erase(it);
       break;
     }
   }
-  trace() << "threads:" << std::to_string(threads.size());
+  trace() << "threads:" << std::to_string(threads_.size());
 }
 
 int AbstractThread::appendTimer(int, AbstractTask *) {
@@ -97,15 +97,20 @@ bool AbstractThread::running() {
   return state > WaitStarted && state != Finished;
 }
 
-AbstractThread *AbstractThread::thread(std::thread::native_handle_type native_handle) {
-  std::thread::id _id = (native_handle != 0) ? std::thread::id(native_handle) : std::this_thread::get_id();
+AbstractThread *AbstractThread::currentThread() {
+  std::thread::id _id = std::this_thread::get_id();
   {  //lock scope
     std::lock_guard<MutexType> lock(list_mutex);
-    for (AbstractThread *thread : threads)
+    for (AbstractThread *thread : threads_)
       if (thread->id_ == _id) return thread;
   }
-  ucError() << "thread not found:" << native_handle;
+  ucError() << "thread not found:" << _id;
   return nullptr;
+}
+
+std::lock_guard<AbstractThread::MutexType> AbstractThread::threads(std::vector<AbstractThread *> **_threads) {
+  *_threads = &threads_;
+  return std::lock_guard<MutexType> {list_mutex};
 }
 
 struct ExecLoopThread::Private {
