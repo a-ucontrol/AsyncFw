@@ -777,7 +777,7 @@ void SocketThread::removeSocket(AbstractSocket *_socket) {
   ucTrace() << LogStream::Color::DarkRed << "not found" << _socket->fd_;
 }
 
-AbstractThreadPool::AbstractThreadPool(AbstractThread *thread) {
+AbstractThreadPool::AbstractThreadPool(const std::string &name, AbstractThread *thread) : name_(name) {
   pools_.emplace_back(this);
   thread_ = (thread) ? thread : AbstractThread::currentThread();
   ucTrace("pools: " + std::to_string(pools_.size()));

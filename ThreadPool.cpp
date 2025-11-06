@@ -15,7 +15,7 @@ ThreadPool::Thread *ThreadPool::currentThread() {
   return nullptr;
 }
 
-ThreadPool::ThreadPool() : AbstractThreadPool() {
+ThreadPool::ThreadPool() : AbstractThreadPool("Pool") {
   instance_ = this;
   logTrace() << "Created";
 }

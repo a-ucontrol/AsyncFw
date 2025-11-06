@@ -314,10 +314,11 @@ class AbstractThreadPool {
 public:
   static int threadCount(AbstractThreadPool * = nullptr);
   static std::vector<AbstractThreadPool *> pools() { return pools_; }
-  AbstractThreadPool(AbstractThread * = nullptr);
+  AbstractThreadPool(const std::string &, AbstractThread * = nullptr);
   virtual ~AbstractThreadPool();
   virtual void quit();
   AbstractThread *thread() { return thread_; }
+  std::string name() { return name_; }
 
 protected:
   class Thread : public SocketThread {
@@ -338,6 +339,7 @@ protected:
 
 private:
   inline static std::vector<AbstractThreadPool *> pools_;
+  std::string name_;
 };
 
 constexpr AbstractThread::PollEvents operator|(AbstractThread::PollEvents e1, AbstractThread::PollEvents e2) { return static_cast<AbstractThread::PollEvents>(static_cast<uint8_t>(e1) | static_cast<uint8_t>(e2)); }

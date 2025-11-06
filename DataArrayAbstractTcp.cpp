@@ -6,7 +6,7 @@
 
 using namespace AsyncFw;
 
-DataArrayAbstractTcp::DataArrayAbstractTcp(SocketThread *thread) : AbstractThreadPool(thread) { init(); }
+DataArrayAbstractTcp::DataArrayAbstractTcp(const std::string &name, SocketThread *thread) : AbstractThreadPool(name, thread) { init(); }
 
 DataArrayAbstractTcp::Thread *DataArrayAbstractTcp::findMinimalSocketsThread() {
   int index = -1;

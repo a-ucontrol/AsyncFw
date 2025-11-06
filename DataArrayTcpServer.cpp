@@ -6,7 +6,7 @@
 
 using namespace AsyncFw;
 
-DataArrayTcpServer::DataArrayTcpServer(SocketThread *thread) : DataArrayAbstractTcp(nullptr) {
+DataArrayTcpServer::DataArrayTcpServer(SocketThread *thread) : DataArrayAbstractTcp("TcpServer", thread) {
   listener = std::make_unique<ListenSocket>(thread);
   listener->setIncomingConnection([this](int descriptor, const std::string &address) { return incomingConnection(descriptor, address); });
   alwaysConnect_.emplace_back("127.0.0.1");  //!!! need check
