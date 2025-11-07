@@ -6,7 +6,7 @@
 
 using namespace AsyncFw;
 
-DataArrayTcpServer::DataArrayTcpServer(SocketThread *thread) : DataArrayAbstractTcp("TcpServer", thread) {
+DataArrayTcpServer::DataArrayTcpServer(const std::string &name, SocketThread *thread) : DataArrayAbstractTcp(name, thread) {
   listener = std::make_unique<ListenSocket>(thread);
   listener->setIncomingConnection([this](int descriptor, const std::string &address) { return incomingConnection(descriptor, address); });
   alwaysConnect_.emplace_back("127.0.0.1");  //!!! need check
@@ -25,7 +25,7 @@ bool DataArrayTcpServer::incomingConnection(int socketDescriptor, const std::str
   mutex.lock();
   bool b = (threads_.size() < maxThreads);
   mutex.unlock();
-  if (b) serverThread = new Thread(this);
+  if (b) serverThread = new Thread("TcpServer", this);
   else {
     mutex.lock();
     serverThread = static_cast<Thread *>(findMinimalSocketsThread());

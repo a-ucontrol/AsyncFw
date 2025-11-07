@@ -15,18 +15,16 @@ ThreadPool::Thread *ThreadPool::currentThread() {
   return nullptr;
 }
 
-ThreadPool::ThreadPool() : AbstractThreadPool("Pool") {
+ThreadPool::ThreadPool(const std::string & name) : AbstractThreadPool(name) {
   instance_ = this;
   logTrace() << "Created";
 }
 
 ThreadPool::~ThreadPool() { logTrace() << "Destroyed"; }
 
-ThreadPool::Thread *ThreadPool::createThread(const std::string &name) {
+ThreadPool::Thread *ThreadPool::createThread(const std::string &_name) {
   int i = AbstractThreadPool::threadCount(this);
-  Thread *thread = new Thread(this);
-  if (!name.empty()) thread->setName(name);
-  else { thread->setName("thread " + std::to_string(AbstractThreadPool::threadCount(this))); }
+  Thread *thread = new Thread((!_name.empty()) ? _name : name() + " thread", this);
   logTrace() << "Created thread \'" + thread->name() + "\', count:" << i + 1;
   return thread;
 }

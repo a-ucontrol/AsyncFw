@@ -100,6 +100,7 @@ public:
   virtual void removePollDescriptor(int);
   bool running();
   std::thread::id id() const { return id_; }
+  std::string name() const { return name_; }
 
   template <typename M>
   bool appendPollTask(int fd, PollEvents events, M method) {
@@ -176,7 +177,7 @@ protected:
     M method;
   };
 
-  AbstractThread();
+  AbstractThread(const std::string &);
   virtual ~AbstractThread() = 0;
   virtual bool invokeTask(AbstractTask *) = 0;
   virtual void destroy() = 0;
@@ -188,6 +189,7 @@ private:
   static inline MutexType list_mutex;
   static inline std::vector<AbstractThread *> threads_;
   std::thread::id id_;
+  std::string name_;
 };
 
 class ExecLoopThread : public AbstractThread {
@@ -195,7 +197,7 @@ class ExecLoopThread : public AbstractThread {
   struct Private;
 
 public:
-  ExecLoopThread(const std::string & = {});
+  ExecLoopThread(const std::string & = "ExecLoopThread");
   ~ExecLoopThread() override;
   int appendTimer(int, AbstractTask *) override;
   bool modifyTimer(int, int) override;
@@ -207,9 +209,6 @@ public:
 
   void start();
   void quit();
-
-  std::string name() const;
-  void setName(const std::string &);
 
   bool interruptRequested() const;
   void requestInterrupt();
@@ -247,7 +246,7 @@ class SocketThread : public ExecLoopThread {
   friend AbstractSocket;
 
 public:
-  SocketThread(const std::string & = {});
+  SocketThread(const std::string & = "SocketThread");
   ~SocketThread() override;
 
 protected:
@@ -318,7 +317,7 @@ public:
   virtual ~AbstractThreadPool();
   virtual void quit();
   AbstractThread *thread() { return thread_; }
-  std::string name() { return name_; }
+  std::string name() const { return name_; }
 
 protected:
   class Thread : public SocketThread {
@@ -326,7 +325,7 @@ protected:
     void quit();
 
   protected:
-    Thread(AbstractThreadPool *, bool = true);
+    Thread(const std::string &name, AbstractThreadPool *, bool = true);
     virtual ~Thread() override = 0;
     AbstractThreadPool *pool;
     void destroy() override;

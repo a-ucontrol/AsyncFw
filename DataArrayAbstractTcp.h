@@ -14,7 +14,7 @@ public:
     ErrorTransmitNotActive = -101,
     ErrorTransmit = -102,
   };
-  DataArrayAbstractTcp(const std::string &, SocketThread * = nullptr);
+  DataArrayAbstractTcp(const std::string &, AbstractThread * = nullptr);
   void init(int readTimeout = 30000, int waitKeepAliveAnswerTimeout = 0, int waitForEncryptedTimeout = 10000, int maxThreads = 4, int maxSockets = 8, int maxReadBuffers = 16, int maxReadSize = 16 * 1024 * 1024, int maxWriteBuffers = 16, int maxWriteSize = 16 * 1024 * 1024, int socketReadBufferSize = 1024 * 512) {
     this->readTimeout = readTimeout;
     this->waitKeepAliveAnswerTimeout = waitKeepAliveAnswerTimeout;
@@ -42,7 +42,7 @@ protected:
     friend class DataArrayAbstractTcp;
 
   public:
-    Thread(DataArrayAbstractTcp *_pool) : AbstractThreadPool::Thread(_pool, true), pool(_pool) { setName("Tcp"); };
+    Thread(const std::string &name, DataArrayAbstractTcp *_pool) : AbstractThreadPool::Thread(name, _pool, true), pool(_pool) {};
 
   protected:
     void socketInit(DataArraySocket *);

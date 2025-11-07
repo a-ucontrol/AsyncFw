@@ -51,7 +51,7 @@ AbstractTask::~AbstractTask() {
 #endif
 }
 
-AbstractThread::AbstractThread() {
+AbstractThread::AbstractThread(const std::string &name) : name_(name) {
   std::lock_guard<MutexType> lock(list_mutex);
   threads_.emplace_back(this);
   trace() << "threads:" << std::to_string(threads_.size());
@@ -137,7 +137,6 @@ struct ExecLoopThread::Private {
 #endif
   };
 
-  std::string name = "unnamed";
   std::queue<AbstractTask *> tasks;
   std::vector<Timer> timers;
   std::chrono::time_point<std::chrono::steady_clock> wakeup = std::chrono::time_point<std::chrono::steady_clock>::max();
@@ -183,9 +182,8 @@ struct ExecLoopThread::Private {
   std::queue<ProcessPollTask> process_poll_tasks;
 };
 
-ExecLoopThread::ExecLoopThread(const std::string &name) {
+ExecLoopThread::ExecLoopThread(const std::string &name) : AbstractThread(name) {
   private_ = new Private;
-  if (!name.empty()) private_->name = name;
 
 #ifndef EPOLL_WAIT
   pollfd _w;
@@ -232,14 +230,14 @@ ExecLoopThread::~ExecLoopThread() {
   ::closesocket(WAKE_FD);
 #endif
 
-  warning_if(std::this_thread::get_id() == id_) << LogStream::Color::Red << "executed from own thread (" + private_->name + ")";
+  warning_if(std::this_thread::get_id() == id_) << LogStream::Color::Red << "executed from own thread (" + name_ + ")";
   if (running()) {
     logWarning() << "Destroing running thread";
     quit();
     waitFinished();
   }
 
-  ucTrace() << private_->name << "-" << private_->tasks.size() << private_->timers.size() << private_->poll_tasks.size() << private_->process_tasks.size() << private_->process_timer_tasks.size() << private_->process_poll_tasks.size();
+  ucTrace() << name_ << "-" << private_->tasks.size() << private_->timers.size() << private_->poll_tasks.size() << private_->process_tasks.size() << private_->process_timer_tasks.size() << private_->process_poll_tasks.size();
 
   if (!private_->tasks.empty()) {
     ucDebug() << LogStream::Color::Red << "Task list not empty";
@@ -360,7 +358,7 @@ void ExecLoopThread::exec() {
 
           int i = 0;
           if (private_->wake_) {
-            trace() << LogStream::Color::Magenta << "waked" << private_->name << id_ << private_->fds_[0].revents << r;
+            trace() << LogStream::Color::Magenta << "waked" << name_ << id_ << private_->fds_[0].revents << r;
   #ifndef _WIN32
     #ifndef EVENTFD_WAKE
             char _c;
@@ -403,7 +401,7 @@ void ExecLoopThread::exec() {
                 eventfd_t _v;
                 (void)eventfd_read(WAKE_FD, &_v);
   #endif
-                trace() << LogStream::Color::Magenta << "waked" << private_->name << id_ << event[i].events << private_->wake_;
+                trace() << LogStream::Color::Magenta << "waked" << name_ << id_ << event[i].events << private_->wake_;
                 continue;
               }
               Private::PollTask *_d = static_cast<Private::PollTask *>(event[i].data.ptr);
@@ -427,7 +425,7 @@ void ExecLoopThread::exec() {
           if (t.expire <= now) {
             t.expire += t.timeout;
             if (t.expire <= now) {
-              console_msg("ExecLoopThread: warning: thread (" + private_->name + ") timer overload, interval: " + std::to_string(t.timeout.count()) + ", expired: " + std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>((now - t.expire + t.timeout)).count()));
+              console_msg("ExecLoopThread: warning: thread (" + name_ + ") timer overload, interval: " + std::to_string(t.timeout.count()) + ", expired: " + std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>((now - t.expire + t.timeout)).count()));
               t.expire = now + t.timeout;
             }
             private_->process_timer_tasks.push({t.id, t.task});
@@ -463,13 +461,13 @@ void ExecLoopThread::exec() {
 
 void ExecLoopThread::wake() {
   if (private_->wake_) return;
-  warning_if(std::this_thread::get_id() == id_) << LogStream::Color::Red << private_->name;
+  warning_if(std::this_thread::get_id() == id_) << LogStream::Color::Red << name_;
   private_->wake_ = true;
   if (private_->poll_tasks.empty()) {
     condition_variable.notify_all();
     return;
   }
-  trace() << LogStream::Color::Cyan << private_->name << id_;
+  trace() << LogStream::Color::Cyan << name_ << id_;
 #ifndef _WIN32
   #ifndef EVENTFD_WAKE
   char _c = '\x0';
@@ -484,9 +482,9 @@ void ExecLoopThread::wake() {
 
 bool ExecLoopThread::invokeTask(AbstractTask *task) {
   std::lock_guard<std::mutex> lock(mutex);
-  warning_if(!state) << LogStream::Color::Red << "thread not running (" + private_->name + ")" << id_;
+  warning_if(!state) << LogStream::Color::Red << "thread not running (" + name_ + ")" << id_;
   if (state >= Finalize) {
-    ucTrace() << LogStream::Color::Red << "Thread (" + private_->name + ") finished";
+    ucTrace() << LogStream::Color::Red << "Thread (" + name_ + ") finished";
     return false;
   }
   if (state == Interrupted) state = Running;
@@ -530,10 +528,6 @@ void ExecLoopThread::quit() {
   state = WaitFinished;
   wake();
 }
-
-std::string ExecLoopThread::name() const { return private_->name; }
-
-void ExecLoopThread::setName(const std::string &_name) { private_->name = _name; }
 
 void ExecLoopThread::waitInterrupted() const {
   checkDifferentThread();
@@ -832,7 +826,7 @@ void AbstractThreadPool::removeThread(AbstractThread *thread) {
   }
 }
 
-AbstractThreadPool::Thread::Thread(AbstractThreadPool *_pool, bool autoStart) : pool(_pool) {
+AbstractThreadPool::Thread::Thread(const std::string &name, AbstractThreadPool *_pool, bool autoStart) : SocketThread(name), pool(_pool) {
   pool->mutex.lock();
   pool->threads_.emplace_back(this);
 #ifndef uC_NO_TRACE
