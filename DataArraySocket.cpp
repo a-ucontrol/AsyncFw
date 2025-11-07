@@ -39,7 +39,7 @@ DataArraySocket::DataArraySocket(SocketThread *_thread) : AbstractTlsSocket(_thr
 
 DataArraySocket::~DataArraySocket() {
   if (state_ != State::Destroy) {
-    ucError() << this << "not Destroy state:" << static_cast<int>(state_);
+    ucDebug() << this << LogStream::Color::DarkRed << "not Destroy state:" << static_cast<int>(state_);
     state_ = Destroy;
     DataArraySocket::stateEvent();
   }

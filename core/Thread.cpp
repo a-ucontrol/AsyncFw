@@ -427,7 +427,7 @@ void ExecLoopThread::exec() {
           if (t.expire <= now) {
             t.expire += t.timeout;
             if (t.expire <= now) {
-              console_msg("ExecLoopThread: warning: thread (" + private_->name + ") timer overload, timeout: " + std::to_string(t.timeout.count()) + ", expired: " + std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>((now - t.expire)).count()));
+              console_msg("ExecLoopThread: warning: thread (" + private_->name + ") timer overload, interval: " + std::to_string(t.timeout.count()) + ", expired: " + std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>((now - t.expire + t.timeout)).count()));
               t.expire = now + t.timeout;
             }
             private_->process_timer_tasks.push({t.id, t.task});
