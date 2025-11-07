@@ -184,6 +184,11 @@ protected:
   mutable ConditionVariableType condition_variable;
 
 private:
+  struct Compare {
+    bool operator()(const AbstractThread *, const AbstractThread *) const;
+    bool operator()(const AbstractThread *, std::thread::id) const;
+  };
+  void setId(std::thread::id);
   int state = None;
   static inline MutexType list_mutex;
   static inline std::vector<AbstractThread *> threads_;
@@ -256,8 +261,6 @@ protected:
 
 private:
   struct Compare {
-    bool operator()(const AbstractSocket *, int) const;
-    bool operator()(int, const AbstractSocket *) const;
     bool operator()(const AbstractSocket *, const AbstractSocket *) const;
   };
 };

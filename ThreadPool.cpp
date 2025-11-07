@@ -1,11 +1,13 @@
 #include "core/LogStream.h"
 #include "ThreadPool.h"
 
-#define DEFAULT_WT_SIZE 2
-
 using namespace AsyncFw;
 
-ThreadPool::Thread::~Thread() { logTrace() << "Destroyed thread \'" + name() + "\'"; }
+ThreadPool::Thread::~Thread() {
+  std::vector<Thread *>::iterator it = std::find(static_cast<ThreadPool *>(pool)->workThreads_.begin(), static_cast<ThreadPool *>(pool)->workThreads_.end(), this);
+  if (it != static_cast<ThreadPool *>(pool)->workThreads_.end()) static_cast<ThreadPool *>(pool)->workThreads_.erase(it);
+  ucTrace() << "Destroyed thread \'" + name() + "\'";
+}
 
 ThreadPool::Thread *ThreadPool::currentThread() {
   AbstractThread *_t = AbstractThread::currentThread();
@@ -15,28 +17,27 @@ ThreadPool::Thread *ThreadPool::currentThread() {
   return nullptr;
 }
 
-ThreadPool::ThreadPool(const std::string &name) : AbstractThreadPool(name) {
-  instance_ = this;
-  logTrace() << "Created";
+ThreadPool::ThreadPool(const std::string &name, int workThreads) : AbstractThreadPool(name), workThreadsSize(workThreads) {
+  if (!instance_) instance_ = this;
+  ucTrace() << "Created";
 }
 
-ThreadPool::~ThreadPool() { logTrace() << "Destroyed"; }
+ThreadPool::~ThreadPool() { ucTrace() << "Destroyed"; }
 
 ThreadPool::Thread *ThreadPool::createThread(const std::string &_name) {
   Thread *thread = new Thread((!_name.empty()) ? _name : name() + " thread", this);
-  logTrace() << "Created thread \'" + thread->name() + "\'";
+  ucTrace() << "Created thread \'" + thread->name() + "\'";
   return thread;
 }
 
 void ThreadPool::quit() {
-  logTrace() << "Wait for quit";
   AbstractThreadPool::quit();
-  logTrace() << "Quited";
+  ucTrace();
 }
 
 ThreadPool::Thread *ThreadPool::getThread() {
   int _s = workThreads_.size();
-  if (_s < DEFAULT_WT_SIZE) {
+  if (_s < workThreadsSize) {
     for (int i = 0; i != _s; ++i)
       if (static_cast<ThreadPool::Thread *>(workThreads_[i])->queuedTasks() == 0) return workThreads_[i];
 

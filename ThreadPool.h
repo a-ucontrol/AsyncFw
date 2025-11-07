@@ -15,7 +15,8 @@ public:
 
   static ThreadPool *instance() { return instance_; }
   Thread *currentThread();
-  ThreadPool(const std::string & = "ThreadPool");
+  ThreadPool(const std::string &, int);
+  ThreadPool(int workThreads = 2) : ThreadPool("ThreadPool", workThreads) {}
   ~ThreadPool();
 
   Thread *createThread(const std::string &name = {});
@@ -39,5 +40,6 @@ public:
 private:
   inline static ThreadPool *instance_;
   std::vector<Thread *> workThreads_;
+  int workThreadsSize;
 };
 }  // namespace AsyncFw

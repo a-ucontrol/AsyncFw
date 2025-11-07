@@ -30,7 +30,7 @@ inline class MainThread :
 public:
   static MainThread *instance() { return instance_; }
   MainThread() : SocketThread("Main") {
-    AbstractThread::id_ = std::this_thread::get_id();
+    setId(std::this_thread::get_id());
     instance_ = this;
 #ifdef EXIT_ON_UNIX_SIGNAL
     eventfd_ = eventfd(0, EFD_NONBLOCK);
@@ -198,6 +198,7 @@ public:
   #endif
 #else
     qApp->quit();
+    setId({});
 #endif
   }
 
