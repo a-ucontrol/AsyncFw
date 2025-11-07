@@ -90,7 +90,6 @@ public:
   }
 
   static AbstractThread *currentThread();
-  static std::lock_guard<MutexType> threads(std::vector<AbstractThread *> **);
 
   virtual int appendTimer(int, AbstractTask *);
   virtual bool modifyTimer(int, int);
@@ -311,8 +310,8 @@ private:
 
 class AbstractThreadPool {
 public:
-  static int threadCount(AbstractThreadPool * = nullptr);
   static std::vector<AbstractThreadPool *> pools() { return pools_; }
+  static std::lock_guard<AbstractThread::MutexType> threads(std::vector<AbstractThread *> **, AbstractThreadPool * = nullptr);
   AbstractThreadPool(const std::string &, AbstractThread * = nullptr);
   virtual ~AbstractThreadPool();
   virtual void quit();

@@ -25,7 +25,7 @@ public:
   DataArrayTcpClient(const std::string & = "TcpClient", AbstractThread * = nullptr);
   void connectToHost(DataArraySocket *socket, const std::string &, uint16_t, int = 0);
   void connectToHost(const DataArraySocket *, int = 0);
-  Thread *createThread() { return new Thread(name(), this); }
+  Thread *createThread() { return new Thread(name() + " thread", this); }
   DataArraySocket *createSocket(Thread *thread = nullptr);
   void removeSocket(DataArraySocket *);
   FunctionConnectorProtected<DataArrayTcpClient>::Connector<const DataArraySocket *> connectionStateChanged;

@@ -108,11 +108,6 @@ AbstractThread *AbstractThread::currentThread() {
   return nullptr;
 }
 
-std::lock_guard<AbstractThread::MutexType> AbstractThread::threads(std::vector<AbstractThread *> **_threads) {
-  *_threads = &threads_;
-  return std::lock_guard<MutexType> {list_mutex};
-}
-
 struct ExecLoopThread::Private {
   struct Timer {
     int id;
@@ -778,10 +773,10 @@ AbstractThreadPool::AbstractThreadPool(const std::string &name, AbstractThread *
 }
 
 AbstractThreadPool::~AbstractThreadPool() {
-  if (threadCount(this) > 0) {
-    ucWarning() << "destroyed with threads";
-    AbstractThreadPool::quit();
-  }
+  //  if (threadCount(this) > 0) {
+  //    ucWarning() << "destroyed with threads";
+  //    AbstractThreadPool::quit();
+  //  }
   for (std::vector<AbstractThreadPool *>::iterator it = pools_.begin(); it != pools_.end(); it++) {
     if ((*it) == this) {
       pools_.erase(it);
@@ -806,6 +801,15 @@ void AbstractThreadPool::quit() {
   ucTrace();
 }
 
+std::lock_guard<AbstractThread::MutexType> AbstractThreadPool::threads(std::vector<AbstractThread *> **_threads, AbstractThreadPool *pool) {
+  if (!pool) {
+    *_threads = &AbstractThread::threads_;
+    return std::lock_guard<AbstractThread::MutexType> {AbstractThread::list_mutex};
+  }
+  *_threads = &(pool->threads_);
+  return std::lock_guard<AbstractThread::MutexType> {pool->mutex};
+}
+/*
 int AbstractThreadPool::threadCount(AbstractThreadPool *_pool) {
   if (_pool == nullptr) {
     int i = 0;
@@ -815,7 +819,7 @@ int AbstractThreadPool::threadCount(AbstractThreadPool *_pool) {
   std::lock_guard<AbstractThread::MutexType> lock(_pool->mutex);
   return _pool->threads_.size();
 }
-
+*/
 void AbstractThreadPool::removeThread(AbstractThread *thread) {
   std::lock_guard<AbstractThread::MutexType> lock(mutex);
   for (std::vector<AbstractThread *>::iterator it = threads_.begin(); it != threads_.end(); it++) {
@@ -829,22 +833,16 @@ void AbstractThreadPool::removeThread(AbstractThread *thread) {
 AbstractThreadPool::Thread::Thread(const std::string &name, AbstractThreadPool *_pool, bool autoStart) : SocketThread(name), pool(_pool) {
   pool->mutex.lock();
   pool->threads_.emplace_back(this);
-#ifndef uC_NO_TRACE
-  int i = pool->threads_.size();
-#endif
+  ucTrace("threads: " + std::to_string(pool->threads_.size()));
   pool->mutex.unlock();
-#ifndef uC_NO_TRACE
-  ucTrace("threads: " + std::to_string(i) + ", pools: " + std::to_string(AbstractThreadPool::pools().size()) + ", threads in pools: " + std::to_string(AbstractThreadPool::threadCount()));
-#endif
   if (autoStart) start();
 }
 
 AbstractThreadPool::Thread::~Thread() {
 #ifndef uC_NO_TRACE
   pool->mutex.lock();
-  int i = pool->threads_.size();
+  ucTrace("threads: " + std::to_string(pool->threads_.size()));
   pool->mutex.unlock();
-  ucTrace("threads: " + std::to_string(i) + ", pools: " + std::to_string(AbstractThreadPool::pools().size()) + ", threads in pools: " + std::to_string(AbstractThreadPool::threadCount()));
 #endif
 }
 

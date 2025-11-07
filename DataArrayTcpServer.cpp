@@ -25,7 +25,7 @@ bool DataArrayTcpServer::incomingConnection(int socketDescriptor, const std::str
   mutex.lock();
   bool b = (threads_.size() < maxThreads);
   mutex.unlock();
-  if (b) serverThread = new Thread("TcpServer", this);
+  if (b) serverThread = new Thread(name() + " thread", this);
   else {
     mutex.lock();
     serverThread = static_cast<Thread *>(findMinimalSocketsThread());

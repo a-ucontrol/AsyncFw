@@ -15,7 +15,7 @@ public:
 
   static ThreadPool *instance() { return instance_; }
   Thread *currentThread();
-  ThreadPool(const std::string & = "Pool");
+  ThreadPool(const std::string & = "ThreadPool");
   ~ThreadPool();
 
   Thread *createThread(const std::string &name = {});

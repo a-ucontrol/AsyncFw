@@ -5,7 +5,7 @@
 
 using namespace AsyncFw;
 
-ThreadPool::Thread::~Thread() { logTrace() << "Destroyed thread \'" + name() + "\', count:" << AbstractThreadPool::threadCount(pool); }
+ThreadPool::Thread::~Thread() { logTrace() << "Destroyed thread \'" + name() + "\'"; }
 
 ThreadPool::Thread *ThreadPool::currentThread() {
   AbstractThread *_t = AbstractThread::currentThread();
@@ -15,7 +15,7 @@ ThreadPool::Thread *ThreadPool::currentThread() {
   return nullptr;
 }
 
-ThreadPool::ThreadPool(const std::string & name) : AbstractThreadPool(name) {
+ThreadPool::ThreadPool(const std::string &name) : AbstractThreadPool(name) {
   instance_ = this;
   logTrace() << "Created";
 }
@@ -23,9 +23,8 @@ ThreadPool::ThreadPool(const std::string & name) : AbstractThreadPool(name) {
 ThreadPool::~ThreadPool() { logTrace() << "Destroyed"; }
 
 ThreadPool::Thread *ThreadPool::createThread(const std::string &_name) {
-  int i = AbstractThreadPool::threadCount(this);
   Thread *thread = new Thread((!_name.empty()) ? _name : name() + " thread", this);
-  logTrace() << "Created thread \'" + thread->name() + "\', count:" << i + 1;
+  logTrace() << "Created thread \'" + thread->name() + "\'";
   return thread;
 }
 
