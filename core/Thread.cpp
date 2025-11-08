@@ -819,13 +819,13 @@ void AbstractThreadPool::quit() {
   ucTrace();
 }
 
-std::lock_guard<AbstractThread::MutexType> AbstractThreadPool::threads(std::vector<AbstractThread *> **_threads, AbstractThreadPool *pool) {
+AbstractThread::LockGuard AbstractThreadPool::threads(std::vector<AbstractThread *> **_threads, AbstractThreadPool *pool) {
   if (!pool) {
     *_threads = &AbstractThread::threads_;
-    return std::lock_guard<AbstractThread::MutexType> {AbstractThread::list_mutex};
+    return AbstractThread::LockGuard {AbstractThread::list_mutex};
   }
   *_threads = &(pool->threads_);
-  return std::lock_guard<AbstractThread::MutexType> {pool->mutex};
+  return AbstractThread::LockGuard {pool->mutex};
 }
 
 void AbstractThreadPool::removeThread(AbstractThread *thread) {

@@ -133,18 +133,18 @@ void Rrd::clear() {
 }
 
 uint64_t Rrd::lastIndex() {
-  std::lock_guard<AbstractThread::MutexType> lock = thread_->lockGuard();
+  AbstractThread::LockGuard lock = thread_->lockGuard();
   return last_;
 }
 
 uint32_t Rrd::count() {
-  std::lock_guard<AbstractThread::MutexType> lock = thread_->lockGuard();
+  AbstractThread::LockGuard lock = thread_->lockGuard();
   return count_v;
 }
 
 uint64_t Rrd::read(DataArrayList *list, uint64_t val, uint32_t size, uint64_t *lastIndex) {
   if (!size) size = dbSize;
-  std::lock_guard<AbstractThread::MutexType> lock = thread_->lockGuard();
+  AbstractThread::LockGuard lock = thread_->lockGuard();
   if (lastIndex) *lastIndex = last_;
   if (val > last_) return last_;
   if ((last_ - val) > dbSize) val = 1 + last_ - dbSize;

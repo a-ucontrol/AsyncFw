@@ -32,6 +32,8 @@
   #define checkDifferentThread()
 #endif
 
+#define ABSTRACT_THREAD_LOCK_GUARD
+
 namespace AsyncFw {
 class AbstractTask {
   friend class AbstractThread;
@@ -56,6 +58,29 @@ class AbstractThread {
 public:
   using MutexType = std::mutex;
   using ConditionVariableType = std::condition_variable;
+#ifndef ABSTRACT_THREAD_LOCK_GUARD
+  using LockGuard = std::lock_guard<AbstractThread::MutexType>;
+  //struct LockGuard : public std::lock_guard<MutexType> {
+  //  using std::lock_guard<MutexType>::lock_guard;
+  //  LockGuard(AbstractThread *thread) : std::lock_guard<MutexType>::lock_guard(thread->mutex) {}
+  //};
+#else
+  struct LockGuard {
+    LockGuard(AbstractThread *thread) : mutex_(&thread->mutex) { mutex_->lock(); }
+    LockGuard(MutexType &mutex) : mutex_(&mutex) { mutex_->lock(); }
+    ~LockGuard() {
+      if (mutex_) mutex_->unlock();
+    }
+    LockGuard(LockGuard &) = delete;
+    LockGuard(LockGuard &&g) {
+      this->mutex_ = g.mutex_;
+      g.mutex_ = nullptr;
+    }
+
+  private:
+    MutexType *mutex_;
+  };
+#endif
   enum PollEvents : uint16_t { PollNo = 0, PollIn = POLLIN_, PollPri = POLLPRI_, PollOut = POLLOUT_, PollErr = POLLERR_, PollHup = POLLHUP_, PollInval = POLLNVAL_ };
   enum State : uint8_t { None = 0, WaitStarted, Running, WaitInterrupted, WaitFinished, Interrupted, Finalize, Finished };
 
@@ -112,7 +137,7 @@ public:
 
   void lock() { mutex.lock(); }
   void unlock() { mutex.unlock(); }
-  std::lock_guard<MutexType> lockGuard() const { return std::lock_guard<MutexType> {mutex}; }
+  LockGuard lockGuard() { return LockGuard(mutex); }
 
 protected:
   template <typename M, typename T = std::invoke_result<M>::type>
@@ -314,7 +339,7 @@ private:
 class AbstractThreadPool {
 public:
   static std::vector<AbstractThreadPool *> pools() { return pools_; }
-  static std::lock_guard<AbstractThread::MutexType> threads(std::vector<AbstractThread *> **, AbstractThreadPool * = nullptr);
+  static AbstractThread::LockGuard threads(std::vector<AbstractThread *> **, AbstractThreadPool * = nullptr);
   AbstractThreadPool(const std::string &, AbstractThread * = nullptr);
   virtual ~AbstractThreadPool();
   virtual void quit();
