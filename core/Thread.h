@@ -213,7 +213,7 @@ private:
     bool operator()(const AbstractThread *, const AbstractThread *) const;
     bool operator()(const AbstractThread *, std::thread::id) const;
   };
-  void setId(std::thread::id);
+  void changeId(std::thread::id);
   int state = None;
   static inline MutexType list_mutex;
   static inline std::vector<AbstractThread *> threads_;
@@ -358,12 +358,16 @@ protected:
     void destroy() override;
   };
 
+  void appendThread(AbstractThread *);
   void removeThread(AbstractThread *);
   std::vector<AbstractThread *> threads_;
   AbstractThread::MutexType mutex;
   AbstractThread *thread_;
 
 private:
+  struct Compare {
+    bool operator()(const AbstractThread *t1, const AbstractThread *t2) const { return t1 < t2; }
+  };
   inline static std::vector<AbstractThreadPool *> pools_;
   std::string name_;
 };

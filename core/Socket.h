@@ -70,13 +70,12 @@ protected:
   virtual void stateEvent() = 0;
   virtual void readEvent() = 0;
 
-  void changeDescriptor(int);
-
   mutable State state_ = Unconnected;
   SocketThread *thread_;
 
 private:
   void pollEvent(int);
+  void changeDescriptor(int);
   Private *private_;
   int fd_ = -1;
   mutable int rs_ = 0;
