@@ -121,9 +121,14 @@ public:
   virtual bool appendPollDescriptor(int, PollEvents, AbstractTask *);
   virtual bool modifyPollDescriptor(int, PollEvents);
   virtual void removePollDescriptor(int);
+  virtual void requestInterrupt();
+  virtual void waitInterrupted() const;
+  virtual void destroy();
+
   bool running();
   std::thread::id id() const { return id_; }
   std::string name() const { return name_; }
+  bool interruptRequested() const;
 
   template <typename M>
   bool appendPollTask(int fd, PollEvents events, M method) {
@@ -203,7 +208,6 @@ protected:
   AbstractThread(const std::string &);
   virtual ~AbstractThread() = 0;
   virtual bool invokeTask(AbstractTask *) = 0;
-  virtual void destroy() = 0;
   mutable std::mutex mutex;
   mutable ConditionVariableType condition_variable;
 
@@ -233,14 +237,12 @@ public:
   bool appendPollDescriptor(int, PollEvents = PollIn, AbstractTask * = nullptr) override;
   bool modifyPollDescriptor(int, PollEvents) override;
   void removePollDescriptor(int) override;
-  void destroy() override;
+  void requestInterrupt() override;
+  void waitInterrupted() const override;
 
   void start();
   void quit();
 
-  bool interruptRequested() const;
-  void requestInterrupt();
-  void waitInterrupted() const;
   void waitFinished() const;
   int queuedTasks() const;
 

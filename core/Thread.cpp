@@ -106,9 +106,20 @@ bool AbstractThread::modifyPollDescriptor(int, PollEvents) {
 
 void AbstractThread::removePollDescriptor(int) { ucWarning("not implemented"); }
 
+void AbstractThread::requestInterrupt() { ucWarning("not implemented"); }
+
+void AbstractThread::waitInterrupted() const { ucWarning("not implemented"); }
+
+void AbstractThread::destroy() { ucWarning("not implemented"); }
+
 bool AbstractThread::running() {
   AbstractThread::LockGuard lock(mutex);
   return state > WaitStarted && state != Finished;
+}
+
+bool AbstractThread::interruptRequested() const {
+  AbstractThread::LockGuard lock(mutex);
+  return state == WaitInterrupted || state == WaitFinished;
 }
 
 AbstractThread *AbstractThread::currentThread() {
@@ -502,11 +513,6 @@ bool ExecLoopThread::invokeTask(AbstractTask *task) {
   return true;
 }
 
-bool ExecLoopThread::interruptRequested() const {
-  AbstractThread::LockGuard lock(mutex);
-  return state == WaitInterrupted || state == WaitFinished;
-}
-
 void ExecLoopThread::requestInterrupt() {
   AbstractThread::LockGuard lock(mutex);
   if (state != Interrupted) {
@@ -736,8 +742,6 @@ void ExecLoopThread::removePollDescriptor(int fd) {
 #endif
   trace() << fd;
 }
-
-void ExecLoopThread::destroy() { ucError("not implemented"); }
 
 bool SocketThread::Compare::operator()(const AbstractSocket *_s1, const AbstractSocket *_s2) const {
   if (_s1->fd_ != _s2->fd_) return _s1->fd_ < _s2->fd_;
