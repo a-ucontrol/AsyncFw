@@ -56,29 +56,28 @@ class AbstractThread {
   friend class AbstractThreadPool;
 
 public:
-  using MutexType = std::mutex;
   using ConditionVariableType = std::condition_variable;
 #ifndef ABSTRACT_THREAD_LOCK_GUARD
-  using LockGuard = std::lock_guard<AbstractThread::MutexType>;
-  //struct LockGuard : public std::lock_guard<MutexType> {
-  //  using std::lock_guard<MutexType>::lock_guard;
-  //  LockGuard(AbstractThread *thread) : std::lock_guard<MutexType>::lock_guard(thread->mutex) {}
-  //};
+  using LockGuard = std::lock_guard<std::mutex>;
+  /*struct LockGuard : public std::lock_guard<std::mutex> {
+    using std::lock_guard<std::mutex>::lock_guard;
+    LockGuard(AbstractThread *thread) : std::lock_guard<std::mutex>::lock_guard(thread->mutex) {}
+  };*/
 #else
   struct LockGuard {
-    LockGuard(AbstractThread *thread) : mutex_(&thread->mutex) { mutex_->lock(); }
-    LockGuard(MutexType &mutex) : mutex_(&mutex) { mutex_->lock(); }
+    //LockGuard(AbstractThread *thread) : mutex_(&thread->mutex) { mutex_->lock(); }
+    LockGuard(std::mutex &mutex) : mutex_(&mutex) { mutex_->lock(); }
     ~LockGuard() {
       if (mutex_) mutex_->unlock();
     }
     LockGuard(LockGuard &) = delete;
-    LockGuard(LockGuard &&g) {
-      this->mutex_ = g.mutex_;
-      g.mutex_ = nullptr;
-    }
+    //LockGuard(LockGuard &&g) {
+    //  this->mutex_ = g.mutex_;
+    //  g.mutex_ = nullptr;
+    //}
 
   private:
-    MutexType *mutex_;
+    std::mutex *mutex_;
   };
 #endif
   enum PollEvents : uint16_t { PollNo = 0, PollIn = POLLIN_, PollPri = POLLPRI_, PollOut = POLLOUT_, PollErr = POLLERR_, PollHup = POLLHUP_, PollInval = POLLNVAL_ };
@@ -102,14 +101,14 @@ public:
     AbstractTask *_t = new InternalTask([method, &finished, this]() {
       method();
       finished = true;
-      std::lock_guard<MutexType> lock(mutex);
+      AbstractThread::LockGuard lock(mutex);
       condition_variable.notify_all();
     });
     if (!invokeTask(_t)) {
       delete _t;
       return false;
     }
-    std::unique_lock<MutexType> lock(mutex);
+    std::unique_lock<std::mutex> lock(mutex);
     while (!finished) condition_variable.wait(lock);
     return true;
   }
@@ -205,7 +204,7 @@ protected:
   virtual ~AbstractThread() = 0;
   virtual bool invokeTask(AbstractTask *) = 0;
   virtual void destroy() = 0;
-  mutable MutexType mutex;
+  mutable std::mutex mutex;
   mutable ConditionVariableType condition_variable;
 
 private:
@@ -215,7 +214,7 @@ private:
   };
   void changeId(std::thread::id);
   int state = None;
-  static inline MutexType list_mutex;
+  static inline std::mutex list_mutex;
   static inline std::vector<AbstractThread *> threads_;
   std::thread::id id_;
   std::string name_;
@@ -361,7 +360,7 @@ protected:
   void appendThread(AbstractThread *);
   void removeThread(AbstractThread *);
   std::vector<AbstractThread *> threads_;
-  AbstractThread::MutexType mutex;
+  std::mutex mutex;
   AbstractThread *thread_;
 
 private:
