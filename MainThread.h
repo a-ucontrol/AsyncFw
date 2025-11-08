@@ -70,7 +70,7 @@ public:
   virtual int appendTimer(int msec, AbstractTask *task) override {
     int id = 0;
     int qid = -1;
-    std::unique_lock<MutexType> lock(mutex);
+    std::unique_lock<std::mutex> lock(mutex);
     std::vector<Timer>::iterator it = timers.begin();
     for (; it != timers.end(); ++it, ++id)
       if (it->id != id) break;
@@ -80,7 +80,7 @@ public:
   }
 
   virtual bool modifyTimer(int id, int msec) override {
-    std::unique_lock<MutexType> lock(mutex);
+    std::unique_lock<std::mutex> lock(mutex);
     for (std::vector<Timer>::iterator it = timers.begin(); it != timers.end(); ++it) {
       if (it->id == id) {
         if (it->qid >= 0) QObject::killTimer(it->qid);
@@ -92,7 +92,7 @@ public:
   }
 
   virtual void removeTimer(int id) override {
-    std::unique_lock<MutexType> lock(mutex);
+    std::unique_lock<std::mutex> lock(mutex);
     for (std::vector<Timer>::iterator it = timers.begin(); it != timers.end(); ++it) {
       if (it->id == id) {
         if (it->qid >= 0) QObject::killTimer(it->qid);
@@ -198,7 +198,6 @@ public:
   #endif
 #else
     qApp->quit();
-    setId({});
 #endif
   }
 
