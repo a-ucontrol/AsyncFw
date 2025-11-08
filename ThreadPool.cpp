@@ -9,14 +9,6 @@ ThreadPool::Thread::~Thread() {
   ucTrace() << "Destroyed thread \'" + name() + "\'";
 }
 
-ThreadPool::Thread *ThreadPool::currentThread() {
-  AbstractThread *_t = AbstractThread::currentThread();
-  for (const AbstractThread *t : threads_) {
-    if (t == _t) return static_cast<Thread *>(_t);
-  }
-  return nullptr;
-}
-
 ThreadPool::ThreadPool(const std::string &name, int workThreads) : AbstractThreadPool(name), workThreadsSize(workThreads) {
   if (!instance_) instance_ = this;
   ucTrace() << "Created";
