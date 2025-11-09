@@ -54,6 +54,7 @@ class AbstractThread {
   friend class MainThread;
   friend class AbstractSocket;
   friend class AbstractThreadPool;
+  struct Private;
 
 public:
   using ConditionVariableType = std::condition_variable;
@@ -128,6 +129,7 @@ public:
 
   virtual void startedEvent() {}
   virtual void finishedEvent() {}
+  virtual void destroy() {}
 
   virtual int appendTimer(int, AbstractTask *);
   virtual bool modifyTimer(int, int);
@@ -135,7 +137,6 @@ public:
   virtual bool appendPollDescriptor(int, PollEvents, AbstractTask *);
   virtual bool modifyPollDescriptor(int, PollEvents);
   virtual void removePollDescriptor(int);
-  virtual void destroy();
 
   bool running();
   void requestInterrupt();
@@ -152,6 +153,9 @@ public:
   int appendTimerTask(int timeout, M method) {
     return appendTimer(timeout, new InternalTask(method));
   }
+
+  void start();
+  int queuedTasks() const;
 
   std::thread::id id() const { return id_; }
   std::string name() const { return name_; }
@@ -209,7 +213,7 @@ protected:
 
   template <typename M>
   class InternalPoolTask : public AbstractTask {
-    friend class ExecLoopThread;
+    friend class AbstractThread;
     friend class AbstractSocket;
     friend class MainThread;
 
@@ -224,8 +228,7 @@ protected:
 
   AbstractThread(const std::string &);
   virtual ~AbstractThread() = 0;
-  virtual bool invokeTask(AbstractTask *) = 0;
-  virtual void wake() = 0;
+  virtual bool invokeTask(AbstractTask *);
   mutable std::mutex mutex;
   mutable ConditionVariableType condition_variable;
 
@@ -236,8 +239,10 @@ private:
   };
   static inline std::mutex list_mutex;
   static inline std::vector<AbstractThread *> threads_;
-  virtual void exec() = 0;
   void changeId(std::thread::id);
+  void exec();
+  void wake();
+  Private *private_;
   int state = None;
   std::thread::id id_;
   std::string name_;
@@ -245,34 +250,11 @@ private:
 
 class ExecLoopThread : public AbstractThread {
   friend class MainThread;
-  struct Private;
-
-public:
-  ExecLoopThread(const std::string & = "ExecLoopThread");
-  ~ExecLoopThread() override;
-  int appendTimer(int, AbstractTask *) override;
-  bool modifyTimer(int, int) override;
-  void removeTimer(int) override;
-  bool appendPollDescriptor(int, PollEvents = PollIn, AbstractTask * = nullptr) override;
-  bool modifyPollDescriptor(int, PollEvents) override;
-  void removePollDescriptor(int) override;
-
-  void start();
-
-  int queuedTasks() const;
-
-protected:
-  bool invokeTask(AbstractTask *) override;
-  void wake() override;
-
-private:
-  void exec() final override;
-  Private *private_;
 };
 
 class AbstractSocket;
 
-class SocketThread : public ExecLoopThread {
+class SocketThread : public AbstractThread {
   friend AbstractSocket;
 
 public:

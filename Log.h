@@ -59,7 +59,7 @@ private:
   std::string senderPrefix;
 };
 
-class LogMinimal : public ExecLoopThread, public AbstractLog {
+class LogMinimal : public AbstractThread, public AbstractLog {
 public:
   LogMinimal();
   void startedEvent() override { AbstractLog::flush(); }

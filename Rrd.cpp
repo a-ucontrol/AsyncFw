@@ -19,13 +19,19 @@
 
 using namespace AsyncFw;
 
+class RrdThread : public AbstractThread {
+public:
+  RrdThread() : AbstractThread("AsyncFw::Rrd") {}
+  ~RrdThread() override {}
+};
+
 Rrd::Rrd(int size, int interval, int fillInterval, const std::string &name, AbstractThread *thread) : dbSize(size), interval(interval), fill(interval ? fillInterval / interval : 0) {
   trace();
   if (thread) thread_ = thread;
   else {
     ownThread = true;
-    thread_ = new ExecLoopThread("AsyncFw::Rrd");
-    static_cast<ExecLoopThread *>(thread_)->start();
+    thread_ = new RrdThread();
+    thread_->start();
   }
   if (size == 0) {
     if (name.empty()) return;

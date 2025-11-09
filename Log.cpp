@@ -165,7 +165,7 @@ void AbstractLog::append_(const Message &m, uint8_t f) {
   }
 }
 
-LogMinimal::LogMinimal() {
+LogMinimal::LogMinimal() : AbstractThread("AsyncFw::LogMinimal") {
   thread_ = this;
   start();
   ucTrace();
