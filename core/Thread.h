@@ -37,7 +37,6 @@
 namespace AsyncFw {
 class AbstractTask {
   friend class AbstractThread;
-  friend class ExecLoopThread;
   friend class MainThread;
   friend class AbstractSocket;
 
@@ -50,7 +49,6 @@ protected:
 };
 
 class AbstractThread {
-  friend class ExecLoopThread;
   friend class MainThread;
   friend class AbstractSocket;
   friend class AbstractThreadPool;
@@ -105,7 +103,7 @@ public:
       }
       return true;
     }
-    if (std::this_thread::get_id() == id_) {
+    if (std::this_thread::get_id() == id()) {
       method();
       return true;
     }
@@ -155,8 +153,8 @@ public:
   void waitFinished() const;
   int queuedTasks() const;
 
-  std::thread::id id() const { return id_; }
-  std::string name() const { return name_; }
+  std::thread::id id() const;
+  std::string name() const;
 
   void lock() { mutex.lock(); }
   void unlock() { mutex.unlock(); }
@@ -200,7 +198,6 @@ protected:
   template <typename M>
   class InternalTask : private AbstractTask {
     friend class AbstractThread;
-    friend class ExecLoopThread;
     friend class AbstractSocket;
 
   private:
@@ -227,6 +224,9 @@ protected:
   AbstractThread(const std::string &);
   virtual ~AbstractThread() = 0;
   virtual bool invokeTask(AbstractTask *);
+  static inline std::mutex list_mutex;
+  static inline std::vector<AbstractThread *> threads_;
+  void changeId(std::thread::id);
   void start();
   mutable std::mutex mutex;
   mutable ConditionVariableType condition_variable;
@@ -236,15 +236,9 @@ private:
     bool operator()(const AbstractThread *, const AbstractThread *) const;
     bool operator()(const AbstractThread *, std::thread::id) const;
   };
-  static inline std::mutex list_mutex;
-  static inline std::vector<AbstractThread *> threads_;
-  void changeId(std::thread::id);
   void exec();
   void wake();
-  Private *private_;
-  int state = None;
-  std::thread::id id_;
-  std::string name_;
+  Private &private_;
 };
 
 class AbstractSocket;
