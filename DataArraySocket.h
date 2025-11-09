@@ -12,7 +12,7 @@ class DataArraySocket : public AbstractTlsSocket {
   friend class DataArrayTcpClient;
 
 public:
-  DataArraySocket(SocketThread * = nullptr);
+  DataArraySocket(Thread * = nullptr);
   ~DataArraySocket() override;
 
   bool initTls(const TlsContext &data);
@@ -91,6 +91,6 @@ private:
   void removeTimer();
   void timerEvent();
   int tid_ = -1;
-  AsyncFw::ExecLoopThread::Holder *wait_holder_ = nullptr;
+  AsyncFw::AbstractThread::Holder *wait_holder_ = nullptr;
 };
 }  // namespace AsyncFw

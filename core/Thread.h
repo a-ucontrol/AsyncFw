@@ -138,13 +138,6 @@ public:
   virtual bool modifyPollDescriptor(int, PollEvents);
   virtual void removePollDescriptor(int);
 
-  bool running();
-  void requestInterrupt();
-  bool interruptRequested() const;
-  void waitInterrupted() const;
-  void quit();
-  void waitFinished() const;
-
   template <typename M>
   bool appendPollTask(int fd, PollEvents events, M method) {
     return appendPollDescriptor(fd, events, new InternalPoolTask(method));
@@ -154,7 +147,12 @@ public:
     return appendTimer(timeout, new InternalTask(method));
   }
 
-  void start();
+  bool running();
+  void requestInterrupt();
+  bool interruptRequested() const;
+  void waitInterrupted() const;
+  void quit();
+  void waitFinished() const;
   int queuedTasks() const;
 
   std::thread::id id() const { return id_; }
@@ -229,6 +227,7 @@ protected:
   AbstractThread(const std::string &);
   virtual ~AbstractThread() = 0;
   virtual bool invokeTask(AbstractTask *);
+  void start();
   mutable std::mutex mutex;
   mutable ConditionVariableType condition_variable;
 
@@ -248,18 +247,14 @@ private:
   std::string name_;
 };
 
-class ExecLoopThread : public AbstractThread {
-  friend class MainThread;
-};
-
 class AbstractSocket;
 
-class SocketThread : public AbstractThread {
+class Thread : public AbstractThread {
   friend AbstractSocket;
 
 public:
-  SocketThread(const std::string & = "SocketThread");
-  ~SocketThread() override;
+  Thread(const std::string & = "AsyncFw::Thread");
+  ~Thread() override;
 
 protected:
   std::vector<AbstractSocket *> sockets_;
@@ -330,7 +325,7 @@ public:
   std::string name() const { return name_; }
 
 protected:
-  class Thread : public SocketThread {
+  class Thread : public AsyncFw::Thread {
   public:
     void quit();
 

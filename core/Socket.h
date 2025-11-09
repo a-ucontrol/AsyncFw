@@ -7,10 +7,10 @@
 #include "AnyData.h"
 
 namespace AsyncFw {
-class SocketThread;
+class Thread;
 
 class AbstractSocket : public AnyData {
-  friend SocketThread;
+  friend Thread;
   friend class ListenSocket;
   friend class AbstractTlsSocket;
   friend class DataArraySocket;
@@ -20,8 +20,8 @@ public:
   enum State : uint8_t { Unconnected, Listening, Connecting, Connected, Active, Closing, Destroy };
   enum Error : uint8_t { None, Closed, Refused, PollErr, PollInval, Read, Write, Unknown };
 
-  AbstractSocket(SocketThread * = nullptr);
-  AbstractSocket(int, int, int, SocketThread * = nullptr);
+  AbstractSocket(Thread * = nullptr);
+  AbstractSocket(int, int, int, Thread * = nullptr);
   virtual ~AbstractSocket();
 
   virtual void setDescriptor(int);
@@ -46,7 +46,7 @@ public:
   int descriptorWriteSize();
 
   State state() const { return state_; }
-  SocketThread *thread() const { return thread_; }
+  Thread *thread() const { return thread_; }
 
   std::string address() const;
   uint16_t port() const;
@@ -71,7 +71,7 @@ protected:
   virtual void readEvent() = 0;
 
   mutable State state_ = Unconnected;
-  SocketThread *thread_;
+  Thread *thread_;
 
 private:
   void pollEvent(int);

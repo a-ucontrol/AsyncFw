@@ -21,15 +21,15 @@
 namespace AsyncFw {
 inline class MainThread :
 #ifdef USE_QAPPLICATION
-    public SocketThread,
+    public Thread,
     private QObject
 #else
-    private SocketThread
+    private Thread
 #endif
 {
 public:
   static MainThread *instance() { return instance_; }
-  MainThread() : SocketThread("Main") {
+  MainThread() : Thread("Main") {
     changeId(std::this_thread::get_id());
     instance_ = this;
 #ifdef EXIT_ON_UNIX_SIGNAL
@@ -41,7 +41,7 @@ public:
         (void)eventfd_read(eventfd_, &_v);
         if (_v == 1) {
   #ifndef USE_QAPPLICATION
-          SocketThread::quit();
+          Thread::quit();
   #else
           qApp->exit(code_);
   #endif
@@ -179,7 +179,7 @@ private:
 public:
   int exec() {
 #ifndef USE_QAPPLICATION
-    SocketThread::exec();
+    Thread::exec();
     return code_;
 #else
     return qApp->exec();
@@ -194,7 +194,7 @@ public:
   #ifdef EXIT_ON_UNIX_SIGNAL
     if (eventfd_ >= 0) eventfd_write(eventfd_, 1);
   #else
-    SocketThread::quit();
+    Thread::quit();
   #endif
 #else
     qApp->quit();

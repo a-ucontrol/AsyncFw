@@ -87,15 +87,15 @@ void DataArrayAbstractTcp::Thread::destroy() {
   ucTrace() << LogStream::Color::Green << this << LogStream::Color::Magenta << sockets_.size();
 
   static_cast<DataArrayAbstractTcp *>(pool)->removeThread(this);
-  SocketThread::quit();
+  AsyncFw::Thread::quit();
 
   if (std::this_thread::get_id() != this->id()) {
-    SocketThread::waitFinished();
+    AsyncFw::Thread::waitFinished();
     delete this;
     return;
   }
   pool->thread()->invokeMethod([this]() {
-    SocketThread::waitFinished();
+    AsyncFw::Thread::waitFinished();
     delete this;
   });
 }

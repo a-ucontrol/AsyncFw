@@ -26,7 +26,7 @@ struct AbstractTlsSocket::Private {
   int dataIndex;
 };
 
-AbstractTlsSocket::AbstractTlsSocket(SocketThread *_thread) : AbstractSocket(_thread) {
+AbstractTlsSocket::AbstractTlsSocket(Thread *_thread) : AbstractSocket(_thread) {
   private_ = new Private;
   trace() << fd_;
 }
@@ -92,7 +92,7 @@ void AbstractTlsSocket::acceptEvent() {
     }
   }
   int r = (private_->encrypt_ == 1) ? SSL_accept(private_->ssl_) : SSL_connect(private_->ssl_);
-  //SIGPIPE if (private_->encrypt_ == 1) ::close(fd_); void SocketThread::startedEvent() disabled it
+  //SIGPIPE if (private_->encrypt_ == 1) ::close(fd_); void Thread::startedEvent() disabled it
   if (r <= 0) {
     r = ERR_peek_error();
     if (!r && SSL_want_read(private_->ssl_)) return;

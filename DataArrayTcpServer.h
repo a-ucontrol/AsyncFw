@@ -6,7 +6,7 @@
 namespace AsyncFw {
 class DataArrayTcpServer : public DataArrayAbstractTcp {
 public:
-  DataArrayTcpServer(const std::string & = "TcpServer", SocketThread * = nullptr);
+  DataArrayTcpServer(const std::string & = "TcpServer", AsyncFw::Thread * = nullptr);
   void quit() override;
   bool listen(const std::string &address, uint16_t port) { return listener->listen(address, port); }
   void close() { listener->close(); }

@@ -69,16 +69,16 @@ struct AbstractSocket::Private {
 #undef uC_THREAD
 #define uC_THREAD this->thread()
 
-AbstractSocket::AbstractSocket(SocketThread *_thread) {
+AbstractSocket::AbstractSocket(Thread *_thread) {
   private_ = new Private;
   private_->la_.ss_family = AF_INET;
   private_->pa_.ss_family = AF_INET;
-  thread_ = (_thread) ? _thread : static_cast<SocketThread *>(AbstractThread::currentThread());
+  thread_ = (_thread) ? _thread : static_cast<Thread *>(AbstractThread::currentThread());
   thread_->appendSocket(this);
   trace();
 }
 
-AbstractSocket::AbstractSocket(int _family, int _type, int _protocol, SocketThread *_thread) : AbstractSocket(_thread) {
+AbstractSocket::AbstractSocket(int _family, int _type, int _protocol, Thread *_thread) : AbstractSocket(_thread) {
   private_->la_.ss_family = _family;
   private_->pa_.ss_family = _family;
   private_->type_ = _type;
@@ -136,11 +136,11 @@ void AbstractSocket::acceptEvent() {
 
 void AbstractSocket::changeDescriptor(int _fd) {
   checkCurrentThread();
-  std::vector<AbstractSocket *>::iterator it = std::lower_bound(thread_->sockets_.begin(), thread_->sockets_.end(), this, SocketThread::Compare());
+  std::vector<AbstractSocket *>::iterator it = std::lower_bound(thread_->sockets_.begin(), thread_->sockets_.end(), this, Thread::Compare());
   if (it != thread_->sockets_.end()) {
     thread_->sockets_.erase(it);
     fd_ = _fd;
-    it = std::lower_bound(thread_->sockets_.begin(), thread_->sockets_.end(), this, SocketThread::Compare());
+    it = std::lower_bound(thread_->sockets_.begin(), thread_->sockets_.end(), this, Thread::Compare());
     thread_->sockets_.insert(it, this);
   }
 }

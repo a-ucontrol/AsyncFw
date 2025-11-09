@@ -21,7 +21,7 @@ using namespace AsyncFw;
 
 class RrdThread : public AbstractThread {
 public:
-  RrdThread() : AbstractThread("AsyncFw::Rrd") {}
+  RrdThread() : AbstractThread("AsyncFw::Rrd") { start(); }
   ~RrdThread() override {}
 };
 
@@ -31,7 +31,6 @@ Rrd::Rrd(int size, int interval, int fillInterval, const std::string &name, Abst
   else {
     ownThread = true;
     thread_ = new RrdThread();
-    thread_->start();
   }
   if (size == 0) {
     if (name.empty()) return;

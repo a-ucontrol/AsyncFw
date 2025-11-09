@@ -177,7 +177,7 @@ bool AbstractThread::Compare::operator()(const AbstractThread *t1, const Abstrac
 
 AbstractThread::AbstractThread(const std::string &_name) : name_(_name) {
   private_ = new Private;
-  AbstractThread::LockGuard lock(list_mutex);
+  LockGuard lock(list_mutex);
   std::vector<AbstractThread *>::iterator it = std::lower_bound(threads_.begin(), threads_.end(), this, Compare());
   threads_.insert(it, this);
   trace() << "threads:" << std::to_string(threads_.size());
@@ -244,7 +244,7 @@ AbstractThread::~AbstractThread() {
 
   delete private_;
 
-  AbstractThread::LockGuard lock(list_mutex);
+  LockGuard lock(list_mutex);
   std::vector<AbstractThread *>::iterator it = std::lower_bound(threads_.begin(), threads_.end(), this, Compare());
   if (it != threads_.end() && (*it) == this) threads_.erase(it);
   else { ucError() << "thread not found"; }
@@ -254,7 +254,7 @@ AbstractThread::~AbstractThread() {
 AbstractThread *AbstractThread::currentThread() {
   std::thread::id _id = std::this_thread::get_id();
   {  //lock scope
-    AbstractThread::LockGuard lock(list_mutex);
+    LockGuard lock(list_mutex);
     std::vector<AbstractThread *>::iterator it = std::lower_bound(threads_.begin(), threads_.end(), _id, Compare());
     if (it != threads_.end() && (*it)->id_ == _id) return (*it);
   }
@@ -263,12 +263,12 @@ AbstractThread *AbstractThread::currentThread() {
 }
 
 bool AbstractThread::running() {
-  AbstractThread::LockGuard lock(mutex);
+  LockGuard lock(mutex);
   return state > WaitStarted && state != Finished;
 }
 
 void AbstractThread::requestInterrupt() {
-  AbstractThread::LockGuard lock(mutex);
+  LockGuard lock(mutex);
   if (state != Interrupted) {
     state = WaitInterrupted;
     wake();
@@ -276,7 +276,7 @@ void AbstractThread::requestInterrupt() {
 }
 
 bool AbstractThread::interruptRequested() const {
-  AbstractThread::LockGuard lock(mutex);
+  LockGuard lock(mutex);
   return state == WaitInterrupted || state == WaitFinished;
 }
 
@@ -293,7 +293,7 @@ void AbstractThread::waitInterrupted() const {
 
 void AbstractThread::quit() {
   ucDebug() << name() << this;
-  AbstractThread::LockGuard lock(mutex);
+  LockGuard lock(mutex);
   if (!state || state == Finished) {
     logWarning() << "Thread already finished or not started";
     return;
@@ -313,7 +313,7 @@ void AbstractThread::waitFinished() const {
 }
 
 void AbstractThread::changeId(std::thread::id _id) {
-  AbstractThread::LockGuard lock(list_mutex);
+  LockGuard lock(list_mutex);
   std::vector<AbstractThread *>::iterator it = std::lower_bound(threads_.begin(), threads_.end(), this, Compare());
   if (it != threads_.end() && (*it) == this) threads_.erase(it);
   else { ucError() << "thread not found"; }
@@ -326,7 +326,7 @@ void AbstractThread::exec() {
   int _state;
 
   {  //lock scope
-    AbstractThread::LockGuard lock(mutex);
+    LockGuard lock(mutex);
     warning_if(private_->process_tasks.size() || private_->process_poll_tasks.size() || private_->process_timer_tasks.size()) << LogStream::Color::Red << "not empty" << private_->process_tasks_.size() << private_->process_poll_tasks_.size() << private_->process_timer_tasks_.size();
     _state = (state != Finished) ? state : None;
     if (_state >= Running) {  //nested exec
@@ -490,7 +490,7 @@ void AbstractThread::exec() {
     }
   }
   if (_state < Running) finishedEvent();
-  AbstractThread::LockGuard lock(mutex);
+  LockGuard lock(mutex);
   if (_state >= Running) {
     state = _state;
     return;
@@ -542,7 +542,7 @@ bool AbstractThread::invokeTask(AbstractTask *task) {
 }
 
 void AbstractThread::start() {
-  AbstractThread::LockGuard lock(mutex);
+  LockGuard lock(mutex);
   if (state && state != Finished) {
     logWarning() << "Thread already running or starting";
     return;
@@ -557,13 +557,13 @@ void AbstractThread::start() {
 }
 
 int AbstractThread::queuedTasks() const {
-  AbstractThread::LockGuard lock(mutex);
+  LockGuard lock(mutex);
   return private_->tasks.size();
 }
 
 int AbstractThread::appendTimer(int ms, AbstractTask *task) {
   int id = 0;
-  AbstractThread::LockGuard lock(mutex);
+  LockGuard lock(mutex);
   std::vector<Private::Timer>::iterator it = private_->timers.begin();
   for (; it != private_->timers.end(); ++it, ++id)
     if (it->id != id) break;
@@ -581,7 +581,7 @@ int AbstractThread::appendTimer(int ms, AbstractTask *task) {
 }
 
 bool AbstractThread::modifyTimer(int id, int ms) {
-  AbstractThread::LockGuard lock(mutex);
+  LockGuard lock(mutex);
   std::vector<Private::Timer>::iterator it = std::lower_bound(private_->timers.begin(), private_->timers.end(), id, Private::Compare());
   if (it != private_->timers.end() && it->id == id) {
     it->timeout = std::chrono::milliseconds(ms);
@@ -602,7 +602,7 @@ void AbstractThread::removeTimer(int id) {
   std::vector<Private::Timer>::iterator it;
   AbstractTask *_t;
   {  //lock scope
-    AbstractThread::LockGuard lock(mutex);
+    LockGuard lock(mutex);
     it = std::lower_bound(private_->timers.begin(), private_->timers.end(), id, Private::Compare());
     if (it == private_->timers.end() || it->id != id) {
       ucError() << "timer:" << id << "not found";
@@ -620,7 +620,7 @@ void AbstractThread::removeTimer(int id) {
 
 bool AbstractThread::appendPollDescriptor(int fd, PollEvents events, AbstractTask *task) {
 #ifndef EPOLL_WAIT
-  AbstractThread::LockGuard lock(mutex);
+  LockGuard lock(mutex);
   std::vector<Private::PollTask *>::iterator it = std::lower_bound(private_->poll_tasks.begin(), private_->poll_tasks.end(), fd, Private::Compare());
   if (it != private_->poll_tasks.end() && (*it)->fd == fd) {
     delete task;
@@ -645,7 +645,7 @@ bool AbstractThread::appendPollDescriptor(int fd, PollEvents events, AbstractTas
     logError() << "Append error, descriptor:" << fd;
     return false;
   }
-  AbstractThread::LockGuard lock(mutex);
+  LockGuard lock(mutex);
   std::vector<Private::PollTask *>::iterator it = std::lower_bound(private_->poll_tasks.begin(), private_->poll_tasks.end(), fd, Private::Compare());
   if (it != private_->poll_tasks.end() && (*it)->fd == fd) goto ERR;
   if (private_->poll_tasks.empty()) wake();
@@ -657,7 +657,7 @@ bool AbstractThread::appendPollDescriptor(int fd, PollEvents events, AbstractTas
 
 bool AbstractThread::modifyPollDescriptor(int fd, PollEvents events) {
 #ifndef EPOLL_WAIT
-  AbstractThread::LockGuard lock(mutex);
+  LockGuard lock(mutex);
   std::vector<Private::PollTask *>::iterator it = std::lower_bound(private_->poll_tasks.begin(), private_->poll_tasks.end(), fd, Private::Compare());
   if (it != private_->poll_tasks.end() && (*it)->fd != fd) {
     logError("Modify: descriptor not found");
@@ -673,7 +673,7 @@ bool AbstractThread::modifyPollDescriptor(int fd, PollEvents events) {
   struct epoll_event event;
   event.events = events;
   {  //lock scope
-    AbstractThread::LockGuard lock(mutex);
+    LockGuard lock(mutex);
     std::vector<Private::PollTask *>::iterator it = std::lower_bound(private_->poll_tasks.begin(), private_->poll_tasks.end(), fd, Private::Compare());
     if (it == private_->poll_tasks.end() || (*it)->fd != fd) {
       logError("Modify: descriptor not found");
@@ -691,7 +691,7 @@ void AbstractThread::removePollDescriptor(int fd) {
 #ifndef EPOLL_WAIT
   AbstractTask *_t;
   {  //lock scope
-    AbstractThread::LockGuard lock(mutex);
+    LockGuard lock(mutex);
     std::vector<Private::PollTask *>::iterator it = std::lower_bound(private_->poll_tasks.begin(), private_->poll_tasks.end(), fd, Private::Compare());
     if (it != private_->poll_tasks.end() && (*it)->fd != fd) {
       logError("Remove: descriptor not found");
@@ -713,7 +713,7 @@ void AbstractThread::removePollDescriptor(int fd) {
   epoll_ctl(private_->epoll_fd, EPOLL_CTL_DEL, fd, nullptr);
   AbstractTask *_t;
   {  //lock scope
-    AbstractThread::LockGuard lock(mutex);
+    LockGuard lock(mutex);
     std::vector<Private::PollTask *>::iterator it = std::lower_bound(private_->poll_tasks.begin(), private_->poll_tasks.end(), fd, Private::Compare());
     if (it == private_->poll_tasks.end() || (*it)->fd != fd) {
       logError("Remove: descriptor not found");
@@ -731,14 +731,14 @@ void AbstractThread::removePollDescriptor(int fd) {
   trace() << fd;
 }
 
-bool SocketThread::Compare::operator()(const AbstractSocket *_s1, const AbstractSocket *_s2) const {
+bool Thread::Compare::operator()(const AbstractSocket *_s1, const AbstractSocket *_s2) const {
   if (_s1->fd_ != _s2->fd_) return _s1->fd_ < _s2->fd_;
   return _s1 < _s2;
 }
 
-SocketThread::SocketThread(const std::string &name) : AbstractThread(name) { trace(); }
+Thread::Thread(const std::string &name) : AbstractThread(name) { trace(); }
 
-SocketThread::~SocketThread() {
+Thread::~Thread() {
   if (running()) {
     quit();
     waitFinished();
@@ -747,7 +747,7 @@ SocketThread::~SocketThread() {
   ucTrace();
 }
 
-void SocketThread::startedEvent() {
+void Thread::startedEvent() {
 #ifndef _WIN32
   sigset_t _s;
   sigemptyset(&_s);
@@ -756,13 +756,13 @@ void SocketThread::startedEvent() {
 #endif
 }
 
-void SocketThread::appendSocket(AbstractSocket *_socket) {
+void Thread::appendSocket(AbstractSocket *_socket) {
   std::vector<AbstractSocket *>::iterator it = std::lower_bound(sockets_.begin(), sockets_.end(), _socket, Compare());
   sockets_.insert(it, _socket);
   trace() << LogStream::Color::Green << _socket->fd_;
 }
 
-void SocketThread::removeSocket(AbstractSocket *_socket) {
+void Thread::removeSocket(AbstractSocket *_socket) {
   std::vector<AbstractSocket *>::iterator it = std::lower_bound(sockets_.begin(), sockets_.end(), _socket, Compare());
   if (it != sockets_.end() && (*it) == _socket) {
     if (_socket->fd_ >= 0) removePollDescriptor(_socket->fd_);
@@ -835,14 +835,14 @@ void AbstractThreadPool::removeThread(AbstractThread *thread) {
   ucTrace("threads: " + std::to_string(threads_.size()));
 }
 
-AbstractThreadPool::Thread::Thread(const std::string &name, AbstractThreadPool *_pool, bool autoStart) : SocketThread(name), pool(_pool) {
+AbstractThreadPool::Thread::Thread(const std::string &name, AbstractThreadPool *_pool, bool autoStart) : AsyncFw::Thread(name), pool(_pool) {
   pool->appendThread(this);
   if (autoStart) start();
   ucTrace();
 }
 
 AbstractThreadPool::Thread::~Thread() {
-  AbstractThread::LockGuard lock(mutex);
+  LockGuard lock(mutex);
   std::vector<AbstractThread *>::iterator it = std::lower_bound(threads_.begin(), threads_.end(), this, AbstractThreadPool::Compare());
   if (it != threads_.end() && (*it) == this) {
     threads_.erase(it);

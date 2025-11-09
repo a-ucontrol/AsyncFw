@@ -18,7 +18,7 @@
 #define uC_THREAD this->thread()
 using namespace AsyncFw;
 
-DataArraySocket::DataArraySocket(SocketThread *_thread) : AbstractTlsSocket(_thread) {
+DataArraySocket::DataArraySocket(Thread *_thread) : AbstractTlsSocket(_thread) {
   sslConnection = 0;
   receiveByteArray = nullptr;
   waitTimerType = 0;
@@ -391,7 +391,7 @@ bool DataArraySocket::connectToHost(int timeout) {
       },
       true);
 
-  ExecLoopThread::Holder h;
+  AbstractThread::Holder h;
   wait_holder_ = &h;
   h.wait();
   wait_holder_ = nullptr;

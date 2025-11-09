@@ -6,10 +6,10 @@
 
 using namespace AsyncFw;
 
-DataArrayTcpServer::DataArrayTcpServer(const std::string &name, SocketThread *thread) : DataArrayAbstractTcp(name, thread) {
+DataArrayTcpServer::DataArrayTcpServer(const std::string &name, AsyncFw::Thread *thread) : DataArrayAbstractTcp(name, thread) {
   listener = std::make_unique<ListenSocket>(thread);
   listener->setIncomingConnection([this](int descriptor, const std::string &address) { return incomingConnection(descriptor, address); });
-  alwaysConnect_.emplace_back("127.0.0.1");  //!!! need check
+  alwaysConnect_.emplace_back("127.0.0.1");
   ucTrace();
 }
 
@@ -67,7 +67,7 @@ void DataArrayTcpServer::Thread::createSocket(int socketDescriptor, bool encrypt
 
 void DataArrayTcpServer::Thread::removeSocket(DataArraySocket *socket) {
   checkCurrentThread();
-  SocketThread::removeSocket(socket);
+  AsyncFw::Thread::removeSocket(socket);
   if (sockets_.empty()) destroy();
   pool->thread()->invokeMethod([socket]() { socket->destroy(); });
 }
