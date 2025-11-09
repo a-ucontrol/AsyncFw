@@ -9,7 +9,7 @@ struct CoroutineTask::promise_type::Private {
   CoroutineAwait *await;
   CoroutineTask *task;
   AbstractThread *thread;
-  ExecLoopThread::Holder *holder = nullptr;
+  AbstractThread::Holder *holder = nullptr;
   bool finished = false;
 };
 
@@ -39,7 +39,7 @@ CoroutineTask::~CoroutineTask() {
 void CoroutineTask::wait() {
   if (promise->private_->finished) return;
 
-  ExecLoopThread::Holder h;
+  AbstractThread::Holder h;
   promise->private_->holder = &h;
   h.wait();
 

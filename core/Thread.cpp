@@ -4,7 +4,7 @@
 #include "Thread.h"
 #include "Socket.h"
 
-#define EVENTFD_WAKE
+//#define EVENTFD_WAKE
 #define EPOLL_WAIT
 
 #ifdef EXTEND_THREAD_TRACE
@@ -51,6 +51,26 @@ AbstractTask::~AbstractTask() {
 #endif
 }
 
+void AbstractThread::Holder::complete() {
+  waiting = false;
+  thread->quit();
+}
+
+void AbstractThread::Holder::wait() {
+  waiting = true;
+  thread = AbstractThread::currentThread();
+  bool _q = false;
+  for (;;) {
+    thread->exec();
+    if (!waiting) {
+      if (thread->state == AbstractThread::Finished) thread->state = AbstractThread::None;
+      break;
+    }
+    _q = true;
+  }
+  if (_q) thread->quit();
+}
+
 bool AbstractThread::Compare::operator()(const AbstractThread *t, std::thread::id id) const { return t->id_ < id; }
 bool AbstractThread::Compare::operator()(const AbstractThread *t1, const AbstractThread *t2) const {
   if (t1->id_ != t2->id_) return t1->id_ < t2->id_;
@@ -72,14 +92,15 @@ AbstractThread::~AbstractThread() {
   trace() << "threads:" << std::to_string(threads_.size());
 }
 
-void AbstractThread::changeId(std::thread::id _id) {
-  AbstractThread::LockGuard lock(list_mutex);
-  std::vector<AbstractThread *>::iterator it = std::lower_bound(threads_.begin(), threads_.end(), this, Compare());
-  if (it != threads_.end() && (*it) == this) threads_.erase(it);
-  else { ucError() << "thread not found"; }
-  id_ = _id;
-  it = std::lower_bound(threads_.begin(), threads_.end(), this, Compare());
-  threads_.insert(it, this);
+AbstractThread *AbstractThread::currentThread() {
+  std::thread::id _id = std::this_thread::get_id();
+  {  //lock scope
+    AbstractThread::LockGuard lock(list_mutex);
+    std::vector<AbstractThread *>::iterator it = std::lower_bound(threads_.begin(), threads_.end(), _id, Compare());
+    if (it != threads_.end() && (*it)->id_ == _id) return (*it);
+  }
+  ucError() << "thread not found:" << _id;
+  return nullptr;
 }
 
 int AbstractThread::appendTimer(int, AbstractTask *) {
@@ -106,10 +127,6 @@ bool AbstractThread::modifyPollDescriptor(int, PollEvents) {
 
 void AbstractThread::removePollDescriptor(int) { ucWarning("not implemented"); }
 
-void AbstractThread::requestInterrupt() { ucWarning("not implemented"); }
-
-void AbstractThread::waitInterrupted() const { ucWarning("not implemented"); }
-
 void AbstractThread::destroy() { ucWarning("not implemented"); }
 
 bool AbstractThread::running() {
@@ -117,20 +134,59 @@ bool AbstractThread::running() {
   return state > WaitStarted && state != Finished;
 }
 
+void AbstractThread::requestInterrupt() {
+  AbstractThread::LockGuard lock(mutex);
+  if (state != Interrupted) {
+    state = WaitInterrupted;
+    wake();
+  }
+}
+
 bool AbstractThread::interruptRequested() const {
   AbstractThread::LockGuard lock(mutex);
   return state == WaitInterrupted || state == WaitFinished;
 }
 
-AbstractThread *AbstractThread::currentThread() {
-  std::thread::id _id = std::this_thread::get_id();
-  {  //lock scope
-    AbstractThread::LockGuard lock(list_mutex);
-    std::vector<AbstractThread *>::iterator it = std::lower_bound(threads_.begin(), threads_.end(), _id, Compare());
-    if (it != threads_.end() && (*it)->id_ == _id) return (*it);
+void AbstractThread::waitInterrupted() const {
+  checkDifferentThread();
+  std::unique_lock<std::mutex> lock(mutex);
+  if (state == Interrupted) return;
+  if (state != WaitInterrupted) {
+    logWarning("Interrupt request not set");
+    return;
   }
-  ucError() << "thread not found:" << _id;
-  return nullptr;
+  while (state == WaitInterrupted) condition_variable.wait(lock);
+}
+
+void AbstractThread::quit() {
+  ucDebug() << name() << this;
+  AbstractThread::LockGuard lock(mutex);
+  if (!state || state == Finished) {
+    logWarning() << "Thread already finished or not started";
+    return;
+  }
+  state = WaitFinished;
+  wake();
+}
+
+void AbstractThread::waitFinished() const {
+  checkDifferentThread();
+  std::unique_lock<std::mutex> lock(mutex);
+  if (!state) {
+    logWarning() << "Thread not running";
+    return;
+  }
+  while (state != Finished) condition_variable.wait(lock);
+}
+
+void AbstractThread::changeId(std::thread::id _id) {
+  AbstractThread::LockGuard lock(list_mutex);
+  std::vector<AbstractThread *>::iterator it = std::lower_bound(threads_.begin(), threads_.end(), this, Compare());
+  if (it != threads_.end() && (*it) == this) threads_.erase(it);
+  else { ucError() << "thread not found"; }
+  id_ = _id;
+  it = std::lower_bound(threads_.begin(), threads_.end(), this, Compare());
+  threads_.insert(it, this);
 }
 
 struct ExecLoopThread::Private {
@@ -197,10 +253,39 @@ struct ExecLoopThread::Private {
     AbstractTask *task;
   };
 
-  std::queue<AbstractTask *> process_tasks;
-  std::queue<ProcessTimerTask> process_timer_tasks;
-  std::queue<ProcessPollTask> process_poll_tasks;
+  std::queue<AbstractTask *> process_tasks_;
+  std::queue<ProcessTimerTask> process_timer_tasks_;
+  std::queue<ProcessPollTask> process_poll_tasks_;
+  void process_tasks();
+  void process_polls();
+  void process_timers();
 };
+
+void ExecLoopThread::Private::process_tasks() {
+  for (; !process_tasks_.empty();) {
+    AbstractTask *_t = process_tasks_.front();
+    process_tasks_.pop();
+    _t->invoke();
+    delete _t;
+  }
+}
+
+void ExecLoopThread::Private::process_polls() {
+  for (; !process_poll_tasks_.empty();) {
+    Private::ProcessPollTask _pt = process_poll_tasks_.front();
+    process_poll_tasks_.pop();
+    static_cast<InternalPoolTask<AbstractThread::PollEvents> *>(_pt.task)->e_ = static_cast<AbstractThread::PollEvents>(_pt.events);
+    _pt.task->invoke();
+  }
+}
+
+void ExecLoopThread::Private::process_timers() {
+  for (; !process_timer_tasks_.empty();) {
+    Private::ProcessTimerTask _tt = process_timer_tasks_.front();
+    process_timer_tasks_.pop();
+    _tt.task->invoke();
+  }
+}
 
 ExecLoopThread::ExecLoopThread(const std::string &name) : AbstractThread(name) {
   private_ = new Private;
@@ -257,41 +342,15 @@ ExecLoopThread::~ExecLoopThread() {
     waitFinished();
   }
 
-  ucTrace() << name_ << "-" << private_->tasks.size() << private_->timers.size() << private_->poll_tasks.size() << private_->process_tasks.size() << private_->process_timer_tasks.size() << private_->process_poll_tasks.size();
+  ucTrace() << name_ << "-" << private_->tasks.size() << private_->timers.size() << private_->poll_tasks.size() << private_->process_tasks_.size() << private_->process_timer_tasks_.size() << private_->process_poll_tasks_.size();
 
   if (!private_->tasks.empty()) {
     ucDebug() << LogStream::Color::Red << "Task list not empty";
-    std::swap(private_->process_tasks, private_->tasks);
-    process_tasks();
+    std::swap(private_->process_tasks_, private_->tasks);
+    private_->process_tasks();
   }
 
   delete private_;
-}
-
-void ExecLoopThread::process_tasks() {
-  for (; !private_->process_tasks.empty();) {
-    AbstractTask *_t = private_->process_tasks.front();
-    private_->process_tasks.pop();
-    _t->invoke();
-    delete _t;
-  }
-}
-
-void ExecLoopThread::process_polls() {
-  for (; !private_->process_poll_tasks.empty();) {
-    Private::ProcessPollTask _pt = private_->process_poll_tasks.front();
-    private_->process_poll_tasks.pop();
-    static_cast<InternalPoolTask<AbstractThread::PollEvents> *>(_pt.task)->e_ = static_cast<AbstractThread::PollEvents>(_pt.events);
-    _pt.task->invoke();
-  }
-}
-
-void ExecLoopThread::process_timers() {
-  for (; !private_->process_timer_tasks.empty();) {
-    Private::ProcessTimerTask _tt = private_->process_timer_tasks.front();
-    private_->process_timer_tasks.pop();
-    _tt.task->invoke();
-  }
 }
 
 void ExecLoopThread::exec() {
@@ -299,37 +358,37 @@ void ExecLoopThread::exec() {
 
   {  //lock scope
     AbstractThread::LockGuard lock(mutex);
-    warning_if(private_->process_tasks.size() || private_->process_poll_tasks.size() || private_->process_timer_tasks.size()) << LogStream::Color::Red << "not empty" << private_->process_tasks.size() << private_->process_poll_tasks.size() << private_->process_timer_tasks.size();
+    warning_if(private_->process_tasks.size() || private_->process_poll_tasks.size() || private_->process_timer_tasks.size()) << LogStream::Color::Red << "not empty" << private_->process_tasks_.size() << private_->process_poll_tasks_.size() << private_->process_timer_tasks_.size();
     _state = (state != Finished) ? state : None;
     if (_state >= Running) {  //nested exec
-      trace() << LogStream::Color::Red << "nested" << private_->process_tasks.size() << private_->process_poll_tasks.size() << private_->process_timer_tasks.size();
-      if (!private_->process_tasks.empty()) {
+      trace() << LogStream::Color::Red << "nested" << private_->process_tasks_.size() << private_->process_poll_tasks_.size() << private_->process_timer_tasks_.size();
+      if (!private_->process_tasks_.empty()) {
         mutex.unlock();
-        process_tasks();
+        private_->process_tasks();
         mutex.lock();
-      } else if (!private_->process_poll_tasks.empty()) {
+      } else if (!private_->process_poll_tasks_.empty()) {
         mutex.unlock();
-        process_polls();
+        private_->process_polls();
         mutex.lock();
-      } else if (!private_->process_timer_tasks.empty()) {
+      } else if (!private_->process_timer_tasks_.empty()) {
         mutex.unlock();
-        process_timers();
+        private_->process_timers();
         mutex.lock();
       }
     }
 
-    std::swap(private_->process_tasks, private_->tasks);  //take exists tasks
+    std::swap(private_->process_tasks_, private_->tasks);  //take exists tasks
     state = Running;
     if (_state < Running) condition_variable.notify_all();
   }
   if (_state < Running) { startedEvent(); }
   for (;;) {
-    process_tasks();
+    private_->process_tasks();
     {  //lock scope, wait new tasks or wakeup
       std::unique_lock<std::mutex> lock(mutex);
     CONTINUE:
       if (!private_->tasks.empty()) {
-        std::swap(private_->process_tasks, private_->tasks);  //take new tasks
+        std::swap(private_->process_tasks_, private_->tasks);  //take new tasks
         continue;
       }
       if (state == WaitFinished) break;
@@ -401,7 +460,7 @@ void ExecLoopThread::exec() {
           if (r > 0) {
             for (std::vector<pollfd>::const_iterator it = private_->fds_.begin() + 1; i != r; ++it)
               if (it->revents) {
-                private_->process_poll_tasks.push({it->fd, it->revents, *(private_->fdts_.begin() + (it - 1 - private_->fds_.begin()))});
+                private_->process_poll_tasks_.push({it->fd, it->revents, *(private_->fdts_.begin() + (it - 1 - private_->fds_.begin()))});
                 i++;
               }
 #else
@@ -425,13 +484,13 @@ void ExecLoopThread::exec() {
                 continue;
               }
               Private::PollTask *_d = static_cast<Private::PollTask *>(event[i].data.ptr);
-              private_->process_poll_tasks.push({_d->fd, event[i].events, _d->task});
+              private_->process_poll_tasks_.push({_d->fd, event[i].events, _d->task});
             }
 #endif
-            if (private_->process_poll_tasks.empty()) goto CONTINUE;
+            if (private_->process_poll_tasks_.empty()) goto CONTINUE;
             private_->wake_ = true;
             mutex.unlock();
-            process_polls();
+            private_->process_polls();
             mutex.lock();
             goto CONTINUE;
           }
@@ -448,14 +507,14 @@ void ExecLoopThread::exec() {
               console_msg("ExecLoopThread: warning: thread (" + name_ + ") timer overload, interval: " + std::to_string(t.timeout.count()) + ", expired: " + std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>((now - t.expire + t.timeout)).count()));
               t.expire = now + t.timeout;
             }
-            private_->process_timer_tasks.push({t.id, t.task});
+            private_->process_timer_tasks_.push({t.id, t.task});
           }
           if (private_->wakeup > t.expire) private_->wakeup = t.expire;
         }
-        if (private_->process_timer_tasks.empty()) goto CONTINUE;
+        if (private_->process_timer_tasks_.empty()) goto CONTINUE;
         private_->wake_ = true;
         mutex.unlock();
-        process_timers();
+        private_->process_timers();
         mutex.lock();
         goto CONTINUE;
       }
@@ -469,10 +528,10 @@ void ExecLoopThread::exec() {
   }
   if (!private_->tasks.empty()) {
     state = Finalize;
-    std::swap(private_->process_tasks, private_->tasks);
+    std::swap(private_->process_tasks_, private_->tasks);
     private_->wake_ = true;
     mutex.unlock();
-    process_tasks();
+    private_->process_tasks();
     mutex.lock();
   }
   state = Finished;
@@ -513,14 +572,6 @@ bool ExecLoopThread::invokeTask(AbstractTask *task) {
   return true;
 }
 
-void ExecLoopThread::requestInterrupt() {
-  AbstractThread::LockGuard lock(mutex);
-  if (state != Interrupted) {
-    state = WaitInterrupted;
-    wake();
-  }
-}
-
 void ExecLoopThread::start() {
   AbstractThread::LockGuard lock(mutex);
   if (state && state != Finished) {
@@ -534,38 +585,6 @@ void ExecLoopThread::start() {
     changeId({});
   }};
   t.detach();
-}
-
-void ExecLoopThread::quit() {
-  ucDebug() << name() << this;
-  AbstractThread::LockGuard lock(mutex);
-  if (!state || state == Finished) {
-    logWarning() << "Thread already finished or not started";
-    return;
-  }
-  state = WaitFinished;
-  wake();
-}
-
-void ExecLoopThread::waitInterrupted() const {
-  checkDifferentThread();
-  std::unique_lock<std::mutex> lock(mutex);
-  if (state == Interrupted) return;
-  if (state != WaitInterrupted) {
-    logWarning("Interrupt request not set");
-    return;
-  }
-  while (state == WaitInterrupted) condition_variable.wait(lock);
-}
-
-void ExecLoopThread::waitFinished() const {
-  checkDifferentThread();
-  std::unique_lock<std::mutex> lock(mutex);
-  if (!state) {
-    logWarning() << "Thread not running";
-    return;
-  }
-  while (state != Finished) condition_variable.wait(lock);
 }
 
 int ExecLoopThread::queuedTasks() const {
@@ -879,24 +898,4 @@ void AbstractThreadPool::Thread::quit() {
   checkDifferentThread();
   pool->removeThread(this);
   destroy();
-}
-
-void ExecLoopThread::Holder::complete() {
-  waiting = false;
-  thread->quit();
-}
-
-void ExecLoopThread::Holder::wait() {
-  waiting = true;
-  thread = static_cast<ExecLoopThread *>(AbstractThread::currentThread());
-  bool _q = false;
-  for (;;) {
-    thread->exec();
-    if (!waiting) {
-      if (thread->state == AbstractThread::Finished) thread->state = AbstractThread::None;
-      break;
-    }
-    _q = true;
-  }
-  if (_q) thread->quit();
 }

@@ -19,13 +19,13 @@
 
 using namespace AsyncFw;
 
-Rrd::Rrd(int size, int interval, int fillInterval, const std::string &name, ExecLoopThread *thread) : dbSize(size), interval(interval), fill(interval ? fillInterval / interval : 0) {
+Rrd::Rrd(int size, int interval, int fillInterval, const std::string &name, AbstractThread *thread) : dbSize(size), interval(interval), fill(interval ? fillInterval / interval : 0) {
   trace();
   if (thread) thread_ = thread;
   else {
     ownThread = true;
-    thread_ = new ExecLoopThread("Rrd");
-    thread_->start();
+    thread_ = new ExecLoopThread("AsyncFw::Rrd");
+    static_cast<ExecLoopThread *>(thread_)->start();
   }
   if (size == 0) {
     if (name.empty()) return;
@@ -44,7 +44,7 @@ Rrd::Rrd(int size, int interval, int fillInterval, const std::string &name, Exec
     dataBase.resize(dbSize);
   }
 }
-Rrd::Rrd(int size, int interval, int fillInterval, ExecLoopThread *thread) : Rrd(size, interval, fillInterval, {}, thread) {}
+Rrd::Rrd(int size, int interval, int fillInterval, AbstractThread *thread) : Rrd(size, interval, fillInterval, {}, thread) {}
 
 Rrd::~Rrd() {
   if (ownThread) {
@@ -57,9 +57,9 @@ Rrd::~Rrd() {
   if (!file.empty() && !readOnly) { saveToFile(); }
 }
 
-Rrd::Rrd(int size, const std::string &name, ExecLoopThread *thread) : Rrd(size, 0, 0, name, thread) {}
+Rrd::Rrd(int size, const std::string &name, AbstractThread *thread) : Rrd(size, 0, 0, name, thread) {}
 
-Rrd::Rrd(int size, ExecLoopThread *thread) : Rrd(size, 0, 0, {}, thread) {}
+Rrd::Rrd(int size, AbstractThread *thread) : Rrd(size, 0, 0, {}, thread) {}
 
 bool Rrd::createFile() {
   count_v = 0;

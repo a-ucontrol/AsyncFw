@@ -279,5 +279,4 @@ bool FileSystemWatcher::CompareWatch::operator()(const Watch *w, const WatchPath
 }
 
 bool FileSystemWatcher::CompareWatchDescriptor::operator()(const Watch *d1, const Watch *d2) const { return d1->d < d2->d; }
-bool FileSystemWatcher::CompareWatchDescriptor::operator()(int fd, const Watch *d) const { return fd < d->d; }
 bool FileSystemWatcher::CompareWatchDescriptor::operator()(const Watch *d, int fd) const { return d->d < fd; }

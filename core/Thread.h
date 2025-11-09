@@ -80,6 +80,17 @@ public:
     std::mutex *mutex_;
   };
 #endif
+
+  class Holder {
+  public:
+    void complete();
+    void wait();
+
+  private:
+    AbstractThread *thread;
+    bool waiting;
+  };
+
   enum PollEvents : uint16_t { PollNo = 0, PollIn = POLLIN_, PollPri = POLLPRI_, PollOut = POLLOUT_, PollErr = POLLERR_, PollHup = POLLHUP_, PollInval = POLLNVAL_ };
   enum State : uint8_t { None = 0, WaitStarted, Running, WaitInterrupted, WaitFinished, Interrupted, Finalize, Finished };
 
@@ -115,20 +126,23 @@ public:
 
   static AbstractThread *currentThread();
 
+  virtual void startedEvent() {}
+  virtual void finishedEvent() {}
+
   virtual int appendTimer(int, AbstractTask *);
   virtual bool modifyTimer(int, int);
   virtual void removeTimer(int);
   virtual bool appendPollDescriptor(int, PollEvents, AbstractTask *);
   virtual bool modifyPollDescriptor(int, PollEvents);
   virtual void removePollDescriptor(int);
-  virtual void requestInterrupt();
-  virtual void waitInterrupted() const;
   virtual void destroy();
 
   bool running();
-  std::thread::id id() const { return id_; }
-  std::string name() const { return name_; }
+  void requestInterrupt();
   bool interruptRequested() const;
+  void waitInterrupted() const;
+  void quit();
+  void waitFinished() const;
 
   template <typename M>
   bool appendPollTask(int fd, PollEvents events, M method) {
@@ -138,6 +152,9 @@ public:
   int appendTimerTask(int timeout, M method) {
     return appendTimer(timeout, new InternalTask(method));
   }
+
+  std::thread::id id() const { return id_; }
+  std::string name() const { return name_; }
 
   void lock() { mutex.lock(); }
   void unlock() { mutex.unlock(); }
@@ -208,6 +225,7 @@ protected:
   AbstractThread(const std::string &);
   virtual ~AbstractThread() = 0;
   virtual bool invokeTask(AbstractTask *) = 0;
+  virtual void wake() = 0;
   mutable std::mutex mutex;
   mutable ConditionVariableType condition_variable;
 
@@ -216,10 +234,11 @@ private:
     bool operator()(const AbstractThread *, const AbstractThread *) const;
     bool operator()(const AbstractThread *, std::thread::id) const;
   };
-  void changeId(std::thread::id);
-  int state = None;
   static inline std::mutex list_mutex;
   static inline std::vector<AbstractThread *> threads_;
+  virtual void exec() = 0;
+  void changeId(std::thread::id);
+  int state = None;
   std::thread::id id_;
   std::string name_;
 };
@@ -237,36 +256,17 @@ public:
   bool appendPollDescriptor(int, PollEvents = PollIn, AbstractTask * = nullptr) override;
   bool modifyPollDescriptor(int, PollEvents) override;
   void removePollDescriptor(int) override;
-  void requestInterrupt() override;
-  void waitInterrupted() const override;
 
   void start();
-  void quit();
 
-  void waitFinished() const;
   int queuedTasks() const;
-
-  class Holder {
-  public:
-    void complete();
-    void wait();
-
-  private:
-    ExecLoopThread *thread;
-    bool waiting;
-  };
 
 protected:
   bool invokeTask(AbstractTask *) override;
-  virtual void startedEvent() {}
-  virtual void finishedEvent() {}
+  void wake() override;
 
 private:
-  void exec();
-  void wake();
-  void process_tasks();
-  void process_polls();
-  void process_timers();
+  void exec() final override;
   Private *private_;
 };
 

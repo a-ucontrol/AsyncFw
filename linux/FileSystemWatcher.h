@@ -46,7 +46,6 @@ private:
   };
   struct CompareWatchDescriptor {
     bool operator()(const Watch *, const Watch *) const;
-    bool operator()(int, const Watch *) const;
     bool operator()(const Watch *, int) const;
   };
 };
