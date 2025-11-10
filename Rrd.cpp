@@ -56,6 +56,7 @@ Rrd::~Rrd() {
     if (thread_->running()) {
       thread_->quit();
       thread_->waitFinished();
+      delete static_cast<RrdThread *>(thread_);
     }
   }
   trace();
