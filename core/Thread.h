@@ -224,9 +224,6 @@ protected:
   AbstractThread(const std::string &);
   virtual ~AbstractThread() = 0;
   virtual bool invokeTask(AbstractTask *);
-  static inline std::mutex list_mutex;
-  static inline std::vector<AbstractThread *> list_threads;
-  void changeId(std::thread::id);
   void start();
   mutable std::mutex mutex;
   mutable ConditionVariableType condition_variable;
@@ -236,6 +233,9 @@ private:
     bool operator()(const AbstractThread *, const AbstractThread *) const;
     bool operator()(const AbstractThread *, std::thread::id) const;
   };
+  static inline std::mutex list_mutex;
+  static inline std::vector<AbstractThread *> list_threads;
+  void changeId(std::thread::id);
   void exec();
   void wake();
   Private &private_;
