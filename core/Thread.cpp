@@ -181,9 +181,9 @@ bool AbstractThread::Compare::operator()(const AbstractThread *t1, const Abstrac
 AbstractThread::AbstractThread(const std::string &_name) : private_(*new Private) {
   private_.name = _name;
   LockGuard lock(list_mutex);
-  std::vector<AbstractThread *>::iterator it = std::lower_bound(threads_.begin(), threads_.end(), this, Compare());
-  threads_.insert(it, this);
-  trace() << "threads:" << std::to_string(threads_.size());
+  std::vector<AbstractThread *>::iterator it = std::lower_bound(list_threads.begin(), list_threads.end(), this, Compare());
+  list_threads.insert(it, this);
+  trace() << "threads:" << std::to_string(list_threads.size());
 
 #ifndef EPOLL_WAIT
   pollfd _w;
@@ -248,18 +248,18 @@ AbstractThread::~AbstractThread() {
   delete &private_;
 
   LockGuard lock(list_mutex);
-  std::vector<AbstractThread *>::iterator it = std::lower_bound(threads_.begin(), threads_.end(), this, Compare());
-  if (it != threads_.end() && (*it) == this) threads_.erase(it);
+  std::vector<AbstractThread *>::iterator it = std::lower_bound(list_threads.begin(), list_threads.end(), this, Compare());
+  if (it != list_threads.end() && (*it) == this) list_threads.erase(it);
   else { ucError() << "thread not found"; }
-  trace() << "threads:" << std::to_string(threads_.size());
+  trace() << "threads:" << std::to_string(list_threads.size());
 }
 
 AbstractThread *AbstractThread::currentThread() {
   std::thread::id _id = std::this_thread::get_id();
   {  //lock scope
     LockGuard lock(list_mutex);
-    std::vector<AbstractThread *>::iterator it = std::lower_bound(threads_.begin(), threads_.end(), _id, Compare());
-    if (it != threads_.end() && (*it)->private_.id == _id) return (*it);
+    std::vector<AbstractThread *>::iterator it = std::lower_bound(list_threads.begin(), list_threads.end(), _id, Compare());
+    if (it != list_threads.end() && (*it)->private_.id == _id) return (*it);
   }
   ucError() << "thread not found:" << _id;
   return nullptr;
@@ -317,12 +317,12 @@ void AbstractThread::waitFinished() const {
 
 void AbstractThread::changeId(std::thread::id _id) {
   LockGuard lock(list_mutex);
-  std::vector<AbstractThread *>::iterator it = std::lower_bound(threads_.begin(), threads_.end(), this, Compare());
-  if (it != threads_.end() && (*it) == this) threads_.erase(it);
+  std::vector<AbstractThread *>::iterator it = std::lower_bound(list_threads.begin(), list_threads.end(), this, Compare());
+  if (it != list_threads.end() && (*it) == this) list_threads.erase(it);
   else { ucError() << "thread not found"; }
   private_.id = _id;
-  it = std::lower_bound(threads_.begin(), threads_.end(), this, Compare());
-  threads_.insert(it, this);
+  it = std::lower_bound(list_threads.begin(), list_threads.end(), this, Compare());
+  list_threads.insert(it, this);
 }
 
 void AbstractThread::exec() {
@@ -820,7 +820,7 @@ void AbstractThreadPool::quit() {
 
 AbstractThread::LockGuard AbstractThreadPool::threads(std::vector<AbstractThread *> **_threads, AbstractThreadPool *pool) {
   if (!pool) {
-    *_threads = &AbstractThread::threads_;
+    *_threads = &AbstractThread::list_threads;
     return AbstractThread::LockGuard {AbstractThread::list_mutex};
   }
   *_threads = &(pool->threads_);
@@ -850,9 +850,9 @@ AbstractThreadPool::Thread::Thread(const std::string &name, AbstractThreadPool *
 
 AbstractThreadPool::Thread::~Thread() {
   LockGuard lock(mutex);
-  std::vector<AbstractThread *>::iterator it = std::lower_bound(threads_.begin(), threads_.end(), this, AbstractThreadPool::Compare());
-  if (it != threads_.end() && (*it) == this) {
-    threads_.erase(it);
+  std::vector<AbstractThread *>::iterator it = std::lower_bound(pool->threads_.begin(), pool->threads_.end(), this, AbstractThreadPool::Compare());
+  if (it != pool->threads_.end() && (*it) == this) {
+    pool->threads_.erase(it);
     ucError() << "thread not removed from pool";
   }
   ucTrace();
