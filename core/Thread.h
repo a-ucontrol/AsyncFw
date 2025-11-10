@@ -145,6 +145,7 @@ public:
     return appendTimer(timeout, new InternalTask(method));
   }
 
+  void start();
   bool running();
   void requestInterrupt();
   bool interruptRequested() const;
@@ -224,7 +225,6 @@ protected:
   AbstractThread(const std::string &);
   virtual ~AbstractThread() = 0;
   virtual bool invokeTask(AbstractTask *);
-  void start();
   mutable std::mutex mutex;
   mutable ConditionVariableType condition_variable;
 
