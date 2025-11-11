@@ -4,7 +4,7 @@
 #include "Thread.h"
 #include "Socket.h"
 
-//#define EVENTFD_WAKE
+#define EVENTFD_WAKE
 #define EPOLL_WAIT
 
 #ifdef EXTEND_THREAD_TRACE

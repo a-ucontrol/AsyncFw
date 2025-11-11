@@ -163,10 +163,10 @@ uint64_t Rrd::read(DataArrayList *list, uint64_t val, uint32_t size, uint64_t *l
   return val - 1;
 }
 
-void Rrd::setAverage(int interval, const std::function<void(const ItemList &)> &f, int offset) {
-  average = f;
-  aInterval = interval;
-  aOffset = offset;
+void Rrd::setAverage(int _interval, const std::function<void(const ItemList &)> &_f, int _offset) {
+  average = _f;
+  aInterval = _interval / interval;
+  aOffset = _offset;
 }
 
 bool Rrd::readFromFile() {
