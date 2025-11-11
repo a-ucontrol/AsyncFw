@@ -28,7 +28,7 @@ int main(int argc, char *argv[]) {
   return ret;
 }
 ```
-PollNotifier example:
+PollNotifier example (Unix only):
 ```c++
 #include <iostream>
 #include <AsyncFw/core/Thread.h>
