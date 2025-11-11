@@ -54,3 +54,25 @@ int main(int argc, char *argv[]) {
   return ret;
 }
 ```
+
+Log example:
+```c++
+#include <AsyncFw/Log.h>
+#include <AsyncFw/MainThread.h>
+
+int main(int argc, char *argv[]) {
+  AsyncFw::Log(1000, "log-file-name");
+
+  logTrace() << "Trace";
+  logDebug() << "Debug";
+  logInfo() << "Info";
+  logNotice() << "Notice";
+  logWarning() << "Warning";
+  logError() << "Error";
+  logAlert() << "logAlert";
+  logEmergency() << "logEmergency";  // terminate application
+
+  int ret = AsyncFw::MainThread::instance()->exec();
+  return ret;
+}
+```
