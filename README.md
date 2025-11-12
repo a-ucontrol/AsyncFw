@@ -70,9 +70,8 @@ int main(int argc, char *argv[]) {
   logWarning() << "Warning";
   logError() << "Error";
   logAlert() << "logAlert";
-  logEmergency() << "logEmergency";  // terminate application
+  logEmergency() << "Emergency";  // terminate application
 
-  int ret = AsyncFw::MainThread::instance()->exec();
-  return ret;
+  return 0;
 }
 ```
