@@ -74,7 +74,7 @@ int main(int argc, char *argv[]) {
   return 0;
 }
 ```
-Executing a method in another thread example:
+Executing method in another thread example:
 ```c++
 #include <AsyncFw/core/Thread.h>
 #include <AsyncFw/MainThread.h>
