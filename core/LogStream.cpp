@@ -171,12 +171,12 @@ LogStream::LogStream(uint8_t type, const char *function, const char *file, int l
 LogStream::~LogStream() {
 #ifdef LOG_STREAM_EMERGENCY_TERMINATE
   if ((type & 0x07) == Emergency) {
-    completed({type, name, ((flags & 0x8000) ? stream.str() : ""), std::string(file) + ":" + std::to_string(line)}, flags | LOG_STREAM_CONSOLE_EXTEND | LOG_STREAM_FLUSH);
+    completed({type, name, ((flags & 0x8000) ? stream.str() : ""), std::string(file) + ":" + std::to_string(line)}, flags  | LOG_STREAM_FLUSH);
     std::cerr << "Log level Emergency, terminate..." << std::endl;
     std::abort();
   } else
 #endif
-    completed({type, name, ((flags & 0x8000) ? stream.str() : ""), std::string(file) + ":" + std::to_string(line)}, flags | LOG_STREAM_CONSOLE_EXTEND);
+    completed({type, name, ((flags & 0x8000) ? stream.str() : ""), std::string(file) + ":" + std::to_string(line)}, flags );
 }
 
 LogStream &LogStream::operator<<(decltype(std::endl<char, std::char_traits<char>>) &) {

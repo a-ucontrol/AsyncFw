@@ -116,7 +116,7 @@ void AbstractLog::process(const Message &m) {
 
 void AbstractLog::output(const Message &m) {
   if (thread_->running() && std::this_thread::get_id() != thread_->id()) { console_msg("AbstractLog::output: error: executed from different thread"); }
-  if ((m.type & 0x0F) <= consoleLevel) { LogStream::console_output(m, flags | LOG_STREAM_CONSOLE_EXTEND); }
+  if ((m.type & 0x0F) <= consoleLevel) { LogStream::console_output(m, flags); }
 }
 
 void AbstractLog::timerTask(int timerId) {

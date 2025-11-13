@@ -16,7 +16,7 @@ public:
   AbstractLog(bool = false);
   virtual ~AbstractLog() = 0;
   void append(uint8_t, const std::string &, const std::string &, const std::string & = {});
-  void setExtendOut(bool b) { (b) ? flags |= LOG_STREAM_CONSOLE_EXTEND : flags &= LOG_STREAM_CONSOLE_EXTEND; }
+  void setExtendOut(bool b) { (b) ? flags |= LOG_STREAM_CONSOLE_EXTEND : flags &= ~LOG_STREAM_CONSOLE_EXTEND; }
   void setColorOut(bool b) { (b) ? flags |= LOG_STREAM_CONSOLE_COLOR : flags &= ~LOG_STREAM_CONSOLE_COLOR; }
   void setNotesOut(bool b) { (b) ? flags |= LOG_STREAM_CONSOLE_LINE : flags &= ~LOG_STREAM_CONSOLE_LINE; }
   void setHideDuplicates(bool b) { hideDuplicates = b; }
@@ -48,7 +48,11 @@ private:
     bool marked = false;
   };
   static void append_(const Message &m, uint8_t t);
-  uint8_t flags = 0;
+  uint8_t flags = LOG_STREAM_CONSOLE_EXTEND
+#ifndef _WIN32
+                  | LOG_STREAM_CONSOLE_COLOR
+#endif
+      ;
   int consoleLevel = LogStream::Trace;
 
   std::queue<Message> messages;
