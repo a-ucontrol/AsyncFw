@@ -169,14 +169,13 @@ protected:
         = new FunctionConnector<>()
 #endif
         ;
-    AbstractThread::currentThread()->invokeMethod([thread, fc, method]() {
-      if (!thread->invokeMethod([fc, method]() {
-            method();
-            (*fc)();
-            delete fc;
-          }))
-        delete fc;
-    });
+    AbstractThread *_t = AbstractThread::currentThread();
+    if (!thread->invokeMethod([_t, fc, method]() {
+          method();
+          (*fc)();
+          _t->invokeMethod([fc]() { delete fc; });
+        }))
+      _t->invokeMethod([fc]() { delete fc; });
     return *fc;
   }
   template <typename M, typename T = std::invoke_result<M>::type>
@@ -186,13 +185,12 @@ protected:
         = new FunctionConnector<T>()
 #endif
         ;
-    AbstractThread::currentThread()->invokeMethod([thread, fc, method]() {
-      if (!thread->invokeMethod([fc, method]() {
-            (*fc)(std::move(method()));
-            delete fc;
-          }))
-        delete fc;
-    });
+    AbstractThread *_t = AbstractThread::currentThread();
+    if (!thread->invokeMethod([_t, fc, method]() {
+          (*fc)(std::move(method()));
+          _t->invokeMethod([fc]() { delete fc; });
+        }))
+      _t->invokeMethod([fc]() { delete fc; });
     return *fc;
   }
 

@@ -8,9 +8,9 @@
 #define EPOLL_WAIT
 
 #ifdef EXTEND_THREAD_TRACE
-  #define trace LogStream(+LogStream::Trace | LogStream::Gray, __PRETTY_FUNCTION__, __FILE__, __LINE__, 6 | LOG_STREAM_CONSOLE_ONLY).output
+  #define trace LogStream(+LogStream::Trace | LogStream::Gray, __PRETTY_FUNCTION__, __FILE__, __LINE__, uC_LOG_DEFAULT_FLAGS | LOG_STREAM_CONSOLE_ONLY).output
   #define warning_if(x) \
-    if (x) LogStream(+LogStream::Warning | LogStream::DarkBlue, __PRETTY_FUNCTION__, __FILE__, __LINE__, 6 | LOG_STREAM_CONSOLE_ONLY).output()
+    if (x) LogStream(+LogStream::Warning | LogStream::DarkBlue, __PRETTY_FUNCTION__, __FILE__, __LINE__, uC_LOG_DEFAULT_FLAGS | LOG_STREAM_CONSOLE_ONLY).output()
 #else
   #define trace(x) \
     if constexpr (0) LogStream()
@@ -330,7 +330,7 @@ void AbstractThread::exec() {
 
   {  //lock scope
     LockGuard lock(mutex);
-    warning_if(private_.process_tasks.size() || private_.process_poll_tasks.size() || private_.process_timer_tasks.size()) << LogStream::Color::Red << "not empty" << private_.process_tasks_.size() << private_.process_poll_tasks_.size() << private_.process_timer_tasks_.size();
+    warning_if(private_.process_tasks_.size() || private_.process_poll_tasks_.size() || private_.process_timer_tasks_.size()) << LogStream::Color::Red << "not empty" << private_.process_tasks_.size() << private_.process_poll_tasks_.size() << private_.process_timer_tasks_.size();
     _state = (private_.state != Finished) ? private_.state : None;
     if (_state >= Running) {  //nested exec
       trace() << LogStream::Color::Red << "nested" << private_.process_tasks_.size() << private_.process_poll_tasks_.size() << private_.process_timer_tasks_.size();
@@ -541,6 +541,7 @@ bool AbstractThread::invokeTask(AbstractTask *task) {
   if (private_.state == Interrupted) private_.state = Running;
   private_.tasks.push(task);
   wake();
+  trace() << LogStream::Color::Green << private_.name << "invoke tasks" << private_.tasks.size();
   return true;
 }
 
