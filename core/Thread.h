@@ -162,38 +162,6 @@ public:
   LockGuard lockGuard() { return LockGuard(mutex); }
 
 protected:
-  template <typename M, typename T = std::invoke_result<M>::type>
-  static typename std::enable_if<std::is_void<T>::value, FunctionConnector<> &>::type invokeMethod(AbstractThread *thread, M method) {
-    FunctionConnector<> *fc
-#ifndef __clang_analyzer__
-        = new FunctionConnector<>()
-#endif
-        ;
-    AbstractThread *_t = AbstractThread::currentThread();
-    if (!thread->invokeMethod([_t, fc, method]() {
-          method();
-          (*fc)();
-          _t->invokeMethod([fc]() { delete fc; });
-        }))
-      _t->invokeMethod([fc]() { delete fc; });
-    return *fc;
-  }
-  template <typename M, typename T = std::invoke_result<M>::type>
-  static typename std::enable_if<!std::is_void<T>::value, FunctionConnector<T> &>::type invokeMethod(AbstractThread *thread, M method) {
-    FunctionConnector<T> *fc
-#ifndef __clang_analyzer__
-        = new FunctionConnector<T>()
-#endif
-        ;
-    AbstractThread *_t = AbstractThread::currentThread();
-    if (!thread->invokeMethod([_t, fc, method]() {
-          (*fc)(std::move(method()));
-          _t->invokeMethod([fc]() { delete fc; });
-        }))
-      _t->invokeMethod([fc]() { delete fc; });
-    return *fc;
-  }
-
   template <typename M>
   class InternalTask : private AbstractTask {
     friend class AbstractThread;

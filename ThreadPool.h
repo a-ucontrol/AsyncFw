@@ -27,15 +27,32 @@ public:
 
   template <typename M>
   static bool sync(AbstractThread *_t, M m) {
-    return Thread::invokeMethod(_t, m, true);
+    return _t->invokeMethod(m, true);
   }
   template <typename M>
-  static decltype(auto) async(AbstractThread *_t, M m) {
-    return Thread::invokeMethod(_t, m);
+  static bool async(AbstractThread *_t, M m) {
+    return _t->invokeMethod(m);
   }
   template <typename M>
-  static decltype(auto) async(M m) {
-    return Thread::invokeMethod(instance_->getThread(), m);
+  static bool async(M m) {
+    return instance_->getThread()->invokeMethod(m);
+  }
+  template <typename M, typename R, typename T = std::invoke_result<M>::type>
+  static typename std::enable_if<std::is_void<T>::value, bool>::type async(AbstractThread *thread, M method, R result) {
+    AbstractThread *_t = AbstractThread::currentThread();
+    return thread->invokeMethod([_t, method, result]() {
+      method();
+      _t->invokeMethod([result]() { result(); });
+    });
+  }
+  template <typename M, typename R, typename T = std::invoke_result<M>::type>
+  static typename std::enable_if<!std::is_void<T>::value, bool>::type async(AbstractThread *thread, M method, R result) {
+    AbstractThread *_t = AbstractThread::currentThread();
+    return thread->invokeMethod([_t, method, result]() { _t->invokeMethod([v = std::move(method()), result]() { result(v); }); });
+  }
+  template <typename M, typename R>
+  static bool async(M m, R r) {
+    return async(instance_->getThread(), m, r);
   }
 
 private:
