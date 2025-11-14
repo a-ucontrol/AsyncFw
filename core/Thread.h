@@ -110,8 +110,8 @@ public:
     bool finished = false;
     AbstractTask *_t = new InternalTask([method, &finished, this]() {
       method();
-      finished = true;
       AbstractThread::LockGuard lock(mutex);
+      finished = true;
       condition_variable.notify_all();
     });
     if (!invokeTask(_t)) {
