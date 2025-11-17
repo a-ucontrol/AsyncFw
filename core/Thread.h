@@ -152,7 +152,7 @@ public:
   void waitInterrupted() const;
   void quit();
   void waitFinished() const;
-  int queuedTasks() const;
+  int workLoad() const;
 
   std::thread::id id() const;
   std::string name() const;

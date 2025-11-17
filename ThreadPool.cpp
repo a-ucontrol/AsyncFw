@@ -31,17 +31,17 @@ ThreadPool::Thread *ThreadPool::getThread() {
   int _s = workThreads_.size();
   if (_s < workThreadsSize) {
     for (int i = 0; i != _s; ++i)
-      if (static_cast<ThreadPool::Thread *>(workThreads_[i])->queuedTasks() == 0) return workThreads_[i];
+      if (static_cast<ThreadPool::Thread *>(workThreads_[i])->workLoad() == 0) return workThreads_[i];
 
     workThreads_.emplace_back(createThread("Work: " + std::to_string(_s)));
     return workThreads_.back();
   }
   ThreadPool::Thread *_t = nullptr;
-  int _tasks = INT_MAX;
+  int _load = INT_MAX;
   for (int i = 0; i != _s; ++i) {
-    int _qt = static_cast<ThreadPool::Thread *>(workThreads_[i])->queuedTasks();
-    if (_qt < _tasks) {
-      _tasks = _qt;
+    int _l = static_cast<ThreadPool::Thread *>(workThreads_[i])->workLoad();
+    if (_l < _load) {
+      _load = _l;
       _t = static_cast<ThreadPool::Thread *>(workThreads_[i]);
     }
   }

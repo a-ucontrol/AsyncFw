@@ -560,7 +560,7 @@ void AbstractThread::start() {
   t.detach();
 }
 
-int AbstractThread::queuedTasks() const {
+int AbstractThread::workLoad() const {
   LockGuard lock(mutex);
   int n = private_.tasks.size();
   if (private_.wake_) ++n;
