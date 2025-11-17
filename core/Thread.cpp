@@ -562,7 +562,9 @@ void AbstractThread::start() {
 
 int AbstractThread::queuedTasks() const {
   LockGuard lock(mutex);
-  return private_.tasks.size();
+  int n = private_.tasks.size();
+  if (private_.wake_) ++n;
+  return n;
 }
 
 std::thread::id AbstractThread::id() const { return private_.id; }
