@@ -312,4 +312,5 @@ private:
 
 constexpr AbstractThread::PollEvents operator|(AbstractThread::PollEvents e1, AbstractThread::PollEvents e2) { return static_cast<AbstractThread::PollEvents>(static_cast<uint8_t>(e1) | static_cast<uint8_t>(e2)); }
 constexpr bool operator==(AbstractThread::PollEvents, AbstractThread::PollEvents) = delete;
+constexpr bool operator!=(AbstractThread::PollEvents, AbstractThread::PollEvents) = delete;
 }  // namespace AsyncFw

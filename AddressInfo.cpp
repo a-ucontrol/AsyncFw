@@ -21,13 +21,13 @@ struct AddressInfo::Private {
   Private() {
     int status = ares_library_init(ARES_LIB_INIT_ALL);
     if (status != ARES_SUCCESS) {
-      ucError("Ares library init: %s", ares_strerror(status));
+      ucError("Ares library init: {}", ares_strerror(status));
       return;
     }
 
     memset(&options, 0, sizeof(options));
     options.sock_state_cb = [](void *data, int s, int read, int write) {
-      ucTrace("change state fd %d read:%d write:%d", s, read, write);
+      ucTrace("change state fd {} read:{} write:{}", s, read, write);
       AbstractThread::PollEvents e = (read) ? AbstractThread::PollIn : AbstractThread::PollNo | (write) ? AbstractThread::PollOut : AbstractThread::PollNo;
       std::unordered_map<int, AbstractThread::PollEvents>::iterator it = static_cast<cbData *>(data)->m.find(s);
       if (it != static_cast<cbData *>(data)->m.end()) {
@@ -36,7 +36,7 @@ struct AddressInfo::Private {
           static_cast<cbData *>(data)->m.erase(it);
           const ares_fd_events_t _ae = {s, ARES_FD_EVENT_NONE};
           ares_process_fds(static_cast<cbData *>(data)->c, &_ae, 1, 0);
-        } else if (it->second != e)
+        } else if (!(it->second & e))
           static_cast<cbData *>(data)->t->modifyPollDescriptor(s, e);
         return;
       }
@@ -45,7 +45,7 @@ struct AddressInfo::Private {
       static_cast<cbData *>(data)->m.insert({s, e});
 
       static_cast<cbData *>(data)->t->appendPollTask(s, e, [fd = s, ch = static_cast<cbData *>(data)->c](int _e) {
-        ucDebug("poll event: %d, fd: %d", _e, fd) << ((_e != AbstractThread::PollOut) ? fd : 0);
+        ucDebug("poll event: {}, fd: {}", _e, fd) << ((_e != AbstractThread::PollOut) ? fd : 0);
         const ares_fd_events_t _ae = {fd, (_e == AbstractThread::PollOut) ? ARES_FD_EVENT_WRITE : ARES_FD_EVENT_READ};
         ares_process_fds(ch, &_ae, 1, 0);
       });
@@ -61,6 +61,7 @@ struct AddressInfo::Private {
   ares_channel channel;
   ares_options options;
   AbstractThread *thread;
+  int timeout = 10000;
 };
 
 AddressInfo::AddressInfo() {
@@ -74,17 +75,17 @@ AddressInfo::~AddressInfo() {
   ucTrace();
 }
 
-void AddressInfo::resolve(const std::string &name) {
+void AddressInfo::resolve(const std::string &name, Family f) {
   Private::cbData *_data = new Private::cbData;
   _data->ai = this;
 
-  _data->tid = private_->thread->appendTimerTask(timeout_, [_data]() { ares_cancel(_data->c); });
+  _data->tid = private_->thread->appendTimerTask(private_->timeout, [_data]() { ares_cancel(_data->c); });
 
   private_->options.sock_state_cb_data = _data;
 
   int status = ares_init_options(&private_->channel, &private_->options, ARES_OPT_SOCK_STATE_CB);
   if (status != ARES_SUCCESS) {
-    ucError("Ares options init: %s", ares_strerror(status));
+    ucError("Ares options init: {}", ares_strerror(status));
     return;
   }
 
@@ -93,8 +94,7 @@ void AddressInfo::resolve(const std::string &name) {
 
   struct ares_addrinfo_hints hints;
   memset(&hints, 0, sizeof(hints));
-  hints.ai_family = AF_INET;
-  //hints.ai_family = AF_UNSPEC;
+  hints.ai_family = f;
   hints.ai_flags = ARES_AI_CANONNAME;
   //hints.ai_socktype = SOCK_STREAM;
 
@@ -105,7 +105,7 @@ void AddressInfo::resolve(const std::string &name) {
         static_cast<Private::cbData *>(data)->ai->private_->thread->invokeMethod([data]() { delete static_cast<Private::cbData *>(data); });
         if (result) {
           std::vector<std::string> _r;
-          ucInfo("Result: %s, name: %s", ares_strerror(status), result->name);
+          ucInfo("Result: {}, name: {}", ares_strerror(status), result->name);
           struct ares_addrinfo_node *node;
           for (node = result->nodes; node != nullptr; node = node->ai_next) {
             std::string addr_buf;
@@ -129,8 +129,10 @@ void AddressInfo::resolve(const std::string &name) {
           static_cast<Private::cbData *>(data)->ai->completed(0, _r);
         } else {
           static_cast<Private::cbData *>(data)->ai->completed(-1, std::vector<std::string> {});
-          ucWarning("Result: %s", ares_strerror(status));
+          ucWarning("Result: {}", ares_strerror(status));
         }
       },
       _data);
 }
+
+void AddressInfo::setTimeout(int _timeout) { private_->timeout = _timeout; }
