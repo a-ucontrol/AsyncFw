@@ -453,6 +453,7 @@ void TlsContext::setIgnoreErrors(uint8_t errors) const {
           return 1;
         }
       }
+      ucError() << _e;
       return 0;
     });
   }
@@ -532,4 +533,9 @@ bool TlsContext::appendTrusted(const DataArray &_da) {
   ucError() << "add certificate";
   ucError() << LogStream::Color::Red << ERR_error_string(ERR_get_error(), nullptr);
   return false;
+}
+
+bool TlsContext::setDefaultVerifyPaths() {
+  if (!private_->ctx_) private_->ctx_ = SSL_CTX_new(TLS_method());
+  return SSL_CTX_set_default_verify_paths(private_->ctx_);
 }

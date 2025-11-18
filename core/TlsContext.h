@@ -27,6 +27,7 @@ public:
   bool setKey(const DataArray &);
   bool setCertificate(const DataArray &);
   bool appendTrusted(const DataArray &);
+  bool setDefaultVerifyPaths();
 
   bool empty() const;
   bool verifyCertificate() const;
@@ -57,9 +58,9 @@ public:
 
 protected:
   static int verify(int ok, x509_store_ctx_st *ctx);
+  ssl_ctx_st *opensslCtx() const;
 
 private:
   Private *private_;
-  ssl_ctx_st *opensslCtx() const;
 };
 }  // namespace AsyncFw
