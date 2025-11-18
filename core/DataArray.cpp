@@ -59,7 +59,11 @@ DataArray::DataArray(const char c) : std::vector<uint8_t>(1, c) {}
 
 DataArray::DataArray(const std::vector<char> &v) : std::vector<uint8_t>(v.begin(), v.end()) {}
 
-const DataArrayView DataArray::view(int i, int j) const { return {data() + i, (j) ? j : std::vector<uint8_t>::size() - i}; }
+const DataArrayView DataArray::view(int i, int j) const {
+  if (i >= std::vector<uint8_t>::size()) return {};
+  if (!j || i + j >= std::vector<uint8_t>::size()) return {data() + i, std::vector<uint8_t>::size() - i};
+  return {data() + i, static_cast<std::size_t>(j)};
+}
 
 DataArray &DataArray::operator+=(const DataArrayView &v) {
   insert(end(), v.begin(), v.end());
