@@ -11,8 +11,6 @@ class AbstractTlsSocket : public AbstractSocket {
 public:
   enum IgnoreErrors : uint8_t { TimeValidity = 0x01 };
 
-  AbstractTlsSocket(Thread * = nullptr);
-  virtual ~AbstractTlsSocket();
   void setDescriptor(int) override;
   bool connect(const std::string &, uint16_t) override;
   void disconnect() override;
@@ -21,6 +19,9 @@ public:
   void setContext(const TlsContext &) const;
 
 protected:
+  AbstractTlsSocket(Thread * = nullptr);
+  virtual ~AbstractTlsSocket();
+
   void acceptEvent() override;
 
   int read_available_fd() const override final;

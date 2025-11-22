@@ -20,10 +20,6 @@ public:
   enum State : uint8_t { Unconnected, Listening, Connecting, Connected, Active, Closing, Destroy };
   enum Error : uint8_t { None, Closed, Refused, PollErr, PollInval, Read, Write, Unknown };
 
-  AbstractSocket(Thread * = nullptr);
-  AbstractSocket(int, int, int, Thread * = nullptr);
-  virtual ~AbstractSocket();
-
   virtual void setDescriptor(int);
   virtual bool connect(const std::string &, uint16_t);
   virtual void disconnect();
@@ -56,6 +52,10 @@ public:
   uint16_t peerPort() const;
 
 protected:
+  AbstractSocket(Thread * = nullptr);
+  AbstractSocket(int, int, int, Thread * = nullptr);
+  virtual ~AbstractSocket();
+
   void setErrorCode(int);
   void setErrorString(const std::string &);
 
@@ -86,7 +86,7 @@ private:
 
 class ListenSocket : public AbstractSocket {
 public:
-  using AbstractSocket::AbstractSocket;
+  ListenSocket(Thread *_t = nullptr) : AbstractSocket(_t) {}
   void setIncomingConnection(std::function<bool(int, const std::string &)> f);
 
 protected:
