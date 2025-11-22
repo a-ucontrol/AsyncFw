@@ -32,6 +32,8 @@ public:
   bool listen(const std::string &, uint16_t);
 
   void destroy();
+
+  DataArray &peek();
   int read(uint8_t *, int);
   DataArray read(int = INT_MAX);
   int write(const uint8_t *, int);
@@ -76,6 +78,7 @@ protected:
 private:
   void pollEvent(int);
   void changeDescriptor(int);
+  void read_fd();
   Private *private_;
   int fd_ = -1;
   mutable int rs_ = 0;

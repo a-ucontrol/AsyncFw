@@ -229,7 +229,7 @@ bool Rrd::saveToFile(const std::string &_fileToSave) {
   _f.close();
 
   if (_f.fail()) {
-    console_msg("Rrd: save failed: " + file);
+    console_msg("Rrd: save failed: " + fileToSave);
     return false;
   }
 

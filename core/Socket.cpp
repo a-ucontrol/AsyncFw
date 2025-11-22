@@ -262,6 +262,25 @@ void AbstractSocket::disconnect() {
   }
 }
 
+DataArray &AbstractSocket::peek() {
+  if (rs_ > 0) read_fd();
+  return private_->rda_;
+}
+
+void AbstractSocket::read_fd() {
+  do {
+    private_->rda_.resize(private_->rda_.size() + rs_);
+    int r = read_fd(private_->rda_.data() + private_->rda_.size() - rs_, rs_);
+    if (r != rs_) {
+      private_->errorString_ = "Read error";
+      private_->errorCode_ = Error::Read;
+      ucDebug() << LogStream::Color::Red << private_->errorString_ << r << rs_ << errno;
+      errorEvent();
+      close();
+    }
+  } while (read_available_fd() > 0);
+}
+
 int AbstractSocket::read(uint8_t *_p, int _s) {
   warning_if(_s <= 0) << LogStream::Color::Red << "size for read is null";
   if (!private_->rda_.empty()) {
@@ -280,7 +299,8 @@ int AbstractSocket::read(uint8_t *_p, int _s) {
 
 DataArray AbstractSocket::read(int _s) {
   DataArray _da;
-  _da.resize((rs_ < _s) ? rs_ : _s);
+  int _n = rs_ + private_->rda_.size();
+  _da.resize((_n < _s) ? _n : _s);
   if (read(_da.data(), _da.size()) != static_cast<int>(_da.size())) return {};
   return _da;
 }
@@ -473,19 +493,7 @@ void AbstractSocket::pollEvent(int _e) {
     }
     if (r > 0) {
       readEvent();
-      if (rs_ > 0) {
-        do {
-          private_->rda_.resize(private_->rda_.size() + rs_);
-          int r = read_fd(private_->rda_.data() + private_->rda_.size() - rs_, rs_);
-          if (r != rs_) {
-            private_->errorString_ = "Read error";
-            private_->errorCode_ = Error::Read;
-            ucDebug() << LogStream::Color::Red << private_->errorString_ << r << rs_ << errno;
-            errorEvent();
-            close();
-          }
-        } while (read_available_fd() > 0);
-      }
+      if (rs_ > 0) read_fd();
     } else if (r < 0) {
       private_->errorString_ = "Unknown error";
       private_->errorCode_ = Error::Unknown;
