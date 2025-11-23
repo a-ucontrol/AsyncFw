@@ -20,7 +20,7 @@ public:
 
 protected:
   AbstractTlsSocket(Thread * = nullptr);
-  virtual ~AbstractTlsSocket();
+  ~AbstractTlsSocket() override;
 
   void acceptEvent() override;
 
