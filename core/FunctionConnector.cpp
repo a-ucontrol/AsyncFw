@@ -15,7 +15,7 @@
 
 using namespace AsyncFw;
 
-AbstractFunctionConnector::AbstractFunctionConnector(ConnectionType type) : defaultConnectionType(type) { trace() << this; }
+AbstractFunctionConnector::AbstractFunctionConnector(ConnectionType type) : defaultConnectionType(type), thread(AbstractThread::currentThread()) { trace() << this; }
 
 AbstractFunctionConnector::~AbstractFunctionConnector() {
   std::lock_guard<std::mutex> lock(mutex);
@@ -26,14 +26,16 @@ AbstractFunctionConnector::~AbstractFunctionConnector() {
   }
 }
 
-AbstractFunctionConnector::Connection::Connection(AbstractFunctionConnector *_connector, ConnectionType _type) : connector_(_connector) {
-  if ((_connector->defaultConnectionType & 0x10) && static_cast<ConnectionType>(_connector->defaultConnectionType) != _type) {
+AbstractFunctionConnector::Connection::Connection(AbstractFunctionConnector *connector, ConnectionType type) : connector_(connector) {
+  uint8_t _type = (type != Default) ? type : static_cast<ConnectionType>(connector->defaultConnectionType);
+  if ((connector->defaultConnectionType & 0x10) && connector->defaultConnectionType != _type) {
     (logAlert() << "AbstractFunctionConnector: fixed connection type, throw exception...").flush();
     throw std::runtime_error("AbstractFunctionConnector: fixed connection type");
   }
-  if (_type != Direct) {
-    thread_ = AbstractThread::currentThread();
-    if (_type == QueuedSync) sync_ = true;
+  if (_type & Direct) {
+    AbstractThread *_t = AbstractThread::currentThread();
+    if (!(_type & Auto) || _t != connector->thread) thread_ = _t;
+    if (_type & QueuedSync) sync_ = true;
   }
   connector_->list_.push_back(this);
   trace() << this << connector_ << connector_->list_.size();

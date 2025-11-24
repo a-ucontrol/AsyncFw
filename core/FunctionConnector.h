@@ -11,13 +11,13 @@ class AbstractFunctionConnector {
   friend FunctionConnectionGuard;
 
 public:
-  enum ConnectionType : uint8_t { Queued = 0x01, Direct = 0x02, QueuedSync = 0x03, QueuedOnly = 0x11, DirectOnly = 0x12, QueuedSyncOnly = 0x13 };
+  enum ConnectionType : uint8_t { Auto = 0, Queued = 0x01, Direct = 0x02, QueuedSync = 0x03, QueuedOnly = 0x11, DirectOnly = 0x12, QueuedSyncOnly = 0x13 };
   class Connection {
     friend AbstractFunctionConnector;
     friend FunctionConnectionGuard;
 
   public:
-    enum ConnectionType : uint8_t { Queued = AbstractFunctionConnector::Queued, Direct = AbstractFunctionConnector::Direct, QueuedSync = AbstractFunctionConnector::QueuedSync };
+    enum ConnectionType : uint8_t { Auto2 = AbstractFunctionConnector::Auto, Queued = AbstractFunctionConnector::Queued, Direct = AbstractFunctionConnector::Direct, QueuedSync = AbstractFunctionConnector::QueuedSync, Default = 0x04 };
 
   protected:
     Connection(AbstractFunctionConnector *, ConnectionType);
@@ -31,12 +31,12 @@ public:
     bool sync_ = false;
   };
 
-  AbstractFunctionConnector(ConnectionType = Queued);
-
 protected:
+  AbstractFunctionConnector(ConnectionType = Queued);
   virtual ~AbstractFunctionConnector() = 0;
   std::vector<Connection *> list_;
   ConnectionType defaultConnectionType;
+  AbstractThread *thread;
   std::mutex mutex;
 };
 
@@ -45,17 +45,10 @@ class FunctionConnector : public AbstractFunctionConnector {
 public:
   using AbstractFunctionConnector::AbstractFunctionConnector;
   template <typename T>
-  Connection &operator()(T f, AbstractFunctionConnector::Connection::ConnectionType t) {
+  Connection &operator()(T f, AbstractFunctionConnector::Connection::ConnectionType t = AbstractFunctionConnector::Connection::Default) {
     std::lock_guard<std::mutex> lock(mutex);
 #ifndef __clang_analyzer__
     return *new Connection(f, this, t);
-#endif
-  }
-  template <typename T>
-  Connection &operator()(T f) {
-    std::lock_guard<std::mutex> lock(mutex);
-#ifndef __clang_analyzer__
-    return *new Connection(f, this, static_cast<AbstractFunctionConnector::Connection::ConnectionType>(defaultConnectionType));
 #endif
   }
   void operator()(Args... args) {
@@ -87,12 +80,8 @@ public:
   public:
     using FunctionConnector<Args...>::FunctionConnector;
     template <typename T>
-    AbstractFunctionConnector::Connection &operator()(T f, AbstractFunctionConnector::Connection::ConnectionType t) {
+    AbstractFunctionConnector::Connection &operator()(T f, AbstractFunctionConnector::Connection::ConnectionType t = AbstractFunctionConnector::Connection::Default) {
       return FunctionConnector<Args...>::operator()(f, t);
-    }
-    template <typename T>
-    AbstractFunctionConnector::Connection &operator()(T f) {
-      return FunctionConnector<Args...>::operator()(f, static_cast<AbstractFunctionConnector::Connection::ConnectionType>(AbstractFunctionConnector::defaultConnectionType));
     }
 
   protected:
