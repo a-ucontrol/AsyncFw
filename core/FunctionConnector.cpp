@@ -2,7 +2,7 @@
 #include "LogStream.h"
 #include "FunctionConnector.h"
 
-#ifdef EXTEND_CONNECTOR_TRACE
+#ifdef EXTEND_FUNCTIONCONNECTOR_TRACE
   #define trace LogStream(+LogStream::Trace | LogStream::Gray, __PRETTY_FUNCTION__, __FILE__, __LINE__, uC_LOG_DEFAULT_FLAGS | LOG_STREAM_CONSOLE_ONLY).output
   #define warning_if(x) \
     if (x) LogStream(+LogStream::Warning | LogStream::DarkBlue, __PRETTY_FUNCTION__, __FILE__, __LINE__, uC_LOG_DEFAULT_FLAGS | LOG_STREAM_CONSOLE_ONLY).output()

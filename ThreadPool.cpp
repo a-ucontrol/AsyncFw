@@ -37,7 +37,7 @@ ThreadPool::Thread *ThreadPool::getThread() {
     return workThreads_.back();
   }
   ThreadPool::Thread *_t = nullptr;
-  int _load = INT_MAX;
+  int _load = std::numeric_limits<int>::max();
   for (int i = 0; i != _s; ++i) {
     int _l = static_cast<ThreadPool::Thread *>(workThreads_[i])->workLoad();
     if (_l < _load) {

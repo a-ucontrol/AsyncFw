@@ -1,6 +1,5 @@
 #pragma once
 
-#include <climits>  //INT_MAX
 #include <functional>
 
 #include "DataArray.h"
@@ -31,7 +30,7 @@ public:
 
   DataArray &peek();
   int read(uint8_t *, int);
-  DataArray read(int = INT_MAX);
+  DataArray read(int = 0);
   int write(const uint8_t *, int);
   int write(const DataArray &);
 

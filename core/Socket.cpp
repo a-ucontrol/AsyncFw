@@ -300,7 +300,7 @@ int AbstractSocket::read(uint8_t *_p, int _s) {
 DataArray AbstractSocket::read(int _s) {
   DataArray _da;
   int _n = rs_ + private_->rda_.size();
-  _da.resize((_n < _s) ? _n : _s);
+  _da.resize((!_s || _n < _s) ? _n : _s);
   if (read(_da.data(), _da.size()) != static_cast<int>(_da.size())) return {};
   return _da;
 }
