@@ -31,8 +31,9 @@ public:
     bool sync_ = false;
   };
 
-protected:
   AbstractFunctionConnector(ConnectionType = Auto);
+
+protected:
   virtual ~AbstractFunctionConnector() = 0;
   std::vector<Connection *> list_;
   ConnectionType defaultConnectionType;
