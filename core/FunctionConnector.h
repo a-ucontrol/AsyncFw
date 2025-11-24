@@ -17,13 +17,13 @@ public:
     friend FunctionConnectionGuard;
 
   public:
-    enum ConnectionType : uint8_t { Auto2 = AbstractFunctionConnector::Auto, Queued = AbstractFunctionConnector::Queued, Direct = AbstractFunctionConnector::Direct, QueuedSync = AbstractFunctionConnector::QueuedSync, Default = 0x04 };
+    enum ConnectionType : uint8_t { Auto = AbstractFunctionConnector::Auto, Queued = AbstractFunctionConnector::Queued, Direct = AbstractFunctionConnector::Direct, QueuedSync = AbstractFunctionConnector::QueuedSync, Default = 0x04 };
 
   protected:
     Connection(AbstractFunctionConnector *, ConnectionType);
     virtual ~Connection() = 0;
     void invoke(const std::function<void(void)> &) const;
-    AbstractThread *thread_;
+    AbstractThread *thread_ = nullptr;
 
   private:
     AbstractFunctionConnector *connector_;
@@ -32,7 +32,7 @@ public:
   };
 
 protected:
-  AbstractFunctionConnector(ConnectionType = Queued);
+  AbstractFunctionConnector(ConnectionType = Auto);
   virtual ~AbstractFunctionConnector() = 0;
   std::vector<Connection *> list_;
   ConnectionType defaultConnectionType;

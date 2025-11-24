@@ -3,9 +3,9 @@
 #include "FunctionConnector.h"
 
 #ifdef EXTEND_CONNECTOR_TRACE
-  #define trace LogStream(+LogStream::Trace | LogStream::Gray, __PRETTY_FUNCTION__, __FILE__, __LINE__, 6 | LOG_STREAM_CONSOLE_ONLY).output
+  #define trace LogStream(+LogStream::Trace | LogStream::Gray, __PRETTY_FUNCTION__, __FILE__, __LINE__, uC_LOG_DEFAULT_FLAGS | LOG_STREAM_CONSOLE_ONLY).output
   #define warning_if(x) \
-    if (x) LogStream(+LogStream::Warning | LogStream::DarkBlue, __PRETTY_FUNCTION__, __FILE__, __LINE__, 6 | LOG_STREAM_CONSOLE_ONLY).output()
+    if (x) LogStream(+LogStream::Warning | LogStream::DarkBlue, __PRETTY_FUNCTION__, __FILE__, __LINE__, uC_LOG_DEFAULT_FLAGS | LOG_STREAM_CONSOLE_ONLY).output()
 #else
   #define trace(x) \
     if constexpr (0) LogStream()
@@ -32,13 +32,13 @@ AbstractFunctionConnector::Connection::Connection(AbstractFunctionConnector *con
     (logAlert() << "AbstractFunctionConnector: fixed connection type, throw exception...").flush();
     throw std::runtime_error("AbstractFunctionConnector: fixed connection type");
   }
-  if (_type & Direct) {
+  if (!(_type & Direct)) {
     AbstractThread *_t = AbstractThread::currentThread();
     if (!(_type & Auto) || _t != connector->thread) thread_ = _t;
     if (_type & QueuedSync) sync_ = true;
   }
   connector_->list_.push_back(this);
-  trace() << this << connector_ << connector_->list_.size();
+  trace() << LogStream::Color::Green << _type << connector->thread->name() << this << connector_ << connector_->list_.size();
 }
 
 AbstractFunctionConnector::Connection::~Connection() {
