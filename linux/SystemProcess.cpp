@@ -120,7 +120,7 @@ void SystemProcess::wait() {
 int SystemProcess::exitCode() { return private_->code_; }
 
 FunctionConnectorProtected<SystemProcess>::Connector<int, SystemProcess::State, const std::string &, const std::string &> &SystemProcess::exec(const std::string &_cmdline, const std::vector<std::string> &_args) {
-  FunctionConnectorProtected<SystemProcess>::Connector<int, SystemProcess::State, const std::string &, const std::string &> *fc = new FunctionConnectorProtected<SystemProcess>::Connector<int, SystemProcess::State, const std::string &, const std::string &>(AbstractFunctionConnector::DefaultQueued);
+  FunctionConnectorProtected<SystemProcess>::Connector<int, SystemProcess::State, const std::string &, const std::string &> *fc = new FunctionConnectorProtected<SystemProcess>::Connector<int, SystemProcess::State, const std::string &, const std::string &>(AbstractFunctionConnector::Queued);
 
   SystemProcess *process = new SystemProcess();
   std::string *_out = new std::string();
@@ -130,7 +130,7 @@ FunctionConnectorProtected<SystemProcess>::Connector<int, SystemProcess::State, 
         if (!err) *_out += msg;
         else { *_err += msg; }
       },
-      nullptr);
+      AbstractFunctionConnector::Connection::Direct);
   process->stateChanged(
       [fc, process, _out, _err](SystemProcess::State state) {
         if (state != SystemProcess::Running) {
@@ -141,7 +141,7 @@ FunctionConnectorProtected<SystemProcess>::Connector<int, SystemProcess::State, 
           delete _err;
         }
       },
-      nullptr);
+      AbstractFunctionConnector::Connection::Direct);
 #ifndef __clang_analyzer__
   process->private_->thread_->invokeMethod([_cmdline, _args, process, fc, _out, _err]() {
     if (!process->start(_cmdline, _args))
