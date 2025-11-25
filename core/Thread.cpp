@@ -841,7 +841,7 @@ void AbstractThreadPool::removeThread(AbstractThread *thread) {
   AbstractThread::LockGuard lock(mutex);
   std::vector<AbstractThread *>::iterator it = std::lower_bound(threads_.begin(), threads_.end(), thread, Compare());
   if (it != threads_.end() && (*it) == thread) threads_.erase(it);
-  else { ucError() << "thread not found"; }
+  else { ucDebug() << LogStream::Color::Red << "thread not found: (" + thread->name() + ')'; }
   ucTrace("threads: " + std::to_string(threads_.size()));
 }
 
