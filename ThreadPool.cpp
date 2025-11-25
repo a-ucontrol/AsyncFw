@@ -1,3 +1,4 @@
+#include <algorithm>
 #include "core/LogStream.h"
 #include "ThreadPool.h"
 
