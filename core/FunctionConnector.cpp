@@ -34,8 +34,8 @@ AbstractFunctionConnector::Connection::Connection(AbstractFunctionConnector *con
   }
   if (_type != Direct) {
     AbstractThread *_t = AbstractThread::currentThread();
-    if (_type != Auto || _t != connector->thread) thread_ = _t;
-    if (_type == QueuedSync) sync_ = true;
+    if ((_type != Auto && _type != AutoSync) || _t != connector->thread) thread_ = _t;
+    if (_type == QueuedSync || (_type == AutoSync && thread_)) sync_ = true;
   }
   connector_->list_.push_back(this);
   trace() << LogStream::Color::Green << _type << connector->thread->name() << this << connector_ << connector_->list_.size();

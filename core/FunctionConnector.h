@@ -11,13 +11,13 @@ class AbstractFunctionConnector {
   friend FunctionConnectionGuard;
 
 public:
-  enum ConnectionType : uint8_t { Auto = 0, Queued = 0x01, Direct = 0x02, QueuedSync = 0x04, AutoOnly = 0x10, QueuedOnly = 0x11, DirectOnly = 0x12, QueuedSyncOnly = 0x14 };
+  enum ConnectionType : uint8_t { Auto = 0, AutoSync = 0x01, Queued = 0x02, Direct = 0x04, QueuedSync = 0x08, AutoOnly = 0x10, AutoSyncOnly = 0x11, QueuedOnly = 0x12, DirectOnly = 0x14, QueuedSyncOnly = 0x18 };
   class Connection {
     friend AbstractFunctionConnector;
     friend FunctionConnectionGuard;
 
   public:
-    enum ConnectionType : uint8_t { Auto = AbstractFunctionConnector::Auto, Queued = AbstractFunctionConnector::Queued, Direct = AbstractFunctionConnector::Direct, QueuedSync = AbstractFunctionConnector::QueuedSync, Default = 0x08 };
+    enum ConnectionType : uint8_t { Auto = AbstractFunctionConnector::Auto, AutoSync = AbstractFunctionConnector::AutoSync, Queued = AbstractFunctionConnector::Queued, Direct = AbstractFunctionConnector::Direct, QueuedSync = AbstractFunctionConnector::QueuedSync, Default = 0x80 };
 
   protected:
     Connection(AbstractFunctionConnector *, ConnectionType);
