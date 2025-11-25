@@ -1,4 +1,3 @@
-#include "Thread.h"
 #include "LogStream.h"
 #include "FunctionConnector.h"
 
@@ -15,7 +14,7 @@
 
 using namespace AsyncFw;
 
-AbstractFunctionConnector::AbstractFunctionConnector(ConnectionType type) : defaultConnectionType(type), thread(AbstractThread::currentThread()) { trace() << this; }
+AbstractFunctionConnector::AbstractFunctionConnector(ConnectionType type) : defaultConnectionType(type) { trace() << this; }
 
 AbstractFunctionConnector::~AbstractFunctionConnector() {
   std::lock_guard<std::mutex> lock(mutex);
@@ -27,18 +26,14 @@ AbstractFunctionConnector::~AbstractFunctionConnector() {
 }
 
 AbstractFunctionConnector::Connection::Connection(AbstractFunctionConnector *connector, ConnectionType type) : connector_(connector) {
-  uint8_t _type = (type != Default) ? type : connector->defaultConnectionType & ~0x10;
-  if ((connector->defaultConnectionType & 0x10) && _type != (connector->defaultConnectionType & ~0x10)) {
+  type_ = (type != Default) ? type : static_cast<ConnectionType>(connector->defaultConnectionType & ~0x10);
+  if ((connector->defaultConnectionType & 0x10) && type_ != (connector->defaultConnectionType & ~0x10)) {
     (logAlert() << "AbstractFunctionConnector: fixed connection type, throw exception...").flush();
     throw std::runtime_error("AbstractFunctionConnector: fixed connection type");
   }
-  if (_type != Direct) {
-    AbstractThread *_t = AbstractThread::currentThread();
-    if ((_type != Auto && _type != AutoSync) || _t != connector->thread) thread_ = _t;
-    if (_type == QueuedSync || (_type == AutoSync && thread_)) sync_ = true;
-  }
+  if (type_ != Direct) thread_ = AbstractThread::currentThread();
   connector_->list_.push_back(this);
-  trace() << LogStream::Color::Green << _type << connector->thread->name() << this << connector_ << connector_->list_.size();
+  trace() << LogStream::Color::Green << type_ << thread_->name() << this << connector_ << connector_->list_.size();
 }
 
 AbstractFunctionConnector::Connection::~Connection() {
@@ -49,8 +44,6 @@ AbstractFunctionConnector::Connection::~Connection() {
   connector_->list_.erase(it);
   trace() << this << connector_ << connector_->list_.size();
 }
-
-void AbstractFunctionConnector::Connection::invoke(const std::function<void()> &f) const { thread_->invokeMethod(f, sync_); }
 
 FunctionConnectionGuard::FunctionConnectionGuard() { c_ = nullptr; }
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "core/Thread.h"
+#include "core/FunctionConnector.h"
 #include "core/DataArray.h"
 
 namespace AsyncFw {

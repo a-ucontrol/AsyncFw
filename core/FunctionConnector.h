@@ -2,9 +2,9 @@
 
 #include <functional>
 #include <mutex>
+#include "Thread.h"
 
 namespace AsyncFw {
-class AbstractThread;
 class FunctionConnectionGuard;
 
 class AbstractFunctionConnector {
@@ -22,13 +22,12 @@ public:
   protected:
     Connection(AbstractFunctionConnector *, ConnectionType);
     virtual ~Connection() = 0;
-    void invoke(const std::function<void(void)> &) const;
-    AbstractThread *thread_ = nullptr;
+    AbstractThread *thread_;
+    ConnectionType type_;
 
   private:
     AbstractFunctionConnector *connector_;
     FunctionConnectionGuard *guarg_ = nullptr;
-    bool sync_ = false;
   };
 
   AbstractFunctionConnector(ConnectionType = Auto);
@@ -37,7 +36,6 @@ protected:
   virtual ~AbstractFunctionConnector() = 0;
   std::vector<Connection *> list_;
   ConnectionType defaultConnectionType;
-  AbstractThread *thread;
   std::mutex mutex;
 };
 
@@ -54,10 +52,13 @@ public:
   }
   void operator()(Args... args) {
     std::lock_guard<std::mutex> lock(mutex);
-    for (const AbstractFunctionConnector::Connection *c : list_) {
-      std::function<void(Args...)> f = static_cast<const Connection *>(c)->f;
-      if (static_cast<const Connection *>(c)->thread_) static_cast<const Connection *>(c)->invoke([f, args...]() { f(args...); });
-      else { f(args...); }
+    for (const Connection *c : *reinterpret_cast<std::vector<Connection *> *>(&list_)) {
+      std::function<void(Args...)> f = c->f;
+      if (c->type_ == Connection::Direct || ((c->type_ == Connection::Auto || c->type_ == Connection::AutoSync) && c->thread_->id() == std::this_thread::get_id())) {
+        f(args...);
+        continue;
+      }
+      c->thread_->invokeMethod([f, args...]() { f(args...); }, c->type_ == Connection::AutoSync || c->type_ == Connection::QueuedSync);
     }
   }
 

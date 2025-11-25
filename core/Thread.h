@@ -1,8 +1,8 @@
 #pragma once
 
+#include <vector>
 #include <condition_variable>
 
-#include "FunctionConnector.h"
 #include "AnyData.h"
 
 #ifndef _WIN32
