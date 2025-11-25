@@ -28,7 +28,7 @@ AbstractFunctionConnector::~AbstractFunctionConnector() {
 
 AbstractFunctionConnector::Connection::Connection(AbstractFunctionConnector *connector, ConnectionType type) : connector_(connector) {
   uint8_t _type = (type != Default) ? type : connector->defaultConnectionType & ~0x10;
-  if ((connector->defaultConnectionType & 0x10) && _type != type) {
+  if ((connector->defaultConnectionType & 0x10) && _type != (connector->defaultConnectionType & ~0x10)) {
     (logAlert() << "AbstractFunctionConnector: fixed connection type, throw exception...").flush();
     throw std::runtime_error("AbstractFunctionConnector: fixed connection type");
   }
