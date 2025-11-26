@@ -31,9 +31,9 @@ AbstractFunctionConnector::Connection::Connection(AbstractFunctionConnector *con
     (logAlert() << "AbstractFunctionConnector: fixed connection type, throw exception...").flush();
     throw std::runtime_error("AbstractFunctionConnector: fixed connection type");
   }
-  if (type_ != Direct) thread_ = AbstractThread::currentThread();
+  thread_ = AbstractThread::currentThread();
   connector_->list_.push_back(this);
-  trace() << LogStream::Color::Green << type_ << thread_->name() << this << connector_ << connector_->list_.size();
+  trace() << LogStream::Color::Green << static_cast<int>(type_) << thread_->name() << this << connector_ << connector_->list_.size();
 }
 
 AbstractFunctionConnector::Connection::~Connection() {
@@ -72,7 +72,7 @@ void FunctionConnectionGuard::operator=(AbstractFunctionConnector::Connection &_
 
 void FunctionConnectionGuard::operator=(FunctionConnectionGuard &&_g) {
   if (c_) {
-    if (!c_->thread_) AbstractThread::currentThread()->invokeMethod([_p = c_]() { delete _p; });
+    if (c_->type_ == AbstractFunctionConnector::Connection::Direct) c_->thread_->invokeMethod([_p = c_]() { delete _p; });
     else { delete c_; }
   }
   c_ = _g.c_;
