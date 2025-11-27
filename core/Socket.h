@@ -56,7 +56,7 @@ protected:
   virtual ~AbstractSocket();
 
   void setErrorCode(Error);
-  void setErrorString(const std::string &);
+  void setErrorString(const std::string &) const;
 
   virtual int read_available_fd() const;
   virtual int read_fd(void *_p, int _s);

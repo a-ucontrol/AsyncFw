@@ -18,7 +18,7 @@ public:
   bool initTls(const TlsContext &data);
   void disableTls();
 
-  bool transmit(const DataArray &, uint32_t, bool = false);
+  bool transmit(const DataArray &, uint32_t, bool = false) const;
   void clearBuffer(const DataArray *) const;
   int connectTimeout() const { return waitForConnectTimeoutInterval; }
   void setConnectTimeout(int timeout) { waitForConnectTimeoutInterval = timeout; }

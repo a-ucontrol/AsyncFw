@@ -245,7 +245,7 @@ void DataArraySocket::writeSocket() {
   }
 }
 
-bool DataArraySocket::transmit(const DataArray &ba, uint32_t pi, bool wait) {
+bool DataArraySocket::transmit(const DataArray &ba, uint32_t pi, bool wait) const {
   if (!thread()) {
     lsError("thread is nullptr") << static_cast<int>(state_);
     return false;
