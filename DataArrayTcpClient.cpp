@@ -9,8 +9,8 @@ using namespace AsyncFw;
 DataArrayTcpClient::DataArrayTcpClient(const std::string &name, AbstractThread *thread) : DataArrayAbstractTcp(name, thread) { lsTrace(); }
 
 void DataArrayTcpClient::socketStateChanged(const DataArraySocket *socket) {
-  bool connected = socket->state() == DataArraySocket::Active;
-  if (!connected && socket->state() != DataArraySocket::Unconnected) return;
+  bool connected = socket->state() == DataArraySocket::State::Active;
+  if (!connected && socket->state() != DataArraySocket::State::Unconnected) return;
   thread_->invokeMethod([this, socket, connected]() {
     DataArrayTcpClient::Thread *thread = static_cast<Thread *>(socket->thread());
     if (thread) {
@@ -18,7 +18,7 @@ void DataArrayTcpClient::socketStateChanged(const DataArraySocket *socket) {
         lsWarning() << "socket thread not found";
         return;
       }
-      bool b = connected == (socket->state() == DataArraySocket::Active);
+      bool b = connected == (socket->state() == DataArraySocket::State::Active);
       if (b) connectionStateChanged(socket);
     }
   });
@@ -63,7 +63,7 @@ void DataArrayTcpClient::removeSocket(DataArraySocket *socket) {
 
 int DataArrayTcpClient::exchange(const DataArraySocket *socket, const DataArray &wda, const DataArray *rda, uint32_t pi, int timeout) {
   if (AbstractThread::currentThread() != thread_) return ErrorExchangeThread;
-  if (socket->state_ != AbstractSocket::Active) return ErrorExchangeNotActive;
+  if (socket->state_ != AbstractSocket::State::Active) return ErrorExchangeNotActive;
   FunctionConnectionGuardList _gl;
   std::coroutine_handle<> h;
   Timer t;
@@ -74,7 +74,7 @@ int DataArrayTcpClient::exchange(const DataArraySocket *socket, const DataArray 
     h.resume();
   });
   _gl += socket->stateChanged([&h, &ret](AbstractSocket::State state) {
-    if (!h || state != AbstractSocket::Unconnected) return;
+    if (!h || state != AbstractSocket::State::Unconnected) return;
     ret = ErrorExchangeConnectionClose;
     h.resume();
   });
@@ -124,7 +124,7 @@ DataArraySocket *DataArrayTcpClient::Thread::createSocket() {
   tcpSocket->setReconnectTimeout(client()->reconnectTimeoutInterval);
   socketInit(const_cast<DataArraySocket *>(tcpSocket));
   tcpSocket->stateChanged([this, tcpSocket](AbstractSocket::State state) {
-    if (state != AbstractSocket::Connected && state != AbstractSocket::Active && state != AbstractSocket::Unconnected) return;
+    if (state != AbstractSocket::State::Connected && state != AbstractSocket::State::Active && state != AbstractSocket::State::Unconnected) return;
     client()->socketStateChanged(tcpSocket);
   });
   return tcpSocket;

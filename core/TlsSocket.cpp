@@ -47,7 +47,7 @@ bool AbstractTlsSocket::connect(const std::string &address, uint16_t port) {
 }
 
 void AbstractTlsSocket::disconnect() {
-  if (private_->ssl_ && state_ == Active) SSL_shutdown(private_->ssl_);
+  if (private_->ssl_ && state_ == State::Active) SSL_shutdown(private_->ssl_);
   AbstractSocket::disconnect();
 }
 
@@ -66,7 +66,7 @@ struct ie {
 };
 
 void AbstractTlsSocket::acceptEvent() {
-  if (state_ != Connected) {
+  if (state_ != State::Connected) {
     lsError() << "not connected";
     return;
   }
@@ -98,7 +98,7 @@ void AbstractTlsSocket::acceptEvent() {
     if (!r && SSL_want_read(private_->ssl_)) return;
     setErrorCode(AbstractSocket::Error::Accept);
     setErrorString("Accept TLS error");
-    state_ = Error;
+    state_ = State::Error;
     stateEvent();
     close();
     return;

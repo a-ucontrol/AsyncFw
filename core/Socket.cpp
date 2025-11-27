@@ -59,7 +59,7 @@ struct AbstractSocket::Private {
   DataArray rda_;
   DataArray wda_;
   int tid_ = -1;
-  int errorCode_;
+  Error errorCode_;
   std::string errorString_;
   int w_ = 0;
   int type_ = SOCK_STREAM;
@@ -124,11 +124,11 @@ bool AbstractSocket::listen(const std::string &_address, uint16_t _port) {
 }
 
 void AbstractSocket::acceptEvent() {
-  if (state_ != Connected) {
+  if (state_ != State::Connected) {
     lsError() << LogStream::Color::Red << "not connected state";
     return;
   }
-  state_ = Active;
+  state_ = State::Active;
   stateEvent();
 }
 
@@ -251,7 +251,7 @@ void AbstractSocket::disconnect() {
     lsError("already closing");
     return;
   }
-  state_ = Closing;
+  state_ = State::Closing;
   stateEvent();
   trace() << LogStream::Color::Red << fd_;
   if (private_->wda_.empty()) {
@@ -273,7 +273,7 @@ void AbstractSocket::read_fd() {
       private_->errorString_ = "Read error";
       private_->errorCode_ = Error::Read;
       lsDebug() << LogStream::Color::Red << private_->errorString_ << r << rs_ << errno;
-      state_ = Error;
+      state_ = State::Error;
       stateEvent();
       close();
     }
@@ -335,9 +335,9 @@ void AbstractSocket::close() {
   stateEvent();
 }
 
-void AbstractSocket::setErrorCode(int code) { private_->errorCode_ = code; }
+void AbstractSocket::setErrorCode(Error code) { private_->errorCode_ = code; }
 
-int AbstractSocket::errorCode() { return private_->errorCode_; }
+AbstractSocket::Error AbstractSocket::errorCode() { return private_->errorCode_; }
 
 void AbstractSocket::setErrorString(const std::string &error) {
   lsDebug() << LogStream::Color::DarkRed << error;
@@ -451,7 +451,7 @@ void AbstractSocket::pollEvent(int _e) {
     if (state_ == State::Connecting) private_->errorString_ = "Connection refused (not connected)";
     else { private_->errorString_ = "Connection refused"; }
     lsTrace() << LogStream::Color::Red << private_->errorString_ << errno;
-    state_ = Error;
+    state_ = State::Error;
     stateEvent();
     close();
     return;
@@ -460,14 +460,14 @@ void AbstractSocket::pollEvent(int _e) {
     private_->errorString_ = "PollErr";
     private_->errorCode_ = Error::PollErr;
     lsDebug() << LogStream::Color::Red << private_->errorString_ << errno;
-    state_ = Error;
+    state_ = State::Error;
     stateEvent();
     close();
     return;
   }
   if (state_ == State::Connecting) {
     thread_->modifyPollDescriptor(fd_, AbstractThread::PollIn);
-    state_ = Connected;
+    state_ = State::Connected;
     stateEvent();
   }
   if (state_ == State::Connected) {
@@ -477,7 +477,7 @@ void AbstractSocket::pollEvent(int _e) {
         private_->errorString_ = "Connection closed (not accepted)";
         private_->errorCode_ = Error::Closed;
         lsDebug() << LogStream::Color::Red << private_->errorString_ << errno;
-        state_ = Error;
+        state_ = State::Error;
         stateEvent();
         close();
         return;
@@ -492,7 +492,7 @@ void AbstractSocket::pollEvent(int _e) {
       private_->errorString_ = "Connection closed";
       private_->errorCode_ = Error::Closed;
       lsTrace() << LogStream::Color::Red << private_->errorString_ << r << rs_ << errno;
-      state_ = Error;
+      state_ = State::Error;
       stateEvent();
       close();
       return;
@@ -504,7 +504,7 @@ void AbstractSocket::pollEvent(int _e) {
       private_->errorString_ = "Unknown error";
       private_->errorCode_ = Error::Unknown;
       lsDebug() << LogStream::Color::Red << private_->errorString_ << r << errno;
-      state_ = Error;
+      state_ = State::Error;
       stateEvent();
       close();
       return;
@@ -534,7 +534,7 @@ void AbstractSocket::pollEvent(int _e) {
       private_->errorString_ = "Write error";
       private_->errorCode_ = Error::Write;
       lsDebug() << LogStream::Color::Red << private_->errorString_ << r << errno;
-      state_ = Error;
+      state_ = State::Error;
       stateEvent();
       close();
     }

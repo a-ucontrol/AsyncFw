@@ -40,7 +40,7 @@ DataArraySocket::DataArraySocket(Thread *_thread) : AbstractTlsSocket(_thread) {
 DataArraySocket::~DataArraySocket() {
   if (state_ != State::Destroy) {
     lsDebug() << this << LogStream::Color::DarkRed << "not Destroy state:" << static_cast<int>(state_);
-    state_ = Destroy;
+    state_ = State::Destroy;
     DataArraySocket::stateEvent();
   }
   if (thread_) removeTimer();
@@ -62,7 +62,7 @@ void DataArraySocket::removeTimer() {
 }
 
 void DataArraySocket::stateEvent() {
-  if (state_ == Connected) {
+  if (state_ == State::Connected) {
     if (waitTimerType & 0x04) {
       waitTimerType &= ~0x04;
       if (sslConnection) {
@@ -76,12 +76,12 @@ void DataArraySocket::stateEvent() {
 
   if (wait_holder_) wait_holder_->complete();
 
-  if (state_ == AbstractSocket::Active) {
+  if (state_ == AbstractSocket::State::Active) {
     if (sslConnection) sslConnection = 4;
     waitTimerType &= ~0x08;
     if (readTimeoutInterval > 0) startTimer(readTimeoutInterval);
     else if (reconnectTimeoutInterval > 0) { removeTimer(); }
-  } else if (state_ == AbstractSocket::Unconnected) {
+  } else if (state_ == AbstractSocket::State::Unconnected) {
     if (!(waitTimerType & 0x08)) {
       if (reconnectTimeoutInterval > 0) startTimer(reconnectTimeoutInterval);
       else if (readTimeoutInterval > 0) { removeTimer(); }
@@ -94,7 +94,7 @@ void DataArraySocket::stateEvent() {
       lsWarning("disconnected while receive");
     }
     lsTrace() << LogStream::Blue << "socket unconnected (" + peerString() + ')';
-  } else if (state_ == AbstractSocket::Connecting) {
+  } else if (state_ == AbstractSocket::State::Connecting) {
     if (!receiveList.empty()) lsWarning("receive buffer not empty during connect");
   }
 
@@ -103,7 +103,7 @@ void DataArraySocket::stateEvent() {
 
 void DataArraySocket::timerEvent() {
   removeTimer();
-  if (state_ == AbstractSocket::Active) {
+  if (state_ == AbstractSocket::State::Active) {
     if (sslConnection != 3 && waitTimerType == 0x80 && readTimeoutInterval > 0) {
       transmitKeepAlive(true);
     } else {
@@ -116,13 +116,13 @@ void DataArraySocket::timerEvent() {
       waitTimerType |= 0x01;
       disconnect();
     }
-  } else if (state_ == AbstractSocket::Unconnected) {
+  } else if (state_ == AbstractSocket::State::Unconnected) {
     if (reconnectTimeoutInterval > 0) connectToHost();
   } else {
     std::string e;
-    if (state_ == Connecting) {
+    if (state_ == State::Connecting) {
       e = "Timeout while connecting";
-    } else if (state_ == Connected) {
+    } else if (state_ == State::Connected) {
       e = "Timeout while wait encryption";
     } else {
       e = "Unknown timeout";
@@ -139,7 +139,7 @@ void DataArraySocket::timerEvent() {
 }
 
 void DataArraySocket::transmitKeepAlive(bool request) {
-  if (state_ != AbstractSocket::Active) {
+  if (state_ != AbstractSocket::State::Active) {
     lsWarning("tried transmit keep alive to inactive socket");
     return;
   }
@@ -155,7 +155,7 @@ void DataArraySocket::transmitKeepAlive(bool request) {
 std::string DataArraySocket::peerString() const { return AbstractSocket::peerAddress() + ':' + std::to_string(AbstractSocket::peerPort()); }
 
 void DataArraySocket::readEvent() {
-  if (state_ != AbstractSocket::Active) {
+  if (state_ != AbstractSocket::State::Active) {
     lsError("tried read from inactive socket");
     return;
   }
@@ -217,7 +217,7 @@ void DataArraySocket::readEvent() {
 }
 
 void DataArraySocket::disconnect() {
-  if (state_ == AbstractSocket::Closing || state_ == AbstractSocket::Unconnected) {
+  if (state_ == AbstractSocket::State::Closing || state_ == AbstractSocket::State::Unconnected) {
     lsWarning("tried disconnect closing or unconnected socket");
     return;
   }
@@ -230,7 +230,7 @@ void DataArraySocket::disconnect() {
 
 void DataArraySocket::writeSocket() {
   for (;;) {
-    if (state_ != AbstractSocket::Active) {
+    if (state_ != AbstractSocket::State::Active) {
       transmitList = {};
       lsWarning("tried write to unconnected socket");
       return;
@@ -254,7 +254,7 @@ bool DataArraySocket::transmit(const DataArray &ba, uint32_t pi, bool wait) {
     lsError("tried transmit with wait from socket thread");
     return false;
   }
-  if (state_ != AbstractSocket::Active) {
+  if (state_ != AbstractSocket::State::Active) {
     lsWarning("tried transmit to inactive socket");
     return false;
   }
@@ -330,7 +330,7 @@ bool DataArraySocket::connectToHost() {
     lsWarning("empty host address or port");
     return false;
   }
-  if (state_ != AbstractSocket::Unconnected) {
+  if (state_ != AbstractSocket::State::Unconnected) {
     lsWarning("trying connect while not unconnected state");
     return false;
   }
