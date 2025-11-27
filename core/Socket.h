@@ -16,8 +16,8 @@ class AbstractSocket : public AnyData {
   struct Private;
 
 public:
-  enum State : uint8_t { Unconnected, Listening, Connecting, Connected, Active, Closing, Destroy };
-  enum Error : uint8_t { None, Closed, Refused, PollErr, PollInval, Read, Write, Unknown };
+  enum State : uint8_t { Unconnected, Listening, Connecting, Connected, Active, Closing, Destroy, Error };
+  enum Error : uint8_t { None, Closed, Refused, PollErr, PollInval, Read, Write, Accept, Unknown };
 
   virtual void setDescriptor(int);
   virtual bool connect(const std::string &, uint16_t);
@@ -63,7 +63,6 @@ protected:
   virtual int write_fd(const void *_p, int _s);
 
   virtual void acceptEvent();
-  virtual void errorEvent();
 
   virtual void incomingEvent() {}
   virtual void writeEvent() {}
