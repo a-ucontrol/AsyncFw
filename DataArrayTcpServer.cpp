@@ -10,7 +10,7 @@ DataArrayTcpServer::DataArrayTcpServer(const std::string &name, AsyncFw::Thread 
   listener = std::make_unique<ListenSocket>(thread);
   listener->setIncomingConnection([this](int descriptor, const std::string &address) { return incomingConnection(descriptor, address); });
   alwaysConnect_.emplace_back("127.0.0.1");
-  ucTrace();
+  lsTrace();
 }
 
 void DataArrayTcpServer::quit() {
@@ -19,7 +19,7 @@ void DataArrayTcpServer::quit() {
 }
 
 bool DataArrayTcpServer::incomingConnection(int socketDescriptor, const std::string &address) {
-  ucTrace("readTimeout: %d, waitKeepAliveAnswerTimeout: %d, waitForEncryptedTimeout: %d, maxThreads: %d, maxSockets: %d, maxReadBuffers = %d, maxReadSize = %d, maxWriteBuffers = %d, maxWriteSize = %d", readTimeout, waitKeepAliveAnswerTimeout, waitForEncryptedTimeout, maxThreads, maxSockets, maxReadBuffers, maxReadSize, maxWriteBuffers, maxWriteSize);
+  lsTrace("readTimeout: %d, waitKeepAliveAnswerTimeout: %d, waitForEncryptedTimeout: %d, maxThreads: %d, maxSockets: %d, maxReadBuffers = %d, maxReadSize = %d, maxWriteBuffers = %d, maxWriteSize = %d", readTimeout, waitKeepAliveAnswerTimeout, waitForEncryptedTimeout, maxThreads, maxSockets, maxReadBuffers, maxReadSize, maxWriteBuffers, maxWriteSize);
   Thread *serverThread;
   bool manyConnections = false;
   mutex.lock();
@@ -34,7 +34,7 @@ bool DataArrayTcpServer::incomingConnection(int socketDescriptor, const std::str
     if (manyConnections && std::find(alwaysConnect_.begin(), alwaysConnect_.end(), address) == alwaysConnect_.end()) b = true;
     serverThread->mutex.unlock();
     mutex.unlock();
-    if (manyConnections) { logError() << "Many connections"; }
+    if (manyConnections) { lsError() << "many connections"; }
     if (b) return false;
   }
 
@@ -62,7 +62,7 @@ void DataArrayTcpServer::Thread::createSocket(int socketDescriptor, bool encrypt
   } else
     tcpSocket->AbstractSocket::setDescriptor(socketDescriptor);
 
-  ucTrace("new connection: " + tcpSocket->peerAddress() + ":" + std::to_string(tcpSocket->peerPort()));
+  lsTrace("new connection: " + tcpSocket->peerAddress() + ":" + std::to_string(tcpSocket->peerPort()));
 }
 
 void DataArrayTcpServer::Thread::removeSocket(DataArraySocket *socket) {

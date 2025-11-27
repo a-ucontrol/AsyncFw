@@ -13,9 +13,9 @@ struct CoroutineTask::promise_type::Private {
   bool finished = false;
 };
 
-CoroutineAwait::~CoroutineAwait() { ucTrace(); }
+CoroutineAwait::~CoroutineAwait() { lsTrace(); }
 
-CoroutineAwait::CoroutineAwait(std::function<void(std::coroutine_handle<CoroutineTask::promise_type>)> f) : f_(f) { ucTrace(); }
+CoroutineAwait::CoroutineAwait(std::function<void(std::coroutine_handle<CoroutineTask::promise_type>)> f) : f_(f) { lsTrace(); }
 
 void CoroutineAwait::await_suspend(std::coroutine_handle<CoroutineTask::promise_type> h) const noexcept {
   h_ = h;
@@ -27,13 +27,13 @@ bool CoroutineAwait::await_ready() const noexcept { return false; }
 
 std::coroutine_handle<CoroutineTask::promise_type> CoroutineAwait::await_resume() const noexcept { return h_; }
 
-CoroutineTask::CoroutineTask() { ucTrace(); }
+CoroutineTask::CoroutineTask() { lsTrace(); }
 
 CoroutineTask::~CoroutineTask() {
   std::coroutine_handle<promise_type> h = std::coroutine_handle<promise_type>::from_promise(*promise);
   if (h.promise().private_->finished) h.destroy();
   else { h.promise().private_->task = nullptr; }
-  ucTrace();
+  lsTrace();
 }
 
 void CoroutineTask::wait() {
@@ -57,12 +57,12 @@ CoroutineAwait &CoroutineTask::await() { return *promise->private_->await; }
 CoroutineTask::promise_type::promise_type() {
   private_ = new Private;
   private_->thread = AbstractThread::currentThread();
-  ucTrace();
+  lsTrace();
 }
 
 CoroutineTask::promise_type::~promise_type() {
   delete private_;
-  ucTrace();
+  lsTrace();
 }
 
 CoroutineTask CoroutineTask::promise_type::get_return_object() {

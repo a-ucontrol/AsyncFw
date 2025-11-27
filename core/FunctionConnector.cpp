@@ -28,8 +28,8 @@ AbstractFunctionConnector::~AbstractFunctionConnector() {
 AbstractFunctionConnector::Connection::Connection(AbstractFunctionConnector *connector, ConnectionType type) : connector_(connector) {
   type_ = (type != Default) ? type : static_cast<ConnectionType>(connector->defaultConnectionType & ~0x10);
   if ((connector->defaultConnectionType & 0x10) && type_ != (connector->defaultConnectionType & ~0x10)) {
-    (logAlert() << "AbstractFunctionConnector: fixed connection type, throw exception...").flush();
-    throw std::runtime_error("AbstractFunctionConnector: fixed connection type");
+    (lsError() << "fixed connection type, throw exception...").flush();
+    throw std::runtime_error("fixed connection type");
   }
   thread_ = AbstractThread::currentThread();
   connector_->list_.push_back(this);

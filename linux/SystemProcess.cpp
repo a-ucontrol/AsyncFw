@@ -8,7 +8,7 @@
 #define SYSTEMPROCESS_STDIN
 
 #ifdef EXTEND_SYSTEMPROCESS_TRACE
-  #define trace ucTrace
+  #define trace lsTrace
 #else
   #define trace(x) \
     if constexpr (0) LogStream()
@@ -37,12 +37,12 @@ struct SystemProcess::Private {
 SystemProcess::SystemProcess() {
   private_ = new Private;
   private_->thread_ = AbstractThread::currentThread();
-  ucTrace();
+  lsTrace();
 }
 
 SystemProcess::~SystemProcess() {
   delete private_;
-  ucTrace();
+  lsTrace();
 }
 
 bool SystemProcess::start(const std::string &_cmdline, const std::vector<std::string> &_args) {
@@ -69,7 +69,7 @@ bool SystemProcess::start() {
       private_->thread_->removePollDescriptor(private_->out);
       ::close(private_->out);
       private_->out = 0;
-      ucTrace() << LogStream::Color::Red << "closed out";
+      lsTrace() << LogStream::Color::Red << "closed out";
       if (private_->err == 0) finality();
       return;
     }
@@ -86,7 +86,7 @@ bool SystemProcess::start() {
       private_->thread_->removePollDescriptor(private_->err);
       ::close(private_->err);
       private_->err = 0;
-      ucTrace() << LogStream::Color::Red << "closed err";
+      lsTrace() << LogStream::Color::Red << "closed err";
       if (private_->out == 0) finality();
       return;
     }
@@ -95,7 +95,7 @@ bool SystemProcess::start() {
     trace() << r << LogStream::Color::DarkRed << buf;
   });
 
-  ucTrace() << LogStream::Color::Green << private_->cmdline_;
+  lsTrace() << LogStream::Color::Green << private_->cmdline_;
 
   private_->state_ = Running;
   stateChanged(private_->state_);
@@ -108,7 +108,7 @@ pid_t SystemProcess::pid() { return private_->pid_; }
 
 void SystemProcess::wait() {
   if (private_->state_ != Running) {
-    logWarning("Process not running");
+    lsWarning("process not running");
     return;
   }
   CoroutineTask ct = private_->waitTask();
@@ -165,13 +165,13 @@ void SystemProcess::finality() {
   } else {
     private_->state_ = Crashed;
     private_->code_ = -1;
-    logError() << "error waitpid";
+    lsError() << "error waitpid";
   }
 
   if (private_->wait_task_) private_->wait_task_->resume();
 
   stateChanged(private_->state_);
-  ucTrace() << LogStream::Color::Red << "End: " + private_->cmdline_ << r << (int)private_->state_;
+  lsTrace() << LogStream::Color::Red << "End: " + private_->cmdline_ << r << (int)private_->state_;
 }
 
 CoroutineTask SystemProcess::Private::waitTask() { co_await CoroutineAwait(); }

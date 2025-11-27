@@ -96,20 +96,20 @@ AbstractSocket::~AbstractSocket() {
 bool AbstractSocket::listen(const std::string &_address, uint16_t _port) {
   int _fd = socket(private_->la_.ss_family, private_->type_, private_->protocol_);
   if (_fd < 0) {
-    ucError() << "socket descriptor error" << _fd << errno;
+    lsError() << "socket descriptor error" << _fd << errno;
     return false;
   }
   int _val = 1;
-  if (setsockopt(_fd, SOL_SOCKET, SO_REUSEADDR, setsockopt_ptr(&_val), sizeof _val) < 0) ucError("set SO_REUSEADDR");
+  if (setsockopt(_fd, SOL_SOCKET, SO_REUSEADDR, setsockopt_ptr(&_val), sizeof _val) < 0) lsError("set SO_REUSEADDR");
 #ifndef _WIN32
-  if (setsockopt(_fd, SOL_SOCKET, SO_REUSEPORT, &_val, sizeof _val) < 0) ucError("set SO_REUSEPORT");
+  if (setsockopt(_fd, SOL_SOCKET, SO_REUSEPORT, &_val, sizeof _val) < 0) lsError("set SO_REUSEPORT");
 #endif
   reinterpret_cast<sockaddr_in *>(&private_->la_)->sin_port = htons(_port);
   reinterpret_cast<sockaddr_in *>(&private_->la_)->sin_addr.s_addr = inet_addr(_address.c_str());
 
   if (::bind(_fd, reinterpret_cast<struct sockaddr *>(&private_->la_), sizeof(private_->la_)) || ::listen(_fd, SOCKET_CONNECTION_QUEUED)) {
     close_fd(_fd);
-    ucError() << "listen error:" << _port;
+    lsError() << "listen error:" << _port;
     return false;
   }
 
@@ -123,11 +123,11 @@ bool AbstractSocket::listen(const std::string &_address, uint16_t _port) {
   return true;
 }
 
-void AbstractSocket::errorEvent() { ucWarning("not implemented"); }
+void AbstractSocket::errorEvent() { lsWarning("not implemented"); }
 
 void AbstractSocket::acceptEvent() {
   if (state_ != Connected) {
-    ucError() << LogStream::Color::Red << "not connected state";
+    lsError() << LogStream::Color::Red << "not connected state";
     return;
   }
   state_ = Active;
@@ -170,23 +170,23 @@ void AbstractSocket::setDescriptor(int _fd) {
   socklen_t _l;
   /*
   int _val = 1;
-  if (setsockopt(_fd, SOL_TCP, TCP_NODELAY, &_val, sizeof _val) < 0) ucError("set TCP_NODELAY");
+  if (setsockopt(_fd, SOL_TCP, TCP_NODELAY, &_val, sizeof _val) < 0) lsError("set TCP_NODELAY");
   _val = 8192;  //!!! need test
-  if (setsockopt(_fd, SOL_SOCKET, SO_SNDBUF, &_val, sizeof _val) < 0) ucError("set SO_SNDBUF");
+  if (setsockopt(_fd, SOL_SOCKET, SO_SNDBUF, &_val, sizeof _val) < 0) lsError("set SO_SNDBUF");
   _val = 16384;
-  if (setsockopt(_fd, SOL_SOCKET, SO_RCVBUF, &_val, sizeof _val) < 0) ucError("set SO_RCVBUF");
+  if (setsockopt(_fd, SOL_SOCKET, SO_RCVBUF, &_val, sizeof _val) < 0) lsError("set SO_RCVBUF");
   _l = sizeof _val;
-  if (getsockopt(_fd, SOL_SOCKET, SO_SNDBUF, &_val, &_l) < 0) ucError("SO_SNDBUF");
-  else { ucDebug() << "SO_SNDBUF" << LogStream::Color::Red << _val; }
-  if (getsockopt(_fd, SOL_SOCKET, SO_RCVBUF, &_val, &_l) < 0) ucError("SO_RCVBUF");
-  else { ucDebug() << "SO_RCVBUF" << LogStream::Color::Red << _val; }
+  if (getsockopt(_fd, SOL_SOCKET, SO_SNDBUF, &_val, &_l) < 0) lsError("SO_SNDBUF");
+  else { lsDebug() << "SO_SNDBUF" << LogStream::Color::Red << _val; }
+  if (getsockopt(_fd, SOL_SOCKET, SO_RCVBUF, &_val, &_l) < 0) lsError("SO_RCVBUF");
+  else { lsDebug() << "SO_RCVBUF" << LogStream::Color::Red << _val; }
 */
   _l = sizeof(private_->la_);
-  if (getsockname(_fd, reinterpret_cast<struct sockaddr *>(&private_->la_), &_l) < 0) logError() << "Server: error socket address";
+  if (getsockname(_fd, reinterpret_cast<struct sockaddr *>(&private_->la_), &_l) < 0) lsError() << "error socket address";
   _l = sizeof(private_->pa_);
-  if (getpeername(_fd, reinterpret_cast<struct sockaddr *>(&private_->pa_), &_l) < 0) logError() << "Server: error peer address";
+  if (getpeername(_fd, reinterpret_cast<struct sockaddr *>(&private_->pa_), &_l) < 0) lsError() << "error peer address";
 
-  ucTrace() << _fd << "local:" << LogStream::Color::Green << address() + ':' + std::to_string(port()) << "peer:" << LogStream::Color::Green << peerAddress() + ':' + std::to_string(peerPort());
+  lsTrace() << _fd << "local:" << LogStream::Color::Green << address() + ':' + std::to_string(port()) << "peer:" << LogStream::Color::Green << peerAddress() + ':' + std::to_string(peerPort());
 
   changeDescriptor(_fd);
   state_ = State::Connected;
@@ -197,7 +197,7 @@ void AbstractSocket::setDescriptor(int _fd) {
 bool AbstractSocket::connect(const std::string &_address, uint16_t _port) {
   int _fd = socket(private_->pa_.ss_family, private_->type_, private_->protocol_);
   if (_fd < 0) {
-    ucError() << "socket descriptor error";
+    lsError() << "socket descriptor error";
     return false;
   }
 #ifndef _WIN32
@@ -210,16 +210,16 @@ bool AbstractSocket::connect(const std::string &_address, uint16_t _port) {
   socklen_t _l;
   /*
   int _val = 1;
-  if (setsockopt(_fd, SOL_TCP, TCP_NODELAY, &_val, sizeof _val) < 0) ucError("set TCP_NODELAY");
+  if (setsockopt(_fd, SOL_TCP, TCP_NODELAY, &_val, sizeof _val) < 0) lsError("set TCP_NODELAY");
   _val = 8192;  //!!! need test
-  if (setsockopt(_fd, SOL_SOCKET, SO_SNDBUF, &_val, sizeof _val) < 0) ucError("set SO_SNDBUF");
+  if (setsockopt(_fd, SOL_SOCKET, SO_SNDBUF, &_val, sizeof _val) < 0) lsError("set SO_SNDBUF");
   _val = 16384;
-  if (setsockopt(_fd, SOL_SOCKET, SO_RCVBUF, &_val, sizeof _val) < 0) ucError("set SO_RCVBUF");
+  if (setsockopt(_fd, SOL_SOCKET, SO_RCVBUF, &_val, sizeof _val) < 0) lsError("set SO_RCVBUF");
   _l = sizeof _val;
-  if (getsockopt(_fd, SOL_SOCKET, SO_SNDBUF, &_val, &_l) < 0) ucError("SO_SNDBUF");
-  else { ucDebug() << "SO_SNDBUF" << LogStream::Color::Red << _val; }
-  if (getsockopt(_fd, SOL_SOCKET, SO_RCVBUF, &_val, &_l) < 0) ucError("SO_RCVBUF");
-  else { ucDebug() << "SO_RCVBUF" << LogStream::Color::Red << _val; }
+  if (getsockopt(_fd, SOL_SOCKET, SO_SNDBUF, &_val, &_l) < 0) lsError("SO_SNDBUF");
+  else { lsDebug() << "SO_SNDBUF" << LogStream::Color::Red << _val; }
+  if (getsockopt(_fd, SOL_SOCKET, SO_RCVBUF, &_val, &_l) < 0) lsError("SO_RCVBUF");
+  else { lsDebug() << "SO_RCVBUF" << LogStream::Color::Red << _val; }
 */
   reinterpret_cast<sockaddr_in *>(&private_->pa_)->sin_port = htons(_port);
   reinterpret_cast<sockaddr_in *>(&private_->pa_)->sin_addr.s_addr = inet_addr(_address.c_str());
@@ -227,15 +227,15 @@ bool AbstractSocket::connect(const std::string &_address, uint16_t _port) {
   if (::connect(_fd, reinterpret_cast<struct sockaddr *>(&private_->pa_), sizeof(private_->pa_)) == -1) {
     if (errno != CONNECT_PROGRESS) {
       close_fd(_fd);
-      ucError() << "connect error" << _address + ':' + std::to_string(_port) << _fd << errno;
+      lsError() << "connect error" << _address + ':' + std::to_string(_port) << _fd << errno;
       return false;
     }
   }
 
   _l = sizeof(private_->la_);
-  if (getsockname(_fd, reinterpret_cast<struct sockaddr *>(&private_->la_), &_l) < 0) logError() << "Client: error socket address";
+  if (getsockname(_fd, reinterpret_cast<struct sockaddr *>(&private_->la_), &_l) < 0) lsError() << "error socket address";
 
-  ucTrace() << _fd << "local:" << LogStream::Color::Green << address() + ':' + std::to_string(port()) << "peer:" << LogStream::Color::Green << peerAddress() + ':' + std::to_string(peerPort());
+  lsTrace() << _fd << "local:" << LogStream::Color::Green << address() + ':' + std::to_string(port()) << "peer:" << LogStream::Color::Green << peerAddress() + ':' + std::to_string(peerPort());
 
   thread_->invokeMethod([this, _fd]() { changeDescriptor(_fd); }, true);
   state_ = State::Connecting;
@@ -246,11 +246,11 @@ bool AbstractSocket::connect(const std::string &_address, uint16_t _port) {
 
 void AbstractSocket::disconnect() {
   if (state_ == State::Unconnected) {
-    ucError("not connected");
+    lsError("not connected");
     return;
   }
   if (state_ == State::Closing) {
-    ucError("already closing");
+    lsError("already closing");
     return;
   }
   state_ = Closing;
@@ -274,7 +274,7 @@ void AbstractSocket::read_fd() {
     if (r != rs_) {
       private_->errorString_ = "Read error";
       private_->errorCode_ = Error::Read;
-      ucDebug() << LogStream::Color::Red << private_->errorString_ << r << rs_ << errno;
+      lsDebug() << LogStream::Color::Red << private_->errorString_ << r << rs_ << errno;
       errorEvent();
       close();
     }
@@ -327,7 +327,7 @@ void AbstractSocket::close() {
   if (fd_ == -1 || !thread_) return;
   thread_->removePollDescriptor(fd_);
   close_fd(fd_);
-  ucTrace() << LogStream::Color::Red << fd_;
+  lsTrace() << LogStream::Color::Red << fd_;
   changeDescriptor(-1);
   state_ = State::Unconnected;
   rs_ = 0;
@@ -340,7 +340,10 @@ void AbstractSocket::setErrorCode(int code) { private_->errorCode_ = code; }
 
 int AbstractSocket::errorCode() { return private_->errorCode_; }
 
-void AbstractSocket::setErrorString(const std::string &error) { private_->errorString_ = error; }
+void AbstractSocket::setErrorString(const std::string &error) {
+  lsDebug() << LogStream::Color::DarkRed << error;
+  private_->errorString_ = error;
+}
 
 std::string AbstractSocket::errorString() const { return private_->errorString_; }
 
@@ -425,7 +428,7 @@ void AbstractSocket::destroy() {
   state_ = State::Destroy;
   stateEvent();
   if (!thread_) {
-    ucTrace() << LogStream::Color::Red << "nullptr thread";
+    lsTrace() << LogStream::Color::Red << "nullptr thread";
     AbstractTask *_t = new AbstractThread::InternalTask([this]() { delete this; });
     if (!AbstractThread::currentThread()->invokeTask(_t)) {
       _t->invoke();
@@ -448,7 +451,7 @@ void AbstractSocket::pollEvent(int _e) {
     private_->errorCode_ = Error::Refused;
     if (state_ == State::Connecting) private_->errorString_ = "Connection refused (not connected)";
     else { private_->errorString_ = "Connection refused"; }
-    ucTrace() << LogStream::Color::Red << private_->errorString_ << errno;
+    lsTrace() << LogStream::Color::Red << private_->errorString_ << errno;
     errorEvent();
     close();
     return;
@@ -456,7 +459,7 @@ void AbstractSocket::pollEvent(int _e) {
   if (_e & AbstractThread::PollErr) {
     private_->errorString_ = "PollErr";
     private_->errorCode_ = Error::PollErr;
-    ucDebug() << LogStream::Color::Red << private_->errorString_ << errno;
+    lsDebug() << LogStream::Color::Red << private_->errorString_ << errno;
     errorEvent();
     close();
     return;
@@ -472,7 +475,7 @@ void AbstractSocket::pollEvent(int _e) {
       if (rs_ < 0) {
         private_->errorString_ = "Connection closed (not accepted)";
         private_->errorCode_ = Error::Closed;
-        ucDebug() << LogStream::Color::Red << private_->errorString_ << errno;
+        lsDebug() << LogStream::Color::Red << private_->errorString_ << errno;
         errorEvent();
         close();
         return;
@@ -486,7 +489,7 @@ void AbstractSocket::pollEvent(int _e) {
     if (rs_ < 0) {
       private_->errorString_ = "Connection closed";
       private_->errorCode_ = Error::Closed;
-      ucTrace() << LogStream::Color::Red << private_->errorString_ << r << rs_ << errno;
+      lsTrace() << LogStream::Color::Red << private_->errorString_ << r << rs_ << errno;
       errorEvent();
       close();
       return;
@@ -497,7 +500,7 @@ void AbstractSocket::pollEvent(int _e) {
     } else if (r < 0) {
       private_->errorString_ = "Unknown error";
       private_->errorCode_ = Error::Unknown;
-      ucDebug() << LogStream::Color::Red << private_->errorString_ << r << errno;
+      lsDebug() << LogStream::Color::Red << private_->errorString_ << r << errno;
       errorEvent();
       close();
       return;
@@ -526,7 +529,7 @@ void AbstractSocket::pollEvent(int _e) {
     if (r < 0) {
       private_->errorString_ = "Write error";
       private_->errorCode_ = Error::Write;
-      ucDebug() << LogStream::Color::Red << private_->errorString_ << r << errno;
+      lsDebug() << LogStream::Color::Red << private_->errorString_ << r << errno;
       errorEvent();
       close();
     }
@@ -549,7 +552,7 @@ void ListenSocket::incomingEvent() {
   }
   if (_cd >= 0) {
     if (!incomingConnection || !incomingConnection(_cd, _pa)) {
-      ucDebug("failed incoming connection") << LogStream::Color::Red << (incomingConnection != nullptr) << _cd;
+      lsDebug("failed incoming connection") << LogStream::Color::Red << (incomingConnection != nullptr) << _cd;
       close_fd(_cd);
       return;
     }

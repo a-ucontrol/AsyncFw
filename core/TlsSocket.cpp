@@ -67,7 +67,7 @@ struct ie {
 
 void AbstractTlsSocket::acceptEvent() {
   if (state_ != Connected) {
-    logError() << "void AbstractTlsSocket::acceptEvent";
+    lsError() << "not connected";
     return;
   }
   if (private_->encrypt_ == 0) {
@@ -86,9 +86,9 @@ void AbstractTlsSocket::acceptEvent() {
 
     SSL_set_fd(private_->ssl_, fd_);
     if (!private_->ctx_.verifyName().empty()) {
-      ucTrace() << fd_ << "verify name" << LogStream::Color::Green << private_->ctx_.verifyName();
+      lsTrace() << fd_ << "verify name" << LogStream::Color::Green << private_->ctx_.verifyName();
       SSL_set_hostflags(private_->ssl_, X509_CHECK_FLAG_NO_PARTIAL_WILDCARDS);
-      if (!SSL_set1_host(private_->ssl_, private_->ctx_.verifyName().c_str())) ucError();
+      if (!SSL_set1_host(private_->ssl_, private_->ctx_.verifyName().c_str())) lsError();
     }
   }
   int r = (private_->encrypt_ == 1) ? SSL_accept(private_->ssl_) : SSL_connect(private_->ssl_);

@@ -21,12 +21,12 @@
   #define POLLNVAL_ 0x0004
 #endif
 
-#if !defined uC_NO_ERROR
+#if !defined LS_NO_ERROR
   #define uC_THREAD this
   #define checkCurrentThread() \
-    if (std::this_thread::get_id() != uC_THREAD->id()) ucError() << "executed from different thread"
+    if (std::this_thread::get_id() != uC_THREAD->id()) lsError() << "executed from different thread"
   #define checkDifferentThread() \
-    if (std::this_thread::get_id() == uC_THREAD->id()) ucError() << "executed from own thread"
+    if (std::this_thread::get_id() == uC_THREAD->id()) lsError() << "executed from own thread"
 #else
   #define checkCurrentThread()
   #define checkDifferentThread()

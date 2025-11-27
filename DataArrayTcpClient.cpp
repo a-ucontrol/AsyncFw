@@ -6,7 +6,7 @@
 
 using namespace AsyncFw;
 
-DataArrayTcpClient::DataArrayTcpClient(const std::string &name, AbstractThread *thread) : DataArrayAbstractTcp(name, thread) { ucTrace(); }
+DataArrayTcpClient::DataArrayTcpClient(const std::string &name, AbstractThread *thread) : DataArrayAbstractTcp(name, thread) { lsTrace(); }
 
 void DataArrayTcpClient::socketStateChanged(const DataArraySocket *socket) {
   bool connected = socket->state() == DataArraySocket::Active;
@@ -15,14 +15,14 @@ void DataArrayTcpClient::socketStateChanged(const DataArraySocket *socket) {
     DataArrayTcpClient::Thread *thread = static_cast<Thread *>(socket->thread());
     if (thread) {
       if (std::find(threads_.begin(), threads_.end(), thread) == threads_.end()) {
-        ucWarning() << "socket thread not found";
+        lsWarning() << "socket thread not found";
         return;
       }
       bool b = connected == (socket->state() == DataArraySocket::Active);
       if (b) connectionStateChanged(socket);
     }
   });
-  ucDebug((connected) ? "connected" : "disconnected");
+  lsDebug((connected) ? "connected" : "disconnected");
 }
 
 DataArraySocket *DataArrayTcpClient::createSocket(Thread *thread) {
@@ -43,7 +43,7 @@ DataArraySocket *DataArrayTcpClient::createSocket(Thread *thread) {
 
       if (manyConnections) {
         mutex.unlock();
-        logError() << "Many connections";
+        lsError() << "many connections";
         return nullptr;
       }
     }
@@ -85,7 +85,7 @@ int DataArrayTcpClient::exchange(const DataArraySocket *socket, const DataArray 
   auto _ct([&h, &wda, &ret, socket, pi, timeout, &t]() -> CoroutineTask {
     co_await CoroutineAwait([&h, &wda, &ret, socket, pi, timeout, &t](std::coroutine_handle<> _h) {
       h = _h;
-      if (!socket->transmit(wda, pi)) {
+      if (!const_cast<DataArraySocket *>(socket)->transmit(wda, pi)) {
         ret = ErrorExchangeTransmit;
         _h.resume();
         return;
@@ -95,7 +95,7 @@ int DataArrayTcpClient::exchange(const DataArraySocket *socket, const DataArray 
     h = nullptr;
   });
   _ct().wait();
-  ucDebug() << ret;
+  lsDebug() << ret;
   return ret;
 }
 
@@ -105,18 +105,18 @@ void DataArrayTcpClient::connectToHost(DataArraySocket *socket, const std::strin
 }
 
 void DataArrayTcpClient::connectToHost(const DataArraySocket *socket, int timeout) {
-  ucTrace("readTimeout: %d, waitKeepAliveAnswerTimeout: %d, waitForEncryptedTimeout: %d, maxThreads: %d, maxSockets: %d, maxReadBuffers = %d, maxReadSize = %d, maxWriteBuffers = %d, maxWriteSize = %d", readTimeout, waitKeepAliveAnswerTimeout, waitForEncryptedTimeout, maxThreads, maxSockets, maxReadBuffers, maxReadSize, maxWriteBuffers, maxWriteSize);
+  lsTrace("readTimeout: %d, waitKeepAliveAnswerTimeout: %d, waitForEncryptedTimeout: %d, maxThreads: %d, maxSockets: %d, maxReadBuffers = %d, maxReadSize = %d, maxWriteBuffers = %d, maxWriteSize = %d", readTimeout, waitKeepAliveAnswerTimeout, waitForEncryptedTimeout, maxThreads, maxSockets, maxReadBuffers, maxReadSize, maxWriteBuffers, maxWriteSize);
   Thread *clientThread = static_cast<Thread *>(socket->thread());
   if (!clientThread) {
-    logWarning("DataArrayTcpClient: unknown socket");
+    lsWarning("unknown socket");
     return;
   }
   if (std::find(disabledEncrypt_.begin(), disabledEncrypt_.end(), socket->hostAddress()) != disabledEncrypt_.end()) const_cast<DataArraySocket *>(socket)->disableTls();
   clientThread->invokeMethod([&socket, &timeout]() { const_cast<DataArraySocket *>(socket)->connectToHost(timeout); }, true);
-  ucTrace();
+  lsTrace();
 }
 
-DataArrayTcpClient::Thread::~Thread() { ucTrace(); }
+DataArrayTcpClient::Thread::~Thread() { lsTrace(); }
 
 DataArraySocket *DataArrayTcpClient::Thread::createSocket() {
   DataArraySocket *tcpSocket = new DataArraySocket(this);
@@ -137,7 +137,7 @@ void DataArrayTcpClient::Thread::removeSocket(DataArraySocket *socket) {
   if (sockets_.empty()) {
     std::vector<AbstractThread *>::iterator it = std::find(static_cast<DataArrayTcpClient *>(pool)->threads_.begin(), static_cast<DataArrayTcpClient *>(pool)->threads_.end(), this);
     if (it != static_cast<DataArrayTcpClient *>(pool)->threads_.end()) destroy();
-    else { ucError() << "thread not found"; }
+    else { lsError() << "thread not found"; }
   }
   pool->thread()->invokeMethod([socket]() { socket->destroy(); });
 }

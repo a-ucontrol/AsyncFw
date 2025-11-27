@@ -246,7 +246,7 @@ LogStream &LogStream::nospace() {
 }
 
 LogStream &LogStream::flush() {
-#ifndef uC_NO_TRACE
+#ifndef LS_NO_TRACE
   console_msg("LogStream: flush flag enable");
 #endif
   flags |= LOG_STREAM_FLUSH;

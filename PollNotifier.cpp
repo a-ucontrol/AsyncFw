@@ -5,20 +5,20 @@ using namespace AsyncFw;
 
 PollNotifier::PollNotifier() {
   thread_ = AbstractThread::currentThread();
-  ucTrace();
+  lsTrace();
 }
 
 PollNotifier::PollNotifier(int fd, AbstractThread::PollEvents e) : PollNotifier() { setDescriptor(fd, e); }
 
 PollNotifier::~PollNotifier() {
   if (fd_ != -1) removeDescriptor();
-  ucTrace();
+  lsTrace();
 }
 
 bool PollNotifier::setDescriptor(int fd, AbstractThread::PollEvents e) {
   bool _r = thread_->appendPollTask(fd, e, [this](AbstractThread::PollEvents e) {
     if (e & ~(AbstractThread::PollIn | AbstractThread::PollOut)) {
-      logError() << "Descriptor:" << fd_ << ", event:" << e;
+      lsError() << "descriptor:" << fd_ << ", event:" << e;
       thread_->removePollDescriptor(fd_);
       fail_ = true;
     }

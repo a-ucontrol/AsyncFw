@@ -14,7 +14,7 @@ public:
 
 void Timer::single(int ms, const std::function<void()> &f) {
   if (ms <= 0) {
-    logError() << "Single: wrong timeout:" << ms;
+    lsError() << "wrong timeout:" << ms;
     return;
   }
   AbstractThread *_t = AbstractThread::currentThread();
@@ -33,12 +33,12 @@ Timer::Timer() {
     timeout();
     if (single_) stop();
   });
-  ucTrace();
+  lsTrace();
 }
 
 Timer::~Timer() {
   thread_->removeTimer(timerId);
-  ucTrace();
+  lsTrace();
 }
 
 void Timer::start(int ms, bool single) {

@@ -18,7 +18,7 @@ public:
   bool initTls(const TlsContext &data);
   void disableTls();
 
-  bool transmit(const DataArray &, uint32_t, bool = false) const;
+  bool transmit(const DataArray &, uint32_t, bool = false);
   void clearBuffer(const DataArray *) const;
   int connectTimeout() const { return waitForConnectTimeoutInterval; }
   void setConnectTimeout(int timeout) { waitForConnectTimeoutInterval = timeout; }
@@ -53,7 +53,6 @@ public:
 protected:
   void stateEvent() override;
   void readEvent() override;
-  void errorEvent() override;
   using AbstractTlsSocket::connect;
 
 private:
@@ -84,7 +83,6 @@ private:
   bool connectToHost(int timeout);
   void clearBuffer_(const DataArray *) const;
   void writeSocket();
-  void sendMessage(const std::string &, uint8_t);
   void transmitKeepAlive(bool);
   std::string peerString() const;
   void startTimer(int _ms);

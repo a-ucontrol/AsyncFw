@@ -112,7 +112,7 @@ bool TlsContext::empty() const { return !private_->ctx_; }
 bool TlsContext::generateKey(int bits) {
   EVP_PKEY *_k = EVP_RSA_gen(bits);
   if (!_k) {
-    ucError() << "generate key";
+    lsError() << "generate key";
     return false;
   }
   if (!private_->ctx_) private_->ctx_ = SSL_CTX_new(TLS_method());
@@ -124,12 +124,12 @@ bool TlsContext::generateKey(int bits) {
 bool TlsContext::generateCertificate(const std::vector<std::pair<std::string, std::string>> &subject, const std::string &san, const std::string &ca, int days) {
   EVP_PKEY *_k = SSL_CTX_get0_privatekey(private_->ctx_);
   if (!_k) {
-    ucError() << "get key";
+    lsError() << "get key";
     return false;
   }
   X509 *_c = X509_new();
   if (!_c) {
-    ucError() << "allocate memory";
+    lsError() << "allocate memory";
     return false;
   }
   X509_set_version(_c, 2);
@@ -146,7 +146,7 @@ bool TlsContext::generateCertificate(const std::vector<std::pair<std::string, st
     if (!X509_add_ext(_c, ext, -1)) {
       X509_EXTENSION_free(ext);
       X509_free(_c);
-      ucError() << "add san ext";
+      lsError() << "add san ext";
       return false;
     }
     X509_EXTENSION_free(ext);
@@ -155,13 +155,13 @@ bool TlsContext::generateCertificate(const std::vector<std::pair<std::string, st
     ext = X509V3_EXT_conf(NULL, NULL, SN_basic_constraints, ca.c_str());
     if (!X509_add_ext(_c, ext, -1)) {
       X509_EXTENSION_free(ext);
-      ucError() << "add ca ext";
+      lsError() << "add ca ext";
       return false;
     }
     X509_EXTENSION_free(ext);
   }
   if (!X509_sign(_c, _k, EVP_sha256())) {
-    ucError() << "signing certificate";
+    lsError() << "signing certificate";
     X509_free(_c);
     return false;
   }
@@ -173,12 +173,12 @@ bool TlsContext::generateCertificate(const std::vector<std::pair<std::string, st
 DataArray TlsContext::generateRequest(const std::vector<std::pair<std::string, std::string>> &subject, const std::string &san, const std::string &ca) {
   EVP_PKEY *_k = SSL_CTX_get0_privatekey(private_->ctx_);
   if (!_k) {
-    ucError() << "get key";
+    lsError() << "get key";
     return {};
   }
   X509_REQ *_r = X509_REQ_new();
   if (!_r) {
-    ucError() << "allocate memory";
+    lsError() << "allocate memory";
     return {};
   }
   X509_REQ_set_pubkey(_r, _k);
@@ -194,7 +194,7 @@ DataArray TlsContext::generateRequest(const std::vector<std::pair<std::string, s
     ext_ca = X509V3_EXT_conf(NULL, NULL, SN_basic_constraints, ca.c_str());
     if (!ext_ca) {
       sk_X509_EXTENSION_free(extlist);
-      ucError() << "add ca ext";
+      lsError() << "add ca ext";
       return {};
     };
     sk_X509_EXTENSION_push(extlist, ext_ca);
@@ -205,7 +205,7 @@ DataArray TlsContext::generateRequest(const std::vector<std::pair<std::string, s
     if (!ext_san) {
       if (ext_ca) X509_EXTENSION_free(ext_ca);
       sk_X509_EXTENSION_free(extlist);
-      ucError() << "add san ext";
+      lsError() << "add san ext";
       return {};
     };
     sk_X509_EXTENSION_push(extlist, ext_san);
@@ -220,7 +220,7 @@ DataArray TlsContext::generateRequest(const std::vector<std::pair<std::string, s
   if (ext_san) X509_EXTENSION_free(ext_san);
   if (ext_ca) X509_EXTENSION_free(ext_ca);
   if (!X509_REQ_sign(_r, _k, EVP_sha256())) {
-    ucError() << "signing certificate";
+    lsError() << "signing certificate";
     EVP_PKEY_free(_k);
     X509_REQ_free(_r);
     return {};
@@ -238,29 +238,29 @@ DataArray TlsContext::generateRequest(const std::vector<std::pair<std::string, s
 DataArray TlsContext::signRequest(DataArray &req, int days) {
   EVP_PKEY *_k = SSL_CTX_get0_privatekey(private_->ctx_);
   if (!_k) {
-    ucError() << "get key";
+    lsError() << "get key";
     return {};
   }
   X509 *_rc = X509_new();
   if (!_rc) {
-    ucError() << "allocate memory";
+    lsError() << "allocate memory";
     return {};
   }
   X509 *_c = SSL_CTX_get0_certificate(private_->ctx_);
   if (!_c) {
-    ucError() << "get certificate";
+    lsError() << "get certificate";
     return {};
   }
   BIO *_bio = BIO_new_mem_buf(req.data(), req.size());
   X509_REQ *_req = PEM_read_bio_X509_REQ(_bio, nullptr, nullptr, nullptr);
   BIO_free(_bio);
   if (!_req) {
-    ucError() << "read request";
+    lsError() << "read request";
     return {};
   }
   EVP_PKEY *_rk = X509_REQ_get_pubkey(_req);
   if (!_rk) {
-    ucError() << "read req key";
+    lsError() << "read req key";
     return {};
   }
   X509_set_version(_rc, 2);
@@ -289,7 +289,7 @@ DataArray TlsContext::signRequest(DataArray &req, int days) {
   sk_X509_EXTENSION_free(extlist);
   X509_REQ_free(_req);
   if (!X509_sign(_rc, _k, EVP_sha256())) {
-    ucError() << "signing certificate";
+    lsError() << "signing certificate";
     X509_free(_rc);
     return {};
   }
@@ -306,7 +306,7 @@ DataArray TlsContext::signRequest(DataArray &req, int days) {
 std::string TlsContext::commonName() const {
   X509 *_c = SSL_CTX_get0_certificate(private_->ctx_);
   if (!_c) {
-    ucError() << "get certificate";
+    lsError() << "get certificate";
     return {};
   }
   char name[256];
@@ -317,7 +317,7 @@ std::string TlsContext::commonName() const {
 DataArray TlsContext::key() const {
   EVP_PKEY *_k = SSL_CTX_get0_privatekey(private_->ctx_);
   if (!_k) {
-    ucError() << "get key";
+    lsError() << "get key";
     return {};
   }
   return private_->key(_k);
@@ -326,7 +326,7 @@ DataArray TlsContext::key() const {
 DataArray TlsContext::certificate() const {
   X509 *_c = SSL_CTX_get0_certificate(private_->ctx_);
   if (!_c) {
-    ucError() << "get certificate";
+    lsError() << "get certificate";
     return {};
   }
   return private_->certificate(_c);
@@ -349,7 +349,7 @@ DataArrayList TlsContext::trusted() const {
 std::string TlsContext::infoKey() const {
   EVP_PKEY *_k = SSL_CTX_get0_privatekey(private_->ctx_);
   if (!_k) {
-    ucError() << "get key";
+    lsError() << "get key";
     return {};
   }
   return private_->info(_k);
@@ -358,7 +358,7 @@ std::string TlsContext::infoKey() const {
 std::string TlsContext::infoCertificate() const {
   X509 *_c = SSL_CTX_get0_certificate(private_->ctx_);
   if (!_c) {
-    ucError() << "get certificate";
+    lsError() << "get certificate";
     return {};
   }
   return private_->info(_c);
@@ -437,7 +437,7 @@ void TlsContext::setIgnoreErrors(uint8_t errors) const {
     if (!private_->ctx_) private_->ctx_ = SSL_CTX_new(TLS_method());
     std::map<SSL_CTX *, std::function<int(int, X509_STORE_CTX *)>>::iterator it = Private::verify_.find(private_->ctx_);
     if (it != Private::verify_.end()) {
-      ucWarning() << "already exists, change";
+      lsWarning() << "already exists, change";
       Private::verify_.erase(it);
     }
     Private::verify_.emplace(private_->ctx_, [errors](int ok, X509_STORE_CTX *ctx) {
@@ -445,15 +445,15 @@ void TlsContext::setIgnoreErrors(uint8_t errors) const {
       int _e = X509_STORE_CTX_get_error(ctx);
       if (errors & 0x01) {  // ignore time validity errors
         if (_e == X509_V_ERR_CERT_NOT_YET_VALID) {
-          logWarning("Certificate not yet valid");
+          lsWarning("certificate not yet valid");
           return 1;
         }
         if (_e == X509_V_ERR_CERT_HAS_EXPIRED) {
-          logWarning("Certificate has expired");
+          lsWarning("certificate has expired");
           return 1;
         }
       }
-      ucError() << _e;
+      lsError() << _e;
       return 0;
     });
   }
@@ -464,17 +464,17 @@ ssl_ctx_st *TlsContext::opensslCtx() const { return private_->ctx_; }
 bool TlsContext::verifyCertificate() const {
   EVP_PKEY *_k = SSL_CTX_get0_privatekey(private_->ctx_);
   if (!_k) {
-    ucError() << "get key";
+    lsError() << "get key";
     return false;
   }
   X509 *_c = SSL_CTX_get0_certificate(private_->ctx_);
   if (!_c) {
-    ucError() << "get certificate";
+    lsError() << "get certificate";
     return false;
   }
   EVP_PKEY *_ck = X509_get_pubkey(_c);
   if (!_ck) {
-    ucError() << "get certificate pubkey";
+    lsError() << "get certificate pubkey";
     return false;
   }
   BIGNUM *bnk = nullptr;
@@ -497,7 +497,7 @@ bool TlsContext::setKey(const DataArray &_da) {
   int r = SSL_CTX_use_PrivateKey(private_->ctx_, _k);
   EVP_PKEY_free(_k);
   if (r == 1) return true;
-  ucError() << LogStream::Color::Red << ERR_error_string(ERR_get_error(), nullptr);
+  lsError() << LogStream::Color::Red << ERR_error_string(ERR_get_error(), nullptr);
   return false;
 }
 
@@ -506,14 +506,14 @@ bool TlsContext::setCertificate(const DataArray &_da) {
   X509 *_c = PEM_read_bio_X509(_bio, NULL, NULL, NULL);
   BIO_free(_bio);
   if (!_c) {
-    ucError() << "read certificate";
+    lsError() << "read certificate";
     return false;
   }
   if (!private_->ctx_) private_->ctx_ = SSL_CTX_new(TLS_method());
   int r = SSL_CTX_use_certificate(private_->ctx_, _c);
   X509_free(_c);
   if (r == 1) return true;
-  ucError() << "set certificate";
+  lsError() << "set certificate";
   return false;
 }
 
@@ -522,7 +522,7 @@ bool TlsContext::appendTrusted(const DataArray &_da) {
   X509 *_c = PEM_read_bio_X509(_bio, NULL, NULL, NULL);
   BIO_free(_bio);
   if (!_c) {
-    ucError() << "read certificate";
+    lsError() << "read certificate";
     return false;
   }
   if (!private_->ctx_) private_->ctx_ = SSL_CTX_new(TLS_method());
@@ -530,8 +530,8 @@ bool TlsContext::appendTrusted(const DataArray &_da) {
   int r = X509_STORE_add_cert(_store, _c);
   X509_free(_c);
   if (r == 1) return true;
-  ucError() << "add certificate";
-  ucError() << LogStream::Color::Red << ERR_error_string(ERR_get_error(), nullptr);
+  lsError() << "add certificate";
+  lsError() << LogStream::Color::Red << ERR_error_string(ERR_get_error(), nullptr);
   return false;
 }
 

@@ -56,13 +56,13 @@ bool Cryptor::encrypt(const DataArray &key, const DataArray &text, DataArray &ct
   iv.resize(16);
   int rc = RAND_bytes(reinterpret_cast<unsigned char *>(iv.data()), iv.size());
   if (rc != 1) {
-    ucError("RAND_bytes for iv failed");
+    lsError("RAND_bytes for iv failed");
     return false;
   }
   try {
     encrypt(key, iv.view(), text.view(), ctext);
   } catch (const std::exception &e) {
-    ucError() << e.what();
+    lsError() << e.what();
     return false;
   }
   ctext += iv;
@@ -74,7 +74,7 @@ bool Cryptor::decrypt(const DataArray &key, const DataArray &ctext, DataArray &t
   try {
     decrypt(key, DataArrayView(ctext.data() + ctext.size() - i, i), DataArrayView(ctext.data(), ctext.size() - i), text);
   } catch (const std::exception &e) {
-    ucDebug() << e.what();
+    lsDebug() << e.what();
     return false;
   }
   return true;

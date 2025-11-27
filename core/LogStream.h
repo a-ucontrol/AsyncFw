@@ -164,49 +164,49 @@ private:
   #endif
 #endif
 
-#ifndef uC_NO_TRACE
-  #define ucTrace AsyncFw::LogStream(+AsyncFw::LogStream::Trace | AsyncFw::LogStream::Gray, __PRETTY_FUNCTION__, __FILE__, __LINE__, uC_LOG_DEFAULT_FLAGS).output
+#ifndef LS_NO_TRACE
+  #define lsTrace AsyncFw::LogStream(+AsyncFw::LogStream::Trace | AsyncFw::LogStream::Gray, __PRETTY_FUNCTION__, __FILE__, __LINE__, uC_LOG_DEFAULT_FLAGS).output
 #else
-  #define ucTrace(...) \
+  #define lsTrace(...) \
     if constexpr (0) AsyncFw::LogStream()
 #endif
-#ifndef uC_NO_DEBUG
-  #define ucDebug AsyncFw::LogStream(+AsyncFw::LogStream::Debug | AsyncFw::LogStream::DarkYellow, __PRETTY_FUNCTION__, __FILE__, __LINE__, uC_LOG_DEFAULT_FLAGS).output
+#ifndef LS_NO_DEBUG
+  #define lsDebug AsyncFw::LogStream(+AsyncFw::LogStream::Debug | AsyncFw::LogStream::DarkYellow, __PRETTY_FUNCTION__, __FILE__, __LINE__, uC_LOG_DEFAULT_FLAGS).output
 #else
-  #define ucDebug(...) \
+  #define lsDebug(...) \
     if constexpr (0) AsyncFw::LogStream()
 #endif
-#ifndef uC_NO_INFO
-  #define ucInfo AsyncFw::LogStream(+AsyncFw::LogStream::Info | AsyncFw::LogStream::DarkYellow, __PRETTY_FUNCTION__, __FILE__, __LINE__, uC_LOG_DEFAULT_FLAGS).output
-  #define ucInfoRed AsyncFw::LogStream(+AsyncFw::LogStream::Info | AsyncFw::LogStream::DarkRed, __PRETTY_FUNCTION__, __FILE__, __LINE__, uC_LOG_DEFAULT_FLAGS).output
-  #define ucInfoGreen AsyncFw::LogStream(+AsyncFw::LogStream::Info | AsyncFw::LogStream::DarkGreen, __PRETTY_FUNCTION__, __FILE__, __LINE__, uC_LOG_DEFAULT_FLAGS).output
-  #define ucInfoBlue AsyncFw::LogStream(+AsyncFw::LogStream::Info | AsyncFw::LogStream::DarkBlue, __PRETTY_FUNCTION__, __FILE__, __LINE__, uC_LOG_DEFAULT_FLAGS).output
-  #define ucInfoCyan AsyncFw::LogStream(+AsyncFw::LogStream::Info | AsyncFw::LogStream::DarkCyan, __PRETTY_FUNCTION__, __FILE__, __LINE__, uC_LOG_DEFAULT_FLAGS).output
-  #define ucInfoMagenta AsyncFw::LogStream(+AsyncFw::LogStream::Info | AsyncFw::LogStream::DarkMagenta, __PRETTY_FUNCTION__, __FILE__, __LINE__, uC_LOG_DEFAULT_FLAGS).output
+#ifndef LS_NO_INFO
+  #define lsInfo AsyncFw::LogStream(+AsyncFw::LogStream::Info | AsyncFw::LogStream::DarkYellow, __PRETTY_FUNCTION__, __FILE__, __LINE__, uC_LOG_DEFAULT_FLAGS).output
+  #define lsInfoRed AsyncFw::LogStream(+AsyncFw::LogStream::Info | AsyncFw::LogStream::DarkRed, __PRETTY_FUNCTION__, __FILE__, __LINE__, uC_LOG_DEFAULT_FLAGS).output
+  #define lsInfoGreen AsyncFw::LogStream(+AsyncFw::LogStream::Info | AsyncFw::LogStream::DarkGreen, __PRETTY_FUNCTION__, __FILE__, __LINE__, uC_LOG_DEFAULT_FLAGS).output
+  #define lsInfoBlue AsyncFw::LogStream(+AsyncFw::LogStream::Info | AsyncFw::LogStream::DarkBlue, __PRETTY_FUNCTION__, __FILE__, __LINE__, uC_LOG_DEFAULT_FLAGS).output
+  #define lsInfoCyan AsyncFw::LogStream(+AsyncFw::LogStream::Info | AsyncFw::LogStream::DarkCyan, __PRETTY_FUNCTION__, __FILE__, __LINE__, uC_LOG_DEFAULT_FLAGS).output
+  #define lsInfoMagenta AsyncFw::LogStream(+AsyncFw::LogStream::Info | AsyncFw::LogStream::DarkMagenta, __PRETTY_FUNCTION__, __FILE__, __LINE__, uC_LOG_DEFAULT_FLAGS).output
 #else
-  #define ucInfo(...) \
+  #define lsInfo(...) \
     if constexpr (0) AsyncFw::LogStream()
-  #define ucInfoRed(...) \
+  #define lsInfoRed(...) \
     if constexpr (0) AsyncFw::LogStream()
-  #define ucInfoGreen(...) \
+  #define lsInfoGreen(...) \
     if constexpr (0) AsyncFw::LogStream()
-  #define ucInfoBlue(...) \
+  #define lsInfoBlue(...) \
     if constexpr (0) AsyncFw::LogStream()
-  #define ucInfoCyan(...) \
+  #define lsInfoCyan(...) \
     if constexpr (0) AsyncFw::LogStream()
-  #define ucInfoMagenta(...) \
+  #define lsInfoMagenta(...) \
     if constexpr (0) AsyncFw::LogStream()
 #endif
-#ifndef uC_NO_WARNING
-  #define ucWarning AsyncFw::LogStream(+AsyncFw::LogStream::Warning | AsyncFw::LogStream::DarkBlue, __PRETTY_FUNCTION__, __FILE__, __LINE__, uC_LOG_DEFAULT_FLAGS).output
+#ifndef LS_NO_WARNING
+  #define lsWarning AsyncFw::LogStream(+AsyncFw::LogStream::Warning | AsyncFw::LogStream::DarkBlue, __PRETTY_FUNCTION__, __FILE__, __LINE__, uC_LOG_DEFAULT_FLAGS).output
 #else
-  #define ucWarning(...) \
+  #define lsWarning(...) \
     if constexpr (0) AsyncFw::LogStream()
 #endif
-#ifndef uC_NO_ERROR
-  #define ucError AsyncFw::LogStream(+AsyncFw::LogStream::Error | AsyncFw::LogStream::DarkRed, __PRETTY_FUNCTION__, __FILE__, __LINE__, uC_LOG_DEFAULT_FLAGS).output
+#ifndef LS_NO_ERROR
+  #define lsError AsyncFw::LogStream(+AsyncFw::LogStream::Error | AsyncFw::LogStream::DarkRed, __PRETTY_FUNCTION__, __FILE__, __LINE__, uC_LOG_DEFAULT_FLAGS).output
 #else
-  #define ucError(...) \
+  #define lsError(...) \
     if constexpr (0) AsyncFw::LogStream()
 #endif
 

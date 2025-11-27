@@ -26,10 +26,10 @@ RrdServer::RrdServer(DataArrayTcpServer *_tcpServer, const std::vector<Rrd *> &_
     }
     transmit(socket, *reinterpret_cast<const uint64_t *>(da->data()), TRANSMIT_COUNT, pi);
   });
-  ucTrace();
+  lsTrace();
 }
 
-RrdServer::~RrdServer() { ucTrace(); }
+RrdServer::~RrdServer() { lsTrace(); }
 
 void RrdServer::quit() { tcpServer->quit(); }
 

@@ -16,13 +16,13 @@ struct File::Private {
 File::File(const std::string &fn) {
   private_ = new Private;
   private_->fn_ = fn;
-  ucTrace();
+  lsTrace();
 }
 
 File::~File() {
   close();
   delete private_;
-  ucTrace();
+  lsTrace();
 }
 
 bool File::open(const std::string &fn, std::ios::openmode m) {

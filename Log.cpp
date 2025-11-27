@@ -62,7 +62,7 @@ void AbstractLog::append(const Message &m) {
   int size = messages.size();
   if (size >= queueLimit) {
     console_msg("AbstractLog::append: many messages in queue");
-#ifndef uC_NO_TRACE
+#ifndef LS_NO_TRACE
     console_msg(m.string);
 #endif
     thread_->unlock();
@@ -168,11 +168,11 @@ void AbstractLog::append_(const Message &m, uint8_t f) {
 LogMinimal::LogMinimal() : AbstractThread("AsyncFw::LogMinimal") {
   thread_ = this;
   start();
-  ucTrace();
+  lsTrace();
 }
 
 LogMinimal::~LogMinimal() {
-  ucTrace();
+  lsTrace();
   quit();
   waitFinished();
 }
@@ -180,11 +180,11 @@ LogMinimal::~LogMinimal() {
 Log::Log(int size, const std::string &name, bool noInstance) : Rrd(size, name), AbstractLog(noInstance) {
   queueLimit = size / 2;
   thread_ = Rrd::thread_;
-  ucTrace();
+  lsTrace();
 }
 
 Log::~Log() {
-  ucTrace();
+  lsTrace();
   autoSave = -1;
   stopTimer(&timerIdAutosave);
   thread()->invokeMethod([this]() { finality(); }, true);

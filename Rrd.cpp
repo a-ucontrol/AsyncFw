@@ -1,7 +1,7 @@
 #include <filesystem>
 #include <fstream>
 
-#include "LogStream.h"
+#include "core/LogStream.h"
 #include "Rrd.h"
 
 #include "core/console_msg.hpp"

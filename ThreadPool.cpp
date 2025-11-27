@@ -7,25 +7,25 @@ using namespace AsyncFw;
 ThreadPool::Thread::~Thread() {
   std::vector<Thread *>::iterator it = std::find(static_cast<ThreadPool *>(pool)->workThreads_.begin(), static_cast<ThreadPool *>(pool)->workThreads_.end(), this);
   if (it != static_cast<ThreadPool *>(pool)->workThreads_.end()) static_cast<ThreadPool *>(pool)->workThreads_.erase(it);
-  ucTrace() << "Destroyed thread \'" + name() + "\'";
+  lsTrace() << "Destroyed thread \'" + name() + "\'";
 }
 
 ThreadPool::ThreadPool(const std::string &name, int workThreads) : AbstractThreadPool(name), workThreadsSize(workThreads) {
   if (!instance_) instance_ = this;
-  ucTrace() << "Created";
+  lsTrace() << "Created";
 }
 
-ThreadPool::~ThreadPool() { ucTrace() << "Destroyed"; }
+ThreadPool::~ThreadPool() { lsTrace() << "Destroyed"; }
 
 ThreadPool::Thread *ThreadPool::createThread(const std::string &_name) {
   Thread *thread = new Thread((!_name.empty()) ? _name : name() + " thread", this);
-  ucTrace() << "Created thread \'" + thread->name() + "\'";
+  lsTrace() << "Created thread \'" + thread->name() + "\'";
   return thread;
 }
 
 void ThreadPool::quit() {
   AbstractThreadPool::quit();
-  ucTrace();
+  lsTrace();
 }
 
 ThreadPool::Thread *ThreadPool::getThread() {

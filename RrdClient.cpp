@@ -18,7 +18,7 @@ using namespace AsyncFw;
 RrdClient::RrdClient(DataArraySocket *socket, const std::vector<Rrd *> &rrd) : rrd_(rrd), tcpSocket(socket), lastTime(rrd.size(), 0) {
   gl_ += socket->received([this](const DataArray *da, uint32_t pi) {
     if (pi > 0x0F) {
-      ucError() << "(pi > 0x0F)" << pi;
+      lsError() << "(pi > 0x0F)" << pi;
       return;
     }
     tcpReadWrite(da, pi);
@@ -32,12 +32,12 @@ RrdClient::RrdClient(DataArraySocket *socket, const std::vector<Rrd *> &rrd) : r
   });
   if (tcpSocket->state() == AbstractSocket::Active)
     for (int i = 0; i != rrd_.size(); ++i) request(i);
-  ucTrace();
+  lsTrace();
 }
 
 RrdClient::~RrdClient() {
   if (tcpSocket && tcpSocket->thread()) tcpSocket->thread()->removeTimer(requestTimerId);
-  ucTrace();
+  lsTrace();
 }
 
 void RrdClient::clear(int n) {
@@ -66,7 +66,7 @@ void RrdClient::disableTls() { tcpSocket->disableTls(); }
 void RrdClient::tcpReadWrite(const DataArray *rba, uint32_t n) {
   DataArray _da = DataArray::uncompress(*rba);
   if (_da.empty()) {
-    logError() << "Error read log";
+    lsError() << "error read log";
     return;
   }
   DataStream _ds(_da);
@@ -78,7 +78,7 @@ void RrdClient::tcpReadWrite(const DataArray *rba, uint32_t n) {
   _ds >> dbLastTime;
 
   if (_ds.fail()) {
-    logError() << "Error read message list";
+    lsError() << "error read message list";
     return;
   }
 

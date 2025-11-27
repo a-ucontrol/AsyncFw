@@ -18,7 +18,7 @@ DataArrayAbstractTcp::Thread *DataArrayAbstractTcp::findMinimalSocketsThread() {
       m = size;
       index = i;
       if (m == 0) {
-        logError("Empty sockets list in thread");
+        lsError("empty sockets list in thread");
         break;
       }
     }
@@ -80,11 +80,11 @@ void DataArrayAbstractTcp::Thread::socketInit(DataArraySocket *socket) {
       socket->clearBuffer(da);
     });
   });
-  ucTrace() << LogStream::Color::Green << this << LogStream::Color::Magenta << sockets_.size();
+  lsTrace() << LogStream::Color::Green << this << LogStream::Color::Magenta << sockets_.size();
 }
 
 void DataArrayAbstractTcp::Thread::destroy() {
-  ucTrace() << LogStream::Color::Green << this << LogStream::Color::Magenta << sockets_.size();
+  lsTrace() << LogStream::Color::Green << this << LogStream::Color::Magenta << sockets_.size();
 
   static_cast<DataArrayAbstractTcp *>(pool)->removeThread(this);
   AsyncFw::Thread::quit();
