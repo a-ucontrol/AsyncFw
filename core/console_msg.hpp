@@ -5,7 +5,7 @@
 #include <iostream>
 #include <syncstream>
 
-#ifndef uC_NO_WARNING
+#ifndef LS_NO_WARNING
   #define console_msg(x) \
     do { (std::osyncstream(std::cerr) << std::string() + x << std::endl).flush(); } while (0)
 #else
