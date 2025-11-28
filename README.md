@@ -321,6 +321,13 @@ public:
     if (state() == Active) {
       logDebug() << "Send request";
       write("GET /a-ucontrol/AsyncFw HTTP/1.1\r\nHost:github.com\r\nConnection:close\r\n\r\n");
+    } else if (state() == Error) {
+      if (errorCode() != Closed) logError() << errorString() << errorCode();
+      else {
+        logNotice() << "Received:" << da;
+        logDebug() << da.view(0, 512) << "...";
+      }
+      AsyncFw::MainThread::instance()->exit(0);
     }
   }
   void readEvent() {
@@ -328,14 +335,6 @@ public:
     //AsyncFw::DataArray _da = read();
     //logTrace() << "Read event:" << _da.size() << std::endl << _da.view(0, 256);
     //da += _da;
-  }
-  void errorEvent() {
-    if (errorCode() != Closed) logError() << errorString() << errorCode();
-    else {
-      logNotice() << "Received:" << da;
-      logDebug() << da.view(0, 512) << "...";
-    }
-    AsyncFw::MainThread::instance()->exit(0);
   }
 
 private:
