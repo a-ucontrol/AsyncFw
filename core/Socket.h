@@ -16,8 +16,8 @@ class AbstractSocket : public AnyData {
   struct Private;
 
 public:
-  enum class State : uint8_t { Unconnected, Listening, Connecting, Connected, Active, Closing, Destroy, Error };
-  enum class Error : uint8_t { None, Closed, Refused, PollErr, PollInval, Read, Write, Accept, Unknown };
+  enum State : uint8_t { Unconnected, Listening, Connecting, Connected, Active, Closing, Destroy, Error };
+  enum ErrorCode : uint8_t { None, Closed, Refused, Poll, Read, Write, Accept };
 
   virtual void setDescriptor(int);
   virtual bool connect(const std::string &, uint16_t);
@@ -34,7 +34,7 @@ public:
   int write(const uint8_t *, int);
   int write(const DataArray &);
 
-  Error errorCode();
+  ErrorCode errorCode();
   std::string errorString() const;
 
   int pendingRead() const;
@@ -55,7 +55,7 @@ protected:
   AbstractSocket(int, int, int, Thread * = nullptr);
   virtual ~AbstractSocket();
 
-  void setErrorCode(Error);
+  void setErrorCode(ErrorCode);
   void setErrorString(const std::string &) const;
 
   virtual int read_available_fd() const;

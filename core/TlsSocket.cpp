@@ -96,7 +96,7 @@ void AbstractTlsSocket::acceptEvent() {
   if (r <= 0) {
     r = ERR_peek_error();
     if (!r && SSL_want_read(private_->ssl_)) return;
-    setErrorCode(AbstractSocket::Error::Accept);
+    setErrorCode(AbstractSocket::Accept);
     setErrorString("Accept TLS error");
     state_ = State::Error;
     stateEvent();
