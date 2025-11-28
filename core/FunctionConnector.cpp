@@ -28,7 +28,7 @@ AbstractFunctionConnector::~AbstractFunctionConnector() {
 AbstractFunctionConnector::Connection::Connection(AbstractFunctionConnector *connector, Type type) : connector_(connector) {
   type_ = (type != Default) ? type : static_cast<Type>(connector->defaultConnectionType & ~0x10);
   if ((connector->defaultConnectionType & 0x10) && type_ != (connector->defaultConnectionType & ~0x10)) {
-    (lsError() << "fixed connection type, throw exception...").flush();
+    lsError().flush() << "fixed connection type, throw exception...";
     throw std::runtime_error("fixed connection type");
   }
   thread_ = AbstractThread::currentThread();
