@@ -25,8 +25,8 @@ AbstractFunctionConnector::~AbstractFunctionConnector() {
   }
 }
 
-AbstractFunctionConnector::Connection::Connection(AbstractFunctionConnector *connector, ConnectionType type) : connector_(connector) {
-  type_ = (type != Default) ? type : static_cast<ConnectionType>(connector->defaultConnectionType & ~0x10);
+AbstractFunctionConnector::Connection::Connection(AbstractFunctionConnector *connector, Type type) : connector_(connector) {
+  type_ = (type != Default) ? type : static_cast<Type>(connector->defaultConnectionType & ~0x10);
   if ((connector->defaultConnectionType & 0x10) && type_ != (connector->defaultConnectionType & ~0x10)) {
     (lsError() << "fixed connection type, throw exception...").flush();
     throw std::runtime_error("fixed connection type");
