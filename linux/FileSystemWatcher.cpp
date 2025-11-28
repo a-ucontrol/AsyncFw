@@ -67,13 +67,13 @@ FileSystemWatcher::FileSystemWatcher(const std::vector<std::string> &paths) {
           inotify_rm_watch(notifyfd_, w->d);
           remove_(w);
           watch(w->directory + '/' + w->name, -1);
-          lsInfoCyan() << "removed" << w->directory + '/' + w->name << w->d;
+          lsDebug() << "removed" << w->directory + '/' + w->name << w->d;
 
           w->d = inotify_add_watch(notifyfd_, (w->directory + '/' + w->name).c_str(), IN_ATTRIB | IN_MODIFY | IN_CLOSE_WRITE | IN_DELETE_SELF);
           if (w->d >= 0) {
             inotify_rm_watch(notifyfd_, i);
             watch(w->directory + '/' + w->name, 1);
-            lsInfoCyan() << "created (event missed)" << w->directory + '/' + w->name << w->d;
+            lsDebug() << "created (event missed)" << w->directory + '/' + w->name << w->d;
             itd = std::lower_bound(wds_.begin(), wds_.end(), w->d, CompareWatchDescriptor());
             wds_.insert(itd, w);
             continue;

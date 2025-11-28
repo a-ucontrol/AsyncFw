@@ -197,6 +197,12 @@ private:
   #define lsInfoMagenta(...) \
     if constexpr (0) AsyncFw::LogStream()
 #endif
+#ifndef LS_NO_NOTICE
+  #define lsNotice AsyncFw::LogStream(+AsyncFw::LogStream::Notice | AsyncFw::LogStream::Green, __PRETTY_FUNCTION__, __FILE__, __LINE__, uC_LOG_DEFAULT_FLAGS).output
+#else
+  #define lsNotice(...) \
+    if constexpr (0) AsyncFw::LogStream()
+#endif
 #ifndef LS_NO_WARNING
   #define lsWarning AsyncFw::LogStream(+AsyncFw::LogStream::Warning | AsyncFw::LogStream::DarkBlue, __PRETTY_FUNCTION__, __FILE__, __LINE__, uC_LOG_DEFAULT_FLAGS).output
 #else
