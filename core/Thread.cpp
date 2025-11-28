@@ -4,8 +4,10 @@
 #include "Thread.h"
 #include "Socket.h"
 
-#define EVENTFD_WAKE
-#define EPOLL_WAIT
+#ifdef __linux
+  #define EVENTFD_WAKE
+  #define EPOLL_WAIT
+#endif
 
 #ifdef EXTEND_THREAD_TRACE
   #define trace LogStream(+LogStream::Trace | LogStream::Gray, __PRETTY_FUNCTION__, __FILE__, __LINE__, uC_LOG_DEFAULT_FLAGS | LOG_STREAM_CONSOLE_ONLY).output
@@ -29,8 +31,6 @@
     #include <sys/poll.h>
   #endif
 #else
-  #undef EVENTFD_WAKE
-  #undef EPOLL_WAIT
   #include <winsock2.h>
   #include <fcntl.h>
   #define poll(ptr, size, timeout) WSAPoll(ptr, size, timeout)
