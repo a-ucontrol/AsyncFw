@@ -428,7 +428,7 @@ void AbstractSocket::destroy() {
   stateEvent();
   if (!thread_) {
     lsTrace() << LogStream::Color::Red << "nullptr thread";
-    AbstractThread::AbstractTask *_t = new AbstractThread::InternalTask([this]() { delete this; });
+    AbstractThread::AbstractTask *_t = new AbstractThread::Task([this]() { delete this; });
     if (!AbstractThread::currentThread()->invokeTask(_t)) {
       _t->invoke();
       delete _t;

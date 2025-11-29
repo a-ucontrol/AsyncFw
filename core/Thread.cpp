@@ -134,7 +134,7 @@ void AbstractThread::Private::process_polls() {
   for (; !process_poll_tasks_.empty();) {
     Private::ProcessPollTask _pt = process_poll_tasks_.front();
     process_poll_tasks_.pop();
-    static_cast<InternalPoolTask<AbstractThread::PollEvents> *>(_pt.task)->e_ = static_cast<AbstractThread::PollEvents>(_pt.events);
+    static_cast<PoolTask<AbstractThread::PollEvents> *>(_pt.task)->e_ = static_cast<AbstractThread::PollEvents>(_pt.events);
     _pt.task->invoke();
   }
 }
@@ -613,7 +613,7 @@ void AbstractThread::removeTimer(int id) {
       lsError() << "timer:" << id << "not found";
       return;
     }
-    _t = (it->task) ? new InternalTask([p = it->task] { delete p; }) : nullptr;
+    _t = (it->task) ? new Task([p = it->task] { delete p; }) : nullptr;
     private_.timers.erase(it);
   }
   if (!_t) return;
@@ -702,7 +702,7 @@ void AbstractThread::removePollDescriptor(int fd) {
       lsError("descriptor not found");
       return;
     }
-    _t = new InternalTask([p = *it] { delete p; });
+    _t = new Task([p = *it] { delete p; });
     struct Private::update_pollfd v;
     v.fd = fd;
     v.action = -1;
@@ -725,7 +725,7 @@ void AbstractThread::removePollDescriptor(int fd) {
       return;
     }
     if (private_.poll_tasks.size() == 1) wake();
-    _t = new InternalTask([p = *it] { delete p; });
+    _t = new Task([p = *it] { delete p; });
     private_.poll_tasks.erase(it);
   }
   if (!invokeTask(_t)) {

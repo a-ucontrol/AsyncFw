@@ -92,7 +92,7 @@ public:
   template <typename M>
   typename std::enable_if<std::is_void<typename std::invoke_result<M>::type>::value, bool>::type invokeMethod(M method, bool sync = false) {
     if (!sync) {
-      AbstractTask *_t = new InternalTask(method);
+      AbstractTask *_t = new Task(method);
       if (!invokeTask(_t)) {
         delete _t;
         return false;
@@ -104,7 +104,7 @@ public:
       return true;
     }
     bool finished = false;
-    AbstractTask *_t = new InternalTask([method, &finished, this]() {
+    AbstractTask *_t = new Task([method, &finished, this]() {
       method();
       AbstractThread::LockGuard lock(mutex);
       finished = true;
@@ -134,11 +134,11 @@ public:
 
   template <typename M>
   bool appendPollTask(int fd, PollEvents events, M method) {
-    return appendPollDescriptor(fd, events, new InternalPoolTask(method));
+    return appendPollDescriptor(fd, events, new PoolTask(method));
   }
   template <typename M>
   int appendTimerTask(int timeout, M method) {
-    return appendTimer(timeout, new InternalTask(method));
+    return appendTimer(timeout, new Task(method));
   }
 
   void start();
@@ -159,26 +159,24 @@ public:
 
 protected:
   template <typename M>
-  class InternalTask : private AbstractTask {
+  class Task : private AbstractTask {
     friend class AbstractThread;
     friend class AbstractSocket;
 
   private:
-    InternalTask(M method) : method(method) {}
+    Task(M method) : method(method) {}
     virtual void invoke() override { method(); }
     M method;
   };
 
   template <typename M>
-  class InternalPoolTask : public AbstractTask {
+  class PoolTask : public AbstractTask {
     friend class AbstractThread;
     friend class AbstractSocket;
     friend class MainThread;
 
-  public:
-    InternalPoolTask(M method) : method(method) {}
-
   private:
+    PoolTask(M method) : method(method) {}
     virtual void invoke() override { method(e_); }
     AbstractThread::PollEvents e_;
     M method;
