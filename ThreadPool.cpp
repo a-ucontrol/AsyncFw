@@ -43,10 +43,6 @@ void AbstractThreadPool::quit() {
 }
 
 AbstractThread::LockGuard AbstractThreadPool::threads(std::vector<AbstractThread *> **_threads, AbstractThreadPool *pool) {
-  if (!pool) {
-    *_threads = &AbstractThread::list_threads;
-    return AbstractThread::LockGuard {AbstractThread::list_mutex};
-  }
   *_threads = &(pool->threads_);
   return AbstractThread::LockGuard {pool->mutex};
 }

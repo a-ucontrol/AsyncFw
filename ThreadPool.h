@@ -8,7 +8,7 @@ namespace AsyncFw {
 class AbstractThreadPool {
 public:
   static std::vector<AbstractThreadPool *> pools() { return pools_; }
-  static AbstractThread::LockGuard threads(std::vector<AbstractThread *> **, AbstractThreadPool * = nullptr);
+  static AbstractThread::LockGuard threads(std::vector<AbstractThread *> **, AbstractThreadPool *);
   AbstractThreadPool(const std::string &, AbstractThread * = nullptr);
   virtual ~AbstractThreadPool();
   virtual void quit();

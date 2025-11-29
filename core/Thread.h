@@ -36,7 +36,6 @@ namespace AsyncFw {
 class AbstractThread {
   friend class MainThread;
   friend class AbstractSocket;
-  friend class AbstractThreadPool;
   struct Private;
 
 public:
