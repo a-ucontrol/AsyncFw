@@ -293,7 +293,7 @@ void DataStream::w_(int size, const uint8_t *p) {
   if (fail_) return;
   if (read_) {
     fail_ = true;
-    error("trying write to stream for read");
+    console_msg("DataStream: trying write to stream for read");
     return;
   }
   data_->insert(data_->end(), p, p + size);
@@ -303,7 +303,7 @@ void DataStream::r_(int size, uint8_t *p) {
   if (fail_) return;
   if (!read_) {
     fail_ = true;
-    error("trying read from stream for write");
+    console_msg("DataStream: trying read from stream for write");
     return;
   }
   if ((pos_ + size) > data_->size()) {
@@ -313,8 +313,6 @@ void DataStream::r_(int size, uint8_t *p) {
   std::memcpy(p, data_->data() + pos_, size);
   pos_ += size;
 }
-
-void DataStream::error(const std::string &msg) { console_msg("DataStream: " + msg); }
 
 void DataStream::sw_(std::size_t _s) {
   uint8_t i = 0;
@@ -341,7 +339,6 @@ void DataStream::sr_(std::size_t *s) {
   *s = 0;
   r_(j, reinterpret_cast<uint8_t *>(s));
   if (fail_) return;
-  //*s &= ~(static_cast<std::size_t>(SIZE_MAX) << (j + 5));
   *s <<= 5;
   *s |= i;
 }

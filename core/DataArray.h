@@ -85,12 +85,8 @@ private:
     }
     try {
       _v.resize(_s);
-    } catch (std::exception &e) {
-      fail_ = true;
-      error(e.what());
-    };
+    } catch (std::exception &e) { fail_ = true; };
   }
-  void error(const std::string &);
   void w_(int, const uint8_t *);
   void r_(int, uint8_t *);
   void sw_(std::size_t);

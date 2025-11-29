@@ -1,22 +1,11 @@
 #include <iostream>
 #include <regex>
 #include <syncstream>
+#include <chrono>
 
-#include "core/console_msg.hpp"
 #include "LogStream.h"
 
-#define LOG_STREAM_EMERGENCY_TERMINATE
-
 #define LOG_STREAM_CURRENT_TIME (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count())
-
-#define STD_FOMAT_TIME_STRING
-
-#ifndef STD_FOMAT_TIME_STRING
-  #include <iomanip>
-  #include <time.h>
-#else
-  #include <chrono>
-#endif
 
 using namespace AsyncFw;
 void LogStream::console_output(const Message &message, uint8_t flags) {
@@ -47,10 +36,6 @@ void LogStream::console_output(const Message &message, uint8_t flags) {
 
   std::ostream *out = (i != Info && i != Notice) ? &std::cerr : &std::cout;
 
-#ifdef Q_OS_WIN
-  str = QString::fromStdString(str).toLocal8Bit().toStdString();
-#endif
-
   std::osyncstream(*out) << str << std::endl;
   if (flags & 0x80) std::osyncstream(*out).flush();
 }
@@ -79,31 +64,12 @@ std::string LogStream::sender(const char *function) {
 }
 
 std::string LogStream::timeString(const uint64_t time, const std::string &format, bool show_ms) {
-#ifdef STD_FOMAT_TIME_STRING
   if (!show_ms) {
     std::chrono::zoned_time _zt {std::chrono::current_zone(), std::chrono::sys_time<std::chrono::seconds> {std::chrono::seconds(time / 1000)}};
     return std::vformat("{:" + format + '}', std::make_format_args(_zt));
   }
   std::chrono::zoned_time _zt {std::chrono::current_zone(), std::chrono::sys_time<std::chrono::milliseconds> {std::chrono::milliseconds(time)}};
   return std::vformat("{:" + format + '}', std::make_format_args(_zt));
-#else
-  std::string str;
-  std::time_t t = time / 1000;
-  #ifndef _WIN32
-  struct tm tm;
-  str += (std::stringstream() << std::put_time(localtime_r(&t, &tm), format.c_str())).str();
-  #else
-  str += (std::stringstream() << std::put_time(localtime(&t), format.c_str())).str();
-  #endif
-  if (show_ms) {
-    int i = time % 1000;
-    str += ".";
-    if (i < 100) str += "0";
-    if (i < 10) str += "0";
-    str += std::to_string(i);
-  }
-  return str;
-#endif
 }
 
 std::string LogStream::currentTimeString(const std::string &format, bool show_ms) { return timeString(LOG_STREAM_CURRENT_TIME, format, show_ms); }
@@ -168,15 +134,12 @@ LogStream::LogStream(uint8_t type, const char *function, const char *file, int l
   else { name = function; }
 }
 
-LogStream::~LogStream() {
-#ifdef LOG_STREAM_EMERGENCY_TERMINATE
+LogStream::~LogStream() noexcept(false) {
   if ((type & 0x07) == Emergency) {
-    completed({type, name, ((flags & 0x8000) ? stream.str() : ""), std::string(file) + ":" + std::to_string(line)}, flags  | LOG_STREAM_FLUSH);
-    std::cerr << "Log level Emergency, terminate..." << std::endl;
-    std::abort();
-  } else
-#endif
-    completed({type, name, ((flags & 0x8000) ? stream.str() : ""), std::string(file) + ":" + std::to_string(line)}, flags );
+    completed({type, name, ((flags & 0x8000) ? stream.str() : ""), std::string(file) + ":" + std::to_string(line)}, flags | LOG_STREAM_FLUSH);
+    throw std::runtime_error("log level emergency");
+  }
+  completed({type, name, ((flags & 0x8000) ? stream.str() : ""), std::string(file) + ":" + std::to_string(line)}, flags);
 }
 
 LogStream &LogStream::operator<<(decltype(std::endl<char, std::char_traits<char>>) &) {
@@ -246,9 +209,6 @@ LogStream &LogStream::nospace() {
 }
 
 LogStream &LogStream::flush() {
-#ifndef LS_NO_TRACE
-  console_msg("LogStream: flush flag enable");
-#endif
   flags |= LOG_STREAM_FLUSH;
   return *this;
 }

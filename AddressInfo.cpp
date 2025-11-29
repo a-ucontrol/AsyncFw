@@ -105,6 +105,7 @@ void AddressInfo::resolve(const std::string &name, Family f) {
         static_cast<Private::cbData *>(data)->ai->private_->thread->invokeMethod([data]() { delete static_cast<Private::cbData *>(data); });
         if (result) {
           std::vector<std::string> _r;
+          (void)status;
           lsDebug("Result: {}, name: {}", ares_strerror(status), (result->name) ? result->name : "unknown");
           struct ares_addrinfo_node *node;
           for (node = result->nodes; node != nullptr; node = node->ai_next) {

@@ -3,15 +3,15 @@
 
 #include "Log.h"
 
-//#define LOG_PREFIX "logger: "
-//#define NOTE_PREFIX "note: "
-
 #define LOG_CURRENT_TIME (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count())
 
 using namespace AsyncFw;
 
 AbstractLog::AbstractLog(bool noInstance) {
-  if (!noInstance && log_ == nullptr) log_ = this;
+  if (!noInstance) {
+    if (log_ == nullptr) log_ = this;
+    else { console_msg("AbstractLog: instance already exists"); }
+  }
   LogStream::setCompleted(&append_);
 }
 
@@ -61,7 +61,7 @@ void AbstractLog::append(const Message &m) {
   thread_->lock();
   int size = messages.size();
   if (size >= queueLimit) {
-    console_msg("AbstractLog::append: many messages in queue");
+    console_msg("AbstractLog: many messages in queue");
 #ifndef LS_NO_TRACE
     console_msg(m.string);
 #endif
@@ -115,7 +115,7 @@ void AbstractLog::process(const Message &m) {
 }
 
 void AbstractLog::output(const Message &m) {
-  if (thread_->running() && std::this_thread::get_id() != thread_->id()) { console_msg("AbstractLog::output: error: executed from different thread"); }
+  if (thread_->running() && std::this_thread::get_id() != thread_->id()) { console_msg("AbstractLog: executed from different thread"); }
   if ((m.type & 0x0F) <= consoleLevel) { LogStream::console_output(m, flags); }
 }
 
@@ -165,7 +165,7 @@ void AbstractLog::append_(const Message &m, uint8_t f) {
   }
 }
 
-LogMinimal::LogMinimal() : AbstractThread("AsyncFw::LogMinimal") {
+LogMinimal::LogMinimal() : AbstractThread("Log") {
   thread_ = this;
   start();
   lsTrace();

@@ -10,9 +10,9 @@
 #endif
 
 #ifdef EXTEND_THREAD_TRACE
-  #define trace LogStream(+LogStream::Trace | LogStream::Gray, __PRETTY_FUNCTION__, __FILE__, __LINE__, uC_LOG_DEFAULT_FLAGS | LOG_STREAM_CONSOLE_ONLY).output
+  #define trace LogStream(+LogStream::Trace | LogStream::Gray, __PRETTY_FUNCTION__, __FILE__, __LINE__, LS_LOG_DEFAULT_FLAGS | LOG_STREAM_CONSOLE_ONLY).output
   #define warning_if(x) \
-    if (x) LogStream(+LogStream::Warning | LogStream::DarkBlue, __PRETTY_FUNCTION__, __FILE__, __LINE__, uC_LOG_DEFAULT_FLAGS | LOG_STREAM_CONSOLE_ONLY).output()
+    if (x) LogStream(+LogStream::Warning | LogStream::DarkBlue, __PRETTY_FUNCTION__, __FILE__, __LINE__, LS_LOG_DEFAULT_FLAGS | LOG_STREAM_CONSOLE_ONLY).output()
 #else
   #define trace(x) \
     if constexpr (0) LogStream()
@@ -45,11 +45,6 @@
 #include "console_msg.hpp"
 
 using namespace AsyncFw;
-AbstractTask::~AbstractTask() {
-#if 0
-  console_msg(__PRETTY_FUNCTION__);
-#endif
-}
 
 struct AbstractThread::Private {
   struct Timer {
@@ -476,7 +471,7 @@ void AbstractThread::exec() {
           if (t.expire <= now) {
             t.expire += t.timeout;
             if (t.expire <= now) {
-              console_msg("AbstractThread: warning: thread (" + private_.name + ") timer overload, interval: " + std::to_string(t.timeout.count()) + ", expired: " + std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>((now - t.expire + t.timeout)).count()));
+              console_msg("AbstractThread: thread (" + private_.name + ") timer overload, interval: " + std::to_string(t.timeout.count()) + ", expired: " + std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>((now - t.expire + t.timeout)).count()));
               t.expire = now + t.timeout;
             }
             private_.process_timer_tasks_.push({t.id, t.task});

@@ -45,7 +45,7 @@ public:
 
 protected:
   AbstractTask() = default;
-  virtual ~AbstractTask();
+  virtual ~AbstractTask() = default;
 };
 
 class AbstractThread {
@@ -213,7 +213,7 @@ class Thread : public AbstractThread {
   friend AbstractSocket;
 
 public:
-  Thread(const std::string & = "AsyncFw::Thread");
+  Thread(const std::string & = "Thread");
   ~Thread() override;
 
 protected:

@@ -15,8 +15,7 @@
 #define LOG_STREAM_CONSOLE_COLOR 0x04
 
 #define LOG_STREAM_CONSOLE_EXTEND 0x10
-#define LOG_STREAM_CONSOLE_NOTE 0x20
-#define LOG_STREAM_CONSOLE_LINE LOG_STREAM_CONSOLE_NOTE
+#define LOG_STREAM_CONSOLE_LINE 0x20
 #define LOG_STREAM_CONSOLE_ONLY 0x40
 
 #define LOG_STREAM_FLUSH 0x80
@@ -29,8 +28,8 @@
   #define LOG_DEFAULT_FLAGS (LOG_STREAM_CONSOLE_SENDER | LOG_STREAM_CONSOLE_SPACE | LOG_STREAM_CONSOLE_EXTEND)
 #endif
 
-#ifndef uC_LOG_DEFAULT_FLAGS
-  #define uC_LOG_DEFAULT_FLAGS (LOG_STREAM_CONSOLE_SPACE | LOG_STREAM_CONSOLE_COLOR | LOG_STREAM_CONSOLE_EXTEND)
+#ifndef LS_LOG_DEFAULT_FLAGS
+  #define LS_LOG_DEFAULT_FLAGS (LOG_STREAM_CONSOLE_SPACE | LOG_STREAM_CONSOLE_COLOR | LOG_STREAM_CONSOLE_EXTEND)
 #endif
 
 namespace AsyncFw {
@@ -95,7 +94,7 @@ public:
 
   LogStream(uint8_t, const char *, const char *, int, uint8_t = 0);
   LogStream() = default;
-  ~LogStream();
+  ~LogStream() noexcept(false);
   LogStream &operator<<(decltype(std::endl<char, std::char_traits<char>>) &);
   LogStream &operator<<(const Color);
   LogStream &operator<<(const int8_t);
@@ -165,54 +164,65 @@ private:
 #endif
 
 #ifndef LS_NO_TRACE
-  #define lsTrace AsyncFw::LogStream(+AsyncFw::LogStream::Trace | AsyncFw::LogStream::Gray, __PRETTY_FUNCTION__, __FILE__, __LINE__, uC_LOG_DEFAULT_FLAGS).output
+  #define lsTrace AsyncFw::LogStream(+AsyncFw::LogStream::Trace | AsyncFw::LogStream::Gray, __PRETTY_FUNCTION__, __FILE__, __LINE__, LS_LOG_DEFAULT_FLAGS).output
 #else
   #define lsTrace(...) \
+    {}                 \
     if constexpr (0) AsyncFw::LogStream()
 #endif
 #ifndef LS_NO_DEBUG
-  #define lsDebug AsyncFw::LogStream(+AsyncFw::LogStream::Debug | AsyncFw::LogStream::DarkYellow, __PRETTY_FUNCTION__, __FILE__, __LINE__, uC_LOG_DEFAULT_FLAGS).output
+  #define lsDebug AsyncFw::LogStream(+AsyncFw::LogStream::Debug | AsyncFw::LogStream::DarkYellow, __PRETTY_FUNCTION__, __FILE__, __LINE__, LS_LOG_DEFAULT_FLAGS).output
 #else
   #define lsDebug(...) \
+    {}                 \
     if constexpr (0) AsyncFw::LogStream()
 #endif
 #ifndef LS_NO_INFO
-  #define lsInfo AsyncFw::LogStream(+AsyncFw::LogStream::Info | AsyncFw::LogStream::DarkYellow, __PRETTY_FUNCTION__, __FILE__, __LINE__, uC_LOG_DEFAULT_FLAGS).output
-  #define lsInfoRed AsyncFw::LogStream(+AsyncFw::LogStream::Info | AsyncFw::LogStream::DarkRed, __PRETTY_FUNCTION__, __FILE__, __LINE__, uC_LOG_DEFAULT_FLAGS).output
-  #define lsInfoGreen AsyncFw::LogStream(+AsyncFw::LogStream::Info | AsyncFw::LogStream::DarkGreen, __PRETTY_FUNCTION__, __FILE__, __LINE__, uC_LOG_DEFAULT_FLAGS).output
-  #define lsInfoBlue AsyncFw::LogStream(+AsyncFw::LogStream::Info | AsyncFw::LogStream::DarkBlue, __PRETTY_FUNCTION__, __FILE__, __LINE__, uC_LOG_DEFAULT_FLAGS).output
-  #define lsInfoCyan AsyncFw::LogStream(+AsyncFw::LogStream::Info | AsyncFw::LogStream::DarkCyan, __PRETTY_FUNCTION__, __FILE__, __LINE__, uC_LOG_DEFAULT_FLAGS).output
-  #define lsInfoMagenta AsyncFw::LogStream(+AsyncFw::LogStream::Info | AsyncFw::LogStream::DarkMagenta, __PRETTY_FUNCTION__, __FILE__, __LINE__, uC_LOG_DEFAULT_FLAGS).output
+  #define lsInfo AsyncFw::LogStream(+AsyncFw::LogStream::Info | AsyncFw::LogStream::DarkYellow, __PRETTY_FUNCTION__, __FILE__, __LINE__, LS_LOG_DEFAULT_FLAGS).output
+  #define lsInfoRed AsyncFw::LogStream(+AsyncFw::LogStream::Info | AsyncFw::LogStream::DarkRed, __PRETTY_FUNCTION__, __FILE__, __LINE__, LS_LOG_DEFAULT_FLAGS).output
+  #define lsInfoGreen AsyncFw::LogStream(+AsyncFw::LogStream::Info | AsyncFw::LogStream::DarkGreen, __PRETTY_FUNCTION__, __FILE__, __LINE__, LS_LOG_DEFAULT_FLAGS).output
+  #define lsInfoBlue AsyncFw::LogStream(+AsyncFw::LogStream::Info | AsyncFw::LogStream::DarkBlue, __PRETTY_FUNCTION__, __FILE__, __LINE__, LS_LOG_DEFAULT_FLAGS).output
+  #define lsInfoCyan AsyncFw::LogStream(+AsyncFw::LogStream::Info | AsyncFw::LogStream::DarkCyan, __PRETTY_FUNCTION__, __FILE__, __LINE__, LS_LOG_DEFAULT_FLAGS).output
+  #define lsInfoMagenta AsyncFw::LogStream(+AsyncFw::LogStream::Info | AsyncFw::LogStream::DarkMagenta, __PRETTY_FUNCTION__, __FILE__, __LINE__, LS_LOG_DEFAULT_FLAGS).output
 #else
   #define lsInfo(...) \
+    {}                \
     if constexpr (0) AsyncFw::LogStream()
   #define lsInfoRed(...) \
+    {}                   \
     if constexpr (0) AsyncFw::LogStream()
   #define lsInfoGreen(...) \
+    {}                     \
     if constexpr (0) AsyncFw::LogStream()
   #define lsInfoBlue(...) \
+    {}                    \
     if constexpr (0) AsyncFw::LogStream()
   #define lsInfoCyan(...) \
+    {}                    \
     if constexpr (0) AsyncFw::LogStream()
   #define lsInfoMagenta(...) \
+    {}                       \
     if constexpr (0) AsyncFw::LogStream()
 #endif
 #ifndef LS_NO_NOTICE
-  #define lsNotice AsyncFw::LogStream(+AsyncFw::LogStream::Notice | AsyncFw::LogStream::Green, __PRETTY_FUNCTION__, __FILE__, __LINE__, uC_LOG_DEFAULT_FLAGS).output
+  #define lsNotice AsyncFw::LogStream(+AsyncFw::LogStream::Notice | AsyncFw::LogStream::Green, __PRETTY_FUNCTION__, __FILE__, __LINE__, LS_LOG_DEFAULT_FLAGS).output
 #else
   #define lsNotice(...) \
+    {}                  \
     if constexpr (0) AsyncFw::LogStream()
 #endif
 #ifndef LS_NO_WARNING
-  #define lsWarning AsyncFw::LogStream(+AsyncFw::LogStream::Warning | AsyncFw::LogStream::DarkBlue, __PRETTY_FUNCTION__, __FILE__, __LINE__, uC_LOG_DEFAULT_FLAGS).output
+  #define lsWarning AsyncFw::LogStream(+AsyncFw::LogStream::Warning | AsyncFw::LogStream::DarkBlue, __PRETTY_FUNCTION__, __FILE__, __LINE__, LS_LOG_DEFAULT_FLAGS).output
 #else
   #define lsWarning(...) \
+    {}                   \
     if constexpr (0) AsyncFw::LogStream()
 #endif
 #ifndef LS_NO_ERROR
-  #define lsError AsyncFw::LogStream(+AsyncFw::LogStream::Error | AsyncFw::LogStream::DarkRed, __PRETTY_FUNCTION__, __FILE__, __LINE__, uC_LOG_DEFAULT_FLAGS).output
+  #define lsError AsyncFw::LogStream(+AsyncFw::LogStream::Error | AsyncFw::LogStream::DarkRed, __PRETTY_FUNCTION__, __FILE__, __LINE__, LS_LOG_DEFAULT_FLAGS).output
 #else
   #define lsError(...) \
+    {}                 \
     if constexpr (0) AsyncFw::LogStream()
 #endif
 
