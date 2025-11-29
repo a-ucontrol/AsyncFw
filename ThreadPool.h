@@ -5,6 +5,42 @@
 #define ThreadPool_DEFAULT_WORK_THREADS 2
 
 namespace AsyncFw {
+class AbstractThreadPool {
+public:
+  static std::vector<AbstractThreadPool *> pools() { return pools_; }
+  static AbstractThread::LockGuard threads(std::vector<AbstractThread *> **, AbstractThreadPool * = nullptr);
+  AbstractThreadPool(const std::string &, AbstractThread * = nullptr);
+  virtual ~AbstractThreadPool();
+  virtual void quit();
+  AbstractThread *thread() { return thread_; }
+  std::string name() const { return name_; }
+
+protected:
+  class Thread : public AsyncFw::Thread {
+  public:
+    void quit();
+
+  protected:
+    Thread(const std::string &name, AbstractThreadPool *, bool = true);
+    virtual ~Thread() override = 0;
+    AbstractThreadPool *pool;
+    void destroy() override;
+  };
+
+  void appendThread(AbstractThread *);
+  void removeThread(AbstractThread *);
+  std::vector<AbstractThread *> threads_;
+  std::mutex mutex;
+  AbstractThread *thread_;
+
+private:
+  struct Compare {
+    bool operator()(const AbstractThread *t1, const AbstractThread *t2) const { return t1 < t2; }
+  };
+  inline static std::vector<AbstractThreadPool *> pools_;
+  std::string name_;
+};
+
 class ThreadPool : public AbstractThreadPool {
 public:
   class Thread : public AbstractThreadPool::Thread {

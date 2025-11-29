@@ -51,6 +51,8 @@ set(AsyncFw_HEADERS
   "DataArrayTcpServer.h"
   "DataArrayTcpClient.h"
   "DataArrayAbstractTcp.h"
+
+  "Task.h"
 )
 
 set(AsyncFw_SOURCES
@@ -70,6 +72,8 @@ set(AsyncFw_SOURCES
   "File.cpp"
   "Cryptor.cpp"
   "ThreadPool.cpp"
+
+  "Task.cpp"
 )
 
 if(NOT PLATFORM STREQUAL "AMD64")

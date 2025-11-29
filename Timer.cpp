@@ -5,7 +5,7 @@
 
 using namespace AsyncFw;
 
-class SingleTimerTask : public AbstractTask {
+class SingleTimerTask : public AbstractThread::AbstractTask {
 public:
   void init(const std::function<void()> &_f) { f = _f; }
   void invoke() override { f(); }

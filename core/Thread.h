@@ -3,8 +3,6 @@
 #include <vector>
 #include <condition_variable>
 
-#include "AnyData.h"
-
 #ifndef _WIN32
   #define POLLIN_ 0x001
   #define POLLPRI_ 0x002
@@ -35,19 +33,6 @@
 #define ABSTRACT_THREAD_LOCK_GUARD
 
 namespace AsyncFw {
-class AbstractTask {
-  friend class AbstractThread;
-  friend class MainThread;
-  friend class AbstractSocket;
-
-public:
-  virtual void invoke() = 0;
-
-protected:
-  AbstractTask() = default;
-  virtual ~AbstractTask() = default;
-};
-
 class AbstractThread {
   friend class MainThread;
   friend class AbstractSocket;
@@ -55,7 +40,19 @@ class AbstractThread {
   struct Private;
 
 public:
-  using ConditionVariableType = std::condition_variable;
+  class AbstractTask {
+    friend class AbstractThread;
+    friend class MainThread;
+    friend class AbstractSocket;
+
+  public:
+    virtual void invoke() = 0;
+
+  protected:
+    AbstractTask() = default;
+    virtual ~AbstractTask() = default;
+  };
+
 #ifndef ABSTRACT_THREAD_LOCK_GUARD
   using LockGuard = std::lock_guard<std::mutex>;
   /*struct LockGuard : public std::lock_guard<std::mutex> {
@@ -192,7 +189,7 @@ protected:
   virtual ~AbstractThread() = 0;
   virtual bool invokeTask(AbstractTask *);
   mutable std::mutex mutex;
-  mutable ConditionVariableType condition_variable;
+  mutable std::condition_variable condition_variable;
 
 private:
   struct Compare {
@@ -226,88 +223,6 @@ private:
   struct Compare {
     bool operator()(const AbstractSocket *, const AbstractSocket *) const;
   };
-};
-
-template <typename M>
-class ThreadTask;
-
-class AbstractThreadTask : public AbstractTask, public AnyData {
-public:
-  virtual bool isRunning() = 0;
-  template <typename _M>
-  static AbstractThreadTask *createTask(_M method, AbstractThread *thread = nullptr) {
-    return new ThreadTask(method, thread);
-  }
-};
-
-template <typename M>
-class ThreadTask : public AbstractThreadTask {
-  friend class AbstractThreadTask;
-  class run {
-    friend class ThreadTask;
-    run(std::atomic_bool *ptr) : r_(ptr) {}
-    std::atomic_bool *r_;
-
-  public:
-    ~run() { *r_ = false; }
-  };
-
-public:
-  void invoke() override {
-    running = true;
-    if (!thread) {
-      method(&data_);
-      running = false;
-      return;
-    }
-    std::shared_ptr<run> r = std::shared_ptr<run>(new run(&running));
-    thread->invokeMethod([this, r]() { method(&data_); });
-  }
-  bool isRunning() override { return running; }
-
-protected:
-  ThreadTask(M method, AbstractThread *thread) : method(method), thread(thread) {}
-
-private:
-  M method;
-  AbstractThread *thread;
-  std::atomic_bool running = false;
-};
-
-class AbstractThreadPool {
-public:
-  static std::vector<AbstractThreadPool *> pools() { return pools_; }
-  static AbstractThread::LockGuard threads(std::vector<AbstractThread *> **, AbstractThreadPool * = nullptr);
-  AbstractThreadPool(const std::string &, AbstractThread * = nullptr);
-  virtual ~AbstractThreadPool();
-  virtual void quit();
-  AbstractThread *thread() { return thread_; }
-  std::string name() const { return name_; }
-
-protected:
-  class Thread : public AsyncFw::Thread {
-  public:
-    void quit();
-
-  protected:
-    Thread(const std::string &name, AbstractThreadPool *, bool = true);
-    virtual ~Thread() override = 0;
-    AbstractThreadPool *pool;
-    void destroy() override;
-  };
-
-  void appendThread(AbstractThread *);
-  void removeThread(AbstractThread *);
-  std::vector<AbstractThread *> threads_;
-  std::mutex mutex;
-  AbstractThread *thread_;
-
-private:
-  struct Compare {
-    bool operator()(const AbstractThread *t1, const AbstractThread *t2) const { return t1 < t2; }
-  };
-  inline static std::vector<AbstractThreadPool *> pools_;
-  std::string name_;
 };
 
 constexpr AbstractThread::PollEvents operator|(AbstractThread::PollEvents e1, AbstractThread::PollEvents e2) { return static_cast<AbstractThread::PollEvents>(static_cast<uint8_t>(e1) | static_cast<uint8_t>(e2)); }

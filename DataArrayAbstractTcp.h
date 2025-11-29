@@ -1,8 +1,8 @@
 #pragma once
 
-#include "core/Thread.h"
 #include "core/FunctionConnector.h"
 #include "core/TlsContext.h"
+#include "ThreadPool.h"
 
 namespace AsyncFw {
 class DataArraySocket;
