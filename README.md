@@ -1,5 +1,7 @@
 # AsyncFw
-Async Framework
+Async Framework c++
+
+An async framework is a software framework that allows developers to build applications using asynchronous programming, which runs operations concurrently without blocking the main thread.
 
 Timer example:
 ```c++
