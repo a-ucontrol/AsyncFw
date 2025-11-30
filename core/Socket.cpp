@@ -337,7 +337,7 @@ void AbstractSocket::close() {
 
 void AbstractSocket::setErrorCode(ErrorCode code) { private_->errorCode_ = code; }
 
-AbstractSocket::ErrorCode AbstractSocket::errorCode() { return private_->errorCode_; }
+AbstractSocket::ErrorCode AbstractSocket::errorCode() const { return private_->errorCode_; }
 
 void AbstractSocket::setErrorString(const std::string &_string) const {
   lsDebug() << LogStream::Color::DarkRed << _string;

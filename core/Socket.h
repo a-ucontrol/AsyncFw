@@ -34,7 +34,7 @@ public:
   int write(const uint8_t *, int);
   int write(const DataArray &);
 
-  ErrorCode errorCode();
+  ErrorCode errorCode() const;
   std::string errorString() const;
 
   int pendingRead() const;
