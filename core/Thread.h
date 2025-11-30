@@ -120,6 +120,7 @@ public:
   }
 
   static AbstractThread *currentThread();
+  static AbstractThread::LockGuard threads(std::vector<AbstractThread *> **_threads);
 
   virtual void startedEvent() {}
   virtual void finishedEvent() {}

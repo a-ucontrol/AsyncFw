@@ -42,9 +42,9 @@ void AbstractThreadPool::quit() {
   lsTrace();
 }
 
-AbstractThread::LockGuard AbstractThreadPool::threads(std::vector<AbstractThread *> **_threads, AbstractThreadPool *pool) {
-  *_threads = &(pool->threads_);
-  return AbstractThread::LockGuard {pool->mutex};
+AbstractThread::LockGuard AbstractThreadPool::threads(std::vector<AbstractThread *> **_threads) {
+  *_threads = &threads_;
+  return AbstractThread::LockGuard {mutex};
 }
 
 void AbstractThreadPool::appendThread(AbstractThread *thread) {
