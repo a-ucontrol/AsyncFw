@@ -1,6 +1,6 @@
 # AsyncFw
 
-Async Framework c++ with timers, poll notifiers, sockets, coroutines, etc. See examples for details.
+Async Framework is c++ runtime with timers, poll notifiers, sockets, coroutines, etc. See examples for details.
 
 An async framework is a software framework that allows developers to build applications using asynchronous programming, which runs operations concurrently without blocking the main thread.
 
