@@ -4,9 +4,6 @@
 #include "core/AnyData.h"
 
 namespace AsyncFw {
-template <typename M>
-class Task;
-
 class AbstractTask : public AnyData {
 public:
   AbstractTask();
@@ -18,6 +15,7 @@ public:
 template <typename M>
 class Task : public AbstractTask {
 public:
+  Task(M method, AbstractThread *thread = nullptr) : method(method), thread(thread) {}
   void invoke() override {
     running_ = true;
     if (!thread) {
@@ -31,7 +29,6 @@ public:
     });
   }
   bool running() override { return running_; }
-  Task(M method, AbstractThread *thread = nullptr) : method(method), thread(thread) {}
 
 private:
   M method;

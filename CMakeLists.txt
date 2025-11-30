@@ -19,6 +19,7 @@ set(AsyncFw_CORE_HEADERS
 
 set(AsyncFw_CORE_SOURCES
   "core/Thread.cpp"
+  "core/AnyData.cpp"
   "core/Socket.cpp"
   "core/TlsSocket.cpp"
   "core/DataArray.cpp"

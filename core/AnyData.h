@@ -8,6 +8,9 @@ struct AnyData {
   T data() const {
     return std::any_cast<T>(data_);
   }
+  AnyData(const std::any &);
+  AnyData();
+  ~AnyData();
   std::any &data() const { return data_; }
   void setData(const std::any &data) const { data_ = data; };
 
