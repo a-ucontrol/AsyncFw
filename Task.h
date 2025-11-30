@@ -12,38 +12,30 @@ public:
   AbstractTask();
   virtual ~AbstractTask();
   virtual void invoke() = 0;
-  virtual bool isRunning() = 0;
+  virtual bool running() = 0;
 };
 
 template <typename M>
 class Task : public AbstractTask {
-  friend class AbstractTask;
-  class run {
-    friend class Task;
-    run(std::atomic_bool *ptr) : r_(ptr) {}
-    std::atomic_bool *r_;
-
-  public:
-    ~run() { *r_ = false; }
-  };
-
 public:
   void invoke() override {
-    running = true;
+    running_ = true;
     if (!thread) {
       method(&data_);
-      running = false;
+      running_ = false;
       return;
     }
-    std::shared_ptr<run> r = std::shared_ptr<run>(new run(&running));
-    thread->invokeMethod([this, r]() { method(&data_); });
+    thread->invokeMethod([_m = method, _r = std::make_shared<std::atomic_bool>(&running_), _d = std::make_shared<std::any>(data_)]() {
+      _m(_d.get());
+      *_r = false;
+    });
   }
-  bool isRunning() override { return running; }
+  bool running() override { return running_; }
   Task(M method, AbstractThread *thread = nullptr) : method(method), thread(thread) {}
 
 private:
   M method;
   AbstractThread *thread;
-  std::atomic_bool running = false;
+  std::atomic_bool running_;
 };
 }  // namespace AsyncFw
