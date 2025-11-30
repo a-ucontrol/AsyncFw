@@ -130,11 +130,11 @@ private:
   struct Poll {
     Poll(AbstractThread *thread, int fd) : in(fd, QSocketNotifier::Read), out(fd, QSocketNotifier::Write), thread_(thread) {
       QObject::connect(&in, &QSocketNotifier::activated, [this]() {
-        static_cast<InternalPoolTask<AbstractThread::PollEvents> *>(task)->e_ = AbstractThread::PollIn;
+        static_cast<PoolTask<AbstractThread::PollEvents> *>(task)->e_ = AbstractThread::PollIn;
         task->invoke();
       });
       QObject::connect(&out, &QSocketNotifier::activated, [this]() {
-        static_cast<InternalPoolTask<AbstractThread::PollEvents> *>(task)->e_ = AbstractThread::PollOut;
+        static_cast<PoolTask<AbstractThread::PollEvents> *>(task)->e_ = AbstractThread::PollOut;
         task->invoke();
       });
     }
