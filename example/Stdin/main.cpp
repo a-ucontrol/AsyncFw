@@ -1,7 +1,6 @@
 #include <iostream>
-#include <AsyncFw/core/Thread.h>
-#include <AsyncFw/MainThread.h>
-#include <AsyncFw/PollNotifier.h>
+#include <MainThread.h>
+#include <PollNotifier.h>
 
 int main(int argc, char *argv[]) {
   AsyncFw::PollNotifier notifier(STDIN_FILENO);

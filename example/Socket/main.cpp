@@ -1,20 +1,15 @@
-#include <AsyncFw/core/Thread.h>
-#include <AsyncFw/MainThread.h>
-#include <AsyncFw/core/TlsSocket.h>
-#include <AsyncFw/core/TlsContext.h>
-#include <AsyncFw/AddressInfo.h>
-#include <AsyncFw/File.h>
-#include <AsyncFw/Log.h>
+#include <MainThread.h>
+#include <core/TlsSocket.h>
+#include <core/TlsContext.h>
+#include <AddressInfo.h>
+#include <File.h>
+#include <Log.h>
 
-#include "../HttpSocket/HttpSocket.hpp"
+#include "../common/HttpSocket/HttpSocket.hpp"
 
-#define SERVER_NAME "ruware-111.ipplus.ru"
-#define SERVER_PORT 8443
-#define GET_FILE    "/index.html"
-
-//#define SERVER_NAME "github.com"
-//#define SERVER_PORT 443
-//#define GET_FILE    "/a-ucontrol/AsyncFw"
+#define SERVER_NAME "github.com"
+#define SERVER_PORT 443
+#define GET_FILE    "/a-ucontrol/AsyncFw"
 
 int main(int argc, char *argv[]) {
   AsyncFw::LogMinimal log;

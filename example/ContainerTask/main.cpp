@@ -1,8 +1,8 @@
 #include <queue>
-#include <AsyncFw/MainThread.h>
-#include <AsyncFw/Timer.h>
-#include <AsyncFw/Task.h>
-#include <AsyncFw/core/LogStream.h>
+#include <MainThread.h>
+#include <Timer.h>
+#include <Task.h>
+#include <core/LogStream.h>
 
 int main(int argc, char *argv[]) {
   AsyncFw::Thread thread;

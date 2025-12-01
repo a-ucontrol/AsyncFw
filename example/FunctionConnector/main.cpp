@@ -1,8 +1,8 @@
-#include <AsyncFw/core/Thread.h>
-#include <AsyncFw/core/FunctionConnector.h>
-#include <AsyncFw/Timer.h>
-#include <AsyncFw/MainThread.h>
-#include <AsyncFw/Log.h>
+#include <core/Thread.h>
+#include <core/FunctionConnector.h>
+#include <Timer.h>
+#include <MainThread.h>
+#include <Log.h>
 
 class Sender {
 public:

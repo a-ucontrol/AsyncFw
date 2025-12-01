@@ -1,5 +1,5 @@
-#include <AsyncFw/Log.h>
-#include <AsyncFw/MainThread.h>
+#include <Log.h>
+#include <MainThread.h>
 
 int main(int argc, char *argv[]) {
   AsyncFw::Log log(1000, "log-file-name");

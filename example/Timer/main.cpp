@@ -1,8 +1,7 @@
 #include <iostream>
 #include <chrono>
-#include <AsyncFw/core/Thread.h>
-#include <AsyncFw/MainThread.h>
-#include <AsyncFw/Timer.h>
+#include <MainThread.h>
+#include <Timer.h>
 
 int main(int argc, char *argv[]) {
   int cnt = 0;

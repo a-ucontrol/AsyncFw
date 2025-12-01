@@ -99,3 +99,18 @@ if(BUILD_SHARED_LIBS)
 else()
   add_library(${CMAKE_PROJECT_NAME} STATIC ${PROJECT_SOURCES})
 endif()
+
+link_libraries(z crypto ssl cares)
+
+add_subdirectory(example/ContainerTask)
+add_subdirectory(example/Coroutine)
+add_subdirectory(example/FunctionConnector)
+add_subdirectory(example/Invoke)
+add_subdirectory(example/ListenSocket)
+add_subdirectory(example/Log)
+add_subdirectory(example/Socket)
+add_subdirectory(example/Stdin)
+add_subdirectory(example/ThreadPool)
+add_subdirectory(example/Timer)
+
+

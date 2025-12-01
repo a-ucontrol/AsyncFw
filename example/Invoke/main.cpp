@@ -1,6 +1,6 @@
-#include <AsyncFw/core/Thread.h>
-#include <AsyncFw/MainThread.h>
-#include <AsyncFw/Log.h>
+#include <core/Thread.h>
+#include <MainThread.h>
+#include <Log.h>
 
 int main(int argc, char *argv[]) {
   AsyncFw::LogMinimal log;

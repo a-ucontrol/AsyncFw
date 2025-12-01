@@ -1,6 +1,6 @@
-#include <AsyncFw/MainThread.h>
-#include <AsyncFw/core/TlsSocket.h>
-#include <AsyncFw/Log.h>
+#include <MainThread.h>
+#include <core/TlsSocket.h>
+#include <Log.h>
 
 class TcpSocket : public AsyncFw::AbstractTlsSocket {
 public:
