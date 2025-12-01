@@ -59,7 +59,7 @@ struct AbstractSocket::Private {
   DataArray rda_;
   DataArray wda_;
   int tid_ = -1;
-  ErrorCode errorCode_;
+  Error error_ = None;
   std::string errorString_;
   int w_ = 0;
   int type_ = SOCK_STREAM;
@@ -113,6 +113,7 @@ bool AbstractSocket::listen(const std::string &_address, uint16_t _port) {
     return false;
   }
 
+  private_->error_ = None;
   state_ = State::Listening;
 
   thread_->invokeMethod([this, _fd]() { changeDescriptor(_fd); }, true);
@@ -123,7 +124,7 @@ bool AbstractSocket::listen(const std::string &_address, uint16_t _port) {
   return true;
 }
 
-void AbstractSocket::acceptEvent() {
+void AbstractSocket::activateEvent() {
   if (state_ != State::Connected) {
     lsError() << LogStream::Color::Red << "not connected state";
     return;
@@ -189,7 +190,7 @@ void AbstractSocket::setDescriptor(int _fd) {
   changeDescriptor(_fd);
   state_ = State::Connected;
   thread_->appendPollTask(fd_, AbstractThread::PollIn, [this](AbstractThread::PollEvents _e) { pollEvent(_e); });
-  acceptEvent();
+  activateEvent();
 }
 
 bool AbstractSocket::connect(const std::string &_address, uint16_t _port) {
@@ -236,6 +237,8 @@ bool AbstractSocket::connect(const std::string &_address, uint16_t _port) {
   lsTrace() << _fd << "local:" << LogStream::Color::Green << address() + ':' + std::to_string(port()) << "peer:" << LogStream::Color::Green << peerAddress() + ':' + std::to_string(peerPort());
 
   thread_->invokeMethod([this, _fd]() { changeDescriptor(_fd); }, true);
+  private_->w_ = 0;
+  private_->error_ = None;
   state_ = State::Connecting;
   thread_->appendPollTask(_fd, AbstractThread::PollOut, [this](AbstractThread::PollEvents _e) { pollEvent(_e); });
 
@@ -271,10 +274,8 @@ void AbstractSocket::read_fd() {
     int r = read_fd(private_->rda_.data() + private_->rda_.size() - rs_, rs_);
     if (r != rs_) {
       private_->errorString_ = "Read error";
-      private_->errorCode_ = Read;
+      private_->error_ = Read;
       lsDebug() << LogStream::Color::Red << private_->errorString_ << r << rs_ << errno;
-      state_ = State::Error;
-      stateEvent();
       close();
     }
   } while (read_available_fd() > 0);
@@ -335,9 +336,9 @@ void AbstractSocket::close() {
   stateEvent();
 }
 
-void AbstractSocket::setErrorCode(ErrorCode code) { private_->errorCode_ = code; }
+void AbstractSocket::setError(Error code) { private_->error_ = code; }
 
-AbstractSocket::ErrorCode AbstractSocket::errorCode() const { return private_->errorCode_; }
+AbstractSocket::Error AbstractSocket::error() const { return private_->error_; }
 
 void AbstractSocket::setErrorString(const std::string &_string) const {
   lsDebug() << LogStream::Color::DarkRed << _string;
@@ -447,21 +448,17 @@ void AbstractSocket::pollEvent(int _e) {
     return;
   }
   if (_e & AbstractThread::PollHup) {
-    private_->errorCode_ = Refused;
+    private_->error_ = Refused;
     if (state_ == State::Connecting) private_->errorString_ = "Connection refused (not connected)";
     else { private_->errorString_ = "Connection refused"; }
     lsTrace() << LogStream::Color::Red << private_->errorString_ << errno;
-    state_ = State::Error;
-    stateEvent();
     close();
     return;
   }
   if (_e & (AbstractThread::PollErr | AbstractThread::PollInval)) {
     private_->errorString_ = "Poll error";
-    private_->errorCode_ = Poll;
+    private_->error_ = Poll;
     lsDebug() << LogStream::Color::Red << private_->errorString_ << static_cast<int>(_e) << errno;
-    state_ = State::Error;
-    stateEvent();
     close();
     return;
   }
@@ -474,26 +471,22 @@ void AbstractSocket::pollEvent(int _e) {
     if (_e & AbstractThread::PollIn) {
       AbstractSocket::read_available_fd();
       if (rs_ < 0) {
-        private_->errorString_ = "Connection closed (not accepted)";
-        private_->errorCode_ = Closed;
+        private_->errorString_ = "Connection closed (not activated)";
+        private_->error_ = Closed;
         lsDebug() << LogStream::Color::Red << private_->errorString_ << errno;
-        state_ = State::Error;
-        stateEvent();
         close();
         return;
       }
     }
-    acceptEvent();
+    activateEvent();
     if (state_ != State::Active || AbstractSocket::read_available_fd() <= 0) return;
   }
   if (_e & AbstractThread::PollIn) {
     int r = read_available_fd();
     if (rs_ < 0) {
       private_->errorString_ = "Connection closed";
-      private_->errorCode_ = Closed;
+      private_->error_ = Closed;
       lsTrace() << LogStream::Color::Red << private_->errorString_ << r << rs_ << errno;
-      state_ = State::Error;
-      stateEvent();
       close();
       return;
     }
@@ -502,10 +495,8 @@ void AbstractSocket::pollEvent(int _e) {
       if (rs_ > 0) read_fd();
     } else if (r < 0) {
       private_->errorString_ = "Read error (check available)";
-      private_->errorCode_ = Read;
+      private_->error_ = Read;
       lsDebug() << LogStream::Color::Red << private_->errorString_ << r << errno;
-      state_ = State::Error;
-      stateEvent();
       close();
       return;
     }
@@ -532,10 +523,8 @@ void AbstractSocket::pollEvent(int _e) {
     }
     if (r < 0) {
       private_->errorString_ = "Write error";
-      private_->errorCode_ = Write;
+      private_->error_ = Write;
       lsDebug() << LogStream::Color::Red << private_->errorString_ << r << errno;
-      state_ = State::Error;
-      stateEvent();
       close();
     }
   }

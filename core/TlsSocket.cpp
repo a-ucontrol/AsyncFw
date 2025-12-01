@@ -65,14 +65,14 @@ struct ie {
   int operator()(int, X509_STORE_CTX *) const { return 1; }
 };
 
-void AbstractTlsSocket::acceptEvent() {
+void AbstractTlsSocket::activateEvent() {
   if (state_ != State::Connected) {
     lsError() << "not connected";
     return;
   }
   if (private_->encrypt_ == 0) {
     trace() << fd_ << LogStream::Color::Red << "encryption disabled";
-    AbstractSocket::acceptEvent();
+    AbstractSocket::activateEvent();
     return;
   }
   trace() << fd_;
@@ -96,10 +96,8 @@ void AbstractTlsSocket::acceptEvent() {
   if (r <= 0) {
     r = ERR_peek_error();
     if (!r && SSL_want_read(private_->ssl_)) return;
-    setErrorCode(AbstractSocket::Accept);
+    setError(AbstractSocket::Activate);
     setErrorString("Accept TLS error");
-    state_ = State::Error;
-    stateEvent();
     close();
     return;
   }
@@ -113,7 +111,7 @@ void AbstractTlsSocket::acceptEvent() {
     std::sprintf(name, "no peer cerificate");
 
   trace() << ((private_->encrypt_ == 1) ? "server" : "client") << "connected" << LogStream::Color::Green << name;
-  AbstractSocket::acceptEvent();
+  AbstractSocket::activateEvent();
 }
 
 int AbstractTlsSocket::read_available_fd() const {

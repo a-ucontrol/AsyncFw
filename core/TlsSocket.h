@@ -22,7 +22,7 @@ protected:
   AbstractTlsSocket(Thread * = nullptr);
   ~AbstractTlsSocket() override;
 
-  void acceptEvent() override;
+  void activateEvent() override;
 
   int read_available_fd() const override final;
   int read_fd(void *_p, int _s) override final;
