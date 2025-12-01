@@ -17,7 +17,7 @@ class AbstractSocket : public AnyData {
 
 public:
   enum State : uint8_t { Unconnected, Listening, Connecting, Connected, Active, Closing, Destroy };
-  enum Error : uint8_t { None, Closed, Refused, Poll, Read, Write, Activate };
+  enum Error : uint8_t { None, Closed, Refused, Read, Write, Activate };
 
   virtual void setDescriptor(int);
   virtual bool connect(const std::string &, uint16_t);

@@ -449,18 +449,10 @@ void AbstractSocket::pollEvent(int _e) {
     incomingEvent();
     return;
   }
-  if (_e & AbstractThread::PollHup) {
+  if (_e & (AbstractThread::PollHup | AbstractThread::PollErr | AbstractThread::PollInval)) {
+    private_->errorString_ = "Connection refused";
     private_->error_ = Refused;
-    if (state_ == State::Connecting) private_->errorString_ = "Connection refused (not connected)";
-    else { private_->errorString_ = "Connection refused"; }
-    lsTrace() << LogStream::Color::Red << private_->errorString_ << errno;
-    close();
-    return;
-  }
-  if (_e & (AbstractThread::PollErr | AbstractThread::PollInval)) {
-    private_->errorString_ = "Poll error";
-    private_->error_ = Poll;
-    lsDebug() << LogStream::Color::Red << private_->errorString_ << static_cast<int>(_e) << errno;
+    lsDebug() << LogStream::Color::Red << private_->errorString_ << "(poll error)" << static_cast<int>(_e) << errno;
     close();
     return;
   }
@@ -473,9 +465,9 @@ void AbstractSocket::pollEvent(int _e) {
     if (_e & AbstractThread::PollIn) {
       AbstractSocket::read_available_fd();
       if (rs_ < 0) {
-        private_->errorString_ = "Connection closed (not activated)";
+        private_->errorString_ = "Connection closed";
         private_->error_ = Closed;
-        lsDebug() << LogStream::Color::Red << private_->errorString_ << errno;
+        lsDebug() << LogStream::Color::Red << private_->errorString_ << "(not active)" << errno;
         close();
         return;
       }
@@ -496,9 +488,9 @@ void AbstractSocket::pollEvent(int _e) {
       readEvent();
       if (rs_ > 0) read_fd();
     } else if (r < 0) {
-      private_->errorString_ = "Read error (check available)";
+      private_->errorString_ = "Read error";
       private_->error_ = Read;
-      lsDebug() << LogStream::Color::Red << private_->errorString_ << r << errno;
+      lsDebug() << LogStream::Color::Red << private_->errorString_ << "(check available)" << r << errno;
       close();
       return;
     }
