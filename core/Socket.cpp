@@ -114,6 +114,7 @@ bool AbstractSocket::listen(const std::string &_address, uint16_t _port) {
   }
 
   private_->error_ = None;
+  private_->errorString_.clear();
   state_ = State::Listening;
 
   thread_->invokeMethod([this, _fd]() { changeDescriptor(_fd); }, true);
@@ -239,6 +240,7 @@ bool AbstractSocket::connect(const std::string &_address, uint16_t _port) {
   thread_->invokeMethod([this, _fd]() { changeDescriptor(_fd); }, true);
   private_->w_ = 0;
   private_->error_ = None;
+  private_->errorString_.clear();
   state_ = State::Connecting;
   thread_->appendPollTask(_fd, AbstractThread::PollOut, [this](AbstractThread::PollEvents _e) { pollEvent(_e); });
 
