@@ -129,23 +129,17 @@ private:
 
   struct Poll {
     Poll(AbstractThread *thread, int fd) : in(fd, QSocketNotifier::Read), out(fd, QSocketNotifier::Write), thread_(thread) {
-      QObject::connect(&in, &QSocketNotifier::activated, [this]() {
-        static_cast<PoolTask<AbstractThread::PollEvents> *>(task)->e_ = AbstractThread::PollIn;
-        task->invoke();
-      });
-      QObject::connect(&out, &QSocketNotifier::activated, [this]() {
-        static_cast<PoolTask<AbstractThread::PollEvents> *>(task)->e_ = AbstractThread::PollOut;
-        task->invoke();
-      });
+      QObject::connect(&in, &QSocketNotifier::activated, [this]() { task->invoke(AbstractThread::PollIn); });
+      QObject::connect(&out, &QSocketNotifier::activated, [this]() { task->invoke(AbstractThread::PollOut); });
     }
     ~Poll() { delete task; }
     QSocketNotifier in;
     QSocketNotifier out;
     AbstractThread *thread_;
-    AbstractTask *task;
+    AbstractPollTask *task;
   };
 
-  bool appendPollDescriptor(int fd, AbstractThread::PollEvents e, AbstractTask *task) override {
+  bool appendPollDescriptor(int fd, AbstractThread::PollEvents e, AbstractPollTask *task) override {
     for (const std::shared_ptr<Poll> &poll : notifiers)
       if (poll->in.socket() == fd) return false;
     std::shared_ptr<Poll> poll = std::make_shared<Poll>(this, fd);

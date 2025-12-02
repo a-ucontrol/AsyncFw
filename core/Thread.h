@@ -39,19 +39,18 @@ class AbstractThread {
   struct Private;
 
 public:
+  enum PollEvents : uint16_t { PollNo = 0, PollIn = POLLIN_, PollPri = POLLPRI_, PollOut = POLLOUT_, PollErr = POLLERR_, PollHup = POLLHUP_, PollInval = POLLNVAL_ };
+  enum State : uint8_t { None = 0, WaitStarted, Running, WaitInterrupted, WaitFinished, Interrupted, Finalize, Finished };
   class AbstractTask {
-    friend class AbstractThread;
-    friend class MainThread;
-    friend class AbstractSocket;
-
   public:
     virtual void invoke() = 0;
-
-  protected:
-    AbstractTask() = default;
     virtual ~AbstractTask() = default;
   };
-
+  class AbstractPollTask {
+  public:
+    virtual void invoke(AbstractThread::PollEvents) = 0;
+    virtual ~AbstractPollTask() = default;
+  };
 #ifndef ABSTRACT_THREAD_LOCK_GUARD
   using LockGuard = std::lock_guard<std::mutex>;
   /*struct LockGuard : public std::lock_guard<std::mutex> {
@@ -85,9 +84,6 @@ public:
     AbstractThread *thread;
     bool waiting;
   };
-
-  enum PollEvents : uint16_t { PollNo = 0, PollIn = POLLIN_, PollPri = POLLPRI_, PollOut = POLLOUT_, PollErr = POLLERR_, PollHup = POLLHUP_, PollInval = POLLNVAL_ };
-  enum State : uint8_t { None = 0, WaitStarted, Running, WaitInterrupted, WaitFinished, Interrupted, Finalize, Finished };
 
   template <typename M>
   typename std::enable_if<std::is_void<typename std::invoke_result<M>::type>::value, bool>::type invokeMethod(M method, bool sync = false) {
@@ -129,13 +125,13 @@ public:
   virtual int appendTimer(int, AbstractTask *);
   virtual bool modifyTimer(int, int);
   virtual void removeTimer(int);
-  virtual bool appendPollDescriptor(int, PollEvents, AbstractTask *);
+  virtual bool appendPollDescriptor(int, PollEvents, AbstractPollTask *);
   virtual bool modifyPollDescriptor(int, PollEvents);
   virtual void removePollDescriptor(int);
 
   template <typename M>
   bool appendPollTask(int fd, PollEvents events, M method) {
-    return appendPollDescriptor(fd, events, new PoolTask(method));
+    return appendPollDescriptor(fd, events, new PollTask(method));
   }
   template <typename M>
   int appendTimerTask(int timeout, M method) {
@@ -171,15 +167,14 @@ protected:
   };
 
   template <typename M>
-  class PoolTask : public AbstractTask {
+  class PollTask : public AbstractPollTask {
     friend class AbstractThread;
     friend class AbstractSocket;
     friend class MainThread;
 
   private:
-    PoolTask(M method) : method(method) {}
-    virtual void invoke() override { method(e_); }
-    AbstractThread::PollEvents e_;
+    PollTask(M method) : method(method) {}
+    virtual void invoke(AbstractThread::PollEvents _e) override { method(_e); }
     M method;
   };
 

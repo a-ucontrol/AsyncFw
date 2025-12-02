@@ -59,7 +59,7 @@ struct AbstractThread::Private {
       if (task) delete task;
     }
     int fd;
-    AbstractTask *task;
+    AbstractPollTask *task;
   };
 
   struct Compare {
@@ -107,7 +107,7 @@ struct AbstractThread::Private {
 #else
     uint32_t events;
 #endif
-    AbstractTask *task;
+    AbstractPollTask *task;
   };
 
   void process_tasks();
@@ -134,8 +134,7 @@ void AbstractThread::Private::process_polls() {
   for (; !process_poll_tasks_.empty();) {
     Private::ProcessPollTask _pt = process_poll_tasks_.front();
     process_poll_tasks_.pop();
-    static_cast<PoolTask<AbstractThread::PollEvents> *>(_pt.task)->e_ = static_cast<AbstractThread::PollEvents>(_pt.events);
-    _pt.task->invoke();
+    _pt.task->invoke(static_cast<AbstractThread::PollEvents>(_pt.events));
   }
 }
 
@@ -628,7 +627,7 @@ void AbstractThread::removeTimer(int id) {
   }
 }
 
-bool AbstractThread::appendPollDescriptor(int fd, PollEvents events, AbstractTask *task) {
+bool AbstractThread::appendPollDescriptor(int fd, PollEvents events, AbstractPollTask *task) {
 #ifndef EPOLL_WAIT
   LockGuard lock(mutex);
   std::vector<Private::PollTask *>::iterator it = std::lower_bound(private_.poll_tasks.begin(), private_.poll_tasks.end(), fd, Private::Compare());
