@@ -85,12 +85,12 @@ struct AbstractThread::Private {
   struct update_pollfd {
     int fd;
     short int events;
-    AbstractTask *task;
+    AbstractPollTask *task;
     int8_t action;
   };
   std::vector<struct update_pollfd> update_pollfd;
   std::vector<pollfd> fds_;
-  std::vector<AbstractTask *> fdts_;
+  std::vector<AbstractPollTask *> fdts_;
 #else
   int epoll_fd;
   PollTask wake_task;
