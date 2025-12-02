@@ -40,7 +40,7 @@ public:
   int pendingRead() const;
   int pendingWrite() const;
 
-  int descriptorWriteSize();
+  //int descriptorWriteSize();
 
   State state() const { return state_; }
   Thread *thread() const { return thread_; }

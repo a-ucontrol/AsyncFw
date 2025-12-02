@@ -65,6 +65,8 @@ struct ie {
   int operator()(int, X509_STORE_CTX *) const { return 1; }
 };
 
+void AbstractTlsSocket::activateReady() { AbstractSocket::activateEvent(); }
+
 void AbstractTlsSocket::activateEvent() {
   if (state_ != State::Connected) {
     lsError() << "not connected";
@@ -111,7 +113,7 @@ void AbstractTlsSocket::activateEvent() {
     std::sprintf(name, "no peer cerificate");
 
   trace() << ((private_->encrypt_ == 1) ? "server" : "client") << "connected" << LogStream::Color::Green << name;
-  AbstractSocket::activateEvent();
+  activateReady();
 }
 
 int AbstractTlsSocket::read_available_fd() const {

@@ -364,7 +364,7 @@ int AbstractSocket::pendingWrite() const {
 
   return private_->wda_.size();
 }
-
+/*
 int AbstractSocket::descriptorWriteSize() {
 #ifndef _WIN32
   int _s;
@@ -376,7 +376,7 @@ int AbstractSocket::descriptorWriteSize() {
   if (r == 0) return _s;
   return r;
 }
-
+*/
 std::string AbstractSocket::address() const {
   if (private_->la_.ss_family == AF_INET) {
     char _ip[INET_ADDRSTRLEN];

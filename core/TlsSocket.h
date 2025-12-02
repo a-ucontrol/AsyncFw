@@ -22,6 +22,8 @@ protected:
   AbstractTlsSocket(Thread * = nullptr);
   ~AbstractTlsSocket() override;
 
+  virtual void activateReady();
+
   void activateEvent() override;
 
   int read_available_fd() const override final;
