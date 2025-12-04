@@ -105,7 +105,7 @@ void DataArrayTcpClient::connectToHost(DataArraySocket *socket, const std::strin
 }
 
 void DataArrayTcpClient::connectToHost(const DataArraySocket *socket, int timeout) {
-  lsTrace("readTimeout: %d, waitKeepAliveAnswerTimeout: %d, waitForEncryptedTimeout: %d, maxThreads: %d, maxSockets: %d, maxReadBuffers = %d, maxReadSize = %d, maxWriteBuffers = %d, maxWriteSize = %d", readTimeout, waitKeepAliveAnswerTimeout, waitForEncryptedTimeout, maxThreads, maxSockets, maxReadBuffers, maxReadSize, maxWriteBuffers, maxWriteSize);
+  lsTrace("readTimeout: {}, waitKeepAliveAnswerTimeout: {}, waitForEncryptedTimeout: {}, maxThreads: {}, maxSockets: {}, maxReadBuffers = {}, maxReadSize = {}, maxWriteBuffers = {}, maxWriteSize = {}", readTimeout, waitKeepAliveAnswerTimeout, waitForEncryptedTimeout, maxThreads, maxSockets, maxReadBuffers, maxReadSize, maxWriteBuffers, maxWriteSize);
   Thread *clientThread = static_cast<Thread *>(socket->thread());
   if (!clientThread) {
     lsWarning("unknown socket");
