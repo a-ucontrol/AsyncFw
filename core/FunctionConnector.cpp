@@ -72,7 +72,7 @@ void FunctionConnectionGuard::operator=(AbstractFunctionConnector::Connection &_
 
 void FunctionConnectionGuard::operator=(FunctionConnectionGuard &&_g) {
   if (c_) {
-    if (c_->type_ == AbstractFunctionConnector::Connection::Direct) c_->thread_->invokeMethod([_p = c_]() { delete _p; });
+    if (c_->thread_->id() == std::this_thread::get_id()) c_->thread_->invokeMethod([_p = c_]() { delete _p; });
     else { delete c_; }
   }
   c_ = _g.c_;
