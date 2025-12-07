@@ -20,11 +20,11 @@
 #endif
 
 #if !defined LS_NO_ERROR
-  #define uC_THREAD this
+  #define AsyncFw_THREAD this
   #define checkCurrentThread() \
-    if (std::this_thread::get_id() != uC_THREAD->id()) lsError() << "executed from different thread"
+    if (std::this_thread::get_id() != AsyncFw_THREAD->id()) lsError() << "executed from different thread"
   #define checkDifferentThread() \
-    if (std::this_thread::get_id() == uC_THREAD->id()) lsError() << "executed from own thread"
+    if (std::this_thread::get_id() == AsyncFw_THREAD->id()) lsError() << "executed from own thread"
 #else
   #define checkCurrentThread()
   #define checkDifferentThread()

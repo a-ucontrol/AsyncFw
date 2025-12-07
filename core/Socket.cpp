@@ -66,8 +66,8 @@ struct AbstractSocket::Private {
   int protocol_ = IPPROTO_TCP;
 };
 
-#undef uC_THREAD
-#define uC_THREAD this->thread()
+#undef AsyncFw_THREAD
+#define AsyncFw_THREAD this->thread()
 
 AbstractSocket::AbstractSocket(Thread *_thread) {
   private_ = new Private;

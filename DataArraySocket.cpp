@@ -14,8 +14,8 @@
     if constexpr (0) LogStream()
 #endif
 
-#undef uC_THREAD
-#define uC_THREAD this->thread()
+#undef AsyncFw_THREAD
+#define AsyncFw_THREAD this->thread()
 using namespace AsyncFw;
 
 DataArraySocket::DataArraySocket(Thread *_thread) : AbstractTlsSocket(_thread) {
