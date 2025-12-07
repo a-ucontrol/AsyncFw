@@ -119,6 +119,7 @@ struct AbstractThread::Private {
   std::queue<AbstractTask *> process_tasks_;
   std::queue<ProcessTimerTask> process_timer_tasks_;
   std::queue<ProcessPollTask> process_poll_tasks_;
+  static void clearId();
 };
 
 void AbstractThread::Private::process_tasks() {
@@ -144,6 +145,20 @@ void AbstractThread::Private::process_timers() {
     process_timer_tasks_.pop();
     _tt.task->invoke();
   }
+}
+
+void AbstractThread::Private::clearId() {
+  LockGuard lock(list_mutex);
+  std::vector<AbstractThread *>::iterator it = std::lower_bound(AbstractThread::list_threads.begin(), AbstractThread::list_threads.end(), std::this_thread::get_id(), AbstractThread::Compare());
+  if (it != list_threads.end()) {
+    AbstractThread *_t = (*it);
+    _t->private_.id = {};
+    list_threads.erase(it);
+    it = std::lower_bound(AbstractThread::list_threads.begin(), AbstractThread::list_threads.end(), _t, AbstractThread::Compare());
+    list_threads.insert(it, _t);
+    return;
+  }
+  lsError() << "thread not found";
 }
 
 void AbstractThread::Holder::complete() {
@@ -314,14 +329,17 @@ void AbstractThread::waitFinished() const {
   while (private_.state != Finished) condition_variable.wait(lock);
 }
 
-void AbstractThread::changeId(std::thread::id _id) {
+void AbstractThread::updateId() {
   LockGuard lock(list_mutex);
   std::vector<AbstractThread *>::iterator it = std::lower_bound(list_threads.begin(), list_threads.end(), this, Compare());
-  if (it != list_threads.end() && (*it) == this) list_threads.erase(it);
-  else { lsError() << "thread not found"; }
-  private_.id = _id;
-  it = std::lower_bound(list_threads.begin(), list_threads.end(), this, Compare());
-  list_threads.insert(it, this);
+  if (it != list_threads.end() && (*it) == this) {
+    list_threads.erase(it);
+    private_.id = std::this_thread::get_id();
+    it = std::lower_bound(list_threads.begin(), list_threads.end(), this, Compare());
+    list_threads.insert(it, this);
+    return;
+  }
+  lsError() << "thread not found";
 }
 
 void AbstractThread::exec() {
@@ -552,9 +570,9 @@ void AbstractThread::start() {
   }
   private_.state = WaitStarted;
   std::thread t {[this]() {
-    changeId(std::this_thread::get_id());
+    updateId();
     exec();
-    changeId({});
+    Private::clearId();
   }};
   t.detach();
 }

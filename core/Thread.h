@@ -191,7 +191,7 @@ private:
   };
   static inline std::mutex list_mutex;
   static inline std::vector<AbstractThread *> list_threads;
-  void changeId(std::thread::id);
+  void updateId();
   void exec();
   void wake();
   Private &private_;

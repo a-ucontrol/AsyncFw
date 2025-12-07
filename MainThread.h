@@ -31,7 +31,7 @@ inline class MainThread :
 public:
   static MainThread *instance() { return instance_; }
   MainThread() : Thread("Main") {
-    changeId(std::this_thread::get_id());
+    updateId();
     instance_ = this;
 #ifdef EXIT_ON_UNIX_SIGNAL
     eventfd_ = eventfd(0, EFD_NONBLOCK);
