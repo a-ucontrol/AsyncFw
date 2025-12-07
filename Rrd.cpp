@@ -21,8 +21,11 @@ using namespace AsyncFw;
 
 class RrdThread : public AbstractThread {
 public:
-  RrdThread() : AbstractThread("Rrd") { start(); }
-  ~RrdThread() override {}
+  RrdThread() : AbstractThread("Rrd") {
+    trace();
+    start();
+  }
+  ~RrdThread() override { trace(); }
 };
 
 Rrd::Rrd(int size, int interval, int fillInterval, const std::string &name, AbstractThread *thread) : dbSize(size), interval(interval), fill(interval ? fillInterval / interval : 0) {
@@ -52,15 +55,9 @@ Rrd::Rrd(int size, int interval, int fillInterval, const std::string &name, Abst
 Rrd::Rrd(int size, int interval, int fillInterval, AbstractThread *thread) : Rrd(size, interval, fillInterval, {}, thread) {}
 
 Rrd::~Rrd() {
-  if (ownThread) {
-    if (thread_->running()) {
-      thread_->quit();
-      thread_->waitFinished();
-      delete static_cast<RrdThread *>(thread_);
-    }
-  }
-  trace();
   if (!file.empty() && !readOnly) { saveToFile(); }
+  if (ownThread && !AbstractThread::currentThread()->invokeMethod([_p = static_cast<RrdThread *>(thread_)]() { delete _p; })) delete static_cast<RrdThread *>(thread_);
+  trace();
 }
 
 Rrd::Rrd(int size, const std::string &name, AbstractThread *thread) : Rrd(size, 0, 0, name, thread) {}
