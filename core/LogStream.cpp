@@ -51,7 +51,7 @@ std::string LogStream::sender(const char *function) {
   str = str.substr(0, str.find_first_of('('));
   i = str.find_last_of(' ');
   if (i != std::string::npos) str = str.substr(i + 1);
-  for (const std::string &_str : senderPrefixIgnoreList_) {
+  for (const std::string &_str : functionPrefixIgnoreList_) {
     if (str.starts_with(_str)) {
       str.erase(0, _str.size());
       break;
@@ -130,8 +130,9 @@ std::string LogStream::colorString(Color c) {
 }
 
 LogStream::LogStream(uint8_t type, const char *function, const char *file, int line, uint8_t flags) : type(type), file(file), line(line), flags(flags) {
-  if (flags & 0x0001) name = sender(function);
-  else { name = function; }
+  if (!senderPrefix_.empty()) name = senderPrefix_;
+  if (flags & 0x0001) name += sender(function);
+  else { name += function; }
 }
 
 LogStream::~LogStream() noexcept(false) {

@@ -69,7 +69,6 @@ void AbstractLog::append(const Message &m) {
     return;
   }
   messages.push(m);
-  if (!senderPrefix.empty()) messages.back().name.insert(0, senderPrefix);
   thread_->unlock();
   if (size == 0)
     thread_->invokeMethod([this]() {
@@ -115,9 +114,7 @@ void AbstractLog::process(const Message &m) {
 }
 
 void AbstractLog::output(const Message &m) {
-  if (thread_->running() && std::this_thread::get_id() != thread_->id()) {
-    console_msg("AbstractLog: executed from different thread");
-  }
+  if (thread_->running() && std::this_thread::get_id() != thread_->id()) { console_msg("AbstractLog: executed from different thread"); }
   if ((m.type & 0x0F) <= consoleLevel) { LogStream::console_output(m, flags); }
 }
 

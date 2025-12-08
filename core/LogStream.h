@@ -131,7 +131,8 @@ public:
   LogStream &space();
   LogStream &nospace();
   LogStream &flush();
-  static void setSenderPrefixIgnoreList(const std::vector<std::string> &list) { senderPrefixIgnoreList_ = list; }
+  static void setFunctionPrefixIgnoreList(const std::vector<std::string> &list) { functionPrefixIgnoreList_ = list; }
+  static void setSenderPrefix(const std::string &prefix) { senderPrefix_ = prefix; }
 
 private:
   void before();
@@ -142,7 +143,8 @@ private:
   const char *file;
   int line;
   uint16_t flags;
-  inline static std::vector<std::string> senderPrefixIgnoreList_;
+  inline static std::vector<std::string> functionPrefixIgnoreList_;
+  inline static std::string senderPrefix_;
 };
 }  // namespace AsyncFw
 

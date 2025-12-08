@@ -23,7 +23,6 @@ public:
   void setLevel(int i) { level = i; }
   void setConsoleLevel(int i) { consoleLevel = i; }
   void setFilter(const std::vector<std::string> &f) { filter = f; }
-  void setSenderPrefix(const std::string &prefix) { senderPrefix = prefix; }
 
 protected:
   static inline AbstractLog *log_;
@@ -60,7 +59,6 @@ private:
   bool hideDuplicates = false;
 
   std::vector<std::string> filter;
-  std::string senderPrefix;
 };
 
 class LogMinimal : public AbstractThread, public AbstractLog {
