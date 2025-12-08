@@ -56,11 +56,7 @@ Rrd::Rrd(int size, int interval, int fillInterval, AbstractThread *thread) : Rrd
 
 Rrd::~Rrd() {
   if (!file.empty() && !readOnly) { saveToFile(); }
-  if (ownThread) {
-    thread_->quit();
-    thread_->waitFinished();
-    if (!AbstractThread::currentThread()->invokeMethod([_p = static_cast<RrdThread *>(thread_)]() { delete _p; })) delete static_cast<RrdThread *>(thread_);
-  }
+  if (ownThread) delete static_cast<RrdThread *>(thread_);
   trace();
 }
 
