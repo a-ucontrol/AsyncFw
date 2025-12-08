@@ -56,12 +56,8 @@ Rrd::Rrd(int size, int interval, int fillInterval, AbstractThread *thread) : Rrd
 
 Rrd::~Rrd() {
   if (!file.empty() && !readOnly) { saveToFile(); }
-  trace() << ownThread << thread_->name() << thread_->id() << std::this_thread::get_id();
-  if (ownThread) {
-    thread_->quit();
-    thread_->waitFinished();
-    delete static_cast<RrdThread *>(thread_);
-  }
+  if (ownThread) delete static_cast<RrdThread *>(thread_);
+  trace();
 }
 
 Rrd::Rrd(int size, const std::string &name, AbstractThread *thread) : Rrd(size, 0, 0, name, thread) {}

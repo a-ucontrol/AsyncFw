@@ -3,13 +3,6 @@
 
 #include "Log.h"
 
-#ifdef EXTEND_LOG_TRACE
-  #define trace LogStream(+LogStream::Trace | LogStream::Gray, __PRETTY_FUNCTION__, __FILE__, __LINE__, LS_LOG_DEFAULT_FLAGS | LOG_STREAM_CONSOLE_ONLY).output
-#else
-  #define trace(x) \
-    if constexpr (0) LogStream()
-#endif
-
 #define LOG_CURRENT_TIME (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count())
 
 using namespace AsyncFw;
@@ -46,6 +39,7 @@ void AbstractLog::finality() {
       if (lastMessages[i].count > 1 && lastMessages[i].count != 10000) { output({lastMessages[i].message.type, lastMessages[i].message.name, "Repeated message " + std::to_string(lastMessages[i].count) + " times (last: " + std::to_string(LOG_CURRENT_TIME - lastMessages[i].message.time) + "ms ago): " + (lastMessages[i].message.string.empty() ? "Empty message" : lastMessages[i].message.string), lastMessages[i].message.note}); }
     }
   }
+  if (log_ == this) log_ = nullptr;
 }
 
 void AbstractLog::append(uint8_t type, const std::string &message, const std::string &sender, const std::string &note) { append({type, sender, message, note}); }
@@ -122,7 +116,6 @@ void AbstractLog::process(const Message &m) {
 void AbstractLog::output(const Message &m) {
   if (thread_->running() && std::this_thread::get_id() != thread_->id()) { console_msg("AbstractLog: executed from different thread"); }
   if ((m.type & 0x0F) <= consoleLevel) { LogStream::console_output(m, flags); }
-  trace() << thread_->name() << thread_->id() << std::this_thread::get_id();
 }
 
 void AbstractLog::timerTask(int timerId) {
@@ -193,7 +186,6 @@ Log::~Log() {
   lsTrace();
   autoSave = -1;
   stopTimer(&timerIdAutosave);
-  if (log_ == this) log_ = nullptr;
   thread()->invokeMethod([this]() { finality(); }, true);
 }
 
