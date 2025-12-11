@@ -1,5 +1,7 @@
 #pragma once
 
+#include <functional>
+
 #include "core/FunctionConnector.h"
 #include "core/DataArray.h"
 

@@ -1,6 +1,7 @@
 #include <ares.h>
 #include <arpa/inet.h>
 #include <netdb.h>
+#include <unordered_map>
 #include <cstring>
 
 #include "core/Thread.h"

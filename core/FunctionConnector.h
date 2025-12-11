@@ -1,6 +1,9 @@
 #pragma once
 
-#include <functional>
+#define FunctionConnector_FUNCTION
+#ifndef FunctionConnector_FUNCTION
+  #include <functional>
+#endif
 #include <mutex>
 #include "Thread.h"
 
@@ -53,22 +56,58 @@ public:
   void operator()(Args... args) {
     std::lock_guard<std::mutex> lock(mutex);
     for (const Connection *c : *reinterpret_cast<std::vector<Connection *> *>(&list_)) {
-      std::function<void(Args...)> f = c->f;
       if (c->type_ == Connection::Direct || ((c->type_ == Connection::Auto || c->type_ == Connection::AutoSync) && c->thread_->id() == std::this_thread::get_id())) {
-        f(args...);
+        c->f(args...);
         continue;
       }
-      c->thread_->invokeMethod([f, args...]() { f(args...); }, c->type_ == Connection::AutoSync || c->type_ == Connection::QueuedSync);
+      if (c->type_ != Connection::AutoSync && c->type_ != Connection::QueuedSync) {
+        c->thread_->invokeMethod([c, args...]() mutable { c->f(args...); });
+      } else {
+        c->thread_->invokeMethod([c, &args...]() mutable { c->f(args...); }, true);
+      }
     }
   }
 
 private:
+#ifdef FunctionConnector_FUNCTION
+  class Function {
+  public:
+    template <typename T>
+    Function(T f) {
+      f_ = new T(std::move(f));
+      i_ = &Function::invoke<T>;
+      df_ = &Function::destroy_function<T>;
+    }
+    ~Function() { df_(f_); }
+    Function(const Function &) = delete;
+    void operator()(Args... args) const { i_(f_, std::forward<Args>(args)...); }
+
+  private:
+    template <typename T>
+    static void destroy_function(void *data) {
+      delete static_cast<T *>(data);
+    }
+    template <typename T>
+    static void invoke(void *data, Args... args) {
+      (*static_cast<T *>(data))(std::forward<Args>(args)...);
+    }
+    void *f_;
+    void (*i_)(void *, Args...);
+    void (*df_)(void *);
+  };
+#endif
   class Connection : public AbstractFunctionConnector::Connection {
     friend class FunctionConnector<Args...>;
 
   public:
+#ifdef FunctionConnector_FUNCTION
+    template <typename T>
+    Connection(T f, AbstractFunctionConnector *c, Type t) : AbstractFunctionConnector::Connection(c, t), f(f) {}
+    Function f;
+#else
     Connection(const std::function<void(Args...)> &f, AbstractFunctionConnector *c, Type t) : AbstractFunctionConnector::Connection(c, t), f(f) {}
     std::function<void(Args...)> f;
+#endif
   };
 };
 

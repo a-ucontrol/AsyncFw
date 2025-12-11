@@ -100,7 +100,7 @@ public:
       return true;
     }
     bool finished = false;
-    AbstractTask *_t = new Task([method, &finished, this]() {
+    AbstractTask *_t = new Task([method, &finished, this]() mutable {
       method();
       AbstractThread::LockGuard lock(mutex);
       finished = true;
