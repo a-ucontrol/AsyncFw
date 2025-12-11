@@ -2,7 +2,11 @@
 
 #include "core/Thread.h"
 
-#define ThreadPool_DEFAULT_WORK_THREADS 2
+#ifndef LS_NO_WARNING
+  #include "core/console_msg.hpp"
+#endif
+
+#define ThreadPool_DEFAULT_WORK_THREADS 1
 
 namespace AsyncFw {
 class AbstractThreadPool {
@@ -76,6 +80,9 @@ public:
   template <typename M, typename R, typename T = std::invoke_result<M>::type>
   static typename std::enable_if<std::is_void<T>::value, bool>::type async(AbstractThread *thread, M method, R result) {
     AbstractThread *_t = AbstractThread::currentThread();
+#ifndef LS_NO_WARNING
+    if (_t == thread) console_msg("thread and current thread are same: " + thread->name());
+#endif
     return thread->invokeMethod([_t, method, result]() {
       method();
       _t->invokeMethod([result]() { result(); });
@@ -84,6 +91,9 @@ public:
   template <typename M, typename R, typename T = std::invoke_result<M>::type>
   static typename std::enable_if<!std::is_void<T>::value, bool>::type async(AbstractThread *thread, M method, R result) {
     AbstractThread *_t = AbstractThread::currentThread();
+#ifndef LS_NO_WARNING
+    if (_t == thread) console_msg("thread and current thread are same: " + thread->name());
+#endif
     return thread->invokeMethod([_t, method, result]() { _t->invokeMethod([v = std::move(method()), result]() { result(v); }); });
   }
   template <typename M, typename R>

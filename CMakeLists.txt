@@ -15,6 +15,7 @@ set(AsyncFw_CORE_HEADERS
   "core/LogStream.h"
   "core/DataArray.h"
   "core/log-types.hpp"
+  "core/console_msg.hpp"
 )
 
 set(AsyncFw_CORE_SOURCES
@@ -27,6 +28,7 @@ set(AsyncFw_CORE_SOURCES
   "core/TlsContext.cpp"
   "core/FunctionConnector.cpp"
   "core/log-types.cpp"
+  "core/console_msg.cpp"
 )
 
 set(AsyncFw_HEADERS

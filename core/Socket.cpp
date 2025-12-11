@@ -90,7 +90,7 @@ AbstractSocket::~AbstractSocket() {
   if (thread_) thread_->removeSocket(this);
   if (fd_ >= 0) close_fd(fd_);
   delete private_;
-  trace();
+  lsTrace();
 }
 
 bool AbstractSocket::listen(const std::string &_address, uint16_t _port) {

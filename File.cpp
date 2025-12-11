@@ -21,8 +21,8 @@ File::File(const std::string &fn) {
 
 File::~File() {
   close();
+  lsTrace() << private_->fn_;
   delete private_;
-  lsTrace();
 }
 
 bool File::open(const std::string &fn, std::ios::openmode m) {
@@ -33,6 +33,7 @@ bool File::open(const std::string &fn, std::ios::openmode m) {
 bool File::open(std::ios::openmode m) {
   private_->m_ = m;
   private_->f_.open(std::filesystem::path(private_->fn_), m);
+  lsTrace() << private_->fn_;
   return !private_->f_.fail();
 }
 

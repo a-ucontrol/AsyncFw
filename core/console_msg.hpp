@@ -1,17 +1,13 @@
 #pragma once
 
-#undef emit
-
-#include <iostream>
-#include <syncstream>
+#include <string>
 
 #ifndef LS_NO_WARNING
-  #define console_msg(x) \
-    do { (std::osyncstream(std::cerr) << std::string() + x << std::endl).flush(); } while (0)
+namespace AsyncFw {
+void console_msg_(const std::string &);
+}
+  #define console_msg(x) AsyncFw::console_msg_(std::string() + x)
 #else
-  #define console_msg(x)                    \
-    if constexpr (0) do {                   \
-        std::string _s = std::string() + x; \
-        (void)_s;                           \
-    } while (0)
+  #define console_msg(x) \
+    if constexpr (0) AsyncFw::console_msg_(std::string() + x)
 #endif
