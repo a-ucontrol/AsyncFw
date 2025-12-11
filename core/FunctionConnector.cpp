@@ -1,3 +1,4 @@
+#include <algorithm>
 #include "LogStream.h"
 #include "FunctionConnector.h"
 
