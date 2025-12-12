@@ -88,7 +88,7 @@ public:
   template <typename M>
   typename std::enable_if<std::is_void<typename std::invoke_result<M>::type>::value, bool>::type invokeMethod(M method, bool sync = false) {
     if (!sync) {
-      AbstractTask *_t = new Task(std::move(method));
+      AbstractTask *_t = new Task_(method);
       if (!invokeTask(_t)) {
         delete _t;
         return false;
@@ -100,8 +100,8 @@ public:
       return true;
     }
     bool finished = false;
-    AbstractTask *_t = new Task([method, &finished, this]() mutable {
-      method();
+    AbstractTask *_t = new Task([_m = std::move(method), &finished, this]() mutable {
+      _m();
       AbstractThread::LockGuard lock(mutex);
       finished = true;
       condition_variable.notify_all();
@@ -185,6 +185,15 @@ protected:
   mutable std::condition_variable condition_variable;
 
 private:
+  template <typename M>
+  class Task_ : private AbstractTask {
+    friend class AbstractThread;
+
+  private:
+    Task_(M &method) : method(std::move(method)) {}
+    virtual void invoke() override { method(); }
+    M method;
+  };
   struct Compare {
     bool operator()(const AbstractThread *, const AbstractThread *) const;
     bool operator()(const AbstractThread *, std::thread::id) const;

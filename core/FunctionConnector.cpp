@@ -33,7 +33,8 @@ AbstractFunctionConnector::Connection::Connection(AbstractFunctionConnector *con
     throw std::runtime_error("fixed connection type");
   }
   thread_ = AbstractThread::currentThread();
-  connector_->list_.push_back(this);
+  std::vector<Connection *>::iterator it = std::lower_bound(connector_->list_.begin(), connector_->list_.end(), this, [](const Connection *c1, const Connection *c2) { return c1 < c2; });
+  connector_->list_.insert(it, this);
   trace() << LogStream::Color::Green << static_cast<int>(type_) << thread_->name() << this << connector_ << connector_->list_.size();
 }
 
@@ -41,7 +42,7 @@ AbstractFunctionConnector::Connection::~Connection() {
   if (guarg_) guarg_->c_ = nullptr;
   if (!connector_) return;
   std::lock_guard<std::mutex> lock(connector_->mutex);
-  std::vector<Connection *>::iterator it = std::find(connector_->list_.begin(), connector_->list_.end(), this);
+  std::vector<Connection *>::iterator it = std::lower_bound(connector_->list_.begin(), connector_->list_.end(), this, [](const Connection *c1, const Connection *c2) { return c1 < c2; });
   connector_->list_.erase(it);
   trace() << this << connector_ << connector_->list_.size();
 }
