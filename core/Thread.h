@@ -88,7 +88,7 @@ public:
   template <typename M>
   typename std::enable_if<std::is_void<typename std::invoke_result<M>::type>::value, bool>::type invokeMethod(M method, bool sync = false) {
     if (!sync) {
-      AbstractTask *_t = new Task(method);
+      AbstractTask *_t = new Task(std::move(method));
       if (!invokeTask(_t)) {
         delete _t;
         return false;
@@ -161,7 +161,7 @@ protected:
     friend class AbstractSocket;
 
   private:
-    Task(M method) : method(method) {}
+    Task(M method) : method(std::move(method)) {}
     virtual void invoke() override { method(); }
     M method;
   };
@@ -173,7 +173,7 @@ protected:
     friend class MainThread;
 
   private:
-    PollTask(M method) : method(method) {}
+    PollTask(M method) : method(std::move(method)) {}
     virtual void invoke(AbstractThread::PollEvents _e) override { method(_e); }
     M method;
   };

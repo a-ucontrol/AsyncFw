@@ -15,7 +15,7 @@ public:
 template <typename M>
 class Task : public AbstractTask {
 public:
-  Task(M method, AbstractThread *thread = nullptr) : method(method), thread(thread) {}
+  Task(M method, AbstractThread *thread = nullptr) : method(std::move(method)), thread(thread) {}
   void invoke() override {
     running_ = true;
     if (!thread) {
@@ -23,7 +23,7 @@ public:
       running_ = false;
       return;
     }
-    thread->invokeMethod([_m = method, _r = std::make_shared<std::atomic_bool>(&running_), _d = std::make_shared<std::any>(data_)]() {
+    thread->invokeMethod([_m = std::move(method), _r = std::make_shared<std::atomic_bool>(&running_), _d = std::make_shared<std::any>(data_)]() {
       _m(_d.get());
       *_r = false;
     });
