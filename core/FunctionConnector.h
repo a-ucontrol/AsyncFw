@@ -43,7 +43,7 @@ class FunctionConnector : public AbstractFunctionConnector {
 public:
   using AbstractFunctionConnector::AbstractFunctionConnector;
   template <typename T>
-  Connection &operator()(T f, AbstractFunctionConnector::Connection::Type t = AbstractFunctionConnector::Connection::Default) {
+  Connection &operator()(const T &f, AbstractFunctionConnector::Connection::Type t = AbstractFunctionConnector::Connection::Default) {
     std::lock_guard<std::mutex> lock(mutex);
 #ifndef __clang_analyzer__
     return *new Connection(f, this, t);
@@ -73,7 +73,7 @@ protected:
 
   public:
     template <typename T>
-    Connection(T &_f, AbstractFunctionConnector *c, Type t) : AbstractFunctionConnector::Connection(c, t), f(new Function(_f)) {}
+    Connection(const T &_f, AbstractFunctionConnector *c, Type t) : AbstractFunctionConnector::Connection(c, t), f(new Function(_f)) {}
 
   private:
     struct AbstractFunction {
@@ -82,10 +82,10 @@ protected:
     };
     template <typename T>
     struct Function : AbstractFunction {
-      Function(T &_f) : f(std::move(_f)) {}
+      Function(const T &_f) : f(std::move(_f)) {}
       ~Function() {}
       void operator()(Args &...args) override { f(args...); }
-      T f;
+      const T f;
     };
     ~Connection() override { delete f; }
     AbstractFunction *f;
@@ -102,7 +102,7 @@ public:
   public:
     using FunctionConnector<Args...>::FunctionConnector;
     template <typename T>
-    FunctionConnector<Args...>::Connection &operator()(T f, AbstractFunctionConnector::Connection::Type t = AbstractFunctionConnector::Connection::Default) {
+    FunctionConnector<Args...>::Connection &operator()(const T &f, AbstractFunctionConnector::Connection::Type t = AbstractFunctionConnector::Connection::Default) {
       std::lock_guard<std::mutex> lock(FunctionConnector<Args...>::mutex);
 #ifndef __clang_analyzer__
       return *new FunctionConnector<Args...>::Connection(f, this, t);
