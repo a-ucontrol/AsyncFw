@@ -1,9 +1,5 @@
 #pragma once
 
-#define FunctionConnector_FUNCTION
-#ifndef FunctionConnector_FUNCTION
-  #include <functional>
-#endif
 #include <mutex>
 #include "Thread.h"
 
@@ -60,67 +56,39 @@ protected:
     std::lock_guard<std::mutex> lock(mutex);
     for (const Connection *c : *reinterpret_cast<std::vector<Connection *> *>(&list_)) {
       if (c->type_ == Connection::Direct || ((c->type_ == Connection::Auto || c->type_ == Connection::AutoSync) && c->thread_->id() == std::this_thread::get_id())) {
-        c->f(args...);
+        (*c->f)(args...);
         continue;
       }
       if (c->type_ != Connection::AutoSync && c->type_ != Connection::QueuedSync) {
-        c->thread_->invokeMethod([_f = c->f, ... _a = std::forward<Args>(args)]() mutable { _f(_a...); });
+        c->thread_->invokeMethod([_f = c->f, ... _a = std::forward<Args>(args)]() mutable { (*_f)(_a...); });
       } else {
-        c->thread_->invokeMethod([c, &args...]() mutable { c->f(args...); }, true);
+        c->thread_->invokeMethod([c, &args...]() mutable { (*c->f)(args...); }, true);
       }
     }
   }
 
-private:
-#ifdef FunctionConnector_FUNCTION
-  class Function {
-  public:
-    template <typename T>
-    Function(T f) : d_(new Data {new T(std::move(f)), &Function::invoke<T>, &Function::destroy_function<T>, 0}) {}
-    ~Function() {
-      if (!(d_->ref_)) {
-        d_->df_(d_->f_);
-        delete d_;
-        return;
-      }
-      d_->ref_--;
-    }
-    Function(const Function &f) {
-      d_ = f.d_;
-      d_->ref_++;
-    }
-    void operator()(Args &...args) const { d_->i_(d_->f_, args...); }
-
-  private:
-    Function &operator=(const Function &) = delete;
-    template <typename T>
-    static void destroy_function(void *data) {
-      delete static_cast<T *>(data);
-    }
-    template <typename T>
-    static void invoke(void *data, Args &...args) {
-      (*static_cast<T *>(data))(args...);
-    }
-    struct Data {
-      void *f_;
-      void (*i_)(void *, Args &...);
-      void (*df_)(void *);
-      int ref_;
-    } *d_;
-  };
-#endif
+protected:
   class Connection : public AbstractFunctionConnector::Connection {
     friend class FunctionConnector<Args...>;
 
   public:
-#ifdef FunctionConnector_FUNCTION
     template <typename T>
-    Connection(T f, AbstractFunctionConnector *c, Type t) : AbstractFunctionConnector::Connection(c, t), f(f) {}
-    Function f;
-#else
-    Connection(const std::function<void(Args...)> &f, AbstractFunctionConnector *c, Type t) : AbstractFunctionConnector::Connection(c, t), f(f) {}
-    std::function<void(Args...)> f;
-#endif
+    Connection(T &_f, AbstractFunctionConnector *c, Type t) : AbstractFunctionConnector::Connection(c, t), f(new Function(_f)) {}
+
+  private:
+    struct AbstractFunction {
+      virtual void operator()(Args &...) = 0;
+      virtual ~AbstractFunction() = default;
+    };
+    template <typename T>
+    struct Function : AbstractFunction {
+      Function(T &_f) : f(std::move(_f)) {}
+      ~Function() {}
+      void operator()(Args &...args) override { f(args...); }
+      T f;
+    };
+    ~Connection() override { delete f; }
+    AbstractFunction *f;
   };
 };
 
@@ -134,8 +102,11 @@ public:
   public:
     using FunctionConnector<Args...>::FunctionConnector;
     template <typename T>
-    AbstractFunctionConnector::Connection &operator()(T f, AbstractFunctionConnector::Connection::Type t = AbstractFunctionConnector::Connection::Default) {
-      return FunctionConnector<Args...>::operator()(f, t);
+    FunctionConnector<Args...>::Connection &operator()(T f, AbstractFunctionConnector::Connection::Type t = AbstractFunctionConnector::Connection::Default) {
+      std::lock_guard<std::mutex> lock(FunctionConnector<Args...>::mutex);
+#ifndef __clang_analyzer__
+      return *new FunctionConnector<Args...>::Connection(f, this, t);
+#endif
     }
 
   protected:
