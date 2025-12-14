@@ -122,6 +122,7 @@ public:
   virtual void finishedEvent() {}
   virtual void destroy() {}
 
+  virtual bool invokeTask(AbstractTask *);
   virtual int appendTimer(int, AbstractTask *);
   virtual bool modifyTimer(int, int);
   virtual void removeTimer(int);
@@ -180,7 +181,6 @@ protected:
 
   AbstractThread(const std::string &);
   virtual ~AbstractThread() = 0;
-  virtual bool invokeTask(AbstractTask *);
   mutable std::mutex mutex;
   mutable std::condition_variable condition_variable;
 
