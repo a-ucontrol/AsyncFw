@@ -4,6 +4,16 @@
 #include "Thread.h"
 
 namespace AsyncFw {
+
+template <typename F, typename... Args>
+class FunctionConnectorTask : public AbstractThread::AbstractTask {
+public:
+  FunctionConnectorTask(F f, Args &...args) : f_(f), args_(std::forward<Args>(args)...) {}
+  void invoke() override { std::apply(*f_, args_); }
+  F f_;
+  std::tuple<Args...> args_;
+};
+
 class FunctionConnectionGuard;
 
 class AbstractFunctionConnector {
@@ -60,7 +70,9 @@ protected:
         continue;
       }
       if (c->type_ != Connection::AutoSync && c->type_ != Connection::QueuedSync) {
-        c->thread_->invokeMethod([_f = c->f, ... _a = std::forward<Args>(args)]() mutable { (*_f)(_a...); });
+        AbstractThread::AbstractTask *_t = new FunctionConnectorTask(c->f, args...);
+        if (!c->thread_->invokeTask(_t)) delete _t;
+        //c->thread_->invokeMethod([_f = c->f, ... _a = std::forward<Args>(args)]() mutable { (*_f)(_a...); });
       } else {
         c->thread_->invokeMethod([c, &args...]() mutable { (*c->f)(args...); }, true);
       }
@@ -84,7 +96,7 @@ protected:
     struct Function : AbstractFunction {
       Function(const T &_f) : f(std::move(_f)) {}
       ~Function() {}
-      void operator()(Args &...args) override { f(args...); }
+      void operator()(Args &...args) override { f(std::forward<Args>(args)...); }
       const T f;
     };
     ~Connection() override { delete f; }
