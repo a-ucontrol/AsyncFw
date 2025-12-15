@@ -36,7 +36,7 @@ protected:
   template <typename F, typename... Args>
   class QueuedTask : public AbstractThread::AbstractTask {
   public:
-    QueuedTask(F *f, Args &...args) : f_(f), /*args_(std::forward<Args>(args)...)*/ args_(args...) {}  //need copy
+    QueuedTask(F *f, Args &...args) : f_(f), args_(args...) {}
     ~QueuedTask() { delete f_; }
     void invoke() override { std::apply(*f_, args_); }
     F *f_;
@@ -72,7 +72,6 @@ protected:
       if (c->type_ != Connection::AutoSync && c->type_ != Connection::QueuedSync) {
         AbstractThread::AbstractTask *_t = new QueuedTask(c->f->copy(), args...);
         if (!c->thread_->invokeTask(_t)) delete _t;
-        //c->thread_->invokeMethod([_f = c->f, args...]() mutable { (*_f)(args...); });
       } else {
         c->thread_->invokeMethod([c, &args...]() mutable { (*c->f)(args...); }, true);
       }
@@ -98,7 +97,7 @@ protected:
       Function(const T &_f) : f(std::move(_f)) {}
       ~Function() {}
       AbstractFunction *copy() override { return new Function(f); }
-      void operator()(Args &...args) override { f(std::forward<Args>(args)...); }
+      void operator()(Args &...args) override { f(args...); }
       const T f;
     };
     ~Connection() override { delete f; }
