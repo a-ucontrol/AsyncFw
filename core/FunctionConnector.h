@@ -5,15 +5,6 @@
 
 namespace AsyncFw {
 
-template <typename F, typename... Args>
-class FunctionConnectorTask : public AbstractThread::AbstractTask {
-public:
-  FunctionConnectorTask(F f, Args &...args) : f_(f), /*args_(std::forward<Args>(args)...)*/ args_(args...) {}  //need copy
-  void invoke() override { std::apply(*f_, args_); }
-  F f_;
-  std::tuple<Args...> args_;
-};
-
 class FunctionConnectionGuard;
 
 class AbstractFunctionConnector {
@@ -42,6 +33,15 @@ public:
   AbstractFunctionConnector(ConnectionType = Auto);
 
 protected:
+  template <typename F, typename... Args>
+  class QueuedTask : public AbstractThread::AbstractTask {
+  public:
+    QueuedTask(F *f, Args &...args) : f_(f), /*args_(std::forward<Args>(args)...)*/ args_(args...) {}  //need copy
+    ~QueuedTask() { delete f_; }
+    void invoke() override { std::apply(*f_, args_); }
+    F *f_;
+    std::tuple<Args...> args_;
+  };
   virtual ~AbstractFunctionConnector() = 0;
   std::vector<Connection *> list_;
   ConnectionType defaultConnectionType;
@@ -70,9 +70,9 @@ protected:
         continue;
       }
       if (c->type_ != Connection::AutoSync && c->type_ != Connection::QueuedSync) {
-        AbstractThread::AbstractTask *_t = new FunctionConnectorTask(c->f->copy(), args...);
+        AbstractThread::AbstractTask *_t = new QueuedTask(c->f->copy(), args...);
         if (!c->thread_->invokeTask(_t)) delete _t;
-        //c->thread_->invokeMethod([_f = c->f, ... _a = std::forward<Args>(args)]() mutable { (*_f)(_a...); });
+        //c->thread_->invokeMethod([_f = c->f, args...]() mutable { (*_f)(args...); });
       } else {
         c->thread_->invokeMethod([c, &args...]() mutable { (*c->f)(args...); }, true);
       }
