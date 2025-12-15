@@ -8,7 +8,7 @@ namespace AsyncFw {
 template <typename F, typename... Args>
 class FunctionConnectorTask : public AbstractThread::AbstractTask {
 public:
-  FunctionConnectorTask(F f, Args &...args) : f_(f), args_(std::forward<Args>(args)...) {}
+  FunctionConnectorTask(F f, Args &...args) : f_(f), /*args_(std::forward<Args>(args)...)*/ args_(args...) {}  //need copy
   void invoke() override { std::apply(*f_, args_); }
   F f_;
   std::tuple<Args...> args_;
@@ -70,7 +70,7 @@ protected:
         continue;
       }
       if (c->type_ != Connection::AutoSync && c->type_ != Connection::QueuedSync) {
-        AbstractThread::AbstractTask *_t = new FunctionConnectorTask(c->f, args...);
+        AbstractThread::AbstractTask *_t = new FunctionConnectorTask(c->f->copy(), args...);
         if (!c->thread_->invokeTask(_t)) delete _t;
         //c->thread_->invokeMethod([_f = c->f, ... _a = std::forward<Args>(args)]() mutable { (*_f)(_a...); });
       } else {
@@ -89,6 +89,7 @@ protected:
 
   private:
     struct AbstractFunction {
+      virtual AbstractFunction *copy() = 0;
       virtual void operator()(Args &...) = 0;
       virtual ~AbstractFunction() = default;
     };
@@ -96,6 +97,7 @@ protected:
     struct Function : AbstractFunction {
       Function(const T &_f) : f(std::move(_f)) {}
       ~Function() {}
+      AbstractFunction *copy() override { return new Function(f); }
       void operator()(Args &...args) override { f(std::forward<Args>(args)...); }
       const T f;
     };
