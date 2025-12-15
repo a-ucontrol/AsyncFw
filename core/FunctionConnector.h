@@ -94,7 +94,7 @@ protected:
     };
     template <typename T>
     struct Function : AbstractFunction {
-      Function(const T &_f) : f(std::move(_f)) {}
+      Function(const T &_f) : f(_f) {}
       ~Function() {}
       AbstractFunction *copy() override { return new Function(f); }
       void operator()(Args &...args) override { f(args...); }
