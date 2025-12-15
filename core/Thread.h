@@ -88,7 +88,7 @@ public:
   template <typename M>
   typename std::enable_if<std::is_void<typename std::invoke_result<M>::type>::value, bool>::type invokeMethod(M method, bool sync = false) {
     if (!sync) {
-      AbstractTask *_t = new Task(std::forward<M>(method));
+      AbstractTask *_t = new Task_(method);
       if (!invokeTask(_t)) {
         delete _t;
         return false;
@@ -132,11 +132,11 @@ public:
 
   template <typename M>
   bool appendPollTask(int fd, PollEvents events, M method) {
-    return appendPollDescriptor(fd, events, new PollTask(std::forward<M>(method)));
+    return appendPollDescriptor(fd, events, new PollTask(method));
   }
   template <typename M>
   int appendTimerTask(int timeout, M method) {
-    return appendTimer(timeout, new Task(std::forward<M>(method)));
+    return appendTimer(timeout, new Task(method));
   }
 
   void start();
@@ -162,7 +162,7 @@ protected:
     friend class AbstractSocket;
 
   private:
-    Task(M &&method) : method(std::move(method)) {}
+    Task(M method) : method(std::move(method)) {}
     virtual void invoke() override { method(); }
     M method;
   };
@@ -174,7 +174,7 @@ protected:
     friend class MainThread;
 
   private:
-    PollTask(M &&method) : method(std::move(method)) {}
+    PollTask(M method) : method(std::move(method)) {}
     virtual void invoke(AbstractThread::PollEvents _e) override { method(_e); }
     M method;
   };
@@ -185,6 +185,15 @@ protected:
   mutable std::condition_variable condition_variable;
 
 private:
+  template <typename M>
+  class Task_ : private AbstractTask {
+    friend class AbstractThread;
+
+  private:
+    Task_(M &method) : method(std::move(method)) {}
+    virtual void invoke() override { method(); }
+    M method;
+  };
   struct Compare {
     bool operator()(const AbstractThread *, const AbstractThread *) const;
     bool operator()(const AbstractThread *, std::thread::id) const;
