@@ -38,7 +38,7 @@ private:
 
 using CoroutineHandle = std::coroutine_handle<CoroutineTask::promise_type>;
 
-struct CoroutineAwait : public AnyData {
+struct CoroutineAwait {
   CoroutineAwait(std::function<void(CoroutineHandle)> = nullptr);
   virtual ~CoroutineAwait();
   virtual void await_suspend(CoroutineHandle) const noexcept;
