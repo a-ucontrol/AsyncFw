@@ -74,6 +74,8 @@ protected:
   Thread *thread_;
 
 private:
+  AbstractSocket(const AbstractSocket &) = delete;
+  AbstractSocket &operator=(const AbstractSocket &) = delete;
   void pollEvent(int);
   void changeDescriptor(int);
   void read_fd();

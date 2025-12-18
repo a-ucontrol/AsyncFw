@@ -27,6 +27,8 @@ public:
   std::fstream &fstream();
 
 private:
+  File(File &) = delete;
+  File &operator=(File &) = delete;
   Private *private_;
 };
 }  // namespace AsyncFw
