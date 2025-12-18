@@ -6,7 +6,6 @@
 using namespace AsyncFw;
 
 struct CoroutineTask::promise_type::Private {
-  CoroutineAwait *await;
   CoroutineTask *task;
   AbstractThread *thread;
   AbstractThread::Holder *holder = nullptr;
@@ -19,7 +18,6 @@ CoroutineAwait::CoroutineAwait(std::function<void(std::coroutine_handle<Coroutin
 
 void CoroutineAwait::await_suspend(std::coroutine_handle<CoroutineTask::promise_type> h) const noexcept {
   h_ = h;
-  h.promise().private_->await = const_cast<CoroutineAwait *>(this);
   if (f_) f_(h);
 }
 
@@ -51,8 +49,6 @@ void CoroutineTask::resume() { std::coroutine_handle<promise_type>::from_promise
 void CoroutineTask::resume_queued() { promise->resume_queued(); }
 
 bool CoroutineTask::finished() { return promise->private_->finished; }
-
-CoroutineAwait &CoroutineTask::await() { return *promise->private_->await; }
 
 CoroutineTask::promise_type::promise_type() {
   private_ = new Private;

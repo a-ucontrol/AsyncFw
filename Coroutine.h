@@ -30,7 +30,6 @@ struct CoroutineTask {
   void resume();
   void resume_queued();
   bool finished();
-  CoroutineAwait &await();
 
 private:
   promise_type *promise;
