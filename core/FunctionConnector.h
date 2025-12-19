@@ -138,6 +138,7 @@ public:
   ~FunctionConnectionGuard();
   void operator=(AbstractFunctionConnector::Connection &);
   void operator=(FunctionConnectionGuard &&);
+  operator bool() const { return c_; }
 
 private:
   AbstractFunctionConnector::Connection *c_;
