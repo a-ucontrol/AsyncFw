@@ -21,8 +21,8 @@ void Timer::single(int ms, const std::function<void()> &f) {
   SingleTimerTask *_s = new SingleTimerTask();
   int tid = _t->appendTimer(0, _s);
   _s->init([f, _t, tid]() {
-    f();
     _t->removeTimer(tid);
+    f();
   });
   _t->modifyTimer(tid, ms);
 }
@@ -30,8 +30,8 @@ void Timer::single(int ms, const std::function<void()> &f) {
 Timer::Timer() {
   thread_ = AbstractThread::currentThread();
   timerId = thread_->appendTimerTask(0, [this]() {
-    timeout();
     if (single_) stop();
+    thread_->invokeMethod([this]() { timeout(); });
   });
   lsTrace();
 }
