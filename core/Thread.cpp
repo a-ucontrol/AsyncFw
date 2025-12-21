@@ -254,6 +254,12 @@ AbstractThread::~AbstractThread() {
     std::swap(private_.process_tasks_, private_.tasks);
     private_.process_tasks();
   }
+  while (!private_.timers.empty()) {
+    lsDebug() << LogStream::Color::Red << "remove timer task";
+    Private::Timer _timer = private_.timers.back();
+    private_.timers.erase(private_.timers.end());
+    delete _timer.task;
+  }
 
   delete &private_;
 
