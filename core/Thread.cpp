@@ -120,6 +120,7 @@ struct AbstractThread::Private {
   std::queue<ProcessTimerTask> process_timer_tasks_;
   std::queue<ProcessPollTask> process_poll_tasks_;
   static void clearId();
+  int nested_ = 0;
 };
 
 void AbstractThread::Private::process_tasks() {
@@ -294,7 +295,7 @@ void AbstractThread::requestInterrupt() {
 
 bool AbstractThread::interruptRequested() const {
   LockGuard lock(mutex);
-  return private_.state == WaitInterrupted || private_.state == WaitFinished;
+  return private_.state == WaitInterrupted || (private_.state & WaitFinished);
 }
 
 void AbstractThread::waitInterrupted() const {
@@ -315,7 +316,8 @@ void AbstractThread::quit() {
     lsWarning() << "thread already finished or not started";
     return;
   }
-  private_.state = WaitFinished;
+  if (private_.nested_) private_.nested_--;
+  private_.state |= WaitFinished;
   wake();
 }
 
@@ -343,14 +345,16 @@ void AbstractThread::updateId() {
 }
 
 void AbstractThread::exec() {
-  int _state;
+  int _nested;
 
   {  //lock scope
     LockGuard lock(mutex);
     warning_if(private_.process_tasks_.size() || private_.process_poll_tasks_.size() || private_.process_timer_tasks_.size()) << LogStream::Color::Red << "not empty" << private_.process_tasks_.size() << private_.process_poll_tasks_.size() << private_.process_timer_tasks_.size();
-    _state = (private_.state != Finished) ? private_.state : None;
-    if (_state >= Running) {  //nested exec
-      trace() << LogStream::Color::Red << "nested" << private_.process_tasks_.size() << private_.process_poll_tasks_.size() << private_.process_timer_tasks_.size();
+    if (private_.state >= Running && private_.state != Finished) { private_.nested_++; }
+    _nested = private_.nested_;
+
+    if (_nested) {  //nested exec
+      trace() << LogStream::Color::Red << "nested" << LogStream::Color::Green << _nested << private_.name << private_.process_tasks_.size() << private_.process_poll_tasks_.size() << private_.process_timer_tasks_.size();
       if (!private_.process_tasks_.empty()) {
         mutex.unlock();
         private_.process_tasks();
@@ -367,10 +371,9 @@ void AbstractThread::exec() {
     }
 
     std::swap(private_.process_tasks_, private_.tasks);  //take exists tasks
-    private_.state = Running;
-    if (_state < Running) condition_variable.notify_all();
+    if (!_nested) private_.state = Running;
   }
-  if (_state < Running) { startedEvent(); }
+  if (!_nested) { startedEvent(); }
   for (;;) {
     private_.process_tasks();
     {  //lock scope, wait new tasks or wakeup
@@ -380,7 +383,7 @@ void AbstractThread::exec() {
         std::swap(private_.process_tasks_, private_.tasks);  //take new tasks
         continue;
       }
-      if (private_.state == WaitFinished) break;
+      if (private_.state & WaitFinished) break;
       if (private_.state == WaitInterrupted) private_.state = Interrupted;
 
       condition_variable.notify_all();
@@ -509,10 +512,12 @@ void AbstractThread::exec() {
       }
     }
   }
-  if (_state < Running) finishedEvent();
+  if (!_nested) finishedEvent();
   LockGuard lock(mutex);
-  if (_state >= Running) {
-    private_.state = _state;
+  if (_nested) {
+    trace() << LogStream::Color::Magenta << private_.name << _nested << private_.nested_ << LogStream::Color::Red << (_nested > 1 && _nested != private_.nested_);
+    if (_nested > 1 && _nested != private_.nested_) return;
+    private_.state &= ~WaitFinished;
     return;
   }
   if (!private_.tasks.empty()) {
