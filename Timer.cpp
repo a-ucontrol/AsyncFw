@@ -31,7 +31,7 @@ Timer::Timer() {
   thread_ = AbstractThread::currentThread();
   timerId = thread_->appendTimerTask(0, [this]() {
     if (single_) stop();
-    thread_->invokeMethod([this]() { timeout(); });
+    timeout();
   });
   lsTrace();
 }
