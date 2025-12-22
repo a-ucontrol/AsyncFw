@@ -42,6 +42,8 @@ int main(int argc, char *argv[]) {
   LogMinimal log;
   ThreadPool _pool(5);
 
+  //tst(5000);
+
   Timer::single(10, []() { tst(100); });
   Timer::single(10, []() { tst(1500); });
   Timer::single(10, []() { tst(2000); });
