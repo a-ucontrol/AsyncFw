@@ -135,8 +135,10 @@ FunctionConnectorProtected<SystemProcess>::Connector<int, SystemProcess::State, 
       [fc, process, _out, _err](SystemProcess::State state) {
         if (state != SystemProcess::Running) {
           (*fc)(process->exitCode(), state, *_out, *_err);
-          delete fc;
-          process->private_->thread_->invokeMethod([process]() { delete process; });
+          process->private_->thread_->invokeMethod([fc, process]() {
+            delete fc;
+            delete process;
+          });
           delete _out;
           delete _err;
         }
