@@ -272,8 +272,11 @@ DataStream &DataStream::operator>>(DataArrayList &v) {
   rs_(v, _s);
   if (fail_) return *this;
   for (std::size_t i = 0; i != _s; ++i) {
-    if (fail_) return *this;
     *this >> v[i];
+    if (fail_) {
+      v.resize(i);
+      return *this;
+    }
   }
   return *this;
 }
@@ -283,8 +286,8 @@ DataStream &DataStream::operator<<(const DataArrayList &v) {
   sw_(_s);
   if (fail_) return *this;
   for (std::size_t i = 0; i != _s; ++i) {
-    if (fail_) return *this;
     *this << v[i];
+    if (fail_) return *this;
   }
   return *this;
 }
