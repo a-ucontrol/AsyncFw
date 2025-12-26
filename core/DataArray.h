@@ -84,7 +84,7 @@ private:
       return;
     }
     try {
-      _v.reserve(_s);
+      _v.resize(_s);
     } catch (std::exception &e) { fail_ = true; };
   }
   void w_(int, const uint8_t *);
