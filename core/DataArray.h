@@ -79,7 +79,7 @@ public:
 private:
   template <typename T>
   void rs_(T &_v, std::size_t _s) {
-    if (read_ && _s >= data_->size()) {
+    if (_s > data_->size() - pos_) {
       fail_ = true;
       return;
     }

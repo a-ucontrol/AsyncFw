@@ -269,15 +269,14 @@ DataStream &DataStream::operator>>(DataArrayList &v) {
   std::size_t _s;
   sr_(&_s);
   if (fail_) return *this;
-  rs_(v, _s);
-  if (fail_) return *this;
+  DataArrayList _l;
   for (std::size_t i = 0; i != _s; ++i) {
-    *this >> v[i];
-    if (fail_) {
-      v.resize(i);
-      return *this;
-    }
+    DataArray _d;
+    *this >> _d;
+    if (fail_) return *this;
+    _l.push_back(std::move(_d));
   }
+  v = std::move(_l);
   return *this;
 }
 
