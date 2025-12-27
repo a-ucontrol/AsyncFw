@@ -16,7 +16,7 @@ public:
   void wait();
   int exitCode();
 
-  FunctionConnectorProtected<SystemProcess>::Connector<State> stateChanged;
+  FunctionConnectorProtected<SystemProcess>::Connector<State> stateChanged {AbstractFunctionConnector::Queued};
   FunctionConnectorProtected<SystemProcess>::Connector<const std::string &, bool /*stdout: 0, stderr: 1*/> output;
 
   static FunctionConnectorProtected<SystemProcess>::Connector<int, State, const std::string &, const std::string &> &exec(const std::string &, const std::vector<std::string> &);
