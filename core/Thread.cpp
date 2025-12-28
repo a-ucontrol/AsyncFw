@@ -56,9 +56,7 @@ struct AbstractThread::Private {
   };
 
   struct PollTask {
-    ~PollTask() {
-      if (task) delete task;
-    }
+    ~PollTask() { delete task; }
     int fd;
     AbstractPollTask *task;
   };
@@ -245,7 +243,7 @@ AbstractThread::~AbstractThread() {
     waitFinished();
   }
 
-  lsTrace() << private_.name << "-" << private_.tasks.size() << private_.timers.size() << private_.poll_tasks.size() << private_.process_tasks_.size() << private_.process_timer_tasks_.size() << private_.process_poll_tasks_.size();
+  lsTrace() << private_.name << "-" << private_.tasks.size() << private_.timers.size() << private_.poll_tasks.size() << "-" << private_.process_tasks_.size() << private_.process_timer_tasks_.size() << private_.process_poll_tasks_.size();
 
   if (!private_.tasks.empty()) {
     lsDebug() << LogStream::Color::Red << "task list not empty";
@@ -257,6 +255,12 @@ AbstractThread::~AbstractThread() {
     Private::Timer _timer = private_.timers.back();
     private_.timers.erase(private_.timers.end());
     delete _timer.task;
+  }
+  while (!private_.poll_tasks.empty()) {
+    lsWarning() << LogStream::Color::Red << "remove poll task";
+    Private::PollTask *_pt = private_.poll_tasks.back();
+    private_.poll_tasks.erase(private_.poll_tasks.end());
+    delete _pt;
   }
 
   delete &private_;

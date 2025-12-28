@@ -449,7 +449,7 @@ void AbstractSocket::pollEvent(int _e) {
     incomingEvent();
     return;
   }
-  if (_e & (AbstractThread::PollHup | AbstractThread::PollErr | AbstractThread::PollInval)) {
+  if (_e & (AbstractThread::PollHup | AbstractThread::PollErr | AbstractThread::PollNval)) {
     private_->errorString_ = "Connection refused";
     private_->error_ = Refused;
     lsDebug() << LogStream::Color::Red << private_->errorString_ << "(poll error)" << static_cast<int>(_e) << errno;

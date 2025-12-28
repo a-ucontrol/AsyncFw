@@ -37,19 +37,16 @@ public:
     instance_ = this;
 #ifdef EXIT_ON_UNIX_SIGNAL
     eventfd_ = eventfd(0, EFD_NONBLOCK);
-    invokeMethod([this]() {
-      if (!running()) return;  //invoke in ~ExecLoopThread
-      appendPollTask(eventfd_, AbstractThread::PollIn, [this](AbstractThread::PollEvents) {
-        eventfd_t _v;
-        (void)eventfd_read(eventfd_, &_v);
-        if (_v == 1) {
+    appendPollTask(eventfd_, AbstractThread::PollIn, [this](AbstractThread::PollEvents) {
+      eventfd_t _v;
+      (void)eventfd_read(eventfd_, &_v);
+      if (_v == 1) {
   #ifndef USE_QAPPLICATION
-          Thread::quit();
+        Thread::quit();
   #else
           qApp->exit(code_);
   #endif
-        }
-      });
+      }
     });
 #endif
   }
