@@ -5,8 +5,6 @@
 #include "Coroutine.h"
 #include "SystemProcess.h"
 
-#define SYSTEMPROCESS_STDIN
-
 #ifdef EXTEND_SYSTEMPROCESS_TRACE
   #define trace lsTrace
 #else
@@ -60,39 +58,49 @@ bool SystemProcess::start() {
     private_->code_ = -1;
     return false;
   }
-
+#ifdef SYSTEMPROCESS_STDIN
+  private_->thread_->appendPollTask(STDIN_FILENO, AbstractThread::PollIn, [this](AbstractThread::PollEvents e) {
+    char buf[BUFSIZ];
+    int r;
+    if ((r = read(STDIN_FILENO, buf, BUFSIZ - 1)) > 0) {
+      buf[r] = 0;
+      input(buf);
+      trace() << "in" << r << LogStream::Color::Green << buf;
+    }
+  });
+#endif
   private_->thread_->appendPollTask(private_->out, AbstractThread::PollIn, [this](AbstractThread::PollEvents e) {
     char buf[BUFSIZ];
     int r;
 
-    if (e & AbstractThread::PollHup || (r = read(private_->out, buf, BUFSIZ)) == 0) {
+    if ((r = read(private_->out, buf, BUFSIZ - 1)) == 0) {
       private_->thread_->removePollDescriptor(private_->out);
       ::close(private_->out);
-      private_->out = 0;
+      private_->out = -1;
       lsTrace() << LogStream::Color::Red << "closed out";
-      if (private_->err == 0) finality();
+      if (private_->err == -1) finality();
       return;
     }
     buf[r] = 0;
     output(buf, false);
-    trace() << r << LogStream::Color::DarkGreen << buf;
+    trace() << "out" << r << LogStream::Color::DarkGreen << buf;
   });
 
   private_->thread_->appendPollTask(private_->err, AbstractThread::PollIn, [this](AbstractThread::PollEvents e) {
     char buf[BUFSIZ];
     int r;
 
-    if (e & AbstractThread::PollHup || (r = read(private_->err, buf, BUFSIZ)) == 0) {
+    if ((r = read(private_->err, buf, BUFSIZ - 1)) == 0) {
       private_->thread_->removePollDescriptor(private_->err);
       ::close(private_->err);
-      private_->err = 0;
+      private_->err = -1;
       lsTrace() << LogStream::Color::Red << "closed err";
-      if (private_->out == 0) finality();
+      if (private_->out == -1) finality();
       return;
     }
     buf[r] = 0;
     output(buf, true);
-    trace() << r << LogStream::Color::DarkRed << buf;
+    trace() << "err" << r << LogStream::Color::DarkRed << buf;
   });
 
   lsTrace() << LogStream::Color::Green << private_->cmdline_;
@@ -118,7 +126,12 @@ void SystemProcess::wait() {
 }
 
 int SystemProcess::exitCode() { return private_->code_; }
-
+#ifdef SYSTEMPROCESS_STDIN
+bool SystemProcess::input(const std::string &str) const {
+  if (private_->in < 0) return false;
+  return write(private_->in, str.data(), str.size()) > 0;
+}
+#endif
 FunctionConnectorProtected<SystemProcess>::Connector<int, SystemProcess::State, const std::string &, const std::string &> &SystemProcess::exec(const std::string &_cmdline, const std::vector<std::string> &_args) {
   FunctionConnectorProtected<SystemProcess>::Connector<int, SystemProcess::State, const std::string &, const std::string &> *fc = new FunctionConnectorProtected<SystemProcess>::Connector<int, SystemProcess::State, const std::string &, const std::string &>(AbstractFunctionConnector::Queued);
 
@@ -146,9 +159,8 @@ FunctionConnectorProtected<SystemProcess>::Connector<int, SystemProcess::State, 
       AbstractFunctionConnector::Connection::Direct);
 #ifndef __clang_analyzer__
   process->private_->thread_->invokeMethod([_cmdline, _args, process, fc, _out, _err]() {
-    if (!process->start(_cmdline, _args))
 #endif
-    {
+    if (!process->start(_cmdline, _args)) {
       (*fc)(process->exitCode(), process->state(), *_out, *_err);
       process->private_->thread_->invokeMethod([fc]() { delete fc; });
       delete process;
@@ -161,6 +173,12 @@ FunctionConnectorProtected<SystemProcess>::Connector<int, SystemProcess::State, 
 
 void SystemProcess::finality() {
   int r;
+#ifdef SYSTEMPROCESS_STDIN
+  private_->thread_->removePollDescriptor(STDIN_FILENO);
+  ::close(private_->in);
+  private_->in = -1;
+  lsTrace() << LogStream::Color::Red << "closed input";
+#endif
   if (waitpid(private_->pid_, &r, 0) == private_->pid_) {
     private_->state_ = (WIFEXITED(r)) ? Finished : Crashed;
     private_->code_ = WEXITSTATUS(r);
@@ -238,10 +256,10 @@ bool SystemProcess::Private::process() {
 
   std::vector<const char *> _args;
 
-  if (::close(_pipe_out[0]) == -1 || dup2(_pipe_out[1], 1) == -1 || ::close(_pipe_out[1]) == -1) goto FAIL;
-  if (::close(_pipe_err[0]) == -1 || dup2(_pipe_err[1], 2) == -1 || ::close(_pipe_err[1]) == -1) goto FAIL;
+  if (::close(_pipe_out[0]) == -1 || dup2(_pipe_out[1], STDOUT_FILENO) == -1 || ::close(_pipe_out[1]) == -1) goto FAIL;
+  if (::close(_pipe_err[0]) == -1 || dup2(_pipe_err[1], STDERR_FILENO) == -1 || ::close(_pipe_err[1]) == -1) goto FAIL;
 #ifdef SYSTEMPROCESS_STDIN
-  if (::close(_pipe_in[1]) == -1 || dup2(_pipe_in[0], 0) == -1 || ::close(_pipe_in[0]) == -1) goto FAIL;
+  if (::close(_pipe_in[1]) == -1 || dup2(_pipe_in[0], STDIN_FILENO) == -1 || ::close(_pipe_in[0]) == -1) goto FAIL;
 #endif
 
   _args.push_back(cmdline_.c_str());
