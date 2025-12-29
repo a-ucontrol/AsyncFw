@@ -21,6 +21,7 @@ bool PollNotifier::setDescriptor(int fd, AbstractThread::PollEvents e) {
       lsError() << "descriptor:" << fd_ << ", event:" << e;
       thread_->removePollDescriptor(fd_);
       fail_ = true;
+      return;
     }
     notify(e);
   });
