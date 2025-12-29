@@ -17,6 +17,7 @@ public:
   pid_t pid();
   void wait();
   int exitCode();
+  std::string cmd() const;
 #ifdef SYSTEMPROCESS_STDIN
   bool input(const std::string &) const;
 #endif

@@ -126,6 +126,9 @@ void SystemProcess::wait() {
 }
 
 int SystemProcess::exitCode() { return private_->code_; }
+
+std::string SystemProcess::cmd() const { return private_->cmdline_; }
+
 #ifdef SYSTEMPROCESS_STDIN
 bool SystemProcess::input(const std::string &str) const {
   if (private_->in < 0) return false;

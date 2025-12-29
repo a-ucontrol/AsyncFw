@@ -115,5 +115,7 @@ add_subdirectory(example/Timer)
 add_subdirectory(example/Coroutine)
 add_subdirectory(example/ContainerTask)
 add_subdirectory(example/CoroutineWait)
+add_subdirectory(example/SystemProcess)
+add_subdirectory(example/run-examples)
 
 
