@@ -3,6 +3,8 @@
 #include <string>
 #include "core/FunctionConnector.h"
 
+#define SYSTEMPROCESS_STDIN
+
 namespace AsyncFw {
 class SystemProcess {
 public:
@@ -15,7 +17,9 @@ public:
   pid_t pid();
   void wait();
   int exitCode();
-
+#ifdef SYSTEMPROCESS_STDIN
+  bool input(const std::string &) const;
+#endif
   FunctionConnectorProtected<SystemProcess>::Connector<State> stateChanged {AbstractFunctionConnector::Queued};
   FunctionConnectorProtected<SystemProcess>::Connector<const std::string &, bool /*stdout: 0, stderr: 1*/> output {AbstractFunctionConnector::Queued};
 
