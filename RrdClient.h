@@ -27,7 +27,6 @@ private:
   int requestTimerId;
   std::vector<uint64_t> lastTime;
   void tcpReadWrite(const DataArray *, uint32_t);
-  void connectionStateChanged();
   void request(int);
   FunctionConnectionGuardList gl_;
 };

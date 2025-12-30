@@ -24,7 +24,15 @@ RrdClient::RrdClient(DataArraySocket *socket, const std::vector<Rrd *> &rrd) : r
     tcpReadWrite(da, pi);
   });
 
-  gl_ += socket->stateChanged([this](AbstractSocket::State) { connectionStateChanged(); });
+  gl_ += socket->stateChanged([this](AbstractSocket::State _state) {
+    if (_state == AbstractSocket::State::Destroy) {
+      tcpSocket = nullptr;
+      return;
+    }
+    if (_state == AbstractSocket::State::Active)
+      for (int i = 0; i != rrd_.size(); ++i) request(i);
+    else { tcpSocket->thread()->modifyTimer(requestTimerId, 0); }
+  });
 
   requestTimerId = tcpSocket->thread()->appendTimerTask(0, [this]() {
     tcpSocket->thread()->modifyTimer(requestTimerId, 0);
@@ -107,14 +115,4 @@ void RrdClient::request(int n) {
   *reinterpret_cast<uint64_t *>(ba.data()) = lastTime[n] + 1;
   tcpSocket->transmit(ba, n);
   trace() << lastTime[n];
-}
-
-void RrdClient::connectionStateChanged() {
-  if (tcpSocket->state() == AbstractSocket::State::Destroy) {
-    tcpSocket = nullptr;
-    return;
-  }
-  if (tcpSocket->state() == AbstractSocket::State::Active)
-    for (int i = 0; i != rrd_.size(); ++i) request(i);
-  else { tcpSocket->thread()->modifyTimer(requestTimerId, 0); }
 }
