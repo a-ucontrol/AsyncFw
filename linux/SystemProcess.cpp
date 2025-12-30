@@ -18,10 +18,9 @@ struct SystemProcess::Private {
   bool process();
   int out;
   int err;
-#ifdef SYSTEMPROCESS_STDIN
   int in = -1;
   bool redirect_stdin = true;
-#endif
+
   AbstractThread *thread_;
   State state_ = None;
 
@@ -60,7 +59,7 @@ bool SystemProcess::start() {
     private_->code_ = -1;
     return false;
   }
-#ifdef SYSTEMPROCESS_STDIN
+
   if (private_->redirect_stdin)
     private_->thread_->appendPollTask(STDIN_FILENO, AbstractThread::PollIn, [this](AbstractThread::PollEvents e) {
       if (e & AbstractThread::PollIn) {
@@ -78,7 +77,7 @@ bool SystemProcess::start() {
         lsWarning() << LogStream::Color::Red << "redirect stdin disabled";
       }
     });
-#endif
+
   private_->thread_->appendPollTask(private_->out, AbstractThread::PollIn, [this](AbstractThread::PollEvents e) {
     if (e & AbstractThread::PollIn) {
       char buf[BUFSIZ];
@@ -141,14 +140,11 @@ void SystemProcess::wait() {
 
 int SystemProcess::exitCode() { return private_->code_; }
 
-std::string SystemProcess::cmd() const { return private_->cmdline_; }
-
-#ifdef SYSTEMPROCESS_STDIN
 bool SystemProcess::input(const std::string &str) const {
   if (private_->in < 0) return false;
   return write(private_->in, str.data(), str.size()) > 0;
 }
-#endif
+
 FunctionConnectorProtected<SystemProcess>::Connector<int, SystemProcess::State, const std::string &, const std::string &> &SystemProcess::exec(const std::string &_cmdline, const std::vector<std::string> &_args) {
   FunctionConnectorProtected<SystemProcess>::Connector<int, SystemProcess::State, const std::string &, const std::string &> *fc = new FunctionConnectorProtected<SystemProcess>::Connector<int, SystemProcess::State, const std::string &, const std::string &>(AbstractFunctionConnector::Queued);
 
@@ -190,12 +186,12 @@ FunctionConnectorProtected<SystemProcess>::Connector<int, SystemProcess::State, 
 
 void SystemProcess::finality() {
   int r;
-#ifdef SYSTEMPROCESS_STDIN
+
   if (private_->redirect_stdin) private_->thread_->removePollDescriptor(STDIN_FILENO);
   ::close(private_->in);
   private_->in = -1;
   lsTrace() << LogStream::Color::Red << "closed input";
-#endif
+
   if (waitpid(private_->pid_, &r, 0) == private_->pid_) {
     private_->state_ = (WIFEXITED(r)) ? Finished : Crashed;
     private_->code_ = WEXITSTATUS(r);
@@ -216,16 +212,14 @@ CoroutineTask SystemProcess::Private::waitTask() { co_await CoroutineAwait(); }
 bool SystemProcess::Private::process() {
   int _pipe_out[2];
   int _pipe_err[2];
-#ifdef SYSTEMPROCESS_STDIN
   int _pipe_in[2];
-#endif
+
   if (pipe(_pipe_out) == -1) return false;
   if (pipe(_pipe_err) == -1) {
     ::close(_pipe_out[0]);
     ::close(_pipe_out[1]);
     return false;
   }
-#ifdef SYSTEMPROCESS_STDIN
   if (pipe(_pipe_in) == -1) {
     ::close(_pipe_out[0]);
     ::close(_pipe_out[1]);
@@ -233,41 +227,30 @@ bool SystemProcess::Private::process() {
     ::close(_pipe_err[1]);
     return false;
   }
-#endif
   if ((pid_ = fork()) == -1) {
     ::close(_pipe_out[0]);
     ::close(_pipe_out[1]);
     ::close(_pipe_err[0]);
     ::close(_pipe_err[1]);
-#ifdef SYSTEMPROCESS_STDIN
     ::close(_pipe_in[0]);
     ::close(_pipe_in[1]);
-#endif
     return false;
   }
 
   if (pid_ > 0) {
     if (::close(_pipe_out[1]) == -1) {
       ::close(_pipe_err[1]);
-#ifdef SYSTEMPROCESS_STDIN
       ::close(_pipe_in[0]);
-#endif
       return false;
     }
     if (::close(_pipe_err[1]) == -1) {
-#ifdef SYSTEMPROCESS_STDIN
       ::close(_pipe_in[0]);
-#endif
       return false;
     }
-#ifdef SYSTEMPROCESS_STDIN
     if (::close(_pipe_in[0]) == -1) return false;
-#endif
     out = _pipe_out[0];
     err = _pipe_err[0];
-#ifdef SYSTEMPROCESS_STDIN
     in = _pipe_in[1];
-#endif
     return true;
   }
 
@@ -275,9 +258,7 @@ bool SystemProcess::Private::process() {
 
   if (::close(_pipe_out[0]) == -1 || dup2(_pipe_out[1], STDOUT_FILENO) == -1 || ::close(_pipe_out[1]) == -1) goto FAIL;
   if (::close(_pipe_err[0]) == -1 || dup2(_pipe_err[1], STDERR_FILENO) == -1 || ::close(_pipe_err[1]) == -1) goto FAIL;
-#ifdef SYSTEMPROCESS_STDIN
   if (::close(_pipe_in[1]) == -1 || dup2(_pipe_in[0], STDIN_FILENO) == -1 || ::close(_pipe_in[0]) == -1) goto FAIL;
-#endif
 
   _args.push_back(cmdline_.c_str());
   for (std::size_t i = 0; i != args.size(); ++i) _args.push_back(args[i].c_str());

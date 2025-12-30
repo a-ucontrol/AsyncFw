@@ -13,13 +13,13 @@ void run_examples() {
     if (!err) logInfo() << "OUT:" << str;
     else { logError() << "ERR:" << str; }
   });
-  process.stateChanged([&ok, &process, &err](AsyncFw::SystemProcess::State _s) {
+  process.stateChanged([&ok, &process, &err, &app](AsyncFw::SystemProcess::State _s) {
     if (_s == AsyncFw::SystemProcess::Running) return;
     if (_s != AsyncFw::SystemProcess::Finished) {
       ok = false;
       logAlert() << "========================";
-      err += process.cmd() + "\n";
-      logAlert() << "error:" << process.cmd();
+      err += app + "\n";
+      logAlert() << "error:" << app;
       logAlert() << "========================";
     }
   });
@@ -67,11 +67,11 @@ void run_examples() {
 }
 
 int main(int, char *[]) {
-  // AsyncFw::SystemProcess::exec("/bin/ls", {EXAMPLES_PATH "/example"})([](int _r, AsyncFw::SystemProcess::State _s, const std::string &_out, const std::string &_err) {
-  //   logNotice() << "End:" << _r << static_cast<int>(_s);
-  //   if (!_out.empty()) logInfo() << _out;
-  //   if (!_err.empty()) logError() << _err;
-  // });
+  AsyncFw::SystemProcess::exec("/bin/ls", {EXAMPLES_PATH})([](int _r, AsyncFw::SystemProcess::State _s, const std::string &_out, const std::string &_err) {
+    logNotice() << "End:" << _r << static_cast<int>(_s);
+    if (!_out.empty()) logInfo() << _out;
+    if (!_err.empty()) logError() << _err;
+  });
 
   AsyncFw::AbstractThread::currentThread()->invokeMethod([]() { run_examples(); });
 

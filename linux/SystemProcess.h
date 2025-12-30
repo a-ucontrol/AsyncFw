@@ -17,10 +17,8 @@ public:
   pid_t pid();
   void wait();
   int exitCode();
-  std::string cmd() const;
-#ifdef SYSTEMPROCESS_STDIN
   bool input(const std::string &) const;
-#endif
+
   FunctionConnectorProtected<SystemProcess>::Connector<State> stateChanged {AbstractFunctionConnector::Queued};
   FunctionConnectorProtected<SystemProcess>::Connector<const std::string &, bool /*stdout: 0, stderr: 1*/> output {AbstractFunctionConnector::Queued};
 
