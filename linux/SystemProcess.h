@@ -9,7 +9,7 @@ namespace AsyncFw {
 class SystemProcess {
 public:
   enum State : uint8_t { None, Running, Finished, Crashed, Error };
-  SystemProcess(bool = true);
+  SystemProcess(bool = false);
   ~SystemProcess();
   bool start(const std::string &, const std::vector<std::string> & = {});
   bool start();
