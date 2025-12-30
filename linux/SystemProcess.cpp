@@ -19,7 +19,8 @@ struct SystemProcess::Private {
   int out;
   int err;
 #ifdef SYSTEMPROCESS_STDIN
-  int in;
+  int in = -1;
+  bool redirect_stdin = true;
 #endif
   AbstractThread *thread_;
   State state_ = None;
@@ -32,8 +33,9 @@ struct SystemProcess::Private {
   CoroutineTask waitTask();
 };
 
-SystemProcess::SystemProcess() {
+SystemProcess::SystemProcess(bool redirect_stdin) {
   private_ = new Private;
+  private_->redirect_stdin = redirect_stdin;
   private_->thread_ = AbstractThread::currentThread();
   lsTrace();
 }
@@ -59,48 +61,60 @@ bool SystemProcess::start() {
     return false;
   }
 #ifdef SYSTEMPROCESS_STDIN
-  private_->thread_->appendPollTask(STDIN_FILENO, AbstractThread::PollIn, [this](AbstractThread::PollEvents e) {
-    char buf[BUFSIZ];
-    int r;
-    if ((r = read(STDIN_FILENO, buf, BUFSIZ - 1)) > 0) {
-      buf[r] = 0;
-      input(buf);
-      trace() << "in" << r << LogStream::Color::Green << buf;
-    }
-  });
+  if (private_->redirect_stdin)
+    private_->thread_->appendPollTask(STDIN_FILENO, AbstractThread::PollIn, [this](AbstractThread::PollEvents e) {
+      if (e & AbstractThread::PollIn) {
+        char buf[BUFSIZ];
+        int r = read(STDIN_FILENO, buf, BUFSIZ - 1);
+        if (r > 0) {
+          buf[r] = 0;
+          input(buf);
+        }
+        trace() << "in" << r << LogStream::Color::Green << buf;
+      }
+      if (e & ~AbstractThread::PollIn) {
+        private_->thread_->removePollDescriptor(STDIN_FILENO);
+        private_->redirect_stdin = false;
+        lsWarning() << LogStream::Color::Red << "redirect stdin disabled";
+      }
+    });
 #endif
   private_->thread_->appendPollTask(private_->out, AbstractThread::PollIn, [this](AbstractThread::PollEvents e) {
-    char buf[BUFSIZ];
-    int r;
-
-    if ((r = read(private_->out, buf, BUFSIZ - 1)) == 0) {
+    if (e & AbstractThread::PollIn) {
+      char buf[BUFSIZ];
+      int r = read(private_->out, buf, BUFSIZ - 1);
+      if (r > 0) {
+        buf[r] = 0;
+        output(buf, false);
+      }
+      trace() << "out" << r << LogStream::Color::DarkGreen << buf;
+    }
+    if (e & ~AbstractThread::PollIn) {
       private_->thread_->removePollDescriptor(private_->out);
       ::close(private_->out);
       private_->out = -1;
       lsTrace() << LogStream::Color::Red << "closed out";
       if (private_->err == -1) finality();
-      return;
     }
-    buf[r] = 0;
-    output(buf, false);
-    trace() << "out" << r << LogStream::Color::DarkGreen << buf;
   });
 
   private_->thread_->appendPollTask(private_->err, AbstractThread::PollIn, [this](AbstractThread::PollEvents e) {
-    char buf[BUFSIZ];
-    int r;
-
-    if ((r = read(private_->err, buf, BUFSIZ - 1)) == 0) {
+    if (e & AbstractThread::PollIn) {
+      char buf[BUFSIZ];
+      int r = read(private_->err, buf, BUFSIZ - 1);
+      if (r > 0) {
+        buf[r] = 0;
+        output(buf, true);
+      }
+      trace() << "err" << r << LogStream::Color::DarkRed << buf;
+    }
+    if (e & ~AbstractThread::PollIn) {
       private_->thread_->removePollDescriptor(private_->err);
       ::close(private_->err);
       private_->err = -1;
       lsTrace() << LogStream::Color::Red << "closed err";
       if (private_->out == -1) finality();
-      return;
     }
-    buf[r] = 0;
-    output(buf, true);
-    trace() << "err" << r << LogStream::Color::DarkRed << buf;
   });
 
   lsTrace() << LogStream::Color::Green << private_->cmdline_;
@@ -177,7 +191,7 @@ FunctionConnectorProtected<SystemProcess>::Connector<int, SystemProcess::State, 
 void SystemProcess::finality() {
   int r;
 #ifdef SYSTEMPROCESS_STDIN
-  private_->thread_->removePollDescriptor(STDIN_FILENO);
+  if (private_->redirect_stdin) private_->thread_->removePollDescriptor(STDIN_FILENO);
   ::close(private_->in);
   private_->in = -1;
   lsTrace() << LogStream::Color::Red << "closed input";
