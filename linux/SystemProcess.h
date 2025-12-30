@@ -3,8 +3,6 @@
 #include <string>
 #include "core/FunctionConnector.h"
 
-#define SYSTEMPROCESS_STDIN
-
 namespace AsyncFw {
 class SystemProcess {
 public:
