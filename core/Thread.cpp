@@ -225,6 +225,14 @@ AbstractThread::AbstractThread(const std::string &_name) : private_(*new Private
 }
 
 AbstractThread::~AbstractThread() {
+  {  //lock scope
+    LockGuard lock(list_mutex);
+    std::vector<AbstractThread *>::iterator it = std::lower_bound(list_threads.begin(), list_threads.end(), this, Compare());
+    if (it != list_threads.end() && (*it) == this) list_threads.erase(it);
+    else { lsError() << "thread not found"; }
+    trace() << "threads:" << std::to_string(list_threads.size());
+  }
+
 #ifndef _WIN32
   ::close(WAKE_FD);
   #ifndef EVENTFD_WAKE
@@ -265,12 +273,6 @@ AbstractThread::~AbstractThread() {
   }
 
   delete &private_;
-
-  LockGuard lock(list_mutex);
-  std::vector<AbstractThread *>::iterator it = std::lower_bound(list_threads.begin(), list_threads.end(), this, Compare());
-  if (it != list_threads.end() && (*it) == this) list_threads.erase(it);
-  else { lsError() << "thread not found"; }
-  trace() << "threads:" << std::to_string(list_threads.size());
 }
 
 AbstractThread *AbstractThread::currentThread() {
