@@ -149,8 +149,9 @@ void AbstractThread::Private::process_timers() {
 
 void AbstractThread::Private::clearId() {
   LockGuard lock(list_mutex);
-  std::vector<AbstractThread *>::iterator it = std::lower_bound(AbstractThread::list_threads.begin(), AbstractThread::list_threads.end(), std::this_thread::get_id(), AbstractThread::Compare());
-  if (it != list_threads.end()) {
+  std::thread::id _id = std::this_thread::get_id();
+  std::vector<AbstractThread *>::iterator it = std::lower_bound(AbstractThread::list_threads.begin(), AbstractThread::list_threads.end(), _id, AbstractThread::Compare());
+  if (it != list_threads.end() && (*it)->private_.id == _id) {
     AbstractThread *_t = (*it);
     _t->private_.id = {};
     list_threads.erase(it);
