@@ -25,15 +25,14 @@ AbstractLog::AbstractLog(bool noInstance) {
 AbstractLog::~AbstractLog() {}
 
 void AbstractLog::flush() {
+  Message m;
   for (;;) {
-    thread_->lock();
-    if (messages.empty()) {
-      thread_->unlock();
-      break;
+    {  //lock scope
+      AbstractThread::LockGuard lock = thread_->lockGuard();
+      if (messages.empty()) break;
+      m = messages.front();
+      messages.pop();
     }
-    Message m = messages.front();
-    messages.pop();
-    thread_->unlock();
     process(m);
   }
 }
@@ -65,19 +64,20 @@ void AbstractLog::append(const Message &m) {
     }
     if (!b) return;
   }
-
-  thread_->lock();
-  int size = messages.size();
-  if (size >= queueLimit) {
-    console_msg("AbstractLog: many messages in queue");
+  int size;
+  {  //lock scope
+    AbstractThread::LockGuard lock = thread_->lockGuard();
+    size = messages.size();
+    if (size >= queueLimit) {
+      console_msg("AbstractLog: many messages in queue");
 #ifndef LS_NO_TRACE
-    console_msg(m.string);
+      console_msg(m.string);
 #endif
-    thread_->unlock();
-    return;
+      return;
+    }
+    messages.push(m);
   }
-  messages.push(m);
-  thread_->unlock();
+
   if (size == 0)
     thread_->invokeMethod([this]() {
       flush();
@@ -155,9 +155,10 @@ void AbstractLog::stopTimer(int *timerId) {
 void AbstractLog::append_(const Message &m, uint8_t f) {
   if (log_ && !(f & LOG_STREAM_CONSOLE_ONLY)) {
     if (f & 0x80) {
-      log_->thread_->lock();
-      log_->messages.push(m);
-      log_->thread_->unlock();
+      {  //lock scope
+        AbstractThread::LockGuard lock = log_->thread_->lockGuard();
+        log_->messages.push(m);
+      }
       log_->thread_->invokeMethod(
           []() {
             log_->flush();

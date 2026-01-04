@@ -30,7 +30,7 @@
   #define checkDifferentThread()
 #endif
 
-#define ABSTRACT_THREAD_LOCK_GUARD
+//#define ABSTRACT_THREAD_LOCK_GUARD
 
 namespace AsyncFw {
 class AbstractThread {
@@ -52,22 +52,17 @@ public:
   };
 #ifndef ABSTRACT_THREAD_LOCK_GUARD
   using LockGuard = std::lock_guard<std::mutex>;
-  /*struct LockGuard : public std::lock_guard<std::mutex> {
-    using std::lock_guard<std::mutex>::lock_guard;
-    LockGuard(AbstractThread *thread) : std::lock_guard<std::mutex>::lock_guard(thread->mutex) {}
-  };*/
 #else
   struct LockGuard {
-    //LockGuard(AbstractThread *thread) : mutex_(&thread->mutex) { mutex_->lock(); }
     LockGuard(std::mutex &mutex) : mutex_(&mutex) { mutex_->lock(); }
     ~LockGuard() {
       if (mutex_) mutex_->unlock();
     }
     LockGuard(LockGuard &) = delete;
-    //LockGuard(LockGuard &&g) {
-    //  this->mutex_ = g.mutex_;
-    //  g.mutex_ = nullptr;
-    //}
+    LockGuard(LockGuard &&g) {
+      this->mutex_ = g.mutex_;
+      g.mutex_ = nullptr;
+    }
 
   private:
     std::mutex *mutex_;
@@ -150,8 +145,8 @@ public:
   std::thread::id id() const;
   std::string name() const;
 
-  void lock() { mutex.lock(); }
-  void unlock() { mutex.unlock(); }
+  //void lock() { mutex.lock(); }
+  //void unlock() { mutex.unlock(); }
   LockGuard lockGuard() { return LockGuard(mutex); }
 
 protected:

@@ -75,38 +75,39 @@ bool Rrd::createFile() {
 
 void Rrd::append(const Item &data, uint64_t index) {
   uint64_t pos = index ? index : interval ? Rrd_CURRENT_TIME / interval : 1;
-  thread_->lock();
-  if (!index && !interval) pos += last_;
+  bool _average;
+  {  //lock scope
+    AbstractThread::LockGuard lock = thread_->lockGuard();
+    if (!index && !interval) pos += last_;
 
-  uint32_t empty;
-  if (pos > last_) {
-    uint64_t v = pos - last_;
-    if (v > dbSize) v = dbSize;
-    empty = v;
-  } else {
-    trace() << ((pos == last_) ? "index exists:" : "error index:") << index;
-    thread_->unlock();
-    return;
-  }
-
-  if (count_v < dbSize && count_v < pos) count_v += 1;
-  uint32_t i = pos % dbSize;
-  dataBase[i] = data;
-
-  if (empty > 1) {
-    bool _fill = empty <= fill;
-    while (--empty) {
-      if (i == 0) i = dbSize;
-      i--;
-      if (!_fill) dataBase[i].clear();
-      else { dataBase[i] = data; }
+    uint32_t empty;
+    if (pos > last_) {
+      uint64_t v = pos - last_;
+      if (v > dbSize) v = dbSize;
+      empty = v;
+    } else {
+      trace() << ((pos == last_) ? "index exists:" : "error index:") << index;
+      return;
     }
+
+    if (count_v < dbSize && count_v < pos) count_v += 1;
+    uint32_t i = pos % dbSize;
+    dataBase[i] = data;
+
+    if (empty > 1) {
+      bool _fill = empty <= fill;
+      while (--empty) {
+        if (i == 0) i = dbSize;
+        i--;
+        if (!_fill) dataBase[i].clear();
+        else { dataBase[i] = data; }
+      }
+    }
+
+    _average = (aInterval && (((pos + aOffset) / aInterval) - ((last_ + aOffset) / aInterval)) > 0);
+
+    last_ = pos;
   }
-
-  bool _average = (aInterval && (((pos + aOffset) / aInterval) - ((last_ + aOffset) / aInterval)) > 0);
-
-  last_ = pos;
-  thread_->unlock();
   updated();
 
   if (_average) {
@@ -127,11 +128,12 @@ void Rrd::writeToArray(uint32_t index, const Item &ba) {  //Must lock the thread
 }
 
 void Rrd::clear() {
-  thread_->lock();
-  for (uint32_t i = 0; i != dbSize; ++i) dataBase[i].clear();
-  last_ = 0;
-  count_v = 0;
-  thread_->unlock();
+  {  //lock scope
+    AbstractThread::LockGuard lock = thread_->lockGuard();
+    for (uint32_t i = 0; i != dbSize; ++i) dataBase[i].clear();
+    last_ = 0;
+    count_v = 0;
+  }
   updated();
 }
 
