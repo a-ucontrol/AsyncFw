@@ -145,8 +145,6 @@ public:
   std::thread::id id() const;
   std::string name() const;
 
-  //void lock() { mutex.lock(); }
-  //void unlock() { mutex.unlock(); }
   LockGuard lockGuard() { return LockGuard(mutex); }
 
 protected:
