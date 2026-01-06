@@ -63,7 +63,7 @@ void run_examples() {
     logAlert() << "-ERROR!-";
   }
 
-  AsyncFw::MainThread::instance()->quit();
+  AsyncFw::MainThread::quit();
 }
 
 int main(int, char *[]) {
@@ -76,6 +76,6 @@ int main(int, char *[]) {
   AsyncFw::AbstractThread::currentThread()->invokeMethod([]() { run_examples(); });
 
   logNotice() << "Start Applicaiton";
-  int ret = AsyncFw::MainThread::instance()->exec();
+  int ret = AsyncFw::MainThread::exec();
   return ret;
 }

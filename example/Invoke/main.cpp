@@ -31,14 +31,14 @@ int main(int argc, char *argv[]) {
         logInfo() << "run in thread" << ct->name() << ct->id();
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
         logInfo() << "exit application";
-        AsyncFw::MainThread::instance()->exit(0);
+        AsyncFw::MainThread::exit(0);
       });
     });
   });
 
   logNotice() << "Start Applicaiton";
 
-  int ret = AsyncFw::MainThread::instance()->exec();
+  int ret = AsyncFw::MainThread::exec();
 
   logNotice() << "End Applicaiton";
   return ret;

@@ -31,7 +31,6 @@ inline class MainThread :
 #endif
 {
 public:
-  static MainThread *instance() { return instance_; }
   MainThread() : Thread("Main") {
     updateId();
     instance_ = this;
@@ -171,28 +170,28 @@ private:
 #endif
 
 public:
-  int exec() {
+  static int exec() {
 #ifndef USE_QAPPLICATION
-    if (running()) {
+    if (instance_->running()) {
       console_msg("Already running");
       return -1;
     }
-    Thread::exec();
-    return code_;
+    instance_->Thread::exec();
+    return instance_->code_;
 #else
     return qApp->exec();
 #endif
   }
-  void exit(int code) {
-    code_ = code;
-    quit();
+  static void exit(int code) {
+    instance_->code_ = code;
+    instance_->quit();
   }
-  void quit() {
+  static void quit() {
 #ifndef USE_QAPPLICATION
   #ifdef EXIT_ON_UNIX_SIGNAL
-    if (eventfd_ >= 0) eventfd_write(eventfd_, 1);
+    if (instance_->eventfd_ >= 0) eventfd_write(instance_->eventfd_, 1);
   #else
-    Thread::quit();
+    instance_->Thread::quit();
   #endif
 #else
     qApp->quit();

@@ -11,7 +11,7 @@ public:
       AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::currentThread();
       logInfo() << cnt << "send from thread:" << ct->name() << ct->id();
       connector(cnt++);
-      if (cnt == 3) AsyncFw::MainThread::instance()->exit(0);
+      if (cnt == 3) AsyncFw::MainThread::exit(0);
     });
     timer.start(1000);
   }
@@ -51,7 +51,7 @@ int main(int argc, char *argv[]) {
 
   logNotice() << "Start Applicaiton";
 
-  int ret = AsyncFw::MainThread::instance()->exec();
+  int ret = AsyncFw::MainThread::exec();
 
   logNotice() << "End Applicaiton";
   delete sender;

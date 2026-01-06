@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
     socket->received([socket](const AsyncFw::DataArray &data) {
       logNotice() << "received:" << data;
       socket->write("Answer\n");
-      AsyncFw::MainThread::instance()->exit(0);
+      AsyncFw::MainThread::exit(0);
     });
     logInfo() << "Incoming:" << fd << address;
     return true;
@@ -29,7 +29,7 @@ int main(int argc, char *argv[]) {
   ls.listen("0.0.0.0", 18080);
 
   logNotice() << "Start Applicaiton";
-  int ret = AsyncFw::MainThread::instance()->exec();
+  int ret = AsyncFw::MainThread::exec();
   logNotice() << "End Applicaiton";
 
   return ret;

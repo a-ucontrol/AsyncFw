@@ -42,12 +42,12 @@ int main(int argc, char *argv[]) {
       [](int r) {
         AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::currentThread();
         logNotice() << "result:" << r << "run in thread" << ct->name() << ct->id();
-        AsyncFw::MainThread::instance()->exit(0);
+        AsyncFw::MainThread::exit(0);
       });
 
   logNotice() << "Start Applicaiton";
 
-  int ret = AsyncFw::MainThread::instance()->exec();
+  int ret = AsyncFw::MainThread::exec();
 
   logNotice() << "End Applicaiton" << ret;
   return ret;

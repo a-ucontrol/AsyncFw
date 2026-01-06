@@ -37,7 +37,7 @@ int main(int argc, char *argv[]) {
       socket->connect(list[0], SERVER_PORT);
       return;
     }
-    AsyncFw::MainThread::instance()->exit(0);
+    AsyncFw::MainThread::exit(0);
   });
 #else
   socket.connect("192.168.110.100", SERVER_PORT);
@@ -53,16 +53,16 @@ int main(int argc, char *argv[]) {
     std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     logNotice() << header.view(0, 512);
     logDebug() << content.view(0, 1024);
-    AsyncFw::MainThread::instance()->exit(0);
+    AsyncFw::MainThread::exit(0);
   });
   socket->error([&socket](const AsyncFw::AbstractSocket::Error) {
     logError() << "Error!";
-    AsyncFw::MainThread::instance()->exit(0);
+    AsyncFw::MainThread::exit(0);
   });
 
   logNotice() << "Start Applicaiton";
 
-  int ret = AsyncFw::MainThread::instance()->exec();
+  int ret = AsyncFw::MainThread::exec();
 
   logNotice() << "End Applicaiton";
 

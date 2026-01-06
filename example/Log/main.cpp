@@ -5,6 +5,9 @@ int main(int argc, char *argv[]) {
   AsyncFw::Log log(1000, "log-file-name");
   log.setColorOut(true);
 
+  AsyncFw::AbstractThread *_t = AsyncFw::AbstractThread::currentThread();
+  logAlert() << *_t;
+
   lsTrace() << "Trace";
   lsDebug() << "Debug";
   lsInfo() << "Info";
@@ -26,6 +29,6 @@ int main(int argc, char *argv[]) {
   logAlert() << "logAlert";
   logEmergency() << "Emergency";  // throw
 
-  int ret = AsyncFw::MainThread::instance()->exec();
+  int ret = AsyncFw::MainThread::exec();
   return ret;
 }

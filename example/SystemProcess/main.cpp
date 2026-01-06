@@ -11,7 +11,7 @@ int main(int argc, char *argv[]) {
   });
   process.stateChanged([](AsyncFw::SystemProcess::State _s) {
     if (_s == AsyncFw::SystemProcess::Running) return;
-    AsyncFw::MainThread::instance()->exit(0);
+    AsyncFw::MainThread::exit(0);
   });
 
   process.start("/bin/bash");
@@ -22,6 +22,6 @@ int main(int argc, char *argv[]) {
   AsyncFw::Timer::single(1500, [&process]() { process.input("exit\n"); });
 
   logNotice() << "Start Applicaiton";
-  int ret = AsyncFw::MainThread::instance()->exec();
+  int ret = AsyncFw::MainThread::exec();
   return ret;
 }

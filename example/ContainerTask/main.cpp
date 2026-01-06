@@ -17,7 +17,7 @@ int main(int argc, char *argv[]) {
 
   timer.timeout([&tasks]() {
     if (tasks.empty()) {
-      AsyncFw::MainThread::instance()->exit(0);
+      AsyncFw::MainThread::exit(0);
       return;
     }
     lsInfoGreen() << tasks.front()->running();
@@ -30,7 +30,7 @@ int main(int argc, char *argv[]) {
   timer.start(500);
 
   logNotice() << "Start Applicaiton";
-  int ret = AsyncFw::MainThread::instance()->exec();
+  int ret = AsyncFw::MainThread::exec();
   logNotice() << "End Applicaiton";
   return ret;
 }

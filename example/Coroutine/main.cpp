@@ -46,14 +46,14 @@ int main(int argc, char *argv[]) {
     co_await await;
     AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::currentThread();
     logNotice() << "coro_task: resumed in thread" << ct->name() << ct->id();
-    AsyncFw::MainThread::instance()->exit(0);
+    AsyncFw::MainThread::exit(0);
   });
 
   coro_task();
 
   logNotice() << "Start Applicaiton";
 
-  int ret = AsyncFw::MainThread::instance()->exec();
+  int ret = AsyncFw::MainThread::exec();
 
   logNotice() << "End Applicaiton";
   return ret;
