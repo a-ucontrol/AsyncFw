@@ -134,7 +134,7 @@ public:
   }
 
   void start();
-  bool running();
+  bool running() const;
   void requestInterrupt();
   bool interruptRequested() const;
   void waitInterrupted() const;

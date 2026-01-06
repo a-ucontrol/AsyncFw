@@ -292,7 +292,7 @@ AbstractThread::LockGuard AbstractThread::threads(std::vector<AbstractThread *> 
   return LockGuard {list_mutex};
 }
 
-bool AbstractThread::running() {
+bool AbstractThread::running() const {
   LockGuard lock(mutex);
   return private_.state > Private::WaitStarted && private_.state != Private::Finished;
 }
