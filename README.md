@@ -22,13 +22,13 @@ int main(int argc, char *argv[]) {
 
   timer1.timeout([&cnt]() {
     std::cout << std::chrono::system_clock::now() << " timer1 timeout" << std::endl;
-    if (++cnt == 10) AsyncFw::MainThread::instance()->exit(0);
+    if (++cnt == 10) AsyncFw::MainThread::exit(0);
   });
 
   timer2.timeout([]() { std::cout << std::chrono::system_clock::now() << " timer2 timeout" << std::endl; });
 
   std::cout << "Start Applicaiton" << std::endl;
-  int ret = AsyncFw::MainThread::instance()->exec();
+  int ret = AsyncFw::MainThread::exec();
   return ret;
 }
 ```
@@ -46,7 +46,7 @@ int main(int argc, char *argv[]) {
       char buf[128];
       int r  = read(STDIN_FILENO, buf, sizeof(buf) - 1);
       buf[r] = 0;
-      if (r == 2 && buf[0] == 'q') AsyncFw::MainThread::instance()->quit();
+      if (r == 2 && buf[0] == 'q') AsyncFw::MainThread::quit();
       std::cout << "stdin: " << buf;
     });
   } else {
@@ -54,7 +54,7 @@ int main(int argc, char *argv[]) {
     return -1;
   }
   std::cout << "Start Applicaiton" << std::endl;
-  int ret = AsyncFw::MainThread::instance()->exec();
+  int ret = AsyncFw::MainThread::exec();
   return ret;
 }
 ```
@@ -113,14 +113,14 @@ int main(int argc, char *argv[]) {
         logInfo() << "run in thread" << ct->name() << ct->id();
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
         logInfo() << "exit application";
-        AsyncFw::MainThread::instance()->exit(0);
+        AsyncFw::MainThread::exit(0);
       });
     });
   });
 
   logNotice() << "Start Applicaiton";
 
-  int ret = AsyncFw::MainThread::instance()->exec();
+  int ret = AsyncFw::MainThread::exec();
 
   logNotice() << "End Applicaiton";
   return ret;
@@ -141,7 +141,7 @@ public:
       AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::currentThread();
       logInfo() << cnt << "send from thread:" << ct->name() << ct->id();
       connector(cnt++);
-      if (cnt == 3) AsyncFw::MainThread::instance()->exit(0);
+      if (cnt == 3) AsyncFw::MainThread::exit(0);
     });
     timer.start(1000);
   }
@@ -181,7 +181,7 @@ int main(int argc, char *argv[]) {
 
   logNotice() << "Start Applicaiton";
 
-  int ret = AsyncFw::MainThread::instance()->exec();
+  int ret = AsyncFw::MainThread::exec();
 
   logNotice() << "End Applicaiton";
   delete sender;
@@ -235,12 +235,12 @@ int main(int argc, char *argv[]) {
       [](int r) {
         AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::currentThread();
         logNotice() << "result:" << r << "run in thread" << ct->name() << ct->id();
-        AsyncFw::MainThread::instance()->exit(0);
+        AsyncFw::MainThread::exit(0);
       });
 
   logNotice() << "Start Applicaiton";
 
-  int ret = AsyncFw::MainThread::instance()->exec();
+  int ret = AsyncFw::MainThread::exec();
 
   logNotice() << "End Applicaiton" << ret;
   return ret;
@@ -296,14 +296,14 @@ int main(int argc, char *argv[]) {
     co_await await;
     AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::currentThread();
     logNotice() << "coro_task: resumed in thread" << ct->name() << ct->id();
-    AsyncFw::MainThread::instance()->exit(0);
+    AsyncFw::MainThread::exit(0);
   });
 
   coro_task();
 
   logNotice() << "Start Applicaiton";
 
-  int ret = AsyncFw::MainThread::instance()->exec();
+  int ret = AsyncFw::MainThread::exec();
 
   logNotice() << "End Applicaiton";
   return ret;
@@ -331,7 +331,7 @@ public:
         logNotice() << "Received:" << da;
         logDebug() << da.view(0, 512) << "...";
       }
-      AsyncFw::MainThread::instance()->exit(0);
+      AsyncFw::MainThread::exit(0);
     }
   }
   void readEvent() {
@@ -369,7 +369,7 @@ int main(int argc, char *argv[]) {
 
   logNotice() << "Start Applicaiton";
 
-  int ret = AsyncFw::MainThread::instance()->exec();
+  int ret = AsyncFw::MainThread::exec();
 
   logNotice() << "End Applicaiton";
   return ret;
@@ -396,7 +396,7 @@ int main(int argc, char *argv[]) {
 
   timer.timeout([&tasks]() {
     if (tasks.empty()) {
-      AsyncFw::MainThread::instance()->exit(0);
+      AsyncFw::MainThread::exit(0);
       return;
     }
     lsInfoGreen() << tasks.front()->running();
@@ -409,7 +409,7 @@ int main(int argc, char *argv[]) {
   timer.start(500);
 
   logNotice() << "Start Applicaiton";
-  int ret = AsyncFw::MainThread::instance()->exec();
+  int ret = AsyncFw::MainThread::exec();
   logNotice() << "End Applicaiton";
   return ret;
 }
@@ -438,7 +438,7 @@ int main(int argc, char *argv[]) {
     socket->received([socket](const AsyncFw::DataArray &data) {
       logNotice() << "received:" << data;
       socket->write("Answer\n");
-      AsyncFw::MainThread::instance()->exit(0);
+      AsyncFw::MainThread::exit(0);
     });
     logInfo() << "Incoming:" << fd << address;
     return true;
@@ -447,7 +447,7 @@ int main(int argc, char *argv[]) {
   ls.listen("0.0.0.0", 18080);
 
   logNotice() << "Start Applicaiton";
-  int ret = AsyncFw::MainThread::instance()->exec();
+  int ret = AsyncFw::MainThread::exec();
   logNotice() << "End Applicaiton";
 
   return ret;
@@ -468,7 +468,7 @@ int main(int argc, char *argv[]) {
   });
   process.stateChanged([](AsyncFw::SystemProcess::State _s) {
     if (_s == AsyncFw::SystemProcess::Running) return;
-    AsyncFw::MainThread::instance()->exit(0);
+    AsyncFw::MainThread::exit(0);
   });
 
   process.start("/bin/bash");
@@ -479,7 +479,7 @@ int main(int argc, char *argv[]) {
   AsyncFw::Timer::single(1500, [&process]() { process.input("exit\n"); });
 
   logNotice() << "Start Applicaiton";
-  int ret = AsyncFw::MainThread::instance()->exec();
+  int ret = AsyncFw::MainThread::exec();
   return ret;
 }
 ```
