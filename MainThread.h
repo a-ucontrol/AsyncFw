@@ -182,11 +182,8 @@ public:
     return qApp->exec();
 #endif
   }
-  static void exit(int code) {
+  static void exit(int code = 0) {
     instance_->code_ = code;
-    instance_->quit();
-  }
-  static void quit() {
 #ifndef USE_QAPPLICATION
   #ifdef EXIT_ON_UNIX_SIGNAL
     if (instance_->eventfd_ >= 0) eventfd_write(instance_->eventfd_, 1);

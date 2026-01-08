@@ -63,7 +63,7 @@ void run_examples() {
     logAlert() << "-ERROR!-";
   }
 
-  AsyncFw::MainThread::quit();
+  AsyncFw::MainThread::exit();
 }
 
 int main(int, char *[]) {

@@ -46,7 +46,7 @@ int main(int argc, char *argv[]) {
       char buf[128];
       int r  = read(STDIN_FILENO, buf, sizeof(buf) - 1);
       buf[r] = 0;
-      if (r == 2 && buf[0] == 'q') AsyncFw::MainThread::quit();
+      if (r == 2 && buf[0] == 'q') AsyncFw::MainThread::exit();
       std::cout << "stdin: " << buf;
     });
   } else {

@@ -52,7 +52,7 @@ int main(int argc, char *argv[]) {
 
   Timer::single(5000, []() {
     logNotice() << "MainThread::instance()->quit()";
-    MainThread::quit();
+    MainThread::exit();
   });
 
   logNotice() << "MainThread::instance()->exec()";
