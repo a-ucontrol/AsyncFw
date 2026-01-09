@@ -21,7 +21,7 @@ File::File(const std::string &fn) {
 
 File::~File() {
   close();
-  lsTrace() << private_->fn_;
+  lsTrace();
   delete private_;
 }
 
@@ -38,7 +38,12 @@ bool File::open(std::ios::openmode m) {
 }
 
 void File::close() {
-  if (private_->f_.is_open()) private_->f_.close();
+  if (private_->f_.is_open()) {
+    private_->f_.close();
+    lsTrace() << private_->fn_;
+    return;
+  }
+  lsDebug() << "not open:" << private_->fn_;
 }
 
 void File::flush() {
