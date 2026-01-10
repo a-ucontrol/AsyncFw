@@ -36,7 +36,7 @@ LogStream &operator<<(LogStream &log, const DataStream &v) { return (log << v.ar
 
 LogStream &operator<<(LogStream &log, const AbstractThread &t) { return (log << "name:" << t.name() << "id:" << t.id() << "running:" << t.running()); }
 
-LogStream &operator<<(LogStream &log, const AbstractSocket &s) { return (log.nospace() << "local: " << s.address() << ':' << std::to_string(s.port()) << "peer: " << s.peerAddress() << ':' << s.peerPort() << "state: " << static_cast<int>(s.state())); }
+LogStream &operator<<(LogStream &log, const AbstractSocket &s) { return (log.nospace() << "local: " << s.address() << ':' << std::to_string(s.port()) << " peer: " << s.peerAddress() << ':' << s.peerPort() << " state: " << static_cast<int>(s.state())); }
 
 LogStream &operator<<(LogStream &log, const std::thread::id &v) { return (log << *static_cast<const std::thread::native_handle_type *>(static_cast<const void *>(&v))); }
 

@@ -62,7 +62,11 @@ int main(int argc, char *argv[]) {
 
   logNotice() << "Start Applicaiton";
 
+  logDebug() << *(AsyncFw::AbstractSocket*)socket;
+
   int ret = AsyncFw::MainThread::exec();
+
+  logDebug() << *(AsyncFw::AbstractSocket*)socket;
 
   logNotice() << "End Applicaiton";
 
