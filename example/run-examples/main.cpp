@@ -10,8 +10,8 @@ void run_examples() {
 
   bool ok = true;
   process.output([](const std::string &str, bool err) {
-    if (!err) logInfo() << "OUT:" << str;
-    else { logError() << "ERR:" << str; }
+    if (!err) logInfo() << "OUT:" << std::endl << str;
+    else { logError() << "ERR:" << std::endl << str; }
   });
   process.stateChanged([&ok, &process, &err, &app](AsyncFw::SystemProcess::State _s) {
     if (_s == AsyncFw::SystemProcess::Running) return;
