@@ -347,6 +347,10 @@ DataArrayList TlsContext::trusted() const {
 }
 
 std::string TlsContext::infoKey() const {
+  if (!private_->ctx_) {
+    lsWarning() << "empty";
+    return {};
+  }
   EVP_PKEY *_k = SSL_CTX_get0_privatekey(private_->ctx_);
   if (!_k) {
     lsError() << "get key";
@@ -356,6 +360,10 @@ std::string TlsContext::infoKey() const {
 }
 
 std::string TlsContext::infoCertificate() const {
+  if (!private_->ctx_) {
+    lsWarning() << "empty";
+    return {};
+  }
   X509 *_c = SSL_CTX_get0_certificate(private_->ctx_);
   if (!_c) {
     lsError() << "get certificate";
@@ -365,13 +373,18 @@ std::string TlsContext::infoCertificate() const {
 }
 
 std::string TlsContext::infoTrusted() const {
+  if (!private_->ctx_) {
+    lsWarning() << "empty";
+    return {};
+  }
   X509_STORE *_store = SSL_CTX_get_cert_store(private_->ctx_);
   STACK_OF(X509) *_t = X509_STORE_get1_all_certs(_store);
   std::string str;
   int _s = sk_X509_num(_t);
   for (int i = 0; i < _s; i++) {
     X509 *_c = sk_X509_value(_t, i);
-    str += private_->info(_c);
+    str += ' ' + std::to_string(i + 1) + ". " + private_->info(_c);
+    X509_free(_c);
   }
   sk_X509_free(_t);
   return str;

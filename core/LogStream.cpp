@@ -172,7 +172,7 @@ LogStream &LogStream::operator<<(uint8_t val) {
 
 LogStream &LogStream::operator<<(const char *val) {
   before();
-  if (!val) stream << "NULL";
+  if (!val) stream << "nullptr";
   else if (*val == 0)
     stream << "\"\"";
   else
@@ -183,7 +183,7 @@ LogStream &LogStream::operator<<(const char *val) {
 
 LogStream &LogStream::operator<<(char *val) {
   before();
-  if (!val) stream << "NULL";
+  if (!val) stream << "nullptr";
   else if (*val == 0)
     stream << "\"\"";
   else
@@ -215,7 +215,7 @@ LogStream &LogStream::flush() {
 }
 
 void LogStream::before() {
-  if ((flags & 0x4002) == 0x4002) stream << ' ';
+  if ((flags & 0x4002) == 0x4002 && !stream.str().ends_with('\n')) stream << ' ';
 }
 
 void LogStream::after() {
