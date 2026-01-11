@@ -383,7 +383,7 @@ std::string TlsContext::infoTrusted() const {
   int _s = sk_X509_num(_t);
   for (int i = 0; i < _s; i++) {
     X509 *_c = sk_X509_value(_t, i);
-    str += ' ' + std::to_string(i + 1) + ". " + private_->info(_c);
+    str += std::to_string(i + 1) + ". " + private_->info(_c);
     X509_free(_c);
   }
   sk_X509_free(_t);
