@@ -9,7 +9,7 @@
 
 #define SERVER_NAME "github.com"
 #define SERVER_PORT 443
-#define GET_FILE    "/a-ucontrol/AsyncFw"
+#define GET_FILE "/a-ucontrol/AsyncFw"
 
 int main(int argc, char *argv[]) {
   AsyncFw::LogMinimal log;
@@ -62,11 +62,12 @@ int main(int argc, char *argv[]) {
 
   logNotice() << "Start Applicaiton";
 
-  logDebug() << *(AsyncFw::AbstractSocket*)socket;
+  logDebug() << *AsyncFw::AbstractThread::currentThread();
+  logDebug() << *(AsyncFw::AbstractSocket *)socket;
 
   int ret = AsyncFw::MainThread::exec();
 
-  logDebug() << *(AsyncFw::AbstractSocket*)socket;
+  logDebug() << *(AsyncFw::AbstractSocket *)socket;
 
   logNotice() << "End Applicaiton";
 

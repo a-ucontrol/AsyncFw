@@ -1,8 +1,8 @@
-#include "log-types.hpp"
 #include "Thread.h"
 #include "Socket.h"
+#include "LogStream.h"
 
-#define LOG_DATA_ARAY_SIZE_LIMIT 4096
+#define LOG_DATA_ARAY_SIZE_LIMIT 1024
 
 namespace AsyncFw {
 LogStream &operator<<(LogStream &log, const DataArray &v) {
@@ -34,11 +34,9 @@ LogStream &operator<<(LogStream &log, const DataArrayList &v) {
 
 LogStream &operator<<(LogStream &log, const DataStream &v) { return (log << v.array()); }
 
-LogStream &operator<<(LogStream &log, const AbstractThread &t) { return (log << "name:" << t.name() << "id:" << t.id() << "running:" << t.running()); }
+LogStream &operator<<(LogStream &log, const AbstractThread &t) { return (log << t.name() << t.id() << t.running()); }
 
-LogStream &operator<<(LogStream &log, const AbstractSocket &s) { return (log.nospace() << "local: " << s.address() << ':' << std::to_string(s.port()) << " peer: " << s.peerAddress() << ':' << s.peerPort() << " state: " << static_cast<int>(s.state())); }
-
-LogStream &operator<<(LogStream &log, const std::thread::id &v) { return (log << *static_cast<const std::thread::native_handle_type *>(static_cast<const void *>(&v))); }
+LogStream &operator<<(LogStream &log, const AbstractSocket &s) { return (log << s.address() + ':' + std::to_string(s.port()) << '/' << s.peerAddress() + ':' + std::to_string(s.peerPort())); }
 
 LogStream &operator<<(LogStream &log, const std::wstring &v) {
   if (v.empty()) {

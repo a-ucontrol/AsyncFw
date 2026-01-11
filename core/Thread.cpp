@@ -1,3 +1,4 @@
+#include <thread>
 #include <queue>
 #include <signal.h>
 #include "LogStream.h"

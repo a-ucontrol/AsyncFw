@@ -1,9 +1,9 @@
 #pragma once
 
-#include <thread>
-#include "LogStream.h"
+#include <string>
 
 namespace AsyncFw {
+class LogStream;
 class DataArray;
 class DataArrayList;
 class DataStream;
@@ -15,13 +15,10 @@ LogStream &operator<<(LogStream &, const DataStream &);
 
 LogStream &operator<<(LogStream &, const AbstractThread &);
 LogStream &operator<<(LogStream &, const AbstractSocket &);
-
-LogStream &operator<<(LogStream &, const std::thread::id &);
 LogStream &operator<<(LogStream &, const std::wstring &);
 }  // namespace AsyncFw
 
 #ifdef USE_QAPPLICATION
-
   #include <QDebug>
   #include <QJsonDocument>
   #include <QJsonObject>
