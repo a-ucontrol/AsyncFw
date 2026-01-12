@@ -35,10 +35,6 @@ LogStream &operator<<(LogStream &log, const DataArrayList &v) {
 
 LogStream &operator<<(LogStream &log, const DataStream &v) { return (log << v.array()); }
 
-LogStream &operator<<(LogStream &log, const AbstractThread &t) { return (log << t.name() << t.id() << t.running()); }
-
-LogStream &operator<<(LogStream &log, const AbstractSocket &s) { return (log << s.address() + ':' + std::to_string(s.port()) << '/' << s.peerAddress() + ':' + std::to_string(s.peerPort())); }
-
 LogStream &operator<<(LogStream &log, const TlsContext &v) { return (log << v.infoKey() << std::endl << v.infoCertificate() << std::endl << v.infoTrusted() << std::endl << v.verifyName()); }
 
 LogStream &operator<<(LogStream &log, const std::wstring &v) {

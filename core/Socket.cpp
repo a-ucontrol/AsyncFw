@@ -549,3 +549,7 @@ void ListenSocket::incomingEvent() {
 }
 
 void ListenSocket::setIncomingConnection(std::function<bool(int, const std::string &)> f) { incomingConnection = f; }
+
+namespace AsyncFw {
+LogStream &operator<<(LogStream &log, const AbstractSocket &s) { return (log << s.fd_ << s.address() + ':' + std::to_string(s.port()) << '/' << s.peerAddress() + ':' + std::to_string(s.peerPort())); }
+}  // namespace AsyncFw

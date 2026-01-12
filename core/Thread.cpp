@@ -818,3 +818,7 @@ void Thread::removeSocket(AbstractSocket *_socket) {
   }
   lsTrace() << LogStream::Color::DarkRed << "not found" << _socket->fd_;
 }
+
+namespace AsyncFw {
+LogStream &operator<<(LogStream &log, const AbstractThread &t) { return (log << t.name() << t.id() << t.private_.state); }
+}  // namespace AsyncFw

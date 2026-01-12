@@ -7,16 +7,13 @@ class LogStream;
 class DataArray;
 class DataArrayList;
 class DataStream;
-class AbstractThread;
-class AbstractSocket;
 class TlsContext;
 LogStream &operator<<(LogStream &, const DataArray &);
 LogStream &operator<<(LogStream &, const DataArrayList &);
 LogStream &operator<<(LogStream &, const DataStream &);
 
-LogStream &operator<<(LogStream &, const AbstractThread &);
-LogStream &operator<<(LogStream &, const AbstractSocket &);
 LogStream &operator<<(LogStream &, const TlsContext &);
+
 LogStream &operator<<(LogStream &, const std::wstring &);
 }  // namespace AsyncFw
 

@@ -33,9 +33,11 @@
 //#define ABSTRACT_THREAD_LOCK_GUARD
 
 namespace AsyncFw {
+class LogStream;
 class AbstractThread {
   friend class MainThread;
   friend class AbstractSocket;
+  friend LogStream &operator<<(LogStream &, const AbstractThread &);
   struct Private;
 
 public:

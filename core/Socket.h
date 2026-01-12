@@ -7,12 +7,14 @@
 
 namespace AsyncFw {
 class Thread;
+class LogStream;
 
 class AbstractSocket : public AnyData {
   friend Thread;
   friend class ListenSocket;
   friend class AbstractTlsSocket;
   friend class DataArraySocket;
+  friend LogStream &operator<<(LogStream &, const AbstractSocket &);
   struct Private;
 
 public:
@@ -97,4 +99,5 @@ protected:
 private:
   std::function<bool(int, const std::string &)> incomingConnection;
 };
+
 }  // namespace AsyncFw
