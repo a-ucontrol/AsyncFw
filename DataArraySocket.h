@@ -3,7 +3,6 @@
 #include <deque>
 #include "core/TlsSocket.h"
 #include "core/TlsContext.h"
-#include "core/Thread.h"
 #include "core/FunctionConnector.h"
 
 namespace AsyncFw {

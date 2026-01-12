@@ -1,6 +1,5 @@
 #pragma once
 
-#include "DataArraySocket.h"
 #include "DataArrayAbstractTcp.h"
 
 namespace AsyncFw {

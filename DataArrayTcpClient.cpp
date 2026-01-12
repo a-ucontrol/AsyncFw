@@ -1,6 +1,7 @@
 #include "core/LogStream.h"
 #include "Timer.h"
 #include "Coroutine.h"
+#include "DataArraySocket.h"
 
 #include "DataArrayTcpClient.h"
 

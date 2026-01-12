@@ -1,10 +1,11 @@
 #pragma once
 
 #include "core/FunctionConnector.h"
-#include "core/TlsContext.h"
 
 namespace AsyncFw {
 class Rrd;
+class DataArray;
+class TlsContext;
 class DataArraySocket;
 
 class RrdClient {

@@ -1,7 +1,6 @@
 #pragma once
 
 #include "core/Thread.h"
-#include "core/Socket.h"
 
 #ifndef _WIN32
   #define EXIT_ON_UNIX_SIGNAL
