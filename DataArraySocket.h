@@ -2,10 +2,10 @@
 
 #include <deque>
 #include "core/TlsSocket.h"
-#include "core/TlsContext.h"
 #include "core/FunctionConnector.h"
 
 namespace AsyncFw {
+class TlsContext;
 class DataArraySocket : public AbstractTlsSocket {
   friend class DataArrayAbstractTcp;
   friend class DataArrayTcpClient;

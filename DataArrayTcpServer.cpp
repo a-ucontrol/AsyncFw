@@ -18,6 +18,14 @@ void DataArrayTcpServer::quit() {
   DataArrayAbstractTcp::quit();
 }
 
+bool DataArrayTcpServer::listen(const std::string &address, uint16_t port) { return listener->listen(address, port); }
+
+void DataArrayTcpServer::close() { listener->close(); }
+
+void DataArrayTcpServer::setAlwaysConnect(const std::vector<std::string> &list) { alwaysConnect_ = list; }
+
+bool DataArrayTcpServer::listening() { return listener->port() != 0; }
+
 bool DataArrayTcpServer::incomingConnection(int socketDescriptor, const std::string &address) {
   lsTrace("readTimeout: {}, waitKeepAliveAnswerTimeout: {}, waitForEncryptedTimeout: {}, maxThreads: {}, maxSockets: {}, maxReadBuffers = {}, maxReadSize = {}, maxWriteBuffers = {}, maxWriteSize = {}", readTimeout, waitKeepAliveAnswerTimeout, waitForEncryptedTimeout, maxThreads, maxSockets, maxReadBuffers, maxReadSize, maxWriteBuffers, maxWriteSize);
   Thread *serverThread;

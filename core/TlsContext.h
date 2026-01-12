@@ -1,13 +1,15 @@
 #pragma once
 
-#include "DataArray.h"
+#include <string>
+#include <vector>
+#include <cstdint>
 
 struct ssl_ctx_st;
 struct x509_store_ctx_st;
-namespace std {
-class mutex;
-}
+
 namespace AsyncFw {
+class DataArray;
+class DataArrayList;
 class TlsContext {
   friend class AbstractTlsSocket;
   struct Private;

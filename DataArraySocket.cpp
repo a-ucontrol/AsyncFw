@@ -1,4 +1,6 @@
 #include "core/Thread.h"
+#include "DataArray.h"
+#include "core/TlsContext.h"
 #include "core/LogStream.h"
 
 #include "DataArraySocket.h"

@@ -1,11 +1,12 @@
 #pragma once
 
 #include "core/FunctionConnector.h"
-#include "core/TlsContext.h"
 #include "ThreadPool.h"
 
 namespace AsyncFw {
 class DataArraySocket;
+class DataArray;
+class TlsContext;
 
 class DataArrayAbstractTcp : public AbstractThreadPool {
 public:

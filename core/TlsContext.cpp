@@ -6,6 +6,7 @@
 #include <openssl/core_names.h>
 #include <openssl/x509v3.h>
 
+#include "DataArray.h"
 #include "LogStream.h"
 
 #include "TlsContext.h"

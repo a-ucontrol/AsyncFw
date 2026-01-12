@@ -1,5 +1,6 @@
 #include "Thread.h"
 #include "Socket.h"
+#include "DataArray.h"
 #include "TlsContext.h"
 #include "LogStream.h"
 

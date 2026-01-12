@@ -1,8 +1,8 @@
 #pragma once
 
-#include "core/DataArray.h"
-
 namespace AsyncFw {
+class DataArray;
+class DataArrayView;
 class Cryptor {
 public:
   static bool encrypt(const DataArray &key, const DataArray &text, DataArray &ctext);

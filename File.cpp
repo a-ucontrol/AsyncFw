@@ -1,6 +1,7 @@
 #include <filesystem>
 #include <fstream>
 
+#include "core/DataArray.h"
 #include "core/LogStream.h"
 
 #include "File.h"

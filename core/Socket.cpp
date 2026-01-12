@@ -2,6 +2,7 @@
 
 #include <cstring>
 
+#include "DataArray.h"
 #include "Thread.h"
 #include "LogStream.h"
 

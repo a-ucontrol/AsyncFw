@@ -1,9 +1,10 @@
 #pragma once
 
 #include <ios>
-#include "core/DataArray.h"
+#include <cstdint>
 
 namespace AsyncFw {
+class DataArray;
 class File {
   struct Private;
 

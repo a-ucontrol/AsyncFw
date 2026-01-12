@@ -1,12 +1,14 @@
 #pragma once
 
 #include <functional>
+#include <cstdint>
+#include <string>
 
-#include "DataArray.h"
 #include "AnyData.h"
 
 namespace AsyncFw {
 class Thread;
+class DataArray;
 class LogStream;
 
 class AbstractSocket : public AnyData {

@@ -1,17 +1,18 @@
 ﻿#pragma once
 
-#include "core/Socket.h"
+#include "core/TlsContext.h"
 #include "DataArrayAbstractTcp.h"
 
 namespace AsyncFw {
+class ListenSocket;
 class DataArrayTcpServer : public DataArrayAbstractTcp {
 public:
   DataArrayTcpServer(const std::string & = "TcpServer", AsyncFw::Thread * = nullptr);
   void quit() override;
-  bool listen(const std::string &address, uint16_t port) { return listener->listen(address, port); }
-  void close() { listener->close(); }
-  void setAlwaysConnect(const std::vector<std::string> &list) { alwaysConnect_ = list; }
-  bool isListening() { return listener->port() != 0; }
+  bool listen(const std::string &address, uint16_t port);
+  void close();
+  void setAlwaysConnect(const std::vector<std::string> &list);
+  bool listening();
   void tlsSetup(const TlsContext &data) { tlsData = data; }
 
 private:

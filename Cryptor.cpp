@@ -2,6 +2,7 @@
 #include <openssl/evp.h>
 #include <openssl/rand.h>
 
+#include "core/DataArray.h"
 #include "core/LogStream.h"
 
 #include "Cryptor.h"
