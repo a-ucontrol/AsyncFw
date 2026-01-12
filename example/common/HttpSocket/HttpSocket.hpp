@@ -1,6 +1,7 @@
 #pragma once
 
 #include <core/FunctionConnector.h>
+#include <core/DataArray.h>
 #include <core/TlsSocket.h>
 
 class HttpSocket : public AsyncFw::AbstractTlsSocket {
