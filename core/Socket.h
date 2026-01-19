@@ -15,7 +15,6 @@ class AbstractSocket : public AnyData {
   friend Thread;
   friend class ListenSocket;
   friend class AbstractTlsSocket;
-  friend class DataArraySocket;
   friend LogStream &operator<<(LogStream &, const AbstractSocket &);
   struct Private;
 
