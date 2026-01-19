@@ -36,7 +36,6 @@ namespace AsyncFw {
 class LogStream;
 class AbstractThread {
   friend class MainThread;
-  friend class AbstractSocket;
   friend LogStream &operator<<(LogStream &, const AbstractThread &);
   struct Private;
 
@@ -164,8 +163,6 @@ protected:
   template <typename M>
   class PollTask : public AbstractPollTask {
     friend class AbstractThread;
-    friend class AbstractSocket;
-    friend class MainThread;
 
   private:
     PollTask(M &&method) : method(std::move(method)) {}
