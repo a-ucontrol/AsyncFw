@@ -44,7 +44,7 @@ void File::close() {
     lsTrace() << private_->fn_;
     return;
   }
-  lsDebug() << "not open:" << private_->fn_;
+  lsTrace() << LogStream::Color::DarkRed << "not open:" << private_->fn_;
 }
 
 void File::flush() {
