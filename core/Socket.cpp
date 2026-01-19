@@ -192,6 +192,7 @@ void AbstractSocket::setDescriptor(int _fd) {
   changeDescriptor(_fd);
   state_ = State::Connected;
   thread_->appendPollTask(fd_, AbstractThread::PollIn, [this](AbstractThread::PollEvents _e) { pollEvent(_e); });
+  stateEvent();
   activateEvent();
 }
 
