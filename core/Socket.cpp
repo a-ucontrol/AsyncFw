@@ -38,6 +38,7 @@ struct start_wsa {
 #include "Socket.h"
 
 #define SOCKET_CONNECTION_QUEUED 16
+//#define SOCKET_REUSEPORT
 
 //#define EXTEND_SOCKET_TRACE
 
@@ -102,7 +103,7 @@ bool AbstractSocket::listen(const std::string &_address, uint16_t _port) {
   }
   int _val = 1;
   if (setsockopt(_fd, SOL_SOCKET, SO_REUSEADDR, setsockopt_ptr(&_val), sizeof _val) < 0) lsError("set SO_REUSEADDR");
-#ifndef _WIN32
+#if defined(SOCKET_REUSEPORT) && !defined(_WIN32)
   if (setsockopt(_fd, SOL_SOCKET, SO_REUSEPORT, &_val, sizeof _val) < 0) lsError("set SO_REUSEPORT");
 #endif
   reinterpret_cast<sockaddr_in *>(&private_->la_)->sin_port = htons(_port);
