@@ -554,5 +554,5 @@ void ListenSocket::incomingEvent() {
 void ListenSocket::setIncomingConnection(std::function<bool(int, const std::string &)> f) { incomingConnection = f; }
 
 namespace AsyncFw {
-LogStream &operator<<(LogStream &log, const AbstractSocket &s) { return (log << s.thread_->name() << s.fd_ << static_cast<int>(s.state_) << s.address() + ':' + std::to_string(s.port()) + '/' + s.peerAddress() + ':' + std::to_string(s.peerPort())); }
+LogStream &operator<<(LogStream &log, const AbstractSocket &s) { return (log << (s.thread_ ? s.thread_->name() : "null") << s.fd_ << static_cast<int>(s.state_) << s.address() + ':' + std::to_string(s.port()) + '/' + s.peerAddress() + ':' + std::to_string(s.peerPort())); }
 }  // namespace AsyncFw
