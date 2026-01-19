@@ -13,8 +13,6 @@ class LogStream;
 
 class AbstractSocket : public AnyData {
   friend Thread;
-  friend class ListenSocket;
-  friend class AbstractTlsSocket;
   friend LogStream &operator<<(LogStream &, const AbstractSocket &);
   struct Private;
 
@@ -73,8 +71,10 @@ protected:
   virtual void stateEvent() = 0;
   virtual void readEvent() = 0;
 
-  mutable State state_ = State::Unconnected;
   Thread *thread_;
+  int fd_ = -1;
+  mutable State state_ = State::Unconnected;
+  mutable int rs_ = 0;
 
 private:
   AbstractSocket(const AbstractSocket &) = delete;
@@ -83,8 +83,6 @@ private:
   void changeDescriptor(int);
   void read_fd();
   Private *private_;
-  int fd_ = -1;
-  mutable int rs_ = 0;
 };
 
 class ListenSocket : public AbstractSocket {
