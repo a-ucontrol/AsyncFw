@@ -820,5 +820,5 @@ void Thread::removeSocket(AbstractSocket *_socket) {
 }
 
 namespace AsyncFw {
-LogStream &operator<<(LogStream &log, const AbstractThread &t) { return (log << t.name() << t.id() << t.private_.state << t.private_.tasks.size() << t.private_.timers.size() << t.private_.poll_tasks.size()); }
+LogStream &operator<<(LogStream &log, const AbstractThread &t) { return (log << t.name() << t.id() << t.private_.state << '-' << t.private_.tasks.size() << t.private_.timers.size() << t.private_.poll_tasks.size()); }
 }  // namespace AsyncFw

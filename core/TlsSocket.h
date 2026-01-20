@@ -6,6 +6,7 @@ namespace AsyncFw {
 class TlsContext;
 
 class AbstractTlsSocket : public AbstractSocket {
+  friend LogStream &operator<<(LogStream &, const AbstractTlsSocket &);
   struct Private;
 
 public:

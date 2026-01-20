@@ -9,6 +9,7 @@ class TlsContext;
 class DataArraySocket : public AbstractTlsSocket {
   friend class DataArrayAbstractTcp;
   friend class DataArrayTcpClient;
+  friend LogStream &operator<<(LogStream &, const DataArraySocket &);
 
 public:
   DataArraySocket(Thread * = nullptr);

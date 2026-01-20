@@ -132,3 +132,7 @@ int AbstractTlsSocket::write_fd(const void *data, int size) {
   if (!private_->encrypt_) return AbstractSocket::write_fd(data, size);
   return SSL_write(private_->ssl_, data, size);
 }
+
+namespace AsyncFw {
+LogStream &operator<<(LogStream &log, const AbstractTlsSocket &s) { return (log << *static_cast<const AbstractSocket *>(&s)) << (!s.private_->ctx_.empty() ? s.private_->ctx_.commonName() + '/' + (!s.private_->ctx_.verifyName().empty() ? s.private_->ctx_.verifyName() : "\"\"") : "null"); }
+}  // namespace AsyncFw

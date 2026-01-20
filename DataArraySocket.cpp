@@ -64,7 +64,7 @@ void DataArraySocket::removeTimer() {
 }
 
 void DataArraySocket::stateEvent() {
-  lsDebug() << *static_cast<AbstractSocket *>(this) << (waitTimerType & 0x04);
+  lsDebug() << *this << (waitTimerType & 0x04);
   if (state_ == State::Connected) {
     if (waitTimerType & 0x04) {
       waitTimerType &= ~0x04;
@@ -407,3 +407,7 @@ bool DataArraySocket::initTls(const TlsContext &data) {
   trace();
   return true;
 }
+
+namespace AsyncFw {
+LogStream &operator<<(LogStream &log, const DataArraySocket &s) { return (log << *static_cast<const AbstractTlsSocket *>(&s)) << s.readTimeoutInterval << s.waitKeepAliveAnswerTimeoutInterval; }
+}  // namespace AsyncFw
