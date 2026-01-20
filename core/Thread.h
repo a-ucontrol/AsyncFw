@@ -146,7 +146,7 @@ public:
   std::thread::id id() const;
   std::string name() const;
 
-  LockGuard lockGuard() { return LockGuard(mutex); }
+  LockGuard lockGuard() const { return LockGuard(mutex); }
 
 protected:
   template <typename M>
