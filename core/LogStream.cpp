@@ -94,10 +94,7 @@ std::string LogStream::levelName(uint8_t l) {
 }
 
 std::string LogStream::colorString(Color c) {
-  if (c == 0) {
-    return "\x1b[0m";
-  } else if (c == White)
-    return "\x1b[1;37m";
+  if (c == White) return "\x1b[1;37m";
   else if (c == Gray)
     return "\x1b[0;37m";
   else if (c == Black)
@@ -136,6 +133,7 @@ LogStream::LogStream(uint8_t type, const char *function, const char *file, int l
 }
 
 LogStream::~LogStream() noexcept(false) {
+  if (flags & 0x0100) stream << colorString(static_cast<Color>(type & 0xf0));
   if ((type & 0x07) == Emergency) {
     completed({type, name, ((flags & 0x8000) ? stream.str() : ""), std::string(file) + ":" + std::to_string(line)}, flags | LOG_STREAM_FLUSH);
     throw std::runtime_error("log level emergency");
@@ -151,6 +149,13 @@ LogStream &LogStream::operator<<(decltype(std::endl<char, std::char_traits<char>
 
 LogStream &LogStream::operator<<(const Color val) {
   if (!(flags & 0x04)) return *this;
+  if (val == Default) {
+    if (flags & 0x0100) {
+      stream << colorString(static_cast<Color>(type & 0xf0));
+      flags &= ~0x0100;
+    }
+    return *this;
+  }
   stream << colorString(val);
   flags |= 0x0100;
   return *this;
@@ -218,10 +223,4 @@ void LogStream::before() {
   if ((flags & 0x4002) == 0x4002 && !stream.str().ends_with('\n')) stream << ' ';
 }
 
-void LogStream::after() {
-  if (flags & 0x0100) {
-    stream << colorString(static_cast<Color>(type & 0xf0));
-    flags &= ~0x0100;
-  }
-  flags |= 0xC000;
-}
+void LogStream::after() { flags |= 0xC000; }

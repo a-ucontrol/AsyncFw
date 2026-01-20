@@ -52,6 +52,7 @@ public:
   //color names
   //https://doc.qt.io/qt-6/qcolor.html, Predefined Colors
   enum Color : uint8_t {
+    Default = 0x00,
     White = 0x10,
     Gray = 0x20,
     Black = 0x30,
