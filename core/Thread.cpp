@@ -782,6 +782,8 @@ bool Thread::Compare::operator()(const AbstractSocket *_s1, const AbstractSocket
   return _s1 < _s2;
 }
 
+Thread *Thread::currentThread() { return static_cast<Thread *>(AbstractThread::currentThread()); }
+
 Thread::Thread(const std::string &name) : AbstractThread(name) { trace(); }
 
 Thread::~Thread() {
@@ -820,5 +822,6 @@ void Thread::removeSocket(AbstractSocket *_socket) {
 }
 
 namespace AsyncFw {
-LogStream &operator<<(LogStream &log, const AbstractThread &t) { return (log << t.name() << t.id() << t.private_.state << '-' << t.private_.tasks.size() << t.private_.timers.size() << t.private_.poll_tasks.size()); }
+LogStream &operator<<(LogStream &log, const AbstractThread &t) { return (log << t.private_.name << t.private_.id << t.private_.state << '-' << t.private_.tasks.size() << t.private_.timers.size() << t.private_.poll_tasks.size()); }
+LogStream &operator<<(LogStream &log, const Thread &t) { return (log << *static_cast<const AbstractThread *>(&t) << '-' << t.sockets_.size()); }
 }  // namespace AsyncFw

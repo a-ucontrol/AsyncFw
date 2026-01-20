@@ -409,5 +409,5 @@ bool DataArraySocket::initTls(const TlsContext &data) {
 }
 
 namespace AsyncFw {
-LogStream &operator<<(LogStream &log, const DataArraySocket &s) { return (log << *static_cast<const AbstractTlsSocket *>(&s)) << s.readTimeoutInterval << s.waitKeepAliveAnswerTimeoutInterval; }
+LogStream &operator<<(LogStream &log, const DataArraySocket &s) { return (log << *static_cast<const AbstractTlsSocket *>(&s)) << '-' << s.readTimeoutInterval << s.waitKeepAliveAnswerTimeoutInterval; }
 }  // namespace AsyncFw

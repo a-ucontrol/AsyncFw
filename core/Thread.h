@@ -192,8 +192,10 @@ class AbstractSocket;
 
 class Thread : public AbstractThread {
   friend AbstractSocket;
+  friend LogStream &operator<<(LogStream &, const Thread &);
 
 public:
+  static Thread *currentThread();
   Thread(const std::string & = "Thread");
   ~Thread() override;
 
