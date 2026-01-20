@@ -254,7 +254,7 @@ AbstractThread::~AbstractThread() {
     waitFinished();
   }
 
-  lsTrace() << private_.name << LogStream::Color::Magenta << private_.id << "-" << private_.tasks.size() << private_.timers.size() << private_.poll_tasks.size() << "-" << private_.process_tasks_.size() << private_.process_timer_tasks_.size() << private_.process_poll_tasks_.size();
+  lsTrace() << LogStream::Color::Magenta << private_.name << private_.id << LogStream::Color::Default << "-" << private_.tasks.size() << private_.timers.size() << private_.poll_tasks.size() << "-" << private_.process_tasks_.size() << private_.process_timer_tasks_.size() << private_.process_poll_tasks_.size();
 
   if (!private_.tasks.empty()) {
     lsDebug() << LogStream::Color::Red << "task list not empty";
