@@ -81,7 +81,7 @@ public:
   };
 
   template <typename M>
-  typename std::enable_if<std::is_void<typename std::invoke_result<M>::type>::value, bool>::type invokeMethod(M method, bool sync = false) {
+  typename std::enable_if<std::is_void<typename std::invoke_result<M>::type>::value, bool>::type invokeMethod(M method, bool sync = false) const {
     if (!sync) {
       AbstractTask *_t = new Task(std::forward<M>(method));
       if (!invokeTask(_t)) {
@@ -111,14 +111,13 @@ public:
   }
 
   static AbstractThread *currentThread();
-  static AbstractThread::LockGuard threadsLockGuard();
   static AbstractThread::LockGuard threads(std::vector<AbstractThread *> **);
 
   virtual void startedEvent() {}
   virtual void finishedEvent() {}
   virtual void destroy() {}
 
-  virtual bool invokeTask(AbstractTask *);
+  virtual bool invokeTask(AbstractTask *) const;
   virtual int appendTimer(int, AbstractTask *);
   virtual bool modifyTimer(int, int);
   virtual void removeTimer(int);
@@ -185,7 +184,7 @@ private:
   static inline std::vector<AbstractThread *> list_threads;
   void updateId();
   void exec();
-  void wake();
+  void wake() const;
   Private &private_;
 };
 

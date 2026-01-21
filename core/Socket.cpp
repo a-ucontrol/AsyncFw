@@ -88,8 +88,9 @@ AbstractSocket::AbstractSocket(int _family, int _type, int _protocol, Thread *_t
 }
 
 AbstractSocket::~AbstractSocket() {
+  lsDebug() << LogStream::Color::Red << *this;  //!!!
   warning_if(state_ != State::Destroy) << this << LogStream::Color::Red << "not destroy state:" << static_cast<int>(state_);
-  if (thread_) thread_->removeSocket(this);
+  thread_->removeSocket(this);
   if (fd_ >= 0) close_fd(fd_);
   delete private_;
   lsTrace();
@@ -432,15 +433,6 @@ void AbstractSocket::destroy() {
   close();
   state_ = State::Destroy;
   stateEvent();
-  if (!thread_) {
-    lsTrace() << LogStream::Color::Red << "nullptr thread";
-    AbstractThread::AbstractTask *_t = new Thread::Task([this]() { delete this; });
-    if (!AbstractThread::currentThread()->invokeTask(_t)) {
-      _t->invoke();
-      delete _t;
-    }
-    return;
-  }
   thread_->invokeMethod([this]() { delete this; });
   thread_->removeSocket(this);
   trace();
@@ -555,8 +547,7 @@ void ListenSocket::setIncomingConnection(std::function<bool(int, const std::stri
 
 namespace AsyncFw {
 LogStream &operator<<(LogStream &log, const AbstractSocket &s) {
-  AbstractThread::LockGuard lock = AbstractThread::threadsLockGuard();
-  AbstractThread *_t = s.thread_;
-  return (log << (_t ? _t->name() : "null") << s.fd_ << static_cast<int>(s.state_) << '-' << s.address() + ':' + std::to_string(s.port()) + '/' + s.peerAddress() + ':' + std::to_string(s.peerPort()));
+  s.thread_->invokeMethod([&s, &log]() { log << s.thread_->name() << s.fd_ << static_cast<int>(s.state_) << '-' << s.address() + ':' + std::to_string(s.port()) + '/' + s.peerAddress() + ':' + std::to_string(s.peerPort()); }, true);
+  return log;
 }
 }  // namespace AsyncFw

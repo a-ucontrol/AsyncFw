@@ -118,10 +118,10 @@ private:
     }
   }
 
-  bool invokeTask(AbstractTask *task) override {
+  bool invokeTask(AbstractTask *task) const override {
     if (!this->QObject::thread()->isRunning()) return false;
     QMetaObject::invokeMethod(
-        this,
+        const_cast<MainThread *>(this),
         [task]() {
           task->invoke();
           delete task;

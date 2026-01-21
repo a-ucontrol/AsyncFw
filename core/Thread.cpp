@@ -227,7 +227,8 @@ AbstractThread::AbstractThread(const std::string &_name) : private_(*new Private
 }
 
 AbstractThread::~AbstractThread() {
-  {  //lock scope
+  lsDebug() << LogStream::Color::Red << *this;  //!!!
+  {                                             //lock scope
     LockGuard lock(list_mutex);
     std::vector<AbstractThread *>::iterator it = std::lower_bound(list_threads.begin(), list_threads.end(), this, Compare());
     if (it != list_threads.end() && (*it) == this) list_threads.erase(it);
@@ -287,8 +288,6 @@ AbstractThread *AbstractThread::currentThread() {
   lsError() << "thread not found:" << _id;
   return nullptr;
 }
-
-AbstractThread::LockGuard AbstractThread::threadsLockGuard() { return LockGuard {list_mutex}; }
 
 AbstractThread::LockGuard AbstractThread::threads(std::vector<AbstractThread *> **_threads) {
   *_threads = &list_threads;
@@ -548,7 +547,7 @@ void AbstractThread::exec() {
   condition_variable.notify_all();
 }
 
-void AbstractThread::wake() {
+void AbstractThread::wake() const {
   if (private_.wake_) return;
   warning_if(std::this_thread::get_id() == private_.id) << LogStream::Color::Red << private_.name;
   private_.wake_ = true;
@@ -569,7 +568,7 @@ void AbstractThread::wake() {
 #endif
 }
 
-bool AbstractThread::invokeTask(AbstractTask *task) {
+bool AbstractThread::invokeTask(AbstractTask *task) const {
   std::lock_guard<std::mutex> lock(mutex);
   warning_if(!private_.state) << LogStream::Color::Red << "thread not running (" + private_.name + ")" << private_.id;
   if (private_.state >= Private::Finalize) {
@@ -819,7 +818,6 @@ void Thread::removeSocket(AbstractSocket *_socket) {
   if (it != sockets_.end() && (*it) == _socket) {
     if (_socket->fd_ >= 0) removePollDescriptor(_socket->fd_);
     sockets_.erase(it);
-    _socket->thread_ = nullptr;
     return;
   }
   lsTrace() << LogStream::Color::DarkRed << "not found" << _socket->fd_;
@@ -832,7 +830,7 @@ LogStream &operator<<(LogStream &log, const AbstractThread &t) {
 }
 LogStream &operator<<(LogStream &log, const Thread &t) {
   log << *static_cast<const AbstractThread *>(&t) << '-';
-  AbstractThread::LockGuard lock = t.lockGuard();
-  return (log << t.sockets_.size());
+  t.invokeMethod([&t, &log]() { log << t.sockets_.size(); }, true);
+  return log;
 }
 }  // namespace AsyncFw

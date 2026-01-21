@@ -135,10 +135,10 @@ void DataArrayTcpClient::Thread::removeSocket(DataArraySocket *socket) {
   checkCurrentThread();
   socket->removeTimer();
   AsyncFw::Thread::removeSocket(socket);
+  pool->thread()->invokeMethod([socket]() { socket->destroy(); });
   if (sockets_.empty()) {
     std::vector<AbstractThread *>::iterator it = std::find(static_cast<DataArrayTcpClient *>(pool)->threads_.begin(), static_cast<DataArrayTcpClient *>(pool)->threads_.end(), this);
     if (it != static_cast<DataArrayTcpClient *>(pool)->threads_.end()) destroy();
     else { lsError() << "thread not found"; }
   }
-  pool->thread()->invokeMethod([socket]() { socket->destroy(); });
 }

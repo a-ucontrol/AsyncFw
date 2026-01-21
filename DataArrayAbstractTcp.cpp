@@ -89,11 +89,6 @@ void DataArrayAbstractTcp::Thread::destroy() {
   static_cast<DataArrayAbstractTcp *>(pool)->removeThread(this);
   AsyncFw::Thread::quit();
 
-  if (std::this_thread::get_id() != this->id()) {
-    AsyncFw::Thread::waitFinished();
-    delete this;
-    return;
-  }
   pool->thread()->invokeMethod([this]() {
     AsyncFw::Thread::waitFinished();
     delete this;
