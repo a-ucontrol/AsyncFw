@@ -111,7 +111,8 @@ public:
   }
 
   static AbstractThread *currentThread();
-  static AbstractThread::LockGuard threads(std::vector<AbstractThread *> **_threads = nullptr);
+  static AbstractThread::LockGuard threadsLockGuard();
+  static AbstractThread::LockGuard threads(std::vector<AbstractThread *> **);
 
   virtual void startedEvent() {}
   virtual void finishedEvent() {}

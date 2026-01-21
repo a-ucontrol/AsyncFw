@@ -288,8 +288,10 @@ AbstractThread *AbstractThread::currentThread() {
   return nullptr;
 }
 
+AbstractThread::LockGuard AbstractThread::threadsLockGuard() { return LockGuard {list_mutex}; }
+
 AbstractThread::LockGuard AbstractThread::threads(std::vector<AbstractThread *> **_threads) {
-  if (_threads) *_threads = &list_threads;
+  *_threads = &list_threads;
   return LockGuard {list_mutex};
 }
 
@@ -805,12 +807,14 @@ void Thread::startedEvent() {
 }
 
 void Thread::appendSocket(AbstractSocket *_socket) {
+  checkCurrentThread();
   std::vector<AbstractSocket *>::iterator it = std::lower_bound(sockets_.begin(), sockets_.end(), _socket, Compare());
   sockets_.insert(it, _socket);
   trace() << LogStream::Color::Green << _socket->fd_;
 }
 
 void Thread::removeSocket(AbstractSocket *_socket) {
+  checkCurrentThread();
   std::vector<AbstractSocket *>::iterator it = std::lower_bound(sockets_.begin(), sockets_.end(), _socket, Compare());
   if (it != sockets_.end() && (*it) == _socket) {
     if (_socket->fd_ >= 0) removePollDescriptor(_socket->fd_);
