@@ -289,7 +289,7 @@ AbstractThread *AbstractThread::currentThread() {
 }
 
 AbstractThread::LockGuard AbstractThread::threads(std::vector<AbstractThread *> **_threads) {
-  *_threads = &list_threads;
+  if (_threads) *_threads = &list_threads;
   return LockGuard {list_mutex};
 }
 
