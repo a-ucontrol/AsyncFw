@@ -13,15 +13,8 @@ void DataArrayTcpClient::socketStateChanged(const DataArraySocket *socket) {
   bool connected = socket->state() == DataArraySocket::State::Active;
   if (!connected && socket->state() != DataArraySocket::State::Unconnected) return;
   thread_->invokeMethod([this, socket, connected]() {
-    DataArrayTcpClient::Thread *thread = static_cast<Thread *>(socket->thread());
-    if (thread) {
-      if (std::find(threads_.begin(), threads_.end(), thread) == threads_.end()) {
-        lsWarning() << "socket thread not found";
-        return;
-      }
-      bool b = connected == (socket->state() == DataArraySocket::State::Active);
-      if (b) connectionStateChanged(socket);
-    }
+    bool b = connected == (socket->state() == DataArraySocket::State::Active);
+    if (b) connectionStateChanged(socket);
   });
   lsDebug((connected) ? "connected" : "disconnected");
 }
