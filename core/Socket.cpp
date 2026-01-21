@@ -56,8 +56,8 @@ struct start_wsa {
 using namespace AsyncFw;
 
 struct AbstractSocket::Private {
-  sockaddr_storage la_;
-  sockaddr_storage pa_;
+  sockaddr_storage la_ = {};
+  sockaddr_storage pa_ = {};
   DataArray rda_;
   DataArray wda_;
   int tid_ = -1;
@@ -88,7 +88,6 @@ AbstractSocket::AbstractSocket(int _family, int _type, int _protocol, Thread *_t
 }
 
 AbstractSocket::~AbstractSocket() {
-  lsDebug() << LogStream::Color::Red << *this;  //!!!
   warning_if(state_ != State::Destroy) << this << LogStream::Color::Red << "not destroy state:" << static_cast<int>(state_);
   thread_->removeSocket(this);
   if (fd_ >= 0) close_fd(fd_);
@@ -189,7 +188,7 @@ void AbstractSocket::setDescriptor(int _fd) {
   _l = sizeof(private_->pa_);
   if (getpeername(_fd, reinterpret_cast<struct sockaddr *>(&private_->pa_), &_l) < 0) lsError() << "error peer address";
 
-  lsTrace() << _fd << "local:" << LogStream::Color::Green << address() + ':' + std::to_string(port()) << "peer:" << LogStream::Color::Green << peerAddress() + ':' + std::to_string(peerPort());
+  lsTrace() << _fd << LogStream::Color::DarkGreen << "local:" << address() + ':' + std::to_string(port()) << "peer:" << LogStream::Color::Green << peerAddress() + ':' + std::to_string(peerPort());
 
   changeDescriptor(_fd);
   state_ = State::Connected;
@@ -434,7 +433,6 @@ void AbstractSocket::destroy() {
   state_ = State::Destroy;
   stateEvent();
   thread_->invokeMethod([this]() { delete this; });
-  thread_->removeSocket(this);
   trace();
 }
 
@@ -547,7 +545,7 @@ void ListenSocket::setIncomingConnection(std::function<bool(int, const std::stri
 
 namespace AsyncFw {
 LogStream &operator<<(LogStream &log, const AbstractSocket &s) {
-  s.thread_->invokeMethod([&s, &log]() { log << s.thread_->name() << s.fd_ << static_cast<int>(s.state_) << '-' << s.address() + ':' + std::to_string(s.port()) + '/' + s.peerAddress() + ':' + std::to_string(s.peerPort()); }, true);
+  s.thread_->invokeMethod([&s, &log]() { log << '(' + s.thread_->name() + ')' << s.fd_ << static_cast<int>(s.state_) << '-' << s.address() + ':' + std::to_string(s.port()) + '/' + s.peerAddress() + ':' + std::to_string(s.peerPort()); }, true);
   return log;
 }
 }  // namespace AsyncFw

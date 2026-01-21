@@ -227,8 +227,7 @@ AbstractThread::AbstractThread(const std::string &_name) : private_(*new Private
 }
 
 AbstractThread::~AbstractThread() {
-  lsDebug() << LogStream::Color::Red << *this;  //!!!
-  {                                             //lock scope
+  {  //lock scope
     LockGuard lock(list_mutex);
     std::vector<AbstractThread *>::iterator it = std::lower_bound(list_threads.begin(), list_threads.end(), this, Compare());
     if (it != list_threads.end() && (*it) == this) list_threads.erase(it);
@@ -825,8 +824,9 @@ void Thread::removeSocket(AbstractSocket *_socket) {
 
 namespace AsyncFw {
 LogStream &operator<<(LogStream &log, const AbstractThread &t) {
+  t.invokeMethod([&t, &log]() { log << '(' + t.private_.name + ')' << t.private_.id; }, true);
   AbstractThread::LockGuard lock = t.lockGuard();
-  return (log << t.private_.name << t.private_.id << t.private_.state << '-' << t.private_.tasks.size() << t.private_.timers.size() << t.private_.poll_tasks.size());
+  return (log << t.private_.state << '-' << t.private_.tasks.size() << t.private_.timers.size() << t.private_.poll_tasks.size());
 }
 LogStream &operator<<(LogStream &log, const Thread &t) {
   log << *static_cast<const AbstractThread *>(&t) << '-';
