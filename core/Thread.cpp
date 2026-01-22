@@ -791,7 +791,12 @@ Thread::~Thread() {
     quit();
     waitFinished();
   }
-  for (; !sockets_.empty();) delete sockets_.back();
+  for (; !sockets_.empty();) {
+    AbstractSocket *_s = sockets_.back();
+    sockets_.pop_back();
+    _s->state_ = AbstractSocket::Destroy;
+    delete _s;
+  }
   lsTrace();
 }
 
