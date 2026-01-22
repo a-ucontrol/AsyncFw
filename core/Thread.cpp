@@ -158,7 +158,7 @@ void AbstractThread::Private::clearId() {
     list_threads.erase(it);
     it = std::lower_bound(AbstractThread::list_threads.begin(), AbstractThread::list_threads.end(), _t, AbstractThread::Compare());
     list_threads.insert(it, _t);
-    lsTrace() << LogStream::Color::Magenta << _id;
+    lsTrace() << '(' + _t->private_.name + ')' << LogStream::Color::Magenta << _id;
     return;
   }
   lsDebug() << "thread not found:" << LogStream::Color::Magenta << _id;
@@ -344,7 +344,7 @@ void AbstractThread::waitFinished() const {
   while (private_.state != Private::Finished) condition_variable.wait(lock);
 }
 
-void AbstractThread::updateId() {
+void AbstractThread::setId() {
   LockGuard lock(list_mutex);
   std::thread::id _id = std::this_thread::get_id();
   std::vector<AbstractThread *>::iterator it = std::lower_bound(list_threads.begin(), list_threads.end(), this, Compare());
@@ -353,7 +353,7 @@ void AbstractThread::updateId() {
     private_.id = _id;
     it = std::lower_bound(list_threads.begin(), list_threads.end(), this, Compare());
     list_threads.insert(it, this);
-    lsTrace() << private_.name << LogStream::Color::Magenta << _id;
+    lsTrace() << '(' + private_.name + ')' << LogStream::Color::Magenta << _id;
     return;
   }
   lsError() << "thread not found:" << _id;
@@ -589,7 +589,7 @@ void AbstractThread::start() {
   }
   private_.state = Private::WaitStarted;
   std::thread t {[this]() {
-    updateId();
+    setId();
     exec();
     Private::clearId();
   }};

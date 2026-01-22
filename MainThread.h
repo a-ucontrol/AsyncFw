@@ -31,7 +31,7 @@ inline class MainThread :
 {
 public:
   MainThread() : Thread("Main") {
-    updateId();
+    setId();
     instance_ = this;
 #ifdef EXIT_ON_UNIX_SIGNAL
     eventfd_ = eventfd(0, EFD_NONBLOCK);
