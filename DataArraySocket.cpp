@@ -40,12 +40,7 @@ DataArraySocket::DataArraySocket(Thread *_thread) : AbstractTlsSocket(_thread) {
 }
 
 DataArraySocket::~DataArraySocket() {
-  if (state_ != State::Destroy) {
-    lsDebug() << this << LogStream::Color::DarkRed << "not Destroy state:" << static_cast<int>(state_);
-    state_ = State::Destroy;
-    DataArraySocket::stateEvent();
-  }
-  if (thread_) removeTimer();
+  removeTimer();
   while (!receiveList.empty()) clearBuffer_(receiveList.back());
   trace();
 }
