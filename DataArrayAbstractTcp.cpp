@@ -83,6 +83,18 @@ void DataArrayAbstractTcp::Thread::socketInit(DataArraySocket *socket) {
   lsTrace() << LogStream::Color::Green << this << LogStream::Color::Magenta << sockets_.size();
 }
 
+void DataArrayAbstractTcp::Thread::removeSocket(DataArraySocket *socket) {
+  checkCurrentThread();
+  socket->removeTimer();
+  socket->close();
+  pool->thread()->invokeMethod([socket, this]() {
+    socket->destroy();
+    invokeMethod([this]() {
+      if (sockets_.empty()) destroy();
+    });
+  });
+}
+
 void DataArrayAbstractTcp::Thread::destroy() {
   lsTrace() << LogStream::Color::Green << this << LogStream::Color::Magenta << sockets_.size();
 

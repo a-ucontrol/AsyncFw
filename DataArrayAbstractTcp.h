@@ -47,6 +47,7 @@ protected:
 
   protected:
     void socketInit(DataArraySocket *);
+    void removeSocket(DataArraySocket *);
     void destroy() override;
     AbstractThreadPool *pool;
   };

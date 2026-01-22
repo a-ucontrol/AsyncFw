@@ -25,7 +25,6 @@ private:
   private:
     using DataArrayAbstractTcp::Thread::Thread;
     void createSocket(int, bool);
-    void removeSocket(DataArraySocket *socket);
   };
   std::unique_ptr<ListenSocket> listener;
 

@@ -72,10 +72,3 @@ void DataArrayTcpServer::Thread::createSocket(int socketDescriptor, bool encrypt
 
   lsTrace("new connection: " + tcpSocket->peerAddress() + ":" + std::to_string(tcpSocket->peerPort()));
 }
-
-void DataArrayTcpServer::Thread::removeSocket(DataArraySocket *socket) {
-  checkCurrentThread();
-  AsyncFw::Thread::removeSocket(socket);
-  pool->thread()->invokeMethod([socket]() { socket->destroy(); });
-  if (sockets_.empty()) destroy();
-}

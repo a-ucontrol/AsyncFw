@@ -15,7 +15,6 @@ protected:
     using DataArrayAbstractTcp::Thread::Thread;
     ~Thread() override;
     DataArraySocket *createSocket();
-    void removeSocket(DataArraySocket *socket);
   };
   virtual void socketStateChanged(const DataArraySocket *);
 

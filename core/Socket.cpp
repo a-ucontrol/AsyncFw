@@ -88,9 +88,14 @@ AbstractSocket::AbstractSocket(int _family, int _type, int _protocol, Thread *_t
 }
 
 AbstractSocket::~AbstractSocket() {
-  warning_if(state_ != State::Destroy) << this << LogStream::Color::Red << "not destroy state:" << static_cast<int>(state_);
-  thread_->removeSocket(this);
-  if (fd_ >= 0) close_fd(fd_);
+  if (state_ != State::Destroy) {
+    thread_->invokeMethod([this]() { thread_->removeSocket(this); }, true);
+    lsTrace() << this << LogStream::Color::Red << "not destroy state:" << static_cast<int>(state_);
+  }
+  if (fd_ >= 0) {
+    thread_->removePollDescriptor(fd_);
+    close_fd(fd_);
+  }
   delete private_;
   lsTrace();
 }
@@ -329,7 +334,7 @@ int AbstractSocket::write(const uint8_t *_p, int _s) {
 int AbstractSocket::write(const DataArray &_da) { return write(_da.data(), _da.size()); }
 
 void AbstractSocket::close() {
-  if (fd_ == -1 || !thread_) return;
+  if (fd_ == -1) return;
   thread_->removePollDescriptor(fd_);
   close_fd(fd_);
   lsTrace() << LogStream::Color::Red << fd_;
@@ -432,7 +437,8 @@ void AbstractSocket::destroy() {
   close();
   state_ = State::Destroy;
   stateEvent();
-  thread_->invokeMethod([this]() { delete this; });
+  thread_->invokeMethod([this]() { thread_->removeSocket(this); }, true);
+  thread_->invokeMethod([_p = this]() { delete _p; });
   trace();
 }
 
