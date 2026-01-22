@@ -295,7 +295,7 @@ AbstractThread::LockGuard AbstractThread::threads(std::vector<AbstractThread *> 
 
 bool AbstractThread::running() const {
   LockGuard lock(mutex);
-  return private_.state > Private::WaitStarted && private_.state != Private::Finished;
+  return private_.state > Private::WaitStarted && private_.state < Private::Finalize;
 }
 
 void AbstractThread::requestInterrupt() {
@@ -568,7 +568,7 @@ void AbstractThread::wake() const {
 }
 
 bool AbstractThread::invokeTask(AbstractTask *task) const {
-  std::lock_guard<std::mutex> lock(mutex);
+  LockGuard lock(mutex);
   warning_if(!private_.state) << LogStream::Color::Red << "thread not running (" + private_.name + ")" << private_.id;
   if (private_.state >= Private::Finalize) {
     lsTrace() << LogStream::Color::Red << "Thread (" + private_.name + ") finished";
