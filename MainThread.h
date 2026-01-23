@@ -12,8 +12,6 @@
   #include <QSocketNotifier>
   #include <QThread>
   #include <QApplication>
-#else
-  #include "core/console_msg.hpp"
 #endif
 
 #ifdef EXIT_ON_UNIX_SIGNAL
@@ -182,14 +180,11 @@ private:
 public:
   static int exec() {
 #ifndef USE_QAPPLICATION
-    if (instance_->running()) {
-      console_msg("Already running");
-      return -1;
-    }
+    if (instance_->running()) return -1;
     instance_->Thread::exec();
     return instance_->code_;
 #else
-    finished_ = false;
+    instance_->finished_ = false;
     return qApp->exec();
 #endif
   }
