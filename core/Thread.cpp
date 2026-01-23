@@ -249,9 +249,9 @@ AbstractThread::~AbstractThread() {
   ::closesocket(WAKE_FD);
 #endif
 
-  warning_if(std::this_thread::get_id() == private_.id) << LogStream::Color::Red << "executed from own thread:" << LOG_THREAD_NAME;
+  warning_if(std::this_thread::get_id() == private_.id) << LogStream::Color::Red << "executed from own thread" << LOG_THREAD_NAME;
   if (running()) {
-    lsWarning() << "destroy running thread:" << LOG_THREAD_NAME;
+    lsWarning() << "destroy running thread" << LOG_THREAD_NAME;
     quit();
     waitFinished();
   }
@@ -513,7 +513,7 @@ void AbstractThread::exec() {
           if (t.expire <= now) {
             t.expire += t.timeout;
             if (t.expire <= now) {
-              console_msg("AbstractThread: thread " + LOG_THREAD_NAME + " timer overload, interval: " + std::to_string(t.timeout.count()) + ", expired: " + std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>((now - t.expire + t.timeout)).count()));
+              console_msg("Thread " + LOG_THREAD_NAME + " timer overload, interval: " + std::to_string(t.timeout.count()) + ", expired: " + std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>((now - t.expire + t.timeout)).count()));
               t.expire = now + t.timeout;
             }
             private_.process_timer_tasks_.push({t.id, t.task});
@@ -571,9 +571,9 @@ void AbstractThread::wake() const {
 
 bool AbstractThread::invokeTask(AbstractTask *task) const {
   LockGuard lock(mutex);
-  warning_if(!private_.state) << LogStream::Color::Red << "thread not running:" << LOG_THREAD_NAME << private_.id;
+  warning_if(!private_.state) << LogStream::Color::Red << "thread not running" << LOG_THREAD_NAME << private_.id;
   if (private_.state >= Private::Finalize) {
-    lsTrace() << LogStream::Color::Red << "Thread:" << LOG_THREAD_NAME << "finished";
+    lsTrace() << LogStream::Color::Red << "thread" << LOG_THREAD_NAME << "finished";
     return false;
   }
   if (private_.state == Private::Interrupted) private_.state = Private::Running;
