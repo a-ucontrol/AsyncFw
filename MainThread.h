@@ -32,7 +32,12 @@ inline class MainThread :
 public:
   MainThread() : Thread("Main") {
     setId();
+#if defined EXIT_ON_UNIX_SIGNAL || !defined USE_QAPPLICATION
     instance_ = this;
+#endif
+#ifdef USE_QAPPLICATION
+    AbstractThread::currentThread()->invokeMethod([this]() { QObject::connect(qApp, &QCoreApplication::aboutToQuit, [this]() { finished_ = true; }); });
+#endif
 #ifdef EXIT_ON_UNIX_SIGNAL
     eventfd_ = eventfd(0, EFD_NONBLOCK);
   #ifdef USE_QAPPLICATION
@@ -119,7 +124,7 @@ private:
   }
 
   bool invokeTask(AbstractTask *task) const override {
-    if (!this->QObject::thread()->isRunning()) return false;
+    if (finished_) return false;
     QMetaObject::invokeMethod(
         const_cast<MainThread *>(this),
         [task]() {
@@ -184,27 +189,34 @@ public:
     instance_->Thread::exec();
     return instance_->code_;
 #else
+    finished_ = false;
     return qApp->exec();
 #endif
   }
   static void exit(int code = 0) {
+#ifdef EXIT_ON_UNIX_SIGNAL
     instance_->code_ = code;
-#ifndef USE_QAPPLICATION
-  #ifdef EXIT_ON_UNIX_SIGNAL
     if (instance_->eventfd_ >= 0) eventfd_write(instance_->eventfd_, 1);
-  #else
-    instance_->Thread::quit();
-  #endif
 #else
-    qApp->quit();
+  #ifndef USE_QAPPLICATION
+    instance_->code_ = code;
+    instance_->Thread::quit();
+  #else
+    qApp->exit(code);
+  #endif
 #endif
   }
 
 private:
+#if defined EXIT_ON_UNIX_SIGNAL || !defined USE_QAPPLICATION
   inline static MainThread *instance_;
   int code_ = 0;
+#endif
 #ifdef EXIT_ON_UNIX_SIGNAL
   int eventfd_ = -1;
+#endif
+#ifdef USE_QAPPLICATION
+  bool finished_ = false;
 #endif
 } mainThread_;
 }  // namespace AsyncFw
