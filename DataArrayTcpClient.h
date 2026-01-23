@@ -26,7 +26,7 @@ public:
   Thread *createThread() { return new Thread(name() + " thread", this); }
   DataArraySocket *createSocket(Thread *thread = nullptr);
   void removeSocket(DataArraySocket *);
-  FunctionConnectorProtected<DataArrayTcpClient>::Connector<const DataArraySocket *> connectionStateChanged;
+  FunctionConnectorProtected<DataArrayTcpClient>::Connector<const DataArraySocket *> connectionStateChanged {AbstractFunctionConnector::DirectOnly};
   int exchange(const DataArraySocket *, const DataArray &, const DataArray *, uint32_t, int = 5000);
   std::size_t socketLimit() { return maxSockets; }
   int connectTimeout() const { return waitForConnectTimeoutInterval; }
