@@ -45,6 +45,8 @@
 
 #include "console_msg.hpp"
 
+#define LOG_THREAD_NAME ('(' + private_.name + ')')
+
 using namespace AsyncFw;
 
 struct AbstractThread::Private {
@@ -247,14 +249,14 @@ AbstractThread::~AbstractThread() {
   ::closesocket(WAKE_FD);
 #endif
 
-  warning_if(std::this_thread::get_id() == private_.id) << LogStream::Color::Red << "executed from own thread (" + private_.name + ")";
+  warning_if(std::this_thread::get_id() == private_.id) << LogStream::Color::Red << "executed from own thread:" << LOG_THREAD_NAME;
   if (running()) {
-    lsWarning() << "destroy running thread";
+    lsWarning() << "destroy running thread:" << LOG_THREAD_NAME;
     quit();
     waitFinished();
   }
 
-  lsTrace() << LogStream::Color::Magenta << '(' + private_.name + ')' << private_.id << LogStream::Color::Default << "-" << private_.tasks.size() << private_.timers.size() << private_.poll_tasks.size() << "-" << private_.process_tasks_.size() << private_.process_timer_tasks_.size() << private_.process_poll_tasks_.size();
+  lsTrace() << LOG_THREAD_NAME << LogStream::Color::Magenta << private_.id << LogStream::Color::Default << "-" << private_.tasks.size() << private_.timers.size() << private_.poll_tasks.size() << "-" << private_.process_tasks_.size() << private_.process_timer_tasks_.size() << private_.process_poll_tasks_.size();
 
   if (!private_.tasks.empty()) {
     lsDebug() << LogStream::Color::Red << "task list not empty";
@@ -353,7 +355,7 @@ void AbstractThread::setId() {
     private_.id = _id;
     it = std::lower_bound(list_threads.begin(), list_threads.end(), this, Compare());
     list_threads.insert(it, this);
-    lsTrace() << '(' + private_.name + ')' << LogStream::Color::Magenta << _id;
+    lsTrace() << LOG_THREAD_NAME << LogStream::Color::Magenta << _id;
     return;
   }
   lsError() << "thread not found:" << _id;
@@ -369,7 +371,7 @@ void AbstractThread::exec() {
     _nested = private_.nested_;
 
     if (_nested) {  //nested exec
-      trace() << LogStream::Color::Red << "nested" << LogStream::Color::Green << _nested << private_.name << private_.process_tasks_.size() << private_.process_poll_tasks_.size() << private_.process_timer_tasks_.size();
+      trace() << LogStream::Color::Red << "nested" << LogStream::Color::Green << _nested << LOG_THREAD_NAME << private_.process_tasks_.size() << private_.process_poll_tasks_.size() << private_.process_timer_tasks_.size();
       if (!private_.process_tasks_.empty()) {
         mutex.unlock();
         private_.process_tasks();
@@ -444,7 +446,7 @@ void AbstractThread::exec() {
 
           int i = 0;
           if (private_.wake_) {
-            trace() << LogStream::Color::Magenta << "waked" << private_.name << private_.id << private_.fds_[0].revents << r;
+            trace() << LogStream::Color::Magenta << "waked" << LOG_THREAD_NAME << private_.id << private_.fds_[0].revents << r;
   #ifndef _WIN32
     #ifndef EVENTFD_WAKE
             char _c;
@@ -487,7 +489,7 @@ void AbstractThread::exec() {
                 eventfd_t _v;
                 (void)eventfd_read(WAKE_FD, &_v);
   #endif
-                trace() << LogStream::Color::Magenta << "waked" << private_.name << private_.id << event[i].events << private_.wake_;
+                trace() << LogStream::Color::Magenta << "waked" << LOG_THREAD_NAME << private_.id << event[i].events << private_.wake_;
                 continue;
               }
               Private::PollTask *_d = static_cast<Private::PollTask *>(event[i].data.ptr);
@@ -511,7 +513,7 @@ void AbstractThread::exec() {
           if (t.expire <= now) {
             t.expire += t.timeout;
             if (t.expire <= now) {
-              console_msg("AbstractThread: thread (" + private_.name + ") timer overload, interval: " + std::to_string(t.timeout.count()) + ", expired: " + std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>((now - t.expire + t.timeout)).count()));
+              console_msg("AbstractThread: thread " + LOG_THREAD_NAME + " timer overload, interval: " + std::to_string(t.timeout.count()) + ", expired: " + std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>((now - t.expire + t.timeout)).count()));
               t.expire = now + t.timeout;
             }
             private_.process_timer_tasks_.push({t.id, t.task});
@@ -530,7 +532,7 @@ void AbstractThread::exec() {
   if (!_nested) finishedEvent();
   LockGuard lock(mutex);
   if (_nested--) {
-    trace() << LogStream::Color::Magenta << private_.name << _nested << private_.nested_ << LogStream::Color::Red << (_nested <= private_.nested_);
+    trace() << LOG_THREAD_NAME << LogStream::Color::Magenta << _nested << private_.nested_ << LogStream::Color::Red << (_nested <= private_.nested_);
     if (_nested <= private_.nested_) private_.state &= ~Private::WaitFinished;
     return;
   }
@@ -548,13 +550,13 @@ void AbstractThread::exec() {
 
 void AbstractThread::wake() const {
   if (private_.wake_) return;
-  warning_if(std::this_thread::get_id() == private_.id) << LogStream::Color::Red << private_.name;
+  warning_if(std::this_thread::get_id() == private_.id) << LogStream::Color::Red << LOG_THREAD_NAME;
   private_.wake_ = true;
   if (private_.poll_tasks.empty()) {
     condition_variable.notify_all();
     return;
   }
-  trace() << LogStream::Color::Cyan << private_.name << private_.id;
+  trace() << LogStream::Color::Cyan << LOG_THREAD_NAME << private_.id;
 #ifndef _WIN32
   #ifndef EVENTFD_WAKE
   char _c = '\x0';
@@ -569,15 +571,15 @@ void AbstractThread::wake() const {
 
 bool AbstractThread::invokeTask(AbstractTask *task) const {
   LockGuard lock(mutex);
-  warning_if(!private_.state) << LogStream::Color::Red << "thread not running (" + private_.name + ")" << private_.id;
+  warning_if(!private_.state) << LogStream::Color::Red << "thread not running:" << LOG_THREAD_NAME << private_.id;
   if (private_.state >= Private::Finalize) {
-    lsTrace() << LogStream::Color::Red << "Thread (" + private_.name + ") finished";
+    lsTrace() << LogStream::Color::Red << "Thread:" << LOG_THREAD_NAME << "finished";
     return false;
   }
   if (private_.state == Private::Interrupted) private_.state = Private::Running;
   private_.tasks.push(task);
   wake();
-  trace() << LogStream::Color::Green << private_.name << "invoke tasks" << private_.tasks.size();
+  trace() << LogStream::Color::Green << LOG_THREAD_NAME << "invoke tasks" << private_.tasks.size();
   return true;
 }
 
