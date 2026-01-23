@@ -133,7 +133,6 @@ LogStream::LogStream(uint8_t type, const char *function, const char *file, int l
 }
 
 LogStream::~LogStream() noexcept(false) {
-  if (flags & 0x0100) stream << colorString(static_cast<Color>(type & 0xf0));
   if ((type & 0x07) == Emergency) {
     completed({type, name, ((flags & 0x8000) ? stream.str() : ""), std::string(file) + ":" + std::to_string(line)}, flags | LOG_STREAM_FLUSH);
     throw std::runtime_error("log level emergency");
