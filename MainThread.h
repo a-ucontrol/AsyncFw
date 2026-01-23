@@ -43,8 +43,7 @@ public:
   #endif
       appendPollTask(eventfd_, AbstractThread::PollIn, [this](AbstractThread::PollEvents) {
         eventfd_t _v;
-        (void)eventfd_read(eventfd_, &_v);
-        if (_v == 1) {
+        if (eventfd_read(eventfd_, &_v) == 0) {
   #ifndef USE_QAPPLICATION
           Thread::quit();
   #else
