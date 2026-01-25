@@ -193,7 +193,7 @@ void AbstractSocket::setDescriptor(int _fd) {
   _l = sizeof(private_->pa_);
   if (getpeername(_fd, reinterpret_cast<struct sockaddr *>(&private_->pa_), &_l) < 0) lsError() << "error peer address";
 
-  lsTrace() << _fd << LogStream::Color::DarkGreen << "local:" << address() + ':' + std::to_string(port()) << "peer:" << LogStream::Color::Green << peerAddress() + ':' + std::to_string(peerPort());
+  lsTrace() << _fd << LogStream::Color::DarkGreen << "local:" << address() + ':' + std::to_string(port()) << "peer:" << peerAddress() + ':' + std::to_string(peerPort());
 
   changeDescriptor(_fd);
   state_ = State::Connected;
