@@ -10,7 +10,6 @@
   #include <map>
   #include <QTimerEvent>
   #include <QSocketNotifier>
-  #include <QThread>
   #include <QApplication>
 #endif
 
@@ -19,20 +18,40 @@
 #endif
 
 namespace AsyncFw {
-inline class MainThread :
+class MainThread : private Thread
 #ifdef USE_QAPPLICATION
-    public Thread,
-    private QObject
-#else
-    private Thread
+    ,
+                   private QObject
 #endif
 {
 public:
+  static int exec() {
+#ifndef USE_QAPPLICATION
+    if (mainThread_.running()) return -1;
+    mainThread_.Thread::exec();
+    return mainThread_.code_;
+#else
+    mainThread_.finished_ = false;
+    return qApp->exec();
+#endif
+  }
+  static void exit(int code = 0) {
+#ifdef EXIT_ON_UNIX_SIGNAL
+    mainThread_.code_ = code;
+    if (mainThread_.eventfd_ >= 0) eventfd_write(mainThread_.eventfd_, 1);
+#else
+  #ifndef USE_QAPPLICATION
+    mainThread_.code_ = code;
+    mainThread_.Thread::quit();
+  #else
+    qApp->exit(code);
+  #endif
+#endif
+  }
+
+private:
   MainThread() : Thread("Main") {
     setId();
-#if defined EXIT_ON_UNIX_SIGNAL || !defined USE_QAPPLICATION
-    instance_ = this;
-#endif
 #ifdef USE_QAPPLICATION
     AbstractThread::currentThread()->invokeMethod([this]() { QObject::connect(qApp, &QCoreApplication::aboutToQuit, [this]() { finished_ = true; }); });
 #endif
@@ -133,7 +152,7 @@ private:
   }
 
   struct Poll {
-    Poll(AbstractThread *thread, int fd) : in(fd, QSocketNotifier::Read), out(fd, QSocketNotifier::Write), thread_(thread) {
+    Poll(MainThread *thread, int fd) : in(fd, QSocketNotifier::Read), out(fd, QSocketNotifier::Write), thread_(thread) {
       QObject::connect(&in, &QSocketNotifier::activated, [this]() { task->invoke(AbstractThread::PollIn); });
       QObject::connect(&out, &QSocketNotifier::activated, [this]() { task->invoke(AbstractThread::PollOut); });
     }
@@ -176,34 +195,7 @@ private:
   QList<std::shared_ptr<Poll>> notifiers;
 #endif
 
-public:
-  static int exec() {
-#ifndef USE_QAPPLICATION
-    if (instance_->running()) return -1;
-    instance_->Thread::exec();
-    return instance_->code_;
-#else
-    instance_->finished_ = false;
-    return qApp->exec();
-#endif
-  }
-  static void exit(int code = 0) {
-#ifdef EXIT_ON_UNIX_SIGNAL
-    instance_->code_ = code;
-    if (instance_->eventfd_ >= 0) eventfd_write(instance_->eventfd_, 1);
-#else
-  #ifndef USE_QAPPLICATION
-    instance_->code_ = code;
-    instance_->Thread::quit();
-  #else
-    qApp->exit(code);
-  #endif
-#endif
-  }
-
-private:
 #if defined EXIT_ON_UNIX_SIGNAL || !defined USE_QAPPLICATION
-  inline static MainThread *instance_;
   int code_ = 0;
 #endif
 #ifdef EXIT_ON_UNIX_SIGNAL
@@ -212,5 +204,7 @@ private:
 #ifdef USE_QAPPLICATION
   bool finished_ = false;
 #endif
-} mainThread_;
+  static MainThread mainThread_;
+};
+inline MainThread MainThread::mainThread_;
 }  // namespace AsyncFw
