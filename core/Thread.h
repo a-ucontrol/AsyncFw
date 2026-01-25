@@ -94,19 +94,13 @@ public:
       method();
       return true;
     }
-    bool finished = false;
-    AbstractTask *_t = new Task([_m = std::move(method), &finished, this]() mutable {
-      _m();
-      AbstractThread::LockGuard lock(mutex);
-      finished = true;
-      condition_variable.notify_all();
-    });
+    std::atomic_flag finished;
+    AbstractTask *_t = new SyncTask(std::move(method), finished);
     if (!invokeTask(_t)) {
       delete _t;
       return false;
     }
-    std::unique_lock<std::mutex> lock(mutex);
-    while (!finished) condition_variable.wait(lock);
+    finished.wait(false);
     return true;
   }
 
@@ -152,12 +146,25 @@ protected:
   template <typename M>
   class Task : private AbstractTask {
     friend class AbstractThread;
-    friend class AbstractSocket;
 
   private:
     Task(M &&method) : method(std::move(method)) {}
     virtual void invoke() override { method(); }
     M method;
+  };
+
+  template <typename M>
+  class SyncTask : private Task<M> {
+    friend class AbstractThread;
+
+  private:
+    SyncTask(M &&method, std::atomic_flag &finished) : Task<M>(std::forward<M>(method)), finished(finished) {}
+    virtual void invoke() override {
+      Task<M>::invoke();
+      finished.test_and_set();
+      finished.notify_all();
+    }
+    std::atomic_flag &finished;
   };
 
   template <typename M>
