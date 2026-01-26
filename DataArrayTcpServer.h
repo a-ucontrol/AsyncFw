@@ -7,7 +7,7 @@ namespace AsyncFw {
 class ListenSocket;
 class DataArrayTcpServer : public DataArrayAbstractTcp {
 public:
-  DataArrayTcpServer(const std::string & = "TcpServer", AsyncFw::Thread * = nullptr);
+  DataArrayTcpServer(const std::string & = "TcpServer");
   void quit() override;
   bool listen(const std::string &address, uint16_t port);
   void close();

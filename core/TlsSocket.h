@@ -20,7 +20,7 @@ public:
   void setContext(const TlsContext &) const;
 
 protected:
-  AbstractTlsSocket(Thread * = nullptr);
+  AbstractTlsSocket();
   ~AbstractTlsSocket() override;
 
   virtual void activateReady();

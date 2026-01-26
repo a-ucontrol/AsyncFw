@@ -4,9 +4,9 @@
 
 using namespace AsyncFw;
 
-AbstractThreadPool::AbstractThreadPool(const std::string &name, AbstractThread *thread) : name_(name) {
+AbstractThreadPool::AbstractThreadPool(const std::string &name) : name_(name) {
   pools_.emplace_back(this);
-  thread_ = (thread) ? thread : AbstractThread::currentThread();
+  thread_ = AbstractThread::currentThread();
   lsTrace("pools: " + std::to_string(pools_.size()));
 }
 

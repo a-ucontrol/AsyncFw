@@ -20,7 +20,7 @@
 #define AsyncFw_THREAD this->thread()
 using namespace AsyncFw;
 
-DataArraySocket::DataArraySocket(Thread *_thread) : AbstractTlsSocket(_thread) {
+DataArraySocket::DataArraySocket() : AbstractTlsSocket() {
   sslConnection = 0;
   receiveByteArray = nullptr;
   waitTimerType = 0;

@@ -12,7 +12,7 @@ class DataArraySocket : public AbstractTlsSocket {
   friend LogStream &operator<<(LogStream &, const DataArraySocket &);
 
 public:
-  DataArraySocket(Thread * = nullptr);
+  DataArraySocket();
   ~DataArraySocket() override;
 
   bool initTls(const TlsContext &data);

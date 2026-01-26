@@ -52,8 +52,8 @@ public:
   uint16_t peerPort() const;
 
 protected:
-  AbstractSocket(Thread * = nullptr);
-  AbstractSocket(int, int, int, Thread * = nullptr);
+  AbstractSocket();
+  AbstractSocket(int, int, int);
   virtual ~AbstractSocket();
 
   void setError(Error);
@@ -87,7 +87,7 @@ private:
 
 class ListenSocket : public AbstractSocket {
 public:
-  ListenSocket(Thread *_t = nullptr) : AbstractSocket(_t) {}
+  //ListenSocket() : AbstractSocket() {}
   void setIncomingConnection(std::function<bool(int, const std::string &)> f);
 
 protected:

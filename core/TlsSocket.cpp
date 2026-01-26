@@ -26,7 +26,7 @@ struct AbstractTlsSocket::Private {
   int dataIndex;
 };
 
-AbstractTlsSocket::AbstractTlsSocket(Thread *_thread) : AbstractSocket(_thread) {
+AbstractTlsSocket::AbstractTlsSocket() : AbstractSocket() {
   private_ = new Private;
   trace() << fd_;
 }

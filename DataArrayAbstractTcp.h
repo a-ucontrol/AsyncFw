@@ -15,7 +15,7 @@ public:
     ErrorTransmitNotActive = -101,
     ErrorTransmit = -102,
   };
-  DataArrayAbstractTcp(const std::string &, AbstractThread * = nullptr);
+  DataArrayAbstractTcp(const std::string &);
   void init(int readTimeout = 30000, int waitKeepAliveAnswerTimeout = 0, int waitForEncryptedTimeout = 10000, int maxThreads = 4, int maxSockets = 8, int maxReadBuffers = 16, int maxReadSize = 16 * 1024 * 1024, int maxWriteBuffers = 16, int maxWriteSize = 16 * 1024 * 1024, int socketReadBufferSize = 1024 * 512) {
     this->readTimeout = readTimeout;
     this->waitKeepAliveAnswerTimeout = waitKeepAliveAnswerTimeout;

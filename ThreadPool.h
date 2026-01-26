@@ -12,7 +12,7 @@ namespace AsyncFw {
 class AbstractThreadPool {
 public:
   static std::vector<AbstractThreadPool *> pools() { return pools_; }
-  AbstractThreadPool(const std::string &, AbstractThread * = nullptr);
+  AbstractThreadPool(const std::string &);
   virtual ~AbstractThreadPool();
   virtual void quit();
   AbstractThread *thread() { return thread_; }

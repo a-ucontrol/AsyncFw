@@ -7,7 +7,7 @@
 
 using namespace AsyncFw;
 
-DataArrayTcpClient::DataArrayTcpClient(const std::string &name, AbstractThread *thread) : DataArrayAbstractTcp(name, thread) { lsTrace(); }
+DataArrayTcpClient::DataArrayTcpClient(const std::string &name) : DataArrayAbstractTcp(name) { lsTrace(); }
 
 void DataArrayTcpClient::socketStateChanged(const DataArraySocket *socket) {
   bool connected = socket->state() == DataArraySocket::State::Active;
@@ -113,7 +113,8 @@ void DataArrayTcpClient::connectToHost(const DataArraySocket *socket, int timeou
 DataArrayTcpClient::Thread::~Thread() { lsTrace(); }
 
 DataArraySocket *DataArrayTcpClient::Thread::createSocket() {
-  DataArraySocket *tcpSocket = new DataArraySocket(this);
+  checkCurrentThread();
+  DataArraySocket *tcpSocket = new DataArraySocket();
   tcpSocket->setConnectTimeout(client()->waitForConnectTimeoutInterval);
   tcpSocket->setReconnectTimeout(client()->reconnectTimeoutInterval);
   socketInit(const_cast<DataArraySocket *>(tcpSocket));

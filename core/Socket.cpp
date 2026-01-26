@@ -71,16 +71,16 @@ struct AbstractSocket::Private {
 #undef AsyncFw_THREAD
 #define AsyncFw_THREAD this->thread()
 
-AbstractSocket::AbstractSocket(Thread *_thread) {
+AbstractSocket::AbstractSocket() {
   private_ = new Private;
   private_->la_.ss_family = AF_INET;
   private_->pa_.ss_family = AF_INET;
-  thread_ = (_thread) ? _thread : static_cast<Thread *>(AbstractThread::currentThread());
+  thread_ = Thread::currentThread();
   thread_->appendSocket(this);
   trace();
 }
 
-AbstractSocket::AbstractSocket(int _family, int _type, int _protocol, Thread *_thread) : AbstractSocket(_thread) {
+AbstractSocket::AbstractSocket(int _family, int _type, int _protocol) : AbstractSocket() {
   private_->la_.ss_family = _family;
   private_->pa_.ss_family = _family;
   private_->type_ = _type;
