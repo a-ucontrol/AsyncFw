@@ -16,7 +16,7 @@ public:
   AsyncFw::FunctionConnectorProtected<HttpSocket>::Connector<const AsyncFw::AbstractSocket::Error> error;
 
 protected:
-  HttpSocket(AsyncFw::Thread *t) : AbstractTlsSocket(t) {}
+  HttpSocket(AsyncFw::Thread *t) : AbstractTlsSocket() {}
   ~HttpSocket() override = default;
 
 private:
