@@ -225,7 +225,7 @@ AbstractThread::AbstractThread(const std::string &_name) : private_(*new Private
   epoll_ctl(private_.epoll_fd, EPOLL_CTL_ADD, WAKE_FD, &event);
 #endif
 
-  lsTrace() << _name;
+  lsTrace() << LOG_THREAD_NAME;
 }
 
 AbstractThread::~AbstractThread() {

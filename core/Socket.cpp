@@ -243,7 +243,7 @@ bool AbstractSocket::connect(const std::string &_address, uint16_t _port) {
   _l = sizeof(private_->la_);
   if (getsockname(_fd, reinterpret_cast<struct sockaddr *>(&private_->la_), &_l) < 0) lsError() << "error socket address";
 
-  lsTrace() << _fd << "local:" << LogStream::Color::Green << address() + ':' + std::to_string(port()) << "peer:" << LogStream::Color::Green << peerAddress() + ':' + std::to_string(peerPort());
+  lsTrace() << _fd << LogStream::Color::DarkGreen << "local:" << address() + ':' + std::to_string(port()) << "peer:" << peerAddress() + ':' + std::to_string(peerPort());
 
   thread_->invokeMethod([this, _fd]() { changeDescriptor(_fd); }, true);
   private_->w_ = 0;
