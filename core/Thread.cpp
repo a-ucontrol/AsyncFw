@@ -303,6 +303,10 @@ bool AbstractThread::running() const {
 void AbstractThread::requestInterrupt() {
   LockGuard lock(mutex);
   if (private_.state != Private::Interrupted) {
+    if (!private_.state || private_.state >= Private::WaitFinished) {
+      lsWarning() << "thread not running";
+      return;
+    }
     private_.state = Private::WaitInterrupted;
     wake();
   }
@@ -310,7 +314,7 @@ void AbstractThread::requestInterrupt() {
 
 bool AbstractThread::interruptRequested() const {
   LockGuard lock(mutex);
-  return private_.state == Private::WaitInterrupted || (private_.state & Private::WaitFinished);
+  return private_.state == Private::WaitInterrupted || (private_.state >= Private::WaitFinished);
 }
 
 void AbstractThread::waitInterrupted() const {
@@ -327,7 +331,7 @@ void AbstractThread::waitInterrupted() const {
 void AbstractThread::quit() {
   lsDebug() << name() << this;
   LockGuard lock(mutex);
-  if (!private_.state || private_.state == Private::Finished) {
+  if (!private_.state || private_.state >= Private::WaitFinished) {
     lsWarning() << "thread already finished or not started";
     return;
   }
@@ -585,8 +589,8 @@ bool AbstractThread::invokeTask(AbstractTask *task) const {
 
 void AbstractThread::start() {
   LockGuard lock(mutex);
-  if (private_.state && private_.state != Private::Finished) {
-    lsWarning() << "thread already running or starting";
+  if ((private_.state && private_.state != Private::Finished) || private_.id != std::thread::id()) {
+    lsWarning() << "thread already running or starting, or thread id not null";
     return;
   }
   private_.state = Private::WaitStarted;
