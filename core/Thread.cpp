@@ -578,17 +578,19 @@ void AbstractThread::wake() const {
 }
 
 bool AbstractThread::invokeTask(AbstractTask *task) const {
-  LockGuard lock(mutex);
-  warning_if(!private_.state) << LogStream::Color::Red << "thread not running" << LOG_THREAD_NAME << private_.id;
-  if (private_.state >= Private::Finalize) {
-    console_msg("Thread " + LOG_THREAD_NAME + " finished");
-    return false;
+  {  //lock scope
+    LockGuard lock(mutex);
+    warning_if(!private_.state) << LogStream::Color::Red << "thread not running" << LOG_THREAD_NAME << private_.id;
+    trace() << LogStream::Color::Green << LOG_THREAD_NAME << "invoke tasks" << private_.tasks.size();
+    if (private_.state < Private::Finalize) {
+      if (private_.state == Private::Interrupted) private_.state = Private::Running;
+      private_.tasks.push(task);
+      wake();
+      return true;
+    }
   }
-  if (private_.state == Private::Interrupted) private_.state = Private::Running;
-  private_.tasks.push(task);
-  wake();
-  trace() << LogStream::Color::Green << LOG_THREAD_NAME << "invoke tasks" << private_.tasks.size();
-  return true;
+  lsTrace() << "thread" << LOG_THREAD_NAME << "finished";
+  return false;
 }
 
 void AbstractThread::start() {
