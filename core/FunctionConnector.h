@@ -10,13 +10,13 @@ class AbstractFunctionConnector {
   friend FunctionConnectionGuard;
 
 public:
-  enum ConnectionType : uint8_t { Auto = 0, AutoSync = 0x01, Queued = 0x02, Direct = 0x04, QueuedSync = 0x08, AutoOnly = 0x10, AutoSyncOnly = 0x11, QueuedOnly = 0x12, DirectOnly = 0x14, QueuedSyncOnly = 0x18 };
+  enum ConnectionType : uint8_t { Auto = 0, Direct = 0x01, Queued = 0x02, Sync = 0x04, AutoOnly = 0x10, DirectOnly = 0x11, QueuedOnly = 0x12, SyncOnly = 0x14 };
   class Connection {
     friend AbstractFunctionConnector;
     friend FunctionConnectionGuard;
 
   public:
-    enum Type : uint8_t { Auto = AbstractFunctionConnector::Auto, AutoSync = AbstractFunctionConnector::AutoSync, Queued = AbstractFunctionConnector::Queued, Direct = AbstractFunctionConnector::Direct, QueuedSync = AbstractFunctionConnector::QueuedSync, Default = 0x80 };
+    enum Type : uint8_t { Auto = AbstractFunctionConnector::Auto, Direct = AbstractFunctionConnector::Direct, Queued = AbstractFunctionConnector::Queued, Sync = AbstractFunctionConnector::Sync, Default = 0x80 };
 
   protected:
     Connection(AbstractFunctionConnector *, Type);
@@ -64,11 +64,11 @@ protected:
   void send(Args &...args) {
     std::lock_guard<std::mutex> lock(mutex);
     for (const Connection *c : *reinterpret_cast<std::vector<Connection *> *>(&list_)) {
-      if (c->type_ == Connection::Direct || ((c->type_ == Connection::Auto || c->type_ == Connection::AutoSync) && c->thread_->id() == std::this_thread::get_id())) {
+      if (c->type_ == Connection::Direct || (c->type_ == Connection::Auto && c->thread_->id() == std::this_thread::get_id())) {
         (*c->f)(args...);
         continue;
       }
-      if (c->type_ != Connection::AutoSync && c->type_ != Connection::QueuedSync) {
+      if (c->type_ != Connection::Sync) {
         AbstractThread::AbstractTask *_t = new QueuedTask(c->f->copy(), args...);
         if (!c->thread_->invokeTask(_t)) delete _t;
       } else {
