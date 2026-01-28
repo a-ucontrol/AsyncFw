@@ -51,11 +51,11 @@ int main(int argc, char *argv[]) {
   Timer::single(10, []() { tst(1000); });
 
   Timer::single(5000, []() {
-    logNotice() << "MainThread::instance()->quit()";
+    logNotice() << "MainThread::quit()";
     MainThread::exit();
   });
 
-  logNotice() << "MainThread::instance()->exec()";
+  logNotice() << "MainThread::exec()";
 
   return MainThread::exec();
 }
