@@ -130,6 +130,7 @@ private:
 
 private:
   void timerEvent(QTimerEvent *e) override {
+    if (finished_) return;
     int qid = e->timerId();
     for (std::vector<Timer>::iterator it = timers.begin(); it != timers.end(); ++it) {
       if (it->qid == qid) {
