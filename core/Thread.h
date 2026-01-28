@@ -95,7 +95,7 @@ public:
       return true;
     }
     std::atomic_flag finished;
-    AbstractTask *_t = new SyncTask(std::move(method), finished);
+    AbstractTask *_t = new SyncTask(std::forward<M>(method), finished);
     if (!invokeTask(_t)) {
       delete _t;
       return false;
