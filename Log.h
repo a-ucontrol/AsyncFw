@@ -25,7 +25,7 @@ public:
   void setFilter(const std::vector<std::string> &f) { filter = f; }
 
 protected:
-  static inline AbstractLog *log_;
+  static inline std::atomic<AbstractLog *> log_;
   void append(const Message &m);
   virtual void flush();
   virtual void output(const Message &message);

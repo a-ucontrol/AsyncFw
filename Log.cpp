@@ -47,6 +47,7 @@ void AbstractLog::finality() {
       if (lastMessages[i].count > 1 && lastMessages[i].count != 10000) { output({lastMessages[i].message.type, lastMessages[i].message.name, "Repeated message " + std::to_string(lastMessages[i].count) + " times (last: " + std::to_string(LOG_CURRENT_TIME - lastMessages[i].message.time) + "ms ago): " + (lastMessages[i].message.string.empty() ? "Empty message" : lastMessages[i].message.string), lastMessages[i].message.note}); }
     }
   }
+  lsTrace();
 }
 
 void AbstractLog::append(uint8_t type, const std::string &message, const std::string &sender, const std::string &note) { append({type, sender, message, note}); }
@@ -153,21 +154,25 @@ void AbstractLog::stopTimer(int *timerId) {
 }
 
 void AbstractLog::append_(const Message &m, uint8_t f) {
-  if (log_ && !(f & LOG_STREAM_CONSOLE_ONLY)) {
+  AbstractLog *_log = log_;
+  if (_log && !(f & LOG_STREAM_CONSOLE_ONLY)) {
     if (f & 0x80) {
       {  //lock scope
-        AbstractThread::LockGuard lock = log_->thread_->lockGuard();
-        log_->messages.push(m);
+        AbstractThread::LockGuard lock = _log->thread_->lockGuard();
+        _log->messages.push(m);
       }
-      log_->thread_->invokeMethod(
-          []() {
-            log_->flush();
-            log_->save();
-          },
-          true);
+      if (!_log->thread_->invokeMethod(
+              [_log]() {
+                _log->flush();
+                _log->save();
+              },
+              true)) {
+        _log->flush();
+        _log->save();
+      }
       return;
     }
-    log_->append(m);
+    _log->append(m);
   } else {
     LogStream::console_output(m, f);
   }
