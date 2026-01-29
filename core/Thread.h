@@ -208,15 +208,15 @@ public:
   ~Thread() override;
 
 protected:
-  std::vector<AbstractSocket *> sockets_;
   void startedEvent() override;
-  void appendSocket(AbstractSocket *);
-  void removeSocket(AbstractSocket *);
+  std::vector<AbstractSocket *> sockets_;
 
 private:
   struct Compare {
     bool operator()(const AbstractSocket *, const AbstractSocket *) const;
   };
+  void appendSocket(AbstractSocket *);
+  void removeSocket(AbstractSocket *);
 };
 
 constexpr AbstractThread::PollEvents operator|(AbstractThread::PollEvents e1, AbstractThread::PollEvents e2) { return static_cast<AbstractThread::PollEvents>(static_cast<uint8_t>(e1) | static_cast<uint8_t>(e2)); }
