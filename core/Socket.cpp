@@ -91,10 +91,10 @@ AbstractSocket::~AbstractSocket() {
   if (state_ != State::Destroy) {
     thread_->removeSocket(this);
     lsWarning() << this << LogStream::Color::Red << "not destroy state:" << static_cast<int>(state_);
-  }
-  if (fd_ >= 0) {
-    thread_->removePollDescriptor(fd_);
-    close_fd(fd_);
+    if (fd_ >= 0) {
+      thread_->removePollDescriptor(fd_);
+      close_fd(fd_);
+    }
   }
   delete private_;
   lsTrace();
