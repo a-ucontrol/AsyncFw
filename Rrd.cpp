@@ -20,7 +20,7 @@
 using namespace AsyncFw;
 
 Rrd::Rrd(int size, int interval, int fillInterval, const std::string &name) : dbSize(size), interval(interval), fill(interval ? fillInterval / interval : 0) {
-  trace();
+  lsTrace();
   thread_ = AbstractThread::currentThread();
   if (size == 0) {
     if (name.empty()) return;
@@ -43,7 +43,7 @@ Rrd::Rrd(int size, int interval, int fillInterval) : Rrd(size, interval, fillInt
 
 Rrd::~Rrd() {
   if (!file.empty() && !readOnly) { saveToFile(); }
-  trace();
+  lsTrace();
 }
 
 Rrd::Rrd(int size, const std::string &name) : Rrd(size, 0, 0, name) {}

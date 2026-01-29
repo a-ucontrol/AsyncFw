@@ -195,7 +195,11 @@ Log::~Log() {
   lsTrace();
   autoSave = -1;
   stopTimer(&timerIdAutosave);
-  thread()->invokeMethod([this]() { finality(); }, true);
+  if (thread_->running()) thread_->invokeMethod([this]() { finality(); }, true);
+  else {
+    console_msg("Log thread not running");
+    finality();
+  }
 }
 
 void Log::output(const Message &m) {

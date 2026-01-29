@@ -111,6 +111,7 @@ public:
   virtual void finishedEvent() {}
   virtual void destroy() {}
 
+  virtual bool running() const;
   virtual bool invokeTask(AbstractTask *) const;
   virtual int appendTimer(int, AbstractTask *);
   virtual bool modifyTimer(int, int);
@@ -129,7 +130,6 @@ public:
   }
 
   void start();
-  bool running() const;
   void requestInterrupt();
   bool interruptRequested() const;
   void waitInterrupted() const;
@@ -146,6 +146,7 @@ protected:
   template <typename M>
   class Task : private AbstractTask {
     friend class AbstractThread;
+    friend class AbstractSocket;
 
   private:
     Task(M &&method) : method(std::move(method)) {}

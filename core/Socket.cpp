@@ -437,10 +437,15 @@ void AbstractSocket::destroy() {
   close();
   state_ = State::Destroy;
   stateEvent();
-  thread_->invokeMethod([_p = this]() {
+  AbstractThread::AbstractTask *_t = new Thread::Task([_p = this]() {
     _p->thread_->removeSocket(_p);
     delete _p;
   });
+  if (!thread_->invokeTask(_t)) {
+    _t->invoke();
+    delete _t;
+    lsError() << "socket thread not running (" + thread_->name() + ')';
+  }
   trace();
 }
 

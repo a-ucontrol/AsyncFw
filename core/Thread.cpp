@@ -252,7 +252,7 @@ AbstractThread::~AbstractThread() {
 #endif
 
   warning_if(std::this_thread::get_id() == private_.id) << LogStream::Color::Red << "executed from own thread" << LOG_THREAD_NAME;
-  if (running()) {
+  if (AbstractThread::running()) {
     lsWarning() << "destroy running thread" << LOG_THREAD_NAME;
     quit();
     waitFinished();
@@ -800,7 +800,7 @@ Thread *Thread::currentThread() { return static_cast<Thread *>(AbstractThread::c
 Thread::Thread(const std::string &name) : AbstractThread(name) { trace(); }
 
 Thread::~Thread() {
-  if (running()) {
+  if (AbstractThread::running()) {
     quit();
     waitFinished();
   }

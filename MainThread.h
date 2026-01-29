@@ -31,7 +31,7 @@ public:
     mainThread_.Thread::exec();
     return mainThread_.code_;
 #else
-    mainThread_.finished_ = false;
+    mainThread_.state_ = 1;
     return qApp->exec();
 #endif
   }
@@ -53,7 +53,12 @@ private:
   MainThread() : Thread("Main") {
     setId();
 #ifdef USE_QAPPLICATION
-    AbstractThread::currentThread()->invokeMethod([this]() { QObject::connect(qApp, &QCoreApplication::aboutToQuit, [this]() { finished_ = true; }); });
+    AbstractThread::currentThread()->invokeMethod([this]() {
+      QObject::connect(qApp, &QCoreApplication::aboutToQuit, [this]() {
+        LockGuard lock = lockGuard();
+        state_ = 2;
+      });
+    });
 #endif
 #ifdef EXIT_ON_UNIX_SIGNAL
     eventfd_ = eventfd(0, EFD_NONBLOCK);
@@ -92,10 +97,15 @@ private:
   std::vector<Timer> timers;
   std::map<int, AbstractTask *> polls;
 
+  bool running() const override {
+    LockGuard lock = lockGuard();
+    return state_ == 1;
+  }
+
   virtual int appendTimer(int msec, AbstractTask *task) override {
     int id = 0;
     int qid = -1;
-    std::unique_lock<std::mutex> lock(mutex);
+    LockGuard lock = lockGuard();
     std::vector<Timer>::iterator it = timers.begin();
     for (; it != timers.end(); ++it, ++id)
       if (it->id != id) break;
@@ -105,7 +115,7 @@ private:
   }
 
   virtual bool modifyTimer(int id, int msec) override {
-    std::unique_lock<std::mutex> lock(mutex);
+    LockGuard lock = lockGuard();
     for (std::vector<Timer>::iterator it = timers.begin(); it != timers.end(); ++it) {
       if (it->id == id) {
         if (it->qid >= 0) QObject::killTimer(it->qid);
@@ -117,7 +127,7 @@ private:
   }
 
   virtual void removeTimer(int id) override {
-    std::unique_lock<std::mutex> lock(mutex);
+    LockGuard lock = lockGuard();
     for (std::vector<Timer>::iterator it = timers.begin(); it != timers.end(); ++it) {
       if (it->id == id) {
         if (it->qid >= 0) QObject::killTimer(it->qid);
@@ -128,9 +138,7 @@ private:
     }
   }
 
-private:
   void timerEvent(QTimerEvent *e) override {
-    if (finished_) return;
     int qid = e->timerId();
     for (std::vector<Timer>::iterator it = timers.begin(); it != timers.end(); ++it) {
       if (it->qid == qid) {
@@ -141,7 +149,8 @@ private:
   }
 
   bool invokeTask(AbstractTask *task) const override {
-    if (finished_) return false;
+    LockGuard lock = lockGuard();
+    if (state_ == 2) return false;
     QMetaObject::invokeMethod(
         const_cast<MainThread *>(this),
         [task]() {
@@ -154,8 +163,8 @@ private:
 
   struct Poll {
     Poll(MainThread *thread, int fd) : in(fd, QSocketNotifier::Read), out(fd, QSocketNotifier::Write), thread_(thread) {
-      QObject::connect(&in, &QSocketNotifier::activated, [this]() { task->invoke(AbstractThread::PollIn); });
-      QObject::connect(&out, &QSocketNotifier::activated, [this]() { task->invoke(AbstractThread::PollOut); });
+      QObject::connect(&in, &QSocketNotifier::activated, [this, thread]() { task->invoke(AbstractThread::PollIn); });
+      QObject::connect(&out, &QSocketNotifier::activated, [this, thread]() { task->invoke(AbstractThread::PollOut); });
     }
     ~Poll() { delete task; }
     QSocketNotifier in;
@@ -203,7 +212,7 @@ private:
   int eventfd_ = -1;
 #endif
 #ifdef USE_QAPPLICATION
-  bool finished_ = false;
+  int state_ = 0;
 #endif
   static MainThread mainThread_;
 };
