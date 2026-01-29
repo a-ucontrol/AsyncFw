@@ -166,8 +166,8 @@ private:
 
   struct Poll {
     Poll(MainThread *thread, int fd) : in(fd, QSocketNotifier::Read), out(fd, QSocketNotifier::Write), thread_(thread) {
-      QObject::connect(&in, &QSocketNotifier::activated, [this, thread]() { task->invoke(AbstractThread::PollIn); });
-      QObject::connect(&out, &QSocketNotifier::activated, [this, thread]() { task->invoke(AbstractThread::PollOut); });
+      QObject::connect(&in, &QSocketNotifier::activated, [this]() { task->invoke(AbstractThread::PollIn); });
+      QObject::connect(&out, &QSocketNotifier::activated, [this]() { task->invoke(AbstractThread::PollOut); });
     }
     ~Poll() { delete task; }
     QSocketNotifier in;
