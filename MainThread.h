@@ -55,8 +55,11 @@ private:
 #ifdef USE_QAPPLICATION
     AbstractThread::currentThread()->invokeMethod([this]() {
       QObject::connect(qApp, &QCoreApplication::aboutToQuit, [this]() {
-        LockGuard lock = lockGuard();
-        state_ = 2;
+        {  //lock scope
+          LockGuard lock = lockGuard();
+          state_ = 2;
+        }
+        qApp->processEvents();
       });
     });
 #endif
