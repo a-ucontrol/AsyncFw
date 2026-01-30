@@ -6,17 +6,18 @@
 
 class HttpSocket : public AsyncFw::AbstractTlsSocket {
 public:
-  static HttpSocket *create(AsyncFw::Thread *_t = nullptr) { return new HttpSocket(_t); }
+  static HttpSocket *create(AsyncFw::Thread *_t = nullptr);
 
   void stateEvent() override;
   void readEvent() override;
 
   AsyncFw::FunctionConnectorProtected<HttpSocket>::Connector<const AsyncFw::AbstractSocket::State> stateChanged;
-  AsyncFw::FunctionConnectorProtected<HttpSocket>::Connector<const AsyncFw::DataArray &, const AsyncFw::DataArray &> received;
+  AsyncFw::FunctionConnectorProtected<HttpSocket>::Connector<const AsyncFw::DataArray &> receivedHeader;
+  AsyncFw::FunctionConnectorProtected<HttpSocket>::Connector<const AsyncFw::DataArray &> receivedContent;
   AsyncFw::FunctionConnectorProtected<HttpSocket>::Connector<const AsyncFw::AbstractSocket::Error> error;
 
 protected:
-  HttpSocket(AsyncFw::Thread *t) : AbstractTlsSocket() {}
+  using AsyncFw::AbstractTlsSocket::AbstractTlsSocket;
   ~HttpSocket() override = default;
 
 private:

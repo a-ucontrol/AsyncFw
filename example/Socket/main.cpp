@@ -48,9 +48,9 @@ int main(int argc, char *argv[]) {
       socket->write("GET " GET_FILE " HTTP/1.1\r\nHost:" SERVER_NAME "\r\n\r\n");
     }
   });
-  socket->received([](const AsyncFw::DataArray &header, const AsyncFw::DataArray &content) {
+  socket->receivedHeader([](const AsyncFw::DataArray &header) { logNotice() << header.view(0, 512); });
+  socket->receivedContent([](const AsyncFw::DataArray &content) {
     std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-    logNotice() << header.view(0, 512);
     logDebug() << content.view(0, 1024);
     AsyncFw::MainThread::exit(0);
   });

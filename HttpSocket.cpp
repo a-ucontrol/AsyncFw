@@ -2,14 +2,22 @@
 
 #include "HttpSocket.h"
 
+HttpSocket *HttpSocket::create(AsyncFw::Thread *_t) {
+  HttpSocket *_s;
+  if (_t) _t->invokeMethod([&_s]() { _s = new HttpSocket(); }, true);
+  else { _s = new HttpSocket(); }
+  return _s;
+}
+
 void HttpSocket::stateEvent() {
-  logDebug() << "State event:" << static_cast<int>(state());
+  lsDebug() << "state event:" << static_cast<int>(state());
   if (state() == Unconnected) {
     if (AbstractSocket::error() > Closed) {
       error(AsyncFw::AbstractSocket::error());
       return;
     }
-    if (!contentLenght_) received(header_, content_);
+    receivedHeader(header_);
+    if (contentLenght_) receivedContent(content_);
     header_.clear();
     content_.clear();
     return;
@@ -23,7 +31,7 @@ void HttpSocket::stateEvent() {
 }
 
 void HttpSocket::readEvent() {
-  logTrace() << "Read event";
+  lsTrace() << "read event";
 
   AsyncFw::DataArray &_da = peek();
 
@@ -43,12 +51,12 @@ void HttpSocket::readEvent() {
         contentLenght_ = std::stoi(str);
       }
       if (contentLenght_ == 0) {
-        received(header_, "");
+        receivedHeader(header_);
         header_.clear();
         return;
       }
       if (contentLenght_ == std::string::npos) {
-        logError("error http request");
+        lsError("error http request");
         disconnect();
         return;
       }
@@ -57,7 +65,7 @@ void HttpSocket::readEvent() {
         if ((j = header_.view().find("\r\n", i + 18)) != std::string::npos) {
           std::string str(header_.begin() + i + 18, header_.begin() + j);
           if (str.find("chunked") == std::string::npos) {
-            logError("error http request");
+            lsError("error http request");
             disconnect();
             return;
           }
@@ -72,7 +80,7 @@ void HttpSocket::readEvent() {
     content_ += _da;
     _da.clear();
     if (contentLenght_ != content_.size()) return;
-    received(header_, content_);
+    receivedContent(content_);
     header_.clear();
     content_.clear();
     return;
@@ -91,7 +99,8 @@ void HttpSocket::readEvent() {
     if (_n == 0) {
       _da.clear();
 
-      received(header_, content_);
+      receivedHeader(header_);
+      receivedContent(content_);
       header_.clear();
       content_.clear();
       return;
@@ -102,6 +111,6 @@ void HttpSocket::readEvent() {
     content_ += read(_n);
     _da.erase(_da.begin(), _da.begin() + 2);
 
-    logDebug() << "readed:" << _n;
+    lsDebug() << "readed:" << _n;
   }
 }
