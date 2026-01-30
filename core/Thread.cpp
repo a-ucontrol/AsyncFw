@@ -801,6 +801,7 @@ Thread::Thread(const std::string &name) : AbstractThread(name) { trace(); }
 
 Thread::~Thread() {
   if (AbstractThread::running()) {
+    lsWarning() << "destroy running thread" << '(' + name() + ')';
     quit();
     waitFinished();
   }
