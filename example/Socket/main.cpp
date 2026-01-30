@@ -3,9 +3,8 @@
 #include <core/TlsContext.h>
 #include <AddressInfo.h>
 #include <File.h>
+#include <HttpSocket.h>
 #include <Log.h>
-
-#include "../common/HttpSocket/HttpSocket.hpp"
 
 #define SERVER_NAME "github.com"
 #define SERVER_PORT 443

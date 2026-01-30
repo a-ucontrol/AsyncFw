@@ -9,8 +9,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(PROJECT_SOURCES
   main.cpp
-  ../common/HttpSocket/HttpSocket.hpp
-  ../common/HttpSocket/HttpSocket.cpp
 )
 
 add_executable(${TARGET} ${PROJECT_SOURCES})

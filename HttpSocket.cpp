@@ -1,6 +1,6 @@
 #include <core/LogStream.h>
 
-#include "HttpSocket.hpp"
+#include "HttpSocket.h"
 
 void HttpSocket::stateEvent() {
   logDebug() << "State event:" << static_cast<int>(state());

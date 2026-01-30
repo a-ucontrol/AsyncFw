@@ -56,6 +56,7 @@ set(AsyncFw_HEADERS
   "DataArrayAbstractTcp.h"
 
   "Task.h"
+  "HttpSocket.h"
 )
 
 set(AsyncFw_SOURCES
@@ -77,6 +78,7 @@ set(AsyncFw_SOURCES
   "ThreadPool.cpp"
 
   "Task.cpp"
+  "HttpSocket.cpp"
 )
 
 if(NOT PLATFORM STREQUAL "AMD64")
