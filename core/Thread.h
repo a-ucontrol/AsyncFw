@@ -200,6 +200,7 @@ class AbstractSocket;
 
 class Thread : public AbstractThread {
   friend AbstractSocket;
+  friend class ListenSocket;
   friend LogStream &operator<<(LogStream &, const Thread &);
 
 public:

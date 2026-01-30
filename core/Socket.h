@@ -87,7 +87,7 @@ private:
 
 class ListenSocket : public AbstractSocket {
 public:
-  //ListenSocket() : AbstractSocket() {}
+  ~ListenSocket();
   void setIncomingConnection(std::function<bool(int, const std::string &)> f);
 
 protected:

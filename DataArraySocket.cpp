@@ -59,7 +59,6 @@ void DataArraySocket::removeTimer() {
 }
 
 void DataArraySocket::stateEvent() {
-  lsDebug() << *this << (waitTimerType & 0x04);
   if (state_ == State::Connected) {
     if (waitTimerType & 0x04) {
       waitTimerType &= ~0x04;

@@ -40,8 +40,6 @@ struct start_wsa {
 #define SOCKET_CONNECTION_QUEUED 16
 //#define SOCKET_REUSEPORT
 
-//#define EXTEND_SOCKET_TRACE
-
 #ifdef EXTEND_SOCKET_TRACE
   #define trace LogStream(+LogStream::Trace | LogStream::Gray, __PRETTY_FUNCTION__, __FILE__, __LINE__, LS_LOG_DEFAULT_FLAGS | LOG_STREAM_CONSOLE_ONLY).output
   #define warning_if(x) \
@@ -91,11 +89,10 @@ AbstractSocket::~AbstractSocket() {
   if (state_ != State::Destroy) {
     thread_->removeSocket(this);
     lsWarning() << this << LogStream::Color::Red << "not destroy state:" << static_cast<int>(state_);
-    if (fd_ >= 0) {
-      thread_->removePollDescriptor(fd_);
-      close_fd(fd_);
-    }
+    if (fd_ >= 0) thread_->removePollDescriptor(fd_);
   }
+  if (fd_ >= 0) close_fd(fd_);
+
   delete private_;
   lsTrace();
 }
@@ -444,7 +441,7 @@ void AbstractSocket::destroy() {
   if (!thread_->invokeTask(_t)) {
     _t->invoke();
     delete _t;
-    lsError() << "socket thread not running (" + thread_->name() + ')';
+    lsError() << "socket thread not running" << '(' + thread_->name() + ')';
   }
   trace();
 }
@@ -552,6 +549,13 @@ void ListenSocket::incomingEvent() {
     }
   }
   trace() << LogStream::Color::Red << _cd << LogStream::Color::Green << _pa;
+}
+
+ListenSocket::~ListenSocket() {
+  lsTrace();
+  if (state_ == Destroy) return;
+  state_ = Destroy;
+  thread_->removeSocket(this);
 }
 
 void ListenSocket::setIncomingConnection(std::function<bool(int, const std::string &)> f) { incomingConnection = f; }
