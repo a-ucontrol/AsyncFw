@@ -43,7 +43,7 @@ public:
 
   //int descriptorWriteSize();
 
-  State state() const { return state_; }
+  State state() const;
   Thread *thread() const { return thread_; }
 
   std::string address() const;

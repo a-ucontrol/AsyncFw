@@ -94,6 +94,7 @@ public:
       method();
       return true;
     }
+#if 1
     bool finished = false;
     AbstractTask *_t = new Task([_m = std::forward<M>(method), &finished, this]() mutable {
       _m();
@@ -107,6 +108,22 @@ public:
     }
     std::unique_lock<std::mutex> lock(mutex);
     while (!finished) condition_variable.wait(lock);
+#else  //ThreadSanitizer: data race
+    std::atomic_flag finished;
+    AbstractTask *_t = new Task([_m = std::forward<M>(method), &finished, this]() mutable {
+      _m();
+      finished.test_and_set();
+      finished.notify_one();
+    });
+    if (!invokeTask(_t)) {
+      delete _t;
+      return false;
+    }
+    for (;;) {
+      finished.wait(false);
+      if (finished.test()) break;
+    }
+#endif
     return true;
   }
 

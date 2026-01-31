@@ -369,6 +369,12 @@ int AbstractSocket::pendingWrite() const {
 
   return private_->wda_.size();
 }
+
+AbstractSocket::State AbstractSocket::state() const {
+  AbstractSocket::State _r;
+  thread_->invokeMethod([&_r, this]() { _r = state_; }, true);
+  return _r;
+}
 /*
 int AbstractSocket::descriptorWriteSize() {
 #ifndef _WIN32
@@ -561,8 +567,5 @@ ListenSocket::~ListenSocket() {
 void ListenSocket::setIncomingConnection(std::function<bool(int, const std::string &)> f) { incomingConnection = f; }
 
 namespace AsyncFw {
-LogStream &operator<<(LogStream &log, const AbstractSocket &s) {
-  s.thread_->invokeMethod([&s, &log]() { log << '(' + s.thread_->name() + ')' << s.fd_ << static_cast<int>(s.state_) << '-' << s.address() + ':' + std::to_string(s.port()) + '/' + s.peerAddress() + ':' + std::to_string(s.peerPort()); }, true);
-  return log;
-}
+LogStream &operator<<(LogStream &log, const AbstractSocket &s) { return log << '(' + s.thread_->name() + ')' << s.fd_ << static_cast<int>(s.state()) << '-' << s.address() + ':' + std::to_string(s.port()) + '/' + s.peerAddress() + ':' + std::to_string(s.peerPort()); }
 }  // namespace AsyncFw
