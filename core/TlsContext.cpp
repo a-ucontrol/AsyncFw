@@ -9,11 +9,18 @@
 #include "DataArray.h"
 #include "LogStream.h"
 
+#ifdef ATOMIC_FLAG_SYNC_INVOKE_METHOD
+  #include "core/Thread.h"
+#endif
+
 #include "TlsContext.h"
 
 using namespace AsyncFw;
 
 struct TlsContext::Private {
+#ifdef ATOMIC_FLAG_SYNC_INVOKE_METHOD
+  Private() { thread = AbstractThread::currentThread(); }
+#endif
   ~Private() {
     if (ctx_) {
       std::map<SSL_CTX *, std::function<int(int, X509_STORE_CTX *)>>::iterator it = verify_.find(ctx_);
@@ -34,6 +41,9 @@ struct TlsContext::Private {
   int serial_ = 0;
   int ref_ = 0;
 
+#ifdef ATOMIC_FLAG_SYNC_INVOKE_METHOD
+  AbstractThread *thread;
+#endif
   inline static std::map<SSL_CTX *, std::function<int(int, X509_STORE_CTX *)>> verify_;
 };
 
@@ -103,7 +113,12 @@ TlsContext::~TlsContext() {
 TlsContext &TlsContext::operator=(const TlsContext &_d) {
   _d.private_->ref_++;
   if (private_->ref_) private_->ref_--;
-  else { delete private_; }
+  else {
+#ifdef ATOMIC_FLAG_SYNC_INVOKE_METHOD
+    if (!private_->thread->invokeMethod([_p = private_]() { delete _p; }))
+#endif
+      delete private_;
+  }
   private_ = _d.private_;
   return *this;
 }

@@ -94,7 +94,7 @@ public:
       method();
       return true;
     }
-#if 1
+#ifndef ATOMIC_FLAG_SYNC_INVOKE_METHOD
     bool finished = false;
     AbstractTask *_t = new Task([_m = std::forward<M>(method), &finished, this]() mutable {
       _m();

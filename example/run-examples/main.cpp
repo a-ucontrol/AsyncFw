@@ -15,7 +15,7 @@ void run_examples() {
   });
   process.stateChanged([&ok, &process, &err, &app](AsyncFw::SystemProcess::State _s) {
     if (_s == AsyncFw::SystemProcess::Running) return;
-    if (_s != AsyncFw::SystemProcess::Finished) {
+    if (_s != AsyncFw::SystemProcess::Finished || process.exitCode()) {
       ok = false;
       logAlert() << "========================";
       err += app + "\n";
@@ -57,9 +57,14 @@ void run_examples() {
   process.start(app);
   process.wait();
 
+  app = EXAMPLES_PATH "Socket/SocketExample";
+  logInfo() << "Start:" << app;
+  process.start(app);
+  process.wait();
+
   if (!ok) {
     logAlert() << "-ERROR!-";
-    logAlert() << "=ERROR!=" << err;
+    logAlert() << "=ERROR!=\n" << err;
     logAlert() << "-ERROR!-";
   }
 
