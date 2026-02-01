@@ -2,6 +2,8 @@
 
 #include "HttpSocket.h"
 
+using namespace AsyncFw;
+
 HttpSocket *HttpSocket::create(AsyncFw::Thread *_t) {
   HttpSocket *_s;
   if (_t) _t->invokeMethod([&_s]() { _s = new HttpSocket(); }, true);

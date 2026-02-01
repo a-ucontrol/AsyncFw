@@ -4,6 +4,7 @@
 #include <core/DataArray.h>
 #include <core/TlsSocket.h>
 
+namespace AsyncFw {
 class HttpSocket : public AsyncFw::AbstractTlsSocket {
 public:
   static HttpSocket *create(AsyncFw::Thread *_t = nullptr);
@@ -25,3 +26,4 @@ private:
   AsyncFw::DataArray content_;
   std::size_t contentLenght_;
 };
+}  // namespace AsyncFw
