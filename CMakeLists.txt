@@ -5,7 +5,7 @@ project(AsyncFw VERSION 0.1 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_definitions(-DATOMIC_FLAG_SYNC_INVOKE_METHOD) #ThreadSanitizer: data race
+add_definitions(-DABSTRACT_THREAD_ATOMIC_FLAG_SYNC_INVOKE_METHOD) #ThreadSanitizer: data race
 
 set(AsyncFw_CORE_HEADERS
   "core/Socket.h"

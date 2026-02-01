@@ -31,6 +31,7 @@
 #endif
 
 //#define ABSTRACT_THREAD_LOCK_GUARD
+//#define ABSTRACT_THREAD_ATOMIC_FLAG_SYNC_INVOKE_METHOD
 
 namespace AsyncFw {
 class LogStream;
@@ -94,10 +95,10 @@ public:
       method();
       return true;
     }
-#ifndef ATOMIC_FLAG_SYNC_INVOKE_METHOD
+#ifndef ABSTRACT_THREAD_ATOMIC_FLAG_SYNC_INVOKE_METHOD
     bool finished = false;
-    AbstractTask *_t = new Task([_m = std::forward<M>(method), &finished, this]() mutable {
-      _m();
+    AbstractTask *_t = new Task([&method, &finished, this]() mutable {
+      method();
       AbstractThread::LockGuard lock(mutex);
       finished = true;
       condition_variable.notify_all();
@@ -110,8 +111,8 @@ public:
     while (!finished) condition_variable.wait(lock);
 #else  //ThreadSanitizer: data race
     std::atomic_flag finished;
-    AbstractTask *_t = new Task([_m = std::forward<M>(method), &finished, this]() mutable {
-      _m();
+    AbstractTask *_t = new Task([&method, &finished]() mutable {
+      method();
       finished.test_and_set();
       finished.notify_one();
     });
