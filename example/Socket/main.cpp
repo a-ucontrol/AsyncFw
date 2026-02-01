@@ -23,7 +23,7 @@ int main(int argc, char *argv[]) {
 
   AsyncFw::Thread _t("HttpSocketThread");
   _t.start();
-  HttpSocket *socket = HttpSocket::create(&_t);
+  AsyncFw::HttpSocket *socket = AsyncFw::HttpSocket::create(&_t);
 
   socket->setContext(context);
 #if 1
