@@ -1,8 +1,8 @@
 #pragma once
 
-#include <core/FunctionConnector.h>
-#include <core/DataArray.h>
-#include <core/TlsSocket.h>
+#include "core/FunctionConnector.h"
+#include "core/DataArray.h"
+#include "core/TlsSocket.h"
 
 namespace AsyncFw {
 class HttpSocket : public AsyncFw::AbstractTlsSocket {
