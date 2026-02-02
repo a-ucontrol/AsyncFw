@@ -12,6 +12,7 @@ struct File::Private {
   std::fstream f_;
   std::ios::openmode m_;
   std::string fn_;
+  std::uintmax_t fs_;
 };
 
 File::File(const std::string &fn) {
@@ -28,6 +29,7 @@ File::~File() {
 
 bool File::open(const std::string &fn, std::ios::openmode m) {
   private_->fn_ = fn;
+  private_->fs_ = std::filesystem::file_size(private_->fn_);
   return open(m);
 }
 
@@ -56,7 +58,7 @@ void File::remove() {
   std::filesystem::remove(private_->fn_);
 }
 
-std::uintmax_t File::size() { return std::filesystem::file_size(private_->fn_); }
+std::uintmax_t File::size() { return private_->fs_; }
 
 bool File::exists() { return std::filesystem::exists(private_->fn_); }
 
