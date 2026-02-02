@@ -11,6 +11,20 @@ HttpSocket *HttpSocket::create(AsyncFw::Thread *_t) {
   return _s;
 }
 
+HttpSocket::HttpSocket() : AbstractTlsSocket() {
+  thread_->appendTimerTask(10000, [this]() {
+    thread_->removeTimer(tid_);
+    tid_ = -1;
+    destroy();
+  });
+  lsTrace();
+}
+
+HttpSocket::~HttpSocket() {
+  if (tid_ >= 0) thread_->removeTimer(tid_);
+  lsTrace();
+}
+
 void HttpSocket::stateEvent() {
   lsDebug() << "state event:" << static_cast<int>(state());
   if (state() == Unconnected) {
@@ -38,6 +52,7 @@ void HttpSocket::readEvent() {
   AsyncFw::DataArray &_da = peek();
 
   if (header_.empty()) {
+    if (tid_ >= 0) thread_->removeTimer(tid_);
     std::size_t i = _da.view().find("\r\n\r\n");
     if (i == std::string::npos) return;
 
@@ -100,8 +115,6 @@ void HttpSocket::readEvent() {
 
     if (_n == 0) {
       _da.clear();
-
-      receivedHeader(header_);
       receivedContent(content_);
       header_.clear();
       content_.clear();

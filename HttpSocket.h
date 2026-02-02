@@ -18,12 +18,13 @@ public:
   AsyncFw::FunctionConnectorProtected<HttpSocket>::Connector<const AsyncFw::AbstractSocket::Error> error;
 
 protected:
-  using AsyncFw::AbstractTlsSocket::AbstractTlsSocket;
-  ~HttpSocket() override = default;
+  HttpSocket();
+  ~HttpSocket();
 
 private:
   AsyncFw::DataArray header_;
   AsyncFw::DataArray content_;
   std::size_t contentLenght_;
+  int tid_ = -1;
 };
 }  // namespace AsyncFw
