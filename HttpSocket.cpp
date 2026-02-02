@@ -11,17 +11,10 @@ HttpSocket *HttpSocket::create(AsyncFw::Thread *_t) {
   return _s;
 }
 
-HttpSocket::HttpSocket() : AbstractTlsSocket() {
-  thread_->appendTimerTask(10000, [this]() {
-    thread_->removeTimer(tid_);
-    tid_ = -1;
-    destroy();
-  });
-  lsTrace();
-}
+HttpSocket::HttpSocket() : AbstractTlsSocket() { lsTrace(); }
 
 HttpSocket::~HttpSocket() {
-  if (tid_ >= 0) thread_->removeTimer(tid_);
+  if (tid_ != -1) thread_->removeTimer(tid_);
   lsTrace();
 }
 
@@ -32,18 +25,24 @@ void HttpSocket::stateEvent() {
       error(AsyncFw::AbstractSocket::error());
       return;
     }
-    receivedHeader(header_);
-    if (contentLenght_) receivedContent(content_);
-    header_.clear();
-    content_.clear();
+    if (!contentLenght_) received(received_);
     return;
   }
-
   if (state() == State::Active) {
-    header_.clear();
-    content_.clear();
+    received_.clear();
+    if (tid_ != -1) thread_->modifyTimer(tid_, 5000);
   }
   stateChanged(state());
+}
+
+void HttpSocket::activateEvent() {
+  AbstractTlsSocket::activateEvent();
+  if (tid_ != -1) return;
+  tid_ = thread_->appendTimerTask((state_ != Active) ? 10000 : 5000, [this]() {
+    thread_->removeTimer(tid_);
+    tid_ = -1;
+    destroy();
+  });
 }
 
 void HttpSocket::readEvent() {
@@ -51,25 +50,28 @@ void HttpSocket::readEvent() {
 
   AsyncFw::DataArray &_da = peek();
 
-  if (header_.empty()) {
-    if (tid_ >= 0) thread_->removeTimer(tid_);
+  if (received_.empty()) {
+    if (tid_ != -1) {
+      thread_->removeTimer(tid_);
+      tid_ = -1;
+    }
     std::size_t i = _da.view().find("\r\n\r\n");
     if (i == std::string::npos) return;
 
-    header_ += read(i + 4);
+    received_ += read(i + 4);
 
     std::size_t j;
     std::string _lc;
-    _lc.resize(header_.size());
-    std::transform(header_.begin(), header_.begin() + header_.size(), _lc.begin(), [](unsigned char c) { return std::tolower(c); });
+    _lc.resize(received_.size());
+    std::transform(received_.begin(), received_.begin() + received_.size(), _lc.begin(), [](unsigned char c) { return std::tolower(c); });
     if ((i = _lc.find("content-length:")) != std::string::npos) {
-      if ((j = header_.view().find("\r\n", i + 15)) != std::string::npos) {
-        std::string str(header_.begin() + i + 15, header_.begin() + j);
+      if ((j = received_.view().find("\r\n", i + 15)) != std::string::npos) {
+        std::string str(received_.begin() + i + 15, received_.begin() + j);
         contentLenght_ = std::stoi(str);
+        headerSize_ = j + 2;
       }
       if (contentLenght_ == 0) {
-        receivedHeader(header_);
-        header_.clear();
+        received(received_);
         return;
       }
       if (contentLenght_ == std::string::npos) {
@@ -79,14 +81,15 @@ void HttpSocket::readEvent() {
       }
     } else {
       if ((i = _lc.find("transfer-encoding:")) != std::string::npos) {
-        if ((j = header_.view().find("\r\n", i + 18)) != std::string::npos) {
-          std::string str(header_.begin() + i + 18, header_.begin() + j);
+        if ((j = received_.view().find("\r\n", i + 18)) != std::string::npos) {
+          std::string str(received_.begin() + i + 18, received_.begin() + j);
           if (str.find("chunked") == std::string::npos) {
             lsError("error http request");
             disconnect();
             return;
           }
           contentLenght_ = std::string::npos;
+          headerSize_ = j + 2;
         }
       } else
         contentLenght_ = 0;
@@ -94,12 +97,11 @@ void HttpSocket::readEvent() {
   }
 
   if (contentLenght_ != std::string::npos) {
-    content_ += _da;
+    received_ += _da;
     _da.clear();
-    if (contentLenght_ != content_.size()) return;
-    receivedContent(content_);
-    header_.clear();
-    content_.clear();
+    if (contentLenght_ != received_.size() - headerSize_) return;
+    contentLenght_ = 0;
+    received(received_);
     return;
   }
 
@@ -115,17 +117,23 @@ void HttpSocket::readEvent() {
 
     if (_n == 0) {
       _da.clear();
-      receivedContent(content_);
-      header_.clear();
-      content_.clear();
+      received(received_);
       return;
     }
 
     if (_da.size() < _n + _s + 4) return;
     _da.erase(_da.begin(), _da.begin() + _s + 2);
-    content_ += read(_n);
+    received_ += read(_n);
     _da.erase(_da.begin(), _da.begin() + 2);
 
     lsDebug() << "readed:" << _n;
   }
 }
+
+void HttpSocket::writeEvent() { writeContent(); }
+
+void HttpSocket::clear() { received_.clear(); }
+
+DataArrayView HttpSocket::content() { return received_.view(headerSize_); }
+
+DataArrayView HttpSocket::header() { return received_.view(0, headerSize_); }
