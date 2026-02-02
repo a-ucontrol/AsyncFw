@@ -1,6 +1,9 @@
+#include <fstream>
 #include <core/LogStream.h>
 
 #include "HttpSocket.h"
+
+#define SOCKET_WRITE_SIZE 8192
 
 using namespace AsyncFw;
 
@@ -25,7 +28,7 @@ void HttpSocket::stateEvent() {
       error(AsyncFw::AbstractSocket::error());
       return;
     }
-    if (!contentLenght_) received(received_);
+    if (contentLenght_ != std::string::npos) received(received_);
     return;
   }
   if (state() == State::Active) {
@@ -41,7 +44,7 @@ void HttpSocket::activateEvent() {
   tid_ = thread_->appendTimerTask((state_ != Active) ? 10000 : 5000, [this]() {
     thread_->removeTimer(tid_);
     tid_ = -1;
-    destroy();
+    //destroy();
   });
 }
 
@@ -57,8 +60,9 @@ void HttpSocket::readEvent() {
     }
     std::size_t i = _da.view().find("\r\n\r\n");
     if (i == std::string::npos) return;
+    headerSize_ = i;
 
-    received_ += read(i + 4);
+    received_ += read(headerSize_ + 4);
 
     std::size_t j;
     std::string _lc;
@@ -68,7 +72,6 @@ void HttpSocket::readEvent() {
       if ((j = received_.view().find("\r\n", i + 15)) != std::string::npos) {
         std::string str(received_.begin() + i + 15, received_.begin() + j);
         contentLenght_ = std::stoi(str);
-        headerSize_ = j + 2;
       }
       if (contentLenght_ == 0) {
         received(received_);
@@ -88,19 +91,16 @@ void HttpSocket::readEvent() {
             disconnect();
             return;
           }
-          contentLenght_ = std::string::npos;
-          headerSize_ = j + 2;
         }
-      } else
-        contentLenght_ = 0;
+      }
     }
   }
 
   if (contentLenght_ != std::string::npos) {
     received_ += _da;
     _da.clear();
-    if (contentLenght_ != received_.size() - headerSize_) return;
-    contentLenght_ = 0;
+    if (contentLenght_ != received_.size() - headerSize_ - 4) return;
+    contentLenght_ = std::string::npos;
     received(received_);
     return;
   }
@@ -130,10 +130,41 @@ void HttpSocket::readEvent() {
   }
 }
 
-void HttpSocket::writeEvent() { writeContent(); }
+void HttpSocket::writeEvent() {
+  if (pendingWrite() >= SOCKET_WRITE_SIZE) return;
+  if (file_.fstream().is_open()) {
+    DataArray da;
+    da.resize(SOCKET_WRITE_SIZE);
+    int r = file_.fstream().readsome(reinterpret_cast<char *>(da.data()), da.size());
+    if (r > 0) write(da.data(), r);
+    int p = file_.fstream().tellg() * 100 / file_.size();
+    if (progress_ != p) progress(progress_ = p);
+    if (file_.fstream().tellg() == file_.size() || file_.fail()) {
+      file_.close();
+      if (file_.fail()) disconnect();
+    }
+    return;
+  }
+  writeContent();
+}
 
 void HttpSocket::clear() { received_.clear(); }
 
+DataArrayView HttpSocket::header() { return received_.view(0, headerSize_ - 4); }
+
 DataArrayView HttpSocket::content() { return received_.view(headerSize_); }
 
-DataArrayView HttpSocket::header() { return received_.view(0, headerSize_); }
+void HttpSocket::sendFile(const std::string &fn) {
+  if (file_.fstream().is_open()) {
+    lsError("file already opened") << fn;
+    return;
+  }
+  file_.open(fn, std::ios::binary | std::ios::in);
+  if (file_.fail()) {
+    lsError("error open file: " + fn);
+    return;
+  }
+  progress(0);
+  progress_ = 0;
+  writeEvent();
+}
