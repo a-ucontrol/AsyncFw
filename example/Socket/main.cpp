@@ -1,14 +1,35 @@
+#include <core/Thread.h>
 #include <MainThread.h>
 #include <core/TlsSocket.h>
 #include <core/TlsContext.h>
 #include <AddressInfo.h>
-#include <File.h>
-#include <HttpSocket.h>
 #include <Log.h>
 
-#define SERVER_NAME "github.com"
-#define SERVER_PORT 443
-#define GET_FILE "/a-ucontrol/AsyncFw"
+class TcpSocket : public AsyncFw::AbstractTlsSocket {
+public:
+  void stateEvent() {
+    logDebug() << "State event:" << static_cast<int>(state());
+    if (state() == Active) {
+      logDebug() << "Send request";
+      write("GET /a-ucontrol/AsyncFw HTTP/1.1\r\nHost:github.com\r\nConnection:close\r\n\r\n");
+    } else if (error() >= Closed) {
+      if (error() != Closed) logError() << errorString();
+      else {
+        logNotice() << "Received:" << da;
+        logDebug() << da.view(0, 512) << "...";
+      }
+      AsyncFw::MainThread::exit(0);
+    }
+  }
+  void readEvent() {
+    AsyncFw::DataArray _da = read();
+    logTrace() << "Read event:" << _da.size() << std::endl << _da.view(0, 256);
+    da += _da;
+  }
+
+private:
+  AsyncFw::DataArray da;
+};
 
 int main(int argc, char *argv[]) {
   AsyncFw::LogMinimal log;
@@ -19,56 +40,23 @@ int main(int argc, char *argv[]) {
     logError("Can't set default verify paths");
     return -1;
   }
-  context.setVerifyName(SERVER_NAME);
+  context.setVerifyName("github.com");
+  TcpSocket socket;
+  socket.setContext(context);
 
-  AsyncFw::Thread _t("HttpSocketThread");
-  _t.start();
-  AsyncFw::HttpSocket *socket = AsyncFw::HttpSocket::create(&_t);
-
-  socket->setContext(context);
-#if 1
   AsyncFw::AddressInfo addressInfo;
-  addressInfo.setTimeout(30000);
-  addressInfo.resolve(SERVER_NAME);
+  addressInfo.resolve("github.com");
   addressInfo.completed([&socket](int r, const std::vector<std::string> &list) {
     if (r == 0 && !list.empty()) {
       for (const std::string _s : list) logNotice() << _s;
-      socket->connect(list[0], SERVER_PORT);
-      return;
+      socket.connect(list[0], 443);
     }
-    AsyncFw::MainThread::exit(0);
-  });
-#else
-  socket.connect("192.168.110.100", SERVER_PORT);
-#endif
-  socket->stateChanged([&socket](const AsyncFw::AbstractSocket::State state) {
-    if (state == AsyncFw::AbstractSocket::State::Active) {
-      logDebug() << "Send request";
-      socket->write("GET " GET_FILE " HTTP/1.1\r\nHost:" SERVER_NAME "\r\nConnection:close\r\n\r\n");
-      //socket->write("GET " GET_FILE " HTTP/1.1\r\nHost:" SERVER_NAME "\r\n\r\n");
-    }
-  });
-  socket->received([socket](const AsyncFw::DataArray &answer) {
-    logNotice() << socket->header();
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-    logAlert() << answer.view(socket->header().size(), 1024);
-    AsyncFw::MainThread::exit(0);
-  });
-  socket->error([&socket](const AsyncFw::AbstractSocket::Error) {
-    logError() << "Error!";
-    AsyncFw::MainThread::exit(0);
   });
 
   logNotice() << "Start Applicaiton";
 
-  logDebug() << *AsyncFw::AbstractThread::currentThread();
-  logDebug() << *(AsyncFw::AbstractSocket *)socket;
-
   int ret = AsyncFw::MainThread::exec();
 
-  logDebug() << *(AsyncFw::AbstractSocket *)socket;
-
   logNotice() << "End Applicaiton";
-
   return ret;
 }
