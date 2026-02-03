@@ -286,6 +286,7 @@ void AbstractSocket::read_fd() {
       close();
     }
   } while (read_available_fd() > 0);
+  rs_ = 0;
 }
 
 int AbstractSocket::read(uint8_t *_p, int _s) {
