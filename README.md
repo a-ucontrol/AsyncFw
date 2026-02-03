@@ -311,12 +311,12 @@ int main(int argc, char *argv[]) {
 ```
 Tls socket example:
 ```c++
-#include <AsyncFw/core/Thread.h>
-#include <AsyncFw/MainThread.h>
-#include <AsyncFw/core/TlsSocket.h>
-#include <AsyncFw/core/TlsContext.h>
-#include <AsyncFw/AddressInfo.h>
-#include <AsyncFw/Log.h>
+#include <core/Thread.h>
+#include <MainThread.h>
+#include <core/TlsSocket.h>
+#include <core/TlsContext.h>
+#include <AddressInfo.h>
+#include <Log.h>
 
 class TcpSocket : public AsyncFw::AbstractTlsSocket {
 public:
@@ -325,8 +325,8 @@ public:
     if (state() == Active) {
       logDebug() << "Send request";
       write("GET /a-ucontrol/AsyncFw HTTP/1.1\r\nHost:github.com\r\nConnection:close\r\n\r\n");
-    } else if (state() == Error) {
-      if (errorCode() != Closed) logError() << errorString() << errorCode();
+    } else if (error() >= Closed) {
+      if (error() != Closed) logError() << errorString();
       else {
         logNotice() << "Received:" << da;
         logDebug() << da.view(0, 512) << "...";
@@ -335,10 +335,9 @@ public:
     }
   }
   void readEvent() {
-    da += read();
-    //AsyncFw::DataArray _da = read();
-    //logTrace() << "Read event:" << _da.size() << std::endl << _da.view(0, 256);
-    //da += _da;
+    AsyncFw::DataArray _da = read();
+    logTrace() << "Read event:" << _da.size() << std::endl << _da.view(0, 256);
+    da += _da;
   }
 
 private:
