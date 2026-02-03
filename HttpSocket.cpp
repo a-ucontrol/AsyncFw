@@ -61,6 +61,7 @@ void HttpSocket::readEvent() {
     std::size_t i = _da.view().find("\r\n\r\n");
     if (i == std::string::npos) return;
     headerSize_ = i;
+    contentLenght_ = std::string::npos;
 
     received_ += read(headerSize_ + 4);
 
@@ -78,21 +79,26 @@ void HttpSocket::readEvent() {
         return;
       }
       if (contentLenght_ == std::string::npos) {
-        lsError("error http request");
+        lsError("error http read");
         disconnect();
         return;
       }
-    } else {
-      if ((i = _lc.find("transfer-encoding:")) != std::string::npos) {
-        if ((j = received_.view().find("\r\n", i + 18)) != std::string::npos) {
-          std::string str(received_.begin() + i + 18, received_.begin() + j);
-          if (str.find("chunked") == std::string::npos) {
-            lsError("error http request");
-            disconnect();
-            return;
-          }
+    } else if ((i = _lc.find("transfer-encoding:")) != std::string::npos) {
+      if ((j = received_.view().find("\r\n", i + 18)) != std::string::npos) {
+        std::string str(received_.begin() + i + 18, received_.begin() + j);
+        if (str.find("chunked") == std::string::npos) {
+          lsError("error http read");
+          disconnect();
+          return;
         }
       }
+    } else if (_da.empty()) {
+      received(received_);
+      return;
+    } else {
+      lsError("error http read");
+      disconnect();
+      return;
     }
   }
 
@@ -150,9 +156,9 @@ void HttpSocket::writeEvent() {
 
 void HttpSocket::clear() { received_.clear(); }
 
-DataArrayView HttpSocket::header() { return received_.view(0, headerSize_ - 4); }
+DataArrayView HttpSocket::header() { return received_.view(0, headerSize_); }
 
-DataArrayView HttpSocket::content() { return received_.view(headerSize_); }
+DataArrayView HttpSocket::content() { return received_.view(headerSize_ + 4); }
 
 void HttpSocket::sendFile(const std::string &fn) {
   if (file_.fstream().is_open()) {

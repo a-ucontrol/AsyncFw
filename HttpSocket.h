@@ -34,8 +34,8 @@ private:
   AsyncFw::DataArray received_;
   AsyncFw::File file_;
   int progress_;
-  std::size_t contentLenght_ = std::string::npos;
-  int headerSize_ = -1;
+  std::size_t contentLenght_;
+  int headerSize_;
   int tid_ = -1;
 };
 }  // namespace AsyncFw
