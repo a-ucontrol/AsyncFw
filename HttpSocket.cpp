@@ -24,8 +24,7 @@ HttpSocket::~HttpSocket() {
 void HttpSocket::stateEvent() {
   lsDebug() << "state event:" << static_cast<int>(state_);
   if (state_ == Unconnected) {
-    if (AbstractSocket::error() > Closed) error(AsyncFw::AbstractSocket::error());
-    else if (contentLenght_ != std::string::npos) { received(received_); }
+    if (contentLenght_ != std::string::npos) { received(received_); }
   } else if (state_ == State::Active) {
     received_.clear();
     if (tid_ != -1) thread_->modifyTimer(tid_, 5000);
@@ -39,7 +38,7 @@ void HttpSocket::activateEvent() {
   tid_ = thread_->appendTimerTask((state_ != Active) ? 10000 : 5000, [this]() {
     thread_->removeTimer(tid_);
     tid_ = -1;
-    destroy();
+    close();
   });
 }
 
@@ -56,7 +55,6 @@ void HttpSocket::readEvent() {
     std::size_t i = _da.view().find("\r\n\r\n");
     if (i == std::string::npos) return;
     headerSize_ = i;
-    contentLenght_ = std::string::npos;
 
     received_ += read(headerSize_ + 4);
 

@@ -22,8 +22,7 @@ public:
 
   AsyncFw::FunctionConnectorProtected<HttpSocket>::Connector<const AsyncFw::AbstractSocket::State> stateChanged {AsyncFw::AbstractFunctionConnector::Queued};
   AsyncFw::FunctionConnectorProtected<HttpSocket>::Connector<const AsyncFw::DataArray &> received;
-  AsyncFw::FunctionConnectorProtected<HttpSocket>::Connector<const AsyncFw::AbstractSocket::Error> error;
-  AsyncFw::FunctionConnectorProtected<HttpSocket>::Connector<> writeContent {AsyncFw::AbstractFunctionConnector::Sync};
+  AsyncFw::FunctionConnectorProtected<HttpSocket>::Connector<> writeContent;
   AsyncFw::FunctionConnectorProtected<HttpSocket>::Connector<int> progress;
 
 protected:
@@ -35,8 +34,8 @@ private:
   AsyncFw::DataArray received_;
   AsyncFw::File file_;
   int progress_;
-  std::size_t contentLenght_;
   int headerSize_;
+  std::size_t contentLenght_ = std::string::npos;
   int tid_ = -1;
 };
 }  // namespace AsyncFw
