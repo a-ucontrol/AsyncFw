@@ -119,8 +119,8 @@ void AbstractTlsSocket::activateEvent() {
 int AbstractTlsSocket::read_available_fd() const {
   int r = AbstractSocket::read_available_fd();
   if (!private_->encrypt_ || r <= 0) return r;
-  if (SSL_peek(private_->ssl_, nullptr, 0) < 0) return rs_ = 0;
-  return rs_ = SSL_pending(private_->ssl_);
+  if (SSL_peek(private_->ssl_, nullptr, 0) < 0) return 0;
+  return SSL_pending(private_->ssl_);
 }
 
 int AbstractTlsSocket::read_fd(void *data, int size) {

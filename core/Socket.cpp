@@ -64,6 +64,7 @@ struct AbstractSocket::Private {
   int w_ = 0;
   int type_ = SOCK_STREAM;
   int protocol_ = IPPROTO_TCP;
+  int rs_ = 0;
 };
 
 #undef AsyncFw_THREAD
@@ -152,14 +153,12 @@ void AbstractSocket::changeDescriptor(int _fd) {
 int AbstractSocket::read_available_fd() const {
 #ifdef _WIN32
   u_long r;
-  if (ioctlsocket(fd_, FIONREAD, &r) < 0) return -1;
+  if (ioctlsocket(fd_, FIONREAD, &r) < 0) return -2;
 #else
   int r;
-  if (ioctl(fd_, SIOCINQ, &r) < 0) return -1;
+  if (ioctl(fd_, SIOCINQ, &r) < 0) return -2;
 #endif
-  if (r > 0) return rs_ = r;
-  if (r == 0) rs_ = -1;
-  return r;
+  return r > 0 ? r : -1;
 }
 
 void AbstractSocket::setDescriptor(int _fd) {
@@ -271,22 +270,22 @@ void AbstractSocket::disconnect() {
 }
 
 DataArray &AbstractSocket::peek() {
-  if (rs_ > 0) read_fd();
+  if (private_->rs_ > 0) read_fd();
   return private_->rda_;
 }
 
 void AbstractSocket::read_fd() {
   do {
-    private_->rda_.resize(private_->rda_.size() + rs_);
-    int r = read_fd(private_->rda_.data() + private_->rda_.size() - rs_, rs_);
-    if (r != rs_) {
+    private_->rda_.resize(private_->rda_.size() + private_->rs_);
+    int r = read_fd(private_->rda_.data() + private_->rda_.size() - private_->rs_, private_->rs_);
+    if (r != private_->rs_) {
       private_->errorString_ = "Read error";
       private_->error_ = Read;
-      lsDebug() << LogStream::Color::Red << private_->errorString_ << r << rs_ << errno;
+      lsDebug() << LogStream::Color::Red << private_->errorString_ << r << private_->rs_ << errno;
       close();
     }
-  } while (read_available_fd() > 0);
-  rs_ = 0;
+  } while ((private_->rs_ = read_available_fd()) > 0);
+  private_->rs_ = 0;
 }
 
 int AbstractSocket::read(uint8_t *_p, int _s) {
@@ -300,14 +299,14 @@ int AbstractSocket::read(uint8_t *_p, int _s) {
     }
   }
   int r = read_fd(_p + private_->rda_.size(), _s - private_->rda_.size());
-  if (r > 0) rs_ -= r;
+  if (r > 0) private_->rs_ -= r;
   private_->rda_.clear();
   return r;
 }
 
 DataArray AbstractSocket::read(int _s) {
   DataArray _da;
-  int _n = rs_ + private_->rda_.size();
+  int _n = private_->rs_ + private_->rda_.size();
   _da.resize((!_s || _n < _s) ? _n : _s);
   if (read(_da.data(), _da.size()) != static_cast<int>(_da.size())) return {};
   return _da;
@@ -338,7 +337,7 @@ void AbstractSocket::close() {
   lsTrace() << LogStream::Color::Red << fd_;
   changeDescriptor(-1);
   state_ = State::Unconnected;
-  rs_ = 0;
+  private_->rs_ = 0;
   private_->rda_.clear();
   private_->wda_.clear();
   stateEvent();
@@ -356,10 +355,10 @@ void AbstractSocket::setErrorString(const std::string &_string) const {
 std::string AbstractSocket::errorString() const { return private_->errorString_; }
 
 int AbstractSocket::pendingRead() const {
-  if (rs_ > 0) return rs_;
+  if (private_->rs_ > 0) return private_->rs_;
   int r = read_available_fd();
   if (r < 0) return 0;
-  return (rs_ = r) + private_->rda_.size();
+  return (private_->rs_ = r) + private_->rda_.size();
 }
 
 int AbstractSocket::pendingWrite() const {
@@ -473,8 +472,7 @@ void AbstractSocket::pollEvent(int _e) {
   }
   if (state_ == State::Connected) {
     if (_e & AbstractThread::PollIn) {
-      AbstractSocket::read_available_fd();
-      if (rs_ < 0) {
+      if (AbstractSocket::read_available_fd() < 0) {
         private_->errorString_ = "Connection closed";
         private_->error_ = Closed;
         lsDebug() << LogStream::Color::Red << private_->errorString_ << "(not active)" << errno;
@@ -486,21 +484,19 @@ void AbstractSocket::pollEvent(int _e) {
     if (state_ != State::Active || AbstractSocket::read_available_fd() <= 0) return;
   }
   if (_e & AbstractThread::PollIn) {
-    int r = read_available_fd();
-    if (rs_ < 0) {
-      private_->errorString_ = "Connection closed";
-      private_->error_ = Closed;
-      lsTrace() << LogStream::Color::Red << private_->errorString_ << r << rs_ << errno;
-      close();
-      return;
-    }
-    if (r > 0) {
+    private_->rs_ = read_available_fd();
+    if (private_->rs_ > 0) {
       readEvent();
-      if (rs_ > 0) read_fd();
-    } else if (r < 0) {
-      private_->errorString_ = "Read error";
-      private_->error_ = Read;
-      lsDebug() << LogStream::Color::Red << private_->errorString_ << "(check available)" << r << errno;
+      if (private_->rs_ > 0) read_fd();
+    } else if (private_->rs_ < 0) {
+      if (private_->rs_ == -1) {
+        private_->errorString_ = "Connection closed";
+        private_->error_ = Closed;
+      } else {
+        private_->errorString_ = "Read error";
+        private_->error_ = Read;
+      }
+      lsDebug() << LogStream::Color::Red << private_->errorString_ << "(check available)" << private_->rs_ << errno;
       close();
       return;
     }

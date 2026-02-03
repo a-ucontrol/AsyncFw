@@ -74,7 +74,6 @@ protected:
   Thread *thread_;
   int fd_ = -1;
   mutable State state_ = State::Unconnected;
-  mutable int rs_ = 0;
 
 private:
   AbstractSocket(const AbstractSocket &) = delete;
