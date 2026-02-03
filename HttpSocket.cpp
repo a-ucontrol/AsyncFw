@@ -22,20 +22,15 @@ HttpSocket::~HttpSocket() {
 }
 
 void HttpSocket::stateEvent() {
-  lsDebug() << "state event:" << static_cast<int>(state());
-  if (state() == Unconnected) {
-    if (AbstractSocket::error() > Closed) {
-      error(AsyncFw::AbstractSocket::error());
-      return;
-    }
-    if (contentLenght_ != std::string::npos) received(received_);
-    return;
-  }
-  if (state() == State::Active) {
+  lsDebug() << "state event:" << static_cast<int>(state_);
+  if (state_ == Unconnected) {
+    if (AbstractSocket::error() > Closed) error(AsyncFw::AbstractSocket::error());
+    else if (contentLenght_ != std::string::npos) { received(received_); }
+  } else if (state_ == State::Active) {
     received_.clear();
     if (tid_ != -1) thread_->modifyTimer(tid_, 5000);
   }
-  stateChanged(state());
+  stateChanged(state_);
 }
 
 void HttpSocket::activateEvent() {
@@ -44,7 +39,7 @@ void HttpSocket::activateEvent() {
   tid_ = thread_->appendTimerTask((state_ != Active) ? 10000 : 5000, [this]() {
     thread_->removeTimer(tid_);
     tid_ = -1;
-    //destroy();
+    destroy();
   });
 }
 
@@ -147,7 +142,7 @@ void HttpSocket::writeEvent() {
     if (progress_ != p) progress(progress_ = p);
     if (file_.fstream().tellg() == file_.size() || file_.fail()) {
       file_.close();
-      if (file_.fail()) disconnect();
+      if (connectionClose || file_.fail()) disconnect();
     }
     return;
   }

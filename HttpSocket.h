@@ -20,7 +20,7 @@ public:
   void clear();
   void sendFile(const std::string &);
 
-  AsyncFw::FunctionConnectorProtected<HttpSocket>::Connector<const AsyncFw::AbstractSocket::State> stateChanged;
+  AsyncFw::FunctionConnectorProtected<HttpSocket>::Connector<const AsyncFw::AbstractSocket::State> stateChanged {AsyncFw::AbstractFunctionConnector::Queued};
   AsyncFw::FunctionConnectorProtected<HttpSocket>::Connector<const AsyncFw::DataArray &> received;
   AsyncFw::FunctionConnectorProtected<HttpSocket>::Connector<const AsyncFw::AbstractSocket::Error> error;
   AsyncFw::FunctionConnectorProtected<HttpSocket>::Connector<> writeContent {AsyncFw::AbstractFunctionConnector::Sync};
@@ -29,6 +29,7 @@ public:
 protected:
   HttpSocket();
   ~HttpSocket();
+  bool connectionClose = false;
 
 private:
   AsyncFw::DataArray received_;
