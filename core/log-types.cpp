@@ -17,7 +17,7 @@ LogStream &operator<<(LogStream &log, const DataArrayView &v) {
     log << "[Large data, size: " + std::to_string(v.size()) + "]";
     return log;
   }
-  for (const uint8_t &c : v)
+  for (const std::basic_string_view<char>::value_type &c : v)
     if (!std::isprint(c) && c != '\n' && c != '\r') {
       log << "[Binary data, size: " + std::to_string(v.size()) + "]";
       return log;
