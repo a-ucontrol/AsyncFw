@@ -37,12 +37,6 @@ public:
   Error error() const;
   std::string errorString() const;
 
-  int pendingRead() const;
-  int pendingWrite() const;
-
-  //int descriptorWriteSize();
-
-  State state() const;
   Thread *thread() const { return thread_; }
 
   std::string address() const;
@@ -55,6 +49,8 @@ protected:
   AbstractSocket(int, int, int);
   virtual ~AbstractSocket();
 
+  int pendingRead() const;
+  int pendingWrite() const;
   void setError(Error);
   void setErrorString(const std::string &) const;
 

@@ -8,8 +8,8 @@
 class TcpSocket : public AsyncFw::AbstractTlsSocket {
 public:
   void stateEvent() {
-    logDebug() << "State event:" << static_cast<int>(state());
-    if (state() == Active) {
+    logDebug() << "State event:" << static_cast<int>(state_);
+    if (state_ == Active) {
       logDebug() << "Send request";
       write("GET /a-ucontrol/AsyncFw HTTP/1.1\r\nHost:github.com\r\nConnection:close\r\n\r\n");
     } else if (error() >= Closed) {

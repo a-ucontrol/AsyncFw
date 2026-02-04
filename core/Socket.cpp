@@ -355,6 +355,7 @@ void AbstractSocket::setErrorString(const std::string &_string) const {
 std::string AbstractSocket::errorString() const { return private_->errorString_; }
 
 int AbstractSocket::pendingRead() const {
+  checkCurrentThread();
   if (private_->rs_ > 0) return private_->rs_;
   int r = read_available_fd();
   if (r < 0) return 0;
@@ -362,32 +363,10 @@ int AbstractSocket::pendingRead() const {
 }
 
 int AbstractSocket::pendingWrite() const {
-  /*int _s;
-  int r = ioctl(fd_, SIOCOUTQ, &_s);
-  if (r < 0) return r;
-  return _s + private_->wda_.size();*/
-
+  checkCurrentThread();
   return private_->wda_.size();
 }
 
-AbstractSocket::State AbstractSocket::state() const {
-  AbstractSocket::State _r;
-  thread_->invokeMethod([&_r, this]() { _r = state_; }, true);
-  return _r;
-}
-/*
-int AbstractSocket::descriptorWriteSize() {
-#ifndef _WIN32
-  int _s;
-#else
-  char _s;
-#endif
-  socklen_t _l = sizeof(_s);
-  int r = getsockopt(fd_, SOL_SOCKET, SO_SNDBUF, &_s, &_l);
-  if (r == 0) return _s;
-  return r;
-}
-*/
 std::string AbstractSocket::address() const {
   if (private_->la_.ss_family == AF_INET) {
     char _ip[INET_ADDRSTRLEN];
@@ -568,5 +547,5 @@ ListenSocket::~ListenSocket() {
 void ListenSocket::setIncomingConnection(std::function<bool(int, const std::string &)> f) { incomingConnection = f; }
 
 namespace AsyncFw {
-LogStream &operator<<(LogStream &log, const AbstractSocket &s) { return log << '(' + s.thread_->name() + ')' << s.fd_ << static_cast<int>(s.state()) << '-' << s.address() + ':' + std::to_string(s.port()) + '/' + s.peerAddress() + ':' + std::to_string(s.peerPort()); }
+LogStream &operator<<(LogStream &log, const AbstractSocket &s) { return log << '(' + s.thread_->name() + ')' << s.fd_ << static_cast<int>(s.state_) << '-' << s.address() + ':' + std::to_string(s.port()) + '/' + s.peerAddress() + ':' + std::to_string(s.peerPort()); }
 }  // namespace AsyncFw

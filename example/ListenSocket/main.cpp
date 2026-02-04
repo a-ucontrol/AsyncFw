@@ -5,7 +5,7 @@
 class TcpSocket : public AsyncFw::AbstractTlsSocket {
 public:
   static TcpSocket *create() { return new TcpSocket; }
-  void stateEvent() { logDebug() << "State event:" << static_cast<int>(state()); }
+  void stateEvent() { logDebug() << "State event:" << static_cast<int>(state_); }
   void readEvent() { received(read()); }
   AsyncFw::FunctionConnectorProtected<TcpSocket>::Connector<const AsyncFw::DataArray &> received;
 };

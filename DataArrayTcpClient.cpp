@@ -10,10 +10,10 @@ using namespace AsyncFw;
 DataArrayTcpClient::DataArrayTcpClient(const std::string &name) : DataArrayAbstractTcp(name) { lsTrace(); }
 
 void DataArrayTcpClient::socketStateChanged(const DataArraySocket *socket) {
-  bool connected = socket->state() == DataArraySocket::State::Active;
-  if (!connected && socket->state() != DataArraySocket::State::Unconnected) return;
+  bool connected = socket->state_ == DataArraySocket::State::Active;
+  if (!connected && socket->state_ != DataArraySocket::State::Unconnected) return;
   thread_->invokeMethod([this, socket, connected]() {
-    bool b = connected == (socket->state() == DataArraySocket::State::Active);
+    bool b = connected == (socket->state_ == DataArraySocket::State::Active);
     if (b) connectionStateChanged(socket);
   });
   lsDebug((connected) ? "connected" : "disconnected");
