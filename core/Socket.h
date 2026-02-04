@@ -24,10 +24,9 @@ public:
   virtual bool connect(const std::string &, uint16_t);
   virtual void disconnect();
   virtual void close();
+  virtual void destroy();
 
   bool listen(const std::string &, uint16_t);
-
-  void destroy();
 
   DataArray &peek();
   int read(uint8_t *, int);

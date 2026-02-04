@@ -44,8 +44,8 @@ int main(int argc, char *argv[]) {
   socket->stateChanged([&socket](const AsyncFw::AbstractSocket::State state) {
     if (state == AsyncFw::AbstractSocket::State::Active) {
       logDebug() << "Send request";
-      socket->write("GET " GET_FILE " HTTP/1.1\r\nHost:" SERVER_NAME "\r\nConnection:close\r\n\r\n");
-      //socket->write("GET " GET_FILE " HTTP/1.1\r\nHost:" SERVER_NAME "\r\n\r\n");
+      //socket->write("GET " GET_FILE " HTTP/1.1\r\nHost:" SERVER_NAME "\r\nConnection:close\r\n\r\n");
+      socket->write("GET " GET_FILE " HTTP/1.1\r\nHost:" SERVER_NAME "\r\n\r\n");
     } else if (state == AsyncFw::AbstractSocket::State::Unconnected) {
       if (socket->errorString().empty()) logInfo() << "Unconnected";
       else { logError() << socket->errorString(); }
@@ -53,10 +53,10 @@ int main(int argc, char *argv[]) {
     }
   });
   socket->received([socket](const AsyncFw::DataArray &answer) {
-    logNotice() << socket->header();
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-    logAlert() << answer.view(socket->header().size(), 1024);
-    AsyncFw::MainThread::exit(0);
+    logDebug() << socket->header();
+    logDebug() << socket->content();
+    logNotice() << answer.view(0, 4096);
+    socket->disconnect();
   });
 
   logNotice() << "Start Applicaiton";

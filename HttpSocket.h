@@ -15,12 +15,16 @@ public:
   void readEvent() override;
   void writeEvent() override;
 
+  void disconnect() override;
+  void close() override;
+  void destroy() override;
+
   AsyncFw::DataArrayView header();
   AsyncFw::DataArrayView content();
   void clear();
   void sendFile(const std::string &);
 
-  AsyncFw::FunctionConnectorProtected<HttpSocket>::Connector<const AsyncFw::AbstractSocket::State> stateChanged {AsyncFw::AbstractFunctionConnector::Queued};
+  AsyncFw::FunctionConnectorProtected<HttpSocket>::Connector<const AsyncFw::AbstractSocket::State> stateChanged;
   AsyncFw::FunctionConnectorProtected<HttpSocket>::Connector<const AsyncFw::DataArray &> received;
   AsyncFw::FunctionConnectorProtected<HttpSocket>::Connector<> writeContent;
   AsyncFw::FunctionConnectorProtected<HttpSocket>::Connector<int> progress;
