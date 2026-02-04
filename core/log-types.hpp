@@ -5,10 +5,12 @@
 namespace AsyncFw {
 class LogStream;
 class DataArray;
+class DataArrayView;
 class DataArrayList;
 class DataStream;
 class TlsContext;
 LogStream &operator<<(LogStream &, const DataArray &);
+LogStream &operator<<(LogStream &, const DataArrayView &);
 LogStream &operator<<(LogStream &, const DataArrayList &);
 LogStream &operator<<(LogStream &, const DataStream &);
 

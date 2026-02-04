@@ -4,10 +4,11 @@
 #include "TlsContext.h"
 #include "LogStream.h"
 
-#define LOG_DATA_ARAY_SIZE_LIMIT 1024
+#define LOG_DATA_ARAY_SIZE_LIMIT 4096
 
 namespace AsyncFw {
-LogStream &operator<<(LogStream &log, const DataArray &v) {
+LogStream &operator<<(LogStream &log, const DataArray &v) { return log << v.view(); }
+LogStream &operator<<(LogStream &log, const DataArrayView &v) {
   if (v.empty()) {
     log << "[]";
     return log;
@@ -21,7 +22,7 @@ LogStream &operator<<(LogStream &log, const DataArray &v) {
       log << "[Binary data, size: " + std::to_string(v.size()) + "]";
       return log;
     }
-  log << v.view();
+  log << static_cast<std::string_view>(v);
   return log;
 }
 
