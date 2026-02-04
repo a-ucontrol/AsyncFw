@@ -44,6 +44,7 @@ public:
   const std::string hostAddress() const { return hostAddress_v; }
   uint16_t hostPort() const { return hostPort_v; }
   void transmitKeepAlive() { transmitKeepAlive(true); }
+  AbstractSocket::State state() const { return state_; }
 
   bool connect(const std::string &, uint16_t) override;
   void disconnect() override;
