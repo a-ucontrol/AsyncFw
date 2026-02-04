@@ -24,9 +24,11 @@ HttpSocket::~HttpSocket() {
 void HttpSocket::stateEvent() {
   lsDebug() << "state event:" << static_cast<int>(state_);
   if (state_ == Unconnected) {
-    if (contentLenght_ != std::string::npos) { received(received_); }
+    if (contentLenght_ != std::string::npos) {
+      full_ = true;
+      received(received_);
+    }
   } else if (state_ == State::Active) {
-    received_.clear();
     if (tid_ != -1) thread_->modifyTimer(tid_, 5000);
   }
   stateChanged(state_);
@@ -43,6 +45,7 @@ void HttpSocket::activateEvent() {
 }
 
 void HttpSocket::readEvent() {
+  if (full_) clearReceived();
   lsTrace() << "read event";
 
   AsyncFw::DataArray &_da = peek();
@@ -68,6 +71,7 @@ void HttpSocket::readEvent() {
         contentLenght_ = std::stoi(str);
       }
       if (contentLenght_ == 0) {
+        full_ = true;
         received(received_);
         return;
       }
@@ -86,6 +90,7 @@ void HttpSocket::readEvent() {
         }
       }
     } else if (_da.empty()) {
+      full_ = true;
       received(received_);
       return;
     } else {
@@ -100,6 +105,7 @@ void HttpSocket::readEvent() {
     _da.clear();
     if (contentLenght_ != received_.size() - headerSize_ - 4) return;
     contentLenght_ = std::string::npos;
+    full_ = true;
     received(received_);
     return;
   }
@@ -116,6 +122,7 @@ void HttpSocket::readEvent() {
 
     if (_n == 0) {
       _da.clear();
+      full_ = true;
       received(received_);
       return;
     }
@@ -130,6 +137,7 @@ void HttpSocket::readEvent() {
 }
 
 void HttpSocket::writeEvent() {
+  if (full_) clearReceived();
   if (pendingWrite() >= SOCKET_WRITE_SIZE) return;
   if (file_.fstream().is_open()) {
     DataArray da;
@@ -163,7 +171,10 @@ DataArrayView HttpSocket::header() { return received_.view(0, headerSize_); }
 
 DataArrayView HttpSocket::content() { return received_.view(headerSize_ + 4); }
 
-void HttpSocket::clear() { received_.clear(); }
+void HttpSocket::clearReceived() {
+  received_.clear();
+  full_ = false;
+}
 
 void HttpSocket::sendFile(const std::string &fn) {
   if (file_.fstream().is_open()) {

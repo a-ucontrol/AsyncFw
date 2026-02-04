@@ -21,7 +21,6 @@ public:
 
   AsyncFw::DataArrayView header();
   AsyncFw::DataArrayView content();
-  void clear();
   void sendFile(const std::string &);
 
   AsyncFw::FunctionConnectorProtected<HttpSocket>::Connector<const AsyncFw::AbstractSocket::State> stateChanged;
@@ -32,6 +31,7 @@ public:
 protected:
   HttpSocket();
   ~HttpSocket();
+  void clearReceived();
   bool connectionClose = false;
 
 private:
@@ -41,5 +41,6 @@ private:
   int headerSize_;
   std::size_t contentLenght_ = std::string::npos;
   int tid_ = -1;
+  bool full_ = false;
 };
 }  // namespace AsyncFw
