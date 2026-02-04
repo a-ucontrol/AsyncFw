@@ -38,8 +38,8 @@ RrdClient::RrdClient(DataArraySocket *socket, const std::vector<Rrd *> &rrd) : r
     tcpSocket->thread()->modifyTimer(requestTimerId, 0);
     for (int i = 0; i != rrd_.size(); ++i) request(i);
   });
-  //if (tcpSocket->state_ == AbstractSocket::State::Active)
-  //  for (int i = 0; i != rrd_.size(); ++i) request(i);
+  if (tcpSocket->state_ == AbstractSocket::State::Active)
+    for (int i = 0; i != rrd_.size(); ++i) request(i);
   lsTrace();
 }
 
