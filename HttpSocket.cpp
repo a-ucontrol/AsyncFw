@@ -22,7 +22,7 @@ HttpSocket::~HttpSocket() {
 }
 
 void HttpSocket::stateEvent() {
-  lsTrace() << LogStream::Color::DarkMagenta << "state:" << static_cast<int>(state_);
+  lsTrace() << *this << LogStream::Color::DarkMagenta << "state:" << static_cast<int>(state_);
   if (state_ == Unconnected) {
     if (contentLenght_ != std::string::npos) {
       full_ = true;
@@ -192,3 +192,7 @@ void HttpSocket::sendFile(const std::string &fn) {
   progress_ = 0;
   writeEvent();
 }
+
+namespace AsyncFw {
+LogStream &operator<<(LogStream &log, const HttpSocket &s) { return log << static_cast<const AbstractTlsSocket &>(s) << s.full_; }
+}  // namespace AsyncFw

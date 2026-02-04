@@ -8,6 +8,8 @@
 namespace AsyncFw {
 class HttpSocket : public AsyncFw::AbstractTlsSocket {
 public:
+  friend LogStream &operator<<(LogStream &, const HttpSocket &);
+
   static HttpSocket *create(AsyncFw::Thread *_t = nullptr);
 
   void stateEvent() override;

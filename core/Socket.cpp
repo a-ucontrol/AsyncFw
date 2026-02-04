@@ -437,6 +437,10 @@ int AbstractSocket::write_fd(const void *_p, int _s) {
 }
 
 void AbstractSocket::destroy() {
+  if (state_ == Destroy) {
+    lsDebug() << LogStream::Color::Red << "already destroy state";
+    return;
+  }
   close();
   state_ = State::Destroy;
   stateEvent();
