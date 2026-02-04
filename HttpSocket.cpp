@@ -22,7 +22,7 @@ HttpSocket::~HttpSocket() {
 }
 
 void HttpSocket::stateEvent() {
-  lsDebug() << "state event:" << static_cast<int>(state_);
+  lsTrace() << LogStream::Color::DarkMagenta << "state:" << static_cast<int>(state_);
   if (state_ == Unconnected) {
     if (contentLenght_ != std::string::npos) {
       full_ = true;
@@ -46,7 +46,7 @@ void HttpSocket::activateEvent() {
 
 void HttpSocket::readEvent() {
   if (full_) clearReceived();
-  lsTrace() << "read event";
+  lsTrace();
 
   AsyncFw::DataArray &_da = peek();
 
@@ -132,11 +132,12 @@ void HttpSocket::readEvent() {
     received_ += read(_n);
     _da.erase(_da.begin(), _da.begin() + 2);
 
-    lsDebug() << "readed:" << _n;
+    lsTrace() << "readed:" << _n;
   }
 }
 
 void HttpSocket::writeEvent() {
+  lsTrace();
   if (full_) clearReceived();
   if (pendingWrite() >= SOCKET_WRITE_SIZE) return;
   if (file_.fstream().is_open()) {
@@ -174,16 +175,17 @@ DataArrayView HttpSocket::content() { return received_.view(headerSize_ + 4); }
 void HttpSocket::clearReceived() {
   received_.clear();
   full_ = false;
+  lsTrace();
 }
 
 void HttpSocket::sendFile(const std::string &fn) {
   if (file_.fstream().is_open()) {
-    lsError("file already opened") << fn;
+    lsError() << "file already opened:" << fn;
     return;
   }
   file_.open(fn, std::ios::binary | std::ios::in);
   if (file_.fail()) {
-    lsError("error open file: " + fn);
+    lsError() << "error open file:" << fn;
     return;
   }
   progress(0);
