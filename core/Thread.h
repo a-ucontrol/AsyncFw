@@ -168,18 +168,17 @@ public:
 
 protected:
   template <typename M>
-  class Task : private AbstractTask {
-    friend class AbstractThread;
-    friend class AbstractSocket;
-
-  private:
+  class Task : public AbstractTask {
+  public:
     Task(M &&method) : method(std::move(method)) {}
     virtual void invoke() override { method(); }
+
+  private:
     M method;
   };
 
   template <typename M>
-  class PollTask : public AbstractPollTask {
+  class PollTask : private AbstractPollTask {
     friend class AbstractThread;
 
   private:

@@ -671,10 +671,9 @@ void AbstractThread::removeTimer(int id) {
       console_msg("Timer: " + std::to_string(id) + " not found");
       return;
     }
-    _t = (it->task) ? new Task([p = it->task] { delete p; }) : nullptr;
+    _t = new Task([p = it->task] { delete p; });
     private_.timers.erase(it);
   }
-  if (!_t) return;
   if (!invokeTask(_t)) {
     _t->invoke();
     delete _t;

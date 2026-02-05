@@ -101,11 +101,13 @@ void DataArrayAbstractTcp::Thread::destroy() {
   static_cast<DataArrayAbstractTcp *>(pool)->removeThread(this);
   AsyncFw::Thread::quit();
 
-  if (!pool->thread()->invokeMethod([this]() {
-        AsyncFw::Thread::waitFinished();
-        delete this;
-      })) {
+  AbstractTask *_t = new Task([this]() {
     AsyncFw::Thread::waitFinished();
     delete this;
+  });
+
+  if (!pool->thread()->invokeTask(_t)) {
+    _t->invoke();
+    delete _t;
   }
 }
