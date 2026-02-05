@@ -25,7 +25,7 @@ protected:
     void quit();
 
   protected:
-    Thread(const std::string &name, AbstractThreadPool *, bool = true);
+    Thread(const std::string &name, AbstractThreadPool *);
     virtual ~Thread() override = 0;
     AbstractThreadPool *pool;
     void destroy() override;

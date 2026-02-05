@@ -43,7 +43,7 @@ protected:
     friend class DataArrayAbstractTcp;
 
   public:
-    Thread(const std::string &name, DataArrayAbstractTcp *_pool) : AbstractThreadPool::Thread(name, _pool, true), pool(_pool) {};
+    Thread(const std::string &name, DataArrayAbstractTcp *_pool) : AbstractThreadPool::Thread(name, _pool), pool(_pool) {};
 
   protected:
     void socketInit(DataArraySocket *);

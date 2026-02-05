@@ -62,9 +62,8 @@ void AbstractThreadPool::removeThread(AbstractThread *thread) {
   lsTrace("threads: " + std::to_string(threads_.size()));
 }
 
-AbstractThreadPool::Thread::Thread(const std::string &name, AbstractThreadPool *_pool, bool autoStart) : AsyncFw::Thread(name), pool(_pool) {
+AbstractThreadPool::Thread::Thread(const std::string &name, AbstractThreadPool *_pool) : AsyncFw::Thread(name), pool(_pool) {
   pool->appendThread(this);
-  if (autoStart) start();
   lsTrace();
 }
 
@@ -82,12 +81,7 @@ void AbstractThreadPool::Thread::destroy() {
   lsTrace();
   AbstractThread::quit();
   waitFinished();
-
-  if (std::this_thread::get_id() != id()) {
-    delete this;
-    return;
-  }
-  pool->thread_->invokeMethod([this]() { delete this; });
+  pool->thread_->invokeMethod([p = this]() { delete p; });
 }
 
 void AbstractThreadPool::Thread::quit() {
@@ -112,6 +106,7 @@ ThreadPool::~ThreadPool() { lsTrace() << "destroyed"; }
 
 ThreadPool::Thread *ThreadPool::createThread(const std::string &_name) {
   Thread *thread = new Thread((!_name.empty()) ? _name : name() + " thread", this);
+  thread->start();
   lsTrace() << "created thread (" + thread->name() + ')';
   return thread;
 }

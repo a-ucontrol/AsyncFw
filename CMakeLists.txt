@@ -113,6 +113,7 @@ link_libraries(z crypto ssl cares)
 
 set(SANITIZE_COMPILE_OPTIONS -g -fsanitize=thread)
 set(SANITIZE_LINK_LIBRARIES tsan)
+### __tsan_on_report -> break point function for debugger
 
 target_compile_options(AsyncFw PRIVATE ${SANITIZE_COMPILE_OPTIONS})
 target_link_libraries(AsyncFw ${SANITIZE_LINK_LIBRARIES})
@@ -124,11 +125,11 @@ add_subdirectory(example/Log)
 add_subdirectory(example/Socket)
 add_subdirectory(example/HttpSocket) #data race
 add_subdirectory(example/Stdin)
-add_subdirectory(example/ThreadPool) #data race
+add_subdirectory(example/ThreadPool)
 add_subdirectory(example/Timer)
-add_subdirectory(example/Coroutine) #data race
+add_subdirectory(example/Coroutine)
 add_subdirectory(example/ContainerTask)
-add_subdirectory(example/CoroutineWait) #data race
+add_subdirectory(example/CoroutineWait)
 add_subdirectory(example/SystemProcess)
 add_subdirectory(example/run-examples)
 

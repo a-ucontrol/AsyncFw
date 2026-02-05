@@ -110,6 +110,12 @@ void DataArrayTcpClient::connectToHost(const DataArraySocket *socket, int timeou
   lsTrace();
 }
 
+DataArrayTcpClient::Thread *DataArrayTcpClient::createThread() {
+  Thread *_t = new Thread(name() + " thread", this);
+  _t->start();
+  return _t;
+}
+
 DataArrayTcpClient::Thread::~Thread() { lsTrace(); }
 
 DataArraySocket *DataArrayTcpClient::Thread::createSocket() {
