@@ -130,25 +130,37 @@ private:
   }
 
   virtual void removeTimer(int id) override {
-    LockGuard lock = lockGuard();
-    for (std::vector<Timer>::iterator it = timers.begin(); it != timers.end(); ++it) {
-      if (it->id == id) {
-        if (it->qid >= 0) QObject::killTimer(it->qid);
-        if (it->task) delete it->task;
-        timers.erase(it);
-        return;
+    AbstractTask *_t = nullptr;
+    {  //lock scope
+      LockGuard lock = lockGuard();
+      for (std::vector<Timer>::iterator it = timers.begin(); it != timers.end(); ++it) {
+        if (it->id == id) {
+          if (it->qid >= 0) QObject::killTimer(it->qid);
+          _t = new Task([p = it->task] { delete p; });
+          timers.erase(it);
+          break;
+        }
       }
+    }
+    if (!invokeTask(_t)) {
+      _t->invoke();
+      delete _t;
     }
   }
 
   void timerEvent(QTimerEvent *e) override {
     int qid = e->timerId();
-    for (std::vector<Timer>::iterator it = timers.begin(); it != timers.end(); ++it) {
-      if (it->qid == qid) {
-        it->task->invoke();
-        return;
+    AbstractTask *_t = nullptr;
+    {  //lock scope
+      LockGuard lock = lockGuard();
+      for (std::vector<Timer>::iterator it = timers.begin(); it != timers.end(); ++it) {
+        if (it->qid == qid) {
+          _t = it->task;
+          break;
+        }
       }
     }
+    if (_t) _t->invoke();
   }
 
   bool invokeTask(AbstractTask *task) const override {
@@ -165,21 +177,21 @@ private:
   }
 
   struct Poll {
-    Poll(MainThread *thread, int fd) : in(fd, QSocketNotifier::Read), out(fd, QSocketNotifier::Write), thread_(thread) {
+    Poll(int fd) : in(fd, QSocketNotifier::Read), out(fd, QSocketNotifier::Write) {
       QObject::connect(&in, &QSocketNotifier::activated, [this]() { task->invoke(AbstractThread::PollIn); });
       QObject::connect(&out, &QSocketNotifier::activated, [this]() { task->invoke(AbstractThread::PollOut); });
     }
-    ~Poll() { delete task; }
+
     QSocketNotifier in;
     QSocketNotifier out;
-    AbstractThread *thread_;
     AbstractPollTask *task;
   };
 
   bool appendPollDescriptor(int fd, AbstractThread::PollEvents e, AbstractPollTask *task) override {
+    LockGuard lock = lockGuard();
     for (const std::shared_ptr<Poll> &poll : notifiers)
       if (poll->in.socket() == fd) return false;
-    std::shared_ptr<Poll> poll = std::make_shared<Poll>(this, fd);
+    std::shared_ptr<Poll> poll = std::make_shared<Poll>(fd);
     poll->in.setEnabled(e & AbstractThread::PollIn);
     poll->out.setEnabled(e & AbstractThread::PollOut);
     poll->task = task;
@@ -187,15 +199,8 @@ private:
     return true;
   }
 
-  void removePollDescriptor(int fd) override {
-    for (const std::shared_ptr<Poll> &poll : notifiers)
-      if (poll->in.socket() == fd) {
-        notifiers.removeAll(poll);
-        return;
-      }
-  }
-
   bool modifyPollDescriptor(int fd, PollEvents e) override {
+    LockGuard lock = lockGuard();
     for (const std::shared_ptr<Poll> &poll : notifiers)
       if (poll->in.socket() == fd) {
         poll->in.setEnabled(e & AbstractThread::PollIn);
@@ -203,6 +208,24 @@ private:
         return true;
       }
     return false;
+  }
+
+  void removePollDescriptor(int fd) override {
+    AbstractTask *_t = nullptr;
+    {  //lock scope
+      LockGuard lock = lockGuard();
+      for (const std::shared_ptr<Poll> &poll : notifiers)
+        if (poll->in.socket() == fd) {
+          _t = new Task([p = poll->task] { delete p; });
+          notifiers.removeAll(poll);
+          break;
+        }
+    }
+    if (!_t) return;
+    if (!invokeTask(_t)) {
+      _t->invoke();
+      delete _t;
+    }
   }
 
   QList<std::shared_ptr<Poll>> notifiers;
