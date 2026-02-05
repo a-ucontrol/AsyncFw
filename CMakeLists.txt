@@ -5,7 +5,7 @@ project(AsyncFw VERSION 0.1 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_definitions(-DABSTRACT_THREAD_ATOMIC_FLAG_SYNC_INVOKE_METHOD) #ThreadSanitizer: data race
+#add_definitions(-DABSTRACT_THREAD_ATOMIC_FLAG_SYNC_INVOKE_METHOD) #ThreadSanitizer: data race
 
 set(AsyncFw_CORE_HEADERS
   "core/Socket.h"
@@ -108,18 +108,27 @@ endif()
 
 link_libraries(z crypto ssl cares)
 
+#set(SANITIZE_COMPILE_OPTIONS -g -fsanitize=address,undefined)
+#set(SANITIZE_LINK_LIBRARIES -Wl,-Bstatic,-lasan,-lubsan,-Bdynamic)
+
+set(SANITIZE_COMPILE_OPTIONS -g -fsanitize=thread)
+set(SANITIZE_LINK_LIBRARIES tsan)
+
+target_compile_options(AsyncFw PRIVATE ${SANITIZE_COMPILE_OPTIONS})
+target_link_libraries(AsyncFw ${SANITIZE_LINK_LIBRARIES})
+
 add_subdirectory(example/FunctionConnector)
 add_subdirectory(example/Invoke)
 add_subdirectory(example/ListenSocket)
 add_subdirectory(example/Log)
 add_subdirectory(example/Socket)
-add_subdirectory(example/HttpSocket)
+add_subdirectory(example/HttpSocket) #data race
 add_subdirectory(example/Stdin)
-add_subdirectory(example/ThreadPool)
+add_subdirectory(example/ThreadPool) #data race
 add_subdirectory(example/Timer)
-add_subdirectory(example/Coroutine)
+add_subdirectory(example/Coroutine) #data race
 add_subdirectory(example/ContainerTask)
-add_subdirectory(example/CoroutineWait)
+add_subdirectory(example/CoroutineWait) #data race
 add_subdirectory(example/SystemProcess)
 add_subdirectory(example/run-examples)
 

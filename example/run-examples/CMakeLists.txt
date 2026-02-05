@@ -16,8 +16,5 @@ add_definitions(-DEXAMPLES_PATH="${CMAKE_BINARY_DIR}/example/")
 add_executable(${TARGET} ${PROJECT_SOURCES})
 target_link_libraries(${TARGET} AsyncFw)
 
-#target_compile_options(${TARGET} PRIVATE -g -fsanitize=address)
-#target_link_libraries(${TARGET} -Wl,-Bstatic,-lasan,-Bdynamic)
-
-target_compile_options(${TARGET} PRIVATE -g -fsanitize=thread)
-target_link_libraries(${TARGET} tsan)
+target_compile_options(${TARGET} PRIVATE ${SANITIZE_COMPILE_OPTIONS})
+target_link_libraries(${TARGET} ${SANITIZE_LINK_LIBRARIES})
