@@ -115,8 +115,8 @@ set(SANITIZE_COMPILE_OPTIONS -g -fsanitize=thread)
 set(SANITIZE_LINK_LIBRARIES tsan)
 ### __tsan_on_report -> break point function for debugger
 
-target_compile_options(AsyncFw PRIVATE ${SANITIZE_COMPILE_OPTIONS})
-target_link_libraries(AsyncFw ${SANITIZE_LINK_LIBRARIES})
+#target_compile_options(AsyncFw PRIVATE ${SANITIZE_COMPILE_OPTIONS})
+#target_link_libraries(AsyncFw ${SANITIZE_LINK_LIBRARIES})
 
 add_subdirectory(example/FunctionConnector)
 add_subdirectory(example/Invoke)

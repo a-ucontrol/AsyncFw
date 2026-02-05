@@ -28,15 +28,11 @@ AbstractThreadPool::~AbstractThreadPool() {
 }
 
 void AbstractThreadPool::quit() {
+  std::lock_guard<std::mutex> lock(mutex);
   for (;;) {
-    mutex.lock();
-    if (threads_.empty()) {
-      mutex.unlock();
-      break;
-    }
+    if (threads_.empty()) break;
     AbstractThread *t = threads_.back();
     threads_.pop_back();
-    mutex.unlock();
     t->destroy();
   }
   lsTrace();
@@ -81,7 +77,11 @@ void AbstractThreadPool::Thread::destroy() {
   lsTrace();
   AbstractThread::quit();
   waitFinished();
-  pool->thread_->invokeMethod([p = this]() { delete p; });
+  AbstractTask *_t = new Task([p = this]() { delete p; });
+  if (!pool->thread_->invokeTask(_t)) {
+    _t->invoke();
+    delete _t;
+  }
 }
 
 void AbstractThreadPool::Thread::quit() {
