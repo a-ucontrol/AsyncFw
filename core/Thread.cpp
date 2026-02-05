@@ -598,7 +598,7 @@ bool AbstractThread::invokeTask(AbstractTask *task) const {
 }
 
 void AbstractThread::start() {
-  LockGuard lock(mutex);
+  std::unique_lock<std::mutex> lock(mutex);
   if ((private_.state && private_.state != Private::Finished) || private_.id != std::thread::id()) {
     console_msg("Thread already running or starting, or thread id not null");
     return;
@@ -606,10 +606,15 @@ void AbstractThread::start() {
   private_.state = Private::WaitStarted;
   std::thread t {[this]() {
     setId();
+    {  //lock scope
+      LockGuard lock(mutex);
+      condition_variable.notify_all();
+    }
     exec();
     Private::clearId();
   }};
   t.detach();
+  condition_variable.wait(lock);
 }
 
 int AbstractThread::workLoad() const {
