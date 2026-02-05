@@ -318,13 +318,14 @@ int AbstractSocket::write(const uint8_t *_p, int _s) {
     private_->wda_.insert(private_->wda_.end(), _p, _p + _s);
     return _s;
   }
-  if (!private_->w_) thread_->modifyPollDescriptor(fd_, AbstractThread::PollIn | AbstractThread::PollOut);
   int r = write_fd(_p, _s);
+  bool out = !private_->w_;
   if (r > 0) {
     if (r < _s) private_->wda_.insert(private_->wda_.end(), _p + r, _p + _s);
     private_->w_ = 2;
-    return _s;
+    r = _s;
   }
+  if (out) thread_->modifyPollDescriptor(fd_, AbstractThread::PollIn | AbstractThread::PollOut);
   return r;
 }
 
