@@ -21,11 +21,13 @@ public:
 
 protected:
   class Thread : public AsyncFw::Thread {
+  public:
+    void destroy() override;
+
   protected:
     Thread(const std::string &name, AbstractThreadPool *);
     virtual ~Thread() override;
     AbstractThreadPool *pool;
-    void destroy() override;
   };
 
   virtual void appendThread(AbstractThread *);
