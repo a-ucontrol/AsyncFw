@@ -85,8 +85,6 @@ Executing method in another thread example:
 #include <AsyncFw/Log.h>
 
 int main(int argc, char *argv[]) {
-  AsyncFw::LogMinimal log;
-
   AsyncFw::AbstractThread *_mainThread = AsyncFw::AbstractThread::currentThread();
   AsyncFw::Thread thread1("T1");
   AsyncFw::Thread thread2("T2");
@@ -164,8 +162,6 @@ public:
 };
 
 int main(int argc, char *argv[]) {
-  AsyncFw::LogMinimal log;
-
   Sender *sender;
 
   AsyncFw::Thread thread("SenderThread");
@@ -196,8 +192,6 @@ ThreadPool example:
 #include <AsyncFw/Log.h>
 
 int main(int argc, char *argv[]) {
-  AsyncFw::LogMinimal log;
-
   AsyncFw::ThreadPool threadPool;
 
   AsyncFw::AbstractThread *_t = threadPool.createThread("SyncExample");
@@ -274,7 +268,6 @@ AsyncFw::CoroutineTask task() {
 }
 
 int main(int argc, char *argv[]) {
-  AsyncFw::LogMinimal log;
   AsyncFw::ThreadPool threadPool;
 
   task();
@@ -345,8 +338,6 @@ private:
 };
 
 int main(int argc, char *argv[]) {
-  AsyncFw::LogMinimal log;
-
   AsyncFw::TlsContext context;
 
   if (!context.setDefaultVerifyPaths()) {
@@ -428,8 +419,6 @@ public:
 };
 
 int main(int argc, char *argv[]) {
-  AsyncFw::LogMinimal log;
-
   AsyncFw::ListenSocket ls;
   ls.setIncomingConnection([](int fd, const std::string &address) {
     TcpSocket *socket = TcpSocket::create();

@@ -34,8 +34,6 @@ public:
 };
 
 int main(int argc, char *argv[]) {
-  AsyncFw::LogMinimal log;
-
   Sender *sender;
 
   AsyncFw::Thread thread("SenderThread");

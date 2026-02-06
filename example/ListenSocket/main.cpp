@@ -11,8 +11,6 @@ public:
 };
 
 int main(int argc, char *argv[]) {
-  AsyncFw::LogMinimal log;
-
   AsyncFw::ListenSocket ls;
   ls.setIncomingConnection([](int fd, const std::string &address) {
     TcpSocket *socket = TcpSocket::create();

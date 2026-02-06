@@ -39,7 +39,6 @@ void tst(int _ms) {
 }
 
 int main(int argc, char *argv[]) {
-  LogMinimal log;
   ThreadPool _pool(5);
 
   //tst(5000);

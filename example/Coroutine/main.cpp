@@ -24,7 +24,6 @@ AsyncFw::CoroutineTask task() {
 }
 
 int main(int argc, char *argv[]) {
-  AsyncFw::LogMinimal log;
   AsyncFw::ThreadPool threadPool;
 
   task();

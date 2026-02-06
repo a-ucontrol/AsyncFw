@@ -178,20 +178,8 @@ void AbstractLog::append_(const Message &m, uint8_t f) {
   }
 }
 
-LogMinimal::LogMinimal() : AbstractThread("Log") {
-  thread_ = this;
-  start();
-  lsTrace();
-}
-
-LogMinimal::~LogMinimal() {
-  lsTrace();
-  quit();
-  waitFinished();
-}
-
 Log::Log(int size, const std::string &name, bool noInstance) : Rrd(size, name), AbstractLog(noInstance) {
-  queueLimit = size / 2;
+  if (size) queueLimit = size / 2;
   thread_ = Rrd::thread_;
   lsTrace();
 }

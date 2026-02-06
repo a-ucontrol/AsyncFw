@@ -11,8 +11,6 @@
 #define GET_FILE "/a-ucontrol/AsyncFw"
 
 int main(int argc, char *argv[]) {
-  AsyncFw::LogMinimal log;
-
   AsyncFw::TlsContext context;
 
   if (!context.setDefaultVerifyPaths()) {

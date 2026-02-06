@@ -61,14 +61,6 @@ private:
   std::vector<std::string> filter;
 };
 
-class LogMinimal : public AbstractThread, public AbstractLog {
-public:
-  LogMinimal();
-  void startedEvent() override { AbstractLog::flush(); }
-  void finishedEvent() override { finality(); }
-  ~LogMinimal() override;
-};
-
 class Log : public Rrd, public AbstractLog {
 public:
   using Message = LogStream::Message;

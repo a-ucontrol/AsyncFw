@@ -3,8 +3,6 @@
 #include <Log.h>
 
 int main(int argc, char *argv[]) {
-  AsyncFw::LogMinimal log;
-
   AsyncFw::ThreadPool threadPool;
 
   AsyncFw::AbstractThread *_t = threadPool.createThread("SyncExample");
