@@ -60,6 +60,7 @@ bool Rrd::createFile() {
 }
 
 void Rrd::append(const Item &data, uint64_t index) {
+  if (!dbSize) return;
   uint64_t pos = index ? index : interval ? Rrd_CURRENT_TIME / interval : 1;
   bool _average;
   {  //lock scope
