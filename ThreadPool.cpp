@@ -90,11 +90,7 @@ void AbstractThreadPool::Thread::quit() {
   destroy();
 }
 
-ThreadPool::Thread::~Thread() {
-  std::vector<Thread *>::iterator it = std::find(static_cast<ThreadPool *>(pool)->workThreads_.begin(), static_cast<ThreadPool *>(pool)->workThreads_.end(), this);
-  if (it != static_cast<ThreadPool *>(pool)->workThreads_.end()) static_cast<ThreadPool *>(pool)->workThreads_.erase(it);
-  lsTrace() << "destroyed thread (" + name() + ')';
-}
+ThreadPool::Thread::~Thread() { lsTrace() << "destroyed thread (" + name() + ')'; }
 
 ThreadPool::ThreadPool(const std::string &name, int workThreads) : AbstractThreadPool(name), workThreadsSize(workThreads) {
   if (!instance_) instance_ = this;
@@ -109,6 +105,13 @@ ThreadPool::Thread *ThreadPool::createThread(const std::string &_name) {
   thread->start();
   lsTrace() << "created thread (" + thread->name() + ')';
   return thread;
+}
+
+void ThreadPool::removeThread(AbstractThread *thread) {
+  std::vector<Thread *>::iterator it = std::find(workThreads_.begin(), workThreads_.end(), thread);
+  if (it != workThreads_.end()) workThreads_.erase(it);
+  AbstractThreadPool::removeThread(thread);
+  lsTrace();
 }
 
 void ThreadPool::quit() {

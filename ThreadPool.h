@@ -31,8 +31,8 @@ protected:
     void destroy() override;
   };
 
-  void appendThread(AbstractThread *);
-  void removeThread(AbstractThread *);
+  virtual void appendThread(AbstractThread *);
+  virtual void removeThread(AbstractThread *);
   std::vector<AbstractThread *> threads_;
   std::mutex mutex;
   AbstractThread *thread_;
@@ -62,7 +62,9 @@ public:
 
   Thread *createThread(const std::string &name = {});
 
+  void removeThread(AbstractThread *) override;
   virtual void quit() override;
+
   Thread *getThread();
 
   template <typename M>
