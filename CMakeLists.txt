@@ -5,8 +5,6 @@ project(AsyncFw VERSION 0.1 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_definitions(-DABSTRACT_THREAD_ATOMIC_FLAG_SYNC_INVOKE_METHOD) #ThreadSanitizer: data race
-
 set(AsyncFw_CORE_HEADERS
   "core/Socket.h"
   "core/TlsSocket.h"
@@ -123,7 +121,7 @@ add_subdirectory(example/Invoke)
 add_subdirectory(example/ListenSocket)
 add_subdirectory(example/Log)
 add_subdirectory(example/Socket)
-add_subdirectory(example/HttpSocket) #data race
+add_subdirectory(example/HttpSocket)
 add_subdirectory(example/Stdin)
 add_subdirectory(example/ThreadPool)
 add_subdirectory(example/Timer)

@@ -77,7 +77,7 @@ AbstractThreadPool::Thread::~Thread() {
 }
 
 void AbstractThreadPool::Thread::destroy() {
-  lsTrace();
+  pool->removeThread(this);
   AbstractThread::quit();
   waitFinished();
   AbstractTask *_t = new Task([p = this]() { delete p; });
@@ -85,12 +85,7 @@ void AbstractThreadPool::Thread::destroy() {
     _t->invoke();
     delete _t;
   }
-}
-
-void AbstractThreadPool::Thread::quit() {
-  checkDifferentThread();
-  pool->removeThread(this);
-  destroy();
+  lsTrace();
 }
 
 ThreadPool::Thread::~Thread() { lsTrace() << "destroyed thread (" + name() + ')'; }

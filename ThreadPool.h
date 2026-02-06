@@ -21,9 +21,6 @@ public:
 
 protected:
   class Thread : public AsyncFw::Thread {
-  public:
-    void quit();
-
   protected:
     Thread(const std::string &name, AbstractThreadPool *);
     virtual ~Thread() override;
