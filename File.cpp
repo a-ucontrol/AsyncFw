@@ -29,13 +29,13 @@ File::~File() {
 
 bool File::open(const std::string &fn, std::ios::openmode m) {
   private_->fn_ = fn;
-  private_->fs_ = std::filesystem::file_size(private_->fn_);
   return open(m);
 }
 
 bool File::open(std::ios::openmode m) {
   private_->m_ = m;
   private_->f_.open(std::filesystem::path(private_->fn_), m);
+  private_->fs_ = std::filesystem::file_size(private_->fn_);
   lsTrace() << private_->fn_;
   return !private_->f_.fail();
 }
@@ -84,7 +84,8 @@ std::streamsize File::write(const char *_v, std::streamsize _s) {
   std::fstream::pos_type _p = private_->f_.tellp();
   private_->f_.write(_v, _s);
   if (private_->f_.fail()) return -1;
-  return private_->f_.tellp() - _p;
+  private_->fs_ = private_->f_.tellp();
+  return private_->fs_ - _p;
 }
 
 std::string File::readLine() {
