@@ -157,7 +157,10 @@ void AbstractThread::Private::clearId() {
     std::vector<AbstractThread *>::iterator it = std::lower_bound(AbstractThread::list_threads.begin(), AbstractThread::list_threads.end(), _id, AbstractThread::Compare());
     if (it != list_threads.end() && (*it)->private_.id == _id) {
       AbstractThread *_t = (*it);
-      _t->private_.id = {};
+      {  //lock scope //fix data race in checkDifferentThread called from waitFinished
+        LockGuard lock = _t->lockGuard();
+        _t->private_.id = {};
+      }
       list_threads.erase(it);
       it = std::lower_bound(AbstractThread::list_threads.begin(), AbstractThread::list_threads.end(), _t, AbstractThread::Compare());
       list_threads.insert(it, _t);
@@ -347,8 +350,8 @@ void AbstractThread::quit() {
 }
 
 void AbstractThread::waitFinished() const {
-  checkDifferentThread();
   std::unique_lock<std::mutex> lock(mutex);
+  checkDifferentThread();  //locked for fix data race
   if (!private_.state) {
     console_msg("Thread not running");
     return;
