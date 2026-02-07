@@ -24,7 +24,7 @@ HttpSocket::~HttpSocket() {
 void HttpSocket::stateEvent() {
   lsTrace() << *this << LogStream::Color::DarkMagenta << "state:" << static_cast<int>(state_);
   if (state_ == Unconnected) {
-    if (contentLenght_ != std::string::npos) {
+    if (!full_ && !received_.empty()) {
       full_ = true;
       received(received_);
     }
