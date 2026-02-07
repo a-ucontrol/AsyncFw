@@ -15,7 +15,7 @@ AbstractThreadPool::~AbstractThreadPool() {
   bool b = threads_.size() > 0;
   mutex.unlock();
   if (b) {
-    lsWarning() << "destroyed with threads";
+    lsDebug() << LogStream::Color::Red << "destroyed with threads";
     AbstractThreadPool::quit();
   }
   for (std::vector<AbstractThreadPool *>::iterator it = pools_.begin(); it != pools_.end(); it++) {
@@ -28,7 +28,7 @@ AbstractThreadPool::~AbstractThreadPool() {
 }
 
 void AbstractThreadPool::quit() {
-  AbstractThread *t;
+  Thread *t;
   for (;;) {
     {  //lock scope
       std::lock_guard<std::mutex> lock(mutex);
@@ -41,21 +41,21 @@ void AbstractThreadPool::quit() {
   lsTrace();
 }
 
-AbstractThread::LockGuard AbstractThreadPool::threads(std::vector<AbstractThread *> **_threads) {
+AbstractThread::LockGuard AbstractThreadPool::threads(std::vector<AbstractThreadPool::Thread *> **_threads) {
   *_threads = &threads_;
   return AbstractThread::LockGuard {mutex};
 }
 
-void AbstractThreadPool::appendThread(AbstractThread *thread) {
+void AbstractThreadPool::appendThread(AbstractThreadPool::Thread *thread) {
   AbstractThread::LockGuard lock(mutex);
-  std::vector<AbstractThread *>::iterator it = std::lower_bound(threads_.begin(), threads_.end(), thread, Compare());
+  std::vector<AbstractThreadPool::Thread *>::iterator it = std::lower_bound(threads_.begin(), threads_.end(), thread, Compare());
   threads_.insert(it, thread);
   lsTrace("threads: " + std::to_string(threads_.size()));
 }
 
-void AbstractThreadPool::removeThread(AbstractThread *thread) {
+void AbstractThreadPool::removeThread(AbstractThreadPool::Thread *thread) {
   AbstractThread::LockGuard lock(mutex);
-  std::vector<AbstractThread *>::iterator it = std::lower_bound(threads_.begin(), threads_.end(), thread, Compare());
+  std::vector<AbstractThreadPool::Thread *>::iterator it = std::lower_bound(threads_.begin(), threads_.end(), thread, Compare());
   if (it != threads_.end() && (*it) == thread) threads_.erase(it);
   else { lsDebug() << LogStream::Color::Red << "thread not found: (" + thread->name() + ')'; }
   lsTrace("threads: " + std::to_string(threads_.size()));
@@ -68,7 +68,7 @@ AbstractThreadPool::Thread::Thread(const std::string &name, AbstractThreadPool *
 
 AbstractThreadPool::Thread::~Thread() {
   LockGuard lock(mutex);
-  std::vector<AbstractThread *>::iterator it = std::lower_bound(pool->threads_.begin(), pool->threads_.end(), this, AbstractThreadPool::Compare());
+  std::vector<AbstractThreadPool::Thread *>::iterator it = std::lower_bound(pool->threads_.begin(), pool->threads_.end(), this, AbstractThreadPool::Compare());
   if (it != pool->threads_.end() && (*it) == this) {
     pool->threads_.erase(it);
     lsError() << "thread not removed from pool";
@@ -79,9 +79,12 @@ AbstractThreadPool::Thread::~Thread() {
 void AbstractThreadPool::Thread::destroy() {
   pool->removeThread(this);
   AbstractThread::quit();
-  waitFinished();
-  AbstractTask *_t = new Task([p = this]() { delete p; });
+  AbstractTask *_t = new Task([p = this]() {
+    p->waitFinished();
+    delete p;
+  });
   if (!pool->thread_->invokeTask(_t)) {
+    lsDebug() << LogStream::Color::Red << "pool thread not running" << '(' + pool->thread_->name() + ')';
     _t->invoke();
     delete _t;
   }
@@ -105,8 +108,8 @@ ThreadPool::Thread *ThreadPool::createThread(const std::string &_name) {
   return thread;
 }
 
-void ThreadPool::removeThread(AbstractThread *thread) {
-  std::vector<Thread *>::iterator it = std::find(workThreads_.begin(), workThreads_.end(), thread);
+void ThreadPool::removeThread(AbstractThreadPool::Thread *thread) {
+  std::vector<AbstractThreadPool::Thread *>::iterator it = std::find(workThreads_.begin(), workThreads_.end(), thread);
   if (it != workThreads_.end()) workThreads_.erase(it);
   AbstractThreadPool::removeThread(thread);
   lsTrace();
@@ -117,11 +120,11 @@ void ThreadPool::quit() {
   lsTrace();
 }
 
-ThreadPool::Thread *ThreadPool::getThread() {
+AbstractThreadPool::Thread *ThreadPool::getThread() {
   int _s = workThreads_.size();
   if (_s < workThreadsSize) {
     for (int i = 0; i != _s; ++i)
-      if (static_cast<ThreadPool::Thread *>(workThreads_[i])->workLoad() == 0) return workThreads_[i];
+      if (workThreads_[i]->workLoad() == 0) return workThreads_[i];
 
     workThreads_.emplace_back(createThread("Work-" + std::to_string(_s)));
     return workThreads_.back();

@@ -43,6 +43,9 @@ int main(int argc, char *argv[]) {
         AsyncFw::MainThread::exit(0);
       });
 
+  AsyncFw::AbstractThreadPool::Thread *_t1 = threadPool.createThread("DestroyFromThreadExample");
+  _t1->invokeMethod([_t1]() { _t1->destroy(); });
+
   logNotice() << "Start Applicaiton";
 
   int ret = AsyncFw::MainThread::exec();

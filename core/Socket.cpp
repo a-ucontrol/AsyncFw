@@ -429,9 +429,9 @@ void AbstractSocket::destroy() {
     delete _p;
   });
   if (!thread_->invokeTask(_t)) {
+    lsError() << "socket thread not running" << '(' + thread_->name() + ')';
     _t->invoke();
     delete _t;
-    lsError() << "socket thread not running" << '(' + thread_->name() + ')';
   }
   trace();
 }

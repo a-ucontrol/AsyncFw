@@ -94,20 +94,3 @@ void DataArrayAbstractTcp::Thread::removeSocket(DataArraySocket *socket) {
     });
   });
 }
-
-void DataArrayAbstractTcp::Thread::destroy() {
-  lsTrace() << LogStream::Color::Green << this << LogStream::Color::Magenta << sockets_.size();
-
-  static_cast<DataArrayAbstractTcp *>(pool)->removeThread(this);
-  AsyncFw::Thread::quit();
-
-  AbstractTask *_t = new Task([this]() {
-    AsyncFw::Thread::waitFinished();
-    delete this;
-  });
-
-  if (!pool->thread()->invokeTask(_t)) {
-    _t->invoke();
-    delete _t;
-  }
-}

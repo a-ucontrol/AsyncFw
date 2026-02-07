@@ -133,7 +133,6 @@ public:
 
   virtual void startedEvent() {}
   virtual void finishedEvent() {}
-  virtual void destroy() {}
 
   virtual bool running() const;
   virtual bool invokeTask(AbstractTask *) const;

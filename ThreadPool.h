@@ -11,18 +11,9 @@
 namespace AsyncFw {
 class AbstractThreadPool {
 public:
-  static std::vector<AbstractThreadPool *> pools() { return pools_; }
-  AbstractThreadPool(const std::string &);
-  virtual ~AbstractThreadPool();
-  virtual void quit();
-  AbstractThread *thread() { return thread_; }
-  std::string name() const { return name_; }
-  AbstractThread::LockGuard threads(std::vector<AbstractThread *> **);
-
-protected:
   class Thread : public AsyncFw::Thread {
   public:
-    void destroy() override;
+    virtual void destroy();
 
   protected:
     Thread(const std::string &name, AbstractThreadPool *);
@@ -30,9 +21,19 @@ protected:
     AbstractThreadPool *pool;
   };
 
-  virtual void appendThread(AbstractThread *);
-  virtual void removeThread(AbstractThread *);
-  std::vector<AbstractThread *> threads_;
+public:
+  static std::vector<AbstractThreadPool *> pools() { return pools_; }
+  AbstractThreadPool(const std::string &);
+  virtual ~AbstractThreadPool();
+  virtual void quit();
+  AbstractThread *thread() { return thread_; }
+  std::string name() const { return name_; }
+  AbstractThread::LockGuard threads(std::vector<AbstractThreadPool::Thread *> **);
+
+protected:
+  virtual void appendThread(AbstractThreadPool::Thread *);
+  virtual void removeThread(AbstractThreadPool::Thread *);
+  std::vector<AbstractThreadPool::Thread *> threads_;
   std::mutex mutex;
   AbstractThread *thread_;
 
@@ -61,10 +62,10 @@ public:
 
   Thread *createThread(const std::string &name = {});
 
-  void removeThread(AbstractThread *) override;
+  void removeThread(AbstractThreadPool::Thread *) override;
   virtual void quit() override;
 
-  Thread *getThread();
+  AbstractThreadPool::Thread *getThread();
 
   template <typename M>
   static bool sync(AbstractThread *_t, M m) {
@@ -104,7 +105,7 @@ public:
 
 private:
   inline static ThreadPool *instance_;
-  std::vector<Thread *> workThreads_;
+  std::vector<AbstractThreadPool::Thread *> workThreads_;
   int workThreadsSize;
 };
 }  // namespace AsyncFw
