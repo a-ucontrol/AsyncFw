@@ -35,7 +35,7 @@ bool File::open(const std::string &fn, std::ios::openmode m) {
 bool File::open(std::ios::openmode m) {
   private_->m_ = m;
   private_->f_.open(std::filesystem::path(private_->fn_), m);
-  private_->fs_ = std::filesystem::file_size(private_->fn_);
+  private_->fs_ = !private_->f_.fail() ? std::filesystem::file_size(private_->fn_) : 0;
   lsTrace() << private_->fn_;
   return !private_->f_.fail();
 }
