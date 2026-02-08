@@ -16,13 +16,13 @@ public:
   AbstractLog(bool = false);
   virtual ~AbstractLog() = 0;
   void append(uint8_t, const std::string &, const std::string &, const std::string & = {});
-  void setExtendOut(bool b) { (b) ? flags |= LOG_STREAM_CONSOLE_EXTEND : flags &= ~LOG_STREAM_CONSOLE_EXTEND; }
-  void setColorOut(bool b) { (b) ? flags |= LOG_STREAM_CONSOLE_COLOR : flags &= ~LOG_STREAM_CONSOLE_COLOR; }
-  void setNotesOut(bool b) { (b) ? flags |= LOG_STREAM_CONSOLE_LINE : flags &= ~LOG_STREAM_CONSOLE_LINE; }
-  void setHideDuplicates(bool b) { hideDuplicates = b; }
-  void setLevel(int i) { level = i; }
-  void setConsoleLevel(int i) { consoleLevel = i; }
-  void setFilter(const std::vector<std::string> &f) { filter = f; }
+  void setExtendOut(bool b);
+  void setColorOut(bool b);
+  void setNotesOut(bool b);
+  void setHideDuplicates(bool b);
+  void setLevel(int i);
+  void setConsoleLevel(int i);
+  void setFilter(const std::vector<std::string> &f);
 
 protected:
   static inline std::atomic<AbstractLog *> log_;
@@ -36,7 +36,7 @@ protected:
   void startTimer(int *, int);
   void stopTimer(int *);
   AbstractThread *thread_;
-  int level = LogStream::Trace;
+  uint8_t level = LogStream::Trace;
   int queueLimit = 128;
 
 private:
@@ -52,7 +52,7 @@ private:
                   | LOG_STREAM_CONSOLE_COLOR
 #endif
       ;
-  int consoleLevel = LogStream::Trace;
+  uint8_t consoleLevel = LogStream::Trace;
 
   std::queue<Message> messages;
   LastMessage lastMessages[_messages_];
