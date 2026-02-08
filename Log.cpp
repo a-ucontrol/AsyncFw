@@ -207,6 +207,7 @@ void AbstractLog::append_(const Message &m, uint8_t f) {
 }
 
 Log::Log(int size, const std::string &name, bool noInstance) : Rrd(size, name), AbstractLog(noInstance) {
+  autoSave = (size && !name.empty()) ? 100 : -1;
   if (size) queueLimit = size / 2;
   thread_ = Rrd::thread_;
   lsTrace();
@@ -214,11 +215,18 @@ Log::Log(int size, const std::string &name, bool noInstance) : Rrd(size, name), 
 
 Log::~Log() {
   lsTrace();
-  autoSave = -1;
-  stopTimer(&timerIdAutosave);
-  if (thread_->running()) thread_->invokeMethod([this]() { finality(); }, true);
+  if (thread_->running())
+    thread_->invokeMethod(
+        [this]() {
+          stopTimer(&timerIdAutosave);
+          autoSave = -1;
+          finality();
+        },
+        true);
   else {
     console_msg("Log thread not running");
+    stopTimer(&timerIdAutosave);
+    autoSave = -1;
     finality();
   }
 }

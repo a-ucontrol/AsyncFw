@@ -29,7 +29,7 @@ protected:
   void append(const Message &m);
   virtual void flush();
   virtual void output(const Message &message);
-  virtual void save() {}
+  virtual void save() = 0;
   void process(const Message &);
   void finality();
   void timerTask(int);
@@ -69,7 +69,9 @@ public:
 
   using AbstractLog::append;
   inline static Log *instance() { return static_cast<Log *>(AbstractLog::instance()); }
-  Log(int size, const std::string &name, bool noInstance = false);
+  Log(int size, const std::string &name = {}, bool noInstance = false);
+  Log(bool noInstance = false) : Log(0, {}, noInstance) {}
+
   ~Log() override;
   void setAutoSave(bool b) { autoSave = (b) ? 100 : -1; }
 
@@ -78,11 +80,13 @@ public:
   Message readMessage(uint32_t index) { return messageFromRrdItem(readFromArray(index)); }
   void writeMessage(uint32_t index, const Message &message) { writeToArray(index, rrdItemFromMessage(message)); }
 
-  void save() override { Rrd::save(); }
+  void save() override {
+    if (!Rrd::readOnly) Rrd::save();
+  }
 
 protected:
   using AbstractLog::thread_;
-  std::atomic_int autoSave = 100;
+  int autoSave;
   int timerIdAutosave = -1;
   virtual void output(const Message &m) override;
 };

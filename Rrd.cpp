@@ -23,8 +23,8 @@ Rrd::Rrd(int size, int interval, int fillInterval, const std::string &name) : db
   lsTrace();
   thread_ = AbstractThread::currentThread();
   if (size == 0) {
-    if (name.empty()) return;
     readOnly = true;
+    if (name.empty()) return;
   }
   last_ = 0;
   if (!name.empty()) {
