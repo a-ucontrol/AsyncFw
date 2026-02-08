@@ -302,7 +302,7 @@ void DataStream::w_(int size, const uint8_t *p) {
 }
 
 void DataStream::r_(int size, uint8_t *p) {
-  if (fail_) return;
+  if (fail_ || !size) return;
   if (!read_) {
     fail_ = true;
     console_msg("DataStream: trying read from stream for write");
