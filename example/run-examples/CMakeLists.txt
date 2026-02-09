@@ -11,7 +11,10 @@ set(PROJECT_SOURCES
   main.cpp
 )
 
-add_definitions(-DEXAMPLES_PATH="${CMAKE_BINARY_DIR}/example/")
+if(NOT EXAMPLES_PATH)
+  set(EXAMPLES_PATH ${CMAKE_BINARY_DIR}/example/)
+endif()
+add_definitions(-DEXAMPLES_PATH="${EXAMPLES_PATH}")
 
 add_executable(${TARGET} ${PROJECT_SOURCES})
 target_link_libraries(${TARGET} ${AsyncFw_PROJECT_NAME})
