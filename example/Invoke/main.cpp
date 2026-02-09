@@ -1,3 +1,4 @@
+#include <thread>
 #include <core/Thread.h>
 #include <MainThread.h>
 #include <Log.h>

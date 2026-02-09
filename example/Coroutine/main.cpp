@@ -1,3 +1,4 @@
+#include <thread>
 #include <core/Thread.h>
 #include <ThreadPool.h>
 #include <Coroutine.h>

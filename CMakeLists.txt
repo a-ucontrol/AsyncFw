@@ -1,6 +1,12 @@
 cmake_minimum_required(VERSION 3.23)
 
-project(AsyncFw VERSION 0.1 LANGUAGES CXX)
+if(MULTIBUILD_PROJECT_NAME)
+  set(AsyncFw_PROJECT_NAME ${MULTIBUILD_PROJECT_NAME})
+else()
+  set(AsyncFw_PROJECT_NAME AsyncFw)
+endif()
+
+project(${AsyncFw_PROJECT_NAME} VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -109,12 +115,12 @@ link_libraries(z crypto ssl cares)
 #set(SANITIZE_COMPILE_OPTIONS -g -fsanitize=address,undefined)
 #set(SANITIZE_LINK_LIBRARIES -Wl,-Bstatic,-lasan,-lubsan,-Bdynamic)
 
-set(SANITIZE_COMPILE_OPTIONS -g -fsanitize=thread)
-set(SANITIZE_LINK_LIBRARIES tsan)
+#set(SANITIZE_COMPILE_OPTIONS -g -fsanitize=thread)
+#set(SANITIZE_LINK_LIBRARIES tsan)
 ### __tsan_on_report -> break point function for debugger
 
-target_compile_options(AsyncFw PRIVATE ${SANITIZE_COMPILE_OPTIONS})
-target_link_libraries(AsyncFw ${SANITIZE_LINK_LIBRARIES})
+#target_compile_options(AsyncFw PRIVATE ${SANITIZE_COMPILE_OPTIONS})
+#target_link_libraries(AsyncFw ${SANITIZE_LINK_LIBRARIES})
 
 add_subdirectory(example/FunctionConnector)
 add_subdirectory(example/Invoke)

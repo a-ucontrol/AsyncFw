@@ -1,3 +1,4 @@
+#include <thread>
 #include <core/Thread.h>
 #include <core/FunctionConnector.h>
 #include <Timer.h>
