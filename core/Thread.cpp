@@ -547,7 +547,7 @@ void AbstractThread::exec() {
   if (!_nested) finishedEvent();
   LockGuard lock(mutex);
   if (_nested--) {
-    trace() << LOG_THREAD_NAME << LogStream::Color::Magenta << _nested << private_.nested_ << LogStream::Color::Red << (_nested <= private_.nested_);
+    lsTrace() << LOG_THREAD_NAME << LogStream::Color::Magenta << "end" << _nested << private_.nested_ << LogStream::Color::Red << (_nested <= private_.nested_);
     if (_nested <= private_.nested_) private_.state &= ~Private::WaitFinished;
     return;
   }
