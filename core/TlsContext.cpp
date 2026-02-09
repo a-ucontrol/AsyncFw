@@ -307,7 +307,7 @@ DataArray TlsContext::signRequest(DataArray &req, int days) {
 std::string TlsContext::commonName() const {
   X509 *_c = SSL_CTX_get0_certificate(private_->ctx_);
   if (!_c) {
-    lsError() << "get certificate";
+    lsTrace() << LogStream::Color::DarkRed << "no certificate";
     return {};
   }
   char name[256];
