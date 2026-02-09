@@ -466,11 +466,11 @@ void AbstractThread::exec() {
     #ifndef EVENTFD_WAKE
             char _c;
       #ifndef __clang_analyzer__
-            (void)read(WAKE_FD, &_c, sizeof(_c));
+            (void)!read(WAKE_FD, &_c, sizeof(_c));
       #endif
     #else
             eventfd_t _v;
-            (void)eventfd_read(WAKE_FD, &_v);
+            eventfd_read(WAKE_FD, &_v);
     #endif
   #else
             WAKE_FD = socket(AF_INET, 0, 0);
@@ -498,11 +498,11 @@ void AbstractThread::exec() {
   #ifndef EVENTFD_WAKE
                 char _c;
     #ifndef __clang_analyzer__
-                (void)read(WAKE_FD, &_c, sizeof(_c));
+                (void)!read(WAKE_FD, &_c, sizeof(_c));
     #endif
   #else
                 eventfd_t _v;
-                (void)eventfd_read(WAKE_FD, &_v);
+                eventfd_read(WAKE_FD, &_v);
   #endif
                 trace() << LogStream::Color::Magenta << "waked" << LOG_THREAD_NAME << private_.id << event[i].events << private_.wake_;
                 continue;
@@ -575,7 +575,7 @@ void AbstractThread::wake() const {
 #ifndef _WIN32
   #ifndef EVENTFD_WAKE
   char _c = '\x0';
-  (void)write(private_.pipe[1], &_c, 1);
+  (void)!write(private_.pipe[1], &_c, 1);
   #else
   eventfd_write(WAKE_FD, 1);
   #endif
