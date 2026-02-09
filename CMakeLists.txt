@@ -119,7 +119,10 @@ link_libraries(z crypto ssl cares)
 #set(SANITIZE_LINK_LIBRARIES tsan)
 ### __tsan_on_report -> break point function for debugger
 
-#target_compile_options(AsyncFw PRIVATE ${SANITIZE_COMPILE_OPTIONS})
+if(SANITIZE_COMPILE_OPTIONS)
+  target_compile_options(${AsyncFw_PROJECT_NAME} PRIVATE ${SANITIZE_COMPILE_OPTIONS})
+endif()
+
 #target_link_libraries(AsyncFw ${SANITIZE_LINK_LIBRARIES})
 
 add_subdirectory(example/FunctionConnector)
