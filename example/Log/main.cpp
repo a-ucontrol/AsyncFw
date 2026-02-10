@@ -1,3 +1,4 @@
+#include <Version.h>
 #include <Log.h>
 #include <MainThread.h>
 
@@ -5,8 +6,8 @@ int main(int argc, char *argv[]) {
   AsyncFw::Log log(1000, "log-file-name");
   log.setColorOut(true);
 
-  AsyncFw::AbstractThread *_t = AsyncFw::AbstractThread::currentThread();
-  logAlert() << *_t;
+  logNotice() << "Version:" << AsyncFw::Version::str();
+  logNotice() << "Git:" << AsyncFw::Version::git();
 
   lsTrace() << "Trace";
   lsDebug() << "Debug";

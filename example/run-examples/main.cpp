@@ -1,3 +1,4 @@
+#include <Version.h>
 #include <MainThread.h>
 #include <linux/SystemProcess.h>
 #include <Timer.h>
@@ -82,5 +83,9 @@ int main(int, char *[]) {
 
   logNotice() << "Start Applicaiton";
   int ret = AsyncFw::MainThread::exec();
+  logNotice() << "Finished Applicaiton";
+
+  logNotice() << "Version:" << AsyncFw::Version::str();
+  logNotice() << "Git:" << AsyncFw::Version::git();
   return ret;
 }

@@ -1,0 +1,31 @@
+if(VERSION_STRING)
+  return()
+endif()
+
+set(VERSION_STRING 0.0)
+
+execute_process(
+  COMMAND ${CMAKE_COMMAND} -DSOURCE_DIR=${CMAKE_SOURCE_DIR} -DBINARY_DIR=${CMAKE_BINARY_DIR} -P ${CMAKE_CURRENT_LIST_DIR}/version.script.cmake)
+
+file(READ ${CMAKE_BINARY_DIR}/version GIT_VERSION)
+
+string(REGEX MATCH
+  ".*/(.*)[-|_| ]([(0-9)]*[.][(0-9)]*[.][(0-9)]*)-([0-9]*)-g[a-f 0-9]*((-m)?)$" _
+  ${GIT_VERSION})
+
+if(CMAKE_MATCH_1)
+  set(VERSION_STRING "${CMAKE_MATCH_2}")
+  set(VERSION_STRING "${VERSION_STRING}.${CMAKE_MATCH_3}")
+endif()
+
+set_property(
+  DIRECTORY
+  APPEND
+  PROPERTY CMAKE_CONFIGURE_DEPENDS ${CMAKE_BINARY_DIR}/version)
+
+add_custom_target(
+  app-version ALL
+  COMMAND ${CMAKE_COMMAND} -DSOURCE_DIR=${CMAKE_SOURCE_DIR} -DBINARY_DIR=${CMAKE_BINARY_DIR} -DGENERATOR=${CMAKE_GENERATOR} -P ${CMAKE_CURRENT_LIST_DIR}/version.script.cmake
+  BYPRODUCTS "${CMAKE_BINARY_DIR}/version")
+
+message("GIT_VERSION: ${GIT_VERSION}, VERSION: ${VERSION_STRING}")

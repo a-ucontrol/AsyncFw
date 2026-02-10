@@ -6,7 +6,9 @@ else()
   set(AsyncFw_PROJECT_NAME AsyncFw)
 endif()
 
-project(${AsyncFw_PROJECT_NAME} VERSION 0.1 LANGUAGES CXX)
+include(cmake/version.cmake)
+
+project(${AsyncFw_PROJECT_NAME} VERSION ${VERSION_STRING} LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -63,6 +65,8 @@ set(AsyncFw_HEADERS
 
   "Task.h"
   "HttpSocket.h"
+
+  "Version.h"
 )
 
 set(AsyncFw_SOURCES
@@ -85,6 +89,8 @@ set(AsyncFw_SOURCES
 
   "Task.cpp"
   "HttpSocket.cpp"
+
+  "Version.cpp"
 )
 
 if(NOT PLATFORM STREQUAL "AMD64")
@@ -109,6 +115,8 @@ if(BUILD_SHARED_LIBS)
 else()
   add_library(${CMAKE_PROJECT_NAME} STATIC ${PROJECT_SOURCES})
 endif()
+
+target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE GIT_VERSION="${GIT_VERSION}" VERSION_STRING="${VERSION_STRING}")
 
 link_libraries(z crypto ssl cares)
 
