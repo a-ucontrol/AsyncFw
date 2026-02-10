@@ -9,7 +9,11 @@ execute_process(
   OUTPUT_STRIP_TRAILING_WHITESPACE
   COMMAND ${GIT_EXECUTABLE} rev-parse --abbrev-ref HEAD
   WORKING_DIRECTORY ${SOURCE_DIR})
-set(GIT_VERSION ${GB_}/${GV_})
+if(GB_ AND GV_)
+  set(GIT_VERSION ${GB_}/${GV_})
+else()
+  set(GIT_VERSION unknown)
+endif()
 if(EXISTS ${BINARY_DIR}/version)
   file(READ ${BINARY_DIR}/version CV_)
 endif()

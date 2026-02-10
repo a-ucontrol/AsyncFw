@@ -2,7 +2,7 @@ if(VERSION_STRING)
   return()
 endif()
 
-set(VERSION_STRING 0.0)
+set(VERSION_STRING 1.0.0)
 
 execute_process(
   COMMAND ${CMAKE_COMMAND} -DSOURCE_DIR=${CMAKE_SOURCE_DIR} -DBINARY_DIR=${CMAKE_BINARY_DIR} -P ${CMAKE_CURRENT_LIST_DIR}/version.script.cmake)
@@ -10,12 +10,12 @@ execute_process(
 file(READ ${CMAKE_BINARY_DIR}/version GIT_VERSION)
 
 string(REGEX MATCH
-  ".*/(.*)[-|_| ]([(0-9)]*[.][(0-9)]*[.][(0-9)]*)-([0-9]*)-g[a-f 0-9]*((-m)?)$" _
+  ".*/(v|(.*)-)([(0-9)]*[.][(0-9)]*[.][(0-9)]*)-([0-9]*)-g[a-f 0-9]*((-m)?)$" _
   ${GIT_VERSION})
 
 if(CMAKE_MATCH_1)
-  set(VERSION_STRING "${CMAKE_MATCH_2}")
-  set(VERSION_STRING "${VERSION_STRING}.${CMAKE_MATCH_3}")
+  set(VERSION_STRING "${CMAKE_MATCH_3}")
+  set(VERSION_STRING "${VERSION_STRING}.${CMAKE_MATCH_4}")
 endif()
 
 set_property(
