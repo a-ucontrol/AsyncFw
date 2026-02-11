@@ -51,7 +51,9 @@ public:
     ~Thread();
   };
 
-  static ThreadPool *instance() { return instance_; }
+  static ThreadPool *instance() { return instance_.p_; }
+  static ThreadPool *createInstance(const std::string &, int size = ThreadPool_DEFAULT_WORK_THREADS);
+
   ThreadPool(const std::string &, int = ThreadPool_DEFAULT_WORK_THREADS);
   ThreadPool(int workThreads = ThreadPool_DEFAULT_WORK_THREADS) : ThreadPool("ThreadPool", workThreads) {}
   ~ThreadPool();
@@ -73,7 +75,7 @@ public:
   }
   template <typename M>
   static bool async(M m) {
-    return instance_->getThread()->invokeMethod(m);
+    return instance_.p_->getThread()->invokeMethod(m);
   }
   template <typename M, typename R, typename T = std::invoke_result<M>::type>
   static typename std::enable_if<std::is_void<T>::value, bool>::type async(AbstractThread *thread, M method, R result) {
@@ -90,11 +92,16 @@ public:
   }
   template <typename M, typename R>
   static bool async(M m, R r) {
-    return async(instance_->getThread(), m, r);
+    return async(instance_.p_->getThread(), m, r);
   }
 
 private:
-  inline static ThreadPool *instance_;
+  inline static struct Instance {
+    ~Instance() {
+      if (p_) delete p_;
+    }
+    ThreadPool *p_;
+  } instance_;
   std::vector<AbstractThreadPool::Thread *> workThreads_;
   int workThreadsSize;
 };

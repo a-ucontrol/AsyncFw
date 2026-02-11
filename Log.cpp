@@ -14,14 +14,6 @@
 
 using namespace AsyncFw;
 
-AbstractLog::AbstractLog(bool noInstance) {
-  if (!noInstance) {
-    if (log_ == nullptr) log_ = this;
-    else { console_msg("AbstractLog: instance already exists"); }
-  }
-  LogStream::setCompleted(&append_);
-}
-
 AbstractLog::~AbstractLog() {}
 
 void AbstractLog::flush() {
@@ -38,7 +30,7 @@ void AbstractLog::flush() {
 }
 
 void AbstractLog::finality() {
-  if (log_ == this) log_ = nullptr;
+  if (instance_.p_ == this) instance_.p_ = nullptr;
   trace() << thread_->name() << thread_->id();
   AbstractLog::flush();
   if (hideDuplicates) {
@@ -182,7 +174,7 @@ void AbstractLog::stopTimer(int *timerId) {
 }
 
 void AbstractLog::append_(const Message &m, uint8_t f) {
-  AbstractLog *_log = log_;
+  AbstractLog *_log = instance_.p_;
   if (_log && !(f & LOG_STREAM_CONSOLE_ONLY)) {
     if (f & 0x80) {
       {  //lock scope
@@ -206,7 +198,17 @@ void AbstractLog::append_(const Message &m, uint8_t f) {
   }
 }
 
-Log::Log(int size, const std::string &name, bool noInstance) : Rrd(size, name), AbstractLog(noInstance) {
+Log *Log::createInstance(int size, const std::string &name) {
+  if (instance()) {
+    console_msg("Log instance already exists");
+    return instance();
+  }
+  Log::instance_.p_ = new Log(size, name);
+  LogStream::setCompleted(&AbstractLog::append_);
+  return static_cast<Log *>(Log::instance_.p_.load());
+}
+
+Log::Log(int size, const std::string &name) : Rrd(size, name), AbstractLog() {
   autoSave = (size && !name.empty()) ? 100 : -1;
   if (size) queueLimit = size / 2;
   thread_ = Rrd::thread_;

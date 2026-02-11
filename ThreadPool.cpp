@@ -1,5 +1,6 @@
 #include <algorithm>
 #include "core/LogStream.h"
+#include "core/console_msg.hpp"
 #include "ThreadPool.h"
 
 using namespace AsyncFw;
@@ -93,13 +94,18 @@ void AbstractThreadPool::Thread::destroy() {
 
 ThreadPool::Thread::~Thread() { lsTrace() << "destroyed thread (" + name() + ')'; }
 
-ThreadPool::ThreadPool(const std::string &name, int workThreads) : AbstractThreadPool(name), workThreadsSize(workThreads) {
-  if (!instance_) instance_ = this;
-  else { lsWarning("instance already exists"); }
-  lsTrace() << "created";
+ThreadPool *ThreadPool::createInstance(const std::string &name, int size) {
+  if (instance()) {
+    console_msg("ThreadPool instance already exists");
+    return instance();
+  }
+  ThreadPool::instance_.p_ = new ThreadPool(name, size);
+  return ThreadPool::instance_.p_;
 }
 
-ThreadPool::~ThreadPool() { lsTrace() << "destroyed"; }
+ThreadPool::ThreadPool(const std::string &name, int workThreads) : AbstractThreadPool(name), workThreadsSize(workThreads) { lsTrace() << "created" << name; }
+
+ThreadPool::~ThreadPool() { lsTrace() << "destroyed" << name(); }
 
 ThreadPool::Thread *ThreadPool::createThread(const std::string &_name) {
   Thread *thread = new Thread((!_name.empty()) ? _name : name() + " thread", this);

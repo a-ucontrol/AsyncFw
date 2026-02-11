@@ -9,11 +9,11 @@
 
 namespace AsyncFw {
 class AbstractLog {
+  friend class Log;
+
 public:
   using Message = LogStream::Message;
 
-  inline static AbstractLog *instance() { return log_; }
-  AbstractLog(bool = false);
   virtual ~AbstractLog() = 0;
   void append(uint8_t, const std::string &, const std::string &, const std::string & = {});
   void setExtendOut(bool b);
@@ -25,7 +25,6 @@ public:
   void setFilter(const std::vector<std::string> &f);
 
 protected:
-  static inline std::atomic<AbstractLog *> log_;
   void append(const Message &m);
   virtual void flush();
   virtual void output(const Message &message);
@@ -38,6 +37,7 @@ protected:
   AbstractThread *thread_;
   uint8_t level = LogStream::Trace;
   int queueLimit = 128;
+  static void append_(const Message &m, uint8_t t);
 
 private:
   struct LastMessage {
@@ -46,7 +46,6 @@ private:
     int timerId = -1;
     bool marked = false;
   };
-  static void append_(const Message &m, uint8_t t);
   uint8_t flags = LOG_STREAM_CONSOLE_EXTEND
 #ifndef _WIN32
                   | LOG_STREAM_CONSOLE_COLOR
@@ -59,6 +58,14 @@ private:
   bool hideDuplicates = false;
 
   std::vector<std::string> filter;
+
+private:
+  inline static struct Instance {
+    ~Instance() {
+      if (p_) delete p_;
+    }
+    std::atomic<AbstractLog *> p_;
+  } instance_;
 };
 
 class Log : public Rrd, public AbstractLog {
@@ -68,13 +75,15 @@ public:
   using Color = LogStream::Color;
 
   using AbstractLog::append;
-  inline static Log *instance() { return static_cast<Log *>(AbstractLog::instance()); }
-  Log(int size, const std::string &name = {}, bool noInstance = false);
-  Log(bool noInstance = false) : Log(0, {}, noInstance) {}
+  inline static Log *instance() { return static_cast<Log *>(instance_.p_.load()); }
+  static Log *createInstance(int = 0, const std::string & = {});
 
+  Log(int = 0, const std::string & = {});
   ~Log() override;
-  void setAutoSave(bool b) { autoSave = (b) ? 100 : -1; }
 
+  void output(const Message &m) final override;
+
+  void setAutoSave(bool b) { autoSave = (b) ? 100 : -1; }
   Rrd::Item rrdItemFromMessage(const Message &m) const;
   Message messageFromRrdItem(const Rrd::Item &_v) const;
   Message readMessage(uint32_t index) { return messageFromRrdItem(readFromArray(index)); }
@@ -88,6 +97,5 @@ protected:
   using AbstractLog::thread_;
   int autoSave;
   int timerIdAutosave = -1;
-  virtual void output(const Message &m) override;
 };
 }  // namespace AsyncFw
