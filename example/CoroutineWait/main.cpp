@@ -39,7 +39,7 @@ void tst(int _ms) {
 }
 
 int main(int argc, char *argv[]) {
-  ThreadPool _pool(5);
+  AsyncFw::ThreadPool::createInstance("CoroutineWaitExamplePool", 5);
 
   //tst(5000);
 

@@ -3,8 +3,8 @@
 #include <MainThread.h>
 
 int main(int argc, char *argv[]) {
-  AsyncFw::Log log(1000, "log-file-name");
-  log.setColorOut(true);
+  AsyncFw::Log *log = AsyncFw::Log::createInstance(1000, "log-file-name");
+  log->setColorOut(true);
 
   logNotice() << "Version:" << AsyncFw::Version::str();
   logNotice() << "Git:" << AsyncFw::Version::git();

@@ -25,7 +25,7 @@ AsyncFw::CoroutineTask task() {
 }
 
 int main(int argc, char *argv[]) {
-  AsyncFw::ThreadPool threadPool;
+  AsyncFw::ThreadPool::createInstance("CoroutineExamplePool");
 
   task();
 

@@ -4,9 +4,9 @@
 #include <Log.h>
 
 int main(int argc, char *argv[]) {
-  AsyncFw::ThreadPool threadPool;
+  AsyncFw::ThreadPool *threadPool = AsyncFw::ThreadPool::createInstance("ExampeThreadPool");
 
-  AsyncFw::AbstractThread *_t = threadPool.createThread("SyncExample");
+  AsyncFw::AbstractThread *_t = threadPool->createThread("SyncExample");
 
   AsyncFw::ThreadPool::sync(_t, []() {
     AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::currentThread();
@@ -44,7 +44,7 @@ int main(int argc, char *argv[]) {
         AsyncFw::MainThread::exit(0);
       });
 
-  AsyncFw::AbstractThreadPool::Thread *_t1 = threadPool.createThread("DestroyFromThreadExample");
+  AsyncFw::AbstractThreadPool::Thread *_t1 = AsyncFw::ThreadPool::instance()->createThread("DestroyFromThreadExample");
   _t1->invokeMethod([_t1]() { _t1->destroy(); });
 
   logNotice() << "Start Applicaiton";
