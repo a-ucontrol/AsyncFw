@@ -1,8 +1,7 @@
 #include <thread>
-#include <core/Thread.h>
+#include <MainThread.h>
 #include <ThreadPool.h>
 #include <Coroutine.h>
-#include <MainThread.h>
 #include <Log.h>
 
 AsyncFw::CoroutineTask task() {

@@ -1,9 +1,10 @@
 #include <thread>
-#include <ThreadPool.h>
 #include <MainThread.h>
+#include <ThreadPool.h>
 #include <Log.h>
 
 int main(int argc, char *argv[]) {
+  AsyncFw::Log::createInstance(1000, "");
   AsyncFw::ThreadPool *threadPool = AsyncFw::ThreadPool::createInstance("ExampeThreadPool");
 
   AsyncFw::AbstractThread *_t = threadPool->createThread("SyncExample");
