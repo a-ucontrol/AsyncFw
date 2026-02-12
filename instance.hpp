@@ -2,7 +2,8 @@
 
 namespace AsyncFw {
 template <typename T>
-struct AbstractInstance {
+class AbstractInstance {
+public:
   template <typename... Args>
   static T *create(Args... args) {
     if (!i_->p_) {
@@ -11,6 +12,10 @@ struct AbstractInstance {
     }
     return i_->p_;
   }
+  static T *value() { return i_->p_; }
+  static void clear() { i_->p_ = nullptr; }
+
+protected:
   AbstractInstance() : p_(nullptr) {
     if (!i_) i_ = this;
   }
@@ -19,7 +24,8 @@ struct AbstractInstance {
     if (p_) delete p_;
   }
   virtual void created() = 0;
-  T *value() { return i_->p_; }
+
+private:
   T *p_;
   inline static AbstractInstance<T> *i_;
 };

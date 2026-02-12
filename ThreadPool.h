@@ -52,8 +52,7 @@ public:
     ~Thread();
   };
 
-  static ThreadPool *instance() { return instance_.p_; }
-  static ThreadPool *createInstance(const std::string &, int size = ThreadPool_DEFAULT_WORK_THREADS);
+  static ThreadPool *instance() { return Instance::value(); }
 
   ThreadPool(const std::string &, int = ThreadPool_DEFAULT_WORK_THREADS);
   ThreadPool(int workThreads = ThreadPool_DEFAULT_WORK_THREADS) : ThreadPool("ThreadPool", workThreads) {}
@@ -76,7 +75,7 @@ public:
   }
   template <typename M>
   static bool async(M m) {
-    return instance_.p_->getThread()->invokeMethod(m);
+    return Instance::value()->getThread()->invokeMethod(m);
   }
   template <typename M, typename R, typename T = std::invoke_result<M>::type>
   static typename std::enable_if<std::is_void<T>::value, bool>::type async(AbstractThread *thread, M method, R result) {
@@ -93,15 +92,17 @@ public:
   }
   template <typename M, typename R>
   static bool async(M m, R r) {
-    return async(instance_.p_->getThread(), m, r);
+    return async(Instance::value()->getThread(), m, r);
   }
 
   struct Instance : public AbstractInstance<ThreadPool> {
-    void created() override {}
+    Instance();
+    ~Instance() override;
+    void created() override;
   };
 
-  inline static struct Instance instance_;
 private:
+  static inline Instance instance_;
   std::vector<AbstractThreadPool::Thread *> workThreads_;
   int workThreadsSize;
 };

@@ -94,19 +94,10 @@ void AbstractThreadPool::Thread::destroy() {
 
 ThreadPool::Thread::~Thread() { lsTrace() << "destroyed thread (" + name() + ')'; }
 
-ThreadPool *ThreadPool::createInstance(const std::string &name, int size) {
-  if (instance()) {
-    console_msg("ThreadPool instance already exists");
-    return instance();
-  }
-  ThreadPool::instance_.p_ = new ThreadPool(name, size);
-  return ThreadPool::instance_.p_;
-}
-
 ThreadPool::ThreadPool(const std::string &name, int workThreads) : AbstractThreadPool(name), workThreadsSize(workThreads) { lsTrace() << "created" << name; }
 
 ThreadPool::~ThreadPool() {
-  if (instance_.p_ == this) instance_.p_ = nullptr;
+  if (Instance::value() == this) Instance::clear();
   lsTrace() << "destroyed" << name();
 }
 
@@ -149,3 +140,12 @@ AbstractThreadPool::Thread *ThreadPool::getThread() {
   }
   return _t;
 }
+
+ThreadPool::Instance::Instance()
+{
+lsInfoMagenta();
+}
+
+void ThreadPool::Instance::created() { lsInfoMagenta(); }
+
+ThreadPool::Instance::~Instance() { lsInfoMagenta(); }
