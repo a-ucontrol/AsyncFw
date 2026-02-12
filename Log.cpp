@@ -30,7 +30,6 @@ void AbstractLog::flush() {
 }
 
 void AbstractLog::finality() {
-  if (instance_.p_ == this) instance_.p_ = nullptr;
   trace() << thread_->name() << thread_->id();
   AbstractLog::flush();
   if (hideDuplicates) {
@@ -173,39 +172,13 @@ void AbstractLog::stopTimer(int *timerId) {
   }
 }
 
-void AbstractLog::append_(const Message &m, uint8_t f) {
-  AbstractLog *_log = instance_.p_;
-  if (_log && !(f & LOG_STREAM_CONSOLE_ONLY)) {
-    if (f & 0x80) {
-      {  //lock scope
-        AbstractThread::LockGuard lock = _log->thread_->lockGuard();
-        _log->messages.push(m);
-      }
-      if (!_log->thread_->invokeMethod(
-              [_log]() {
-                _log->flush();
-                _log->save();
-              },
-              true)) {
-        _log->flush();
-        _log->save();
-      }
-      return;
-    }
-    _log->append(m);
-  } else {
-    LogStream::console_output(m, f);
-  }
-}
+Log::Instance::Instance() { lsTrace(); }
 
-Log *Log::createInstance(int size, const std::string &name) {
-  if (instance()) {
-    console_msg("Log instance already exists");
-    return instance();
-  }
-  Log::instance_.p_ = new Log(size, name);
-  LogStream::setCompleted(&AbstractLog::append_);
-  return static_cast<Log *>(Log::instance_.p_.load());
+Log::Instance::~Instance() { lsTrace() << LogStream::Color::Magenta << Instance::value(); }
+
+void Log::Instance::created() {
+  LogStream::setCompleted(&append_);
+  lsTrace() << LogStream::Color::Magenta << Instance::value();
 }
 
 Log::Log(int size, const std::string &name) : Rrd(size, name), AbstractLog() {
@@ -217,6 +190,7 @@ Log::Log(int size, const std::string &name) : Rrd(size, name), AbstractLog() {
 
 Log::~Log() {
   lsTrace();
+  if (Instance::value() == this) Instance::clear();
   if (thread_->running())
     thread_->invokeMethod(
         [this]() {
@@ -266,4 +240,29 @@ AbstractLog::Message Log::messageFromRrdItem(const Item &_v) const {
   ds >> m.time >> m.type >> m.name >> m.string >> m.note;
   if (!ds.fail()) return m;
   return {};
+}
+
+void Log::append_(const Message &m, uint8_t f) {
+  AbstractLog *_log = Instance::value();
+  if (_log && !(f & LOG_STREAM_CONSOLE_ONLY)) {
+    if (f & 0x80) {
+      {  //lock scope
+        AbstractThread::LockGuard lock = _log->thread_->lockGuard();
+        _log->messages.push(m);
+      }
+      if (!_log->thread_->invokeMethod(
+              [_log]() {
+                _log->flush();
+                _log->save();
+              },
+              true)) {
+        _log->flush();
+        _log->save();
+      }
+      return;
+    }
+    _log->append(m);
+  } else {
+    LogStream::console_output(m, f);
+  }
 }

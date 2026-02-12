@@ -18,6 +18,12 @@ using namespace AsyncFw;
     if constexpr (0) LogStream()
 #endif
 
+FileSystemWatcher::Instance::Instance() { lsTrace(); }
+
+FileSystemWatcher::Instance::~Instance() { lsTrace() << LogStream::Color::Magenta << Instance::value(); }
+
+void FileSystemWatcher::Instance::created() { lsTrace() << LogStream::Color::Magenta << Instance::value(); }
+
 FileSystemWatcher::WatchPath::WatchPath(const std::string &path) {
   size_t i = path.find_last_of('/');
   if (i == std::string::npos) return;
@@ -26,7 +32,6 @@ FileSystemWatcher::WatchPath::WatchPath(const std::string &path) {
 }
 
 FileSystemWatcher::FileSystemWatcher(const std::vector<std::string> &paths) {
-  fileSystemWatcher = this;
   thread_ = AbstractThread::currentThread();
   timerid_ = thread_->appendTimerTask(0, [this]() {
     thread_->modifyTimer(timerid_, 0);

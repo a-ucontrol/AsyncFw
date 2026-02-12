@@ -2,11 +2,18 @@
 
 #include <string>
 #include "core/FunctionConnector.h"
+#include "instance.hpp"
 
 namespace AsyncFw {
 class FileSystemWatcher {
 public:
-  static FileSystemWatcher *instance() { return fileSystemWatcher; }
+  struct Instance : public AbstractInstance<FileSystemWatcher> {
+    Instance();
+    ~Instance() override;
+    void created() override;
+  };
+
+  static FileSystemWatcher *instance() { return Instance::value(); }
   FileSystemWatcher(const std::vector<std::string> & = {});
   ~FileSystemWatcher();
   bool addPath(const std::string &path);
@@ -29,7 +36,7 @@ private:
     using WatchPath::WatchPath;
     int d;
   };
-  static inline FileSystemWatcher *fileSystemWatcher;
+  static inline Instance instance_;
   std::vector<Watch *> files_;
   std::vector<Watch *> wds_;
   int notifyfd_;

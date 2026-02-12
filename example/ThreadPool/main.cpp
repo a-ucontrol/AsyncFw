@@ -4,7 +4,7 @@
 #include <Log.h>
 
 int main(int argc, char *argv[]) {
-  AsyncFw::Log::createInstance(1000, "");
+  AsyncFw::Log::Instance::create(1000, "");
   AsyncFw::ThreadPool *threadPool = AsyncFw::ThreadPool::Instance::create("ExampeThreadPool");
 
   AsyncFw::AbstractThread *_t = threadPool->createThread("SyncExample");

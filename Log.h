@@ -3,6 +3,7 @@
 #include <queue>
 
 #include "core/LogStream.h"
+#include "instance.hpp"
 #include "Rrd.h"
 
 #define _messages_ 8
@@ -37,7 +38,6 @@ protected:
   AbstractThread *thread_;
   uint8_t level = LogStream::Trace;
   int queueLimit = 128;
-  static void append_(const Message &m, uint8_t t);
 
 private:
   struct LastMessage {
@@ -52,20 +52,10 @@ private:
 #endif
       ;
   uint8_t consoleLevel = LogStream::Trace;
-
   std::queue<Message> messages;
   LastMessage lastMessages[_messages_];
   bool hideDuplicates = false;
-
   std::vector<std::string> filter;
-
-private:
-  inline static struct Instance {
-    ~Instance() {
-      if (p_) delete p_;
-    }
-    std::atomic<AbstractLog *> p_;
-  } instance_;
 };
 
 class Log : public Rrd, public AbstractLog {
@@ -75,8 +65,14 @@ public:
   using Color = LogStream::Color;
 
   using AbstractLog::append;
-  inline static Log *instance() { return static_cast<Log *>(instance_.p_.load()); }
-  static Log *createInstance(int = 0, const std::string & = {});
+
+  struct Instance : public AbstractInstance<Log> {
+    Instance();
+    ~Instance() override;
+    void created() override;
+  };
+
+  inline static Log *instance() { return Instance::value(); }
 
   Log(int = 0, const std::string & = {});
   ~Log() override;
@@ -97,5 +93,9 @@ protected:
   using AbstractLog::thread_;
   int autoSave;
   int timerIdAutosave = -1;
+
+private:
+  static void append_(const Message &m, uint8_t t);
+  static inline Instance instance_;
 };
 }  // namespace AsyncFw

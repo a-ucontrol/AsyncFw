@@ -1,6 +1,5 @@
 #include <algorithm>
 #include "core/LogStream.h"
-#include "core/console_msg.hpp"
 #include "ThreadPool.h"
 
 using namespace AsyncFw;
@@ -92,6 +91,12 @@ void AbstractThreadPool::Thread::destroy() {
   lsTrace();
 }
 
+ThreadPool::Instance::Instance() { lsTrace(); }
+
+ThreadPool::Instance::~Instance() { lsTrace() << LogStream::Color::Magenta << Instance::value(); }
+
+void ThreadPool::Instance::created() { lsTrace() << LogStream::Color::Magenta << Instance::value(); }
+
 ThreadPool::Thread::~Thread() { lsTrace() << "destroyed thread (" + name() + ')'; }
 
 ThreadPool::ThreadPool(const std::string &name, int workThreads) : AbstractThreadPool(name), workThreadsSize(workThreads) { lsTrace() << "created" << name; }
@@ -140,12 +145,3 @@ AbstractThreadPool::Thread *ThreadPool::getThread() {
   }
   return _t;
 }
-
-ThreadPool::Instance::Instance()
-{
-lsInfoMagenta();
-}
-
-void ThreadPool::Instance::created() { lsInfoMagenta(); }
-
-ThreadPool::Instance::~Instance() { lsInfoMagenta(); }

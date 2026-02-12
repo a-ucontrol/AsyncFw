@@ -44,6 +44,12 @@ private:
 
 class ThreadPool : public AbstractThreadPool {
 public:
+  struct Instance : public AbstractInstance<ThreadPool> {
+    Instance();
+    ~Instance() override;
+    void created() override;
+  };
+
   class Thread : public AbstractThreadPool::Thread {
     friend class ThreadPool;
 
@@ -94,12 +100,6 @@ public:
   static bool async(M m, R r) {
     return async(Instance::value()->getThread(), m, r);
   }
-
-  struct Instance : public AbstractInstance<ThreadPool> {
-    Instance();
-    ~Instance() override;
-    void created() override;
-  };
 
 private:
   static inline Instance instance_;
