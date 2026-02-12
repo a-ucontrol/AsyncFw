@@ -153,17 +153,17 @@ void AbstractThread::Private::process_timers() {
 void AbstractThread::Private::clearId() {
   std::thread::id _id = std::this_thread::get_id();
   {  //lock scope
-    LockGuard lock(list_mutex);
-    std::vector<AbstractThread *>::iterator it = std::lower_bound(AbstractThread::list_threads.begin(), AbstractThread::list_threads.end(), _id, AbstractThread::Compare());
-    if (it != list_threads.end() && (*it)->private_.id == _id) {
+    LockGuard lock(list.mutex);
+    std::vector<AbstractThread *>::iterator it = std::lower_bound(AbstractThread::list.threads.begin(), AbstractThread::list.threads.end(), _id, AbstractThread::Compare());
+    if (it != list.threads.end() && (*it)->private_.id == _id) {
       AbstractThread *_t = (*it);
       {  //lock scope //fix data race in checkDifferentThread called from waitFinished
         LockGuard lock = _t->lockGuard();
         _t->private_.id = {};
       }
-      list_threads.erase(it);
-      it = std::lower_bound(AbstractThread::list_threads.begin(), AbstractThread::list_threads.end(), _t, AbstractThread::Compare());
-      list_threads.insert(it, _t);
+      list.threads.erase(it);
+      it = std::lower_bound(AbstractThread::list.threads.begin(), AbstractThread::list.threads.end(), _t, AbstractThread::Compare());
+      list.threads.insert(it, _t);
       trace() << '(' + _t->private_.name + ')' << LogStream::Color::Magenta << _id;
       return;
     }
@@ -194,12 +194,14 @@ bool AbstractThread::Compare::operator()(const AbstractThread *t1, const Abstrac
   return t1 < t2;
 }
 
+AbstractThread::List::~List() { lsDebug() << threads.size(); }
+
 AbstractThread::AbstractThread(const std::string &_name) : private_(*new Private) {
   private_.name = _name;
-  LockGuard lock(list_mutex);
-  std::vector<AbstractThread *>::iterator it = std::lower_bound(list_threads.begin(), list_threads.end(), this, Compare());
-  list_threads.insert(it, this);
-  trace() << "threads:" << std::to_string(list_threads.size());
+  LockGuard lock(list.mutex);
+  std::vector<AbstractThread *>::iterator it = std::lower_bound(list.threads.begin(), list.threads.end(), this, Compare());
+  list.threads.insert(it, this);
+  trace() << "threads:" << std::to_string(list.threads.size());
 
 #ifndef EPOLL_WAIT
   pollfd _w;
@@ -235,11 +237,11 @@ AbstractThread::AbstractThread(const std::string &_name) : private_(*new Private
 
 AbstractThread::~AbstractThread() {
   {  //lock scope
-    LockGuard lock(list_mutex);
-    std::vector<AbstractThread *>::iterator it = std::lower_bound(list_threads.begin(), list_threads.end(), this, Compare());
-    if (it != list_threads.end() && (*it) == this) list_threads.erase(it);
+    LockGuard lock(list.mutex);
+    std::vector<AbstractThread *>::iterator it = std::lower_bound(list.threads.begin(), list.threads.end(), this, Compare());
+    if (it != list.threads.end() && (*it) == this) list.threads.erase(it);
     else { console_msg("thread not found"); }
-    trace() << "threads:" << std::to_string(list_threads.size());
+    trace() << "threads:" << std::to_string(list.threads.size());
   }
 
 #ifndef _WIN32
@@ -291,17 +293,17 @@ AbstractThread::~AbstractThread() {
 AbstractThread *AbstractThread::currentThread() {
   std::thread::id _id = std::this_thread::get_id();
   {  //lock scope
-    LockGuard lock(list_mutex);
-    std::vector<AbstractThread *>::iterator it = std::lower_bound(list_threads.begin(), list_threads.end(), _id, Compare());
-    if (it != list_threads.end() && (*it)->private_.id == _id) return (*it);
+    LockGuard lock(list.mutex);
+    std::vector<AbstractThread *>::iterator it = std::lower_bound(list.threads.begin(), list.threads.end(), _id, Compare());
+    if (it != list.threads.end() && (*it)->private_.id == _id) return (*it);
   }
   lsError() << "thread not found:" << _id;
   return nullptr;
 }
 
 AbstractThread::LockGuard AbstractThread::threads(std::vector<AbstractThread *> **_threads) {
-  *_threads = &list_threads;
-  return LockGuard {list_mutex};
+  *_threads = &list.threads;
+  return LockGuard {list.mutex};
 }
 
 bool AbstractThread::running() const {
@@ -362,13 +364,13 @@ void AbstractThread::waitFinished() const {
 void AbstractThread::setId() {
   std::thread::id _id = std::this_thread::get_id();
   {  //lock scope
-    LockGuard lock(list_mutex);
-    std::vector<AbstractThread *>::iterator it = std::lower_bound(list_threads.begin(), list_threads.end(), this, Compare());
-    if (it != list_threads.end() && (*it) == this) {
-      list_threads.erase(it);
+    LockGuard lock(list.mutex);
+    std::vector<AbstractThread *>::iterator it = std::lower_bound(list.threads.begin(), list.threads.end(), this, Compare());
+    if (it != list.threads.end() && (*it) == this) {
+      list.threads.erase(it);
       private_.id = _id;
-      it = std::lower_bound(list_threads.begin(), list_threads.end(), this, Compare());
-      list_threads.insert(it, this);
+      it = std::lower_bound(list.threads.begin(), list.threads.end(), this, Compare());
+      list.threads.insert(it, this);
       trace() << LOG_THREAD_NAME << LogStream::Color::Magenta << _id;
       return;
     }

@@ -196,8 +196,13 @@ private:
     bool operator()(const AbstractThread *, const AbstractThread *) const;
     bool operator()(const AbstractThread *, std::thread::id) const;
   };
-  static inline std::mutex list_mutex;
-  static inline std::vector<AbstractThread *> list_threads;
+
+  inline static struct List {
+    ~List();
+    std::mutex mutex;
+    std::vector<AbstractThread *> threads;
+  } list;
+
   void setId();
   void exec();
   void wake() const;
