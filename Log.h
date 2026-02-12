@@ -77,7 +77,7 @@ public:
   Log(int = 0, const std::string & = {});
   ~Log() override;
 
-  void output(const Message &m) final override;
+  void output(const Message &m) override;
 
   void setAutoSave(bool b) { autoSave = (b) ? 100 : -1; }
   Rrd::Item rrdItemFromMessage(const Message &m) const;

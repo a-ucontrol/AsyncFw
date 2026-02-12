@@ -4,13 +4,18 @@ namespace AsyncFw {
 template <typename T>
 class AbstractInstance {
 public:
+  template <typename CT, typename... Args>
+  static CT *create(Args... args) {
+    if (!i_->p_) {
+      i_->p_ = new CT(args...);
+      i_->created();
+      return static_cast<CT *>(i_->p_);
+    }
+    return nullptr;
+  }
   template <typename... Args>
   static T *create(Args... args) {
-    if (!i_->p_) {
-      i_->p_ = new T(args...);
-      i_->created();
-    }
-    return i_->p_;
+    return create<T>(args...);
   }
   static T *value() { return i_->p_; }
   static void clear() { i_->p_ = nullptr; }

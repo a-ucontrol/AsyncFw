@@ -194,7 +194,13 @@ bool AbstractThread::Compare::operator()(const AbstractThread *t1, const Abstrac
   return t1 < t2;
 }
 
-AbstractThread::List::~List() { lsDebug() << threads.size(); }
+AbstractThread::List::~List() {
+  if (!threads.empty()) {
+    lsError() << LogStream::Color::Red << "thread list not empty" << threads.size();
+    for (const AbstractThread *_t : threads) delete _t;
+  }
+  lsDebug() << threads.size();
+}
 
 AbstractThread::AbstractThread(const std::string &_name) : private_(*new Private) {
   private_.name = _name;
