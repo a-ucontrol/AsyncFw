@@ -67,6 +67,7 @@ set(AsyncFw_HEADERS
   "HttpSocket.h"
 
   "Version.h"
+  "instance.hpp"
 )
 
 set(AsyncFw_SOURCES

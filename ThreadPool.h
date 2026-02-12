@@ -1,6 +1,7 @@
 #pragma once
 
 #include "core/Thread.h"
+#include "instance.hpp"
 
 #define ThreadPool_DEFAULT_WORK_THREADS 1
 
@@ -95,13 +96,12 @@ public:
     return async(instance_.p_->getThread(), m, r);
   }
 
+  struct Instance : public AbstractInstance<ThreadPool> {
+    void created() override {}
+  };
+
+  inline static struct Instance instance_;
 private:
-  inline static struct Instance {
-    ~Instance() {
-      if (p_) delete p_;
-    }
-    ThreadPool *p_;
-  } instance_;
   std::vector<AbstractThreadPool::Thread *> workThreads_;
   int workThreadsSize;
 };

@@ -105,7 +105,10 @@ ThreadPool *ThreadPool::createInstance(const std::string &name, int size) {
 
 ThreadPool::ThreadPool(const std::string &name, int workThreads) : AbstractThreadPool(name), workThreadsSize(workThreads) { lsTrace() << "created" << name; }
 
-ThreadPool::~ThreadPool() { lsTrace() << "destroyed" << name(); }
+ThreadPool::~ThreadPool() {
+  if (instance_.p_ == this) instance_.p_ = nullptr;
+  lsTrace() << "destroyed" << name();
+}
 
 ThreadPool::Thread *ThreadPool::createThread(const std::string &_name) {
   Thread *thread = new Thread((!_name.empty()) ? _name : name() + " thread", this);
