@@ -30,12 +30,12 @@ protected:
   virtual void flush();
   virtual void output(const Message &message);
   virtual void save() = 0;
+  virtual AbstractThread *thread() = 0;
   void process(const Message &);
   void finality();
   void timerTask(int);
   void startTimer(int *, int);
   void stopTimer(int *);
-  AbstractThread *thread_;
   uint8_t level = LogStream::Trace;
   int queueLimit = 128;
 
@@ -89,8 +89,9 @@ public:
     if (!Rrd::readOnly) Rrd::save();
   }
 
+  AsyncFw::AbstractThread *thread() override { return thread_; }
+
 protected:
-  using AbstractLog::thread_;
   int autoSave;
   int timerIdAutosave = -1;
 
