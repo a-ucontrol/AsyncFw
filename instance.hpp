@@ -27,7 +27,6 @@ public:
   static CT *create(Args... args) {
     if (!i_->p_) {
       i_->p_ = new CT(args...);
-      list.append(i_);
       i_->created();
       return static_cast<CT *>(i_->p_);
     }
@@ -43,7 +42,8 @@ public:
 
 protected:
   Instance() : p_(nullptr) {
-    if (!i_) i_ = this;
+    i_ = this;
+    list.append(i_);
   }
   Instance(const Instance &) = delete;
   virtual ~Instance() { Instance::destroyValue(); }

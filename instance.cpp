@@ -7,7 +7,7 @@ AbstractInstance::List::~List() { lsDebug() << instances.size(); }
 
 void AbstractInstance::List::append(AbstractInstance *p) {
   instances.push_back(p);
-  lsDebug() << instances.size();
+  logAlert() << instances.size();
 }
 
 void AbstractInstance::List::destroyValues() {

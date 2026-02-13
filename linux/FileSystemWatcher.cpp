@@ -156,6 +156,7 @@ FileSystemWatcher::FileSystemWatcher(const std::vector<std::string> &paths) {
 }
 
 FileSystemWatcher::~FileSystemWatcher() {
+  if (Instance::value() == this) Instance::clear();
   thread_->removePollDescriptor(notifyfd_);
   thread_->removeTimer(timerid_);
   ::close(notifyfd_);
