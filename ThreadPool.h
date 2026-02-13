@@ -44,7 +44,7 @@ private:
 
 class ThreadPool : public AbstractThreadPool {
 public:
-  struct Instance : public AbstractInstance<ThreadPool> {
+  struct Instance : public AsyncFw::Instance<ThreadPool> {
     Instance();
     ~Instance() override;
     void created() override;

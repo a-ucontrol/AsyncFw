@@ -1,13 +1,33 @@
 #pragma once
 
+#include <vector>
+
 namespace AsyncFw {
-template <typename T>
+
 class AbstractInstance {
+  friend class MainThread;
+
+protected:
+  virtual void created() = 0;
+  virtual void destroyValue() = 0;
+  inline static struct List {
+    void destroyValues();
+    ~List();
+    void append(AbstractInstance *);
+    std::vector<AbstractInstance *> instances;
+  } list;
+};
+
+template <typename T>
+class Instance : public AbstractInstance {
+  friend class MainThread;
+
 public:
   template <typename CT, typename... Args>
   static CT *create(Args... args) {
     if (!i_->p_) {
       i_->p_ = new CT(args...);
+      list.append(i_);
       i_->created();
       return static_cast<CT *>(i_->p_);
     }
@@ -22,17 +42,17 @@ public:
   static void clear() { i_->p_ = nullptr; }
 
 protected:
-  AbstractInstance() : p_(nullptr) {
+  Instance() : p_(nullptr) {
     if (!i_) i_ = this;
   }
-  AbstractInstance(const AbstractInstance &) = delete;
-  virtual ~AbstractInstance() {
+  Instance(const Instance &) = delete;
+  virtual ~Instance() { Instance::destroyValue(); }
+  void destroyValue() override {
     if (p_) delete p_;
   }
-  virtual void created() = 0;
 
 private:
   T *p_;
-  inline static AbstractInstance<T> *i_;
+  inline static Instance<T> *i_;
 };
 }  // namespace AsyncFw

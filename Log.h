@@ -66,7 +66,7 @@ public:
 
   using AbstractLog::append;
 
-  struct Instance : public AbstractInstance<Log> {
+  struct Instance : public AsyncFw::Instance<Log> {
     Instance();
     ~Instance() override;
     void created() override;

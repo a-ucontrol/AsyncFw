@@ -92,6 +92,7 @@ set(AsyncFw_SOURCES
   "HttpSocket.cpp"
 
   "Version.cpp"
+  "instance.cpp"
 )
 
 if(NOT PLATFORM STREQUAL "AMD64")

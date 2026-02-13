@@ -7,7 +7,7 @@
 namespace AsyncFw {
 class FileSystemWatcher {
 public:
-  struct Instance : public AbstractInstance<FileSystemWatcher> {
+  struct Instance : public AsyncFw::Instance<FileSystemWatcher> {
     Instance();
     ~Instance() override;
     void created() override;

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "core/Thread.h"
+#include "instance.hpp"
 
 #ifndef _WIN32
   #define EXIT_ON_UNIX_SIGNAL
@@ -90,6 +91,7 @@ private:
       ::close(eventfd_);
     }
 #endif
+    AbstractInstance::list.destroyValues();
   }
 #ifdef USE_QAPPLICATION
   struct Timer {
