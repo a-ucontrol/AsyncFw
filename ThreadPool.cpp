@@ -67,11 +67,11 @@ AbstractThreadPool::Thread::Thread(const std::string &name, AbstractThreadPool *
 }
 
 AbstractThreadPool::Thread::~Thread() {
-  LockGuard lock(mutex);
+  LockGuard lock(pool->mutex);
   std::vector<AbstractThreadPool::Thread *>::iterator it = std::lower_bound(pool->threads_.begin(), pool->threads_.end(), this, AbstractThreadPool::Compare());
   if (it != pool->threads_.end() && (*it) == this) {
     pool->threads_.erase(it);
-    lsError() << "thread not removed from pool";
+    lsError() << "thread not removed from pool" << '(' + (*it)->name() + ')';
   }
   lsTrace();
 }

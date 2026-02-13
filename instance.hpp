@@ -17,6 +17,7 @@ public:
   static T *create(Args... args) {
     return create<T>(args...);
   }
+  static void set(T *p) { i_->p_ = p; }
   static T *value() { return i_->p_; }
   static void clear() { i_->p_ = nullptr; }
 
