@@ -9,7 +9,7 @@ public:
   static void destroyValues();
 
 protected:
-  virtual void created() = 0;
+  virtual ~AbstractInstance() = default;
   virtual void destroyValue() = 0;
   void append(AbstractInstance *);
   void remove(AbstractInstance *);
@@ -41,19 +41,21 @@ public:
   static T *value() { return i_->p_; }
   static void clear() { i_->p_ = nullptr; }
 
-protected:
   Instance() : p_(nullptr) {
     i_ = this;
     append(i_);
   }
-  Instance(const Instance &) = delete;
-  virtual ~Instance() {
+  virtual ~Instance() override {
     destroyValue();
     remove(i_);
   }
+
+protected:
+  Instance(const Instance &) = delete;
   void destroyValue() override {
     if (p_) delete p_;
   }
+  virtual void created() {}
 
 private:
   T *p_;
