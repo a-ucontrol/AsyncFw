@@ -8,6 +8,10 @@ endif()
 
 include(cmake/version.cmake)
 
+if(EXISTS "${CMAKE_CURRENT_LIST_DIR}/defines.cmake")
+  include("${CMAKE_CURRENT_LIST_DIR}/defines.cmake")
+endif()
+
 project(${AsyncFw_PROJECT_NAME} VERSION ${VERSION_STRING} LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 20)
@@ -122,18 +126,9 @@ target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE GIT_VERSION="${GIT_VERS
 
 link_libraries(z crypto ssl cares)
 
-set(SANITIZE_COMPILE_OPTIONS -g -fsanitize=address,undefined)
-set(SANITIZE_LINK_LIBRARIES -Wl,-Bstatic,-lasan,-lubsan,-Bdynamic)
-
-#set(SANITIZE_COMPILE_OPTIONS -g -fsanitize=thread)
-#set(SANITIZE_LINK_LIBRARIES tsan)
-### __tsan_on_report -> break point function for debugger
-
 if(SANITIZE_COMPILE_OPTIONS)
   target_compile_options(${AsyncFw_PROJECT_NAME} PRIVATE ${SANITIZE_COMPILE_OPTIONS})
 endif()
-
-#target_link_libraries(AsyncFw ${SANITIZE_LINK_LIBRARIES})
 
 add_subdirectory(example/FunctionConnector)
 add_subdirectory(example/Invoke)

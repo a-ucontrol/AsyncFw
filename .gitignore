@@ -40,5 +40,6 @@
 # debug information files
 *.dwo
 
+defines.cmake
 CMakeLists.txt.*
 build
