@@ -93,16 +93,16 @@ void AbstractThreadPool::Thread::destroy() {
 
 ThreadPool::Instance::Instance() { lsTrace(); }
 
-ThreadPool::Instance::~Instance() { lsTrace() << LogStream::Color::Magenta << Instance::value(); }
+ThreadPool::Instance::~Instance() { lsTrace() << LogStream::Color::Magenta << instance_.value; }
 
-void ThreadPool::Instance::created() { lsTrace() << LogStream::Color::Magenta << Instance::value(); }
+void ThreadPool::Instance::created() { lsTrace() << LogStream::Color::Magenta << instance_.value; }
 
 ThreadPool::Thread::~Thread() { lsTrace() << "destroyed thread (" + name() + ')'; }
 
 ThreadPool::ThreadPool(const std::string &name, int workThreads) : AbstractThreadPool(name), workThreadsSize(workThreads) { lsTrace() << "created" << name; }
 
 ThreadPool::~ThreadPool() {
-  if (Instance::value() == this) Instance::clear();
+  if (instance_.value == this) instance_.value = nullptr;
   lsTrace() << "destroyed" << name();
 }
 

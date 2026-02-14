@@ -23,13 +23,15 @@ private:
 
 template <typename T>
 class Instance : public AbstractInstance {
+  friend T;
+
 public:
   template <typename CT, typename... Args>
   static CT *create(Args... args) {
-    if (!i_->p_) {
-      i_->p_ = new CT(args...);
+    if (!i_->value) {
+      i_->value = new CT(args...);
       i_->created();
-      return static_cast<CT *>(i_->p_);
+      return static_cast<CT *>(i_->value);
     }
     return nullptr;
   }
@@ -37,11 +39,10 @@ public:
   static T *create(Args... args) {
     return create<T>(args...);
   }
-  static void set(T *p) { i_->p_ = p; }
-  static T *value() { return i_->p_; }
-  static void clear() { i_->p_ = nullptr; }
+  static void set(T *p) { i_->value = p; }
+  static T *get() { return i_->value; }
 
-  Instance() : p_(nullptr) {
+  Instance() : value(nullptr) {
     i_ = this;
     append(i_);
   }
@@ -53,12 +54,12 @@ public:
 protected:
   Instance(const Instance &) = delete;
   void destroyValue() override {
-    if (p_) delete p_;
+    if (value) delete value;
   }
   virtual void created() {}
 
 private:
-  T *p_;
+  T *value;
   inline static Instance<T> *i_;
 };
 }  // namespace AsyncFw

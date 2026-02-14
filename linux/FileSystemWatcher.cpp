@@ -20,9 +20,9 @@ using namespace AsyncFw;
 
 FileSystemWatcher::Instance::Instance() { lsTrace(); }
 
-FileSystemWatcher::Instance::~Instance() { lsTrace() << LogStream::Color::Magenta << Instance::value(); }
+FileSystemWatcher::Instance::~Instance() { lsTrace() << LogStream::Color::Magenta << instance_.value; }
 
-void FileSystemWatcher::Instance::created() { lsTrace() << LogStream::Color::Magenta << Instance::value(); }
+void FileSystemWatcher::Instance::created() { lsTrace() << LogStream::Color::Magenta << instance_.value; }
 
 FileSystemWatcher::WatchPath::WatchPath(const std::string &path) {
   size_t i = path.find_last_of('/');
@@ -156,7 +156,7 @@ FileSystemWatcher::FileSystemWatcher(const std::vector<std::string> &paths) {
 }
 
 FileSystemWatcher::~FileSystemWatcher() {
-  if (Instance::value() == this) Instance::clear();
+  if (instance_.value == this) instance_.value = nullptr;
   thread_->removePollDescriptor(notifyfd_);
   thread_->removeTimer(timerid_);
   ::close(notifyfd_);
