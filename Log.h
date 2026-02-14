@@ -90,9 +90,9 @@ protected:
   int timerIdAutosave = -1;
 
 private:
-  inline static struct Instance2 : public AsyncFw::Instance<Log> {
-    Instance2();
-    ~Instance2() override;
+  inline static struct Instance : public AsyncFw::Instance<Log> {
+    Instance();
+    ~Instance() override;
     void created() override;
   } instance_;
   static void append_(const Message &m, uint8_t t);
