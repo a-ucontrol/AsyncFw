@@ -20,12 +20,7 @@ public:
   FunctionConnectorProtected<FileSystemWatcher>::Connector<const std::string &, int> watch;
 
 private:
-  static inline struct Instance : public AsyncFw::Instance<FileSystemWatcher> {
-    Instance();
-    ~Instance() override;
-    void created() override;
-  } instance_;
-
+  static inline struct AsyncFw::Instance<FileSystemWatcher> instance_;
   struct WatchPath {
     WatchPath() = default;
     WatchPath(const std::string &);

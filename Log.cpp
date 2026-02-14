@@ -172,13 +172,9 @@ void AbstractLog::stopTimer(int *timerId) {
   }
 }
 
-Log::Instance::Instance() { lsTrace(); }
-
-Log::Instance::~Instance() { lsTrace() << LogStream::Color::Magenta << instance_.value; }
-
 void Log::Instance::created() {
   LogStream::setCompleted(&append_);
-  lsTrace() << LogStream::Color::Magenta << instance_.value;
+  lsTrace();
 }
 
 Log::Log(int size, const std::string &name) : Rrd(size, name), AbstractLog() {

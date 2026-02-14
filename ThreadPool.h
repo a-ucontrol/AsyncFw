@@ -96,11 +96,7 @@ public:
   }
 
 private:
-  inline static struct Instance : public AsyncFw::Instance<ThreadPool> {
-    Instance();
-    ~Instance() override;
-    void created() override;
-  } instance_;
+  inline static AsyncFw::Instance<ThreadPool> instance_;
   std::vector<AbstractThreadPool::Thread *> workThreads_;
   int workThreadsSize;
 };

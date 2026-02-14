@@ -12,6 +12,25 @@ if(EXISTS "${CMAKE_CURRENT_LIST_DIR}/defines.cmake")
   include("${CMAKE_CURRENT_LIST_DIR}/defines.cmake")
 endif()
 
+# defines.cmake
+#set(SANITIZE_COMPILE_OPTIONS -g -fsanitize=address,undefined)
+#set(SANITIZE_LINK_LIBRARIES -Wl,-Bstatic,-lasan,-lubsan,-Bdynamic)
+
+#set(SANITIZE_COMPILE_OPTIONS -g -fsanitize=thread)
+#set(SANITIZE_LINK_LIBRARIES tsan)
+### __tsan_on_report -> break point function for debugger
+
+#add_definitions(-DEXTEND_LOGSTREAM_TRACE)
+#add_definitions(-DEXTEND_RRD_TRACE)
+#add_definitions(-DEXTEND_THREAD_TRACE)
+#add_definitions(-DEXTEND_SOCKET_TRACE)
+#add_definitions(-DEXTEND_FILESYSTEMWATCHER_TRACE)
+#add_definitions(-DEXTEND_SYSTEMPROCESS_TRACE)
+#add_definitions(-DEXTEND_LOG_TRACE)
+#add_definitions(-DEXTEND_FUNCTIONCONNECTOR_TRACE)
+#add_definitions(-DEXTEND_INSTANCE_TRACE)
+# -- defines.cmake
+
 project(${AsyncFw_PROJECT_NAME} VERSION ${VERSION_STRING} LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 20)
@@ -144,5 +163,3 @@ add_subdirectory(example/ContainerTask)
 add_subdirectory(example/CoroutineWait)
 add_subdirectory(example/SystemProcess)
 add_subdirectory(example/run-examples)
-
-

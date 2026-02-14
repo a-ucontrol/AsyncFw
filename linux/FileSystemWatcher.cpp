@@ -18,12 +18,6 @@ using namespace AsyncFw;
     if constexpr (0) LogStream()
 #endif
 
-FileSystemWatcher::Instance::Instance() { lsTrace(); }
-
-FileSystemWatcher::Instance::~Instance() { lsTrace() << LogStream::Color::Magenta << instance_.value; }
-
-void FileSystemWatcher::Instance::created() { lsTrace() << LogStream::Color::Magenta << instance_.value; }
-
 FileSystemWatcher::WatchPath::WatchPath(const std::string &path) {
   size_t i = path.find_last_of('/');
   if (i == std::string::npos) return;

@@ -91,8 +91,6 @@ protected:
 
 private:
   inline static struct Instance : public AsyncFw::Instance<Log> {
-    Instance();
-    ~Instance() override;
     void created() override;
   } instance_;
   static void append_(const Message &m, uint8_t t);

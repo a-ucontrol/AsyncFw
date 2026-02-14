@@ -1,6 +1,6 @@
 #include <Version.h>
-#include <Log.h>
 #include <MainThread.h>
+#include <Log.h>
 
 int main(int argc, char *argv[]) {
   AsyncFw::Instance<AsyncFw::Log>::create(1000, "log-file-name");
