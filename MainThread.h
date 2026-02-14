@@ -91,7 +91,7 @@ private:
       ::close(eventfd_);
     }
 #endif
-    AbstractInstance::list.destroyValues();
+    AbstractInstance::destroyValues();
   }
 #ifdef USE_QAPPLICATION
   struct Timer {

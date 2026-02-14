@@ -5,23 +5,24 @@
 namespace AsyncFw {
 
 class AbstractInstance {
-  friend class MainThread;
+public:
+  static void destroyValues();
 
 protected:
   virtual void created() = 0;
   virtual void destroyValue() = 0;
+  void append(AbstractInstance *);
+  void remove(AbstractInstance *);
+
+private:
   inline static struct List {
-    void destroyValues();
     ~List();
-    void append(AbstractInstance *);
     std::vector<AbstractInstance *> instances;
   } list;
 };
 
 template <typename T>
 class Instance : public AbstractInstance {
-  friend class MainThread;
-
 public:
   template <typename CT, typename... Args>
   static CT *create(Args... args) {
@@ -43,10 +44,13 @@ public:
 protected:
   Instance() : p_(nullptr) {
     i_ = this;
-    list.append(i_);
+    append(i_);
   }
   Instance(const Instance &) = delete;
-  virtual ~Instance() { Instance::destroyValue(); }
+  virtual ~Instance() {
+    destroyValue();
+    remove(i_);
+  }
   void destroyValue() override {
     if (p_) delete p_;
   }
