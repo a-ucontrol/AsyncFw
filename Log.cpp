@@ -172,11 +172,11 @@ void AbstractLog::stopTimer(int *timerId) {
   }
 }
 
-Log::Instance::Instance() { lsTrace(); }
+Log::Instance2::Instance2() { lsTrace(); }
 
-Log::Instance::~Instance() { lsTrace() << LogStream::Color::Magenta << Instance::value(); }
+Log::Instance2::~Instance2() { lsTrace() << LogStream::Color::Magenta << Instance::value(); }
 
-void Log::Instance::created() {
+void Log::Instance2::created() {
   LogStream::setCompleted(&append_);
   lsTrace() << LogStream::Color::Magenta << Instance::value();
 }
@@ -189,7 +189,10 @@ Log::Log(int size, const std::string &name) : Rrd(size, name), AbstractLog() {
 
 Log::~Log() {
   lsTrace();
-  if (Instance::value() == this) Instance::clear();
+  if (instance_.value() == this) {
+    LogStream::setCompleted(&LogStream::console_output);
+    instance_.clear();
+  }
   if (thread_->running())
     thread_->invokeMethod(
         [this]() {
@@ -242,7 +245,7 @@ AbstractLog::Message Log::messageFromRrdItem(const Item &_v) const {
 }
 
 void Log::append_(const Message &m, uint8_t f) {
-  AbstractLog *_log = Instance::value();
+  AbstractLog *_log = instance_.value();
   if (_log && !(f & LOG_STREAM_CONSOLE_ONLY)) {
     if (f & 0x80) {
       {  //lock scope

@@ -44,12 +44,6 @@ private:
 
 class ThreadPool : public AbstractThreadPool {
 public:
-  struct Instance : public AsyncFw::Instance<ThreadPool> {
-    Instance();
-    ~Instance() override;
-    void created() override;
-  };
-
   class Thread : public AbstractThreadPool::Thread {
     friend class ThreadPool;
 
@@ -102,7 +96,11 @@ public:
   }
 
 private:
-  static inline Instance instance_;
+  inline static struct Instance : public AsyncFw::Instance<ThreadPool> {
+    Instance();
+    ~Instance() override;
+    void created() override;
+  } instance_;
   std::vector<AbstractThreadPool::Thread *> workThreads_;
   int workThreadsSize;
 };

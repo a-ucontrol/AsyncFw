@@ -66,13 +66,7 @@ public:
 
   using AbstractLog::append;
 
-  struct Instance : public AsyncFw::Instance<Log> {
-    Instance();
-    ~Instance() override;
-    void created() override;
-  };
-
-  inline static Log *instance() { return Instance::value(); }
+  inline static Log *instance() { return instance_.value(); }
 
   Log(int = 0, const std::string & = {});
   ~Log() override;
@@ -96,7 +90,11 @@ protected:
   int timerIdAutosave = -1;
 
 private:
+  inline static struct Instance2 : public AsyncFw::Instance<Log> {
+    Instance2();
+    ~Instance2() override;
+    void created() override;
+  } instance_;
   static void append_(const Message &m, uint8_t t);
-  static inline Instance instance_;
 };
 }  // namespace AsyncFw

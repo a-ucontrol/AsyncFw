@@ -122,8 +122,8 @@ target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE GIT_VERSION="${GIT_VERS
 
 link_libraries(z crypto ssl cares)
 
-#set(SANITIZE_COMPILE_OPTIONS -g -fsanitize=address,undefined)
-#set(SANITIZE_LINK_LIBRARIES -Wl,-Bstatic,-lasan,-lubsan,-Bdynamic)
+set(SANITIZE_COMPILE_OPTIONS -g -fsanitize=address,undefined)
+set(SANITIZE_LINK_LIBRARIES -Wl,-Bstatic,-lasan,-lubsan,-Bdynamic)
 
 #set(SANITIZE_COMPILE_OPTIONS -g -fsanitize=thread)
 #set(SANITIZE_LINK_LIBRARIES tsan)

@@ -7,12 +7,6 @@
 namespace AsyncFw {
 class FileSystemWatcher {
 public:
-  struct Instance : public AsyncFw::Instance<FileSystemWatcher> {
-    Instance();
-    ~Instance() override;
-    void created() override;
-  };
-
   static FileSystemWatcher *instance() { return Instance::value(); }
   FileSystemWatcher(const std::vector<std::string> & = {});
   ~FileSystemWatcher();
@@ -26,6 +20,12 @@ public:
   FunctionConnectorProtected<FileSystemWatcher>::Connector<const std::string &, int> watch;
 
 private:
+  struct Instance : public AsyncFw::Instance<FileSystemWatcher> {
+    Instance();
+    ~Instance() override;
+    void created() override;
+  } instance_;
+
   struct WatchPath {
     WatchPath() = default;
     WatchPath(const std::string &);
@@ -36,7 +36,6 @@ private:
     using WatchPath::WatchPath;
     int d;
   };
-  static inline Instance instance_;
   std::vector<Watch *> files_;
   std::vector<Watch *> wds_;
   int notifyfd_;

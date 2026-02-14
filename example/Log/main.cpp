@@ -3,7 +3,7 @@
 #include <MainThread.h>
 
 int main(int argc, char *argv[]) {
-  AsyncFw::Log::Instance::create(1000, "log-file-name");
+  AsyncFw::Instance<AsyncFw::Log>::create(1000, "log-file-name");
   AsyncFw::Log::instance()->setColorOut(true);
 
   logNotice() << "Version:" << AsyncFw::Version::str();
@@ -28,7 +28,9 @@ int main(int argc, char *argv[]) {
   logWarning() << "Warning";
   logError() << "Error";
   logAlert() << "logAlert";
-  logEmergency() << "Emergency";  // throw
+  //logEmergency() << "Emergency";  // throw
+
+  AsyncFw::Thread::currentThread()->invokeMethod([](){AsyncFw::MainThread::exit();});
 
   int ret = AsyncFw::MainThread::exec();
   return ret;
