@@ -18,7 +18,17 @@ endif()
 #set(SANITIZE_COMPILE_OPTIONS -g -fsanitize=address,undefined)
 #set(SANITIZE_LINK_LIBRARIES -Wl,-Bstatic,-lasan,-lubsan,-Bdynamic)
 
-#set(SANITIZE_COMPILE_OPTIONS -g -fsanitize=thread,undefined)
+#set(SANITIZE_COMPILE_OPTIONS -g -fsanitize=thread)
+### int main()
+### {
+###   std::thread t1([]{});
+###   std::thread t2([]{});
+###   t1.join();
+###   t2.join();
+### }
+### gcc main.cpp -lstdc++ -g -fsanitize=thread,undefined
+### -- int main() with -fsanitize=thread,undefined -> ThreadSanitizer: data race
+
 #set(SANITIZE_LINK_LIBRARIES tsan ubsan)
 ### __tsan_on_report -> break point function for debugger
 

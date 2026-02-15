@@ -66,16 +66,6 @@ AbstractThreadPool::Thread::Thread(const std::string &name, AbstractThreadPool *
   lsTrace();
 }
 
-AbstractThreadPool::Thread::~Thread() {
-  LockGuard lock(pool->mutex);
-  std::vector<AbstractThreadPool::Thread *>::iterator it = std::lower_bound(pool->threads_.begin(), pool->threads_.end(), this, AbstractThreadPool::Compare());
-  if (it != pool->threads_.end() && (*it) == this) {
-    pool->threads_.erase(it);
-    lsError() << "thread not removed from pool" << '(' + (*it)->name() + ')';
-  }
-  lsTrace();
-}
-
 void AbstractThreadPool::Thread::destroy() {
   pool->removeThread(this);
   AbstractThread::quit();
@@ -90,8 +80,6 @@ void AbstractThreadPool::Thread::destroy() {
   }
   lsTrace();
 }
-
-ThreadPool::Thread::~Thread() { lsTrace() << "destroyed thread (" + name() + ')'; }
 
 ThreadPool::ThreadPool(const std::string &name, int workThreads) : AbstractThreadPool(name), workThreadsSize(workThreads) { lsTrace() << "created" << name; }
 

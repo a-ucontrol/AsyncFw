@@ -11,10 +11,9 @@ public:
   class Thread : public AsyncFw::Thread {
   public:
     virtual void destroy();
+    Thread(const std::string &name, AbstractThreadPool *);
 
   protected:
-    Thread(const std::string &name, AbstractThreadPool *);
-    virtual ~Thread() override;
     AbstractThreadPool *pool;
   };
 
@@ -44,14 +43,6 @@ private:
 
 class ThreadPool : public AbstractThreadPool {
 public:
-  class Thread : public AbstractThreadPool::Thread {
-    friend class ThreadPool;
-
-  protected:
-    using AbstractThreadPool::Thread::Thread;
-    ~Thread();
-  };
-
   static ThreadPool *instance() { return instance_.value; }
 
   ThreadPool(const std::string &, int = ThreadPool_DEFAULT_WORK_THREADS);

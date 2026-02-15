@@ -197,10 +197,9 @@ private:
     bool operator()(const AbstractThread *, std::thread::id) const;
   };
 
-  inline static struct List {
+  inline static struct List : public std::vector<AbstractThread *> {
     ~List();
     std::mutex mutex;
-    std::vector<AbstractThread *> threads;
   } list;
 
   void setId();
