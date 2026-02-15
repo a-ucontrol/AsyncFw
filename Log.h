@@ -3,8 +3,8 @@
 #include <queue>
 
 #include "core/LogStream.h"
-#include "instance.hpp"
 #include "Rrd.h"
+#include "instance.hpp"
 
 #define _messages_ 8
 

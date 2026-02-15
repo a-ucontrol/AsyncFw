@@ -346,7 +346,7 @@ void AbstractThread::waitInterrupted() const {
 }
 
 void AbstractThread::quit() {
-  lsDebug() << name() << this;
+  lsTrace() << LOG_THREAD_NAME;
   LockGuard lock(mutex);
   if (!private_.state || private_.state >= Private::Finalize) {
     console_msg("Thread already finished or not started");

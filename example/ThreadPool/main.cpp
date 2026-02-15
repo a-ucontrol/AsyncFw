@@ -3,11 +3,18 @@
 #include <ThreadPool.h>
 #include <Log.h>
 
-int main(int argc, char *argv[]) {
-  AsyncFw::Instance<AsyncFw::Log>::create(1000, "");
-  AsyncFw::ThreadPool *threadPool = AsyncFw::Instance<AsyncFw::ThreadPool>::create("ExampeThreadPool");
+class Pool : public AsyncFw::ThreadPool {  // example for AsyncFw::Instance<AsyncFw::ThreadPool>::create<Pool>
+public:
+  using AsyncFw::ThreadPool::ThreadPool;
+  std::string text() { return "Pool"; }
+};
 
-  AsyncFw::AbstractThread *_t = threadPool->createThread("SyncExample");
+int main(int argc, char *argv[]) {
+  AsyncFw::Instance<AsyncFw::Log>::create();
+  Pool *threadPool = AsyncFw::Instance<AsyncFw::ThreadPool>::create<Pool>("ExampeThreadPool");
+  logInfo() << threadPool->text();
+
+  AsyncFw::AbstractThread *_t = AsyncFw::ThreadPool::instance()->createThread("SyncExample");
 
   AsyncFw::ThreadPool::sync(_t, []() {
     AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::currentThread();

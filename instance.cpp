@@ -34,6 +34,8 @@ void AbstractInstance::remove(AbstractInstance *_i) {
 
 void AbstractInstance::destroyValues() {
   lsDebug() << list.instances.size();
-  for (AbstractInstance *_i : list.instances) _i->destroyValue();
-  list.instances.clear();
+  while (!list.instances.empty()) {
+    list.instances.back()->destroyValue();
+    list.instances.pop_back();
+  }
 }

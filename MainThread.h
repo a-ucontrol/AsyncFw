@@ -1,7 +1,7 @@
 #pragma once
 
-#include "instance.hpp"
 #include "core/Thread.h"
+#include "instance.hpp"
 
 #ifndef _WIN32
   #define EXIT_ON_UNIX_SIGNAL
