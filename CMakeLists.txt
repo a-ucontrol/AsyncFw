@@ -13,11 +13,13 @@ if(EXISTS "${CMAKE_CURRENT_LIST_DIR}/defines.cmake")
 endif()
 
 # defines.cmake
+#set(BUILD_SHARED_LIBS ON)
+
 #set(SANITIZE_COMPILE_OPTIONS -g -fsanitize=address,undefined)
 #set(SANITIZE_LINK_LIBRARIES -Wl,-Bstatic,-lasan,-lubsan,-Bdynamic)
 
-#set(SANITIZE_COMPILE_OPTIONS -g -fsanitize=thread)
-#set(SANITIZE_LINK_LIBRARIES tsan)
+#set(SANITIZE_COMPILE_OPTIONS -g -fsanitize=thread,undefined)
+#set(SANITIZE_LINK_LIBRARIES tsan ubsan)
 ### __tsan_on_report -> break point function for debugger
 
 #add_definitions(-DEXTEND_LOGSTREAM_TRACE)
