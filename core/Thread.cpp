@@ -11,9 +11,9 @@
 #endif
 
 #ifdef EXTEND_THREAD_TRACE
-  #define trace LogStream(+LogStream::Trace | LogStream::Gray, __PRETTY_FUNCTION__, __FILE__, __LINE__, LS_LOG_DEFAULT_FLAGS | LOG_STREAM_CONSOLE_ONLY).output
+  #define trace LogStream(+LogStream::Trace | LogStream::Black, __PRETTY_FUNCTION__, __FILE__, __LINE__, LS_LOG_DEFAULT_FLAGS | LOG_STREAM_CONSOLE_ONLY).output
   #define warning_if(x) \
-    if (x) LogStream(+LogStream::Warning | LogStream::DarkBlue, __PRETTY_FUNCTION__, __FILE__, __LINE__, LS_LOG_DEFAULT_FLAGS | LOG_STREAM_CONSOLE_ONLY).output()
+    if (x) LogStream(+LogStream::Warning | LogStream::Blue, __PRETTY_FUNCTION__, __FILE__, __LINE__, LS_LOG_DEFAULT_FLAGS | LOG_STREAM_CONSOLE_ONLY).output()
 #else
   #define trace(x) \
     if constexpr (0) LogStream()
@@ -196,10 +196,12 @@ bool AbstractThread::Compare::operator()(const AbstractThread *t1, const Abstrac
 
 AbstractThread::List::~List() {
   if (!threads.empty()) {
-    lsError() << LogStream::Color::Red << "thread list not empty" << threads.size();
+    console_msg("Thread list not empty: " + std::to_string(threads.size()));
     for (const AbstractThread *_t : threads) delete _t;
   }
-  lsDebug() << threads.size();
+#ifndef LS_NO_DEBUG
+  console_msg(__PRETTY_FUNCTION__ + ' ' + std::to_string(threads.size()));
+#endif
 }
 
 AbstractThread::AbstractThread(const std::string &_name) : private_(*new Private) {

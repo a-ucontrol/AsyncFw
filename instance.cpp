@@ -1,41 +1,32 @@
-#include "core/LogStream.h"
+#include <algorithm>
+#include "core/console_msg.hpp"
 #include "instance.hpp"
-
-#ifdef EXTEND_INSTANCE_TRACE
-  #define trace LogStream(+LogStream::Trace | LogStream::Gray, __PRETTY_FUNCTION__, __FILE__, __LINE__, LS_LOG_DEFAULT_FLAGS | LOG_STREAM_CONSOLE_ONLY).output
-  #define warning_if(x) \
-    if (x) LogStream(+LogStream::Warning | LogStream::DarkBlue, __PRETTY_FUNCTION__, __FILE__, __LINE__, LS_LOG_DEFAULT_FLAGS | LOG_STREAM_CONSOLE_ONLY).output()
-#else
-  #define trace(x) \
-    if constexpr (0) LogStream()
-  #define warning_if(x) \
-    if constexpr (0) LogStream()
-#endif
 
 using namespace AsyncFw;
 
-AbstractInstance::List::~List() { lsTrace() << instances.size(); }
+AbstractInstance::List::~List() {
+#ifndef LS_NO_DEBUG
+  console_msg(__PRETTY_FUNCTION__ + ' ' + std::to_string(instances.size()));
+#endif
+}
 
 void AbstractInstance::append(AbstractInstance *_i) {
   std::vector<AbstractInstance *>::iterator it = std::lower_bound(list.instances.begin(), list.instances.end(), _i, [](const AbstractInstance *i1, const AbstractInstance *i2) { return i1 < i2; });
   list.instances.insert(it, _i);
-  trace() << list.instances.size();
 }
 
 void AbstractInstance::remove(AbstractInstance *_i) {
   if (list.instances.empty()) {
-    trace() << LogStream::Color::DarkRed << "empty";
+    console_msg(__PRETTY_FUNCTION__ + " Instance list empty");
     return;
   }
   std::vector<AbstractInstance *>::iterator it = std::lower_bound(list.instances.begin(), list.instances.end(), _i, [](const AbstractInstance *i1, const AbstractInstance *i2) { return i1 < i2; });
   list.instances.erase(it);
-  trace() << list.instances.size();
 }
 
 void AbstractInstance::destroyValues() {
-  lsDebug() << list.instances.size();
-  while (!list.instances.empty()) {
-    list.instances.back()->destroyValue();
-    list.instances.pop_back();
-  }
+#ifndef LS_NO_DEBUG
+  console_msg(__PRETTY_FUNCTION__ + ' ' + std::to_string(list.instances.size()));
+#endif
+  std::for_each(list.instances.rbegin(), list.instances.rend(), [](AbstractInstance *_i) { _i->destroyValue(); });
 }

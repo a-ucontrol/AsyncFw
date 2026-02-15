@@ -10,7 +10,7 @@
 using namespace AsyncFw;
 
 #ifdef EXTEND_SOCKET_TRACE
-  #define trace LogStream(+LogStream::Trace | LogStream::Gray, __PRETTY_FUNCTION__, __FILE__, __LINE__, LS_LOG_DEFAULT_FLAGS | LOG_STREAM_CONSOLE_ONLY).output
+  #define trace LogStream(+LogStream::Trace | LogStream::Black, __PRETTY_FUNCTION__, __FILE__, __LINE__, LS_LOG_DEFAULT_FLAGS | LOG_STREAM_CONSOLE_ONLY).output
 #else
   #define trace(x) \
     if constexpr (0) LogStream()

@@ -28,7 +28,6 @@ endif()
 #add_definitions(-DEXTEND_SYSTEMPROCESS_TRACE)
 #add_definitions(-DEXTEND_LOG_TRACE)
 #add_definitions(-DEXTEND_FUNCTIONCONNECTOR_TRACE)
-#add_definitions(-DEXTEND_INSTANCE_TRACE)
 # -- defines.cmake
 
 project(${AsyncFw_PROJECT_NAME} VERSION ${VERSION_STRING} LANGUAGES CXX)
