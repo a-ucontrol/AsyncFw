@@ -15,9 +15,8 @@ protected:
   void remove(AbstractInstance *);
 
 private:
-  inline static struct List {
+  inline static struct List : public std::vector<AbstractInstance *> {
     ~List();
-    std::vector<AbstractInstance *> instances;
   } list;
 };
 
