@@ -830,7 +830,15 @@ Thread *Thread::currentThread() { return static_cast<Thread *>(AbstractThread::c
 
 Thread::Thread(const std::string &name) : AbstractThread(name) { trace(); }
 
-Thread::~Thread() { trace(); }
+Thread::~Thread() {
+  warning_if(!sockets_.empty()) << "socket list not empty" << sockets_.size();
+  for (; !sockets_.empty();) {
+    AbstractSocket *_s = sockets_.back();
+    sockets_.pop_back();
+    _s->state_ = AbstractSocket::Destroy;
+    delete _s;
+  }
+}
 
 void Thread::startedEvent() {
 #ifndef _WIN32
@@ -842,18 +850,7 @@ void Thread::startedEvent() {
   AbstractThread::startedEvent();
 }
 
-void Thread::finishedEvent() {
-  invokeMethod([this]() {  // run in ~AbstractThread
-    trace() << "destroy sockets:" << sockets_.size();
-    for (; !sockets_.empty();) {
-      AbstractSocket *_s = sockets_.back();
-      sockets_.pop_back();
-      _s->state_ = AbstractSocket::Destroy;
-      delete _s;
-    }
-  });
-  AbstractThread::finishedEvent();
-}
+void Thread::finishedEvent() { AbstractThread::finishedEvent(); }
 
 void Thread::appendSocket(AbstractSocket *_socket) {
   checkCurrentThread();
