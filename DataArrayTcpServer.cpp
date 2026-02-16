@@ -29,7 +29,6 @@ bool DataArrayTcpServer::listening() { return listener->port() != 0; }
 bool DataArrayTcpServer::incomingConnection(int socketDescriptor, const std::string &address) {
   lsTrace("readTimeout: {}, waitKeepAliveAnswerTimeout: {}, waitForEncryptedTimeout: {}, maxThreads: {}, maxSockets: {}, maxReadBuffers = {}, maxReadSize = {}, maxWriteBuffers = {}, maxWriteSize = {}", readTimeout, waitKeepAliveAnswerTimeout, waitForEncryptedTimeout, maxThreads, maxSockets, maxReadBuffers, maxReadSize, maxWriteBuffers, maxWriteSize);
   Thread *serverThread;
-  bool manyConnections = false;
   mutex.lock();
   bool b = (threads_.size() < maxThreads);
   mutex.unlock();
@@ -51,7 +50,6 @@ bool DataArrayTcpServer::incomingConnection(int socketDescriptor, const std::str
   bool encrypt = std::find(disabledEncrypt_.begin(), disabledEncrypt_.end(), address) == disabledEncrypt_.end() && !tlsData.empty();
 
   serverThread->invokeMethod([serverThread, socketDescriptor, encrypt]() { serverThread->createSocket(socketDescriptor, encrypt); }, true);
-  //serverThread->createSocket(socketDescriptor); //!!! ???
   return true;
 }
 
