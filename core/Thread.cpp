@@ -205,7 +205,7 @@ AbstractThread::AbstractThread(const std::string &_name) : private_(*new Private
   private_.WAKE_FD = eventfd(0, EFD_NONBLOCK);
     #endif
   #else
-  WAKE_FD = socket(AF_INET, 0, 0);
+  private_.WAKE_FD = socket(AF_INET, 0, 0);
   #endif
 #else
   private_.epoll_fd = epoll_create1(0);
@@ -243,7 +243,7 @@ AbstractThread::~AbstractThread() {
   ::close(private_.epoll_fd);
   #endif
 #else
-  ::closesocket(WAKE_FD);
+  ::closesocket(private_.WAKE_FD);
 #endif
 
   warning_if(std::this_thread::get_id() == private_.id) << LogStream::Color::Red << "executed from own thread" << LOG_THREAD_NAME;
@@ -503,7 +503,7 @@ void AbstractThread::exec() {
             eventfd_read(private_.WAKE_FD, &_v);
     #endif
   #else
-            WAKE_FD = socket(AF_INET, 0, 0);
+            private_.WAKE_FD = socket(AF_INET, 0, 0);
   #endif
             if (private_.fds_[0].revents) {
               if (r == 1) goto CONTINUE;
