@@ -30,12 +30,7 @@ DataArraySocket *DataArrayTcpClient::createSocket(Thread *thread) {
     else {
       mutex.lock();
       clientThread = static_cast<Thread *>(findMinimalSocketsThread());
-
-      clientThread->mutex.lock();
-      bool manyConnections = clientThread->sockets_.size() >= maxSockets;
-      clientThread->mutex.unlock();
-
-      if (manyConnections) {
+      if (!clientThread) {
         mutex.unlock();
         lsError() << "many connections";
         return nullptr;

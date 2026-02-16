@@ -1,7 +1,7 @@
 #pragma once
 
+#include <thread>
 #include <vector>
-#include <condition_variable>
 
 #ifndef _WIN32
   #define POLLIN_ 0x001
@@ -163,7 +163,7 @@ public:
   std::thread::id id() const;
   std::string name() const;
 
-  LockGuard lockGuard() const { return LockGuard(mutex); }
+  LockGuard lockGuard() const;
 
 protected:
   template <typename M>
@@ -188,8 +188,6 @@ protected:
 
   AbstractThread(const std::string &);
   virtual ~AbstractThread() = 0;
-  mutable std::mutex mutex;
-  mutable std::condition_variable condition_variable;
 
 private:
   struct Compare {
@@ -205,7 +203,6 @@ private:
   void setId();
   void clearId();
   void exec();
-  void wake() const;
   Private &private_;
 };
 

@@ -11,19 +11,20 @@ DataArrayAbstractTcp::DataArrayAbstractTcp(const std::string &name) : AbstractTh
 DataArrayAbstractTcp::Thread *DataArrayAbstractTcp::findMinimalSocketsThread() {
   int index = -1;
   for (int i = 0, n = threads_.size(), m = maxSockets; i != n; ++i) {
-    static_cast<Thread *>(threads_.at(i))->mutex.lock();
-    int size = static_cast<Thread *>(threads_.at(i))->sockets_.size();
-    static_cast<Thread *>(threads_.at(i))->mutex.unlock();
-    if (size < m) {
-      m = size;
-      index = i;
-      if (m == 0) {
-        lsError("empty sockets list in thread");
-        break;
+    {  //lock scope
+      Thread::LockGuard lock = threads_.at(i)->lockGuard();
+      int size = static_cast<Thread *>(threads_.at(i))->sockets_.size();
+      if (size < m) {
+        m = size;
+        index = i;
+        if (m == 0) {
+          lsError("empty sockets list in thread");
+          break;
+        }
       }
     }
   }
-  AbstractThread *t = (index >= 0) ? threads_.at(index) : (threads_.empty() ? nullptr : threads_.at(0));
+  AbstractThread *t = (index >= 0) ? threads_.at(index) : nullptr;
   return static_cast<Thread *>(t);
 }
 
@@ -58,10 +59,9 @@ int DataArrayAbstractTcp::sockets(std::vector<DataArraySocket *> *list) {
   int count = 0;
   mutex.lock();
   for (AbstractThread *thread : threads_) {
-    static_cast<Thread *>(thread)->mutex.lock();
+    Thread::LockGuard lock = thread->lockGuard();
     if (list) reinterpret_cast<std::vector<AbstractSocket *> *>(list)->insert(reinterpret_cast<std::vector<AbstractSocket *> *>(list)->end(), static_cast<Thread *>(thread)->sockets_.begin(), static_cast<Thread *>(thread)->sockets_.end());
     count += static_cast<Thread *>(thread)->sockets_.size();
-    static_cast<Thread *>(thread)->mutex.unlock();
   }
   mutex.unlock();
   return count;

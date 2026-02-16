@@ -1,9 +1,9 @@
-#include <thread>
+#include <condition_variable>
 #include <queue>
 #include <signal.h>
-#include "LogStream.h"
 #include "Thread.h"
 #include "Socket.h"
+#include "LogStream.h"
 
 #ifdef __linux
   #define EVENTFD_WAKE
@@ -38,9 +38,9 @@
 #endif
 
 #ifdef EPOLL_WAIT
-  #define WAKE_FD private_.wake_task.fd
+  #define WAKE_FD wake_task.fd
 #else
-  #define WAKE_FD private_.fds_[0].fd
+  #define WAKE_FD fds_[0].fd
 #endif
 
 #include "console_msg.hpp"
@@ -71,6 +71,9 @@ struct AbstractThread::Private {
     bool operator()(const pollfd pfd, int fd) const { return pfd.fd < fd; }
 #endif
   };
+
+  std::mutex mutex;
+  std::condition_variable condition_variable;
 
   std::queue<AbstractTask *> tasks;
   std::vector<Timer> timers;
@@ -112,6 +115,7 @@ struct AbstractThread::Private {
     AbstractPollTask *task;
   };
 
+  void wake();
   void process_tasks();
   void process_polls();
   void process_timers();
@@ -196,9 +200,9 @@ AbstractThread::AbstractThread(const std::string &_name) : private_(*new Private
   #ifndef _WIN32
     #ifndef EVENTFD_WAKE
   if (::pipe(private_.pipe)) console_msg("AbstractThread: error create pipe");
-  WAKE_FD = private_.pipe[0];
+  private_.WAKE_FD = private_.pipe[0];
     #else
-  WAKE_FD = eventfd(0, EFD_NONBLOCK);
+  private_.WAKE_FD = eventfd(0, EFD_NONBLOCK);
     #endif
   #else
   WAKE_FD = socket(AF_INET, 0, 0);
@@ -215,7 +219,7 @@ AbstractThread::AbstractThread(const std::string &_name) : private_(*new Private
   #endif
   private_.wake_task.task = nullptr;
   event.data.ptr = &private_.wake_task;
-  epoll_ctl(private_.epoll_fd, EPOLL_CTL_ADD, WAKE_FD, &event);
+  epoll_ctl(private_.epoll_fd, EPOLL_CTL_ADD, private_.WAKE_FD, &event);
 #endif
 
   lsTrace() << LOG_THREAD_NAME;
@@ -231,7 +235,7 @@ AbstractThread::~AbstractThread() {
   }
 
 #ifndef _WIN32
-  ::close(WAKE_FD);
+  ::close(private_.WAKE_FD);
   #ifndef EVENTFD_WAKE
   ::close(private_.pipe[1]);
   #endif
@@ -305,58 +309,58 @@ void AbstractThread::finishedEvent() {
 }
 
 bool AbstractThread::running() const {
-  LockGuard lock(mutex);
+  LockGuard lock(private_.mutex);
   return private_.state > Private::WaitStarted && private_.state < Private::WaitFinished;
 }
 
 void AbstractThread::requestInterrupt() {
-  LockGuard lock(mutex);
+  LockGuard lock(private_.mutex);
   if (private_.state != Private::Interrupted) {
     if (!private_.state || private_.state >= Private::WaitFinished) {
       console_msg("Thread not running");
       return;
     }
     private_.state = Private::WaitInterrupted;
-    wake();
+    private_.wake();
   }
 }
 
 bool AbstractThread::interruptRequested() const {
-  LockGuard lock(mutex);
+  LockGuard lock(private_.mutex);
   return private_.state == Private::WaitInterrupted || (private_.state >= Private::WaitFinished);
 }
 
 void AbstractThread::waitInterrupted() const {
   checkDifferentThread();
-  std::unique_lock<std::mutex> lock(mutex);
+  std::unique_lock<std::mutex> lock(private_.mutex);
   if (private_.state == Private::Interrupted) return;
   if (private_.state != Private::WaitInterrupted) {
     console_msg("Interrupt request not set");
     return;
   }
-  while (private_.state == Private::WaitInterrupted) condition_variable.wait(lock);
+  while (private_.state == Private::WaitInterrupted) private_.condition_variable.wait(lock);
 }
 
 void AbstractThread::quit() {
   lsTrace() << LOG_THREAD_NAME;
-  LockGuard lock(mutex);
+  LockGuard lock(private_.mutex);
   if (!private_.state || private_.state == Private::Finished) {
     console_msg("Thread already finished or not started");
     return;
   }
   if (private_.nested_) private_.nested_--;
   private_.state |= Private::WaitFinished;
-  wake();
+  private_.wake();
 }
 
 void AbstractThread::waitFinished() const {
-  std::unique_lock<std::mutex> lock(mutex);
+  std::unique_lock<std::mutex> lock(private_.mutex);
   checkDifferentThread();  //locked for fix data race
   if (!private_.state) {
     console_msg("Thread not running");
     return;
   }
-  while (private_.state != Private::Finished) condition_variable.wait(lock);
+  while (private_.state != Private::Finished) private_.condition_variable.wait(lock);
 }
 
 void AbstractThread::setId() {
@@ -401,7 +405,7 @@ void AbstractThread::exec() {
   int _nested;
 
   {  //lock scope
-    LockGuard lock(mutex);
+    LockGuard lock(private_.mutex);
     warning_if(private_.process_tasks_.size() || private_.process_poll_tasks_.size() || private_.process_timer_tasks_.size()) << LogStream::Color::Red << "not empty" << private_.process_tasks_.size() << private_.process_poll_tasks_.size() << private_.process_timer_tasks_.size();
     if (private_.state >= Private::Running && private_.state < Private::Finished) { private_.nested_++; }
     _nested = private_.nested_;
@@ -409,23 +413,23 @@ void AbstractThread::exec() {
     if (_nested) {  //nested exec
       trace() << LogStream::Color::Red << "nested" << LogStream::Color::Green << _nested << LOG_THREAD_NAME << private_.process_tasks_.size() << private_.process_poll_tasks_.size() << private_.process_timer_tasks_.size();
       if (!private_.process_tasks_.empty()) {
-        mutex.unlock();
+        private_.mutex.unlock();
         private_.process_tasks();
-        mutex.lock();
+        private_.mutex.lock();
       } else if (!private_.process_poll_tasks_.empty()) {
-        mutex.unlock();
+        private_.mutex.unlock();
         private_.process_polls();
-        mutex.lock();
+        private_.mutex.lock();
       } else if (!private_.process_timer_tasks_.empty()) {
-        mutex.unlock();
+        private_.mutex.unlock();
         private_.process_timers();
-        mutex.lock();
+        private_.mutex.lock();
       }
     }
     if (!_nested) {
-      mutex.unlock();
+      private_.mutex.unlock();
       startedEvent();
-      mutex.lock();
+      private_.mutex.lock();
       private_.state = Private::Running;
     }
 
@@ -435,7 +439,7 @@ void AbstractThread::exec() {
   for (;;) {
     private_.process_tasks();
     {  //lock scope, wait new tasks or wakeup
-      std::unique_lock<std::mutex> lock(mutex);
+      std::unique_lock<std::mutex> lock(private_.mutex);
     CONTINUE:
       if (!private_.tasks.empty()) {
         std::swap(private_.process_tasks_, private_.tasks);  //take new tasks
@@ -444,13 +448,13 @@ void AbstractThread::exec() {
       if (private_.state & Private::WaitFinished) break;
       if (private_.state == Private::WaitInterrupted) private_.state = Private::Interrupted;
 
-      condition_variable.notify_all();
+      private_.condition_variable.notify_all();
       std::chrono::time_point now = std::chrono::steady_clock::now();
 
       if (private_.wakeup > now) {
         private_.wake_ = false;
         if (private_.poll_tasks.empty()) {
-          if (condition_variable.wait_until(lock, private_.wakeup) == std::cv_status::no_timeout) {
+          if (private_.condition_variable.wait_until(lock, private_.wakeup) == std::cv_status::no_timeout) {
             private_.wake_ = true;
             goto CONTINUE;
           }
@@ -481,9 +485,9 @@ void AbstractThread::exec() {
             private_.update_pollfd.clear();
           }
 
-          mutex.unlock();
+          private_.mutex.unlock();
           int r = poll(private_.fds_.data(), private_.fds_.size(), ms);
-          mutex.lock();
+          private_.mutex.lock();
 
           int i = 0;
           if (private_.wake_) {
@@ -492,11 +496,11 @@ void AbstractThread::exec() {
     #ifndef EVENTFD_WAKE
             char _c;
       #ifndef __clang_analyzer__
-            (void)!read(WAKE_FD, &_c, sizeof(_c));
+            (void)!read(private_.WAKE_FD, &_c, sizeof(_c));
       #endif
     #else
             eventfd_t _v;
-            eventfd_read(WAKE_FD, &_v);
+            eventfd_read(private_.WAKE_FD, &_v);
     #endif
   #else
             WAKE_FD = socket(AF_INET, 0, 0);
@@ -515,20 +519,20 @@ void AbstractThread::exec() {
               }
 #else
           struct epoll_event event[EPOLL_WAIT_EVENTS];
-          mutex.unlock();
+          private_.mutex.unlock();
           int r = epoll_wait(private_.epoll_fd, event, EPOLL_WAIT_EVENTS, ms);
-          mutex.lock();
+          private_.mutex.lock();
           if (r > 0) {
             for (int i = 0; i != r; ++i) {
-              if (static_cast<Private::PollTask *>(event[i].data.ptr)->fd == WAKE_FD) {
+              if (static_cast<Private::PollTask *>(event[i].data.ptr)->fd == private_.WAKE_FD) {
   #ifndef EVENTFD_WAKE
                 char _c;
     #ifndef __clang_analyzer__
-                (void)!read(WAKE_FD, &_c, sizeof(_c));
+                (void)!read(private_.WAKE_FD, &_c, sizeof(_c));
     #endif
   #else
                 eventfd_t _v;
-                eventfd_read(WAKE_FD, &_v);
+                eventfd_read(private_.WAKE_FD, &_v);
   #endif
                 trace() << LogStream::Color::Magenta << "waked" << LOG_THREAD_NAME << private_.id << event[i].events << private_.wake_;
                 continue;
@@ -539,9 +543,9 @@ void AbstractThread::exec() {
 #endif
             if (private_.process_poll_tasks_.empty()) goto CONTINUE;
             private_.wake_ = true;
-            mutex.unlock();
+            private_.mutex.unlock();
             private_.process_polls();
-            mutex.lock();
+            private_.mutex.lock();
             goto CONTINUE;
           }
         }
@@ -563,39 +567,39 @@ void AbstractThread::exec() {
         }
         if (private_.process_timer_tasks_.empty()) goto CONTINUE;
         private_.wake_ = true;
-        mutex.unlock();
+        private_.mutex.unlock();
         private_.process_timers();
-        mutex.lock();
+        private_.mutex.lock();
         goto CONTINUE;
       }
     }
   }
-  LockGuard lock(mutex);
+  LockGuard lock(private_.mutex);
   if (_nested--) {
     lsTrace() << LOG_THREAD_NAME << LogStream::Color::Magenta << "end" << _nested << private_.nested_ << LogStream::Color::Red << (_nested <= private_.nested_);
     if (_nested <= private_.nested_) private_.state &= ~Private::WaitFinished;
     return;
   }
-  mutex.unlock();
+  private_.mutex.unlock();
   finishedEvent();
-  mutex.lock();
+  private_.mutex.lock();
   private_.state = Private::Finished;
-  condition_variable.notify_all();
+  private_.condition_variable.notify_all();
 }
 
-void AbstractThread::wake() const {
-  if (private_.wake_) return;
-  warning_if(std::this_thread::get_id() == private_.id) << LogStream::Color::Red << LOG_THREAD_NAME;
-  private_.wake_ = true;
-  if (private_.poll_tasks.empty()) {
+void AbstractThread::Private::wake() {
+  if (wake_) return;
+  warning_if(std::this_thread::get_id() == id) << LogStream::Color::Red << '(' + name + ')';
+  wake_ = true;
+  if (poll_tasks.empty()) {
     condition_variable.notify_all();
     return;
   }
-  trace() << LogStream::Color::Cyan << LOG_THREAD_NAME << private_.id;
+  trace() << LogStream::Color::Cyan << '(' + name + ')' << id;
 #ifndef _WIN32
   #ifndef EVENTFD_WAKE
   char _c = '\x0';
-  (void)!write(private_.pipe[1], &_c, 1);
+  (void)!write(pipe[1], &_c, 1);
   #else
   eventfd_write(WAKE_FD, 1);
   #endif
@@ -606,13 +610,13 @@ void AbstractThread::wake() const {
 
 bool AbstractThread::invokeTask(AbstractTask *task) const {
   {  //lock scope
-    LockGuard lock(mutex);
+    LockGuard lock(private_.mutex);
     warning_if(!private_.state) << LogStream::Color::Red << "thread not running" << LOG_THREAD_NAME << private_.id;
     trace() << LogStream::Color::Green << LOG_THREAD_NAME << "invoke tasks" << private_.tasks.size();
     if (private_.state < Private::Finished) {
       if (private_.state == Private::Interrupted) private_.state = Private::Running;
       private_.tasks.push(task);
-      wake();
+      private_.wake();
       return true;
     }
   }
@@ -621,7 +625,7 @@ bool AbstractThread::invokeTask(AbstractTask *task) const {
 }
 
 void AbstractThread::start() {
-  std::unique_lock<std::mutex> lock(mutex);
+  std::unique_lock<std::mutex> lock(private_.mutex);
   if ((private_.state && private_.state != Private::Finished) || private_.id != std::thread::id()) {
     console_msg("Thread already running or starting, or thread id not null");
     return;
@@ -630,18 +634,18 @@ void AbstractThread::start() {
   std::thread t {[this]() {
     setId();
     {  //lock scope
-      LockGuard lock(mutex);
-      condition_variable.notify_all();
+      LockGuard lock(private_.mutex);
+      private_.condition_variable.notify_all();
     }
     exec();
     clearId();
   }};
   t.detach();
-  condition_variable.wait(lock);
+  private_.condition_variable.wait(lock);
 }
 
 int AbstractThread::workLoad() const {
-  LockGuard lock(mutex);
+  LockGuard lock(private_.mutex);
   int n = private_.tasks.size();
   if (private_.wake_) ++n;
   trace() << n;
@@ -652,9 +656,11 @@ std::thread::id AbstractThread::id() const { return private_.id; }
 
 std::string AbstractThread::name() const { return private_.name; }
 
+AbstractThread::LockGuard AbstractThread::lockGuard() const { return LockGuard(private_.mutex); }
+
 int AbstractThread::appendTimer(int ms, AbstractTask *task) {
   int id = 0;
-  LockGuard lock(mutex);
+  LockGuard lock(private_.mutex);
   std::vector<Private::Timer>::iterator it = private_.timers.begin();
   for (; it != private_.timers.end(); ++it, ++id)
     if (it->id != id) break;
@@ -664,7 +670,7 @@ int AbstractThread::appendTimer(int ms, AbstractTask *task) {
     _wakeup = std::chrono::steady_clock::now() + _ms;
     if (private_.wakeup > _wakeup) {
       private_.wakeup = _wakeup;
-      wake();
+      private_.wake();
     }
   }
   private_.timers.emplace(it, Private::Timer {id, _ms, _wakeup, task});
@@ -672,7 +678,7 @@ int AbstractThread::appendTimer(int ms, AbstractTask *task) {
 }
 
 bool AbstractThread::modifyTimer(int id, int ms) {
-  LockGuard lock(mutex);
+  LockGuard lock(private_.mutex);
   std::vector<Private::Timer>::iterator it = std::lower_bound(private_.timers.begin(), private_.timers.end(), id, Private::Compare());
   if (it != private_.timers.end() && it->id == id) {
     it->timeout = std::chrono::milliseconds(ms);
@@ -680,7 +686,7 @@ bool AbstractThread::modifyTimer(int id, int ms) {
       it->expire = std::chrono::steady_clock::now() + it->timeout;
       if (private_.wakeup > it->expire) {
         private_.wakeup = it->expire;
-        wake();
+        private_.wake();
       }
     }
     return true;
@@ -693,7 +699,7 @@ void AbstractThread::removeTimer(int id) {
   std::vector<Private::Timer>::iterator it;
   AbstractTask *_t;
   {  //lock scope
-    LockGuard lock(mutex);
+    LockGuard lock(private_.mutex);
     it = std::lower_bound(private_.timers.begin(), private_.timers.end(), id, Private::Compare());
     if (it == private_.timers.end() || it->id != id) {
       console_msg("Timer: " + std::to_string(id) + " not found " + LOG_THREAD_NAME);
@@ -710,7 +716,7 @@ void AbstractThread::removeTimer(int id) {
 
 bool AbstractThread::appendPollDescriptor(int fd, PollEvents events, AbstractPollTask *task) {
 #ifndef EPOLL_WAIT
-  LockGuard lock(mutex);
+  LockGuard lock(private_.mutex);
   std::vector<Private::PollTask *>::iterator it = std::lower_bound(private_.poll_tasks.begin(), private_.poll_tasks.end(), fd, Private::Compare());
   if (it != private_.poll_tasks.end() && (*it)->fd == fd) {
     delete task;
@@ -722,7 +728,7 @@ bool AbstractThread::appendPollDescriptor(int fd, PollEvents events, AbstractPol
   pollfd.events = events;
   Private::PollTask *_d = new Private::PollTask(pollfd.fd, task);
   private_.update_pollfd.push_back({fd, pollfd.events, task, 1});
-  wake();
+  private_.wake();
   private_.poll_tasks.insert(it, _d);
 #else
   struct epoll_event event;
@@ -735,10 +741,10 @@ bool AbstractThread::appendPollDescriptor(int fd, PollEvents events, AbstractPol
     console_msg("Append error, descriptor: " + std::to_string(fd));
     return false;
   }
-  LockGuard lock(mutex);
+  LockGuard lock(private_.mutex);
   std::vector<Private::PollTask *>::iterator it = std::lower_bound(private_.poll_tasks.begin(), private_.poll_tasks.end(), fd, Private::Compare());
   if (it != private_.poll_tasks.end() && (*it)->fd == fd) goto ERR;
-  if (private_.poll_tasks.empty()) wake();
+  if (private_.poll_tasks.empty()) private_.wake();
   private_.poll_tasks.insert(it, _d);
 #endif
   trace() << fd << static_cast<int>(events);
@@ -747,7 +753,7 @@ bool AbstractThread::appendPollDescriptor(int fd, PollEvents events, AbstractPol
 
 bool AbstractThread::modifyPollDescriptor(int fd, PollEvents events) {
 #ifndef EPOLL_WAIT
-  LockGuard lock(mutex);
+  LockGuard lock(private_.mutex);
   std::vector<Private::PollTask *>::iterator it = std::lower_bound(private_.poll_tasks.begin(), private_.poll_tasks.end(), fd, Private::Compare());
   if (it != private_.poll_tasks.end() && (*it)->fd != fd) {
     console_msg("Descriptor: " + std::to_string(fd) + " not found " + LOG_THREAD_NAME);
@@ -758,12 +764,12 @@ bool AbstractThread::modifyPollDescriptor(int fd, PollEvents events) {
   v.events = events;
   v.action = 0;
   private_.update_pollfd.push_back(v);
-  wake();
+  private_.wake();
 #else
   struct epoll_event event;
   event.events = events;
   {  //lock scope
-    LockGuard lock(mutex);
+    LockGuard lock(private_.mutex);
     std::vector<Private::PollTask *>::iterator it = std::lower_bound(private_.poll_tasks.begin(), private_.poll_tasks.end(), fd, Private::Compare());
     if (it == private_.poll_tasks.end() || (*it)->fd != fd) {
       console_msg("Descriptor: " + std::to_string(fd) + " not found " + LOG_THREAD_NAME);
@@ -781,7 +787,7 @@ void AbstractThread::removePollDescriptor(int fd) {
 #ifndef EPOLL_WAIT
   AbstractTask *_t;
   {  //lock scope
-    LockGuard lock(mutex);
+    LockGuard lock(private_.mutex);
     std::vector<Private::PollTask *>::iterator it = std::lower_bound(private_.poll_tasks.begin(), private_.poll_tasks.end(), fd, Private::Compare());
     if (it != private_.poll_tasks.end() && (*it)->fd != fd) {
       console_msg("Descriptor: " + std::to_string(fd) + " not found " + LOG_THREAD_NAME);
@@ -792,7 +798,7 @@ void AbstractThread::removePollDescriptor(int fd) {
     v.fd = fd;
     v.action = -1;
     private_.update_pollfd.push_back(v);
-    wake();
+    private_.wake();
     private_.poll_tasks.erase(it);
   }
   if (!invokeTask(_t)) {
@@ -803,13 +809,13 @@ void AbstractThread::removePollDescriptor(int fd) {
   epoll_ctl(private_.epoll_fd, EPOLL_CTL_DEL, fd, nullptr);
   AbstractTask *_t;
   {  //lock scope
-    LockGuard lock(mutex);
+    LockGuard lock(private_.mutex);
     std::vector<Private::PollTask *>::iterator it = std::lower_bound(private_.poll_tasks.begin(), private_.poll_tasks.end(), fd, Private::Compare());
     if (it == private_.poll_tasks.end() || (*it)->fd != fd) {
       console_msg("Descriptor: " + std::to_string(fd) + " not found " + LOG_THREAD_NAME);
       return;
     }
-    if (private_.poll_tasks.size() == 1) wake();
+    if (private_.poll_tasks.size() == 1) private_.wake();
     _t = new Task([p = *it] { delete p; });
     private_.poll_tasks.erase(it);
   }

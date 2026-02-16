@@ -39,12 +39,12 @@ bool DataArrayTcpServer::incomingConnection(int socketDescriptor, const std::str
   } else {
     mutex.lock();
     serverThread = static_cast<Thread *>(findMinimalSocketsThread());
-    serverThread->mutex.lock();
-    manyConnections = serverThread->sockets_.size() >= maxSockets;
-    if (manyConnections && std::find(alwaysConnect_.begin(), alwaysConnect_.end(), address) == alwaysConnect_.end()) b = true;
-    serverThread->mutex.unlock();
+    if (!serverThread && std::find(alwaysConnect_.begin(), alwaysConnect_.end(), address) == alwaysConnect_.end()) b = true;
     mutex.unlock();
-    if (manyConnections) { lsError() << "many connections"; }
+    if (!serverThread) {
+      lsError() << "many connections";
+      serverThread = static_cast<Thread *>(threads_.at(0));
+    }
     if (b) return false;
   }
 

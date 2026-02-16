@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include "core/Thread.h"
 #include "core/AnyData.h"
 
