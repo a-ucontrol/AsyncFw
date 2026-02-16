@@ -131,8 +131,8 @@ public:
   static AbstractThread *currentThread();
   static AbstractThread::LockGuard threads(std::vector<AbstractThread *> **);
 
-  virtual void startedEvent() {}
-  virtual void finishedEvent() {}
+  virtual void startedEvent();
+  virtual void finishedEvent();
 
   virtual bool running() const;
   virtual bool invokeTask(AbstractTask *) const;
@@ -203,6 +203,7 @@ private:
   } list;
 
   void setId();
+  void clearId();
   void exec();
   void wake() const;
   Private &private_;

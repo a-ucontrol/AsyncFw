@@ -50,7 +50,7 @@
 using namespace AsyncFw;
 
 struct AbstractThread::Private {
-  enum State : uint8_t { None = 0, WaitStarted = 0x01, Running = 0x02, WaitInterrupted = 0x04, Interrupted = 0x08, WaitFinished = 0x10, Finalize = 0x20, Finished = 0x40 };
+  enum State : uint8_t { None = 0, WaitStarted = 0x01, Running = 0x02, WaitInterrupted = 0x04, Interrupted = 0x08, WaitFinished = 0x10, Finished = 0x20 };
   struct Timer {
     int id;
     std::chrono::milliseconds timeout;
@@ -121,7 +121,6 @@ struct AbstractThread::Private {
   std::queue<AbstractTask *> process_tasks_;
   std::queue<ProcessTimerTask> process_timer_tasks_;
   std::queue<ProcessPollTask> process_poll_tasks_;
-  static void clearId();
   int nested_ = 0;
 };
 
@@ -148,27 +147,6 @@ void AbstractThread::Private::process_timers() {
     process_timer_tasks_.pop();
     _tt.task->invoke();
   }
-}
-
-void AbstractThread::Private::clearId() {
-  std::thread::id _id = std::this_thread::get_id();
-  {  //lock scope
-    LockGuard lock(list.mutex);
-    std::vector<AbstractThread *>::iterator it = std::lower_bound(AbstractThread::list.begin(), AbstractThread::list.end(), _id, AbstractThread::Compare());
-    if (it != list.end() && (*it)->private_.id == _id) {
-      AbstractThread *_t = (*it);
-      {  //lock scope //fix data race in checkDifferentThread called from waitFinished
-        LockGuard lock = _t->lockGuard();
-        _t->private_.id = {};
-      }
-      list.erase(it);
-      it = std::lower_bound(AbstractThread::list.begin(), AbstractThread::list.end(), _t, AbstractThread::Compare());
-      list.insert(it, _t);
-      trace() << '(' + _t->private_.name + ')' << LogStream::Color::Magenta << _id;
-      return;
-    }
-  }
-  lsDebug() << "thread not found:" << LogStream::Color::Magenta << _id;
 }
 
 void AbstractThread::Holder::complete() {
@@ -314,9 +292,21 @@ AbstractThread::LockGuard AbstractThread::threads(std::vector<AbstractThread *> 
   return LockGuard {list.mutex};
 }
 
+void AbstractThread::startedEvent() {
+#ifndef LS_NO_TRACE
+  console_msg(__PRETTY_FUNCTION__);
+#endif
+}
+
+void AbstractThread::finishedEvent() {
+#ifndef LS_NO_TRACE
+  console_msg(__PRETTY_FUNCTION__);
+#endif
+}
+
 bool AbstractThread::running() const {
   LockGuard lock(mutex);
-  return private_.state > Private::WaitStarted && private_.state < Private::Finalize;
+  return private_.state > Private::WaitStarted && private_.state < Private::WaitFinished;
 }
 
 void AbstractThread::requestInterrupt() {
@@ -350,7 +340,7 @@ void AbstractThread::waitInterrupted() const {
 void AbstractThread::quit() {
   lsTrace() << LOG_THREAD_NAME;
   LockGuard lock(mutex);
-  if (!private_.state || private_.state >= Private::Finalize) {
+  if (!private_.state || private_.state == Private::Finished) {
     console_msg("Thread already finished or not started");
     return;
   }
@@ -386,13 +376,34 @@ void AbstractThread::setId() {
   lsError() << "thread not found:" << _id;
 }
 
+void AbstractThread::clearId() {
+  std::thread::id _id = std::this_thread::get_id();
+  {  //lock scope
+    LockGuard lock(list.mutex);
+    std::vector<AbstractThread *>::iterator it = std::lower_bound(AbstractThread::list.begin(), AbstractThread::list.end(), _id, AbstractThread::Compare());
+    if (it != list.end() && (*it)->private_.id == _id) {
+      AbstractThread *_t = (*it);
+      {  //lock scope //fix data race in checkDifferentThread called from waitFinished
+        LockGuard lock = _t->lockGuard();
+        _t->private_.id = {};
+      }
+      list.erase(it);
+      it = std::lower_bound(AbstractThread::list.begin(), AbstractThread::list.end(), _t, AbstractThread::Compare());
+      list.insert(it, _t);
+      trace() << '(' + _t->private_.name + ')' << LogStream::Color::Magenta << _id;
+      return;
+    }
+  }
+  lsDebug() << "thread not found:" << LogStream::Color::Magenta << _id;
+}
+
 void AbstractThread::exec() {
   int _nested;
 
   {  //lock scope
     LockGuard lock(mutex);
     warning_if(private_.process_tasks_.size() || private_.process_poll_tasks_.size() || private_.process_timer_tasks_.size()) << LogStream::Color::Red << "not empty" << private_.process_tasks_.size() << private_.process_poll_tasks_.size() << private_.process_timer_tasks_.size();
-    if (private_.state >= Private::Running && private_.state < Private::WaitFinished) { private_.nested_++; }
+    if (private_.state >= Private::Running && private_.state < Private::Finished) { private_.nested_++; }
     _nested = private_.nested_;
 
     if (_nested) {  //nested exec
@@ -411,9 +422,14 @@ void AbstractThread::exec() {
         mutex.lock();
       }
     }
+    if (!_nested) {
+      mutex.unlock();
+      startedEvent();
+      mutex.lock();
+      private_.state = Private::Running;
+    }
 
     std::swap(private_.process_tasks_, private_.tasks);  //take exists tasks
-    if (!_nested) private_.state = Private::Running;
   }
   if (!_nested) { startedEvent(); }
   for (;;) {
@@ -554,21 +570,15 @@ void AbstractThread::exec() {
       }
     }
   }
-  if (!_nested) finishedEvent();
   LockGuard lock(mutex);
   if (_nested--) {
     lsTrace() << LOG_THREAD_NAME << LogStream::Color::Magenta << "end" << _nested << private_.nested_ << LogStream::Color::Red << (_nested <= private_.nested_);
     if (_nested <= private_.nested_) private_.state &= ~Private::WaitFinished;
     return;
   }
-  if (!private_.tasks.empty()) {
-    private_.state = Private::Finalize;
-    std::swap(private_.process_tasks_, private_.tasks);
-    private_.wake_ = true;
-    mutex.unlock();
-    private_.process_tasks();
-    mutex.lock();
-  }
+  mutex.unlock();
+  finishedEvent();
+  mutex.lock();
   private_.state = Private::Finished;
   condition_variable.notify_all();
 }
@@ -599,7 +609,7 @@ bool AbstractThread::invokeTask(AbstractTask *task) const {
     LockGuard lock(mutex);
     warning_if(!private_.state) << LogStream::Color::Red << "thread not running" << LOG_THREAD_NAME << private_.id;
     trace() << LogStream::Color::Green << LOG_THREAD_NAME << "invoke tasks" << private_.tasks.size();
-    if (private_.state < Private::Finalize) {
+    if (private_.state < Private::Finished) {
       if (private_.state == Private::Interrupted) private_.state = Private::Running;
       private_.tasks.push(task);
       wake();
@@ -624,7 +634,7 @@ void AbstractThread::start() {
       condition_variable.notify_all();
     }
     exec();
-    Private::clearId();
+    clearId();
   }};
   t.detach();
   condition_variable.wait(lock);
@@ -829,17 +839,20 @@ void Thread::startedEvent() {
   sigaddset(&_s, SIGPIPE);
   sigprocmask(SIG_BLOCK, &_s, nullptr);  //SIGPIPE if close fd while tls handshake, AbstractTlsSocket::acceptEvent()
 #endif
-  lsTrace();
+  AbstractThread::startedEvent();
 }
 
 void Thread::finishedEvent() {
-  for (; !sockets_.empty();) {
-    AbstractSocket *_s = sockets_.back();
-    sockets_.pop_back();
-    _s->state_ = AbstractSocket::Destroy;
-    delete _s;
-  }
-  lsTrace();
+  invokeMethod([this]() {  // run in ~AbstractThread
+    trace() << "destroy sockets:" << sockets_.size();
+    for (; !sockets_.empty();) {
+      AbstractSocket *_s = sockets_.back();
+      sockets_.pop_back();
+      _s->state_ = AbstractSocket::Destroy;
+      delete _s;
+    }
+  });
+  AbstractThread::finishedEvent();
 }
 
 void Thread::appendSocket(AbstractSocket *_socket) {
