@@ -223,6 +223,7 @@ public:
 protected:
   std::vector<AbstractSocket *> sockets_;
   void startedEvent() override;
+  void finishedEvent() override;
 
 private:
   struct Compare {

@@ -820,20 +820,7 @@ Thread *Thread::currentThread() { return static_cast<Thread *>(AbstractThread::c
 
 Thread::Thread(const std::string &name) : AbstractThread(name) { trace(); }
 
-Thread::~Thread() {
-  if (AbstractThread::running()) {
-    lsWarning() << "destroy running thread" << '(' + name() + ')';
-    quit();
-    waitFinished();
-  }
-  for (; !sockets_.empty();) {
-    AbstractSocket *_s = sockets_.back();
-    sockets_.pop_back();
-    _s->state_ = AbstractSocket::Destroy;
-    delete _s;
-  }
-  lsTrace();
-}
+Thread::~Thread() { trace(); }
 
 void Thread::startedEvent() {
 #ifndef _WIN32
@@ -842,6 +829,17 @@ void Thread::startedEvent() {
   sigaddset(&_s, SIGPIPE);
   sigprocmask(SIG_BLOCK, &_s, nullptr);  //SIGPIPE if close fd while tls handshake, AbstractTlsSocket::acceptEvent()
 #endif
+  lsTrace();
+}
+
+void Thread::finishedEvent() {
+  for (; !sockets_.empty();) {
+    AbstractSocket *_s = sockets_.back();
+    sockets_.pop_back();
+    _s->state_ = AbstractSocket::Destroy;
+    delete _s;
+  }
+  lsTrace();
 }
 
 void Thread::appendSocket(AbstractSocket *_socket) {
