@@ -30,13 +30,9 @@
   #define checkDifferentThread()
 #endif
 
-//#define ABSTRACT_THREAD_LOCK_GUARD
-#define ABSTRACT_THREAD_ATOMIC_FLAG_SYNC_INVOKE_METHOD
-
 namespace AsyncFw {
 class LogStream;
 class AbstractThread {
-  friend class MainThread;
   friend LogStream &operator<<(LogStream &, const AbstractThread &);
   struct Private;
 
@@ -52,25 +48,7 @@ public:
     virtual void invoke(AbstractThread::PollEvents) = 0;
     virtual ~AbstractPollTask() = default;
   };
-#ifndef ABSTRACT_THREAD_LOCK_GUARD
   using LockGuard = std::lock_guard<std::mutex>;
-#else
-  struct LockGuard {
-    LockGuard(std::mutex &mutex) : mutex_(&mutex) { mutex_->lock(); }
-    ~LockGuard() {
-      if (mutex_) mutex_->unlock();
-    }
-    LockGuard(LockGuard &) = delete;
-    LockGuard(LockGuard &&g) {
-      this->mutex_ = g.mutex_;
-      g.mutex_ = nullptr;
-    }
-
-  private:
-    std::mutex *mutex_;
-  };
-#endif
-
   class Holder {
   public:
     void complete();
@@ -95,21 +73,6 @@ public:
       method();
       return true;
     }
-#ifndef ABSTRACT_THREAD_ATOMIC_FLAG_SYNC_INVOKE_METHOD
-    bool finished = false;
-    AbstractTask *_t = new Task([&method, &finished, this]() mutable {
-      method();
-      AbstractThread::LockGuard lock(mutex);
-      finished = true;
-      condition_variable.notify_all();
-    });
-    if (!invokeTask(_t)) {
-      delete _t;
-      return false;
-    }
-    std::unique_lock<std::mutex> lock(mutex);
-    while (!finished) condition_variable.wait(lock);
-#else  //ThreadSanitizer: data race
     std::atomic_flag finished;
     AbstractTask *_t = new Task([&method, &finished]() mutable {
       method();
@@ -124,7 +87,6 @@ public:
       finished.wait(false);
       if (finished.test()) break;
     }
-#endif
     return true;
   }
 
@@ -189,20 +151,19 @@ protected:
   AbstractThread(const std::string &);
   virtual ~AbstractThread() = 0;
 
+  void setId();
+  void clearId();
+  void exec();
+
 private:
   struct Compare {
     bool operator()(const AbstractThread *, const AbstractThread *) const;
     bool operator()(const AbstractThread *, std::thread::id) const;
   };
-
   inline static struct List : public std::vector<AbstractThread *> {
     ~List();
     std::mutex mutex;
   } list;
-
-  void setId();
-  void clearId();
-  void exec();
   Private &private_;
 };
 
