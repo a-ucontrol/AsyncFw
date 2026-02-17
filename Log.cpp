@@ -142,7 +142,6 @@ void AbstractLog::process(const Message &m) {
 }
 
 void AbstractLog::output(const Message &m) {
-  if (thread()->running() && std::this_thread::get_id() != thread()->id()) { console_msg("AbstractLog: executed from different thread, log thread: " + thread()->name() + ", current thread: " + AbstractThread::currentThread()->name()); }
   if ((m.type & 0x0F) <= consoleLevel) { LogStream::console_output(m, flags); }
 }
 
@@ -208,6 +207,8 @@ void Log::output(const Message &m) {
   AbstractLog::output(m);
   if (i <= level) {
     Rrd::append(rrdItemFromMessage(m));
+    if (!thread()->running()) return;
+    if (std::this_thread::get_id() != thread()->id()) { console_msg("Log::output executed from different thread, log thread: " + thread()->name() + ", current thread: " + AbstractThread::currentThread()->name()); }
     if (autoSave > 0) {
       autoSave--;
       if (timerIdAutosave >= 0) thread_->modifyTimer(timerIdAutosave, 15000);
