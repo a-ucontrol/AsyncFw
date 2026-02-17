@@ -173,7 +173,7 @@ void AbstractLog::stopTimer(int *timerId) {
 }
 
 void Log::Instance::created() {
-  LogStream::setCompleted(&append_);
+  LogStream::setCompleted(&lsAppend);
   lsTrace();
 }
 
@@ -186,18 +186,16 @@ Log::Log(int size, const std::string &name) : Rrd(size, name), AbstractLog() {
 Log::~Log() {
   lsTrace();
   if (instance_.value == this) {
-    instance_.value = nullptr;
     LogStream::setCompleted(&LogStream::console_output);
+    instance_.value = nullptr;
   }
-  if (thread_->running())
-    thread_->invokeMethod(
-        [this]() {
-          stopTimer(&timerIdAutosave);
-          autoSave = -1;
-          finality();
-        },
-        true);
-  else {
+  if (!thread_->invokeMethod(
+          [this]() {
+            stopTimer(&timerIdAutosave);
+            autoSave = -1;
+            finality();
+          },
+          true)) {
     console_msg("Log thread not running");
     stopTimer(&timerIdAutosave);
     autoSave = -1;
@@ -240,14 +238,11 @@ AbstractLog::Message Log::messageFromRrdItem(const Item &_v) const {
   return {};
 }
 
-void Log::append_(const Message &m, uint8_t f) {
+void Log::lsAppend(const Message &m, uint8_t f) {
   AbstractLog *_log = instance_.value;
-  if (_log && !(f & LOG_STREAM_CONSOLE_ONLY)) {
+  if (!(f & LOG_STREAM_CONSOLE_ONLY)) {
+    _log->append(m);
     if (f & 0x80) {
-      {  //lock scope
-        AbstractThread::LockGuard lock = _log->thread()->lockGuard();
-        _log->messages.push(m);
-      }
       if (!_log->thread()->invokeMethod(
               [_log]() {
                 _log->flush();
@@ -259,7 +254,6 @@ void Log::append_(const Message &m, uint8_t f) {
       }
       return;
     }
-    _log->append(m);
   } else {
     LogStream::console_output(m, f);
   }

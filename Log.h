@@ -26,17 +26,12 @@ public:
   void setFilter(const std::vector<std::string> &f);
 
 protected:
-  void append(const Message &m);
-  virtual void flush();
   virtual void output(const Message &message);
   virtual void save() = 0;
   virtual AbstractThread *thread() = 0;
-  void process(const Message &);
+  void append(const Message &m);
+  void flush();
   void finality();
-  void timerTask(int);
-  void startTimer(int *, int);
-  void stopTimer(int *);
-  uint8_t level = LogStream::Trace;
   int queueLimit = 128;
 
 private:
@@ -46,11 +41,16 @@ private:
     int timerId = -1;
     bool marked = false;
   };
+  void timerTask(int);
+  void startTimer(int *, int);
+  void stopTimer(int *);
+  void process(const Message &);
   uint8_t flags = LOG_STREAM_CONSOLE_EXTEND
 #ifndef _WIN32
                   | LOG_STREAM_CONSOLE_COLOR
 #endif
       ;
+  uint8_t level = LogStream::Trace;
   uint8_t consoleLevel = LogStream::Trace;
   std::queue<Message> messages;
   LastMessage lastMessages[_messages_];
@@ -93,6 +93,6 @@ private:
   inline static struct Instance : public AsyncFw::Instance<Log> {
     void created() override;
   } instance_;
-  static void append_(const Message &m, uint8_t t);
+  static void lsAppend(const Message &m, uint8_t t);
 };
 }  // namespace AsyncFw
