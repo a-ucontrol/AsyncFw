@@ -179,7 +179,10 @@ bool AbstractThread::Compare::operator()(const AbstractThread *t1, const Abstrac
 AbstractThread::List::~List() {
   while (!empty()) {
     console_msg("Thread list not empty: " + std::to_string(size()));
-    delete back();
+    AbstractThread *_t = back();
+    _t->quit();
+    _t->waitFinished();
+    delete _t;
   }
 #ifndef LS_NO_DEBUG
   console_msg(__PRETTY_FUNCTION__ + ' ' + std::to_string(size()));
@@ -584,7 +587,6 @@ void AbstractThread::exec() {
   finishedEvent();
   private_.mutex.lock();
   private_.state = Private::Finished;
-  private_.condition_variable.notify_all();
 }
 
 void AbstractThread::Private::wake() {
@@ -639,6 +641,10 @@ void AbstractThread::start() {
     }
     exec();
     clearId();
+    {  //lock scope
+      LockGuard lock(private_.mutex);
+      private_.condition_variable.notify_all();
+    }
   }};
   t.detach();
   private_.condition_variable.wait(lock);
