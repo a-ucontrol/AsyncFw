@@ -32,6 +32,8 @@ protected:
   void append(const Message &m);
   void flush();
   void finality();
+  uint8_t level = LogStream::Trace;
+  uint8_t consoleLevel = LogStream::Trace;
   int queueLimit = 128;
 
 private:
@@ -50,8 +52,6 @@ private:
                   | LOG_STREAM_CONSOLE_COLOR
 #endif
       ;
-  uint8_t level = LogStream::Trace;
-  uint8_t consoleLevel = LogStream::Trace;
   std::queue<Message> messages;
   LastMessage lastMessages[_messages_];
   bool hideDuplicates = false;
