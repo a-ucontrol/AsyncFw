@@ -177,16 +177,14 @@ bool AbstractThread::Compare::operator()(const AbstractThread *t1, const Abstrac
 }
 
 AbstractThread::List::~List() {
+  if (!empty()) lsError() << "thread list not empty:" << size();
   while (!empty()) {
-    console_msg("Thread list not empty: " + std::to_string(size()));
     AbstractThread *_t = back();
     _t->quit();
     _t->waitFinished();
     delete _t;
   }
-#ifndef LS_NO_DEBUG
-  console_msg(__PRETTY_FUNCTION__ + ' ' + std::to_string(size()));
-#endif
+  lsInfoGreen() << size();
 }
 
 AbstractThread::AbstractThread(const std::string &_name) : private_(*new Private) {
@@ -202,7 +200,7 @@ AbstractThread::AbstractThread(const std::string &_name) : private_(*new Private
   private_.fds_.push_back(_w);
   #ifndef _WIN32
     #ifndef EVENTFD_WAKE
-  if (::pipe(private_.pipe)) console_msg("AbstractThread: error create pipe");
+  if (::pipe(private_.pipe)) lsError << "error create pipe";
   private_.WAKE_FD = private_.pipe[0];
     #else
   private_.WAKE_FD = eventfd(0, EFD_NONBLOCK);
@@ -217,7 +215,7 @@ AbstractThread::AbstractThread(const std::string &_name) : private_(*new Private
   #ifdef EVENTFD_WAKE
   private_.wake_task.fd = eventfd(0, EFD_NONBLOCK);
   #else
-  if (::pipe(private_.pipe)) console_msg("AbstractThread: error create pipe");
+  if (::pipe(private_.pipe)) lsError << "error create pipe";
   private_.wake_task.fd = private_.pipe[0];
   #endif
   private_.wake_task.task = nullptr;
@@ -233,7 +231,7 @@ AbstractThread::~AbstractThread() {
     LockGuard lock(list.mutex);
     std::vector<AbstractThread *>::iterator it = std::lower_bound(list.begin(), list.end(), this, Compare());
     if (it != list.end() && (*it) == this) list.erase(it);
-    else { console_msg("thread not found"); }
+    else { lsError() << "thread not found"; }
     trace() << "threads:" << std::to_string(list.size());
   }
 
@@ -299,17 +297,9 @@ AbstractThread::LockGuard AbstractThread::threads(std::vector<AbstractThread *> 
   return LockGuard {list.mutex};
 }
 
-void AbstractThread::startedEvent() {
-#ifndef LS_NO_TRACE
-  console_msg(__PRETTY_FUNCTION__);
-#endif
-}
+void AbstractThread::startedEvent() { lsDebug() << LOG_THREAD_NAME; }
 
-void AbstractThread::finishedEvent() {
-#ifndef LS_NO_TRACE
-  console_msg(__PRETTY_FUNCTION__);
-#endif
-}
+void AbstractThread::finishedEvent() { lsDebug() << LOG_THREAD_NAME; }
 
 bool AbstractThread::running() const {
   LockGuard lock(private_.mutex);
@@ -388,7 +378,7 @@ void AbstractThread::clearId() {
   {  //lock scope
     LockGuard lock(list.mutex);
     std::vector<AbstractThread *>::iterator it = std::lower_bound(AbstractThread::list.begin(), AbstractThread::list.end(), _id, AbstractThread::Compare());
-    if (it != list.end() && (*it)->private_.id == _id) {
+    if (it != list.end() && (*it) == this && private_.id == _id) {
       AbstractThread *_t = (*it);
       {  //lock scope //fix data race in checkDifferentThread called from waitFinished
         LockGuard lock = _t->lockGuard();
@@ -401,7 +391,7 @@ void AbstractThread::clearId() {
       return;
     }
   }
-  lsDebug() << "thread not found:" << LogStream::Color::Magenta << _id;
+  lsError() << "thread not found:" << LogStream::Color::Magenta << _id;
 }
 
 void AbstractThread::exec() {
@@ -435,10 +425,8 @@ void AbstractThread::exec() {
       private_.mutex.lock();
       private_.state = Private::Running;
     }
-
     std::swap(private_.process_tasks_, private_.tasks);  //take exists tasks
   }
-  if (!_nested) { startedEvent(); }
   for (;;) {
     private_.process_tasks();
     {  //lock scope, wait new tasks or wakeup
@@ -587,6 +575,10 @@ void AbstractThread::exec() {
   finishedEvent();
   private_.mutex.lock();
   private_.state = Private::Finished;
+  std::swap(private_.process_tasks_, private_.tasks);
+  private_.mutex.unlock();
+  private_.process_tasks();
+  private_.mutex.lock();
 }
 
 void AbstractThread::Private::wake() {

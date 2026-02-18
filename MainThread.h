@@ -94,6 +94,7 @@ private:
     }
 #endif
     AbstractInstance::destroyValues();
+    clearId();
   }
 #ifdef USE_QAPPLICATION
   struct Timer {

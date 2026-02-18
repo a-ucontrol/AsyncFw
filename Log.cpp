@@ -20,7 +20,7 @@ void AbstractLog::flush() {
   Message m;
   for (;;) {
     {  //lock scope
-      AbstractThread::LockGuard lock = thread()->lockGuard();
+      AbstractThread::LockGuard lock = thread_->lockGuard();
       if (messages.empty()) break;
       m = messages.front();
       messages.pop();
@@ -30,7 +30,7 @@ void AbstractLog::flush() {
 }
 
 void AbstractLog::finality() {
-  trace() << thread()->name();
+  trace() << thread_->name();
   AbstractLog::flush();
   if (hideDuplicates) {
     for (int i = 0; i != _messages_; ++i) {
@@ -44,31 +44,31 @@ void AbstractLog::finality() {
 void AbstractLog::append(uint8_t type, const std::string &message, const std::string &sender, const std::string &note) { append({type, sender, message, note}); }
 
 void AbstractLog::setExtendOut(bool b) {
-  thread()->invokeMethod([this, b]() { (b) ? flags |= LOG_STREAM_CONSOLE_EXTEND : flags &= ~LOG_STREAM_CONSOLE_EXTEND; }, true);
+  thread_->invokeMethod([this, b]() { (b) ? flags |= LOG_STREAM_CONSOLE_EXTEND : flags &= ~LOG_STREAM_CONSOLE_EXTEND; }, true);
 }
 
 void AbstractLog::setColorOut(bool b) {
-  thread()->invokeMethod([this, b]() { (b) ? flags |= LOG_STREAM_CONSOLE_COLOR : flags &= ~LOG_STREAM_CONSOLE_COLOR; }, true);
+  thread_->invokeMethod([this, b]() { (b) ? flags |= LOG_STREAM_CONSOLE_COLOR : flags &= ~LOG_STREAM_CONSOLE_COLOR; }, true);
 }
 
 void AbstractLog::setNotesOut(bool b) {
-  thread()->invokeMethod([this, b]() { (b) ? flags |= LOG_STREAM_CONSOLE_LINE : flags &= ~LOG_STREAM_CONSOLE_LINE; }, true);
+  thread_->invokeMethod([this, b]() { (b) ? flags |= LOG_STREAM_CONSOLE_LINE : flags &= ~LOG_STREAM_CONSOLE_LINE; }, true);
 }
 
 void AbstractLog::setHideDuplicates(bool b) {
-  thread()->invokeMethod([this, b]() { hideDuplicates = b; }, true);
+  thread_->invokeMethod([this, b]() { hideDuplicates = b; }, true);
 }
 
 void AbstractLog::setLevel(int i) {
-  thread()->invokeMethod([this, i]() { level = i; }, true);
+  thread_->invokeMethod([this, i]() { level = i; }, true);
 }
 
 void AbstractLog::setConsoleLevel(int i) {
-  thread()->invokeMethod([this, i]() { consoleLevel = i; }, true);
+  thread_->invokeMethod([this, i]() { consoleLevel = i; }, true);
 }
 
 void AbstractLog::setFilter(const std::vector<std::string> &f) {
-  thread()->invokeMethod([this, f]() { filter = f; }, true);
+  thread_->invokeMethod([this, f]() { filter = f; }, true);
 }
 
 void AbstractLog::append(const Message &m) {
@@ -86,7 +86,7 @@ void AbstractLog::append(const Message &m) {
   }
   int size;
   {  //lock scope
-    AbstractThread::LockGuard lock = thread()->lockGuard();
+    AbstractThread::LockGuard lock = thread_->lockGuard();
     size = messages.size();
     if (size >= queueLimit) {
       console_msg("AbstractLog: many messages in queue");
@@ -99,7 +99,7 @@ void AbstractLog::append(const Message &m) {
   }
 
   if (size == 0)
-    thread()->invokeMethod([this]() {
+    thread_->invokeMethod([this]() {
       flush();
       if (hideDuplicates) {
         for (int i = 0; i != _messages_; ++i) {
@@ -160,13 +160,13 @@ void AbstractLog::timerTask(int timerId) {
 }
 
 void AbstractLog::startTimer(int *timerId, int msec) {
-  if (*timerId >= 0) thread()->removeTimer(*timerId);
-  *timerId = thread()->appendTimerTask(msec, [this, timerId]() { timerTask(*timerId); });
+  if (*timerId >= 0) thread_->removeTimer(*timerId);
+  *timerId = thread_->appendTimerTask(msec, [this, timerId]() { timerTask(*timerId); });
 }
 
 void AbstractLog::stopTimer(int *timerId) {
   if (*timerId >= 0) {
-    thread()->removeTimer(*timerId);
+    thread_->removeTimer(*timerId);
     *timerId = -1;
   }
 }
@@ -177,6 +177,7 @@ void Log::Instance::created() {
 }
 
 Log::Log(int size, const std::string &name) : Rrd(size, name), AbstractLog() {
+  thread_ = Rrd::thread_;
   autoSave = (size && !name.empty()) ? 100 : -1;
   if (size) queueLimit = size / 2;
   lsTrace();
@@ -207,8 +208,8 @@ void Log::output(const Message &m) {
   AbstractLog::output(m);
   if (i <= level) {
     Rrd::append(rrdItemFromMessage(m));
-    if (!thread()->running()) return;
-    if (std::this_thread::get_id() != thread()->id()) { console_msg("Log::output executed from different thread, log thread: " + thread()->name() + ", current thread: " + AbstractThread::currentThread()->name()); }
+    if (!thread_->running()) return;
+    if (std::this_thread::get_id() != thread_->id()) { console_msg("Log::output executed from different thread, log thread: " + thread_->name() + ", current thread: " + AbstractThread::currentThread()->name()); }
     if (autoSave > 0) {
       autoSave--;
       if (timerIdAutosave >= 0) thread_->modifyTimer(timerIdAutosave, 15000);
@@ -244,7 +245,7 @@ void Log::lsAppend(const Message &m, uint8_t f) {
   if (!(f & LOG_STREAM_CONSOLE_ONLY)) {
     _log->append(m);
     if (f & 0x80) {
-      if (!_log->thread()->invokeMethod(
+      if (!_log->thread_->invokeMethod(
               [_log]() {
                 _log->flush();
                 _log->save();

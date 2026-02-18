@@ -28,13 +28,13 @@ public:
 protected:
   virtual void output(const Message &message);
   virtual void save() = 0;
-  virtual AbstractThread *thread() = 0;
   void append(const Message &m);
   void flush();
   void finality();
   uint8_t level = LogStream::Trace;
   uint8_t consoleLevel = LogStream::Trace;
   int queueLimit = 128;
+  AbstractThread *thread_;
 
 private:
   struct LastMessage {
@@ -83,9 +83,8 @@ public:
     if (!Rrd::readOnly) Rrd::save();
   }
 
-  AsyncFw::AbstractThread *thread() override { return thread_; }
-
 protected:
+  using AbstractLog::thread_;
   int autoSave;
   int timerIdAutosave = -1;
 
