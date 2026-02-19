@@ -42,6 +42,8 @@ void LogStream::console_output(const Message &message, uint8_t flags) {
 
 LogStream::Message::Message(uint8_t type, const std::string &name, const std::string &string, const std::string &note) : type(type), name(name), string(string), note(note) { time = LOG_STREAM_CURRENT_TIME; }
 
+void LogStream::ZonedTimeOffset::update() { ms = std::chrono::current_zone()->get_info(std::chrono::system_clock::now()).offset.count() * 1000; }
+
 std::string LogStream::sender(const char *function) {
   if (!function) return "Unknown";
   std::string str(function);
@@ -65,11 +67,11 @@ std::string LogStream::sender(const char *function) {
 
 std::string LogStream::timeString(const uint64_t time, const std::string &format, bool show_ms) {
   if (!show_ms) {
-    std::chrono::zoned_time _zt {std::chrono::current_zone(), std::chrono::sys_time<std::chrono::seconds> {std::chrono::seconds(time / 1000)}};
-    return std::vformat("{:" + format + '}', std::make_format_args(_zt));
+    std::chrono::time_point tp = std::chrono::sys_time<std::chrono::seconds> {std::chrono::seconds((time + zonedTimeOffset_.ms) / 1000)};
+    return std::vformat("{:" + format + '}', std::make_format_args(tp));
   }
-  std::chrono::zoned_time _zt {std::chrono::current_zone(), std::chrono::sys_time<std::chrono::milliseconds> {std::chrono::milliseconds(time)}};
-  return std::vformat("{:" + format + '}', std::make_format_args(_zt));
+  std::chrono::time_point tp = std::chrono::sys_time<std::chrono::milliseconds> {std::chrono::milliseconds(time + zonedTimeOffset_.ms)};
+  return std::vformat("{:" + format + '}', std::make_format_args(tp));
 }
 
 std::string LogStream::currentTimeString(const std::string &format, bool show_ms) { return timeString(LOG_STREAM_CURRENT_TIME, format, show_ms); }

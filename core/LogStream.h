@@ -134,6 +134,17 @@ public:
   static void setFunctionPrefixIgnoreList(const std::vector<std::string> &list) { functionPrefixIgnoreList_ = list; }
   static void setSenderPrefix(const std::string &prefix) { senderPrefix_ = prefix; }
 
+  inline static class ZonedTimeOffset {
+    friend LogStream;
+
+  public:
+    void update();
+
+  private:
+    ZonedTimeOffset() { update(); }
+    int ms;
+  } zonedTimeOffset_;
+
 private:
   void before();
   void after();
