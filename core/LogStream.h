@@ -138,10 +138,10 @@ public:
     friend LogStream;
 
   public:
-    void update();
+    static void update();
 
   private:
-    ZonedTimeOffset() { update(); }
+    ZonedTimeOffset() : ms(std::numeric_limits<int>::max()) {}
     int ms;
   } zonedTimeOffset_;
 

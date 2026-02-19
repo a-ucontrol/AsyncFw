@@ -23,4 +23,5 @@ void AbstractInstance::remove(AbstractInstance *_i) {
 void AbstractInstance::destroyValues() {
   lsDebug() << list.size();
   std::for_each(list.rbegin(), list.rend(), [](AbstractInstance *_i) { _i->destroyValue(); });
+  LogStream::ZonedTimeOffset::update();
 }
