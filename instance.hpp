@@ -6,6 +6,15 @@ namespace AsyncFw {
 
 class AbstractInstance {
 public:
+  class List : public std::vector<AbstractInstance *> {
+    friend AbstractInstance;
+
+  public:
+    static void destroy();
+
+  private:
+    ~List();
+  };
   static void destroyValues();
 
 protected:
@@ -15,9 +24,7 @@ protected:
   void remove(AbstractInstance *);
 
 private:
-  inline static struct List : public std::vector<AbstractInstance *> {
-    ~List();
-  } list;
+  inline static class List list;
 };
 
 template <typename T>

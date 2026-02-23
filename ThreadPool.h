@@ -17,7 +17,14 @@ public:
     AbstractThreadPool *pool;
   };
 
-public:
+  struct List : public std::vector<AbstractThreadPool *> {
+    friend AbstractThreadPool;
+    static void destroy();
+
+  private:
+    ~List();
+  };
+
   static std::vector<AbstractThreadPool *> pools() { return pools_; }
   AbstractThreadPool(const std::string &);
   virtual ~AbstractThreadPool();
@@ -37,7 +44,7 @@ private:
   struct Compare {
     bool operator()(const AbstractThread *t1, const AbstractThread *t2) const { return t1 < t2; }
   };
-  inline static std::vector<AbstractThreadPool *> pools_;
+  inline static List pools_;
   std::string name_;
 };
 

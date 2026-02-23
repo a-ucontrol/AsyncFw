@@ -4,6 +4,21 @@
 
 using namespace AsyncFw;
 
+AbstractThreadPool::List::~List() {
+  if (!empty()) {
+    lsError() << "thread pool list not empty:" << size();
+    destroy();
+  }
+  lsDebug() << size();
+}
+
+void AbstractThreadPool::List::destroy() {
+  while (!pools_.empty()) {
+    AbstractThreadPool *_p = pools_.back();
+    delete _p;
+  }
+}
+
 AbstractThreadPool::AbstractThreadPool(const std::string &name) : name_(name) {
   pools_.emplace_back(this);
   thread_ = AbstractThread::currentThread();
