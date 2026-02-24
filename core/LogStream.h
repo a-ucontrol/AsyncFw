@@ -82,7 +82,7 @@ public:
     bool operator==(const Message &m) const { return type == m.type && string == m.string && name == m.name && note == m.note; }
   };
 
-  inline static class Format {
+  inline static class TimeFormat {
     friend LogStream;
 
   public:
@@ -90,18 +90,41 @@ public:
       format.str = _string;
       format.show_ms = _show_ms;
     }
-    Format() = default;
-    Format(const std::string _string, bool _show_ms) { set(_string, _show_ms); }
+    TimeFormat() {
+      show_ms = false;
+      empty_ = true;
+    }
+    TimeFormat(const std::string _string, bool _show_ms = false) {
+      str = _string;
+      show_ms = _show_ms;
+      empty_ = false;
+    }
+    bool empty() const { return empty_; }
+
+  private:
     std::string str;
     bool show_ms;
+    bool empty_;
   } format {LOG_STREAM_DEFAULT_TIME_FORMAT, false};
+
+  inline static class ZonedTimeOffset {
+    friend LogStream;
+
+  public:
+    static void update();
+    static void set(int);
+
+  private:
+    ZonedTimeOffset() : ms(std::numeric_limits<int>::max()) {}
+    int ms;
+  } zonedTimeOffset_;
 
   static void console_output(const Message &, uint8_t = LOG_STREAM_CONSOLE_COLOR | LOG_STREAM_CONSOLE_EXTEND);
   static std::string levelName(uint8_t);
   static std::string colorString(Color);
   static std::string sender(const char *);
-  static std::string timeString(const uint64_t, const Format & = {});
-  static std::string currentTimeString(const Format & = {});
+  static std::string timeString(const uint64_t, const TimeFormat & = {});
+  static std::string currentTimeString(const TimeFormat & = {});
   inline static void (*completed)(const Message &, uint8_t) = &console_output;
   static void setCompleted(void (*_completed)(const Message &, uint8_t)) { completed = _completed; }
   static void setFunctionPrefixIgnoreList(const std::vector<std::string> &list) { functionPrefixIgnoreList_ = list; }
@@ -146,18 +169,6 @@ public:
   LogStream &space();
   LogStream &nospace();
   LogStream &flush();
-
-  inline static class ZonedTimeOffset {
-    friend LogStream;
-
-  public:
-    static void update();
-    static void set(int);
-
-  private:
-    ZonedTimeOffset() : ms(std::numeric_limits<int>::max()) {}
-    int ms;
-  } zonedTimeOffset_;
 
 private:
   void before();

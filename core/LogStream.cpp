@@ -67,8 +67,8 @@ std::string LogStream::sender(const char *function) {
   return str;
 }
 
-std::string LogStream::timeString(const uint64_t _time, const Format &_format) {
-  const Format &_f = (_format.str.empty()) ? format : _format;
+std::string LogStream::timeString(const uint64_t _time, const TimeFormat &_format) {
+  const TimeFormat &_f = (_format.empty()) ? format : _format;
   if (zonedTimeOffset_.ms == std::numeric_limits<int>::max()) {
     if (!_f.show_ms) {
       std::chrono::zoned_time _zt {std::chrono::current_zone(), std::chrono::sys_time<std::chrono::seconds> {std::chrono::seconds(_time / 1000)}};
@@ -85,7 +85,7 @@ std::string LogStream::timeString(const uint64_t _time, const Format &_format) {
   return std::vformat("{:" + _f.str + '}', std::make_format_args(tp));
 }
 
-std::string LogStream::currentTimeString(const Format &format) { return timeString(LOG_STREAM_CURRENT_TIME, format); }
+std::string LogStream::currentTimeString(const TimeFormat &format) { return timeString(LOG_STREAM_CURRENT_TIME, format); }
 
 std::string LogStream::levelName(uint8_t l) {
   if (l == Trace) return "trace";
