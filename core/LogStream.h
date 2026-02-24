@@ -86,19 +86,9 @@ public:
     friend LogStream;
 
   public:
-    static void set(const std::string _string, bool _show_ms = false) {
-      format.str = _string;
-      format.show_ms = _show_ms;
-    }
-    TimeFormat() {
-      show_ms = false;
-      empty_ = true;
-    }
-    TimeFormat(const std::string _string, bool _show_ms = false) {
-      str = _string;
-      show_ms = _show_ms;
-      empty_ = false;
-    }
+    static void set(const std::string &, bool = false);
+    TimeFormat();
+    TimeFormat(const std::string &, bool = false);
     bool empty() const { return empty_; }
 
   private:

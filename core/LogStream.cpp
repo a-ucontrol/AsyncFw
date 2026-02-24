@@ -42,6 +42,22 @@ void LogStream::console_output(const Message &message, uint8_t flags) {
 
 LogStream::Message::Message(uint8_t type, const std::string &name, const std::string &string, const std::string &note) : type(type), name(name), string(string), note(note) { time = LOG_STREAM_CURRENT_TIME; }
 
+void LogStream::TimeFormat::set(const std::string &_string, bool _show_ms) {
+  format.str = _string;
+  format.show_ms = _show_ms;
+}
+
+LogStream::TimeFormat::TimeFormat() {
+  show_ms = false;
+  empty_ = true;
+}
+
+LogStream::TimeFormat::TimeFormat(const std::string &_string, bool _show_ms) {
+  str = _string;
+  show_ms = _show_ms;
+  empty_ = false;
+}
+
 void LogStream::ZonedTimeOffset::update() { LogStream::zonedTimeOffset_.ms = std::chrono::current_zone()->get_info(std::chrono::system_clock::now()).offset.count() * 1000; }
 
 void LogStream::ZonedTimeOffset::set(int ms) { LogStream::zonedTimeOffset_.ms = ms; }
