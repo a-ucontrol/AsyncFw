@@ -247,5 +247,5 @@ private:
 #endif
   static MainThread mainThread_;
 };
-inline MainThread MainThread::mainThread_ __attribute__((init_priority(65532)));
+inline MainThread MainThread::mainThread_ __attribute__((init_priority(65533)));
 }  // namespace AsyncFw
