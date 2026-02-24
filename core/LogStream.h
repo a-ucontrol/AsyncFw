@@ -20,7 +20,7 @@
 #define LOG_STREAM_FLUSH 0x80
 
 #ifndef LOG_STREAM_DEFAULT_TIME_FORMAT
-  #define LOG_STREAM_DEFAULT_TIME_FORMAT "%d.%m %H:%M:%S"
+  #define LOG_STREAM_DEFAULT_TIME_FORMAT "%Y-%m-%d %H:%M:%S"
 #endif
 
 #ifndef LOG_DEFAULT_FLAGS
@@ -70,7 +70,6 @@ public:
     DarkYellow = 0xf0,
   };
 
-public:
   struct Message {
     Message() = default;
     Message(uint8_t, const std::string &, const std::string &, const std::string &);
@@ -83,14 +82,30 @@ public:
     bool operator==(const Message &m) const { return type == m.type && string == m.string && name == m.name && note == m.note; }
   };
 
+  inline static class Format {
+    friend LogStream;
+
+  public:
+    static void set(const std::string _string, bool _show_ms = false) {
+      format.str = _string;
+      format.show_ms = _show_ms;
+    }
+    Format() = default;
+    Format(const std::string _string, bool _show_ms) { set(_string, _show_ms); }
+    std::string str;
+    bool show_ms;
+  } format {LOG_STREAM_DEFAULT_TIME_FORMAT, false};
+
   static void console_output(const Message &, uint8_t = LOG_STREAM_CONSOLE_COLOR | LOG_STREAM_CONSOLE_EXTEND);
   static std::string levelName(uint8_t);
   static std::string colorString(Color);
   static std::string sender(const char *);
-  static std::string timeString(const uint64_t, const std::string & = LOG_STREAM_DEFAULT_TIME_FORMAT, bool = false);
-  static std::string currentTimeString(const std::string & = LOG_STREAM_DEFAULT_TIME_FORMAT, bool = false);
+  static std::string timeString(const uint64_t, const Format & = {});
+  static std::string currentTimeString(const Format & = {});
   inline static void (*completed)(const Message &, uint8_t) = &console_output;
-  inline static void setCompleted(void (*_completed)(const Message &, uint8_t)) { completed = _completed; }
+  static void setCompleted(void (*_completed)(const Message &, uint8_t)) { completed = _completed; }
+  static void setFunctionPrefixIgnoreList(const std::vector<std::string> &list) { functionPrefixIgnoreList_ = list; }
+  static void setSenderPrefix(const std::string &prefix) { senderPrefix_ = prefix; }
 
   LogStream(uint8_t, const char *, const char *, int, uint8_t = 0);
   LogStream() = default;
@@ -131,14 +146,13 @@ public:
   LogStream &space();
   LogStream &nospace();
   LogStream &flush();
-  static void setFunctionPrefixIgnoreList(const std::vector<std::string> &list) { functionPrefixIgnoreList_ = list; }
-  static void setSenderPrefix(const std::string &prefix) { senderPrefix_ = prefix; }
 
   inline static class ZonedTimeOffset {
     friend LogStream;
 
   public:
     static void update();
+    static void set(int);
 
   private:
     ZonedTimeOffset() : ms(std::numeric_limits<int>::max()) {}

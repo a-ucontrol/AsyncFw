@@ -1,9 +1,9 @@
 #include <condition_variable>
 #include <queue>
 #include <signal.h>
+#include "LogStream.h"
 #include "Thread.h"
 #include "Socket.h"
-#include "LogStream.h"
 
 #ifdef __linux
   #define EVENTFD_WAKE
