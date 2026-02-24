@@ -1,5 +1,4 @@
 #include <algorithm>
-#include "ThreadPool.h"
 #include "core/LogStream.h"
 #include "instance.hpp"
 
@@ -8,7 +7,6 @@ using namespace AsyncFw;
 void AbstractInstance::List::destroy() {
   lsDebug() << list.size();
   std::for_each(list.rbegin(), list.rend(), [](AbstractInstance *_i) { _i->destroyValue(); });
-//  AbstractThreadPool::List::destroy();
   LogStream::ZonedTimeOffset::update();
 }
 

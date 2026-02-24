@@ -41,7 +41,7 @@ private:
   struct Compare {
     bool operator()(const AbstractThread *t1, const AbstractThread *t2) const { return t1 < t2; }
   };
-  inline static List pools_ __attribute__((init_priority(65533)));
+  inline static List pools_;
   std::string name_;
 };
 
