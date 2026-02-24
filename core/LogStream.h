@@ -105,7 +105,7 @@ public:
     std::string str;
     bool show_ms;
     bool empty_;
-  } format __attribute__((init_priority(65531))) {LOG_STREAM_DEFAULT_TIME_FORMAT, false};
+  } format __attribute__((init_priority(65530))) {LOG_STREAM_DEFAULT_TIME_FORMAT, false};
 
   inline static class ZonedTimeOffset {
     friend LogStream;
@@ -117,7 +117,7 @@ public:
   private:
     ZonedTimeOffset() : ms(std::numeric_limits<int>::max()) {}
     int ms;
-  } zonedTimeOffset_ __attribute__((init_priority(65531)));
+  } zonedTimeOffset_ __attribute__((init_priority(65530)));
 
   static void console_output(const Message &, uint8_t = LOG_STREAM_CONSOLE_COLOR | LOG_STREAM_CONSOLE_EXTEND);
   static std::string levelName(uint8_t);

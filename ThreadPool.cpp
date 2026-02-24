@@ -7,16 +7,12 @@ using namespace AsyncFw;
 AbstractThreadPool::List::~List() {
   if (!empty()) {
     lsError() << "thread pool list not empty:" << size();
-    destroy();
+    while (!pools_.empty()) {
+      AbstractThreadPool *_p = pools_.back();
+      delete _p;
+    }
   }
   lsDebug() << size();
-}
-
-void AbstractThreadPool::List::destroy() {
-  while (!pools_.empty()) {
-    AbstractThreadPool *_p = pools_.back();
-    delete _p;
-  }
 }
 
 AbstractThreadPool::AbstractThreadPool(const std::string &name) : name_(name) {
