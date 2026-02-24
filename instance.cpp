@@ -1,21 +1,14 @@
 #include <algorithm>
-#include "ThreadPool.h"
 #include "core/LogStream.h"
 #include "instance.hpp"
 
 using namespace AsyncFw;
 
-void AbstractInstance::List::destroy() {
-  lsDebug() << list.size();
-  std::for_each(list.rbegin(), list.rend(), [](AbstractInstance *_i) { _i->destroyValue(); });
-  AbstractThreadPool::List::destroy();
-  LogStream::ZonedTimeOffset::update();
-}
-
 AbstractInstance::List::~List() {
   if (!empty()) {
     lsError() << "instance list not empty:" << size();
-    destroy();
+    std::for_each(list.rbegin(), list.rend(), [](AbstractInstance *_i) { _i->destroyValue(); });
+    LogStream::ZonedTimeOffset::update();
   }
   lsDebug() << size();
 }

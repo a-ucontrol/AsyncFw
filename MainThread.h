@@ -93,7 +93,6 @@ private:
       ::close(eventfd_);
     }
 #endif
-    AbstractInstance::List::destroy();
     clearId();
   }
 #ifdef USE_QAPPLICATION
@@ -247,5 +246,5 @@ private:
 #endif
   static MainThread mainThread_;
 };
-inline MainThread MainThread::mainThread_;
+inline MainThread MainThread::mainThread_ __attribute__((init_priority(65533)));
 }  // namespace AsyncFw
