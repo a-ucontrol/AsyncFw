@@ -19,6 +19,7 @@ public:
 
   struct List : public std::vector<AbstractThreadPool *> {
     friend AbstractThreadPool;
+    static void destroy();
 
   private:
     ~List();

@@ -163,7 +163,7 @@ private:
   inline static struct List : public std::vector<AbstractThread *> {
     ~List();
     std::mutex mutex;
-  } list __attribute__((init_priority(65532)));
+  } list;
   Private &private_;
 };
 

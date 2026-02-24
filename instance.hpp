@@ -8,8 +8,14 @@ class AbstractInstance {
 public:
   class List : public std::vector<AbstractInstance *> {
     friend AbstractInstance;
+
+  public:
+    static void destroy();
+
+  private:
     ~List();
   };
+  static void destroyValues();
 
 protected:
   virtual ~AbstractInstance() = default;
@@ -18,7 +24,7 @@ protected:
   void remove(AbstractInstance *);
 
 private:
-  inline static class List list __attribute__((init_priority(65534)));
+  inline static class List list;
 };
 
 template <typename T>
