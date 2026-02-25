@@ -89,9 +89,9 @@ void AbstractLog::append(const Message &m) {
     AbstractThread::LockGuard lock = thread_->lockGuard();
     size = messages.size();
     if (size >= queueLimit) {
-      console_msg("AbstractLog: many messages in queue");
+      console_msg("AbstractLog", "many messages in queue");
 #ifndef LS_NO_TRACE
-      console_msg(m.string);
+      console_msg("AbstractLog", m.string);
 #endif
       return;
     }
@@ -196,7 +196,7 @@ Log::~Log() {
             finality();
           },
           true)) {
-    console_msg("Log thread not running");
+    console_msg("Log", "thread not running");
     stopTimer(&timerIdAutosave);
     autoSave = -1;
     finality();
@@ -209,7 +209,7 @@ void Log::output(const Message &m) {
   if (i <= level) {
     Rrd::append(rrdItemFromMessage(m));
     if (!thread_->running()) return;
-    if (std::this_thread::get_id() != thread_->id()) { console_msg("Log::output executed from different thread, log thread: " + thread_->name() + ", current thread: " + AbstractThread::currentThread()->name()); }
+    if (std::this_thread::get_id() != thread_->id()) { console_msg("Log", "output executed from different thread, log thread: " + thread_->name() + ", current thread: " + AbstractThread::currentThread()->name()); }
     if (autoSave > 0) {
       autoSave--;
       if (timerIdAutosave >= 0) thread_->modifyTimer(timerIdAutosave, 15000);

@@ -30,9 +30,9 @@ Rrd::Rrd(int size, int interval, int fillInterval, const std::string &name) : db
   if (!name.empty()) {
     file = name;
     if (!readFromFile()) {
-      if (std::filesystem::exists(file) || readOnly) console_msg("Rrd: read failed: " + name);
+      if (std::filesystem::exists(file) || readOnly) console_msg("Rrd", "read failed: " + name);
 
-      if (!createFile() && !readOnly) console_msg("Rrd: create failed: " + name);
+      if (!createFile() && !readOnly) console_msg("Rrd", "create failed: " + name);
     }
   } else {
     count_v = 0;
@@ -184,7 +184,7 @@ bool Rrd::readFromFile() {
     trace() << "Rrd: size:" << dbSize;
   }
   if (static_cast<uint32_t>(dataBase.size()) != dbSize) {
-    console_msg("Rrd: error database size: " + std::to_string(dataBase.size()));
+    console_msg("Rrd", "error database size: " + std::to_string(dataBase.size()));
   } else {
     ok = true;
     count_v = 0;
@@ -215,7 +215,7 @@ bool Rrd::saveToFile(const std::string &_fileToSave) {
   _f.close();
 
   if (_f.fail()) {
-    console_msg("Rrd: save failed: " + fileToSave);
+    console_msg("Rrd", "save failed: " + fileToSave);
     return false;
   }
 
@@ -229,11 +229,11 @@ bool Rrd::saveToFile(const std::string &_fileToSave) {
 
 void Rrd::save(const std::string &fn) {
   if (readOnly && fn.empty()) {
-    console_msg("Rrd: save error, read only: " + file);
+    console_msg("Rrd", "save error, read only: " + file);
     return;
   }
   if (fn.empty() && file.empty()) {
-    console_msg("Rrd: save error, empty file name");
+    console_msg("Rrd", "save error, empty file name");
     return;
   }
   if (std::this_thread::get_id() != thread_->id()) {
@@ -241,7 +241,7 @@ void Rrd::save(const std::string &fn) {
       thread_->invokeMethod([this, fn]() { saveToFile(fn); }, true);
       return;
     }
-    console_msg("Rrd: executed from different thread and own thread not running");
+    console_msg("Rrd", "save executed from different thread and own thread not running");
   }
   saveToFile(fn);
 }

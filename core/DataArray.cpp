@@ -15,7 +15,7 @@ DataArray DataArray::compress(const DataArrayView &_u) {
   DataArray _c;
   _c.resize(_uLongf + sizeof(uint8_t) + j);
   if (::compress(_c.data() + sizeof(uint8_t) + j, &_uLongf, reinterpret_cast<const uint8_t *>(_u.data()), _u.size())) {
-    console_msg("DataArray: compress failed");
+    console_msg("DataArray", "compress failed");
     return {};
   }
   _c[0] = j | (_size << 3);
@@ -39,12 +39,12 @@ DataArray DataArray::uncompress(const DataArrayView &_c) {
   try {
     _u.resize(_size);
   } catch (std::exception &e) {
-    console_msg("DataArray: uncompress failed: " + e.what());
+    console_msg("DataArray", "uncompress failed: " + e.what());
     return {};
   }
   uLongf _uLongf = _size;
   if (::uncompress(_u.data(), &_uLongf, reinterpret_cast<const uint8_t *>(_c.data()) + sizeof(uint8_t) + j, _c.size() - sizeof(uint8_t) - j)) {
-    console_msg("DataArray: uncompress failed");
+    console_msg("DataArray", "uncompress failed");
     return {};
   }
   if (_size != _uLongf) return {};
@@ -295,7 +295,7 @@ void DataStream::w_(int size, const uint8_t *p) {
   if (fail_) return;
   if (read_) {
     fail_ = true;
-    console_msg("DataStream: trying write to stream for read");
+    console_msg("DataStream", "trying write to stream for read");
     return;
   }
   data_->insert(data_->end(), p, p + size);
@@ -305,7 +305,7 @@ void DataStream::r_(int size, uint8_t *p) {
   if (fail_ || !size) return;
   if (!read_) {
     fail_ = true;
-    console_msg("DataStream: trying read from stream for write");
+    console_msg("DataStream", "trying read from stream for write");
     return;
   }
   if ((pos_ + size) > data_->size()) {
