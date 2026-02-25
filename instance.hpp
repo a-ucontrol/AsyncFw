@@ -48,12 +48,9 @@ public:
   static void set(T *p) { i_->value = p; }
   static T *get() { return i_->value; }
 
-  Instance() : value(nullptr) {
-    i_ = this;
-    append(i_);
-  }
+  Instance() : value(nullptr) { append(i_ = this); }
   virtual ~Instance() override {
-    destroyValue();
+    if (value) delete value;
     remove(i_);
   }
 
