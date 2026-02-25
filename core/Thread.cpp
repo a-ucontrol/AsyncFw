@@ -200,7 +200,7 @@ AbstractThread::AbstractThread(const std::string &_name) : private_(*new Private
   private_.fds_.push_back(_w);
   #ifndef _WIN32
     #ifndef EVENTFD_WAKE
-  if (::pipe(private_.pipe)) lsError << "error create pipe";
+  if (::pipe(private_.pipe)) lsError() << "error create pipe";
   private_.WAKE_FD = private_.pipe[0];
     #else
   private_.WAKE_FD = eventfd(0, EFD_NONBLOCK);
@@ -710,7 +710,7 @@ bool AbstractThread::appendPollDescriptor(int fd, PollEvents events, AbstractPol
   std::vector<Private::PollTask *>::iterator it = std::lower_bound(private_.poll_tasks.begin(), private_.poll_tasks.end(), fd, Private::Compare());
   if (it != private_.poll_tasks.end() && (*it)->fd == fd) {
     delete task;
-    console_msg("Append error, descriptor: " + std::to_string(fd));
+    console_msg("AbstractThread", "poll descriptor append error: " + std::to_string(fd));
     return false;
   }
   struct pollfd pollfd;
@@ -746,7 +746,7 @@ bool AbstractThread::modifyPollDescriptor(int fd, PollEvents events) {
   LockGuard lock(private_.mutex);
   std::vector<Private::PollTask *>::iterator it = std::lower_bound(private_.poll_tasks.begin(), private_.poll_tasks.end(), fd, Private::Compare());
   if (it != private_.poll_tasks.end() && (*it)->fd != fd) {
-    console_msg("Descriptor: " + std::to_string(fd) + " not found " + LOG_THREAD_NAME);
+    console_msg("AbstractThread", "poll descriptor: " + std::to_string(fd) + " not found " + LOG_THREAD_NAME);
     return false;
   }
   struct Private::update_pollfd v;
@@ -780,7 +780,7 @@ void AbstractThread::removePollDescriptor(int fd) {
     LockGuard lock(private_.mutex);
     std::vector<Private::PollTask *>::iterator it = std::lower_bound(private_.poll_tasks.begin(), private_.poll_tasks.end(), fd, Private::Compare());
     if (it != private_.poll_tasks.end() && (*it)->fd != fd) {
-      console_msg("Descriptor: " + std::to_string(fd) + " not found " + LOG_THREAD_NAME);
+      console_msg("AbstractThread", "poll descriptor: " + std::to_string(fd) + " not found " + LOG_THREAD_NAME);
       return;
     }
     _t = new Task([p = *it] { delete p; });
