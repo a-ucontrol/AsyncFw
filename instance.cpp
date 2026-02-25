@@ -7,7 +7,7 @@ using namespace AsyncFw;
 void AbstractInstance::List::destroy() {
   lsDebug() << list.size();
   std::for_each(list.rbegin(), list.rend(), [](AbstractInstance *_i) { _i->destroyValue(); });
-  LogStream::ZonedTimeOffset::update();
+  //LogStream::ZonedTimeOffset::update();
 }
 
 AbstractInstance::List::~List() {

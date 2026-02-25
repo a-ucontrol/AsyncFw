@@ -58,10 +58,6 @@ LogStream::TimeFormat::TimeFormat(const std::string &_string, bool _show_ms) {
   empty_ = false;
 }
 
-void LogStream::ZonedTimeOffset::update() { LogStream::zonedTimeOffset_.ms = std::chrono::current_zone()->get_info(std::chrono::system_clock::now()).offset.count() * 1000; }
-
-void LogStream::ZonedTimeOffset::set(int ms) { LogStream::zonedTimeOffset_.ms = ms; }
-
 std::string LogStream::sender(const char *function) {
   if (!function) return "Unknown";
   std::string str(function);
@@ -85,20 +81,12 @@ std::string LogStream::sender(const char *function) {
 
 std::string LogStream::timeString(const uint64_t _time, const TimeFormat &_format) {
   const TimeFormat &_f = (_format.empty()) ? format : _format;
-  if (zonedTimeOffset_.ms == std::numeric_limits<int>::max()) {
-    if (!_f.show_ms) {
-      std::chrono::zoned_time _zt {std::chrono::current_zone(), std::chrono::sys_time<std::chrono::seconds> {std::chrono::seconds(_time / 1000)}};
-      return std::vformat("{:" + _f.str + '}', std::make_format_args(_zt));
-    }
-    std::chrono::zoned_time _zt {std::chrono::current_zone(), std::chrono::sys_time<std::chrono::milliseconds> {std::chrono::milliseconds(_time)}};
+  if (!_f.show_ms) {
+    std::chrono::zoned_time _zt {std::chrono::current_zone(), std::chrono::sys_time<std::chrono::seconds> {std::chrono::seconds(_time / 1000)}};
     return std::vformat("{:" + _f.str + '}', std::make_format_args(_zt));
   }
-  if (!_f.show_ms) {
-    std::chrono::time_point tp = std::chrono::sys_time<std::chrono::seconds> {std::chrono::seconds((_time + zonedTimeOffset_.ms) / 1000)};
-    return std::vformat("{:" + _f.str + '}', std::make_format_args(tp));
-  }
-  std::chrono::time_point tp = std::chrono::sys_time<std::chrono::milliseconds> {std::chrono::milliseconds(_time + zonedTimeOffset_.ms)};
-  return std::vformat("{:" + _f.str + '}', std::make_format_args(tp));
+  std::chrono::zoned_time _zt {std::chrono::current_zone(), std::chrono::sys_time<std::chrono::milliseconds> {std::chrono::milliseconds(_time)}};
+  return std::vformat("{:" + _f.str + '}', std::make_format_args(_zt));
 }
 
 std::string LogStream::currentTimeString(const TimeFormat &format) { return timeString(LOG_STREAM_CURRENT_TIME, format); }
