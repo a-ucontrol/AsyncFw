@@ -39,10 +39,10 @@ inline void qtMessageOutput(QtMsgType type, const QMessageLogContext &context, c
   QByteArray name(LogStream::sender(context.function).c_str());
   QByteArray note((context.line) ? QByteArray(context.file) + ":" + QByteArray::number(context.line) : "");
   switch (static_cast<int>(type)) {
-    case QtDebugMsg: LogStream::completed({+LogStream::Debug | LogStream::DarkYellow, name.data(), ("(Qt) " + msg.toUtf8()).data(), note.data()}, LOG_STREAM_CONSOLE_COLOR | LOG_STREAM_CONSOLE_EXTEND); break;
-    case QtInfoMsg: LogStream::completed({+LogStream::Info | LogStream::DarkGreen, name.data(), ("(Qt) " + msg.toUtf8()).data(), note.data()}, LOG_STREAM_CONSOLE_COLOR | LOG_STREAM_CONSOLE_EXTEND); break;
-    case QtWarningMsg: LogStream::completed({+LogStream::Warning | LogStream::DarkBlue, name.data(), ("(Qt) " + msg.toUtf8()).data(), note.data()}, LOG_STREAM_CONSOLE_COLOR | LOG_STREAM_CONSOLE_EXTEND); break;
-    case QtCriticalMsg: LogStream::completed({+LogStream::Error | LogStream::DarkRed, name.data(), ("(Qt) " + msg.toUtf8()).data(), note.data()}, LOG_STREAM_CONSOLE_COLOR | LOG_STREAM_CONSOLE_EXTEND); break;
+    case QtDebugMsg: LogStream::message({+LogStream::Debug | LogStream::DarkYellow, name.data(), ("(Qt) " + msg.toUtf8()).data(), note.data()}, LOG_STREAM_CONSOLE_COLOR | LOG_STREAM_CONSOLE_EXTEND); break;
+    case QtInfoMsg: LogStream::message({+LogStream::Info | LogStream::DarkGreen, name.data(), ("(Qt) " + msg.toUtf8()).data(), note.data()}, LOG_STREAM_CONSOLE_COLOR | LOG_STREAM_CONSOLE_EXTEND); break;
+    case QtWarningMsg: LogStream::message({+LogStream::Warning | LogStream::DarkBlue, name.data(), ("(Qt) " + msg.toUtf8()).data(), note.data()}, LOG_STREAM_CONSOLE_COLOR | LOG_STREAM_CONSOLE_EXTEND); break;
+    case QtCriticalMsg: LogStream::message({+LogStream::Error | LogStream::DarkRed, name.data(), ("(Qt) " + msg.toUtf8()).data(), note.data()}, LOG_STREAM_CONSOLE_COLOR | LOG_STREAM_CONSOLE_EXTEND); break;
     case QtFatalMsg:
       fprintf(stderr, "(Qt) Fatal error: %s\nprogramm exit\n", msg.toUtf8().data());
       fflush(stderr);

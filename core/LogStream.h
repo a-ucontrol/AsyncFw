@@ -82,11 +82,10 @@ public:
     bool operator==(const Message &m) const { return type == m.type && string == m.string && name == m.name && note == m.note; }
   };
 
-  inline static class TimeFormat {
+  class TimeFormat {
     friend LogStream;
 
   public:
-    static void set(const std::string &, bool = false);
     TimeFormat();
     TimeFormat(const std::string &, bool = false);
     bool empty() const { return empty_; }
@@ -95,29 +94,21 @@ public:
     std::string str;
     bool show_ms;
     bool empty_;
-  } format __attribute__((init_priority(65530))) {LOG_STREAM_DEFAULT_TIME_FORMAT, false};
+  };
 
-  inline static class TimeOffset {
-    friend LogStream;
-
-  public:
-    static void set(int);
-
-  private:
-    TimeOffset() : ms(std::numeric_limits<int>::max()) {}
-    int ms;
-  } timeOffset __attribute__((init_priority(65530)));
-
+  static void message(const Message &m, uint8_t f = LOG_STREAM_CONSOLE_COLOR | LOG_STREAM_CONSOLE_EXTEND) { data.completed(m, f); }
   static void console_output(const Message &, uint8_t = LOG_STREAM_CONSOLE_COLOR | LOG_STREAM_CONSOLE_EXTEND);
   static std::string levelName(uint8_t);
   static std::string colorString(Color);
   static std::string sender(const char *);
   static std::string timeString(const uint64_t, const TimeFormat & = {});
   static std::string currentTimeString(const TimeFormat & = {});
-  inline static void (*completed)(const Message &, uint8_t) = &console_output;
-  static void setCompleted(void (*_completed)(const Message &, uint8_t)) { completed = _completed; }
-  static void setFunctionPrefixIgnoreList(const std::vector<std::string> &list) { functionPrefixIgnoreList_ = list; }
-  static void setSenderPrefix(const std::string &prefix) { senderPrefix_ = prefix; }
+
+  static void setTimeFormat(const std::string &, bool = false);
+  static void setTimeOffset(int);
+  static void setCompleted(void (*_completed)(const Message &, uint8_t)) { data.completed = _completed; }
+  static void setFunctionPrefixIgnoreList(const std::vector<std::string> &list) { data.functionPrefixIgnoreList_ = list; }
+  static void setSenderPrefix(const std::string &prefix) { data.senderPrefix_ = prefix; }
 
   LogStream(uint8_t, const char *, const char *, int, uint8_t = 0);
   LogStream() = default;
@@ -160,6 +151,22 @@ public:
   LogStream &flush();
 
 private:
+  inline static class Data {
+    friend LogStream;
+
+  public:
+    static void set(int);
+
+  private:
+    Data() {}
+    ~Data() {}
+    int timeOffset = std::numeric_limits<int>::max();
+    TimeFormat timeFormat {LOG_STREAM_DEFAULT_TIME_FORMAT, false};
+    void (*completed)(const Message &, uint8_t) = &console_output;
+    std::vector<std::string> functionPrefixIgnoreList_;
+    std::string senderPrefix_;
+  } data __attribute__((init_priority(65530)));
+
   void before();
   void after();
   std::string name;
@@ -168,8 +175,6 @@ private:
   const char *file;
   int line;
   uint16_t flags;
-  inline static std::vector<std::string> functionPrefixIgnoreList_;
-  inline static std::string senderPrefix_;
 };
 }  // namespace AsyncFw
 

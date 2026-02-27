@@ -42,11 +42,6 @@ void LogStream::console_output(const Message &message, uint8_t flags) {
 
 LogStream::Message::Message(uint8_t type, const std::string &name, const std::string &string, const std::string &note) : type(type), name(name), string(string), note(note) { time = LOG_STREAM_CURRENT_TIME; }
 
-void LogStream::TimeFormat::set(const std::string &_string, bool _show_ms) {
-  format.str = _string;
-  format.show_ms = _show_ms;
-}
-
 LogStream::TimeFormat::TimeFormat() {
   show_ms = false;
   empty_ = true;
@@ -58,7 +53,12 @@ LogStream::TimeFormat::TimeFormat(const std::string &_string, bool _show_ms) {
   empty_ = false;
 }
 
-void LogStream::TimeOffset::set(int seconds) { LogStream::timeOffset.ms = seconds * 1000; }
+void LogStream::setTimeFormat(const std::string &_string, bool _show_ms) {
+  data.timeFormat.str = _string;
+  data.timeFormat.show_ms = _show_ms;
+}
+
+void LogStream::setTimeOffset(int seconds) { data.timeOffset = seconds * 1000; }
 
 std::string LogStream::sender(const char *function) {
   if (!function) return "Unknown";
@@ -69,7 +69,7 @@ std::string LogStream::sender(const char *function) {
   str = str.substr(0, str.find_first_of('('));
   i = str.find_last_of(' ');
   if (i != std::string::npos) str = str.substr(i + 1);
-  for (const std::string &_str : functionPrefixIgnoreList_) {
+  for (const std::string &_str : data.functionPrefixIgnoreList_) {
     if (str.starts_with(_str)) {
       str.erase(0, _str.size());
       break;
@@ -82,8 +82,8 @@ std::string LogStream::sender(const char *function) {
 }
 
 std::string LogStream::timeString(const uint64_t _time, const TimeFormat &_format) {
-  const TimeFormat &_f = (_format.empty()) ? format : _format;
-  if (timeOffset.ms == std::numeric_limits<int>::max()) {
+  const TimeFormat &_f = (_format.empty()) ? data.timeFormat : _format;
+  if (data.timeOffset == std::numeric_limits<int>::max()) {
     if (!_f.show_ms) {
       std::chrono::zoned_time _zt {std::chrono::current_zone(), std::chrono::sys_time<std::chrono::seconds> {std::chrono::seconds(_time / 1000)}};
       return std::vformat("{:" + _f.str + '}', std::make_format_args(_zt));
@@ -92,10 +92,10 @@ std::string LogStream::timeString(const uint64_t _time, const TimeFormat &_forma
     return std::vformat("{:" + _f.str + '}', std::make_format_args(_zt));
   }
   if (!_f.show_ms) {
-    std::chrono::time_point tp = std::chrono::sys_time<std::chrono::seconds> {std::chrono::seconds((_time + timeOffset.ms) / 1000)};
+    std::chrono::time_point tp = std::chrono::sys_time<std::chrono::seconds> {std::chrono::seconds((_time + data.timeOffset) / 1000)};
     return std::vformat("{:" + _f.str + '}', std::make_format_args(tp));
   }
-  std::chrono::time_point tp = std::chrono::sys_time<std::chrono::milliseconds> {std::chrono::milliseconds(_time + timeOffset.ms)};
+  std::chrono::time_point tp = std::chrono::sys_time<std::chrono::milliseconds> {std::chrono::milliseconds(_time + data.timeOffset)};
   return std::vformat("{:" + _f.str + '}', std::make_format_args(tp));
 }
 
@@ -154,17 +154,17 @@ std::string LogStream::colorString(Color c) {
 }
 
 LogStream::LogStream(uint8_t type, const char *function, const char *file, int line, uint8_t flags) : type(type), file(file), line(line), flags(flags) {
-  if (!senderPrefix_.empty()) name = senderPrefix_;
+  if (!data.senderPrefix_.empty()) name = data.senderPrefix_;
   if (flags & 0x0001) name += sender(function);
   else { name += function; }
 }
 
 LogStream::~LogStream() noexcept(false) {
   if ((type & 0x07) == Emergency) {
-    completed({type, name, ((flags & 0x8000) ? stream.str() : ""), std::string(file) + ":" + std::to_string(line)}, flags | LOG_STREAM_FLUSH);
+    data.completed({type, name, ((flags & 0x8000) ? stream.str() : ""), std::string(file) + ":" + std::to_string(line)}, flags | LOG_STREAM_FLUSH);
     throw std::runtime_error("log level emergency");
   }
-  completed({type, name, ((flags & 0x8000) ? stream.str() : ""), std::string(file) + ":" + std::to_string(line)}, flags);
+  data.completed({type, name, ((flags & 0x8000) ? stream.str() : ""), std::string(file) + ":" + std::to_string(line)}, flags);
 }
 
 LogStream &LogStream::operator<<(decltype(std::endl<char, std::char_traits<char>>) &) {
