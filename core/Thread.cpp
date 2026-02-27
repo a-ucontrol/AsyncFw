@@ -128,11 +128,6 @@ struct AbstractThread::Private {
   std::queue<ProcessTimerTask> process_timer_tasks_;
   std::queue<ProcessPollTask> process_poll_tasks_;
   int nested_ = 0;
-
-  inline static struct List : public std::vector<AbstractThread *> {
-    ~List();
-    std::mutex mutex;
-  } list __attribute__((init_priority(65531)));
 };
 
 bool AbstractThread::Private::Compare::operator()(const AbstractThread *t1, const AbstractThread *t2) const {
@@ -182,7 +177,7 @@ void AbstractThread::Holder::wait() {
   while (_q--) thread->quit();
 }
 
-AbstractThread::Private::List::~List() {
+AbstractThread::List::~List() {
   if (!empty()) lsError() << "thread list not empty:" << size();
   while (!empty()) {
     AbstractThread *_t = back();
@@ -195,10 +190,10 @@ AbstractThread::Private::List::~List() {
 
 AbstractThread::AbstractThread(const std::string &_name) : private_(*new Private) {
   private_.name = _name;
-  LockGuard lock(Private::list.mutex);
-  std::vector<AbstractThread *>::iterator it = std::lower_bound(Private::list.begin(), Private::list.end(), this, Private::Compare());
-  Private::list.insert(it, this);
-  trace() << "threads:" << std::to_string(Private::list.size());
+  LockGuard lock(list.mutex);
+  std::vector<AbstractThread *>::iterator it = std::lower_bound(list.begin(), list.end(), this, Private::Compare());
+  list.insert(it, this);
+  trace() << "threads:" << std::to_string(list.size());
 
 #ifndef EPOLL_WAIT
   pollfd _w;
@@ -221,7 +216,7 @@ AbstractThread::AbstractThread(const std::string &_name) : private_(*new Private
   #ifdef EVENTFD_WAKE
   private_.wake_task.fd = eventfd(0, EFD_NONBLOCK);
   #else
-  if (::pipe(private_.pipe)) lsError() << "error create pipe";
+  if (::pipe(private_.pipe)) lsError << "error create pipe";
   private_.wake_task.fd = private_.pipe[0];
   #endif
   private_.wake_task.task = nullptr;
@@ -240,11 +235,11 @@ AbstractThread::~AbstractThread() {
     waitFinished();
   }
   {  //lock scope
-    LockGuard lock(Private::list.mutex);
-    std::vector<AbstractThread *>::iterator it = std::lower_bound(Private::list.begin(), Private::list.end(), this, Private::Compare());
-    if (it != Private::list.end() && (*it) == this) Private::list.erase(it);
+    LockGuard lock(list.mutex);
+    std::vector<AbstractThread *>::iterator it = std::lower_bound(list.begin(), list.end(), this, Private::Compare());
+    if (it != list.end() && (*it) == this) list.erase(it);
     else { lsError() << "thread not found"; }
-    trace() << "threads:" << std::to_string(Private::list.size());
+    trace() << "threads:" << std::to_string(list.size());
   }
 
 #ifndef _WIN32
@@ -289,17 +284,17 @@ AbstractThread::~AbstractThread() {
 AbstractThread *AbstractThread::currentThread() {
   std::thread::id _id = std::this_thread::get_id();
   {  //lock scope
-    LockGuard lock(Private::list.mutex);
-    std::vector<AbstractThread *>::iterator it = std::lower_bound(Private::list.begin(), Private::list.end(), _id, Private::Compare());
-    if (it != Private::list.end() && (*it)->private_.id == _id) return (*it);
+    LockGuard lock(list.mutex);
+    std::vector<AbstractThread *>::iterator it = std::lower_bound(list.begin(), list.end(), _id, Private::Compare());
+    if (it != list.end() && (*it)->private_.id == _id) return (*it);
   }
   lsError() << "thread not found:" << _id;
   return nullptr;
 }
 
 AbstractThread::LockGuard AbstractThread::threads(std::vector<AbstractThread *> **_threads) {
-  *_threads = &Private::list;
-  return LockGuard {Private::list.mutex};
+  *_threads = &list;
+  return LockGuard {list.mutex};
 }
 
 void AbstractThread::startedEvent() { lsDebug() << LOG_THREAD_NAME; }
@@ -363,12 +358,12 @@ void AbstractThread::waitFinished() const {
 
 void AbstractThread::setId() {
   std::thread::id _id = std::this_thread::get_id();
-  std::vector<AbstractThread *>::iterator it = std::lower_bound(Private::list.begin(), Private::list.end(), this, Private::Compare());
-  if (it != Private::list.end() && (*it) == this) {
-    Private::list.erase(it);
+  std::vector<AbstractThread *>::iterator it = std::lower_bound(list.begin(), list.end(), this, Private::Compare());
+  if (it != list.end() && (*it) == this) {
+    list.erase(it);
     private_.id = _id;
-    it = std::lower_bound(Private::list.begin(), Private::list.end(), this, Private::Compare());
-    Private::list.insert(it, this);
+    it = std::lower_bound(list.begin(), list.end(), this, Private::Compare());
+    list.insert(it, this);
     trace() << LOG_THREAD_NAME << LogStream::Color::Magenta << _id;
     return;
   }
@@ -377,13 +372,13 @@ void AbstractThread::setId() {
 
 void AbstractThread::clearId() {
   std::thread::id _id = std::this_thread::get_id();
-  std::vector<AbstractThread *>::iterator it = std::lower_bound(Private::list.begin(), Private::list.end(), _id, Private::Compare());
-  if (it != Private::list.end() && (*it) == this && private_.id == _id) {
+  std::vector<AbstractThread *>::iterator it = std::lower_bound(AbstractThread::list.begin(), AbstractThread::list.end(), _id, Private::Compare());
+  if (it != list.end() && (*it) == this && private_.id == _id) {
     AbstractThread *_t = (*it);
     _t->private_.id = {};
-    Private::list.erase(it);
-    it = std::lower_bound(Private::list.begin(), Private::list.end(), _t, Private::Compare());
-    Private::list.insert(it, _t);
+    list.erase(it);
+    it = std::lower_bound(AbstractThread::list.begin(), AbstractThread::list.end(), _t, Private::Compare());
+    list.insert(it, _t);
     trace() << '(' + _t->private_.name + ')' << LogStream::Color::Magenta << _id;
     return;
   }
@@ -623,14 +618,14 @@ void AbstractThread::start() {
   private_.state = Private::WaitStarted;
   std::thread t {[this]() {
     {  //lock scope
-      LockGuard lock_list(Private::list.mutex);
+      LockGuard lock_list(list.mutex);
       LockGuard lock(private_.mutex);
       setId();
       private_.condition_variable.notify_all();
     }
     exec();
     {  //lock scope
-      LockGuard lock_list(Private::list.mutex);
+      LockGuard lock_list(list.mutex);
       LockGuard lock(private_.mutex);
       clearId();
       private_.condition_variable.notify_all();
