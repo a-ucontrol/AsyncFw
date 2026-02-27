@@ -253,13 +253,13 @@ void LogStream::before() {
 void LogStream::after() { flags |= 0xC000; }
 
 LogStream::Data::Data() {
-#ifndef EXTEND_LOGSTREAM_TRACE
+#ifdef EXTEND_LOGSTREAM_TRACE
   console_msg_(__PRETTY_FUNCTION__);
 #endif
 }
 
 LogStream::Data::~Data() {
-#ifndef EXTEND_LOGSTREAM_TRACE
+#ifdef EXTEND_LOGSTREAM_TRACE
   console_msg_(__PRETTY_FUNCTION__);
 #endif
 }
