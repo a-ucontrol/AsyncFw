@@ -82,7 +82,7 @@ std::string LogStream::sender(const char *function) {
   return str;
 }
 
-std::string LogStream::timeString(const uint64_t _time, const TimeFormat &_format) {
+std::string __attribute__((weak)) LogStream::timeString(const uint64_t _time, const TimeFormat &_format) {
   const TimeFormat &_f = (_format.empty()) ? data.timeFormat : _format;
   if (data.timeOffset == std::numeric_limits<int>::max()) {
     if (!_f.show_ms) {
