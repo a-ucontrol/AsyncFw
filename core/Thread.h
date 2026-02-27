@@ -160,10 +160,6 @@ private:
     bool operator()(const AbstractThread *, const AbstractThread *) const;
     bool operator()(const AbstractThread *, std::thread::id) const;
   };
-  inline static struct List : public std::vector<AbstractThread *> {
-    ~List();
-    std::mutex mutex;
-  } list __attribute__((init_priority(65531)));
   Private &private_;
 };
 
