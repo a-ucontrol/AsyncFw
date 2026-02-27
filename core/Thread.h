@@ -156,10 +156,6 @@ protected:
   void exec();
 
 private:
-  struct Compare {
-    bool operator()(const AbstractThread *, const AbstractThread *) const;
-    bool operator()(const AbstractThread *, std::thread::id) const;
-  };
   Private &private_;
 };
 
