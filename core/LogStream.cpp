@@ -2,6 +2,7 @@
 #include <regex>
 #include <syncstream>
 #include <chrono>
+#include "core/console_msg.hpp"
 
 #include "LogStream.h"
 
@@ -250,3 +251,15 @@ void LogStream::before() {
 }
 
 void LogStream::after() { flags |= 0xC000; }
+
+LogStream::Data::Data() {
+#ifndef LS_NO_TRACE
+  console_msg_(__PRETTY_FUNCTION__);
+#endif
+}
+
+LogStream::Data::~Data() {
+#ifndef LS_NO_TRACE
+  console_msg_(__PRETTY_FUNCTION__);
+#endif
+}

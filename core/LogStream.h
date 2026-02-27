@@ -158,8 +158,8 @@ private:
     static void set(int);
 
   private:
-    Data() {}
-    ~Data() {}
+    Data();
+    ~Data();
     int timeOffset = std::numeric_limits<int>::max();
     TimeFormat timeFormat {LOG_STREAM_DEFAULT_TIME_FORMAT, false};
     void (*completed)(const Message &, uint8_t) = &console_output;

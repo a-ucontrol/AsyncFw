@@ -10,7 +10,7 @@ public:
 };
 
 int main(int argc, char *argv[]) {
-  AsyncFw::LogStream::TimeFormat::set("%Y-%m-%d %H:%M:%S", true);
+  AsyncFw::LogStream::setTimeFormat("%Y-%m-%d %H:%M:%S", true);
 
   AsyncFw::AbstractThread *_lt = new AsyncFw::Thread("LogThread");
   _lt->start();
