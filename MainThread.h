@@ -89,12 +89,12 @@ private:
   ~MainThread() {
 #ifdef EXIT_ON_UNIX_SIGNAL
     if (eventfd_ >= 0) {
-      //removePollDescriptor(eventfd_);
+      removePollDescriptor(eventfd_);
       ::close(eventfd_);
     }
 #endif
-    //AbstractInstance::List::destroy();
-    //clearId();
+    AbstractInstance::List::destroy();
+    clearId();
   }
 #ifdef USE_QAPPLICATION
   struct Timer {
