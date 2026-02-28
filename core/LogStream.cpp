@@ -2,13 +2,18 @@
 #include <regex>
 #include <syncstream>
 #include <chrono>
-#include "core/console_msg.hpp"
-
+#include "core/Thread.h"
+#ifdef EXTEND_LOGSTREAM_TRACE
+  #include "core/console_msg.hpp"
+#endif
 #include "LogStream.h"
 
 #define LOG_STREAM_CURRENT_TIME (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count())
 
 using namespace AsyncFw;
+
+LogStream::Data LogStream::data __attribute__((init_priority(AsyncFw_STATIC_INIT_PRIORITY)));
+
 void LogStream::console_output(const Message &message, uint8_t flags) {
   if (!(flags & 0x80) && (message.type & 0x07) > LOG_STREAM_CONSOLE_LEVEL) return;
   std::string _message = message.string;

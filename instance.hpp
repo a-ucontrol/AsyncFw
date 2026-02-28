@@ -3,7 +3,6 @@
 #include <vector>
 
 namespace AsyncFw {
-
 class AbstractInstance {
 public:
   class List : public std::vector<AbstractInstance *> {
@@ -24,7 +23,7 @@ protected:
   void remove(AbstractInstance *);
 
 private:
-  inline static class List list __attribute__((init_priority(65532)));
+  static class List list;
 };
 
 template <typename T>

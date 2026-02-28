@@ -132,7 +132,7 @@ struct AbstractThread::Private {
   inline static struct List : public std::vector<AbstractThread *> {
     ~List();
     std::mutex mutex;
-  } list __attribute__((init_priority(65531)));
+  } list __attribute__((init_priority(AsyncFw_STATIC_INIT_PRIORITY + 1)));
 };
 
 bool AbstractThread::Private::Compare::operator()(const AbstractThread *t1, const AbstractThread *t2) const {

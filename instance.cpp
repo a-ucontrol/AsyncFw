@@ -1,8 +1,11 @@
 #include <algorithm>
+#include "core/Thread.h"
 #include "core/LogStream.h"
 #include "instance.hpp"
 
 using namespace AsyncFw;
+
+AbstractInstance::List AbstractInstance::list __attribute__((init_priority(AsyncFw_STATIC_INIT_PRIORITY + 2)));
 
 void AbstractInstance::List::destroy() {
   lsDebug() << list.size();
