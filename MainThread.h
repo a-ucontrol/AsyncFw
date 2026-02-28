@@ -2,7 +2,10 @@
 
 #include "core/Thread.h"
 #include "instance.hpp"
-#include "core/console_msg.hpp"
+
+namespace AsyncFw {
+void console_msg_(const std::string &);
+}
 
 #ifndef _WIN32
   #define EXIT_ON_UNIX_SIGNAL
@@ -88,9 +91,6 @@ private:
 #endif
   }
   ~MainThread() {
-    console_msg_("~MainThread() 1");
-    clearId();
-    console_msg_("~MainThread() 2");
 #ifdef EXIT_ON_UNIX_SIGNAL
     if (eventfd_ >= 0) {
       console_msg_("~MainThread() 3");
@@ -102,6 +102,8 @@ private:
     console_msg_("~MainThread() 5");
     AbstractInstance::List::destroy();
     console_msg_("~MainThread() 6");
+    clearId();
+    console_msg_("~MainThread() 2");
   }
 #ifdef USE_QAPPLICATION
   struct Timer {
