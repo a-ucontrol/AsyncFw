@@ -2,6 +2,7 @@
 
 #include "core/Thread.h"
 #include "instance.hpp"
+#include "core/console_msg.hpp"
 
 #ifndef _WIN32
   #define EXIT_ON_UNIX_SIGNAL
@@ -87,14 +88,20 @@ private:
 #endif
   }
   ~MainThread() {
+    console_msg_("~MainThread() 1");
+    clearId();
+    console_msg_("~MainThread() 2");
 #ifdef EXIT_ON_UNIX_SIGNAL
     if (eventfd_ >= 0) {
-      //removePollDescriptor(eventfd_);
+      console_msg_("~MainThread() 3");
+      removePollDescriptor(eventfd_);
       ::close(eventfd_);
+      console_msg_("~MainThread() 4");
     }
 #endif
-    //AbstractInstance::List::destroy();
-    //clearId();
+    console_msg_("~MainThread() 5");
+    AbstractInstance::List::destroy();
+    console_msg_("~MainThread() 6");
   }
 #ifdef USE_QAPPLICATION
   struct Timer {
