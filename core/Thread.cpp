@@ -183,7 +183,6 @@ void AbstractThread::Holder::wait() {
 }
 
 AbstractThread::Private::List::~List() {
-  console_msg(__PRETTY_FUNCTION__, std::to_string(size()) + " 1");
   if (!empty()) lsError() << "thread list not empty:" << size();
   while (!empty()) {
     AbstractThread *_t = back();
@@ -191,7 +190,6 @@ AbstractThread::Private::List::~List() {
     _t->waitFinished();
     delete _t;
   }
-  console_msg(__PRETTY_FUNCTION__, std::to_string(size()) + " 2");
   lsInfoGreen() << size();
 }
 
@@ -235,22 +233,18 @@ AbstractThread::AbstractThread(const std::string &_name) : private_(*new Private
 }
 
 AbstractThread::~AbstractThread() {
-  console_msg(__PRETTY_FUNCTION__, LOG_THREAD_NAME + " 1");
   warning_if(std::this_thread::get_id() == private_.id) << LogStream::Color::Red << "executed from own thread" << LOG_THREAD_NAME;
   if (AbstractThread::running()) {
     lsWarning() << "destroy running thread" << LOG_THREAD_NAME;
-    console_msg(__PRETTY_FUNCTION__, LOG_THREAD_NAME + " 2");
     quit();
     waitFinished();
   }
-  console_msg(__PRETTY_FUNCTION__, LOG_THREAD_NAME + " 3");
   {  //lock scope
     LockGuard lock(Private::list.mutex);
     std::vector<AbstractThread *>::iterator it = std::lower_bound(Private::list.begin(), Private::list.end(), this, Private::Compare());
     if (it != Private::list.end() && (*it) == this) Private::list.erase(it);
     else { lsError() << "thread not found"; }
     trace() << "threads:" << std::to_string(Private::list.size());
-    console_msg(__PRETTY_FUNCTION__, LOG_THREAD_NAME + " 4");
   }
 
 #ifndef _WIN32
@@ -266,7 +260,6 @@ AbstractThread::~AbstractThread() {
 #endif
 
   lsTrace() << LOG_THREAD_NAME << LogStream::Color::Magenta << private_.id << LogStream::Color::Default << "-" << private_.tasks.size() << private_.timers.size() << private_.poll_tasks.size() << "-" << private_.process_tasks_.size() << private_.process_timer_tasks_.size() << private_.process_poll_tasks_.size();
-  console_msg(__PRETTY_FUNCTION__, LOG_THREAD_NAME + " 5");
 
   if (!private_.tasks.empty()) {
     lsDebug() << LogStream::Color::DarkRed << "task list not empty" << private_.tasks.size();
@@ -289,10 +282,8 @@ AbstractThread::~AbstractThread() {
       delete _pt;
     }
   }
-  console_msg(__PRETTY_FUNCTION__, LOG_THREAD_NAME + " 6");
 
   delete &private_;
-  console_msg(__PRETTY_FUNCTION__, LOG_THREAD_NAME + " 7");
 }
 
 AbstractThread *AbstractThread::currentThread() {
