@@ -24,7 +24,7 @@ protected:
   void remove(AbstractInstance *);
 
 private:
-  inline static class List list __attribute__((init_priority(65531)));
+  inline static class List list __attribute__((init_priority(65532)));
 };
 
 template <typename T>
