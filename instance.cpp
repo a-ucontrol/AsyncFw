@@ -11,13 +11,13 @@ void AbstractInstance::List::destroy() {
 }
 
 AbstractInstance::List::~List() {
-  console_msg_(std::string(__PRETTY_FUNCTION__)  + "  " + std::to_string(size()) + " 1");
+  console_msg(__PRETTY_FUNCTION__, std::to_string(size()) + " 1");
   if (!empty()) {
     lsError() << "instance list not empty:" << size();
     destroy();
   }
   lsDebug() << size();
-  console_msg_(std::string(__PRETTY_FUNCTION__)  + "  " + std::to_string(size()) + " 2");
+  console_msg(__PRETTY_FUNCTION__, std::to_string(size()) + " 2");
 }
 
 void AbstractInstance::append(AbstractInstance *_i) {
