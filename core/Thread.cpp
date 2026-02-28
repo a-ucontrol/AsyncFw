@@ -183,17 +183,12 @@ void AbstractThread::Holder::wait() {
 }
 
 AbstractThread::Private::List::~List() {
-  console_msg_(std::string(__PRETTY_FUNCTION__));
   if (!empty()) lsError() << "thread list not empty:" << size();
   while (!empty()) {
     AbstractThread *_t = back();
-    console_msg_(std::string(__PRETTY_FUNCTION__) + _t->name() + ' ' + std::to_string(_t->private_.state) + " 1");
     _t->quit();
-    console_msg_(std::string(__PRETTY_FUNCTION__) + _t->name() + ' ' + std::to_string(_t->private_.state) + " 2");
     _t->waitFinished();
-    console_msg_(std::string(__PRETTY_FUNCTION__) + _t->name() + ' ' + std::to_string(_t->private_.state) + " 3");
     delete _t;
-    console_msg_(std::string(__PRETTY_FUNCTION__) + " 4");
   }
   lsInfoGreen() << size();
 }
