@@ -1,5 +1,6 @@
 #include <algorithm>
 #include "core/LogStream.h"
+#include "core/console_msg.hpp"
 #include "instance.hpp"
 
 using namespace AsyncFw;
@@ -10,11 +11,13 @@ void AbstractInstance::List::destroy() {
 }
 
 AbstractInstance::List::~List() {
+  console_msg(__PRETTY_FUNCTION__, std::to_string(size()) + " 1");
   if (!empty()) {
     lsError() << "instance list not empty:" << size();
     destroy();
   }
   lsDebug() << size();
+  console_msg(__PRETTY_FUNCTION__, std::to_string(size()) + " 2");
 }
 
 void AbstractInstance::append(AbstractInstance *_i) {

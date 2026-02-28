@@ -1,5 +1,6 @@
 #include <algorithm>
 #include "core/LogStream.h"
+#include "core/console_msg.hpp"
 #include "ThreadPool.h"
 
 using namespace AsyncFw;
@@ -22,6 +23,7 @@ AbstractThreadPool::AbstractThreadPool(const std::string &name) : name_(name) {
 }
 
 AbstractThreadPool::~AbstractThreadPool() {
+  console_msg(__PRETTY_FUNCTION__, std::to_string(pools_.size()) + " 1");
   mutex.lock();
   bool b = threads_.size() > 0;
   mutex.unlock();
@@ -36,6 +38,7 @@ AbstractThreadPool::~AbstractThreadPool() {
     }
   }
   lsTrace("pools: " + std::to_string(pools_.size()));
+  console_msg(__PRETTY_FUNCTION__, std::to_string(pools_.size()) + " 2");
 }
 
 void AbstractThreadPool::quit() {
