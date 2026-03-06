@@ -80,15 +80,10 @@ AbstractThreadPool::Thread::Thread(const std::string &name, AbstractThreadPool *
 void AbstractThreadPool::Thread::destroy() {
   pool->removeThread(this);
   AbstractThread::quit();
-  AbstractTask *_t = new Task([p = this]() {
+  pool->thread_->invokeMethod([p = this]() {
     p->waitFinished();
     delete p;
   });
-  if (!pool->thread_->invokeTask(_t)) {
-    lsDebug() << LogStream::Color::Red << "pool thread not running" << '(' + pool->thread_->name() + ')';
-    _t->invoke();
-    delete _t;
-  }
   lsTrace();
 }
 
