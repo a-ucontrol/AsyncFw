@@ -12,7 +12,7 @@ AbstractThreadPool::List::~List() {
       delete _p;
     }
   }
-  lsDebug() << size();
+  logAlert() << "AbstractThreadPool::List::~List" << size();
 }
 
 AbstractThreadPool::AbstractThreadPool(const std::string &name) : name_(name) {
@@ -35,7 +35,7 @@ AbstractThreadPool::~AbstractThreadPool() {
       break;
     }
   }
-  lsTrace("pools: " + std::to_string(pools_.size()));
+  logAlert("pools: " + std::to_string(pools_.size()));
 }
 
 void AbstractThreadPool::quit() {
@@ -93,7 +93,7 @@ ThreadPool::ThreadPool(const std::string &name, int workThreads) : AbstractThrea
 
 ThreadPool::~ThreadPool() {
   if (instance_.value == this) instance_.value = nullptr;
-  lsTrace() << "destroyed" << name();
+  logAlert() << "destroyed" << name();
 }
 
 ThreadPool::Thread *ThreadPool::createThread(const std::string &_name) {
