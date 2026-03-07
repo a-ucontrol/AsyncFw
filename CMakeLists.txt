@@ -32,7 +32,6 @@ endif()
 #set(SANITIZE_LINK_LIBRARIES tsan ubsan)
 ### __tsan_on_report -> break point function for debugger
 
-#add_definitions(-DEXTEND_LOGSTREAM_TRACE)
 #add_definitions(-DEXTEND_RRD_TRACE)
 #add_definitions(-DEXTEND_THREAD_TRACE)
 #add_definitions(-DEXTEND_SOCKET_TRACE)

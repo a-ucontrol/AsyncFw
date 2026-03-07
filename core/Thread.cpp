@@ -190,7 +190,7 @@ AbstractThread::Private::List::~List() {
     _t->waitFinished();
     delete _t;
   }
-  lsInfoGreen() << size();
+  lsDebug() << LogStream::Color::Magenta << size();
 }
 
 AbstractThread::AbstractThread(const std::string &_name) : private_(*new Private) {
