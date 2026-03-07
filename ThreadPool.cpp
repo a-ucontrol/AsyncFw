@@ -80,12 +80,10 @@ AbstractThreadPool::Thread::Thread(const std::string &name, AbstractThreadPool *
 void AbstractThreadPool::Thread::destroy() {
   pool->removeThread(this);
   AbstractThread::quit();
-  if (!pool->thread_->invokeMethod([p = this]() {
-        p->waitFinished();
-        delete p;
-      })) {
-    waitFinished();
-  }
+  pool->thread_->invokeMethod([p = this]() {
+    p->waitFinished();
+    delete p;
+  });
   lsTrace();
 }
 
