@@ -89,7 +89,7 @@ void DataArrayAbstractTcp::Thread::removeSocket(DataArraySocket *socket) {
   pool->thread()->invokeMethod([socket, this]() {
     socket->destroy();
     invokeMethod([this]() {
-      if (sockets_.empty()) destroy();
+      if (sockets_.empty()) pool->thread()->invokeMethod([this]() { destroy(); });
     });
   });
 }
