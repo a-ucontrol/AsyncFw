@@ -3,7 +3,7 @@
 #include <syncstream>
 #include <chrono>
 #include "core/Thread.h"
-#ifndef LS_NO_DEBUG
+#ifdef EXTEND_LOGSTREAM_TRACE
   #include "core/console_msg.hpp"
 #endif
 #include "LogStream.h"
@@ -258,13 +258,13 @@ void LogStream::before() {
 void LogStream::after() { flags |= 0xC000; }
 
 LogStream::Data::Data() {
-#ifndef LS_NO_DEBUG
+#ifdef EXTEND_LOGSTREAM_TRACE
   console_msg_(__PRETTY_FUNCTION__);
 #endif
 }
 
 LogStream::Data::~Data() {
-#ifndef LS_NO_DEBUG
+#ifdef EXTEND_LOGSTREAM_TRACE
   console_msg_(__PRETTY_FUNCTION__);
 #endif
 }
