@@ -1,6 +1,6 @@
 #pragma once
 
-#include "core/Thread.h"
+#include <core/Thread.h>
 
 namespace AsyncFw {
 class AbstractInstance {
@@ -13,7 +13,7 @@ protected:
   void append(AbstractInstance *);
   void remove(AbstractInstance *);
 
-public:
+private:
   inline static class List : public std::vector<AbstractInstance *> {
     friend AbstractInstance;
 
