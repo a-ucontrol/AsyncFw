@@ -5,6 +5,8 @@
 
 using namespace AsyncFw;
 
+AbstractInstance::List AbstractInstance::list __attribute__((init_priority(AsyncFw_STATIC_INIT_PRIORITY + 2)));
+
 void AbstractInstance::List::destroy() {
   lsDebug() << list.size();
   std::for_each(list.rbegin(), list.rend(), [](AbstractInstance *_i) { _i->destroyValue(); });

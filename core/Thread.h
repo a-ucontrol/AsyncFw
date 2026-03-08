@@ -3,7 +3,7 @@
 #include <thread>
 #include <vector>
 
-#define AsyncFw_STATIC_INIT_PRIORITY_A 65530
+#define AsyncFw_STATIC_INIT_PRIORITY 65530
 
 #ifndef _WIN32
   #define POLLIN_ 0x001
