@@ -1,6 +1,7 @@
 #include <algorithm>
 #include "core/Thread.h"
 #include "core/LogStream.h"
+#include "core/console_msg.hpp"
 #include "instance.hpp"
 
 using namespace AsyncFw;
@@ -23,6 +24,7 @@ AbstractInstance::List::~List() {
 void AbstractInstance::append(AbstractInstance *_i) {
   std::vector<AbstractInstance *>::iterator it = std::lower_bound(list.begin(), list.end(), _i, [](const AbstractInstance *i1, const AbstractInstance *i2) { return i1 < i2; });
   list.insert(it, _i);
+  console_msg(__PRETTY_FUNCTION__, std::to_string(reinterpret_cast<uint64_t>(this)));
 }
 
 void AbstractInstance::remove(AbstractInstance *_i) {
@@ -30,6 +32,8 @@ void AbstractInstance::remove(AbstractInstance *_i) {
     lsError("instance list empty");
     return;
   }
+  lsTrace();
   std::vector<AbstractInstance *>::iterator it = std::lower_bound(list.begin(), list.end(), _i, [](const AbstractInstance *i1, const AbstractInstance *i2) { return i1 < i2; });
   list.erase(it);
+  console_msg(__PRETTY_FUNCTION__, std::to_string(reinterpret_cast<uint64_t>(this)));
 }
