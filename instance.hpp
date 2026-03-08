@@ -1,19 +1,10 @@
 #pragma once
 
-#include <vector>
+#include <core/Thread.h>
 
 namespace AsyncFw {
 class AbstractInstance {
 public:
-  class List : public std::vector<AbstractInstance *> {
-    friend AbstractInstance;
-
-  public:
-    static void destroy();
-
-  private:
-    ~List();
-  };
   static void destroyValues();
 
 protected:
@@ -23,7 +14,15 @@ protected:
   void remove(AbstractInstance *);
 
 private:
-  static class List list;
+  inline static class List : public std::vector<AbstractInstance *> {
+    friend AbstractInstance;
+
+  public:
+    static void destroy();
+
+  private:
+    ~List();
+  } list __attribute__((init_priority(AsyncFw_STATIC_INIT_PRIORITY_A + 2)));
 };
 
 template <typename T>

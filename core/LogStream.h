@@ -151,7 +151,7 @@ public:
   LogStream &flush();
 
 private:
-  static class Data {
+  inline static class Data {
     friend LogStream;
 
   public:
@@ -165,7 +165,7 @@ private:
     void (*completed)(const Message &, uint8_t) = &console_output;
     std::vector<std::string> functionPrefixIgnoreList_;
     std::string senderPrefix_;
-  } data;
+  } data __attribute__((init_priority(65530)));
 
   void before();
   void after();
