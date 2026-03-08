@@ -45,7 +45,6 @@ void AbstractThreadPool::quit() {
       std::lock_guard<std::mutex> lock(mutex);
       if (threads_.empty()) break;
       t = threads_.back();
-      threads_.pop_back();
     }
     t->destroy();
   }
