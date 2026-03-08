@@ -49,8 +49,8 @@ public:
 
   Instance() : value(nullptr) { append(i_ = this); }
   virtual ~Instance() override {
-    if (value) delete value;
     remove(i_);
+    if (value) delete value;
   }
 
 protected:
