@@ -15,7 +15,7 @@ void AbstractInstance::List::destroy() {
 
 AbstractInstance::List::~List() {
   if (!empty()) {
-    lsError() << "instance list not empty:" << size();
+    lsDebug() << LogStream::Color::Red << "instance list not empty:" << size();
     destroy();
   }
   lsDebug() << size();
