@@ -23,7 +23,6 @@ AbstractInstance::List::~List() {
 void AbstractInstance::append(AbstractInstance *_i) {
   std::vector<AbstractInstance *>::iterator it = std::lower_bound(list.begin(), list.end(), _i, [](const AbstractInstance *i1, const AbstractInstance *i2) { return i1 < i2; });
   list.insert(it, _i);
-  lsDebug();
 }
 
 void AbstractInstance::remove(AbstractInstance *_i) {
@@ -33,5 +32,4 @@ void AbstractInstance::remove(AbstractInstance *_i) {
   }
   std::vector<AbstractInstance *>::iterator it = std::lower_bound(list.begin(), list.end(), _i, [](const AbstractInstance *i1, const AbstractInstance *i2) { return i1 < i2; });
   list.erase(it);
-  lsDebug();
 }
