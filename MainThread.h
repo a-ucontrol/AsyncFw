@@ -25,6 +25,8 @@ class MainThread : private Thread
                    private QObject
 #endif
 {
+  friend class Instance<MainThread>;
+
 public:
   static int exec() {
 #ifndef USE_QAPPLICATION
@@ -93,6 +95,7 @@ private:
       ::close(eventfd_);
     }
 #endif
+    instance_.value = nullptr;
     AbstractInstance::List::destroy();
     clearId();
   }
@@ -246,5 +249,10 @@ private:
   int state_ = 0;
 #endif
   static MainThread mainThread_;
+  static class Instance : public AsyncFw::Instance<MainThread> {
+  public:
+    Instance();
+  } instance_;
 };
+inline MainThread MainThread::mainThread_;
 }  // namespace AsyncFw
