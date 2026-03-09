@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <string>
 
 namespace AsyncFw {
 class AbstractInstance {
@@ -21,6 +22,8 @@ protected:
   virtual void destroyValue() = 0;
   void append(AbstractInstance *);
   void remove(AbstractInstance *);
+
+  std::string name;
 
 private:
   static class List list;
@@ -47,7 +50,10 @@ public:
   static void set(T *p) { i_->value = p; }
   static T *get() { return i_->value; }
 
-  Instance() : value(nullptr) { append(i_ = this); }
+  Instance(const std::string &_name = {}) : value(nullptr) {
+    name = _name;
+    append(i_ = this);
+  }
   virtual ~Instance() override {
     if (value) delete value;
     remove(i_);

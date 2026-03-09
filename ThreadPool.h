@@ -91,7 +91,7 @@ public:
   }
 
 private:
-  inline static AsyncFw::Instance<ThreadPool> instance_;
+  inline static AsyncFw::Instance<ThreadPool> instance_{"ThreadPool"};
   std::vector<AbstractThreadPool::Thread *> workThreads_;
   int workThreadsSize;
 };
