@@ -12,14 +12,14 @@ public:
 int main(int argc, char *argv[]) {
   AsyncFw::LogStream::setTimeFormat("%Y-%m-%d %H:%M:%S", true);
 
-  AsyncFw::AbstractThread *_lt = new AsyncFw::Thread("LogThread");
-  _lt->start();
-  _lt->invokeMethod([]() { AsyncFw::Instance<AsyncFw::Log>::create(); }, true);
+  //AsyncFw::AbstractThread *_lt = new AsyncFw::Thread("LogThread");
+  //_lt->start();
+  //_lt->invokeMethod([]() { AsyncFw::Instance<AsyncFw::Log>::create(); }, true);
 
   Pool *threadPool = AsyncFw::Instance<AsyncFw::ThreadPool>::create<Pool>("ExampeThreadPool");
   logInfo() << threadPool->text();
-  //AsyncFw::AbstractThread *_lt = AsyncFw::ThreadPool::instance()->createThread("LogThread");
-  //_lt->invokeMethod([]() { AsyncFw::Instance<AsyncFw::Log>::create(); }, true);
+  AsyncFw::AbstractThread *_lt = AsyncFw::ThreadPool::instance()->createThread("LogThread");
+  _lt->invokeMethod([]() { AsyncFw::Instance<AsyncFw::Log>::create(); }, true);
 
   AsyncFw::AbstractThread *_t = AsyncFw::ThreadPool::instance()->createThread("SyncExample");
 

@@ -96,7 +96,6 @@ private:
     }
 #endif
     instance_.value = nullptr;
-    AbstractInstance::List::destroy();
     clearId();
   }
 #ifdef USE_QAPPLICATION
