@@ -72,6 +72,7 @@ public:
       return true;
     }
     if (std::this_thread::get_id() == id()) {
+      processTasks();
       method();
       return true;
     }
@@ -158,6 +159,7 @@ protected:
   void exec();
 
 private:
+  void processTasks() const;
   Private &private_;
 };
 

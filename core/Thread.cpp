@@ -577,6 +577,14 @@ void AbstractThread::exec() {
   private_.mutex.lock();
 }
 
+void AbstractThread::processTasks() const {
+  {  //lock scope
+    LockGuard lock(private_.mutex);
+    std::swap(private_.process_tasks_, private_.tasks);
+  }
+  private_.process_tasks();
+}
+
 void AbstractThread::Private::wake() {
   if (wake_) return;
   warning_if(std::this_thread::get_id() == id) << LogStream::Color::Red << '(' + name + ')';
