@@ -171,7 +171,7 @@ void AbstractLog::stopTimer(int *timerId) {
   }
 }
 
-Log::Instance Log::instance_ __attribute__((init_priority(AsyncFw_STATIC_INIT_PRIORITY + 4))) {"Log"};
+Log::Instance Log::instance_{"Log"};
 
 void Log::Instance::created() {
   LogStream::setCompleted(&lsAppend);
