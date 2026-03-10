@@ -5,7 +5,7 @@
 
 using namespace AsyncFw;
 
-AbstractInstance::List AbstractInstance::list __attribute__((init_priority(AsyncFw_STATIC_INIT_PRIORITY + 2)));
+AbstractInstance::List AbstractInstance::list __attribute__((init_priority(AsyncFw_STATIC_INIT_PRIORITY + 1)));
 
 void AbstractInstance::List::destroy() {
   lsDebug() << list.size();
