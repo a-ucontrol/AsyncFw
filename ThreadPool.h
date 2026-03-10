@@ -41,7 +41,7 @@ private:
   struct Compare {
     bool operator()(const AbstractThread *t1, const AbstractThread *t2) const { return t1 < t2; }
   };
-  inline static List pools_;
+  static List pools_;
   std::string name_;
 };
 
@@ -91,7 +91,7 @@ public:
   }
 
 private:
-  inline static AsyncFw::Instance<ThreadPool> instance_{"ThreadPool"};
+  static AsyncFw::Instance<ThreadPool> instance_;
   std::vector<AbstractThreadPool::Thread *> workThreads_;
   int workThreadsSize;
 };

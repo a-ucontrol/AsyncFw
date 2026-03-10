@@ -4,6 +4,8 @@
 
 using namespace AsyncFw;
 
+AbstractThreadPool::List AbstractThreadPool::pools_ __attribute__((init_priority(AsyncFw_STATIC_INIT_PRIORITY + 3)));
+
 AbstractThreadPool::List::~List() {
   if (!empty()) {
     lsError() << "thread pool list not empty:" << size();
@@ -137,3 +139,5 @@ AbstractThreadPool::Thread *ThreadPool::getThread() {
   }
   return _t;
 }
+
+Instance<ThreadPool> ThreadPool::instance_ __attribute__((init_priority(AsyncFw_STATIC_INIT_PRIORITY + 3))) {"ThreadPool"};
