@@ -578,6 +578,7 @@ void AbstractThread::exec() {
 }
 
 void AbstractThread::processTasks() const {
+  checkCurrentThread();
   private_.process_tasks();
   {  //lock scope
     LockGuard lock(private_.mutex);
