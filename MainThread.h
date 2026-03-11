@@ -30,22 +30,22 @@ class MainThread : private Thread
 public:
   static int exec() {
 #ifndef USE_QAPPLICATION
-    if (instance_.value->running()) return -1;
-    instance_.value->Thread::exec();
-    return instance_.value->code_;
+    if (mt_.running()) return -1;
+    mt_.Thread::exec();
+    return mt_.code_;
 #else
-    instance_.value->state_ = 1;
+    mt_.state_ = 1;
     return qApp->exec();
 #endif
   }
   static void exit(int code = 0) {
 #ifdef EXIT_ON_UNIX_SIGNAL
-    instance_.value->code_ = code;
-    if (instance_.value->eventfd_ >= 0) eventfd_write(instance_.value->eventfd_, 1);
+    mt_.code_ = code;
+    if (mt_.eventfd_ >= 0) eventfd_write(mt_.eventfd_, 1);
 #else
   #ifndef USE_QAPPLICATION
-    instance_.value->code_ = code;
-    instance_.value->Thread::quit();
+    mt_.code_ = code;
+    mt_.Thread::quit();
   #else
     qApp->exit(code);
   #endif
@@ -95,7 +95,6 @@ private:
       ::close(eventfd_);
     }
 #endif
-    instance_.value = nullptr;
     clearId();
   }
 #ifdef USE_QAPPLICATION
@@ -247,9 +246,7 @@ private:
 #ifdef USE_QAPPLICATION
   int state_ = 0;
 #endif
-  static AsyncFw::Instance<MainThread> instance_;
-  inline static struct CreateInstance {
-    CreateInstance() { AsyncFw::Instance<MainThread>::create(); }
-  } _ci;
+  static MainThread mt_;
 };
+inline MainThread MainThread::mt_;
 }  // namespace AsyncFw
