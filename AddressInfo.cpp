@@ -11,64 +11,55 @@
 using namespace AsyncFw;
 
 struct AddressInfo::Private {
-  struct cbData {
-    ares_channel c;
-    std::unordered_map<int, AbstractThread::PollEvents> m;
-    AddressInfo *ai;
-    int tid;
-  };
-
-  Private() {
-    int status = ares_library_init(ARES_LIB_INIT_ALL);
-    if (status != ARES_SUCCESS) {
-      lsError("Ares library init: {}", ares_strerror(status));
-      return;
-    }
+  Private(AddressInfo *_ai) : ai(_ai) {
     thread = AbstractThread::currentThread();
-    _data = new Private::cbData;
     memset(&options, 0, sizeof(options));
+    options.sock_state_cb_data = this;
     options.sock_state_cb = [](void *data, int s, int read, int write) {
       lsTrace("change state fd {} read:{} write:{}", s, read, write);
       AbstractThread::PollEvents e = (read) ? AbstractThread::PollIn : AbstractThread::PollNo | (write) ? AbstractThread::PollOut : AbstractThread::PollNo;
-      std::unordered_map<int, AbstractThread::PollEvents>::iterator it = static_cast<cbData *>(data)->m.find(s);
-      if (it != static_cast<cbData *>(data)->m.end()) {
+      std::unordered_map<int, AbstractThread::PollEvents>::iterator it = static_cast<Private *>(data)->m.find(s);
+      if (it != static_cast<Private *>(data)->m.end()) {
         if (!e) {
-          static_cast<cbData *>(data)->ai->private_->thread->removePollDescriptor(s);
-          static_cast<cbData *>(data)->m.erase(it);
+          static_cast<Private *>(data)->thread->removePollDescriptor(s);
+          static_cast<Private *>(data)->m.erase(it);
           const ares_fd_events_t _ae = {s, ARES_FD_EVENT_NONE};
-          ares_process_fds(static_cast<cbData *>(data)->c, &_ae, 1, 0);
+          ares_process_fds(static_cast<Private *>(data)->channel, &_ae, 1, 0);
         } else if (!(it->second & e))
-          static_cast<cbData *>(data)->ai->private_->thread->modifyPollDescriptor(s, e);
+          static_cast<Private *>(data)->thread->modifyPollDescriptor(s, e);
         return;
       }
 
       lsTrace() << "append poll descriptor" << s;
-      static_cast<cbData *>(data)->m.insert({s, e});
+      static_cast<Private *>(data)->m.insert({s, e});
 
-      static_cast<cbData *>(data)->ai->private_->thread->appendPollTask(s, e, [fd = s, ch = static_cast<cbData *>(data)->c](int _e) {
+      static_cast<Private *>(data)->thread->appendPollTask(s, e, [fd = s, ch = static_cast<Private *>(data)->channel](int _e) {
         lsDebug("poll event: {}, fd: {}", _e, fd) << ((_e != AbstractThread::PollOut) ? fd : 0);
         const ares_fd_events_t _ae = {fd, (_e == AbstractThread::PollOut) ? ARES_FD_EVENT_WRITE : ARES_FD_EVENT_READ};
         ares_process_fds(ch, &_ae, 1, 0);
       });
     };
+    int status = ares_init_options(&channel, &options, ARES_OPT_SOCK_STATE_CB);
+    if (status != ARES_SUCCESS) { lsError("Ares options init: {}", ares_strerror(status)); }
+    lsTrace();
   }
 
   ~Private() {
     ares_destroy(channel);
-    ares_library_cleanup();
-    delete _data;
     lsTrace();
   }
 
+  std::unordered_map<int, AbstractThread::PollEvents> m;
   ares_channel channel;
   ares_options options;
   AbstractThread *thread;
+  AddressInfo *ai;
   int timeout = 10000;
-  cbData *_data;
+  int tid = -1;
 };
 
 AddressInfo::AddressInfo() {
-  private_ = new Private();
+  private_ = new Private(this);
   lsTrace();
 }
 
@@ -78,19 +69,11 @@ AddressInfo::~AddressInfo() {
 }
 
 void AddressInfo::resolve(const std::string &name, Family f) {
-  private_->_data->ai = this;
-
-  private_->_data->tid = private_->thread->appendTimerTask(private_->timeout, [this]() { ares_cancel(private_->_data->c); });
-
-  private_->options.sock_state_cb_data = private_->_data;
-
-  int status = ares_init_options(&private_->channel, &private_->options, ARES_OPT_SOCK_STATE_CB);
-  if (status != ARES_SUCCESS) {
-    lsError("Ares options init: {}", ares_strerror(status));
+  if (private_->tid >= 0) {
+    lsError() << "timer task already exists";
     return;
   }
-
-  private_->_data->c = private_->channel;
+  private_->tid = private_->thread->appendTimerTask(private_->timeout, [this]() { ares_cancel(private_->channel); });
 
   struct ares_addrinfo_hints hints;
   memset(&hints, 0, sizeof(hints));
@@ -101,7 +84,8 @@ void AddressInfo::resolve(const std::string &name, Family f) {
   ares_getaddrinfo(
       private_->channel, name.c_str(), nullptr, &hints,
       [](void *data, int status, int, struct ares_addrinfo *result) {
-        static_cast<Private::cbData *>(data)->ai->private_->thread->removeTimer(static_cast<Private::cbData *>(data)->tid);
+        static_cast<Private *>(data)->thread->removeTimer(static_cast<Private *>(data)->tid);
+        static_cast<Private *>(data)->tid = -1;
         if (result) {
           std::vector<std::string> _r;
           (void)status;
@@ -126,13 +110,13 @@ void AddressInfo::resolve(const std::string &name, Family f) {
             _r.push_back(addr_buf);
           }
           ares_freeaddrinfo(result);
-          static_cast<Private::cbData *>(data)->ai->completed(0, _r);
+          static_cast<Private *>(data)->ai->completed(0, _r);
         } else {
-          static_cast<Private::cbData *>(data)->ai->completed(-1, std::vector<std::string> {});
+          static_cast<Private *>(data)->ai->completed(-1, std::vector<std::string> {});
           lsWarning("Result: {}", ares_strerror(status));
         }
       },
-      private_->_data);
+      private_);
 }
 
 void AddressInfo::setTimeout(int _timeout) { private_->timeout = _timeout; }
