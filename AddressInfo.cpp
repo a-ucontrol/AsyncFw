@@ -13,7 +13,6 @@ using namespace AsyncFw;
 struct AddressInfo::Private {
   struct cbData {
     ares_channel c;
-    AbstractThread *t;
     std::unordered_map<int, AbstractThread::PollEvents> m;
     AddressInfo *ai;
     int tid;
@@ -33,19 +32,19 @@ struct AddressInfo::Private {
       std::unordered_map<int, AbstractThread::PollEvents>::iterator it = static_cast<cbData *>(data)->m.find(s);
       if (it != static_cast<cbData *>(data)->m.end()) {
         if (!e) {
-          static_cast<cbData *>(data)->t->removePollDescriptor(s);
+          static_cast<cbData *>(data)->ai->private_->thread->removePollDescriptor(s);
           static_cast<cbData *>(data)->m.erase(it);
           const ares_fd_events_t _ae = {s, ARES_FD_EVENT_NONE};
           ares_process_fds(static_cast<cbData *>(data)->c, &_ae, 1, 0);
         } else if (!(it->second & e))
-          static_cast<cbData *>(data)->t->modifyPollDescriptor(s, e);
+          static_cast<cbData *>(data)->ai->private_->thread->modifyPollDescriptor(s, e);
         return;
       }
 
       lsTrace() << "append poll descriptor" << s;
       static_cast<cbData *>(data)->m.insert({s, e});
 
-      static_cast<cbData *>(data)->t->appendPollTask(s, e, [fd = s, ch = static_cast<cbData *>(data)->c](int _e) {
+      static_cast<cbData *>(data)->ai->private_->thread->appendPollTask(s, e, [fd = s, ch = static_cast<cbData *>(data)->c](int _e) {
         lsDebug("poll event: {}, fd: {}", _e, fd) << ((_e != AbstractThread::PollOut) ? fd : 0);
         const ares_fd_events_t _ae = {fd, (_e == AbstractThread::PollOut) ? ARES_FD_EVENT_WRITE : ARES_FD_EVENT_READ};
         ares_process_fds(ch, &_ae, 1, 0);
@@ -63,26 +62,28 @@ struct AddressInfo::Private {
   ares_options options;
   AbstractThread *thread;
   int timeout = 10000;
+  cbData *_data;
 };
 
 AddressInfo::AddressInfo() {
   private_ = new Private();
+  private_->_data = new Private::cbData;
   private_->thread = AbstractThread::currentThread();
   lsTrace();
 }
 
 AddressInfo::~AddressInfo() {
+  private_->thread->invokeMethod([_p = private_->_data]() { delete _p; });
   delete private_;
   lsTrace();
 }
 
 void AddressInfo::resolve(const std::string &name, Family f) {
-  Private::cbData *_data = new Private::cbData;
-  _data->ai = this;
+  private_->_data->ai = this;
 
-  _data->tid = private_->thread->appendTimerTask(private_->timeout, [_data]() { ares_cancel(_data->c); });
+  private_->_data->tid = private_->thread->appendTimerTask(private_->timeout, [this]() { ares_cancel(private_->_data->c); });
 
-  private_->options.sock_state_cb_data = _data;
+  private_->options.sock_state_cb_data = private_->_data;
 
   int status = ares_init_options(&private_->channel, &private_->options, ARES_OPT_SOCK_STATE_CB);
   if (status != ARES_SUCCESS) {
@@ -90,8 +91,7 @@ void AddressInfo::resolve(const std::string &name, Family f) {
     return;
   }
 
-  _data->c = private_->channel;
-  _data->t = private_->thread;
+  private_->_data->c = private_->channel;
 
   struct ares_addrinfo_hints hints;
   memset(&hints, 0, sizeof(hints));
@@ -103,7 +103,6 @@ void AddressInfo::resolve(const std::string &name, Family f) {
       private_->channel, name.c_str(), nullptr, &hints,
       [](void *data, int status, int, struct ares_addrinfo *result) {
         static_cast<Private::cbData *>(data)->ai->private_->thread->removeTimer(static_cast<Private::cbData *>(data)->tid);
-        static_cast<Private::cbData *>(data)->ai->private_->thread->invokeMethod([data]() { delete static_cast<Private::cbData *>(data); });
         if (result) {
           std::vector<std::string> _r;
           (void)status;
@@ -134,7 +133,7 @@ void AddressInfo::resolve(const std::string &name, Family f) {
           lsWarning("Result: {}", ares_strerror(status));
         }
       },
-      _data);
+      private_->_data);
 }
 
 void AddressInfo::setTimeout(int _timeout) { private_->timeout = _timeout; }
