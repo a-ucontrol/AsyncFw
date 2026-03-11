@@ -105,8 +105,6 @@ set(AsyncFw_HEADERS
 )
 
 set(AsyncFw_SOURCES
-  "MainThread.cpp"
-
   "DataArraySocket.cpp"
   "DataArrayTcpServer.cpp"
   "DataArrayTcpClient.cpp"

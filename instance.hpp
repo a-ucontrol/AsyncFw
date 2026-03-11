@@ -15,7 +15,6 @@ public:
   private:
     ~List();
   };
-  static void destroyValues();
 
 protected:
   virtual ~AbstractInstance() = default;

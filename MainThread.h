@@ -95,6 +95,7 @@ private:
       ::close(eventfd_);
     }
 #endif
+    AbstractInstance::List::destroy();
     clearId();
   }
 #ifdef USE_QAPPLICATION
