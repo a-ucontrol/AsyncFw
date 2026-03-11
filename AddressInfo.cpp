@@ -24,7 +24,8 @@ struct AddressInfo::Private {
       lsError("Ares library init: {}", ares_strerror(status));
       return;
     }
-
+    thread = AbstractThread::currentThread();
+    _data = new Private::cbData;
     memset(&options, 0, sizeof(options));
     options.sock_state_cb = [](void *data, int s, int read, int write) {
       lsTrace("change state fd {} read:{} write:{}", s, read, write);
@@ -55,6 +56,7 @@ struct AddressInfo::Private {
   ~Private() {
     ares_destroy(channel);
     ares_library_cleanup();
+    delete _data;
     lsTrace();
   }
 
@@ -67,13 +69,10 @@ struct AddressInfo::Private {
 
 AddressInfo::AddressInfo() {
   private_ = new Private();
-  private_->_data = new Private::cbData;
-  private_->thread = AbstractThread::currentThread();
   lsTrace();
 }
 
 AddressInfo::~AddressInfo() {
-  private_->thread->invokeMethod([_p = private_->_data]() { delete _p; });
   delete private_;
   lsTrace();
 }
