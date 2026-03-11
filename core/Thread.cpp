@@ -433,11 +433,9 @@ void AbstractThread::exec() {
         continue;
       }
       if (private_.state & Private::WaitFinished) break;
-      if (private_.state == Private::WaitInterrupted) {
-        private_.state = Private::Interrupted;
-        private_.condition_variable.notify_all();
-      }
+      if (private_.state == Private::WaitInterrupted) private_.state = Private::Interrupted;
 
+      private_.condition_variable.notify_all();
       std::chrono::time_point now = std::chrono::steady_clock::now();
 
       if (private_.wakeup > now) {
@@ -638,15 +636,15 @@ void AbstractThread::start() {
       LockGuard lock_list(Private::list.mutex);
       LockGuard lock(private_.mutex);
       setId();
+      private_.condition_variable.notify_all();
     }
-    private_.condition_variable.notify_all();
     exec();
     {  //lock scope
       LockGuard lock_list(Private::list.mutex);
       LockGuard lock(private_.mutex);
       clearId();
+      private_.condition_variable.notify_all();
     }
-    private_.condition_variable.notify_all();
   }};
   t.detach();
   private_.condition_variable.wait(lock);
