@@ -578,6 +578,7 @@ void AbstractThread::exec() {
 }
 
 void AbstractThread::processTasks() const {
+  private_.process_tasks();
   {  //lock scope
     LockGuard lock(private_.mutex);
     std::swap(private_.process_tasks_, private_.tasks);
