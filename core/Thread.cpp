@@ -641,12 +641,12 @@ void AbstractThread::start() {
     }
     private_.condition_variable.notify_all();
     exec();
+    private_.condition_variable.notify_all();
     {  //lock scope
       LockGuard lock_list(Private::list.mutex);
       LockGuard lock(private_.mutex);
       clearId();
     }
-    private_.condition_variable.notify_all();
   }};
   t.detach();
   private_.condition_variable.wait(lock);
