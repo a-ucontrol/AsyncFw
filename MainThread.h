@@ -25,9 +25,12 @@ class MainThread : private Thread
                    private QObject
 #endif
 {
-  friend class Instance<MainThread>;
-
 public:
+  template <typename M>
+  static void setExitTask(M method) {
+    if (mt_.exitTask && !mt_.invokeMethod([_p = mt_.exitTask]() { delete _p; })) delete mt_.exitTask;
+    mt_.exitTask = new Thread::Task(std::forward<M>(method));
+  }
   static int exec() {
 #ifndef USE_QAPPLICATION
     if (mt_.running()) return -1;
@@ -39,22 +42,25 @@ public:
 #endif
   }
   static void exit(int code = 0) {
-#ifdef EXIT_ON_UNIX_SIGNAL
     mt_.code_ = code;
+#ifdef EXIT_ON_UNIX_SIGNAL
     if (mt_.eventfd_ >= 0) eventfd_write(mt_.eventfd_, 1);
 #else
-  #ifndef USE_QAPPLICATION
-    mt_.code_ = code;
+    mt_.exitTask->invoke();
+#endif
+  }
+  static void quit() {
+#ifndef USE_QAPPLICATION
     mt_.Thread::quit();
-  #else
-    qApp->exit(code);
-  #endif
+#else
+    qApp->exit(mt_.code_);
 #endif
   }
 
 private:
   MainThread() : Thread("Main") {
     setId();
+    setExitTask([]() { quit(); });
 #ifdef USE_QAPPLICATION
     AbstractThread::currentThread()->invokeMethod([this]() {
       QObject::connect(qApp, &QCoreApplication::aboutToQuit, [this]() {
@@ -74,13 +80,7 @@ private:
   #endif
       appendPollTask(eventfd_, AbstractThread::PollIn, [this](AbstractThread::PollEvents) {
         eventfd_t _v;
-        if (eventfd_read(eventfd_, &_v) == 0) {
-  #ifndef USE_QAPPLICATION
-          Thread::quit();
-  #else
-        qApp->exit(code_);
-  #endif
-        }
+        if (eventfd_read(eventfd_, &_v) == 0) exitTask->invoke();
       });
   #ifdef USE_QAPPLICATION
       startedEvent();
@@ -95,6 +95,7 @@ private:
       ::close(eventfd_);
     }
 #endif
+    delete exitTask;
     AbstractInstance::List::destroy();
     clearId();
   }
@@ -237,7 +238,7 @@ private:
 
   QList<std::shared_ptr<Poll>> notifiers;
 #endif
-
+  AbstractThread::AbstractTask *exitTask = nullptr;
 #if defined EXIT_ON_UNIX_SIGNAL || !defined USE_QAPPLICATION
   int code_ = 0;
 #endif
