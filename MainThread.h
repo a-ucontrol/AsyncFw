@@ -239,9 +239,7 @@ private:
   QList<std::shared_ptr<Poll>> notifiers;
 #endif
   AbstractThread::AbstractTask *exitTask = nullptr;
-#if defined EXIT_ON_UNIX_SIGNAL || !defined USE_QAPPLICATION
   int code_ = 0;
-#endif
 #ifdef EXIT_ON_UNIX_SIGNAL
   int eventfd_ = -1;
 #endif
