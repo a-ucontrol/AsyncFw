@@ -89,10 +89,10 @@ protected:
   int timerIdAutosave = -1;
 
 private:
-  static class Instance : public AsyncFw::Instance<Log> {
+  inline static class Instance : public AsyncFw::Instance<Log> {
     using AsyncFw::Instance<Log>::Instance;
     void created() override;
-  } instance_;
+  } instance_ {"Log"};
   static void lsAppend(const Message &m, uint8_t t);
 };
 }  // namespace AsyncFw
