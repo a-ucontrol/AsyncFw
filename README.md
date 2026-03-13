@@ -9,9 +9,9 @@ Timer example:
 ```c++
 #include <iostream>
 #include <chrono>
-#include <AsyncFw/core/Thread.h>
-#include <AsyncFw/MainThread.h>
-#include <AsyncFw/Timer.h>
+#include <core/Thread.h>
+#include <MainThread.h>
+#include <Timer.h>
 
 int main(int argc, char *argv[]) {
   int cnt = 0;
@@ -35,9 +35,9 @@ int main(int argc, char *argv[]) {
 PollNotifier example (Unix only):
 ```c++
 #include <iostream>
-#include <AsyncFw/core/Thread.h>
-#include <AsyncFw/MainThread.h>
-#include <AsyncFw/PollNotifier.h>
+#include <core/Thread.h>
+#include <MainThread.h>
+#include <PollNotifier.h>
 
 int main(int argc, char *argv[]) {
   AsyncFw::PollNotifier notifier(STDIN_FILENO);
@@ -60,8 +60,8 @@ int main(int argc, char *argv[]) {
 ```
 Log example:
 ```c++
-#include <AsyncFw/Log.h>
-#include <AsyncFw/MainThread.h>
+#include <Log.h>
+#include <MainThread.h>
 
 int main(int argc, char *argv[]) {
   AsyncFw::Log(1000, "log-file-name");
@@ -80,9 +80,9 @@ int main(int argc, char *argv[]) {
 ```
 Executing method in another thread example:
 ```c++
-#include <AsyncFw/core/Thread.h>
-#include <AsyncFw/MainThread.h>
-#include <AsyncFw/Log.h>
+#include <core/Thread.h>
+#include <MainThread.h>
+#include <Log.h>
 
 int main(int argc, char *argv[]) {
   AsyncFw::AbstractThread *_mainThread = AsyncFw::AbstractThread::currentThread();
@@ -126,11 +126,11 @@ int main(int argc, char *argv[]) {
 ```
 FunctionConnector example:
 ```c++
-#include <AsyncFw/core/Thread.h>
-#include <AsyncFw/core/FunctionConnector.h>
-#include <AsyncFw/Timer.h>
-#include <AsyncFw/MainThread.h>
-#include <AsyncFw/Log.h>
+#include <core/Thread.h>
+#include <core/FunctionConnector.h>
+#include <Timer.h>
+#include <MainThread.h>
+#include <Log.h>
 
 class Sender {
 public:
@@ -186,15 +186,15 @@ int main(int argc, char *argv[]) {
 ```
 ThreadPool example:
 ```c++
-#include <AsyncFw/core/Thread.h>
-#include <AsyncFw/ThreadPool.h>
-#include <AsyncFw/MainThread.h>
-#include <AsyncFw/Log.h>
+#include <core/Thread.h>
+#include <ThreadPool.h>
+#include <MainThread.h>
+#include <Log.h>
 
 int main(int argc, char *argv[]) {
-  AsyncFw::ThreadPool threadPool;
+  AsyncFw::ThreadPool *threadPool = AsyncFw::Instance<AsyncFw::ThreadPool>::create("ExampeThreadPool");
 
-  AsyncFw::AbstractThread *_t = threadPool.createThread("SyncExample");
+  AsyncFw::AbstractThread *_t = threadPool->createThread("SyncExample");
 
   AsyncFw::ThreadPool::sync(_t, []() {
     AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::currentThread();
@@ -242,11 +242,11 @@ int main(int argc, char *argv[]) {
 ```
 Coroutine example:
 ```c++
-#include <AsyncFw/core/Thread.h>
-#include <AsyncFw/ThreadPool.h>
-#include <AsyncFw/Coroutine.h>
-#include <AsyncFw/MainThread.h>
-#include <AsyncFw/Log.h>
+#include <thread>
+#include <MainThread.h>
+#include <ThreadPool.h>
+#include <Coroutine.h>
+#include <Log.h>
 
 AsyncFw::CoroutineTask task() {
   AsyncFw::CoroutineAwait await([](AsyncFw::CoroutineHandle h) {
@@ -268,7 +268,7 @@ AsyncFw::CoroutineTask task() {
 }
 
 int main(int argc, char *argv[]) {
-  AsyncFw::ThreadPool threadPool;
+  AsyncFw::Instance<AsyncFw::ThreadPool>::create("CoroutineExamplePool");
 
   task();
 
@@ -314,8 +314,8 @@ Tls socket example:
 class TcpSocket : public AsyncFw::AbstractTlsSocket {
 public:
   void stateEvent() {
-    logDebug() << "State event:" << static_cast<int>(state());
-    if (state() == Active) {
+    logDebug() << "State event:" << static_cast<int>(state_);
+    if (state_ == Active) {
       logDebug() << "Send request";
       write("GET /a-ucontrol/AsyncFw HTTP/1.1\r\nHost:github.com\r\nConnection:close\r\n\r\n");
     } else if (error() >= Closed) {
@@ -368,10 +368,10 @@ int main(int argc, char *argv[]) {
 Container task example:
 ```c++
 #include <queue>
-#include <AsyncFw/MainThread.h>
-#include <AsyncFw/Timer.h>
-#include <AsyncFw/Task.h>
-#include <AsyncFw/core/LogStream.h>
+#include <MainThread.h>
+#include <Timer.h>
+#include <Task.h>
+#include <core/LogStream.h>
 
 int main(int argc, char *argv[]) {
   AsyncFw::Thread thread;
@@ -406,14 +406,14 @@ int main(int argc, char *argv[]) {
 ```
 Listen socket example:
 ```c++
-#include <AsyncFw/MainThread.h>
-#include <AsyncFw/core/TlsSocket.h>
-#include <AsyncFw/Log.h>
+#include <MainThread.h>
+#include <core/TlsSocket.h>
+#include <Log.h>
 
 class TcpSocket : public AsyncFw::AbstractTlsSocket {
 public:
   static TcpSocket *create() { return new TcpSocket; }
-  void stateEvent() { logDebug() << "State event:" << static_cast<int>(state()); }
+  void stateEvent() { logDebug() << "State event:" << static_cast<int>(state_); }
   void readEvent() { received(read()); }
   AsyncFw::FunctionConnectorProtected<TcpSocket>::Connector<const AsyncFw::DataArray &> received;
 };
