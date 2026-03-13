@@ -41,13 +41,16 @@ public:
     return qApp->exec();
 #endif
   }
-  static void exit(int code = 0) {
-    mt_.code_ = code;
+  static void exit() {
 #ifdef EXIT_ON_UNIX_SIGNAL
     if (mt_.eventfd_ >= 0) eventfd_write(mt_.eventfd_, 1);
 #else
     mt_.exitTask->invoke();
 #endif
+  }
+  static void exit(int code) {
+    mt_.code_ = code;
+    exit();
   }
   static void quit() {
 #ifndef USE_QAPPLICATION
