@@ -1,3 +1,10 @@
+/*
+Copyright (c) 2026 Alexandr Kuzmuk
+
+This file is part of the AsyncFw project. Licensed under the MIT License.
+See {Link: LICENSE file https://mit-license.org} in the project root for full license information.
+*/
+
 #include <thread>
 #include <MainThread.h>
 #include <ThreadPool.h>
