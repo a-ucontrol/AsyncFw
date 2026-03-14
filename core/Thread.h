@@ -92,22 +92,6 @@ public:
     }
     return true;
   }
-
-  static AbstractThread *currentThread();
-  static AbstractThread::LockGuard threads(std::vector<AbstractThread *> **);
-
-  virtual void startedEvent();
-  virtual void finishedEvent();
-
-  virtual bool running() const;
-  virtual bool invokeTask(AbstractTask *) const;
-  virtual int appendTimer(int, AbstractTask *);
-  virtual bool modifyTimer(int, int);
-  virtual void removeTimer(int);
-  virtual bool appendPollDescriptor(int, PollEvents, AbstractPollTask *);
-  virtual bool modifyPollDescriptor(int, PollEvents);
-  virtual void removePollDescriptor(int);
-
   template <typename M>
   bool appendPollTask(int fd, PollEvents events, M method) {
     return appendPollDescriptor(fd, events, new PollTask(std::forward<M>(method)));
@@ -116,6 +100,27 @@ public:
   int appendTimerTask(int timeout, M method) {
     return appendTimer(timeout, new Task(std::forward<M>(method)));
   }
+
+  /*! \brief Returns a pointer to the AsyncFw::AbstractThread that manages the currently executing thread. */
+  static AbstractThread *currentThread();
+  /*! \brief Assigns a pointer to the list of all threads. \param std::vector<AbstractThread *> **pointer \return AbstractThread::LockGuard */
+  static AbstractThread::LockGuard threads(std::vector<AbstractThread *> **);
+
+  /*! \brief This call from thread when it starts executing. */
+  virtual void startedEvent();
+  /*! \brief This call from the thread when it finishing execution. */
+  virtual void finishedEvent();
+
+  /*! \brief Returns true if the managed thread is running. */
+  virtual bool running() const;
+  /*! \brief Runs a task in a managed thread. \param Poiner to AbstractTask \return True if the task is added to the queue */
+  virtual bool invokeTask(AbstractTask *) const;
+  virtual int appendTimer(int, AbstractTask *);
+  virtual bool modifyTimer(int, int);
+  virtual void removeTimer(int);
+  virtual bool appendPollDescriptor(int, PollEvents, AbstractPollTask *);
+  virtual bool modifyPollDescriptor(int, PollEvents);
+  virtual void removePollDescriptor(int);
 
   void start();
   void requestInterrupt();
