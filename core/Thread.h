@@ -41,6 +41,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 namespace AsyncFw {
 class LogStream;
+/*! \brief AsyncFw::AbstractThread manage the thread. */
 class AbstractThread {
   friend LogStream &operator<<(LogStream &, const AbstractThread &);
   struct Private;
@@ -177,12 +178,14 @@ private:
 
 class AbstractSocket;
 
+/*! \brief AsyncFw::Thread thread with sockets. */
 class Thread : public AbstractThread {
   friend AbstractSocket;
   friend class ListenSocket;
   friend LogStream &operator<<(LogStream &, const Thread &);
 
 public:
+  /*! \brief Returns a pointer to the AsyncFw::Thread that manages the currently executing thread. */
   static Thread *currentThread();
   Thread(const std::string & = "Thread");
   ~Thread() override;
