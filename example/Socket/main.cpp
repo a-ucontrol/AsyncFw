@@ -25,6 +25,10 @@ public:
         logNotice() << "Received:" << da;
         logDebug() << da.view(0, 512) << "...";
       }
+      if (h) {
+        h.promise().resume_queued();
+        return;
+      }
       AsyncFw::MainThread::exit(0);
     }
   }
@@ -34,10 +38,32 @@ public:
     da += _da;
   }
 
+  AsyncFw::CoroutineAwait coConnect(const std::string &address, uint16_t port) {
+    connect(address, port);
+    return AsyncFw::CoroutineAwait([this](AsyncFw::CoroutineHandle _h) { h = _h; });
+  }
+
 private:
+  AsyncFw::CoroutineHandle h;
   AsyncFw::DataArray da;
 };
+/*
+AsyncFw::CoroutineTask coroTask(TcpSocket *socket) {
+  AsyncFw::AddressInfo addressInfo;
+  AsyncFw::CoroutineHandle h = co_await addressInfo.coResolve("github.com");
 
+  std::vector<std::string> list = h.promise().data<std::vector<std::string>>();
+  if (list.empty()) {
+    logError("Resolve error");
+    AsyncFw::MainThread::exit(-1);
+    co_return;
+  }
+
+  for (const std::string _s : list) logNotice() << _s;
+  co_await socket->coConnect(list[0], 443);
+  AsyncFw::MainThread::exit(0);
+}
+*/
 int main(int argc, char *argv[]) {
   AsyncFw::TlsContext context;
 
@@ -48,20 +74,38 @@ int main(int argc, char *argv[]) {
   context.setVerifyName("github.com");
   TcpSocket socket;
   socket.setContext(context);
-
+  /*
   AsyncFw::AddressInfo addressInfo;
   addressInfo.resolve("github.com");
-  addressInfo.completed([&socket](int r, const std::vector<std::string> &list) {
-    if (r == 0 && !list.empty()) {
-      for (const std::string _s : list) logNotice() << _s;
-      socket.connect(list[0], 443);
+  addressInfo.completed([&socket](int, const std::vector<std::string> &list) {
+    if (list.empty()) {
+      logError("Resolve error");
+      AsyncFw::MainThread::exit(-1);
+      return;
     }
+    for (const std::string _s : list) logNotice() << _s;
+    socket.connect(list[0], 443);
   });
+*/
+  auto coroTask {[&socket]() -> AsyncFw::CoroutineTask {
+    AsyncFw::AddressInfo addressInfo;
+    AsyncFw::CoroutineHandle h = co_await addressInfo.coResolve("github.com");
+    std::vector<std::string> list = h.promise().data<std::vector<std::string>>();
+    if (list.empty()) {
+      logError("Resolve error");
+      AsyncFw::MainThread::exit(-1);
+      co_return;
+    }
+    for (const std::string _s : list) logNotice() << _s;
+    co_await socket.coConnect(list[0], 443);
+    AsyncFw::MainThread::exit(0);
+  }};
+  coroTask();
 
   logNotice() << "Start Applicaiton";
 
   int ret = AsyncFw::MainThread::exec();
 
-  logNotice() << "End Applicaiton";
+  logNotice() << "End Applicaiton" << ret;
   return ret;
 }

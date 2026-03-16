@@ -6,9 +6,6 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 */
 
 #include <ares.h>
-#include <arpa/inet.h>
-#include <netdb.h>
-#include <unordered_map>
 #include <cstring>
 
 #include "core/Thread.h"
@@ -74,7 +71,6 @@ AddressInfo::~AddressInfo() {
   delete private_;
   lsTrace();
 }
-
 void AddressInfo::resolve(const std::string &name, Family f) {
   if (private_->tid >= 0) {
     lsError() << "timer task already exists";
@@ -93,9 +89,9 @@ void AddressInfo::resolve(const std::string &name, Family f) {
       [](void *data, int status, int, struct ares_addrinfo *result) {
         static_cast<Private *>(data)->thread->removeTimer(static_cast<Private *>(data)->tid);
         static_cast<Private *>(data)->tid = -1;
-        if (result) {
-          std::vector<std::string> _r;
-          (void)status;
+        std::vector<std::string> _r;
+        if (!result) lsWarning("Result: {}", ares_strerror(status));
+        else {
           lsDebug("Result: {}, name: {}", ares_strerror(status), (result->name) ? result->name : "unknown");
           struct ares_addrinfo_node *node;
           for (node = result->nodes; node != nullptr; node = node->ai_next) {
@@ -117,13 +113,22 @@ void AddressInfo::resolve(const std::string &name, Family f) {
             _r.push_back(addr_buf);
           }
           ares_freeaddrinfo(result);
-          static_cast<Private *>(data)->ai->completed(0, _r);
-        } else {
-          static_cast<Private *>(data)->ai->completed(-1, std::vector<std::string> {});
-          lsWarning("Result: {}", ares_strerror(status));
         }
+        static_cast<Private *>(data)->ai->completed(status, _r);
       },
       private_);
 }
 
 void AddressInfo::setTimeout(int _timeout) { private_->timeout = _timeout; }
+
+CoroutineAwait AddressInfo::coResolve(const std::string &name, Family f) {
+  resolve(name, f);
+  return AsyncFw::CoroutineAwait([this](AsyncFw::CoroutineHandle h) {
+    completed(
+        [h](int r, const std::vector<std::string> &list) {
+          h.promise().setData(list);
+          h.resume();
+        },
+        AsyncFw::AbstractFunctionConnector::Connection::Queued);
+  });
+}

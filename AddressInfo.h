@@ -9,6 +9,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #include <string>
 #include "core/FunctionConnector.h"
+#include "Coroutine.h"
 
 #ifndef _WIN32
   #define AF_UNSPEC_ 0
@@ -33,6 +34,7 @@ public:
   void setTimeout(int);
 
   FunctionConnectorProtected<AddressInfo>::Connector<int, const std::vector<std::string> &> completed;
+  AsyncFw::CoroutineAwait coResolve(const std::string &, Family = Inet);
 
 private:
   struct Private *private_;
