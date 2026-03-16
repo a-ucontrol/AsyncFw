@@ -54,17 +54,44 @@ protected:
   std::mutex mutex;
 };
 
+/*!
+ \brief Обеспечивает соединение отправитель -> получатели. Получатели могут быть вызваны в своих потоках (по умолчанию).
+ \brief Другие инструментальные средства реализуют подобную коммуникацию с помощью коллбэков. Коллбэк - это указатель на функцию, поэтому, если вы хотите, чтобы функция обработки уведомила вас о каком-либо событии, вы передаете указатель на другую функцию (коллбэк) в функцию обработки. Затем функция обработки вызывает коллбэк, когда это необходимо.
+ \code{.cpp}
+class Sender {
+public:
+  void send(int value) {
+    event(value);
+  }
+  AsyncFw::FunctionConnectorProtected<Sender>::Connector<int> event;
+};
+ \endcode
+ \code{.cpp}
+class Receiver {
+public:
+  Receiver(const Sender &sender) {
+    sender.evnet([](int val) {
+      logInfo() << val;
+    });
+  }
+};
+ \endcode
+ \brief Пример:
+ \snippet FunctionConnector/main.cpp snippet
+*/
 template <typename... Args>
 class FunctionConnector : public AbstractFunctionConnector {
 public:
   using AbstractFunctionConnector::AbstractFunctionConnector;
+  /*! Отправить */
   template <typename T>
-  Connection &operator()(T f, AbstractFunctionConnector::Connection::Type t = AbstractFunctionConnector::Connection::Default) {
+  Connection &operator()(T f, Connection::Type t = Connection::Default) {
     std::lock_guard<std::mutex> lock(mutex);
 #ifndef __clang_analyzer__
     return *new Connection(f, this, t);
 #endif
   }
+  /*! Подключиться */
   void operator()(Args... args) { send(args...); }
 
 protected:
@@ -112,6 +139,7 @@ protected:
   };
 };
 
+/*! \brief Защищенный коннетор отправителем может быто только владелец. */
 template <typename F>
 class FunctionConnectorProtected {
 public:

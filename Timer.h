@@ -12,6 +12,10 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include "core/FunctionConnector.h"
 
 namespace AsyncFw {
+/*!
+ \brief Timer
+ \snippet Timer/main.cpp snippet
+*/
 class Timer {
 public:
   static void single(int, const std::function<void()> &);

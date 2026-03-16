@@ -5,6 +5,7 @@ This file is part of the AsyncFw project. Licensed under the MIT License.
 See {Link: LICENSE file https://mit-license.org} in the project root for full license information.
 */
 
+//! [snippet]
 #include <iostream>
 #include <chrono>
 #include <MainThread.h>
@@ -28,3 +29,4 @@ int main(int argc, char *argv[]) {
   int ret = AsyncFw::MainThread::exec();
   return ret;
 }
+//! [snippet]
