@@ -21,7 +21,7 @@ struct CoroutineTask::promise_type::Private {
 
 CoroutineAwait::~CoroutineAwait() { lsTrace(); }
 
-CoroutineAwait::CoroutineAwait(std::function<void(std::coroutine_handle<CoroutineTask::promise_type>)> f) : f_(f) { lsTrace(); }
+CoroutineAwait::CoroutineAwait(const std::function<void(std::coroutine_handle<CoroutineTask::promise_type>)> &f) : f_(f) { lsTrace(); }
 
 void CoroutineAwait::await_suspend(std::coroutine_handle<CoroutineTask::promise_type> h) const noexcept {
   h_ = h;

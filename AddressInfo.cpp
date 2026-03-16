@@ -122,13 +122,13 @@ void AddressInfo::resolve(const std::string &name, Family f) {
 void AddressInfo::setTimeout(int _timeout) { private_->timeout = _timeout; }
 
 CoroutineAwait AddressInfo::coResolve(const std::string &name, Family f) {
-  resolve(name, f);
-  return AsyncFw::CoroutineAwait([this](AsyncFw::CoroutineHandle h) {
+  return AsyncFw::CoroutineAwait([this, name, f](AsyncFw::CoroutineHandle h) {
     completed(
         [h](int r, const std::vector<std::string> &list) {
           h.promise().setData(list);
           h.resume();
         },
         AsyncFw::AbstractFunctionConnector::Connection::Queued);
+    resolve(name, f);
   });
 }

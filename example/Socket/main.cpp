@@ -27,6 +27,7 @@ public:
       }
       if (h) {
         h.promise().resume_queued();
+        h = {};
         return;
       }
       AsyncFw::MainThread::exit(0);
@@ -39,8 +40,10 @@ public:
   }
 
   AsyncFw::CoroutineAwait coConnect(const std::string &address, uint16_t port) {
-    connect(address, port);
-    return AsyncFw::CoroutineAwait([this](AsyncFw::CoroutineHandle _h) { h = _h; });
+    return AsyncFw::CoroutineAwait([this, address, port](AsyncFw::CoroutineHandle _h) {
+      h = _h;
+      connect(address, port);
+    });
   }
 
 private:

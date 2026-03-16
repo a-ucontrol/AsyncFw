@@ -45,7 +45,7 @@ private:
 using CoroutineHandle = std::coroutine_handle<CoroutineTask::promise_type>;
 
 struct CoroutineAwait {
-  CoroutineAwait(std::function<void(CoroutineHandle)> = nullptr);
+  CoroutineAwait(const std::function<void(CoroutineHandle)> & = nullptr);
   virtual ~CoroutineAwait();
   virtual void await_suspend(CoroutineHandle) const noexcept;
   virtual bool await_ready() const noexcept;
