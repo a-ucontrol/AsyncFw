@@ -93,7 +93,7 @@ int main(int argc, char *argv[]) {
   auto coroTask {[&socket]() -> AsyncFw::CoroutineTask {
     AsyncFw::AddressInfo addressInfo;
     AsyncFw::CoroutineHandle h = co_await addressInfo.coResolve("github.com");
-    std::vector<std::string> list = h.promise().data<std::vector<std::string>>();
+    AsyncFw::AddressInfo::Result list = h.promise().data<AsyncFw::AddressInfo::Result>();
     if (list.empty()) {
       logError("Resolve error");
       AsyncFw::MainThread::exit(-1);

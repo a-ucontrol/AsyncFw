@@ -26,6 +26,7 @@ class AddressInfo {
   struct Private;
 
 public:
+  using Result = std::vector<std::string>;
   enum Family : uint8_t { Unspec = AF_UNSPEC_, Inet = AF_INET_, Inet6 = AF_INET6_ };
   AddressInfo();
   ~AddressInfo();

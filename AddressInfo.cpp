@@ -124,7 +124,7 @@ void AddressInfo::setTimeout(int _timeout) { private_->timeout = _timeout; }
 CoroutineAwait AddressInfo::coResolve(const std::string &name, Family f) {
   return AsyncFw::CoroutineAwait([this, name, f](AsyncFw::CoroutineHandle h) {
     completed(
-        [h](int r, const std::vector<std::string> &list) {
+        [h](int, const std::vector<std::string> &list) {
           h.promise().setData(list);
           h.resume();
         },
