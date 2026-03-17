@@ -44,4 +44,4 @@ defines.cmake
 CMakeLists.txt.*
 build
 
-doc/html
+#doc/html

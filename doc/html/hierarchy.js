@@ -1,0 +1,49 @@
+var hierarchy =
+[
+    [ "AsyncFw::AbstractInstance", "classAsyncFw_1_1AbstractInstance.html", [
+      [ "AsyncFw::Instance< Log >", "classAsyncFw_1_1Instance.html", null ],
+      [ "AsyncFw::Instance< FileSystemWatcher >", "classAsyncFw_1_1Instance.html", null ],
+      [ "AsyncFw::Instance< AsyncFw::ThreadPool >", "classAsyncFw_1_1Instance.html", null ],
+      [ "AsyncFw::Instance< T >", "classAsyncFw_1_1Instance.html", null ]
+    ] ],
+    [ "AsyncFw::AbstractLog", "classAsyncFw_1_1AbstractLog.html", [
+      [ "AsyncFw::Log", "classAsyncFw_1_1Log.html", null ]
+    ] ],
+    [ "AsyncFw::AbstractThread", "classAsyncFw_1_1AbstractThread.html", [
+      [ "AsyncFw::Thread", "classAsyncFw_1_1Thread.html", [
+        [ "AsyncFw::MainThread", "classAsyncFw_1_1MainThread.html", null ]
+      ] ]
+    ] ],
+    [ "AsyncFw::AbstractThreadPool", "classAsyncFw_1_1AbstractThreadPool.html", [
+      [ "AsyncFw::ThreadPool", "classAsyncFw_1_1ThreadPool.html", null ]
+    ] ],
+    [ "AsyncFw::AnyData", "structAsyncFw_1_1AnyData.html", [
+      [ "AsyncFw::AbstractSocket", "classAsyncFw_1_1AbstractSocket.html", [
+        [ "AsyncFw::AbstractTlsSocket", "classAsyncFw_1_1AbstractTlsSocket.html", [
+          [ "AsyncFw::HttpSocket", "classAsyncFw_1_1HttpSocket.html", null ]
+        ] ],
+        [ "AsyncFw::ListenSocket", "classAsyncFw_1_1ListenSocket.html", null ]
+      ] ]
+    ] ],
+    [ "std::basic_string_view< Char >", null, [
+      [ "std::string_view", null, [
+        [ "AsyncFw::DataArrayView", "classAsyncFw_1_1DataArrayView.html", null ]
+      ] ]
+    ] ],
+    [ "AsyncFw::DataStream", "classAsyncFw_1_1DataStream.html", null ],
+    [ "AsyncFw::File", "classAsyncFw_1_1File.html", null ],
+    [ "AsyncFw::FunctionConnector< Args >", "classAsyncFw_1_1FunctionConnector.html", null ],
+    [ "AsyncFw::FunctionConnector< Args... >", "classAsyncFw_1_1FunctionConnector.html", null ],
+    [ "AsyncFw::FunctionConnectorProtected< F >", "classAsyncFw_1_1FunctionConnectorProtected.html", null ],
+    [ "AsyncFw::LogStream", "classAsyncFw_1_1LogStream.html", null ],
+    [ "AsyncFw::PollNotifier", "classAsyncFw_1_1PollNotifier.html", null ],
+    [ "AsyncFw::Rrd", "classAsyncFw_1_1Rrd.html", [
+      [ "AsyncFw::Log", "classAsyncFw_1_1Log.html", null ]
+    ] ],
+    [ "AsyncFw::Timer", "classAsyncFw_1_1Timer.html", null ],
+    [ "AsyncFw::TlsContext", "classAsyncFw_1_1TlsContext.html", null ],
+    [ "std::vector< T >", null, [
+      [ "AsyncFw::DataArray", "classAsyncFw_1_1DataArray.html", null ],
+      [ "AsyncFw::DataArrayList", "classAsyncFw_1_1DataArrayList.html", null ]
+    ] ]
+];
