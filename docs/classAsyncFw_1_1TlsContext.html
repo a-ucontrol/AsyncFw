@@ -238,33 +238,9 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>AbstractTlsSocket</b
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The <a class="el" href="classAsyncFw_1_1TlsContext.html" title="The TlsContext class provides functionality for managing TLS certificates.">TlsContext</a> class provides functionality for managing TLS certificates. </p>
-<p>Examlpe: </p><div class="fragment"><div class="line">  <span class="comment">/*</span></div>
-<div class="line"><span class="comment">   * Create certificate</span></div>
-<div class="line"><span class="comment">  */</span></div>
-<div class="line"><span class="preprocessor">#define KEY_BITS 2048</span></div>
-<div class="line"> </div>
-<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1TlsContext.html">TlsContext</a> _root_ca;</div>
-<div class="line">  _root_ca.generateKey(KEY_BITS);</div>
-<div class="line">  _root_ca.generateCertificate();</div>
-<div class="line"> </div>
-<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1TlsContext.html">TlsContext</a> _ca;</div>
-<div class="line">  _ca.generateKey(KEY_BITS);</div>
-<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1DataArray.html">DataArray</a> req = _ca.generateRequest({{<span class="stringliteral">&quot;C&quot;</span>, <span class="stringliteral">&quot;RU&quot;</span>}, {<span class="stringliteral">&quot;CN&quot;</span>, <span class="stringliteral">&quot;Eample-CA&quot;</span>}}, <span class="stringliteral">&quot;&quot;</span>, <span class="stringliteral">&quot;CA:TRUE,pathlen:0&quot;</span>);</div>
-<div class="line">  _ca.setCertificate(_root_ca.signRequest(req));</div>
-<div class="line"> </div>
-<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1TlsContext.html">TlsContext</a> _cert;</div>
-<div class="line">  _cert.generateKey(KEY_BITS);</div>
-<div class="line">  req = _cert.generateRequest({{<span class="stringliteral">&quot;C&quot;</span>, <span class="stringliteral">&quot;RU&quot;</span>}, {<span class="stringliteral">&quot;ST&quot;</span>, <span class="stringliteral">&quot;Region&quot;</span>}, {<span class="stringliteral">&quot;CN&quot;</span>, <span class="stringliteral">&quot;Eample-cert&quot;</span>}, {<span class="stringliteral">&quot;L&quot;</span>, <span class="stringliteral">&quot;Location&quot;</span>}, {<span class="stringliteral">&quot;O&quot;</span>, <span class="stringliteral">&quot;Org&quot;</span>}, {<span class="stringliteral">&quot;OU&quot;</span>, <span class="stringliteral">&quot;Org-unit&quot;</span>}, {<span class="stringliteral">&quot;serialNumber&quot;</span>, <span class="stringliteral">&quot;device-000-00-00&quot;</span>}, {<span class="stringliteral">&quot;emailAddress&quot;</span>, <span class="stringliteral">&quot;ssl@example.ru&quot;</span>}, {<span class="stringliteral">&quot;dnQualifier&quot;</span>, <span class="stringliteral">&quot;Example-device&quot;</span>}}, <span class="stringliteral">&quot;IP:192.168.1.101,IP:192.168.1.102,IP:192.168.1.103,IP:192.168.10.1,IP:192.168.10.100,IP:192.168.10.101,IP:192.168.10.102,IP:192.168.10.103&quot;</span>);</div>
-<div class="line">  _cert.setCertificate(_ca.signRequest(req));</div>
-<div class="line">  logInfo() &lt;&lt; _cert.infoCertificate();</div>
-<div class="line">  <span class="comment">/*</span></div>
-<div class="line"><span class="comment">   * Use certificate</span></div>
-<div class="line"><span class="comment">  */</span></div>
-<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1HttpSocket.html">HttpSocket</a> *socket = HttpSocket::create();</div>
-<div class="line">  socket-&gt;setContext(_cert);</div>
-</div><!-- fragment --> </div><hr/>The documentation for this class was generated from the following files:<ul>
-<li>/home/user/a-ucontrol/AsyncFw/core/<a class="el" href="TlsContext_8h_source.html">TlsContext.h</a></li>
-<li>/home/user/a-ucontrol/AsyncFw/core/<b>TlsContext.cpp</b></li>
+<p>Examlpe: </p><div class="fragment"></div><!-- fragment --> </div><hr/>The documentation for this class was generated from the following files:<ul>
+<li>core/<a class="el" href="TlsContext_8h_source.html">TlsContext.h</a></li>
+<li>core/<b>TlsContext.cpp</b></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
