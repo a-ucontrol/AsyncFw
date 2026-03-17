@@ -34,7 +34,7 @@ int main(int argc, char *argv[]) {
   });
 
   thread.start();
-  timer.start(500);
+  timer.start(50);
 
   logNotice() << "Start Applicaiton";
   int ret = AsyncFw::MainThread::exec();

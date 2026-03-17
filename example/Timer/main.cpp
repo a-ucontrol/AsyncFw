@@ -14,9 +14,9 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 int main(int argc, char *argv[]) {
   int cnt = 0;
   AsyncFw::Timer timer1;
-  timer1.start(1000);
+  timer1.start(100);
   AsyncFw::Timer timer2;
-  timer2.start(2000);
+  timer2.start(200);
 
   timer1.timeout([&cnt]() {
     std::cout << std::chrono::system_clock::now() << " timer1 timeout" << std::endl;

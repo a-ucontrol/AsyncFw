@@ -21,7 +21,7 @@ public:
       connector(cnt++);
       if (cnt == 3) AsyncFw::MainThread::exit(0);
     });
-    timer.start(1000);
+    timer.start(100);
   }
 
   mutable AsyncFw::FunctionConnectorProtected<Sender>::Connector<int> connector;
