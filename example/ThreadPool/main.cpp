@@ -5,6 +5,7 @@ This file is part of the AsyncFw project. Licensed under the MIT License.
 See {Link: LICENSE file https://mit-license.org} in the project root for full license information.
 */
 
+//! [snippet]
 #include <thread>
 #include <MainThread.h>
 #include <ThreadPool.h>
@@ -19,33 +20,30 @@ public:
 int main(int argc, char *argv[]) {
   AsyncFw::LogStream::setTimeFormat("%Y-%m-%d %H:%M:%S", true);
 
-  //AsyncFw::AbstractThread *_lt = new AsyncFw::Thread("LogThread");
-  //_lt->start();
-  //_lt->invokeMethod([]() { AsyncFw::Instance<AsyncFw::Log>::create(); }, true);
-
   Pool *threadPool = AsyncFw::Instance<AsyncFw::ThreadPool>::create<Pool>("ExampeThreadPool");
   logInfo() << threadPool->text();
+
   AsyncFw::AbstractThread *_lt = AsyncFw::ThreadPool::instance()->createThread("LogThread");
-  _lt->invokeMethod([]() { AsyncFw::Instance<AsyncFw::Log>::create(); }, true);
+  _lt->invokeMethod([]() { AsyncFw::Instance<AsyncFw::Log>::create(); }, true);  //create log instance in log thread _lt
 
   AsyncFw::AbstractThread *_t = AsyncFw::ThreadPool::instance()->createThread("SyncExample");
 
   AsyncFw::ThreadPool::sync(_t, []() {
     AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::currentThread();
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
     logInfo() << "sync run in thread" << ct->name() << ct->id();
   });
 
   AsyncFw::ThreadPool::async([]() {
     AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::currentThread();
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
     logInfo() << "async run in thread" << ct->name() << ct->id();
   });
 
   AsyncFw::ThreadPool::async(
       []() {
         AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::currentThread();
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
         logInfo() << "async run in thread" << ct->name() << ct->id();
       },
       []() {
@@ -56,7 +54,7 @@ int main(int argc, char *argv[]) {
   AsyncFw::ThreadPool::async(
       []() {
         AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::currentThread();
-        std::this_thread::sleep_for(std::chrono::milliseconds(1500));
+        std::this_thread::sleep_for(std::chrono::milliseconds(150));
         logInfo() << "async run in thread" << ct->name() << ct->id();
         return 1;
       },
@@ -76,3 +74,4 @@ int main(int argc, char *argv[]) {
   logNotice() << "End Applicaiton" << ret;
   return ret;
 }
+//! [snippet]

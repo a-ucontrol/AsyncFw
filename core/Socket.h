@@ -18,6 +18,7 @@ class Thread;
 class DataArray;
 class LogStream;
 
+/*! \brief The AbstractSocket class provides the base functionality for socket. */
 class AbstractSocket : public AnyData {
   friend Thread;
   friend LogStream &operator<<(LogStream &, const AbstractSocket &);
@@ -67,11 +68,10 @@ protected:
 
   virtual void activateEvent();
 
-  virtual void incomingEvent() {}
+  virtual void stateEvent() {}
+  virtual void readEvent() {}
   virtual void writeEvent() {}
-
-  virtual void stateEvent() = 0;
-  virtual void readEvent() = 0;
+  virtual void incomingEvent() {}
 
   Thread *thread_;
   int fd_ = -1;
@@ -86,6 +86,7 @@ private:
   Private *private_;
 };
 
+/*! \brief The ListenSocket class. */
 class ListenSocket : public AbstractSocket {
 public:
   ~ListenSocket();
@@ -93,8 +94,6 @@ public:
 
 protected:
   void incomingEvent() override;
-  void stateEvent() override {}
-  void readEvent() override {}
 
 private:
   std::function<bool(int, const std::string &)> incomingConnection;

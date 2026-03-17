@@ -26,6 +26,10 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #endif
 
 namespace AsyncFw {
+/*! \brief The MainThread class.
+ \brief Examlpe:
+ \snippet snippet.dox MainThread
+*/
 class MainThread : private Thread
 #ifdef USE_QAPPLICATION
     ,

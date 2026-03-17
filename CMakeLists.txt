@@ -44,6 +44,8 @@ endif()
 
 project(${AsyncFw_PROJECT_NAME} VERSION ${VERSION_STRING} LANGUAGES CXX)
 
+add_custom_target(additional-files SOURCES example/snippet.dox)
+
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 

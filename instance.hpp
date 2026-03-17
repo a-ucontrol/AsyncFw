@@ -11,6 +11,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include <string>
 
 namespace AsyncFw {
+/*! \brief The AbstractInstance class. */
 class AbstractInstance {
 public:
   class List : public std::vector<AbstractInstance *> {
@@ -35,6 +36,7 @@ private:
   static class List list;
 };
 
+/*! \brief The Instance class. */
 template <typename T>
 class Instance : public AbstractInstance {
   friend T;

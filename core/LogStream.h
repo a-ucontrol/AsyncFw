@@ -39,6 +39,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #endif
 
 namespace AsyncFw {
+/*! \brief The LogStream class. */
 class LogStream {
 public:
   enum MessageType : uint8_t {
@@ -120,12 +121,6 @@ public:
   LogStream(uint8_t, const char *, const char *, int, uint8_t = 0);
   LogStream() = default;
   ~LogStream() noexcept(false);
-  LogStream &operator<<(decltype(std::endl<char, std::char_traits<char>>) &);
-  LogStream &operator<<(const Color);
-  LogStream &operator<<(const int8_t);
-  LogStream &operator<<(const uint8_t);
-  LogStream &operator<<(const char *);
-  LogStream &operator<<(char *);
   template <typename T>
   inline LogStream &operator<<(T val) {
     typedef const typename std::remove_reference<T>::type type;
@@ -144,8 +139,12 @@ public:
     after();
     return *this;
   }
-  LogStream &output() { return *this; }
-  LogStream &output(const std::string &);
+  LogStream &operator<<(decltype(std::endl<char, std::char_traits<char>>) &);
+  LogStream &operator<<(const Color);
+  LogStream &operator<<(const int8_t);
+  LogStream &operator<<(const uint8_t);
+  LogStream &operator<<(const char *);
+  LogStream &operator<<(char *);
   template <typename... Args>
   LogStream &output(std::format_string<Args...> msg, Args &&...args) {
     before();
@@ -153,6 +152,8 @@ public:
     after();
     return *this;
   }
+  LogStream &output() { return *this; }
+  LogStream &output(const std::string &);
   LogStream &space();
   LogStream &nospace();
   LogStream &flush();

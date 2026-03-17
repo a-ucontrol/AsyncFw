@@ -5,6 +5,7 @@ This file is part of the AsyncFw project. Licensed under the MIT License.
 See {Link: LICENSE file https://mit-license.org} in the project root for full license information.
 */
 
+//! [snippet]
 #include <MainThread.h>
 #include <core/TlsSocket.h>
 #include <core/TlsContext.h>
@@ -31,7 +32,7 @@ int main(int argc, char *argv[]) {
   AsyncFw::HttpSocket *socket = AsyncFw::HttpSocket::create(&_t);
 
   socket->setContext(context);
-#if 1
+
   AsyncFw::AddressInfo addressInfo;
   addressInfo.setTimeout(30000);
   addressInfo.resolve(SERVER_NAME);
@@ -41,15 +42,12 @@ int main(int argc, char *argv[]) {
       socket->connect(list[0], SERVER_PORT);
       return;
     }
-    AsyncFw::MainThread::exit(0);
+    AsyncFw::MainThread::exit(-1);
   });
-#else
-  socket.connect("192.168.110.100", SERVER_PORT);
-#endif
+
   socket->stateChanged([&socket](const AsyncFw::AbstractSocket::State state) {
     if (state == AsyncFw::AbstractSocket::State::Active) {
       logDebug() << "Send request";
-      //socket->write("GET " GET_FILE " HTTP/1.1\r\nHost:" SERVER_NAME "\r\nConnection:close\r\n\r\n");
       socket->write("GET " GET_FILE " HTTP/1.1\r\nHost:" SERVER_NAME "\r\n\r\n");
     } else if (state == AsyncFw::AbstractSocket::State::Unconnected) {
       if (socket->errorString().empty()) logInfo() << "Unconnected";
@@ -73,7 +71,8 @@ int main(int argc, char *argv[]) {
 
   logDebug() << *(AsyncFw::AbstractSocket *)socket;
 
-  logNotice() << "End Applicaiton";
+  logNotice() << "End Applicaiton" << ret;
 
   return ret;
 }
+//! [snippet]

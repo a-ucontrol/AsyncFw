@@ -13,6 +13,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #define ThreadPool_DEFAULT_WORK_THREADS 1
 
 namespace AsyncFw {
+/*! \brief Абстрактный класс для создания пулов управления потоками. */
 class AbstractThreadPool {
 public:
   class Thread : public AsyncFw::Thread {
@@ -52,21 +53,12 @@ private:
   std::string name_;
 };
 
+/*! \brief Управляет набором многократно используемых рабочих потоков для параллельного выполнения задач, вместо создания нового потока для каждой задачи.
+ \brief Благодаря постановке задач в очередь и повторному использованию потоков, повышается производительность системы, ограничивается использование ресурсов и снижаются накладные расходы на создание/уничтожение потоков.
+ @snippet ThreadPool/main.cpp snippet
+*/
 class ThreadPool : public AbstractThreadPool {
 public:
-  static ThreadPool *instance() { return instance_.value; }
-
-  ThreadPool(const std::string &, int = ThreadPool_DEFAULT_WORK_THREADS);
-  ThreadPool(int workThreads = ThreadPool_DEFAULT_WORK_THREADS) : ThreadPool("ThreadPool", workThreads) {}
-  ~ThreadPool();
-
-  Thread *createThread(const std::string &name = {});
-
-  void removeThread(AbstractThreadPool::Thread *) override;
-  virtual void quit() override;
-
-  AbstractThreadPool::Thread *getThread();
-
   template <typename M>
   static bool sync(AbstractThread *_t, M m) {
     return _t->invokeMethod(m, true);
@@ -97,8 +89,21 @@ public:
     return async(instance_.value->getThread(), m, r);
   }
 
+  static ThreadPool *instance() { return instance_.value; }
+
+  ThreadPool(const std::string &, int = ThreadPool_DEFAULT_WORK_THREADS);
+  ThreadPool(int workThreads = ThreadPool_DEFAULT_WORK_THREADS) : ThreadPool("ThreadPool", workThreads) {}
+  ~ThreadPool();
+
+  Thread *createThread(const std::string &name = {});
+
+  void removeThread(AbstractThreadPool::Thread *) override;
+  virtual void quit() override;
+
+  AbstractThreadPool::Thread *getThread();
+
 private:
-  inline static AsyncFw::Instance<ThreadPool> instance_{"ThreadPool"};
+  inline static AsyncFw::Instance<ThreadPool> instance_ {"ThreadPool"};
   std::vector<AbstractThreadPool::Thread *> workThreads_;
   int workThreadsSize;
 };

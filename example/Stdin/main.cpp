@@ -5,6 +5,10 @@ This file is part of the AsyncFw project. Licensed under the MIT License.
 See {Link: LICENSE file https://mit-license.org} in the project root for full license information.
 */
 
+//! [snippet]
+/*
+ * This exfample for Unix-like systems only
+*/
 #include <iostream>
 #include <MainThread.h>
 #include <PollNotifier.h>
@@ -22,3 +26,4 @@ int main(int argc, char *argv[]) {
   int ret = AsyncFw::MainThread::exec();
   return ret;
 }
+//! [snippet]

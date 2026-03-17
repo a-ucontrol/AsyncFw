@@ -13,6 +13,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include "core/DataArray.h"
 
 namespace AsyncFw {
+/*! \brief The Rrd class. */
 class Rrd {
 public:
   using Item = DataArray;

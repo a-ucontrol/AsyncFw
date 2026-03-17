@@ -15,6 +15,7 @@ namespace AsyncFw {
 class DataArrayList;
 class DataArrayView;
 
+/*! \brief The DataArray class. */
 class DataArray : public std::vector<uint8_t> {
 public:
   static DataArray compress(const DataArrayView &);
@@ -31,6 +32,7 @@ public:
   DataArray operator+(const char);
 };
 
+/*! \brief The DataArrayView class. */
 class DataArrayView : public std::string_view {
 public:
   DataArrayView(const uint8_t *, std::size_t);
@@ -41,12 +43,14 @@ public:
   DataArrayList split(const char) const;
 };
 
+/*! \brief The DataArrayList class. */
 class DataArrayList : public std::vector<DataArray> {
 public:
   using std::vector<DataArray>::vector;
   DataArray join(const char) const;
 };
 
+/*! \brief The DataStream class. */
 class DataStream {
 public:
   DataStream();
