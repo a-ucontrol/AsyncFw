@@ -12,7 +12,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include "instance.hpp"
 
 namespace AsyncFw {
-/*! \brief The FileSystemWatcher class. */
+/*! \brief The FileSystemWatcher class. \warning Unix-like systems only */
 class FileSystemWatcher {
 public:
   static FileSystemWatcher *instance() { return instance_.value; }
