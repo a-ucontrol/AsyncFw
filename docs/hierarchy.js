@@ -30,6 +30,8 @@ var hierarchy =
         [ "AsyncFw::DataArrayView", "classAsyncFw_1_1DataArrayView.html", null ]
       ] ]
     ] ],
+    [ "AsyncFw::CoroutineAwait", "structAsyncFw_1_1CoroutineAwait.html", null ],
+    [ "AsyncFw::CoroutineTask", "structAsyncFw_1_1CoroutineTask.html", null ],
     [ "AsyncFw::DataStream", "classAsyncFw_1_1DataStream.html", null ],
     [ "AsyncFw::File", "classAsyncFw_1_1File.html", null ],
     [ "AsyncFw::FunctionConnector< Args >", "classAsyncFw_1_1FunctionConnector.html", null ],

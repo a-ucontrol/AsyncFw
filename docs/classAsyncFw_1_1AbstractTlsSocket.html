@@ -316,7 +316,7 @@ std::any&#160;</td><td class="memItemRight" valign="bottom"><b>data_</b></td></t
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The <a class="el" href="classAsyncFw_1_1AbstractTlsSocket.html" title="The AbstractTlsSocket class provides the base functionality for TLS encrypted socket.">AbstractTlsSocket</a> class provides the base functionality for TLS encrypted socket. </p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;core/Thread.h&gt;</span></div>
+<p>Example: </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;core/Thread.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;core/TlsSocket.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;core/TlsContext.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;core/DataArray.h&gt;</span></div>
@@ -374,7 +374,7 @@ std::any&#160;</td><td class="memItemRight" valign="bottom"><b>data_</b></td></t
 <div class="line">  TcpSocket socket;</div>
 <div class="line">  socket.setContext(context);</div>
 <div class="line"> </div>
-<div class="line">  <span class="keyword">auto</span> coroTask {[&amp;socket]() -&gt; AsyncFw::CoroutineTask {</div>
+<div class="line">  <span class="keyword">auto</span> coroTask {[&amp;socket]() -&gt; <a class="code hl_struct" href="structAsyncFw_1_1CoroutineTask.html">AsyncFw::CoroutineTask</a> {</div>
 <div class="line">    AsyncFw::AddressInfo addressInfo;</div>
 <div class="line">    AsyncFw::CoroutineHandle h = <span class="keyword">co_await</span> addressInfo.coResolve(<span class="stringliteral">&quot;github.com&quot;</span>);</div>
 <div class="line">    AsyncFw::AddressInfo::Result list = h.promise().data&lt;AsyncFw::AddressInfo::Result&gt;();</div>
