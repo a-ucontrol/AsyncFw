@@ -316,7 +316,87 @@ std::any&#160;</td><td class="memItemRight" valign="bottom"><b>data_</b></td></t
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The <a class="el" href="classAsyncFw_1_1AbstractTlsSocket.html" title="The AbstractTlsSocket class provides the base functionality for TLS encrypted socket.">AbstractTlsSocket</a> class provides the base functionality for TLS encrypted socket. </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;core/Thread.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;core/TlsSocket.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;core/TlsContext.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;core/DataArray.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;core/LogStream.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;AddressInfo.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;MainThread.h&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">class </span>TcpSocket : <span class="keyword">public</span> <a class="code hl_class" href="classAsyncFw_1_1AbstractTlsSocket.html">AsyncFw::AbstractTlsSocket</a> {</div>
+<div class="line"><span class="keyword">public</span>:</div>
+<div class="line">  <span class="keywordtype">void</span> stateEvent() {</div>
+<div class="line">    logDebug() &lt;&lt; <span class="stringliteral">&quot;State event:&quot;</span> &lt;&lt; <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(state_);</div>
+<div class="line">    <span class="keywordflow">if</span> (state_ == Active) {</div>
+<div class="line">      logDebug() &lt;&lt; <span class="stringliteral">&quot;Send request&quot;</span>;</div>
+<div class="line">      write(<span class="stringliteral">&quot;GET /a-ucontrol/AsyncFw HTTP/1.1\r\nHost:github.com\r\nConnection:close\r\n\r\n&quot;</span>);</div>
+<div class="line">    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (error() &gt;= Closed) {</div>
+<div class="line">      <span class="keywordflow">if</span> (error() != Closed) logError() &lt;&lt; errorString();</div>
+<div class="line">      <span class="keywordflow">else</span> {</div>
+<div class="line">        logNotice() &lt;&lt; <span class="stringliteral">&quot;Received:&quot;</span> &lt;&lt; da;</div>
+<div class="line">        logDebug() &lt;&lt; da.view(0, 512) &lt;&lt; <span class="stringliteral">&quot;...&quot;</span>;</div>
+<div class="line">      }</div>
+<div class="line">      <span class="keywordflow">if</span> (h) {</div>
+<div class="line">        h.promise().resume_queued();</div>
+<div class="line">        h = {};</div>
+<div class="line">        <span class="keywordflow">return</span>;</div>
+<div class="line">      }</div>
+<div class="line">      AsyncFw::MainThread::exit(0);</div>
+<div class="line">    }</div>
+<div class="line">  }</div>
+<div class="line">  <span class="keywordtype">void</span> readEvent() {</div>
+<div class="line">    AsyncFw::DataArray _da = read();</div>
+<div class="line">    logTrace() &lt;&lt; <span class="stringliteral">&quot;Read event:&quot;</span> &lt;&lt; _da.size() &lt;&lt; std::endl &lt;&lt; _da.view(0, 256);</div>
+<div class="line">    da += _da;</div>
+<div class="line">  }</div>
+<div class="line"> </div>
+<div class="line">  AsyncFw::CoroutineAwait coConnect(<span class="keyword">const</span> std::string &amp;address, uint16_t port) {</div>
+<div class="line">    <span class="keywordflow">return</span> AsyncFw::CoroutineAwait([<span class="keyword">this</span>, address, port](AsyncFw::CoroutineHandle _h) {</div>
+<div class="line">      h = _h;</div>
+<div class="line">      connect(address, port);</div>
+<div class="line">    });</div>
+<div class="line">  }</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">private</span>:</div>
+<div class="line">  AsyncFw::CoroutineHandle h;</div>
+<div class="line">  AsyncFw::DataArray da;</div>
+<div class="line">};</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[]) {</div>
+<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1TlsContext.html">AsyncFw::TlsContext</a> context;</div>
+<div class="line"> </div>
+<div class="line">  <span class="keywordflow">if</span> (!context.setDefaultVerifyPaths()) {</div>
+<div class="line">    logError(<span class="stringliteral">&quot;Can&#39;t set default verify paths&quot;</span>);</div>
+<div class="line">    <span class="keywordflow">return</span> -1;</div>
+<div class="line">  }</div>
+<div class="line">  context.setVerifyName(<span class="stringliteral">&quot;github.com&quot;</span>);</div>
+<div class="line">  TcpSocket socket;</div>
+<div class="line">  socket.setContext(context);</div>
+<div class="line"> </div>
+<div class="line">  <span class="keyword">auto</span> coroTask {[&amp;socket]() -&gt; AsyncFw::CoroutineTask {</div>
+<div class="line">    AsyncFw::AddressInfo addressInfo;</div>
+<div class="line">    AsyncFw::CoroutineHandle h = <span class="keyword">co_await</span> addressInfo.coResolve(<span class="stringliteral">&quot;github.com&quot;</span>);</div>
+<div class="line">    AsyncFw::AddressInfo::Result list = h.promise().data&lt;AsyncFw::AddressInfo::Result&gt;();</div>
+<div class="line">    <span class="keywordflow">if</span> (list.empty()) {</div>
+<div class="line">      logError(<span class="stringliteral">&quot;Resolve error&quot;</span>);</div>
+<div class="line">      AsyncFw::MainThread::exit(-1);</div>
+<div class="line">      <span class="keyword">co_return</span>;</div>
+<div class="line">    }</div>
+<div class="line">    <span class="keywordflow">for</span> (<span class="keyword">const</span> std::string _s : list) logNotice() &lt;&lt; _s;</div>
+<div class="line">    <span class="keyword">co_await</span> socket.coConnect(list[0], 443);</div>
+<div class="line">    AsyncFw::MainThread::exit(0);</div>
+<div class="line">  }};</div>
+<div class="line">  coroTask();</div>
+<div class="line"> </div>
+<div class="line">  logNotice() &lt;&lt; <span class="stringliteral">&quot;Start Applicaiton&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  <span class="keywordtype">int</span> ret = AsyncFw::MainThread::exec();</div>
+<div class="line"> </div>
+<div class="line">  logNotice() &lt;&lt; <span class="stringliteral">&quot;End Applicaiton&quot;</span> &lt;&lt; ret;</div>
+<div class="line">  <span class="keywordflow">return</span> ret;</div>
+<div class="line">}</div>
+</div><!-- fragment --> </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a57ac6daff9926cf631abcd1e19073cc8" name="a57ac6daff9926cf631abcd1e19073cc8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a57ac6daff9926cf631abcd1e19073cc8">&#9670;&#160;</a></span>activateEvent()</h2>
 

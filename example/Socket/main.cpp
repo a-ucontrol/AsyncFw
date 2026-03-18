@@ -5,12 +5,14 @@ This file is part of the AsyncFw project. Licensed under the MIT License.
 See {Link: LICENSE file https://mit-license.org} in the project root for full license information.
 */
 
+//! [snippet]
 #include <core/Thread.h>
-#include <MainThread.h>
 #include <core/TlsSocket.h>
 #include <core/TlsContext.h>
+#include <core/DataArray.h>
+#include <core/LogStream.h>
 #include <AddressInfo.h>
-#include <Log.h>
+#include <MainThread.h>
 
 class TcpSocket : public AsyncFw::AbstractTlsSocket {
 public:
@@ -50,23 +52,7 @@ private:
   AsyncFw::CoroutineHandle h;
   AsyncFw::DataArray da;
 };
-/*
-AsyncFw::CoroutineTask coroTask(TcpSocket *socket) {
-  AsyncFw::AddressInfo addressInfo;
-  AsyncFw::CoroutineHandle h = co_await addressInfo.coResolve("github.com");
 
-  std::vector<std::string> list = h.promise().data<std::vector<std::string>>();
-  if (list.empty()) {
-    logError("Resolve error");
-    AsyncFw::MainThread::exit(-1);
-    co_return;
-  }
-
-  for (const std::string _s : list) logNotice() << _s;
-  co_await socket->coConnect(list[0], 443);
-  AsyncFw::MainThread::exit(0);
-}
-*/
 int main(int argc, char *argv[]) {
   AsyncFw::TlsContext context;
 
@@ -77,19 +63,7 @@ int main(int argc, char *argv[]) {
   context.setVerifyName("github.com");
   TcpSocket socket;
   socket.setContext(context);
-  /*
-  AsyncFw::AddressInfo addressInfo;
-  addressInfo.resolve("github.com");
-  addressInfo.completed([&socket](int, const std::vector<std::string> &list) {
-    if (list.empty()) {
-      logError("Resolve error");
-      AsyncFw::MainThread::exit(-1);
-      return;
-    }
-    for (const std::string _s : list) logNotice() << _s;
-    socket.connect(list[0], 443);
-  });
-*/
+
   auto coroTask {[&socket]() -> AsyncFw::CoroutineTask {
     AsyncFw::AddressInfo addressInfo;
     AsyncFw::CoroutineHandle h = co_await addressInfo.coResolve("github.com");
@@ -112,3 +86,4 @@ int main(int argc, char *argv[]) {
   logNotice() << "End Applicaiton" << ret;
   return ret;
 }
+//! [snippet]

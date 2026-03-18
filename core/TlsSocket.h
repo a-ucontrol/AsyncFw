@@ -12,7 +12,9 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 namespace AsyncFw {
 class TlsContext;
 
-/*! \brief The AbstractTlsSocket class provides the base functionality for TLS encrypted socket. */
+/*! \brief The AbstractTlsSocket class provides the base functionality for TLS encrypted socket.
+ \snippet Socket/main.cpp snippet
+*/
 class AbstractTlsSocket : public AbstractSocket {
   friend LogStream &operator<<(LogStream &, const AbstractTlsSocket &);
   struct Private;
