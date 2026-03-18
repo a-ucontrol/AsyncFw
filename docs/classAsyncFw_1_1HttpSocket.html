@@ -334,7 +334,76 @@ Additional Inherited Members</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The <a class="el" href="classAsyncFw_1_1HttpSocket.html" title="The HttpSocket class.">HttpSocket</a> class. </p>
-<p>Example: </p><div class="fragment"></div><!-- fragment --> </div><h2 class="groupheader">Member Function Documentation</h2>
+<p>Example: </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;MainThread.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;core/TlsSocket.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;core/TlsContext.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;AddressInfo.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;File.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;HttpSocket.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;Log.h&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="preprocessor">#define SERVER_NAME &quot;github.com&quot;</span></div>
+<div class="line"><span class="preprocessor">#define SERVER_PORT 443</span></div>
+<div class="line"><span class="preprocessor">#define GET_FILE &quot;/a-ucontrol/AsyncFw&quot;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[]) {</div>
+<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1TlsContext.html">AsyncFw::TlsContext</a> context;</div>
+<div class="line"> </div>
+<div class="line">  <span class="keywordflow">if</span> (!context.setDefaultVerifyPaths()) {</div>
+<div class="line">    logError(<span class="stringliteral">&quot;Can&#39;t set default verify paths&quot;</span>);</div>
+<div class="line">    <span class="keywordflow">return</span> -1;</div>
+<div class="line">  }</div>
+<div class="line">  context.setVerifyName(SERVER_NAME);</div>
+<div class="line"> </div>
+<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1Thread.html">AsyncFw::Thread</a> _t(<span class="stringliteral">&quot;HttpSocketThread&quot;</span>);</div>
+<div class="line">  _t.start();</div>
+<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1HttpSocket.html">AsyncFw::HttpSocket</a> *socket = AsyncFw::HttpSocket::create(&amp;_t);</div>
+<div class="line"> </div>
+<div class="line">  socket-&gt;setContext(context);</div>
+<div class="line"> </div>
+<div class="line">  AsyncFw::AddressInfo addressInfo;</div>
+<div class="line">  addressInfo.setTimeout(30000);</div>
+<div class="line">  addressInfo.resolve(SERVER_NAME);</div>
+<div class="line">  addressInfo.completed([&amp;socket](<span class="keywordtype">int</span> r, <span class="keyword">const</span> std::vector&lt;std::string&gt; &amp;list) {</div>
+<div class="line">    <span class="keywordflow">if</span> (r == 0 &amp;&amp; !list.empty()) {</div>
+<div class="line">      <span class="keywordflow">for</span> (<span class="keyword">const</span> std::string _s : list) logNotice() &lt;&lt; _s;</div>
+<div class="line">      socket-&gt;connect(list[0], SERVER_PORT);</div>
+<div class="line">      <span class="keywordflow">return</span>;</div>
+<div class="line">    }</div>
+<div class="line">    AsyncFw::MainThread::exit(-1);</div>
+<div class="line">  });</div>
+<div class="line"> </div>
+<div class="line">  socket-&gt;stateChanged([&amp;socket](<span class="keyword">const</span> AsyncFw::AbstractSocket::State state) {</div>
+<div class="line">    <span class="keywordflow">if</span> (state == AsyncFw::AbstractSocket::State::Active) {</div>
+<div class="line">      logDebug() &lt;&lt; <span class="stringliteral">&quot;Send request&quot;</span>;</div>
+<div class="line">      socket-&gt;write(<span class="stringliteral">&quot;GET &quot;</span> GET_FILE <span class="stringliteral">&quot; HTTP/1.1\r\nHost:&quot;</span> SERVER_NAME <span class="stringliteral">&quot;\r\n\r\n&quot;</span>);</div>
+<div class="line">    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (state == AsyncFw::AbstractSocket::State::Unconnected) {</div>
+<div class="line">      <span class="keywordflow">if</span> (socket-&gt;errorString().empty()) logInfo() &lt;&lt; <span class="stringliteral">&quot;Unconnected&quot;</span>;</div>
+<div class="line">      <span class="keywordflow">else</span> { logError() &lt;&lt; socket-&gt;errorString(); }</div>
+<div class="line">      AsyncFw::MainThread::exit(0);</div>
+<div class="line">    }</div>
+<div class="line">  });</div>
+<div class="line">  socket-&gt;received([socket](<span class="keyword">const</span> <a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> &amp;answer) {</div>
+<div class="line">    logDebug() &lt;&lt; socket-&gt;header();</div>
+<div class="line">    logDebug() &lt;&lt; socket-&gt;content();</div>
+<div class="line">    logNotice() &lt;&lt; answer.view(0, 4096);</div>
+<div class="line">    socket-&gt;disconnect();</div>
+<div class="line">  });</div>
+<div class="line"> </div>
+<div class="line">  logNotice() &lt;&lt; <span class="stringliteral">&quot;Start Applicaiton&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  logDebug() &lt;&lt; *<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#ac1b35ef04b06ce771f6d6ca0a5b120db">AsyncFw::AbstractThread::currentThread</a>();</div>
+<div class="line">  logDebug() &lt;&lt; *(<a class="code hl_class" href="classAsyncFw_1_1AbstractSocket.html">AsyncFw::AbstractSocket</a> *)socket;</div>
+<div class="line"> </div>
+<div class="line">  <span class="keywordtype">int</span> ret = AsyncFw::MainThread::exec();</div>
+<div class="line"> </div>
+<div class="line">  logDebug() &lt;&lt; *(<a class="code hl_class" href="classAsyncFw_1_1AbstractSocket.html">AsyncFw::AbstractSocket</a> *)socket;</div>
+<div class="line"> </div>
+<div class="line">  logNotice() &lt;&lt; <span class="stringliteral">&quot;End Applicaiton&quot;</span> &lt;&lt; ret;</div>
+<div class="line"> </div>
+<div class="line">  <span class="keywordflow">return</span> ret;</div>
+<div class="line">}</div>
+</div><!-- fragment --> </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="ad51bb1bf5880c3037c7ad70231c0767d" name="ad51bb1bf5880c3037c7ad70231c0767d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad51bb1bf5880c3037c7ad70231c0767d">&#9670;&#160;</a></span>activateEvent()</h2>
 
