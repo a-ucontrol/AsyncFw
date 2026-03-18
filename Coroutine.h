@@ -18,6 +18,7 @@ struct CoroutineAwait;
 struct CoroutineTask {
   CoroutineTask();
   virtual ~CoroutineTask();
+  /*! \brief The CoroutineTask::promise_type struct. */
   struct promise_type : public AnyData {
     friend CoroutineAwait;
     friend CoroutineTask;

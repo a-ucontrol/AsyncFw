@@ -2,7 +2,7 @@ var hierarchy =
 [
     [ "AsyncFw::AbstractInstance", "classAsyncFw_1_1AbstractInstance.html", [
       [ "AsyncFw::Instance< Log >", "classAsyncFw_1_1Instance.html", null ],
-      [ "AsyncFw::Instance< FileSystemWatcher >", "classAsyncFw_1_1Instance.html", null ],
+      [ "AsyncFw::Instance< AsyncFw::FileSystemWatcher >", "classAsyncFw_1_1Instance.html", null ],
       [ "AsyncFw::Instance< AsyncFw::ThreadPool >", "classAsyncFw_1_1Instance.html", null ],
       [ "AsyncFw::Instance< T >", "classAsyncFw_1_1Instance.html", null ]
     ] ],
@@ -23,7 +23,8 @@ var hierarchy =
           [ "AsyncFw::HttpSocket", "classAsyncFw_1_1HttpSocket.html", null ]
         ] ],
         [ "AsyncFw::ListenSocket", "classAsyncFw_1_1ListenSocket.html", null ]
-      ] ]
+      ] ],
+      [ "AsyncFw::CoroutineTask::promise_type", "structAsyncFw_1_1CoroutineTask_1_1promise__type.html", null ]
     ] ],
     [ "std::basic_string_view< Char >", null, [
       [ "std::string_view", null, [
@@ -34,6 +35,7 @@ var hierarchy =
     [ "AsyncFw::CoroutineTask", "structAsyncFw_1_1CoroutineTask.html", null ],
     [ "AsyncFw::DataStream", "classAsyncFw_1_1DataStream.html", null ],
     [ "AsyncFw::File", "classAsyncFw_1_1File.html", null ],
+    [ "AsyncFw::FileSystemWatcher", "classAsyncFw_1_1FileSystemWatcher.html", null ],
     [ "AsyncFw::FunctionConnector< Args >", "classAsyncFw_1_1FunctionConnector.html", null ],
     [ "AsyncFw::FunctionConnector< Args... >", "classAsyncFw_1_1FunctionConnector.html", null ],
     [ "AsyncFw::FunctionConnectorProtected< F >", "classAsyncFw_1_1FunctionConnectorProtected.html", null ],
@@ -42,6 +44,7 @@ var hierarchy =
     [ "AsyncFw::Rrd", "classAsyncFw_1_1Rrd.html", [
       [ "AsyncFw::Log", "classAsyncFw_1_1Log.html", null ]
     ] ],
+    [ "AsyncFw::SystemProcess", "classAsyncFw_1_1SystemProcess.html", null ],
     [ "AsyncFw::Timer", "classAsyncFw_1_1Timer.html", null ],
     [ "AsyncFw::TlsContext", "classAsyncFw_1_1TlsContext.html", null ],
     [ "std::vector< T >", null, [

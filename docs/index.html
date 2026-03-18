@@ -393,7 +393,7 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
 <div class="line">  logNotice() &lt;&lt; <span class="stringliteral">&quot;End Applicaiton&quot;</span>;</div>
 <div class="line">  <span class="keywordflow">return</span> ret;</div>
 <div class="line">}</div>
-<div class="ttc" id="astructAsyncFw_1_1CoroutineAwait_html"><div class="ttname"><a href="structAsyncFw_1_1CoroutineAwait.html">AsyncFw::CoroutineAwait</a></div><div class="ttdoc">The CoroutineAwait struct.</div><div class="ttdef"><b>Definition</b> Coroutine.h:49</div></div>
+<div class="ttc" id="astructAsyncFw_1_1CoroutineAwait_html"><div class="ttname"><a href="structAsyncFw_1_1CoroutineAwait.html">AsyncFw::CoroutineAwait</a></div><div class="ttdoc">The CoroutineAwait struct.</div><div class="ttdef"><b>Definition</b> Coroutine.h:50</div></div>
 <div class="ttc" id="astructAsyncFw_1_1CoroutineTask_html"><div class="ttname"><a href="structAsyncFw_1_1CoroutineTask.html">AsyncFw::CoroutineTask</a></div><div class="ttdoc">The CoroutineTask struct.</div><div class="ttdef"><b>Definition</b> Coroutine.h:18</div></div>
 </div><!-- fragment --><p> Tls socket example: </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;core/Thread.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;MainThread.h&gt;</span></div>
@@ -535,7 +535,7 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
 <div class="line"><span class="preprocessor">#include &lt;core/LogStream.h&gt;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[]) {</div>
-<div class="line">  AsyncFw::SystemProcess process;</div>
+<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1SystemProcess.html">AsyncFw::SystemProcess</a> process;</div>
 <div class="line">  process.output([](<span class="keyword">const</span> std::string &amp;str, <span class="keywordtype">bool</span> err) {</div>
 <div class="line">    <span class="keywordflow">if</span> (!err) logInfo() &lt;&lt; <span class="stringliteral">&quot;OUT:&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span> + str;</div>
 <div class="line">    <span class="keywordflow">else</span> { logError() &lt;&lt; <span class="stringliteral">&quot;ERR:&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span> + str; }</div>
@@ -556,6 +556,7 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
 <div class="line">  <span class="keywordtype">int</span> ret = AsyncFw::MainThread::exec();</div>
 <div class="line">  <span class="keywordflow">return</span> ret;</div>
 <div class="line">}</div>
+<div class="ttc" id="aclassAsyncFw_1_1SystemProcess_html"><div class="ttname"><a href="classAsyncFw_1_1SystemProcess.html">AsyncFw::SystemProcess</a></div><div class="ttdoc">The SystemProcess class.</div><div class="ttdef"><b>Definition</b> SystemProcess.h:15</div></div>
 </div><!-- fragment --> </div></div><!-- PageDoc -->
 <a href="doxygen_crawl.html"></a>
 </div><!-- contents -->
