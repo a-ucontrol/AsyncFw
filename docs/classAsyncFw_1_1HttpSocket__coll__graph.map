@@ -1,0 +1,15 @@
+<map id="AsyncFw::HttpSocket" name="AsyncFw::HttpSocket">
+<area shape="rect" id="Node000001" title="The HttpSocket class." alt="" coords="1040,73,1191,100"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractTlsSocket.html" title="The AbstractTlsSocket class provides the base functionality for TLS encrypted socket." alt="" coords="700,31,893,57"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="908,47,1017,60,1064,70,1063,75,1016,65,908,53"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractSocket.html" title="The AbstractSocket class provides the base functionality for socket." alt="" coords="458,31,633,57"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="648,41,700,41,700,47,648,47"/>
+<area shape="rect" id="Node000004" href="$structAsyncFw_1_1AnyData.html" title="The AnyData class." alt="" coords="228,5,363,32"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="379,24,458,32,457,38,379,30"/>
+<area shape="rect" id="Node000005" href="$classAsyncFw_1_1Thread.html" title="AsyncFw::Thread thread with sockets." alt="" coords="234,56,358,83"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="373,59,458,50,458,55,373,64"/>
+<area shape="rect" id="Node000006" href="$classAsyncFw_1_1AbstractThread.html" title="The AbstractThread class provides the base functionality for thread management." alt="" coords="5,56,179,83"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="194,67,233,67,233,72,194,72"/>
+<area shape="rect" id="Node000007" href="$classAsyncFw_1_1FunctionConnectorProtected.html" title=" " alt="" coords="682,107,911,149"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="927,133,972,130,1016,124,1054,113,1087,98,1089,103,1055,118,1017,129,972,136,927,138"/>
+</map>

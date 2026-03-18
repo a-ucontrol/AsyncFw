@@ -1,0 +1,9 @@
+<map id="AsyncFw::AbstractSocket" name="AsyncFw::AbstractSocket">
+<area shape="rect" id="Node000001" title="The AbstractSocket class provides the base functionality for socket." alt="" coords="35,172,210,199"/>
+<area shape="rect" id="Node000002" href="$structAsyncFw_1_1AnyData.html" title="The AnyData class." alt="" coords="5,81,141,108"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="90,120,118,170,113,173,85,123"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1Thread.html" title="AsyncFw::Thread thread with sockets." alt="" coords="164,81,288,108"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="202,120,139,173,135,169,198,116"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1AbstractThread.html" title="The AbstractThread class provides the base functionality for thread management." alt="" coords="140,5,313,32"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="229,47,229,81,224,81,224,47"/>
+</map>

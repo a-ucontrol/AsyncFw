@@ -1,0 +1,5 @@
+<map id="AsyncFw::AbstractThreadPool" name="AsyncFw::AbstractThreadPool">
+<area shape="rect" id="Node000001" title="Абстрактный класс для создания пулов управления потоками." alt="" coords="5,96,205,123"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractThread.html" title="The AbstractThread class provides the base functionality for thread management." alt="" coords="18,5,192,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="108,48,108,95,102,95,102,48"/>
+</map>
