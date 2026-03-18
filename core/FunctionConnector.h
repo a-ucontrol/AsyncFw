@@ -57,9 +57,7 @@ protected:
 /*!
  \brief Обеспечивает соединение отправитель -> получатели. Получатели могут быть вызваны в своих потоках (по умолчанию).
  \brief Другие инструментальные средства реализуют подобную коммуникацию с помощью коллбэков. Коллбэк - это указатель на функцию, поэтому, если вы хотите, чтобы функция обработки уведомила вас о каком-либо событии, вы передаете указатель на другую функцию (коллбэк) в функцию обработки. Затем функция обработки вызывает коллбэк, когда это необходимо.
- \brief Example:
- \snippet FunctionConnector/main.cpp snippet
-*/
+ \brief Example: \snippet FunctionConnector/main.cpp snippet */
 template <typename... Args>
 class FunctionConnector : public AbstractFunctionConnector {
 public:

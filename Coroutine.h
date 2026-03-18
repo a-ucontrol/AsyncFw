@@ -14,6 +14,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 namespace AsyncFw {
 struct CoroutineAwait;
 
+/*! \brief The CoroutineTask struct. */
 struct CoroutineTask {
   CoroutineTask();
   virtual ~CoroutineTask();
@@ -44,6 +45,7 @@ private:
 
 using CoroutineHandle = std::coroutine_handle<CoroutineTask::promise_type>;
 
+/*! \brief The CoroutineAwait struct. */
 struct CoroutineAwait {
   CoroutineAwait(const std::function<void(CoroutineHandle)> & = nullptr);
   virtual ~CoroutineAwait();

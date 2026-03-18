@@ -13,8 +13,7 @@ namespace AsyncFw {
 class TlsContext;
 
 /*! \brief The AbstractTlsSocket class provides the base functionality for TLS encrypted socket.
- \snippet Socket/main.cpp snippet
-*/
+ \brief Example: \snippet Socket/main.cpp snippet */
 class AbstractTlsSocket : public AbstractSocket {
   friend LogStream &operator<<(LogStream &, const AbstractTlsSocket &);
   struct Private;

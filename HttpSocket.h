@@ -14,9 +14,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 namespace AsyncFw {
 /*! \brief The HttpSocket class.
- \brief Example:
- \snippet HttpSocket/main.cpp snippet
-*/
+ \brief Example: \snippet HttpSocket/main.cpp snippet */
 class HttpSocket : public AsyncFw::AbstractTlsSocket {
 public:
   friend LogStream &operator<<(LogStream &, const HttpSocket &);
