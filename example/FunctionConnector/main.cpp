@@ -62,7 +62,6 @@ int main(int argc, char *argv[]) {
 
   MethodConnectionExample tst;
   sender->connector.connect(&tst, &MethodConnectionExample::method);
-  sender->connector.connect([](int val) { lsNotice() << "sender->connector.connect" << val; });
   sender->connector([](int val) { lsNotice() << "sender->connector (lambda)" << val; });
 
   logNotice() << "Start Applicaiton";

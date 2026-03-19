@@ -64,7 +64,7 @@ public:
   using AbstractFunctionConnector::AbstractFunctionConnector;
   /*! \brief Подключиться */
   template <typename T>
-  Connection &connect(T f, Connection::Type t = Connection::Default) {
+  Connection &operator()(T f, Connection::Type t = Connection::Default) {
     std::lock_guard<std::mutex> lock(mutex);
 #ifndef __clang_analyzer__
     return *new Connection(f, this, t);
@@ -73,12 +73,7 @@ public:
   /*! \brief Подключиться */
   template <typename O, typename M>
   Connection &connect(O *o, M m, Connection::Type t = Connection::Default) {
-    return connect([o, m](Args... args) { (o->*m)(args...); }, t);
-  }
-  /*! \brief Подключиться */
-  template <typename T>
-  Connection &operator()(T f, Connection::Type t = Connection::Default) {
-    return connect(f, t);
+    return operator()([o, m](Args... args) { (o->*m)(args...); }, t);
   }
   /*! \brief Отправить */
   void operator()(Args... args) {
@@ -138,7 +133,7 @@ public:
     using FunctionConnector<Args...>::connect;
     template <typename T>
     AbstractFunctionConnector::Connection &operator()(T f, AbstractFunctionConnector::Connection::Type t = AbstractFunctionConnector::Connection::Default) {
-      return FunctionConnector<Args...>::connect(f, t);
+      return FunctionConnector<Args...>::operator()(f, t);
     }
 
   protected:
