@@ -13,6 +13,7 @@ namespace AsyncFw {
 
 class FunctionConnectionGuard;
 
+/*! \brief The AbstractFunctionConnector class. */
 class AbstractFunctionConnector {
   friend FunctionConnectionGuard;
 
@@ -54,8 +55,7 @@ protected:
   std::mutex mutex;
 };
 
-/*!
- \brief Обеспечивает соединение отправитель -> получатели. Получатели могут быть вызваны в своих потоках (по умолчанию).
+/*! \brief Обеспечивает соединение отправитель -> получатели. Получатели могут быть вызваны в своих потоках (по умолчанию).
  \brief Другие инструментальные средства реализуют подобную коммуникацию с помощью коллбэков. Коллбэк - это указатель на функцию, поэтому, если вы хотите, чтобы функция обработки уведомила вас о каком-либо событии, вы передаете указатель на другую функцию (коллбэк) в функцию обработки. Затем функция обработки вызывает коллбэк, когда это необходимо.
  \brief Example: \snippet FunctionConnector/main.cpp snippet */
 template <typename... Args>
@@ -146,6 +146,8 @@ public:
   };
 };
 
+/*! \brief The FunctionConnectionGuard class.
+ \brief При разрушении FunctionConnectionGuard соединение разрывается */
 class FunctionConnectionGuard {
   friend AbstractFunctionConnector::Connection;
 
