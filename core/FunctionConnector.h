@@ -62,19 +62,26 @@ template <typename... Args>
 class FunctionConnector : public AbstractFunctionConnector {
 public:
   using AbstractFunctionConnector::AbstractFunctionConnector;
-  /*! Подключиться */
+  /*! \brief Подключиться */
   template <typename T>
-  Connection &operator()(T f, Connection::Type t = Connection::Default) {
+  Connection &connect(T f, Connection::Type t = Connection::Default) {
     std::lock_guard<std::mutex> lock(mutex);
 #ifndef __clang_analyzer__
     return *new Connection(f, this, t);
 #endif
   }
-  /*! Отправить */
-  void operator()(Args... args) { send(args...); }
-
-protected:
-  void send(Args &...args) {
+  /*! \brief Подключиться */
+  template <typename O, typename M>
+  Connection &connect(O *o, M m, Connection::Type t = Connection::Default) {
+    return connect([o, m](Args... args) { (o->*m)(args...); }, t);
+  }
+  /*! \brief Подключиться */
+  template <typename T>
+  Connection &operator()(T f, Connection::Type t = Connection::Default) {
+    return connect(f, t);
+  }
+  /*! \brief Отправить */
+  void operator()(Args... args) {
     std::lock_guard<std::mutex> lock(mutex);
     for (const Connection *c : *reinterpret_cast<std::vector<Connection *> *>(&list_)) {
       if (c->type_ == Connection::Direct || (c->type_ != Connection::Queued && c->thread_->id() == std::this_thread::get_id())) {
@@ -128,16 +135,14 @@ public:
 
   public:
     using FunctionConnector<Args...>::FunctionConnector;
+    using FunctionConnector<Args...>::connect;
     template <typename T>
-    FunctionConnector<Args...>::Connection &operator()(T f, AbstractFunctionConnector::Connection::Type t = AbstractFunctionConnector::Connection::Default) {
-      std::lock_guard<std::mutex> lock(FunctionConnector<Args...>::mutex);
-#ifndef __clang_analyzer__
-      return *new FunctionConnector<Args...>::Connection(f, this, t);
-#endif
+    AbstractFunctionConnector::Connection &operator()(T f, AbstractFunctionConnector::Connection::Type t = AbstractFunctionConnector::Connection::Default) {
+      return FunctionConnector<Args...>::connect(f, t);
     }
 
   protected:
-    void operator()(Args... args) { FunctionConnector<Args...>::send(args...); }
+    using FunctionConnector<Args...>::operator();
   };
 };
 

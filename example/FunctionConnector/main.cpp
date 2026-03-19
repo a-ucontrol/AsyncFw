@@ -12,6 +12,11 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include <MainThread.h>
 #include <Log.h>
 
+class MethodConnectionExample {
+public:
+  void method(int val) { lsNotice() << val; }
+};
+
 class Sender {
 public:
   Sender() {
@@ -54,6 +59,11 @@ int main(int argc, char *argv[]) {
 
   Receiver receiver1("R1", *sender);
   Receiver receiver2("R2", *sender);
+
+  MethodConnectionExample tst;
+  sender->connector.connect(&tst, &MethodConnectionExample::method);
+  sender->connector.connect([](int val) { lsNotice() << "sender->connector.connect" << val; });
+  sender->connector([](int val) { lsNotice() << "sender->connector (lambda)" << val; });
 
   logNotice() << "Start Applicaiton";
 
