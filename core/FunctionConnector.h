@@ -50,7 +50,7 @@ protected:
     std::tuple<Args...> args_;
   };
   virtual ~AbstractFunctionConnector() = 0;
-  std::vector<Connection *> list_;
+  std::vector<Connection *> list;
   ConnectionType defaultConnectionType;
   std::mutex mutex;
 };
@@ -83,7 +83,7 @@ public:
   /*! \brief Отправить */
   void operator()(Args... args) {
     std::lock_guard<std::mutex> lock(mutex);
-    for (const Connection *c : *reinterpret_cast<std::vector<Connection *> *>(&list_)) {
+    for (const Connection *c : *reinterpret_cast<std::vector<Connection *> *>(&list)) {
       if (c->type_ == Connection::Direct || (c->type_ != Connection::Queued && c->thread_->id() == std::this_thread::get_id())) {
         (*c->f)(args...);
         continue;

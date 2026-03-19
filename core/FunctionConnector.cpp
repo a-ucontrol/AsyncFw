@@ -26,8 +26,8 @@ AbstractFunctionConnector::AbstractFunctionConnector(ConnectionType type) : defa
 
 AbstractFunctionConnector::~AbstractFunctionConnector() {
   std::lock_guard<std::mutex> lock(mutex);
-  trace() << this << list_.size();
-  for (Connection *c : list_) {
+  trace() << this << list.size();
+  for (Connection *c : list) {
     c->connector_ = nullptr;
     delete c;
   }
@@ -40,18 +40,18 @@ AbstractFunctionConnector::Connection::Connection(AbstractFunctionConnector *con
     throw std::runtime_error("fixed connection type");
   }
   thread_ = AbstractThread::currentThread();
-  std::vector<Connection *>::iterator it = std::lower_bound(connector_->list_.begin(), connector_->list_.end(), this, [](const Connection *c1, const Connection *c2) { return c1 < c2; });
-  connector_->list_.insert(it, this);
-  trace() << LogStream::Color::Green << static_cast<int>(type_) << thread_->name() << this << connector_ << connector_->list_.size();
+  std::vector<Connection *>::iterator it = std::lower_bound(connector_->list.begin(), connector_->list.end(), this, [](const Connection *c1, const Connection *c2) { return c1 < c2; });
+  connector_->list.insert(it, this);
+  trace() << LogStream::Color::Green << static_cast<int>(type_) << thread_->name() << this << connector_ << connector_->list.size();
 }
 
 AbstractFunctionConnector::Connection::~Connection() {
   if (guarg_) guarg_->c_ = nullptr;
   if (!connector_) return;
   std::lock_guard<std::mutex> lock(connector_->mutex);
-  std::vector<Connection *>::iterator it = std::lower_bound(connector_->list_.begin(), connector_->list_.end(), this, [](const Connection *c1, const Connection *c2) { return c1 < c2; });
-  connector_->list_.erase(it);
-  trace() << this << connector_ << connector_->list_.size();
+  std::vector<Connection *>::iterator it = std::lower_bound(connector_->list.begin(), connector_->list.end(), this, [](const Connection *c1, const Connection *c2) { return c1 < c2; });
+  connector_->list.erase(it);
+  trace() << this << connector_ << connector_->list.size();
 }
 
 FunctionConnectionGuard::FunctionConnectionGuard() { c_ = nullptr; }
