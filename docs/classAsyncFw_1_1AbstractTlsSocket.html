@@ -375,7 +375,7 @@ std::any&#160;</td><td class="memItemRight" valign="bottom"><b>data_</b></td></t
 <div class="line">  socket.setContext(context);</div>
 <div class="line"> </div>
 <div class="line">  <span class="keyword">auto</span> coroTask {[&amp;socket]() -&gt; <a class="code hl_struct" href="structAsyncFw_1_1CoroutineTask.html">AsyncFw::CoroutineTask</a> {</div>
-<div class="line">    AsyncFw::AddressInfo addressInfo;</div>
+<div class="line">    <a class="code hl_class" href="classAsyncFw_1_1AddressInfo.html">AsyncFw::AddressInfo</a> addressInfo;</div>
 <div class="line">    AsyncFw::CoroutineHandle h = <span class="keyword">co_await</span> addressInfo.coResolve(<span class="stringliteral">&quot;github.com&quot;</span>);</div>
 <div class="line">    AsyncFw::AddressInfo::Result list = h.promise().data&lt;AsyncFw::AddressInfo::Result&gt;();</div>
 <div class="line">    <span class="keywordflow">if</span> (list.empty()) {</div>

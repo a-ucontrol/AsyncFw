@@ -47,21 +47,26 @@ class AbstractThread {
   struct Private;
 
 public:
+  /*! \brief The LockGuard type. */
+  using LockGuard = std::lock_guard<std::mutex>;
   enum PollEvents : uint16_t { PollNo = 0, PollIn = POLLIN_, PollPri = POLLPRI_, PollOut = POLLOUT_, PollErr = POLLERR_, PollHup = POLLHUP_, PollNval = POLLNVAL_ };
+  /*! \brief The AbstractTask class. */
   class AbstractTask {
   public:
     virtual void invoke() = 0;
     virtual ~AbstractTask() = default;
   };
+  /*! \brief The AbstractPollTask class. */
   class AbstractPollTask {
   public:
     virtual void invoke(AbstractThread::PollEvents) = 0;
     virtual ~AbstractPollTask() = default;
   };
-  using LockGuard = std::lock_guard<std::mutex>;
+  /*! \brief The Holder class. */
   class Holder {
   public:
     void complete();
+    /*! \brief Runs nested exec() and wait for it completed. */
     void wait();
 
   private:
@@ -111,7 +116,7 @@ public:
 
   /*! \brief Returns a pointer to the AsyncFw::AbstractThread that manages the currently executing thread. */
   static AbstractThread *currentThread();
-  /*! \brief Assigns a pointer to the list of all threads. \param std::vector<AbstractThread *> **pointer \return AbstractThread::LockGuard */
+  /*! \brief Assigns a pointer to the list of all threads. \param list std::vector<AbstractThread *> ** pointer \return AbstractThread::LockGuard */
   static AbstractThread::LockGuard threads(std::vector<AbstractThread *> **);
 
   /*! \brief This call from thread when it starts executing. */
@@ -123,13 +128,20 @@ public:
   virtual bool running() const;
   /*! \brief Runs a task in a managed thread. \param Poiner to AbstractTask \return True if the task is added to the queue */
   virtual bool invokeTask(AbstractTask *) const;
+  /*! \brief Append timer. \param ms timeout in milliseconds \param task pointer to AbstractTask \return timer id */
   virtual int appendTimer(int, AbstractTask *);
+  /*! \brief Modify timer. \param id timer id \param ms timeout in milliseconds \return True if the timer modified */
   virtual bool modifyTimer(int, int);
+  /*! \brief Remove timer. \param id timer id */
   virtual void removeTimer(int);
+  /*! \brief Append poll descriptor. \param fd file descriptor \param events watch events \param task pointer to AbstractPollTask \return True if the poll descriptor added */
   virtual bool appendPollDescriptor(int, PollEvents, AbstractPollTask *);
+  /*! \brief Modify poll descriptor. \param fd file descriptor \param events watch events \return True if the poll descriptor modified */
   virtual bool modifyPollDescriptor(int, PollEvents);
+  /*! \brief Remove poll descriptor. \param fd file descriptor */
   virtual void removePollDescriptor(int);
 
+  /*! \brief Create a managed thread and run exec() */
   void start();
   void requestInterrupt();
   bool interruptRequested() const;
@@ -169,6 +181,7 @@ protected:
 
   void setId();
   void clearId();
+  /*! \brief Run manage loop */
   void exec();
 
 private:

@@ -12,26 +12,27 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include "core/AnyData.h"
 
 namespace AsyncFw {
-class AbstractTask : public AnyData {
+/*! \brief The AbstractTask class. */
+class AbstractTask : public AsyncFw::AbstractThread::AbstractTask, public AnyData {
 public:
   AbstractTask();
-  virtual ~AbstractTask();
-  virtual void invoke() = 0;
+  ~AbstractTask();
   virtual bool running() = 0;
 };
 
+/*! \brief The Task class. */
 template <typename M>
 class Task : public AbstractTask {
 public:
-  Task(M &&method, AbstractThread *thread = nullptr) : method(std::move(method)), thread(thread) {}
+  Task(M &&method, AbstractThread *thread = nullptr) : method(std::move(method)), thread_(thread) {}
   void invoke() override {
     running_ = true;
-    if (!thread) {
+    if (!thread_) {
       method(&data_);
       running_ = false;
       return;
     }
-    thread->invokeMethod([_m = std::move(method), _r = std::make_shared<std::atomic_bool>(&running_), _d = std::make_shared<std::any>(data_)]() {
+    thread_->invokeMethod([_m = std::move(method), _r = std::make_shared<std::atomic_bool>(&running_), _d = std::make_shared<std::any>(data_)]() {
       _m(_d.get());
       *_r = false;
     });
@@ -40,7 +41,7 @@ public:
 
 private:
   M method;
-  AbstractThread *thread;
+  AbstractThread *thread_;
   std::atomic_bool running_;
 };
 }  // namespace AsyncFw

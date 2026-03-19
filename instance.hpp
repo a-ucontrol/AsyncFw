@@ -20,20 +20,19 @@ public:
   public:
     static void destroy();
 
+    void append(AbstractInstance *);
+    void remove(AbstractInstance *);
+
   private:
     ~List();
   };
 
 protected:
+  static class List list;
+
   virtual ~AbstractInstance() = default;
   virtual void destroyValue() = 0;
-  void append(AbstractInstance *);
-  void remove(AbstractInstance *);
-
   std::string name;
-
-private:
-  static class List list;
 };
 
 /*! \brief The Instance class. */
@@ -60,11 +59,11 @@ public:
 
   Instance(const std::string &_name = {}) : value(nullptr) {
     name = _name;
-    append(i_ = this);
+    list.append(i_ = this);
   }
   virtual ~Instance() override {
-    if (value) delete value;
-    remove(i_);
+    Instance<T>::destroyValue();
+    list.remove(i_);
   }
 
 protected:

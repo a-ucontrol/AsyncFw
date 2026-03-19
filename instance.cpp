@@ -27,14 +27,14 @@ AbstractInstance::List::~List() {
   lsDebug() << size();
 }
 
-void AbstractInstance::append(AbstractInstance *_i) {
+void AbstractInstance::List::append(AbstractInstance *_i) {
   std::vector<AbstractInstance *>::iterator it = std::lower_bound(list.begin(), list.end(), _i, [](const AbstractInstance *i1, const AbstractInstance *i2) { return i1 < i2; });
   list.insert(it, _i);
-  lsTrace() << name;
+  lsTrace() << _i->name;
 }
 
-void AbstractInstance::remove(AbstractInstance *_i) {
-  lsTrace() << name;
+void AbstractInstance::List::remove(AbstractInstance *_i) {
+  lsTrace() << _i->name;
   if (list.empty()) {
     lsError() << "instance list empty";
     return;

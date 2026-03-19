@@ -104,6 +104,7 @@ $(function(){initNavTree('classAsyncFw_1_1AbstractThread.html',''); initResizabl
 
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
@@ -131,6 +132,18 @@ Inheritance diagram for AsyncFw::AbstractThread:</div>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAsyncFw_1_1AbstractThread_1_1AbstractPollTask.html">AbstractPollTask</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="classAsyncFw_1_1AbstractThread_1_1AbstractPollTask.html" title="The AbstractPollTask class.">AbstractPollTask</a> class.  <a href="classAsyncFw_1_1AbstractThread_1_1AbstractPollTask.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAsyncFw_1_1AbstractThread_1_1AbstractTask.html">AbstractTask</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="classAsyncFw_1_1AbstractThread_1_1AbstractTask.html" title="The AbstractTask class.">AbstractTask</a> class.  <a href="classAsyncFw_1_1AbstractThread_1_1AbstractTask.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAsyncFw_1_1AbstractThread_1_1Holder.html">Holder</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="classAsyncFw_1_1AbstractThread_1_1Holder.html" title="The Holder class.">Holder</a> class.  <a href="classAsyncFw_1_1AbstractThread_1_1Holder.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
 <tr class="memitem:a654efa5f41b38ff679e48211e8904a59" id="r_a654efa5f41b38ff679e48211e8904a59"><td class="memItemLeft" align="right" valign="top"><a id="a654efa5f41b38ff679e48211e8904a59" name="a654efa5f41b38ff679e48211e8904a59"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>PollEvents</b> : uint16_t { <br />
@@ -147,6 +160,7 @@ Public Types</h2></td></tr>
 <tr class="separator:a654efa5f41b38ff679e48211e8904a59"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4e97803ef650d36ba80ef1471c4b643c" id="r_a4e97803ef650d36ba80ef1471c4b643c"><td class="memItemLeft" align="right" valign="top"><a id="a4e97803ef650d36ba80ef1471c4b643c" name="a4e97803ef650d36ba80ef1471c4b643c"></a>
 using&#160;</td><td class="memItemRight" valign="bottom"><b>LockGuard</b> = std::lock_guard&lt;std::mutex&gt;</td></tr>
+<tr class="memdesc:a4e97803ef650d36ba80ef1471c4b643c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="#a4e97803ef650d36ba80ef1471c4b643c" title="The LockGuard type.">LockGuard</a> type. <br /></td></tr>
 <tr class="separator:a4e97803ef650d36ba80ef1471c4b643c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
@@ -175,29 +189,30 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>finishedEvent
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>running</b> () const</td></tr>
 <tr class="memdesc:aa317731738402e37a8a05d5a5ec9d7c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the managed thread is running. <br /></td></tr>
 <tr class="separator:aa317731738402e37a8a05d5a5ec9d7c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abe96e6b2a1de041f0d25390a6b77e50a" id="r_abe96e6b2a1de041f0d25390a6b77e50a"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abe96e6b2a1de041f0d25390a6b77e50a">invokeTask</a> (AbstractTask *) const</td></tr>
+<tr class="memitem:abe96e6b2a1de041f0d25390a6b77e50a" id="r_abe96e6b2a1de041f0d25390a6b77e50a"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abe96e6b2a1de041f0d25390a6b77e50a">invokeTask</a> (<a class="el" href="classAsyncFw_1_1AbstractThread_1_1AbstractTask.html">AbstractTask</a> *) const</td></tr>
 <tr class="memdesc:abe96e6b2a1de041f0d25390a6b77e50a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runs a task in a managed thread.  <br /></td></tr>
 <tr class="separator:abe96e6b2a1de041f0d25390a6b77e50a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1fa8bc43151797cbcfb2013ee1fce2ce" id="r_a1fa8bc43151797cbcfb2013ee1fce2ce"><td class="memItemLeft" align="right" valign="top"><a id="a1fa8bc43151797cbcfb2013ee1fce2ce" name="a1fa8bc43151797cbcfb2013ee1fce2ce"></a>
-virtual int&#160;</td><td class="memItemRight" valign="bottom"><b>appendTimer</b> (int, AbstractTask *)</td></tr>
+<tr class="memitem:a1fa8bc43151797cbcfb2013ee1fce2ce" id="r_a1fa8bc43151797cbcfb2013ee1fce2ce"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1fa8bc43151797cbcfb2013ee1fce2ce">appendTimer</a> (int, <a class="el" href="classAsyncFw_1_1AbstractThread_1_1AbstractTask.html">AbstractTask</a> *)</td></tr>
+<tr class="memdesc:a1fa8bc43151797cbcfb2013ee1fce2ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Append timer.  <br /></td></tr>
 <tr class="separator:a1fa8bc43151797cbcfb2013ee1fce2ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4e367b49b300c1b93d2275b5840bb20b" id="r_a4e367b49b300c1b93d2275b5840bb20b"><td class="memItemLeft" align="right" valign="top"><a id="a4e367b49b300c1b93d2275b5840bb20b" name="a4e367b49b300c1b93d2275b5840bb20b"></a>
-virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>modifyTimer</b> (int, int)</td></tr>
+<tr class="memitem:a4e367b49b300c1b93d2275b5840bb20b" id="r_a4e367b49b300c1b93d2275b5840bb20b"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4e367b49b300c1b93d2275b5840bb20b">modifyTimer</a> (int, int)</td></tr>
+<tr class="memdesc:a4e367b49b300c1b93d2275b5840bb20b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modify timer.  <br /></td></tr>
 <tr class="separator:a4e367b49b300c1b93d2275b5840bb20b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae8fc0b3f68faed69e7f0b4e940ef12c0" id="r_ae8fc0b3f68faed69e7f0b4e940ef12c0"><td class="memItemLeft" align="right" valign="top"><a id="ae8fc0b3f68faed69e7f0b4e940ef12c0" name="ae8fc0b3f68faed69e7f0b4e940ef12c0"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>removeTimer</b> (int)</td></tr>
+<tr class="memitem:ae8fc0b3f68faed69e7f0b4e940ef12c0" id="r_ae8fc0b3f68faed69e7f0b4e940ef12c0"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae8fc0b3f68faed69e7f0b4e940ef12c0">removeTimer</a> (int)</td></tr>
+<tr class="memdesc:ae8fc0b3f68faed69e7f0b4e940ef12c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove timer.  <br /></td></tr>
 <tr class="separator:ae8fc0b3f68faed69e7f0b4e940ef12c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9a4001da757d31945c4e6be4e20c31ed" id="r_a9a4001da757d31945c4e6be4e20c31ed"><td class="memItemLeft" align="right" valign="top"><a id="a9a4001da757d31945c4e6be4e20c31ed" name="a9a4001da757d31945c4e6be4e20c31ed"></a>
-virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>appendPollDescriptor</b> (int, PollEvents, AbstractPollTask *)</td></tr>
+<tr class="memitem:a9a4001da757d31945c4e6be4e20c31ed" id="r_a9a4001da757d31945c4e6be4e20c31ed"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9a4001da757d31945c4e6be4e20c31ed">appendPollDescriptor</a> (int, PollEvents, <a class="el" href="classAsyncFw_1_1AbstractThread_1_1AbstractPollTask.html">AbstractPollTask</a> *)</td></tr>
+<tr class="memdesc:a9a4001da757d31945c4e6be4e20c31ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Append poll descriptor.  <br /></td></tr>
 <tr class="separator:a9a4001da757d31945c4e6be4e20c31ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af295f768757d3c7d6cf32e5248cbc2e0" id="r_af295f768757d3c7d6cf32e5248cbc2e0"><td class="memItemLeft" align="right" valign="top"><a id="af295f768757d3c7d6cf32e5248cbc2e0" name="af295f768757d3c7d6cf32e5248cbc2e0"></a>
-virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>modifyPollDescriptor</b> (int, PollEvents)</td></tr>
+<tr class="memitem:af295f768757d3c7d6cf32e5248cbc2e0" id="r_af295f768757d3c7d6cf32e5248cbc2e0"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af295f768757d3c7d6cf32e5248cbc2e0">modifyPollDescriptor</a> (int, PollEvents)</td></tr>
+<tr class="memdesc:af295f768757d3c7d6cf32e5248cbc2e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modify poll descriptor.  <br /></td></tr>
 <tr class="separator:af295f768757d3c7d6cf32e5248cbc2e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a499a70b1d68a82fcded917a331f4cdef" id="r_a499a70b1d68a82fcded917a331f4cdef"><td class="memItemLeft" align="right" valign="top"><a id="a499a70b1d68a82fcded917a331f4cdef" name="a499a70b1d68a82fcded917a331f4cdef"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>removePollDescriptor</b> (int)</td></tr>
+<tr class="memitem:a499a70b1d68a82fcded917a331f4cdef" id="r_a499a70b1d68a82fcded917a331f4cdef"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a499a70b1d68a82fcded917a331f4cdef">removePollDescriptor</a> (int)</td></tr>
+<tr class="memdesc:a499a70b1d68a82fcded917a331f4cdef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove poll descriptor.  <br /></td></tr>
 <tr class="separator:a499a70b1d68a82fcded917a331f4cdef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afdaccb5da7d4bee5e9ff687f761bd21f" id="r_afdaccb5da7d4bee5e9ff687f761bd21f"><td class="memItemLeft" align="right" valign="top"><a id="afdaccb5da7d4bee5e9ff687f761bd21f" name="afdaccb5da7d4bee5e9ff687f761bd21f"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>start</b> ()</td></tr>
+<tr class="memdesc:afdaccb5da7d4bee5e9ff687f761bd21f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a managed thread and run <a class="el" href="#a1abe0f5c637dcc6af5aff00c5291bd4f" title="Run manage loop.">exec()</a> <br /></td></tr>
 <tr class="separator:afdaccb5da7d4bee5e9ff687f761bd21f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a16affc1626e26d18cc2d9eab21315591" id="r_a16affc1626e26d18cc2d9eab21315591"><td class="memItemLeft" align="right" valign="top"><a id="a16affc1626e26d18cc2d9eab21315591" name="a16affc1626e26d18cc2d9eab21315591"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>requestInterrupt</b> ()</td></tr>
@@ -224,7 +239,7 @@ std::thread::id&#160;</td><td class="memItemRight" valign="bottom"><b>id</b> () 
 std::string&#160;</td><td class="memItemRight" valign="bottom"><b>name</b> () const</td></tr>
 <tr class="separator:a0cd916251e061aaf3d456575ef052edd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6e17293ccd9683f5bd8ca9a3dcd52e7d" id="r_a6e17293ccd9683f5bd8ca9a3dcd52e7d"><td class="memItemLeft" align="right" valign="top"><a id="a6e17293ccd9683f5bd8ca9a3dcd52e7d" name="a6e17293ccd9683f5bd8ca9a3dcd52e7d"></a>
-LockGuard&#160;</td><td class="memItemRight" valign="bottom"><b>lockGuard</b> () const</td></tr>
+<a class="el" href="#a4e97803ef650d36ba80ef1471c4b643c">LockGuard</a>&#160;</td><td class="memItemRight" valign="bottom"><b>lockGuard</b> () const</td></tr>
 <tr class="separator:a6e17293ccd9683f5bd8ca9a3dcd52e7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
@@ -233,7 +248,7 @@ Static Public Member Functions</h2></td></tr>
 static <a class="el" href="classAsyncFw_1_1AbstractThread.html">AbstractThread</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>currentThread</b> ()</td></tr>
 <tr class="memdesc:ac1b35ef04b06ce771f6d6ca0a5b120db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a pointer to the <a class="el" href="classAsyncFw_1_1AbstractThread.html" title="The AbstractThread class provides the base functionality for thread management.">AsyncFw::AbstractThread</a> that manages the currently executing thread. <br /></td></tr>
 <tr class="separator:ac1b35ef04b06ce771f6d6ca0a5b120db"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a43ef467a5f4dcc46d152a06cc20bf41c" id="r_a43ef467a5f4dcc46d152a06cc20bf41c"><td class="memItemLeft" align="right" valign="top">static AbstractThread::LockGuard&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a43ef467a5f4dcc46d152a06cc20bf41c">threads</a> (std::vector&lt; <a class="el" href="classAsyncFw_1_1AbstractThread.html">AbstractThread</a> * &gt; **)</td></tr>
+<tr class="memitem:a43ef467a5f4dcc46d152a06cc20bf41c" id="r_a43ef467a5f4dcc46d152a06cc20bf41c"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="#a4e97803ef650d36ba80ef1471c4b643c">AbstractThread::LockGuard</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a43ef467a5f4dcc46d152a06cc20bf41c">threads</a> (std::vector&lt; <a class="el" href="classAsyncFw_1_1AbstractThread.html">AbstractThread</a> * &gt; **)</td></tr>
 <tr class="memdesc:a43ef467a5f4dcc46d152a06cc20bf41c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assigns a pointer to the list of all threads.  <br /></td></tr>
 <tr class="separator:a43ef467a5f4dcc46d152a06cc20bf41c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -250,6 +265,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>clearId</b> ()</td></
 <tr class="separator:a70d927fa19d4005ebaaef2584d9e1869"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1abe0f5c637dcc6af5aff00c5291bd4f" id="r_a1abe0f5c637dcc6af5aff00c5291bd4f"><td class="memItemLeft" align="right" valign="top"><a id="a1abe0f5c637dcc6af5aff00c5291bd4f" name="a1abe0f5c637dcc6af5aff00c5291bd4f"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>exec</b> ()</td></tr>
+<tr class="memdesc:a1abe0f5c637dcc6af5aff00c5291bd4f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run manage loop. <br /></td></tr>
 <tr class="separator:a1abe0f5c637dcc6af5aff00c5291bd4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="friends" name="friends"></a>
@@ -261,6 +277,90 @@ Friends</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The <a class="el" href="classAsyncFw_1_1AbstractThread.html" title="The AbstractThread class provides the base functionality for thread management.">AbstractThread</a> class provides the base functionality for thread management. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a9a4001da757d31945c4e6be4e20c31ed" name="a9a4001da757d31945c4e6be4e20c31ed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9a4001da757d31945c4e6be4e20c31ed">&#9670;&#160;</a></span>appendPollDescriptor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool AbstractThread::appendPollDescriptor </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>fd</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">PollEvents</td>          <td class="paramname"><span class="paramname"><em>events</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classAsyncFw_1_1AbstractThread_1_1AbstractPollTask.html">AbstractPollTask</a> *</td>          <td class="paramname"><span class="paramname"><em>task</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel virtual">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Append poll descriptor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fd</td><td>file descriptor</td></tr>
+    <tr><td class="paramname">events</td><td>watch events</td></tr>
+    <tr><td class="paramname">task</td><td>pointer to <a class="el" href="classAsyncFw_1_1AbstractThread_1_1AbstractPollTask.html" title="The AbstractPollTask class.">AbstractPollTask</a> </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the poll descriptor added </dd></dl>
+
+</div>
+</div>
+<a id="a1fa8bc43151797cbcfb2013ee1fce2ce" name="a1fa8bc43151797cbcfb2013ee1fce2ce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1fa8bc43151797cbcfb2013ee1fce2ce">&#9670;&#160;</a></span>appendTimer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int AbstractThread::appendTimer </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>ms</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classAsyncFw_1_1AbstractThread_1_1AbstractTask.html">AbstractTask</a> *</td>          <td class="paramname"><span class="paramname"><em>task</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel virtual">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Append timer. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ms</td><td>timeout in milliseconds</td></tr>
+    <tr><td class="paramname">task</td><td>pointer to <a class="el" href="classAsyncFw_1_1AbstractThread_1_1AbstractTask.html" title="The AbstractTask class.">AbstractTask</a> </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>timer id </dd></dl>
+
+</div>
+</div>
 <a id="abe96e6b2a1de041f0d25390a6b77e50a" name="abe96e6b2a1de041f0d25390a6b77e50a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#abe96e6b2a1de041f0d25390a6b77e50a">&#9670;&#160;</a></span>invokeTask()</h2>
 
@@ -273,7 +373,7 @@ Friends</h2></td></tr>
         <tr>
           <td class="memname">bool AbstractThread::invokeTask </td>
           <td>(</td>
-          <td class="paramtype">AbstractTask *</td>          <td class="paramname"><span class="paramname"><em>task</em></span></td><td>)</td>
+          <td class="paramtype"><a class="el" href="classAsyncFw_1_1AbstractThread_1_1AbstractTask.html">AbstractTask</a> *</td>          <td class="paramname"><span class="paramname"><em>task</em></span></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
@@ -287,11 +387,187 @@ Friends</h2></td></tr>
 <p>Runs a task in a managed thread. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">Poiner</td><td>to AbstractTask </td></tr>
+    <tr><td class="paramname">Poiner</td><td>to <a class="el" href="classAsyncFw_1_1AbstractThread_1_1AbstractTask.html" title="The AbstractTask class.">AbstractTask</a> </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if the task is added to the queue </dd></dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classAsyncFw_1_1AbstractThread_abe96e6b2a1de041f0d25390a6b77e50a_icgraph.png" border="0" usemap="#aclassAsyncFw_1_1AbstractThread_abe96e6b2a1de041f0d25390a6b77e50a_icgraph" alt=""/></div>
+<map name="aclassAsyncFw_1_1AbstractThread_abe96e6b2a1de041f0d25390a6b77e50a_icgraph" id="aclassAsyncFw_1_1AbstractThread_abe96e6b2a1de041f0d25390a6b77e50a_icgraph">
+<area shape="rect" title="Runs a task in a managed thread." alt="" coords="227,39,400,81"/>
+<area shape="rect" href="classAsyncFw_1_1AbstractThread.html#a499a70b1d68a82fcded917a331f4cdef" title="Remove poll descriptor." alt="" coords="5,5,179,48"/>
+<area shape="poly" title=" " alt="" coords="211,47,179,42,180,37,212,42"/>
+<area shape="rect" href="classAsyncFw_1_1AbstractThread.html#ae8fc0b3f68faed69e7f0b4e940ef12c0" title="Remove timer." alt="" coords="5,72,179,115"/>
+<area shape="poly" title=" " alt="" coords="212,78,180,83,179,78,211,73"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="af295f768757d3c7d6cf32e5248cbc2e0" name="af295f768757d3c7d6cf32e5248cbc2e0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af295f768757d3c7d6cf32e5248cbc2e0">&#9670;&#160;</a></span>modifyPollDescriptor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool AbstractThread::modifyPollDescriptor </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>fd</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">PollEvents</td>          <td class="paramname"><span class="paramname"><em>events</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel virtual">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Modify poll descriptor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fd</td><td>file descriptor</td></tr>
+    <tr><td class="paramname">events</td><td>watch events </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the poll descriptor modified </dd></dl>
+
+</div>
+</div>
+<a id="a4e367b49b300c1b93d2275b5840bb20b" name="a4e367b49b300c1b93d2275b5840bb20b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4e367b49b300c1b93d2275b5840bb20b">&#9670;&#160;</a></span>modifyTimer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool AbstractThread::modifyTimer </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>id</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>ms</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel virtual">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Modify timer. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>timer id</td></tr>
+    <tr><td class="paramname">ms</td><td>timeout in milliseconds </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the timer modified </dd></dl>
+
+</div>
+</div>
+<a id="a499a70b1d68a82fcded917a331f4cdef" name="a499a70b1d68a82fcded917a331f4cdef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a499a70b1d68a82fcded917a331f4cdef">&#9670;&#160;</a></span>removePollDescriptor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AbstractThread::removePollDescriptor </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>fd</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel virtual">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Remove poll descriptor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fd</td><td>file descriptor </td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classAsyncFw_1_1AbstractThread_a499a70b1d68a82fcded917a331f4cdef_cgraph.png" border="0" usemap="#aclassAsyncFw_1_1AbstractThread_a499a70b1d68a82fcded917a331f4cdef_cgraph" alt=""/></div>
+<map name="aclassAsyncFw_1_1AbstractThread_a499a70b1d68a82fcded917a331f4cdef_cgraph" id="aclassAsyncFw_1_1AbstractThread_a499a70b1d68a82fcded917a331f4cdef_cgraph">
+<area shape="rect" title="Remove poll descriptor." alt="" coords="5,5,179,48"/>
+<area shape="rect" href="classAsyncFw_1_1AbstractThread.html#abe96e6b2a1de041f0d25390a6b77e50a" title="Runs a task in a managed thread." alt="" coords="227,5,400,48"/>
+<area shape="poly" title=" " alt="" coords="179,24,211,24,211,29,179,29"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="ae8fc0b3f68faed69e7f0b4e940ef12c0" name="ae8fc0b3f68faed69e7f0b4e940ef12c0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae8fc0b3f68faed69e7f0b4e940ef12c0">&#9670;&#160;</a></span>removeTimer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AbstractThread::removeTimer </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>id</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel virtual">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Remove timer. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>timer id </td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classAsyncFw_1_1AbstractThread_ae8fc0b3f68faed69e7f0b4e940ef12c0_cgraph.png" border="0" usemap="#aclassAsyncFw_1_1AbstractThread_ae8fc0b3f68faed69e7f0b4e940ef12c0_cgraph" alt=""/></div>
+<map name="aclassAsyncFw_1_1AbstractThread_ae8fc0b3f68faed69e7f0b4e940ef12c0_cgraph" id="aclassAsyncFw_1_1AbstractThread_ae8fc0b3f68faed69e7f0b4e940ef12c0_cgraph">
+<area shape="rect" title="Remove timer." alt="" coords="5,5,179,48"/>
+<area shape="rect" href="classAsyncFw_1_1AbstractThread.html#abe96e6b2a1de041f0d25390a6b77e50a" title="Runs a task in a managed thread." alt="" coords="227,5,400,48"/>
+<area shape="poly" title=" " alt="" coords="179,24,211,24,211,29,179,29"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -305,9 +581,9 @@ Friends</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">AbstractThread::LockGuard AbstractThread::threads </td>
+          <td class="memname"><a class="el" href="#a4e97803ef650d36ba80ef1471c4b643c">AbstractThread::LockGuard</a> AbstractThread::threads </td>
           <td>(</td>
-          <td class="paramtype">std::vector&lt; <a class="el" href="classAsyncFw_1_1AbstractThread.html">AbstractThread</a> * &gt; **</td>          <td class="paramname"><span class="paramname"><em>_threads</em></span></td><td>)</td>
+          <td class="paramtype">std::vector&lt; <a class="el" href="classAsyncFw_1_1AbstractThread.html">AbstractThread</a> * &gt; **</td>          <td class="paramname"><span class="paramname"><em>list</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -321,11 +597,11 @@ Friends</h2></td></tr>
 <p>Assigns a pointer to the list of all threads. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">std::vector&lt;AbstractThread</td><td>*&gt; **pointer </td></tr>
+    <tr><td class="paramname">list</td><td>std::vector&lt;AbstractThread *&gt; ** pointer </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>AbstractThread::LockGuard </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="#a4e97803ef650d36ba80ef1471c4b643c" title="The LockGuard type.">AbstractThread::LockGuard</a> </dd></dl>
 
 </div>
 </div>

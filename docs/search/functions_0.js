@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['currentthread_0',['currentThread',['../classAsyncFw_1_1AbstractThread.html#ac1b35ef04b06ce771f6d6ca0a5b120db',1,'AsyncFw::AbstractThread::currentThread()'],['../classAsyncFw_1_1Thread.html#a46662ffa7482f1c1e52b654c51639fd2',1,'AsyncFw::Thread::currentThread()']]]
+  ['appendpolldescriptor_0',['appendPollDescriptor',['../classAsyncFw_1_1AbstractThread.html#a9a4001da757d31945c4e6be4e20c31ed',1,'AsyncFw::AbstractThread']]],
+  ['appendtimer_1',['appendTimer',['../classAsyncFw_1_1AbstractThread.html#a1fa8bc43151797cbcfb2013ee1fce2ce',1,'AsyncFw::AbstractThread']]]
 ];

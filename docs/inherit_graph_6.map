@@ -1,3 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$structAsyncFw_1_1CoroutineTask.html" title="The CoroutineTask struct." alt="" coords="5,5,174,32"/>
+<area shape="rect" id="Node000000" href="$classAsyncFw_1_1AbstractThreadPool.html" title="Абстрактный класс для создания пулов управления потоками." alt="" coords="5,5,205,32"/>
+<area shape="rect" id="Node000001" href="$classAsyncFw_1_1ThreadPool.html" title="Управляет набором многократно используемых рабочих потоков для параллельного выполнения задач,..." alt="" coords="253,5,403,32"/>
+<area shape="poly" id="edge17_Node000000_Node000001" title=" " alt="" coords="220,16,253,16,253,21,220,21"/>
 </map>

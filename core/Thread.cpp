@@ -304,8 +304,8 @@ AbstractThread *AbstractThread::currentThread() {
   return nullptr;
 }
 
-AbstractThread::LockGuard AbstractThread::threads(std::vector<AbstractThread *> **_threads) {
-  *_threads = &Private::list;
+AbstractThread::LockGuard AbstractThread::threads(std::vector<AbstractThread *> **list) {
+  *list = &Private::list;
   return LockGuard {Private::list.mutex};
 }
 

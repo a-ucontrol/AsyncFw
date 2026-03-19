@@ -222,7 +222,7 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
 <div class="line">}</div>
 <div class="ttc" id="aclassAsyncFw_1_1AbstractThread_html"><div class="ttname"><a href="classAsyncFw_1_1AbstractThread.html">AsyncFw::AbstractThread</a></div><div class="ttdoc">The AbstractThread class provides the base functionality for thread management.</div><div class="ttdef"><b>Definition</b> Thread.h:45</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1AbstractThread_html_ac1b35ef04b06ce771f6d6ca0a5b120db"><div class="ttname"><a href="classAsyncFw_1_1AbstractThread.html#ac1b35ef04b06ce771f6d6ca0a5b120db">AsyncFw::AbstractThread::currentThread</a></div><div class="ttdeci">static AbstractThread * currentThread()</div><div class="ttdoc">Returns a pointer to the AsyncFw::AbstractThread that manages the currently executing thread.</div><div class="ttdef"><b>Definition</b> Thread.cpp:296</div></div>
-<div class="ttc" id="aclassAsyncFw_1_1Thread_html"><div class="ttname"><a href="classAsyncFw_1_1Thread.html">AsyncFw::Thread</a></div><div class="ttdoc">AsyncFw::Thread thread with sockets.</div><div class="ttdef"><b>Definition</b> Thread.h:182</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1Thread_html"><div class="ttname"><a href="classAsyncFw_1_1Thread.html">AsyncFw::Thread</a></div><div class="ttdoc">AsyncFw::Thread thread with sockets.</div><div class="ttdef"><b>Definition</b> Thread.h:195</div></div>
 </div><!-- fragment --><p> FunctionConnector example: </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;core/Thread.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;core/FunctionConnector.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;Timer.h&gt;</span></div>
@@ -439,7 +439,7 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
 <div class="line">  TcpSocket socket;</div>
 <div class="line">  socket.setContext(context);</div>
 <div class="line"> </div>
-<div class="line">  AsyncFw::AddressInfo addressInfo;</div>
+<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1AddressInfo.html">AsyncFw::AddressInfo</a> addressInfo;</div>
 <div class="line">  addressInfo.resolve(<span class="stringliteral">&quot;github.com&quot;</span>);</div>
 <div class="line">  addressInfo.completed([&amp;socket](<span class="keywordtype">int</span> r, <span class="keyword">const</span> std::vector&lt;std::string&gt; &amp;list) {</div>
 <div class="line">    <span class="keywordflow">if</span> (r == 0 &amp;&amp; !list.empty()) {</div>
@@ -456,6 +456,7 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
 <div class="line">  <span class="keywordflow">return</span> ret;</div>
 <div class="line">}</div>
 <div class="ttc" id="aclassAsyncFw_1_1AbstractTlsSocket_html"><div class="ttname"><a href="classAsyncFw_1_1AbstractTlsSocket.html">AsyncFw::AbstractTlsSocket</a></div><div class="ttdoc">The AbstractTlsSocket class provides the base functionality for TLS encrypted socket.</div><div class="ttdef"><b>Definition</b> TlsSocket.h:17</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1AddressInfo_html"><div class="ttname"><a href="classAsyncFw_1_1AddressInfo.html">AsyncFw::AddressInfo</a></div><div class="ttdoc">The AddressInfo class.</div><div class="ttdef"><b>Definition</b> AddressInfo.h:26</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1TlsContext_html"><div class="ttname"><a href="classAsyncFw_1_1TlsContext.html">AsyncFw::TlsContext</a></div><div class="ttdoc">The TlsContext class provides functionality for managing TLS certificates.</div><div class="ttdef"><b>Definition</b> TlsContext.h:24</div></div>
 </div><!-- fragment --><p> Container task example: </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;queue&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;MainThread.h&gt;</span></div>
@@ -469,7 +470,7 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
 <div class="line">  std::queue&lt;std::shared_ptr&lt;AsyncFw::AbstractTask&gt;&gt; tasks;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i != 10; ++i) {</div>
-<div class="line">    std::shared_ptr&lt;AsyncFw::AbstractTask&gt; task = std::shared_ptr&lt;AsyncFw::AbstractTask&gt;(<span class="keyword">new</span> AsyncFw::Task([](std::any *data) { logInfo() &lt;&lt; <span class="stringliteral">&quot;task:&quot;</span> &lt;&lt; std::any_cast&lt;int&gt;(*data); }, &amp;thread));</div>
+<div class="line">    std::shared_ptr&lt;AsyncFw::AbstractTask&gt; task = std::shared_ptr&lt;AsyncFw::AbstractTask&gt;(<span class="keyword">new</span> <a class="code hl_class" href="classAsyncFw_1_1Task.html">AsyncFw::Task</a>([](std::any *data) { logInfo() &lt;&lt; <span class="stringliteral">&quot;task:&quot;</span> &lt;&lt; std::any_cast&lt;int&gt;(*data); }, &amp;thread));</div>
 <div class="line">    task-&gt;setData(i);</div>
 <div class="line">    tasks.push(task);</div>
 <div class="line">  }</div>
@@ -485,7 +486,7 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
 <div class="line">    tasks.pop();</div>
 <div class="line">  });</div>
 <div class="line"> </div>
-<div class="line">  thread.start();</div>
+<div class="line">  thread.<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#afdaccb5da7d4bee5e9ff687f761bd21f">start</a>();</div>
 <div class="line">  timer.start(500);</div>
 <div class="line"> </div>
 <div class="line">  logNotice() &lt;&lt; <span class="stringliteral">&quot;Start Applicaiton&quot;</span>;</div>
@@ -493,6 +494,8 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
 <div class="line">  logNotice() &lt;&lt; <span class="stringliteral">&quot;End Applicaiton&quot;</span>;</div>
 <div class="line">  <span class="keywordflow">return</span> ret;</div>
 <div class="line">}</div>
+<div class="ttc" id="aclassAsyncFw_1_1AbstractThread_html_afdaccb5da7d4bee5e9ff687f761bd21f"><div class="ttname"><a href="classAsyncFw_1_1AbstractThread.html#afdaccb5da7d4bee5e9ff687f761bd21f">AsyncFw::AbstractThread::start</a></div><div class="ttdeci">void start()</div><div class="ttdoc">Create a managed thread and run exec()</div><div class="ttdef"><b>Definition</b> Thread.cpp:636</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1Task_html"><div class="ttname"><a href="classAsyncFw_1_1Task.html">AsyncFw::Task</a></div><div class="ttdoc">The Task class.</div><div class="ttdef"><b>Definition</b> Task.h:25</div></div>
 </div><!-- fragment --><p> Listen socket example: </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;MainThread.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;core/TlsSocket.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;Log.h&gt;</span></div>
