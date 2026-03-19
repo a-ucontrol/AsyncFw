@@ -119,49 +119,51 @@ $(function(){initNavTree('FunctionConnector_8h_source.html',''); initResizable(t
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="keyword">namespace </span>AsyncFw {</div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="keyword">class </span>FunctionConnectionGuard;</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="keyword">class </span>AbstractFunctionConnector {</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>  <span class="keyword">friend</span> FunctionConnectionGuard;</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>  <span class="keyword">enum</span> ConnectionType : uint8_t { Auto = 0, Direct = 0x01, Queued = 0x02, Sync = 0x04, AutoOnly = 0x10, DirectOnly = 0x11, QueuedOnly = 0x12, SyncOnly = 0x14 };</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>  <span class="keyword">class </span>Connection {</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    <span class="keyword">friend</span> AbstractFunctionConnector;</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    <span class="keyword">friend</span> FunctionConnectionGuard;</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>  <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    <span class="keyword">enum</span> Type : uint8_t { Auto = AbstractFunctionConnector::Auto, Direct = AbstractFunctionConnector::Direct, Queued = AbstractFunctionConnector::Queued, Sync = AbstractFunctionConnector::Sync, Default = 0x80 };</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>  <span class="keyword">protected</span>:</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    Connection(AbstractFunctionConnector *, Type);</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    <span class="keyword">virtual</span> ~Connection() = 0;</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    AbstractThread *thread_;</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    Type type_;</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>  <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    AbstractFunctionConnector *connector_;</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    FunctionConnectionGuard *guarg_ = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>  };</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>  AbstractFunctionConnector(ConnectionType = Auto);</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="keyword">protected</span>:</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>  <span class="keyword">template</span> &lt;<span class="keyword">typename</span> F, <span class="keyword">typename</span>... Args&gt;</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>  <span class="keyword">class </span>QueuedTask : <span class="keyword">public</span> AbstractThread::AbstractTask {</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>  <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    QueuedTask(F *f, Args &amp;...args) : f_(f), args_(args...) {}</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    ~QueuedTask() { <span class="keyword">delete</span> f_; }</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    <span class="keywordtype">void</span> invoke()<span class="keyword"> override </span>{ std::apply(*f_, args_); }</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    F *f_;</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    std::tuple&lt;Args...&gt; args_;</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>  };</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>  <span class="keyword">virtual</span> ~AbstractFunctionConnector() = 0;</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>  std::vector&lt;Connection *&gt; list_;</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>  ConnectionType defaultConnectionType;</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>  std::mutex mutex;</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>};</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="keyword">class </span><a class="code hl_class" href="classAsyncFw_1_1FunctionConnectionGuard.html">FunctionConnectionGuard</a>;</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span></div>
+<div class="foldopen" id="foldopen00017" data-start="{" data-end="};">
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno"><a class="line" href="classAsyncFw_1_1AbstractFunctionConnector.html">   17</a></span><span class="keyword">class </span>AbstractFunctionConnector {</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>  <span class="keyword">friend</span> FunctionConnectionGuard;</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>  <span class="keyword">enum</span> ConnectionType : uint8_t { Auto = 0, Direct = 0x01, Queued = 0x02, Sync = 0x04, AutoOnly = 0x10, DirectOnly = 0x11, QueuedOnly = 0x12, SyncOnly = 0x14 };</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>  <span class="keyword">class </span>Connection {</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    <span class="keyword">friend</span> AbstractFunctionConnector;</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    <span class="keyword">friend</span> FunctionConnectionGuard;</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>  <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    <span class="keyword">enum</span> Type : uint8_t { Auto = AbstractFunctionConnector::Auto, Direct = AbstractFunctionConnector::Direct, Queued = AbstractFunctionConnector::Queued, Sync = AbstractFunctionConnector::Sync, Default = 0x80 };</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>  <span class="keyword">protected</span>:</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    Connection(AbstractFunctionConnector *, Type);</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    <span class="keyword">virtual</span> ~Connection() = 0;</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    <a class="code hl_class" href="classAsyncFw_1_1AbstractThread.html">AbstractThread</a> *thread_;</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    Type type_;</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>  <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    AbstractFunctionConnector *connector_;</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    FunctionConnectionGuard *guarg_ = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>  };</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>  AbstractFunctionConnector(ConnectionType = Auto);</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="keyword">protected</span>:</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>  <span class="keyword">template</span> &lt;<span class="keyword">typename</span> F, <span class="keyword">typename</span>... Args&gt;</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>  <span class="keyword">class </span>QueuedTask : <span class="keyword">public</span> <a class="code hl_class" href="classAsyncFw_1_1AbstractThread_1_1AbstractTask.html">AbstractThread::AbstractTask</a> {</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>  <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    QueuedTask(F *f, Args &amp;...args) : f_(f), args_(args...) {}</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    ~QueuedTask() { <span class="keyword">delete</span> f_; }</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    <span class="keywordtype">void</span> invoke()<span class="keyword"> override </span>{ std::apply(*f_, args_); }</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    F *f_;</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    std::tuple&lt;Args...&gt; args_;</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>  };</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>  <span class="keyword">virtual</span> ~AbstractFunctionConnector() = 0;</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>  std::vector&lt;Connection *&gt; list;</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>  ConnectionType defaultConnectionType;</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>  std::mutex mutex;</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>};</div>
+</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span></div>
 <div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span>... Args&gt;</div>
 <div class="foldopen" id="foldopen00062" data-start="{" data-end="};">
 <div class="line"><a id="l00062" name="l00062"></a><span class="lineno"><a class="line" href="classAsyncFw_1_1FunctionConnector.html">   62</a></span><span class="keyword">class </span><a class="code hl_class" href="classAsyncFw_1_1FunctionConnector.html">FunctionConnector</a> : <span class="keyword">public</span> AbstractFunctionConnector {</div>
@@ -194,7 +196,7 @@ $(function(){initNavTree('FunctionConnector_8h_source.html',''); initResizable(t
 <div class="foldopen" id="foldopen00084" data-start="{" data-end="}">
 <div class="line"><a id="l00084" name="l00084"></a><span class="lineno"><a class="line" href="classAsyncFw_1_1FunctionConnector.html#ab78eb4bd213a04c987d1230c61e0f354">   84</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classAsyncFw_1_1FunctionConnector.html#ab78eb4bd213a04c987d1230c61e0f354">operator()</a>(Args... args) {</div>
 <div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>    std::lock_guard&lt;std::mutex&gt; lock(mutex);</div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>    <span class="keywordflow">for</span> (<span class="keyword">const</span> Connection *c : *<span class="keyword">reinterpret_cast&lt;</span>std::vector&lt;Connection *&gt; *<span class="keyword">&gt;</span>(&amp;list_)) {</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>    <span class="keywordflow">for</span> (<span class="keyword">const</span> Connection *c : *<span class="keyword">reinterpret_cast&lt;</span>std::vector&lt;Connection *&gt; *<span class="keyword">&gt;</span>(&amp;list)) {</div>
 <div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>      <span class="keywordflow">if</span> (c-&gt;type_ == Connection::Direct || (c-&gt;type_ != Connection::Queued &amp;&amp; c-&gt;thread_-&gt;id() == std::this_thread::get_id())) {</div>
 <div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>        (*c-&gt;f)(args...);</div>
 <div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>        <span class="keywordflow">continue</span>;</div>
@@ -215,7 +217,7 @@ $(function(){initNavTree('FunctionConnector_8h_source.html',''); initResizable(t
 <div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span> </div>
 <div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>  <span class="keyword">public</span>:</div>
 <div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>    Connection(T &amp;_f, AbstractFunctionConnector *c, Type t) : AbstractFunctionConnector::Connection(c, t), f(new Function(_f)) {}</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>    Connection(T &amp;_f, <a class="code hl_class" href="classAsyncFw_1_1AbstractFunctionConnector.html">AbstractFunctionConnector</a> *c, Type t) : <a class="code hl_class" href="classAsyncFw_1_1AbstractFunctionConnector.html">AbstractFunctionConnector</a>::Connection(c, t), f(new Function(_f)) {}</div>
 <div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span> </div>
 <div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>  <span class="keyword">private</span>:</div>
 <div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>    <span class="keyword">struct </span>AbstractFunction {</div>
@@ -259,29 +261,34 @@ $(function(){initNavTree('FunctionConnector_8h_source.html',''); initResizable(t
 <div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>  };</div>
 <div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>};</div>
 </div>
-<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span> </div>
-<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span><span class="keyword">class </span>FunctionConnectionGuard {</div>
-<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>  <span class="keyword">friend</span> AbstractFunctionConnector::Connection;</div>
-<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span> </div>
-<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>  FunctionConnectionGuard();</div>
-<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>  FunctionConnectionGuard(FunctionConnectionGuard &amp;&amp;);</div>
-<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>  FunctionConnectionGuard(AbstractFunctionConnector::Connection &amp;);</div>
-<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>  ~FunctionConnectionGuard();</div>
-<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>  <span class="keywordtype">void</span> operator=(AbstractFunctionConnector::Connection &amp;);</div>
-<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>  <span class="keywordtype">void</span> operator=(FunctionConnectionGuard &amp;&amp;);</div>
-<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>  <span class="keyword">operator</span> bool()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> c_; }</div>
-<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span> </div>
-<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>  AbstractFunctionConnector::Connection *c_;</div>
-<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>};</div>
-<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span> </div>
-<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span><span class="keyword">class </span>FunctionConnectionGuardList : <span class="keyword">public</span> std::vector&lt;FunctionConnectionGuard&gt; {</div>
-<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>  <span class="keywordtype">void</span> operator+=(FunctionConnectionGuard &amp;&amp;);</div>
-<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>};</div>
-<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>}  <span class="comment">// namespace AsyncFw</span></div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span></div>
+<div class="foldopen" id="foldopen00151" data-start="{" data-end="};">
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno"><a class="line" href="classAsyncFw_1_1FunctionConnectionGuard.html">  151</a></span><span class="keyword">class </span>FunctionConnectionGuard {</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>  <span class="keyword">friend</span> AbstractFunctionConnector::Connection;</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span> </div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>  FunctionConnectionGuard();</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>  FunctionConnectionGuard(FunctionConnectionGuard &amp;&amp;);</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>  FunctionConnectionGuard(AbstractFunctionConnector::Connection &amp;);</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>  ~FunctionConnectionGuard();</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>  <span class="keywordtype">void</span> operator=(AbstractFunctionConnector::Connection &amp;);</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>  <span class="keywordtype">void</span> operator=(FunctionConnectionGuard &amp;&amp;);</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>  <span class="keyword">operator</span> bool()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> c_; }</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span> </div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>  AbstractFunctionConnector::Connection *c_;</div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>};</div>
+</div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span> </div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span><span class="keyword">class </span>FunctionConnectionGuardList : <span class="keyword">public</span> std::vector&lt;FunctionConnectionGuard&gt; {</div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>  <span class="keywordtype">void</span> operator+=(<a class="code hl_class" href="classAsyncFw_1_1FunctionConnectionGuard.html">FunctionConnectionGuard</a> &amp;&amp;);</div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>};</div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>}  <span class="comment">// namespace AsyncFw</span></div>
+<div class="ttc" id="aclassAsyncFw_1_1AbstractFunctionConnector_html"><div class="ttname"><a href="classAsyncFw_1_1AbstractFunctionConnector.html">AsyncFw::AbstractFunctionConnector</a></div><div class="ttdoc">The AbstractFunctionConnector class.</div><div class="ttdef"><b>Definition</b> FunctionConnector.h:17</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1AbstractThread_1_1AbstractTask_html"><div class="ttname"><a href="classAsyncFw_1_1AbstractThread_1_1AbstractTask.html">AsyncFw::AbstractThread::AbstractTask</a></div><div class="ttdoc">The AbstractTask class.</div><div class="ttdef"><b>Definition</b> Thread.h:54</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1AbstractThread_html"><div class="ttname"><a href="classAsyncFw_1_1AbstractThread.html">AsyncFw::AbstractThread</a></div><div class="ttdoc">The AbstractThread class provides the base functionality for thread management.</div><div class="ttdef"><b>Definition</b> Thread.h:45</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1FunctionConnectionGuard_html"><div class="ttname"><a href="classAsyncFw_1_1FunctionConnectionGuard.html">AsyncFw::FunctionConnectionGuard</a></div><div class="ttdoc">The FunctionConnectionGuard class.</div><div class="ttdef"><b>Definition</b> FunctionConnector.h:151</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1FunctionConnectorProtected_html"><div class="ttname"><a href="classAsyncFw_1_1FunctionConnectorProtected.html">AsyncFw::FunctionConnectorProtected</a></div><div class="ttdoc">Защищенный коннетор, отправитель может быть только один.</div><div class="ttdef"><b>Definition</b> FunctionConnector.h:130</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1FunctionConnector_html"><div class="ttname"><a href="classAsyncFw_1_1FunctionConnector.html">AsyncFw::FunctionConnector</a></div><div class="ttdoc">Обеспечивает соединение отправитель -&gt; получатели. Получатели могут быть вызваны в своих потоках (по ...</div><div class="ttdef"><b>Definition</b> FunctionConnector.h:62</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1FunctionConnector_html_a1ab25b31810087bc1d432073c5508f9a"><div class="ttname"><a href="classAsyncFw_1_1FunctionConnector.html#a1ab25b31810087bc1d432073c5508f9a">AsyncFw::FunctionConnector::operator()</a></div><div class="ttdeci">Connection &amp; operator()(T f, Connection::Type t=Connection::Default)</div><div class="ttdoc">Подключиться</div><div class="ttdef"><b>Definition</b> FunctionConnector.h:80</div></div>

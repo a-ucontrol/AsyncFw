@@ -1,6 +1,7 @@
 var annotated_dup =
 [
     [ "AsyncFw", null, [
+      [ "AbstractFunctionConnector", "classAsyncFw_1_1AbstractFunctionConnector.html", null ],
       [ "AbstractInstance", "classAsyncFw_1_1AbstractInstance.html", null ],
       [ "AbstractLog", "classAsyncFw_1_1AbstractLog.html", null ],
       [ "AbstractSocket", "classAsyncFw_1_1AbstractSocket.html", null ],
@@ -18,6 +19,7 @@ var annotated_dup =
       [ "DataStream", "classAsyncFw_1_1DataStream.html", null ],
       [ "File", "classAsyncFw_1_1File.html", null ],
       [ "FileSystemWatcher", "classAsyncFw_1_1FileSystemWatcher.html", null ],
+      [ "FunctionConnectionGuard", "classAsyncFw_1_1FunctionConnectionGuard.html", null ],
       [ "FunctionConnector", "classAsyncFw_1_1FunctionConnector.html", "classAsyncFw_1_1FunctionConnector" ],
       [ "FunctionConnectorProtected", "classAsyncFw_1_1FunctionConnectorProtected.html", null ],
       [ "HttpSocket", "classAsyncFw_1_1HttpSocket.html", null ],

@@ -1,5 +1,9 @@
 var hierarchy =
 [
+    [ "AsyncFw::AbstractFunctionConnector", "classAsyncFw_1_1AbstractFunctionConnector.html", [
+      [ "AsyncFw::FunctionConnector< Args... >", "classAsyncFw_1_1FunctionConnector.html", null ],
+      [ "AsyncFw::FunctionConnector< Args >", "classAsyncFw_1_1FunctionConnector.html", null ]
+    ] ],
     [ "AsyncFw::AbstractInstance", "classAsyncFw_1_1AbstractInstance.html", [
       [ "AsyncFw::Instance< Log >", "classAsyncFw_1_1Instance.html", null ],
       [ "AsyncFw::Instance< AsyncFw::FileSystemWatcher >", "classAsyncFw_1_1Instance.html", null ],
@@ -44,8 +48,7 @@ var hierarchy =
     [ "AsyncFw::DataStream", "classAsyncFw_1_1DataStream.html", null ],
     [ "AsyncFw::File", "classAsyncFw_1_1File.html", null ],
     [ "AsyncFw::FileSystemWatcher", "classAsyncFw_1_1FileSystemWatcher.html", null ],
-    [ "AsyncFw::FunctionConnector< Args >", "classAsyncFw_1_1FunctionConnector.html", null ],
-    [ "AsyncFw::FunctionConnector< Args... >", "classAsyncFw_1_1FunctionConnector.html", null ],
+    [ "AsyncFw::FunctionConnectionGuard", "classAsyncFw_1_1FunctionConnectionGuard.html", null ],
     [ "AsyncFw::FunctionConnectorProtected< F >", "classAsyncFw_1_1FunctionConnectorProtected.html", null ],
     [ "AsyncFw::AbstractThread::Holder", "classAsyncFw_1_1AbstractThread_1_1Holder.html", null ],
     [ "AsyncFw::LogStream", "classAsyncFw_1_1LogStream.html", null ],
