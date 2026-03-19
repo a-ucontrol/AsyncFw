@@ -38,13 +38,11 @@ var hierarchy =
       [ "AsyncFw::AbstractTask", "classAsyncFw_1_1AbstractTask.html", null ],
       [ "AsyncFw::CoroutineTask::promise_type", "structAsyncFw_1_1CoroutineTask_1_1promise__type.html", null ]
     ] ],
-    [ "std::basic_string_view< Char >", null, [
-      [ "std::string_view", null, [
-        [ "AsyncFw::DataArrayView", "classAsyncFw_1_1DataArrayView.html", null ]
-      ] ]
-    ] ],
     [ "AsyncFw::CoroutineAwait", "structAsyncFw_1_1CoroutineAwait.html", null ],
     [ "AsyncFw::CoroutineTask", "structAsyncFw_1_1CoroutineTask.html", null ],
+    [ "AsyncFw::DataArray", "classAsyncFw_1_1DataArray.html", null ],
+    [ "AsyncFw::DataArrayList", "classAsyncFw_1_1DataArrayList.html", null ],
+    [ "AsyncFw::DataArrayView", "classAsyncFw_1_1DataArrayView.html", null ],
     [ "AsyncFw::DataStream", "classAsyncFw_1_1DataStream.html", null ],
     [ "AsyncFw::File", "classAsyncFw_1_1File.html", null ],
     [ "AsyncFw::FileSystemWatcher", "classAsyncFw_1_1FileSystemWatcher.html", null ],
@@ -58,9 +56,5 @@ var hierarchy =
     ] ],
     [ "AsyncFw::SystemProcess", "classAsyncFw_1_1SystemProcess.html", null ],
     [ "AsyncFw::Timer", "classAsyncFw_1_1Timer.html", null ],
-    [ "AsyncFw::TlsContext", "classAsyncFw_1_1TlsContext.html", null ],
-    [ "std::vector< T >", null, [
-      [ "AsyncFw::DataArray", "classAsyncFw_1_1DataArray.html", null ],
-      [ "AsyncFw::DataArrayList", "classAsyncFw_1_1DataArrayList.html", null ]
-    ] ]
+    [ "AsyncFw::TlsContext", "classAsyncFw_1_1TlsContext.html", null ]
 ];

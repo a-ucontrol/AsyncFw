@@ -183,7 +183,7 @@ $(function(){initNavTree('MainThread_8h_source.html',''); initResizable(true); }
 <div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span><span class="preprocessor">#ifdef USE_QAPPLICATION</span></div>
 <div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    <a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#ac1b35ef04b06ce771f6d6ca0a5b120db">AbstractThread::currentThread</a>()-&gt;invokeMethod([<span class="keyword">this</span>]() {</div>
 <div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>      QObject::connect(qApp, &amp;QCoreApplication::aboutToQuit, [<span class="keyword">this</span>]() {</div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>        finishedEvent();</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>        <a class="code hl_function" href="classAsyncFw_1_1Thread.html#ae9fc9cf8baddcc8dfa0e14784918c4a5">finishedEvent</a>();</div>
 <div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>        {  <span class="comment">//lock scope</span></div>
 <div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>          <a class="code hl_typedef" href="classAsyncFw_1_1AbstractThread.html#a4e97803ef650d36ba80ef1471c4b643c">LockGuard</a> lock = lockGuard();</div>
 <div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>          state_ = 2;</div>
@@ -202,7 +202,7 @@ $(function(){initNavTree('MainThread_8h_source.html',''); initResizable(true); }
 <div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>        <span class="keywordflow">if</span> (eventfd_read(eventfd_, &amp;_v) == 0) exitTask-&gt;invoke();</div>
 <div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>      });</div>
 <div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span><span class="preprocessor">  #ifdef USE_QAPPLICATION</span></div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>      startedEvent();</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>      <a class="code hl_function" href="classAsyncFw_1_1Thread.html#ae03f85da53209734bdafe450f45e5d53">startedEvent</a>();</div>
 <div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>    });</div>
 <div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span><span class="preprocessor">  #endif</span></div>
 <div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span><span class="preprocessor">#endif</span></div>
@@ -383,6 +383,8 @@ $(function(){initNavTree('MainThread_8h_source.html',''); initResizable(true); }
 <div class="ttc" id="aclassAsyncFw_1_1AbstractThread_html_ae8fc0b3f68faed69e7f0b4e940ef12c0"><div class="ttname"><a href="classAsyncFw_1_1AbstractThread.html#ae8fc0b3f68faed69e7f0b4e940ef12c0">AsyncFw::AbstractThread::removeTimer</a></div><div class="ttdeci">virtual void removeTimer(int)</div><div class="ttdoc">Remove timer.</div><div class="ttdef"><b>Definition</b> Thread.cpp:713</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1AbstractThread_html_af295f768757d3c7d6cf32e5248cbc2e0"><div class="ttname"><a href="classAsyncFw_1_1AbstractThread.html#af295f768757d3c7d6cf32e5248cbc2e0">AsyncFw::AbstractThread::modifyPollDescriptor</a></div><div class="ttdeci">virtual bool modifyPollDescriptor(int, PollEvents)</div><div class="ttdoc">Modify poll descriptor.</div><div class="ttdef"><b>Definition</b> Thread.cpp:769</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1MainThread_html"><div class="ttname"><a href="classAsyncFw_1_1MainThread.html">AsyncFw::MainThread</a></div><div class="ttdoc">The MainThread class.</div><div class="ttdef"><b>Definition</b> MainThread.h:38</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1Thread_html_ae03f85da53209734bdafe450f45e5d53"><div class="ttname"><a href="classAsyncFw_1_1Thread.html#ae03f85da53209734bdafe450f45e5d53">AsyncFw::Thread::startedEvent</a></div><div class="ttdeci">void startedEvent() override</div><div class="ttdoc">This call from thread when it starts executing.</div><div class="ttdef"><b>Definition</b> Thread.cpp:864</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1Thread_html_ae9fc9cf8baddcc8dfa0e14784918c4a5"><div class="ttname"><a href="classAsyncFw_1_1Thread.html#ae9fc9cf8baddcc8dfa0e14784918c4a5">AsyncFw::Thread::finishedEvent</a></div><div class="ttdeci">void finishedEvent() override</div><div class="ttdoc">This call from the thread when it finishing execution.</div><div class="ttdef"><b>Definition</b> Thread.cpp:874</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1Timer_html"><div class="ttname"><a href="classAsyncFw_1_1Timer.html">AsyncFw::Timer</a></div><div class="ttdoc">The Timer class.</div><div class="ttdef"><b>Definition</b> Timer.h:18</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

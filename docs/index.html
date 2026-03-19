@@ -123,18 +123,19 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
 <div class="line">  <a class="code hl_class" href="classAsyncFw_1_1Timer.html">AsyncFw::Timer</a> timer2;</div>
 <div class="line">  timer2.start(2000);</div>
 <div class="line"> </div>
-<div class="line">  timer1.timeout([&amp;cnt]() {</div>
+<div class="line">  timer1.<a class="code hl_variable" href="classAsyncFw_1_1Timer.html#a746a7b46bc5d405ab0452b09ad1253f3">timeout</a>([&amp;cnt]() {</div>
 <div class="line">    std::cout &lt;&lt; std::chrono::system_clock::now() &lt;&lt; <span class="stringliteral">&quot; timer1 timeout&quot;</span> &lt;&lt; std::endl;</div>
 <div class="line">    <span class="keywordflow">if</span> (++cnt == 10) AsyncFw::MainThread::exit(0);</div>
 <div class="line">  });</div>
 <div class="line"> </div>
-<div class="line">  timer2.timeout([]() { std::cout &lt;&lt; std::chrono::system_clock::now() &lt;&lt; <span class="stringliteral">&quot; timer2 timeout&quot;</span> &lt;&lt; std::endl; });</div>
+<div class="line">  timer2.<a class="code hl_variable" href="classAsyncFw_1_1Timer.html#a746a7b46bc5d405ab0452b09ad1253f3">timeout</a>([]() { std::cout &lt;&lt; std::chrono::system_clock::now() &lt;&lt; <span class="stringliteral">&quot; timer2 timeout&quot;</span> &lt;&lt; std::endl; });</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;Start Applicaiton&quot;</span> &lt;&lt; std::endl;</div>
 <div class="line">  <span class="keywordtype">int</span> ret = AsyncFw::MainThread::exec();</div>
 <div class="line">  <span class="keywordflow">return</span> ret;</div>
 <div class="line">}</div>
 <div class="ttc" id="aclassAsyncFw_1_1Timer_html"><div class="ttname"><a href="classAsyncFw_1_1Timer.html">AsyncFw::Timer</a></div><div class="ttdoc">The Timer class.</div><div class="ttdef"><b>Definition</b> Timer.h:18</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1Timer_html_a746a7b46bc5d405ab0452b09ad1253f3"><div class="ttname"><a href="classAsyncFw_1_1Timer.html#a746a7b46bc5d405ab0452b09ad1253f3">AsyncFw::Timer::timeout</a></div><div class="ttdeci">FunctionConnectorProtected&lt; Timer &gt;::Connector&lt;&gt; timeout</div><div class="ttdoc">The Timer::timeout connector.</div><div class="ttdef"><b>Definition</b> Timer.h:28</div></div>
 </div><!-- fragment --><p> PollNotifier example (Unix only): </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;core/Thread.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;MainThread.h&gt;</span></div>
@@ -475,7 +476,7 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
 <div class="line">    tasks.push(task);</div>
 <div class="line">  }</div>
 <div class="line"> </div>
-<div class="line">  timer.timeout([&amp;tasks]() {</div>
+<div class="line">  timer.<a class="code hl_variable" href="classAsyncFw_1_1Timer.html#a746a7b46bc5d405ab0452b09ad1253f3">timeout</a>([&amp;tasks]() {</div>
 <div class="line">    <span class="keywordflow">if</span> (tasks.empty()) {</div>
 <div class="line">      AsyncFw::MainThread::exit(0);</div>
 <div class="line">      <span class="keywordflow">return</span>;</div>

@@ -302,8 +302,8 @@ $(function(){initNavTree('Thread_8h_source.html',''); initResizable(true); });
 <div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span> </div>
 <div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span><span class="keyword">protected</span>:</div>
 <div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>  std::vector&lt;AbstractSocket *&gt; sockets_;</div>
-<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>  <span class="keywordtype">void</span> startedEvent() <span class="keyword">override</span>;</div>
-<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>  <span class="keywordtype">void</span> finishedEvent() <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classAsyncFw_1_1Thread.html#ae03f85da53209734bdafe450f45e5d53">startedEvent</a>() <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classAsyncFw_1_1Thread.html#ae9fc9cf8baddcc8dfa0e14784918c4a5">finishedEvent</a>() <span class="keyword">override</span>;</div>
 <div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span> </div>
 <div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span><span class="keyword">private</span>:</div>
 <div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>  <span class="keyword">struct </span>Compare {</div>
@@ -340,6 +340,8 @@ $(function(){initNavTree('Thread_8h_source.html',''); initResizable(true); });
 <div class="ttc" id="aclassAsyncFw_1_1AbstractThread_html_afdaccb5da7d4bee5e9ff687f761bd21f"><div class="ttname"><a href="classAsyncFw_1_1AbstractThread.html#afdaccb5da7d4bee5e9ff687f761bd21f">AsyncFw::AbstractThread::start</a></div><div class="ttdeci">void start()</div><div class="ttdoc">Create a managed thread and run exec()</div><div class="ttdef"><b>Definition</b> Thread.cpp:636</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1LogStream_html"><div class="ttname"><a href="classAsyncFw_1_1LogStream.html">AsyncFw::LogStream</a></div><div class="ttdoc">The LogStream class.</div><div class="ttdef"><b>Definition</b> LogStream.h:43</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1Thread_html_a46662ffa7482f1c1e52b654c51639fd2"><div class="ttname"><a href="classAsyncFw_1_1Thread.html#a46662ffa7482f1c1e52b654c51639fd2">AsyncFw::Thread::currentThread</a></div><div class="ttdeci">static Thread * currentThread()</div><div class="ttdoc">Returns a pointer to the AsyncFw::Thread that manages the currently executing thread.</div><div class="ttdef"><b>Definition</b> Thread.cpp:850</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1Thread_html_ae03f85da53209734bdafe450f45e5d53"><div class="ttname"><a href="classAsyncFw_1_1Thread.html#ae03f85da53209734bdafe450f45e5d53">AsyncFw::Thread::startedEvent</a></div><div class="ttdeci">void startedEvent() override</div><div class="ttdoc">This call from thread when it starts executing.</div><div class="ttdef"><b>Definition</b> Thread.cpp:864</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1Thread_html_ae9fc9cf8baddcc8dfa0e14784918c4a5"><div class="ttname"><a href="classAsyncFw_1_1Thread.html#ae9fc9cf8baddcc8dfa0e14784918c4a5">AsyncFw::Thread::finishedEvent</a></div><div class="ttdeci">void finishedEvent() override</div><div class="ttdoc">This call from the thread when it finishing execution.</div><div class="ttdef"><b>Definition</b> Thread.cpp:874</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

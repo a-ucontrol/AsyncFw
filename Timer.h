@@ -24,6 +24,7 @@ public:
   void start(int, bool = false);
   void stop();
 
+  /*! \brief The Timer::timeout connector */
   FunctionConnectorProtected<Timer>::Connector<> timeout;
 
 private:

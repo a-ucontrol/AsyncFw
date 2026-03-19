@@ -1,5 +1,7 @@
 <map id="AsyncFw::SystemProcess" name="AsyncFw::SystemProcess">
-<area shape="rect" id="Node000001" title="The SystemProcess class." alt="" coords="45,128,222,155"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1FunctionConnectorProtected.html" title=" " alt="" coords="5,5,262,48"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="136,64,136,128,131,128,131,64"/>
+<area shape="rect" id="Node000001" title="The SystemProcess class." alt="" coords="45,235,222,261"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1FunctionConnectorProtected.html" title=" " alt="" coords="5,112,262,155"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="136,170,136,235,131,235,131,170"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1FunctionConnectorProtected.html" title="Защищенный коннетор, отправитель может быть только один." alt="" coords="36,5,231,48"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="136,64,136,111,131,111,131,64"/>
 </map>

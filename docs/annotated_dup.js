@@ -32,9 +32,9 @@ var annotated_dup =
       [ "Rrd", "classAsyncFw_1_1Rrd.html", null ],
       [ "SystemProcess", "classAsyncFw_1_1SystemProcess.html", null ],
       [ "Task", "classAsyncFw_1_1Task.html", null ],
-      [ "Thread", "classAsyncFw_1_1Thread.html", null ],
+      [ "Thread", "classAsyncFw_1_1Thread.html", "classAsyncFw_1_1Thread" ],
       [ "ThreadPool", "classAsyncFw_1_1ThreadPool.html", null ],
-      [ "Timer", "classAsyncFw_1_1Timer.html", null ],
+      [ "Timer", "classAsyncFw_1_1Timer.html", "classAsyncFw_1_1Timer" ],
       [ "TlsContext", "classAsyncFw_1_1TlsContext.html", null ]
     ] ]
 ];

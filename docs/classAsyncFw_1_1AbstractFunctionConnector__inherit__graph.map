@@ -1,7 +1,8 @@
 <map id="AsyncFw::AbstractFunctionConnector" name="AsyncFw::AbstractFunctionConnector">
-<area shape="rect" id="Node000001" title="The AbstractFunctionConnector class." alt="" coords="120,5,304,48"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="5,96,200,139"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="176,60,130,97,126,93,173,56"/>
-<area shape="rect" id="Node000003" href="$classAsyncFw_1_1FunctionConnector.html" title="Обеспечивает соединение отправитель &#45;&gt; получатели. Получатели могут быть вызваны в своих потоках (по ..." alt="" coords="224,96,418,139"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="251,56,297,93,294,97,247,60"/>
+<area shape="rect" id="Node000001" title="The AbstractFunctionConnector class." alt="" coords="6,5,189,48"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="5,204,200,247"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="101,63,105,204,99,204,95,64"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1FunctionConnector.html" title="Обеспечивает соединение отправитель &#45;&gt; получатели. Получатели могут быть вызваны в своих потоках (по ..." alt="" coords="119,97,313,140"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="138,55,190,95,187,99,134,59"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="184,153,127,205,123,202,181,149"/>
 </map>

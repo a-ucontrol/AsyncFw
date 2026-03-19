@@ -3,7 +3,7 @@ var searchData=
   ['file_0',['File',['../classAsyncFw_1_1File.html',1,'AsyncFw']]],
   ['filesystemwatcher_1',['FileSystemWatcher',['../classAsyncFw_1_1FileSystemWatcher.html',1,'AsyncFw']]],
   ['finished_2',['finished',['../structAsyncFw_1_1CoroutineTask.html#a2a9141689d60da24339465aa0d225a27',1,'AsyncFw::CoroutineTask']]],
-  ['finishedevent_3',['finishedEvent',['../classAsyncFw_1_1AbstractThread.html#ad43b7b79e541bd1d6cce20f0231cc64d',1,'AsyncFw::AbstractThread']]],
+  ['finishedevent_3',['finishedEvent',['../classAsyncFw_1_1AbstractThread.html#ad43b7b79e541bd1d6cce20f0231cc64d',1,'AsyncFw::AbstractThread::finishedEvent()'],['../classAsyncFw_1_1Thread.html#ae9fc9cf8baddcc8dfa0e14784918c4a5',1,'AsyncFw::Thread::finishedEvent()']]],
   ['functionconnectionguard_4',['FunctionConnectionGuard',['../classAsyncFw_1_1FunctionConnectionGuard.html',1,'AsyncFw']]],
   ['functionconnector_5',['FunctionConnector',['../classAsyncFw_1_1FunctionConnector.html',1,'AsyncFw']]],
   ['functionconnector_3c_20args_2e_2e_2e_20_3e_6',['FunctionConnector&lt; Args... &gt;',['../classAsyncFw_1_1FunctionConnector.html',1,'AsyncFw']]],
