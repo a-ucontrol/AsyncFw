@@ -127,21 +127,16 @@ Collaboration diagram for AsyncFw::FunctionConnector&lt; Args &gt;:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ab0c621be7a792e256acab8241ae563a0" id="r_ab0c621be7a792e256acab8241ae563a0"><td class="memTemplParams" colspan="2"><a id="ab0c621be7a792e256acab8241ae563a0" name="ab0c621be7a792e256acab8241ae563a0"></a>
-template&lt;typename T&gt; </td></tr>
-<tr class="memitem:ab0c621be7a792e256acab8241ae563a0"><td class="memTemplItemLeft" align="right" valign="top">Connection &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>connect</b> (T f, Connection::Type t=Connection::Default)</td></tr>
-<tr class="memdesc:ab0c621be7a792e256acab8241ae563a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Подключиться <br /></td></tr>
-<tr class="separator:ab0c621be7a792e256acab8241ae563a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a36849fd3a6d79bfc0aa1a14a2b7d4c56" id="r_a36849fd3a6d79bfc0aa1a14a2b7d4c56"><td class="memTemplParams" colspan="2"><a id="a36849fd3a6d79bfc0aa1a14a2b7d4c56" name="a36849fd3a6d79bfc0aa1a14a2b7d4c56"></a>
-template&lt;typename O, typename M&gt; </td></tr>
-<tr class="memitem:a36849fd3a6d79bfc0aa1a14a2b7d4c56"><td class="memTemplItemLeft" align="right" valign="top">Connection &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>connect</b> (O *o, M m, Connection::Type t=Connection::Default)</td></tr>
-<tr class="memdesc:a36849fd3a6d79bfc0aa1a14a2b7d4c56"><td class="mdescLeft">&#160;</td><td class="mdescRight">Подключиться <br /></td></tr>
-<tr class="separator:a36849fd3a6d79bfc0aa1a14a2b7d4c56"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1ab25b31810087bc1d432073c5508f9a" id="r_a1ab25b31810087bc1d432073c5508f9a"><td class="memTemplParams" colspan="2"><a id="a1ab25b31810087bc1d432073c5508f9a" name="a1ab25b31810087bc1d432073c5508f9a"></a>
 template&lt;typename T&gt; </td></tr>
 <tr class="memitem:a1ab25b31810087bc1d432073c5508f9a"><td class="memTemplItemLeft" align="right" valign="top">Connection &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator()</b> (T f, Connection::Type t=Connection::Default)</td></tr>
 <tr class="memdesc:a1ab25b31810087bc1d432073c5508f9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Подключиться <br /></td></tr>
 <tr class="separator:a1ab25b31810087bc1d432073c5508f9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a36849fd3a6d79bfc0aa1a14a2b7d4c56" id="r_a36849fd3a6d79bfc0aa1a14a2b7d4c56"><td class="memTemplParams" colspan="2"><a id="a36849fd3a6d79bfc0aa1a14a2b7d4c56" name="a36849fd3a6d79bfc0aa1a14a2b7d4c56"></a>
+template&lt;typename O, typename M&gt; </td></tr>
+<tr class="memitem:a36849fd3a6d79bfc0aa1a14a2b7d4c56"><td class="memTemplItemLeft" align="right" valign="top">Connection &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>connect</b> (O *o, M m, Connection::Type t=Connection::Default)</td></tr>
+<tr class="memdesc:a36849fd3a6d79bfc0aa1a14a2b7d4c56"><td class="mdescLeft">&#160;</td><td class="mdescRight">Подключиться <br /></td></tr>
+<tr class="separator:a36849fd3a6d79bfc0aa1a14a2b7d4c56"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab78eb4bd213a04c987d1230c61e0f354" id="r_ab78eb4bd213a04c987d1230c61e0f354"><td class="memItemLeft" align="right" valign="top"><a id="ab78eb4bd213a04c987d1230c61e0f354" name="ab78eb4bd213a04c987d1230c61e0f354"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>operator()</b> (Args... args)</td></tr>
 <tr class="memdesc:ab78eb4bd213a04c987d1230c61e0f354"><td class="mdescLeft">&#160;</td><td class="mdescRight">Отправить <br /></td></tr>
@@ -241,7 +236,6 @@ class AsyncFw::FunctionConnector&lt; Args &gt;</div><p>Обеспечивает 
 <div class="line"> </div>
 <div class="line">  MethodConnectionExample tst;</div>
 <div class="line">  sender-&gt;connector.connect(&amp;tst, &amp;MethodConnectionExample::method);</div>
-<div class="line">  sender-&gt;connector.connect([](<span class="keywordtype">int</span> val) { lsNotice() &lt;&lt; <span class="stringliteral">&quot;sender-&gt;connector.connect&quot;</span> &lt;&lt; val; });</div>
 <div class="line">  sender-&gt;connector([](<span class="keywordtype">int</span> val) { lsNotice() &lt;&lt; <span class="stringliteral">&quot;sender-&gt;connector (lambda)&quot;</span> &lt;&lt; val; });</div>
 <div class="line"> </div>
 <div class="line">  logNotice() &lt;&lt; <span class="stringliteral">&quot;Start Applicaiton&quot;</span>;</div>
