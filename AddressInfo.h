@@ -22,7 +22,10 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #endif
 
 namespace AsyncFw {
-/*! \brief The AddressInfo class. */
+/*! \brief The AddressInfo class.
+ \brief Examlpe with FunctionConnector: \snippet snippet.dox AddressInfo
+ \brief Examlpe with CoroutineAwait: \snippet snippet.dox AddressInfo coro
+*/
 class AddressInfo {
   struct Private;
 

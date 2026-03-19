@@ -15,6 +15,7 @@ int main(int argc, char *argv[]) {
 #include <core/TlsContext.h>
 #include <core/DataArray.h>
 #include <HttpSocket.h>
+#include <AddressInfo.h>
 using namespace AsyncFw;
 void example() {
   //! [TlsContext]
@@ -43,4 +44,27 @@ void example() {
   HttpSocket *socket = HttpSocket::create();
   socket->setContext(_cert);
   //! [TlsContext]
+
+  //! [AddressInfo]
+  AsyncFw::AddressInfo addressInfo;
+  addressInfo.completed([](int, const std::vector<std::string> &list) {
+    if (!list.empty()) {
+      logError("Resolve error");
+    } else {
+      for (const std::string _s : list) logNotice() << _s;
+    }
+  });
+  addressInfo.resolve("github.com");
+  //! [AddressInfo]
+
+  //! [AddressInfo coro]
+  AsyncFw::AddressInfo addressInfo;
+  AsyncFw::CoroutineHandle h = co_await addressInfo.coResolve("github.com");
+  AsyncFw::AddressInfo::Result list = h.promise().data<AsyncFw::AddressInfo::Result>();
+  if (list.empty()) {
+    logError("Resolve error");
+    co_return;
+  }
+  for (const std::string _s : list) logNotice() << _s;
+  //! [AddressInfo coro]
 }

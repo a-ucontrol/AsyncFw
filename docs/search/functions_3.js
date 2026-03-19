@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['finishedevent_0',['finishedEvent',['../classAsyncFw_1_1AbstractThread.html#ad43b7b79e541bd1d6cce20f0231cc64d',1,'AsyncFw::AbstractThread']]]
+  ['finished_0',['finished',['../structAsyncFw_1_1CoroutineTask.html#a2a9141689d60da24339465aa0d225a27',1,'AsyncFw::CoroutineTask']]],
+  ['finishedevent_1',['finishedEvent',['../classAsyncFw_1_1AbstractThread.html#ad43b7b79e541bd1d6cce20f0231cc64d',1,'AsyncFw::AbstractThread']]]
 ];

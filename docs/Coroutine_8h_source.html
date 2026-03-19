@@ -144,36 +144,38 @@ $(function(){initNavTree('Coroutine_8h_source.html',''); initResizable(true); })
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    Private *private_;</div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>  };</div>
 </div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>  <span class="keywordtype">void</span> wait();</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>  <span class="keywordtype">void</span> resume();</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>  <span class="keywordtype">void</span> resume_queued();</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>  <span class="keywordtype">bool</span> finished();</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>  <a class="code hl_struct" href="structAsyncFw_1_1CoroutineTask_1_1promise__type.html">promise_type</a> *promise;</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>};</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>  <span class="keywordtype">void</span> resume();</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>  <span class="keywordtype">void</span> resume_queued();</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>  <span class="keywordtype">bool</span> <a class="code hl_function" href="structAsyncFw_1_1CoroutineTask.html#a2a9141689d60da24339465aa0d225a27">finished</a>();</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>  <span class="keywordtype">void</span> <a class="code hl_function" href="structAsyncFw_1_1CoroutineTask.html#a820a0a3410c4a14a71ad3599f46c1bb0">wait</a>();</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>  <a class="code hl_struct" href="structAsyncFw_1_1CoroutineTask_1_1promise__type.html">promise_type</a> *promise;</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>};</div>
 </div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span><span class="keyword">using </span>CoroutineHandle = std::coroutine_handle&lt;CoroutineTask::promise_type&gt;;</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span></div>
-<div class="foldopen" id="foldopen00050" data-start="{" data-end="};">
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno"><a class="line" href="structAsyncFw_1_1CoroutineAwait.html">   50</a></span><span class="keyword">struct </span>CoroutineAwait {</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>  CoroutineAwait(<span class="keyword">const</span> std::function&lt;<span class="keywordtype">void</span>(CoroutineHandle)&gt; &amp; = <span class="keyword">nullptr</span>);</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>  <span class="keyword">virtual</span> ~CoroutineAwait();</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>  <span class="keyword">virtual</span> <span class="keywordtype">void</span> await_suspend(CoroutineHandle) <span class="keyword">const</span> <span class="keyword">noexcept</span>;</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>  <span class="keyword">virtual</span> <span class="keywordtype">bool</span> await_ready() <span class="keyword">const</span> <span class="keyword">noexcept</span>;</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>  <span class="keyword">virtual</span> CoroutineHandle await_resume() <span class="keyword">const</span> <span class="keyword">noexcept</span>;</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span><span class="keyword">protected</span>:</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>  <span class="keyword">mutable</span> CoroutineHandle h_;</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>  std::function&lt;void(CoroutineHandle)&gt; f_;</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>};</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span><span class="keyword">using </span>CoroutineHandle = std::coroutine_handle&lt;CoroutineTask::promise_type&gt;;</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span></div>
+<div class="foldopen" id="foldopen00052" data-start="{" data-end="};">
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno"><a class="line" href="structAsyncFw_1_1CoroutineAwait.html">   52</a></span><span class="keyword">struct </span>CoroutineAwait {</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>  CoroutineAwait(<span class="keyword">const</span> std::function&lt;<span class="keywordtype">void</span>(CoroutineHandle)&gt; &amp; = <span class="keyword">nullptr</span>);</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>  <span class="keyword">virtual</span> ~CoroutineAwait();</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>  <span class="keyword">virtual</span> <span class="keywordtype">void</span> await_suspend(CoroutineHandle) <span class="keyword">const</span> <span class="keyword">noexcept</span>;</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>  <span class="keyword">virtual</span> <span class="keywordtype">bool</span> await_ready() <span class="keyword">const</span> <span class="keyword">noexcept</span>;</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>  <span class="keyword">virtual</span> CoroutineHandle await_resume() <span class="keyword">const</span> <span class="keyword">noexcept</span>;</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span><span class="keyword">protected</span>:</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>  <span class="keyword">mutable</span> CoroutineHandle h_;</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>  std::function&lt;void(CoroutineHandle)&gt; f_;</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>};</div>
 </div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>}  <span class="comment">// namespace AsyncFw</span></div>
-<div class="ttc" id="astructAsyncFw_1_1CoroutineAwait_html"><div class="ttname"><a href="structAsyncFw_1_1CoroutineAwait.html">AsyncFw::CoroutineAwait</a></div><div class="ttdoc">The CoroutineAwait struct.</div><div class="ttdef"><b>Definition</b> Coroutine.h:50</div></div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>}  <span class="comment">// namespace AsyncFw</span></div>
+<div class="ttc" id="astructAsyncFw_1_1CoroutineAwait_html"><div class="ttname"><a href="structAsyncFw_1_1CoroutineAwait.html">AsyncFw::CoroutineAwait</a></div><div class="ttdoc">The CoroutineAwait struct.</div><div class="ttdef"><b>Definition</b> Coroutine.h:52</div></div>
 <div class="ttc" id="astructAsyncFw_1_1CoroutineTask_1_1promise__type_html"><div class="ttname"><a href="structAsyncFw_1_1CoroutineTask_1_1promise__type.html">AsyncFw::CoroutineTask::promise_type</a></div><div class="ttdoc">The CoroutineTask::promise_type struct.</div><div class="ttdef"><b>Definition</b> Coroutine.h:22</div></div>
+<div class="ttc" id="astructAsyncFw_1_1CoroutineTask_html_a2a9141689d60da24339465aa0d225a27"><div class="ttname"><a href="structAsyncFw_1_1CoroutineTask.html#a2a9141689d60da24339465aa0d225a27">AsyncFw::CoroutineTask::finished</a></div><div class="ttdeci">bool finished()</div><div class="ttdoc">Return true if task finished.</div><div class="ttdef"><b>Definition</b> Coroutine.cpp:58</div></div>
+<div class="ttc" id="astructAsyncFw_1_1CoroutineTask_html_a820a0a3410c4a14a71ad3599f46c1bb0"><div class="ttname"><a href="structAsyncFw_1_1CoroutineTask.html#a820a0a3410c4a14a71ad3599f46c1bb0">AsyncFw::CoroutineTask::wait</a></div><div class="ttdeci">void wait()</div><div class="ttdoc">Runs nested Thread::exec() and wait for task finished.</div><div class="ttdef"><b>Definition</b> Coroutine.cpp:44</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

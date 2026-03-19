@@ -35,10 +35,12 @@ struct CoroutineTask {
   private:
     Private *private_;
   };
-  void wait();
   void resume();
   void resume_queued();
+  /*! \brief Return true if task finished. */
   bool finished();
+  /*! \brief Runs nested Thread::exec() and wait for task finished. */
+  void wait();
 
 private:
   promise_type *promise;

@@ -1,0 +1,9 @@
+<map id="AsyncFw::AbstractTask" name="AsyncFw::AbstractTask">
+<area shape="rect" id="Node000001" title="The AbstractTask class." alt="" coords="101,96,262,123"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1Task.html" title="The Task class." alt="" coords="108,171,255,197"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="184,138,184,170,179,170,179,138"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractThread_1_1AbstractTask.html" title="The AbstractTask class." alt="" coords="5,5,179,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="128,57,169,93,166,97,124,60"/>
+<area shape="rect" id="Node000003" href="$structAsyncFw_1_1AnyData.html" title="The AnyData class." alt="" coords="203,13,338,40"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="247,52,197,98,193,94,244,48"/>
+</map>
