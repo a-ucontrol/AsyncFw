@@ -25,17 +25,17 @@ int main(int argc, char *argv[]) {
   thread1.invokeMethod([&thread2, _mainThread]() {
     AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::currentThread();
     logInfo() << "run in thread" << ct->name() << ct->id();
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
     thread2.invokeMethod([_mainThread]() {
       AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::currentThread();
       logInfo() << "run in thread" << ct->name() << ct->id();
-      std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+      std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
       _mainThread->invokeMethod([_mainThread]() {
         AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::currentThread();
         logInfo() << "run in thread" << ct->name() << ct->id();
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
         logInfo() << "exit application";
         AsyncFw::MainThread::exit(0);
       });
