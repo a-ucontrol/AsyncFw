@@ -6,7 +6,6 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 */
 
 #include <map>
-#include <functional>
 
 #include <openssl/ssl.h>
 #include <openssl/err.h>
@@ -23,7 +22,7 @@ using namespace AsyncFw;
 struct TlsContext::Private {
   ~Private() {
     if (ctx_) {
-      std::map<SSL_CTX *, std::function<int(int, X509_STORE_CTX *)>>::iterator it = verify_.find(ctx_);
+      std::map<SSL_CTX *, uint8_t>::iterator it = verify_.find(ctx_);
       if (it != verify_.end()) { verify_.erase(it); }
       SSL_CTX_free(ctx_);
     }
@@ -41,7 +40,7 @@ struct TlsContext::Private {
   int serial_ = 0;
   int ref_ = 0;
 
-  inline static std::map<SSL_CTX *, std::function<int(int, X509_STORE_CTX *)>> verify_;
+  inline static std::map<SSL_CTX *, uint8_t> verify_;
 };
 
 DataArray TlsContext::Private::key(EVP_PKEY *_k) {
@@ -401,8 +400,23 @@ std::string TlsContext::infoTrusted() const {
 int TlsContext::verify(int ok, X509_STORE_CTX *ctx) {
   SSL *ssl = static_cast<SSL *>(X509_STORE_CTX_get_ex_data(ctx, SSL_get_ex_data_X509_STORE_CTX_idx()));
   SSL_CTX *ssl_ctx = SSL_get_SSL_CTX(ssl);
-  std::map<SSL_CTX *, std::function<int(int, X509_STORE_CTX *)>>::iterator it = Private::verify_.find(ssl_ctx);
-  if (it != Private::verify_.end()) { return it->second(ok, ctx); }
+  std::map<SSL_CTX *, uint8_t>::iterator it = Private::verify_.find(ssl_ctx);
+  if (it != Private::verify_.end()) {
+    if (ok) return ok;
+    int _e = X509_STORE_CTX_get_error(ctx);
+    if (it->second & 0x01) {  // ignore time validity errors
+      if (_e == X509_V_ERR_CERT_NOT_YET_VALID) {
+        lsWarning("certificate not yet valid");
+        return 1;
+      }
+      if (_e == X509_V_ERR_CERT_HAS_EXPIRED) {
+        lsWarning("certificate has expired");
+        return 1;
+      }
+    }
+    lsError() << _e;
+    return 0;
+  }
   return ok;
 }
 
@@ -456,27 +470,12 @@ void TlsContext::setVerifyName(const std::string &name) const { private_->verify
 void TlsContext::setIgnoreErrors(uint8_t errors) const {
   if (errors == 0x01) {
     if (!private_->ctx_) private_->ctx_ = SSL_CTX_new(TLS_method());
-    std::map<SSL_CTX *, std::function<int(int, X509_STORE_CTX *)>>::iterator it = Private::verify_.find(private_->ctx_);
+    std::map<SSL_CTX *, uint8_t>::iterator it = Private::verify_.find(private_->ctx_);
     if (it != Private::verify_.end()) {
       lsWarning() << "already exists, change";
       Private::verify_.erase(it);
     }
-    Private::verify_.emplace(private_->ctx_, [errors](int ok, X509_STORE_CTX *ctx) {
-      if (ok) return ok;
-      int _e = X509_STORE_CTX_get_error(ctx);
-      if (errors & 0x01) {  // ignore time validity errors
-        if (_e == X509_V_ERR_CERT_NOT_YET_VALID) {
-          lsWarning("certificate not yet valid");
-          return 1;
-        }
-        if (_e == X509_V_ERR_CERT_HAS_EXPIRED) {
-          lsWarning("certificate has expired");
-          return 1;
-        }
-      }
-      lsError() << _e;
-      return 0;
-    });
+    Private::verify_.emplace(private_->ctx_, errors);
   }
 }
 
