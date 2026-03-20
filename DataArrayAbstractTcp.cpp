@@ -5,10 +5,9 @@ This file is part of the AsyncFw project. Licensed under the MIT License.
 See {Link: LICENSE file https://mit-license.org} in the project root for full license information.
 */
 
+#include <algorithm>
 #include "core/LogStream.h"
-
 #include "DataArraySocket.h"
-
 #include "DataArrayAbstractTcp.h"
 
 using namespace AsyncFw;

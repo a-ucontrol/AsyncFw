@@ -5,9 +5,10 @@ This file is part of the AsyncFw project. Licensed under the MIT License.
 See {Link: LICENSE file https://mit-license.org} in the project root for full license information.
 */
 
+#include <signal.h>
+#include <algorithm>
 #include <condition_variable>
 #include <queue>
-#include <signal.h>
 #include "LogStream.h"
 #include "Thread.h"
 #include "Socket.h"

@@ -7,6 +7,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #include <fcntl.h>
 
+#include <algorithm>
 #include <cstring>
 
 #include "DataArray.h"
