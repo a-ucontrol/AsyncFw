@@ -19,7 +19,7 @@ public:
 
 int main(int argc, char *argv[]) {
   AsyncFw::ListenSocket ls;
-  ls.setIncomingConnection([](int fd, const std::string &address) {
+  ls.incoming([](int fd, const std::string &address, bool *accept) {
     TcpSocket *socket = TcpSocket::create();
     socket->setDescriptor(fd);
     socket->received([socket](const AsyncFw::DataArray &data) {
@@ -28,7 +28,7 @@ int main(int argc, char *argv[]) {
       AsyncFw::MainThread::exit(0);
     });
     logInfo() << "Incoming:" << fd << address;
-    return true;
+    *accept = true;
   });
 
   ls.listen("0.0.0.0", 18080);

@@ -536,8 +536,10 @@ void ListenSocket::incomingEvent() {
     _pa = _ip;
   }
   if (_cd >= 0) {
-    if (!incomingConnection || !incomingConnection(_cd, _pa)) {
-      lsDebug("failed incoming connection") << LogStream::Color::Red << (incomingConnection != nullptr) << _cd;
+    bool _accept = false;
+    incoming(_cd, _pa, &_accept);
+    if (!_accept) {
+      lsDebug() << LogStream::Color::Red << "failed incoming connection" << _cd;
       close_fd(_cd);
       return;
     }
@@ -551,8 +553,6 @@ ListenSocket::~ListenSocket() {
   state_ = Destroy;
   thread_->removeSocket(this);
 }
-
-void ListenSocket::setIncomingConnection(std::function<bool(int, const std::string &)> f) { incomingConnection = f; }
 
 namespace AsyncFw {
 LogStream &operator<<(LogStream &log, const AbstractSocket &s) {

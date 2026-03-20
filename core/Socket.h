@@ -12,6 +12,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include <string>
 
 #include "AnyData.h"
+#include "FunctionConnector.h"
 
 namespace AsyncFw {
 class Thread;
@@ -90,13 +91,11 @@ private:
 class ListenSocket : public AbstractSocket {
 public:
   ~ListenSocket();
-  void setIncomingConnection(std::function<bool(int, const std::string &)> f);
+  /*! \brief The FunctionConnector for connections. */
+  AsyncFw::FunctionConnectorProtected<ListenSocket>::Connector<int, const std::string &, bool *> incoming {AsyncFw::AbstractFunctionConnector::SyncOnly};
 
 protected:
   void incomingEvent() override;
-
-private:
-  std::function<bool(int, const std::string &)> incomingConnection;
 };
 
 }  // namespace AsyncFw
