@@ -35,11 +35,11 @@ public:
 /*! \brief The DataArrayView class. */
 class DataArrayView : public std::string_view {
 public:
+  template <typename... Args>
+  DataArrayView(Args... args) : std::string_view(args...) {}
   DataArrayView(const uint8_t *, std::size_t);
   DataArrayView(const DataArray::iterator, const DataArray::iterator);
   DataArrayView(const DataArray &);
-  template <typename... Args>
-  DataArrayView(Args... args) : std::string_view(args...) {}
   DataArrayList split(const char) const;
 };
 
