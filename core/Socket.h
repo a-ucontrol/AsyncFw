@@ -86,7 +86,8 @@ private:
   Private *private_;
 };
 
-/*! \brief The ListenSocket class. */
+/*! \brief The ListenSocket class.
+ \snippet ListenSocket/main.cpp snippet */
 class ListenSocket : public AbstractSocket {
 public:
   ~ListenSocket();

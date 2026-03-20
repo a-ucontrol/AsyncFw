@@ -13,8 +13,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 namespace AsyncFw {
 /*! \brief The Timer class
- \snippet Timer/main.cpp snippet
-*/
+ \snippet Timer/main.cpp snippet */
 class Timer {
 public:
   static void single(int, const std::function<void()> &);

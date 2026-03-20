@@ -5,9 +5,11 @@ This file is part of the AsyncFw project. Licensed under the MIT License.
 See {Link: LICENSE file https://mit-license.org} in the project root for full license information.
 */
 
-#include <MainThread.h>
+//! [snippet]
+#include <core/DataArray.h>
 #include <core/TlsSocket.h>
-#include <Log.h>
+#include <core/LogStream.h>
+#include <MainThread.h>
 
 class TcpSocket : public AsyncFw::AbstractTlsSocket {
 public:
@@ -35,7 +37,8 @@ int main(int argc, char *argv[]) {
 
   logNotice() << "Start Applicaiton";
   int ret = AsyncFw::MainThread::exec();
-  logNotice() << "End Applicaiton";
+  logNotice() << "End Applicaiton" << ret;
 
   return ret;
 }
+//! [snippet]
