@@ -91,7 +91,7 @@ private:
 class ListenSocket : public AbstractSocket {
 public:
   ~ListenSocket();
-  /*! \brief The FunctionConnector for connections. */
+  /*! \brief The FunctionConnector for incoming connections. */
   AsyncFw::FunctionConnectorProtected<ListenSocket>::Connector<int, const std::string &, bool *> incoming {AsyncFw::AbstractFunctionConnector::SyncOnly};
 
 protected:
