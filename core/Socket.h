@@ -88,8 +88,12 @@ private:
 
 /*! \brief The ListenSocket class.
  \brief Example: \snippet ListenSocket/main.cpp snippet */
-class ListenSocket : public AbstractSocket {
+class ListenSocket : private AbstractSocket {
 public:
+  using AbstractSocket::close;
+  using AbstractSocket::destroy;
+  using AbstractSocket::listen;
+  using AbstractSocket::port;
   ~ListenSocket();
   /*! \brief The FunctionConnector for incoming connections. */
   AsyncFw::FunctionConnectorProtected<ListenSocket>::Connector<int, const std::string &, bool *> incoming {AsyncFw::AbstractFunctionConnector::SyncOnly};
