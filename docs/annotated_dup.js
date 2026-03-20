@@ -24,7 +24,7 @@ var annotated_dup =
       [ "FunctionConnectorProtected", "classAsyncFw_1_1FunctionConnectorProtected.html", null ],
       [ "HttpSocket", "classAsyncFw_1_1HttpSocket.html", null ],
       [ "Instance", "classAsyncFw_1_1Instance.html", null ],
-      [ "ListenSocket", "classAsyncFw_1_1ListenSocket.html", null ],
+      [ "ListenSocket", "classAsyncFw_1_1ListenSocket.html", "classAsyncFw_1_1ListenSocket" ],
       [ "Log", "classAsyncFw_1_1Log.html", null ],
       [ "LogStream", "classAsyncFw_1_1LogStream.html", null ],
       [ "MainThread", "classAsyncFw_1_1MainThread.html", null ],
