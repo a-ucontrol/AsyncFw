@@ -10,9 +10,9 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include <openssl/core_names.h>
 #include <openssl/x509v3.h>
 
+#include <algorithm>
 #include "DataArray.h"
 #include "LogStream.h"
-
 #include "TlsContext.h"
 
 using namespace AsyncFw;
