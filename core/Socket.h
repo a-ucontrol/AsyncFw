@@ -90,6 +90,7 @@ private:
  \brief Example: \snippet ListenSocket/main.cpp snippet */
 class ListenSocket : private AbstractSocket {
 public:
+  using AbstractSocket::address;
   using AbstractSocket::close;
   using AbstractSocket::destroy;
   using AbstractSocket::listen;
