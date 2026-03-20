@@ -5,8 +5,6 @@ This file is part of the AsyncFw project. Licensed under the MIT License.
 See {Link: LICENSE file https://mit-license.org} in the project root for full license information.
 */
 
-#include <map>
-
 #include <openssl/ssl.h>
 #include <openssl/err.h>
 #include <openssl/core_names.h>
@@ -22,7 +20,7 @@ using namespace AsyncFw;
 struct TlsContext::Private {
   ~Private() {
     if (ctx_) {
-      std::map<SSL_CTX *, uint8_t>::iterator it = verify_.find(ctx_);
+      std::vector<Private *>::iterator it = lower_bound(verify_.begin(), verify_.end(), this, [](const Private *p1, const Private *p2) { return p1->ctx_ < p2->ctx_; });
       if (it != verify_.end()) { verify_.erase(it); }
       SSL_CTX_free(ctx_);
     }
@@ -39,8 +37,9 @@ struct TlsContext::Private {
 
   int serial_ = 0;
   int ref_ = 0;
+  uint8_t ignoreErrors_ = 0;
 
-  inline static std::map<SSL_CTX *, uint8_t> verify_;
+  inline static std::vector<Private *> verify_;
 };
 
 DataArray TlsContext::Private::key(EVP_PKEY *_k) {
@@ -400,11 +399,11 @@ std::string TlsContext::infoTrusted() const {
 int TlsContext::verify(int ok, X509_STORE_CTX *ctx) {
   SSL *ssl = static_cast<SSL *>(X509_STORE_CTX_get_ex_data(ctx, SSL_get_ex_data_X509_STORE_CTX_idx()));
   SSL_CTX *ssl_ctx = SSL_get_SSL_CTX(ssl);
-  std::map<SSL_CTX *, uint8_t>::iterator it = Private::verify_.find(ssl_ctx);
+  std::vector<Private *>::iterator it = lower_bound(Private::verify_.begin(), Private::verify_.end(), ssl_ctx, [](const Private *p, const SSL_CTX *ctx) { return p->ctx_ < ctx; });
   if (it != Private::verify_.end()) {
     if (ok) return ok;
     int _e = X509_STORE_CTX_get_error(ctx);
-    if (it->second & 0x01) {  // ignore time validity errors
+    if ((*it)->ignoreErrors_ & 0x01) {  // ignore time validity errors
       if (_e == X509_V_ERR_CERT_NOT_YET_VALID) {
         lsWarning("certificate not yet valid");
         return 1;
@@ -468,15 +467,10 @@ std::string &TlsContext::verifyName() const { return private_->verifyName_; }
 void TlsContext::setVerifyName(const std::string &name) const { private_->verifyName_ = name; }
 
 void TlsContext::setIgnoreErrors(uint8_t errors) const {
-  if (errors == 0x01) {
-    if (!private_->ctx_) private_->ctx_ = SSL_CTX_new(TLS_method());
-    std::map<SSL_CTX *, uint8_t>::iterator it = Private::verify_.find(private_->ctx_);
-    if (it != Private::verify_.end()) {
-      lsWarning() << "already exists, change";
-      Private::verify_.erase(it);
-    }
-    Private::verify_.emplace(private_->ctx_, errors);
-  }
+  private_->ignoreErrors_ = errors;
+  if (!private_->ctx_) private_->ctx_ = SSL_CTX_new(TLS_method());
+  std::vector<Private *>::iterator it = lower_bound(private_->verify_.begin(), private_->verify_.end(), private_, [](const Private *p1, const Private *p2) { return p1->ctx_ < p2->ctx_; });
+  if (it == private_->verify_.end() || *it != private_) private_->verify_.insert(it, private_);
 }
 
 ssl_ctx_st *TlsContext::opensslCtx() const { return private_->ctx_; }
