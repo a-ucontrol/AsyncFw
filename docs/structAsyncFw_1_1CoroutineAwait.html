@@ -105,7 +105,6 @@ $(function(){initNavTree('structAsyncFw_1_1CoroutineAwait.html',''); initResizab
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="structAsyncFw_1_1CoroutineAwait-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">AsyncFw::CoroutineAwait Struct Reference</div></div>
 </div><!--header-->
@@ -118,9 +117,16 @@ $(function(){initNavTree('structAsyncFw_1_1CoroutineAwait.html',''); initResizab
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a8f73a3d2dbf3b1dde941924faa966748" id="r_a8f73a3d2dbf3b1dde941924faa966748"><td class="memItemLeft" align="right" valign="top"><a id="a8f73a3d2dbf3b1dde941924faa966748" name="a8f73a3d2dbf3b1dde941924faa966748"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>CoroutineAwait</b> (const std::function&lt; void(CoroutineHandle)&gt; &amp;=nullptr)</td></tr>
-<tr class="separator:a8f73a3d2dbf3b1dde941924faa966748"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5475b43f8ff7e8ae15c2aefd0f4eff44" id="r_a5475b43f8ff7e8ae15c2aefd0f4eff44"><td class="memTemplParams" colspan="2"><a id="a5475b43f8ff7e8ae15c2aefd0f4eff44" name="a5475b43f8ff7e8ae15c2aefd0f4eff44"></a>
+template&lt;typename T&gt; </td></tr>
+<tr class="memitem:a5475b43f8ff7e8ae15c2aefd0f4eff44"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>CoroutineAwait</b> (T _f)</td></tr>
+<tr class="separator:a5475b43f8ff7e8ae15c2aefd0f4eff44"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a28f9e6eeca11c4d10c6a0ff270ccb871" id="r_a28f9e6eeca11c4d10c6a0ff270ccb871"><td class="memItemLeft" align="right" valign="top"><a id="a28f9e6eeca11c4d10c6a0ff270ccb871" name="a28f9e6eeca11c4d10c6a0ff270ccb871"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>CoroutineAwait</b> (const <a class="el" href="structAsyncFw_1_1CoroutineAwait.html">CoroutineAwait</a> &amp;)=delete</td></tr>
+<tr class="separator:a28f9e6eeca11c4d10c6a0ff270ccb871"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7c2e17ec5eb9cbe73cc8c1abe5af2b6f" id="r_a7c2e17ec5eb9cbe73cc8c1abe5af2b6f"><td class="memItemLeft" align="right" valign="top"><a id="a7c2e17ec5eb9cbe73cc8c1abe5af2b6f" name="a7c2e17ec5eb9cbe73cc8c1abe5af2b6f"></a>
+<a class="el" href="structAsyncFw_1_1CoroutineAwait.html">CoroutineAwait</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (const <a class="el" href="structAsyncFw_1_1CoroutineAwait.html">CoroutineAwait</a> &amp;)=delete</td></tr>
+<tr class="separator:a7c2e17ec5eb9cbe73cc8c1abe5af2b6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4c5d650d4541bf558323dea9c33fdb94" id="r_a4c5d650d4541bf558323dea9c33fdb94"><td class="memItemLeft" align="right" valign="top"><a id="a4c5d650d4541bf558323dea9c33fdb94" name="a4c5d650d4541bf558323dea9c33fdb94"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>await_suspend</b> (CoroutineHandle) const noexcept</td></tr>
 <tr class="separator:a4c5d650d4541bf558323dea9c33fdb94"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -130,12 +136,6 @@ virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>await_ready</
 <tr class="memitem:af4145b61f7f8ed048002f3dc63c952a5" id="r_af4145b61f7f8ed048002f3dc63c952a5"><td class="memItemLeft" align="right" valign="top"><a id="af4145b61f7f8ed048002f3dc63c952a5" name="af4145b61f7f8ed048002f3dc63c952a5"></a>
 virtual CoroutineHandle&#160;</td><td class="memItemRight" valign="bottom"><b>await_resume</b> () const noexcept</td></tr>
 <tr class="separator:af4145b61f7f8ed048002f3dc63c952a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
-Protected Attributes</h2></td></tr>
-<tr class="memitem:af97d8ff88d7420a891d26adc9fc5adbf" id="r_af97d8ff88d7420a891d26adc9fc5adbf"><td class="memItemLeft" align="right" valign="top"><a id="af97d8ff88d7420a891d26adc9fc5adbf" name="af97d8ff88d7420a891d26adc9fc5adbf"></a>
-CoroutineHandle&#160;</td><td class="memItemRight" valign="bottom"><b>h_</b></td></tr>
-<tr class="separator:af97d8ff88d7420a891d26adc9fc5adbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The <a class="el" href="structAsyncFw_1_1CoroutineAwait.html" title="The CoroutineAwait struct.">CoroutineAwait</a> struct. </p>
