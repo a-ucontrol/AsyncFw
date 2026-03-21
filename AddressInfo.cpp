@@ -7,6 +7,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #include <ares.h>
 #include <cstring>
+#include <unordered_map>
 
 #include "core/Thread.h"
 #include "core/LogStream.h"

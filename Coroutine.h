@@ -8,7 +8,6 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #pragma once
 
 #include <coroutine>
-#include <functional>
 #include "core/AnyData.h"
 
 namespace AsyncFw {
@@ -36,7 +35,6 @@ struct CoroutineTask {
     Private *private_;
   };
   void resume();
-  void resume_queued();
   /*! \brief Return true if task finished. */
   bool finished();
   /*! \brief Runs nested Thread::exec() and wait for task finished. */
@@ -50,16 +48,28 @@ using CoroutineHandle = std::coroutine_handle<CoroutineTask::promise_type>;
 
 /*! \brief The CoroutineAwait struct. */
 struct CoroutineAwait {
-  CoroutineAwait(const std::function<void(CoroutineHandle)> & = nullptr);
+  template <typename T>
+  CoroutineAwait(T _f) : f_(new Function(_f)) {}
+  CoroutineAwait() = default;
+  CoroutineAwait(const CoroutineAwait &) = delete;
+  CoroutineAwait &operator=(const CoroutineAwait &) = delete;
   virtual ~CoroutineAwait();
   virtual void await_suspend(CoroutineHandle) const noexcept;
   virtual bool await_ready() const noexcept;
   virtual CoroutineHandle await_resume() const noexcept;
 
-protected:
-  mutable CoroutineHandle h_;
-
 private:
-  std::function<void(CoroutineHandle)> f_;
+  struct AbstractFunction {
+    virtual void invoke(const CoroutineHandle) = 0;
+    virtual ~AbstractFunction() = default;
+  };
+  template <typename T>
+  struct Function : AbstractFunction {
+    Function(T &_f) : f(std::move(_f)) {}
+    void invoke(const CoroutineHandle _h) override { f(_h); }
+    T f;
+  };
+  mutable CoroutineHandle h_;
+  AbstractFunction *f_ = nullptr;
 };
 }  // namespace AsyncFw

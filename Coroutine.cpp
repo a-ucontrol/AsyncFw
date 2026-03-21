@@ -19,13 +19,14 @@ struct CoroutineTask::promise_type::Private {
   bool finished = false;
 };
 
-CoroutineAwait::~CoroutineAwait() { lsTrace(); }
-
-CoroutineAwait::CoroutineAwait(const std::function<void(std::coroutine_handle<CoroutineTask::promise_type>)> &f) : f_(f) { lsTrace(); }
+CoroutineAwait::~CoroutineAwait() {
+  if (f_) delete f_;
+  lsTrace();
+}
 
 void CoroutineAwait::await_suspend(std::coroutine_handle<CoroutineTask::promise_type> h) const noexcept {
   h_ = h;
-  if (f_) f_(h);
+  if (f_) f_->invoke(h);
 }
 
 bool CoroutineAwait::await_ready() const noexcept { return false; }
@@ -53,7 +54,7 @@ void CoroutineTask::wait() {
 
 void CoroutineTask::resume() { std::coroutine_handle<promise_type>::from_promise(*promise).resume(); }
 
-void CoroutineTask::resume_queued() { promise->resume_queued(); }
+//void CoroutineTask::resume_queued() { promise->resume_queued(); }
 
 bool CoroutineTask::finished() { return promise->private_->finished; }
 
