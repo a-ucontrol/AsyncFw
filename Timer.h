@@ -7,8 +7,6 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #pragma once
 
-#include <functional>
-
 #include "core/FunctionConnector.h"
 
 namespace AsyncFw {
@@ -16,7 +14,10 @@ namespace AsyncFw {
  \snippet Timer/main.cpp snippet */
 class Timer {
 public:
-  static void single(int, const std::function<void()> &);
+  template <typename T>
+  static void single(int ms, T f) {
+    new SingleTimerTask(ms, f);
+  }
 
   Timer();
   ~Timer();
@@ -27,6 +28,23 @@ public:
   FunctionConnectorProtected<Timer>::Connector<> timeout;
 
 private:
+  template <typename T>
+  class SingleTimerTask : public AbstractThread::AbstractTask {
+  public:
+    SingleTimerTask(int ms, T _f) : f(std::move(_f)) {
+      t = AbstractThread::currentThread();
+      id = t->appendTimer(ms, this);
+    }
+    void invoke() override {
+      t->removeTimer(id);
+      f();
+    }
+
+  private:
+    AbstractThread *t;
+    int id;
+    T f;
+  };
   AbstractThread *thread_;
   int timerId = -1;
   bool single_;
