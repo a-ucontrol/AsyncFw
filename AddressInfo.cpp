@@ -7,7 +7,6 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #include <ares.h>
 #include <cstring>
-#include <unordered_map>
 
 #include "core/Thread.h"
 #include "core/LogStream.h"
@@ -23,21 +22,18 @@ struct AddressInfo::Private {
     options.sock_state_cb = [](void *data, int s, int read, int write) {
       lsTrace("change state fd {} read:{} write:{}", s, read, write);
       AbstractThread::PollEvents e = (read) ? AbstractThread::PollIn : AbstractThread::PollNo | (write) ? AbstractThread::PollOut : AbstractThread::PollNo;
-      std::unordered_map<int, AbstractThread::PollEvents>::iterator it = static_cast<Private *>(data)->m.find(s);
-      if (it != static_cast<Private *>(data)->m.end()) {
+      if (static_cast<Private *>(data)->events) {
         if (!e) {
           static_cast<Private *>(data)->thread->removePollDescriptor(s);
-          static_cast<Private *>(data)->m.erase(it);
           const ares_fd_events_t _ae = {s, ARES_FD_EVENT_NONE};
           ares_process_fds(static_cast<Private *>(data)->channel, &_ae, 1, 0);
-        } else if (!(it->second & e))
-          static_cast<Private *>(data)->thread->modifyPollDescriptor(s, e);
+        } else if (!(static_cast<Private *>(data)->events & e))
+          static_cast<Private *>(data)->events = e;
+        static_cast<Private *>(data)->thread->modifyPollDescriptor(s, e);
         return;
       }
-
       lsTrace() << "append poll descriptor" << s;
-      static_cast<Private *>(data)->m.insert({s, e});
-
+      static_cast<Private *>(data)->events = e;
       static_cast<Private *>(data)->thread->appendPollTask(s, e, [fd = s, ch = static_cast<Private *>(data)->channel](int _e) {
         lsDebug("poll event: {}, fd: {}", _e, fd) << ((_e != AbstractThread::PollOut) ? fd : 0);
         const ares_fd_events_t _ae = {fd, (_e == AbstractThread::PollOut) ? ARES_FD_EVENT_WRITE : ARES_FD_EVENT_READ};
@@ -54,7 +50,7 @@ struct AddressInfo::Private {
     lsTrace();
   }
 
-  std::unordered_map<int, AbstractThread::PollEvents> m;
+  AbstractThread::PollEvents events = AbstractThread::PollNo;
   ares_channel channel;
   ares_options options;
   AbstractThread *thread;
