@@ -7,8 +7,6 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #pragma once
 
-#include <functional>
-
 #include "core/FunctionConnector.h"
 #include "core/DataArray.h"
 
@@ -18,13 +16,18 @@ class Rrd {
 public:
   using Item = DataArray;
   using ItemList = DataArrayList;
+  template <typename T>
+  void setAverage(int _interval, T f, int _offset = 0) {
+    average = new Function(f);
+    aInterval = _interval / interval;
+    aOffset = _offset;
+  }
   Rrd(int size, int interval, int fillInterval, const std::string &name);
   Rrd(int size, int interval, int fillInterval);
   Rrd(int size, const std::string &name);
   Rrd(int size);
   ~Rrd();
   uint64_t read(DataArrayList *list, uint64_t from = 0, uint32_t size = 0, uint64_t *lastIndex = nullptr);
-  void setAverage(int interval, const std::function<void(const ItemList &)> &f, int offset = 0);
   void setFillInterval(int interval);
   uint32_t size() { return dbSize; }
   uint32_t count();
@@ -52,6 +55,17 @@ protected:
   bool readOnly = false;
 
 private:
+  struct AbstractFunction {
+    virtual void invoke(const ItemList &) = 0;
+    virtual ~AbstractFunction() = default;
+  };
+  template <typename T>
+  struct Function : AbstractFunction {
+    Function(T &_f) : f(std::move(_f)) {}
+    void invoke(const ItemList &_h) override { f(_h); }
+    T f;
+  };
+  AbstractFunction *average = nullptr;
   int aInterval = 0;
   int aOffset = 0;
   int interval;
@@ -60,6 +74,5 @@ private:
   bool createFile();
   bool readFromFile();
   bool saveToFile(const std::string &fn = {});
-  std::function<void(const ItemList &)> average;
 };
 }  // namespace AsyncFw

@@ -49,6 +49,7 @@ Rrd::Rrd(int size, int interval, int fillInterval, const std::string &name) : db
 Rrd::Rrd(int size, int interval, int fillInterval) : Rrd(size, interval, fillInterval, {}) {}
 
 Rrd::~Rrd() {
+  if (average) delete average;
   if (!file.empty() && !readOnly) { saveToFile(); }
   lsTrace();
 }
@@ -107,7 +108,7 @@ void Rrd::append(const Item &data, uint64_t index) {
   if (_average) {
     ItemList list;
     read(&list, pos - pos % aInterval - aInterval, aInterval);
-    average(list);
+    average->invoke(list);
   }
 }
 
@@ -154,12 +155,6 @@ uint64_t Rrd::read(DataArrayList *list, uint64_t val, uint32_t size, uint64_t *l
     if ((++val) > last_) break;
   }
   return val - 1;
-}
-
-void Rrd::setAverage(int _interval, const std::function<void(const ItemList &)> &_f, int _offset) {
-  average = _f;
-  aInterval = _interval / interval;
-  aOffset = _offset;
 }
 
 bool Rrd::readFromFile() {
