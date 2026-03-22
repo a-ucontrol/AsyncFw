@@ -110,7 +110,7 @@ private:
     }
 #endif
     delete exitTask;
-    AbstractInstance::List::destroy();
+    AbstractInstance::List::destroyValues();
     clearId();
   }
 #ifdef USE_QAPPLICATION

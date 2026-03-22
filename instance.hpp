@@ -18,7 +18,7 @@ public:
     friend AbstractInstance;
 
   public:
-    static void destroy();
+    static void destroyValues();
 
     void append(AbstractInstance *);
     void remove(AbstractInstance *);

@@ -14,7 +14,7 @@ using namespace AsyncFw;
 
 AbstractInstance::List AbstractInstance::list __attribute__((init_priority(AsyncFw_STATIC_INIT_PRIORITY + 2)));
 
-void AbstractInstance::List::destroy() {
+void AbstractInstance::List::destroyValues() {
   lsDebug() << list.size();
   std::for_each(list.rbegin(), list.rend(), [](AbstractInstance *_i) { _i->destroyValue(); });
 }
@@ -22,7 +22,7 @@ void AbstractInstance::List::destroy() {
 AbstractInstance::List::~List() {
   if (!empty()) {
     lsError() << LogStream::Color::Red << "instance list not empty:" << size();
-    destroy();
+    destroyValues();
   }
   lsDebug() << size();
 }
