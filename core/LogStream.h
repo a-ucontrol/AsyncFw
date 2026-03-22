@@ -39,7 +39,8 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #endif
 
 namespace AsyncFw {
-/*! \brief The LogStream class. */
+/*! \brief The LogStream class.
+ \brief Examlpe: \snippet snippet.dox LogStream */
 class LogStream {
 public:
   enum MessageType : uint8_t {

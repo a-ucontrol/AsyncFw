@@ -15,5 +15,14 @@ var classAsyncFw_1_1AbstractThread =
     [ "modifyPollDescriptor", "classAsyncFw_1_1AbstractThread.html#af295f768757d3c7d6cf32e5248cbc2e0", null ],
     [ "removePollDescriptor", "classAsyncFw_1_1AbstractThread.html#a499a70b1d68a82fcded917a331f4cdef", null ],
     [ "start", "classAsyncFw_1_1AbstractThread.html#afdaccb5da7d4bee5e9ff687f761bd21f", null ],
+    [ "requestInterrupt", "classAsyncFw_1_1AbstractThread.html#a16affc1626e26d18cc2d9eab21315591", null ],
+    [ "interruptRequested", "classAsyncFw_1_1AbstractThread.html#ab614c8e9a266d924e86c3c49c1a6ff36", null ],
+    [ "waitInterrupted", "classAsyncFw_1_1AbstractThread.html#a5d7785eb8b21e956a6b7ff880d3ae4c3", null ],
+    [ "quit", "classAsyncFw_1_1AbstractThread.html#afef57401f138e8de37eb8d817772d9ff", null ],
+    [ "waitFinished", "classAsyncFw_1_1AbstractThread.html#a4d12fe08b7d84311eaa56a9704b7c2ba", null ],
+    [ "workLoad", "classAsyncFw_1_1AbstractThread.html#a474577d15fa4b52abee863b44a0b7f89", null ],
+    [ "id", "classAsyncFw_1_1AbstractThread.html#a41d1cf92e033bcc11e2394cb949e031a", null ],
+    [ "name", "classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd", null ],
+    [ "lockGuard", "classAsyncFw_1_1AbstractThread.html#a6e17293ccd9683f5bd8ca9a3dcd52e7d", null ],
     [ "exec", "classAsyncFw_1_1AbstractThread.html#a1abe0f5c637dcc6af5aff00c5291bd4f", null ]
 ];

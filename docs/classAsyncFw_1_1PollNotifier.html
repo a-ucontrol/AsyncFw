@@ -111,7 +111,7 @@ $(function(){initNavTree('classAsyncFw_1_1PollNotifier.html',''); initResizable(
 </div><!--header-->
 <div class="contents">
 
-<p>The <a class="el" href="classAsyncFw_1_1PollNotifier.html" title="The PollNotifier class.">PollNotifier</a> class.  
+<p>The <a class="el" href="classAsyncFw_1_1PollNotifier.html" title="The PollNotifier class Example:">PollNotifier</a> class Example:  
  <a href="#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="PollNotifier_8h_source.html">PollNotifier.h</a>&gt;</code></p>
@@ -123,33 +123,37 @@ Collaboration diagram for AsyncFw::PollNotifier:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:abe469fd8ab6f5a38c562aa2885075ec6" id="r_abe469fd8ab6f5a38c562aa2885075ec6"><td class="memItemLeft" align="right" valign="top"><a id="abe469fd8ab6f5a38c562aa2885075ec6" name="abe469fd8ab6f5a38c562aa2885075ec6"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>PollNotifier</b> (int, AbstractThread::PollEvents=AbstractThread::PollIn)</td></tr>
+<tr class="memitem:abe469fd8ab6f5a38c562aa2885075ec6" id="r_abe469fd8ab6f5a38c562aa2885075ec6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abe469fd8ab6f5a38c562aa2885075ec6">PollNotifier</a> (int, AbstractThread::PollEvents=AbstractThread::PollIn)</td></tr>
+<tr class="memdesc:abe469fd8ab6f5a38c562aa2885075ec6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a poll notifier. It assigns the file descriptor, and watches for events.  <br /></td></tr>
 <tr class="separator:abe469fd8ab6f5a38c562aa2885075ec6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a383eab2a439eb7cf82f1ddc38a6204cb" id="r_a383eab2a439eb7cf82f1ddc38a6204cb"><td class="memItemLeft" align="right" valign="top"><a id="a383eab2a439eb7cf82f1ddc38a6204cb" name="a383eab2a439eb7cf82f1ddc38a6204cb"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>setDescriptor</b> (int, AbstractThread::PollEvents=AbstractThread::PollIn)</td></tr>
+<tr class="memitem:a383eab2a439eb7cf82f1ddc38a6204cb" id="r_a383eab2a439eb7cf82f1ddc38a6204cb"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a383eab2a439eb7cf82f1ddc38a6204cb">setDescriptor</a> (int, AbstractThread::PollEvents=AbstractThread::PollIn)</td></tr>
+<tr class="memdesc:a383eab2a439eb7cf82f1ddc38a6204cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assigns the file descriptor and watch events.  <br /></td></tr>
 <tr class="separator:a383eab2a439eb7cf82f1ddc38a6204cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5a1c30a1fcfc343457e07db934165893" id="r_a5a1c30a1fcfc343457e07db934165893"><td class="memItemLeft" align="right" valign="top"><a id="a5a1c30a1fcfc343457e07db934165893" name="a5a1c30a1fcfc343457e07db934165893"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>setEvents</b> (AbstractThread::PollEvents)</td></tr>
+<tr class="memitem:a5a1c30a1fcfc343457e07db934165893" id="r_a5a1c30a1fcfc343457e07db934165893"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5a1c30a1fcfc343457e07db934165893">setEvents</a> (AbstractThread::PollEvents)</td></tr>
+<tr class="memdesc:a5a1c30a1fcfc343457e07db934165893"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set watch events.  <br /></td></tr>
 <tr class="separator:a5a1c30a1fcfc343457e07db934165893"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a63d989535fa3af6dcb2e8656999f8315" id="r_a63d989535fa3af6dcb2e8656999f8315"><td class="memItemLeft" align="right" valign="top"><a id="a63d989535fa3af6dcb2e8656999f8315" name="a63d989535fa3af6dcb2e8656999f8315"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>removeDescriptor</b> ()</td></tr>
+<tr class="memdesc:a63d989535fa3af6dcb2e8656999f8315"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove the file descriptor. <br /></td></tr>
 <tr class="separator:a63d989535fa3af6dcb2e8656999f8315"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5b2ff26b63b3d2f46b04892c6899217c" id="r_a5b2ff26b63b3d2f46b04892c6899217c"><td class="memItemLeft" align="right" valign="top"><a id="a5b2ff26b63b3d2f46b04892c6899217c" name="a5b2ff26b63b3d2f46b04892c6899217c"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>descriptor</b> ()</td></tr>
+<tr class="memdesc:a5b2ff26b63b3d2f46b04892c6899217c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the file descriptor. <br /></td></tr>
 <tr class="separator:a5b2ff26b63b3d2f46b04892c6899217c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a52d96002ff262ab846331324c64882e0" id="r_a52d96002ff262ab846331324c64882e0"><td class="memItemLeft" align="right" valign="top"><a id="a52d96002ff262ab846331324c64882e0" name="a52d96002ff262ab846331324c64882e0"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>fail</b> ()</td></tr>
+<tr class="memdesc:a52d96002ff262ab846331324c64882e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if error occurred. <br /></td></tr>
 <tr class="separator:a52d96002ff262ab846331324c64882e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:aabd27ec525c6982e95e93ffd20f443cc" id="r_aabd27ec525c6982e95e93ffd20f443cc"><td class="memItemLeft" align="right" valign="top"><a id="aabd27ec525c6982e95e93ffd20f443cc" name="aabd27ec525c6982e95e93ffd20f443cc"></a>
 <a class="el" href="classAsyncFw_1_1FunctionConnectorProtected.html">FunctionConnectorProtected</a>&lt; <a class="el" href="classAsyncFw_1_1PollNotifier.html">PollNotifier</a> &gt;::Connector&lt; AbstractThread::PollEvents &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>notify</b></td></tr>
+<tr class="memdesc:aabd27ec525c6982e95e93ffd20f443cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="#aabd27ec525c6982e95e93ffd20f443cc" title="The PollNotifier::notify connector.">PollNotifier::notify</a> connector. <br /></td></tr>
 <tr class="separator:aabd27ec525c6982e95e93ffd20f443cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>The <a class="el" href="classAsyncFw_1_1PollNotifier.html" title="The PollNotifier class.">PollNotifier</a> class. </p>
+<div class="textblock"><p>The <a class="el" href="classAsyncFw_1_1PollNotifier.html" title="The PollNotifier class Example:">PollNotifier</a> class Example: </p>
 <div class="fragment"><div class="line"><span class="comment">/*</span></div>
 <div class="line"><span class="comment"> * This exfample for Unix-like systems only</span></div>
 <div class="line"><span class="comment">*/</span></div>
@@ -170,7 +174,106 @@ Public Attributes</h2></td></tr>
 <div class="line">  <span class="keywordtype">int</span> ret = AsyncFw::MainThread::exec();</div>
 <div class="line">  <span class="keywordflow">return</span> ret;</div>
 <div class="line">}</div>
-</div><!-- fragment --> </div><hr/>The documentation for this class was generated from the following files:<ul>
+</div><!-- fragment --> </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="abe469fd8ab6f5a38c562aa2885075ec6" name="abe469fd8ab6f5a38c562aa2885075ec6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abe469fd8ab6f5a38c562aa2885075ec6">&#9670;&#160;</a></span>PollNotifier()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">PollNotifier::PollNotifier </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>fd</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">AbstractThread::PollEvents</td>          <td class="paramname"><span class="paramname"><em>events</em></span><span class="paramdefsep"> = </span><span class="paramdefval">AbstractThread::PollIn</span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructs a poll notifier. It assigns the file descriptor, and watches for events. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fd</td><td>file descriptor</td></tr>
+    <tr><td class="paramname">events</td><td>watch events </td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1PollNotifier_abe469fd8ab6f5a38c562aa2885075ec6_cgraph.svg" width="356" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a383eab2a439eb7cf82f1ddc38a6204cb" name="a383eab2a439eb7cf82f1ddc38a6204cb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a383eab2a439eb7cf82f1ddc38a6204cb">&#9670;&#160;</a></span>setDescriptor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool PollNotifier::setDescriptor </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>fd</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">AbstractThread::PollEvents</td>          <td class="paramname"><span class="paramname"><em>events</em></span><span class="paramdefsep"> = </span><span class="paramdefval">AbstractThread::PollIn</span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Assigns the file descriptor and watch events. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fd</td><td>file descriptor</td></tr>
+    <tr><td class="paramname">events</td><td>watch events </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if descriptor is set </dd></dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1PollNotifier_a383eab2a439eb7cf82f1ddc38a6204cb_icgraph.svg" width="356" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<a id="a5a1c30a1fcfc343457e07db934165893" name="a5a1c30a1fcfc343457e07db934165893"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5a1c30a1fcfc343457e07db934165893">&#9670;&#160;</a></span>setEvents()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool PollNotifier::setEvents </td>
+          <td>(</td>
+          <td class="paramtype">AbstractThread::PollEvents</td>          <td class="paramname"><span class="paramname"><em>events</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set watch events. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">events</td><td>watch events </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if events is set </dd></dl>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li><a class="el" href="PollNotifier_8h_source.html">PollNotifier.h</a></li>
 <li><b>PollNotifier.cpp</b></li>
 </ul>

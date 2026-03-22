@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['operator_28_29_0',['operator()',['../classAsyncFw_1_1FunctionConnector.html#a1ab25b31810087bc1d432073c5508f9a',1,'AsyncFw::FunctionConnector::operator()(T f, Connection::Type t=Connection::Default)'],['../classAsyncFw_1_1FunctionConnector.html#ab78eb4bd213a04c987d1230c61e0f354',1,'AsyncFw::FunctionConnector::operator()(Args... args)']]]
+  ['name_0',['name',['../classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd',1,'AsyncFw::AbstractThread']]],
+  ['notify_1',['notify',['../classAsyncFw_1_1PollNotifier.html#aabd27ec525c6982e95e93ffd20f443cc',1,'AsyncFw::PollNotifier']]]
 ];

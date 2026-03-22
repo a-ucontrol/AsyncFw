@@ -4,6 +4,6 @@
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="436,47,402,42,403,37,437,42"/>
 <area shape="rect" id="Node000004" href="$classAsyncFw_1_1Thread.html#ae9fc9cf8baddcc8dfa0e14784918c4a5" title="This call from the thread when it finishing execution." alt="" coords="227,72,404,115"/>
 <area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="437,78,405,83,404,77,436,73"/>
-<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractThread.html#afdaccb5da7d4bee5e9ff687f761bd21f" title="Create a managed thread and run exec()" alt="" coords="5,5,179,48"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractThread.html#afdaccb5da7d4bee5e9ff687f761bd21f" title="Create a managed thread and run exec()." alt="" coords="5,5,179,48"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="213,29,179,29,179,24,213,24"/>
 </map>

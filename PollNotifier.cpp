@@ -15,27 +15,27 @@ PollNotifier::PollNotifier() {
   lsTrace();
 }
 
-PollNotifier::PollNotifier(int fd, AbstractThread::PollEvents e) : PollNotifier() { setDescriptor(fd, e); }
+PollNotifier::PollNotifier(int fd, AbstractThread::PollEvents events) : PollNotifier() { setDescriptor(fd, events); }
 
 PollNotifier::~PollNotifier() {
   if (fd_ != -1) removeDescriptor();
   lsTrace();
 }
 
-bool PollNotifier::setDescriptor(int fd, AbstractThread::PollEvents e) {
-  bool _r = thread_->appendPollTask(fd, e, [this](AbstractThread::PollEvents e) {
-    if (e & ~(AbstractThread::PollIn | AbstractThread::PollOut)) {
-      lsError() << "descriptor:" << fd_ << ", event:" << e;
+bool PollNotifier::setDescriptor(int fd, AbstractThread::PollEvents events) {
+  bool _r = thread_->appendPollTask(fd, events, [this](AbstractThread::PollEvents events) {
+    if (events & ~(AbstractThread::PollIn | AbstractThread::PollOut)) {
+      lsError() << "descriptor:" << fd_ << ", event:" << events;
       thread_->removePollDescriptor(fd_);
       fail_ = true;
       return;
     }
-    notify(e);
+    notify(events);
   });
   return !(fail_ = (fd_ = (_r) ? fd : -1) == -1);
 }
 
-bool PollNotifier::setEvents(AbstractThread::PollEvents e) { return !(fail_ = !thread_->modifyPollDescriptor(fd_, e)); }
+bool PollNotifier::setEvents(AbstractThread::PollEvents events) { return !(fail_ = !thread_->modifyPollDescriptor(fd_, events)); }
 
 void PollNotifier::removeDescriptor() {
   thread_->removePollDescriptor(fd_);

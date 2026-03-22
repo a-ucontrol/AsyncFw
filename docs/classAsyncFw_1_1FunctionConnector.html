@@ -196,7 +196,7 @@ class AsyncFw::FunctionConnector&lt; Args &gt;</div><p>Обеспечивает 
 <div class="line">  Sender() {</div>
 <div class="line">    timer.timeout([<span class="keyword">this</span>]() {</div>
 <div class="line">      AsyncFw::AbstractThread *ct = <a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#ac1b35ef04b06ce771f6d6ca0a5b120db">AsyncFw::AbstractThread::currentThread</a>();</div>
-<div class="line">      logInfo() &lt;&lt; cnt &lt;&lt; <span class="stringliteral">&quot;send from thread:&quot;</span> &lt;&lt; ct-&gt;name() &lt;&lt; ct-&gt;id();</div>
+<div class="line">      logInfo() &lt;&lt; cnt &lt;&lt; <span class="stringliteral">&quot;send from thread:&quot;</span> &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd">name</a>() &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a41d1cf92e033bcc11e2394cb949e031a">id</a>();</div>
 <div class="line">      connector(cnt++);</div>
 <div class="line">      <span class="keywordflow">if</span> (cnt == 3) AsyncFw::MainThread::exit(0);</div>
 <div class="line">    });</div>
@@ -215,7 +215,7 @@ class AsyncFw::FunctionConnector&lt; Args &gt;</div><p>Обеспечивает 
 <div class="line">  Receiver(<span class="keyword">const</span> std::string &amp;name, <span class="keyword">const</span> Sender &amp;sender) {</div>
 <div class="line">    sender.connector([name_ = name](<span class="keywordtype">int</span> val) {</div>
 <div class="line">      AsyncFw::AbstractThread *ct = <a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#ac1b35ef04b06ce771f6d6ca0a5b120db">AsyncFw::AbstractThread::currentThread</a>();</div>
-<div class="line">      logInfo() &lt;&lt; name_ &lt;&lt; <span class="stringliteral">&quot;received&quot;</span> &lt;&lt; val &lt;&lt; <span class="stringliteral">&quot;run in thread&quot;</span> &lt;&lt; ct-&gt;name() &lt;&lt; ct-&gt;id();</div>
+<div class="line">      logInfo() &lt;&lt; name_ &lt;&lt; <span class="stringliteral">&quot;received&quot;</span> &lt;&lt; val &lt;&lt; <span class="stringliteral">&quot;run in thread&quot;</span> &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd">name</a>() &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a41d1cf92e033bcc11e2394cb949e031a">id</a>();</div>
 <div class="line">    });</div>
 <div class="line">  }</div>
 <div class="line">};</div>

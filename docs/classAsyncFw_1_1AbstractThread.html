@@ -203,34 +203,43 @@ virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>running</b> (
 <tr class="separator:a499a70b1d68a82fcded917a331f4cdef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afdaccb5da7d4bee5e9ff687f761bd21f" id="r_afdaccb5da7d4bee5e9ff687f761bd21f"><td class="memItemLeft" align="right" valign="top"><a id="afdaccb5da7d4bee5e9ff687f761bd21f" name="afdaccb5da7d4bee5e9ff687f761bd21f"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>start</b> ()</td></tr>
-<tr class="memdesc:afdaccb5da7d4bee5e9ff687f761bd21f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a managed thread and run <a class="el" href="#a1abe0f5c637dcc6af5aff00c5291bd4f" title="Run manage loop.">exec()</a> <br /></td></tr>
+<tr class="memdesc:afdaccb5da7d4bee5e9ff687f761bd21f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a managed thread and run <a class="el" href="#a1abe0f5c637dcc6af5aff00c5291bd4f" title="Run manage loop.">exec()</a>. <br /></td></tr>
 <tr class="separator:afdaccb5da7d4bee5e9ff687f761bd21f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a16affc1626e26d18cc2d9eab21315591" id="r_a16affc1626e26d18cc2d9eab21315591"><td class="memItemLeft" align="right" valign="top"><a id="a16affc1626e26d18cc2d9eab21315591" name="a16affc1626e26d18cc2d9eab21315591"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>requestInterrupt</b> ()</td></tr>
+<tr class="memdesc:a16affc1626e26d18cc2d9eab21315591"><td class="mdescLeft">&#160;</td><td class="mdescRight">Request the interruption of the thread. <br /></td></tr>
 <tr class="separator:a16affc1626e26d18cc2d9eab21315591"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab614c8e9a266d924e86c3c49c1a6ff36" id="r_ab614c8e9a266d924e86c3c49c1a6ff36"><td class="memItemLeft" align="right" valign="top"><a id="ab614c8e9a266d924e86c3c49c1a6ff36" name="ab614c8e9a266d924e86c3c49c1a6ff36"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>interruptRequested</b> () const</td></tr>
+<tr class="memdesc:ab614c8e9a266d924e86c3c49c1a6ff36"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if an interrupt is requested. <br /></td></tr>
 <tr class="separator:ab614c8e9a266d924e86c3c49c1a6ff36"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5d7785eb8b21e956a6b7ff880d3ae4c3" id="r_a5d7785eb8b21e956a6b7ff880d3ae4c3"><td class="memItemLeft" align="right" valign="top"><a id="a5d7785eb8b21e956a6b7ff880d3ae4c3" name="a5d7785eb8b21e956a6b7ff880d3ae4c3"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>waitInterrupted</b> () const</td></tr>
+<tr class="memdesc:a5d7785eb8b21e956a6b7ff880d3ae4c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait for thread interrupted. This means that <a class="el" href="#a16affc1626e26d18cc2d9eab21315591" title="Request the interruption of the thread.">requestInterrupt()</a> has been called and all queue tasks have completed. <br /></td></tr>
 <tr class="separator:a5d7785eb8b21e956a6b7ff880d3ae4c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afef57401f138e8de37eb8d817772d9ff" id="r_afef57401f138e8de37eb8d817772d9ff"><td class="memItemLeft" align="right" valign="top"><a id="afef57401f138e8de37eb8d817772d9ff" name="afef57401f138e8de37eb8d817772d9ff"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>quit</b> ()</td></tr>
+<tr class="memdesc:afef57401f138e8de37eb8d817772d9ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tells the thread's <a class="el" href="#a1abe0f5c637dcc6af5aff00c5291bd4f" title="Run manage loop.">exec()</a> to exit. <br /></td></tr>
 <tr class="separator:afef57401f138e8de37eb8d817772d9ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4d12fe08b7d84311eaa56a9704b7c2ba" id="r_a4d12fe08b7d84311eaa56a9704b7c2ba"><td class="memItemLeft" align="right" valign="top"><a id="a4d12fe08b7d84311eaa56a9704b7c2ba" name="a4d12fe08b7d84311eaa56a9704b7c2ba"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>waitFinished</b> () const</td></tr>
+<tr class="memdesc:a4d12fe08b7d84311eaa56a9704b7c2ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait for the thread's <a class="el" href="#a1abe0f5c637dcc6af5aff00c5291bd4f" title="Run manage loop.">exec()</a> function finished. <br /></td></tr>
 <tr class="separator:a4d12fe08b7d84311eaa56a9704b7c2ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a474577d15fa4b52abee863b44a0b7f89" id="r_a474577d15fa4b52abee863b44a0b7f89"><td class="memItemLeft" align="right" valign="top"><a id="a474577d15fa4b52abee863b44a0b7f89" name="a474577d15fa4b52abee863b44a0b7f89"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>workLoad</b> () const</td></tr>
+<tr class="memdesc:a474577d15fa4b52abee863b44a0b7f89"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the number of tasks in the queue, plus one if there are running task. <br /></td></tr>
 <tr class="separator:a474577d15fa4b52abee863b44a0b7f89"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a41d1cf92e033bcc11e2394cb949e031a" id="r_a41d1cf92e033bcc11e2394cb949e031a"><td class="memItemLeft" align="right" valign="top"><a id="a41d1cf92e033bcc11e2394cb949e031a" name="a41d1cf92e033bcc11e2394cb949e031a"></a>
 std::thread::id&#160;</td><td class="memItemRight" valign="bottom"><b>id</b> () const</td></tr>
+<tr class="memdesc:a41d1cf92e033bcc11e2394cb949e031a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns unique identifier of managed thread. <br /></td></tr>
 <tr class="separator:a41d1cf92e033bcc11e2394cb949e031a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0cd916251e061aaf3d456575ef052edd" id="r_a0cd916251e061aaf3d456575ef052edd"><td class="memItemLeft" align="right" valign="top"><a id="a0cd916251e061aaf3d456575ef052edd" name="a0cd916251e061aaf3d456575ef052edd"></a>
 std::string&#160;</td><td class="memItemRight" valign="bottom"><b>name</b> () const</td></tr>
+<tr class="memdesc:a0cd916251e061aaf3d456575ef052edd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns name of managed thread. <br /></td></tr>
 <tr class="separator:a0cd916251e061aaf3d456575ef052edd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6e17293ccd9683f5bd8ca9a3dcd52e7d" id="r_a6e17293ccd9683f5bd8ca9a3dcd52e7d"><td class="memItemLeft" align="right" valign="top"><a id="a6e17293ccd9683f5bd8ca9a3dcd52e7d" name="a6e17293ccd9683f5bd8ca9a3dcd52e7d"></a>
 <a class="el" href="#a4e97803ef650d36ba80ef1471c4b643c">LockGuard</a>&#160;</td><td class="memItemRight" valign="bottom"><b>lockGuard</b> () const</td></tr>
+<tr class="memdesc:a6e17293ccd9683f5bd8ca9a3dcd52e7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Locks the managed thread and returns a <a class="el" href="#a4e97803ef650d36ba80ef1471c4b643c" title="The LockGuard type.">LockGuard</a> variable. The thread is unblocked after this variable is destroyed. <br /></td></tr>
 <tr class="separator:a6e17293ccd9683f5bd8ca9a3dcd52e7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
@@ -294,7 +303,7 @@ Friends</h2></td></tr>
 <p>Assigns a pointer to the list of all threads. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">list</td><td>std::vector&lt;AbstractThread *&gt; ** pointer </td></tr>
+    <tr><td class="paramname">list</td><td>pointer to the list of threads </td></tr>
   </table>
   </dd>
 </dl>
@@ -396,7 +405,7 @@ Here is the caller graph for this function:</div>
 <p>Runs a task in a managed thread. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">Poiner</td><td>to <a class="el" href="classAsyncFw_1_1AbstractThread_1_1AbstractTask.html" title="The AbstractTask class.">AbstractTask</a> </td></tr>
+    <tr><td class="paramname">task</td><td>poiner to <a class="el" href="classAsyncFw_1_1AbstractThread_1_1AbstractTask.html" title="The AbstractTask class.">AbstractTask</a> </td></tr>
   </table>
   </dd>
 </dl>
@@ -445,6 +454,11 @@ Here is the caller graph for this function:</div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>timer id </dd></dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1AbstractThread_a1fa8bc43151797cbcfb2013ee1fce2ce_cgraph.svg" width="424" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
 
 </div>
 </div>

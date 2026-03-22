@@ -11,17 +11,20 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 namespace AsyncFw {
 /*! \brief The Timer class
- \snippet Timer/main.cpp snippet */
+ \brief Example: \snippet Timer/main.cpp snippet */
 class Timer {
 public:
+  /*! \brief Starts a single shot timer with the specified timeout. \param ms timeout interval in milliseconds \param function runs at timeout */
   template <typename T>
-  static void single(int ms, T f) {
-    new SingleTimerTask(ms, f);
+  static void single(int ms, T function) {
+    new SingleTimerTask(ms, function);
   }
 
   Timer();
   ~Timer();
+  /*! \brief Starts or restarts a timer with the specified timeout. If the timer is already running, it will be restarted. \param ms timeout interval in milliseconds \param single if true, the timer will be a single shot */
   void start(int, bool = false);
+  /*! \brief Stops the timer */
   void stop();
 
   /*! \brief The Timer::timeout connector */

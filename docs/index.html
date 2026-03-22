@@ -119,9 +119,9 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
 <div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[]) {</div>
 <div class="line">  <span class="keywordtype">int</span> cnt = 0;</div>
 <div class="line">  <a class="code hl_class" href="classAsyncFw_1_1Timer.html">AsyncFw::Timer</a> timer1;</div>
-<div class="line">  timer1.start(1000);</div>
+<div class="line">  timer1.<a class="code hl_function" href="classAsyncFw_1_1Timer.html#a14d02d88bd3682afd7c8fd72cc670e46">start</a>(1000);</div>
 <div class="line">  <a class="code hl_class" href="classAsyncFw_1_1Timer.html">AsyncFw::Timer</a> timer2;</div>
-<div class="line">  timer2.start(2000);</div>
+<div class="line">  timer2.<a class="code hl_function" href="classAsyncFw_1_1Timer.html#a14d02d88bd3682afd7c8fd72cc670e46">start</a>(2000);</div>
 <div class="line"> </div>
 <div class="line">  timer1.<a class="code hl_variable" href="classAsyncFw_1_1Timer.html#a746a7b46bc5d405ab0452b09ad1253f3">timeout</a>([&amp;cnt]() {</div>
 <div class="line">    std::cout &lt;&lt; std::chrono::system_clock::now() &lt;&lt; <span class="stringliteral">&quot; timer1 timeout&quot;</span> &lt;&lt; std::endl;</div>
@@ -135,7 +135,8 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
 <div class="line">  <span class="keywordflow">return</span> ret;</div>
 <div class="line">}</div>
 <div class="ttc" id="aclassAsyncFw_1_1Timer_html"><div class="ttname"><a href="classAsyncFw_1_1Timer.html">AsyncFw::Timer</a></div><div class="ttdoc">The Timer class.</div><div class="ttdef"><b>Definition</b> Timer.h:15</div></div>
-<div class="ttc" id="aclassAsyncFw_1_1Timer_html_a746a7b46bc5d405ab0452b09ad1253f3"><div class="ttname"><a href="classAsyncFw_1_1Timer.html#a746a7b46bc5d405ab0452b09ad1253f3">AsyncFw::Timer::timeout</a></div><div class="ttdeci">FunctionConnectorProtected&lt; Timer &gt;::Connector&lt;&gt; timeout</div><div class="ttdoc">The Timer::timeout connector.</div><div class="ttdef"><b>Definition</b> Timer.h:28</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1Timer_html_a14d02d88bd3682afd7c8fd72cc670e46"><div class="ttname"><a href="classAsyncFw_1_1Timer.html#a14d02d88bd3682afd7c8fd72cc670e46">AsyncFw::Timer::start</a></div><div class="ttdeci">void start(int, bool=false)</div><div class="ttdoc">Starts or restarts a timer with the specified timeout. If the timer is already running,...</div><div class="ttdef"><b>Definition</b> Timer.cpp:29</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1Timer_html_a746a7b46bc5d405ab0452b09ad1253f3"><div class="ttname"><a href="classAsyncFw_1_1Timer.html#a746a7b46bc5d405ab0452b09ad1253f3">AsyncFw::Timer::timeout</a></div><div class="ttdeci">FunctionConnectorProtected&lt; Timer &gt;::Connector&lt;&gt; timeout</div><div class="ttdoc">The Timer::timeout connector.</div><div class="ttdef"><b>Definition</b> Timer.h:31</div></div>
 </div><!-- fragment --><p> PollNotifier example (Unix only): </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;core/Thread.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;MainThread.h&gt;</span></div>
@@ -159,7 +160,7 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
 <div class="line">  <span class="keywordtype">int</span> ret = AsyncFw::MainThread::exec();</div>
 <div class="line">  <span class="keywordflow">return</span> ret;</div>
 <div class="line">}</div>
-<div class="ttc" id="aclassAsyncFw_1_1PollNotifier_html"><div class="ttname"><a href="classAsyncFw_1_1PollNotifier.html">AsyncFw::PollNotifier</a></div><div class="ttdoc">The PollNotifier class.</div><div class="ttdef"><b>Definition</b> PollNotifier.h:16</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1PollNotifier_html"><div class="ttname"><a href="classAsyncFw_1_1PollNotifier.html">AsyncFw::PollNotifier</a></div><div class="ttdoc">The PollNotifier class Example:</div><div class="ttdef"><b>Definition</b> PollNotifier.h:15</div></div>
 </div><!-- fragment --><p> Log example: </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;Log.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;MainThread.h&gt;</span></div>
 <div class="line"> </div>
@@ -177,7 +178,7 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="aclassAsyncFw_1_1Log_html"><div class="ttname"><a href="classAsyncFw_1_1Log.html">AsyncFw::Log</a></div><div class="ttdoc">The Log class.</div><div class="ttdef"><b>Definition</b> Log.h:70</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1Log_html"><div class="ttname"><a href="classAsyncFw_1_1Log.html">AsyncFw::Log</a></div><div class="ttdoc">The Log class.</div><div class="ttdef"><b>Definition</b> Log.h:71</div></div>
 </div><!-- fragment --><p> Executing method in another thread example: </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;core/Thread.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;MainThread.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;Log.h&gt;</span></div>
@@ -190,23 +191,23 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
 <div class="line">  thread1.start();</div>
 <div class="line">  thread2.start();</div>
 <div class="line"> </div>
-<div class="line">  logDebug() &lt;&lt; <span class="stringliteral">&quot;Main id:&quot;</span> &lt;&lt; _mainThread-&gt;id();</div>
+<div class="line">  logDebug() &lt;&lt; <span class="stringliteral">&quot;Main id:&quot;</span> &lt;&lt; _mainThread-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a41d1cf92e033bcc11e2394cb949e031a">id</a>();</div>
 <div class="line">  logDebug() &lt;&lt; <span class="stringliteral">&quot;T1 id:&quot;</span> &lt;&lt; thread1.id();</div>
 <div class="line">  logDebug() &lt;&lt; <span class="stringliteral">&quot;T2 id:&quot;</span> &lt;&lt; thread2.id();</div>
 <div class="line"> </div>
 <div class="line">  thread1.invokeMethod([&amp;thread2, _mainThread]() {</div>
 <div class="line">    <a class="code hl_class" href="classAsyncFw_1_1AbstractThread.html">AsyncFw::AbstractThread</a> *ct = <a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#ac1b35ef04b06ce771f6d6ca0a5b120db">AsyncFw::AbstractThread::currentThread</a>();</div>
-<div class="line">    logInfo() &lt;&lt; <span class="stringliteral">&quot;run in thread&quot;</span> &lt;&lt; ct-&gt;name() &lt;&lt; ct-&gt;id();</div>
+<div class="line">    logInfo() &lt;&lt; <span class="stringliteral">&quot;run in thread&quot;</span> &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd">name</a>() &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a41d1cf92e033bcc11e2394cb949e031a">id</a>();</div>
 <div class="line">    std::this_thread::sleep_for(std::chrono::milliseconds(1000));</div>
 <div class="line"> </div>
 <div class="line">    thread2.invokeMethod([_mainThread]() {</div>
 <div class="line">      <a class="code hl_class" href="classAsyncFw_1_1AbstractThread.html">AsyncFw::AbstractThread</a> *ct = <a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#ac1b35ef04b06ce771f6d6ca0a5b120db">AsyncFw::AbstractThread::currentThread</a>();</div>
-<div class="line">      logInfo() &lt;&lt; <span class="stringliteral">&quot;run in thread&quot;</span> &lt;&lt; ct-&gt;name() &lt;&lt; ct-&gt;id();</div>
+<div class="line">      logInfo() &lt;&lt; <span class="stringliteral">&quot;run in thread&quot;</span> &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd">name</a>() &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a41d1cf92e033bcc11e2394cb949e031a">id</a>();</div>
 <div class="line">      std::this_thread::sleep_for(std::chrono::milliseconds(1000));</div>
 <div class="line"> </div>
 <div class="line">      _mainThread-&gt;invokeMethod([_mainThread]() {</div>
 <div class="line">        <a class="code hl_class" href="classAsyncFw_1_1AbstractThread.html">AsyncFw::AbstractThread</a> *ct = <a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#ac1b35ef04b06ce771f6d6ca0a5b120db">AsyncFw::AbstractThread::currentThread</a>();</div>
-<div class="line">        logInfo() &lt;&lt; <span class="stringliteral">&quot;run in thread&quot;</span> &lt;&lt; ct-&gt;name() &lt;&lt; ct-&gt;id();</div>
+<div class="line">        logInfo() &lt;&lt; <span class="stringliteral">&quot;run in thread&quot;</span> &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd">name</a>() &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a41d1cf92e033bcc11e2394cb949e031a">id</a>();</div>
 <div class="line">        std::this_thread::sleep_for(std::chrono::milliseconds(1000));</div>
 <div class="line">        logInfo() &lt;&lt; <span class="stringliteral">&quot;exit application&quot;</span>;</div>
 <div class="line">        AsyncFw::MainThread::exit(0);</div>
@@ -222,8 +223,10 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
 <div class="line">  <span class="keywordflow">return</span> ret;</div>
 <div class="line">}</div>
 <div class="ttc" id="aclassAsyncFw_1_1AbstractThread_html"><div class="ttname"><a href="classAsyncFw_1_1AbstractThread.html">AsyncFw::AbstractThread</a></div><div class="ttdoc">The AbstractThread class provides the base functionality for thread management.</div><div class="ttdef"><b>Definition</b> Thread.h:45</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1AbstractThread_html_a0cd916251e061aaf3d456575ef052edd"><div class="ttname"><a href="classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd">AsyncFw::AbstractThread::name</a></div><div class="ttdeci">std::string name() const</div><div class="ttdoc">Returns name of managed thread.</div><div class="ttdef"><b>Definition</b> Thread.cpp:673</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1AbstractThread_html_a41d1cf92e033bcc11e2394cb949e031a"><div class="ttname"><a href="classAsyncFw_1_1AbstractThread.html#a41d1cf92e033bcc11e2394cb949e031a">AsyncFw::AbstractThread::id</a></div><div class="ttdeci">std::thread::id id() const</div><div class="ttdoc">Returns unique identifier of managed thread.</div><div class="ttdef"><b>Definition</b> Thread.cpp:671</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1AbstractThread_html_ac1b35ef04b06ce771f6d6ca0a5b120db"><div class="ttname"><a href="classAsyncFw_1_1AbstractThread.html#ac1b35ef04b06ce771f6d6ca0a5b120db">AsyncFw::AbstractThread::currentThread</a></div><div class="ttdeci">static AbstractThread * currentThread()</div><div class="ttdoc">Returns a pointer to the AsyncFw::AbstractThread that manages the currently executing thread.</div><div class="ttdef"><b>Definition</b> Thread.cpp:297</div></div>
-<div class="ttc" id="aclassAsyncFw_1_1Thread_html"><div class="ttname"><a href="classAsyncFw_1_1Thread.html">AsyncFw::Thread</a></div><div class="ttdoc">AsyncFw::Thread thread with sockets.</div><div class="ttdef"><b>Definition</b> Thread.h:195</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1Thread_html"><div class="ttname"><a href="classAsyncFw_1_1Thread.html">AsyncFw::Thread</a></div><div class="ttdoc">AsyncFw::Thread thread with sockets.</div><div class="ttdef"><b>Definition</b> Thread.h:204</div></div>
 </div><!-- fragment --><p> FunctionConnector example: </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;core/Thread.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;core/FunctionConnector.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;Timer.h&gt;</span></div>
@@ -235,7 +238,7 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
 <div class="line">  Sender() {</div>
 <div class="line">    timer.timeout([<span class="keyword">this</span>]() {</div>
 <div class="line">      <a class="code hl_class" href="classAsyncFw_1_1AbstractThread.html">AsyncFw::AbstractThread</a> *ct = <a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#ac1b35ef04b06ce771f6d6ca0a5b120db">AsyncFw::AbstractThread::currentThread</a>();</div>
-<div class="line">      logInfo() &lt;&lt; cnt &lt;&lt; <span class="stringliteral">&quot;send from thread:&quot;</span> &lt;&lt; ct-&gt;name() &lt;&lt; ct-&gt;id();</div>
+<div class="line">      logInfo() &lt;&lt; cnt &lt;&lt; <span class="stringliteral">&quot;send from thread:&quot;</span> &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd">name</a>() &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a41d1cf92e033bcc11e2394cb949e031a">id</a>();</div>
 <div class="line">      connector(cnt++);</div>
 <div class="line">      <span class="keywordflow">if</span> (cnt == 3) AsyncFw::MainThread::exit(0);</div>
 <div class="line">    });</div>
@@ -254,7 +257,7 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
 <div class="line">  Receiver(<span class="keyword">const</span> std::string &amp;name, <span class="keyword">const</span> Sender &amp;sender) {</div>
 <div class="line">    sender.connector([name_ = name](<span class="keywordtype">int</span> val) {</div>
 <div class="line">      AsyncFw::AbstractThread *ct = <a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#ac1b35ef04b06ce771f6d6ca0a5b120db">AsyncFw::AbstractThread::currentThread</a>();</div>
-<div class="line">      logInfo() &lt;&lt; name_ &lt;&lt; <span class="stringliteral">&quot;received&quot;</span> &lt;&lt; val &lt;&lt; <span class="stringliteral">&quot;run in thread&quot;</span> &lt;&lt; ct-&gt;name() &lt;&lt; ct-&gt;id();</div>
+<div class="line">      logInfo() &lt;&lt; name_ &lt;&lt; <span class="stringliteral">&quot;received&quot;</span> &lt;&lt; val &lt;&lt; <span class="stringliteral">&quot;run in thread&quot;</span> &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd">name</a>() &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a41d1cf92e033bcc11e2394cb949e031a">id</a>();</div>
 <div class="line">    });</div>
 <div class="line">  }</div>
 <div class="line">};</div>
@@ -294,36 +297,36 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
 <div class="line">  AsyncFw::ThreadPool::sync(_t, []() {</div>
 <div class="line">    <a class="code hl_class" href="classAsyncFw_1_1AbstractThread.html">AsyncFw::AbstractThread</a> *ct = <a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#ac1b35ef04b06ce771f6d6ca0a5b120db">AsyncFw::AbstractThread::currentThread</a>();</div>
 <div class="line">    std::this_thread::sleep_for(std::chrono::milliseconds(1000));</div>
-<div class="line">    logInfo() &lt;&lt; <span class="stringliteral">&quot;sync run in thread&quot;</span> &lt;&lt; ct-&gt;name() &lt;&lt; ct-&gt;id();</div>
+<div class="line">    logInfo() &lt;&lt; <span class="stringliteral">&quot;sync run in thread&quot;</span> &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd">name</a>() &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a41d1cf92e033bcc11e2394cb949e031a">id</a>();</div>
 <div class="line">  });</div>
 <div class="line"> </div>
 <div class="line">  AsyncFw::ThreadPool::async([]() {</div>
 <div class="line">    <a class="code hl_class" href="classAsyncFw_1_1AbstractThread.html">AsyncFw::AbstractThread</a> *ct = <a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#ac1b35ef04b06ce771f6d6ca0a5b120db">AsyncFw::AbstractThread::currentThread</a>();</div>
 <div class="line">    std::this_thread::sleep_for(std::chrono::milliseconds(1000));</div>
-<div class="line">    logInfo() &lt;&lt; <span class="stringliteral">&quot;async run in thread&quot;</span> &lt;&lt; ct-&gt;name() &lt;&lt; ct-&gt;id();</div>
+<div class="line">    logInfo() &lt;&lt; <span class="stringliteral">&quot;async run in thread&quot;</span> &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd">name</a>() &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a41d1cf92e033bcc11e2394cb949e031a">id</a>();</div>
 <div class="line">  });</div>
 <div class="line"> </div>
 <div class="line">  AsyncFw::ThreadPool::async(</div>
 <div class="line">      []() {</div>
 <div class="line">        <a class="code hl_class" href="classAsyncFw_1_1AbstractThread.html">AsyncFw::AbstractThread</a> *ct = <a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#ac1b35ef04b06ce771f6d6ca0a5b120db">AsyncFw::AbstractThread::currentThread</a>();</div>
 <div class="line">        std::this_thread::sleep_for(std::chrono::milliseconds(1000));</div>
-<div class="line">        logInfo() &lt;&lt; <span class="stringliteral">&quot;async run in thread&quot;</span> &lt;&lt; ct-&gt;name() &lt;&lt; ct-&gt;id();</div>
+<div class="line">        logInfo() &lt;&lt; <span class="stringliteral">&quot;async run in thread&quot;</span> &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd">name</a>() &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a41d1cf92e033bcc11e2394cb949e031a">id</a>();</div>
 <div class="line">      },</div>
 <div class="line">      []() {</div>
 <div class="line">        <a class="code hl_class" href="classAsyncFw_1_1AbstractThread.html">AsyncFw::AbstractThread</a> *ct = <a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#ac1b35ef04b06ce771f6d6ca0a5b120db">AsyncFw::AbstractThread::currentThread</a>();</div>
-<div class="line">        logNotice() &lt;&lt; <span class="stringliteral">&quot;result without value, run in thread&quot;</span> &lt;&lt; ct-&gt;name() &lt;&lt; ct-&gt;id();</div>
+<div class="line">        logNotice() &lt;&lt; <span class="stringliteral">&quot;result without value, run in thread&quot;</span> &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd">name</a>() &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a41d1cf92e033bcc11e2394cb949e031a">id</a>();</div>
 <div class="line">      });</div>
 <div class="line"> </div>
 <div class="line">  AsyncFw::ThreadPool::async(</div>
 <div class="line">      []() {</div>
 <div class="line">        <a class="code hl_class" href="classAsyncFw_1_1AbstractThread.html">AsyncFw::AbstractThread</a> *ct = <a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#ac1b35ef04b06ce771f6d6ca0a5b120db">AsyncFw::AbstractThread::currentThread</a>();</div>
 <div class="line">        std::this_thread::sleep_for(std::chrono::milliseconds(1500));</div>
-<div class="line">        logInfo() &lt;&lt; <span class="stringliteral">&quot;async run in thread&quot;</span> &lt;&lt; ct-&gt;name() &lt;&lt; ct-&gt;id();</div>
+<div class="line">        logInfo() &lt;&lt; <span class="stringliteral">&quot;async run in thread&quot;</span> &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd">name</a>() &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a41d1cf92e033bcc11e2394cb949e031a">id</a>();</div>
 <div class="line">        <span class="keywordflow">return</span> 1;</div>
 <div class="line">      },</div>
 <div class="line">      [](<span class="keywordtype">int</span> r) {</div>
 <div class="line">        <a class="code hl_class" href="classAsyncFw_1_1AbstractThread.html">AsyncFw::AbstractThread</a> *ct = <a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#ac1b35ef04b06ce771f6d6ca0a5b120db">AsyncFw::AbstractThread::currentThread</a>();</div>
-<div class="line">        logNotice() &lt;&lt; <span class="stringliteral">&quot;result:&quot;</span> &lt;&lt; r &lt;&lt; <span class="stringliteral">&quot;run in thread&quot;</span> &lt;&lt; ct-&gt;name() &lt;&lt; ct-&gt;id();</div>
+<div class="line">        logNotice() &lt;&lt; <span class="stringliteral">&quot;result:&quot;</span> &lt;&lt; r &lt;&lt; <span class="stringliteral">&quot;run in thread&quot;</span> &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd">name</a>() &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a41d1cf92e033bcc11e2394cb949e031a">id</a>();</div>
 <div class="line">        AsyncFw::MainThread::exit(0);</div>
 <div class="line">      });</div>
 <div class="line"> </div>
@@ -346,18 +349,18 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
 <div class="line">    AsyncFw::ThreadPool::async(</div>
 <div class="line">        [h]() {</div>
 <div class="line">          <a class="code hl_class" href="classAsyncFw_1_1AbstractThread.html">AsyncFw::AbstractThread</a> *ct = <a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#ac1b35ef04b06ce771f6d6ca0a5b120db">AsyncFw::AbstractThread::currentThread</a>();</div>
-<div class="line">          logInfo() &lt;&lt; <span class="stringliteral">&quot;task: run in thread&quot;</span> &lt;&lt; ct-&gt;name() &lt;&lt; ct-&gt;id();</div>
+<div class="line">          logInfo() &lt;&lt; <span class="stringliteral">&quot;task: run in thread&quot;</span> &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd">name</a>() &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a41d1cf92e033bcc11e2394cb949e031a">id</a>();</div>
 <div class="line">          std::this_thread::sleep_for(std::chrono::milliseconds(1000));</div>
 <div class="line">        },</div>
 <div class="line">        [h]() {</div>
 <div class="line">          <a class="code hl_class" href="classAsyncFw_1_1AbstractThread.html">AsyncFw::AbstractThread</a> *ct = <a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#ac1b35ef04b06ce771f6d6ca0a5b120db">AsyncFw::AbstractThread::currentThread</a>();</div>
-<div class="line">          logInfo() &lt;&lt; <span class="stringliteral">&quot;task: resume in thread&quot;</span> &lt;&lt; ct-&gt;name() &lt;&lt; ct-&gt;id();</div>
+<div class="line">          logInfo() &lt;&lt; <span class="stringliteral">&quot;task: resume in thread&quot;</span> &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd">name</a>() &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a41d1cf92e033bcc11e2394cb949e031a">id</a>();</div>
 <div class="line">          h.resume();</div>
 <div class="line">        });</div>
 <div class="line">  });</div>
 <div class="line">  <span class="keyword">co_await</span> await;</div>
 <div class="line">  <a class="code hl_class" href="classAsyncFw_1_1AbstractThread.html">AsyncFw::AbstractThread</a> *ct = <a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#ac1b35ef04b06ce771f6d6ca0a5b120db">AsyncFw::AbstractThread::currentThread</a>();</div>
-<div class="line">  logNotice() &lt;&lt; <span class="stringliteral">&quot;task: resumed in thread&quot;</span> &lt;&lt; ct-&gt;name() &lt;&lt; ct-&gt;id();</div>
+<div class="line">  logNotice() &lt;&lt; <span class="stringliteral">&quot;task: resumed in thread&quot;</span> &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd">name</a>() &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a41d1cf92e033bcc11e2394cb949e031a">id</a>();</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[]) {</div>
@@ -370,18 +373,18 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
 <div class="line">      AsyncFw::ThreadPool::async(</div>
 <div class="line">          [h]() {</div>
 <div class="line">            <a class="code hl_class" href="classAsyncFw_1_1AbstractThread.html">AsyncFw::AbstractThread</a> *ct = <a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#ac1b35ef04b06ce771f6d6ca0a5b120db">AsyncFw::AbstractThread::currentThread</a>();</div>
-<div class="line">            logInfo() &lt;&lt; <span class="stringliteral">&quot;coro_task: run in thread&quot;</span> &lt;&lt; ct-&gt;name() &lt;&lt; ct-&gt;id();</div>
+<div class="line">            logInfo() &lt;&lt; <span class="stringliteral">&quot;coro_task: run in thread&quot;</span> &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd">name</a>() &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a41d1cf92e033bcc11e2394cb949e031a">id</a>();</div>
 <div class="line">            std::this_thread::sleep_for(std::chrono::milliseconds(1500));</div>
 <div class="line">          },</div>
 <div class="line">          [h]() {</div>
 <div class="line">            <a class="code hl_class" href="classAsyncFw_1_1AbstractThread.html">AsyncFw::AbstractThread</a> *ct = <a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#ac1b35ef04b06ce771f6d6ca0a5b120db">AsyncFw::AbstractThread::currentThread</a>();</div>
-<div class="line">            logInfo() &lt;&lt; <span class="stringliteral">&quot;coro_task: resume in thread&quot;</span> &lt;&lt; ct-&gt;name() &lt;&lt; ct-&gt;id();</div>
+<div class="line">            logInfo() &lt;&lt; <span class="stringliteral">&quot;coro_task: resume in thread&quot;</span> &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd">name</a>() &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a41d1cf92e033bcc11e2394cb949e031a">id</a>();</div>
 <div class="line">            h.resume();</div>
 <div class="line">          });</div>
 <div class="line">    });</div>
 <div class="line">    <span class="keyword">co_await</span> await;</div>
 <div class="line">    <a class="code hl_class" href="classAsyncFw_1_1AbstractThread.html">AsyncFw::AbstractThread</a> *ct = <a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#ac1b35ef04b06ce771f6d6ca0a5b120db">AsyncFw::AbstractThread::currentThread</a>();</div>
-<div class="line">    logNotice() &lt;&lt; <span class="stringliteral">&quot;coro_task: resumed in thread&quot;</span> &lt;&lt; ct-&gt;name() &lt;&lt; ct-&gt;id();</div>
+<div class="line">    logNotice() &lt;&lt; <span class="stringliteral">&quot;coro_task: resumed in thread&quot;</span> &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd">name</a>() &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a41d1cf92e033bcc11e2394cb949e031a">id</a>();</div>
 <div class="line">    AsyncFw::MainThread::exit(0);</div>
 <div class="line">  });</div>
 <div class="line"> </div>
@@ -488,14 +491,14 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
 <div class="line">  });</div>
 <div class="line"> </div>
 <div class="line">  thread.<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#afdaccb5da7d4bee5e9ff687f761bd21f">start</a>();</div>
-<div class="line">  timer.start(500);</div>
+<div class="line">  timer.<a class="code hl_function" href="classAsyncFw_1_1Timer.html#a14d02d88bd3682afd7c8fd72cc670e46">start</a>(500);</div>
 <div class="line"> </div>
 <div class="line">  logNotice() &lt;&lt; <span class="stringliteral">&quot;Start Applicaiton&quot;</span>;</div>
 <div class="line">  <span class="keywordtype">int</span> ret = AsyncFw::MainThread::exec();</div>
 <div class="line">  logNotice() &lt;&lt; <span class="stringliteral">&quot;End Applicaiton&quot;</span>;</div>
 <div class="line">  <span class="keywordflow">return</span> ret;</div>
 <div class="line">}</div>
-<div class="ttc" id="aclassAsyncFw_1_1AbstractThread_html_afdaccb5da7d4bee5e9ff687f761bd21f"><div class="ttname"><a href="classAsyncFw_1_1AbstractThread.html#afdaccb5da7d4bee5e9ff687f761bd21f">AsyncFw::AbstractThread::start</a></div><div class="ttdeci">void start()</div><div class="ttdoc">Create a managed thread and run exec()</div><div class="ttdef"><b>Definition</b> Thread.cpp:637</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1AbstractThread_html_afdaccb5da7d4bee5e9ff687f761bd21f"><div class="ttname"><a href="classAsyncFw_1_1AbstractThread.html#afdaccb5da7d4bee5e9ff687f761bd21f">AsyncFw::AbstractThread::start</a></div><div class="ttdeci">void start()</div><div class="ttdoc">Create a managed thread and run exec().</div><div class="ttdef"><b>Definition</b> Thread.cpp:637</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1Task_html"><div class="ttname"><a href="classAsyncFw_1_1Task.html">AsyncFw::Task</a></div><div class="ttdoc">The Task class.</div><div class="ttdef"><b>Definition</b> Task.h:25</div></div>
 </div><!-- fragment --><p> Listen socket example: </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;MainThread.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;core/TlsSocket.h&gt;</span></div>
@@ -551,16 +554,17 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
 <div class="line"> </div>
 <div class="line">  process.start(<span class="stringliteral">&quot;/bin/bash&quot;</span>);</div>
 <div class="line"> </div>
-<div class="line">  AsyncFw::Timer::single(500, [&amp;process]() { process.input(<span class="stringliteral">&quot;echo 1234567890\n&quot;</span>); });</div>
-<div class="line">  AsyncFw::Timer::single(1000, [&amp;process]() { process.input(<span class="stringliteral">&quot;_cmd_\n&quot;</span>); });</div>
-<div class="line">  AsyncFw::Timer::single(1000, [&amp;process]() { process.input(<span class="stringliteral">&quot;ls /\n&quot;</span>); });</div>
-<div class="line">  AsyncFw::Timer::single(1500, [&amp;process]() { process.input(<span class="stringliteral">&quot;exit\n&quot;</span>); });</div>
+<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">AsyncFw::Timer::single</a>(500, [&amp;process]() { process.input(<span class="stringliteral">&quot;echo 1234567890\n&quot;</span>); });</div>
+<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">AsyncFw::Timer::single</a>(1000, [&amp;process]() { process.input(<span class="stringliteral">&quot;_cmd_\n&quot;</span>); });</div>
+<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">AsyncFw::Timer::single</a>(1000, [&amp;process]() { process.input(<span class="stringliteral">&quot;ls /\n&quot;</span>); });</div>
+<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">AsyncFw::Timer::single</a>(1500, [&amp;process]() { process.input(<span class="stringliteral">&quot;exit\n&quot;</span>); });</div>
 <div class="line"> </div>
 <div class="line">  logNotice() &lt;&lt; <span class="stringliteral">&quot;Start Applicaiton&quot;</span>;</div>
 <div class="line">  <span class="keywordtype">int</span> ret = AsyncFw::MainThread::exec();</div>
 <div class="line">  <span class="keywordflow">return</span> ret;</div>
 <div class="line">}</div>
-<div class="ttc" id="aclassAsyncFw_1_1SystemProcess_html"><div class="ttname"><a href="classAsyncFw_1_1SystemProcess.html">AsyncFw::SystemProcess</a></div><div class="ttdoc">The SystemProcess class.</div><div class="ttdef"><b>Definition</b> SystemProcess.h:15</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1SystemProcess_html"><div class="ttname"><a href="classAsyncFw_1_1SystemProcess.html">AsyncFw::SystemProcess</a></div><div class="ttdoc">The SystemProcess class.</div><div class="ttdef"><b>Definition</b> SystemProcess.h:16</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1Timer_html_ac71f0729e65046914c3358e87759f9e9"><div class="ttname"><a href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">AsyncFw::Timer::single</a></div><div class="ttdeci">static void single(int ms, T function)</div><div class="ttdoc">Starts a single shot timer with the specified timeout.</div><div class="ttdef"><b>Definition</b> Timer.h:19</div></div>
 </div><!-- fragment --> </div></div><!-- PageDoc -->
 <a href="doxygen_crawl.html"></a>
 </div><!-- contents -->

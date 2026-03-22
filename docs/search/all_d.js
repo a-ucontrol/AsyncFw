@@ -1,10 +1,9 @@
 var searchData=
 [
-  ['task_0',['Task',['../classAsyncFw_1_1Task.html',1,'AsyncFw']]],
-  ['thread_1',['Thread',['../classAsyncFw_1_1Thread.html',1,'AsyncFw']]],
-  ['threadpool_2',['ThreadPool',['../classAsyncFw_1_1ThreadPool.html',1,'AsyncFw']]],
-  ['threads_3',['threads',['../classAsyncFw_1_1AbstractThread.html#a43ef467a5f4dcc46d152a06cc20bf41c',1,'AsyncFw::AbstractThread']]],
-  ['timeout_4',['timeout',['../classAsyncFw_1_1Timer.html#a746a7b46bc5d405ab0452b09ad1253f3',1,'AsyncFw::Timer']]],
-  ['timer_5',['Timer',['../classAsyncFw_1_1Timer.html',1,'AsyncFw']]],
-  ['tlscontext_6',['TlsContext',['../classAsyncFw_1_1TlsContext.html',1,'AsyncFw']]]
+  ['removedescriptor_0',['removeDescriptor',['../classAsyncFw_1_1PollNotifier.html#a63d989535fa3af6dcb2e8656999f8315',1,'AsyncFw::PollNotifier']]],
+  ['removepolldescriptor_1',['removePollDescriptor',['../classAsyncFw_1_1AbstractThread.html#a499a70b1d68a82fcded917a331f4cdef',1,'AsyncFw::AbstractThread']]],
+  ['removetimer_2',['removeTimer',['../classAsyncFw_1_1AbstractThread.html#ae8fc0b3f68faed69e7f0b4e940ef12c0',1,'AsyncFw::AbstractThread']]],
+  ['requestinterrupt_3',['requestInterrupt',['../classAsyncFw_1_1AbstractThread.html#a16affc1626e26d18cc2d9eab21315591',1,'AsyncFw::AbstractThread']]],
+  ['rrd_4',['Rrd',['../classAsyncFw_1_1Rrd.html',1,'AsyncFw']]],
+  ['running_5',['running',['../classAsyncFw_1_1AbstractThread.html#aa317731738402e37a8a05d5a5ec9d7c4',1,'AsyncFw::AbstractThread']]]
 ];

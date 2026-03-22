@@ -5,12 +5,16 @@ This file is part of the AsyncFw project. Licensed under the MIT License.
 See {Link: LICENSE file https://mit-license.org} in the project root for full license information.
 */
 
+//! [snippet]
 #include <Version.h>
 #include <MainThread.h>
 #include <Log.h>
 
 int main(int argc, char *argv[]) {
-  AsyncFw::Instance<AsyncFw::Log>::create(1000, "log-file-name");
+  AsyncFw::Thread *logThread = new AsyncFw::Thread("LogThread");
+  logThread->start();
+  logThread->invokeMethod([]() { AsyncFw::Instance<AsyncFw::Log>::create(1000, "log-file-name"); }, true);
+
   AsyncFw::Log::instance()->setColorOut(true);
 
   logNotice() << "Version:" << AsyncFw::Version::str();
@@ -37,8 +41,9 @@ int main(int argc, char *argv[]) {
   logAlert() << "logAlert";
   //logEmergency() << "Emergency";  // throw
 
-  AsyncFw::Thread::currentThread()->invokeMethod([](){AsyncFw::MainThread::exit();});
+  AsyncFw::Thread::currentThread()->invokeMethod([]() { AsyncFw::MainThread::exit(); });
 
   int ret = AsyncFw::MainThread::exec();
   return ret;
 }
+//! [snippet]

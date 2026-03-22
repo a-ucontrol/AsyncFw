@@ -1,0 +1,5 @@
+<map id="AsyncFw::Timer::start" name="AsyncFw::Timer::start">
+<area shape="rect" id="Node000001" title="Starts or restarts a timer with the specified timeout. If the timer is already running,..." alt="" coords="5,5,157,32"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9" title="Starts a single shot timer with the specified timeout." alt="" coords="205,5,364,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="157,16,189,16,189,21,157,21"/>
+</map>

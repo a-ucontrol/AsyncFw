@@ -180,8 +180,35 @@ Public Attributes</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The <a class="el" href="classAsyncFw_1_1SystemProcess.html" title="The SystemProcess class.">SystemProcess</a> class. </p>
-<dl class="section warning"><dt>Warning</dt><dd>Unix-like systems only </dd></dl>
-</div><hr/>The documentation for this class was generated from the following files:<ul>
+<dl class="section warning"><dt>Warning</dt><dd>Unix-like systems only</dd></dl>
+<p>Example: </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;MainThread.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;linux/SystemProcess.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;Timer.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;core/LogStream.h&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[]) {</div>
+<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1SystemProcess.html">AsyncFw::SystemProcess</a> process;</div>
+<div class="line">  process.output([](<span class="keyword">const</span> std::string &amp;str, <span class="keywordtype">bool</span> err) {</div>
+<div class="line">    <span class="keywordflow">if</span> (!err) logInfo() &lt;&lt; <span class="stringliteral">&quot;OUT:&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span> + str;</div>
+<div class="line">    <span class="keywordflow">else</span> { logError() &lt;&lt; <span class="stringliteral">&quot;ERR:&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span> + str; }</div>
+<div class="line">  });</div>
+<div class="line">  process.stateChanged([](AsyncFw::SystemProcess::State _s) {</div>
+<div class="line">    <span class="keywordflow">if</span> (_s == AsyncFw::SystemProcess::Running) <span class="keywordflow">return</span>;</div>
+<div class="line">    AsyncFw::MainThread::exit(0);</div>
+<div class="line">  });</div>
+<div class="line"> </div>
+<div class="line">  process.start(<span class="stringliteral">&quot;/bin/bash&quot;</span>);</div>
+<div class="line"> </div>
+<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">AsyncFw::Timer::single</a>(50, [&amp;process]() { process.input(<span class="stringliteral">&quot;echo 1234567890\n&quot;</span>); });</div>
+<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">AsyncFw::Timer::single</a>(100, [&amp;process]() { process.input(<span class="stringliteral">&quot;_cmd_\n&quot;</span>); });  <span class="comment">//error: _cmd_ not found</span></div>
+<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">AsyncFw::Timer::single</a>(150, [&amp;process]() { process.input(<span class="stringliteral">&quot;ls /\n&quot;</span>); });</div>
+<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">AsyncFw::Timer::single</a>(200, [&amp;process]() { process.input(<span class="stringliteral">&quot;exit\n&quot;</span>); });</div>
+<div class="line"> </div>
+<div class="line">  logNotice() &lt;&lt; <span class="stringliteral">&quot;Start Applicaiton&quot;</span>;</div>
+<div class="line">  <span class="keywordtype">int</span> ret = AsyncFw::MainThread::exec();</div>
+<div class="line">  <span class="keywordflow">return</span> ret;</div>
+<div class="line">}</div>
+</div><!-- fragment --> </div><hr/>The documentation for this class was generated from the following files:<ul>
 <li>linux/<a class="el" href="SystemProcess_8h_source.html">SystemProcess.h</a></li>
 <li>linux/<b>SystemProcess.cpp</b></li>
 </ul>

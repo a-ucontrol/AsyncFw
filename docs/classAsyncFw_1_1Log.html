@@ -326,7 +326,47 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>finality</b> ()</td><
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The <a class="el" href="classAsyncFw_1_1Log.html" title="The Log class.">Log</a> class. </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
+<p>Example: </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;Version.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;MainThread.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;Log.h&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[]) {</div>
+<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1Thread.html">AsyncFw::Thread</a> *logThread = <span class="keyword">new</span> <a class="code hl_class" href="classAsyncFw_1_1Thread.html">AsyncFw::Thread</a>(<span class="stringliteral">&quot;LogThread&quot;</span>);</div>
+<div class="line">  logThread-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#afdaccb5da7d4bee5e9ff687f761bd21f">start</a>();</div>
+<div class="line">  logThread-&gt;invokeMethod([]() { AsyncFw::Instance&lt;AsyncFw::Log&gt;::create(1000, <span class="stringliteral">&quot;log-file-name&quot;</span>); }, <span class="keyword">true</span>);</div>
+<div class="line"> </div>
+<div class="line">  AsyncFw::Log::instance()-&gt;setColorOut(<span class="keyword">true</span>);</div>
+<div class="line"> </div>
+<div class="line">  logNotice() &lt;&lt; <span class="stringliteral">&quot;Version:&quot;</span> &lt;&lt; AsyncFw::Version::str();</div>
+<div class="line">  logNotice() &lt;&lt; <span class="stringliteral">&quot;Git:&quot;</span> &lt;&lt; AsyncFw::Version::git();</div>
+<div class="line"> </div>
+<div class="line">  lsTrace() &lt;&lt; <span class="stringliteral">&quot;Trace&quot;</span>;</div>
+<div class="line">  lsDebug() &lt;&lt; <span class="stringliteral">&quot;Debug&quot;</span>;</div>
+<div class="line">  lsInfo() &lt;&lt; <span class="stringliteral">&quot;Info&quot;</span>;</div>
+<div class="line">  lsInfoRed() &lt;&lt; <span class="stringliteral">&quot;Info red&quot;</span>;</div>
+<div class="line">  lsInfoGreen() &lt;&lt; <span class="stringliteral">&quot;Info green&quot;</span>;</div>
+<div class="line">  lsInfoBlue() &lt;&lt; <span class="stringliteral">&quot;Info blue&quot;</span>;</div>
+<div class="line">  lsInfoMagenta() &lt;&lt; <span class="stringliteral">&quot;Info magenta&quot;</span>;</div>
+<div class="line">  lsInfoCyan() &lt;&lt; <span class="stringliteral">&quot;Info cyan&quot;</span>;</div>
+<div class="line">  lsNotice() &lt;&lt; <span class="stringliteral">&quot;Notice&quot;</span>;</div>
+<div class="line">  lsWarning() &lt;&lt; <span class="stringliteral">&quot;Warning&quot;</span>;</div>
+<div class="line">  lsError() &lt;&lt; <span class="stringliteral">&quot;Error&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  logTrace() &lt;&lt; <span class="stringliteral">&quot;Trace&quot;</span>;</div>
+<div class="line">  logDebug() &lt;&lt; <span class="stringliteral">&quot;Debug&quot;</span>;</div>
+<div class="line">  logInfo() &lt;&lt; <span class="stringliteral">&quot;Info&quot;</span>;</div>
+<div class="line">  logNotice() &lt;&lt; <span class="stringliteral">&quot;Notice&quot;</span>;</div>
+<div class="line">  logWarning() &lt;&lt; <span class="stringliteral">&quot;Warning&quot;</span>;</div>
+<div class="line">  logError() &lt;&lt; <span class="stringliteral">&quot;Error&quot;</span>;</div>
+<div class="line">  logAlert() &lt;&lt; <span class="stringliteral">&quot;logAlert&quot;</span>;</div>
+<div class="line">  <span class="comment">//logEmergency() &lt;&lt; &quot;Emergency&quot;;  // throw</span></div>
+<div class="line"> </div>
+<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Thread.html#a46662ffa7482f1c1e52b654c51639fd2">AsyncFw::Thread::currentThread</a>()-&gt;invokeMethod([]() { AsyncFw::MainThread::exit(); });</div>
+<div class="line"> </div>
+<div class="line">  <span class="keywordtype">int</span> ret = AsyncFw::MainThread::exec();</div>
+<div class="line">  <span class="keywordflow">return</span> ret;</div>
+<div class="line">}</div>
+</div><!-- fragment --> </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a6b0ce40bc2e34f4b435894701194dc26" name="a6b0ce40bc2e34f4b435894701194dc26"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6b0ce40bc2e34f4b435894701194dc26">&#9670;&#160;</a></span>output()</h2>
 

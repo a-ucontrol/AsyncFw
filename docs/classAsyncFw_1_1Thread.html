@@ -174,34 +174,43 @@ virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>running</b> (
 <tr class="separator:a499a70b1d68a82fcded917a331f4cdef inherit pub_methods_classAsyncFw_1_1AbstractThread"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afdaccb5da7d4bee5e9ff687f761bd21f inherit pub_methods_classAsyncFw_1_1AbstractThread" id="r_afdaccb5da7d4bee5e9ff687f761bd21f"><td class="memItemLeft" align="right" valign="top">
 void&#160;</td><td class="memItemRight" valign="bottom"><b>start</b> ()</td></tr>
-<tr class="memdesc:afdaccb5da7d4bee5e9ff687f761bd21f inherit pub_methods_classAsyncFw_1_1AbstractThread"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a managed thread and run <a class="el" href="classAsyncFw_1_1AbstractThread.html#a1abe0f5c637dcc6af5aff00c5291bd4f" title="Run manage loop.">exec()</a> <br /></td></tr>
+<tr class="memdesc:afdaccb5da7d4bee5e9ff687f761bd21f inherit pub_methods_classAsyncFw_1_1AbstractThread"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a managed thread and run <a class="el" href="classAsyncFw_1_1AbstractThread.html#a1abe0f5c637dcc6af5aff00c5291bd4f" title="Run manage loop.">exec()</a>. <br /></td></tr>
 <tr class="separator:afdaccb5da7d4bee5e9ff687f761bd21f inherit pub_methods_classAsyncFw_1_1AbstractThread"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a16affc1626e26d18cc2d9eab21315591 inherit pub_methods_classAsyncFw_1_1AbstractThread" id="r_a16affc1626e26d18cc2d9eab21315591"><td class="memItemLeft" align="right" valign="top">
 void&#160;</td><td class="memItemRight" valign="bottom"><b>requestInterrupt</b> ()</td></tr>
+<tr class="memdesc:a16affc1626e26d18cc2d9eab21315591 inherit pub_methods_classAsyncFw_1_1AbstractThread"><td class="mdescLeft">&#160;</td><td class="mdescRight">Request the interruption of the thread. <br /></td></tr>
 <tr class="separator:a16affc1626e26d18cc2d9eab21315591 inherit pub_methods_classAsyncFw_1_1AbstractThread"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab614c8e9a266d924e86c3c49c1a6ff36 inherit pub_methods_classAsyncFw_1_1AbstractThread" id="r_ab614c8e9a266d924e86c3c49c1a6ff36"><td class="memItemLeft" align="right" valign="top">
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>interruptRequested</b> () const</td></tr>
+<tr class="memdesc:ab614c8e9a266d924e86c3c49c1a6ff36 inherit pub_methods_classAsyncFw_1_1AbstractThread"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if an interrupt is requested. <br /></td></tr>
 <tr class="separator:ab614c8e9a266d924e86c3c49c1a6ff36 inherit pub_methods_classAsyncFw_1_1AbstractThread"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5d7785eb8b21e956a6b7ff880d3ae4c3 inherit pub_methods_classAsyncFw_1_1AbstractThread" id="r_a5d7785eb8b21e956a6b7ff880d3ae4c3"><td class="memItemLeft" align="right" valign="top">
 void&#160;</td><td class="memItemRight" valign="bottom"><b>waitInterrupted</b> () const</td></tr>
+<tr class="memdesc:a5d7785eb8b21e956a6b7ff880d3ae4c3 inherit pub_methods_classAsyncFw_1_1AbstractThread"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait for thread interrupted. This means that <a class="el" href="classAsyncFw_1_1AbstractThread.html#a16affc1626e26d18cc2d9eab21315591" title="Request the interruption of the thread.">requestInterrupt()</a> has been called and all queue tasks have completed. <br /></td></tr>
 <tr class="separator:a5d7785eb8b21e956a6b7ff880d3ae4c3 inherit pub_methods_classAsyncFw_1_1AbstractThread"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afef57401f138e8de37eb8d817772d9ff inherit pub_methods_classAsyncFw_1_1AbstractThread" id="r_afef57401f138e8de37eb8d817772d9ff"><td class="memItemLeft" align="right" valign="top">
 void&#160;</td><td class="memItemRight" valign="bottom"><b>quit</b> ()</td></tr>
+<tr class="memdesc:afef57401f138e8de37eb8d817772d9ff inherit pub_methods_classAsyncFw_1_1AbstractThread"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tells the thread's <a class="el" href="classAsyncFw_1_1AbstractThread.html#a1abe0f5c637dcc6af5aff00c5291bd4f" title="Run manage loop.">exec()</a> to exit. <br /></td></tr>
 <tr class="separator:afef57401f138e8de37eb8d817772d9ff inherit pub_methods_classAsyncFw_1_1AbstractThread"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4d12fe08b7d84311eaa56a9704b7c2ba inherit pub_methods_classAsyncFw_1_1AbstractThread" id="r_a4d12fe08b7d84311eaa56a9704b7c2ba"><td class="memItemLeft" align="right" valign="top">
 void&#160;</td><td class="memItemRight" valign="bottom"><b>waitFinished</b> () const</td></tr>
+<tr class="memdesc:a4d12fe08b7d84311eaa56a9704b7c2ba inherit pub_methods_classAsyncFw_1_1AbstractThread"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait for the thread's <a class="el" href="classAsyncFw_1_1AbstractThread.html#a1abe0f5c637dcc6af5aff00c5291bd4f" title="Run manage loop.">exec()</a> function finished. <br /></td></tr>
 <tr class="separator:a4d12fe08b7d84311eaa56a9704b7c2ba inherit pub_methods_classAsyncFw_1_1AbstractThread"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a474577d15fa4b52abee863b44a0b7f89 inherit pub_methods_classAsyncFw_1_1AbstractThread" id="r_a474577d15fa4b52abee863b44a0b7f89"><td class="memItemLeft" align="right" valign="top">
 int&#160;</td><td class="memItemRight" valign="bottom"><b>workLoad</b> () const</td></tr>
+<tr class="memdesc:a474577d15fa4b52abee863b44a0b7f89 inherit pub_methods_classAsyncFw_1_1AbstractThread"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the number of tasks in the queue, plus one if there are running task. <br /></td></tr>
 <tr class="separator:a474577d15fa4b52abee863b44a0b7f89 inherit pub_methods_classAsyncFw_1_1AbstractThread"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a41d1cf92e033bcc11e2394cb949e031a inherit pub_methods_classAsyncFw_1_1AbstractThread" id="r_a41d1cf92e033bcc11e2394cb949e031a"><td class="memItemLeft" align="right" valign="top">
 std::thread::id&#160;</td><td class="memItemRight" valign="bottom"><b>id</b> () const</td></tr>
+<tr class="memdesc:a41d1cf92e033bcc11e2394cb949e031a inherit pub_methods_classAsyncFw_1_1AbstractThread"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns unique identifier of managed thread. <br /></td></tr>
 <tr class="separator:a41d1cf92e033bcc11e2394cb949e031a inherit pub_methods_classAsyncFw_1_1AbstractThread"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0cd916251e061aaf3d456575ef052edd inherit pub_methods_classAsyncFw_1_1AbstractThread" id="r_a0cd916251e061aaf3d456575ef052edd"><td class="memItemLeft" align="right" valign="top">
 std::string&#160;</td><td class="memItemRight" valign="bottom"><b>name</b> () const</td></tr>
+<tr class="memdesc:a0cd916251e061aaf3d456575ef052edd inherit pub_methods_classAsyncFw_1_1AbstractThread"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns name of managed thread. <br /></td></tr>
 <tr class="separator:a0cd916251e061aaf3d456575ef052edd inherit pub_methods_classAsyncFw_1_1AbstractThread"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6e17293ccd9683f5bd8ca9a3dcd52e7d inherit pub_methods_classAsyncFw_1_1AbstractThread" id="r_a6e17293ccd9683f5bd8ca9a3dcd52e7d"><td class="memItemLeft" align="right" valign="top">
 <a class="el" href="classAsyncFw_1_1AbstractThread.html#a4e97803ef650d36ba80ef1471c4b643c">LockGuard</a>&#160;</td><td class="memItemRight" valign="bottom"><b>lockGuard</b> () const</td></tr>
+<tr class="memdesc:a6e17293ccd9683f5bd8ca9a3dcd52e7d inherit pub_methods_classAsyncFw_1_1AbstractThread"><td class="mdescLeft">&#160;</td><td class="mdescRight">Locks the managed thread and returns a <a class="el" href="classAsyncFw_1_1AbstractThread.html#a4e97803ef650d36ba80ef1471c4b643c" title="The LockGuard type.">LockGuard</a> variable. The thread is unblocked after this variable is destroyed. <br /></td></tr>
 <tr class="separator:a6e17293ccd9683f5bd8ca9a3dcd52e7d inherit pub_methods_classAsyncFw_1_1AbstractThread"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>

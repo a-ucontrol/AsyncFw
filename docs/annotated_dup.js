@@ -28,7 +28,7 @@ var annotated_dup =
       [ "Log", "classAsyncFw_1_1Log.html", null ],
       [ "LogStream", "classAsyncFw_1_1LogStream.html", null ],
       [ "MainThread", "classAsyncFw_1_1MainThread.html", null ],
-      [ "PollNotifier", "classAsyncFw_1_1PollNotifier.html", null ],
+      [ "PollNotifier", "classAsyncFw_1_1PollNotifier.html", "classAsyncFw_1_1PollNotifier" ],
       [ "Rrd", "classAsyncFw_1_1Rrd.html", null ],
       [ "SystemProcess", "classAsyncFw_1_1SystemProcess.html", null ],
       [ "Task", "classAsyncFw_1_1Task.html", null ],

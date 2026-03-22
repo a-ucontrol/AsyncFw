@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['removepolldescriptor_0',['removePollDescriptor',['../classAsyncFw_1_1AbstractThread.html#a499a70b1d68a82fcded917a331f4cdef',1,'AsyncFw::AbstractThread']]],
-  ['removetimer_1',['removeTimer',['../classAsyncFw_1_1AbstractThread.html#ae8fc0b3f68faed69e7f0b4e940ef12c0',1,'AsyncFw::AbstractThread']]],
-  ['rrd_2',['Rrd',['../classAsyncFw_1_1Rrd.html',1,'AsyncFw']]],
-  ['running_3',['running',['../classAsyncFw_1_1AbstractThread.html#aa317731738402e37a8a05d5a5ec9d7c4',1,'AsyncFw::AbstractThread']]]
+  ['pollnotifier_0',['PollNotifier',['../classAsyncFw_1_1PollNotifier.html',1,'AsyncFw::PollNotifier'],['../classAsyncFw_1_1PollNotifier.html#abe469fd8ab6f5a38c562aa2885075ec6',1,'AsyncFw::PollNotifier::PollNotifier()']]],
+  ['promise_5ftype_1',['promise_type',['../structAsyncFw_1_1CoroutineTask_1_1promise__type.html',1,'AsyncFw::CoroutineTask']]]
 ];

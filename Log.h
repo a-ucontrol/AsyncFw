@@ -66,7 +66,8 @@ private:
   std::vector<std::string> filter;
 };
 
-/*! \brief The Log class. */
+/*! \brief The Log class.
+ \brief Example: \snippet Log/main.cpp snippet */
 class Log : public Rrd, public AbstractLog {
 public:
   using Message = LogStream::Message;

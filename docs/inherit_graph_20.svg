@@ -11,7 +11,7 @@
 <!-- Node0 -->
 <g id="Node000000" class="node">
 <title>Node0</title>
-<g id="a_Node000000"><a xlink:href="classAsyncFw_1_1PollNotifier.html" target="_top" xlink:title="The PollNotifier class.">
+<g id="a_Node000000"><a xlink:href="classAsyncFw_1_1PollNotifier.html" target="_top" xlink:title="The PollNotifier class Example:">
 <polygon fill="white" stroke="#666666" points="111.25,-20 0,-20 0,0 111.25,0 111.25,-20"/>
 <text text-anchor="middle" x="55.62" y="-6.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::PollNotifier</text>
 </a>

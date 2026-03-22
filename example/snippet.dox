@@ -67,4 +67,27 @@ void example() {
   }
   for (const std::string _s : list) logNotice() << _s;
   //! [AddressInfo coro]
+
+  //! [LogStream]
+  lsTrace() << "Trace";
+  lsDebug() << "Debug";
+  lsInfo() << "Info";
+  lsInfoRed() << "Info red";
+  lsInfoGreen() << "Info green";
+  lsInfoBlue() << "Info blue";
+  lsInfoMagenta() << "Info magenta";
+  lsInfoCyan() << "Info cyan";
+  lsNotice() << "Notice";
+  lsWarning() << "Warning";
+  lsError() << "Error";
+
+  logTrace() << "Trace";
+  logDebug() << "Debug";
+  logInfo() << "Info";
+  logNotice() << "Notice";
+  logWarning() << "Warning";
+  logError() << "Error";
+  logAlert() << "logAlert";
+  logEmergency() << "Emergency";  // terminate
+  //! [LogStream]
 }

@@ -116,7 +116,7 @@ public:
 
   /*! \brief Returns a pointer to the AsyncFw::AbstractThread that manages the currently executing thread. */
   static AbstractThread *currentThread();
-  /*! \brief Assigns a pointer to the list of all threads. \param list std::vector<AbstractThread *> ** pointer \return AbstractThread::LockGuard */
+  /*! \brief Assigns a pointer to the list of all threads. \param list pointer to the list of threads \return AbstractThread::LockGuard */
   static AbstractThread::LockGuard threads(std::vector<AbstractThread *> **);
 
   /*! \brief This call from thread when it starts executing. */
@@ -126,7 +126,7 @@ public:
 
   /*! \brief Returns true if the managed thread is running. */
   virtual bool running() const;
-  /*! \brief Runs a task in a managed thread. \param Poiner to AbstractTask \return True if the task is added to the queue */
+  /*! \brief Runs a task in a managed thread. \param task poiner to AbstractTask \return True if the task is added to the queue */
   virtual bool invokeTask(AbstractTask *) const;
   /*! \brief Append timer. \param ms timeout in milliseconds \param task pointer to AbstractTask \return timer id */
   virtual int appendTimer(int, AbstractTask *);
@@ -141,18 +141,27 @@ public:
   /*! \brief Remove poll descriptor. \param fd file descriptor */
   virtual void removePollDescriptor(int);
 
-  /*! \brief Create a managed thread and run exec() */
+  /*! \brief Create a managed thread and run exec(). */
   void start();
+  /*! \brief Request the interruption of the thread.*/
   void requestInterrupt();
+  /*! \brief Returns true if an interrupt is requested.*/
   bool interruptRequested() const;
+  /*! \brief Wait for thread interrupted. This means that requestInterrupt() has been called and all queue tasks have completed. */
   void waitInterrupted() const;
+  /*! \brief Tells the thread's exec() to exit. */
   void quit();
+  /*! \brief Wait for the thread's exec() function finished. */
   void waitFinished() const;
+  /*! \brief Returns the number of tasks in the queue, plus one if there are running task. */
   int workLoad() const;
 
+  /*! \brief Returns unique identifier of managed thread. */
   std::thread::id id() const;
+  /*! \brief Returns name of managed thread */
   std::string name() const;
 
+  /*! \brief Locks the managed thread and returns a LockGuard variable. The thread is unblocked after this variable is destroyed. */
   LockGuard lockGuard() const;
 
 protected:
