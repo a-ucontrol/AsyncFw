@@ -104,5 +104,6 @@ private:
     void created() override;
   } instance_;
   static void lsAppend(const Message &m, uint8_t t);
+  FunctionConnectionGuard tfg;
 };
 }  // namespace AsyncFw
