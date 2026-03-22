@@ -8,7 +8,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #pragma once
 
 #include <memory>
-#include "core/Thread.h"
+#include "core/abstract_thread.hpp"
 #include "core/AnyData.h"
 
 namespace AsyncFw {

@@ -6,7 +6,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 */
 
 #include <algorithm>
-#include "core/Thread.h"
+#include "core/abstract_thread.hpp"
 #include "core/LogStream.h"
 #include "instance.hpp"
 

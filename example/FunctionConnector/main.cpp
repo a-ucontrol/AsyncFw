@@ -6,10 +6,9 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 */
 
 //! [snippet]
-#include <core/Thread.h>
 #include <core/FunctionConnector.h>
-#include <Timer.h>
 #include <MainThread.h>
+#include <Timer.h>
 #include <Log.h>
 
 class MethodConnectionExample {

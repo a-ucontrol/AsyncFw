@@ -58,6 +58,7 @@ set(AsyncFw_CORE_HEADERS
   "core/FunctionConnector.h"
   "core/LogStream.h"
   "core/DataArray.h"
+  "core/abstract_thread.hpp"
   "core/log-types.hpp"
   "core/console_msg.hpp"
 )

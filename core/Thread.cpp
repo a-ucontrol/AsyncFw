@@ -870,9 +870,13 @@ void Thread::startedEvent() {
   sigprocmask(SIG_BLOCK, &_s, nullptr);  //SIGPIPE if close fd while tls handshake, AbstractTlsSocket::acceptEvent()
 #endif
   AbstractThread::startedEvent();
+  started();
 }
 
-void Thread::finishedEvent() { AbstractThread::finishedEvent(); }
+void Thread::finishedEvent() {
+  AbstractThread::finishedEvent();
+  finished();
+}
 
 void Thread::appendSocket(AbstractSocket *_socket) {
   checkCurrentThread();
