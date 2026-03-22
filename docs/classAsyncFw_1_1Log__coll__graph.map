@@ -1,16 +1,21 @@
 <map id="AsyncFw::Log" name="AsyncFw::Log">
-<area shape="rect" id="Node000001" title="The Log class." alt="" coords="864,105,969,132"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1Rrd.html" title="The Rrd class." alt="" coords="684,68,790,95"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="806,93,864,105,863,110,804,98"/>
-<area shape="rect" id="Node000003" href="$classAsyncFw_1_1FunctionConnectorProtected.html" title=" " alt="" coords="359,56,553,99"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="569,76,684,78,684,83,569,82"/>
-<area shape="rect" id="Node000004" href="$classAsyncFw_1_1FunctionConnectorProtected.html" title="Защищенный коннетор, отправитель может быть только один." alt="" coords="5,56,200,99"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="215,75,358,75,358,80,215,80"/>
-<area shape="rect" id="Node000005" href="$classAsyncFw_1_1AbstractThread.html" title="The AbstractThread class provides the base functionality for thread management." alt="" coords="369,140,542,167"/>
-<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="525,133,683,92,685,97,526,138"/>
-<area shape="rect" id="Node000007" href="$classAsyncFw_1_1AbstractLog.html" title="The AbstractLog class provides the base functionality for logger." alt="" coords="660,129,814,156"/>
-<area shape="poly" id="edge7_Node000007_Node000005" title=" " alt="" coords="558,161,636,160,676,154,676,159,636,165,558,167"/>
-<area shape="rect" id="Node000006" href="$classAsyncFw_1_1DataArrayList.html" title="The DataArrayList class." alt="" coords="374,5,538,32"/>
-<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="539,33,637,55,685,66,683,71,635,60,538,38"/>
-<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="830,128,863,123,864,128,830,133"/>
+<area shape="rect" id="Node000001" title="The Log class." alt="" coords="1298,101,1404,128"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1Rrd.html" title="The Rrd class." alt="" coords="1119,67,1224,93"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="1240,90,1298,102,1297,107,1239,96"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1FunctionConnectorProtected.html" title=" " alt="" coords="605,51,799,93"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="815,71,1119,76,1119,82,815,77"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1FunctionConnectorProtected.html" title="Защищенный коннетор, отправитель может быть только один." alt="" coords="5,105,200,148"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="215,111,377,95,604,76,605,81,378,100,215,117"/>
+<area shape="rect" id="Node000007" href="$classAsyncFw_1_1FunctionConnectorProtected.html" title=" " alt="" coords="378,160,581,203"/>
+<area shape="poly" id="edge7_Node000007_Node000004" title=" " alt="" coords="216,140,378,164,377,169,215,146"/>
+<area shape="rect" id="Node000005" href="$classAsyncFw_1_1Thread.html" title="AsyncFw::Thread thread with sockets." alt="" coords="843,131,968,157"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="982,125,1070,104,1119,91,1120,97,1071,109,984,130"/>
+<area shape="rect" id="Node000009" href="$classAsyncFw_1_1AbstractLog.html" title="The AbstractLog class provides the base functionality for logger." alt="" coords="1095,125,1249,152"/>
+<area shape="poly" id="edge10_Node000009_Node000005" title=" " alt="" coords="984,150,1071,151,1094,148,1095,154,1071,156,984,155"/>
+<area shape="rect" id="Node000006" href="$classAsyncFw_1_1AbstractThread.html" title="The AbstractThread class provides the base functionality for thread management." alt="" coords="393,109,566,136"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="581,125,843,138,843,144,581,130"/>
+<area shape="poly" id="edge6_Node000005_Node000007" title=" " alt="" coords="596,184,696,183,799,173,867,155,868,161,800,179,696,189,597,190"/>
+<area shape="rect" id="Node000008" href="$classAsyncFw_1_1DataArrayList.html" title="The DataArrayList class." alt="" coords="823,5,988,32"/>
+<area shape="poly" id="edge8_Node000002_Node000008" title=" " alt="" coords="992,33,1071,51,1121,63,1120,69,1070,56,991,38"/>
+<area shape="poly" id="edge9_Node000001_Node000009" title=" " alt="" coords="1264,124,1298,119,1298,124,1265,129"/>
 </map>

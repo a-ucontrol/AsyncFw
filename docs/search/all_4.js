@@ -16,8 +16,9 @@ var searchData=
   ['functionconnectorprotected_3c_20asyncfw_3a_3apollnotifier_20_3e_13',['FunctionConnectorProtected&lt; AsyncFw::PollNotifier &gt;',['../classAsyncFw_1_1FunctionConnectorProtected.html',1,'AsyncFw']]],
   ['functionconnectorprotected_3c_20asyncfw_3a_3arrd_20_3e_14',['FunctionConnectorProtected&lt; AsyncFw::Rrd &gt;',['../classAsyncFw_1_1FunctionConnectorProtected.html',1,'AsyncFw']]],
   ['functionconnectorprotected_3c_20asyncfw_3a_3asystemprocess_20_3e_15',['FunctionConnectorProtected&lt; AsyncFw::SystemProcess &gt;',['../classAsyncFw_1_1FunctionConnectorProtected.html',1,'AsyncFw']]],
-  ['functionconnectorprotected_3c_20asyncfw_3a_3atimer_20_3e_16',['FunctionConnectorProtected&lt; AsyncFw::Timer &gt;',['../classAsyncFw_1_1FunctionConnectorProtected.html',1,'AsyncFw']]],
-  ['functionconnectorprotected_3c_20dataarrayabstracttcp_20_3e_17',['FunctionConnectorProtected&lt; DataArrayAbstractTcp &gt;',['../classAsyncFw_1_1FunctionConnectorProtected.html',1,'AsyncFw']]],
-  ['functionconnectorprotected_3c_20dataarraysocket_20_3e_18',['FunctionConnectorProtected&lt; DataArraySocket &gt;',['../classAsyncFw_1_1FunctionConnectorProtected.html',1,'AsyncFw']]],
-  ['functionconnectorprotected_3c_20dataarraytcpclient_20_3e_19',['FunctionConnectorProtected&lt; DataArrayTcpClient &gt;',['../classAsyncFw_1_1FunctionConnectorProtected.html',1,'AsyncFw']]]
+  ['functionconnectorprotected_3c_20asyncfw_3a_3athread_20_3e_16',['FunctionConnectorProtected&lt; AsyncFw::Thread &gt;',['../classAsyncFw_1_1FunctionConnectorProtected.html',1,'AsyncFw']]],
+  ['functionconnectorprotected_3c_20asyncfw_3a_3atimer_20_3e_17',['FunctionConnectorProtected&lt; AsyncFw::Timer &gt;',['../classAsyncFw_1_1FunctionConnectorProtected.html',1,'AsyncFw']]],
+  ['functionconnectorprotected_3c_20dataarrayabstracttcp_20_3e_18',['FunctionConnectorProtected&lt; DataArrayAbstractTcp &gt;',['../classAsyncFw_1_1FunctionConnectorProtected.html',1,'AsyncFw']]],
+  ['functionconnectorprotected_3c_20dataarraysocket_20_3e_19',['FunctionConnectorProtected&lt; DataArraySocket &gt;',['../classAsyncFw_1_1FunctionConnectorProtected.html',1,'AsyncFw']]],
+  ['functionconnectorprotected_3c_20dataarraytcpclient_20_3e_20',['FunctionConnectorProtected&lt; DataArrayTcpClient &gt;',['../classAsyncFw_1_1FunctionConnectorProtected.html',1,'AsyncFw']]]
 ];

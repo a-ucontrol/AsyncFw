@@ -1,5 +1,9 @@
 <map id="AsyncFw::Thread" name="AsyncFw::Thread">
-<area shape="rect" id="Node000001" title="AsyncFw::Thread thread with sockets." alt="" coords="30,80,154,107"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractThread.html" title="The AbstractThread class provides the base functionality for thread management." alt="" coords="5,5,179,32"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="95,48,95,80,89,80,89,48"/>
+<area shape="rect" id="Node000001" title="AsyncFw::Thread thread with sockets." alt="" coords="94,235,218,261"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractThread.html" title="The AbstractThread class provides the base functionality for thread management." alt="" coords="5,120,179,147"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="109,159,151,233,147,236,104,161"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1FunctionConnectorProtected.html" title=" " alt="" coords="202,112,406,155"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="266,167,174,236,171,232,263,162"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1FunctionConnectorProtected.html" title="Защищенный коннетор, отправитель может быть только один." alt="" coords="207,5,401,48"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="307,64,307,111,301,111,301,64"/>
 </map>
