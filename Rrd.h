@@ -11,6 +11,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include "core/DataArray.h"
 
 namespace AsyncFw {
+class Thread;
 /*! \brief The Rrd class. */
 class Rrd {
 public:
@@ -42,12 +43,12 @@ public:
   void clear();
   uint64_t lastIndex();
 
-  AsyncFw::FunctionConnectorProtected<Rrd>::Connector<> updated;
+  FunctionConnectorProtected<Rrd>::Connector<> updated;
 
-  AsyncFw::AbstractThread *thread() { return thread_; }
+  Thread *thread() { return thread_; }
 
 protected:
-  AsyncFw::AbstractThread *thread_;
+  Thread *thread_;
   uint64_t last_;
   uint32_t dbSize;
   ItemList dataBase;

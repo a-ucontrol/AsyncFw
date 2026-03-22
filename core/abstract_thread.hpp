@@ -43,6 +43,7 @@ namespace AsyncFw {
 class LogStream;
 /*! \brief The AbstractThread class provides the base functionality for thread management. */
 class AbstractThread {
+  friend class Thread;
   friend LogStream &operator<<(LogStream &, const AbstractThread &);
   struct Private;
 

@@ -6,6 +6,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 */
 
 #include "core/DataArray.h"
+#include "core/Thread.h"
 #include "core/console_msg.hpp"
 
 #include "Log.h"
@@ -178,7 +179,7 @@ void AbstractLog::stopTimer(int *timerId) {
   }
 }
 
-Log::Instance Log::instance_{"Log"};
+Log::Instance Log::instance_ {"Log"};
 
 void Log::Instance::created() {
   LogStream::setCompleted(&lsAppend);
@@ -187,6 +188,12 @@ void Log::Instance::created() {
 
 Log::Log(int size, const std::string &name) : Rrd(size, name), AbstractLog() {
   thread_ = Rrd::thread_;
+
+  thread_->finished([]() {
+    lsWarning() << "logger thread finished, destroy logger";
+    instance_.destroyValue();
+  });
+
   autoSave = (size && !name.empty()) ? 100 : -1;
   if (size) queueLimit = size / 2;
   lsTrace();

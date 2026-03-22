@@ -243,10 +243,11 @@ AbstractThread::AbstractThread(const std::string &_name) : private_(*new Private
 AbstractThread::~AbstractThread() {
   warning_if(std::this_thread::get_id() == private_.id) << LogStream::Color::Red << "executed from own thread" << LOG_THREAD_NAME;
   if (AbstractThread::running()) {
-    lsWarning() << "destroy running thread" << LOG_THREAD_NAME;
+    lsError() << LogStream::Color::Red << "destroy running thread" << LOG_THREAD_NAME;
     quit();
     waitFinished();
   }
+
   {  //lock scope
     LockGuard lock(Private::list.mutex);
     std::vector<AbstractThread *>::iterator it = std::lower_bound(Private::list.begin(), Private::list.end(), this, Private::Compare());
@@ -854,6 +855,11 @@ Thread::Thread(const std::string &name) : AbstractThread(name) { trace(); }
 
 Thread::~Thread() {
   warning_if(!sockets_.empty()) << "socket list not empty" << sockets_.size();
+  if (AbstractThread::running()) {
+    lsWarning() << "destroy running thread" << LOG_THREAD_NAME;
+    quit();
+    waitFinished();
+  }
   for (; !sockets_.empty();) {
     AbstractSocket *_s = sockets_.back();
     sockets_.pop_back();

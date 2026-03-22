@@ -11,9 +11,9 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include <Log.h>
 
 int main(int argc, char *argv[]) {
-  AsyncFw::Thread *logThread = new AsyncFw::Thread("LogThread");
-  logThread->start();
-  logThread->invokeMethod([]() { AsyncFw::Instance<AsyncFw::Log>::create(1000, "log-file-name"); }, true);
+  AsyncFw::Thread logThread {"LogThread"};
+  logThread.start();
+  logThread.invokeMethod([]() { AsyncFw::Instance<AsyncFw::Log>::create(1000, "log-file-name"); }, true);
 
   AsyncFw::Log::instance()->setColorOut(true);
 

@@ -8,6 +8,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include <filesystem>
 #include <fstream>
 
+#include "core/Thread.h"
 #include "core/LogStream.h"
 #include "Rrd.h"
 
@@ -28,7 +29,7 @@ using namespace AsyncFw;
 
 Rrd::Rrd(int size, int interval, int fillInterval, const std::string &name) : dbSize(size), interval(interval), fill(interval ? fillInterval / interval : 0) {
   lsTrace();
-  thread_ = AbstractThread::currentThread();
+  thread_ = Thread::currentThread();
   if (size == 0) {
     readOnly = true;
     if (name.empty()) return;

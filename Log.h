@@ -42,7 +42,7 @@ protected:
   uint8_t level = LogStream::Trace;
   uint8_t consoleLevel = LogStream::Trace;
   int queueLimit = 128;
-  AbstractThread *thread_;
+  Thread *thread_;
 
 private:
   struct LastMessage {
