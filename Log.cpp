@@ -206,7 +206,6 @@ Log::~Log() {
 }
 
 void Log::finality() {
-  lsTrace();
   LogStream::setCompleted(&LogStream::console_output);
   stopTimer(&timerIdAutosave);
   if (!thread_->invokeMethod(
@@ -220,6 +219,7 @@ void Log::finality() {
     AbstractLog::finality();
   }
   thread_ = nullptr;
+  lsTrace();
 }
 
 void Log::output(const Message &m) {
