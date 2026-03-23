@@ -207,15 +207,10 @@ Log::~Log() {
 
 void Log::finality() {
   LogStream::setCompleted(&LogStream::console_output);
+  autoSave = -1;
   stopTimer(&timerIdAutosave);
-  if (!thread_->invokeMethod(
-          [this]() {
-            autoSave = -1;
-            AbstractLog::finality();
-          },
-          true)) {
+  if (!thread_->invokeMethod([this]() { AbstractLog::finality(); }, true)) {
     console_msg("Log", "thread not running");
-    autoSave = -1;
     AbstractLog::finality();
   }
   thread_ = nullptr;
