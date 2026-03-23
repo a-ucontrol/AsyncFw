@@ -189,9 +189,9 @@ void Log::Instance::created() {
 Log::Log(int size, const std::string &name) : Rrd(size, name), AbstractLog() {
   thread_ = Rrd::thread_;
 
-  tfg = thread_->finished([]() {
+  tfg = thread_->finished([this]() {
     lsWarning() << "logger thread finished, destroy logger";
-    instance_.destroyValue();
+    finality();
   });
 
   autoSave = (size && !name.empty()) ? 100 : -1;
@@ -201,22 +201,27 @@ Log::Log(int size, const std::string &name) : Rrd(size, name), AbstractLog() {
 
 Log::~Log() {
   lsTrace();
+  if (thread_) finality();
+}
+
+void Log::finality() {
+  lsTrace();
   if (instance_.value == this) {
     LogStream::setCompleted(&LogStream::console_output);
     instance_.value = nullptr;
   }
+  stopTimer(&timerIdAutosave);
   if (!thread_->invokeMethod(
           [this]() {
-            stopTimer(&timerIdAutosave);
             autoSave = -1;
-            finality();
+            AbstractLog::finality();
           },
           true)) {
     console_msg("Log", "thread not running");
-    stopTimer(&timerIdAutosave);
     autoSave = -1;
-    finality();
+    AbstractLog::finality();
   }
+  thread_ = nullptr;
 }
 
 void Log::output(const Message &m) {

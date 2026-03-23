@@ -81,6 +81,8 @@ public:
   Log(int = 0, const std::string & = {});
   ~Log() override;
 
+  void finality();
+
   void output(const Message &m) override;
 
   void setAutoSave(bool b) { autoSave = (b) ? 100 : -1; }
