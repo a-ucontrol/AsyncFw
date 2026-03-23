@@ -38,11 +38,12 @@ private:
 class Receiver {
 public:
   Receiver(const std::string &name, const Sender &sender) {
-    sender.connector([name_ = name](int val) {
+    fcg = sender.connector([name_ = name](int val) {
       AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::currentThread();
       logInfo() << name_ << "received" << val << "run in thread" << ct->name() << ct->id();
     });
   }
+  AsyncFw::FunctionConnectionGuard fcg;
 };
 
 int main(int argc, char *argv[]) {
