@@ -212,11 +212,12 @@ class AsyncFw::FunctionConnector&lt; Args &gt;</div><p>Обеспечивает 
 <div class="line"><span class="keyword">class </span>Receiver {</div>
 <div class="line"><span class="keyword">public</span>:</div>
 <div class="line">  Receiver(<span class="keyword">const</span> std::string &amp;name, <span class="keyword">const</span> Sender &amp;sender) {</div>
-<div class="line">    sender.connector([name_ = name](<span class="keywordtype">int</span> val) {</div>
+<div class="line">    fcg = sender.connector([name_ = name](<span class="keywordtype">int</span> val) {</div>
 <div class="line">      AsyncFw::AbstractThread *ct = <a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#ac1b35ef04b06ce771f6d6ca0a5b120db">AsyncFw::AbstractThread::currentThread</a>();</div>
 <div class="line">      logInfo() &lt;&lt; name_ &lt;&lt; <span class="stringliteral">&quot;received&quot;</span> &lt;&lt; val &lt;&lt; <span class="stringliteral">&quot;run in thread&quot;</span> &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd">name</a>() &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a41d1cf92e033bcc11e2394cb949e031a">id</a>();</div>
 <div class="line">    });</div>
 <div class="line">  }</div>
+<div class="line">  AsyncFw::FunctionConnectionGuard fcg;</div>
 <div class="line">};</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[]) {</div>
