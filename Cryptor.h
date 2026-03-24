@@ -10,6 +10,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 namespace AsyncFw {
 class DataArray;
 class DataArrayView;
+/*! \brief The Cryptor struct. */
 class Cryptor {
 public:
   static bool encrypt(const DataArray &key, const DataArray &text, DataArray &ctext);

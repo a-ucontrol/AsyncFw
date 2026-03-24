@@ -38,7 +38,9 @@ public:
   void resolve(const std::string &, Family = Inet);
   void setTimeout(int);
 
+  /*! \brief The AddressInfo::completed connector */
   FunctionConnectorProtected<AddressInfo>::Connector<int, const std::vector<std::string> &> completed;
+  /*! \brief The AddressInfo::coResolve coroutine awaiter */
   AsyncFw::CoroutineAwait coResolve(const std::string &, Family = Inet);
 
 private:

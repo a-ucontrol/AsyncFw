@@ -363,7 +363,7 @@ Additional Inherited Members</h2></td></tr>
 <div class="line">  <a class="code hl_class" href="classAsyncFw_1_1AddressInfo.html">AsyncFw::AddressInfo</a> addressInfo;</div>
 <div class="line">  addressInfo.setTimeout(30000);</div>
 <div class="line">  addressInfo.resolve(SERVER_NAME);</div>
-<div class="line">  addressInfo.completed([&amp;socket](<span class="keywordtype">int</span> r, <span class="keyword">const</span> std::vector&lt;std::string&gt; &amp;list) {</div>
+<div class="line">  addressInfo.<a class="code hl_variable" href="classAsyncFw_1_1AddressInfo.html#a724e55a870a6eec5b857d00bc7a72ecd">completed</a>([&amp;socket](<span class="keywordtype">int</span> r, <span class="keyword">const</span> std::vector&lt;std::string&gt; &amp;list) {</div>
 <div class="line">    <span class="keywordflow">if</span> (r == 0 &amp;&amp; !list.empty()) {</div>
 <div class="line">      <span class="keywordflow">for</span> (<span class="keyword">const</span> std::string _s : list) logNotice() &lt;&lt; _s;</div>
 <div class="line">      socket-&gt;connect(list[0], SERVER_PORT);</div>

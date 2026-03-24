@@ -1,0 +1,13 @@
+<map id="AsyncFw::DataArrayTcpServer" name="AsyncFw::DataArrayTcpServer">
+<area shape="rect" id="Node000001" title="The DataArrayTcpServer class." alt="" coords="1088,41,1289,68"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1DataArrayAbstractTcp.html" title="The DataArrayAbstractTcp class." alt="" coords="826,41,1038,68"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="1054,52,1087,52,1087,57,1054,57"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractThreadPool.html" title="Абстрактный класс для создания пулов управления потоками." alt="" coords="480,9,679,36"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="695,30,826,42,825,47,695,35"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1AbstractThread.html" title="The AbstractThread class provides the base functionality for thread management." alt="" coords="16,8,189,34"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="205,19,479,19,479,25,205,24"/>
+<area shape="rect" id="Node000005" href="$classAsyncFw_1_1FunctionConnectorProtected.html" title=" " alt="" coords="434,61,725,104"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="740,67,802,62,825,60,826,66,802,68,741,73"/>
+<area shape="rect" id="Node000006" href="$classAsyncFw_1_1FunctionConnectorProtected.html" title="Защищенный коннетор, отправитель может быть только один." alt="" coords="5,62,200,105"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="215,81,433,80,433,85,215,86"/>
+</map>

@@ -14,6 +14,7 @@ class DataArraySocket;
 class DataArrayTcpServer;
 class Rrd;
 
+/*! \brief The RrdServer class */
 class RrdServer {
 public:
   RrdServer(DataArrayTcpServer *, const std::vector<Rrd *> &Rrd);

@@ -25,12 +25,17 @@ var hierarchy =
       ] ]
     ] ],
     [ "AsyncFw::AbstractThreadPool", "classAsyncFw_1_1AbstractThreadPool.html", [
+      [ "AsyncFw::DataArrayAbstractTcp", "classAsyncFw_1_1DataArrayAbstractTcp.html", [
+        [ "AsyncFw::DataArrayTcpClient", "classAsyncFw_1_1DataArrayTcpClient.html", null ],
+        [ "AsyncFw::DataArrayTcpServer", "classAsyncFw_1_1DataArrayTcpServer.html", null ]
+      ] ],
       [ "AsyncFw::ThreadPool", "classAsyncFw_1_1ThreadPool.html", null ]
     ] ],
     [ "AsyncFw::AddressInfo", "classAsyncFw_1_1AddressInfo.html", null ],
     [ "AsyncFw::AnyData", "structAsyncFw_1_1AnyData.html", [
       [ "AsyncFw::AbstractSocket", "classAsyncFw_1_1AbstractSocket.html", [
         [ "AsyncFw::AbstractTlsSocket", "classAsyncFw_1_1AbstractTlsSocket.html", [
+          [ "AsyncFw::DataArraySocket", "classAsyncFw_1_1DataArraySocket.html", null ],
           [ "AsyncFw::HttpSocket", "classAsyncFw_1_1HttpSocket.html", null ]
         ] ],
         [ "AsyncFw::ListenSocket", "classAsyncFw_1_1ListenSocket.html", null ]
@@ -40,6 +45,7 @@ var hierarchy =
     ] ],
     [ "AsyncFw::CoroutineAwait", "structAsyncFw_1_1CoroutineAwait.html", null ],
     [ "AsyncFw::CoroutineTask", "structAsyncFw_1_1CoroutineTask.html", null ],
+    [ "AsyncFw::Cryptor", "classAsyncFw_1_1Cryptor.html", null ],
     [ "AsyncFw::DataArray", "classAsyncFw_1_1DataArray.html", null ],
     [ "AsyncFw::DataArrayList", "classAsyncFw_1_1DataArrayList.html", null ],
     [ "AsyncFw::DataArrayView", "classAsyncFw_1_1DataArrayView.html", null ],
@@ -54,7 +60,10 @@ var hierarchy =
     [ "AsyncFw::Rrd", "classAsyncFw_1_1Rrd.html", [
       [ "AsyncFw::Log", "classAsyncFw_1_1Log.html", null ]
     ] ],
+    [ "AsyncFw::RrdClient", "classAsyncFw_1_1RrdClient.html", null ],
+    [ "AsyncFw::RrdServer", "classAsyncFw_1_1RrdServer.html", null ],
     [ "AsyncFw::SystemProcess", "classAsyncFw_1_1SystemProcess.html", null ],
     [ "AsyncFw::Timer", "classAsyncFw_1_1Timer.html", null ],
-    [ "AsyncFw::TlsContext", "classAsyncFw_1_1TlsContext.html", null ]
+    [ "AsyncFw::TlsContext", "classAsyncFw_1_1TlsContext.html", null ],
+    [ "AsyncFw::Version", "structAsyncFw_1_1Version.html", null ]
 ];

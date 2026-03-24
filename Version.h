@@ -10,6 +10,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include <string>
 
 namespace AsyncFw {
+/*! \brief The Version struct */
 struct Version {
   static std::string str();
   static std::string git();

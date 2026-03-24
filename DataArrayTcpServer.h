@@ -12,6 +12,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 namespace AsyncFw {
 class ListenSocket;
+/*! \brief The DataArrayTcpServer class. */
 class DataArrayTcpServer : public DataArrayAbstractTcp {
 public:
   DataArrayTcpServer(const std::string & = "TcpServer");

@@ -1,5 +1,11 @@
 <map id="AsyncFw::AbstractThreadPool" name="AsyncFw::AbstractThreadPool">
-<area shape="rect" id="Node000001" title="Абстрактный класс для создания пулов управления потоками." alt="" coords="5,5,205,32"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1ThreadPool.html" title="Управляет набором многократно используемых рабочих потоков для параллельного выполнения задач,..." alt="" coords="30,80,180,107"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="108,48,108,80,102,80,102,48"/>
+<area shape="rect" id="Node000001" title="Абстрактный класс для создания пулов управления потоками." alt="" coords="219,5,418,32"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1DataArrayAbstractTcp.html" title="The DataArrayAbstractTcp class." alt="" coords="110,80,322,107"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="290,44,236,82,232,77,287,39"/>
+<area shape="rect" id="Node000005" href="$classAsyncFw_1_1ThreadPool.html" title="Управляет набором многократно используемых рабочих потоков для параллельного выполнения задач,..." alt="" coords="346,80,496,107"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="351,39,405,77,402,82,348,44"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1DataArrayTcpClient.html" title="The DataArrayTcpClient class." alt="" coords="5,155,203,181"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="185,118,125,156,122,152,182,113"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1DataArrayTcpServer.html" title="The DataArrayTcpServer class." alt="" coords="227,155,429,181"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="250,113,310,152,307,156,247,118"/>
 </map>

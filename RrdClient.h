@@ -15,6 +15,7 @@ class DataArray;
 class TlsContext;
 class DataArraySocket;
 
+/*! \brief The RrdClient class */
 class RrdClient {
 public:
   RrdClient(DataArraySocket *, const std::vector<Rrd *> &);
