@@ -40,7 +40,7 @@
 <!-- Node4 -->
 <g id="Node000004" class="node">
 <title>Node4</title>
-<g id="a_Node000004"><a xlink:href="classAsyncFw_1_1Thread.html#ae9fc9cf8baddcc8dfa0e14784918c4a5" target="_top" xlink:title="This call from the thread when it finishing execution.">
+<g id="a_Node000004"><a xlink:href="classAsyncFw_1_1Thread.html#ae9fc9cf8baddcc8dfa0e14784918c4a5" target="_top" xlink:title="Runs finished()">
 <polygon fill="white" stroke="#666666" points="299,-32 166,-32 166,0 299,0 299,-32"/>
 <text text-anchor="start" x="174" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::Thread::finished</text>
 <text text-anchor="middle" x="232.5" y="-6.5" font-family="Helvetica,sans-Serif" font-size="10.00">Event</text>

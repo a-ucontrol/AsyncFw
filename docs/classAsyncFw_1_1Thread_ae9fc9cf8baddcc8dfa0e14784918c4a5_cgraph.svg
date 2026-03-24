@@ -11,7 +11,7 @@
 <!-- Node1 -->
 <g id="Node000001" class="node">
 <title>Node1</title>
-<g id="a_Node000001"><a xlink:title="This call from the thread when it finishing execution.">
+<g id="a_Node000001"><a xlink:title="Runs finished()">
 <polygon fill="#999999" stroke="#666666" points="133,-32 0,-32 0,0 133,0 133,-32"/>
 <text text-anchor="start" x="8" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::Thread::finished</text>
 <text text-anchor="middle" x="66.5" y="-6.5" font-family="Helvetica,sans-Serif" font-size="10.00">Event</text>

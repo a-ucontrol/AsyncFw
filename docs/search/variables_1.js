@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['notify_0',['notify',['../classAsyncFw_1_1PollNotifier.html#aabd27ec525c6982e95e93ffd20f443cc',1,'AsyncFw::PollNotifier']]]
+  ['finished_0',['finished',['../classAsyncFw_1_1Thread.html#af1e818b40f0aa5bef7ea81573d29a463',1,'AsyncFw::Thread']]]
 ];

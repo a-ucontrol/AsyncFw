@@ -1,11 +1,11 @@
 <map id="AsyncFw::AbstractLog" name="AsyncFw::AbstractLog">
-<area shape="rect" id="Node000001" title="The AbstractLog class provides the base functionality for logger." alt="" coords="79,325,233,352"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1Thread.html" title="AsyncFw::Thread thread with sockets." alt="" coords="94,235,218,261"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="159,277,159,325,153,325,153,277"/>
+<area shape="rect" id="Node000001" title="The AbstractLog class provides the base functionality for logger." alt="" coords="79,341,233,368"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1Thread.html" title="AsyncFw::Thread thread with sockets." alt="" coords="94,251,218,277"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="159,293,159,341,153,341,153,293"/>
 <area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractThread.html" title="The AbstractThread class provides the base functionality for thread management." alt="" coords="5,120,179,147"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="109,159,151,233,147,236,104,161"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="107,159,152,249,147,251,102,162"/>
 <area shape="rect" id="Node000004" href="$classAsyncFw_1_1FunctionConnectorProtected.html" title=" " alt="" coords="202,112,406,155"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="266,167,174,236,171,232,263,162"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="271,167,172,252,169,248,267,163"/>
 <area shape="rect" id="Node000005" href="$classAsyncFw_1_1FunctionConnectorProtected.html" title="Защищенный коннетор, отправитель может быть только один." alt="" coords="207,5,401,48"/>
 <area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="307,64,307,111,301,111,301,64"/>
 </map>

@@ -201,8 +201,8 @@ AbstractThread::Private::List::~List() {
   lsDebug() << LogStream::Color::Magenta << size();
 }
 
-AbstractThread::AbstractThread(const std::string &_name) : private_(*new Private) {
-  private_.name = _name;
+AbstractThread::AbstractThread(const std::string &name) : private_(*new Private) {
+  private_.name = name;
   LockGuard lock(Private::list.mutex);
   std::vector<AbstractThread *>::iterator it = std::lower_bound(Private::list.begin(), Private::list.end(), this, Private::Compare());
   Private::list.insert(it, this);

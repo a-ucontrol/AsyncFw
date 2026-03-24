@@ -125,7 +125,7 @@ Inheritance diagram for AsyncFw::Log:</div>
 <div class="dynheader">
 Collaboration diagram for AsyncFw::Log:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1Log__coll__graph.svg" width="1410" height="208"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1Log__coll__graph.svg" width="1410" height="212"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
@@ -364,9 +364,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>finality</b> ()</td><
 <div class="line">  logAlert() &lt;&lt; <span class="stringliteral">&quot;logAlert&quot;</span>;</div>
 <div class="line">  <span class="comment">//logEmergency() &lt;&lt; &quot;Emergency&quot;;  // throw</span></div>
 <div class="line"> </div>
-<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Thread.html#a46662ffa7482f1c1e52b654c51639fd2">AsyncFw::Thread::currentThread</a>()-&gt;invokeMethod([]() { AsyncFw::MainThread::exit(); });</div>
+<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Thread.html#a46662ffa7482f1c1e52b654c51639fd2">AsyncFw::Thread::currentThread</a>()-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#aa58eb4ec370dece81d08f7cea08f2af7">invokeMethod</a>([]() { AsyncFw::MainThread::exit(); });</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordtype">int</span> ret = AsyncFw::MainThread::exec();</div>
+<div class="line"> </div>
+<div class="line">  AsyncFw::Log::instance()-&gt;append({AsyncFw::LogStream::Info, <span class="stringliteral">&quot;Log&quot;</span>, <span class="stringliteral">&quot;Application finished&quot;</span>, <span class="stringliteral">&quot;&quot;</span>});</div>
+<div class="line"> </div>
 <div class="line">  <span class="keywordflow">return</span> ret;</div>
 <div class="line">}</div>
 </div><!-- fragment --> </div><h2 class="groupheader">Member Function Documentation</h2>

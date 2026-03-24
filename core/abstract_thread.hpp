@@ -75,6 +75,7 @@ public:
     bool waiting;
   };
 
+  /*! \brief Runs a method in a managed thread. \param method runs method \param sync blocking wait if true \return True if the method is added to the queue */
   template <typename M>
   typename std::enable_if<std::is_void<typename std::invoke_result<M>::type>::value, bool>::type invokeMethod(M method, bool sync = false) const {
     if (!sync) {
@@ -106,10 +107,12 @@ public:
     }
     return true;
   }
+  /*! \brief Append poll task. \param fd file descriptor \param events watch events \param method task method \return True if the task added */
   template <typename M>
   bool appendPollTask(int fd, PollEvents events, M method) {
     return appendPollDescriptor(fd, events, new PollTask(std::forward<M>(method)));
   }
+  /*! \brief Append timer task. \param ms timeout in milliseconds \param method task method \return timer id if the task added or value less than zero */
   template <typename M>
   int appendTimerTask(int timeout, M method) {
     return appendTimer(timeout, new Task(std::forward<M>(method)));
@@ -129,7 +132,7 @@ public:
   virtual bool running() const;
   /*! \brief Runs a task in a managed thread. \param task poiner to AbstractTask \return True if the task is added to the queue */
   virtual bool invokeTask(AbstractTask *) const;
-  /*! \brief Append timer. \param ms timeout in milliseconds \param task pointer to AbstractTask \return timer id */
+  /*! \brief Append timer. \param ms timeout in milliseconds \param task pointer to AbstractTask \return timer id if timer added or value less than zero */
   virtual int appendTimer(int, AbstractTask *);
   /*! \brief Modify timer. \param id timer id \param ms timeout in milliseconds \return True if the timer modified */
   virtual bool modifyTimer(int, int);
@@ -186,6 +189,7 @@ protected:
     M method;
   };
 
+  /*! \brief Constructs a thread. \param name thread name */
   AbstractThread(const std::string &);
   virtual ~AbstractThread() = 0;
 

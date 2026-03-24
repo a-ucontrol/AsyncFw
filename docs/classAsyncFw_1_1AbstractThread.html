@@ -158,17 +158,17 @@ using&#160;</td><td class="memItemRight" valign="bottom"><b>LockGuard</b> = std:
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aa58eb4ec370dece81d08f7cea08f2af7" id="r_aa58eb4ec370dece81d08f7cea08f2af7"><td class="memTemplParams" colspan="2"><a id="aa58eb4ec370dece81d08f7cea08f2af7" name="aa58eb4ec370dece81d08f7cea08f2af7"></a>
-template&lt;typename M&gt; </td></tr>
-<tr class="memitem:aa58eb4ec370dece81d08f7cea08f2af7"><td class="memTemplItemLeft" align="right" valign="top">std::enable_if&lt; std::is_void&lt; typenamestd::invoke_result&lt; M &gt;::type &gt;::value, bool &gt;::type&#160;</td><td class="memTemplItemRight" valign="bottom"><b>invokeMethod</b> (M method, bool sync=false) const</td></tr>
+<tr class="memitem:aa58eb4ec370dece81d08f7cea08f2af7" id="r_aa58eb4ec370dece81d08f7cea08f2af7"><td class="memTemplParams" colspan="2">template&lt;typename M&gt; </td></tr>
+<tr class="memitem:aa58eb4ec370dece81d08f7cea08f2af7"><td class="memTemplItemLeft" align="right" valign="top">std::enable_if&lt; std::is_void&lt; typenamestd::invoke_result&lt; M &gt;::type &gt;::value, bool &gt;::type&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#aa58eb4ec370dece81d08f7cea08f2af7">invokeMethod</a> (M method, bool sync=false) const</td></tr>
+<tr class="memdesc:aa58eb4ec370dece81d08f7cea08f2af7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runs a method in a managed thread.  <br /></td></tr>
 <tr class="separator:aa58eb4ec370dece81d08f7cea08f2af7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0b6d6552ad2d0cdae6ce11fe6cb979be" id="r_a0b6d6552ad2d0cdae6ce11fe6cb979be"><td class="memTemplParams" colspan="2"><a id="a0b6d6552ad2d0cdae6ce11fe6cb979be" name="a0b6d6552ad2d0cdae6ce11fe6cb979be"></a>
-template&lt;typename M&gt; </td></tr>
-<tr class="memitem:a0b6d6552ad2d0cdae6ce11fe6cb979be"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>appendPollTask</b> (int fd, PollEvents events, M method)</td></tr>
+<tr class="memitem:a0b6d6552ad2d0cdae6ce11fe6cb979be" id="r_a0b6d6552ad2d0cdae6ce11fe6cb979be"><td class="memTemplParams" colspan="2">template&lt;typename M&gt; </td></tr>
+<tr class="memitem:a0b6d6552ad2d0cdae6ce11fe6cb979be"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a0b6d6552ad2d0cdae6ce11fe6cb979be">appendPollTask</a> (int fd, PollEvents events, M method)</td></tr>
+<tr class="memdesc:a0b6d6552ad2d0cdae6ce11fe6cb979be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Append poll task.  <br /></td></tr>
 <tr class="separator:a0b6d6552ad2d0cdae6ce11fe6cb979be"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6ca7a9fa8bd7197c82529d5b4b83b97d" id="r_a6ca7a9fa8bd7197c82529d5b4b83b97d"><td class="memTemplParams" colspan="2"><a id="a6ca7a9fa8bd7197c82529d5b4b83b97d" name="a6ca7a9fa8bd7197c82529d5b4b83b97d"></a>
-template&lt;typename M&gt; </td></tr>
-<tr class="memitem:a6ca7a9fa8bd7197c82529d5b4b83b97d"><td class="memTemplItemLeft" align="right" valign="top">int&#160;</td><td class="memTemplItemRight" valign="bottom"><b>appendTimerTask</b> (int timeout, M method)</td></tr>
+<tr class="memitem:a6ca7a9fa8bd7197c82529d5b4b83b97d" id="r_a6ca7a9fa8bd7197c82529d5b4b83b97d"><td class="memTemplParams" colspan="2">template&lt;typename M&gt; </td></tr>
+<tr class="memitem:a6ca7a9fa8bd7197c82529d5b4b83b97d"><td class="memTemplItemLeft" align="right" valign="top">int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a6ca7a9fa8bd7197c82529d5b4b83b97d">appendTimerTask</a> (int timeout, M method)</td></tr>
+<tr class="memdesc:a6ca7a9fa8bd7197c82529d5b4b83b97d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Append timer task.  <br /></td></tr>
 <tr class="separator:a6ca7a9fa8bd7197c82529d5b4b83b97d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9b9db94ad8c90eafe1ef34a076af8498" id="r_a9b9db94ad8c90eafe1ef34a076af8498"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9b9db94ad8c90eafe1ef34a076af8498">startedEvent</a> ()</td></tr>
 <tr class="memdesc:a9b9db94ad8c90eafe1ef34a076af8498"><td class="mdescLeft">&#160;</td><td class="mdescRight">This call from thread when it starts executing.  <br /></td></tr>
@@ -254,8 +254,8 @@ static <a class="el" href="classAsyncFw_1_1AbstractThread.html">AbstractThread</
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:a8c9202c90ac101522f26c4260cb01b59" id="r_a8c9202c90ac101522f26c4260cb01b59"><td class="memItemLeft" align="right" valign="top"><a id="a8c9202c90ac101522f26c4260cb01b59" name="a8c9202c90ac101522f26c4260cb01b59"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>AbstractThread</b> (const std::string &amp;)</td></tr>
+<tr class="memitem:a8c9202c90ac101522f26c4260cb01b59" id="r_a8c9202c90ac101522f26c4260cb01b59"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8c9202c90ac101522f26c4260cb01b59">AbstractThread</a> (const std::string &amp;)</td></tr>
+<tr class="memdesc:a8c9202c90ac101522f26c4260cb01b59"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a thread.  <br /></td></tr>
 <tr class="separator:a8c9202c90ac101522f26c4260cb01b59"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab61c0a69425ecd8a83d8825050c2f077" id="r_ab61c0a69425ecd8a83d8825050c2f077"><td class="memItemLeft" align="right" valign="top"><a id="ab61c0a69425ecd8a83d8825050c2f077" name="ab61c0a69425ecd8a83d8825050c2f077"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setId</b> ()</td></tr>
@@ -279,7 +279,195 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>Thread</b></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The <a class="el" href="classAsyncFw_1_1AbstractThread.html" title="The AbstractThread class provides the base functionality for thread management.">AbstractThread</a> class provides the base functionality for thread management. </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a8c9202c90ac101522f26c4260cb01b59" name="a8c9202c90ac101522f26c4260cb01b59"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8c9202c90ac101522f26c4260cb01b59">&#9670;&#160;</a></span>AbstractThread()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">AbstractThread::AbstractThread </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>name</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructs a thread. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>thread name </td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1AbstractThread_a8c9202c90ac101522f26c4260cb01b59_cgraph.svg" width="406" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1AbstractThread_a8c9202c90ac101522f26c4260cb01b59_icgraph.svg" width="843" height="120"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="aa58eb4ec370dece81d08f7cea08f2af7" name="aa58eb4ec370dece81d08f7cea08f2af7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa58eb4ec370dece81d08f7cea08f2af7">&#9670;&#160;</a></span>invokeMethod()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename M&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::enable_if&lt; std::is_void&lt; typenamestd::invoke_result&lt; M &gt;::type &gt;::value, bool &gt;::type AsyncFw::AbstractThread::invokeMethod </td>
+          <td>(</td>
+          <td class="paramtype">M</td>          <td class="paramname"><span class="paramname"><em>method</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>sync</em></span><span class="paramdefsep"> = </span><span class="paramdefval">false</span>&#160;) const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Runs a method in a managed thread. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">method</td><td>runs method</td></tr>
+    <tr><td class="paramname">sync</td><td>blocking wait if true </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the method is added to the queue </dd></dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1AbstractThread_aa58eb4ec370dece81d08f7cea08f2af7_cgraph.svg" width="406" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<a id="a0b6d6552ad2d0cdae6ce11fe6cb979be" name="a0b6d6552ad2d0cdae6ce11fe6cb979be"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0b6d6552ad2d0cdae6ce11fe6cb979be">&#9670;&#160;</a></span>appendPollTask()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename M&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool AsyncFw::AbstractThread::appendPollTask </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>fd</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">PollEvents</td>          <td class="paramname"><span class="paramname"><em>events</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">M</td>          <td class="paramname"><span class="paramname"><em>method</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Append poll task. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fd</td><td>file descriptor</td></tr>
+    <tr><td class="paramname">events</td><td>watch events</td></tr>
+    <tr><td class="paramname">method</td><td>task method </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the task added </dd></dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1AbstractThread_a0b6d6552ad2d0cdae6ce11fe6cb979be_cgraph.svg" width="406" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<a id="a6ca7a9fa8bd7197c82529d5b4b83b97d" name="a6ca7a9fa8bd7197c82529d5b4b83b97d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6ca7a9fa8bd7197c82529d5b4b83b97d">&#9670;&#160;</a></span>appendTimerTask()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename M&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int AsyncFw::AbstractThread::appendTimerTask </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>timeout</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">M</td>          <td class="paramname"><span class="paramname"><em>method</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Append timer task. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ms</td><td>timeout in milliseconds</td></tr>
+    <tr><td class="paramname">method</td><td>task method </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>timer id if the task added or value less than zero </dd></dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1AbstractThread_a6ca7a9fa8bd7197c82529d5b4b83b97d_cgraph.svg" width="646" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
 <a id="a43ef467a5f4dcc46d152a06cc20bf41c" name="a43ef467a5f4dcc46d152a06cc20bf41c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a43ef467a5f4dcc46d152a06cc20bf41c">&#9670;&#160;</a></span>threads()</h2>
 
@@ -416,7 +604,7 @@ Here is the caller graph for this function:</div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1AbstractThread_abe96e6b2a1de041f0d25390a6b77e50a_icgraph.svg" width="406" height="120"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1AbstractThread_abe96e6b2a1de041f0d25390a6b77e50a_icgraph.svg" width="406" height="187"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -456,11 +644,16 @@ Here is the caller graph for this function:</div>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>timer id </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>timer id if timer added or value less than zero </dd></dl>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1AbstractThread_a1fa8bc43151797cbcfb2013ee1fce2ce_cgraph.svg" width="424" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1AbstractThread_a1fa8bc43151797cbcfb2013ee1fce2ce_icgraph.svg" width="406" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -584,6 +777,11 @@ Here is the call graph for this function:</div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if the poll descriptor added </dd></dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1AbstractThread_a9a4001da757d31945c4e6be4e20c31ed_icgraph.svg" width="406" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
 
 </div>
 </div>

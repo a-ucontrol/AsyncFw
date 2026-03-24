@@ -229,7 +229,7 @@ std::mutex&#160;</td><td class="memItemRight" valign="bottom"><b>mutex</b></td><
 <div class="line">  logInfo() &lt;&lt; threadPool-&gt;text();</div>
 <div class="line"> </div>
 <div class="line">  <a class="code hl_class" href="classAsyncFw_1_1AbstractThread.html">AsyncFw::AbstractThread</a> *_lt = AsyncFw::ThreadPool::instance()-&gt;createThread(<span class="stringliteral">&quot;LogThread&quot;</span>);</div>
-<div class="line">  _lt-&gt;invokeMethod([]() { AsyncFw::Instance&lt;AsyncFw::Log&gt;::create(); }, <span class="keyword">true</span>);  <span class="comment">//create log instance in log thread _lt</span></div>
+<div class="line">  _lt-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#aa58eb4ec370dece81d08f7cea08f2af7">invokeMethod</a>([]() { AsyncFw::Instance&lt;AsyncFw::Log&gt;::create(); }, <span class="keyword">true</span>);  <span class="comment">//create log instance in log thread _lt</span></div>
 <div class="line"> </div>
 <div class="line">  <a class="code hl_class" href="classAsyncFw_1_1AbstractThread.html">AsyncFw::AbstractThread</a> *_t = AsyncFw::ThreadPool::instance()-&gt;createThread(<span class="stringliteral">&quot;SyncExample&quot;</span>);</div>
 <div class="line"> </div>
@@ -270,7 +270,7 @@ std::mutex&#160;</td><td class="memItemRight" valign="bottom"><b>mutex</b></td><
 <div class="line">      });</div>
 <div class="line"> </div>
 <div class="line">  AsyncFw::AbstractThreadPool::Thread *_t1 = AsyncFw::ThreadPool::instance()-&gt;createThread(<span class="stringliteral">&quot;DestroyFromThreadExample&quot;</span>);</div>
-<div class="line">  _t1-&gt;invokeMethod([_t1]() { _t1-&gt;destroy(); });</div>
+<div class="line">  _t1-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#aa58eb4ec370dece81d08f7cea08f2af7">invokeMethod</a>([_t1]() { _t1-&gt;destroy(); });</div>
 <div class="line"> </div>
 <div class="line">  logNotice() &lt;&lt; <span class="stringliteral">&quot;Start Applicaiton&quot;</span>;</div>
 <div class="line"> </div>

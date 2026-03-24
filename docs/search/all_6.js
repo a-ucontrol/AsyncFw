@@ -7,5 +7,6 @@ var searchData=
   ['instance_3c_20asyncfw_3a_3athreadpool_20_3e_4',['Instance&lt; AsyncFw::ThreadPool &gt;',['../classAsyncFw_1_1Instance.html',1,'AsyncFw']]],
   ['instance_3c_20log_20_3e_5',['Instance&lt; Log &gt;',['../classAsyncFw_1_1Instance.html',1,'AsyncFw']]],
   ['interruptrequested_6',['interruptRequested',['../classAsyncFw_1_1AbstractThread.html#ab614c8e9a266d924e86c3c49c1a6ff36',1,'AsyncFw::AbstractThread']]],
-  ['invoketask_7',['invokeTask',['../classAsyncFw_1_1AbstractThread.html#abe96e6b2a1de041f0d25390a6b77e50a',1,'AsyncFw::AbstractThread']]]
+  ['invokemethod_7',['invokeMethod',['../classAsyncFw_1_1AbstractThread.html#aa58eb4ec370dece81d08f7cea08f2af7',1,'AsyncFw::AbstractThread']]],
+  ['invoketask_8',['invokeTask',['../classAsyncFw_1_1AbstractThread.html#abe96e6b2a1de041f0d25390a6b77e50a',1,'AsyncFw::AbstractThread']]]
 ];

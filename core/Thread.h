@@ -21,17 +21,25 @@ class Thread : public AbstractThread {
 public:
   /*! \brief Returns a pointer to the AsyncFw::Thread that manages the currently executing thread. */
   static Thread *currentThread();
+
+  /*! \brief Constructs a thread. \param name thread name */
   Thread(const std::string & = "Thread");
   ~Thread() override;
 
+  /*! \brief The Thread::started connector */
   FunctionConnectorProtected<Thread>::Connector<> started;
+  /*! \brief The Thread::finished connector */
   FunctionConnectorProtected<Thread>::Connector<> finished;
+  /*! \brief The Thread::destroing connector */
   FunctionConnectorProtected<Thread>::Connector<> destroing;
 
 protected:
-  std::vector<AbstractSocket *> sockets_;
+  /*! \brief Runs started()*/
   void startedEvent() override;
+  /*! \brief Runs finished()*/
   void finishedEvent() override;
+
+  std::vector<AbstractSocket *> sockets_;
 
 private:
   struct Compare {
