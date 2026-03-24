@@ -203,7 +203,6 @@ Log::~Log() {
   lsTrace();
   if (instance_.value == this) instance_.value = nullptr;
   if (!thread_) return;
-  tdg = {};
   finality();
 }
 

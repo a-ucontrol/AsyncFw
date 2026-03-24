@@ -69,8 +69,7 @@ FunctionConnectionGuard::FunctionConnectionGuard(AbstractFunctionConnector::Conn
 
 FunctionConnectionGuard::~FunctionConnectionGuard() {
   if (!c_) return;
-  c_->guarg_ = nullptr;
-  if (c_->thread_->id() != std::this_thread::get_id() || !c_->thread_->invokeMethod([_p = c_]() { delete _p; })) delete c_;
+  delete c_;
   trace() << this;
 }
 
