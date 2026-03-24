@@ -9,7 +9,6 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include <sys/wait.h>
 #include "core/abstract_thread.hpp"
 #include "core/LogStream.h"
-#include "Coroutine.h"
 #include "SystemProcess.h"
 
 #ifdef EXTEND_SYSTEMPROCESS_TRACE
@@ -23,20 +22,20 @@ using namespace AsyncFw;
 
 struct SystemProcess::Private {
   bool process();
-  int out;
-  int err;
+
   int in = -1;
   bool redirect_stdin = true;
-
-  AbstractThread *thread_;
+  AbstractThread::Holder *holder_ = nullptr;
   State state_ = None;
 
+  int out;
+  int err;
+
+  AbstractThread *thread_;
   std::vector<std::string> args;
   int code_;
   std::string cmdline_;
   pid_t pid_;
-  CoroutineTask *wait_task_ = nullptr;
-  CoroutineTask waitTask();
 };
 
 SystemProcess::SystemProcess(bool redirect_stdin) {
@@ -139,10 +138,9 @@ void SystemProcess::wait() {
     lsWarning("process not running");
     return;
   }
-  CoroutineTask ct = private_->waitTask();
-  private_->wait_task_ = &ct;
-  ct.wait();
-  private_->wait_task_ = nullptr;
+  AbstractThread::Holder _h;
+  private_->holder_ = &_h;
+  _h.wait();
 }
 
 int SystemProcess::exitCode() { return private_->code_; }
@@ -208,13 +206,14 @@ void SystemProcess::finality() {
     lsError() << "error waitpid";
   }
 
-  if (private_->wait_task_) private_->wait_task_->resume();
+  if (private_->holder_) {
+    private_->holder_->complete();
+    private_->holder_ = nullptr;
+  }
 
   stateChanged(private_->state_);
   lsTrace() << LogStream::Color::Red << "End: " + private_->cmdline_ << r << (int)private_->state_;
 }
-
-CoroutineTask SystemProcess::Private::waitTask() { co_await CoroutineAwait(); }
 
 bool SystemProcess::Private::process() {
   int _pipe_out[2];
