@@ -189,7 +189,7 @@ void Log::Instance::created() {
 Log::Log(int size, const std::string &name) : Rrd(size, name), AbstractLog() {
   thread_ = Rrd::thread_;
 
-  tfg = thread_->destroing([this]() {
+  tdg = thread_->destroing([this]() {
     lsWarning() << "logger thread finished, finalize logger";
     finality();
   });
@@ -203,7 +203,7 @@ Log::~Log() {
   lsTrace();
   if (instance_.value == this) instance_.value = nullptr;
   if (!thread_) return;
-  tfg = {};
+  tdg = {};
   finality();
 }
 
