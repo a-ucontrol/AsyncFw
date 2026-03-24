@@ -44,6 +44,9 @@ int main(int argc, char *argv[]) {
   AsyncFw::Thread::currentThread()->invokeMethod([]() { AsyncFw::MainThread::exit(); });
 
   int ret = AsyncFw::MainThread::exec();
+
+  AsyncFw::Log::instance()->append({AsyncFw::LogStream::Info, "Log", "Application finished", ""});
+
   return ret;
 }
 //! [snippet]

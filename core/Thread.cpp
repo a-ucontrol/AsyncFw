@@ -854,6 +854,7 @@ Thread *Thread::currentThread() { return static_cast<Thread *>(AbstractThread::c
 Thread::Thread(const std::string &name) : AbstractThread(name) { trace(); }
 
 Thread::~Thread() {
+  destroing();
   warning_if(!sockets_.empty()) << "socket list not empty" << sockets_.size();
   if (AbstractThread::running()) {
     lsWarning() << "destroy running thread" << LOG_THREAD_NAME;

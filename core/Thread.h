@@ -26,6 +26,7 @@ public:
 
   FunctionConnectorProtected<Thread>::Connector<> started;
   FunctionConnectorProtected<Thread>::Connector<> finished;
+  FunctionConnectorProtected<Thread>::Connector<> destroing;
 
 protected:
   std::vector<AbstractSocket *> sockets_;
