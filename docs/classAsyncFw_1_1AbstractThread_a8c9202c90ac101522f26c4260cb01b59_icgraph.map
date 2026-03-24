@@ -1,0 +1,14 @@
+<map id="AsyncFw::AbstractThread::AbstractThread" name="AsyncFw::AbstractThread::AbstractThread">
+<area shape="rect" id="Node000001" title="Constructs a thread." alt="" coords="664,35,838,77"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractThread.html#ac1b35ef04b06ce771f6d6ca0a5b120db" title="Returns a pointer to the AsyncFw::AbstractThread that manages the currently executing thread." alt="" coords="443,64,616,107"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="649,72,617,76,617,71,649,67"/>
+<area shape="rect" id="Node000006" href="$classAsyncFw_1_1Thread.html#afc5e422090767dd84020381fb9a4d490" title="Constructs a thread." alt="" coords="444,13,616,40"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="649,45,616,41,617,35,649,40"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1Thread.html#a46662ffa7482f1c1e52b654c51639fd2" title="Returns a pointer to the AsyncFw::Thread that manages the currently executing thread." alt="" coords="222,5,394,48"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="432,62,391,51,392,46,433,57"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1AbstractThread_1_1Holder.html#a795fc5bb1d23123fc892b8d414c56083" title="Runs nested exec() and wait for it completed." alt="" coords="222,72,395,115"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="428,92,396,93,395,88,427,86"/>
+<area shape="rect" id="Node000005" href="$structAsyncFw_1_1CoroutineTask.html#a820a0a3410c4a14a71ad3599f46c1bb0" title="Runs nested Thread::exec() and wait for task finished." alt="" coords="5,72,174,115"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="206,96,174,96,174,91,206,91"/>
+<area shape="poly" id="edge6_Node000006_Node000003" title=" " alt="" coords="428,29,395,29,395,24,428,24"/>
+</map>
