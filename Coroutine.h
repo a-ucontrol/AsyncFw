@@ -29,6 +29,7 @@ struct CoroutineTask {
     std::suspend_always final_suspend() noexcept;
     void unhandled_exception() {}
     void return_void();
+    /*! \brief Execute coroutine_handle::resume on the thread where the promise_type is created. */
     void resume_queued();
 
   private:

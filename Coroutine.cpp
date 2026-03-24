@@ -54,8 +54,6 @@ void CoroutineTask::wait() {
 
 void CoroutineTask::resume() { std::coroutine_handle<promise_type>::from_promise(*promise).resume(); }
 
-//void CoroutineTask::resume_queued() { promise->resume_queued(); }
-
 bool CoroutineTask::finished() { return promise->private_->finished; }
 
 CoroutineTask::promise_type::promise_type() {
