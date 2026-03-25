@@ -819,7 +819,7 @@ void AbstractThread::removePollDescriptor(int fd) {
     private_.poll_tasks.erase(it);
   }
   if (!invokeTask(_t)) {
-    _t->invoke();
+    (*_t)();
     delete _t;
   }
 #else
