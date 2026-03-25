@@ -19,7 +19,7 @@ public:
   using ItemList = DataArrayList;
   template <typename T>
   void setAverage(int _interval, T f, int _offset = 0) {
-    average = new Function(f);
+    average = new FunctionArgs<const ItemList &>::Function(f);
     aInterval = _interval / interval;
     aOffset = _offset;
   }
@@ -56,12 +56,6 @@ protected:
   bool readOnly = false;
 
 private:
-  template <typename T>
-  struct Function : AbstractFunction<const ItemList &> {
-    Function(T &_f) : f(std::move(_f)) {}
-    void operator()(const ItemList &_h) override { f(_h); }
-    T f;
-  };
   AbstractFunction<const ItemList &> *average = nullptr;
   int aInterval = 0;
   int aOffset = 0;

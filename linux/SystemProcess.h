@@ -8,7 +8,6 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #pragma once
 
 #include <string>
-#include "core/abstract_function.hpp"
 #include "core/FunctionConnector.h"
 
 namespace AsyncFw {
@@ -32,21 +31,15 @@ public:
 
   template <typename T>
   static void exec(const std::string &cmd, const std::vector<std::string> &args, T f) {
-    exec_(cmd, args, new Function<T>(f));
+    exec_(cmd, args, new FunctionArgs<int, State, const std::string &, const std::string &>::Function<T>(f));
   }
   template <typename T>
   static void exec(const std::string &cmd, T f) {
-    exec_(cmd, {}, new Function<T>(f));
+    exec_(cmd, {}, new FunctionArgs<int, State, const std::string &, const std::string &>::Function<T>(f));
   }
   static void exec(const std::string &cmd, const std::vector<std::string> &args = {}) { exec_(cmd, args, nullptr); }
 
 private:
-  template <typename T>
-  struct Function : AbstractFunction<int, State, const std::string &, const std::string &> {
-    Function(T &_f) : f(std::move(_f)) {}
-    void operator()(int r, State s, const std::string &out, const std::string &err) override { f(r, s, out, err); }
-    T f;
-  };
   static void exec_(const std::string &, const std::vector<std::string> &, AbstractFunction<int, State, const std::string &, const std::string &> *);
 
   void finality();

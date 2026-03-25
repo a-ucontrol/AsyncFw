@@ -9,7 +9,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #include <coroutine>
 #include "core/AnyData.h"
-#include "core/abstract_function.hpp"
+#include "core/function.hpp"
 
 namespace AsyncFw {
 struct CoroutineAwait;
@@ -50,7 +50,7 @@ using CoroutineHandle = std::coroutine_handle<CoroutineTask::promise_type>;
 /*! \brief The CoroutineAwait struct. */
 struct CoroutineAwait {
   template <typename T>
-  CoroutineAwait(T _f) : f_(new Function(_f)) {}
+  CoroutineAwait(T _f) : f_(new FunctionArgs<const CoroutineHandle>::Function<T>(_f)) {}
   CoroutineAwait() = default;
   CoroutineAwait(const CoroutineAwait &) = delete;
   CoroutineAwait &operator=(const CoroutineAwait &) = delete;
@@ -60,12 +60,6 @@ struct CoroutineAwait {
   virtual CoroutineHandle await_resume() const noexcept;
 
 private:
-  template <typename T>
-  struct Function : AbstractFunction<const CoroutineHandle> {
-    Function(T &_f) : f(std::move(_f)) {}
-    void operator()(const CoroutineHandle _h) override { f(_h); }
-    T f;
-  };
   mutable CoroutineHandle h_;
   AbstractFunction<const CoroutineHandle> *f_ = nullptr;
 };
