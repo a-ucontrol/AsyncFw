@@ -8,6 +8,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #pragma once
 
 #include <string>
+#include "core/abstract_function.hpp"
 #include "core/FunctionConnector.h"
 
 namespace AsyncFw {
@@ -40,17 +41,13 @@ public:
   static void exec(const std::string &cmd, const std::vector<std::string> &args = {}) { exec_(cmd, args, nullptr); }
 
 private:
-  struct AbstractFunction {
-    virtual void invoke(int, State, const std::string &, const std::string &) = 0;
-    virtual ~AbstractFunction() = default;
-  };
   template <typename T>
-  struct Function : AbstractFunction {
+  struct Function : AbstractFunction<int, State, const std::string &, const std::string &> {
     Function(T &_f) : f(std::move(_f)) {}
     void invoke(int r, State s, const std::string &out, const std::string &err) override { f(r, s, out, err); }
     T f;
   };
-  static void exec_(const std::string &, const std::vector<std::string> &, AbstractFunction *);
+  static void exec_(const std::string &, const std::vector<std::string> &, AbstractFunction<int, State, const std::string &, const std::string &> *);
 
   void finality();
   struct Private;

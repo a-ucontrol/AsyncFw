@@ -9,6 +9,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #include <coroutine>
 #include "core/AnyData.h"
+#include "core/abstract_function.hpp"
 
 namespace AsyncFw {
 struct CoroutineAwait;
@@ -59,17 +60,13 @@ struct CoroutineAwait {
   virtual CoroutineHandle await_resume() const noexcept;
 
 private:
-  struct AbstractFunction {
-    virtual void invoke(const CoroutineHandle) = 0;
-    virtual ~AbstractFunction() = default;
-  };
   template <typename T>
-  struct Function : AbstractFunction {
+  struct Function : AbstractFunction<const CoroutineHandle> {
     Function(T &_f) : f(std::move(_f)) {}
     void invoke(const CoroutineHandle _h) override { f(_h); }
     T f;
   };
   mutable CoroutineHandle h_;
-  AbstractFunction *f_ = nullptr;
+  AbstractFunction<const CoroutineHandle> *f_ = nullptr;
 };
 }  // namespace AsyncFw

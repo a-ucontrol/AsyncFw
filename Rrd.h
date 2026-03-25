@@ -56,17 +56,13 @@ protected:
   bool readOnly = false;
 
 private:
-  struct AbstractFunction {
-    virtual void invoke(const ItemList &) = 0;
-    virtual ~AbstractFunction() = default;
-  };
   template <typename T>
-  struct Function : AbstractFunction {
+  struct Function : AbstractFunction<const ItemList &> {
     Function(T &_f) : f(std::move(_f)) {}
     void invoke(const ItemList &_h) override { f(_h); }
     T f;
   };
-  AbstractFunction *average = nullptr;
+  AbstractFunction<const ItemList &> *average = nullptr;
   int aInterval = 0;
   int aOffset = 0;
   int interval;

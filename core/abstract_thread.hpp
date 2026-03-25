@@ -9,6 +9,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #include <thread>
 #include <vector>
+#include "abstract_function.hpp"
 
 #define AsyncFw_STATIC_INIT_PRIORITY 65530
 
@@ -48,21 +49,14 @@ class AbstractThread {
   struct Private;
 
 public:
+  enum PollEvents : uint16_t { PollNo = 0, PollIn = POLLIN_, PollPri = POLLPRI_, PollOut = POLLOUT_, PollErr = POLLERR_, PollHup = POLLHUP_, PollNval = POLLNVAL_ };
   /*! \brief The LockGuard type. */
   using LockGuard = std::lock_guard<std::mutex>;
-  enum PollEvents : uint16_t { PollNo = 0, PollIn = POLLIN_, PollPri = POLLPRI_, PollOut = POLLOUT_, PollErr = POLLERR_, PollHup = POLLHUP_, PollNval = POLLNVAL_ };
-  /*! \brief The AbstractTask class. */
-  class AbstractTask {
-  public:
-    virtual void invoke() = 0;
-    virtual ~AbstractTask() = default;
-  };
-  /*! \brief The AbstractPollTask class. */
-  class AbstractPollTask {
-  public:
-    virtual void invoke(AbstractThread::PollEvents) = 0;
-    virtual ~AbstractPollTask() = default;
-  };
+  /*! \brief The AbstractTask type. */
+  using AbstractTask = AbstractFunction<>;
+  /*! \brief The AbstractPollTask type. */
+  using AbstractPollTask = AbstractFunction<AbstractThread::PollEvents>;
+
   /*! \brief The Holder class. */
   class Holder {
   public:
