@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.13.2"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>AsyncFw: Member List</title>
+<title>AsyncFw: core/function.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -77,7 +77,7 @@ $(function() { codefold.init(0); });
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(function(){initNavTree('classAsyncFw_1_1AbstractThread_1_1AbstractTask.html',''); initResizable(true); });
+$(function(){initNavTree('function_8hpp_source.html',''); initResizable(true); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -103,19 +103,35 @@ $(function(){initNavTree('classAsyncFw_1_1AbstractThread_1_1AbstractTask.html','
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">AsyncFw::AbstractThread::AbstractTask Member List</div></div>
+  <div class="headertitle"><div class="title">function.hpp</div></div>
 </div><!--header-->
 <div class="contents">
-
-<p>This is the complete list of members for <a class="el" href="classAsyncFw_1_1AbstractThread_1_1AbstractTask.html">AsyncFw::AbstractThread::AbstractTask</a>, including all inherited members.</p>
-<table class="directory">
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>invoke</b>()=0 (defined in <a class="el" href="classAsyncFw_1_1AbstractThread_1_1AbstractTask.html">AsyncFw::AbstractThread::AbstractTask</a>)</td><td class="entry"><a class="el" href="classAsyncFw_1_1AbstractThread_1_1AbstractTask.html">AsyncFw::AbstractThread::AbstractTask</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
-  <tr bgcolor="#f0f0f0" class="odd"><td class="entry"><b>~AbstractTask</b>()=default (defined in <a class="el" href="classAsyncFw_1_1AbstractThread_1_1AbstractTask.html">AsyncFw::AbstractThread::AbstractTask</a>)</td><td class="entry"><a class="el" href="classAsyncFw_1_1AbstractThread_1_1AbstractTask.html">AsyncFw::AbstractThread::AbstractTask</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
-</table></div><!-- contents -->
+<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="keyword">namespace </span>AsyncFw {</div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span>... Args&gt;</div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="keyword">struct </span>AbstractFunction {</div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span>  <span class="keyword">virtual</span> <span class="keywordtype">void</span> operator()(Args...) = 0;</div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span>  <span class="keyword">virtual</span> ~AbstractFunction() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>};</div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span>... Args&gt;</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="keyword">struct </span>FunctionArgs {</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>  <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>  <span class="keyword">struct </span>Function : <span class="keyword">public</span> AbstractFunction&lt;Args...&gt; {</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    <span class="keywordtype">void</span> operator()(Args... args)<span class="keyword"> override </span>{ f(args...); }</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    Function(T &amp;_f) : f(std::move(_f)) {}</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>  <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    T f;</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>  };</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>};</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>}  <span class="comment">// namespace AsyncFw</span></div>
+</div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
+    <li class="navelem"><a class="el" href="dir_4270bfced15e0e73154b13468c7c9ad9.html">core</a></li><li class="navelem"><b>function.hpp</b></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
   </ul>
 </div>

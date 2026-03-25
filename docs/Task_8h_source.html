@@ -121,7 +121,7 @@ $(function(){initNavTree('Task_8h_source.html',''); initResizable(true); });
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="keyword">namespace </span>AsyncFw {</div>
 <div class="foldopen" id="foldopen00016" data-start="{" data-end="};">
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno"><a class="line" href="classAsyncFw_1_1AbstractTask.html">   16</a></span><span class="keyword">class </span>AbstractTask : <span class="keyword">public</span> <a class="code hl_class" href="classAsyncFw_1_1AbstractThread_1_1AbstractTask.html">AsyncFw::AbstractThread::AbstractTask</a>, <span class="keyword">public</span> AnyData {</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno"><a class="line" href="classAsyncFw_1_1AbstractTask.html">   16</a></span><span class="keyword">class </span>AbstractTask : <span class="keyword">public</span> <a class="code hl_typedef" href="classAsyncFw_1_1AbstractThread.html#ab67dc17d7fefb34e7af6a0a3115c0023">AsyncFw::AbstractThread::AbstractTask</a>, <span class="keyword">public</span> AnyData {</div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="keyword">public</span>:</div>
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>  AbstractTask();</div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>  ~AbstractTask();</div>
@@ -134,7 +134,7 @@ $(function(){initNavTree('Task_8h_source.html',''); initResizable(true); });
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="classAsyncFw_1_1Task.html">   25</a></span><span class="keyword">class </span>Task : <span class="keyword">public</span> AbstractTask {</div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="keyword">public</span>:</div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>  Task(M &amp;&amp;method, <a class="code hl_class" href="classAsyncFw_1_1AbstractThread.html">AbstractThread</a> *thread = <span class="keyword">nullptr</span>) : method(std::move(method)), thread_(thread) {}</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>  <span class="keywordtype">void</span> invoke()<span class="keyword"> override </span>{</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>  <span class="keywordtype">void</span> operator()()<span class="keyword"> override </span>{</div>
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    running_ = <span class="keyword">true</span>;</div>
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    <span class="keywordflow">if</span> (!thread_) {</div>
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>      method(&amp;data_);</div>
@@ -155,8 +155,8 @@ $(function(){initNavTree('Task_8h_source.html',''); initResizable(true); });
 <div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>};</div>
 </div>
 <div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>}  <span class="comment">// namespace AsyncFw</span></div>
-<div class="ttc" id="aclassAsyncFw_1_1AbstractThread_1_1AbstractTask_html"><div class="ttname"><a href="classAsyncFw_1_1AbstractThread_1_1AbstractTask.html">AsyncFw::AbstractThread::AbstractTask</a></div><div class="ttdoc">The AbstractTask class.</div><div class="ttdef"><b>Definition</b> abstract_thread.hpp:55</div></div>
-<div class="ttc" id="aclassAsyncFw_1_1AbstractThread_html"><div class="ttname"><a href="classAsyncFw_1_1AbstractThread.html">AsyncFw::AbstractThread</a></div><div class="ttdoc">The AbstractThread class provides the base functionality for thread management.</div><div class="ttdef"><b>Definition</b> abstract_thread.hpp:45</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1AbstractThread_html"><div class="ttname"><a href="classAsyncFw_1_1AbstractThread.html">AsyncFw::AbstractThread</a></div><div class="ttdoc">The AbstractThread class provides the base functionality for thread management.</div><div class="ttdef"><b>Definition</b> abstract_thread.hpp:46</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1AbstractThread_html_ab67dc17d7fefb34e7af6a0a3115c0023"><div class="ttname"><a href="classAsyncFw_1_1AbstractThread.html#ab67dc17d7fefb34e7af6a0a3115c0023">AsyncFw::AbstractThread::AbstractTask</a></div><div class="ttdeci">AbstractFunction&lt;&gt; AbstractTask</div><div class="ttdoc">The AbstractTask type.</div><div class="ttdef"><b>Definition</b> abstract_thread.hpp:56</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
