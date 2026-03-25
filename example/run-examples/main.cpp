@@ -80,7 +80,7 @@ void run_examples() {
 }
 
 int main(int, char *[]) {
-  AsyncFw::SystemProcess::exec("/bin/ls", {EXAMPLES_PATH})([](int _r, AsyncFw::SystemProcess::State _s, const std::string &_out, const std::string &_err) {
+  AsyncFw::SystemProcess::exec("/bin/ls", {EXAMPLES_PATH}, [](int _r, AsyncFw::SystemProcess::State _s, const std::string &_out, const std::string &_err) {
     logNotice() << "End:" << _r << static_cast<int>(_s);
     if (!_out.empty()) logInfo() << _out;
     if (!_err.empty()) logError() << _err;

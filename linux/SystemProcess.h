@@ -29,12 +29,32 @@ public:
   FunctionConnectorProtected<SystemProcess>::Connector<State> stateChanged {AbstractFunctionConnector::Queued};
   FunctionConnectorProtected<SystemProcess>::Connector<const std::string &, bool /*stdout: 0, stderr: 1*/> output {AbstractFunctionConnector::Queued};
 
-  static FunctionConnectorProtected<SystemProcess>::Connector<int, State, const std::string &, const std::string &> &exec(const std::string &, const std::vector<std::string> &);
+  template <typename T>
+  static void exec(const std::string &cmd, const std::vector<std::string> &args, T f) {
+    exec_(cmd, args, new Function<T>(f));
+  }
+  template <typename T>
+  static void exec(const std::string &cmd, T f) {
+    exec_(cmd, {}, new Function<T>(f));
+  }
+  static void exec(const std::string &cmd, const std::vector<std::string> &args = {}) { exec_(cmd, args, nullptr); }
 
 private:
+  struct AbstractFunction {
+    virtual void invoke(int, State, const std::string &, const std::string &) = 0;
+    virtual ~AbstractFunction() = default;
+  };
+  template <typename T>
+  struct Function : AbstractFunction {
+    Function(T &_f) : f(std::move(_f)) {}
+    void invoke(int r, State s, const std::string &out, const std::string &err) override { f(r, s, out, err); }
+    T f;
+  };
+  static void exec_(const std::string &, const std::vector<std::string> &, AbstractFunction *);
+
+  void finality();
   struct Private;
   Private *private_;
-  void finality();
 };
 
 }  // namespace AsyncFw

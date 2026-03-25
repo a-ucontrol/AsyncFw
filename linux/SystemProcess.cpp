@@ -150,45 +150,6 @@ bool SystemProcess::input(const std::string &str) const {
   return write(private_->in, str.data(), str.size()) > 0;
 }
 
-FunctionConnectorProtected<SystemProcess>::Connector<int, SystemProcess::State, const std::string &, const std::string &> &SystemProcess::exec(const std::string &_cmdline, const std::vector<std::string> &_args) {
-  FunctionConnectorProtected<SystemProcess>::Connector<int, SystemProcess::State, const std::string &, const std::string &> *fc = new FunctionConnectorProtected<SystemProcess>::Connector<int, SystemProcess::State, const std::string &, const std::string &>(AbstractFunctionConnector::Queued);
-
-  SystemProcess *process = new SystemProcess();
-  std::string *_out = new std::string();
-  std::string *_err = new std::string();
-  process->output(
-      [_out, _err](const std::string &msg, bool err) {
-        if (!err) *_out += msg;
-        else { *_err += msg; }
-      },
-      AbstractFunctionConnector::Connection::Direct);
-  process->stateChanged(
-      [fc, process, _out, _err](SystemProcess::State state) {
-        if (state != SystemProcess::Running) {
-          (*fc)(process->exitCode(), state, *_out, *_err);
-          process->private_->thread_->invokeMethod([fc, process]() {
-            delete fc;
-            delete process;
-          });
-          delete _out;
-          delete _err;
-        }
-      },
-      AbstractFunctionConnector::Connection::Direct);
-#ifndef __clang_analyzer__
-  process->private_->thread_->invokeMethod([_cmdline, _args, process, fc, _out, _err]() {
-#endif
-    if (!process->start(_cmdline, _args)) {
-      (*fc)(process->exitCode(), process->state(), *_out, *_err);
-      process->private_->thread_->invokeMethod([fc]() { delete fc; });
-      delete process;
-      delete _out;
-      delete _err;
-    }
-  });
-  return *fc;
-}
-
 void SystemProcess::finality() {
   int r;
 
@@ -273,4 +234,48 @@ bool SystemProcess::Private::process() {
 
 FAIL:
   std::terminate();
+}
+
+void SystemProcess::exec_(const std::string &cmd, const std::vector<std::string> &args, AbstractFunction *f) {
+  struct Data {
+    SystemProcess process;
+    std::string out;
+    std::string err;
+  };
+  Data *_data = new Data;
+
+  if (f) {
+    _data->process.output(
+        [_data](const std::string &msg, bool err) {
+          if (!err) _data->out += msg;
+          else { _data->err += msg; }
+        },
+        AbstractFunctionConnector::Connection::Direct);
+  }
+  _data->process.stateChanged(
+      [f, _data](SystemProcess::State state) {
+        if (state != SystemProcess::Running) {
+          if (f) {
+            f->invoke(_data->process.exitCode(), state, _data->out, _data->err);
+            delete f;
+          }
+          if (!_data->process.private_->thread_->invokeMethod([_data]() { delete _data; })) delete _data;
+        }
+      },
+      AbstractFunctionConnector::Connection::Direct);
+  if (!_data->process.private_->thread_->invokeMethod([cmd, args, f, _data]() {
+        if (!_data->process.start(cmd, args)) {
+          if (f) {
+            f->invoke(_data->process.exitCode(), _data->process.state(), _data->out, _data->err);
+            delete f;
+          }
+          delete _data;
+        }
+      })) {
+    if (f) {
+      f->invoke(-1, Error, _data->out, _data->err);
+      delete f;
+    }
+    delete _data;
+  }
 }
