@@ -56,7 +56,7 @@ public:
 #ifdef EXIT_ON_UNIX_SIGNAL
     if (mt_.eventfd_ >= 0) eventfd_write(mt_.eventfd_, 1);
 #else
-    mt_.exitTask->invoke();
+    (*mt_.exitTask)();
 #endif
   }
   static void exit(int code) {
@@ -165,7 +165,7 @@ private:
       }
     }
     if (!invokeTask(_t)) {
-      _t->invoke();
+      (*_t)();
       delete _t;
     }
   }
@@ -182,7 +182,7 @@ private:
         }
       }
     }
-    if (_t) _t->invoke();
+    if (_t) (*_t)();
   }
 
   bool invokeTask(AbstractTask *task) const override {
@@ -191,7 +191,7 @@ private:
     QMetaObject::invokeMethod(
         const_cast<MainThread *>(this),
         [task]() {
-          task->invoke();
+          (*task)();
           delete task;
         },
         Qt::QueuedConnection);
@@ -200,8 +200,8 @@ private:
 
   struct Poll {
     Poll(int fd) : in(fd, QSocketNotifier::Read), out(fd, QSocketNotifier::Write) {
-      QObject::connect(&in, &QSocketNotifier::activated, [this]() { task->invoke(AbstractThread::PollIn); });
-      QObject::connect(&out, &QSocketNotifier::activated, [this]() { task->invoke(AbstractThread::PollOut); });
+      QObject::connect(&in, &QSocketNotifier::activated, [this]() { (*task)(AbstractThread::PollIn); });
+      QObject::connect(&out, &QSocketNotifier::activated, [this]() { (*task)(AbstractThread::PollOut); });
     }
 
     QSocketNotifier in;
@@ -245,7 +245,7 @@ private:
     }
     if (!_t) return;
     if (!invokeTask(_t)) {
-      _t->invoke();
+      (*_t)();
       delete _t;
     }
   }
