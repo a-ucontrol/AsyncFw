@@ -45,7 +45,7 @@ protected:
   public:
     QueuedTask(F *f, Args &...args) : f_(f), args_(args...) {}
     ~QueuedTask() { delete f_; }
-    void invoke() override { std::apply(*f_, args_); }
+    void operator()() override { std::apply(*f_, args_); }
     F *f_;
     std::tuple<Args...> args_;
   };
@@ -101,10 +101,8 @@ protected:
     Connection(T &_f, AbstractFunctionConnector *c, Type t) : AbstractFunctionConnector::Connection(c, t), f(new Function(_f)) {}
 
   private:
-    struct AbstractFunction {
+    struct AbstractFunction : public AsyncFw::AbstractFunction<Args &...> {
       virtual AbstractFunction *copy() const = 0;
-      virtual void operator()(Args &...) = 0;
-      virtual ~AbstractFunction() = default;
     };
     template <typename T>
     struct Function : AbstractFunction {

@@ -256,7 +256,7 @@ void SystemProcess::exec_(const std::string &cmd, const std::vector<std::string>
       [f, _data](SystemProcess::State state) {
         if (state != SystemProcess::Running) {
           if (f) {
-            f->invoke(_data->process.exitCode(), state, _data->out, _data->err);
+            (*f)(_data->process.exitCode(), state, _data->out, _data->err);
             delete f;
           }
           if (!_data->process.private_->thread_->invokeMethod([_data]() { delete _data; })) delete _data;
@@ -266,14 +266,14 @@ void SystemProcess::exec_(const std::string &cmd, const std::vector<std::string>
   if (!_data->process.private_->thread_->invokeMethod([cmd, args, f, _data]() {
         if (!_data->process.start(cmd, args)) {
           if (f) {
-            f->invoke(_data->process.exitCode(), _data->process.state(), _data->out, _data->err);
+            (*f)(_data->process.exitCode(), _data->process.state(), _data->out, _data->err);
             delete f;
           }
           delete _data;
         }
       })) {
     if (f) {
-      f->invoke(-1, Error, _data->out, _data->err);
+      (*f)(-1, Error, _data->out, _data->err);
       delete f;
     }
     delete _data;

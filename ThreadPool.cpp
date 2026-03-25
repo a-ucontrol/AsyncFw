@@ -92,7 +92,7 @@ void AbstractThreadPool::Thread::destroy() {
   });
   if (!pool->thread_->invokeTask(_t)) {
     lsDebug() << LogStream::Color::Red << "pool thread not running" << '(' + pool->thread_->name() + ')';
-    _t->invoke();
+    (*_t)();
     delete _t;
   }
   lsTrace();

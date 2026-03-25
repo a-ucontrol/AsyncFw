@@ -109,7 +109,7 @@ void Rrd::append(const Item &data, uint64_t index) {
   if (_average) {
     ItemList list;
     read(&list, pos - pos % aInterval - aInterval, aInterval);
-    average->invoke(list);
+    (*average)(list);
   }
 }
 

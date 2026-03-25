@@ -94,7 +94,7 @@ private:
   #endif
       appendPollTask(eventfd_, AbstractThread::PollIn, [this](AbstractThread::PollEvents) {
         eventfd_t _v;
-        if (eventfd_read(eventfd_, &_v) == 0) exitTask->invoke();
+        if (eventfd_read(eventfd_, &_v) == 0) (*exitTask)();
       });
   #ifdef USE_QAPPLICATION
       startedEvent();

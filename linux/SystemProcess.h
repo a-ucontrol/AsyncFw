@@ -44,7 +44,7 @@ private:
   template <typename T>
   struct Function : AbstractFunction<int, State, const std::string &, const std::string &> {
     Function(T &_f) : f(std::move(_f)) {}
-    void invoke(int r, State s, const std::string &out, const std::string &err) override { f(r, s, out, err); }
+    void operator()(int r, State s, const std::string &out, const std::string &err) override { f(r, s, out, err); }
     T f;
   };
   static void exec_(const std::string &, const std::vector<std::string> &, AbstractFunction<int, State, const std::string &, const std::string &> *);

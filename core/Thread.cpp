@@ -152,7 +152,7 @@ void AbstractThread::Private::process_tasks() {
   for (; !process_tasks_.empty();) {
     AbstractTask *_t = process_tasks_.front();
     process_tasks_.pop();
-    _t->invoke();
+    (*_t)();
     delete _t;
   }
 }
@@ -161,7 +161,7 @@ void AbstractThread::Private::process_polls() {
   for (; !process_poll_tasks_.empty();) {
     Private::ProcessPollTask _pt = process_poll_tasks_.front();
     process_poll_tasks_.pop();
-    _pt.task->invoke(static_cast<AbstractThread::PollEvents>(_pt.events));
+    (*_pt.task)(static_cast<AbstractThread::PollEvents>(_pt.events));
   }
 }
 
@@ -169,7 +169,7 @@ void AbstractThread::Private::process_timers() {
   for (; !process_timer_tasks_.empty();) {
     Private::ProcessTimerTask _tt = process_timer_tasks_.front();
     process_timer_tasks_.pop();
-    _tt.task->invoke();
+    (*_tt.task)();
   }
 }
 
@@ -726,7 +726,7 @@ void AbstractThread::removeTimer(int id) {
     private_.timers.erase(it);
   }
   if (!invokeTask(_t)) {
-    _t->invoke();
+    (*_t)();
     delete _t;
   }
 }
@@ -837,7 +837,7 @@ void AbstractThread::removePollDescriptor(int fd) {
     private_.poll_tasks.erase(it);
   }
   if (!invokeTask(_t)) {
-    _t->invoke();
+    (*_t)();
     delete _t;
   }
 #endif

@@ -26,7 +26,7 @@ CoroutineAwait::~CoroutineAwait() {
 
 void CoroutineAwait::await_suspend(std::coroutine_handle<CoroutineTask::promise_type> h) const noexcept {
   h_ = h;
-  if (f_) f_->invoke(h);
+  if (f_) (*f_)(h);
 }
 
 bool CoroutineAwait::await_ready() const noexcept { return false; }

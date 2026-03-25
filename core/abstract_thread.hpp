@@ -167,7 +167,7 @@ protected:
   class Task : public AbstractTask {
   public:
     Task(M &&method) : method(std::move(method)) {}
-    virtual void invoke() override { method(); }
+    virtual void operator()() override { method(); }
 
   private:
     M method;
@@ -179,7 +179,7 @@ protected:
 
   private:
     PollTask(M &&method) : method(std::move(method)) {}
-    virtual void invoke(AbstractThread::PollEvents _e) override { method(_e); }
+    virtual void operator()(AbstractThread::PollEvents _e) override { method(_e); }
     M method;
   };
 

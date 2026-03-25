@@ -59,7 +59,7 @@ private:
   template <typename T>
   struct Function : AbstractFunction<const ItemList &> {
     Function(T &_f) : f(std::move(_f)) {}
-    void invoke(const ItemList &_h) override { f(_h); }
+    void operator()(const ItemList &_h) override { f(_h); }
     T f;
   };
   AbstractFunction<const ItemList &> *average = nullptr;

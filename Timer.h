@@ -38,7 +38,7 @@ private:
       t = AbstractThread::currentThread();
       id = t->appendTimer(ms, this);
     }
-    void invoke() override {
+    void operator()() override {
       t->removeTimer(id);
       f();
     }

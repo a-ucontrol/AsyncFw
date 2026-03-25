@@ -63,7 +63,7 @@ private:
   template <typename T>
   struct Function : AbstractFunction<const CoroutineHandle> {
     Function(T &_f) : f(std::move(_f)) {}
-    void invoke(const CoroutineHandle _h) override { f(_h); }
+    void operator()(const CoroutineHandle _h) override { f(_h); }
     T f;
   };
   mutable CoroutineHandle h_;
