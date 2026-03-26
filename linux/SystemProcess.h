@@ -30,17 +30,17 @@ public:
   FunctionConnectorProtected<SystemProcess>::Connector<const std::string &, bool /*stdout: 0, stderr: 1*/> output {AbstractFunctionConnector::Queued};
 
   template <typename T>
-  static void exec(const std::string &cmd, const std::vector<std::string> &args, T f) {
-    exec_(cmd, args, new FunctionArgs<int, State, const std::string &, const std::string &>::Function<T>(f));
+  static bool exec(const std::string &cmd, const std::vector<std::string> &args, T f) {
+    return exec_(cmd, args, new FunctionArgs<int, State, const std::string &, const std::string &>::Function<T>(f));
   }
   template <typename T>
-  static void exec(const std::string &cmd, T f) {
-    exec_(cmd, {}, new FunctionArgs<int, State, const std::string &, const std::string &>::Function<T>(f));
+  static bool exec(const std::string &cmd, T f) {
+    return exec_(cmd, {}, new FunctionArgs<int, State, const std::string &, const std::string &>::Function<T>(f));
   }
-  static void exec(const std::string &cmd, const std::vector<std::string> &args = {}) { exec_(cmd, args, nullptr); }
+  static bool exec(const std::string &cmd, const std::vector<std::string> &args = {}) { return exec_(cmd, args, nullptr); }
 
 private:
-  static void exec_(const std::string &, const std::vector<std::string> &, AbstractFunction<int, State, const std::string &, const std::string &> *);
+  static bool exec_(const std::string &, const std::vector<std::string> &, AbstractFunction<int, State, const std::string &, const std::string &> *);
 
   void finality();
   struct Private;

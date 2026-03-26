@@ -236,7 +236,7 @@ FAIL:
   std::terminate();
 }
 
-void SystemProcess::exec_(const std::string &cmd, const std::vector<std::string> &args, AbstractFunction<int, State, const std::string &, const std::string &> *f) {
+bool SystemProcess::exec_(const std::string &cmd, const std::vector<std::string> &args, AbstractFunction<int, State, const std::string &, const std::string &> *f) {
   struct Data {
     SystemProcess process;
     std::string out;
@@ -277,5 +277,7 @@ void SystemProcess::exec_(const std::string &cmd, const std::vector<std::string>
       delete f;
     }
     delete _data;
+    return false;
   }
+  return true;
 }
