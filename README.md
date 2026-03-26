@@ -393,7 +393,7 @@ int main(int argc, char *argv[]) {
       return;
     }
     lsInfoGreen() << tasks.front()->running();
-    tasks.front()->invoke();
+    (*tasks.front())();
     lsInfoGreen() << tasks.front()->running();
     tasks.pop();
   });
