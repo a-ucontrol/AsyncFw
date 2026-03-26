@@ -646,14 +646,14 @@ void AbstractThread::start() {
     {  //lock scope
       LockGuard lock_list(Private::list.mutex);
       LockGuard lock(private_.mutex);
+      private_.condition_variable.notify_all();
       setId();
     }
-    private_.condition_variable.notify_all();
     exec();
-    private_.condition_variable.notify_all();
     {  //lock scope
       LockGuard lock_list(Private::list.mutex);
       LockGuard lock(private_.mutex);
+      private_.condition_variable.notify_all();
       clearId();
     }
   }};
