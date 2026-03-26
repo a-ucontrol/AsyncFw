@@ -708,7 +708,7 @@ bool AbstractThread::modifyTimer(int id, int ms) {
     }
     return true;
   }
-  console_msg("AbstractThread " + LOG_THREAD_NAME, "timer: " + std::to_string(id) + " not found " + LOG_THREAD_NAME);
+  console_msg("AbstractThread " + LOG_THREAD_NAME, "timer: " + std::to_string(id) + " not found");
   return false;
 }
 
@@ -719,7 +719,7 @@ void AbstractThread::removeTimer(int id) {
     LockGuard lock(private_.mutex);
     it = std::lower_bound(private_.timers.begin(), private_.timers.end(), id, Private::Compare());
     if (it == private_.timers.end() || it->id != id) {
-      console_msg("AbstractThread " + LOG_THREAD_NAME, "timer: " + std::to_string(id) + " not found " + LOG_THREAD_NAME);
+      console_msg("AbstractThread " + LOG_THREAD_NAME, "timer: " + std::to_string(id) + " not found");
       return;
     }
     _t = new Task([p = it->task] { delete p; });
@@ -773,7 +773,7 @@ bool AbstractThread::modifyPollDescriptor(int fd, PollEvents events) {
   LockGuard lock(private_.mutex);
   std::vector<Private::PollTask *>::iterator it = std::lower_bound(private_.poll_tasks.begin(), private_.poll_tasks.end(), fd, Private::Compare());
   if (it != private_.poll_tasks.end() && (*it)->fd != fd) {
-    console_msg("AbstractThread " + LOG_THREAD_NAME, "poll descriptor: " + std::to_string(fd) + " not found " + LOG_THREAD_NAME);
+    console_msg("AbstractThread " + LOG_THREAD_NAME, "poll descriptor: " + std::to_string(fd) + " not found");
     return false;
   }
   struct Private::update_pollfd v;
@@ -789,7 +789,7 @@ bool AbstractThread::modifyPollDescriptor(int fd, PollEvents events) {
     LockGuard lock(private_.mutex);
     std::vector<Private::PollTask *>::iterator it = std::lower_bound(private_.poll_tasks.begin(), private_.poll_tasks.end(), fd, Private::Compare());
     if (it == private_.poll_tasks.end() || (*it)->fd != fd) {
-      console_msg("AbstractThread " + LOG_THREAD_NAME, "poll descriptor: " + std::to_string(fd) + " not found " + LOG_THREAD_NAME);
+      console_msg("AbstractThread " + LOG_THREAD_NAME, "poll descriptor: " + std::to_string(fd) + " not found");
       return false;
     }
     event.data.ptr = *it;
@@ -807,7 +807,7 @@ void AbstractThread::removePollDescriptor(int fd) {
     LockGuard lock(private_.mutex);
     std::vector<Private::PollTask *>::iterator it = std::lower_bound(private_.poll_tasks.begin(), private_.poll_tasks.end(), fd, Private::Compare());
     if (it != private_.poll_tasks.end() && (*it)->fd != fd) {
-      console_msg("AbstractThread " + LOG_THREAD_NAME, "poll descriptor: " + std::to_string(fd) + " not found " + LOG_THREAD_NAME);
+      console_msg("AbstractThread " + LOG_THREAD_NAME, "poll descriptor: " + std::to_string(fd) + " not found");
       return;
     }
     _t = new Task([p = *it] { delete p; });
@@ -829,7 +829,7 @@ void AbstractThread::removePollDescriptor(int fd) {
     LockGuard lock(private_.mutex);
     std::vector<Private::PollTask *>::iterator it = std::lower_bound(private_.poll_tasks.begin(), private_.poll_tasks.end(), fd, Private::Compare());
     if (it == private_.poll_tasks.end() || (*it)->fd != fd) {
-      console_msg("AbstractThread " + LOG_THREAD_NAME, "poll descriptor: " + std::to_string(fd) + " not found " + LOG_THREAD_NAME);
+      console_msg("AbstractThread " + LOG_THREAD_NAME, "poll descriptor: " + std::to_string(fd) + " not found");
       return;
     }
     if (private_.poll_tasks.size() == 1) private_.wake();
