@@ -130,12 +130,11 @@ bool AbstractSocket::listen(const std::string &_address, uint16_t _port) {
   private_->errorString_.clear();
   state_ = State::Listening;
 
-  thread_->invokeMethod([this, _fd]() { changeDescriptor(_fd); }, true);
-  thread_->appendPollTask(_fd, AbstractThread::PollIn, [this](AbstractThread::PollEvents _e) { pollEvent(_e); });
-
-  stateEvent();
-
-  return true;
+  return thread_->invokeMethod([this, _fd]() {
+    changeDescriptor(_fd);
+    thread_->appendPollTask(_fd, AbstractThread::PollIn, [this](AbstractThread::PollEvents _e) { pollEvent(_e); });
+    stateEvent();
+  });
 }
 
 void AbstractSocket::activateEvent() {

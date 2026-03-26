@@ -52,31 +52,31 @@ void AbstractLog::finality() {
 void AbstractLog::append(uint8_t type, const std::string &message, const std::string &sender, const std::string &note) { append({type, sender, message, note}); }
 
 void AbstractLog::setExtendOut(bool b) {
-  thread_->invokeMethod([this, b]() { (b) ? flags |= LOG_STREAM_CONSOLE_EXTEND : flags &= ~LOG_STREAM_CONSOLE_EXTEND; }, true);
+  thread_->invokeMethod([this, b]() { (b) ? flags |= LOG_STREAM_CONSOLE_EXTEND : flags &= ~LOG_STREAM_CONSOLE_EXTEND; });
 }
 
 void AbstractLog::setColorOut(bool b) {
-  thread_->invokeMethod([this, b]() { (b) ? flags |= LOG_STREAM_CONSOLE_COLOR : flags &= ~LOG_STREAM_CONSOLE_COLOR; }, true);
+  thread_->invokeMethod([this, b]() { (b) ? flags |= LOG_STREAM_CONSOLE_COLOR : flags &= ~LOG_STREAM_CONSOLE_COLOR; });
 }
 
 void AbstractLog::setNotesOut(bool b) {
-  thread_->invokeMethod([this, b]() { (b) ? flags |= LOG_STREAM_CONSOLE_LINE : flags &= ~LOG_STREAM_CONSOLE_LINE; }, true);
+  thread_->invokeMethod([this, b]() { (b) ? flags |= LOG_STREAM_CONSOLE_LINE : flags &= ~LOG_STREAM_CONSOLE_LINE; });
 }
 
 void AbstractLog::setHideDuplicates(bool b) {
-  thread_->invokeMethod([this, b]() { hideDuplicates = b; }, true);
+  thread_->invokeMethod([this, b]() { hideDuplicates = b; });
 }
 
 void AbstractLog::setLevel(int i) {
-  thread_->invokeMethod([this, i]() { level = i; }, true);
+  thread_->invokeMethod([this, i]() { level = i; });
 }
 
 void AbstractLog::setConsoleLevel(int i) {
-  thread_->invokeMethod([this, i]() { consoleLevel = i; }, true);
+  thread_->invokeMethod([this, i]() { consoleLevel = i; });
 }
 
 void AbstractLog::setFilter(const std::vector<std::string> &f) {
-  thread_->invokeMethod([this, f]() { filter = f; }, true);
+  thread_->invokeMethod([this, f]() { filter = f; });
 }
 
 void AbstractLog::append(const Message &m) {
