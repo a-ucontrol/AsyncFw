@@ -10,9 +10,11 @@
 #include "base64/base64.h"
 #include "sha1/sha1.h"
 
-#include <iostream>
+//#include <iostream>
 #include <string>
 #include <vector>
+
+#include <cstring>
 
 using namespace std;
 
@@ -66,7 +68,7 @@ WebSocketFrameType WebSocket::parseHandshake(unsigned char* input_frame, int inp
 string WebSocket::trim(string str) 
 {
 	//printf("TRIM\n");
-	char* whitespace = " \t\r\n";
+  char whitespace[] = " \t\r\n";
 	string::size_type pos = str.find_last_not_of(whitespace);
 	if(pos != string::npos) {
 		str.erase(pos + 1);
@@ -88,7 +90,7 @@ vector<string> WebSocket::explode(
 	//UASSERT( theDelimiter.size(), >, 0 );
 	
 	vector<string> theStringVector;
-	int  start = 0, end = 0, length = 0;
+  std::size_t  start = 0, end = 0, length = 0;
 
 	while ( end != string::npos )
 	{
@@ -158,7 +160,7 @@ string WebSocket::answerHandshake()
 	//return WS_OPENING_FRAME;
 }
 
-int WebSocket::makeFrame(WebSocketFrameType frame_type, unsigned char* msg, int msg_length, unsigned char* buffer, int buffer_size)
+int WebSocket::makeFrame(WebSocketFrameType frame_type, const unsigned char* msg, int msg_length, unsigned char* buffer, int /* buffer_size */)
 {
 	int pos = 0;
 	int size = msg_length; 
@@ -223,10 +225,10 @@ WebSocketFrameType WebSocket::getFrame(unsigned char* in_buffer, int in_length, 
 	}
 	else if(length_field == 127) { //msglen is 64bit!
 		payload_length = (
-			(in_buffer[2] << 56) | 
-			(in_buffer[3] << 48) | 
-			(in_buffer[4] << 40) | 
-			(in_buffer[5] << 32) | 
+      ((uint64_t)in_buffer[2] << 56) |
+      ((uint64_t)in_buffer[3] << 48) |
+      ((uint64_t)in_buffer[4] << 40) |
+      ((uint64_t)in_buffer[5] << 32) |
 			(in_buffer[6] << 24) | 
 			(in_buffer[7] << 16) | 
 			(in_buffer[8] << 8) | 
