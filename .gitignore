@@ -43,5 +43,3 @@
 defines.cmake
 CMakeLists.txt.*
 build
-
-#doc/html
