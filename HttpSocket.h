@@ -16,9 +16,9 @@ namespace AsyncFw {
 /*! \brief The HttpSocket class.
  \brief Example: \snippet HttpSocket/main.cpp snippet */
 class HttpSocket : public AsyncFw::AbstractTlsSocket {
-public:
   friend LogStream &operator<<(LogStream &, const HttpSocket &);
 
+public:
   static HttpSocket *create(AsyncFw::Thread *_t = nullptr);
 
   void stateEvent() override;

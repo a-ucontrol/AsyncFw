@@ -103,6 +103,7 @@ set(AsyncFw_HEADERS
 
   "Task.h"
   "HttpSocket.h"
+  "HttpServer.h"
 
   "Version.h"
   "instance.hpp"
@@ -128,9 +129,16 @@ set(AsyncFw_SOURCES
 
   "Task.cpp"
   "HttpSocket.cpp"
+  "HttpServer.cpp"
 
   "Version.cpp"
   "instance.cpp"
+)
+
+set(3rdparty_SOURCES
+  "3rdparty/WebSocket/WebSocket/WebSocket.cpp"
+  "3rdparty/WebSocket/WebSocket/sha1/sha1.cpp"
+  "3rdparty/WebSocket/WebSocket/base64/base64.cpp"
 )
 
 if(NOT PLATFORM STREQUAL "AMD64")
@@ -148,7 +156,7 @@ endif()
 
 include_directories(.)
 
-set(PROJECT_SOURCES ${AsyncFw_CORE_SOURCES} ${AsyncFw_SOURCES} ${AsyncFw_CORE_HEADERS} ${AsyncFw_HEADERS})
+set(PROJECT_SOURCES ${AsyncFw_CORE_SOURCES} ${AsyncFw_SOURCES} ${AsyncFw_CORE_HEADERS} ${AsyncFw_HEADERS} ${3rdparty_SOURCES})
 
 if(BUILD_SHARED_LIBS)
   add_library(${CMAKE_PROJECT_NAME} SHARED ${PROJECT_SOURCES})
@@ -170,6 +178,7 @@ add_subdirectory(example/ListenSocket)
 add_subdirectory(example/Log)
 add_subdirectory(example/Socket)
 add_subdirectory(example/HttpSocket)
+add_subdirectory(example/HttpServer)
 add_subdirectory(example/Stdin)
 add_subdirectory(example/ThreadPool)
 add_subdirectory(example/Timer)

@@ -10,6 +10,7 @@ var files_dup =
     [ "DataArrayTcpClient.h", "DataArrayTcpClient_8h_source.html", null ],
     [ "DataArrayTcpServer.h", "DataArrayTcpServer_8h_source.html", null ],
     [ "File.h", "File_8h_source.html", null ],
+    [ "HttpServer.h", "HttpServer_8h_source.html", null ],
     [ "HttpSocket.h", "HttpSocket_8h_source.html", null ],
     [ "instance.hpp", "instance_8hpp_source.html", null ],
     [ "Log.h", "Log_8h_source.html", null ],

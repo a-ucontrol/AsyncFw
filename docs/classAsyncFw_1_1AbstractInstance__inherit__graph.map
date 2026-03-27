@@ -1,14 +1,17 @@
 <map id="AsyncFw::AbstractInstance" name="AsyncFw::AbstractInstance">
-<area shape="rect" id="Node000001" title="The AbstractInstance class." alt="" coords="5,136,189,163"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1Instance.html" title=" " alt="" coords="692,5,834,48"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="134,126,182,100,237,76,331,43,428,24,498,17,569,15,692,19,692,24,569,21,498,23,429,29,332,48,239,81,185,105,136,130"/>
-<area shape="rect" id="Node000003" href="$classAsyncFw_1_1Instance.html" title=" " alt="" coords="656,85,870,128"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="203,163,295,172,403,177,518,174,632,159,678,145,721,126,723,131,680,150,633,164,519,179,403,182,295,177,202,168"/>
-<area shape="rect" id="Node000004" href="$classAsyncFw_1_1Instance.html" title=" " alt="" coords="680,179,846,221"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="157,165,238,183,358,195,478,201,680,201,680,206,478,206,358,200,238,188,156,170"/>
-<area shape="rect" id="Node000005" href="$classAsyncFw_1_1Instance.html" title="The Instance class." alt="" coords="238,91,404,117"/>
-<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="181,130,251,115,252,121,182,135"/>
-<area shape="poly" id="edge5_Node000005_Node000002" title=" " alt="" coords="405,84,428,80,691,35,692,40,429,85,406,90"/>
-<area shape="poly" id="edge6_Node000005_Node000003" title=" " alt="" coords="420,102,656,103,656,109,420,107"/>
-<area shape="poly" id="edge7_Node000005_Node000004" title=" " alt="" coords="402,119,680,179,679,185,400,124"/>
+<area shape="rect" id="Node000001" title="The AbstractInstance class." alt="" coords="5,145,189,172"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1Instance.html" title=" " alt="" coords="692,97,834,140"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="146,137,236,107,357,78,425,67,494,60,564,60,633,68,676,79,716,94,714,99,674,84,632,73,564,66,494,66,425,72,358,83,238,112,148,142"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1Instance.html" title=" " alt="" coords="656,5,870,48"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="126,133,176,99,237,70,291,53,346,40,458,24,565,18,656,18,656,23,565,23,459,29,347,45,292,58,239,74,178,104,129,138"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1Instance.html" title=" " alt="" coords="682,271,844,313"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="125,181,175,221,206,240,239,255,296,272,356,285,477,299,589,301,681,297,681,303,589,306,476,304,355,290,295,277,237,260,204,245,172,225,122,185"/>
+<area shape="rect" id="Node000005" href="$classAsyncFw_1_1Instance.html" title=" " alt="" coords="680,177,846,220"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="144,176,234,208,355,241,423,253,493,260,563,259,632,251,678,237,721,218,723,223,680,242,633,256,563,265,493,265,422,258,354,246,233,213,143,181"/>
+<area shape="rect" id="Node000006" href="$classAsyncFw_1_1Instance.html" title="The Instance class." alt="" coords="238,145,404,172"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="204,156,237,156,237,161,204,161"/>
+<area shape="poly" id="edge6_Node000006_Node000002" title=" " alt="" coords="420,149,632,131,691,124,692,130,633,136,420,154"/>
+<area shape="poly" id="edge7_Node000006_Node000003" title=" " alt="" coords="369,137,427,115,554,77,670,46,671,51,555,82,429,120,370,142"/>
+<area shape="poly" id="edge8_Node000006_Node000004" title=" " alt="" coords="362,177,429,208,561,248,682,275,681,280,560,253,427,213,359,182"/>
+<area shape="poly" id="edge9_Node000006_Node000005" title=" " alt="" coords="420,168,429,169,680,190,679,196,428,175,419,174"/>
 </map>
