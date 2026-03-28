@@ -49,7 +49,7 @@ public:
         i_->value = _v;
         i_->created();
       }
-      return i_->value;
+      return static_cast<CT *>(i_->value);
     }
     return nullptr;
   }
