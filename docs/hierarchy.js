@@ -54,6 +54,7 @@ var hierarchy =
     [ "AsyncFw::AbstractThread::Holder", "classAsyncFw_1_1AbstractThread_1_1Holder.html", null ],
     [ "AsyncFw::HttpServer", "classAsyncFw_1_1HttpServer.html", null ],
     [ "AsyncFw::LogStream", "classAsyncFw_1_1LogStream.html", null ],
+    [ "AsyncFw::MulticastDns", "classAsyncFw_1_1MulticastDns.html", null ],
     [ "AsyncFw::PollNotifier", "classAsyncFw_1_1PollNotifier.html", null ],
     [ "AsyncFw::Rrd", "classAsyncFw_1_1Rrd.html", [
       [ "AsyncFw::Log", "classAsyncFw_1_1Log.html", null ]

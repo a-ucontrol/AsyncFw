@@ -15,6 +15,7 @@ var files_dup =
     [ "instance.hpp", "instance_8hpp_source.html", null ],
     [ "Log.h", "Log_8h_source.html", null ],
     [ "MainThread.h", "MainThread_8h_source.html", null ],
+    [ "MulticastDns.h", "MulticastDns_8h_source.html", null ],
     [ "PollNotifier.h", "PollNotifier_8h_source.html", null ],
     [ "Rrd.h", "Rrd_8h_source.html", null ],
     [ "RrdClient.h", "RrdClient_8h_source.html", null ],

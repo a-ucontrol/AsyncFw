@@ -42,7 +42,7 @@ endif()
 #add_definitions(-DEXTEND_FUNCTIONCONNECTOR_TRACE)
 # -- defines.cmake
 
-project(${AsyncFw_PROJECT_NAME} VERSION ${VERSION_STRING} LANGUAGES CXX)
+project(${AsyncFw_PROJECT_NAME} VERSION ${VERSION_STRING} LANGUAGES C CXX)
 
 add_custom_target(additional-files SOURCES example/snippet.dox)
 
@@ -105,6 +105,8 @@ set(AsyncFw_HEADERS
   "HttpSocket.h"
   "HttpServer.h"
 
+  "MulticastDns.h"
+
   "Version.h"
   "instance.hpp"
 )
@@ -131,6 +133,8 @@ set(AsyncFw_SOURCES
   "HttpSocket.cpp"
   "HttpServer.cpp"
 
+  "MulticastDns.cpp"
+
   "Version.cpp"
   "instance.cpp"
 )
@@ -139,6 +143,7 @@ set(3rdparty_SOURCES
   "3rdparty/WebSocket/WebSocket/WebSocket.cpp"
   "3rdparty/WebSocket/WebSocket/sha1/sha1.cpp"
   "3rdparty/WebSocket/WebSocket/base64/base64.cpp"
+  "3rdparty/mdns/mdns.c"
 )
 
 if(NOT PLATFORM STREQUAL "AMD64")
@@ -186,5 +191,6 @@ add_subdirectory(example/Coroutine)
 add_subdirectory(example/ContainerTask)
 add_subdirectory(example/CoroutineWait)
 add_subdirectory(example/SystemProcess)
+add_subdirectory(example/MulticastDns)
 add_subdirectory(example/Uart)
 add_subdirectory(example/run-examples)
