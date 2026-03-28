@@ -1,6 +1,7 @@
 #pragma once
 
 #include "core/FunctionConnector.h"
+#include "instance.hpp"
 
 namespace AsyncFw {
 class AbstractThread;
@@ -18,7 +19,7 @@ public:
     bool operator!=(const Host &h) const { return !operator==(h); }
   };
 
-  static inline MulticastDns *instance() { return instance_; }
+  static inline MulticastDns *instance() { return instance_.value; }
   MulticastDns(const std::string &serviceType = {});
   ~MulticastDns();
 
@@ -48,7 +49,7 @@ public:
   FunctionConnectorProtected<MulticastDns>::Connector<const Host &> hostRemoved;
 
 private:
-  static inline MulticastDns *instance_;
+  static inline Instance<MulticastDns> instance_ {"HttpServer"};
   void servicePollEvent(int fd);
   void querierPollEvent(int fd);
   void querierTimerEvent();

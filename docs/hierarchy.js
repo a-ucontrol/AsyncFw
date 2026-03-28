@@ -8,6 +8,7 @@ var hierarchy =
       [ "AsyncFw::Instance< Log >", "classAsyncFw_1_1Instance.html", null ],
       [ "AsyncFw::Instance< AsyncFw::FileSystemWatcher >", "classAsyncFw_1_1Instance.html", null ],
       [ "AsyncFw::Instance< AsyncFw::HttpServer >", "classAsyncFw_1_1Instance.html", null ],
+      [ "AsyncFw::Instance< AsyncFw::MulticastDns >", "classAsyncFw_1_1Instance.html", null ],
       [ "AsyncFw::Instance< AsyncFw::ThreadPool >", "classAsyncFw_1_1Instance.html", null ],
       [ "AsyncFw::Instance< T >", "classAsyncFw_1_1Instance.html", null ]
     ] ],

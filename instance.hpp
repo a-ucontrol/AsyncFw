@@ -44,9 +44,12 @@ public:
   template <typename CT, typename... Args>
   static CT *create(Args... args) {
     if (!i_->value) {
-      i_->value = new CT(args...);
-      i_->created();
-      return static_cast<CT *>(i_->value);
+      CT *_v = new CT(args...);
+      if (!i_->value) {
+        i_->value = _v;
+        i_->created();
+      }
+      return _v;
     }
     return nullptr;
   }

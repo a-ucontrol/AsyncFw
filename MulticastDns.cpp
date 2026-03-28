@@ -129,14 +129,19 @@ void append_host(void *_host) {
 }
 
 MulticastDns::MulticastDns(const std::string &_serviceType) {
-  if (!instance_) instance_ = this;
-  else { logEmergency("There can only be one MulticastDns instance"); }
+  if (!instance_.value) {
+    instance_.value = this;
+    //instance_.created();
+  } else {
+    logEmergency("There can only be one MulticastDns instance");
+  }
   thread_ = AbstractThread::currentThread();
   setServiceType(_serviceType);
   lsTrace();
 }
 
 MulticastDns::~MulticastDns() {
+  if (instance_.value == this) instance_.value = nullptr;
   stopService();
   stopQuerier();
   lsTrace();
