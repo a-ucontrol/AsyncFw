@@ -49,7 +49,7 @@ public:
         i_->value = _v;
         i_->created();
       }
-      return _v;
+      return i_->value;
     }
     return nullptr;
   }
