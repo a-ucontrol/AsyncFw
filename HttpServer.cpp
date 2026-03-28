@@ -414,7 +414,7 @@ void HttpServer::TcpSocket::readEvent() {
   HttpSocket::readEvent();
 }
 
-bool HttpServer::incomingConnection(int descriptor, const std::string &address) {
+bool HttpServer::incomingConnection(int descriptor, const std::string &) {
   TcpSocket *socket = new TcpSocket(this);
   sockets.emplace_back(socket);
   trace("socket created, total: " + std::to_string(sockets.size()));
@@ -490,7 +490,7 @@ void HttpServer::sendToWebSockets(const std::string &data) {  //Дичь, для
 }
 
 bool HttpServer::listen(uint16_t port) {
-  trace_if(!tlsContext_.empty()) << private_->tlsContext_.infoCertificate();
+  trace_if(!private_->tlsContext_.empty()) << private_->tlsContext_.infoCertificate();
   if (!private_->listener) {
     private_->listener = std::make_unique<ListenSocket>();
     private_->listenerGuard = private_->listener->incoming([this](int descriptor, const std::string &address, bool *accept) {
