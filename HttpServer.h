@@ -281,6 +281,8 @@ public:
   void setTlsContext(const AsyncFw::TlsContext &);
   void sendToWebSockets(const std::string &);
 
+  AsyncFw::FunctionConnectorProtected<HttpServer>::Connector<int, const std::string &, bool *> incoming {AsyncFw::AbstractFunctionConnector::SyncOnly};
+
 protected:
   virtual void fileUploadProgress(TcpSocket *, int);
   RulesMap rules;

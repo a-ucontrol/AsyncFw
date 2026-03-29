@@ -357,7 +357,7 @@ struct HttpServer::Private {
 
   std::string httpPath = "/www";
   AsyncFw::TlsContext tlsContext_;
-  std::unique_ptr<AsyncFw::ListenSocket> listener;
+  AsyncFw::ListenSocket listener;
   FunctionConnectionGuard listenerGuard;
 };
 
@@ -456,7 +456,6 @@ HttpServer::HttpServer(const std::string &_httpPath) {
 
 HttpServer::~HttpServer() {
   if (instance_.value == this) instance_.value = nullptr;
-  if (private_->listener) close();
   clearConnections();
   delete private_;
   lsTrace();
@@ -491,27 +490,37 @@ void HttpServer::sendToWebSockets(const std::string &data) {  //Дичь, для
 
 bool HttpServer::listen(uint16_t port) {
   trace_if(!private_->tlsContext_.empty()) << private_->tlsContext_.infoCertificate();
-  if (!private_->listener) {
-    private_->listener = std::make_unique<ListenSocket>();
-    private_->listenerGuard = private_->listener->incoming([this](int descriptor, const std::string &address, bool *accept) {
-      if (!*accept) *accept = incomingConnection(descriptor, address);
+  bool b = private_->listener.listen("0.0.0.0", port);
+  if (b) {
+    private_->listenerGuard = private_->listener.incoming([this](int descriptor, const std::string &address, bool *accept) {
+      incoming(descriptor, address, accept);
+      if (!*accept) {
+        TcpSocket *socket = new TcpSocket(this);
+        sockets.emplace_back(socket);
+        trace() << "(incoming) socket created, total:" << sockets.size() << "tls data" << !private_->tlsContext_.empty();
+        if (!private_->tlsContext_.empty()) socket->AbstractSocket::setDescriptor(descriptor);
+        else {
+          socket->setContext(private_->tlsContext_);
+          socket->setDescriptor(descriptor);
+        }
+        *accept = true;
+      }
     });
+    lsDebug() << LogStream::Color::Green << *this;
+  } else {
+    logError() << "Tcp server listen error, port:" << port;
   }
-  bool b = private_->listener->listen("0.0.0.0", port);
-  if (b) lsDebug() << LogStream::Color::Green << *this;
-  else { logError() << "Tcp server listen error, port:" << port; }
   return b;
 }
 
 void HttpServer::close() {
-  if (!private_->listener) {
+  if (!private_->listener.port()) {
     lsError() << "not listen";
     return;
   }
-  lsDebug() << LogStream::Color::Blue << "Tcp server close, port: " + std::to_string(private_->listener->port());
-  private_->listener->close();
+  lsDebug() << LogStream::Color::Blue << "Tcp server close, port: " + std::to_string(private_->listener.port());
+  private_->listener.close();
   private_->listenerGuard = {};
-  private_->listener = nullptr;
 }
 
 bool HttpServer::execRule(const Request &req) {
@@ -536,7 +545,7 @@ bool HttpServer::execRule(const Request &req) {
 
 void HttpServer::setHttpPath(const std::string &httpPath) { private_->httpPath = httpPath; }
 
-uint16_t HttpServer::port() { return (private_->listener->port()) ? private_->listener->port() : 0; }
+uint16_t HttpServer::port() { return private_->listener.port(); }
 
 void HttpServer::received(TcpSocket *socket, const std::string_view &ba) {
   trace() << LogStream::Color::Red << ba;
@@ -755,7 +764,7 @@ bool HttpServer::Request::fail() const { return private_->res != httpparser::Htt
 
 namespace AsyncFw {
 LogStream &operator<<(LogStream &log, const HttpServer &s) {
-  std::string str = "Listening: " + ((s.private_->listener->port()) ? s.private_->listener->address() + ':' + std::to_string(s.private_->listener->port()) : "no");
+  std::string str = "Listening: " + ((s.private_->listener.port()) ? s.private_->listener.address() + ':' + std::to_string(s.private_->listener.port()) : "no");
   str += std::string("\nSSL: ") + ((!s.private_->tlsContext_.empty()) ? "enabled" : "disabled");
   str += "\nWeb root: " + ((!s.private_->httpPath.empty()) ? s.private_->httpPath : "none");
 
