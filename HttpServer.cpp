@@ -546,8 +546,6 @@ bool HttpServer::execRule(const Request &req) {
   return true;
 }
 
-void HttpServer::setHttpPath(const std::string &httpPath) { private_->httpPath = httpPath; }
-
 uint16_t HttpServer::port() { return private_->listener.port(); }
 
 void HttpServer::received(TcpSocket *socket, const std::string_view &ba) {
@@ -616,9 +614,9 @@ HttpServer::RulesMap::iterator HttpServer::findRule(const std::string &path, con
 
 void HttpServer::setEnableCorsRequests(bool state) { cors_request_enabled = state; }
 
-void HttpServer::setTlsContext(const TlsContext &ctx) { private_->tlsContext_ = ctx; }
+bool HttpServer::hasTls() { return !private_->tlsContext_.empty(); }
 
-TlsContext &HttpServer::tlsContext() { return private_->tlsContext_; }
+void HttpServer::setTlsContext(const TlsContext &ctx) { private_->tlsContext_ = ctx; }
 
 std::string HttpServer::Response::header() const {
   std::string ba = "HTTP/" + version + ' ' + std::to_string(static_cast<int>(statusCode_)) + "\r\n";

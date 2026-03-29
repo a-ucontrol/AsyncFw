@@ -134,6 +134,9 @@ using&#160;</td><td class="memItemRight" valign="bottom"><b>RulesMap</b> = std::
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a522928fa8bf3b13b706ac997d4f100dd" id="r_a522928fa8bf3b13b706ac997d4f100dd"><td class="memItemLeft" align="right" valign="top"><a id="a522928fa8bf3b13b706ac997d4f100dd" name="a522928fa8bf3b13b706ac997d4f100dd"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>HttpServer</b> (const std::string &amp;={})</td></tr>
+<tr class="separator:a522928fa8bf3b13b706ac997d4f100dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5c32aee1be945562ee7c5601ecdc187b" id="r_a5c32aee1be945562ee7c5601ecdc187b"><td class="memTemplParams" colspan="2"><a id="a5c32aee1be945562ee7c5601ecdc187b" name="a5c32aee1be945562ee7c5601ecdc187b"></a>
 template&lt;typename A&gt; </td></tr>
 <tr class="memitem:a5c32aee1be945562ee7c5601ecdc187b"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>addRoute</b> (const std::string &amp;url, Request::Method method, A action, const std::any &amp;data={})</td></tr>
@@ -142,9 +145,6 @@ template&lt;typename A&gt; </td></tr>
 template&lt;typename O, typename A&gt; </td></tr>
 <tr class="memitem:a64e42967cdef1254142bcba26f246f07"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>addRoute</b> (const O object, const std::string &amp;url, Request::Method method, A action, const std::any &amp;data={})</td></tr>
 <tr class="separator:a64e42967cdef1254142bcba26f246f07"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a522928fa8bf3b13b706ac997d4f100dd" id="r_a522928fa8bf3b13b706ac997d4f100dd"><td class="memItemLeft" align="right" valign="top"><a id="a522928fa8bf3b13b706ac997d4f100dd" name="a522928fa8bf3b13b706ac997d4f100dd"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>HttpServer</b> (const std::string &amp;={})</td></tr>
-<tr class="separator:a522928fa8bf3b13b706ac997d4f100dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2d9f5dda4b025b9885180808c488503e" id="r_a2d9f5dda4b025b9885180808c488503e"><td class="memTemplParams" colspan="2"><a id="a2d9f5dda4b025b9885180808c488503e" name="a2d9f5dda4b025b9885180808c488503e"></a>
 template&lt;typename T&gt; </td></tr>
 <tr class="memitem:a2d9f5dda4b025b9885180808c488503e"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>clearConnections</b> (const T &amp;_data)</td></tr>
@@ -168,30 +168,27 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>listen</b> (uint16_t 
 <tr class="memitem:a8f4f0809de66b8631a9134fd823772f3" id="r_a8f4f0809de66b8631a9134fd823772f3"><td class="memItemLeft" align="right" valign="top"><a id="a8f4f0809de66b8631a9134fd823772f3" name="a8f4f0809de66b8631a9134fd823772f3"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>close</b> ()</td></tr>
 <tr class="separator:a8f4f0809de66b8631a9134fd823772f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae1ea4f1df23f9d51820cd75d0adb7cac" id="r_ae1ea4f1df23f9d51820cd75d0adb7cac"><td class="memItemLeft" align="right" valign="top"><a id="ae1ea4f1df23f9d51820cd75d0adb7cac" name="ae1ea4f1df23f9d51820cd75d0adb7cac"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>port</b> ()</td></tr>
+<tr class="separator:ae1ea4f1df23f9d51820cd75d0adb7cac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e3e419d07c51b25f0f4910db1e21b1f" id="r_a1e3e419d07c51b25f0f4910db1e21b1f"><td class="memItemLeft" align="right" valign="top"><a id="a1e3e419d07c51b25f0f4910db1e21b1f" name="a1e3e419d07c51b25f0f4910db1e21b1f"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>hasTls</b> ()</td></tr>
+<tr class="separator:a1e3e419d07c51b25f0f4910db1e21b1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a49661dff67c27da35efe560c85ac04c1" id="r_a49661dff67c27da35efe560c85ac04c1"><td class="memItemLeft" align="right" valign="top"><a id="a49661dff67c27da35efe560c85ac04c1" name="a49661dff67c27da35efe560c85ac04c1"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>addRule</b> (const std::string &amp;, const Request::Method, std::function&lt; void(const Request &amp;)&gt;)</td></tr>
 <tr class="separator:a49661dff67c27da35efe560c85ac04c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac494c117321095a11243e7eeea9f967b" id="r_ac494c117321095a11243e7eeea9f967b"><td class="memItemLeft" align="right" valign="top"><a id="ac494c117321095a11243e7eeea9f967b" name="ac494c117321095a11243e7eeea9f967b"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>execRule</b> (const Request &amp;)</td></tr>
 <tr class="separator:ac494c117321095a11243e7eeea9f967b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae1ea4f1df23f9d51820cd75d0adb7cac" id="r_ae1ea4f1df23f9d51820cd75d0adb7cac"><td class="memItemLeft" align="right" valign="top"><a id="ae1ea4f1df23f9d51820cd75d0adb7cac" name="ae1ea4f1df23f9d51820cd75d0adb7cac"></a>
-uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>port</b> ()</td></tr>
-<tr class="separator:ae1ea4f1df23f9d51820cd75d0adb7cac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a58ba48a236e1756ef8e195eeba174218" id="r_a58ba48a236e1756ef8e195eeba174218"><td class="memItemLeft" align="right" valign="top"><a id="a58ba48a236e1756ef8e195eeba174218" name="a58ba48a236e1756ef8e195eeba174218"></a>
-<a class="el" href="classAsyncFw_1_1TlsContext.html">AsyncFw::TlsContext</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>tlsContext</b> ()</td></tr>
-<tr class="separator:a58ba48a236e1756ef8e195eeba174218"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a313be3a920c19f58526ee184744699c1" id="r_a313be3a920c19f58526ee184744699c1"><td class="memItemLeft" align="right" valign="top"><a id="a313be3a920c19f58526ee184744699c1" name="a313be3a920c19f58526ee184744699c1"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setTlsContext</b> (const <a class="el" href="classAsyncFw_1_1TlsContext.html">AsyncFw::TlsContext</a> &amp;)</td></tr>
 <tr class="separator:a313be3a920c19f58526ee184744699c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afaa64127bfd09f267c54777aec08606f" id="r_afaa64127bfd09f267c54777aec08606f"><td class="memItemLeft" align="right" valign="top"><a id="afaa64127bfd09f267c54777aec08606f" name="afaa64127bfd09f267c54777aec08606f"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setHttpPath</b> (const std::string &amp;httpPath)</td></tr>
-<tr class="separator:afaa64127bfd09f267c54777aec08606f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a949914c25c7ca6da1b8fd159938f1c18" id="r_a949914c25c7ca6da1b8fd159938f1c18"><td class="memItemLeft" align="right" valign="top"><a id="a949914c25c7ca6da1b8fd159938f1c18" name="a949914c25c7ca6da1b8fd159938f1c18"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setPeek</b> (std::function&lt; bool(const Request &amp;, const std::any &amp;)&gt; f)</td></tr>
-<tr class="separator:a949914c25c7ca6da1b8fd159938f1c18"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6806aba6259233c939f9c44f577314ce" id="r_a6806aba6259233c939f9c44f577314ce"><td class="memItemLeft" align="right" valign="top"><a id="a6806aba6259233c939f9c44f577314ce" name="a6806aba6259233c939f9c44f577314ce"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setEnableCorsRequests</b> (bool)</td></tr>
 <tr class="separator:a6806aba6259233c939f9c44f577314ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a949914c25c7ca6da1b8fd159938f1c18" id="r_a949914c25c7ca6da1b8fd159938f1c18"><td class="memItemLeft" align="right" valign="top"><a id="a949914c25c7ca6da1b8fd159938f1c18" name="a949914c25c7ca6da1b8fd159938f1c18"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setPeek</b> (std::function&lt; bool(const Request &amp;, const std::any &amp;)&gt; f)</td></tr>
+<tr class="separator:a949914c25c7ca6da1b8fd159938f1c18"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>

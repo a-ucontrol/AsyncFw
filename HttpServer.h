@@ -200,7 +200,10 @@ private:
 
 public:
   using RulesMap = std::multimap<std::string, std::unique_ptr<HttpRule>>;
-  static HttpServer *instance() { return instance_.value; }
+
+  HttpServer(const std::string & = {});
+  virtual ~HttpServer();
+
   template <typename A>
   void addRoute(const std::string &url, Request::Method method, A action, const std::any &data = {}) {
     addRule(url, method, [this, action, data](const Request &request) {
@@ -216,9 +219,6 @@ public:
   void addRoute(const O object, const std::string &url, Request::Method method, A action, const std::any &data = {}) {
     addRoute(url, method, [object, action](const Request &request) { return (object->*action)(request); }, data);
   }
-
-  HttpServer(const std::string & = {});
-  virtual ~HttpServer();
 
   template <typename T>
   void clearConnections(const T &_data) {
@@ -252,18 +252,17 @@ public:
   bool listen(uint16_t port);
   void close();
 
+  uint16_t port();
+  bool hasTls();
+
   void addRule(const std::string &, const Request::Method, std::function<void(const Request &)>);
   bool execRule(const Request &);
 
-  uint16_t port();
-
-  AsyncFw::TlsContext &tlsContext();
   void setTlsContext(const AsyncFw::TlsContext &);
-
-  void setHttpPath(const std::string &httpPath);
-  void setPeek(std::function<bool(const Request &, const std::any &)> f) { peek = f; }
   void setEnableCorsRequests(bool);
+  void setPeek(std::function<bool(const Request &, const std::any &)> f) { peek = f; }
 
+  static HttpServer *instance() { return instance_.value; }
   AsyncFw::FunctionConnectorProtected<HttpServer>::Connector<int, const std::string &, bool *> incoming {AsyncFw::AbstractFunctionConnector::SyncOnly};
 
 protected:
