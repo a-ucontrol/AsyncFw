@@ -14,12 +14,13 @@ var searchData=
   ['functionconnectorprotected_3c_20asyncfw_3a_3adataarraysocket_20_3e_11',['FunctionConnectorProtected&lt; AsyncFw::DataArraySocket &gt;',['../classAsyncFw_1_1FunctionConnectorProtected.html',1,'AsyncFw']]],
   ['functionconnectorprotected_3c_20asyncfw_3a_3adataarraytcpclient_20_3e_12',['FunctionConnectorProtected&lt; AsyncFw::DataArrayTcpClient &gt;',['../classAsyncFw_1_1FunctionConnectorProtected.html',1,'AsyncFw']]],
   ['functionconnectorprotected_3c_20asyncfw_3a_3afilesystemwatcher_20_3e_13',['FunctionConnectorProtected&lt; AsyncFw::FileSystemWatcher &gt;',['../classAsyncFw_1_1FunctionConnectorProtected.html',1,'AsyncFw']]],
-  ['functionconnectorprotected_3c_20asyncfw_3a_3ahttpsocket_20_3e_14',['FunctionConnectorProtected&lt; AsyncFw::HttpSocket &gt;',['../classAsyncFw_1_1FunctionConnectorProtected.html',1,'AsyncFw']]],
-  ['functionconnectorprotected_3c_20asyncfw_3a_3alistensocket_20_3e_15',['FunctionConnectorProtected&lt; AsyncFw::ListenSocket &gt;',['../classAsyncFw_1_1FunctionConnectorProtected.html',1,'AsyncFw']]],
-  ['functionconnectorprotected_3c_20asyncfw_3a_3amulticastdns_20_3e_16',['FunctionConnectorProtected&lt; AsyncFw::MulticastDns &gt;',['../classAsyncFw_1_1FunctionConnectorProtected.html',1,'AsyncFw']]],
-  ['functionconnectorprotected_3c_20asyncfw_3a_3apollnotifier_20_3e_17',['FunctionConnectorProtected&lt; AsyncFw::PollNotifier &gt;',['../classAsyncFw_1_1FunctionConnectorProtected.html',1,'AsyncFw']]],
-  ['functionconnectorprotected_3c_20asyncfw_3a_3arrd_20_3e_18',['FunctionConnectorProtected&lt; AsyncFw::Rrd &gt;',['../classAsyncFw_1_1FunctionConnectorProtected.html',1,'AsyncFw']]],
-  ['functionconnectorprotected_3c_20asyncfw_3a_3asystemprocess_20_3e_19',['FunctionConnectorProtected&lt; AsyncFw::SystemProcess &gt;',['../classAsyncFw_1_1FunctionConnectorProtected.html',1,'AsyncFw']]],
-  ['functionconnectorprotected_3c_20asyncfw_3a_3athread_20_3e_20',['FunctionConnectorProtected&lt; AsyncFw::Thread &gt;',['../classAsyncFw_1_1FunctionConnectorProtected.html',1,'AsyncFw']]],
-  ['functionconnectorprotected_3c_20asyncfw_3a_3atimer_20_3e_21',['FunctionConnectorProtected&lt; AsyncFw::Timer &gt;',['../classAsyncFw_1_1FunctionConnectorProtected.html',1,'AsyncFw']]]
+  ['functionconnectorprotected_3c_20asyncfw_3a_3ahttpserver_20_3e_14',['FunctionConnectorProtected&lt; AsyncFw::HttpServer &gt;',['../classAsyncFw_1_1FunctionConnectorProtected.html',1,'AsyncFw']]],
+  ['functionconnectorprotected_3c_20asyncfw_3a_3ahttpsocket_20_3e_15',['FunctionConnectorProtected&lt; AsyncFw::HttpSocket &gt;',['../classAsyncFw_1_1FunctionConnectorProtected.html',1,'AsyncFw']]],
+  ['functionconnectorprotected_3c_20asyncfw_3a_3alistensocket_20_3e_16',['FunctionConnectorProtected&lt; AsyncFw::ListenSocket &gt;',['../classAsyncFw_1_1FunctionConnectorProtected.html',1,'AsyncFw']]],
+  ['functionconnectorprotected_3c_20asyncfw_3a_3amulticastdns_20_3e_17',['FunctionConnectorProtected&lt; AsyncFw::MulticastDns &gt;',['../classAsyncFw_1_1FunctionConnectorProtected.html',1,'AsyncFw']]],
+  ['functionconnectorprotected_3c_20asyncfw_3a_3apollnotifier_20_3e_18',['FunctionConnectorProtected&lt; AsyncFw::PollNotifier &gt;',['../classAsyncFw_1_1FunctionConnectorProtected.html',1,'AsyncFw']]],
+  ['functionconnectorprotected_3c_20asyncfw_3a_3arrd_20_3e_19',['FunctionConnectorProtected&lt; AsyncFw::Rrd &gt;',['../classAsyncFw_1_1FunctionConnectorProtected.html',1,'AsyncFw']]],
+  ['functionconnectorprotected_3c_20asyncfw_3a_3asystemprocess_20_3e_20',['FunctionConnectorProtected&lt; AsyncFw::SystemProcess &gt;',['../classAsyncFw_1_1FunctionConnectorProtected.html',1,'AsyncFw']]],
+  ['functionconnectorprotected_3c_20asyncfw_3a_3athread_20_3e_21',['FunctionConnectorProtected&lt; AsyncFw::Thread &gt;',['../classAsyncFw_1_1FunctionConnectorProtected.html',1,'AsyncFw']]],
+  ['functionconnectorprotected_3c_20asyncfw_3a_3atimer_20_3e_22',['FunctionConnectorProtected&lt; AsyncFw::Timer &gt;',['../classAsyncFw_1_1FunctionConnectorProtected.html',1,'AsyncFw']]]
 ];

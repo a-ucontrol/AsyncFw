@@ -158,7 +158,7 @@ $(function(){initNavTree('instance_8hpp_source.html',''); initResizable(true); }
 <div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>        i_-&gt;value = _v;</div>
 <div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>        i_-&gt;created();</div>
 <div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>      }</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>      <span class="keywordflow">return</span> _v;</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>      <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span>CT *<span class="keyword">&gt;</span>(i_-&gt;value);</div>
 <div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    }</div>
 <div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    <span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
 <div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>  }</div>

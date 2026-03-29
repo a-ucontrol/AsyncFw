@@ -107,6 +107,7 @@ $(function(){initNavTree('classAsyncFw_1_1HttpServer.html',''); initResizable(tr
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="#friends">Friends</a> &#124;
@@ -119,6 +120,11 @@ $(function(){initNavTree('classAsyncFw_1_1HttpServer.html',''); initResizable(tr
  <a href="#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="HttpServer_8h_source.html">HttpServer.h</a>&gt;</code></p>
+<div class="dynheader">
+Collaboration diagram for AsyncFw::HttpServer:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1HttpServer__coll__graph.svg" width="278" height="251"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
@@ -193,6 +199,12 @@ Static Public Member Functions</h2></td></tr>
 static <a class="el" href="classAsyncFw_1_1HttpServer.html">HttpServer</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>instance</b> ()</td></tr>
 <tr class="separator:ad52f34791fe5848d9ba891b209fcdbe0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:a122d563fb26e27e29d87f62e6c10ac0c" id="r_a122d563fb26e27e29d87f62e6c10ac0c"><td class="memItemLeft" align="right" valign="top"><a id="a122d563fb26e27e29d87f62e6c10ac0c" name="a122d563fb26e27e29d87f62e6c10ac0c"></a>
+<a class="el" href="classAsyncFw_1_1FunctionConnectorProtected.html">AsyncFw::FunctionConnectorProtected</a>&lt; <a class="el" href="classAsyncFw_1_1HttpServer.html">HttpServer</a> &gt;::Connector&lt; int, const std::string &amp;, bool * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>incoming</b> {AsyncFw::AbstractFunctionConnector::SyncOnly}</td></tr>
+<tr class="separator:a122d563fb26e27e29d87f62e6c10ac0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:abdfe4d8339781230ced6d74e866c2082" id="r_abdfe4d8339781230ced6d74e866c2082"><td class="memItemLeft" align="right" valign="top"><a id="abdfe4d8339781230ced6d74e866c2082" name="abdfe4d8339781230ced6d74e866c2082"></a>
@@ -213,26 +225,39 @@ Friends</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The <a class="el" href="classAsyncFw_1_1HttpServer.html" title="The HttpServer class.">HttpServer</a> class. </p>
-<p>Example: </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;csignal&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;HttpServer.h&gt;</span></div>
+<p>Example: </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;HttpServer.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;MainThread.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;core/LogStream.h&gt;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">using namespace </span>AsyncFw;</div>
 <div class="line"> </div>
-<div class="line"><span class="keywordtype">void</span> handleSignal(<span class="keywordtype">int</span> _sig) { MainThread::exit(); }</div>
-<div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[]) {</div>
-<div class="line">  signal(SIGINT, handleSignal);</div>
-<div class="line">  signal(SIGTERM, handleSignal);</div>
+<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1HttpServer.html">HttpServer</a> _http {HTTP_SERVER_HOME};</div>
 <div class="line"> </div>
-<div class="line">  logNotice() &lt;&lt; <span class="stringliteral">&quot;Start&quot;</span>;</div>
+<div class="line">  _http.addRoute(<span class="stringliteral">&quot;/quit&quot;</span>, HttpServer::Request::Method::Get, [](<span class="keyword">const</span> HttpServer::Request &amp;request) {</div>
+<div class="line">    HttpServer::Response *resp = request.response();</div>
+<div class="line">    resp-&gt;setMimeType(<span class="stringliteral">&quot;octet-stream&quot;</span>);</div>
+<div class="line">    resp-&gt;setStatusCode(HttpServer::Response::StatusCode::Ok);</div>
+<div class="line">    resp-&gt;addHeader(<span class="stringliteral">&quot;ContentLenght:0&quot;</span>);</div>
+<div class="line">    resp-&gt;send();</div>
+<div class="line">    MainThread::exit();</div>
+<div class="line">  });</div>
 <div class="line"> </div>
-<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1HttpServer.html">HttpServer</a> _http{HTTP_SERVER_HOME};</div>
 <div class="line">  _http.listen(18080);</div>
 <div class="line"> </div>
+<div class="line">  <span class="keywordflow">if</span> (argc == 2 &amp;&amp; std::string(argv[1]) == <span class="stringliteral">&quot;--tst&quot;</span>) {</div>
+<div class="line">    <a class="code hl_class" href="classAsyncFw_1_1HttpSocket.html">HttpSocket</a> *_socket = HttpSocket::create();</div>
+<div class="line">    _socket-&gt;stateChanged([_socket](<span class="keyword">const</span> AsyncFw::AbstractSocket::State state) {</div>
+<div class="line">      <span class="keywordflow">if</span> (state == AsyncFw::AbstractSocket::State::Active) {</div>
+<div class="line">        logDebug() &lt;&lt; <span class="stringliteral">&quot;Send request&quot;</span>;</div>
+<div class="line">        _socket-&gt;write(<span class="stringliteral">&quot;GET /quit HTTP/1.1\r\n\r\n&quot;</span>);</div>
+<div class="line">      }</div>
+<div class="line">    });</div>
+<div class="line">    _socket-&gt;connect(<span class="stringliteral">&quot;127.0.0.1&quot;</span>, 18080);</div>
+<div class="line">  }</div>
+<div class="line"> </div>
 <div class="line">  lsNotice() &lt;&lt; <span class="stringliteral">&quot;Start Applicaiton&quot;</span>;</div>
-<div class="line">  <span class="keywordtype">int</span> ret = AsyncFw::MainThread::exec();</div>
+<div class="line">  <span class="keywordtype">int</span> ret = MainThread::exec();</div>
 <div class="line">  lsNotice() &lt;&lt; <span class="stringliteral">&quot;End Applicaiton&quot;</span> &lt;&lt; ret;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">return</span> ret;</div>

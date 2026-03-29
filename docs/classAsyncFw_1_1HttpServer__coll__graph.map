@@ -1,0 +1,7 @@
+<map id="AsyncFw::HttpServer" name="AsyncFw::HttpServer">
+<area shape="rect" id="Node000001" title="The HttpServer class." alt="" coords="45,219,192,245"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1FunctionConnectorProtected.html" title=" " alt="" coords="5,112,232,155"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="121,170,121,218,116,218,116,170"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1FunctionConnectorProtected.html" title="Защищенный коннетор, отправитель может быть только один." alt="" coords="21,5,216,48"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="121,64,121,111,116,111,116,64"/>
+</map>
