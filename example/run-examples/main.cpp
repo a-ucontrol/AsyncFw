@@ -74,6 +74,15 @@ void run_examples() {
   process.start(app);
   process.wait();
 
+  app = EXAMPLES_PATH "ListenSocket/ListenSocketExample";
+  logInfo() << "Start:" << app;
+  process.start(app, {"--tst"});
+  process.wait();
+  app = EXAMPLES_PATH "HttpServer/HttpServerExample";
+  logInfo() << "Start:" << app;
+  process.start(app, {"--tst"});
+  process.wait();
+
   if (!ok) {
     logAlert() << "-ERROR!-";
     logAlert() << "=ERROR!=\n" << err;

@@ -1,26 +1,39 @@
 #define uC_LOGGER
 
 //! [snippet]
-#include <csignal>
 #include <HttpServer.h>
 #include <MainThread.h>
 #include <core/LogStream.h>
 
 using namespace AsyncFw;
 
-void handleSignal(int _sig) { MainThread::exit(); }
-
 int main(int argc, char *argv[]) {
-  signal(SIGINT, handleSignal);
-  signal(SIGTERM, handleSignal);
+  HttpServer _http {HTTP_SERVER_HOME};
 
-  logNotice() << "Start";
+  _http.addRoute("/quit", HttpServer::Request::Method::Get, [](const HttpServer::Request &request) {
+    HttpServer::Response *resp = request.response();
+    resp->setMimeType("octet-stream");
+    resp->setStatusCode(HttpServer::Response::StatusCode::Ok);
+    resp->addHeader("ContentLenght:0");
+    resp->send();
+    MainThread::exit();
+  });
 
-  HttpServer _http{HTTP_SERVER_HOME};
   _http.listen(18080);
 
+  if (argc == 2 && std::string(argv[1]) == "--tst") {
+    HttpSocket *_socket = HttpSocket::create();
+    _socket->stateChanged([_socket](const AsyncFw::AbstractSocket::State state) {
+      if (state == AsyncFw::AbstractSocket::State::Active) {
+        logDebug() << "Send request";
+        _socket->write("GET /quit HTTP/1.1\r\n\r\n");
+      }
+    });
+    _socket->connect("127.0.0.1", 18080);
+  }
+
   lsNotice() << "Start Applicaiton";
-  int ret = AsyncFw::MainThread::exec();
+  int ret = MainThread::exec();
   lsNotice() << "End Applicaiton" << ret;
 
   return ret;
