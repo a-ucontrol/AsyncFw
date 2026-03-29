@@ -50,7 +50,6 @@ public:
 
   public:
     enum class StatusCode {
-      NoResponse = 0,
       Continue = 100,
       SwitchingProtocols = 101,
       Processing = 102,
@@ -114,13 +113,6 @@ public:
       NetworkAuthenticationRequired = 511,
       NetworkConnectTimeoutError = 599
     };
-    Response() {}
-    Response(const StatusCode status) : statusCode_(status) {}
-    Response(const AsyncFw::DataArray &ba, const StatusCode status = StatusCode::Ok) : statusCode_(status), content_(ba) { contentLength = content_.size(); }
-    Response(const char *ptr, const StatusCode status = StatusCode::Ok) : statusCode_(status), content_(ptr) { contentLength = content_.size(); }
-    Response(const std::vector<char> &v, const StatusCode status = StatusCode::Ok) : statusCode_(status), content_(v.begin(), v.end()) { contentLength = content_.size(); }
-    Response(const std::vector<uint8_t> &v, const StatusCode status = StatusCode::Ok) : statusCode_(status), content_(v.begin(), v.end()) { contentLength = content_.size(); }
-    Response(const std::string &s, const StatusCode status = StatusCode::Ok) : statusCode_(status), content_(s.begin(), s.end()) { contentLength = content_.size(); }
 
     void setMimeType(const std::string &mime) { mimeType_ = mime; }
     std::string mimeType() const { return mimeType_; }
@@ -140,7 +132,7 @@ public:
 
   private:
     std::vector<std::string> additionalHeaders;
-    mutable StatusCode statusCode_ = Response::StatusCode::NoResponse;
+    mutable StatusCode statusCode_ = Response::StatusCode::Ok;
     mutable int contentLength = 0;
     mutable std::string mimeType_;
     AsyncFw::DataArray content_;
@@ -191,7 +183,6 @@ public:
     void setResponse(const Response &) const;
     Method method_;
     Response *response_ = nullptr;
-    mutable bool sendResponse_ = true;
     Private *private_;
   };
 
@@ -252,15 +243,7 @@ public:
   template <typename A>
   void addRoute(const std::string &url, Request::Method method, A action, const std::any &data = {}) {
     addRule(url, method, [this, action, data](const Request &request) {
-      if (!peek || peek(request, data)) {
-        if constexpr (std::is_same<decltype(action(request)), Response>::value) {
-          request.setResponse(action(request));
-          request.sendResponse_ = request.response_->statusCode_ != Response::StatusCode::NoResponse;
-          return;
-        }
-        action(request);
-      }
-      request.sendResponse_ = false;
+      if (!peek || peek(request, data)) action(request);
     });
     if (findRule(url, Request::Method::Options) != rules.end()) return;
     addRule(url, Request::Method::Options, [this, action, data](const Request &request) {

@@ -439,6 +439,7 @@ HttpServer::HttpServer(const std::string &_httpPath) {
     if (private_->httpPath.empty()) {
       lsError("application home not set");
       request.response()->setStatusCode(Response::StatusCode::BadRequest);
+      request.response()->send();
       return;
     }
     std::string path = private_->httpPath + ((request.path() == "/") ? "/index.html" : request.path());
@@ -447,9 +448,11 @@ HttpServer::HttpServer(const std::string &_httpPath) {
       trace(("return: " + path).c_str());
       request.response()->setStatusCode(Response::StatusCode::Ok);
       request.response()->setContent("file://" + path);
+      request.response()->send();
       return;
     }
     request.response()->setStatusCode(Response::StatusCode::NotFound);
+    request.response()->send();
   });
   lsTrace();
 }
@@ -585,14 +588,7 @@ void HttpServer::received(TcpSocket *socket, const std::string_view &ba) {
       delete req.response_;
       return;
     }
-    if (!req.sendResponse_) {
-      socket->response = req.response_;
-      lsDebug() << LogStream::Color::DarkGreen << "not send response";
-      return;
-    }
-    req.response_->send();
-    return;
-
+    socket->response = req.response_;
   } else {
     lsTrace();
     socket->disconnect();
