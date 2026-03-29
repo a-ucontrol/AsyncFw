@@ -200,9 +200,26 @@ private:
 
 public:
   using RulesMap = std::multimap<std::string, std::unique_ptr<HttpRule>>;
+  static HttpServer *instance() { return instance_.value; }
+  template <typename A>
+  void addRoute(const std::string &url, Request::Method method, A action, const std::any &data = {}) {
+    addRule(url, method, [this, action, data](const Request &request) {
+      if (!peek || peek(request, data)) action(request);
+    });
+    if (findRule(url, Request::Method::Options) != rules.end()) return;
+    addRule(url, Request::Method::Options, [this, action, data](const Request &request) {
+      if (cors_request_enabled) request.response()->setStatusCode(Response::StatusCode::Ok);
+      else { request.response()->setStatusCode(Response::StatusCode::Forbidden); }
+    });
+  }
+  template <typename O, typename A>
+  void addRoute(const O object, const std::string &url, Request::Method method, A action, const std::any &data = {}) {
+    addRoute(url, method, [object, action](const Request &request) { return (object->*action)(request); }, data);
+  }
+
   HttpServer(const std::string & = {});
   virtual ~HttpServer();
-  void addRule(const std::string &, const Request::Method, std::function<void(const Request &)>);
+
   template <typename T>
   void clearConnections(const T &_data) {
     for (TcpSocket *socket : sockets) {
@@ -212,10 +229,6 @@ public:
   void clearConnections() {
     for (TcpSocket *socket : sockets) disconnectFromHost(socket);
   }
-  void disconnectFromHost(TcpSocket *socket);
-  bool listen(uint16_t port);
-  void close();
-
   template <typename T>
   int sendToWebSockets(const T &_data, const AsyncFw::DataArray &_da) {
     AsyncFw::DataArray _f;
@@ -233,36 +246,23 @@ public:
     }
     return _r;
   }
+  void sendToWebSockets(const std::string &);
 
+  void disconnectFromHost(TcpSocket *socket);
+  bool listen(uint16_t port);
+  void close();
+
+  void addRule(const std::string &, const Request::Method, std::function<void(const Request &)>);
   bool execRule(const Request &);
 
-  static HttpServer *instance() { return instance_.value; }
-
-  void setHttpPath(const std::string &httpPath);
-
-  template <typename A>
-  void addRoute(const std::string &url, Request::Method method, A action, const std::any &data = {}) {
-    addRule(url, method, [this, action, data](const Request &request) {
-      if (!peek || peek(request, data)) action(request);
-    });
-    if (findRule(url, Request::Method::Options) != rules.end()) return;
-    addRule(url, Request::Method::Options, [this, action, data](const Request &request) {
-      if (cors_request_enabled) request.response()->setStatusCode(Response::StatusCode::Ok);
-      else { request.response()->setStatusCode(Response::StatusCode::Forbidden); }
-    });
-  }
-
-  template <typename O, typename A>
-  void addRoute(const O object, const std::string &url, Request::Method method, A action, const std::any &data = {}) {
-    addRoute(url, method, [object, action](const Request &request) { return (object->*action)(request); }, data);
-  }
-
   uint16_t port();
-  void setPeek(std::function<bool(const Request &, const std::any &)> f) { peek = f; }
-  void setEnableCorsRequests(bool);
+
   AsyncFw::TlsContext &tlsContext();
   void setTlsContext(const AsyncFw::TlsContext &);
-  void sendToWebSockets(const std::string &);
+
+  void setHttpPath(const std::string &httpPath);
+  void setPeek(std::function<bool(const Request &, const std::any &)> f) { peek = f; }
+  void setEnableCorsRequests(bool);
 
   AsyncFw::FunctionConnectorProtected<HttpServer>::Connector<int, const std::string &, bool *> incoming {AsyncFw::AbstractFunctionConnector::SyncOnly};
 
