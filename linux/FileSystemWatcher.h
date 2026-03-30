@@ -12,7 +12,8 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include "instance.hpp"
 
 namespace AsyncFw {
-/*! \brief The FileSystemWatcher class. \warning Unix-like systems only */
+/*! \brief The FileSystemWatcher class. \warning Unix-like systems only
+ \brief Example: \snippet FileSystemWatcher/main.cpp snippet */
 class FileSystemWatcher {
 public:
   static FileSystemWatcher *instance() { return instance_.value; }
@@ -25,7 +26,8 @@ public:
   std::vector<std::string> paths() const;
   std::string info() const;
 
-  FunctionConnectorProtected<FileSystemWatcher>::Connector<const std::string &, int> watch;
+  /*! \brief The FunctionConnector for notification of file-related events. */
+  FunctionConnectorProtected<FileSystemWatcher>::Connector<const std::string &, int> notify;
 
 private:
   inline static AsyncFw::Instance<FileSystemWatcher> instance_ {"FileSystemWatcher"};

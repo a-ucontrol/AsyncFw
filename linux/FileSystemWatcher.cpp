@@ -36,7 +36,7 @@ FileSystemWatcher::FileSystemWatcher(const std::vector<std::string> &paths) {
   thread_ = AbstractThread::currentThread();
   timerid_ = thread_->appendTimerTask(0, [this]() {
     thread_->modifyTimer(timerid_, 0);
-    for (const Watch *f : we_) watch(f->directory + '/' + f->name, 0);
+    for (const Watch *f : we_) notify(f->directory + '/' + f->name, 0);
     trace() << LogStream::Color::DarkRed << "timer event" << we_.size();
     we_.clear();
   });
@@ -72,13 +72,13 @@ FileSystemWatcher::FileSystemWatcher(const std::vector<std::string> &paths) {
           int i = inotify_add_watch(notifyfd_, w->directory.c_str(), IN_CREATE | IN_DELETE);
           inotify_rm_watch(notifyfd_, w->d);
           remove_(w);
-          watch(w->directory + '/' + w->name, -1);
+          notify(w->directory + '/' + w->name, -1);
           lsDebug() << "removed" << w->directory + '/' + w->name << w->d;
 
           w->d = inotify_add_watch(notifyfd_, (w->directory + '/' + w->name).c_str(), IN_ATTRIB | IN_MODIFY | IN_CLOSE_WRITE | IN_DELETE_SELF);
           if (w->d >= 0) {
             inotify_rm_watch(notifyfd_, i);
-            watch(w->directory + '/' + w->name, 1);
+            notify(w->directory + '/' + w->name, 1);
             lsDebug() << "created (event missed)" << w->directory + '/' + w->name << w->d;
             itd = std::lower_bound(wds_.begin(), wds_.end(), w->d, CompareWatchDescriptor());
             wds_.insert(itd, w);
@@ -95,7 +95,7 @@ FileSystemWatcher::FileSystemWatcher(const std::vector<std::string> &paths) {
           continue;
         }
         if (e->mask & IN_CLOSE_WRITE) {
-          watch((*itd)->directory + '/' + (*itd)->name, 0);
+          notify((*itd)->directory + '/' + (*itd)->name, 0);
           remove_(*itd);
           lsDebug() << "close write" << (*itd)->directory + '/' + (*itd)->name << (*itd)->d;
           continue;
@@ -106,7 +106,7 @@ FileSystemWatcher::FileSystemWatcher(const std::vector<std::string> &paths) {
           continue;
         }
         if (e->mask & IN_ATTRIB) {
-          watch((*itd)->directory + '/' + (*itd)->name, 0);
+          notify((*itd)->directory + '/' + (*itd)->name, 0);
           remove_(*itd);
           //append_(*itd);
           lsDebug() << "attributes changed" << (*itd)->directory + '/' + (*itd)->name << (*itd)->d;
@@ -135,13 +135,13 @@ FileSystemWatcher::FileSystemWatcher(const std::vector<std::string> &paths) {
             wds_.insert(itd, *itw);
           }
         }
-        watch(wp.directory + '/' + e->name, 1);
+        notify(wp.directory + '/' + e->name, 1);
         lsDebug() << "created (watch directory)" << wp.directory + '/' + wp.name;
         continue;
       }
       if (e->mask & IN_DELETE) {
         if ((*itw)->d == (*itd)->d) {
-          watch(wp.directory + '/' + e->name, -1);
+          notify(wp.directory + '/' + e->name, -1);
           lsDebug() << "removed" << wp.directory + '/' + wp.name;
         }
         continue;
