@@ -74,6 +74,11 @@ void run_examples() {
   process.start(app);
   process.wait();
 
+  app = EXAMPLES_PATH "FileSystemWatcher/FileSystemWatcherExample";
+  logInfo() << "Start:" << app;
+  process.start(app);
+  process.wait();
+
   app = EXAMPLES_PATH "ListenSocket/ListenSocketExample";
   logInfo() << "Start:" << app;
   process.start(app, {"--tst"});
