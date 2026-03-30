@@ -633,10 +633,7 @@ open_client_sockets(int* sockets, int max_sockets, int port) {
   struct ifaddrs* ifaddr = 0;
   struct ifaddrs* ifa = 0;
 
-#ifdef EXTEND_MDNS_TRACE
-  if (getifaddrs(&ifaddr) < 0)
-    printf("Unable to get interface addresses\n");
-#endif
+  if (getifaddrs(&ifaddr) < 0) { printf("Unable to get interface addresses\n"); }
 
   int first_ipv4 = 1;
   int first_ipv6 = 1;
