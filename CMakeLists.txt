@@ -1,8 +1,6 @@
 cmake_minimum_required(VERSION 3.23)
 
-if(MULTIBUILD_PROJECT_NAME)
-  set(AsyncFw_PROJECT_NAME ${MULTIBUILD_PROJECT_NAME})
-else()
+if(NOT AsyncFw_PROJECT_NAME)
   set(AsyncFw_PROJECT_NAME AsyncFw)
 endif()
 
@@ -50,18 +48,18 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(AsyncFw_CORE_HEADERS
-  "core/Socket.h"
-  "core/TlsSocket.h"
-  "core/Thread.h"
-  "core/AnyData.h"
-  "core/TlsContext.h"
-  "core/FunctionConnector.h"
-  "core/LogStream.h"
-  "core/DataArray.h"
-  "core/function.hpp"
-  "core/abstract_thread.hpp"
-  "core/log-types.hpp"
-  "core/console_msg.hpp"
+  "${CMAKE_CURRENT_LIST_DIR}/core/Socket.h"
+  "${CMAKE_CURRENT_LIST_DIR}/core/TlsSocket.h"
+  "${CMAKE_CURRENT_LIST_DIR}/core/Thread.h"
+  "${CMAKE_CURRENT_LIST_DIR}/core/AnyData.h"
+  "${CMAKE_CURRENT_LIST_DIR}/core/TlsContext.h"
+  "${CMAKE_CURRENT_LIST_DIR}/core/FunctionConnector.h"
+  "${CMAKE_CURRENT_LIST_DIR}/core/LogStream.h"
+  "${CMAKE_CURRENT_LIST_DIR}/core/DataArray.h"
+  "${CMAKE_CURRENT_LIST_DIR}/core/function.hpp"
+  "${CMAKE_CURRENT_LIST_DIR}/core/abstract_thread.hpp"
+  "${CMAKE_CURRENT_LIST_DIR}/core/log-types.hpp"
+  "${CMAKE_CURRENT_LIST_DIR}/core/console_msg.hpp"
 )
 
 set(AsyncFw_CORE_SOURCES
@@ -78,37 +76,37 @@ set(AsyncFw_CORE_SOURCES
 )
 
 set(AsyncFw_HEADERS
-  "Coroutine.h"
-  "Timer.h"
-  "AddressInfo.h"
-  "PollNotifier.h"
-  "ThreadPool.h"
-  "File.h"
-  "Cryptor.h"
+  "${CMAKE_CURRENT_LIST_DIR}/Coroutine.h"
+  "${CMAKE_CURRENT_LIST_DIR}/Timer.h"
+  "${CMAKE_CURRENT_LIST_DIR}/AddressInfo.h"
+  "${CMAKE_CURRENT_LIST_DIR}/PollNotifier.h"
+  "${CMAKE_CURRENT_LIST_DIR}/ThreadPool.h"
+  "${CMAKE_CURRENT_LIST_DIR}/File.h"
+  "${CMAKE_CURRENT_LIST_DIR}/Cryptor.h"
 
-  "MainThread.h"
+  "${CMAKE_CURRENT_LIST_DIR}/MainThread.h"
 
-  "linux/SystemProcess.h"
-  "linux/FileSystemWatcher.h"
+  "${CMAKE_CURRENT_LIST_DIR}/linux/SystemProcess.h"
+  "${CMAKE_CURRENT_LIST_DIR}/linux/FileSystemWatcher.h"
 
-  "Rrd.h"
-  "Log.h"
-  "RrdServer.h"
-  "RrdClient.h"
+  "${CMAKE_CURRENT_LIST_DIR}/Rrd.h"
+  "${CMAKE_CURRENT_LIST_DIR}/Log.h"
+  "${CMAKE_CURRENT_LIST_DIR}/RrdServer.h"
+  "${CMAKE_CURRENT_LIST_DIR}/RrdClient.h"
 
-  "DataArraySocket.h"
-  "DataArrayTcpServer.h"
-  "DataArrayTcpClient.h"
-  "DataArrayAbstractTcp.h"
+  "${CMAKE_CURRENT_LIST_DIR}/DataArraySocket.h"
+  "${CMAKE_CURRENT_LIST_DIR}/DataArrayTcpServer.h"
+  "${CMAKE_CURRENT_LIST_DIR}/DataArrayTcpClient.h"
+  "${CMAKE_CURRENT_LIST_DIR}/DataArrayAbstractTcp.h"
 
-  "Task.h"
-  "HttpSocket.h"
-  "HttpServer.h"
+  "${CMAKE_CURRENT_LIST_DIR}/Task.h"
+  "${CMAKE_CURRENT_LIST_DIR}/HttpSocket.h"
+  "${CMAKE_CURRENT_LIST_DIR}/HttpServer.h"
 
-  "MulticastDns.h"
+  "${CMAKE_CURRENT_LIST_DIR}/MulticastDns.h"
+  "${CMAKE_CURRENT_LIST_DIR}/instance.hpp"
 
-  "Version.h"
-  "instance.hpp"
+  "${CMAKE_CURRENT_LIST_DIR}/Version.h"
 )
 
 set(AsyncFw_SOURCES
@@ -139,7 +137,7 @@ set(AsyncFw_SOURCES
   "instance.cpp"
 )
 
-set(3rdparty_SOURCES
+set(AsyncFw_3rdparty_SOURCES
   "3rdparty/WebSocket/WebSocket/WebSocket.cpp"
   "3rdparty/WebSocket/WebSocket/sha1/sha1.cpp"
   "3rdparty/WebSocket/WebSocket/base64/base64.cpp"
@@ -147,11 +145,6 @@ set(3rdparty_SOURCES
 )
 
 if(NOT PLATFORM STREQUAL "AMD64")
-  set(AsyncFw_HEADERS ${AsyncFw_HEADERS}
-    "AddressInfo.h" #need build cares for AMD64
-    "linux/FileSystemWatcher.h"
-    "linux/SystemProcess.h"
-  )
   set(AsyncFw_SOURCES ${AsyncFw_SOURCES}
     "AddressInfo.cpp" #need build cares for AMD64
     "linux/FileSystemWatcher.cpp"
@@ -159,38 +152,42 @@ if(NOT PLATFORM STREQUAL "AMD64")
   )
 endif()
 
+set(AsyncFw_CORE_HEADERS ${AsyncFw_CORE_HEADERS} PARENT_SCOPE)
+set(AsyncFw_HEADERS ${AsyncFw_HEADERS} PARENT_SCOPE)
+
 include_directories(.)
 
-set(PROJECT_SOURCES ${AsyncFw_CORE_SOURCES} ${AsyncFw_SOURCES} ${AsyncFw_CORE_HEADERS} ${AsyncFw_HEADERS} ${3rdparty_SOURCES})
+set(PROJECT_SOURCES ${AsyncFw_CORE_SOURCES} ${AsyncFw_SOURCES} ${AsyncFw_CORE_HEADERS} ${AsyncFw_HEADERS} ${AsyncFw_3rdparty_SOURCES})
 
 if(BUILD_SHARED_LIBS)
-  add_library(${CMAKE_PROJECT_NAME} SHARED ${PROJECT_SOURCES})
+  add_library(${AsyncFw_PROJECT_NAME} SHARED ${PROJECT_SOURCES})
 else()
-  add_library(${CMAKE_PROJECT_NAME} STATIC ${PROJECT_SOURCES})
+  add_library(${AsyncFw_PROJECT_NAME} STATIC ${PROJECT_SOURCES})
 endif()
 
-target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE GIT_VERSION="${GIT_VERSION}" VERSION_STRING="${VERSION_STRING}")
+target_compile_options(${AsyncFw_PROJECT_NAME} PRIVATE -fPIC)
+target_compile_definitions(${AsyncFw_PROJECT_NAME} PRIVATE GIT_VERSION="${GIT_VERSION}" VERSION_STRING="${VERSION_STRING}")
 
-link_libraries(z crypto ssl cares)
+target_link_libraries(${AsyncFw_PROJECT_NAME} z crypto ssl cares)
 
-if(SANITIZE_COMPILE_OPTIONS)
-  target_compile_options(${AsyncFw_PROJECT_NAME} PRIVATE ${SANITIZE_COMPILE_OPTIONS})
+if(NOT AsyncFw_DISABLE_BUILD_EXAMPLES)
+  add_subdirectory(example/FunctionConnector)
+  add_subdirectory(example/Invoke)
+  add_subdirectory(example/ListenSocket)
+  add_subdirectory(example/Log)
+  add_subdirectory(example/Socket)
+  add_subdirectory(example/HttpSocket)
+  add_subdirectory(example/HttpServer)
+  add_subdirectory(example/ThreadPool)
+  add_subdirectory(example/Timer)
+  add_subdirectory(example/Coroutine)
+  add_subdirectory(example/ContainerTask)
+  add_subdirectory(example/CoroutineWait)
+  add_subdirectory(example/MulticastDns)
+  if(NOT PLATFORM STREQUAL "AMD64")
+    add_subdirectory(example/Stdin)
+    add_subdirectory(example/Uart)
+    add_subdirectory(example/SystemProcess)
+    add_subdirectory(example/run-examples)
+  endif()
 endif()
-
-add_subdirectory(example/FunctionConnector)
-add_subdirectory(example/Invoke)
-add_subdirectory(example/ListenSocket)
-add_subdirectory(example/Log)
-add_subdirectory(example/Socket)
-add_subdirectory(example/HttpSocket)
-add_subdirectory(example/HttpServer)
-add_subdirectory(example/Stdin)
-add_subdirectory(example/ThreadPool)
-add_subdirectory(example/Timer)
-add_subdirectory(example/Coroutine)
-add_subdirectory(example/ContainerTask)
-add_subdirectory(example/CoroutineWait)
-add_subdirectory(example/SystemProcess)
-add_subdirectory(example/MulticastDns)
-add_subdirectory(example/Uart)
-add_subdirectory(example/run-examples)
