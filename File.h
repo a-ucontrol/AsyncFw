@@ -24,7 +24,7 @@ public:
   void close();
   void flush();
   void remove();
-  std::uintmax_t size();
+  std::size_t size();
   bool exists();
   DataArray read(std::size_t = SIZE_MAX);
   std::streamsize write(const DataArray &);

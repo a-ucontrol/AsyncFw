@@ -167,7 +167,7 @@ else()
   add_library(${AsyncFw_PROJECT_NAME} STATIC ${PROJECT_SOURCES})
 endif()
 
-target_compile_options(${AsyncFw_PROJECT_NAME} PRIVATE -fPIC -Wall)
+target_compile_options(${AsyncFw_PROJECT_NAME} PRIVATE -fPIC -Wall -Wno-psabi)
 target_compile_definitions(${AsyncFw_PROJECT_NAME} PRIVATE GIT_VERSION="${GIT_VERSION}" VERSION_STRING="${VERSION_STRING}")
 
 target_link_libraries(${AsyncFw_PROJECT_NAME} z crypto ssl cares)

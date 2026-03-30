@@ -226,7 +226,10 @@ service_callback(int sock, const struct sockaddr* from, size_t addrlen, mdns_ent
                  uint16_t query_id, uint16_t rtype, uint16_t rclass, uint32_t ttl, const void* data,
                  size_t size, size_t name_offset, size_t name_length, size_t record_offset,
                  size_t record_length, void* user_data) {
-  (void)sizeof(ttl);
+  (void)ttl;
+  (void)name_length;
+  (void)record_offset;
+  (void)record_length;
   if (entry != MDNS_ENTRYTYPE_QUESTION)
     return 0;
 
@@ -543,11 +546,15 @@ open_client_sockets(int* sockets, int max_sockets, int port) {
             (saddr->sin_addr.S_un.S_un_b.s_b2 != 0) ||
             (saddr->sin_addr.S_un.S_un_b.s_b3 != 0) ||
             (saddr->sin_addr.S_un.S_un_b.s_b4 != 1)) {
+#ifdef EXTEND_MDNS_TRACE
           int log_addr = 0;
+#endif
           if (first_ipv4) {
             service_address_ipv4 = *saddr;
             first_ipv4 = 0;
+#ifdef EXTEND_MDNS_TRACE
             log_addr = 1;
+#endif
           }
           has_ipv4 = 1;
           if (num_sockets < max_sockets) {
@@ -555,17 +562,21 @@ open_client_sockets(int* sockets, int max_sockets, int port) {
             int sock = mdns_socket_open_ipv4(saddr);
             if (sock >= 0) {
               sockets[num_sockets++] = sock;
+#ifdef EXTEND_MDNS_TRACE
               log_addr = 1;
             } else {
               log_addr = 0;
+#endif
             }
           }
+#ifdef EXTEND_MDNS_TRACE
           if (log_addr) {
             char buffer[128];
             mdns_string_t addr = ipv4_address_to_string(buffer, sizeof(buffer), saddr,
                                                         sizeof(struct sockaddr_in));
             printf("Local IPv4 address: %.*s\n", MDNS_STRING_FORMAT(addr));
           }
+#endif
         }
       } else if (unicast->Address.lpSockaddr->sa_family == AF_INET6) {
         struct sockaddr_in6* saddr = (struct sockaddr_in6*)unicast->Address.lpSockaddr;
@@ -579,11 +590,15 @@ open_client_sockets(int* sockets, int max_sockets, int port) {
         if ((unicast->DadState == NldsPreferred) &&
             memcmp(saddr->sin6_addr.s6_addr, localhost, 16) &&
             memcmp(saddr->sin6_addr.s6_addr, localhost_mapped, 16)) {
+#ifdef EXTEND_MDNS_TRACE
           int log_addr = 0;
+#endif
           if (first_ipv6) {
             service_address_ipv6 = *saddr;
             first_ipv6 = 0;
+#ifdef EXTEND_MDNS_TRACE
             log_addr = 1;
+#endif
           }
           has_ipv6 = 1;
           if (num_sockets < max_sockets) {
@@ -591,17 +606,21 @@ open_client_sockets(int* sockets, int max_sockets, int port) {
             int sock = mdns_socket_open_ipv6(saddr);
             if (sock >= 0) {
               sockets[num_sockets++] = sock;
+#ifdef EXTEND_MDNS_TRACE
               log_addr = 1;
             } else {
               log_addr = 0;
+#endif
             }
           }
+#ifdef EXTEND_MDNS_TRACE
           if (log_addr) {
             char buffer[128];
             mdns_string_t addr = ipv6_address_to_string(buffer, sizeof(buffer), saddr,
                                                         sizeof(struct sockaddr_in6));
             printf("Local IPv6 address: %.*s\n", MDNS_STRING_FORMAT(addr));
           }
+#endif
         }
       }
     }
@@ -614,8 +633,10 @@ open_client_sockets(int* sockets, int max_sockets, int port) {
   struct ifaddrs* ifaddr = 0;
   struct ifaddrs* ifa = 0;
 
+#ifdef EXTEND_MDNS_TRACE
   if (getifaddrs(&ifaddr) < 0)
     printf("Unable to get interface addresses\n");
+#endif
 
   int first_ipv4 = 1;
   int first_ipv6 = 1;

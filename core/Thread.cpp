@@ -78,7 +78,7 @@ struct AbstractThread::Private {
     bool operator()(const Timer &t, int id) const { return t.id < id; }
     bool operator()(const PollTask *d, int fd) const { return d->fd < fd; }
 #ifndef EPOLL_WAIT
-    bool operator()(const pollfd pfd, int fd) const { return pfd.fd < fd; }
+    bool operator()(const pollfd pfd, int fd) const { return static_cast<int>(pfd.fd) < fd; }
 #endif
   };
 
@@ -512,7 +512,7 @@ void AbstractThread::exec() {
           if (r > 0) {
             for (std::vector<pollfd>::const_iterator it = private_.fds_.begin() + 1; i != r; ++it)
               if (it->revents) {
-                private_.process_poll_tasks_.push({it->fd, it->revents, *(private_.fdts_.begin() + (it - 1 - private_.fds_.begin()))});
+                private_.process_poll_tasks_.push({static_cast<int>(it->fd), it->revents, *(private_.fdts_.begin() + (it - 1 - private_.fds_.begin()))});
                 i++;
               }
 #else
