@@ -25,7 +25,7 @@ public:
   DataArray(const char *);
   DataArray(const char);
   DataArray(const std::vector<char> &);
-  const DataArrayView view(int = 0, int = 0) const;
+  const DataArrayView view(std::size_t = 0, std::size_t = 0) const;
   DataArray &operator+=(const DataArrayView &);
   DataArray operator+(const DataArrayView &);
   DataArray &operator+=(const char);

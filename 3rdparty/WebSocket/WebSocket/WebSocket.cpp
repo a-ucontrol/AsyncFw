@@ -26,8 +26,8 @@ WebSocketFrameType WebSocket::parseHandshake(unsigned char* input_frame, int inp
 {
 	// 1. copy char*/len into string
 	// 2. try to parse headers until \r\n occurs
-	string headers((char*)input_frame, input_len); 
-	int header_end = headers.find("\r\n\r\n");
+	string headers((char*)input_frame, input_len);
+  std::size_t header_end = headers.find("\r\n\r\n");
 
 	if(header_end == string::npos) { // end-of-headers not found - do not parse
 		return INCOMPLETE_FRAME;
@@ -35,7 +35,7 @@ WebSocketFrameType WebSocket::parseHandshake(unsigned char* input_frame, int inp
 
 	headers.resize(header_end); // trim off any data we don't need after the headers
 	vector<string> headers_rows = explode(headers, string("\r\n"));
-	for(int i=0; i<headers_rows.size(); i++) {
+  for(std::size_t i=0; i<headers_rows.size(); i++) {
 		string& header = headers_rows[i];
 		if(header.find("GET") == 0) {
 			vector<string> get_tokens = explode(header, string(" "));
@@ -44,7 +44,7 @@ WebSocketFrameType WebSocket::parseHandshake(unsigned char* input_frame, int inp
 			}
 		}
 		else {
-			int pos = header.find(":");
+      std::size_t pos = header.find(":");
 			if(pos != string::npos) {
 				string header_key(header, 0, pos);
 				string header_value(header, pos+1);

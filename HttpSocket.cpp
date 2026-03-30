@@ -156,7 +156,7 @@ void HttpSocket::writeEvent() {
     if (r > 0) write(da.data(), r);
     int p = file_.fstream().tellg() * 100 / file_.size();
     if (progress_ != p) progress(progress_ = p);
-    if (file_.fstream().tellg() == file_.size() || file_.fail()) {
+    if (static_cast<std::size_t>(file_.fstream().tellg()) == file_.size() || file_.fail()) {
       file_.close();
       if (connectionClose || file_.fail()) disconnect();
     }

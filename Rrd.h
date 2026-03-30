@@ -60,7 +60,7 @@ private:
   int aInterval = 0;
   int aOffset = 0;
   int interval;
-  int fill;
+  uint32_t fill;
   std::string file;
   bool createFile();
   bool readFromFile();

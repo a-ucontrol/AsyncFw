@@ -152,8 +152,10 @@ if(NOT PLATFORM STREQUAL "AMD64")
   )
 endif()
 
-set(AsyncFw_CORE_HEADERS ${AsyncFw_CORE_HEADERS} PARENT_SCOPE)
-set(AsyncFw_HEADERS ${AsyncFw_HEADERS} PARENT_SCOPE)
+if(NOT PROJECT_IS_TOP_LEVEL)
+  set(AsyncFw_CORE_HEADERS ${AsyncFw_CORE_HEADERS} PARENT_SCOPE)
+  set(AsyncFw_HEADERS ${AsyncFw_HEADERS} PARENT_SCOPE)
+endif()
 
 include_directories(.)
 
@@ -165,7 +167,7 @@ else()
   add_library(${AsyncFw_PROJECT_NAME} STATIC ${PROJECT_SOURCES})
 endif()
 
-target_compile_options(${AsyncFw_PROJECT_NAME} PRIVATE -fPIC)
+target_compile_options(${AsyncFw_PROJECT_NAME} PRIVATE -fPIC -Wall)
 target_compile_definitions(${AsyncFw_PROJECT_NAME} PRIVATE GIT_VERSION="${GIT_VERSION}" VERSION_STRING="${VERSION_STRING}")
 
 target_link_libraries(${AsyncFw_PROJECT_NAME} z crypto ssl cares)
