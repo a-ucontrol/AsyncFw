@@ -26,7 +26,9 @@ public:
   int exitCode();
   bool input(const std::string &) const;
 
+  /*! \brief The FunctionConnector for SystemProcess stateChanged. */
   FunctionConnectorProtected<SystemProcess>::Connector<State> stateChanged {AbstractFunctionConnector::Queued};
+  /*! \brief The FunctionConnector for SystemProcess output. */
   FunctionConnectorProtected<SystemProcess>::Connector<const std::string &, bool /*stdout: 0, stderr: 1*/> output {AbstractFunctionConnector::Queued};
 
   template <typename T>
