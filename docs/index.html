@@ -545,11 +545,11 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[]) {</div>
 <div class="line">  <a class="code hl_class" href="classAsyncFw_1_1SystemProcess.html">AsyncFw::SystemProcess</a> process;</div>
-<div class="line">  process.output([](<span class="keyword">const</span> std::string &amp;str, <span class="keywordtype">bool</span> err) {</div>
+<div class="line">  process.<a class="code hl_variable" href="classAsyncFw_1_1SystemProcess.html#add4c0b7aff0eb842fa41c81cd0723c41">output</a>([](<span class="keyword">const</span> std::string &amp;str, <span class="keywordtype">bool</span> err) {</div>
 <div class="line">    <span class="keywordflow">if</span> (!err) logInfo() &lt;&lt; <span class="stringliteral">&quot;OUT:&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span> + str;</div>
 <div class="line">    <span class="keywordflow">else</span> { logError() &lt;&lt; <span class="stringliteral">&quot;ERR:&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span> + str; }</div>
 <div class="line">  });</div>
-<div class="line">  process.stateChanged([](AsyncFw::SystemProcess::State _s) {</div>
+<div class="line">  process.<a class="code hl_variable" href="classAsyncFw_1_1SystemProcess.html#a2b1dca35fe7a92497a7aad622d878dfb">stateChanged</a>([](AsyncFw::SystemProcess::State _s) {</div>
 <div class="line">    <span class="keywordflow">if</span> (_s == AsyncFw::SystemProcess::Running) <span class="keywordflow">return</span>;</div>
 <div class="line">    AsyncFw::MainThread::exit(0);</div>
 <div class="line">  });</div>
@@ -566,6 +566,8 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
 <div class="line">  <span class="keywordflow">return</span> ret;</div>
 <div class="line">}</div>
 <div class="ttc" id="aclassAsyncFw_1_1SystemProcess_html"><div class="ttname"><a href="classAsyncFw_1_1SystemProcess.html">AsyncFw::SystemProcess</a></div><div class="ttdoc">The SystemProcess class.</div><div class="ttdef"><b>Definition</b> SystemProcess.h:16</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1SystemProcess_html_a2b1dca35fe7a92497a7aad622d878dfb"><div class="ttname"><a href="classAsyncFw_1_1SystemProcess.html#a2b1dca35fe7a92497a7aad622d878dfb">AsyncFw::SystemProcess::stateChanged</a></div><div class="ttdeci">FunctionConnectorProtected&lt; SystemProcess &gt;::Connector&lt; State &gt; stateChanged</div><div class="ttdoc">The FunctionConnector for SystemProcess stateChanged.</div><div class="ttdef"><b>Definition</b> SystemProcess.h:30</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1SystemProcess_html_add4c0b7aff0eb842fa41c81cd0723c41"><div class="ttname"><a href="classAsyncFw_1_1SystemProcess.html#add4c0b7aff0eb842fa41c81cd0723c41">AsyncFw::SystemProcess::output</a></div><div class="ttdeci">FunctionConnectorProtected&lt; SystemProcess &gt;::Connector&lt; const std::string &amp;, bool &gt; output</div><div class="ttdoc">The FunctionConnector for SystemProcess output.</div><div class="ttdef"><b>Definition</b> SystemProcess.h:32</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1Timer_html_ac71f0729e65046914c3358e87759f9e9"><div class="ttname"><a href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">AsyncFw::Timer::single</a></div><div class="ttdeci">static void single(int ms, T function)</div><div class="ttdoc">Starts a single shot timer with the specified timeout.</div><div class="ttdef"><b>Definition</b> Timer.h:19</div></div>
 </div><!-- fragment --> </div></div><!-- PageDoc -->
 <a href="doxygen_crawl.html"></a>

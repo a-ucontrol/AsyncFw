@@ -154,14 +154,39 @@ static <a class="el" href="classAsyncFw_1_1FileSystemWatcher.html">FileSystemWat
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:afe08add447eb0119bb3e68036353ef6b" id="r_afe08add447eb0119bb3e68036353ef6b"><td class="memItemLeft" align="right" valign="top"><a id="afe08add447eb0119bb3e68036353ef6b" name="afe08add447eb0119bb3e68036353ef6b"></a>
-<a class="el" href="classAsyncFw_1_1FunctionConnectorProtected.html">FunctionConnectorProtected</a>&lt; <a class="el" href="classAsyncFw_1_1FileSystemWatcher.html">FileSystemWatcher</a> &gt;::Connector&lt; const std::string &amp;, int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>watch</b></td></tr>
-<tr class="separator:afe08add447eb0119bb3e68036353ef6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d97340ee2f2378dd516411f56ed8498" id="r_a4d97340ee2f2378dd516411f56ed8498"><td class="memItemLeft" align="right" valign="top"><a id="a4d97340ee2f2378dd516411f56ed8498" name="a4d97340ee2f2378dd516411f56ed8498"></a>
+<a class="el" href="classAsyncFw_1_1FunctionConnectorProtected.html">FunctionConnectorProtected</a>&lt; <a class="el" href="classAsyncFw_1_1FileSystemWatcher.html">FileSystemWatcher</a> &gt;::Connector&lt; const std::string &amp;, int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>notify</b></td></tr>
+<tr class="memdesc:a4d97340ee2f2378dd516411f56ed8498"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="classAsyncFw_1_1FunctionConnector.html" title="Обеспечивает соединение отправитель -&gt; получатели. Получатели могут быть вызваны в своих потоках (по ...">FunctionConnector</a> for notification of file-related events. <br /></td></tr>
+<tr class="separator:a4d97340ee2f2378dd516411f56ed8498"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The <a class="el" href="classAsyncFw_1_1FileSystemWatcher.html" title="The FileSystemWatcher class.">FileSystemWatcher</a> class. </p>
-<dl class="section warning"><dt>Warning</dt><dd>Unix-like systems only </dd></dl>
-</div><hr/>The documentation for this class was generated from the following files:<ul>
+<dl class="section warning"><dt>Warning</dt><dd>Unix-like systems only</dd></dl>
+<p>Example: </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;linux/FileSystemWatcher.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;File.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;MainThread.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;core/LogStream.h&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">using namespace </span>AsyncFw;</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[]) {</div>
+<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1FileSystemWatcher.html">FileSystemWatcher</a> watcher {{<span class="stringliteral">&quot;/tmp/FileSystemWatcher.example&quot;</span>}};</div>
+<div class="line">  watcher.<a class="code hl_variable" href="#a4d97340ee2f2378dd516411f56ed8498">notify</a>([](<span class="keyword">const</span> std::string &amp;name, <span class="keywordtype">int</span> event) {</div>
+<div class="line">    lsInfoMagenta() &lt;&lt; <span class="stringliteral">&quot;file:&quot;</span> &lt;&lt; name &lt;&lt; event;  <span class="comment">// event: -1 removed / 0 changed / 1 created</span></div>
+<div class="line">    MainThread::exit();</div>
+<div class="line">  });</div>
+<div class="line"> </div>
+<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1File.html">File</a> _f {<span class="stringliteral">&quot;/tmp/FileSystemWatcher.example&quot;</span>};</div>
+<div class="line">  <span class="keywordflow">if</span> (_f.exists()) _f.remove();</div>
+<div class="line">  <span class="keywordflow">else</span> { _f.open(std::ios::binary | std::ios::out); };</div>
+<div class="line"> </div>
+<div class="line">  lsNotice() &lt;&lt; <span class="stringliteral">&quot;Start Applicaiton&quot;</span>;</div>
+<div class="line">  <span class="keywordtype">int</span> ret = MainThread::exec();</div>
+<div class="line">  lsNotice() &lt;&lt; <span class="stringliteral">&quot;End Applicaiton&quot;</span> &lt;&lt; ret;</div>
+<div class="line"> </div>
+<div class="line">  <span class="keywordflow">return</span> ret;</div>
+<div class="line">}</div>
+</div><!-- fragment --> </div><hr/>The documentation for this class was generated from the following files:<ul>
 <li>linux/<a class="el" href="FileSystemWatcher_8h_source.html">FileSystemWatcher.h</a></li>
 <li>linux/<b>FileSystemWatcher.cpp</b></li>
 </ul>
