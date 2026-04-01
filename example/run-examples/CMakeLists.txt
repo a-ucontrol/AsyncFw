@@ -18,6 +18,3 @@ add_definitions(-DEXAMPLES_PATH="${EXAMPLES_PATH}")
 
 add_executable(${TARGET} ${PROJECT_SOURCES})
 target_link_libraries(${TARGET} ${AsyncFw_PROJECT_NAME})
-
-target_compile_options(${TARGET} PRIVATE ${SANITIZE_COMPILE_OPTIONS})
-target_link_libraries(${TARGET} ${SANITIZE_LINK_LIBRARIES})

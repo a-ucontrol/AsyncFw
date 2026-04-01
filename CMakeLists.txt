@@ -13,10 +13,6 @@ endif()
 # defines.cmake
 #set(BUILD_SHARED_LIBS ON)
 
-#set(SANITIZE_COMPILE_OPTIONS -g -fsanitize=address,undefined)
-#set(SANITIZE_LINK_LIBRARIES -Wl,-Bstatic,-lasan,-lubsan,-Bdynamic)
-
-#set(SANITIZE_COMPILE_OPTIONS -g -fsanitize=thread)
 ### int main()
 ### {
 ###   std::thread t1([]{});
@@ -27,7 +23,6 @@ endif()
 ### gcc main.cpp -lstdc++ -g -fsanitize=thread,undefined
 ### -- int main() with -fsanitize=thread,undefined -> ThreadSanitizer: data race
 
-#set(SANITIZE_LINK_LIBRARIES tsan ubsan)
 ### __tsan_on_report -> break point function for debugger
 
 #add_definitions(-DEXTEND_LOGSTREAM_TRACE)
@@ -38,6 +33,8 @@ endif()
 #add_definitions(-DEXTEND_SYSTEMPROCESS_TRACE)
 #add_definitions(-DEXTEND_LOG_TRACE)
 #add_definitions(-DEXTEND_FUNCTIONCONNECTOR_TRACE)
+#add_definitions(-DEXTEND_HTTP_TRACE)
+#add_definitions(-DEXTEND_MDNS_TRACE)
 # -- defines.cmake
 
 project(${AsyncFw_PROJECT_NAME} VERSION ${VERSION_STRING} LANGUAGES C CXX)
