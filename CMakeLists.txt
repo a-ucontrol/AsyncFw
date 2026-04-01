@@ -6,7 +6,7 @@ endif()
 
 include(cmake/version.cmake)
 
-if(EXISTS "${CMAKE_CURRENT_LIST_DIR}/defines.cmake")
+if(NOT FINAL_RELEASE AND EXISTS "${CMAKE_CURRENT_LIST_DIR}/defines.cmake")
   include("${CMAKE_CURRENT_LIST_DIR}/defines.cmake")
 endif()
 
@@ -42,7 +42,7 @@ endif()
 
 project(${AsyncFw_PROJECT_NAME} VERSION ${VERSION_STRING} LANGUAGES C CXX)
 
-add_custom_target(additional-files SOURCES example/snippet.dox)
+add_custom_target(additional-files SOURCES AsyncFwConfig.cmake example/snippet.dox)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -171,6 +171,20 @@ target_compile_options(${AsyncFw_PROJECT_NAME} PRIVATE -fPIC -Wall -Wno-psabi)
 target_compile_definitions(${AsyncFw_PROJECT_NAME} PRIVATE GIT_VERSION="${GIT_VERSION}" VERSION_STRING="${VERSION_STRING}")
 
 target_link_libraries(${AsyncFw_PROJECT_NAME} z crypto ssl cares)
+
+include(CMakePackageConfigHelpers)
+write_basic_package_version_file(
+    "AsyncFwConfigVersion.cmake"
+    VERSION ${VERSION_STRING}
+    COMPATIBILITY AnyNewerVersion)
+
+include(GNUInstallDirs)
+
+install(TARGETS ${AsyncFw_PROJECT_NAME} EXPORT AsyncFw_TARGETS DESTINATION ${CMAKE_INSTALL_LIBDIR})
+install(EXPORT AsyncFw_TARGETS FILE AsyncFwTargets.cmake NAMESPACE AsyncFw:: DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/AsyncFw)
+install(FILES ${AsyncFw_CORE_HEADERS} DESTINATION include/AsyncFw/core)
+install(FILES ${AsyncFw_HEADERS} DESTINATION include/AsyncFw)
+install(FILES "${CMAKE_CURRENT_LIST_DIR}/AsyncFwConfig.cmake" "${CMAKE_CURRENT_BINARY_DIR}/AsyncFwConfigVersion.cmake" DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/AsyncFw)
 
 if(NOT AsyncFw_DISABLE_BUILD_EXAMPLES)
   add_subdirectory(example/FunctionConnector)
