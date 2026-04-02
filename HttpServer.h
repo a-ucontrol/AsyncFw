@@ -176,7 +176,7 @@ public:
     void setSocketData(const std::any &data) const { response_->socket_->data_ = data; }
     std::any &socketData() const { return response_->socket_->data_; }
     Response *response() const { return response_; }
-    bool switchingProtocols();
+    bool switchingProtocols() const;
 
     bool fail() const;
 

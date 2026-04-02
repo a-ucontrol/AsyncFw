@@ -735,14 +735,14 @@ std::string HttpServer::Request::queryItemValue(const std::string &name) const {
 
 DataArray HttpServer::Request::content() const { return private_->request.content; }
 
-bool HttpServer::Request::switchingProtocols() {
+bool HttpServer::Request::switchingProtocols() const {
   response_->statusCode_ = Response::StatusCode::SwitchingProtocols;
   response_->socket_->ws_ = new WebSocket;
   WebSocketFrameType ft = response_->socket_->ws_->parseHandshake(const_cast<unsigned char *>(reinterpret_cast<const unsigned char *>(private_->req_.c_str())), private_->req_.size());
   bool b = ft == WebSocketFrameType::OPENING_FRAME;
   if (b) response_->socket_->write(response_->socket_->ws_->answerHandshake());
   else { lsTrace(); }
-  delete response_;
+  response_->destroy();
   return b;
 }
 
