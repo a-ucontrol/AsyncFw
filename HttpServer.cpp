@@ -649,6 +649,10 @@ bool HttpServer::Response::send() {
     destroy();
     return false;
   }
+  if (statusCode_ == Response::StatusCode::SwitchingProtocols) {
+    lsWarning() << "not need runs send if StatusCode a SwitchingProtocols";
+    return false;
+  }
   if (content_.view().find("file://") == 0) {
     std::string fn(content_.begin() + 7, content_.end());
     if (std::filesystem::exists(fn)) {
