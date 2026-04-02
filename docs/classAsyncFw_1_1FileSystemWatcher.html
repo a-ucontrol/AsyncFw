@@ -107,6 +107,7 @@ $(function(){initNavTree('classAsyncFw_1_1FileSystemWatcher.html',''); initResiz
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="#friends">Friends</a> &#124;
 <a href="classAsyncFw_1_1FileSystemWatcher-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">AsyncFw::FileSystemWatcher Class Reference</div></div>
 </div><!--header-->
@@ -142,9 +143,6 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>removePaths</b> (cons
 <tr class="memitem:ab174c18c8399c50a7818c456e2a51551" id="r_ab174c18c8399c50a7818c456e2a51551"><td class="memItemLeft" align="right" valign="top"><a id="ab174c18c8399c50a7818c456e2a51551" name="ab174c18c8399c50a7818c456e2a51551"></a>
 std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>paths</b> () const</td></tr>
 <tr class="separator:ab174c18c8399c50a7818c456e2a51551"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad48e6bc4fef8c284f2c099042cf5a6ca" id="r_ad48e6bc4fef8c284f2c099042cf5a6ca"><td class="memItemLeft" align="right" valign="top"><a id="ad48e6bc4fef8c284f2c099042cf5a6ca" name="ad48e6bc4fef8c284f2c099042cf5a6ca"></a>
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>info</b> () const</td></tr>
-<tr class="separator:ad48e6bc4fef8c284f2c099042cf5a6ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -158,6 +156,12 @@ Public Attributes</h2></td></tr>
 <a class="el" href="classAsyncFw_1_1FunctionConnectorProtected.html">FunctionConnectorProtected</a>&lt; <a class="el" href="classAsyncFw_1_1FileSystemWatcher.html">FileSystemWatcher</a> &gt;::Connector&lt; const std::string &amp;, int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>notify</b></td></tr>
 <tr class="memdesc:a4d97340ee2f2378dd516411f56ed8498"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="classAsyncFw_1_1FunctionConnector.html" title="Обеспечивает соединение отправитель -&gt; получатели. Получатели могут быть вызваны в своих потоках (по ...">FunctionConnector</a> for notification of file-related events. <br /></td></tr>
 <tr class="separator:a4d97340ee2f2378dd516411f56ed8498"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="friends" name="friends"></a>
+Friends</h2></td></tr>
+<tr class="memitem:a318edca92d23e60b71a852cf5df96179" id="r_a318edca92d23e60b71a852cf5df96179"><td class="memItemLeft" align="right" valign="top"><a id="a318edca92d23e60b71a852cf5df96179" name="a318edca92d23e60b71a852cf5df96179"></a>
+<a class="el" href="classAsyncFw_1_1LogStream.html">LogStream</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator&lt;&lt;</b> (<a class="el" href="classAsyncFw_1_1LogStream.html">LogStream</a> &amp;log, const <a class="el" href="classAsyncFw_1_1FileSystemWatcher.html">FileSystemWatcher</a> &amp;w)</td></tr>
+<tr class="separator:a318edca92d23e60b71a852cf5df96179"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The <a class="el" href="classAsyncFw_1_1FileSystemWatcher.html" title="The FileSystemWatcher class.">FileSystemWatcher</a> class. </p>
@@ -179,6 +183,8 @@ Public Attributes</h2></td></tr>
 <div class="line">  <a class="code hl_class" href="classAsyncFw_1_1File.html">File</a> _f {<span class="stringliteral">&quot;/tmp/FileSystemWatcher.example&quot;</span>};</div>
 <div class="line">  <span class="keywordflow">if</span> (_f.exists()) _f.remove();</div>
 <div class="line">  <span class="keywordflow">else</span> { _f.open(std::ios::binary | std::ios::out); };</div>
+<div class="line"> </div>
+<div class="line">  lsInfoGreen() &lt;&lt; watcher;</div>
 <div class="line"> </div>
 <div class="line">  lsNotice() &lt;&lt; <span class="stringliteral">&quot;Start Applicaiton&quot;</span>;</div>
 <div class="line">  <span class="keywordtype">int</span> ret = MainThread::exec();</div>
