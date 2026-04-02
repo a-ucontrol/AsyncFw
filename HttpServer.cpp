@@ -575,17 +575,6 @@ void HttpServer::received(TcpSocket *socket, const std::string_view &ba) {
       return;
     }
 
-    if (req.response_->statusCode_ == Response::StatusCode::SwitchingProtocols) {
-      socket->ws_ = new WebSocket;
-      WebSocketFrameType ft = socket->ws_->parseHandshake(const_cast<unsigned char *>(reinterpret_cast<const unsigned char *>(req.private_->req_.c_str())), req.private_->req_.size());
-      if (ft == WebSocketFrameType::OPENING_FRAME) socket->write(socket->ws_->answerHandshake());
-      else {
-        lsTrace();
-        socket->disconnect();
-      }
-      delete req.response_;
-      return;
-    }
     socket->response = req.response_;
   } else {
     lsTrace();
@@ -647,10 +636,6 @@ bool HttpServer::Response::send() {
   if (!socket_) {
     lsWarning() << "unknown socket";
     destroy();
-    return false;
-  }
-  if (statusCode_ == Response::StatusCode::SwitchingProtocols) {
-    lsWarning() << "not need runs send if StatusCode a SwitchingProtocols";
     return false;
   }
   if (content_.view().find("file://") == 0) {
@@ -750,12 +735,15 @@ std::string HttpServer::Request::queryItemValue(const std::string &name) const {
 
 DataArray HttpServer::Request::content() const { return private_->request.content; }
 
-void HttpServer::Request::setResponse(const Response &resp) const {
-  response_->statusCode_ = resp.statusCode_;
-  response_->contentLength = resp.contentLength;
-  response_->content_ = std::move(resp.content_);
-  response_->mimeType_ = std::move(resp.mimeType_);
-  response_->additionalHeaders = std::move(resp.additionalHeaders);
+bool HttpServer::Request::switchingProtocols() {
+  response_->statusCode_ = Response::StatusCode::SwitchingProtocols;
+  response_->socket_->ws_ = new WebSocket;
+  WebSocketFrameType ft = response_->socket_->ws_->parseHandshake(const_cast<unsigned char *>(reinterpret_cast<const unsigned char *>(private_->req_.c_str())), private_->req_.size());
+  bool b = ft == WebSocketFrameType::OPENING_FRAME;
+  if (b) response_->socket_->write(response_->socket_->ws_->answerHandshake());
+  else { lsTrace(); }
+  delete response_;
+  return b;
 }
 
 bool HttpServer::Request::fail() const { return private_->res != httpparser::HttpRequestParser::ParsingCompleted; }

@@ -176,11 +176,11 @@ public:
     void setSocketData(const std::any &data) const { response_->socket_->data_ = data; }
     std::any &socketData() const { return response_->socket_->data_; }
     Response *response() const { return response_; }
+    bool switchingProtocols();
 
     bool fail() const;
 
   private:
-    void setResponse(const Response &) const;
     Method method_;
     Response *response_ = nullptr;
     Private *private_;
