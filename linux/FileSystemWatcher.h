@@ -15,6 +15,7 @@ namespace AsyncFw {
 /*! \brief The FileSystemWatcher class. \warning Unix-like systems only
  \brief Example: \snippet FileSystemWatcher/main.cpp snippet */
 class FileSystemWatcher {
+  friend LogStream &operator<<(LogStream &, const FileSystemWatcher &);
 public:
   static FileSystemWatcher *instance() { return instance_.value; }
   FileSystemWatcher(const std::vector<std::string> & = {});
@@ -24,7 +25,6 @@ public:
   bool removePath(const std::string &path);
   bool removePaths(const std::vector<std::string> &paths);
   std::vector<std::string> paths() const;
-  std::string info() const;
 
   /*! \brief The FunctionConnector for notification of file-related events. */
   FunctionConnectorProtected<FileSystemWatcher>::Connector<const std::string &, int> notify;

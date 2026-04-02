@@ -19,6 +19,8 @@ int main(int argc, char *argv[]) {
   if (_f.exists()) _f.remove();
   else { _f.open(std::ios::binary | std::ios::out); };
 
+  lsInfoGreen() << watcher;
+
   lsNotice() << "Start Applicaiton";
   int ret = MainThread::exec();
   lsNotice() << "End Applicaiton" << ret;

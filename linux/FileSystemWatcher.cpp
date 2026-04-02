@@ -248,13 +248,6 @@ std::vector<std::string> FileSystemWatcher::paths() const {
   return _p;
 }
 
-std::string FileSystemWatcher::info() const {
-  std::string str = "Files list:";
-  if (files_.empty()) return str + " empty";
-  for (const std::string &s : paths()) { str += '\n' + s; }
-  return str;
-}
-
 void FileSystemWatcher::append_(const Watch *_w) {
   trace() << LogStream::Color::DarkRed << _w->directory << _w->name << _w->d;
   thread_->modifyTimer(timerid_, 1000);
@@ -287,3 +280,12 @@ bool FileSystemWatcher::CompareWatch::operator()(const Watch *w, const WatchPath
 
 bool FileSystemWatcher::CompareWatchDescriptor::operator()(const Watch *d1, const Watch *d2) const { return d1->d < d2->d; }
 bool FileSystemWatcher::CompareWatchDescriptor::operator()(const Watch *d, int fd) const { return d->d < fd; }
+
+namespace AsyncFw {
+LogStream &operator<<(LogStream &log, const FileSystemWatcher &w) {
+  std::string str = "File list:";
+  if (w.files_.empty()) return log << str << "empty";
+  for (const std::string &s : w.paths()) { str += '\n' + s; }
+  return log << str;
+}
+}  // namespace AsyncFw
