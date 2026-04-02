@@ -283,11 +283,11 @@ $(function(){initNavTree('HttpServer_8h_source.html',''); initResizable(true); }
 <div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>    <span class="keywordtype">void</span> setSocketData(<span class="keyword">const</span> std::any &amp;data)<span class="keyword"> const </span>{ response_-&gt;socket_-&gt;data_ = data; }</div>
 <div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>    std::any &amp;socketData()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> response_-&gt;socket_-&gt;data_; }</div>
 <div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>    Response *response()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> response_; }</div>
-<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span> </div>
-<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>    <span class="keywordtype">bool</span> fail() <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span> </div>
-<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>  <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>    <span class="keywordtype">void</span> setResponse(<span class="keyword">const</span> Response &amp;) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>    <span class="keywordtype">bool</span> switchingProtocols();</div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span> </div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>    <span class="keywordtype">bool</span> fail() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span> </div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>  <span class="keyword">private</span>:</div>
 <div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>    Method method_;</div>
 <div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>    Response *response_ = <span class="keyword">nullptr</span>;</div>
 <div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>    Private *private_;</div>
