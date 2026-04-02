@@ -8,14 +8,15 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #pragma once
 
 #include <string>
-#include <AsyncFw/core/FunctionConnector.h>
-#include <AsyncFw/instance.hpp>
+#include "../core/FunctionConnector.h"
+#include "../instance.hpp"
 
 namespace AsyncFw {
 /*! \brief The FileSystemWatcher class. \warning Unix-like systems only
  \brief Example: \snippet FileSystemWatcher/main.cpp snippet */
 class FileSystemWatcher {
   friend LogStream &operator<<(LogStream &, const FileSystemWatcher &);
+
 public:
   static FileSystemWatcher *instance() { return instance_.value; }
   FileSystemWatcher(const std::vector<std::string> & = {});
