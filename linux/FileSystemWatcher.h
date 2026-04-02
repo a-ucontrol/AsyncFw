@@ -8,8 +8,8 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #pragma once
 
 #include <string>
-#include "core/FunctionConnector.h"
-#include "instance.hpp"
+#include <AsyncFw/core/FunctionConnector.h>
+#include <AsyncFw/instance.hpp>
 
 namespace AsyncFw {
 /*! \brief The FileSystemWatcher class. \warning Unix-like systems only

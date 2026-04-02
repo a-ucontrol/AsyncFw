@@ -8,7 +8,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #pragma once
 
 #include <string>
-#include "core/FunctionConnector.h"
+#include <AsyncFw/core/FunctionConnector.h>
 
 namespace AsyncFw {
 /*! \brief The SystemProcess class. \warning Unix-like systems only
