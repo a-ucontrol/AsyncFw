@@ -167,14 +167,26 @@ if(NOT PLATFORM STREQUAL "AMD64")
   set(PROJECT_SOURCES ${PROJECT_SOURCES} ${AsyncFw_LINUX_HEADERS} ${AsyncFw_LINUX_SOURCES})
 endif()
 
-if(BUILD_SHARED_LIBS)
-  add_library(${AsyncFw_PROJECT_NAME} SHARED ${PROJECT_SOURCES})
-else()
-  add_library(${AsyncFw_PROJECT_NAME} STATIC ${PROJECT_SOURCES})
-endif()
+include(GNUInstallDirs)
 
-target_compile_options(${AsyncFw_PROJECT_NAME} PRIVATE -fPIC -Wall -Wno-psabi)
-target_compile_definitions(${AsyncFw_PROJECT_NAME} PRIVATE GIT_VERSION="${GIT_VERSION}" VERSION_STRING="${VERSION_STRING}")
+if(BUILD_SHARED_LIBS AND BUILD_STATIC_LIBS)
+  add_library(${AsyncFw_PROJECT_NAME}_objects OBJECT ${PROJECT_SOURCES})
+  add_library(${AsyncFw_PROJECT_NAME} SHARED $<TARGET_OBJECTS:${AsyncFw_PROJECT_NAME}_objects>)
+  add_library(${AsyncFw_PROJECT_NAME}_static STATIC $<TARGET_OBJECTS:${AsyncFw_PROJECT_NAME}_objects>)
+  set_target_properties(${AsyncFw_PROJECT_NAME}_static PROPERTIES OUTPUT_NAME ${AsyncFw_PROJECT_NAME})
+  install(TARGETS ${AsyncFw_PROJECT_NAME} ${AsyncFw_PROJECT_NAME}_static EXPORT AsyncFw_TARGETS DESTINATION ${CMAKE_INSTALL_LIBDIR})
+  target_compile_options(${AsyncFw_PROJECT_NAME}_objects PRIVATE -fPIC -Wall -Wno-psabi)
+  target_compile_definitions(${AsyncFw_PROJECT_NAME}_objects PRIVATE GIT_VERSION="${GIT_VERSION}" VERSION_STRING="${VERSION_STRING}")
+  target_link_libraries(${AsyncFw_PROJECT_NAME}_static z crypto ssl cares)
+else()
+  if(BUILD_SHARED_LIBS)
+    add_library(${AsyncFw_PROJECT_NAME} SHARED ${PROJECT_SOURCES})
+  else()
+    add_library(${AsyncFw_PROJECT_NAME} STATIC ${PROJECT_SOURCES})
+  endif()
+  target_compile_definitions(${AsyncFw_PROJECT_NAME} PRIVATE GIT_VERSION="${GIT_VERSION}" VERSION_STRING="${VERSION_STRING}")
+  install(TARGETS ${AsyncFw_PROJECT_NAME} EXPORT AsyncFw_TARGETS DESTINATION ${CMAKE_INSTALL_LIBDIR})
+endif()
 
 target_link_libraries(${AsyncFw_PROJECT_NAME} z crypto ssl cares)
 
@@ -193,9 +205,6 @@ write_basic_package_version_file(
     VERSION ${VERSION_STRING}
     COMPATIBILITY AnyNewerVersion)
 
-include(GNUInstallDirs)
-
-install(TARGETS ${AsyncFw_PROJECT_NAME} EXPORT AsyncFw_TARGETS DESTINATION ${CMAKE_INSTALL_LIBDIR})
 install(EXPORT AsyncFw_TARGETS FILE AsyncFwTargets.cmake NAMESPACE AsyncFw:: DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/AsyncFw)
 install(FILES ${AsyncFw_CORE_HEADERS} DESTINATION include/AsyncFw/core)
 install(FILES ${AsyncFw_LINUX_HEADERS} DESTINATION include/AsyncFw/linux)
