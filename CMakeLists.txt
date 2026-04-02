@@ -87,9 +87,6 @@ set(AsyncFw_HEADERS
 
   "${CMAKE_CURRENT_LIST_DIR}/MainThread.h"
 
-  "${CMAKE_CURRENT_LIST_DIR}/linux/SystemProcess.h"
-  "${CMAKE_CURRENT_LIST_DIR}/linux/FileSystemWatcher.h"
-
   "${CMAKE_CURRENT_LIST_DIR}/Rrd.h"
   "${CMAKE_CURRENT_LIST_DIR}/Log.h"
   "${CMAKE_CURRENT_LIST_DIR}/RrdServer.h"
@@ -138,6 +135,17 @@ set(AsyncFw_SOURCES
   "instance.cpp"
 )
 
+set(AsyncFw_LINUX_HEADERS
+  "${CMAKE_CURRENT_LIST_DIR}/linux/SystemProcess.h"
+  "${CMAKE_CURRENT_LIST_DIR}/linux/FileSystemWatcher.h"
+)
+
+set(AsyncFw_LINUX_SOURCES
+  "AddressInfo.cpp" #need build cares for AMD64
+  "linux/FileSystemWatcher.cpp"
+  "linux/SystemProcess.cpp"
+)
+
 set(AsyncFw_3rdparty_SOURCES
   "3rdparty/WebSocket/WebSocket/WebSocket.cpp"
   "3rdparty/WebSocket/WebSocket/sha1/sha1.cpp"
@@ -145,22 +153,19 @@ set(AsyncFw_3rdparty_SOURCES
   "3rdparty/mdns/mdns.c"
 )
 
-if(NOT PLATFORM STREQUAL "AMD64")
-  set(AsyncFw_SOURCES ${AsyncFw_SOURCES}
-    "AddressInfo.cpp" #need build cares for AMD64
-    "linux/FileSystemWatcher.cpp"
-    "linux/SystemProcess.cpp"
-  )
-endif()
-
 if(NOT PROJECT_IS_TOP_LEVEL)
   set(AsyncFw_CORE_HEADERS ${AsyncFw_CORE_HEADERS} PARENT_SCOPE)
+  set(AsyncFw_LINUX_HEADERS ${AsyncFw_LINUX_HEADERS} PARENT_SCOPE)
   set(AsyncFw_HEADERS ${AsyncFw_HEADERS} PARENT_SCOPE)
 endif()
 
 include_directories(.)
 
 set(PROJECT_SOURCES ${AsyncFw_CORE_SOURCES} ${AsyncFw_SOURCES} ${AsyncFw_CORE_HEADERS} ${AsyncFw_HEADERS} ${AsyncFw_3rdparty_SOURCES})
+
+if(NOT PLATFORM STREQUAL "AMD64")
+  set(PROJECT_SOURCES ${PROJECT_SOURCES} ${AsyncFw_LINUX_HEADERS} ${AsyncFw_LINUX_SOURCES})
+endif()
 
 if(BUILD_SHARED_LIBS)
   add_library(${AsyncFw_PROJECT_NAME} SHARED ${PROJECT_SOURCES})
@@ -177,7 +182,6 @@ target_link_libraries(${AsyncFw_PROJECT_NAME} z crypto ssl cares)
 #  string(FIND ${H} ".hpp" F)
 #  if(F EQUAL -1)
 #    string (REPLACE "${CMAKE_CURRENT_LIST_DIR}/" "" H ${H})
-#    string (REPLACE "linux/" "" H ${H})
 #    string (REPLACE ".h" "" H ${H})
 #    file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/install_include/${H}" "#include \"${H}.h\"\n")
 #  endif()
@@ -194,6 +198,7 @@ include(GNUInstallDirs)
 install(TARGETS ${AsyncFw_PROJECT_NAME} EXPORT AsyncFw_TARGETS DESTINATION ${CMAKE_INSTALL_LIBDIR})
 install(EXPORT AsyncFw_TARGETS FILE AsyncFwTargets.cmake NAMESPACE AsyncFw:: DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/AsyncFw)
 install(FILES ${AsyncFw_CORE_HEADERS} DESTINATION include/AsyncFw/core)
+install(FILES ${AsyncFw_LINUX_HEADERS} DESTINATION include/AsyncFw/linux)
 install(FILES ${AsyncFw_HEADERS} DESTINATION include/AsyncFw)
 install(FILES ${AsyncFw_INSTALL_INCLUDE} DESTINATION include/AsyncFw)
 install(FILES "${CMAKE_CURRENT_LIST_DIR}/AsyncFwConfig.cmake" "${CMAKE_CURRENT_BINARY_DIR}/AsyncFwConfigVersion.cmake" DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/AsyncFw)
