@@ -555,6 +555,7 @@ void HttpServer::received(TcpSocket *socket, const std::string_view &ba) {
   if (!req.fail()) {
     req.response_ = new Response();
     req.response_->socket_ = socket;
+    socket->response = req.response_;
 
     if (req.private_->request.versionMajor == 1 && req.private_->request.versionMinor == 0) {
       socket->connectionClose = true;
@@ -574,8 +575,6 @@ void HttpServer::received(TcpSocket *socket, const std::string_view &ba) {
       lsWarning("connection closed while reading");
       return;
     }
-
-    socket->response = req.response_;
   } else {
     lsTrace();
     socket->disconnect();
@@ -629,6 +628,7 @@ std::string HttpServer::Response::header() const {
 }
 
 void HttpServer::Response::destroy() {
+  if (socket_) socket_->response = nullptr;
   AbstractThread::currentThread()->invokeMethod([_p = this]() { delete _p; });
 }
 
