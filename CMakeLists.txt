@@ -48,6 +48,10 @@ add_custom_target(additional-files SOURCES AsyncFwConfig.cmake example/snippet.d
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+set(AsyncFw_INTERNAL_HEADERS
+  "${CMAKE_CURRENT_LIST_DIR}/core/console_msg.hpp"
+)
+
 set(AsyncFw_CORE_HEADERS
   "${CMAKE_CURRENT_LIST_DIR}/core/Socket.h"
   "${CMAKE_CURRENT_LIST_DIR}/core/TlsSocket.h"
@@ -60,7 +64,6 @@ set(AsyncFw_CORE_HEADERS
   "${CMAKE_CURRENT_LIST_DIR}/core/function.hpp"
   "${CMAKE_CURRENT_LIST_DIR}/core/abstract_thread.hpp"
   "${CMAKE_CURRENT_LIST_DIR}/core/log-types.hpp"
-  "${CMAKE_CURRENT_LIST_DIR}/core/console_msg.hpp"
 )
 
 set(AsyncFw_CORE_SOURCES
@@ -161,7 +164,7 @@ endif()
 
 include_directories(.)
 
-set(PROJECT_SOURCES ${AsyncFw_CORE_SOURCES} ${AsyncFw_SOURCES} ${AsyncFw_CORE_HEADERS} ${AsyncFw_HEADERS} ${AsyncFw_3rdparty_SOURCES})
+set(PROJECT_SOURCES ${AsyncFw_CORE_SOURCES} ${AsyncFw_SOURCES} ${AsyncFw_INTERNAL_HEADERS} ${AsyncFw_CORE_HEADERS} ${AsyncFw_HEADERS} ${AsyncFw_3rdparty_SOURCES})
 
 if(NOT PLATFORM STREQUAL "AMD64")
   set(PROJECT_SOURCES ${PROJECT_SOURCES} ${AsyncFw_LINUX_HEADERS} ${AsyncFw_LINUX_SOURCES})
