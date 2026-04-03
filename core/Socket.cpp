@@ -552,6 +552,7 @@ ListenSocket::~ListenSocket() {
   lsTrace();
   if (state_ == Destroy) return;
   state_ = Destroy;
+  thread_->removePollDescriptor(fd_);
   thread_->removeSocket(this);
 }
 

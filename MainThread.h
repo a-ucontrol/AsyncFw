@@ -112,6 +112,10 @@ private:
     delete exitTask;
     AbstractInstance::List::destroyValues();
     clearId();
+#ifdef USE_QAPPLICATION
+    for (const std::shared_ptr<Poll> &_n : notifiers) { delete _n->task; }
+    for (const Timer &_t : timers) { delete _t.task; }
+#endif
   }
 #ifdef USE_QAPPLICATION
   struct Timer {
@@ -120,7 +124,6 @@ private:
     AbstractTask *task;
   };
   std::vector<Timer> timers;
-  std::map<int, AbstractTask *> polls;
 
   bool running() const override {
     LockGuard lock = lockGuard();
