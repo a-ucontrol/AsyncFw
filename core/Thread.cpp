@@ -51,6 +51,8 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
   #define WAKE_FD fds_[0].fd
 #endif
 
+#include "console_msg.hpp"
+
 #define LOG_THREAD_NAME ('(' + private_.name + ')')
 
 using namespace AsyncFw;
@@ -322,7 +324,7 @@ void AbstractThread::requestInterrupt() {
   LockGuard lock(private_.mutex);
   if (private_.state != Private::Interrupted) {
     if (!private_.state || private_.state >= Private::WaitFinished) {
-      lsWarning() << LOG_THREAD_NAME << "not running";
+      console_msg("AbstractThread " + LOG_THREAD_NAME, "not running");
       return;
     }
     private_.state = Private::WaitInterrupted;
@@ -340,7 +342,7 @@ void AbstractThread::waitInterrupted() const {
   checkDifferentThread();
   if (private_.state == Private::Interrupted) return;
   if (private_.state != Private::WaitInterrupted) {
-    lsWarning() << LOG_THREAD_NAME << "interrupt request not set";
+    console_msg("AbstractThread " + LOG_THREAD_NAME, "interrupt request not set");
     return;
   }
   while (private_.state == Private::WaitInterrupted) private_.condition_variable.wait(lock);
@@ -350,7 +352,7 @@ void AbstractThread::quit() {
   lsTrace() << LOG_THREAD_NAME;
   LockGuard lock(private_.mutex);
   if (!private_.state || private_.state == Private::Finished) {
-    lsWarning() << LOG_THREAD_NAME << "thread already finished or not started";
+    console_msg("AbstractThread " + LOG_THREAD_NAME, "thread already finished or not started");
     return;
   }
   if (private_.nested_) private_.nested_--;
@@ -362,7 +364,7 @@ void AbstractThread::waitFinished() const {
   std::unique_lock<std::mutex> lock(private_.mutex);
   checkDifferentThread();
   if (!private_.state) {
-    lsWarning() << LOG_THREAD_NAME << "thread not running";
+    console_msg("AbstractThread " + LOG_THREAD_NAME, "thread not running");
     return;
   }
   while (private_.state != Private::Finished) private_.condition_variable.wait(lock);
@@ -554,7 +556,7 @@ void AbstractThread::exec() {
           if (t.expire <= now) {
             t.expire += t.timeout;
             if (t.expire <= now) {
-              lsWarning() << LOG_THREAD_NAME << "timer overload, interval:" << t.timeout.count() << "expired:" << std::chrono::duration_cast<std::chrono::milliseconds>((now - t.expire + t.timeout)).count();
+              console_msg("Thread", LOG_THREAD_NAME + " timer overload, interval: " + std::to_string(t.timeout.count()) + ", expired: " + std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>((now - t.expire + t.timeout)).count()));
               t.expire = now + t.timeout;
             }
             private_.process_timer_tasks_.push({t.id, t.task});
@@ -636,7 +638,7 @@ bool AbstractThread::invokeTask(AbstractTask *task) const {
 void AbstractThread::start() {
   std::unique_lock<std::mutex> lock(private_.mutex);
   if ((private_.state && private_.state != Private::Finished) || private_.id != std::thread::id()) {
-    lsError() << LOG_THREAD_NAME << "thread is already running or starting, or the thread id is not null";
+    console_msg("AbstractThread " + LOG_THREAD_NAME, "thread already running or starting, or thread id not null");
     return;
   }
   private_.state = Private::WaitStarted;
@@ -706,7 +708,7 @@ bool AbstractThread::modifyTimer(int id, int ms) {
     }
     return true;
   }
-  lsError() << LOG_THREAD_NAME << "timer:" << id << "not found";
+  console_msg("AbstractThread " + LOG_THREAD_NAME, "timer: " + std::to_string(id) + " not found");
   return false;
 }
 
@@ -717,7 +719,7 @@ void AbstractThread::removeTimer(int id) {
     LockGuard lock(private_.mutex);
     it = std::lower_bound(private_.timers.begin(), private_.timers.end(), id, Private::Compare());
     if (it == private_.timers.end() || it->id != id) {
-      lsError() << LOG_THREAD_NAME << "timer:" << id << "not found";
+      console_msg("AbstractThread " + LOG_THREAD_NAME, "timer: " + std::to_string(id) + " not found");
       return;
     }
     _t = new Task([p = it->task] { delete p; });
@@ -735,7 +737,7 @@ bool AbstractThread::appendPollDescriptor(int fd, PollEvents events, AbstractPol
   std::vector<Private::PollTask *>::iterator it = std::lower_bound(private_.poll_tasks.begin(), private_.poll_tasks.end(), fd, Private::Compare());
   if (it != private_.poll_tasks.end() && (*it)->fd == fd) {
     delete task;
-    lsError() << LOG_THREAD_NAME << "poll descriptor:" << fd << "append error";
+    console_msg("AbstractThread " + LOG_THREAD_NAME, "poll descriptor append error: " + std::to_string(fd));
     return false;
   }
   struct pollfd pollfd;
@@ -753,7 +755,7 @@ bool AbstractThread::appendPollDescriptor(int fd, PollEvents events, AbstractPol
   if (epoll_ctl(private_.epoll_fd, EPOLL_CTL_ADD, fd, &event) != 0) {
   ERR:
     delete _d;
-    lsError() << LOG_THREAD_NAME << "poll descriptor:" << fd << "append error";
+    console_msg("AbstractThread " + LOG_THREAD_NAME, "poll descriptor append error: " + std::to_string(fd));
     return false;
   }
   LockGuard lock(private_.mutex);
@@ -771,7 +773,7 @@ bool AbstractThread::modifyPollDescriptor(int fd, PollEvents events) {
   LockGuard lock(private_.mutex);
   std::vector<Private::PollTask *>::iterator it = std::lower_bound(private_.poll_tasks.begin(), private_.poll_tasks.end(), fd, Private::Compare());
   if (it != private_.poll_tasks.end() && (*it)->fd != fd) {
-    lsError() << LOG_THREAD_NAME << "poll descriptor:" << fd << "not found";
+    console_msg("AbstractThread " + LOG_THREAD_NAME, "poll descriptor: " + std::to_string(fd) + " not found");
     return false;
   }
   struct Private::update_pollfd v;
@@ -787,7 +789,7 @@ bool AbstractThread::modifyPollDescriptor(int fd, PollEvents events) {
     LockGuard lock(private_.mutex);
     std::vector<Private::PollTask *>::iterator it = std::lower_bound(private_.poll_tasks.begin(), private_.poll_tasks.end(), fd, Private::Compare());
     if (it == private_.poll_tasks.end() || (*it)->fd != fd) {
-      lsError() << LOG_THREAD_NAME << "poll descriptor:" << fd << "not found";
+      console_msg("AbstractThread " + LOG_THREAD_NAME, "poll descriptor: " + std::to_string(fd) + " not found");
       return false;
     }
     event.data.ptr = *it;
@@ -805,7 +807,7 @@ void AbstractThread::removePollDescriptor(int fd) {
     LockGuard lock(private_.mutex);
     std::vector<Private::PollTask *>::iterator it = std::lower_bound(private_.poll_tasks.begin(), private_.poll_tasks.end(), fd, Private::Compare());
     if (it != private_.poll_tasks.end() && (*it)->fd != fd) {
-      lsError() << LOG_THREAD_NAME << "poll descriptor:" << fd << "not found";
+      console_msg("AbstractThread " + LOG_THREAD_NAME, "poll descriptor: " + std::to_string(fd) + " not found");
       return;
     }
     _t = new Task([p = *it] { delete p; });
@@ -827,7 +829,7 @@ void AbstractThread::removePollDescriptor(int fd) {
     LockGuard lock(private_.mutex);
     std::vector<Private::PollTask *>::iterator it = std::lower_bound(private_.poll_tasks.begin(), private_.poll_tasks.end(), fd, Private::Compare());
     if (it == private_.poll_tasks.end() || (*it)->fd != fd) {
-      lsError() << LOG_THREAD_NAME << "poll descriptor:" << fd << "not found";
+      console_msg("AbstractThread " + LOG_THREAD_NAME, "poll descriptor: " + std::to_string(fd) + " not found");
       return;
     }
     if (private_.poll_tasks.size() == 1) private_.wake();
