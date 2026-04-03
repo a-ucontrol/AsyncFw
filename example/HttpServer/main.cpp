@@ -26,8 +26,12 @@ int main(int argc, char *argv[]) {
     _socket->stateChanged([_socket](const AsyncFw::AbstractSocket::State state) {
       if (state == AsyncFw::AbstractSocket::State::Active) {
         logDebug() << "Send request";
-        _socket->write("GET /quit HTTP/1.1\r\n\r\n");
+        _socket->write("GET / HTTP/1.1\r\n\r\n");
       }
+    });
+    _socket->received([_socket](const AsyncFw::DataArray &_da) {
+      lsDebug() << _da.view(0, _da.size() > 1024 ? 1024 : _da.size());
+      _socket->write("GET /quit HTTP/1.1\r\n\r\n");
     });
     _socket->connect("127.0.0.1", 18080);
   }
