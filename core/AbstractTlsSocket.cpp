@@ -12,7 +12,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include "TlsContext.h"
 #include "LogStream.h"
 
-#include "TlsSocket.h"
+#include "AbstractTlsSocket.h"
 
 using namespace AsyncFw;
 

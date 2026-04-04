@@ -11,7 +11,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #include "core/LogStream.h"
 #include "Rrd.h"
-#include "instance.hpp"
+#include "Instance.h"
 
 #define _messages_ 8
 

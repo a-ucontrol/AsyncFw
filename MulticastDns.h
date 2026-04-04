@@ -1,7 +1,7 @@
 #pragma once
 
 #include "core/FunctionConnector.h"
-#include "instance.hpp"
+#include "Instance.h"
 
 namespace AsyncFw {
 class AbstractThread;

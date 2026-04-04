@@ -9,7 +9,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #include <string>
 #include "../core/FunctionConnector.h"
-#include "../instance.hpp"
+#include "../Instance.h"
 
 namespace AsyncFw {
 /*! \class FileSystemWatcher FileSystemWatcher.h <AsyncFw/FileSystemWatcher> \brief The FileSystemWatcher class. \warning Unix-like systems only

@@ -7,7 +7,8 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 //! [snippet]
 #include <core/DataArray.h>
-#include <core/TlsSocket.h>
+#include <core/AbstractTlsSocket.h>
+#include <core/ListenSocket.h>
 #include <core/LogStream.h>
 #include <MainThread.h>
 

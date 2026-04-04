@@ -1,5 +1,6 @@
 <map id="AsyncFw::Thread::Thread" name="AsyncFw::Thread::Thread">
-<area shape="rect" id="Node000001" title="Constructs a thread." alt="" coords="226,13,398,40"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1Thread.html#a46662ffa7482f1c1e52b654c51639fd2" title="Returns a pointer to the AsyncFw::Thread that manages the currently executing thread." alt="" coords="5,5,178,48"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="210,29,178,29,178,24,210,24"/>
+<area shape="rect" id="Node000001" title="Constructs a thread." alt="" coords="226,29,398,56"/>
+<area shape="poly" id="edge2_Node000001_Node000001" title=" " alt="" coords="350,16,337,10,312,8,289,10,276,15,273,20,279,27,275,30,268,21,273,11,287,5,312,3,338,5,352,12"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1Thread.html#a46662ffa7482f1c1e52b654c51639fd2" title="Returns a pointer to the AsyncFw::Thread that manages the currently executing thread." alt="" coords="5,21,178,64"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="210,45,178,45,178,40,210,40"/>
 </map>

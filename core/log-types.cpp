@@ -6,7 +6,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 */
 
 #include "AbstractThread.h"
-#include "Socket.h"
+#include "AbstractSocket.h"
 #include "DataArray.h"
 #include "TlsContext.h"
 #include "LogStream.h"

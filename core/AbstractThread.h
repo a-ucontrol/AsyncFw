@@ -42,7 +42,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 namespace AsyncFw {
 class LogStream;
-/*! \class AbstractThread AbstractThread.h <AsyncFw/AbstractThread> \brief The AbstractThread class provides the base functionality for thread management. */
+/*! \class AbstractThread AbstractThread.h <AsyncFw/AbstractThread> \class AbstractThread AbstractThread.h <AsyncFw/AbstractThread> \brief The AbstractThread class provides the base functionality for thread management. */
 class AbstractThread {
   friend class Thread;
   friend LogStream &operator<<(LogStream &, const AbstractThread &);

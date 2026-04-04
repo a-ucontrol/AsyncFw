@@ -11,14 +11,13 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include <string>
 
 #include "AnyData.h"
-#include "FunctionConnector.h"
 
 namespace AsyncFw {
 class Thread;
 class DataArray;
 class LogStream;
 
-/*! \class AbstractSocket Socket.h <AsyncFw/Socket> \brief The AbstractSocket class provides the base functionality for socket. */
+/*! \class AbstractSocket Socket.h <AsyncFw/AbstractSocket> \brief The AbstractSocket class provides the base functionality for socket. */
 class AbstractSocket : public AnyData {
   friend Thread;
   friend LogStream &operator<<(LogStream &, const AbstractSocket &);
@@ -85,22 +84,4 @@ private:
   void read_fd();
   Private *private_;
 };
-
-/*! \class ListenSocket Socket.h <AsyncFw/Socket> \brief The ListenSocket class.
- \brief Example: \snippet ListenSocket/main.cpp snippet */
-class ListenSocket : private AbstractSocket {
-public:
-  using AbstractSocket::address;
-  using AbstractSocket::close;
-  using AbstractSocket::destroy;
-  using AbstractSocket::listen;
-  using AbstractSocket::port;
-  ~ListenSocket();
-  /*! \brief The FunctionConnector for incoming connections. */
-  AsyncFw::FunctionConnectorProtected<ListenSocket>::Connector<int, const std::string &, bool *> incoming {AsyncFw::AbstractFunctionConnector::SyncOnly};
-
-protected:
-  void incomingEvent() override;
-};
-
 }  // namespace AsyncFw

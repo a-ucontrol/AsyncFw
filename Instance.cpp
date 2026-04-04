@@ -8,7 +8,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include <algorithm>
 #include "core/AbstractThread.h"
 #include "core/LogStream.h"
-#include "instance.hpp"
+#include "Instance.h"
 
 using namespace AsyncFw;
 

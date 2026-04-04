@@ -9,7 +9,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #include "core/FunctionConnector.h"
 #include "core/DataArray.h"
-#include "core/TlsSocket.h"
+#include "core/AbstractTlsSocket.h"
 #include "File.h"
 
 namespace AsyncFw {

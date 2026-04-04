@@ -7,7 +7,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 //! [snippet]
 #include <MainThread.h>
-#include <core/TlsSocket.h>
+#include <core/AbstractTlsSocket.h>
 #include <core/TlsContext.h>
 #include <AddressInfo.h>
 #include <File.h>

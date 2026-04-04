@@ -8,6 +8,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include <filesystem>
 
 #include "core/Thread.h"
+#include "core/ListenSocket.h"
 #include "core/LogStream.h"
 
 #include "3rdparty/httpparser/src/httpparser/httprequestparser.h"

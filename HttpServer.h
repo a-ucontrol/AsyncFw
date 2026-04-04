@@ -13,7 +13,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #include "core/TlsContext.h"
 #include "HttpSocket.h"
-#include "instance.hpp"
+#include "Instance.h"
 
 class WebSocket;
 namespace AsyncFw {

@@ -44,7 +44,7 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"AbstractThread_8h_source.html"
+"AbstractSocket_8h_source.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronization';

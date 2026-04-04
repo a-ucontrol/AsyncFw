@@ -53,24 +53,27 @@ set(AsyncFw_INTERNAL_HEADERS
 )
 
 set(AsyncFw_CORE_HEADERS
-  "${CMAKE_CURRENT_LIST_DIR}/core/Socket.h"
-  "${CMAKE_CURRENT_LIST_DIR}/core/TlsSocket.h"
+  "${CMAKE_CURRENT_LIST_DIR}/core/AbstractThread.h"
   "${CMAKE_CURRENT_LIST_DIR}/core/Thread.h"
   "${CMAKE_CURRENT_LIST_DIR}/core/AnyData.h"
+  "${CMAKE_CURRENT_LIST_DIR}/core/AbstractSocket.h"
+  "${CMAKE_CURRENT_LIST_DIR}/core/AbstractTlsSocket.h"
+  "${CMAKE_CURRENT_LIST_DIR}/core/ListenSocket.h"
   "${CMAKE_CURRENT_LIST_DIR}/core/TlsContext.h"
   "${CMAKE_CURRENT_LIST_DIR}/core/FunctionConnector.h"
   "${CMAKE_CURRENT_LIST_DIR}/core/LogStream.h"
   "${CMAKE_CURRENT_LIST_DIR}/core/DataArray.h"
   "${CMAKE_CURRENT_LIST_DIR}/core/function.hpp"
-  "${CMAKE_CURRENT_LIST_DIR}/core/AbstractThread.h"
   "${CMAKE_CURRENT_LIST_DIR}/core/log-types.hpp"
 )
 
 set(AsyncFw_CORE_SOURCES
+  "core/AbstractThread.cpp"
   "core/Thread.cpp"
   "core/AnyData.cpp"
-  "core/Socket.cpp"
-  "core/TlsSocket.cpp"
+  "core/AbstractSocket.cpp"
+  "core/AbstractTlsSocket.cpp"
+  "core/ListenSocket.cpp"
   "core/DataArray.cpp"
   "core/LogStream.cpp"
   "core/TlsContext.cpp"
@@ -105,7 +108,7 @@ set(AsyncFw_HEADERS
   "${CMAKE_CURRENT_LIST_DIR}/HttpServer.h"
 
   "${CMAKE_CURRENT_LIST_DIR}/MulticastDns.h"
-  "${CMAKE_CURRENT_LIST_DIR}/instance.hpp"
+  "${CMAKE_CURRENT_LIST_DIR}/Instance.h"
 
   "${CMAKE_CURRENT_LIST_DIR}/Version.h"
 )
@@ -127,6 +130,7 @@ set(AsyncFw_SOURCES
   "File.cpp"
   "Cryptor.cpp"
   "ThreadPool.cpp"
+  "Instance.cpp"
 
   "Task.cpp"
   "HttpSocket.cpp"
@@ -135,7 +139,6 @@ set(AsyncFw_SOURCES
   "MulticastDns.cpp"
 
   "Version.cpp"
-  "instance.cpp"
 )
 
 set(AsyncFw_LINUX_HEADERS

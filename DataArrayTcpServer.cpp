@@ -7,6 +7,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #include <algorithm>
 #include "core/LogStream.h"
+#include "core/ListenSocket.h"
 #include "DataArraySocket.h"
 #include "DataArrayTcpServer.h"
 

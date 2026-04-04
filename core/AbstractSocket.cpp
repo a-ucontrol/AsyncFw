@@ -43,7 +43,7 @@ struct start_wsa {
   #define SHUT_RDWR SD_BOTH
 #endif
 
-#include "Socket.h"
+#include "AbstractSocket.h"
 
 #define SOCKET_CONNECTION_QUEUED 16
 //#define SOCKET_REUSEPORT
@@ -520,41 +520,6 @@ void AbstractSocket::pollEvent(int _e) {
       close();
     }
   }
-}
-
-void ListenSocket::incomingEvent() {
-  sockaddr_storage _a;
-  socklen_t _l = sizeof _a;
-  int _cd = accept(fd_, (struct sockaddr *)&_a, &_l);
-  std::string _pa;
-  if (_a.ss_family == AF_INET) {
-    char _ip[INET_ADDRSTRLEN];
-    inet_ntop(AF_INET, &reinterpret_cast<const sockaddr_in *>(&_a)->sin_addr, _ip, sizeof _ip);
-    _pa = _ip;
-  } else {
-    char _ip[INET6_ADDRSTRLEN];
-    inet_ntop(AF_INET6, &reinterpret_cast<const sockaddr_in6 *>(&_a)->sin6_addr, _ip, sizeof _ip);
-    _pa = _ip;
-  }
-  if (_cd >= 0) {
-    bool _accept = false;
-    incoming(_cd, _pa, &_accept);
-    if (!_accept) {
-      lsDebug() << LogStream::Color::Red << "failed incoming connection" << _cd;
-      close_fd(_cd);
-      return;
-    }
-  }
-  trace() << LogStream::Color::Red << _cd << LogStream::Color::Green << _pa;
-}
-
-ListenSocket::~ListenSocket() {
-  lsTrace();
-  if (state_ == Destroy) return;
-  state_ = Destroy;
-  thread_->removeSocket(this);
-  if (fd_ == -1) return;
-  thread_->removePollDescriptor(fd_);
 }
 
 namespace AsyncFw {

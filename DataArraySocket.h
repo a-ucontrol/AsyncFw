@@ -8,7 +8,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #pragma once
 
 #include <deque>
-#include "core/TlsSocket.h"
+#include "core/AbstractTlsSocket.h"
 #include "core/FunctionConnector.h"
 
 namespace AsyncFw {

@@ -8,7 +8,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #pragma once
 
 #include "core/Thread.h"
-#include "instance.hpp"
+#include "Instance.h"
 
 #ifndef _WIN32
   #define EXIT_ON_UNIX_SIGNAL

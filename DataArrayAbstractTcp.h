@@ -15,7 +15,7 @@ class DataArraySocket;
 class DataArray;
 class TlsContext;
 
-/*! \brief The DataArrayAbstractTcp class. */
+/*! \class DataArrayAbstractTcp DataArrayAbstractTcp.h <AsyncFw/DataArrayAbstractTcp> \brief The DataArrayAbstractTcp class. */
 class DataArrayAbstractTcp : public AbstractThreadPool {
 public:
   enum Result {
