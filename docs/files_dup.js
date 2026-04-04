@@ -13,6 +13,8 @@ var files_dup =
     [ "HttpServer.h", "HttpServer_8h_source.html", null ],
     [ "HttpSocket.h", "HttpSocket_8h_source.html", null ],
     [ "Instance.h", "Instance_8h_source.html", null ],
+    [ "ListenSocket.h", "ListenSocket_8h_source.html", null ],
+    [ "log-types.hpp", "log-types_8hpp_source.html", null ],
     [ "Log.h", "Log_8h_source.html", null ],
     [ "MainThread.h", "MainThread_8h_source.html", null ],
     [ "MulticastDns.h", "MulticastDns_8h_source.html", null ],
