@@ -10,7 +10,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include <any>
 
 namespace AsyncFw {
-/*! \brief The AnyData class. */
+/*! \class AnyData AnyData.h <AsyncFw/AnyData> \brief The AnyData class. */
 struct AnyData {
   template <typename T>
   T data() const {

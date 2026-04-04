@@ -16,7 +16,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #define _messages_ 8
 
 namespace AsyncFw {
-/*! \brief The AbstractLog class provides the base functionality for logger. */
+/*! \class AbstractLog Log.h <AsyncFw/Log> \brief The AbstractLog class provides the base functionality for logger. */
 class AbstractLog {
   friend class Log;
 
@@ -66,7 +66,7 @@ private:
   std::vector<std::string> filter;
 };
 
-/*! \brief The Log class.
+/*! \class Log Log.h <AsyncFw/Log> \brief The Log class.
  \brief Example: \snippet Log/main.cpp snippet */
 class Log : public Rrd, public AbstractLog {
 public:

@@ -10,7 +10,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include "DataArrayAbstractTcp.h"
 
 namespace AsyncFw {
-/*! \brief The DataArrayTcpClient class. */
+/*! \class DataArrayTcpClient DataArrayTcpClient.h <AsyncFw/DataArrayTcpClient> \brief The DataArrayTcpClient class. */
 class DataArrayTcpClient : public DataArrayAbstractTcp {
 protected:
   class Thread : public DataArrayAbstractTcp::Thread {

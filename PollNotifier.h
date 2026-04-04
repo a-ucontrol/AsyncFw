@@ -10,7 +10,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include "core/FunctionConnector.h"
 
 namespace AsyncFw {
-/*! \brief The PollNotifier class
+/*! \class PollNotifier PollNotifier.h <AsyncFw/PollNotifier> \brief The PollNotifier class
  Example: \snippet Stdin/main.cpp snippet */
 class PollNotifier {
 public:

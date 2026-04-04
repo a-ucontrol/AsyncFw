@@ -11,7 +11,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include "../core/FunctionConnector.h"
 
 namespace AsyncFw {
-/*! \brief The SystemProcess class. \warning Unix-like systems only
+/*! \class SystemProcess SystemProcess.h <AsyncFw/SystemProcess> \brief The SystemProcess class. \warning Unix-like systems only
  \brief Example: \snippet SystemProcess/main.cpp snippet */
 class SystemProcess {
 public:

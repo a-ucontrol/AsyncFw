@@ -62,7 +62,7 @@ set(AsyncFw_CORE_HEADERS
   "${CMAKE_CURRENT_LIST_DIR}/core/LogStream.h"
   "${CMAKE_CURRENT_LIST_DIR}/core/DataArray.h"
   "${CMAKE_CURRENT_LIST_DIR}/core/function.hpp"
-  "${CMAKE_CURRENT_LIST_DIR}/core/abstract_thread.hpp"
+  "${CMAKE_CURRENT_LIST_DIR}/core/AbstractThread.h"
   "${CMAKE_CURRENT_LIST_DIR}/core/log-types.hpp"
 )
 

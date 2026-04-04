@@ -18,7 +18,7 @@ class Thread;
 class DataArray;
 class LogStream;
 
-/*! \brief The AbstractSocket class provides the base functionality for socket. */
+/*! \class AbstractSocket Socket.h <AsyncFw/Socket> \brief The AbstractSocket class provides the base functionality for socket. */
 class AbstractSocket : public AnyData {
   friend Thread;
   friend LogStream &operator<<(LogStream &, const AbstractSocket &);
@@ -86,7 +86,7 @@ private:
   Private *private_;
 };
 
-/*! \brief The ListenSocket class.
+/*! \class ListenSocket Socket.h <AsyncFw/Socket> \brief The ListenSocket class.
  \brief Example: \snippet ListenSocket/main.cpp snippet */
 class ListenSocket : private AbstractSocket {
 public:

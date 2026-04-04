@@ -7,7 +7,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #include <cstdlib>
 #include <sys/wait.h>
-#include "core/abstract_thread.hpp"
+#include "core/AbstractThread.h"
 #include "core/LogStream.h"
 #include "SystemProcess.h"
 

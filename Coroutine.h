@@ -14,11 +14,11 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 namespace AsyncFw {
 struct CoroutineAwait;
 
-/*! \brief The CoroutineTask struct. */
+/*! \struct CoroutineTask Coroutine.h <AsyncFw/Coroutine> \brief The CoroutineTask struct. */
 struct CoroutineTask {
   CoroutineTask();
   virtual ~CoroutineTask();
-  /*! \brief The CoroutineTask::promise_type struct. */
+  /*! \struct promise_type Coroutine.h <AsyncFw/Coroutine> \brief The CoroutineTask::promise_type struct. */
   struct promise_type : public AnyData {
     friend CoroutineAwait;
     friend CoroutineTask;
@@ -47,7 +47,7 @@ private:
 
 using CoroutineHandle = std::coroutine_handle<CoroutineTask::promise_type>;
 
-/*! \brief The CoroutineAwait struct. */
+/*! \struct CoroutineAwait Coroutine.h <AsyncFw/Coroutine> \brief The CoroutineAwait struct. */
 struct CoroutineAwait {
   template <typename T>
   CoroutineAwait(T _f) : f_(new FunctionArgs<const CoroutineHandle>::Function<T>(_f)) {}

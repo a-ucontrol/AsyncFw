@@ -8,11 +8,11 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #pragma once
 
 #include <memory>
-#include "core/abstract_thread.hpp"
+#include "core/AbstractThread.h"
 #include "core/AnyData.h"
 
 namespace AsyncFw {
-/*! \brief The AbstractTask class. */
+/*! \class AbstractTask Task.h <AsyncFw/Task> \brief The AbstractTask class. */
 class AbstractTask : public AsyncFw::AbstractThread::AbstractTask, public AnyData {
 public:
   AbstractTask();
@@ -20,7 +20,7 @@ public:
   virtual bool running() = 0;
 };
 
-/*! \brief The Task class. */
+/*! \class Task Task.h <AsyncFw/Task> \brief The Task class. */
 template <typename M>
 class Task : public AbstractTask {
 public:

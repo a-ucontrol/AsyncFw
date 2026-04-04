@@ -12,7 +12,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 namespace AsyncFw {
 class AbstractSocket;
 
-/*! \brief AsyncFw::Thread thread with sockets. */
+/*! \class Thread Thread.h <AsyncFw/Thread> \brief AsyncFw::Thread thread with sockets. */
 class Thread : public AbstractThread {
   friend AbstractSocket;
   friend class ListenSocket;

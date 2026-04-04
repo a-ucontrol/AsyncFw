@@ -18,7 +18,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 class WebSocket;
 namespace AsyncFw {
 using namespace AsyncFw;
-/*! \brief The HttpServer class.
+/*! \class HttpServer HttpServer.h <AsyncFw/HttpServer> \brief The HttpServer class.
  \brief Example: \snippet HttpServer/main.cpp snippet */
 class HttpServer {
   friend LogStream &operator<<(LogStream &, const HttpServer &);

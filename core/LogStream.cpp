@@ -9,7 +9,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include <regex>
 #include <syncstream>
 #include <chrono>
-#include "core/abstract_thread.hpp"
+#include "core/AbstractThread.h"
 #ifdef EXTEND_LOGSTREAM_TRACE
   #include "core/console_msg.hpp"
 #endif

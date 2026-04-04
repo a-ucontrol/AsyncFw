@@ -12,7 +12,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 namespace AsyncFw {
 class Thread;
-/*! \brief The Rrd class. */
+/*! \class Rrd Rrd.h <AsyncFw/Rrd> \brief The Rrd class. */
 class Rrd {
 public:
   using Item = DataArray;

@@ -10,7 +10,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include "core/FunctionConnector.h"
 
 namespace AsyncFw {
-/*! \brief The Timer class
+/*! \class Timer Timer.h <AsyncFw/Timer> \brief The Timer class
  \brief Example: \snippet Timer/main.cpp snippet */
 class Timer {
 public:

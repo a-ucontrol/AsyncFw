@@ -13,7 +13,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 namespace AsyncFw {
 class TlsContext;
-/*! \brief The DataArraySocket class. */
+/*! \class DataArraySocket DataArraySocket.h <AsyncFw/DataArraySocket> \brief The DataArraySocket class. */
 class DataArraySocket : public AbstractTlsSocket {
   friend class DataArrayAbstractTcp;
   friend class DataArrayTcpClient;

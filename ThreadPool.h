@@ -13,7 +13,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #define ThreadPool_DEFAULT_WORK_THREADS 1
 
 namespace AsyncFw {
-/*! \brief Абстрактный класс для создания пулов управления потоками. */
+/*! \class AbstractThreadPool ThreadPool.h <AsyncFw/ThreadPool> \brief Абстрактный класс для создания пулов управления потоками. */
 class AbstractThreadPool {
 public:
   class Thread : public AsyncFw::Thread {
@@ -53,7 +53,7 @@ private:
   std::string name_;
 };
 
-/*! \brief Управляет набором многократно используемых рабочих потоков для параллельного выполнения задач, вместо создания нового потока для каждой задачи.
+/*! \class ThreadPool ThreadPool.h <AsyncFw/ThreadPool> \brief Управляет набором многократно используемых рабочих потоков для параллельного выполнения задач, вместо создания нового потока для каждой задачи.
  \brief Благодаря постановке задач в очередь и повторному использованию потоков, повышается производительность системы, ограничивается использование ресурсов и снижаются накладные расходы на создание/уничтожение потоков.
  @snippet ThreadPool/main.cpp snippet
 */

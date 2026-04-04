@@ -39,7 +39,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #endif
 
 namespace AsyncFw {
-/*! \brief The LogStream class.
+/*! \class LogStream LogStream.h <AsyncFw/LogStream> \brief The LogStream class.
  \brief Examlpe: \snippet snippet.dox LogStream */
 class LogStream {
 public:

@@ -12,7 +12,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 namespace AsyncFw {
 class DataArray;
-/*! \brief The File class. */
+/*! \class File File.h <AsyncFw/File> \brief The File class. */
 class File {
   struct Private;
 

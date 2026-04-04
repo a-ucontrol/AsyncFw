@@ -7,13 +7,13 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #pragma once
 
-#include "abstract_thread.hpp"
+#include "AbstractThread.h"
 
 namespace AsyncFw {
 
 class FunctionConnectionGuard;
 
-/*! \brief The AbstractFunctionConnector class. */
+/*! \class AbstractFunctionConnector FunctionConnector.h <AsyncFw/FunctionConnector> \brief The AbstractFunctionConnector class. */
 class AbstractFunctionConnector {
   friend FunctionConnectionGuard;
 
@@ -55,7 +55,7 @@ protected:
   std::mutex mutex;
 };
 
-/*! \brief Обеспечивает соединение отправитель -> получатели. Получатели могут быть вызваны в своих потоках (по умолчанию).
+/*! \class FunctionConnector FunctionConnector.h <AsyncFw/FunctionConnector> \brief Обеспечивает соединение отправитель -> получатели. Получатели могут быть вызваны в своих потоках (по умолчанию).
  \brief Другие инструментальные средства реализуют подобную коммуникацию с помощью коллбэков. Коллбэк - это указатель на функцию, поэтому, если вы хотите, чтобы функция обработки уведомила вас о каком-либо событии, вы передаете указатель на другую функцию (коллбэк) в функцию обработки. Затем функция обработки вызывает коллбэк, когда это необходимо.
  \brief Example: \snippet FunctionConnector/main.cpp snippet */
 template <typename... Args>
@@ -118,7 +118,7 @@ protected:
   };
 };
 
-/*! \brief Защищенный коннетор, отправитель может быть только один. */
+/*! \class FunctionConnectorProtected FunctionConnector.h <AsyncFw/FunctionConnector> \brief Защищенный коннетор, отправитель может быть только один. */
 template <typename F>
 class FunctionConnectorProtected {
 public:
@@ -139,7 +139,7 @@ public:
   };
 };
 
-/*! \brief The FunctionConnectionGuard class.
+/*! \class FunctionConnectionGuard FunctionConnector.h <AsyncFw/FunctionConnector> \brief The FunctionConnectionGuard class.
  \brief При разрушении FunctionConnectionGuard соединение разрывается */
 class FunctionConnectionGuard {
   friend AbstractFunctionConnector::Connection;

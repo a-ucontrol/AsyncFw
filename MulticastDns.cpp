@@ -1,5 +1,5 @@
 #include <regex>
-#include "core/abstract_thread.hpp"
+#include "core/AbstractThread.h"
 #include "core/LogStream.h"
 #include "3rdparty/mdns/mdns.h"
 #include "MulticastDns.h"

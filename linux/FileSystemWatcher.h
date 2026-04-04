@@ -12,7 +12,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include "../instance.hpp"
 
 namespace AsyncFw {
-/*! \brief The FileSystemWatcher class. \warning Unix-like systems only
+/*! \class FileSystemWatcher FileSystemWatcher.h <AsyncFw/FileSystemWatcher> \brief The FileSystemWatcher class. \warning Unix-like systems only
  \brief Example: \snippet FileSystemWatcher/main.cpp snippet */
 class FileSystemWatcher {
   friend LogStream &operator<<(LogStream &, const FileSystemWatcher &);
