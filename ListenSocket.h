@@ -7,8 +7,8 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #pragma once
 
-#include "AbstractSocket.h"
-#include "FunctionConnector.h"
+#include "core/AbstractSocket.h"
+#include "core/FunctionConnector.h"
 
 namespace AsyncFw {
 /*! \class ListenSocket ListenSocket.h <AsyncFw/ListenSocket> \brief The ListenSocket class.

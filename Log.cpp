@@ -6,9 +6,8 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 */
 
 #include "core/DataArray.h"
-#include "core/Thread.h"
 #include "core/console_msg.hpp"
-
+#include "core/Thread.h"
 #include "Log.h"
 
 #ifdef EXTEND_LOG_TRACE

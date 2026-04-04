@@ -17,6 +17,7 @@ struct x509_store_ctx_st;
 namespace AsyncFw {
 class DataArray;
 class DataArrayList;
+class LogStream;
 /*! \class TlsContext TlsContext.h <AsyncFw/TlsContext> \brief The TlsContext class provides functionality for managing TLS certificates.
  \brief Examlpe:
  \snippet snippet.dox TlsContext */
@@ -75,4 +76,5 @@ protected:
 private:
   Private *private_;
 };
+LogStream &operator<<(LogStream &, const TlsContext &);
 }  // namespace AsyncFw

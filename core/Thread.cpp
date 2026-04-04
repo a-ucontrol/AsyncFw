@@ -6,9 +6,9 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 */
 
 #include <signal.h>
+#include "core/AbstractSocket.h"
+#include "core/LogStream.h"
 #include "Thread.h"
-#include "AbstractSocket.h"
-#include "LogStream.h"
 
 #ifdef EXTEND_THREAD_TRACE
   #define trace LogStream(+LogStream::Debug | LogStream::Black, __PRETTY_FUNCTION__, __FILE__, __LINE__, LS_DEFAULT_FLAGS | LOG_STREAM_CONSOLE_ONLY).output

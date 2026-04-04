@@ -14,10 +14,10 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
   #define close_fd ::closesocket
 #endif
 
-#include "AbstractSocket.h"
+#include "core/AbstractSocket.h"
+#include "core/LogStream.h"
+#include "core/Thread.h"
 #include "ListenSocket.h"
-#include "Thread.h"
-#include "LogStream.h"
 
 #ifdef EXTEND_SOCKET_TRACE
   #define trace LogStream(+LogStream::Trace | LogStream::Black, __PRETTY_FUNCTION__, __FILE__, __LINE__, LS_DEFAULT_FLAGS | LOG_STREAM_CONSOLE_ONLY).output

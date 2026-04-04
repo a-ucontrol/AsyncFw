@@ -14,6 +14,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 namespace AsyncFw {
 class DataArrayList;
 class DataArrayView;
+class LogStream;
 
 /*! \class DataArray DataArray.h <AsyncFw/DataArray> \brief The DataArray class. */
 class DataArray : public std::vector<uint8_t> {
@@ -107,4 +108,8 @@ private:
   bool read_ = false;
   std::size_t pos_ = 0;
 };
+LogStream &operator<<(LogStream &, const DataArray &);
+LogStream &operator<<(LogStream &, const DataArrayView &);
+LogStream &operator<<(LogStream &, const DataArrayList &);
+LogStream &operator<<(LogStream &, const DataStream &);
 }  // namespace AsyncFw

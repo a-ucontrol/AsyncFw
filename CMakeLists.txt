@@ -58,13 +58,11 @@ set(AsyncFw_CORE_HEADERS
   "${CMAKE_CURRENT_LIST_DIR}/core/AnyData.h"
   "${CMAKE_CURRENT_LIST_DIR}/core/AbstractSocket.h"
   "${CMAKE_CURRENT_LIST_DIR}/core/AbstractTlsSocket.h"
-  "${CMAKE_CURRENT_LIST_DIR}/core/ListenSocket.h"
   "${CMAKE_CURRENT_LIST_DIR}/core/TlsContext.h"
   "${CMAKE_CURRENT_LIST_DIR}/core/FunctionConnector.h"
   "${CMAKE_CURRENT_LIST_DIR}/core/LogStream.h"
   "${CMAKE_CURRENT_LIST_DIR}/core/DataArray.h"
   "${CMAKE_CURRENT_LIST_DIR}/core/function.hpp"
-  "${CMAKE_CURRENT_LIST_DIR}/core/log-types.hpp"
 )
 
 set(AsyncFw_CORE_SOURCES
@@ -73,16 +71,15 @@ set(AsyncFw_CORE_SOURCES
   "core/AnyData.cpp"
   "core/AbstractSocket.cpp"
   "core/AbstractTlsSocket.cpp"
-  "core/ListenSocket.cpp"
   "core/DataArray.cpp"
   "core/LogStream.cpp"
   "core/TlsContext.cpp"
   "core/FunctionConnector.cpp"
-  "core/log-types.cpp"
   "core/console_msg.cpp"
 )
 
 set(AsyncFw_HEADERS
+  "${CMAKE_CURRENT_LIST_DIR}/ListenSocket.h"
   "${CMAKE_CURRENT_LIST_DIR}/Coroutine.h"
   "${CMAKE_CURRENT_LIST_DIR}/Timer.h"
   "${CMAKE_CURRENT_LIST_DIR}/AddressInfo.h"
@@ -90,40 +87,34 @@ set(AsyncFw_HEADERS
   "${CMAKE_CURRENT_LIST_DIR}/ThreadPool.h"
   "${CMAKE_CURRENT_LIST_DIR}/File.h"
   "${CMAKE_CURRENT_LIST_DIR}/Cryptor.h"
-
   "${CMAKE_CURRENT_LIST_DIR}/MainThread.h"
-
   "${CMAKE_CURRENT_LIST_DIR}/Rrd.h"
   "${CMAKE_CURRENT_LIST_DIR}/Log.h"
   "${CMAKE_CURRENT_LIST_DIR}/RrdServer.h"
   "${CMAKE_CURRENT_LIST_DIR}/RrdClient.h"
-
   "${CMAKE_CURRENT_LIST_DIR}/DataArraySocket.h"
   "${CMAKE_CURRENT_LIST_DIR}/DataArrayTcpServer.h"
   "${CMAKE_CURRENT_LIST_DIR}/DataArrayTcpClient.h"
   "${CMAKE_CURRENT_LIST_DIR}/DataArrayAbstractTcp.h"
-
   "${CMAKE_CURRENT_LIST_DIR}/Task.h"
   "${CMAKE_CURRENT_LIST_DIR}/HttpSocket.h"
   "${CMAKE_CURRENT_LIST_DIR}/HttpServer.h"
-
   "${CMAKE_CURRENT_LIST_DIR}/MulticastDns.h"
   "${CMAKE_CURRENT_LIST_DIR}/Instance.h"
-
   "${CMAKE_CURRENT_LIST_DIR}/Version.h"
+  "${CMAKE_CURRENT_LIST_DIR}/log-types.hpp"
 )
 
 set(AsyncFw_SOURCES
+  "ListenSocket.cpp"
   "DataArraySocket.cpp"
   "DataArrayTcpServer.cpp"
   "DataArrayTcpClient.cpp"
   "DataArrayAbstractTcp.cpp"
-
   "Rrd.cpp"
   "Log.cpp"
   "RrdServer.cpp"
   "RrdClient.cpp"
-
   "Coroutine.cpp"
   "Timer.cpp"
   "PollNotifier.cpp"
@@ -131,14 +122,12 @@ set(AsyncFw_SOURCES
   "Cryptor.cpp"
   "ThreadPool.cpp"
   "Instance.cpp"
-
   "Task.cpp"
   "HttpSocket.cpp"
   "HttpServer.cpp"
-
   "MulticastDns.cpp"
-
   "Version.cpp"
+  "log-types.cpp"
 )
 
 set(AsyncFw_LINUX_HEADERS

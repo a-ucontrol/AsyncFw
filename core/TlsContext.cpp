@@ -553,3 +553,7 @@ bool TlsContext::setDefaultVerifyPaths() {
   if (!private_->ctx_) private_->ctx_ = SSL_CTX_new(TLS_method());
   return SSL_CTX_set_default_verify_paths(private_->ctx_);
 }
+
+namespace AsyncFw {
+LogStream &operator<<(LogStream &log, const TlsContext &v) { return (log << v.infoKey() << std::endl << v.infoCertificate() << std::endl << v.infoTrusted() << std::endl << v.verifyName()); }
+}  // namespace AsyncFw

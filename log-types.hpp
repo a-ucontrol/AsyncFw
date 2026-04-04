@@ -11,18 +11,6 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 namespace AsyncFw {
 class LogStream;
-class DataArray;
-class DataArrayView;
-class DataArrayList;
-class DataStream;
-class TlsContext;
-LogStream &operator<<(LogStream &, const DataArray &);
-LogStream &operator<<(LogStream &, const DataArrayView &);
-LogStream &operator<<(LogStream &, const DataArrayList &);
-LogStream &operator<<(LogStream &, const DataStream &);
-
-LogStream &operator<<(LogStream &, const TlsContext &);
-
 LogStream &operator<<(LogStream &, const std::wstring &);
 }  // namespace AsyncFw
 

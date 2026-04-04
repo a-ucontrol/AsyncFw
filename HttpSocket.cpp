@@ -7,9 +7,8 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #include <algorithm>
 #include <fstream>
+#include "core/LogStream.h"
 #include "core/Thread.h"
-#include <core/LogStream.h>
-
 #include "HttpSocket.h"
 
 #define SOCKET_WRITE_SIZE 8192

@@ -8,8 +8,10 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include <cstring>
 #include <zlib.h>
 #include "DataArray.h"
-
+#include "LogStream.h"
 #include "console_msg.hpp"
+
+#define LOG_DATA_ARAY_SIZE_LIMIT 4096
 
 using namespace AsyncFw;
 DataArray DataArray::compress(const DataArrayView &_u) {
@@ -351,3 +353,35 @@ void DataStream::sr_(std::size_t *s) {
   *s <<= 5;
   *s |= i;
 }
+
+namespace AsyncFw {
+LogStream &operator<<(LogStream &log, const DataArray &v) { return log << v.view(); }
+LogStream &operator<<(LogStream &log, const DataArrayView &v) {
+  if (v.empty()) {
+    log << "[]";
+    return log;
+  }
+  if (v.size() > LOG_DATA_ARAY_SIZE_LIMIT) {
+    log << "[Large data, size: " + std::to_string(v.size()) + "]";
+    return log;
+  }
+  for (const std::basic_string_view<char>::value_type &c : v)
+    if (!std::isprint(c) && c != '\n' && c != '\r') {
+      log << "[Binary data, size: " + std::to_string(v.size()) + "]";
+      return log;
+    }
+  log << static_cast<std::string_view>(v);
+  return log;
+}
+
+LogStream &operator<<(LogStream &log, const DataArrayList &v) {
+  if (v.empty()) {
+    log << "[[]]";
+    return log;
+  }
+  log << "[[Items: " + std::to_string(v.size()) + "]]";
+  return log;
+}
+
+LogStream &operator<<(LogStream &log, const DataStream &v) { return (log << v.array()); }
+}  // namespace AsyncFw
