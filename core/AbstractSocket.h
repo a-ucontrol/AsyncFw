@@ -17,7 +17,7 @@ class Thread;
 class DataArray;
 class LogStream;
 
-/*! \class AbstractSocket Socket.h <AsyncFw/AbstractSocket> \brief The AbstractSocket class provides the base functionality for socket. */
+/*! \class AbstractSocket AbstractSocket.h <AsyncFw/AbstractSocket> \brief The AbstractSocket class provides the base functionality for socket. */
 class AbstractSocket : public AnyData {
   friend Thread;
   friend LogStream &operator<<(LogStream &, const AbstractSocket &);
