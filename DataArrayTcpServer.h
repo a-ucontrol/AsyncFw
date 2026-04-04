@@ -8,6 +8,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #pragma once
 
 #include "core/TlsContext.h"
+#include "ListenSocket.h"
 #include "DataArrayAbstractTcp.h"
 
 namespace AsyncFw {

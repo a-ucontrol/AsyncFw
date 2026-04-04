@@ -9,7 +9,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #include <cstdint>
 #include <string>
-#include "core/AnyData.h"
+#include "AnyData.h"
 
 namespace AsyncFw {
 class Thread;

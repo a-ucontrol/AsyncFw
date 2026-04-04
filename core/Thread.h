@@ -7,7 +7,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #pragma once
 
-#include "core/FunctionConnector.h"
+#include "FunctionConnector.h"
 
 namespace AsyncFw {
 class AbstractSocket;

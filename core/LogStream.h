@@ -266,5 +266,3 @@ private:
     {}            \
     if constexpr (0) AsyncFw::LogStream().output
 #endif
-
-#include "log-types.hpp"
