@@ -6,6 +6,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 */
 
 #include <signal.h>
+#include <algorithm>
 #include "core/AbstractSocket.h"
 #include "core/LogStream.h"
 #include "Thread.h"
