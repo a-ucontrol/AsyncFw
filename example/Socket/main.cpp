@@ -6,13 +6,12 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 */
 
 //! [snippet]
-#include <core/Thread.h>
-#include <core/AbstractTlsSocket.h>
-#include <core/TlsContext.h>
-#include <core/DataArray.h>
-#include <core/LogStream.h>
-#include <AddressInfo.h>
-#include <MainThread.h>
+#include <AsyncFw/Thread>
+#include <AsyncFw/AbstractTlsSocket>
+#include <AsyncFw/TlsContext>
+#include <AsyncFw/LogStream>
+#include <AsyncFw/AddressInfo>
+#include <AsyncFw/MainThread>
 
 class TcpSocket : public AsyncFw::AbstractTlsSocket {
 public:

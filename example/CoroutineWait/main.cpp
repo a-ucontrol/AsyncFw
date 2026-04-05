@@ -5,11 +5,11 @@ This file is part of the AsyncFw project. Licensed under the MIT License.
 See {Link: LICENSE file https://mit-license.org} in the project root for full license information.
 */
 
-#include <MainThread.h>
-#include <ThreadPool.h>
-#include <Coroutine.h>
-#include <Timer.h>
-#include <Log.h>
+#include <AsyncFw/MainThread>
+#include <AsyncFw/ThreadPool>
+#include <AsyncFw/Coroutine>
+#include <AsyncFw/Timer>
+#include <AsyncFw/Log>
 
 #define CURRENT_TIME_MS (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count())
 

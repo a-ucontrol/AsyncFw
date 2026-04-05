@@ -6,10 +6,10 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 */
 
 #include <queue>
-#include <MainThread.h>
-#include <Timer.h>
-#include <Task.h>
-#include <core/LogStream.h>
+#include <AsyncFw/MainThread>
+#include <AsyncFw/Timer>
+#include <AsyncFw/Task>
+#include <AsyncFw/LogStream>
 
 int main(int argc, char *argv[]) {
   AsyncFw::Thread thread;

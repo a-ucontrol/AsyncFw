@@ -6,10 +6,10 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 */
 
 //! [snippet]
-#include <MulticastDns.h>
-#include <MainThread.h>
-#include <Timer.h>
-#include <core/LogStream.h>
+#include <AsyncFw/MulticastDns>
+#include <AsyncFw/MainThread>
+#include <AsyncFw/Timer>
+#include <AsyncFw/LogStream>
 
 using namespace AsyncFw;
 

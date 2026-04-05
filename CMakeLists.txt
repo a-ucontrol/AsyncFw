@@ -41,9 +41,9 @@ set(QT_CREATOR_SKIP_MAINTENANCE_TOOL_PROVIDER ON)
 
 project(${AsyncFw_PROJECT_NAME} VERSION ${VERSION_STRING} LANGUAGES C CXX)
 
-file(GLOB AsyncFw_INSTALL_INCLUDE install_include/*)
+file(GLOB AsyncFw_INCLUDE include/AsyncFw/*)
 
-add_custom_target(additional-files SOURCES AsyncFwConfig.cmake example/snippet.dox ${AsyncFw_INSTALL_INCLUDE})
+add_custom_target(additional-files SOURCES AsyncFwConfig.cmake example/snippet.dox ${AsyncFw_INCLUDE})
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -78,56 +78,56 @@ set(AsyncFw_CORE_SOURCES
   "core/console_msg.cpp"
 )
 
-set(AsyncFw_HEADERS
-  "${CMAKE_CURRENT_LIST_DIR}/ListenSocket.h"
-  "${CMAKE_CURRENT_LIST_DIR}/Coroutine.h"
-  "${CMAKE_CURRENT_LIST_DIR}/Timer.h"
-  "${CMAKE_CURRENT_LIST_DIR}/AddressInfo.h"
-  "${CMAKE_CURRENT_LIST_DIR}/PollNotifier.h"
-  "${CMAKE_CURRENT_LIST_DIR}/ThreadPool.h"
-  "${CMAKE_CURRENT_LIST_DIR}/File.h"
-  "${CMAKE_CURRENT_LIST_DIR}/Cryptor.h"
-  "${CMAKE_CURRENT_LIST_DIR}/MainThread.h"
-  "${CMAKE_CURRENT_LIST_DIR}/Rrd.h"
-  "${CMAKE_CURRENT_LIST_DIR}/Log.h"
-  "${CMAKE_CURRENT_LIST_DIR}/RrdServer.h"
-  "${CMAKE_CURRENT_LIST_DIR}/RrdClient.h"
-  "${CMAKE_CURRENT_LIST_DIR}/DataArraySocket.h"
-  "${CMAKE_CURRENT_LIST_DIR}/DataArrayTcpServer.h"
-  "${CMAKE_CURRENT_LIST_DIR}/DataArrayTcpClient.h"
-  "${CMAKE_CURRENT_LIST_DIR}/DataArrayAbstractTcp.h"
-  "${CMAKE_CURRENT_LIST_DIR}/Task.h"
-  "${CMAKE_CURRENT_LIST_DIR}/HttpSocket.h"
-  "${CMAKE_CURRENT_LIST_DIR}/HttpServer.h"
-  "${CMAKE_CURRENT_LIST_DIR}/MulticastDns.h"
-  "${CMAKE_CURRENT_LIST_DIR}/Instance.h"
-  "${CMAKE_CURRENT_LIST_DIR}/Version.h"
-  "${CMAKE_CURRENT_LIST_DIR}/log-types.hpp"
+set(AsyncFw_MAIN_HEADERS
+  "${CMAKE_CURRENT_LIST_DIR}/main/ListenSocket.h"
+  "${CMAKE_CURRENT_LIST_DIR}/main/Coroutine.h"
+  "${CMAKE_CURRENT_LIST_DIR}/main/Timer.h"
+  "${CMAKE_CURRENT_LIST_DIR}/main/AddressInfo.h"
+  "${CMAKE_CURRENT_LIST_DIR}/main/PollNotifier.h"
+  "${CMAKE_CURRENT_LIST_DIR}/main/ThreadPool.h"
+  "${CMAKE_CURRENT_LIST_DIR}/main/File.h"
+  "${CMAKE_CURRENT_LIST_DIR}/main/Cryptor.h"
+  "${CMAKE_CURRENT_LIST_DIR}/main/MainThread.h"
+  "${CMAKE_CURRENT_LIST_DIR}/main/Rrd.h"
+  "${CMAKE_CURRENT_LIST_DIR}/main/Log.h"
+  "${CMAKE_CURRENT_LIST_DIR}/main/RrdServer.h"
+  "${CMAKE_CURRENT_LIST_DIR}/main/RrdClient.h"
+  "${CMAKE_CURRENT_LIST_DIR}/main/DataArraySocket.h"
+  "${CMAKE_CURRENT_LIST_DIR}/main/DataArrayTcpServer.h"
+  "${CMAKE_CURRENT_LIST_DIR}/main/DataArrayTcpClient.h"
+  "${CMAKE_CURRENT_LIST_DIR}/main/DataArrayAbstractTcp.h"
+  "${CMAKE_CURRENT_LIST_DIR}/main/Task.h"
+  "${CMAKE_CURRENT_LIST_DIR}/main/HttpSocket.h"
+  "${CMAKE_CURRENT_LIST_DIR}/main/HttpServer.h"
+  "${CMAKE_CURRENT_LIST_DIR}/main/MulticastDns.h"
+  "${CMAKE_CURRENT_LIST_DIR}/main/Instance.h"
+  "${CMAKE_CURRENT_LIST_DIR}/main/Version.h"
+  "${CMAKE_CURRENT_LIST_DIR}/main/log-types.hpp"
 )
 
-set(AsyncFw_SOURCES
-  "ListenSocket.cpp"
-  "DataArraySocket.cpp"
-  "DataArrayTcpServer.cpp"
-  "DataArrayTcpClient.cpp"
-  "DataArrayAbstractTcp.cpp"
-  "Rrd.cpp"
-  "Log.cpp"
-  "RrdServer.cpp"
-  "RrdClient.cpp"
-  "Coroutine.cpp"
-  "Timer.cpp"
-  "PollNotifier.cpp"
-  "File.cpp"
-  "Cryptor.cpp"
-  "ThreadPool.cpp"
-  "Instance.cpp"
-  "Task.cpp"
-  "HttpSocket.cpp"
-  "HttpServer.cpp"
-  "MulticastDns.cpp"
-  "Version.cpp"
-  "log-types.cpp"
+set(AsyncFw_MAIN_SOURCES
+  "main/ListenSocket.cpp"
+  "main/DataArraySocket.cpp"
+  "main/DataArrayTcpServer.cpp"
+  "main/DataArrayTcpClient.cpp"
+  "main/DataArrayAbstractTcp.cpp"
+  "main/Rrd.cpp"
+  "main/Log.cpp"
+  "main/RrdServer.cpp"
+  "main/RrdClient.cpp"
+  "main/Coroutine.cpp"
+  "main/Timer.cpp"
+  "main/PollNotifier.cpp"
+  "main/File.cpp"
+  "main/Cryptor.cpp"
+  "main/ThreadPool.cpp"
+  "main/Instance.cpp"
+  "main/Task.cpp"
+  "main/HttpSocket.cpp"
+  "main/HttpServer.cpp"
+  "main/MulticastDns.cpp"
+  "main/Version.cpp"
+  "main/log-types.cpp"
 )
 
 set(AsyncFw_LINUX_HEADERS
@@ -136,7 +136,7 @@ set(AsyncFw_LINUX_HEADERS
 )
 
 set(AsyncFw_LINUX_SOURCES
-  "AddressInfo.cpp" #need build cares for AMD64
+  "main/AddressInfo.cpp" #need build cares for AMD64
   "linux/FileSystemWatcher.cpp"
   "linux/SystemProcess.cpp"
 )
@@ -151,12 +151,13 @@ set(AsyncFw_3rdparty_SOURCES
 if(NOT PROJECT_IS_TOP_LEVEL)
   set(AsyncFw_CORE_HEADERS ${AsyncFw_CORE_HEADERS} PARENT_SCOPE)
   set(AsyncFw_LINUX_HEADERS ${AsyncFw_LINUX_HEADERS} PARENT_SCOPE)
-  set(AsyncFw_HEADERS ${AsyncFw_HEADERS} PARENT_SCOPE)
+  set(AsyncFw_MAIN_HEADERS ${AsyncFw_MAIN_HEADERS} PARENT_SCOPE)
 endif()
 
+include_directories(include)
 include_directories(.)
 
-set(PROJECT_SOURCES ${AsyncFw_CORE_SOURCES} ${AsyncFw_SOURCES} ${AsyncFw_INTERNAL_HEADERS} ${AsyncFw_CORE_HEADERS} ${AsyncFw_HEADERS} ${AsyncFw_3rdparty_SOURCES})
+set(PROJECT_SOURCES ${AsyncFw_CORE_SOURCES} ${AsyncFw_MAIN_SOURCES} ${AsyncFw_INTERNAL_HEADERS} ${AsyncFw_CORE_HEADERS} ${AsyncFw_MAIN_HEADERS} ${AsyncFw_3rdparty_SOURCES})
 
 if(NOT PLATFORM STREQUAL "AMD64")
   set(PROJECT_SOURCES ${PROJECT_SOURCES} ${AsyncFw_LINUX_HEADERS} ${AsyncFw_LINUX_SOURCES})
@@ -186,15 +187,6 @@ endif()
 
 target_link_libraries(${AsyncFw_PROJECT_NAME} z crypto ssl cares)
 
-#foreach(H ${AsyncFw_CORE_HEADERS} ${AsyncFw_HEADERS})
-#  string(FIND ${H} ".hpp" F)
-#  if(F EQUAL -1)
-#    string (REPLACE "${CMAKE_CURRENT_LIST_DIR}/" "" H ${H})
-#    string (REPLACE ".h" "" H ${H})
-#    file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/install_include/${H}" "#include \"${H}.h\"\n")
-#  endif()
-#endforeach()
-
 include(CMakePackageConfigHelpers)
 write_basic_package_version_file(
     "AsyncFwConfigVersion.cmake"
@@ -204,8 +196,8 @@ write_basic_package_version_file(
 install(EXPORT AsyncFw_TARGETS FILE AsyncFwTargets.cmake NAMESPACE AsyncFw:: DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/AsyncFw)
 install(FILES ${AsyncFw_CORE_HEADERS} DESTINATION include/AsyncFw/core)
 install(FILES ${AsyncFw_LINUX_HEADERS} DESTINATION include/AsyncFw/linux)
-install(FILES ${AsyncFw_HEADERS} DESTINATION include/AsyncFw)
-install(FILES ${AsyncFw_INSTALL_INCLUDE} DESTINATION include/AsyncFw)
+install(FILES ${AsyncFw_MAIN_HEADERS} DESTINATION include/AsyncFw/main)
+install(FILES ${AsyncFw_INCLUDE} DESTINATION include/AsyncFw)
 install(FILES "${CMAKE_CURRENT_LIST_DIR}/AsyncFwConfig.cmake" "${CMAKE_CURRENT_BINARY_DIR}/AsyncFwConfigVersion.cmake" DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/AsyncFw)
 
 if(NOT AsyncFw_DISABLE_BUILD_EXAMPLES)

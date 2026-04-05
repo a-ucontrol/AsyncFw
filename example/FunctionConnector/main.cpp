@@ -6,10 +6,10 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 */
 
 //! [snippet]
-#include <core/FunctionConnector.h>
-#include <MainThread.h>
-#include <Timer.h>
-#include <Log.h>
+#include <AsyncFw/FunctionConnector>
+#include <AsyncFw/MainThread>
+#include <AsyncFw/Timer>
+#include <AsyncFw/Log>
 
 class MethodConnectionExample {
 public:

@@ -11,9 +11,9 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 */
 #include <termios.h>
 #include <fcntl.h>
-#include <core/LogStream.h>
-#include <MainThread.h>
-#include <PollNotifier.h>
+#include <AsyncFw/MainThread>
+#include <AsyncFw/PollNotifier>
+#include <AsyncFw/LogStream>
 
 int main(int argc, char *argv[]) {
   const char _ttyS[] = "/dev/ttyUSB0";

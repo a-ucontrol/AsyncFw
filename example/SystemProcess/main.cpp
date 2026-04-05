@@ -6,10 +6,10 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 */
 
 //! [snippet]
-#include <MainThread.h>
-#include <linux/SystemProcess.h>
-#include <Timer.h>
-#include <core/LogStream.h>
+#include <AsyncFw/MainThread>
+#include <AsyncFw/SystemProcess>
+#include <AsyncFw/Timer>
+#include <AsyncFw/LogStream>
 
 int main(int argc, char *argv[]) {
   AsyncFw::SystemProcess process;

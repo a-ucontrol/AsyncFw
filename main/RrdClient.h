@@ -1,0 +1,42 @@
+/*
+Copyright (c) 2026 Alexandr Kuzmuk
+
+This file is part of the AsyncFw project. Licensed under the MIT License.
+See {Link: LICENSE file https://mit-license.org} in the project root for full license information.
+*/
+
+#pragma once
+
+#include "../core/FunctionConnector.h"
+
+namespace AsyncFw {
+class Rrd;
+class DataArray;
+class TlsContext;
+class DataArraySocket;
+
+/*! \class RrdClient RrdClient.h <AsyncFw/RrdClient> \brief The RrdClient class */
+class RrdClient {
+public:
+  RrdClient(DataArraySocket *, const std::vector<Rrd *> &);
+  ~RrdClient();
+  void clear(int);
+
+  void connectToHost(const std::string &, uint16_t);
+  void connectToHost();
+  void disconnectFromHost();
+  int transmit(const DataArray &, uint32_t, bool = false);
+
+  void tlsSetup(const TlsContext &);
+  void disableTls();
+
+private:
+  std::vector<Rrd *> rrd_;
+  DataArraySocket *tcpSocket;
+  int requestTimerId;
+  std::vector<uint64_t> lastTime;
+  void tcpReadWrite(const DataArray *, uint32_t);
+  void request(int);
+  FunctionConnectionGuardList gl_;
+};
+}  // namespace AsyncFw

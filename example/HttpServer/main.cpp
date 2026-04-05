@@ -1,9 +1,9 @@
 #define uC_LOGGER
 
 //! [snippet]
-#include <HttpServer.h>
-#include <MainThread.h>
-#include <core/LogStream.h>
+#include <AsyncFw/HttpServer>
+#include <AsyncFw/MainThread>
+#include <AsyncFw/LogStream>
 
 using namespace AsyncFw;
 

@@ -180,10 +180,10 @@ std::mutex&#160;</td><td class="memItemRight" valign="bottom"><b>mutex</b></td><
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename... Args&gt;<br />
 class AsyncFw::FunctionConnector&lt; Args &gt;</div><p>Обеспечивает соединение отправитель -&gt; получатели. Получатели могут быть вызваны в своих потоках (по умолчанию). </p>
 <p>Другие инструментальные средства реализуют подобную коммуникацию с помощью коллбэков. Коллбэк - это указатель на функцию, поэтому, если вы хотите, чтобы функция обработки уведомила вас о каком-либо событии, вы передаете указатель на другую функцию (коллбэк) в функцию обработки. Затем функция обработки вызывает коллбэк, когда это необходимо.</p>
-<p>Example: </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;core/FunctionConnector.h&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;MainThread.h&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;Timer.h&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;Log.h&gt;</span></div>
+<p>Example: </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;AsyncFw/FunctionConnector&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;AsyncFw/MainThread&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;AsyncFw/Timer&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;AsyncFw/Log&gt;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">class </span>MethodConnectionExample {</div>
 <div class="line"><span class="keyword">public</span>:</div>

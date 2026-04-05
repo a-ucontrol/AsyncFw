@@ -6,9 +6,9 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 */
 
 //! [snippet]
-#include <Version.h>
-#include <MainThread.h>
-#include <Log.h>
+#include <AsyncFw/Version>
+#include <AsyncFw/MainThread>
+#include <AsyncFw/Log>
 
 int main(int argc, char *argv[]) {
   AsyncFw::Thread logThread {"LogThread"};

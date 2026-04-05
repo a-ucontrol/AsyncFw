@@ -5,11 +5,11 @@ This file is part of the AsyncFw project. Licensed under the MIT License.
 See {Link: LICENSE file https://mit-license.org} in the project root for full license information.
 */
 
-#include <Version.h>
-#include <MainThread.h>
-#include <linux/SystemProcess.h>
-#include <Timer.h>
-#include <Log.h>
+#include <AsyncFw/Version>
+#include <AsyncFw/MainThread>
+#include <AsyncFw/SystemProcess>
+#include <AsyncFw/Timer>
+#include <AsyncFw/Log>
 
 void run_examples() {
   std::string app;

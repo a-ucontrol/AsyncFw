@@ -8,8 +8,8 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 //! [snippet]
 #include <iostream>
 #include <chrono>
-#include <MainThread.h>
-#include <Timer.h>
+#include <AsyncFw/MainThread>
+#include <AsyncFw/Timer>
 
 int main(int argc, char *argv[]) {
   int cnt = 0;

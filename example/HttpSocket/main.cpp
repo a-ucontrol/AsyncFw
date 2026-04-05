@@ -6,13 +6,13 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 */
 
 //! [snippet]
-#include <MainThread.h>
-#include <core/AbstractTlsSocket.h>
-#include <core/TlsContext.h>
-#include <AddressInfo.h>
-#include <File.h>
-#include <HttpSocket.h>
-#include <Log.h>
+#include <AsyncFw/MainThread>
+#include <AsyncFw/AbstractTlsSocket>
+#include <AsyncFw/TlsContext>
+#include <AsyncFw/AddressInfo>
+#include <AsyncFw/File>
+#include <AsyncFw/HttpSocket>
+#include <AsyncFw/Log>
 
 #define SERVER_NAME "github.com"
 #define SERVER_PORT 443

@@ -1,10 +1,10 @@
 #define uC_LOGGER
 
 //! [snippet]
-#include <linux/FileSystemWatcher.h>
-#include <File.h>
-#include <MainThread.h>
-#include <core/LogStream.h>
+#include <AsyncFw/FileSystemWatcher>
+#include <AsyncFw/File>
+#include <AsyncFw/MainThread>
+#include <AsyncFw/LogStream>
 
 using namespace AsyncFw;
 

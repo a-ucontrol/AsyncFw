@@ -6,10 +6,9 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 */
 
 //! [snippet]
-#include <thread>
-#include <MainThread.h>
-#include <ThreadPool.h>
-#include <Log.h>
+#include <AsyncFw/MainThread>
+#include <AsyncFw/ThreadPool>
+#include <AsyncFw/Log>
 
 class Pool : public AsyncFw::ThreadPool {  // example for AsyncFw::Instance<AsyncFw::ThreadPool>::create<Pool>
 public:

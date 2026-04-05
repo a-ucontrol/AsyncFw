@@ -5,9 +5,8 @@ This file is part of the AsyncFw project. Licensed under the MIT License.
 See {Link: LICENSE file https://mit-license.org} in the project root for full license information.
 */
 
-#include <thread>
-#include <MainThread.h>
-#include <Log.h>
+#include <AsyncFw/MainThread>
+#include <AsyncFw/Log>
 
 int main(int argc, char *argv[]) {
   AsyncFw::AbstractThread *_mainThread = AsyncFw::AbstractThread::currentThread();

@@ -10,8 +10,8 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
  * This exfample for Unix-like systems only
 */
 #include <iostream>
-#include <MainThread.h>
-#include <PollNotifier.h>
+#include <AsyncFw/MainThread>
+#include <AsyncFw/PollNotifier>
 
 int main(int argc, char *argv[]) {
   AsyncFw::PollNotifier notifier(STDIN_FILENO);

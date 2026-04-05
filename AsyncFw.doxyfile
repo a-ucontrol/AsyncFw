@@ -993,7 +993,9 @@ WARN_LOGFILE           =
 
 INPUT                  = . \
                          ./core \
-                         ./linux
+                         ./linux \
+                         ./main \
+                         ./include
 
 # This tag can be used to specify the character encoding of the source files
 # that Doxygen parses. Internally Doxygen uses the UTF-8 encoding. Doxygen uses
@@ -1083,7 +1085,8 @@ FILE_PATTERNS          = *.c \
                          *.vhdl \
                          *.ucf \
                          *.qsf \
-                         *.ice
+                         *.ice \
+                         AsyncFw/*
 
 # The RECURSIVE tag can be used to specify whether or not subdirectories should
 # be searched for input files as well.
