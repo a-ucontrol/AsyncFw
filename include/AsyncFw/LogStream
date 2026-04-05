@@ -1,1 +1,2 @@
 #include "core/LogStream.h"
+#include "main/log-types.hpp"
