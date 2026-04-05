@@ -1,2 +1,3 @@
 #include "core/DataArray.h"
+#include "core/TlsContext.h"
 #include "core/AbstractTlsSocket.h"
