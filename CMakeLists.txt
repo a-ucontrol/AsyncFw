@@ -136,7 +136,7 @@ set(AsyncFw_LINUX_HEADERS
 )
 
 set(AsyncFw_LINUX_SOURCES
-  "main/AddressInfo.cpp" #need build cares for AMD64
+  "main/AddressInfo.cpp" #need cares for AMD64
   "linux/FileSystemWatcher.cpp"
   "linux/SystemProcess.cpp"
 )
@@ -152,6 +152,7 @@ if(NOT PROJECT_IS_TOP_LEVEL)
   set(AsyncFw_CORE_HEADERS ${AsyncFw_CORE_HEADERS} PARENT_SCOPE)
   set(AsyncFw_LINUX_HEADERS ${AsyncFw_LINUX_HEADERS} PARENT_SCOPE)
   set(AsyncFw_MAIN_HEADERS ${AsyncFw_MAIN_HEADERS} PARENT_SCOPE)
+  set(AsyncFw_INCLUDE ${AsyncFw_INCLUDE} PARENT_SCOPE)
 endif()
 
 include_directories(include)
@@ -205,8 +206,6 @@ if(NOT AsyncFw_DISABLE_BUILD_EXAMPLES)
   add_subdirectory(example/Invoke)
   add_subdirectory(example/ListenSocket)
   add_subdirectory(example/Log)
-  add_subdirectory(example/Socket)
-  add_subdirectory(example/HttpSocket)
   add_subdirectory(example/HttpServer)
   add_subdirectory(example/ThreadPool)
   add_subdirectory(example/Timer)
@@ -215,6 +214,8 @@ if(NOT AsyncFw_DISABLE_BUILD_EXAMPLES)
   add_subdirectory(example/CoroutineWait)
   add_subdirectory(example/MulticastDns)
   if(NOT PLATFORM STREQUAL "AMD64")
+    add_subdirectory(example/Socket) #need cares for AMD64
+    add_subdirectory(example/HttpSocket) #need cares for AMD64
     add_subdirectory(example/Stdin)
     add_subdirectory(example/Uart)
     add_subdirectory(example/SystemProcess)
