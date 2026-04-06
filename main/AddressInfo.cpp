@@ -12,6 +12,13 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include "core/LogStream.h"
 #include "AddressInfo.h"
 
+#ifdef _WIN32
+static struct _ares_library {
+  _ares_library() { ares_library_init(ARES_LIB_INIT_ALL); }
+  ~_ares_library() { ares_library_cleanup(); }
+} _ares_library;
+#endif
+
 using namespace AsyncFw;
 
 struct AddressInfo::Private {
@@ -19,7 +26,7 @@ struct AddressInfo::Private {
     thread = AbstractThread::currentThread();
     memset(&options, 0, sizeof(options));
     options.sock_state_cb_data = this;
-    options.sock_state_cb = [](void *data, int s, int read, int write) {
+    options.sock_state_cb = [](void *data, ares_socket_t s, int read, int write) {
       lsTrace("change state fd {} read:{} write:{}", s, read, write);
       AbstractThread::PollEvents e = (read) ? AbstractThread::PollIn : AbstractThread::PollNo | (write) ? AbstractThread::PollOut : AbstractThread::PollNo;
       if (static_cast<Private *>(data)->events) {

@@ -42,11 +42,13 @@ project(${AsyncFw_PROJECT_NAME} VERSION ${VERSION_STRING} LANGUAGES C CXX)
 
 message("CMAKE_SYSTEM_PROCESSOR: ${CMAKE_SYSTEM_PROCESSOR}")
 if(${CMAKE_SYSTEM_PROCESSOR} STREQUAL "AMD64")
+  #need for run examles in wine: export SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
   if(NOT AMD64_OPENSSL_INCLUDE_DIR OR NOT AMD64_OPENSSL_LIB_DIR)
     message(FATAL_ERROR "AMD64_OPENSSL_INCLUDE_DIR OR AMD64_OPENSSL_LIB_DIR not set")
   endif()
   include_directories(${AMD64_OPENSSL_INCLUDE_DIR})
   link_directories(${AMD64_OPENSSL_LIB_DIR})
+  find_package(c-ares CONFIG)
 endif()
 
 file(GLOB AsyncFw_INCLUDE include/AsyncFw/*)
@@ -168,6 +170,13 @@ include_directories(.)
 
 set(PROJECT_SOURCES ${AsyncFw_CORE_SOURCES} ${AsyncFw_MAIN_SOURCES} ${AsyncFw_INTERNAL_HEADERS} ${AsyncFw_CORE_HEADERS} ${AsyncFw_MAIN_HEADERS} ${AsyncFw_3rdparty_SOURCES})
 
+if(${CMAKE_SYSTEM_PROCESSOR} STREQUAL "AMD64")
+  if(c-ares_FOUND)
+    set(PROJECT_SOURCES ${PROJECT_SOURCES} "main/AddressInfo.cpp")
+  endif()
+endif()
+
+
 if(NOT ${CMAKE_SYSTEM_PROCESSOR} STREQUAL "AMD64")
   set(PROJECT_SOURCES ${PROJECT_SOURCES} ${AsyncFw_LINUX_HEADERS} ${AsyncFw_LINUX_SOURCES})
 endif()
@@ -198,6 +207,9 @@ target_link_libraries(${AsyncFw_PROJECT_NAME} z crypto ssl)
 if(NOT ${CMAKE_SYSTEM_PROCESSOR} STREQUAL "AMD64")
   target_link_libraries(${AsyncFw_PROJECT_NAME} cares)
 else()
+  if(c-ares_FOUND)
+    target_link_libraries(${AsyncFw_PROJECT_NAME} c-ares::cares)
+  endif()
   target_link_libraries(${AsyncFw_PROJECT_NAME} iphlpapi Ws2_32)
 endif()
 
@@ -226,9 +238,11 @@ if(NOT AsyncFw_DISABLE_BUILD_EXAMPLES)
   add_subdirectory(example/ContainerTask)
   add_subdirectory(example/CoroutineWait)
   add_subdirectory(example/MulticastDns)
+  if(NOT ${CMAKE_SYSTEM_PROCESSOR} STREQUAL "AMD64" OR c-ares_FOUND)
+    add_subdirectory(example/Socket)
+    add_subdirectory(example/HttpSocket)
+  endif()
   if(NOT ${CMAKE_SYSTEM_PROCESSOR} STREQUAL "AMD64")
-    add_subdirectory(example/Socket) #need cares for AMD64
-    add_subdirectory(example/HttpSocket) #need cares for AMD64
     add_subdirectory(example/Stdin)
     add_subdirectory(example/Uart)
     add_subdirectory(example/SystemProcess)

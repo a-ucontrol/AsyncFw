@@ -30,7 +30,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 struct start_wsa {
   start_wsa() {
-    WORD versionWanted = MAKEWORD(1, 1);
+    WORD versionWanted = MAKEWORD(2, 2);
     WSADATA wsaData;
     (void)WSAStartup(versionWanted, &wsaData);
   }
@@ -38,7 +38,7 @@ struct start_wsa {
 } start_wsa;
 
   #define close_fd ::closesocket
-  #define CONNECT_PROGRESS 0
+  #define CONNECT_PROGRESS ENOENT
   #define setsockopt_ptr reinterpret_cast<const char *>
   #define SHUT_RDWR SD_BOTH
 #endif
