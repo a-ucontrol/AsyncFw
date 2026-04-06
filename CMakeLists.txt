@@ -10,8 +10,6 @@ if(NOT FINAL_RELEASE AND EXISTS "${CMAKE_CURRENT_LIST_DIR}/defines.cmake")
   include("${CMAKE_CURRENT_LIST_DIR}/defines.cmake")
 endif()
 
-set(QT_CREATOR_SKIP_MAINTENANCE_TOOL_PROVIDER ON)
-
 # defines.cmake
 #set(BUILD_SHARED_LIBS ON)
 
