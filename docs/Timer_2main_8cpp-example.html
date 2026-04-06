@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.13.2"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>AsyncFw: AsyncFw</title>
+<title>AsyncFw: Timer/main.cpp</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -77,7 +77,7 @@ $(function() { codefold.init(0); });
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(function(){initNavTree('index.html',''); initResizable(true); });
+$(function(){initNavTree('Timer_2main_8cpp-example.html',''); initResizable(true); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -102,17 +102,45 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
 </div>
 </div>
 
-<div><div class="header">
-  <div class="headertitle"><div class="title">AsyncFw </div></div>
+<div class="header">
+  <div class="headertitle"><div class="title">Timer/main.cpp</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="md_README"></a></p>
-<p>Async Framework is c++ runtime with timers, poll notifiers, sockets, coroutines, etc.</p>
-<p>Is a software framework that allows developers to build applications using asynchronous programming, which runs operations concurrently without blocking the main thread.</p>
-<p>See <a href="https://a-ucontrol.github.io/AsyncFw">documentation</a> and <a href="https://a-ucontrol.github.io/AsyncFw/examples.html">examples</a> for details. </p>
-</div></div><!-- PageDoc -->
-<a href="doxygen_crawl.html"></a>
-</div><!-- contents -->
+<p>Timer example</p>
+<div class="fragment"><div class="line"><span class="comment">/*</span></div>
+<div class="line"><span class="comment">Copyright (c) 2026 Alexandr Kuzmuk</span></div>
+<div class="line"><span class="comment"></span> </div>
+<div class="line"><span class="comment">This file is part of the AsyncFw project. Licensed under the MIT License.</span></div>
+<div class="line"><span class="comment">See {Link: LICENSE file https://mit-license.org} in the project root for full license information.</span></div>
+<div class="line"><span class="comment">*/</span></div>
+<div class="line"></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;chrono&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;AsyncFw/MainThread&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;AsyncFw/Timer&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[]) {</div>
+<div class="line">  <span class="keywordtype">int</span> cnt = 0;</div>
+<div class="line">  <a id="_a0" name="_a0"></a><a class="code hl_class" href="classAsyncFw_1_1Timer.html">AsyncFw::Timer</a> timer1;</div>
+<div class="line">  timer1.<a id="a1" name="a1"></a><a class="code hl_function" href="classAsyncFw_1_1Timer.html#a14d02d88bd3682afd7c8fd72cc670e46">start</a>(100);</div>
+<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1Timer.html">AsyncFw::Timer</a> timer2;</div>
+<div class="line">  timer2.<a class="code hl_function" href="classAsyncFw_1_1Timer.html#a14d02d88bd3682afd7c8fd72cc670e46">start</a>(200);</div>
+<div class="line"> </div>
+<div class="line">  timer1.<a id="a2" name="a2"></a><a class="code hl_variable" href="classAsyncFw_1_1Timer.html#a746a7b46bc5d405ab0452b09ad1253f3">timeout</a>([&amp;cnt]() {</div>
+<div class="line">    std::cout &lt;&lt; std::chrono::system_clock::now() &lt;&lt; <span class="stringliteral">&quot; timer1 timeout&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line">    <span class="keywordflow">if</span> (++cnt == 10) AsyncFw::MainThread::exit(0);</div>
+<div class="line">  });</div>
+<div class="line"> </div>
+<div class="line">  timer2.<a class="code hl_variable" href="classAsyncFw_1_1Timer.html#a746a7b46bc5d405ab0452b09ad1253f3">timeout</a>([]() { std::cout &lt;&lt; std::chrono::system_clock::now() &lt;&lt; <span class="stringliteral">&quot; timer2 timeout&quot;</span> &lt;&lt; std::endl; });</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;Start Applicaiton&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line">  <span class="keywordtype">int</span> ret = AsyncFw::MainThread::exec();</div>
+<div class="line">  <span class="keywordflow">return</span> ret;</div>
+<div class="line">}</div>
+<div class="ttc" id="aclassAsyncFw_1_1Timer_html"><div class="ttname"><a href="classAsyncFw_1_1Timer.html">AsyncFw::Timer</a></div><div class="ttdoc">The Timer class.</div><div class="ttdef"><b>Definition</b> Timer.h:15</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1Timer_html_a14d02d88bd3682afd7c8fd72cc670e46"><div class="ttname"><a href="classAsyncFw_1_1Timer.html#a14d02d88bd3682afd7c8fd72cc670e46">AsyncFw::Timer::start</a></div><div class="ttdeci">void start(int, bool=false)</div><div class="ttdoc">Starts or restarts a timer with the specified timeout. If the timer is already running,...</div><div class="ttdef"><b>Definition</b> Timer.cpp:29</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1Timer_html_a746a7b46bc5d405ab0452b09ad1253f3"><div class="ttname"><a href="classAsyncFw_1_1Timer.html#a746a7b46bc5d405ab0452b09ad1253f3">AsyncFw::Timer::timeout</a></div><div class="ttdeci">FunctionConnectorProtected&lt; Timer &gt;::Connector&lt;&gt; timeout</div><div class="ttdoc">The Timer::timeout connector.</div><div class="ttdef"><b>Definition</b> Timer.h:31</div></div>
+</div><!-- fragment --> </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->

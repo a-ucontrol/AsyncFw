@@ -7,6 +7,8 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #pragma once
 
+/*! \example ContainerTask/main.cpp ContainerTask example */
+
 #include <memory>
 #include "../core/AbstractThread.h"
 #include "../core/AnyData.h"

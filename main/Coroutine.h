@@ -7,6 +7,8 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #pragma once
 
+/*! \example Coroutine/main.cpp Coroutine example \example CoroutineWait/main.cpp CoroutineWait example */
+
 #include <coroutine>
 #include "../core/AnyData.h"
 #include "../core/function.hpp"

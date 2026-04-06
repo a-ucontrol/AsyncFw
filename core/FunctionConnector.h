@@ -7,6 +7,8 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #pragma once
 
+/*! \example FunctionConnector/main.cpp FunctionConnector example */
+
 #include "AbstractThread.h"
 
 namespace AsyncFw {

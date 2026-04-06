@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.13.2"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>AsyncFw: AsyncFw</title>
+<title>AsyncFw: FileSystemWatcher/main.cpp</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -77,7 +77,7 @@ $(function() { codefold.init(0); });
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(function(){initNavTree('index.html',''); initResizable(true); });
+$(function(){initNavTree('FileSystemWatcher_2main_8cpp-example.html',''); initResizable(true); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -102,17 +102,48 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
 </div>
 </div>
 
-<div><div class="header">
-  <div class="headertitle"><div class="title">AsyncFw </div></div>
+<div class="header">
+  <div class="headertitle"><div class="title">FileSystemWatcher/main.cpp</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="md_README"></a></p>
-<p>Async Framework is c++ runtime with timers, poll notifiers, sockets, coroutines, etc.</p>
-<p>Is a software framework that allows developers to build applications using asynchronous programming, which runs operations concurrently without blocking the main thread.</p>
-<p>See <a href="https://a-ucontrol.github.io/AsyncFw">documentation</a> and <a href="https://a-ucontrol.github.io/AsyncFw/examples.html">examples</a> for details. </p>
-</div></div><!-- PageDoc -->
-<a href="doxygen_crawl.html"></a>
-</div><!-- contents -->
+<p>FileSystemWatcher example</p>
+<div class="fragment"><div class="line"><span class="comment">/*</span></div>
+<div class="line"><span class="comment">Copyright (c) 2026 Alexandr Kuzmuk</span></div>
+<div class="line"><span class="comment"></span> </div>
+<div class="line"><span class="comment">This file is part of the AsyncFw project. Licensed under the MIT License.</span></div>
+<div class="line"><span class="comment">See {Link: LICENSE file https://mit-license.org} in the project root for full license information.</span></div>
+<div class="line"><span class="comment">*/</span></div>
+<div class="line"></div>
+<div class="line"><span class="preprocessor">#include &lt;AsyncFw/FileSystemWatcher&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;AsyncFw/File&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;AsyncFw/MainThread&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;AsyncFw/LogStream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">using namespace </span>AsyncFw;</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[]) {</div>
+<div class="line">  <a id="_a0" name="_a0"></a><a class="code hl_class" href="classAsyncFw_1_1FileSystemWatcher.html">FileSystemWatcher</a> watcher {{<span class="stringliteral">&quot;/tmp/FileSystemWatcher.example&quot;</span>}};</div>
+<div class="line">  watcher.<a id="a1" name="a1"></a><a class="code hl_variable" href="classAsyncFw_1_1FileSystemWatcher.html#a4d97340ee2f2378dd516411f56ed8498">notify</a>([](<span class="keyword">const</span> std::string &amp;name, <span class="keywordtype">int</span> event) {</div>
+<div class="line">    lsInfoMagenta() &lt;&lt; <span class="stringliteral">&quot;file:&quot;</span> &lt;&lt; name &lt;&lt; event;  <span class="comment">// event: -1 removed / 0 changed / 1 created</span></div>
+<div class="line">    MainThread::exit();</div>
+<div class="line">  });</div>
+<div class="line"> </div>
+<div class="line">  <a id="_a2" name="_a2"></a><a class="code hl_class" href="classAsyncFw_1_1File.html">File</a> _f {<span class="stringliteral">&quot;/tmp/FileSystemWatcher.example&quot;</span>};</div>
+<div class="line">  <span class="keywordflow">if</span> (_f.exists()) _f.<a id="a3" name="a3"></a>remove();</div>
+<div class="line">  <span class="keywordflow">else</span> { _f.open(std::ios::binary | std::ios::out); };</div>
+<div class="line"> </div>
+<div class="line">  lsInfoGreen() &lt;&lt; watcher;</div>
+<div class="line"> </div>
+<div class="line">  lsNotice() &lt;&lt; <span class="stringliteral">&quot;Start Applicaiton&quot;</span>;</div>
+<div class="line">  <span class="keywordtype">int</span> ret = MainThread::exec();</div>
+<div class="line">  lsNotice() &lt;&lt; <span class="stringliteral">&quot;End Applicaiton&quot;</span> &lt;&lt; ret;</div>
+<div class="line"> </div>
+<div class="line">  <span class="keywordflow">return</span> ret;</div>
+<div class="line">}</div>
+<div class="ttc" id="aclassAsyncFw_1_1FileSystemWatcher_html"><div class="ttname"><a href="classAsyncFw_1_1FileSystemWatcher.html">AsyncFw::FileSystemWatcher</a></div><div class="ttdoc">The FileSystemWatcher class.</div><div class="ttdef"><b>Definition</b> FileSystemWatcher.h:17</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1FileSystemWatcher_html_a4d97340ee2f2378dd516411f56ed8498"><div class="ttname"><a href="classAsyncFw_1_1FileSystemWatcher.html#a4d97340ee2f2378dd516411f56ed8498">AsyncFw::FileSystemWatcher::notify</a></div><div class="ttdeci">FunctionConnectorProtected&lt; FileSystemWatcher &gt;::Connector&lt; const std::string &amp;, int &gt; notify</div><div class="ttdoc">The FunctionConnector for notification of file-related events.</div><div class="ttdef"><b>Definition</b> FileSystemWatcher.h:31</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1File_html"><div class="ttname"><a href="classAsyncFw_1_1File.html">AsyncFw::File</a></div><div class="ttdoc">The File class.</div><div class="ttdef"><b>Definition</b> File.h:16</div></div>
+</div><!-- fragment --> </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->

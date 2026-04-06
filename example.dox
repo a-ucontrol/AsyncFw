@@ -1,0 +1,17 @@
+/*! \example ContainerTask/main.cpp Task in container example */
+/*! \example Coroutine/main.cpp Coroutine example */
+/*! \example CoroutineWait/main.cpp Coroutine wait example */
+/*! \example FileSystemWatcher/main.cpp FileSystemWatcher example */
+/*! \example FunctionConnector/main.cpp FunctionConnector example */
+/*! \example HttpServer/main.cpp HttpServer example */
+/*! \example HttpSocket/main.cpp HttpSocket example \warning Unix-like systems only */
+/*! \example Invoke/main.cpp Invoke method example */
+/*! \example ListenSocket/main.cpp ListenSocket example */
+/*! \example Log/main.cpp Log example */
+/*! \example MulticastDns/main.cpp MulticastDns example */
+/*! \example Socket/main.cpp Socket example \warning Unix-like systems only */
+/*! \example Stdin/main.cpp Stdin example \warning Unix-like systems only */
+/*! \example SystemProcess/main.cpp SystemProcess example \warning Unix-like systems only */
+/*! \example ThreadPool/main.cpp ThreadPool example */
+/*! \example Timer/main.cpp Timer example */
+/*! \example Uart/main.cpp PollNotifier example \warning Unix-like systems only */

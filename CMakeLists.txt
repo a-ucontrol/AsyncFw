@@ -43,7 +43,7 @@ project(${AsyncFw_PROJECT_NAME} VERSION ${VERSION_STRING} LANGUAGES C CXX)
 
 file(GLOB AsyncFw_INCLUDE include/AsyncFw/*)
 
-add_custom_target(additional-files SOURCES AsyncFwConfig.cmake example/snippet.dox ${AsyncFw_INCLUDE})
+add_custom_target(additional-files SOURCES AsyncFwConfig.cmake README.md example.dox example/snippet.dox ${AsyncFw_INCLUDE})
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
