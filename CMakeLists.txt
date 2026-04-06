@@ -10,6 +10,7 @@ if(NOT FINAL_RELEASE AND EXISTS "${CMAKE_CURRENT_LIST_DIR}/defines.cmake")
   include("${CMAKE_CURRENT_LIST_DIR}/defines.cmake")
 endif()
 
+
 # defines.cmake
 #set(BUILD_SHARED_LIBS ON)
 
@@ -38,6 +39,15 @@ endif()
 # -- defines.cmake
 
 project(${AsyncFw_PROJECT_NAME} VERSION ${VERSION_STRING} LANGUAGES C CXX)
+
+message("CMAKE_SYSTEM_PROCESSOR: ${CMAKE_SYSTEM_PROCESSOR}")
+if(${CMAKE_SYSTEM_PROCESSOR} STREQUAL "AMD64")
+  if(NOT AMD64_OPENSSL_INCLUDE_DIR OR NOT AMD64_OPENSSL_LIB_DIR)
+    message(FATAL_ERROR "AMD64_OPENSSL_INCLUDE_DIR OR AMD64_OPENSSL_LIB_DIR not set")
+  endif()
+  include_directories(${AMD64_OPENSSL_INCLUDE_DIR})
+  link_directories(${AMD64_OPENSSL_LIB_DIR})
+endif()
 
 file(GLOB AsyncFw_INCLUDE include/AsyncFw/*)
 
@@ -158,7 +168,7 @@ include_directories(.)
 
 set(PROJECT_SOURCES ${AsyncFw_CORE_SOURCES} ${AsyncFw_MAIN_SOURCES} ${AsyncFw_INTERNAL_HEADERS} ${AsyncFw_CORE_HEADERS} ${AsyncFw_MAIN_HEADERS} ${AsyncFw_3rdparty_SOURCES})
 
-if(NOT PLATFORM STREQUAL "AMD64")
+if(NOT ${CMAKE_SYSTEM_PROCESSOR} STREQUAL "AMD64")
   set(PROJECT_SOURCES ${PROJECT_SOURCES} ${AsyncFw_LINUX_HEADERS} ${AsyncFw_LINUX_SOURCES})
 endif()
 
@@ -184,7 +194,12 @@ else()
   install(TARGETS ${AsyncFw_PROJECT_NAME} EXPORT AsyncFw_TARGETS DESTINATION ${CMAKE_INSTALL_LIBDIR})
 endif()
 
-target_link_libraries(${AsyncFw_PROJECT_NAME} z crypto ssl cares)
+target_link_libraries(${AsyncFw_PROJECT_NAME} z crypto ssl)
+if(NOT ${CMAKE_SYSTEM_PROCESSOR} STREQUAL "AMD64")
+  target_link_libraries(${AsyncFw_PROJECT_NAME} cares)
+else()
+  target_link_libraries(${AsyncFw_PROJECT_NAME} iphlpapi Ws2_32)
+endif()
 
 include(CMakePackageConfigHelpers)
 write_basic_package_version_file(
@@ -211,7 +226,7 @@ if(NOT AsyncFw_DISABLE_BUILD_EXAMPLES)
   add_subdirectory(example/ContainerTask)
   add_subdirectory(example/CoroutineWait)
   add_subdirectory(example/MulticastDns)
-  if(NOT PLATFORM STREQUAL "AMD64")
+  if(NOT ${CMAKE_SYSTEM_PROCESSOR} STREQUAL "AMD64")
     add_subdirectory(example/Socket) #need cares for AMD64
     add_subdirectory(example/HttpSocket) #need cares for AMD64
     add_subdirectory(example/Stdin)
