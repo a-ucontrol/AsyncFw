@@ -210,7 +210,7 @@ bool MulticastDns::startService(const std::string &hostname, const std::string &
   int *sockets;
   int num;
   int r = start_mdns_service(hostname.c_str(), serviceType_.c_str(), port, &sockets, &num);
-  lsTrace() << r << num << (int)sockets[0];
+  lsTrace() << r << num;
   if (r || !num) return false;
   sfds.resize(num);
   for (size_t i = 0; i != sfds.size(); ++i) {
@@ -241,7 +241,7 @@ bool MulticastDns::startQuerier(int timeout) {
   int *sockets;
   int num;
   int r = start_mdns_querier(&sockets, &num);
-  lsTrace() << r << num << (int)sockets[0];
+  lsTrace() << r << num;
   if (r || !num) return false;
   qfds.resize(num);
   for (size_t i = 0; i != qfds.size(); ++i) {

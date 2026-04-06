@@ -9,7 +9,6 @@
 
 #include <stdio.h>
 
-//#include <errno.h>
 //#include <signal.h>
 
 #ifdef _WIN32
@@ -34,6 +33,8 @@ const IN_ADDR in4addr_any = { 0 };
 
 #ifndef EXTEND_MDNS_TRACE
 #define printf(...)
+#else
+#include <errno.h>
 #endif
 
 #include "3rdparty/mdns/mdns.h"
