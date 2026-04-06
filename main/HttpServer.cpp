@@ -568,13 +568,6 @@ void HttpServer::received(TcpSocket *socket, const std::string_view &ba) {
       req.response_->setStatusCode(Response::StatusCode::BadRequest);
       req.response_->send();
       logWarning() << "Rule not found:" << req.path() << "method:" << req.methodName();
-      return;
-    }
-
-    if (!req.response_->socket_) {
-      delete req.response_;
-      lsWarning("connection closed while reading");
-      return;
     }
   } else {
     lsTrace();
