@@ -15,9 +15,7 @@ set(PROJECT_SOURCES
   main.cpp
 )
 
-if(NOT EXAMPLES_PATH)
-  set(EXAMPLES_PATH ${CMAKE_BINARY_DIR}/example-bin/)
-endif()
+set(EXAMPLES_PATH "${CMAKE_BINARY_DIR}/example-bin/")
 add_definitions(-DEXAMPLES_PATH="${EXAMPLES_PATH}")
 
 add_executable(${TARGET} ${PROJECT_SOURCES})
