@@ -270,7 +270,6 @@ protected:
   RulesMap rules;
 
 private:
-  bool incomingConnection(int, const std::string &);
   void received(TcpSocket *, const std::string_view &);
   int makeWebSocketFrame(const AsyncFw::DataArray &, AsyncFw::DataArray *);
   RulesMap::iterator findRule(const std::string &, const Request::Method);

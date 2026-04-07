@@ -415,22 +415,6 @@ void HttpServer::TcpSocket::readEvent() {
   HttpSocket::readEvent();
 }
 
-bool HttpServer::incomingConnection(int descriptor, const std::string &) {
-  TcpSocket *socket = new TcpSocket(this);
-  sockets.emplace_back(socket);
-  trace("socket created, total: " + std::to_string(sockets.size()));
-
-  trace() << "tls data" << !private_->tlsContext_.empty();
-  if (!private_->tlsContext_.empty()) {
-    socket->setContext(private_->tlsContext_);
-    socket->setDescriptor(descriptor);
-  } else
-    socket->AbstractSocket::setDescriptor(descriptor);
-
-  trace();
-  return true;
-}
-
 void HttpServer::fileUploadProgress(TcpSocket *, int progress) { trace() << progress; }
 
 HttpServer::HttpServer(const std::string &_httpPath) {
