@@ -18,7 +18,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
   #include <map>
   #include <QTimerEvent>
   #include <QSocketNotifier>
-  #include <QApplication>
+  #include <QCoreApplication>
 #endif
 
 #ifdef EXIT_ON_UNIX_SIGNAL
