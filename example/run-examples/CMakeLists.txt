@@ -22,6 +22,10 @@ add_definitions(-DEXAMPLES_PATH="${EXAMPLES_PATH}")
 
 add_executable(${TARGET} ${PROJECT_SOURCES})
 target_link_libraries(${TARGET} ${AsyncFw_PROJECT_NAME})
+set_target_properties(${TARGET} PROPERTIES
+  RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/example-bin"
+)
+
 if(${CMAKE_SYSTEM_PROCESSOR} STREQUAL "AMD64" AND USE_QAPPLICATION)
   target_link_libraries(${AsyncFw_PROJECT_NAME} Qt6::Core)
 endif()
