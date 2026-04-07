@@ -10,7 +10,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include "core/AbstractThread.h"
 #include "core/LogStream.h"
 
-#include "FileSystemWatcher.h"
+#include "main/FileSystemWatcher.h"
 
 using namespace AsyncFw;
 

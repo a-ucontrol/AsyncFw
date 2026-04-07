@@ -49,7 +49,12 @@ if(${CMAKE_SYSTEM_PROCESSOR} STREQUAL "AMD64")
   include_directories(${AMD64_OPENSSL_INCLUDE_DIR})
   link_directories(${AMD64_OPENSSL_LIB_DIR})
   find_package(c-ares CONFIG)
+  if(USE_QAPPLICATION)
+    find_package(Qt6 CONFIG COMPONENTS Core)
+    add_definitions(-DUSE_QAPPLICATION)
+  endif()
 endif()
+
 
 file(GLOB AsyncFw_INCLUDE include/AsyncFw/*)
 
@@ -92,7 +97,6 @@ set(AsyncFw_MAIN_HEADERS
   "${CMAKE_CURRENT_LIST_DIR}/main/ListenSocket.h"
   "${CMAKE_CURRENT_LIST_DIR}/main/Coroutine.h"
   "${CMAKE_CURRENT_LIST_DIR}/main/Timer.h"
-  "${CMAKE_CURRENT_LIST_DIR}/main/AddressInfo.h"
   "${CMAKE_CURRENT_LIST_DIR}/main/PollNotifier.h"
   "${CMAKE_CURRENT_LIST_DIR}/main/ThreadPool.h"
   "${CMAKE_CURRENT_LIST_DIR}/main/File.h"
@@ -113,6 +117,10 @@ set(AsyncFw_MAIN_HEADERS
   "${CMAKE_CURRENT_LIST_DIR}/main/Instance.h"
   "${CMAKE_CURRENT_LIST_DIR}/main/Version.h"
   "${CMAKE_CURRENT_LIST_DIR}/main/log-types.hpp"
+
+  "${CMAKE_CURRENT_LIST_DIR}/main/AddressInfo.h"
+  "${CMAKE_CURRENT_LIST_DIR}/main/SystemProcess.h"
+  "${CMAKE_CURRENT_LIST_DIR}/main/FileSystemWatcher.h"
 )
 
 set(AsyncFw_MAIN_SOURCES
@@ -140,15 +148,16 @@ set(AsyncFw_MAIN_SOURCES
   "main/log-types.cpp"
 )
 
-set(AsyncFw_LINUX_HEADERS
-  "${CMAKE_CURRENT_LIST_DIR}/linux/SystemProcess.h"
-  "${CMAKE_CURRENT_LIST_DIR}/linux/FileSystemWatcher.h"
-)
-
 set(AsyncFw_LINUX_SOURCES
   "main/AddressInfo.cpp" #need cares for AMD64
   "linux/FileSystemWatcher.cpp"
   "linux/SystemProcess.cpp"
+)
+
+set(AsyncFw_WINDOWS_SOURCES
+  "main/AddressInfo.cpp" #need cares for AMD64 #!!!
+  "windows/FileSystemWatcher.cpp"
+  "windows/SystemProcess.cpp"
 )
 
 set(AsyncFw_3rdparty_SOURCES
@@ -160,7 +169,6 @@ set(AsyncFw_3rdparty_SOURCES
 
 if(NOT PROJECT_IS_TOP_LEVEL)
   set(AsyncFw_CORE_HEADERS ${AsyncFw_CORE_HEADERS} PARENT_SCOPE)
-  set(AsyncFw_LINUX_HEADERS ${AsyncFw_LINUX_HEADERS} PARENT_SCOPE)
   set(AsyncFw_MAIN_HEADERS ${AsyncFw_MAIN_HEADERS} PARENT_SCOPE)
   set(AsyncFw_INCLUDE ${AsyncFw_INCLUDE} PARENT_SCOPE)
 endif()
@@ -177,8 +185,10 @@ if(${CMAKE_SYSTEM_PROCESSOR} STREQUAL "AMD64")
 endif()
 
 
-if(NOT ${CMAKE_SYSTEM_PROCESSOR} STREQUAL "AMD64")
-  set(PROJECT_SOURCES ${PROJECT_SOURCES} ${AsyncFw_LINUX_HEADERS} ${AsyncFw_LINUX_SOURCES})
+if(${CMAKE_SYSTEM_PROCESSOR} STREQUAL "AMD64")
+  set(PROJECT_SOURCES ${PROJECT_SOURCES} ${AsyncFw_WINDOWS_SOURCES})
+else()
+  set(PROJECT_SOURCES ${PROJECT_SOURCES} ${AsyncFw_LINUX_SOURCES})
 endif()
 
 include(GNUInstallDirs)
@@ -211,6 +221,9 @@ else()
     target_link_libraries(${AsyncFw_PROJECT_NAME} c-ares::cares)
   endif()
   target_link_libraries(${AsyncFw_PROJECT_NAME} iphlpapi Ws2_32)
+  if(USE_QAPPLICATION)
+    target_link_libraries(${AsyncFw_PROJECT_NAME} Qt6::Core)
+  endif()
 endif()
 
 include(CMakePackageConfigHelpers)
@@ -221,7 +234,6 @@ write_basic_package_version_file(
 
 install(EXPORT AsyncFw_TARGETS FILE AsyncFwTargets.cmake NAMESPACE AsyncFw:: DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/AsyncFw)
 install(FILES ${AsyncFw_CORE_HEADERS} DESTINATION include/AsyncFw/core)
-install(FILES ${AsyncFw_LINUX_HEADERS} DESTINATION include/AsyncFw/linux)
 install(FILES ${AsyncFw_MAIN_HEADERS} DESTINATION include/AsyncFw/main)
 install(FILES ${AsyncFw_INCLUDE} DESTINATION include/AsyncFw)
 install(FILES "${CMAKE_CURRENT_LIST_DIR}/AsyncFwConfig.cmake" "${CMAKE_CURRENT_BINARY_DIR}/AsyncFwConfigVersion.cmake" DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/AsyncFw)
@@ -242,11 +254,13 @@ if(NOT AsyncFw_DISABLE_BUILD_EXAMPLES)
     add_subdirectory(example/Socket)
     add_subdirectory(example/HttpSocket)
   endif()
+  if(NOT ${CMAKE_SYSTEM_PROCESSOR} STREQUAL "AMD64" OR USE_QAPPLICATION)
+    add_subdirectory(example/SystemProcess)
+    add_subdirectory(example/run-examples)
+   endif()
   if(NOT ${CMAKE_SYSTEM_PROCESSOR} STREQUAL "AMD64")
     add_subdirectory(example/Stdin)
     add_subdirectory(example/Uart)
-    add_subdirectory(example/SystemProcess)
     add_subdirectory(example/FileSystemWatcher)
-    add_subdirectory(example/run-examples)
   endif()
 endif()

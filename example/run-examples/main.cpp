@@ -97,7 +97,12 @@ void run_examples() {
   AsyncFw::MainThread::exit(ok ? 0 : -1);
 }
 
-int main(int, char *[]) {
+int main(int argc, char *argv[]) {
+#ifdef USE_QAPPLICATION
+  int _a = 0;
+  QCoreApplication app(argc, argv);
+#endif
+
   AsyncFw::SystemProcess::exec("/bin/ls", {EXAMPLES_PATH}, [](int _r, AsyncFw::SystemProcess::State _s, const std::string &_out, const std::string &_err) {
     logNotice() << "End:" << _r << static_cast<int>(_s);
     if (!_out.empty()) logInfo() << _out;

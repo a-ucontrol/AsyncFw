@@ -9,7 +9,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include <sys/wait.h>
 #include "core/AbstractThread.h"
 #include "core/LogStream.h"
-#include "SystemProcess.h"
+#include "main/SystemProcess.h"
 
 #ifdef EXTEND_SYSTEMPROCESS_TRACE
   #define trace lsTrace
