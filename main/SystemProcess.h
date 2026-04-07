@@ -16,6 +16,9 @@ namespace AsyncFw {
 class SystemProcess {
 public:
   enum State : uint8_t { None, Running, Finished, Crashed, Error };
+  /*! \param redirect_stdin
+    \brief False Управляет вводом данных в запущенный процесс. Это режим ввода по умолчанию для канала ввода
+    \brief True  Дочерний процесс перенаправляет ввод основного процесса на работающий процесс. Дочерний процесс считывает свой стандартный ввод из того же источника, что и основной процесс. Обратите внимание, что основной процесс не должен пытаться считывать свой стандартный ввод, пока работает дочерний процесс. */
   SystemProcess(bool = false);
   ~SystemProcess();
   bool start(const std::string &, const std::vector<std::string> & = {});
