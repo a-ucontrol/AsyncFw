@@ -16,7 +16,7 @@ set(PROJECT_SOURCES
 )
 
 if(NOT EXAMPLES_PATH)
-  set(EXAMPLES_PATH ${CMAKE_BINARY_DIR}/example/)
+  set(EXAMPLES_PATH ${CMAKE_BINARY_DIR}/example-bin/)
 endif()
 add_definitions(-DEXAMPLES_PATH="${EXAMPLES_PATH}")
 

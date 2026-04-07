@@ -32,58 +32,58 @@ void run_examples() {
     }
   });
 
-  app = EXAMPLES_PATH "ContainerTask/ContainerTaskExample";
+  app = EXAMPLES_PATH "ContainerTaskExample";
   logInfo() << "Start:" << app;
   process.start(app);
   process.wait();
-  app = EXAMPLES_PATH "Coroutine/CoroutineExample";
+  app = EXAMPLES_PATH "CoroutineExample";
   logInfo() << "Start:" << app;
   process.start(app);
   process.wait();
-  app = EXAMPLES_PATH "CoroutineWait/CoroutineWaitExample";
+  app = EXAMPLES_PATH "CoroutineWaitExample";
   logInfo() << "Start:" << app;
   process.start(app);
   process.wait();
-  app = EXAMPLES_PATH "Invoke/InvokeExample";
+  app = EXAMPLES_PATH "InvokeExample";
   logInfo() << "Start:" << app;
   process.start(app);
   process.wait();
-  app = EXAMPLES_PATH "Log/LogExample";
+  app = EXAMPLES_PATH "LogExample";
   logInfo() << "Start:" << app;
   process.start(app);
   process.wait();
-  app = EXAMPLES_PATH "ThreadPool/ThreadPoolExample";
+  app = EXAMPLES_PATH "ThreadPoolExample";
   logInfo() << "Start:" << app;
   process.start(app);
   process.wait();
-  app = EXAMPLES_PATH "SystemProcess/SystemProcessExample";
+  app = EXAMPLES_PATH "SystemProcessExample";
   logInfo() << "Start:" << app;
   process.start(app);
   process.wait();
-  app = EXAMPLES_PATH "Timer/TimerExample";
+  app = EXAMPLES_PATH "TimerExample";
   logInfo() << "Start:" << app;
   process.start(app);
   process.wait();
-  app = EXAMPLES_PATH "HttpSocket/HttpSocketExample";
-  logInfo() << "Start:" << app;
-  process.start(app);
-  process.wait();
-
-  app = EXAMPLES_PATH "MulticastDns/MulticastDnsExample";
+  app = EXAMPLES_PATH "HttpSocketExample";
   logInfo() << "Start:" << app;
   process.start(app);
   process.wait();
 
-  app = EXAMPLES_PATH "FileSystemWatcher/FileSystemWatcherExample";
+  app = EXAMPLES_PATH "MulticastDnsExample";
   logInfo() << "Start:" << app;
   process.start(app);
   process.wait();
 
-  app = EXAMPLES_PATH "ListenSocket/ListenSocketExample";
+  app = EXAMPLES_PATH "FileSystemWatcherExample";
+  logInfo() << "Start:" << app;
+  process.start(app);
+  process.wait();
+
+  app = EXAMPLES_PATH "ListenSocketExample";
   logInfo() << "Start:" << app;
   process.start(app, {"--tst"});
   process.wait();
-  app = EXAMPLES_PATH "HttpServer/HttpServerExample";
+  app = EXAMPLES_PATH "HttpServerExample";
   logInfo() << "Start:" << app;
   process.start(app, {"--tst"});
   process.wait();
