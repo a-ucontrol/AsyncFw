@@ -56,10 +56,14 @@ void run_examples() {
   logInfo() << "Start:" << app;
   process.start(app);
   process.wait();
+#ifndef _WIN32
   app = EXAMPLES_PATH "SystemProcessExample";
   logInfo() << "Start:" << app;
   process.start(app);
   process.wait();
+#else
+  #warning "_WIN32 SystemProcessExample disabled"
+#endif
   app = EXAMPLES_PATH "TimerExample";
   logInfo() << "Start:" << app;
   process.start(app);

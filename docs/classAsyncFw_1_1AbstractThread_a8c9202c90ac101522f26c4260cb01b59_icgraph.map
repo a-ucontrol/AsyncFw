@@ -1,15 +1,17 @@
 <map id="AsyncFw::AbstractThread::AbstractThread" name="AsyncFw::AbstractThread::AbstractThread">
-<area shape="rect" id="Node000001" title="Constructs a thread." alt="" coords="664,51,838,93"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractThread.html#ac1b35ef04b06ce771f6d6ca0a5b120db" title="Returns a pointer to the AsyncFw::AbstractThread that manages the currently executing thread." alt="" coords="443,80,616,123"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="649,88,617,92,617,87,649,83"/>
-<area shape="rect" id="Node000006" href="$classAsyncFw_1_1Thread.html#afc5e422090767dd84020381fb9a4d490" title="Constructs a thread." alt="" coords="444,29,616,56"/>
-<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="649,61,616,57,617,51,649,56"/>
-<area shape="rect" id="Node000003" href="$classAsyncFw_1_1Thread.html#a46662ffa7482f1c1e52b654c51639fd2" title="Returns a pointer to the AsyncFw::Thread that manages the currently executing thread." alt="" coords="222,21,394,64"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="432,78,391,67,392,62,433,73"/>
-<area shape="rect" id="Node000004" href="$classAsyncFw_1_1AbstractThread_1_1Holder.html#a795fc5bb1d23123fc892b8d414c56083" title="Runs nested exec() and wait for it completed." alt="" coords="222,88,395,131"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="428,108,396,109,395,104,427,102"/>
-<area shape="rect" id="Node000005" href="$structAsyncFw_1_1CoroutineTask.html#a820a0a3410c4a14a71ad3599f46c1bb0" title="Runs nested Thread::exec() and wait for task finished." alt="" coords="5,88,174,131"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="206,112,174,112,174,107,206,107"/>
-<area shape="poly" id="edge6_Node000006_Node000003" title=" " alt="" coords="428,45,395,45,395,40,428,40"/>
-<area shape="poly" id="edge7_Node000006_Node000006" title=" " alt="" coords="568,16,555,10,530,8,506,10,494,15,491,20,497,27,492,30,486,21,490,11,505,5,530,3,556,5,570,12"/>
+<area shape="rect" id="Node000001" title="Constructs a thread." alt="" coords="668,52,842,95"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractThread.html#ac1b35ef04b06ce771f6d6ca0a5b120db" title="Returns a pointer to the AsyncFw::AbstractThread that manages the currently executing thread." alt="" coords="447,81,620,124"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="653,89,621,94,621,88,653,84"/>
+<area shape="rect" id="Node000007" href="$classAsyncFw_1_1Thread.html#afc5e422090767dd84020381fb9a4d490" title="Constructs a thread." alt="" coords="448,29,620,56"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="653,62,620,57,621,52,653,57"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1Thread.html#a46662ffa7482f1c1e52b654c51639fd2" title="Returns a pointer to the AsyncFw::Thread that manages the currently executing thread." alt="" coords="224,19,396,61"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="440,79,388,64,390,59,442,74"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1SystemProcess.html#acf60a585a89304fdb3580e9add06d155" title="False Управляет вводом данных в запущенный процесс. Это режим ввода по умолчанию для канала ввода" alt="" coords="222,85,399,128"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="431,107,400,108,400,102,431,102"/>
+<area shape="rect" id="Node000005" href="$classAsyncFw_1_1AbstractThread_1_1Holder.html#a795fc5bb1d23123fc892b8d414c56083" title="Runs nested exec() and wait for it completed." alt="" coords="224,152,397,195"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="451,132,381,154,379,149,449,127"/>
+<area shape="rect" id="Node000006" href="$structAsyncFw_1_1CoroutineTask.html#a820a0a3410c4a14a71ad3599f46c1bb0" title="Runs nested Thread::exec() and wait for task finished." alt="" coords="5,152,174,195"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="208,176,174,176,174,171,208,171"/>
+<area shape="poly" id="edge7_Node000007_Node000003" title=" " alt="" coords="432,44,397,44,397,38,432,39"/>
+<area shape="poly" id="edge8_Node000007_Node000007" title=" " alt="" coords="572,16,559,10,534,8,510,10,498,15,495,20,501,27,496,30,490,21,494,11,509,5,534,3,560,5,574,12"/>
 </map>

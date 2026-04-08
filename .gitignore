@@ -43,3 +43,4 @@
 defines.cmake
 CMakeLists.txt.*
 build
+tmp

@@ -138,8 +138,8 @@ Public Types</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:acf60a585a89304fdb3580e9add06d155" id="r_acf60a585a89304fdb3580e9add06d155"><td class="memItemLeft" align="right" valign="top"><a id="acf60a585a89304fdb3580e9add06d155" name="acf60a585a89304fdb3580e9add06d155"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>SystemProcess</b> (bool=false)</td></tr>
+<tr class="memitem:acf60a585a89304fdb3580e9add06d155" id="r_acf60a585a89304fdb3580e9add06d155"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acf60a585a89304fdb3580e9add06d155">SystemProcess</a> (bool=false)</td></tr>
+<tr class="memdesc:acf60a585a89304fdb3580e9add06d155"><td class="mdescLeft">&#160;</td><td class="mdescRight">False Управляет вводом данных в запущенный процесс. Это режим ввода по умолчанию для канала ввода  <br /></td></tr>
 <tr class="separator:acf60a585a89304fdb3580e9add06d155"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a07450fc564490581360f8ff9244291c8" id="r_a07450fc564490581360f8ff9244291c8"><td class="memItemLeft" align="right" valign="top"><a id="a07450fc564490581360f8ff9244291c8" name="a07450fc564490581360f8ff9244291c8"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>start</b> (const std::string &amp;, const std::vector&lt; std::string &gt; &amp;={})</td></tr>
@@ -197,6 +197,10 @@ Public Attributes</h2></td></tr>
 <div class="line"><span class="preprocessor">#include &lt;AsyncFw/LogStream&gt;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[]) {</div>
+<div class="line"><span class="preprocessor">#ifdef USE_QAPPLICATION</span></div>
+<div class="line">  QCoreApplication app(argc, argv);</div>
+<div class="line"><span class="preprocessor">#endif</span></div>
+<div class="line"> </div>
 <div class="line">  <a class="code hl_class" href="classAsyncFw_1_1SystemProcess.html">AsyncFw::SystemProcess</a> process;</div>
 <div class="line">  process.<a class="code hl_variable" href="#add4c0b7aff0eb842fa41c81cd0723c41">output</a>([](<span class="keyword">const</span> std::string &amp;str, <span class="keywordtype">bool</span> err) {</div>
 <div class="line">    <span class="keywordflow">if</span> (!err) logInfo() &lt;&lt; <span class="stringliteral">&quot;OUT:&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span> + str;</div>
@@ -220,8 +224,40 @@ Public Attributes</h2></td></tr>
 <div class="line">}</div>
 </div><!-- fragment --> <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="SystemProcess_2main_8cpp-example.html#_a0">SystemProcess/main.cpp</a>.</dd>
 </dl>
-</div><hr/>The documentation for this class was generated from the following files:<ul>
-<li>linux/<a class="el" href="SystemProcess_8h_source.html">SystemProcess.h</a></li>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="acf60a585a89304fdb3580e9add06d155" name="acf60a585a89304fdb3580e9add06d155"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acf60a585a89304fdb3580e9add06d155">&#9670;&#160;</a></span>SystemProcess()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">SystemProcess::SystemProcess </td>
+          <td>(</td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>redirect_stdin</em></span><span class="paramdefsep"> = </span><span class="paramdefval">false</span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>False Управляет вводом данных в запущенный процесс. Это режим ввода по умолчанию для канала ввода </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">redirect_stdin</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<p>True Дочерний процесс перенаправляет ввод основного процесса на работающий процесс. Дочерний процесс считывает свой стандартный ввод из того же источника, что и основной процесс. Обратите внимание, что основной процесс не должен пытаться считывать свой стандартный ввод, пока работает дочерний процесс. </p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1SystemProcess_acf60a585a89304fdb3580e9add06d155_cgraph.svg" width="852" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
+<li>main/<a class="el" href="SystemProcess_8h_source.html">SystemProcess.h</a></li>
 <li>linux/<b>SystemProcess.cpp</b></li>
 </ul>
 </div><!-- contents -->

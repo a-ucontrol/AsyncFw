@@ -1,0 +1,9 @@
+<map id="AsyncFw::SystemProcess::SystemProcess" name="AsyncFw::SystemProcess::SystemProcess">
+<area shape="rect" id="Node000001" title="False Управляет вводом данных в запущенный процесс. Это режим ввода по умолчанию для канала ввода" alt="" coords="5,5,183,48"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractThread.html#ac1b35ef04b06ce771f6d6ca0a5b120db" title="Returns a pointer to the AsyncFw::AbstractThread that manages the currently executing thread." alt="" coords="231,5,404,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="183,24,215,24,215,29,183,29"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractThread.html#a8c9202c90ac101522f26c4260cb01b59" title="Constructs a thread." alt="" coords="452,5,625,48"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="404,24,436,24,436,29,404,29"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd" title="Returns name of managed thread." alt="" coords="673,5,847,48"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="626,24,658,24,658,29,626,29"/>
+</map>

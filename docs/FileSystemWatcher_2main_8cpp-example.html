@@ -122,6 +122,10 @@ $(function(){initNavTree('FileSystemWatcher_2main_8cpp-example.html',''); initRe
 <div class="line"><span class="keyword">using namespace </span>AsyncFw;</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[]) {</div>
+<div class="line"><span class="preprocessor">#ifdef USE_QAPPLICATION</span></div>
+<div class="line">  QCoreApplication app(argc, argv);</div>
+<div class="line"><span class="preprocessor">#endif</span></div>
+<div class="line"> </div>
 <div class="line">  <a id="_a0" name="_a0"></a><a class="code hl_class" href="classAsyncFw_1_1FileSystemWatcher.html">FileSystemWatcher</a> watcher {{<span class="stringliteral">&quot;/tmp/FileSystemWatcher.example&quot;</span>}};</div>
 <div class="line">  watcher.<a id="a1" name="a1"></a><a class="code hl_variable" href="classAsyncFw_1_1FileSystemWatcher.html#a4d97340ee2f2378dd516411f56ed8498">notify</a>([](<span class="keyword">const</span> std::string &amp;name, <span class="keywordtype">int</span> event) {</div>
 <div class="line">    lsInfoMagenta() &lt;&lt; <span class="stringliteral">&quot;file:&quot;</span> &lt;&lt; name &lt;&lt; event;  <span class="comment">// event: -1 removed / 0 changed / 1 created</span></div>
