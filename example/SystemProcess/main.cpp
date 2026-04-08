@@ -12,6 +12,10 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include <AsyncFw/LogStream>
 
 int main(int argc, char *argv[]) {
+#ifdef USE_QAPPLICATION
+  QCoreApplication app(argc, argv);
+#endif
+
   AsyncFw::SystemProcess process;
   process.output([](const std::string &str, bool err) {
     if (!err) logInfo() << "OUT:" << '\n' + str;

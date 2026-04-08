@@ -99,7 +99,6 @@ void run_examples() {
 
 int main(int argc, char *argv[]) {
 #ifdef USE_QAPPLICATION
-  int _a = 0;
   QCoreApplication app(argc, argv);
 #endif
 

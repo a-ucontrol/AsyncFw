@@ -14,6 +14,10 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 using namespace AsyncFw;
 
 int main(int argc, char *argv[]) {
+#ifdef USE_QAPPLICATION
+  QCoreApplication app(argc, argv);
+#endif
+
   FileSystemWatcher watcher {{"/tmp/FileSystemWatcher.example"}};
   watcher.notify([](const std::string &name, int event) {
     lsInfoMagenta() << "file:" << name << event;  // event: -1 removed / 0 changed / 1 created
