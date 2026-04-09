@@ -547,6 +547,11 @@ open_client_sockets(int* sockets, int max_sockets, int port) {
             (saddr->sin_addr.S_un.S_un_b.s_b2 != 0) ||
             (saddr->sin_addr.S_un.S_un_b.s_b3 != 0) ||
             (saddr->sin_addr.S_un.S_un_b.s_b4 != 1)) {
+          if((ntohl(saddr->sin_addr.s_addr) & 0xFFFF0000) == 0xA9FE0000) {
+            ipv4_address_to_string(mdns_llip, sizeof(mdns_llip), saddr, sizeof(struct sockaddr_in));
+            printf("LinkLocal IPv4 address: %s\n", mdns_llip);
+            continue;
+          }
 #ifdef EXTEND_MDNS_TRACE
           int log_addr = 0;
 #endif
@@ -645,10 +650,6 @@ open_client_sockets(int* sockets, int max_sockets, int port) {
       continue;
     if ((ifa->ifa_flags & IFF_LOOPBACK) || (ifa->ifa_flags & IFF_POINTOPOINT))
       continue;
-    //if (strstr(ifa->ifa_name, ":")) {
-    //  printf("Iface name: %s\n", ifa->ifa_name);
-    //  continue;
-    //}
 
     if (ifa->ifa_addr->sa_family == AF_INET) {
       struct sockaddr_in* saddr = (struct sockaddr_in*)ifa->ifa_addr;
