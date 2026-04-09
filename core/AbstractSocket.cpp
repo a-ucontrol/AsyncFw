@@ -28,15 +28,6 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
   #include <winsock2.h>
   #include <ws2tcpip.h>
 
-struct start_wsa {
-  start_wsa() {
-    WORD versionWanted = MAKEWORD(2, 2);
-    WSADATA wsaData;
-    (void)WSAStartup(versionWanted, &wsaData);
-  }
-  ~start_wsa() { WSACleanup(); }
-} start_wsa;
-
   #define close_fd ::closesocket
   #define CONNECT_PROGRESS ENOENT
   #define setsockopt_ptr reinterpret_cast<const char *>

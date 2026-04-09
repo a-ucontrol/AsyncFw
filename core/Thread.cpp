@@ -89,3 +89,16 @@ LogStream &operator<<(LogStream &log, const Thread &t) {
   return log << *static_cast<const AbstractThread *>(&t) << '-' << _size;
 }
 }  // namespace AsyncFw
+
+#ifdef _WIN32
+  #include <winsock2.h>
+  #include <ws2tcpip.h>
+struct start_wsa {
+  start_wsa() {
+    WORD versionWanted = MAKEWORD(2, 2);
+    WSADATA wsaData;
+    (void)WSAStartup(versionWanted, &wsaData);
+  }
+  ~start_wsa() { WSACleanup(); }
+} start_wsa;
+#endif
