@@ -56,9 +56,6 @@ static struct sockaddr_in service_address_llipv4;
 static struct sockaddr_in service_address_ipv4;
 static struct sockaddr_in6 service_address_ipv6;
 
-static int has_ipv4;
-static int has_ipv6;
-
 int mdns_send_goodbye;
 
 extern void append_host(void *host);
@@ -552,6 +549,7 @@ open_client_sockets(int* sockets, int max_sockets, int port) {
           if((ntohl(saddr->sin_addr.s_addr) & 0xFFFF0000) == 0xA9FE0000) {
             if(!first_llipv4) continue;
             first_llipv4 = 0;
+            saddr->sin_port = htons(port);
             service_address_llipv4 = *saddr;
             ipv4_address_to_string(mdns_llip, sizeof(mdns_llip), saddr, sizeof(struct sockaddr_in));
             printf("LinkLocal IPv4 address: %s\n", mdns_llip);
@@ -567,7 +565,6 @@ open_client_sockets(int* sockets, int max_sockets, int port) {
             log_addr = 1;
 #endif
           }
-          has_ipv4 = 1;
           if (num_sockets < max_sockets) {
             saddr->sin_port = htons((unsigned short)port);
             int sock = mdns_socket_open_ipv4(saddr);
@@ -611,7 +608,6 @@ open_client_sockets(int* sockets, int max_sockets, int port) {
             log_addr = 1;
 #endif
           }
-          has_ipv6 = 1;
           if (num_sockets < max_sockets) {
             saddr->sin6_port = htons((unsigned short)port);
             int sock = mdns_socket_open_ipv6(saddr);
@@ -637,18 +633,12 @@ open_client_sockets(int* sockets, int max_sockets, int port) {
     }
   }
   if (first_ipv4 && !first_llipv4) {
-    service_address_ipv4 = service_address_llipv4;
-    has_ipv4 = 1;
+    //service_address_ipv4 = service_address_llipv4;
     if (num_sockets < max_sockets) {
-      service_address_ipv4.sin_port = htons(port);
-      int sock = mdns_socket_open_ipv4(&service_address_ipv4);
+      int sock = mdns_socket_open_ipv4(&service_address_llipv4);
       if (sock >= 0) {
         sockets[num_sockets++] = sock;
-#ifdef EXTEND_MDNS_TRACE
-        char buffer[128];
-        mdns_string_t addr = ipv4_address_to_string(buffer, sizeof(buffer), &service_address_ipv4, sizeof(struct sockaddr_in));
-        printf("Local IPv4/LLIpv4 address: %.*s\n", MDNS_STRING_FORMAT(addr));
-#endif
+        printf("Local IPv4 address is empty");
       }
     }
   }
@@ -679,6 +669,7 @@ open_client_sockets(int* sockets, int max_sockets, int port) {
         if((ntohl(saddr->sin_addr.s_addr) & 0xFFFF0000) == 0xA9FE0000) {
           if(!first_llipv4) continue;
           first_llipv4 = 0;
+          saddr->sin_port = htons(port);
           service_address_llipv4 = *saddr;
           ipv4_address_to_string(mdns_llip, sizeof(mdns_llip), saddr, sizeof(struct sockaddr_in));
           printf("LinkLocal IPv4 address: %s\n", mdns_llip);
@@ -694,7 +685,6 @@ open_client_sockets(int* sockets, int max_sockets, int port) {
           log_addr = 1;
 #endif
         }
-        has_ipv4 = 1;
         if (num_sockets < max_sockets) {
           saddr->sin_port = htons(port);
           int sock = mdns_socket_open_ipv4(saddr);
@@ -737,7 +727,6 @@ open_client_sockets(int* sockets, int max_sockets, int port) {
           log_addr = 1;
 #endif
         }
-        has_ipv6 = 1;
         if (num_sockets < max_sockets) {
           saddr->sin6_port = htons(port);
           int sock = mdns_socket_open_ipv6(saddr);
@@ -762,18 +751,13 @@ open_client_sockets(int* sockets, int max_sockets, int port) {
     }
   }
   if (first_ipv4 && !first_llipv4) {
-    service_address_ipv4 = service_address_llipv4;
-    has_ipv4 = 1;
+    //service_address_ipv4 = service_address_llipv4;
     if (num_sockets < max_sockets) {
       service_address_ipv4.sin_port = htons(port);
-      int sock = mdns_socket_open_ipv4(&service_address_ipv4);
+      int sock = mdns_socket_open_ipv4(&service_address_llipv4);
       if (sock >= 0) {
         sockets[num_sockets++] = sock;
-#ifdef EXTEND_MDNS_TRACE
-        char buffer[128];
-        mdns_string_t addr = ipv4_address_to_string(buffer, sizeof(buffer), &service_address_ipv4, sizeof(struct sockaddr_in));
-        printf("Local IPv4/LLIpv4 address: %.*s\n", MDNS_STRING_FORMAT(addr));
-#endif
+        printf("Local IPv4 address is empty");
       }
     }
   }
