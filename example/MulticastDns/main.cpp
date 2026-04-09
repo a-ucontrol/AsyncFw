@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
   _mdns.hostChanged([](const MulticastDns::Host &host) { lsInfoMagenta() << "Changed" << host.name << host.ipv4 << host.llipv4 << host.misc << host.port; });
   _mdns.hostRemoved([](const MulticastDns::Host &host) { lsInfoRed() << "Removed" << host.name << host.ipv4 << host.llipv4 << host.misc << host.port; });
 
-  _mdns.startService("AsyncFw_host", "169.254.0.1", "AsyncFw_misc_string", 18080);
+  _mdns.startService("AsyncFw_host", "AsyncFw_misc_string", 18080);
   _mdns.startQuerier(1);
 
   Timer::single(100, [&_mdns]() { _mdns.stopService(); });
