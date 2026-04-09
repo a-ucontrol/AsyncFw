@@ -49,7 +49,10 @@ if(${CMAKE_SYSTEM_PROCESSOR} STREQUAL "AMD64")
   endif()
   include_directories(${AMD64_OPENSSL_INCLUDE_DIR})
   link_directories(${AMD64_OPENSSL_LIB_DIR})
-  find_package(c-ares CONFIG)
+  if(AMD64_USE_CARES)
+    message(STATUS "AMD64_USE_CARES")
+    find_package(c-ares CONFIG)
+  endif()
   if(AMD64_USE_QAPPLICATION)
     message(STATUS "AMD64_USE_QAPPLICATION")
     find_package(Qt6 CONFIG COMPONENTS Core)
@@ -154,11 +157,11 @@ set(AsyncFw_LINUX_SOURCES
   "linux/SystemProcess.cpp"
 )
 
-set(AsyncFw_WINDOWS_SOURCES
-  "main/AddressInfo.cpp" #need cares for AMD64 #!!!
-  "windows/FileSystemWatcher.cpp"
-  "windows/SystemProcess.cpp"
-)
+#set(AsyncFw_WINDOWS_SOURCES
+#  "main/AddressInfo.cpp" #need cares for AMD64 #!!!
+#  "windows/FileSystemWatcher.cpp"
+#  "windows/SystemProcess.cpp"
+#)
 
 set(AsyncFw_3rdparty_SOURCES
   "3rdparty/WebSocket/WebSocket/WebSocket.cpp"
@@ -180,10 +183,13 @@ set(PROJECT_SOURCES ${AsyncFw_CORE_SOURCES} ${AsyncFw_MAIN_SOURCES} ${AsyncFw_IN
 
 
 if(${CMAKE_SYSTEM_PROCESSOR} STREQUAL "AMD64")
-  if(c-ares_FOUND)
+  if(AMD64_USE_CARES)
     set(PROJECT_SOURCES ${PROJECT_SOURCES} "main/AddressInfo.cpp")
   endif()
-  set(PROJECT_SOURCES ${PROJECT_SOURCES} ${AsyncFw_WINDOWS_SOURCES})
+  if(AMD64_USE_QAPPLICATION)
+    set(PROJECT_SOURCES ${PROJECT_SOURCES} "windows/FileSystemWatcher.cpp" "windows/SystemProcess.cpp")
+  endif()
+  set(PROJECT_SOURCES ${PROJECT_SOURCES})
 else()
   set(PROJECT_SOURCES ${PROJECT_SOURCES} ${AsyncFw_LINUX_SOURCES})
 endif()
@@ -214,10 +220,10 @@ target_link_libraries(${AsyncFw_PROJECT_NAME} z crypto ssl)
 if(NOT ${CMAKE_SYSTEM_PROCESSOR} STREQUAL "AMD64")
   target_link_libraries(${AsyncFw_PROJECT_NAME} cares)
 else()
-  if(c-ares_FOUND)
+  target_link_libraries(${AsyncFw_PROJECT_NAME} iphlpapi Ws2_32)
+  if(AMD64_USE_CARES)
     target_link_libraries(${AsyncFw_PROJECT_NAME} c-ares::cares)
   endif()
-  target_link_libraries(${AsyncFw_PROJECT_NAME} iphlpapi Ws2_32)
   if(AMD64_USE_QAPPLICATION)
     target_link_libraries(${AsyncFw_PROJECT_NAME} Qt6::Core)
   endif()
@@ -247,7 +253,7 @@ if(NOT AsyncFw_DISABLE_BUILD_EXAMPLES)
   add_subdirectory(example/ContainerTask)
   add_subdirectory(example/CoroutineWait)
   add_subdirectory(example/MulticastDns)
-  if(NOT ${CMAKE_SYSTEM_PROCESSOR} STREQUAL "AMD64" OR c-ares_FOUND)
+  if(NOT ${CMAKE_SYSTEM_PROCESSOR} STREQUAL "AMD64" OR AMD64_USE_CARES)
     add_subdirectory(example/Socket)
     add_subdirectory(example/HttpSocket)
   endif()
