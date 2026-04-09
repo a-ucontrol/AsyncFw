@@ -139,9 +139,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>setServiceType</b> (c
 <tr class="memitem:ac43061ac22299588479dbecf7918e896" id="r_ac43061ac22299588479dbecf7918e896"><td class="memItemLeft" align="right" valign="top"><a id="ac43061ac22299588479dbecf7918e896" name="ac43061ac22299588479dbecf7918e896"></a>
 std::string&#160;</td><td class="memItemRight" valign="bottom"><b>serviceType</b> ()</td></tr>
 <tr class="separator:ac43061ac22299588479dbecf7918e896"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a05326e21bfa1085db5f423f82c920e42" id="r_a05326e21bfa1085db5f423f82c920e42"><td class="memItemLeft" align="right" valign="top"><a id="a05326e21bfa1085db5f423f82c920e42" name="a05326e21bfa1085db5f423f82c920e42"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>startService</b> (const std::string &amp;hostname, const std::string &amp;llip, const std::string &amp;misc, uint16_t port)</td></tr>
-<tr class="separator:a05326e21bfa1085db5f423f82c920e42"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a03bbdd8859db5e26f7fe34545e571618" id="r_a03bbdd8859db5e26f7fe34545e571618"><td class="memItemLeft" align="right" valign="top"><a id="a03bbdd8859db5e26f7fe34545e571618" name="a03bbdd8859db5e26f7fe34545e571618"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>startService</b> (const std::string &amp;hostname, const std::string &amp;misc, uint16_t port)</td></tr>
+<tr class="separator:a03bbdd8859db5e26f7fe34545e571618"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac14f4f10b2dda8f9f441bac8163da521" id="r_ac14f4f10b2dda8f9f441bac8163da521"><td class="memItemLeft" align="right" valign="top"><a id="ac14f4f10b2dda8f9f441bac8163da521" name="ac14f4f10b2dda8f9f441bac8163da521"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>stopService</b> (bool send_goodbye=true)</td></tr>
 <tr class="separator:ac14f4f10b2dda8f9f441bac8163da521"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -195,7 +195,7 @@ Public Attributes</h2></td></tr>
 <div class="line">  _mdns.hostChanged([](<span class="keyword">const</span> MulticastDns::Host &amp;host) { lsInfoMagenta() &lt;&lt; <span class="stringliteral">&quot;Changed&quot;</span> &lt;&lt; host.name &lt;&lt; host.ipv4 &lt;&lt; host.llipv4 &lt;&lt; host.misc &lt;&lt; host.port; });</div>
 <div class="line">  _mdns.hostRemoved([](<span class="keyword">const</span> MulticastDns::Host &amp;host) { lsInfoRed() &lt;&lt; <span class="stringliteral">&quot;Removed&quot;</span> &lt;&lt; host.name &lt;&lt; host.ipv4 &lt;&lt; host.llipv4 &lt;&lt; host.misc &lt;&lt; host.port; });</div>
 <div class="line"> </div>
-<div class="line">  _mdns.startService(<span class="stringliteral">&quot;AsyncFw_host&quot;</span>, <span class="stringliteral">&quot;169.254.0.1&quot;</span>, <span class="stringliteral">&quot;AsyncFw_misc_string&quot;</span>, 18080);</div>
+<div class="line">  _mdns.startService(<span class="stringliteral">&quot;AsyncFw_host&quot;</span>, <span class="stringliteral">&quot;AsyncFw_misc_string&quot;</span>, 18080);</div>
 <div class="line">  _mdns.startQuerier(1);</div>
 <div class="line"> </div>
 <div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">Timer::single</a>(100, [&amp;_mdns]() { _mdns.stopService(); });</div>

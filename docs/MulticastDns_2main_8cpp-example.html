@@ -128,7 +128,7 @@ $(function(){initNavTree('MulticastDns_2main_8cpp-example.html',''); initResizab
 <div class="line">  _mdns.hostChanged([](<span class="keyword">const</span> MulticastDns::Host &amp;host) { lsInfoMagenta() &lt;&lt; <span class="stringliteral">&quot;Changed&quot;</span> &lt;&lt; host.name &lt;&lt; host.ipv4 &lt;&lt; host.llipv4 &lt;&lt; host.misc &lt;&lt; host.port; });</div>
 <div class="line">  _mdns.hostRemoved([](<span class="keyword">const</span> MulticastDns::Host &amp;host) { lsInfoRed() &lt;&lt; <span class="stringliteral">&quot;Removed&quot;</span> &lt;&lt; host.name &lt;&lt; host.ipv4 &lt;&lt; host.llipv4 &lt;&lt; host.misc &lt;&lt; host.port; });</div>
 <div class="line"> </div>
-<div class="line">  _mdns.startService(<span class="stringliteral">&quot;AsyncFw_host&quot;</span>, <span class="stringliteral">&quot;169.254.0.1&quot;</span>, <span class="stringliteral">&quot;AsyncFw_misc_string&quot;</span>, 18080);</div>
+<div class="line">  _mdns.startService(<span class="stringliteral">&quot;AsyncFw_host&quot;</span>, <span class="stringliteral">&quot;AsyncFw_misc_string&quot;</span>, 18080);</div>
 <div class="line">  _mdns.startQuerier(1);</div>
 <div class="line"> </div>
 <div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">Timer::single</a>(100, [&amp;_mdns]() { _mdns.stopService(); });</div>
