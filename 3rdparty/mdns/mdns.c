@@ -52,6 +52,7 @@ mdns_record_txt_t txtbuffer[128];
 char mdns_llip[16];
 char mdns_misc[128];
 
+static struct sockaddr_in service_address_llipv4;
 static struct sockaddr_in service_address_ipv4;
 static struct sockaddr_in6 service_address_ipv6;
 
@@ -531,6 +532,7 @@ open_client_sockets(int* sockets, int max_sockets, int port) {
     return num_sockets;
   }
 
+  int first_llipv4 = 1;
   int first_ipv4 = 1;
   int first_ipv6 = 1;
   for (PIP_ADAPTER_ADDRESSES adapter = adapter_address; adapter; adapter = adapter->Next) {
@@ -548,6 +550,9 @@ open_client_sockets(int* sockets, int max_sockets, int port) {
             (saddr->sin_addr.S_un.S_un_b.s_b3 != 0) ||
             (saddr->sin_addr.S_un.S_un_b.s_b4 != 1)) {
           if((ntohl(saddr->sin_addr.s_addr) & 0xFFFF0000) == 0xA9FE0000) {
+            if(!first_llipv4) continue;
+            first_llipv4 = 0;
+            service_address_llipv4 = *saddr;
             ipv4_address_to_string(mdns_llip, sizeof(mdns_llip), saddr, sizeof(struct sockaddr_in));
             printf("LinkLocal IPv4 address: %s\n", mdns_llip);
             continue;
@@ -631,6 +636,22 @@ open_client_sockets(int* sockets, int max_sockets, int port) {
       }
     }
   }
+  if (first_ipv4 && !first_llipv4) {
+    service_address_ipv4 = service_address_llipv4;
+    has_ipv4 = 1;
+    if (num_sockets < max_sockets) {
+      service_address_ipv4.sin_port = htons(port);
+      int sock = mdns_socket_open_ipv4(&service_address_ipv4);
+      if (sock >= 0) {
+        sockets[num_sockets++] = sock;
+#ifdef EXTEND_MDNS_TRACE
+        char buffer[128];
+        mdns_string_t addr = ipv4_address_to_string(buffer, sizeof(buffer), &service_address_ipv4, sizeof(struct sockaddr_in));
+        printf("Local IPv4/LLIpv4 address: %.*s\n", MDNS_STRING_FORMAT(addr));
+#endif
+      }
+    }
+  }
 
   free(adapter_address);
 
@@ -641,6 +662,7 @@ open_client_sockets(int* sockets, int max_sockets, int port) {
 
   if (getifaddrs(&ifaddr) < 0) { printf("Unable to get interface addresses\n"); }
 
+  int first_llipv4 = 1;
   int first_ipv4 = 1;
   int first_ipv6 = 1;
   for (ifa = ifaddr; ifa; ifa = ifa->ifa_next) {
@@ -655,6 +677,9 @@ open_client_sockets(int* sockets, int max_sockets, int port) {
       struct sockaddr_in* saddr = (struct sockaddr_in*)ifa->ifa_addr;
       if (saddr->sin_addr.s_addr != htonl(INADDR_LOOPBACK)) {
         if((ntohl(saddr->sin_addr.s_addr) & 0xFFFF0000) == 0xA9FE0000) {
+          if(!first_llipv4) continue;
+          first_llipv4 = 0;
+          service_address_llipv4 = *saddr;
           ipv4_address_to_string(mdns_llip, sizeof(mdns_llip), saddr, sizeof(struct sockaddr_in));
           printf("LinkLocal IPv4 address: %s\n", mdns_llip);
           continue;
@@ -732,6 +757,22 @@ open_client_sockets(int* sockets, int max_sockets, int port) {
                                                       sizeof(struct sockaddr_in6));
           printf("Local IPv6 address: %.*s\n", MDNS_STRING_FORMAT(addr));
         }
+#endif
+      }
+    }
+  }
+  if (first_ipv4 && !first_llipv4) {
+    service_address_ipv4 = service_address_llipv4;
+    has_ipv4 = 1;
+    if (num_sockets < max_sockets) {
+      service_address_ipv4.sin_port = htons(port);
+      int sock = mdns_socket_open_ipv4(&service_address_ipv4);
+      if (sock >= 0) {
+        sockets[num_sockets++] = sock;
+#ifdef EXTEND_MDNS_TRACE
+        char buffer[128];
+        mdns_string_t addr = ipv4_address_to_string(buffer, sizeof(buffer), &service_address_ipv4, sizeof(struct sockaddr_in));
+        printf("Local IPv4/LLIpv4 address: %.*s\n", MDNS_STRING_FORMAT(addr));
 #endif
       }
     }
