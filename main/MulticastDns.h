@@ -34,7 +34,7 @@ public:
   void setServiceType(const std::string &_serviceType);
   std::string serviceType() { return serviceType_; };
 
-  bool startService(const std::string &hostname, const std::string &llip, const std::string &misc, uint16_t port);
+  bool startService(const std::string &hostname, const std::string &misc, uint16_t port);
   void stopService(bool send_goodbye = true);
   bool serviceRunning();
 

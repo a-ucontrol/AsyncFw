@@ -645,10 +645,10 @@ open_client_sockets(int* sockets, int max_sockets, int port) {
       continue;
     if ((ifa->ifa_flags & IFF_LOOPBACK) || (ifa->ifa_flags & IFF_POINTOPOINT))
       continue;
-    if (strstr(ifa->ifa_name, ":")) {
-      printf("Iface name: %s\n", ifa->ifa_name);
-      continue;
-    }
+    //if (strstr(ifa->ifa_name, ":")) {
+    //  printf("Iface name: %s\n", ifa->ifa_name);
+    //  continue;
+    //}
 
     if (ifa->ifa_addr->sa_family == AF_INET) {
       struct sockaddr_in* saddr = (struct sockaddr_in*)ifa->ifa_addr;

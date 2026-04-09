@@ -27,7 +27,6 @@ extern char addrbuffer[64];
 extern char entrybuffer[256];
 extern char namebuffer[256];
 extern mdns_record_txt_t txtbuffer[128];
-extern char mdns_llip[16];
 extern char mdns_misc[128];
 extern int mdns_send_goodbye;
 
@@ -202,11 +201,10 @@ int MulticastDns::sendQuery(const std::vector<std::pair<std::string, std::string
 
 bool MulticastDns::serviceRunning() { return !sfds.empty(); }
 
-bool MulticastDns::startService(const std::string &hostname, const std::string &llip, const std::string &misc, uint16_t port) {
+bool MulticastDns::startService(const std::string &hostname, const std::string &misc, uint16_t port) {
   if (!sfds.empty()) return false;
-  snprintf(mdns_llip, sizeof(mdns_llip), "%s", llip.c_str());
   snprintf(mdns_misc, sizeof(mdns_misc), "%s", misc.c_str());
-  lsDebug() << hostname << serviceType_ << mdns_llip << mdns_misc << port;
+  lsDebug() << hostname << serviceType_ << mdns_misc << port;
   int *sockets;
   int num;
   int r = start_mdns_service(hostname.c_str(), serviceType_.c_str(), port, &sockets, &num);
