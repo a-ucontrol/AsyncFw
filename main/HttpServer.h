@@ -262,7 +262,7 @@ public:
   void setEnableCorsRequests(bool);
   void setPeek(std::function<bool(const Request &, const std::any &)> f) { peek = f; }
 
-  static HttpServer *instance() { return instance_.value; }
+  static inline HttpServer *instance() { return instance_.value; }
   AsyncFw::FunctionConnectorProtected<HttpServer>::Connector<int, const std::string &, bool *> incoming {AsyncFw::AbstractFunctionConnector::SyncOnly};
 
 protected:
