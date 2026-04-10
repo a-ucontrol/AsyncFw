@@ -31,20 +31,20 @@ int main(int argc, char *argv[]) {
     logNotice() << "Start '/bin/bash' error";
     return 0;
   }
-  AsyncFw::Timer::single(50, [&process]() { process.input("echo 1234567890\n"); });
-  AsyncFw::Timer::single(100, [&process]() { process.input("_cmd_\n"); });  //error: _cmd_ not found
-  AsyncFw::Timer::single(150, [&process]() { process.input("ls\n"); });
-  AsyncFw::Timer::single(200, [&process]() { process.input("exit\n"); });
+  AsyncFw::Timer::single(10, [&process]() { process.input("echo 1234567890\n"); });
+  AsyncFw::Timer::single(20, [&process]() { process.input("_cmd_\n"); });  //error: _cmd_ not found
+  AsyncFw::Timer::single(30, [&process]() { process.input("ls\n"); });
+  AsyncFw::Timer::single(40, [&process]() { process.input("exit\n"); });
 #else
   bool _r = process.start("cmd.exe");
   if (!_r) {
     logNotice() << "Start 'cmd.exe' error";
     return 0;
   }
-  AsyncFw::Timer::single(50, [&process]() { process.input("echo 1234567890\n"); });
-  AsyncFw::Timer::single(100, [&process]() { process.input("_cmd_\n"); });  //error: _cmd_ not found
-  AsyncFw::Timer::single(150, [&process]() { process.input("dir\n"); });
-  AsyncFw::Timer::single(200, [&process]() { process.input("exit\n"); });
+  AsyncFw::Timer::single(10, [&process]() { process.input("echo 1234567890\n"); });
+  AsyncFw::Timer::single(20, [&process]() { process.input("_cmd_\n"); });  //error: _cmd_ not found
+  AsyncFw::Timer::single(30, [&process]() { process.input("dir\n"); });
+  AsyncFw::Timer::single(40, [&process]() { process.input("exit\n"); });
 #endif
   logNotice() << "Start Applicaiton";
   int ret = AsyncFw::MainThread::exec();

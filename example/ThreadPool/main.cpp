@@ -29,20 +29,20 @@ int main(int argc, char *argv[]) {
 
   AsyncFw::ThreadPool::sync(_t, []() {
     AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::currentThread();
-    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    std::this_thread::sleep_for(std::chrono::milliseconds(10));
     logInfo() << "sync run in thread" << ct->name() << ct->id();
   });
 
   AsyncFw::ThreadPool::async([]() {
     AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::currentThread();
-    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    std::this_thread::sleep_for(std::chrono::milliseconds(10));
     logInfo() << "async run in thread" << ct->name() << ct->id();
   });
 
   AsyncFw::ThreadPool::async(
       []() {
         AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::currentThread();
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
         logInfo() << "async run in thread" << ct->name() << ct->id();
       },
       []() {
@@ -53,7 +53,7 @@ int main(int argc, char *argv[]) {
   AsyncFw::ThreadPool::async(
       []() {
         AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::currentThread();
-        std::this_thread::sleep_for(std::chrono::milliseconds(150));
+        std::this_thread::sleep_for(std::chrono::milliseconds(15));
         logInfo() << "async run in thread" << ct->name() << ct->id();
         return 1;
       },

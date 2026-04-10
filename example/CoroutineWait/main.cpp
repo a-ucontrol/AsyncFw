@@ -51,12 +51,12 @@ int main(int argc, char *argv[]) {
   //tst(5000);
 
   Timer::single(10, []() { tst(10); });
-  Timer::single(10, []() { tst(150); });
-  Timer::single(10, []() { tst(200); });
+  Timer::single(10, []() { tst(15); });
+  Timer::single(10, []() { tst(20); });
   Timer::single(10, []() { tst(50); });
-  Timer::single(10, []() { tst(100); });
+  Timer::single(10, []() { tst(10); });
 
-  Timer::single(1000, []() {
+  Timer::single(100, []() {
     logNotice() << "MainThread::quit()";
     MainThread::exit();
   });

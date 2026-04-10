@@ -23,8 +23,8 @@ int main(int argc, char *argv[]) {
   _mdns.startService("AsyncFw_host", "AsyncFw_misc_string", 18080);
   _mdns.startQuerier(1);
 
-  Timer::single(100, [&_mdns]() { _mdns.stopService(); });
-  Timer::single(200, [&_mdns]() { MainThread::exit(); });
+  Timer::single(10, [&_mdns]() { _mdns.stopService(); });
+  Timer::single(20, [&_mdns]() { MainThread::exit(); });
 
   lsNotice() << "Start Applicaiton";
   int ret = MainThread::exec();

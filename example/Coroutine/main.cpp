@@ -16,7 +16,7 @@ AsyncFw::CoroutineTask task() {
         [h]() {
           AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::currentThread();
           logInfo() << "task: run in thread" << ct->name() << ct->id();
-          std::this_thread::sleep_for(std::chrono::milliseconds(100));
+          std::this_thread::sleep_for(std::chrono::milliseconds(10));
         },
         [h]() {
           AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::currentThread();
@@ -40,7 +40,7 @@ int main(int argc, char *argv[]) {
           [h]() {
             AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::currentThread();
             logInfo() << "coro_task: run in thread" << ct->name() << ct->id();
-            std::this_thread::sleep_for(std::chrono::milliseconds(150));
+            std::this_thread::sleep_for(std::chrono::milliseconds(15));
           },
           [h]() {
             AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::currentThread();

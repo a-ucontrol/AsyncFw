@@ -64,6 +64,10 @@ void run_examples() {
   logInfo() << "Start:" << app;
   process.start(app);
   process.wait();
+  app = EXAMPLES_PATH "SocketExample";
+  logInfo() << "Start:" << app;
+  process.start(app);
+  process.wait();
   app = EXAMPLES_PATH "HttpSocketExample";
   logInfo() << "Start:" << app;
   process.start(app);
