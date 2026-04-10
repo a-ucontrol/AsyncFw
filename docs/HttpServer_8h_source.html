@@ -369,7 +369,7 @@ $(function(){initNavTree('HttpServer_8h_source.html',''); initResizable(true); }
 <div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>  <span class="keywordtype">void</span> setEnableCorsRequests(<span class="keywordtype">bool</span>);</div>
 <div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>  <span class="keywordtype">void</span> setPeek(std::function&lt;<span class="keywordtype">bool</span>(<span class="keyword">const</span> Request &amp;, <span class="keyword">const</span> std::any &amp;)&gt; f) { peek = f; }</div>
 <div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span> </div>
-<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>  <span class="keyword">static</span> HttpServer *instance() { <span class="keywordflow">return</span> instance_.value; }</div>
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>  <span class="keyword">static</span> <span class="keyword">inline</span> HttpServer *instance() { <span class="keywordflow">return</span> instance_.value; }</div>
 <div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>  AsyncFw::FunctionConnectorProtected&lt;HttpServer&gt;::Connector&lt;int, <span class="keyword">const</span> std::string &amp;, <span class="keywordtype">bool</span> *&gt; incoming {AsyncFw::AbstractFunctionConnector::SyncOnly};</div>
 <div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span> </div>
 <div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span><span class="keyword">protected</span>:</div>

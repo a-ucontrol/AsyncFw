@@ -131,8 +131,8 @@ $(function(){initNavTree('MulticastDns_2main_8cpp-example.html',''); initResizab
 <div class="line">  _mdns.startService(<span class="stringliteral">&quot;AsyncFw_host&quot;</span>, <span class="stringliteral">&quot;AsyncFw_misc_string&quot;</span>, 18080);</div>
 <div class="line">  _mdns.startQuerier(1);</div>
 <div class="line"> </div>
-<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">Timer::single</a>(100, [&amp;_mdns]() { _mdns.stopService(); });</div>
-<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">Timer::single</a>(200, [&amp;_mdns]() { MainThread::exit(); });</div>
+<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">Timer::single</a>(10, [&amp;_mdns]() { _mdns.stopService(); });</div>
+<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">Timer::single</a>(20, [&amp;_mdns]() { MainThread::exit(); });</div>
 <div class="line"> </div>
 <div class="line">  lsNotice() &lt;&lt; <span class="stringliteral">&quot;Start Applicaiton&quot;</span>;</div>
 <div class="line">  <span class="keywordtype">int</span> ret = MainThread::exec();</div>

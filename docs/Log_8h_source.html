@@ -184,7 +184,7 @@ $(function(){initNavTree('Log_8h_source.html',''); initResizable(true); });
 <div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span> </div>
 <div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>  <span class="keyword">using </span>AbstractLog::append;</div>
 <div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span> </div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>  <span class="keyword">inline</span> <span class="keyword">static</span> Log *instance() { <span class="keywordflow">return</span> instance_.value; }</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>  <span class="keyword">static</span> <span class="keyword">inline</span> Log *instance() { <span class="keywordflow">return</span> instance_.value; }</div>
 <div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> </div>
 <div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>  Log(<span class="keywordtype">int</span> = 0, <span class="keyword">const</span> std::string &amp; = {});</div>
 <div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>  ~Log() <span class="keyword">override</span>;</div>
@@ -209,15 +209,16 @@ $(function(){initNavTree('Log_8h_source.html',''); initResizable(true); });
 <div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>  <span class="keywordtype">int</span> timerIdAutosave = -1;</div>
 <div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span> </div>
 <div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>  <span class="keyword">static</span> <span class="keyword">class </span>Instance : <span class="keyword">public</span> <a class="code hl_class" href="classAsyncFw_1_1Instance.html">AsyncFw::Instance</a>&lt;Log&gt; {</div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>    <span class="keyword">using </span><a class="code hl_class" href="classAsyncFw_1_1Instance.html">AsyncFw::Instance</a>&lt;Log&gt;::Instance;</div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>    <span class="keywordtype">void</span> created() <span class="keyword">override</span>;</div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>  } instance_;</div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>  <span class="keyword">static</span> <span class="keywordtype">void</span> lsAppend(<span class="keyword">const</span> Message &amp;m, uint8_t t);</div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>  <a class="code hl_class" href="classAsyncFw_1_1FunctionConnectionGuard.html">FunctionConnectionGuard</a> tdg;</div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>};</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>  <span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">class </span>Instance : <span class="keyword">public</span> <a class="code hl_class" href="classAsyncFw_1_1Instance.html">AsyncFw::Instance</a>&lt;Log&gt; {</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>  <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>    Instance() : <a class="code hl_class" href="classAsyncFw_1_1Instance.html">AsyncFw::Instance&lt;Log&gt;</a>(<span class="stringliteral">&quot;Log&quot;</span>) {}</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>    <span class="keywordtype">void</span> created() <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>  } instance_;</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>  <span class="keyword">static</span> <span class="keywordtype">void</span> lsAppend(<span class="keyword">const</span> Message &amp;m, uint8_t t);</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>  <a class="code hl_class" href="classAsyncFw_1_1FunctionConnectionGuard.html">FunctionConnectionGuard</a> tdg;</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>};</div>
 </div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>}  <span class="comment">// namespace AsyncFw</span></div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>}  <span class="comment">// namespace AsyncFw</span></div>
 <div class="ttc" id="aclassAsyncFw_1_1AbstractLog_html"><div class="ttname"><a href="classAsyncFw_1_1AbstractLog.html">AsyncFw::AbstractLog</a></div><div class="ttdoc">The AbstractLog class provides the base functionality for logger.</div><div class="ttdef"><b>Definition</b> Log.h:20</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1FunctionConnectionGuard_html"><div class="ttname"><a href="classAsyncFw_1_1FunctionConnectionGuard.html">AsyncFw::FunctionConnectionGuard</a></div><div class="ttdoc">The FunctionConnectionGuard class.</div><div class="ttdef"><b>Definition</b> FunctionConnector.h:146</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1Instance_html"><div class="ttname"><a href="classAsyncFw_1_1Instance.html">AsyncFw::Instance</a></div><div class="ttdoc">The Instance class.</div><div class="ttdef"><b>Definition</b> Instance.h:40</div></div>

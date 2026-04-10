@@ -139,20 +139,20 @@ $(function(){initNavTree('SystemProcess_2main_8cpp-example.html',''); initResiza
 <div class="line">    logNotice() &lt;&lt; <span class="stringliteral">&quot;Start &#39;/bin/bash&#39; error&quot;</span>;</div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">  }</div>
-<div class="line">  <a id="a4" name="a4"></a><a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">AsyncFw::Timer::single</a>(50, [&amp;process]() { process.<a id="a5" name="a5"></a>input(<span class="stringliteral">&quot;echo 1234567890\n&quot;</span>); });</div>
-<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">AsyncFw::Timer::single</a>(100, [&amp;process]() { process.input(<span class="stringliteral">&quot;_cmd_\n&quot;</span>); });  <span class="comment">//error: _cmd_ not found</span></div>
-<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">AsyncFw::Timer::single</a>(150, [&amp;process]() { process.input(<span class="stringliteral">&quot;ls\n&quot;</span>); });</div>
-<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">AsyncFw::Timer::single</a>(200, [&amp;process]() { process.input(<span class="stringliteral">&quot;exit\n&quot;</span>); });</div>
+<div class="line">  <a id="a4" name="a4"></a><a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">AsyncFw::Timer::single</a>(10, [&amp;process]() { process.<a id="a5" name="a5"></a>input(<span class="stringliteral">&quot;echo 1234567890\n&quot;</span>); });</div>
+<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">AsyncFw::Timer::single</a>(20, [&amp;process]() { process.input(<span class="stringliteral">&quot;_cmd_\n&quot;</span>); });  <span class="comment">//error: _cmd_ not found</span></div>
+<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">AsyncFw::Timer::single</a>(30, [&amp;process]() { process.input(<span class="stringliteral">&quot;ls\n&quot;</span>); });</div>
+<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">AsyncFw::Timer::single</a>(40, [&amp;process]() { process.input(<span class="stringliteral">&quot;exit\n&quot;</span>); });</div>
 <div class="line"><span class="preprocessor">#else</span></div>
 <div class="line">  <span class="keywordtype">bool</span> _r = process.start(<span class="stringliteral">&quot;cmd.exe&quot;</span>);</div>
 <div class="line">  <span class="keywordflow">if</span> (!_r) {</div>
 <div class="line">    logNotice() &lt;&lt; <span class="stringliteral">&quot;Start &#39;cmd.exe&#39; error&quot;</span>;</div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">  }</div>
-<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">AsyncFw::Timer::single</a>(50, [&amp;process]() { process.input(<span class="stringliteral">&quot;echo 1234567890\n&quot;</span>); });</div>
-<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">AsyncFw::Timer::single</a>(100, [&amp;process]() { process.input(<span class="stringliteral">&quot;_cmd_\n&quot;</span>); });  <span class="comment">//error: _cmd_ not found</span></div>
-<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">AsyncFw::Timer::single</a>(150, [&amp;process]() { process.input(<span class="stringliteral">&quot;dir\n&quot;</span>); });</div>
-<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">AsyncFw::Timer::single</a>(200, [&amp;process]() { process.input(<span class="stringliteral">&quot;exit\n&quot;</span>); });</div>
+<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">AsyncFw::Timer::single</a>(10, [&amp;process]() { process.input(<span class="stringliteral">&quot;echo 1234567890\n&quot;</span>); });</div>
+<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">AsyncFw::Timer::single</a>(20, [&amp;process]() { process.input(<span class="stringliteral">&quot;_cmd_\n&quot;</span>); });  <span class="comment">//error: _cmd_ not found</span></div>
+<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">AsyncFw::Timer::single</a>(30, [&amp;process]() { process.input(<span class="stringliteral">&quot;dir\n&quot;</span>); });</div>
+<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">AsyncFw::Timer::single</a>(40, [&amp;process]() { process.input(<span class="stringliteral">&quot;exit\n&quot;</span>); });</div>
 <div class="line"><span class="preprocessor">#endif</span></div>
 <div class="line">  logNotice() &lt;&lt; <span class="stringliteral">&quot;Start Applicaiton&quot;</span>;</div>
 <div class="line">  <span class="keywordtype">int</span> ret = AsyncFw::MainThread::exec();</div>

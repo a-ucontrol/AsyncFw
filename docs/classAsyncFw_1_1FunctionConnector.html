@@ -199,7 +199,7 @@ class AsyncFw::FunctionConnector&lt; Args &gt;</div><p>Обеспечивает 
 <div class="line">      connector(cnt++);</div>
 <div class="line">      <span class="keywordflow">if</span> (cnt == 3) AsyncFw::MainThread::exit(0);</div>
 <div class="line">    });</div>
-<div class="line">    timer.start(100);</div>
+<div class="line">    timer.start(10);</div>
 <div class="line">  }</div>
 <div class="line"> </div>
 <div class="line">  <span class="keyword">mutable</span> AsyncFw::FunctionConnectorProtected&lt;Sender&gt;::Connector&lt;<span class="keywordtype">int</span>&gt; connector;</div>
