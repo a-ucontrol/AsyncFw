@@ -178,8 +178,6 @@ void AbstractLog::stopTimer(int *timerId) {
   }
 }
 
-Log::Instance Log::instance_ {"Log"};
-
 void Log::Instance::created() {
   LogStream::setCompleted(&lsAppend);
   lsTrace();
