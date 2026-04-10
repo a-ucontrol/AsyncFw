@@ -34,7 +34,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 using namespace AsyncFw;
 
 struct HttpServer::Private {
-  inline static std::map<std::string, std::string> mimeTypes {
+  static inline std::map<std::string, std::string> mimeTypes {
       {"3g2", "video/3gpp2"},
       {"3gp", "video/3gpp"},
       {"3gpp", "video/3gpp"},

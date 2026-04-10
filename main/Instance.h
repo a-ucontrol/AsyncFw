@@ -78,6 +78,6 @@ protected:
 
 private:
   T *value;
-  inline static Instance<T> *i_;
+  static inline Instance<T> *i_;
 };
 }  // namespace AsyncFw

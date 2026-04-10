@@ -39,7 +39,7 @@ struct TlsContext::Private {
   int ref_ = 0;
   uint8_t ignoreErrors_ = 0;
 
-  inline static std::vector<Private *> verify_;
+  static inline std::vector<Private *> verify_;
 };
 
 DataArray TlsContext::Private::key(EVP_PKEY *_k) {

@@ -76,7 +76,7 @@ public:
 
   using AbstractLog::append;
 
-  inline static Log *instance() { return instance_.value; }
+  static inline Log *instance() { return instance_.value; }
 
   Log(int = 0, const std::string & = {});
   ~Log() override;

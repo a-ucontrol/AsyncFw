@@ -135,7 +135,7 @@ struct AbstractThread::Private {
   std::queue<ProcessPollTask> process_poll_tasks_;
   int nested_ = 0;
 
-  inline static struct List : public std::vector<AbstractThread *> {
+  static inline struct List : public std::vector<AbstractThread *> {
     ~List();
     std::mutex mutex;
   } list __attribute__((init_priority(AsyncFw_STATIC_INIT_PRIORITY + 1)));
