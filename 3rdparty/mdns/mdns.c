@@ -931,7 +931,7 @@ void mdns_querier_event(int fd) {
   void *user_data = &qd.host;
   int query_id    = -1;
   for (int isock = 0; isock < qd.num_sockets; ++isock)
-    if (qd.sockets[isock] == fd) query_id = qd.query_id[query_id];
+    if (qd.sockets[isock] == fd) query_id = qd.query_id[isock];
   size_t rec = mdns_query_recv(fd, qd.buffer, qd.capacity, query_callback, user_data, query_id);
   if (rec > 0)
     if (qd.host) append_host(qd.host);
