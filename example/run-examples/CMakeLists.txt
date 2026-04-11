@@ -11,10 +11,6 @@ if(AMD64_USE_QAPPLICATION)
   add_definitions(-DUSE_QAPPLICATION)
 endif()
 
-#if(${CMAKE_SYSTEM_PROCESSOR} STREQUAL "AMD64" AND USE_QAPPLICATION)
-#  find_package(Qt6 CONFIG COMPONENTS Core)
-#endif()
-
 set(PROJECT_SOURCES
   main.cpp
 )
@@ -27,7 +23,3 @@ target_link_libraries(${TARGET} ${AsyncFw_PROJECT_NAME})
 set_target_properties(${TARGET} PROPERTIES
   RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/example-bin"
 )
-
-if(${CMAKE_SYSTEM_PROCESSOR} STREQUAL "AMD64" AND USE_QAPPLICATION)
-  target_link_libraries(${AsyncFw_PROJECT_NAME} Qt6::Core)
-endif()
