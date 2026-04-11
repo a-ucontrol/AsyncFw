@@ -11,7 +11,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 using namespace AsyncFw;
 
-AbstractThreadPool::List AbstractThreadPool::pools_;
+AbstractThreadPool::List AbstractThreadPool::pools_ __attribute__((init_priority(AsyncFw_STATIC_INIT_PRIORITY + 3)));
 
 AbstractThreadPool::List::~List() {
   if (!empty()) {
