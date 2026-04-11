@@ -275,7 +275,7 @@ private:
   RulesMap::iterator findRule(const std::string &, const Request::Method);
   std::vector<TcpSocket *> sockets;
   bool cors_request_enabled = true;
-  static inline Instance<HttpServer> instance_ {"HttpServer"};
+  static Instance<HttpServer> instance_;
   std::function<bool(const Request &, std::any)> peek;
   Private *private_;
 };

@@ -11,6 +11,8 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 using namespace AsyncFw;
 
+AbstractThreadPool::List AbstractThreadPool::pools_;
+
 AbstractThreadPool::List::~List() {
   if (!empty()) {
     lsError() << "thread pool list not empty:" << size();
@@ -97,6 +99,8 @@ void AbstractThreadPool::Thread::destroy() {
   }
   lsTrace();
 }
+
+Instance<ThreadPool> ThreadPool::instance_ {"ThreadPool"};
 
 ThreadPool::ThreadPool(const std::string &name, int workThreads) : AbstractThreadPool(name), workThreadsSize(workThreads) { lsTrace() << "created" << name; }
 

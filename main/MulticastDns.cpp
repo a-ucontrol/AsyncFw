@@ -127,6 +127,8 @@ void append_host(void *_host) {
 }
 }
 
+Instance<MulticastDns> MulticastDns::instance_ {"MulticastDns"};
+
 MulticastDns::MulticastDns(const std::string &_serviceType) {
   if (!instance_.value) {
     instance_.value = this;

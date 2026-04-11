@@ -25,11 +25,6 @@ public:
     AbstractThreadPool *pool;
   };
 
-  struct List : public std::vector<AbstractThreadPool *> {
-    friend AbstractThreadPool;
-    ~List();
-  };
-
   static std::vector<AbstractThreadPool *> pools() { return pools_; }
   AbstractThreadPool(const std::string &);
   virtual ~AbstractThreadPool();
@@ -46,10 +41,13 @@ protected:
   AbstractThread *thread_;
 
 private:
+  static struct List : public std::vector<AbstractThreadPool *> {
+    friend AbstractThreadPool;
+    ~List();
+  } pools_;
   struct Compare {
     bool operator()(const AbstractThread *t1, const AbstractThread *t2) const { return t1 < t2; }
   };
-  static inline List pools_;
   std::string name_;
 };
 
@@ -89,7 +87,7 @@ public:
     return async(instance_.value->getThread(), m, r);
   }
 
-  static ThreadPool *instance() { return instance_.value; }
+  static inline ThreadPool *instance() { return instance_.value; }
 
   ThreadPool(const std::string &, int = ThreadPool_DEFAULT_WORK_THREADS);
   ThreadPool(int workThreads = ThreadPool_DEFAULT_WORK_THREADS) : ThreadPool("ThreadPool", workThreads) {}
@@ -103,7 +101,7 @@ public:
   AbstractThreadPool::Thread *getThread();
 
 private:
-  static inline AsyncFw::Instance<ThreadPool> instance_ {"ThreadPool"};
+  static Instance<ThreadPool> instance_;
   std::vector<AbstractThreadPool::Thread *> workThreads_;
   int workThreadsSize;
 };
