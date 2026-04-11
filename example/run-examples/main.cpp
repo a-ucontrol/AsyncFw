@@ -11,7 +11,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include <AsyncFw/Timer>
 #include <AsyncFw/Log>
 
-void run_examples() {
+void run_examples(bool _socket) {
   std::string app;
   AsyncFw::SystemProcess process;
   std::string err;
@@ -64,14 +64,17 @@ void run_examples() {
   logInfo() << "Start:" << app;
   process.start(app);
   process.wait();
-  app = EXAMPLES_PATH "SocketExample";
-  logInfo() << "Start:" << app;
-  process.start(app);
-  process.wait();
-  app = EXAMPLES_PATH "HttpSocketExample";
-  logInfo() << "Start:" << app;
-  process.start(app);
-  process.wait();
+
+  if (_socket) {
+    app = EXAMPLES_PATH "SocketExample";
+    logInfo() << "Start:" << app;
+    process.start(app);
+    process.wait();
+    app = EXAMPLES_PATH "HttpSocketExample";
+    logInfo() << "Start:" << app;
+    process.start(app);
+    process.wait();
+  }
 
   app = EXAMPLES_PATH "MulticastDnsExample";
   logInfo() << "Start:" << app;
@@ -112,7 +115,10 @@ int main(int argc, char *argv[]) {
     if (!_err.empty()) logError() << _err;
   });
 
-  AsyncFw::AbstractThread::currentThread()->invokeMethod([]() { run_examples(); });
+  bool _socket = false;
+  if (argc == 2 && std::string(argv[1]) == "--socket") _socket = true;
+
+  AsyncFw::AbstractThread::currentThread()->invokeMethod([_socket]() { run_examples(_socket); });
 
   logNotice() << "Start Applicaiton";
   int ret = AsyncFw::MainThread::exec();
