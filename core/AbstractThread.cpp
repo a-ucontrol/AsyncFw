@@ -50,7 +50,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #endif
 
 #define LOG_THREAD_NAME ('(' + private_.name + ')')
-#define QUEUE_TASKS_OVERLOAD_SIZE 32
+#define QUEUE_TASKS_OVERLOAD_SIZE 128
 
 #include "console_msg.hpp"
 
@@ -438,13 +438,12 @@ void AbstractThread::exec() {
     CONTINUE:
       if (!private_.tasks.empty()) {
         std::swap(private_.process_tasks_, private_.tasks);  //take new tasks
-        if (!private_.wake_ || private_.process_tasks_.size() < QUEUE_TASKS_OVERLOAD_SIZE) continue;
-        else {  //invoke tasks and check poll descriptors and timers
-          console_msg("AbstractThread " + LOG_THREAD_NAME, "queue tasks overload, warning limit: " + std::to_string(QUEUE_TASKS_OVERLOAD_SIZE) + ", size: " + std::to_string(private_.process_tasks_.size()));
-          private_.mutex.unlock();
-          private_.process_tasks();
-          private_.mutex.lock();
-        }
+        if (!private_.wake_ || private_.process_tasks_.size() <= QUEUE_TASKS_OVERLOAD_SIZE) continue;
+        //invoke tasks and check poll descriptors and timers
+        console_msg("AbstractThread " + LOG_THREAD_NAME, "queue tasks overload, warning limit: " + std::to_string(QUEUE_TASKS_OVERLOAD_SIZE) + ", size: " + std::to_string(private_.process_tasks_.size()));
+        private_.mutex.unlock();
+        private_.process_tasks();
+        private_.mutex.lock();
       }
       if (private_.state & Private::WaitFinished) break;
       if (private_.state == Private::WaitInterrupted) {
