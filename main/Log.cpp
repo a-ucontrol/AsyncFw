@@ -205,14 +205,15 @@ Log::~Log() {
 
 void Log::finality() {
   LogStream::setCompleted(&LogStream::console_output);
-  stopTimer(&timerIdAutosave);
   if (!thread_->invokeMethod(
           [this]() {
+            stopTimer(&timerIdAutosave);
             autoSave = -1;
             AbstractLog::finality();
           },
           true)) {
     console_msg("Log", "thread not running");
+    stopTimer(&timerIdAutosave);
     autoSave = -1;
     AbstractLog::finality();
   }
