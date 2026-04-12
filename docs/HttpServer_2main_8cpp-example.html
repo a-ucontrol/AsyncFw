@@ -127,26 +127,27 @@ $(function(){initNavTree('HttpServer_2main_8cpp-example.html',''); initResizable
 <div class="line">    HttpServer::Response *resp = request.<a id="a2" name="a2"></a>response();</div>
 <div class="line">    resp-&gt;<a id="a3" name="a3"></a>setMimeType(<span class="stringliteral">&quot;octet-stream&quot;</span>);</div>
 <div class="line">    resp-&gt;<a id="a4" name="a4"></a>setStatusCode(HttpServer::Response::StatusCode::Ok);</div>
-<div class="line">    resp-&gt;<a id="a5" name="a5"></a>addHeader(<span class="stringliteral">&quot;ContentLenght:0&quot;</span>);</div>
-<div class="line">    resp-&gt;<a id="a6" name="a6"></a>send();</div>
+<div class="line">    resp-&gt;<a id="a5" name="a5"></a>send();</div>
 <div class="line">    MainThread::exit();</div>
 <div class="line">  });</div>
 <div class="line"> </div>
 <div class="line">  _http.listen(18080);</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">if</span> (argc == 2 &amp;&amp; std::string(argv[1]) == <span class="stringliteral">&quot;--tst&quot;</span>) {</div>
-<div class="line">    <a id="_a7" name="_a7"></a><a class="code hl_class" href="classAsyncFw_1_1HttpSocket.html">HttpSocket</a> *_socket = HttpSocket::create();</div>
-<div class="line">    _socket-&gt;<a id="a8" name="a8"></a>stateChanged([_socket](<span class="keyword">const</span> AsyncFw::AbstractSocket::State state) {</div>
+<div class="line">    <a id="_a6" name="_a6"></a><a class="code hl_class" href="classAsyncFw_1_1HttpSocket.html">HttpSocket</a> *_socket = HttpSocket::create();</div>
+<div class="line">    _socket-&gt;<a id="a7" name="a7"></a>stateChanged([_socket](<span class="keyword">const</span> AsyncFw::AbstractSocket::State state) {</div>
 <div class="line">      <span class="keywordflow">if</span> (state == AsyncFw::AbstractSocket::State::Active) {</div>
 <div class="line">        logDebug() &lt;&lt; <span class="stringliteral">&quot;Send request&quot;</span>;</div>
-<div class="line">        _socket-&gt;<a id="a9" name="a9"></a>write(<span class="stringliteral">&quot;GET / HTTP/1.1\r\n\r\n&quot;</span>);</div>
+<div class="line">        _socket-&gt;<a id="a8" name="a8"></a>write(<span class="stringliteral">&quot;GET / HTTP/1.1\r\n\r\n&quot;</span>);</div>
 <div class="line">      }</div>
 <div class="line">    });</div>
-<div class="line">    _socket-&gt;<a id="a10" name="a10"></a>received([_socket](<span class="keyword">const</span> <a id="_a11" name="_a11"></a><a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> &amp;_da) {</div>
-<div class="line">      lsDebug() &lt;&lt; _da.<a id="a12" name="a12"></a>view(0, _da.size() &gt; 1024 ? 1024 : _da.size());</div>
-<div class="line">      _socket-&gt;write(<span class="stringliteral">&quot;GET /quit HTTP/1.1\r\n\r\n&quot;</span>);</div>
-<div class="line">    });</div>
-<div class="line">    _socket-&gt;<a id="a13" name="a13"></a>connect(<span class="stringliteral">&quot;127.0.0.1&quot;</span>, 18080);</div>
+<div class="line">    _socket-&gt;<a id="a9" name="a9"></a>received(</div>
+<div class="line">        [_socket](<span class="keyword">const</span> <a id="_a10" name="_a10"></a><a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> &amp;_da) {</div>
+<div class="line">          lsDebug() &lt;&lt; _da.<a id="a11" name="a11"></a>view(0, _da.size() &gt; 1024 ? 1024 : _da.size());</div>
+<div class="line">          _socket-&gt;write(<span class="stringliteral">&quot;GET /quit HTTP/1.1\r\n\r\n&quot;</span>);</div>
+<div class="line">        },</div>
+<div class="line">        AbstractFunctionConnector::Connection::Queued);</div>
+<div class="line">    _socket-&gt;<a id="a12" name="a12"></a>connect(<span class="stringliteral">&quot;127.0.0.1&quot;</span>, 18080);</div>
 <div class="line">  }</div>
 <div class="line"> </div>
 <div class="line">  lsNotice() &lt;&lt; <span class="stringliteral">&quot;Start Applicaiton&quot;</span>;</div>

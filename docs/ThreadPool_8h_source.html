@@ -133,7 +133,7 @@ $(function(){initNavTree('ThreadPool_8h_source.html',''); initResizable(true); }
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    AbstractThreadPool *pool;</div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>  };</div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>  <span class="keyword">static</span> std::vector&lt;AbstractThreadPool *&gt; pools() { <span class="keywordflow">return</span> pools_; }</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>  <span class="keyword">static</span> std::vector&lt;AbstractThreadPool *&gt; pools() { <span class="keywordflow">return</span> list_; }</div>
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>  AbstractThreadPool(<span class="keyword">const</span> std::string &amp;);</div>
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>  <span class="keyword">virtual</span> ~AbstractThreadPool();</div>
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>  <span class="keyword">virtual</span> <span class="keywordtype">void</span> quit();</div>
@@ -152,7 +152,7 @@ $(function(){initNavTree('ThreadPool_8h_source.html',''); initResizable(true); }
 <div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>  <span class="keyword">static</span> <span class="keyword">struct </span>List : <span class="keyword">public</span> std::vector&lt;AbstractThreadPool *&gt; {</div>
 <div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    <span class="keyword">friend</span> AbstractThreadPool;</div>
 <div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    ~List();</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>  } pools_;</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>  } list_;</div>
 <div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>  <span class="keyword">struct </span>Compare {</div>
 <div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    <span class="keywordtype">bool</span> operator()(<span class="keyword">const</span> <a class="code hl_class" href="classAsyncFw_1_1AbstractThread.html">AbstractThread</a> *t1, <span class="keyword">const</span> <a class="code hl_class" href="classAsyncFw_1_1AbstractThread.html">AbstractThread</a> *t2)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> t1 &lt; t2; }</div>
 <div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>  };</div>
