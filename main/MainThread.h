@@ -49,6 +49,7 @@ public:
     return mt_.code_;
 #else
     mt_.state_ = 1;
+    if (!qApp) return -1;
     return qApp->exec();
 #endif
   }

@@ -19,7 +19,6 @@ int main(int argc, char *argv[]) {
     HttpServer::Response *resp = request.response();
     resp->setMimeType("octet-stream");
     resp->setStatusCode(HttpServer::Response::StatusCode::Ok);
-    resp->addHeader("ContentLenght:0");
     resp->send();
     MainThread::exit();
   });
@@ -34,10 +33,12 @@ int main(int argc, char *argv[]) {
         _socket->write("GET / HTTP/1.1\r\n\r\n");
       }
     });
-    _socket->received([_socket](const AsyncFw::DataArray &_da) {
-      lsDebug() << _da.view(0, _da.size() > 1024 ? 1024 : _da.size());
-      _socket->write("GET /quit HTTP/1.1\r\n\r\n");
-    });
+    _socket->received(
+        [_socket](const AsyncFw::DataArray &_da) {
+          lsDebug() << _da.view(0, _da.size() > 1024 ? 1024 : _da.size());
+          _socket->write("GET /quit HTTP/1.1\r\n\r\n");
+        },
+        AbstractFunctionConnector::Connection::Queued);
     _socket->connect("127.0.0.1", 18080);
   }
 

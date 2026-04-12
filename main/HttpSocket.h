@@ -30,14 +30,14 @@ public:
   void close() override;
   void destroy() override;
 
-  AsyncFw::DataArrayView header();
-  AsyncFw::DataArrayView content();
+  DataArrayView header();
+  DataArrayView content();
   void sendFile(const std::string &);
 
-  AsyncFw::FunctionConnectorProtected<HttpSocket>::Connector<const AsyncFw::AbstractSocket::State> stateChanged;
-  AsyncFw::FunctionConnectorProtected<HttpSocket>::Connector<const AsyncFw::DataArray &> received;
-  AsyncFw::FunctionConnectorProtected<HttpSocket>::Connector<> writeContent;
-  AsyncFw::FunctionConnectorProtected<HttpSocket>::Connector<int> progress;
+  FunctionConnectorProtected<HttpSocket>::Connector<const AbstractSocket::State> stateChanged;
+  FunctionConnectorProtected<HttpSocket>::Connector<const DataArray &> received;
+  FunctionConnectorProtected<HttpSocket>::Connector<> writeContent;
+  FunctionConnectorProtected<HttpSocket>::Connector<int> progress;
 
 protected:
   HttpSocket();
@@ -46,8 +46,8 @@ protected:
   bool connectionClose = false;
 
 private:
-  AsyncFw::DataArray received_;
-  AsyncFw::File file_;
+  DataArray received_;
+  File file_;
   int progress_;
   int headerSize_;
   std::size_t contentLenght_ = std::string::npos;
