@@ -22,14 +22,12 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
   #include <linux/sockios.h>
 
   #define close_fd ::close
-  #define CONNECT_PROGRESS EINPROGRESS
   #define setsockopt_ptr
 #else
   #include <winsock2.h>
   #include <ws2tcpip.h>
 
   #define close_fd ::closesocket
-  #define CONNECT_PROGRESS ENOENT
   #define setsockopt_ptr reinterpret_cast<const char *>
   #define SHUT_RDWR SD_BOTH
 #endif
@@ -227,10 +225,16 @@ bool AbstractSocket::connect(const std::string &_address, uint16_t _port) {
   reinterpret_cast<sockaddr_in *>(&private_->pa_)->sin_port = htons(_port);
   reinterpret_cast<sockaddr_in *>(&private_->pa_)->sin_addr.s_addr = inet_addr(_address.c_str());
 
-  if (::connect(_fd, reinterpret_cast<struct sockaddr *>(&private_->pa_), sizeof(private_->pa_)) == -1) {
-    if (errno != CONNECT_PROGRESS) {
+  if (::connect(_fd, reinterpret_cast<struct sockaddr *>(&private_->pa_), sizeof(private_->pa_)) < 0) {
+    int _error;
+#ifndef _WIN32
+    if ((_error = errno) != EINPROGRESS)
+#else
+    if ((_error = WSAGetLastError()) != WSAEWOULDBLOCK)
+#endif
+    {
       close_fd(_fd);
-      lsError() << "connect error" << _address + ':' + std::to_string(_port) << _fd << errno;
+      lsError() << "connect error" << _address + ':' + std::to_string(_port) << _fd << _error;
       return false;
     }
   }
