@@ -355,11 +355,8 @@ bool DataArraySocket::connectToHost() {
 
   lsTrace() << address << port;
 
-  if (sslConnection) {
-    sslConnection = 3;
-    return AbstractTlsSocket::connect(address, port);
-  } else
-    return AbstractSocket::connect(address, port);
+  if (sslConnection) sslConnection = 3;
+  return AbstractTlsSocket::connect(address, port);
 }
 
 bool DataArraySocket::connectToHost(int timeout) {
