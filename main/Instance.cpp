@@ -12,7 +12,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 using namespace AsyncFw;
 
-AbstractInstance::List AbstractInstance::list __attribute__((init_priority(AsyncFw_STATIC_INIT_PRIORITY + 2)));
+AbstractInstance::List AbstractInstance::list __attribute__((init_priority(AsyncFw_STATIC_INIT_PRIORITY + 3)));
 
 void AbstractInstance::List::destroyValues() {
   lsDebug() << list.size();

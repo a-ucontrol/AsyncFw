@@ -11,23 +11,23 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 using namespace AsyncFw;
 
-AbstractThreadPool::List AbstractThreadPool::pools_ __attribute__((init_priority(AsyncFw_STATIC_INIT_PRIORITY + 3)));
+AbstractThreadPool::List AbstractThreadPool::list_ __attribute__((init_priority(AsyncFw_STATIC_INIT_PRIORITY + 2)));
 
 AbstractThreadPool::List::~List() {
   if (!empty()) {
     lsError() << "thread pool list not empty:" << size();
-    while (!pools_.empty()) {
-      AbstractThreadPool *_p = pools_.back();
+    while (!empty()) {
+      AbstractThreadPool *_p = back();
       delete _p;
     }
   }
-  lsDebug() << size();
+  lsDebug() << LogStream::Color::DarkMagenta << size();
 }
 
 AbstractThreadPool::AbstractThreadPool(const std::string &name) : name_(name) {
-  pools_.emplace_back(this);
+  list_.emplace_back(this);
   thread_ = AbstractThread::currentThread();
-  lsTrace("pools: " + std::to_string(pools_.size()));
+  lsTrace("pools: " + std::to_string(list_.size()));
 }
 
 AbstractThreadPool::~AbstractThreadPool() {
@@ -38,13 +38,13 @@ AbstractThreadPool::~AbstractThreadPool() {
     lsDebug() << LogStream::Color::Red << "destroyed with threads";
     AbstractThreadPool::quit();
   }
-  for (std::vector<AbstractThreadPool *>::iterator it = pools_.begin(); it != pools_.end(); it++) {
+  for (std::vector<AbstractThreadPool *>::iterator it = list_.begin(); it != list_.end(); it++) {
     if ((*it) == this) {
-      pools_.erase(it);
+      list_.erase(it);
       break;
     }
   }
-  lsTrace("pools: " + std::to_string(pools_.size()));
+  lsTrace("pools: " + std::to_string(list_.size()));
 }
 
 void AbstractThreadPool::quit() {
