@@ -165,15 +165,15 @@ void HttpSocket::writeEvent() {
 }
 
 void HttpSocket::disconnect() {
-  thread_->invokeMethod([this]() { AbstractTlsSocket::disconnect(); }, true);
+  thread_->invokeMethod([this]() { AbstractTlsSocket::disconnect(); });
 }
 
 void HttpSocket::close() {
-  thread_->invokeMethod([this]() { AbstractTlsSocket::close(); }, true);
+  thread_->invokeMethod([this]() { AbstractTlsSocket::close(); });
 }
 
 void HttpSocket::destroy() {
-  thread_->invokeMethod([this]() { AbstractTlsSocket::destroy(); }, true);
+  thread_->invokeMethod([this]() { AbstractTlsSocket::destroy(); });
 }
 
 DataArrayView HttpSocket::header() { return received_.view(0, headerSize_); }
