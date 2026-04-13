@@ -4,8 +4,9 @@ endif()
 
 set(VERSION_STRING 1.2.3)
 
-execute_process(
-  COMMAND ${CMAKE_COMMAND} -DSOURCE_DIR=${CMAKE_CURRENT_SOURCE_DIR} -DBINARY_DIR=${CMAKE_CURRENT_BINARY_DIR} -P ${CMAKE_CURRENT_LIST_DIR}/version.script.cmake)
+if(NOT EXISTS ${CMAKE_CURRENT_BINARY_DIR}/version)
+  execute_process(COMMAND ${CMAKE_COMMAND} -DSOURCE_DIR=${CMAKE_CURRENT_SOURCE_DIR} -DBINARY_DIR=${CMAKE_CURRENT_BINARY_DIR} -P ${CMAKE_CURRENT_LIST_DIR}/version.script.cmake)
+endif()
 
 file(READ ${CMAKE_CURRENT_BINARY_DIR}/version GIT_VERSION)
 
@@ -25,3 +26,14 @@ add_custom_target(app-version
   COMMENT "update version")
 
 message("GIT_VERSION: ${GIT_VERSION}, VERSION: ${VERSION_STRING}")
+
+set(VH "#pragma once
+#define GIT_VERSION \"${GIT_VERSION}\"
+#define VERSION_STRING \"${VERSION_STRING}\"
+")
+if(EXISTS "${CMAKE_CURRENT_BINARY_DIR}/version.hpp")
+  file(READ "${CMAKE_CURRENT_BINARY_DIR}/version.hpp" STR)
+endif()
+if(NOT VH STREQUAL STR)
+  file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/version.hpp" "${VH}")
+endif()

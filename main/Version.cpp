@@ -6,6 +6,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 */
 
 #include "Version.h"
+#include VERSION_HPP
 
 std::string AsyncFw::Version::str() { return VERSION_STRING; }
 
