@@ -453,7 +453,7 @@ HttpServer::~HttpServer() {
 
 void HttpServer::addRule(const std::string &url, const Request::Method method, std::function<void(const Request &)> exec) {
   if (findRule(url, method) != rules.end()) {
-    logError() << "Rule already exists:" << url << static_cast<int>(method);
+    lsError() << "Rule already exists:" << url << static_cast<int>(method);
     return;
   }
   HttpServer::rules.emplace(url, std::make_unique<HttpRule>(HttpServer::HttpRule(method, exec)));
@@ -498,7 +498,7 @@ bool HttpServer::listen(uint16_t port) {
     });
     lsDebug() << LogStream::Color::Green << *this;
   } else {
-    logError() << "Tcp server listen error, port:" << port;
+    lsError() << "Tcp server listen error, port:" << port;
   }
   return b;
 }
@@ -525,7 +525,7 @@ bool HttpServer::execRule(const Request &req) {
       i = j;
     }
     if (rule == rules.end() && (rule = findRule("/<arg>", req.method())) == rules.end()) {
-      logWarning() << "Rule not found:" << req.path() << "method:" << req.methodName();
+      lsWarning() << "Rule not found:" << req.path() << "method:" << req.methodName();
       return false;
     }
   }
@@ -553,7 +553,7 @@ void HttpServer::received(TcpSocket *socket, const std::string_view &ba) {
     if (!execRule(req)) {
       req.response_->setStatusCode(Response::StatusCode::BadRequest);
       req.response_->send();
-      logWarning() << "Rule not found:" << req.path() << "method:" << req.methodName();
+      lsWarning() << "Rule not found:" << req.path() << "method:" << req.methodName();
     }
   } else {
     lsTrace();
@@ -662,7 +662,7 @@ HttpServer::Request::Request(const std::string_view &str) {
 
   if (private_->res != httpparser::HttpRequestParser::ParsingCompleted) {
     method_ = Method::Unknown;
-    logWarning() << "Parsing failed\n" << str;
+    lsWarning() << "Parsing failed\n" << str;
     return;
   }
 
