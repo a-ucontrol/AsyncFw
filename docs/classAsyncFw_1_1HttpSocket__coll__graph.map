@@ -12,7 +12,7 @@
 <area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="608,12,730,15,796,23,861,35,885,46,914,57,912,62,883,50,860,40,795,28,729,21,608,17"/>
 <area shape="rect" id="Node000007" href="$classAsyncFw_1_1FunctionConnectorProtected.html" title=" " alt="" coords="404,65,607,108"/>
 <area shape="poly" id="edge6_Node000005_Node000007" title=" " alt="" coords="623,87,738,87,860,83,889,80,890,85,861,88,738,93,623,93"/>
-<area shape="rect" id="Node000008" href="$classAsyncFw_1_1FunctionConnectorProtected.html" title="Защищенный коннетор, отправитель может быть только один." alt="" coords="5,101,200,144"/>
+<area shape="rect" id="Node000008" href="$classAsyncFw_1_1FunctionConnectorProtected.html" title="Защищенный коннетор, отправитель может быть только один. &#160;&#160;Обеспечивает соединение отправитель &#45;&gt; пол..." alt="" coords="5,101,200,144"/>
 <area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="215,110,403,93,403,98,216,115"/>
 <area shape="rect" id="Node000009" href="$classAsyncFw_1_1FunctionConnectorProtected.html" title=" " alt="" coords="631,124,860,167"/>
 <area shape="poly" id="edge9_Node000009_Node000008" title=" " alt="" coords="215,129,224,129,440,138,631,141,630,147,440,143,224,135,215,134"/>

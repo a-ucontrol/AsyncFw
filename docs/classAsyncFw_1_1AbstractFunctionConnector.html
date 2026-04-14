@@ -112,7 +112,7 @@ $(function(){initNavTree('classAsyncFw_1_1AbstractFunctionConnector.html',''); i
 </div><!--header-->
 <div class="contents">
 
-<p>The <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector.html" title="The AbstractFunctionConnector class.">AbstractFunctionConnector</a> class.  
+<p>The <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector.html" title="The AbstractFunctionConnector class provides the base functionality for FunctionConnector.">AbstractFunctionConnector</a> class provides the base functionality for <a class="el" href="classAsyncFw_1_1FunctionConnector.html" title="Обеспечивает соединение отправитель -&gt; получатели. Получатели могут быть вызваны в своих потоках (по ...">FunctionConnector</a>.  
  <a href="#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="FunctionConnector_8h_source.html">AsyncFw/FunctionConnector</a>&gt;</code></p>
@@ -157,7 +157,13 @@ std::mutex&#160;</td><td class="memItemRight" valign="bottom"><b>mutex</b></td><
 <tr class="separator:a9cbe19db2de586f96ea1810ca2863cf6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>The <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector.html" title="The AbstractFunctionConnector class.">AbstractFunctionConnector</a> class. </p>
+<div class="textblock"><p>The <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector.html" title="The AbstractFunctionConnector class provides the base functionality for FunctionConnector.">AbstractFunctionConnector</a> class provides the base functionality for <a class="el" href="classAsyncFw_1_1FunctionConnector.html" title="Обеспечивает соединение отправитель -&gt; получатели. Получатели могут быть вызваны в своих потоках (по ...">FunctionConnector</a>. </p>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>If the default connection type (AbstractFunctionConnector::ConnectionType) is DirectOnly, AutoOnly, or SyncOnly and there is a type mismatch when connecting (AbstractFunctionConnector::Connection::Type), the exception std::runtime_error("fixed connection type") will be raised. </td></tr>
+  </table>
+  </dd>
+</dl>
 </div><hr/>The documentation for this class was generated from the following files:<ul>
 <li>core/<a class="el" href="FunctionConnector_8h_source.html">FunctionConnector.h</a></li>
 <li>core/<b>FunctionConnector.cpp</b></li>

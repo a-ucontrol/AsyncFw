@@ -11,7 +11,7 @@
 <!-- Node1 -->
 <g id="Node000001" class="node">
 <title>Node1</title>
-<g id="a_Node000001"><a xlink:title="Защищенный коннетор, отправитель может быть только один.">
+<g id="a_Node000001"><a xlink:title="Защищенный коннетор, отправитель может быть только один. &#160;&#160;Обеспечивает соединение отправитель &#45;&gt; пол...">
 <polygon fill="#999999" stroke="#666666" points="145.75,-364.47 0,-364.47 0,-332.47 145.75,-332.47 145.75,-364.47"/>
 <text text-anchor="start" x="8" y="-350.97" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::FunctionConnector</text>
 <text text-anchor="middle" x="72.88" y="-338.97" font-family="Helvetica,sans-Serif" font-size="10.00">Protected&lt; F &gt;</text>

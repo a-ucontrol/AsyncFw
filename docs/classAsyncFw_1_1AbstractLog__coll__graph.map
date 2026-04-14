@@ -6,6 +6,6 @@
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="107,159,152,249,147,251,102,162"/>
 <area shape="rect" id="Node000004" href="$classAsyncFw_1_1FunctionConnectorProtected.html" title=" " alt="" coords="202,112,406,155"/>
 <area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="271,167,172,252,169,248,267,163"/>
-<area shape="rect" id="Node000005" href="$classAsyncFw_1_1FunctionConnectorProtected.html" title="Защищенный коннетор, отправитель может быть только один." alt="" coords="207,5,401,48"/>
+<area shape="rect" id="Node000005" href="$classAsyncFw_1_1FunctionConnectorProtected.html" title="Защищенный коннетор, отправитель может быть только один. &#160;&#160;Обеспечивает соединение отправитель &#45;&gt; пол..." alt="" coords="207,5,401,48"/>
 <area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="307,64,307,111,301,111,301,64"/>
 </map>

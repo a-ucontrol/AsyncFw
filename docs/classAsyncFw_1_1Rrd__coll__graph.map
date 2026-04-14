@@ -2,7 +2,7 @@
 <area shape="rect" id="Node000001" title="The Rrd class." alt="" coords="1095,89,1200,116"/>
 <area shape="rect" id="Node000002" href="$classAsyncFw_1_1FunctionConnectorProtected.html" title=" " alt="" coords="605,5,799,48"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="816,37,939,54,1071,79,1101,86,1100,91,1070,84,938,60,815,42"/>
-<area shape="rect" id="Node000003" href="$classAsyncFw_1_1FunctionConnectorProtected.html" title="Защищенный коннетор, отправитель может быть только один." alt="" coords="5,36,200,79"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1FunctionConnectorProtected.html" title="Защищенный коннетор, отправитель может быть только один. &#160;&#160;Обеспечивает соединение отправитель &#45;&gt; пол..." alt="" coords="5,36,200,79"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="215,49,605,29,605,34,215,54"/>
 <area shape="rect" id="Node000006" href="$classAsyncFw_1_1FunctionConnectorProtected.html" title=" " alt="" coords="378,65,581,108"/>
 <area shape="poly" id="edge6_Node000006_Node000003" title=" " alt="" coords="215,70,224,71,378,81,377,86,223,76,215,75"/>

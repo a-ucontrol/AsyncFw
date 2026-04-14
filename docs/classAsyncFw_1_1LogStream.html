@@ -247,6 +247,12 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><b>setSenderPrefi
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The <a class="el" href="classAsyncFw_1_1LogStream.html" title="The LogStream class.">LogStream</a> class. </p>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>If log level emergency the exception std::runtime_error("log level emergency") will be raised.</td></tr>
+  </table>
+  </dd>
+</dl>
 <p>Examlpe: </p><div class="fragment"><div class="line">  lsTrace() &lt;&lt; <span class="stringliteral">&quot;Trace&quot;</span>;</div>
 <div class="line">  lsDebug() &lt;&lt; <span class="stringliteral">&quot;Debug&quot;</span>;</div>
 <div class="line">  lsInfo() &lt;&lt; <span class="stringliteral">&quot;Info&quot;</span>;</div>
@@ -266,7 +272,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><b>setSenderPrefi
 <div class="line">  logWarning() &lt;&lt; <span class="stringliteral">&quot;Warning&quot;</span>;</div>
 <div class="line">  logError() &lt;&lt; <span class="stringliteral">&quot;Error&quot;</span>;</div>
 <div class="line">  logAlert() &lt;&lt; <span class="stringliteral">&quot;logAlert&quot;</span>;</div>
-<div class="line">  logEmergency() &lt;&lt; <span class="stringliteral">&quot;Emergency&quot;</span>;  <span class="comment">// terminate</span></div>
+<div class="line">  logEmergency() &lt;&lt; <span class="stringliteral">&quot;Emergency&quot;</span>;  <span class="comment">// throw</span></div>
 </div><!-- fragment --> </div><hr/>The documentation for this class was generated from the following files:<ul>
 <li>core/<a class="el" href="LogStream_8h_source.html">LogStream.h</a></li>
 <li>core/<b>LogStream.cpp</b></li>

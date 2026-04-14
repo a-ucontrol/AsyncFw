@@ -107,7 +107,7 @@ $(function(){initNavTree('classAsyncFw_1_1FunctionConnectorProtected.html',''); 
 </div><!--header-->
 <div class="contents">
 
-<p>Защищенный коннетор, отправитель может быть только один.  
+<p>Защищенный коннетор, отправитель может быть только один.   Обеспечивает соединение отправитель -&gt; получатели. Получатели могут быть вызваны в своих потоках (по умолчанию). Другие инструментальные средства реализуют подобную коммуникацию с помощью коллбэков. Коллбэк - это указатель на функцию, поэтому, если вы хотите, чтобы функция обработки уведомила вас о каком-либо событии, вы передаете указатель на другую функцию (коллбэк) в функцию обработки. Затем функция обработки вызывает коллбэк, когда это необходимо.     
  <a href="#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="FunctionConnector_8h_source.html">AsyncFw/FunctionConnector</a>&gt;</code></p>
@@ -118,8 +118,74 @@ Inheritance diagram for AsyncFw::FunctionConnectorProtected&lt; F &gt;:</div>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename F&gt;<br />
-class AsyncFw::FunctionConnectorProtected&lt; F &gt;</div><p>Защищенный коннетор, отправитель может быть только один. </p>
-</div><hr/>The documentation for this class was generated from the following file:<ul>
+class AsyncFw::FunctionConnectorProtected&lt; F &gt;</div><p>Защищенный коннетор, отправитель может быть только один.   Обеспечивает соединение отправитель -&gt; получатели. Получатели могут быть вызваны в своих потоках (по умолчанию). Другие инструментальные средства реализуют подобную коммуникацию с помощью коллбэков. Коллбэк - это указатель на функцию, поэтому, если вы хотите, чтобы функция обработки уведомила вас о каком-либо событии, вы передаете указатель на другую функцию (коллбэк) в функцию обработки. Затем функция обработки вызывает коллбэк, когда это необходимо.    </p>
+<p>Example: </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;AsyncFw/FunctionConnector&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;AsyncFw/MainThread&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;AsyncFw/Timer&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;AsyncFw/Log&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">class </span>MethodConnectionExample {</div>
+<div class="line"><span class="keyword">public</span>:</div>
+<div class="line">  <span class="keywordtype">void</span> method(<span class="keywordtype">int</span> val) { lsNotice() &lt;&lt; val; }</div>
+<div class="line">};</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">class </span>Sender {</div>
+<div class="line"><span class="keyword">public</span>:</div>
+<div class="line">  Sender() {</div>
+<div class="line">    timer.timeout([<span class="keyword">this</span>]() {</div>
+<div class="line">      AsyncFw::AbstractThread *ct = <a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#ac1b35ef04b06ce771f6d6ca0a5b120db">AsyncFw::AbstractThread::currentThread</a>();</div>
+<div class="line">      logInfo() &lt;&lt; cnt &lt;&lt; <span class="stringliteral">&quot;send from thread:&quot;</span> &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd">name</a>() &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a41d1cf92e033bcc11e2394cb949e031a">id</a>();</div>
+<div class="line">      connector(cnt++);</div>
+<div class="line">      <span class="keywordflow">if</span> (cnt == 3) AsyncFw::MainThread::exit(0);</div>
+<div class="line">    });</div>
+<div class="line">    timer.start(10);</div>
+<div class="line">  }</div>
+<div class="line"> </div>
+<div class="line">  <span class="keyword">mutable</span> AsyncFw::FunctionConnectorProtected&lt;Sender&gt;::Connector&lt;<span class="keywordtype">int</span>&gt; connector;</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">private</span>:</div>
+<div class="line">  <span class="keywordtype">int</span> cnt = 0;</div>
+<div class="line">  AsyncFw::Timer timer;</div>
+<div class="line">};</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">class </span>Receiver {</div>
+<div class="line"><span class="keyword">public</span>:</div>
+<div class="line">  Receiver(<span class="keyword">const</span> std::string &amp;name, <span class="keyword">const</span> Sender &amp;sender) {</div>
+<div class="line">    fcg = sender.connector([name_ = name](<span class="keywordtype">int</span> val) {</div>
+<div class="line">      AsyncFw::AbstractThread *ct = <a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#ac1b35ef04b06ce771f6d6ca0a5b120db">AsyncFw::AbstractThread::currentThread</a>();</div>
+<div class="line">      logInfo() &lt;&lt; name_ &lt;&lt; <span class="stringliteral">&quot;received&quot;</span> &lt;&lt; val &lt;&lt; <span class="stringliteral">&quot;run in thread&quot;</span> &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd">name</a>() &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a41d1cf92e033bcc11e2394cb949e031a">id</a>();</div>
+<div class="line">    });</div>
+<div class="line">  }</div>
+<div class="line">  AsyncFw::FunctionConnectionGuard fcg;</div>
+<div class="line">};</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[]) {</div>
+<div class="line">  Sender *sender;</div>
+<div class="line"> </div>
+<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1Thread.html">AsyncFw::Thread</a> thread(<span class="stringliteral">&quot;SenderThread&quot;</span>);</div>
+<div class="line">  thread.start();</div>
+<div class="line">  thread.invokeMethod(</div>
+<div class="line">      [&amp;sender]() {</div>
+<div class="line">        sender = <span class="keyword">new</span> Sender;  <span class="comment">// created in thread SenderThread</span></div>
+<div class="line">      },</div>
+<div class="line">      <span class="keyword">true</span>);</div>
+<div class="line"> </div>
+<div class="line">  Receiver receiver1(<span class="stringliteral">&quot;R1&quot;</span>, *sender);</div>
+<div class="line">  Receiver receiver2(<span class="stringliteral">&quot;R2&quot;</span>, *sender);</div>
+<div class="line"> </div>
+<div class="line">  MethodConnectionExample tst;</div>
+<div class="line">  sender-&gt;connector.connect(&amp;tst, &amp;MethodConnectionExample::method);</div>
+<div class="line">  sender-&gt;connector([](<span class="keywordtype">int</span> val) { lsNotice() &lt;&lt; <span class="stringliteral">&quot;sender-&gt;connector (lambda)&quot;</span> &lt;&lt; val; });</div>
+<div class="line"> </div>
+<div class="line">  logNotice() &lt;&lt; <span class="stringliteral">&quot;Start Applicaiton&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  <span class="keywordtype">int</span> ret = AsyncFw::MainThread::exec();</div>
+<div class="line"> </div>
+<div class="line">  logNotice() &lt;&lt; <span class="stringliteral">&quot;End Applicaiton&quot;</span>;</div>
+<div class="line">  <span class="keyword">delete</span> sender;</div>
+<div class="line">  <span class="keywordflow">return</span> ret;</div>
+<div class="line">}</div>
+</div><!-- fragment --> </div><hr/>The documentation for this class was generated from the following file:<ul>
 <li>core/<a class="el" href="FunctionConnector_8h_source.html">FunctionConnector.h</a></li>
 </ul>
 </div><!-- contents -->

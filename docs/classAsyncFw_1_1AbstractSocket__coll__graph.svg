@@ -97,7 +97,7 @@
 <!-- Node6 -->
 <g id="Node000006" class="node">
 <title>Node6</title>
-<g id="a_Node000006"><a xlink:href="classAsyncFw_1_1FunctionConnectorProtected.html" target="_top" xlink:title="Защищенный коннетор, отправитель может быть только один.">
+<g id="a_Node000006"><a xlink:href="classAsyncFw_1_1FunctionConnectorProtected.html" target="_top" xlink:title="Защищенный коннетор, отправитель может быть только один. &#160;&#160;Обеспечивает соединение отправитель &#45;&gt; пол...">
 <polygon fill="white" stroke="#666666" points="349.62,-272 203.88,-272 203.88,-240 349.62,-240 349.62,-272"/>
 <text text-anchor="start" x="211.88" y="-258.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::FunctionConnector</text>
 <text text-anchor="middle" x="276.75" y="-246.5" font-family="Helvetica,sans-Serif" font-size="10.00">Protected&lt; F &gt;</text>

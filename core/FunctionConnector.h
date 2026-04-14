@@ -15,7 +15,9 @@ namespace AsyncFw {
 
 class FunctionConnectionGuard;
 
-/*! \class AbstractFunctionConnector FunctionConnector.h <AsyncFw/FunctionConnector> \brief The AbstractFunctionConnector class. */
+/*! \class AbstractFunctionConnector FunctionConnector.h <AsyncFw/FunctionConnector> \brief The AbstractFunctionConnector class provides the base functionality for FunctionConnector
+  \exception std::runtime_error If the default connection type (AbstractFunctionConnector::ConnectionType) is DirectOnly, AutoOnly, or SyncOnly and there is a type mismatch when connecting (AbstractFunctionConnector::Connection::Type), the exception std::runtime_error("fixed connection type") will be raised.
+*/
 class AbstractFunctionConnector {
   friend FunctionConnectionGuard;
 
@@ -58,7 +60,12 @@ protected:
 };
 
 /*! \class FunctionConnector FunctionConnector.h <AsyncFw/FunctionConnector> \brief Обеспечивает соединение отправитель -> получатели. Получатели могут быть вызваны в своих потоках (по умолчанию).
- \brief Другие инструментальные средства реализуют подобную коммуникацию с помощью коллбэков. Коллбэк - это указатель на функцию, поэтому, если вы хотите, чтобы функция обработки уведомила вас о каком-либо событии, вы передаете указатель на другую функцию (коллбэк) в функцию обработки. Затем функция обработки вызывает коллбэк, когда это необходимо.
+ Другие инструментальные средства реализуют подобную коммуникацию с помощью коллбэков.
+ Коллбэк - это указатель на функцию, поэтому, если вы хотите, чтобы функция обработки уведомила вас о каком-либо событии, вы передаете указатель на другую функцию (коллбэк) в функцию обработки.
+ Затем функция обработки вызывает коллбэк, когда это необходимо.
+ \brief FunctionConnector сообщение генерируются объектом, когда его внутреннее состояние изменяется каким-либо образом, который может представлять интерес других объектов.
+ FunctionConnector сообщения являются функциями с открытым доступом и могут генерироваться из любого места, но рекомендуется генерировать их только из класса, который его определяет.
+ Для того что бы только объект одного типа мог отправлять сообщения, следует использовать FunctionConnectorProtected.
  \brief Example: \snippet FunctionConnector/main.cpp snippet */
 template <typename... Args>
 class FunctionConnector : public AbstractFunctionConnector {
@@ -120,7 +127,8 @@ protected:
   };
 };
 
-/*! \class FunctionConnectorProtected FunctionConnector.h <AsyncFw/FunctionConnector> \brief Защищенный коннетор, отправитель может быть только один. */
+/*! \class FunctionConnectorProtected FunctionConnector.h <AsyncFw/FunctionConnector> \brief Защищенный коннетор, отправитель может быть только один.
+  \copybrief FunctionConnector \brief Example: \snippet FunctionConnector/main.cpp snippet */
 template <typename F>
 class FunctionConnectorProtected {
 public:

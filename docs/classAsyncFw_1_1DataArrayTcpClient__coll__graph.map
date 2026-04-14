@@ -8,7 +8,7 @@
 <area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="204,19,496,19,496,24,204,24"/>
 <area shape="rect" id="Node000005" href="$classAsyncFw_1_1FunctionConnectorProtected.html" title=" " alt="" coords="451,59,742,101"/>
 <area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="758,77,1020,76,1020,82,758,82"/>
-<area shape="rect" id="Node000006" href="$classAsyncFw_1_1FunctionConnectorProtected.html" title="Защищенный коннетор, отправитель может быть только один." alt="" coords="5,93,200,136"/>
+<area shape="rect" id="Node000006" href="$classAsyncFw_1_1FunctionConnectorProtected.html" title="Защищенный коннетор, отправитель может быть только один. &#160;&#160;Обеспечивает соединение отправитель &#45;&gt; пол..." alt="" coords="5,93,200,136"/>
 <area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="215,104,450,88,451,93,215,109"/>
 <area shape="rect" id="Node000007" href="$classAsyncFw_1_1FunctionConnectorProtected.html" title=" " alt="" coords="766,109,996,168"/>
 <area shape="poly" id="edge7_Node000007_Node000006" title=" " alt="" coords="215,123,224,124,517,135,765,137,765,142,516,140,224,129,215,129"/>

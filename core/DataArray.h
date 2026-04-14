@@ -16,7 +16,7 @@ class DataArrayList;
 class DataArrayView;
 class LogStream;
 
-/*! \class DataArray DataArray.h <AsyncFw/DataArray> \brief The DataArray class. */
+/*! \class DataArray DataArray.h <AsyncFw/DataArray> \brief The DataArray class, provides an array of bytes. */
 class DataArray : public std::vector<uint8_t> {
 public:
   static DataArray compress(const DataArrayView &);

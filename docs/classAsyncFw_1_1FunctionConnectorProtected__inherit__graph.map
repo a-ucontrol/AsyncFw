@@ -1,5 +1,5 @@
 <map id="AsyncFw::FunctionConnectorProtected&lt; F &gt;" name="AsyncFw::FunctionConnectorProtected&lt; F &gt;">
-<area shape="rect" id="Node000001" title="Защищенный коннетор, отправитель может быть только один." alt="" coords="5,491,200,534"/>
+<area shape="rect" id="Node000001" title="Защищенный коннетор, отправитель может быть только один. &#160;&#160;Обеспечивает соединение отправитель &#45;&gt; пол..." alt="" coords="5,491,200,534"/>
 <area shape="rect" id="Node000002" href="$classAsyncFw_1_1FunctionConnectorProtected.html" title=" " alt="" coords="481,26,714,69"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="106,476,121,380,145,260,161,201,179,148,199,105,222,76,251,56,282,41,315,30,350,23,419,19,484,23,484,28,419,24,350,29,317,35,284,46,253,61,225,80,204,107,184,149,166,202,150,261,126,381,111,476"/>
 <area shape="rect" id="Node000003" href="$classAsyncFw_1_1FunctionConnectorProtected.html" title=" " alt="" coords="452,93,743,135"/>

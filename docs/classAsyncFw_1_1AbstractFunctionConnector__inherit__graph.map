@@ -1,5 +1,5 @@
 <map id="AsyncFw::AbstractFunctionConnector" name="AsyncFw::AbstractFunctionConnector">
-<area shape="rect" id="Node000001" title="The AbstractFunctionConnector class." alt="" coords="6,5,189,48"/>
+<area shape="rect" id="Node000001" title="The AbstractFunctionConnector class provides the base functionality for FunctionConnector." alt="" coords="6,5,189,48"/>
 <area shape="rect" id="Node000002" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="5,204,200,247"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="101,63,105,204,99,204,95,64"/>
 <area shape="rect" id="Node000003" href="$classAsyncFw_1_1FunctionConnector.html" title="Обеспечивает соединение отправитель &#45;&gt; получатели. Получатели могут быть вызваны в своих потоках (по ..." alt="" coords="119,97,313,140"/>

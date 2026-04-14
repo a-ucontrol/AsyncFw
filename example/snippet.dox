@@ -88,6 +88,6 @@ void example() {
   logWarning() << "Warning";
   logError() << "Error";
   logAlert() << "logAlert";
-  logEmergency() << "Emergency";  // terminate
+  logEmergency() << "Emergency";  // throw
   //! [LogStream]
 }
