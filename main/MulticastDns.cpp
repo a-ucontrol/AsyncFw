@@ -43,6 +43,10 @@ extern int send_mdns_query(mdns_query_t *query, size_t count);
 int query_callback(int, const struct sockaddr *from, size_t addrlen, mdns_entry_type_t entry, uint16_t, uint16_t rtype, uint16_t rclass, uint32_t ttl, const void *data, size_t size, size_t name_offset, size_t, size_t record_offset, size_t record_length, void *user_data) {
   mdns_string_t fromaddrstr = ip_address_to_string(addrbuffer, sizeof(addrbuffer), from, addrlen);
   const char *entrytype = (entry == MDNS_ENTRYTYPE_ANSWER) ? "answer" : ((entry == MDNS_ENTRYTYPE_AUTHORITY) ? "authority" : "additional");
+#ifdef LS_NO_TRACE
+  (void)fromaddrstr;
+  (void)entrytype;
+#endif
   mdns_string_t entrystr = mdns_string_extract(data, size, &name_offset, entrybuffer, sizeof(entrybuffer));
   if (rtype == MDNS_RECORDTYPE_PTR) {
     if (MDNS_STRING_FORMAT(entrystr) == MulticastDns::instance()->serviceType()) {
