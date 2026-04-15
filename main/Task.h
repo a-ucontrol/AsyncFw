@@ -34,7 +34,7 @@ public:
       running_ = false;
       return;
     }
-    thread_->invokeMethod([_m = std::move(method), _r = std::make_shared<std::atomic_bool>(&running_), _d = std::make_shared<std::any>(data_)]() {
+    thread_->invokeMethod([_m = method, _r = std::make_shared<std::atomic_bool>(&running_), _d = std::make_shared<std::any>(data_)]() {
       _m(_d.get());
       *_r = false;
     });
