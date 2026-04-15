@@ -8,8 +8,11 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include "Task.h"
 #include "core/LogStream.h"
 
-AsyncFw::AbstractTask::AbstractTask() { lsTrace(); }
-AsyncFw::AbstractTask::~AbstractTask() { lsTrace(); }
+AsyncFw::AbstractTask::AbstractTask(AbstractThread *thread) : thread_(thread) { lsTrace(); }
+AsyncFw::AbstractTask::~AbstractTask() {
+  if (thread_) thread_->invokeMethod([]() {}, true);
+  lsTrace();
+}
 
 bool AsyncFw::AbstractTask::running() {
   lsDebug() << static_cast<bool>(running_);

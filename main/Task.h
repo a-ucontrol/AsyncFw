@@ -16,17 +16,20 @@ namespace AsyncFw {
 /*! \class AbstractTask Task.h <AsyncFw/Task> \brief The AbstractTask class. */
 class AbstractTask : public AsyncFw::AbstractThread::AbstractTask, public AnyData {
 public:
-  AbstractTask();
-  ~AbstractTask();
+  AbstractTask(AbstractThread * = nullptr);
+  virtual ~AbstractTask();
   bool running();
+
+protected:
   std::atomic_bool running_;
+  AbstractThread *thread_;
 };
 
 /*! \class Task Task.h <AsyncFw/Task> \brief The Task class. */
 template <typename M>
 class Task : public AbstractTask {
 public:
-  Task(M &&method, AbstractThread *thread = nullptr) : method(std::move(method)), thread_(thread) {}
+  Task(M &&method, AbstractThread *thread = nullptr) : AbstractTask(thread), method(std::move(method)) {}
   void operator()() override {
     running_ = true;
     if (!thread_) {
@@ -42,6 +45,5 @@ public:
 
 private:
   M method;
-  AbstractThread *thread_;
 };
 }  // namespace AsyncFw
