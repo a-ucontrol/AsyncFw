@@ -6,6 +6,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 */
 
 #include <queue>
+#include <memory>
 #include <AsyncFw/MainThread>
 #include <AsyncFw/Timer>
 #include <AsyncFw/Task>
