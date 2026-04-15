@@ -9,7 +9,6 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 /*! \example ContainerTask/main.cpp ContainerTask example */
 
-#include <memory>
 #include "../core/AbstractThread.h"
 #include "../core/AnyData.h"
 
@@ -19,7 +18,8 @@ class AbstractTask : public AsyncFw::AbstractThread::AbstractTask, public AnyDat
 public:
   AbstractTask();
   ~AbstractTask();
-  virtual bool running() = 0;
+  bool running();
+  std::atomic_bool running_;
 };
 
 /*! \class Task Task.h <AsyncFw/Task> \brief The Task class. */
@@ -34,16 +34,14 @@ public:
       running_ = false;
       return;
     }
-    thread_->invokeMethod([_m = method, _r = std::make_shared<std::atomic_bool>(&running_), _d = std::make_shared<std::any>(data_)]() {
-      _m(_d.get());
-      *_r = false;
+    thread_->invokeMethod([this]() {
+      method(&data_);
+      running_ = false;
     });
   }
-  bool running() override { return running_; }
 
 private:
   M method;
   AbstractThread *thread_;
-  std::atomic_bool running_;
 };
 }  // namespace AsyncFw

@@ -10,3 +10,8 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 AsyncFw::AbstractTask::AbstractTask() { lsTrace(); }
 AsyncFw::AbstractTask::~AbstractTask() { lsTrace(); }
+
+bool AsyncFw::AbstractTask::running() {
+  lsDebug() << static_cast<bool>(running_);
+  return running_;
+}
