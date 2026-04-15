@@ -26,7 +26,7 @@ public:
 template <typename M>
 class Task : public AbstractTask {
 public:
-  Task(M &&method, AbstractThread *thread = nullptr) : method(std::move(method)), thread_(thread) {}
+  Task(M &&method, AbstractThread *thread = nullptr) : method(method), thread_(thread) {}
   void operator()() override {
     running_ = true;
     if (!thread_) {
