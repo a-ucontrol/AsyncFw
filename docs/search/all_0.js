@@ -15,5 +15,6 @@ var searchData=
   ['appendpolltask_12',['appendPollTask',['../classAsyncFw_1_1AbstractThread.html#a0b6d6552ad2d0cdae6ce11fe6cb979be',1,'AsyncFw::AbstractThread']]],
   ['appendtimer_13',['appendTimer',['../classAsyncFw_1_1AbstractThread.html#a1fa8bc43151797cbcfb2013ee1fce2ce',1,'AsyncFw::AbstractThread']]],
   ['appendtimertask_14',['appendTimerTask',['../classAsyncFw_1_1AbstractThread.html#a6ca7a9fa8bd7197c82529d5b4b83b97d',1,'AsyncFw::AbstractThread']]],
-  ['asyncfw_15',['AsyncFw',['../index.html',1,'']]]
+  ['applicationnotifier_15',['ApplicationNotifier',['../classAsyncFw_1_1ApplicationNotifier.html',1,'AsyncFw']]],
+  ['asyncfw_16',['AsyncFw',['../index.html',1,'']]]
 ];

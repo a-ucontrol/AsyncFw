@@ -1,7 +1,9 @@
 <map id="AsyncFw::FunctionConnector&lt; Args &gt;" name="AsyncFw::FunctionConnector&lt; Args &gt;">
-<area shape="rect" id="Node000001" title="Обеспечивает соединение отправитель &#45;&gt; получатели. Получатели могут быть вызваны в своих потоках (по ..." alt="" coords="5,97,200,140"/>
+<area shape="rect" id="Node000001" title="Обеспечивает соединение отправитель &#45;&gt; получатели. Получатели могут быть вызваны в своих потоках (по ..." alt="" coords="115,97,309,140"/>
 <area shape="rect" id="Node000003" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="5,204,200,247"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="105,156,105,203,100,203,100,156"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractFunctionConnector.html" title="The AbstractFunctionConnector class provides the base functionality for FunctionConnector." alt="" coords="11,5,194,48"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="105,64,105,97,100,97,100,64"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="181,153,126,205,122,202,177,149"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="224,204,418,247"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="246,149,301,202,298,205,243,153"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractFunctionConnector.html" title="The AbstractFunctionConnector class provides the base functionality for FunctionConnector." alt="" coords="120,5,304,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="214,64,214,97,209,97,209,64"/>
 </map>

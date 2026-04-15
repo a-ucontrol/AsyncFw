@@ -1,15 +1,17 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$classAsyncFw_1_1AbstractInstance.html" title="The AbstractInstance class." alt="" coords="5,180,189,207"/>
+<area shape="rect" id="Node000000" href="$classAsyncFw_1_1AbstractInstance.html" title="The AbstractInstance class." alt="" coords="5,213,189,240"/>
 <area shape="rect" id="Node000001" href="$classAsyncFw_1_1Instance.html" title=" " alt="" coords="272,5,414,48"/>
-<area shape="poly" id="edge3_Node000000_Node000001" title=" " alt="" coords="117,166,167,111,200,83,235,58,271,41,273,46,238,62,203,87,171,115,121,169"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1Instance.html" title=" " alt="" coords="237,72,450,115"/>
-<area shape="poly" id="edge4_Node000000_Node000002" title=" " alt="" coords="137,170,236,124,267,113,269,118,238,129,139,175"/>
-<area shape="rect" id="Node000003" href="$classAsyncFw_1_1Instance.html" title=" " alt="" coords="262,139,424,181"/>
-<area shape="poly" id="edge5_Node000000_Node000003" title=" " alt="" coords="203,176,261,168,262,174,204,182"/>
-<area shape="rect" id="Node000004" href="$classAsyncFw_1_1Instance.html" title=" " alt="" coords="255,205,432,248"/>
-<area shape="poly" id="edge6_Node000000_Node000004" title=" " alt="" coords="204,205,255,212,254,217,204,210"/>
-<area shape="rect" id="Node000005" href="$classAsyncFw_1_1Instance.html" title=" " alt="" coords="261,272,426,315"/>
-<area shape="poly" id="edge7_Node000000_Node000005" title=" " alt="" coords="139,212,238,258,269,269,267,274,236,262,137,217"/>
-<area shape="rect" id="Node000006" href="$classAsyncFw_1_1Instance.html" title="The Instance class." alt="" coords="260,339,426,365"/>
-<area shape="poly" id="edge8_Node000000_Node000006" title=" " alt="" coords="120,217,169,272,202,300,238,324,265,336,263,341,235,329,199,305,166,276,116,221"/>
+<area shape="poly" id="edge4_Node000000_Node000001" title=" " alt="" coords="112,198,161,128,195,90,235,58,271,40,273,45,238,62,199,94,165,132,116,201"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1Instance.html" title=" " alt="" coords="241,72,446,115"/>
+<area shape="poly" id="edge5_Node000000_Node000002" title=" " alt="" coords="124,201,174,162,235,124,262,113,264,118,238,129,177,167,127,205"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1Instance.html" title=" " alt="" coords="237,139,450,181"/>
+<area shape="poly" id="edge6_Node000000_Node000003" title=" " alt="" coords="163,206,261,179,262,185,165,211"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1Instance.html" title=" " alt="" coords="262,205,424,248"/>
+<area shape="poly" id="edge7_Node000000_Node000004" title=" " alt="" coords="204,224,262,224,262,229,204,229"/>
+<area shape="rect" id="Node000005" href="$classAsyncFw_1_1Instance.html" title=" " alt="" coords="255,272,432,315"/>
+<area shape="poly" id="edge8_Node000000_Node000005" title=" " alt="" coords="165,242,262,269,261,274,163,247"/>
+<area shape="rect" id="Node000006" href="$classAsyncFw_1_1Instance.html" title=" " alt="" coords="261,339,426,381"/>
+<area shape="poly" id="edge9_Node000000_Node000006" title=" " alt="" coords="127,248,177,287,238,324,264,336,262,341,235,329,174,291,124,252"/>
+<area shape="rect" id="Node000007" href="$classAsyncFw_1_1Instance.html" title="The Instance class." alt="" coords="260,405,426,432"/>
+<area shape="poly" id="edge10_Node000000_Node000007" title=" " alt="" coords="115,252,164,323,198,360,238,391,262,402,259,407,235,396,195,364,160,326,111,255"/>
 </map>

@@ -1,8 +1,11 @@
 <map id="AsyncFw::AbstractFunctionConnector" name="AsyncFw::AbstractFunctionConnector">
-<area shape="rect" id="Node000001" title="The AbstractFunctionConnector class provides the base functionality for FunctionConnector." alt="" coords="6,5,189,48"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="5,204,200,247"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="101,63,105,204,99,204,95,64"/>
-<area shape="rect" id="Node000003" href="$classAsyncFw_1_1FunctionConnector.html" title="Обеспечивает соединение отправитель &#45;&gt; получатели. Получатели могут быть вызваны в своих потоках (по ..." alt="" coords="119,97,313,140"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="138,55,190,95,187,99,134,59"/>
-<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="184,153,127,205,123,202,181,149"/>
+<area shape="rect" id="Node000001" title="The AbstractFunctionConnector class provides the base functionality for FunctionConnector." alt="" coords="5,49,189,92"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="585,5,780,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="194,43,238,35,329,25,422,20,585,20,585,25,422,25,330,30,238,40,195,48"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="585,84,780,127"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="192,93,238,101,330,109,422,112,585,109,585,114,422,117,329,114,238,107,191,99"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1FunctionConnector.html" title="Обеспечивает соединение отправитель &#45;&gt; получатели. Получатели могут быть вызваны в своих потоках (по ..." alt="" coords="238,49,432,92"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="204,68,238,68,238,73,204,73"/>
+<area shape="poly" id="edge4_Node000004_Node000002" title=" " alt="" coords="447,54,584,36,585,42,448,59"/>
+<area shape="poly" id="edge5_Node000004_Node000003" title=" " alt="" coords="448,84,457,85,585,97,585,102,456,91,447,90"/>
 </map>

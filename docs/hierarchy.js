@@ -2,10 +2,12 @@ var hierarchy =
 [
     [ "AsyncFw::AbstractFunctionConnector", "classAsyncFw_1_1AbstractFunctionConnector.html", [
       [ "AsyncFw::FunctionConnector< Args... >", "classAsyncFw_1_1FunctionConnector.html", null ],
+      [ "AsyncFw::FunctionConnector< const Data & >", "classAsyncFw_1_1FunctionConnector.html", null ],
       [ "AsyncFw::FunctionConnector< Args >", "classAsyncFw_1_1FunctionConnector.html", null ]
     ] ],
     [ "AsyncFw::AbstractInstance", "classAsyncFw_1_1AbstractInstance.html", [
       [ "AsyncFw::Instance< Log >", "classAsyncFw_1_1Instance.html", null ],
+      [ "AsyncFw::Instance< AsyncFw::ApplicationNotifier >", "classAsyncFw_1_1Instance.html", null ],
       [ "AsyncFw::Instance< AsyncFw::FileSystemWatcher >", "classAsyncFw_1_1Instance.html", null ],
       [ "AsyncFw::Instance< AsyncFw::HttpServer >", "classAsyncFw_1_1Instance.html", null ],
       [ "AsyncFw::Instance< AsyncFw::MulticastDns >", "classAsyncFw_1_1Instance.html", null ],
@@ -41,6 +43,7 @@ var hierarchy =
       ] ],
       [ "AsyncFw::CoroutineTask::promise_type", "structAsyncFw_1_1CoroutineTask_1_1promise__type.html", null ]
     ] ],
+    [ "AsyncFw::ApplicationNotifier", "classAsyncFw_1_1ApplicationNotifier.html", null ],
     [ "AsyncFw::CoroutineAwait", "structAsyncFw_1_1CoroutineAwait.html", null ],
     [ "AsyncFw::CoroutineTask", "structAsyncFw_1_1CoroutineTask.html", null ],
     [ "AsyncFw::Cryptor", "classAsyncFw_1_1Cryptor.html", null ],
