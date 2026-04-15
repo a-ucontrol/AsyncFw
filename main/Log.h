@@ -18,8 +18,6 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 namespace AsyncFw {
 /*! \class AbstractLog Log.h <AsyncFw/Log> \brief The AbstractLog class provides the base functionality for logger. */
 class AbstractLog {
-  friend class Log;
-
 public:
   using Message = LogStream::Message;
 
@@ -39,6 +37,8 @@ protected:
   void append(const Message &m);
   void flush();
   void finality();
+  void startTimer(int *, int);
+  void stopTimer(int *);
   uint8_t level = LogStream::Trace;
   uint8_t consoleLevel = LogStream::Trace;
   int queueLimit = 128;
@@ -52,8 +52,6 @@ private:
     bool marked = false;
   };
   void timerTask(int);
-  void startTimer(int *, int);
-  void stopTimer(int *);
   void process(const Message &);
   uint8_t flags = LOG_STREAM_CONSOLE_EXTEND
 #ifndef _WIN32

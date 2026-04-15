@@ -261,7 +261,7 @@ AbstractLog::Message Log::messageFromRrdItem(const Item &_v) const {
 }
 
 void Log::lsAppend(const Message &m, uint8_t f) {
-  AbstractLog *_log = instance_.value;
+  Log *_log = instance_.value;
   if (!(f & LOG_STREAM_CONSOLE_ONLY)) {
     _log->append(m);
     if (f & 0x80) {

@@ -42,7 +42,7 @@ Rrd::Rrd(int size, int interval, int fillInterval, const std::string &name) : db
       if (!createFile() && !readOnly) console_msg("Rrd", "create failed: " + name);
     }
   } else {
-    count_v = 0;
+    count_ = 0;
     dataBase.resize(dbSize);
   }
 }
@@ -59,7 +59,7 @@ Rrd::Rrd(int size, const std::string &name) : Rrd(size, 0, 0, name) {}
 Rrd::Rrd(int size) : Rrd(size, 0, 0, {}) {}
 
 bool Rrd::createFile() {
-  count_v = 0;
+  count_ = 0;
   dataBase.clear();
   dataBase.resize(dbSize);
   last_ = 0;
@@ -85,7 +85,7 @@ void Rrd::append(const Item &data, uint64_t index) {
       return;
     }
 
-    if (count_v < dbSize && count_v < pos) count_v += 1;
+    if (count_ < dbSize && count_ < pos) count_ += 1;
     uint32_t i = pos % dbSize;
     dataBase[i] = data;
 
@@ -113,12 +113,12 @@ void Rrd::append(const Item &data, uint64_t index) {
 }
 
 Rrd::Item Rrd::readFromArray(uint32_t index) {  //Must lock the thread before calling this method
-  uint64_t i = 1 + last_ + index - count_v;
+  uint64_t i = 1 + last_ + index - count_;
   return dataBase[i % dbSize];
 }
 
 void Rrd::writeToArray(uint32_t index, const Item &ba) {  //Must lock the thread before calling this method
-  uint64_t i = 1 + last_ + index - count_v;
+  uint64_t i = 1 + last_ + index - count_;
   dataBase[i % dbSize] = ba;
 }
 
@@ -127,7 +127,7 @@ void Rrd::clear() {
     AbstractThread::LockGuard lock = thread_->lockGuard();
     for (uint32_t i = 0; i != dbSize; ++i) dataBase[i].clear();
     last_ = 0;
-    count_v = 0;
+    count_ = 0;
   }
   updated();
 }
@@ -139,7 +139,7 @@ uint64_t Rrd::lastIndex() {
 
 uint32_t Rrd::count() {
   AbstractThread::LockGuard lock = thread_->lockGuard();
-  return count_v;
+  return count_;
 }
 
 uint64_t Rrd::read(DataArrayList *list, uint64_t val, uint32_t size, uint64_t *lastIndex) {
@@ -189,9 +189,9 @@ bool Rrd::readFromFile() {
     console_msg("Rrd", "error database size: " + std::to_string(dataBase.size()));
   } else {
     ok = true;
-    count_v = 0;
+    count_ = 0;
     for (const Item &ba : dataBase)
-      if (!ba.empty()) count_v++;
+      if (!ba.empty()) count_++;
     updated();
   }
   return ok;
@@ -224,7 +224,7 @@ bool Rrd::saveToFile(const std::string &_fileToSave) {
 #ifdef EXTEND_RRD_TRACE
   std::chrono::time_point<std::chrono::steady_clock> t = std::chrono::steady_clock::now();
   int size = _ds.array().size();
-  trace() << "Rrd: saved:" << fileToSave << std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - t).count()) + "ms, mem size: " + std::to_string(size) + ", count:" + std::to_string(count_v) + '/' + std::to_string(dbSize) + ", file size:" + std::to_string(_buf.size()) + ", ratio: " + std::to_string(size / static_cast<int>(_buf.size()));
+  trace() << "Rrd: saved:" << fileToSave << std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - t).count()) + "ms, mem size: " + std::to_string(size) + ", count:" + std::to_string(count_) + '/' + std::to_string(dbSize) + ", file size:" + std::to_string(_buf.size()) + ", ratio: " + std::to_string(size / static_cast<int>(_buf.size()));
 #endif
   return true;
 }

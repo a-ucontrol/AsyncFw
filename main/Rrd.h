@@ -52,7 +52,7 @@ protected:
   uint64_t last_;
   uint32_t dbSize;
   ItemList dataBase;
-  uint32_t count_v;
+  uint32_t count_;
   bool readOnly = false;
 
 private:
