@@ -21,6 +21,7 @@ struct AnyData {
   ~AnyData();
   std::any &data() const { return data_; }
   void setData(const std::any &data) const { data_ = data; };
+  bool hasValue() const { return data_.has_value(); }
 
 protected:
   mutable std::any data_;

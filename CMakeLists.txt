@@ -118,6 +118,7 @@ set(AsyncFw_MAIN_HEADERS
   "${CMAKE_CURRENT_LIST_DIR}/main/HttpServer.h"
   "${CMAKE_CURRENT_LIST_DIR}/main/MulticastDns.h"
   "${CMAKE_CURRENT_LIST_DIR}/main/Instance.h"
+  "${CMAKE_CURRENT_LIST_DIR}/main/ApplicationNotifier.h"
   "${CMAKE_CURRENT_LIST_DIR}/main/Version.h"
   "${CMAKE_CURRENT_LIST_DIR}/main/log-types.hpp"
 
@@ -147,6 +148,7 @@ set(AsyncFw_MAIN_SOURCES
   "main/HttpSocket.cpp"
   "main/HttpServer.cpp"
   "main/MulticastDns.cpp"
+  "main/ApplicationNotifier.cpp"
   "main/Version.cpp"
   "main/log-types.cpp"
 )
@@ -256,6 +258,7 @@ if(NOT AsyncFw_DISABLE_BUILD_EXAMPLES)
   add_subdirectory(example/ContainerTask)
   add_subdirectory(example/CoroutineWait)
   add_subdirectory(example/MulticastDns)
+  add_subdirectory(example/ApplicationNotifier)
   if(NOT ${CMAKE_SYSTEM_PROCESSOR} STREQUAL "AMD64" OR AMD64_USE_CARES)
     add_subdirectory(example/Socket)
     add_subdirectory(example/HttpSocket)
