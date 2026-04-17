@@ -350,7 +350,7 @@ void AbstractThread::waitInterrupted() const {
 void AbstractThread::quit() {
   lsTrace() << LOG_THREAD_NAME;
   LockGuard lock(private_.mutex);
-  if (!private_.state || private_.state == Private::Finished) {
+  if (!private_.state || (private_.state & Private::Finished)) {
     console_msg("AbstractThread " + LOG_THREAD_NAME, "thread already finished or not started");
     return;
   }
@@ -585,7 +585,7 @@ void AbstractThread::exec() {
   private_.mutex.unlock();
   finishedEvent();
   private_.mutex.lock();
-  private_.state = Private::Finished;
+  private_.state = Private::WaitFinished | Private::Finished;
   std::swap(private_.process_tasks_, private_.tasks);
   private_.mutex.unlock();
   private_.process_tasks();
@@ -650,15 +650,16 @@ void AbstractThread::start() {
     {  //lock scope
       LockGuard lock_list(Private::list.mutex);
       LockGuard lock(private_.mutex);
-      private_.condition_variable.notify_all();
       setId();
+      private_.condition_variable.notify_all();
     }
     exec();
     {  //lock scope
       LockGuard lock_list(Private::list.mutex);
       LockGuard lock(private_.mutex);
-      private_.condition_variable.notify_all();
       clearId();
+      private_.state = Private::Finished;
+      private_.condition_variable.notify_all();
     }
   }};
   t.detach();
