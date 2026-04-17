@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../core/FunctionConnector.h"
-#include <../core/AnyData.h>
+#include "../core/AnyData.h"
 #include "Instance.h"
 
 namespace AsyncFw {
