@@ -6,9 +6,14 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 */
 
 #include "AnyData.h"
+#include "LogStream.h"
 
-AsyncFw::AnyData::AnyData(const std::any &data) : data_(data) {}
+AsyncFw::AnyData::AnyData(const std::any &data) : data_(data) { lsTrace(); }
 
-AsyncFw::AnyData::AnyData() {}
+AsyncFw::AnyData::~AnyData() { lsTrace(); }
 
-AsyncFw::AnyData::~AnyData() {}
+std::any &AsyncFw::AnyData::data() const { return data_; }
+
+void AsyncFw::AnyData::setData(const std::any &data) const { data_ = data; }
+
+bool AsyncFw::AnyData::hasValue() const { return data_.has_value(); }

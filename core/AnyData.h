@@ -16,12 +16,11 @@ struct AnyData {
   T data() const {
     return std::any_cast<T>(data_);
   }
-  AnyData(const std::any &);
-  AnyData();
+  AnyData(const std::any & = {});
   ~AnyData();
-  std::any &data() const { return data_; }
-  void setData(const std::any &data) const { data_ = data; };
-  bool hasValue() const { return data_.has_value(); }
+  std::any &data() const;
+  void setData(const std::any &data) const;
+  bool hasValue() const;
 
 protected:
   mutable std::any data_;

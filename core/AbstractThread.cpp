@@ -424,10 +424,10 @@ void AbstractThread::exec() {
       }
     }
     if (!_nested) {
+      private_.state = Private::Running;
       private_.mutex.unlock();
       startedEvent();
       private_.mutex.lock();
-      private_.state = Private::Running;
     }
     std::swap(private_.process_tasks_, private_.tasks);  //take exists tasks
   }

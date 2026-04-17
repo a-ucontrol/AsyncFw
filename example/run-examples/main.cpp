@@ -11,6 +11,8 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include <AsyncFw/Timer>
 #include <AsyncFw/Log>
 
+#define EMERGENCY_ERROR
+
 void run_examples(bool _socket) {
   std::string app;
   AsyncFw::SystemProcess process;
@@ -25,10 +27,13 @@ void run_examples(bool _socket) {
     if (_s == AsyncFw::SystemProcess::Running) return;
     if (_s != AsyncFw::SystemProcess::Finished || process.exitCode()) {
       ok = false;
-      logAlert() << "========================";
       err += app + "\n";
-      logAlert() << "error:" << app;
-      logAlert() << "========================";
+#ifdef EMERGENCY_ERROR
+      logEmergency()
+#else
+      logAlert()
+#endif
+          << "========================" << "\nerror:" << app << "\n========================";
     }
   });
 
