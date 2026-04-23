@@ -13,7 +13,7 @@ namespace AsyncFw {
 /*! \class AnyData AnyData.h <AsyncFw/AnyData> \brief The AnyData class. */
 struct AnyData {
   template <typename T>
-  T data() const {
+  T value() const {
     return std::any_cast<T>(data_);
   }
   AnyData(const std::any & = {});
