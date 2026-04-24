@@ -16,4 +16,4 @@ std::any &AsyncFw::AnyData::data() const { return data_; }
 
 void AsyncFw::AnyData::setData(const std::any &data) const { data_ = data; }
 
-bool AsyncFw::AnyData::hasValue() const { return data_.has_value(); }
+bool AsyncFw::AnyData::empty() const { return !data_.has_value(); }
