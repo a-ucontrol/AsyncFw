@@ -23,7 +23,7 @@
 <g id="a_Node000002"><a xlink:href="classAsyncFw_1_1FunctionConnector.html" target="_top" xlink:title=" ">
 <polygon fill="white" stroke="#666666" points="145.75,-100 0,-100 0,-68 145.75,-68 145.75,-100"/>
 <text text-anchor="start" x="8" y="-86.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::FunctionConnector</text>
-<text text-anchor="middle" x="72.88" y="-74.5" font-family="Helvetica,sans-Serif" font-size="10.00">&lt; const Data &amp; &gt;</text>
+<text text-anchor="middle" x="72.88" y="-74.5" font-family="Helvetica,sans-Serif" font-size="10.00">&lt; const Value &amp; &gt;</text>
 </a>
 </g>
 </g>
@@ -83,7 +83,7 @@
 <polygon fill="orange" stroke="orange" points="130.23,-142.38 139.97,-146.57 134.97,-137.23 130.23,-142.38"/>
 </a>
 </g>
-<text text-anchor="middle" x="159.84" y="-120.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="grey"> &lt; const Data &amp; &gt;</text>
+<text text-anchor="middle" x="161.34" y="-120.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="grey"> &lt; const Value &amp; &gt;</text>
 </g>
 </g>
 </svg>

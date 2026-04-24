@@ -129,9 +129,9 @@ static <a class="el" href="classAsyncFw_1_1ApplicationNotifier.html">Application
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a53f72ebcd969d7aa93fb160733b17909" id="r_a53f72ebcd969d7aa93fb160733b17909"><td class="memItemLeft" align="right" valign="top"><a id="a53f72ebcd969d7aa93fb160733b17909" name="a53f72ebcd969d7aa93fb160733b17909"></a>
-<a class="el" href="classAsyncFw_1_1FunctionConnector.html">FunctionConnector</a>&lt; const Data &amp; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>notify</b></td></tr>
-<tr class="separator:a53f72ebcd969d7aa93fb160733b17909"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a989eaa483fec75f7d90730d031db0b2a" id="r_a989eaa483fec75f7d90730d031db0b2a"><td class="memItemLeft" align="right" valign="top"><a id="a989eaa483fec75f7d90730d031db0b2a" name="a989eaa483fec75f7d90730d031db0b2a"></a>
+<a class="el" href="classAsyncFw_1_1FunctionConnector.html">FunctionConnector</a>&lt; const Value &amp; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>notify</b></td></tr>
+<tr class="separator:a989eaa483fec75f7d90730d031db0b2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The <a class="el" href="classAsyncFw_1_1ApplicationNotifier.html" title="The ApplicationNotifier class.">ApplicationNotifier</a> class. </p>
@@ -147,9 +147,9 @@ Public Attributes</h2></td></tr>
 <div class="line"> </div>
 <div class="line">  <a class="code hl_class" href="classAsyncFw_1_1Thread.html">AsyncFw::Thread</a> _test;</div>
 <div class="line"> </div>
-<div class="line">  AsyncFw::ApplicationNotifier::instance()-&gt;notify([&amp;_test](<span class="keyword">const</span> AsyncFw::ApplicationNotifier::Data &amp;_val) {</div>
+<div class="line">  AsyncFw::ApplicationNotifier::instance()-&gt;notify([&amp;_test](<span class="keyword">const</span> AsyncFw::ApplicationNotifier::Value &amp;_val) {</div>
 <div class="line">    lsNotice() &lt;&lt; _val.type;</div>
-<div class="line">    <span class="keywordflow">if</span> (_val.hasValue()) lsInfoMagenta() &lt;&lt; _val.data&lt;std::chrono::time_point&lt;std::chrono::system_clock&gt;&gt;();</div>
+<div class="line">    <span class="keywordflow">if</span> (!_val.empty()) lsInfoMagenta() &lt;&lt; _val.data&lt;std::chrono::time_point&lt;std::chrono::system_clock&gt;&gt;();</div>
 <div class="line">    <span class="keywordflow">if</span> (_val.type == TestThreadStarted) _test.<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#afef57401f138e8de37eb8d817772d9ff">quit</a>();</div>
 <div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (_val.type == TestThreadFinished) { AsyncFw::MainThread::exit(); }</div>
 <div class="line">  });</div>

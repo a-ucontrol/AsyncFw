@@ -9,15 +9,15 @@ namespace AsyncFw {
   \brief Example: \snippet ApplicationNotifier/main.cpp snippet */
 class ApplicationNotifier {
 public:
-  struct Data : public AnyData {
-    Data(int type, const std::any &data = {}) : AnyData(data), type(type) {}
+  struct Value : public AnyData {
+    Value(int type, const std::any &data = {}) : AnyData(data), type(type) {}
     int type;
   };
   static inline ApplicationNotifier *instance() { return instance_.value; }
   ApplicationNotifier();
   ~ApplicationNotifier();
 
-  FunctionConnector<const Data &> notify;
+  FunctionConnector<const Value &> notify;
 
 private:
   static AsyncFw::Instance<ApplicationNotifier> instance_;

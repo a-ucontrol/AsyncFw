@@ -2,7 +2,7 @@ var hierarchy =
 [
     [ "AsyncFw::AbstractFunctionConnector", "classAsyncFw_1_1AbstractFunctionConnector.html", [
       [ "AsyncFw::FunctionConnector< Args... >", "classAsyncFw_1_1FunctionConnector.html", null ],
-      [ "AsyncFw::FunctionConnector< const Data & >", "classAsyncFw_1_1FunctionConnector.html", null ],
+      [ "AsyncFw::FunctionConnector< const Value & >", "classAsyncFw_1_1FunctionConnector.html", null ],
       [ "AsyncFw::FunctionConnector< Args >", "classAsyncFw_1_1FunctionConnector.html", null ]
     ] ],
     [ "AsyncFw::AbstractInstance", "classAsyncFw_1_1AbstractInstance.html", [

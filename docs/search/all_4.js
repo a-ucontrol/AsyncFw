@@ -8,7 +8,7 @@ var searchData=
   ['functionconnectionguard_5',['FunctionConnectionGuard',['../classAsyncFw_1_1FunctionConnectionGuard.html',1,'AsyncFw']]],
   ['functionconnector_6',['FunctionConnector',['../classAsyncFw_1_1FunctionConnector.html',1,'AsyncFw']]],
   ['functionconnector_3c_20args_2e_2e_2e_20_3e_7',['FunctionConnector&lt; Args... &gt;',['../classAsyncFw_1_1FunctionConnector.html',1,'AsyncFw']]],
-  ['functionconnector_3c_20const_20data_20_26_20_3e_8',['FunctionConnector&lt; const Data &amp; &gt;',['../classAsyncFw_1_1FunctionConnector.html',1,'AsyncFw']]],
+  ['functionconnector_3c_20const_20value_20_26_20_3e_8',['FunctionConnector&lt; const Value &amp; &gt;',['../classAsyncFw_1_1FunctionConnector.html',1,'AsyncFw']]],
   ['functionconnectorprotected_9',['FunctionConnectorProtected',['../classAsyncFw_1_1FunctionConnectorProtected.html',1,'AsyncFw']]],
   ['functionconnectorprotected_3c_20asyncfw_3a_3aaddressinfo_20_3e_10',['FunctionConnectorProtected&lt; AsyncFw::AddressInfo &gt;',['../classAsyncFw_1_1FunctionConnectorProtected.html',1,'AsyncFw']]],
   ['functionconnectorprotected_3c_20asyncfw_3a_3adataarrayabstracttcp_20_3e_11',['FunctionConnectorProtected&lt; AsyncFw::DataArrayAbstractTcp &gt;',['../classAsyncFw_1_1FunctionConnectorProtected.html',1,'AsyncFw']]],
