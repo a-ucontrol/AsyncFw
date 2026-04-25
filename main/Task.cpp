@@ -10,7 +10,10 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 AsyncFw::AbstractTask::AbstractTask(AbstractThread *thread) : thread_(thread) { lsTrace(); }
 AsyncFw::AbstractTask::~AbstractTask() {
-  if (thread_) thread_->invokeMethod([]() {}, true);
+  if (thread_) {
+    thread_->requestInterrupt();
+    thread_->waitInterrupted();
+  }
   lsTrace();
 }
 
