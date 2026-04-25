@@ -46,7 +46,7 @@ public:
     if (!i_->value) {
       CT *_v = new CT(args...);
       if (!i_->value) {
-        i_->value = static_cast<T *>(_v);
+        i_->value = reinterpret_cast<T *>(_v);
         i_->created();
       }
       return _v;
