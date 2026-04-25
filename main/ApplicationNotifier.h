@@ -15,7 +15,7 @@ public:
   };
   static inline ApplicationNotifier *instance() { return instance_.value; }
   ApplicationNotifier();
-  ~ApplicationNotifier();
+  virtual ~ApplicationNotifier();
 
   FunctionConnector<const Value &> notify;
 

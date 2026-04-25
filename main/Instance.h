@@ -46,10 +46,10 @@ public:
     if (!i_->value) {
       CT *_v = new CT(args...);
       if (!i_->value) {
-        i_->value = _v;
+        i_->value = static_cast<T *>(_v);
         i_->created();
       }
-      return static_cast<CT *>(i_->value);
+      return _v;
     }
     return nullptr;
   }
