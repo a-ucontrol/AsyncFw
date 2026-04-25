@@ -21,7 +21,7 @@ public:
 
   static inline MulticastDns *instance() { return instance_.value; }
   MulticastDns(const std::string &serviceType = {});
-  ~MulticastDns();
+  virtual ~MulticastDns();
 
   //int sendDnsSd();
   int sendQuery(int timeout = 0);

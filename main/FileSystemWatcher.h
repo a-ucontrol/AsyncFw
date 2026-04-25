@@ -20,7 +20,7 @@ class FileSystemWatcher {
 public:
   static FileSystemWatcher *instance() { return instance_.value; }
   FileSystemWatcher(const std::vector<std::string> & = {});
-  ~FileSystemWatcher();
+  virtual ~FileSystemWatcher();
   bool addPath(const std::string &path);
   bool addPaths(const std::vector<std::string> &paths);
   bool removePath(const std::string &path);
