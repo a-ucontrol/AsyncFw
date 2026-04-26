@@ -25,12 +25,12 @@ public:
     AbstractThreadPool *pool;
   };
 
-  static std::vector<AbstractThreadPool *> pools() { return list_; }
+  static std::vector<AbstractThreadPool *> pools();
   AbstractThreadPool(const std::string &);
   virtual ~AbstractThreadPool();
   virtual void quit();
   AbstractThread *thread() { return thread_; }
-  std::string name() const { return name_; }
+  std::string name() const;
   AbstractThread::LockGuard threads(std::vector<AbstractThreadPool::Thread *> **);
 
 protected:
@@ -41,14 +41,8 @@ protected:
   AbstractThread *thread_;
 
 private:
-  static struct List : public std::vector<AbstractThreadPool *> {
-    friend AbstractThreadPool;
-    ~List();
-  } list_;
-  struct Compare {
-    bool operator()(const AbstractThread *t1, const AbstractThread *t2) const { return t1 < t2; }
-  };
-  std::string name_;
+  struct Private;
+  Private &private_;
 };
 
 /*! \class ThreadPool ThreadPool.h <AsyncFw/ThreadPool> \brief Управляет набором многократно используемых рабочих потоков для параллельного выполнения задач, вместо создания нового потока для каждой задачи.
@@ -103,6 +97,6 @@ public:
 private:
   static inline Instance<ThreadPool> instance_ {"ThreadPool"};
   std::vector<AbstractThreadPool::Thread *> workThreads_;
-  int workThreadsSize;
+  int workThreadsSize_;
 };
 }  // namespace AsyncFw
