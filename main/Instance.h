@@ -7,34 +7,24 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #pragma once
 
-#include <vector>
 #include <string>
 
 namespace AsyncFw {
 /*! \class AbstractInstance Instance.h <AsyncFw/Instance> \brief The AbstractInstance class. */
 class AbstractInstance {
 public:
-  class List : public std::vector<AbstractInstance *> {
-    friend AbstractInstance;
-
-  public:
-    static void destroyValues();
-
-    void append(AbstractInstance *);
-    void remove(AbstractInstance *);
-
-  private:
-    ~List();
-  };
+  static void destroyValues();
 
 protected:
-  static class List list;
-
-  virtual ~AbstractInstance() = default;
+  AbstractInstance(const std::string &name);
+  virtual ~AbstractInstance() = 0;
   virtual bool destroyValue() = 0;
   virtual void created();
   virtual void destroing();
-  std::string name;
+
+private:
+  struct Private;
+  Private &private_;
 };
 
 /*! \class Instance Instance.h <AsyncFw/Instance> \brief The Instance class. */
@@ -62,14 +52,8 @@ public:
   static void set(T *p) { i_->value = p; }
   static T *get() { return i_->value; }
 
-  Instance(const std::string &_name = {}) : value(nullptr) {
-    name = _name;
-    list.append(i_ = this);
-  }
-  virtual ~Instance() override {
-    destroyValue();
-    list.remove(i_);
-  }
+  Instance(const std::string &_name = {}) : AbstractInstance(_name) { i_ = this; }
+  virtual ~Instance() override { destroyValue(); }
 
 protected:
   Instance(const Instance &) = delete;
@@ -83,7 +67,7 @@ protected:
   }
 
 private:
-  T *value;
+  T *value = nullptr;
   static inline Instance<T> *i_;
 };
 }  // namespace AsyncFw

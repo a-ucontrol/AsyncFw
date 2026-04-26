@@ -12,18 +12,30 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 using namespace AsyncFw;
 
-AbstractInstance::List AbstractInstance::list __attribute__((init_priority(AsyncFw_STATIC_INIT_PRIORITY + 3)));
+struct AbstractInstance::Private {
+  static inline class List : public std::vector<AbstractInstance *> {
+    friend AbstractInstance;
 
-void AbstractInstance::List::destroyValues() {
-  lsTrace() << list.size();
+  public:
+    void append(AbstractInstance *);
+    void remove(AbstractInstance *);
+
+  private:
+    ~List();
+  } list __attribute__((init_priority(AsyncFw_STATIC_INIT_PRIORITY + 3)));
+  std::string name;
+};
+
+void AbstractInstance::destroyValues() {
+  lsTrace() << Private::list.size();
   int destroyed = 0;
-  std::for_each(list.rbegin(), list.rend(), [&destroyed](AbstractInstance *_i) {
+  std::for_each(Private::list.rbegin(), Private::list.rend(), [&destroyed](AbstractInstance *_i) {
     if (_i->destroyValue()) destroyed++;
   });
   lsDebug() << LogStream::Color::DarkCyan << "destroyed:" << destroyed;
 }
 
-AbstractInstance::List::~List() {
+AbstractInstance::Private::List::~List() {
   if (!empty()) {
     lsError() << LogStream::Color::Red << "instance list not empty:" << size();
     destroyValues();
@@ -31,14 +43,14 @@ AbstractInstance::List::~List() {
   lsDebug() << LogStream::Color::DarkCyan << size();
 }
 
-void AbstractInstance::List::append(AbstractInstance *_i) {
+void AbstractInstance::Private::List::append(AbstractInstance *_i) {
   std::vector<AbstractInstance *>::iterator it = std::lower_bound(list.begin(), list.end(), _i, [](const AbstractInstance *i1, const AbstractInstance *i2) { return i1 < i2; });
   list.insert(it, _i);
-  lsTrace() << _i->name;
+  lsTrace() << _i->private_.name;
 }
 
-void AbstractInstance::List::remove(AbstractInstance *_i) {
-  lsTrace() << _i->name;
+void AbstractInstance::Private::List::remove(AbstractInstance *_i) {
+  lsTrace() << _i->private_.name;
   if (list.empty()) {
     lsError() << "instance list empty";
     return;
@@ -47,6 +59,16 @@ void AbstractInstance::List::remove(AbstractInstance *_i) {
   list.erase(it);
 }
 
-void AbstractInstance::created() { lsDebug() << LogStream::Color::Cyan << name; }
+AbstractInstance::AbstractInstance(const std::string &name) : private_(*new Private) {
+  private_.name = name;
+  Private::list.append(this);
+}
 
-void AbstractInstance::destroing() { lsDebug() << LogStream::Color::Cyan << name; }
+AbstractInstance::~AbstractInstance() {
+  Private::list.remove(this);
+  delete &private_;
+}
+
+void AbstractInstance::created() { lsDebug() << LogStream::Color::Cyan << private_.name; }
+
+void AbstractInstance::destroing() { lsDebug() << LogStream::Color::Cyan << private_.name; }

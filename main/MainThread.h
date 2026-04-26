@@ -111,7 +111,7 @@ private:
     }
 #endif
     delete exitTask;
-    AbstractInstance::List::destroyValues();
+    AbstractInstance::destroyValues();
     clearId();
 #ifdef USE_QAPPLICATION
     for (const std::shared_ptr<Poll> &_n : notifiers) { delete _n->task; }
