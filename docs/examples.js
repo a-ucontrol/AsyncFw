@@ -11,6 +11,8 @@ var examples =
     [ "ListenSocket/main.cpp", "ListenSocket_2main_8cpp-example.html", null ],
     [ "Log/main.cpp", "Log_2main_8cpp-example.html", null ],
     [ "MulticastDns/main.cpp", "MulticastDns_2main_8cpp-example.html", null ],
+    [ "ApplicationNotifier/main.cpp", "ApplicationNotifier_2main_8cpp-example.html", null ],
+    [ "DataArrayTcp/main.cpp", "DataArrayTcp_2main_8cpp-example.html", null ],
     [ "Socket/main.cpp", "Socket_2main_8cpp-example.html", null ],
     [ "Stdin/main.cpp", "Stdin_2main_8cpp-example.html", null ],
     [ "SystemProcess/main.cpp", "SystemProcess_2main_8cpp-example.html", null ],

@@ -9,6 +9,8 @@
 /*! \example ListenSocket/main.cpp ListenSocket example */
 /*! \example Log/main.cpp Log example */
 /*! \example MulticastDns/main.cpp MulticastDns example */
+/*! \example ApplicationNotifier/main.cpp ApplicationNotifier example */
+/*! \example DataArrayTcp/main.cpp DataArrayTcpServer and DataArrayTcpClient example */
 /*! \example Socket/main.cpp Socket example \warning Unix-like systems only */
 /*! \example Stdin/main.cpp Stdin example \warning Unix-like systems only */
 /*! \example SystemProcess/main.cpp SystemProcess example \warning Unix-like systems only */
