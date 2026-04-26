@@ -3,6 +3,8 @@
 
 using namespace AsyncFw;
 
+Instance<ApplicationNotifier> ApplicationNotifier::instance_ {"ApplicationNotifier"};
+
 ApplicationNotifier::ApplicationNotifier() {
   if (!instance_.value) instance_.value = this;
   else { logEmergency("Only one ApplicationNotifier can exist"); }

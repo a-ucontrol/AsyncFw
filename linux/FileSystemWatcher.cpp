@@ -63,6 +63,8 @@ FileSystemWatcher::Private::WatchPath::WatchPath(const std::string &path) {
   name = path.substr(i + 1);
 }
 
+Instance<FileSystemWatcher> FileSystemWatcher::instance_ {"FileSystemWatcher"};
+
 FileSystemWatcher::FileSystemWatcher(const std::vector<std::string> &paths) {
   private_ = new Private;
   private_->thread_ = AbstractThread::currentThread();

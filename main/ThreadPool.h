@@ -95,7 +95,7 @@ public:
   AbstractThreadPool::Thread *getThread();
 
 private:
-  static inline Instance<ThreadPool> instance_ {"ThreadPool"};
+  static Instance<ThreadPool> instance_;
   std::vector<AbstractThreadPool::Thread *> workThreads_;
   int workThreadsSize_;
 };

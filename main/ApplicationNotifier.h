@@ -20,6 +20,6 @@ public:
   FunctionConnector<const Value &> notify;
 
 private:
-  static inline Instance<ApplicationNotifier> instance_ {"ApplicationNotifier"};
+  static AsyncFw::Instance<ApplicationNotifier> instance_;
 };
 }  // namespace AsyncFw

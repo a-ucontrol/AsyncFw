@@ -31,7 +31,7 @@ public:
   FunctionConnectorProtected<FileSystemWatcher>::Connector<const std::string &, int> notify;
 
 private:
-  static inline Instance<FileSystemWatcher> instance_ {"FileSystemWatcher"};
+  static Instance<FileSystemWatcher> instance_;
   struct Private;
   Private *private_;
 };
