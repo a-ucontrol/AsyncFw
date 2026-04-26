@@ -31,7 +31,7 @@ protected:
   static class List list;
 
   virtual ~AbstractInstance() = default;
-  virtual void destroyValue() = 0;
+  virtual bool destroyValue() = 0;
   virtual void created();
   virtual void destroing();
   std::string name;
@@ -73,11 +73,13 @@ public:
 
 protected:
   Instance(const Instance &) = delete;
-  void destroyValue() override {
+  bool destroyValue() override {
     if (value) {
       destroing();
       delete value;
+      return true;
     }
+    return false;
   }
 
 private:
