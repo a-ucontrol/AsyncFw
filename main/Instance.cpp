@@ -15,7 +15,7 @@ using namespace AsyncFw;
 AbstractInstance::List AbstractInstance::list __attribute__((init_priority(AsyncFw_STATIC_INIT_PRIORITY + 3)));
 
 void AbstractInstance::List::destroyValues() {
-  lsDebug() << LogStream::Color::Cyan << list.size();
+  lsTrace() << LogStream::Color::Cyan << list.size();
   std::for_each(list.rbegin(), list.rend(), [](AbstractInstance *_i) { _i->destroyValue(); });
 }
 
@@ -42,3 +42,7 @@ void AbstractInstance::List::remove(AbstractInstance *_i) {
   std::vector<AbstractInstance *>::iterator it = std::lower_bound(list.begin(), list.end(), _i, [](const AbstractInstance *i1, const AbstractInstance *i2) { return i1 < i2; });
   list.erase(it);
 }
+
+void AbstractInstance::created() { lsDebug() << LogStream::Color::Cyan << name; }
+
+void AbstractInstance::destroing() { lsDebug() << LogStream::Color::Cyan << name; }

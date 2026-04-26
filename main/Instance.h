@@ -32,6 +32,8 @@ protected:
 
   virtual ~AbstractInstance() = default;
   virtual void destroyValue() = 0;
+  virtual void created();
+  virtual void destroing();
   std::string name;
 };
 
@@ -65,16 +67,18 @@ public:
     list.append(i_ = this);
   }
   virtual ~Instance() override {
-    Instance<T>::destroyValue();
+    destroyValue();
     list.remove(i_);
   }
 
 protected:
   Instance(const Instance &) = delete;
   void destroyValue() override {
-    if (value) delete value;
+    if (value) {
+      destroing();
+      delete value;
+    }
   }
-  virtual void created() {}
 
 private:
   T *value;

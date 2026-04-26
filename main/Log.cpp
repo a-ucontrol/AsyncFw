@@ -180,6 +180,7 @@ void AbstractLog::stopTimer(int *timerId) {
 
 void Log::Instance::created() {
   LogStream::setCompleted(&lsAppend);
+  AbstractInstance::created();
   lsTrace();
 }
 
@@ -189,7 +190,7 @@ Log::Log(int size, const std::string &name) : Rrd(size, name), AbstractLog() {
   thread_ = Rrd::thread_;
 
   tdg = thread_->destroing([this]() {
-    lsWarning() << "logger thread finished, finalize logger";
+    lsWarning() << "log thread finished, finalize logger";
     finality();
   });
 
