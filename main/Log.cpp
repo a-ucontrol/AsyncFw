@@ -184,8 +184,6 @@ void Log::Instance::created() {
   lsTrace();
 }
 
-Log::Instance Log::instance_ {"Log"};
-
 Log::Log(int size, const std::string &name) : Rrd(size, name), AbstractLog() {
   thread_ = Rrd::thread_;
 

@@ -100,8 +100,6 @@ void AbstractThreadPool::Thread::destroy() {
   lsTrace();
 }
 
-Instance<ThreadPool> ThreadPool::instance_ {"ThreadPool"};
-
 ThreadPool::ThreadPool(const std::string &name, int workThreads) : AbstractThreadPool(name), workThreadsSize(workThreads) { lsTrace() << "created" << name; }
 
 ThreadPool::~ThreadPool() {

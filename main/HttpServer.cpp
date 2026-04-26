@@ -417,8 +417,6 @@ void HttpServer::TcpSocket::readEvent() {
 
 void HttpServer::fileUploadProgress(TcpSocket *, int progress) { trace() << progress; }
 
-Instance<HttpServer> HttpServer::instance_ {"HttpServer"};
-
 HttpServer::HttpServer(const std::string &_httpPath) {
   private_ = new Private();
   private_->httpPath = _httpPath;

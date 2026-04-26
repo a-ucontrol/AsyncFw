@@ -270,12 +270,12 @@ protected:
   RulesMap rules;
 
 private:
+  static inline Instance<HttpServer> instance_ {"HttpServer"};
   void received(TcpSocket *, const std::string_view &);
   int makeWebSocketFrame(const AsyncFw::DataArray &, AsyncFw::DataArray *);
   RulesMap::iterator findRule(const std::string &, const Request::Method);
   std::vector<TcpSocket *> sockets;
   bool cors_request_enabled = true;
-  static Instance<HttpServer> instance_;
   std::function<bool(const Request &, std::any)> peek;
   Private *private_;
 };

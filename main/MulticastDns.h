@@ -49,7 +49,7 @@ public:
   FunctionConnectorProtected<MulticastDns>::Connector<const Host &> hostRemoved;
 
 private:
-  static Instance<MulticastDns> instance_;
+  static inline Instance<MulticastDns> instance_ {"MulticastDns"};
   void servicePollEvent(int fd);
   void querierPollEvent(int fd);
   void querierTimerEvent();
