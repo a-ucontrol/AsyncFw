@@ -39,6 +39,10 @@ extern void stop_mdns_querier();
 extern void mdns_querier_event(int fd);
 extern int send_mdns_query(mdns_query_t *query, size_t count);
 
+struct Compare {
+  bool operator()(const MulticastDns::Host &h, const std::string &n) const { return h.name.compare(n); }
+};
+
 // Callback handling parsing answers to queries sent
 int query_callback(int, const struct sockaddr *from, size_t addrlen, mdns_entry_type_t entry, uint16_t, uint16_t rtype, uint16_t rclass, uint32_t ttl, const void *data, size_t size, size_t name_offset, size_t, size_t record_offset, size_t record_length, void *user_data) {
   mdns_string_t fromaddrstr = ip_address_to_string(addrbuffer, sizeof(addrbuffer), from, addrlen);
@@ -52,15 +56,9 @@ int query_callback(int, const struct sockaddr *from, size_t addrlen, mdns_entry_
     if (MDNS_STRING_FORMAT(entrystr) == MulticastDns::instance()->serviceType()) {
       mdns_string_t namestr = mdns_record_parse_ptr(data, size, record_offset, record_length, namebuffer, sizeof(namebuffer));
       std::string name = std::regex_replace(MDNS_STRING_FORMAT(namestr), std::regex("\\..*"), "");
-      bool b = false;
-      for (MulticastDns::Host &host : hostList) {
-        if (host.name == name) {
-          host.ipv4.clear();
-          b = true;
-          break;
-        }
-      }
-      if (!b) { hostList.push_back({name, {}, {}, {}, 0}); }
+      std::vector<MulticastDns::Host>::iterator it = std::lower_bound(hostList.begin(), hostList.end(), name, Compare());
+      if (it != hostList.end() && (*it).name == name) (*it).ipv4.clear();
+      else { hostList.insert(it, {name, {}, {}, {}, 0}); }
       trace() << "PTR" << std::endl << MDNS_STRING_FORMAT(fromaddrstr) << entrytype << MDNS_STRING_FORMAT(entrystr) << name;
     } else
       trace() << "PTR" << std::endl << MDNS_STRING_FORMAT(fromaddrstr) << entrytype << MDNS_STRING_FORMAT(entrystr);
@@ -69,17 +67,16 @@ int query_callback(int, const struct sockaddr *from, size_t addrlen, mdns_entry_
       mdns_record_srv_t srv = mdns_record_parse_srv(data, size, record_offset, record_length, namebuffer, sizeof(namebuffer));
       uint16_t port = (ttl) ? srv.port : 0;
       std::string name = std::regex_replace(MDNS_STRING_FORMAT(srv.name), std::regex(".local."), "");
-      for (MulticastDns::Host &host : hostList) {
-        if (host.name == name) {
-          host.port = port;
-          if (!port) {
-            host.ipv4.clear();
-            host.llipv4.clear();
-            host.misc.clear();
-          }
-          if (*(void **)user_data == 0) *(void **)user_data = &host;
-          break;
+
+      std::vector<MulticastDns::Host>::iterator it = std::lower_bound(hostList.begin(), hostList.end(), name, Compare());
+      if (it != hostList.end() && (*it).name == name) {
+        (*it).port = port;
+        if (!port) {
+          (*it).ipv4.clear();
+          (*it).llipv4.clear();
+          (*it).misc.clear();
         }
+        if (*(void **)user_data == 0) *(void **)user_data = &(*it);
       }
       trace() << "SRV" << std::endl << MDNS_STRING_FORMAT(fromaddrstr) << entrytype << MDNS_STRING_FORMAT(entrystr) << name << port;
     } else
@@ -90,12 +87,10 @@ int query_callback(int, const struct sockaddr *from, size_t addrlen, mdns_entry_
     mdns_string_t addrstr = ipv4_address_to_string(namebuffer, sizeof(namebuffer), &addr, sizeof(addr));
     std::string address = MDNS_STRING_FORMAT(addrstr);
     std::string name = std::regex_replace(MDNS_STRING_FORMAT(entrystr), std::regex(".local."), "");
-    for (MulticastDns::Host &host : hostList) {
-      if (host.name == name) {
-        host.ipv4 = address;
-        if (*(void **)user_data == 0) *(void **)user_data = &host;
-        break;
-      }
+    std::vector<MulticastDns::Host>::iterator it = std::lower_bound(hostList.begin(), hostList.end(), name, Compare());
+    if (it != hostList.end() && (*it).name == name) {
+      (*it).ipv4 = address;
+      if (*(void **)user_data == 0) *(void **)user_data = &(*it);
     }
     trace() << "A" << std::endl << MDNS_STRING_FORMAT(fromaddrstr) << entrytype << MDNS_STRING_FORMAT(entrystr) << MDNS_STRING_FORMAT(addrstr);
   } else if (rtype == MDNS_RECORDTYPE_TXT) {
@@ -106,13 +101,11 @@ int query_callback(int, const struct sockaddr *from, size_t addrlen, mdns_entry_
         if (key != "llip" && key != "misc") continue;
         std::string name = std::regex_replace(MDNS_STRING_FORMAT(entrystr), std::regex("[.].*"), "");
         std::string val = MDNS_STRING_FORMAT(txtbuffer[itxt].value);
-        for (MulticastDns::Host &host : hostList) {
-          if (host.name == name) {
-            if (key == "llip") host.llipv4 = val;
-            else if (key == "misc") { host.misc = val; }
-            if (*(void **)user_data == 0) *(void **)user_data = &host;
-            break;
-          }
+        std::vector<MulticastDns::Host>::iterator it = std::lower_bound(hostList.begin(), hostList.end(), name, Compare());
+        if (it != hostList.end() && (*it).name == name) {
+          if (key == "llip") (*it).llipv4 = val;
+          else if (key == "misc") { (*it).misc = val; }
+          if (*(void **)user_data == 0) *(void **)user_data = &(*it);
         }
         trace() << "TXT" << std::endl << MDNS_STRING_FORMAT(fromaddrstr) << entrytype << MDNS_STRING_FORMAT(entrystr) << MDNS_STRING_FORMAT(txtbuffer[itxt].key) << "=" << MDNS_STRING_FORMAT(txtbuffer[itxt].value);
       }
@@ -302,12 +295,12 @@ void MulticastDns::append_(const Host &_host) {
 
 void MulticastDns::update() {
   std::lock_guard<std::mutex> lock(mutex);
-  for (auto host = hosts_.begin(); host != hosts_.end();) {
-    if (std::find(hostList.begin(), hostList.end(), *host) == hostList.end()) {
-      Host h = *host;
+  for (std::vector<MulticastDns::Host>::iterator host = hosts_.begin(); host != hosts_.end();) {
+    std::vector<MulticastDns::Host>::iterator it = std::lower_bound(hostList.begin(), hostList.end(), host->name, Compare());
+    if (it != hostList.end() && (*it).name == host->name) host++;
+    else {
+      hostRemoved(*host);
       host = hosts_.erase(host);
-      hostRemoved(h);
-    } else
-      host++;
+    }
   }
 }
