@@ -2,8 +2,8 @@ var classAsyncFw_1_1AbstractThread =
 [
     [ "Holder", "classAsyncFw_1_1AbstractThread_1_1Holder.html", "classAsyncFw_1_1AbstractThread_1_1Holder" ],
     [ "LockGuard", "classAsyncFw_1_1AbstractThread.html#a4e97803ef650d36ba80ef1471c4b643c", null ],
-    [ "AbstractTask", "classAsyncFw_1_1AbstractThread.html#ab67dc17d7fefb34e7af6a0a3115c0023", null ],
-    [ "AbstractPollTask", "classAsyncFw_1_1AbstractThread.html#ae3d99f6a3bf3d8278a062d9c3daab1d1", null ],
+    [ "AbstractTask", "classAsyncFw_1_1AbstractThread.html#ae4482090d35bbbc8393bed661c441b44", null ],
+    [ "AbstractPollTask", "classAsyncFw_1_1AbstractThread.html#a4f2d546f5c5e3f2a1078ab67fd340f24", null ],
     [ "AbstractThread", "classAsyncFw_1_1AbstractThread.html#a8c9202c90ac101522f26c4260cb01b59", null ],
     [ "invokeMethod", "classAsyncFw_1_1AbstractThread.html#aa58eb4ec370dece81d08f7cea08f2af7", null ],
     [ "appendPollTask", "classAsyncFw_1_1AbstractThread.html#a0b6d6552ad2d0cdae6ce11fe6cb979be", null ],

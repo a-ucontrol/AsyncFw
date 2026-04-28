@@ -145,6 +145,18 @@ template&lt;typename A&gt; </td></tr>
 template&lt;typename O, typename A&gt; </td></tr>
 <tr class="memitem:a64e42967cdef1254142bcba26f246f07"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>addRoute</b> (const O object, const std::string &amp;url, Request::Method method, A action, const std::any &amp;data={})</td></tr>
 <tr class="separator:a64e42967cdef1254142bcba26f246f07"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a414198c976b0e4fa621127ec7146b264" id="r_a414198c976b0e4fa621127ec7146b264"><td class="memTemplParams" colspan="2"><a id="a414198c976b0e4fa621127ec7146b264" name="a414198c976b0e4fa621127ec7146b264"></a>
+template&lt;typename T&gt; </td></tr>
+<tr class="memitem:a414198c976b0e4fa621127ec7146b264"><td class="memTemplItemLeft" align="right" valign="top">int&#160;</td><td class="memTemplItemRight" valign="bottom"><b>sendToWebSockets</b> (const T &amp;_data, const <a class="el" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> &amp;_da)</td></tr>
+<tr class="separator:a414198c976b0e4fa621127ec7146b264"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc73f692881dd6ec48995a05844076a0" id="r_adc73f692881dd6ec48995a05844076a0"><td class="memTemplParams" colspan="2"><a id="adc73f692881dd6ec48995a05844076a0" name="adc73f692881dd6ec48995a05844076a0"></a>
+template&lt;typename T&gt; </td></tr>
+<tr class="memitem:adc73f692881dd6ec48995a05844076a0"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>addRule</b> (const std::string &amp;url, const Request::Method method, T exec)</td></tr>
+<tr class="separator:adc73f692881dd6ec48995a05844076a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad0bb08fb4a0ef0fd28961e29a8275bd0" id="r_ad0bb08fb4a0ef0fd28961e29a8275bd0"><td class="memTemplParams" colspan="2"><a id="ad0bb08fb4a0ef0fd28961e29a8275bd0" name="ad0bb08fb4a0ef0fd28961e29a8275bd0"></a>
+template&lt;typename T&gt; </td></tr>
+<tr class="memitem:ad0bb08fb4a0ef0fd28961e29a8275bd0"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>setPeek</b> (T f)</td></tr>
+<tr class="separator:ad0bb08fb4a0ef0fd28961e29a8275bd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2d9f5dda4b025b9885180808c488503e" id="r_a2d9f5dda4b025b9885180808c488503e"><td class="memTemplParams" colspan="2"><a id="a2d9f5dda4b025b9885180808c488503e" name="a2d9f5dda4b025b9885180808c488503e"></a>
 template&lt;typename T&gt; </td></tr>
 <tr class="memitem:a2d9f5dda4b025b9885180808c488503e"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>clearConnections</b> (const T &amp;_data)</td></tr>
@@ -152,10 +164,6 @@ template&lt;typename T&gt; </td></tr>
 <tr class="memitem:a614589d105eadadf6e125eaccbb9d3b1" id="r_a614589d105eadadf6e125eaccbb9d3b1"><td class="memItemLeft" align="right" valign="top"><a id="a614589d105eadadf6e125eaccbb9d3b1" name="a614589d105eadadf6e125eaccbb9d3b1"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>clearConnections</b> ()</td></tr>
 <tr class="separator:a614589d105eadadf6e125eaccbb9d3b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a414198c976b0e4fa621127ec7146b264" id="r_a414198c976b0e4fa621127ec7146b264"><td class="memTemplParams" colspan="2"><a id="a414198c976b0e4fa621127ec7146b264" name="a414198c976b0e4fa621127ec7146b264"></a>
-template&lt;typename T&gt; </td></tr>
-<tr class="memitem:a414198c976b0e4fa621127ec7146b264"><td class="memTemplItemLeft" align="right" valign="top">int&#160;</td><td class="memTemplItemRight" valign="bottom"><b>sendToWebSockets</b> (const T &amp;_data, const <a class="el" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> &amp;_da)</td></tr>
-<tr class="separator:a414198c976b0e4fa621127ec7146b264"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac1225b4e5fe3b38d5c6ef4c664d0a59b" id="r_ac1225b4e5fe3b38d5c6ef4c664d0a59b"><td class="memItemLeft" align="right" valign="top"><a id="ac1225b4e5fe3b38d5c6ef4c664d0a59b" name="ac1225b4e5fe3b38d5c6ef4c664d0a59b"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>sendToWebSockets</b> (const std::string &amp;)</td></tr>
 <tr class="separator:ac1225b4e5fe3b38d5c6ef4c664d0a59b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -174,9 +182,6 @@ uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>port</b> ()</td><
 <tr class="memitem:a1e3e419d07c51b25f0f4910db1e21b1f" id="r_a1e3e419d07c51b25f0f4910db1e21b1f"><td class="memItemLeft" align="right" valign="top"><a id="a1e3e419d07c51b25f0f4910db1e21b1f" name="a1e3e419d07c51b25f0f4910db1e21b1f"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>hasTls</b> ()</td></tr>
 <tr class="separator:a1e3e419d07c51b25f0f4910db1e21b1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a49661dff67c27da35efe560c85ac04c1" id="r_a49661dff67c27da35efe560c85ac04c1"><td class="memItemLeft" align="right" valign="top"><a id="a49661dff67c27da35efe560c85ac04c1" name="a49661dff67c27da35efe560c85ac04c1"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>addRule</b> (const std::string &amp;, const Request::Method, std::function&lt; void(const Request &amp;)&gt;)</td></tr>
-<tr class="separator:a49661dff67c27da35efe560c85ac04c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac494c117321095a11243e7eeea9f967b" id="r_ac494c117321095a11243e7eeea9f967b"><td class="memItemLeft" align="right" valign="top"><a id="ac494c117321095a11243e7eeea9f967b" name="ac494c117321095a11243e7eeea9f967b"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>execRule</b> (const Request &amp;)</td></tr>
 <tr class="separator:ac494c117321095a11243e7eeea9f967b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -186,9 +191,6 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>setTlsContext</b> (co
 <tr class="memitem:a6806aba6259233c939f9c44f577314ce" id="r_a6806aba6259233c939f9c44f577314ce"><td class="memItemLeft" align="right" valign="top"><a id="a6806aba6259233c939f9c44f577314ce" name="a6806aba6259233c939f9c44f577314ce"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setEnableCorsRequests</b> (bool)</td></tr>
 <tr class="separator:a6806aba6259233c939f9c44f577314ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a949914c25c7ca6da1b8fd159938f1c18" id="r_a949914c25c7ca6da1b8fd159938f1c18"><td class="memItemLeft" align="right" valign="top"><a id="a949914c25c7ca6da1b8fd159938f1c18" name="a949914c25c7ca6da1b8fd159938f1c18"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setPeek</b> (std::function&lt; bool(const Request &amp;, const std::any &amp;)&gt; f)</td></tr>
-<tr class="separator:a949914c25c7ca6da1b8fd159938f1c18"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -230,6 +232,8 @@ Friends</h2></td></tr>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[]) {</div>
 <div class="line">  <a class="code hl_class" href="classAsyncFw_1_1HttpServer.html">HttpServer</a> _http {HTTP_SERVER_HOME};</div>
+<div class="line"> </div>
+<div class="line">  _http.setPeek([](<span class="keyword">const</span> HttpServer::Request &amp;, std::any) { <span class="keywordflow">return</span> <span class="keyword">true</span>; });</div>
 <div class="line"> </div>
 <div class="line">  _http.addRoute(<span class="stringliteral">&quot;/quit&quot;</span>, HttpServer::Request::Method::Get, [](<span class="keyword">const</span> HttpServer::Request &amp;request) {</div>
 <div class="line">    HttpServer::Response *resp = request.response();</div>

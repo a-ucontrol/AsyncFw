@@ -123,7 +123,9 @@ $(function(){initNavTree('HttpServer_2main_8cpp-example.html',''); initResizable
 <div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[]) {</div>
 <div class="line">  <a id="_a0" name="_a0"></a><a class="code hl_class" href="classAsyncFw_1_1HttpServer.html">HttpServer</a> _http {HTTP_SERVER_HOME};</div>
 <div class="line"> </div>
-<div class="line">  _http.<a id="a1" name="a1"></a>addRoute(<span class="stringliteral">&quot;/quit&quot;</span>, HttpServer::Request::Method::Get, [](<span class="keyword">const</span> HttpServer::Request &amp;request) {</div>
+<div class="line">  _http.<a id="a1" name="a1"></a>setPeek([](<span class="keyword">const</span> HttpServer::Request &amp;, std::any) { <span class="keywordflow">return</span> <span class="keyword">true</span>; });</div>
+<div class="line"> </div>
+<div class="line">  _http.addRoute(<span class="stringliteral">&quot;/quit&quot;</span>, HttpServer::Request::Method::Get, [](<span class="keyword">const</span> HttpServer::Request &amp;request) {</div>
 <div class="line">    HttpServer::Response *resp = request.<a id="a2" name="a2"></a>response();</div>
 <div class="line">    resp-&gt;<a id="a3" name="a3"></a>setMimeType(<span class="stringliteral">&quot;octet-stream&quot;</span>);</div>
 <div class="line">    resp-&gt;<a id="a4" name="a4"></a>setStatusCode(HttpServer::Response::StatusCode::Ok);</div>
@@ -157,7 +159,7 @@ $(function(){initNavTree('HttpServer_2main_8cpp-example.html',''); initResizable
 <div class="line">  <span class="keywordflow">return</span> ret;</div>
 <div class="line">}</div>
 <div class="ttc" id="aclassAsyncFw_1_1DataArray_html"><div class="ttname"><a href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a></div><div class="ttdoc">The DataArray class, provides an array of bytes.</div><div class="ttdef"><b>Definition</b> DataArray.h:20</div></div>
-<div class="ttc" id="aclassAsyncFw_1_1HttpServer_html"><div class="ttname"><a href="classAsyncFw_1_1HttpServer.html">AsyncFw::HttpServer</a></div><div class="ttdoc">The HttpServer class.</div><div class="ttdef"><b>Definition</b> HttpServer.h:23</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1HttpServer_html"><div class="ttname"><a href="classAsyncFw_1_1HttpServer.html">AsyncFw::HttpServer</a></div><div class="ttdoc">The HttpServer class.</div><div class="ttdef"><b>Definition</b> HttpServer.h:22</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1HttpSocket_html"><div class="ttname"><a href="classAsyncFw_1_1HttpSocket.html">AsyncFw::HttpSocket</a></div><div class="ttdoc">The HttpSocket class.</div><div class="ttdef"><b>Definition</b> HttpSocket.h:18</div></div>
 </div><!-- fragment --> </div><!-- contents -->
 </div><!-- doc-content -->
