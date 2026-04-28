@@ -9,7 +9,6 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #include <map>
 #include <memory>
-#include <functional>
 
 #include "../core/TlsContext.h"
 #include "HttpSocket.h"
@@ -192,10 +191,14 @@ private:
 
   public:
     const Request::Method method;
+    ~HttpRule();
+    HttpRule(HttpRule &&);
 
   private:
-    HttpRule(const Request::Method method, std::function<void(const Request &)> exec) : method(method), exec(exec) {}
-    std::function<void(const Request &)> exec;
+    template <typename T>
+    HttpRule(const Request::Method method, T exec) : method(method), exec(new Function<void, const Request &>::Value(exec)) {}
+    HttpRule(HttpRule &) = delete;
+    AbstractFunction<void, const Request &> *exec = nullptr;
   };
 
 public:
@@ -207,7 +210,7 @@ public:
   template <typename A>
   void addRoute(const std::string &url, Request::Method method, A action, const std::any &data = {}) {
     addRule(url, method, [this, action, data](const Request &request) {
-      if (!peek || peek(request, data)) action(request);
+      if (!peek || (*peek)(request, data)) action(request);
     });
     if (findRule(url, Request::Method::Options) != rules.end()) return;
     addRule(url, Request::Method::Options, [this, action, data](const Request &request) {
@@ -218,16 +221,6 @@ public:
   template <typename O, typename A>
   void addRoute(const O object, const std::string &url, Request::Method method, A action, const std::any &data = {}) {
     addRoute(url, method, [object, action](const Request &request) { return (object->*action)(request); }, data);
-  }
-
-  template <typename T>
-  void clearConnections(const T &_data) {
-    for (TcpSocket *socket : sockets) {
-      if (socket->data_.has_value() && _data == std::any_cast<T>(socket->data_)) disconnectFromHost(socket);
-    }
-  }
-  void clearConnections() {
-    for (TcpSocket *socket : sockets) disconnectFromHost(socket);
   }
   template <typename T>
   int sendToWebSockets(const T &_data, const AsyncFw::DataArray &_da) {
@@ -246,6 +239,25 @@ public:
     }
     return _r;
   }
+  template <typename T>
+  void addRule(const std::string &url, const Request::Method method, T exec) {
+    if (findRule(url, method) != rules.end()) return;
+    HttpServer::rules.emplace(url, std::make_unique<HttpRule>(HttpServer::HttpRule(method, exec)));
+  }
+  template <typename T>
+  void setPeek(T f) {
+    peek = new Function<bool, const Request &, std::any>::Value(f);
+  }
+  template <typename T>
+  void clearConnections(const T &_data) {
+    for (TcpSocket *socket : sockets) {
+      if (socket->data_.has_value() && _data == std::any_cast<T>(socket->data_)) disconnectFromHost(socket);
+    }
+  }
+  void clearConnections() {
+    for (TcpSocket *socket : sockets) disconnectFromHost(socket);
+  }
+
   void sendToWebSockets(const std::string &);
 
   void disconnectFromHost(TcpSocket *socket);
@@ -255,12 +267,10 @@ public:
   uint16_t port();
   bool hasTls();
 
-  void addRule(const std::string &, const Request::Method, std::function<void(const Request &)>);
   bool execRule(const Request &);
 
   void setTlsContext(const AsyncFw::TlsContext &);
   void setEnableCorsRequests(bool);
-  void setPeek(std::function<bool(const Request &, const std::any &)> f) { peek = f; }
 
   static inline HttpServer *instance() { return instance_.value; }
   AsyncFw::FunctionConnectorProtected<HttpServer>::Connector<int, const std::string &, bool *> incoming {AsyncFw::AbstractFunctionConnector::SyncOnly};
@@ -276,7 +286,7 @@ private:
   std::vector<TcpSocket *> sockets;
   bool cors_request_enabled = true;
   static Instance<HttpServer> instance_;
-  std::function<bool(const Request &, std::any)> peek;
+  AbstractFunction<bool, const Request &, std::any> *peek = nullptr;
   Private *private_;
 };
 }  // namespace AsyncFw

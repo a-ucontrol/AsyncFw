@@ -53,9 +53,9 @@ public:
   /*! \brief The LockGuard type. */
   using LockGuard = std::lock_guard<std::mutex>;
   /*! \brief The AbstractTask type. */
-  using AbstractTask = AbstractFunction<>;
+  using AbstractTask = AbstractFunction<void>;
   /*! \brief The AbstractPollTask type. */
-  using AbstractPollTask = AbstractFunction<AbstractThread::PollEvents>;
+  using AbstractPollTask = AbstractFunction<void, AbstractThread::PollEvents>;
 
   /*! \brief The Holder class. */
   class Holder {

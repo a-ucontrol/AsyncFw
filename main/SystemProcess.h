@@ -36,16 +36,16 @@ public:
 
   template <typename T>
   static bool exec(const std::string &cmd, const std::vector<std::string> &args, T f) {
-    return exec_(cmd, args, new FunctionArgs<int, State, const std::string &, const std::string &>::Function<T>(f));
+    return exec_(cmd, args, new Function<void, int, State, const std::string &, const std::string &>::Value(f));
   }
   template <typename T>
   static bool exec(const std::string &cmd, T f) {
-    return exec_(cmd, {}, new FunctionArgs<int, State, const std::string &, const std::string &>::Function<T>(f));
+    return exec_(cmd, {}, new Function<void, int, State, const std::string &, const std::string &>::Value(f));
   }
   static bool exec(const std::string &cmd, const std::vector<std::string> &args = {}) { return exec_(cmd, args, nullptr); }
 
 private:
-  static bool exec_(const std::string &, const std::vector<std::string> &, AbstractFunction<int, State, const std::string &, const std::string &> *);
+  static bool exec_(const std::string &, const std::vector<std::string> &, AbstractFunction<void, int, State, const std::string &, const std::string &> *);
 
   void finality();
   struct Private;

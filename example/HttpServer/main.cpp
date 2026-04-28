@@ -15,6 +15,8 @@ using namespace AsyncFw;
 int main(int argc, char *argv[]) {
   HttpServer _http {HTTP_SERVER_HOME};
 
+  _http.setPeek([](const HttpServer::Request &, std::any) { return true; });
+
   _http.addRoute("/quit", HttpServer::Request::Method::Get, [](const HttpServer::Request &request) {
     HttpServer::Response *resp = request.response();
     resp->setMimeType("octet-stream");

@@ -19,7 +19,7 @@ public:
   using ItemList = DataArrayList;
   template <typename T>
   void setAverage(int _interval, T f, int _offset = 0) {
-    average = new FunctionArgs<const ItemList &>::Function(f);
+    average = new Function<void, const ItemList &>::Value(f);
     aInterval = _interval / interval;
     aOffset = _offset;
   }
@@ -56,7 +56,7 @@ protected:
   bool readOnly = false;
 
 private:
-  AbstractFunction<const ItemList &> *average = nullptr;
+  AbstractFunction<void, const ItemList &> *average = nullptr;
   int aInterval = 0;
   int aOffset = 0;
   int interval;

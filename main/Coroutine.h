@@ -52,7 +52,7 @@ using CoroutineHandle = std::coroutine_handle<CoroutineTask::promise_type>;
 /*! \struct CoroutineAwait Coroutine.h <AsyncFw/Coroutine> \brief The CoroutineAwait struct. */
 struct CoroutineAwait {
   template <typename T>
-  CoroutineAwait(T _f) : f_(new FunctionArgs<const CoroutineHandle>::Function<T>(_f)) {}
+  CoroutineAwait(T _f) : f_(new Function<void, const CoroutineHandle>::Value(_f)) {}
   CoroutineAwait() = default;
   CoroutineAwait(const CoroutineAwait &) = delete;
   CoroutineAwait &operator=(const CoroutineAwait &) = delete;
@@ -63,6 +63,6 @@ struct CoroutineAwait {
 
 private:
   mutable CoroutineHandle h_;
-  AbstractFunction<const CoroutineHandle> *f_ = nullptr;
+  AbstractFunction<void, const CoroutineHandle> *f_ = nullptr;
 };
 }  // namespace AsyncFw

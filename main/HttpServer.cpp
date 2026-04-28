@@ -415,7 +415,14 @@ void HttpServer::TcpSocket::readEvent() {
   HttpSocket::readEvent();
 }
 
-void HttpServer::fileUploadProgress(TcpSocket *, int progress) { trace() << progress; }
+HttpServer::HttpRule::~HttpRule() {
+  if (exec) delete exec;
+}
+
+HttpServer::HttpRule::HttpRule(HttpRule &&r) : method(r.method) {
+  exec = r.exec;
+  r.exec = nullptr;
+}
 
 Instance<HttpServer> HttpServer::instance_ {"HttpServer"};
 
@@ -446,18 +453,13 @@ HttpServer::HttpServer(const std::string &_httpPath) {
 
 HttpServer::~HttpServer() {
   if (instance_.value == this) instance_.value = nullptr;
+  if (peek) delete peek;
   clearConnections();
   delete private_;
   lsTrace();
 }
 
-void HttpServer::addRule(const std::string &url, const Request::Method method, std::function<void(const Request &)> exec) {
-  if (findRule(url, method) != rules.end()) {
-    lsError() << "Rule already exists:" << url << static_cast<int>(method);
-    return;
-  }
-  HttpServer::rules.emplace(url, std::make_unique<HttpRule>(HttpServer::HttpRule(method, exec)));
-}
+void HttpServer::fileUploadProgress(TcpSocket *, int progress) { trace() << progress; }
 
 void HttpServer::disconnectFromHost(TcpSocket *socket) {
   lsTrace();
@@ -529,7 +531,7 @@ bool HttpServer::execRule(const Request &req) {
       return false;
     }
   }
-  rule->second->exec(req);
+  (*rule->second->exec)(req);
   return true;
 }
 
@@ -736,4 +738,5 @@ LogStream &operator<<(LogStream &log, const HttpServer &s) {
 
   return log << str;
 }
+
 }  // namespace AsyncFw

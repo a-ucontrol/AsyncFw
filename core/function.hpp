@@ -8,17 +8,18 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #pragma once
 
 namespace AsyncFw {
-template <typename... Args>
+template <typename R, typename... Args>
 struct AbstractFunction {
-  virtual void operator()(Args...) = 0;
+  virtual R operator()(Args...) = 0;
   virtual ~AbstractFunction() = default;
 };
-template <typename... Args>
-struct FunctionArgs {
+
+template <typename R, typename... Args>
+struct Function {
   template <typename T>
-  struct Function : public AbstractFunction<Args...> {
-    void operator()(Args... args) override { f(args...); }
-    Function(T &_f) : f(std::move(_f)) {}
+  struct Value : public AbstractFunction<R, Args...> {
+    R operator()(Args... args) override { return f(args...); }
+    Value(T &_f) : f(std::move(_f)) {}
 
   private:
     T f;
