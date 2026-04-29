@@ -303,7 +303,7 @@ $(function(){initNavTree('HttpServer_8h_source.html',''); initResizable(true); }
 <div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span> </div>
 <div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>  <span class="keyword">private</span>:</div>
 <div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>    HttpRule(<span class="keyword">const</span> Request::Method method, T exec) : method(method), exec(<span class="keyword">new</span> Function&lt;void, const Request &amp;&gt;::Value(exec)) {}</div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>    HttpRule(<span class="keyword">const</span> Request::Method method, T &amp;exec) : method(method), exec(<span class="keyword">new</span> Function&lt;T, const Request &amp;&gt;(exec)) {}</div>
 <div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>    HttpRule(HttpRule &amp;) = <span class="keyword">delete</span>;</div>
 <div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>    AbstractFunction&lt;void, const Request &amp;&gt; *exec = <span class="keyword">nullptr</span>;</div>
 <div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>  };</div>
@@ -353,7 +353,7 @@ $(function(){initNavTree('HttpServer_8h_source.html',''); initResizable(true); }
 <div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>  }</div>
 <div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>  <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
 <div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>  <span class="keywordtype">void</span> setPeek(T f) {</div>
-<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>    peek = <span class="keyword">new</span> Function&lt;bool, const Request &amp;, std::any&gt;::Value(f);</div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>    peek = <span class="keyword">new</span> Function&lt;T, const Request &amp;, std::any&gt;(f);</div>
 <div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>  }</div>
 <div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>  <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
 <div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>  <span class="keywordtype">void</span> clearConnections(<span class="keyword">const</span> T &amp;_data) {</div>
