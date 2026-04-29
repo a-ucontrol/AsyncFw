@@ -9,7 +9,6 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #include <thread>
 #include <vector>
-#include "function.hpp"
 
 #define AsyncFw_STATIC_INIT_PRIORITY 65530
 
@@ -52,11 +51,17 @@ public:
   enum PollEvents : uint16_t { PollNo = 0, PollIn = POLLIN_, PollPri = POLLPRI_, PollOut = POLLOUT_, PollErr = POLLERR_, PollHup = POLLHUP_, PollNval = POLLNVAL_ };
   /*! \brief The LockGuard type. */
   using LockGuard = std::lock_guard<std::mutex>;
-  /*! \brief The AbstractTask type. */
-  using AbstractTask = AbstractFunction<void>;
-  /*! \brief The AbstractPollTask type. */
-  using AbstractPollTask = AbstractFunction<void, AbstractThread::PollEvents>;
 
+  /*! \brief The AbstractTask struct. */
+  struct AbstractTask {
+    virtual void operator()() = 0;
+    virtual ~AbstractTask() = default;
+  };
+  /*! \brief The AbstractPollTask struct. */
+  struct AbstractPollTask {
+    virtual void operator()(AbstractThread::PollEvents) = 0;
+    virtual ~AbstractPollTask() = default;
+  };
   /*! \brief The Holder class. */
   class Holder {
   public:
@@ -116,12 +121,11 @@ public:
   static AbstractThread *currentThread();
   /*! \brief Assigns a pointer to the list of all threads. \param list pointer to the list of threads \return AbstractThread::LockGuard */
   static AbstractThread::LockGuard threads(std::vector<AbstractThread *> **);
-
   /*! \brief This call from thread when it starts executing. */
+
   virtual void startedEvent();
   /*! \brief This call from the thread when it finishing execution. */
   virtual void finishedEvent();
-
   /*! \brief Returns true if the managed thread is running. */
   virtual bool running() const;
   /*! \brief Runs a task in a managed thread. \param task poiner to AbstractTask \return True if the task is added to the queue */
@@ -153,12 +157,10 @@ public:
   void waitFinished() const;
   /*! \brief Returns the number of tasks in the queue, plus one if there are running task. */
   int workLoad() const;
-
   /*! \brief Returns unique identifier of managed thread. */
   std::thread::id id() const;
   /*! \brief Returns name of managed thread */
   std::string name() const;
-
   /*! \brief Locks the managed thread and returns a LockGuard variable. The thread is unblocked after this variable is destroyed. */
   LockGuard lockGuard() const;
 
