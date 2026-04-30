@@ -1,9 +1,7 @@
 <map id="AsyncFw::Task&lt; M &gt;" name="AsyncFw::Task&lt; M &gt;">
-<area shape="rect" id="Node000001" title="The Task class." alt="" coords="108,171,255,197"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractTask.html" title="The AbstractTask class." alt="" coords="101,96,262,123"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="184,138,184,170,179,170,179,138"/>
-<area shape="rect" id="Node000003" href="$structAsyncFw_1_1AbstractThread_1_1AbstractTask.html" title="The AbstractTask struct." alt="" coords="5,5,179,48"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="128,57,169,93,166,97,124,60"/>
-<area shape="rect" id="Node000004" href="$structAsyncFw_1_1AnyData.html" title="The AnyData class." alt="" coords="203,13,338,40"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="247,52,197,98,193,94,244,48"/>
+<area shape="rect" id="Node000001" title="The Task class." alt="" coords="12,155,160,181"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractTask.html" title="The AbstractTask class." alt="" coords="5,80,167,107"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="89,122,89,154,83,154,83,122"/>
+<area shape="rect" id="Node000003" href="$structAsyncFw_1_1AnyData.html" title="The AnyData class." alt="" coords="18,5,154,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="89,48,89,80,83,80,83,48"/>
 </map>

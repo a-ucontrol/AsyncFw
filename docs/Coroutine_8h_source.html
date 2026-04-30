@@ -159,7 +159,7 @@ $(function(){initNavTree('Coroutine_8h_source.html',''); initResizable(true); })
 <div class="foldopen" id="foldopen00053" data-start="{" data-end="};">
 <div class="line"><a id="l00053" name="l00053"></a><span class="lineno"><a class="line" href="structAsyncFw_1_1CoroutineAwait.html">   53</a></span><span class="keyword">struct </span>CoroutineAwait {</div>
 <div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>  <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>  CoroutineAwait(T _f) : f_(<span class="keyword">new</span> Function&lt;T, const CoroutineHandle&gt;(_f)) {}</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>  CoroutineAwait(T f) : f_(<span class="keyword">new</span> Function&lt;T, const CoroutineHandle&gt;(std::forward&lt;T&gt;(f))) {}</div>
 <div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>  CoroutineAwait() = <span class="keywordflow">default</span>;</div>
 <div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>  CoroutineAwait(<span class="keyword">const</span> CoroutineAwait &amp;) = <span class="keyword">delete</span>;</div>
 <div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>  CoroutineAwait &amp;operator=(<span class="keyword">const</span> CoroutineAwait &amp;) = <span class="keyword">delete</span>;</div>

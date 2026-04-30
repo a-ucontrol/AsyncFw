@@ -17,12 +17,6 @@ var hierarchy =
     [ "AsyncFw::AbstractLog", "classAsyncFw_1_1AbstractLog.html", [
       [ "AsyncFw::Log", "classAsyncFw_1_1Log.html", null ]
     ] ],
-    [ "AsyncFw::AbstractThread::AbstractPollTask", "structAsyncFw_1_1AbstractThread_1_1AbstractPollTask.html", null ],
-    [ "AsyncFw::AbstractThread::AbstractTask", "structAsyncFw_1_1AbstractThread_1_1AbstractTask.html", [
-      [ "AsyncFw::AbstractTask", "classAsyncFw_1_1AbstractTask.html", [
-        [ "AsyncFw::Task< M >", "classAsyncFw_1_1Task.html", null ]
-      ] ]
-    ] ],
     [ "AsyncFw::AbstractThread", "classAsyncFw_1_1AbstractThread.html", [
       [ "AsyncFw::Thread", "classAsyncFw_1_1Thread.html", [
         [ "AsyncFw::MainThread", "classAsyncFw_1_1MainThread.html", null ]
@@ -44,7 +38,9 @@ var hierarchy =
         ] ],
         [ "AsyncFw::ListenSocket", "classAsyncFw_1_1ListenSocket.html", null ]
       ] ],
-      [ "AsyncFw::AbstractTask", "classAsyncFw_1_1AbstractTask.html", null ],
+      [ "AsyncFw::AbstractTask", "classAsyncFw_1_1AbstractTask.html", [
+        [ "AsyncFw::Task< M >", "classAsyncFw_1_1Task.html", null ]
+      ] ],
       [ "AsyncFw::CoroutineTask::promise_type", "structAsyncFw_1_1CoroutineTask_1_1promise__type.html", null ]
     ] ],
     [ "AsyncFw::ApplicationNotifier", "classAsyncFw_1_1ApplicationNotifier.html", null ],
