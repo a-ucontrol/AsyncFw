@@ -10,7 +10,6 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 /*! \example FunctionConnector/main.cpp FunctionConnector example */
 
 #include "AbstractThread.h"
-#include "function.hpp"
 
 namespace AsyncFw {
 
