@@ -427,7 +427,7 @@ void AbstractSocket::destroy() {
   close();
   state_ = State::Destroy;
   stateEvent();
-  AbstractThread::AbstractTask *_t = new Thread::Task([_p = this]() {
+  AbstractThread::AbstractTask *_t = new Function([_p = this]() {
     _p->thread_->removeSocket(_p);
     delete _p;
   });

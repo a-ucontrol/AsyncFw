@@ -17,7 +17,7 @@ struct AbstractFunction {
 template <typename T, typename... Args>
 struct Function : public AbstractFunction<typename std::invoke_result<T, Args...>::type, Args...> {
   typename std::invoke_result<T, Args...>::type operator()(Args... args) override { return f(args...); }
-  Function(T &_f) : f(std::move(_f)) {}
+  Function(T &&_f) : f(std::move(_f)) {}
 
 private:
   T f;

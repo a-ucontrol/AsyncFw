@@ -104,7 +104,7 @@ AbstractThreadPool::Thread::Thread(const std::string &name, AbstractThreadPool *
 void AbstractThreadPool::Thread::destroy() {
   pool->removeThread(this);
   AbstractThread::quit();
-  AbstractTask *_t = new Task([p = this]() {
+  AbstractTask *_t = new Function([p = this]() {
     p->waitFinished();
     delete p;
   });

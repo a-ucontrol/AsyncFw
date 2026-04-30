@@ -40,7 +40,7 @@ public:
   template <typename M>
   static void setExitTask(M method) {
     if (mt_.exitTask && !mt_.invokeMethod([_p = mt_.exitTask]() { delete _p; })) delete mt_.exitTask;
-    mt_.exitTask = new Thread::Task(std::forward<M>(method));
+    mt_.exitTask = new Function(std::forward<M>(method));
   }
   static int exec() {
 #ifndef USE_QAPPLICATION

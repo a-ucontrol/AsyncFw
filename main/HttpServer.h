@@ -196,7 +196,7 @@ private:
 
   private:
     template <typename T>
-    HttpRule(const Request::Method method, T &exec) : method(method), exec(new Function<T, const Request &>(exec)) {}
+    HttpRule(const Request::Method method, T &f) : method(method), exec(new Function<T, const Request &>(std::forward<T>(f))) {}
     HttpRule(HttpRule &) = delete;
     AbstractFunction<void, const Request &> *exec = nullptr;
   };
@@ -246,7 +246,7 @@ public:
   }
   template <typename T>
   void setPeek(T f) {
-    peek = new Function<T, const Request &, std::any>(f);
+    peek = new Function<T, const Request &, std::any>(std::forward<T>(f));
   }
   template <typename T>
   void clearConnections(const T &_data) {

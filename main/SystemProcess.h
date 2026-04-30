@@ -36,11 +36,11 @@ public:
 
   template <typename T>
   static bool exec(const std::string &cmd, const std::vector<std::string> &args, T f) {
-    return exec_(cmd, args, new Function<T, int, State, const std::string &, const std::string &>(f));
+    return exec_(cmd, args, new Function<T, int, State, const std::string &, const std::string &>(std::forward<T>(f)));
   }
   template <typename T>
   static bool exec(const std::string &cmd, T f) {
-    return exec_(cmd, {}, new Function<T, int, State, const std::string &, const std::string &>(f));
+    return exec_(cmd, {}, new Function<T, int, State, const std::string &, const std::string &>(std::forward<T>(f)));
   }
   static bool exec(const std::string &cmd, const std::vector<std::string> &args = {}) { return exec_(cmd, args, nullptr); }
 
