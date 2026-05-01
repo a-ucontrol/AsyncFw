@@ -53,9 +53,9 @@ public:
   /*! \brief The LockGuard type. */
   using LockGuard = std::lock_guard<std::mutex>;
   /*! \brief The AbstractTask type. */
-  using AbstractTask = AbstractFunction<void>;
+  using AbstractTask = AbstractFunction<>::Type<void>;
   /*! \brief The AbstractPollTask type. */
-  using AbstractPollTask = AbstractFunction<void, AbstractThread::PollEvents>;
+  using AbstractPollTask = AbstractFunction<AbstractThread::PollEvents>::Type<void>;
 
   /*! \brief The Holder class. */
   class Holder {
@@ -73,7 +73,7 @@ public:
   template <typename M>
   typename std::enable_if<std::is_void<typename std::invoke_result<M>::type>::value, bool>::type invokeMethod(M method, bool sync = false) const {
     if (!sync) {
-      AbstractTask *_t = new Function(std::forward<M>(method));
+      AbstractTask *_t = new Function<>::Value(std::forward<M>(method));
       if (!invokeTask(_t)) {
         delete _t;
         return false;
@@ -86,7 +86,7 @@ public:
       return true;
     }
     std::atomic_flag finished;
-    AbstractTask *_t = new Function([&method, &finished]() mutable {
+    AbstractTask *_t = new Function<>::Value([&method, &finished]() {
       method();
       finished.test_and_set();
       finished.notify_one();
@@ -104,12 +104,12 @@ public:
   /*! \brief Append poll task. \param fd file descriptor \param events watch events \param method task method \return True if the task added */
   template <typename M>
   bool appendPollTask(int fd, PollEvents events, M method) {
-    return appendPollDescriptor(fd, events, new Function<M, PollEvents>(std::forward<M>(method)));
+    return appendPollDescriptor(fd, events, new Function<PollEvents>::Value(std::forward<M>(method)));
   }
   /*! \brief Append timer task. \param ms timeout in milliseconds \param method task method \return timer id if the task added or value less than zero */
   template <typename M>
   int appendTimerTask(int timeout, M method) {
-    return appendTimer(timeout, new Function(std::forward<M>(method)));
+    return appendTimer(timeout, new Function<>::Value(std::forward<M>(method)));
   }
 
   /*! \brief Returns a pointer to the AsyncFw::AbstractThread that manages the currently executing thread. */

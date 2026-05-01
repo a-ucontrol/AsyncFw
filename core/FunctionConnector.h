@@ -110,7 +110,7 @@ protected:
     Connection(T &_f, AbstractFunctionConnector *c, Type t) : AbstractFunctionConnector::Connection(c, t), f(new Function(_f)) {}
 
   private:
-    struct AbstractFunction : public AsyncFw::AbstractFunction<void, Args &...> {
+    struct AbstractFunction : public AsyncFw::AbstractFunction<Args &...>::template Type<void> {
       virtual AbstractFunction *copy() const = 0;
     };
     template <typename T>
