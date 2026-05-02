@@ -815,7 +815,7 @@ void AbstractThread::removePollDescriptor(int fd) {
       console_msg("AbstractThread " + LOG_THREAD_NAME, "poll descriptor: " + std::to_string(fd) + " not found");
       return;
     }
-    _t = new Task([p = *it] { delete p; });
+    _t = new Function<>::Value([p = *it] { delete p; });
     struct Private::update_pollfd v;
     v.fd = fd;
     v.action = -1;
