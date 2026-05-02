@@ -277,7 +277,7 @@ $(function(){initNavTree('HttpServer_8h_source.html',''); initResizable(true); }
 <div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>    std::string queryItemValue(<span class="keyword">const</span> std::string &amp;) <span class="keyword">const</span>;</div>
 <div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span> </div>
 <div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>    <a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> content() <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>    std::string peerAddress()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> response_-&gt;socket_-&gt;peerAddress(); }</div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>    std::string peerAddress()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> response_-&gt;socket_-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractSocket.html#ab05320fcb1c111e06a56587b4abbb639">peerAddress</a>(); }</div>
 <div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span> </div>
 <div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>    <span class="keywordtype">void</span> setSocketData(<span class="keyword">const</span> std::any &amp;data)<span class="keyword"> const </span>{ response_-&gt;socket_-&gt;data_ = data; }</div>
 <div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>    std::any &amp;socketData()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> response_-&gt;socket_-&gt;data_; }</div>
@@ -398,6 +398,7 @@ $(function(){initNavTree('HttpServer_8h_source.html',''); initResizable(true); }
 <div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>};</div>
 </div>
 <div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>}  <span class="comment">// namespace AsyncFw</span></div>
+<div class="ttc" id="aclassAsyncFw_1_1AbstractSocket_html_ab05320fcb1c111e06a56587b4abbb639"><div class="ttname"><a href="classAsyncFw_1_1AbstractSocket.html#ab05320fcb1c111e06a56587b4abbb639">AsyncFw::AbstractSocket::peerAddress</a></div><div class="ttdeci">std::string peerAddress() const</div><div class="ttdoc">Return peer address.</div><div class="ttdef"><b>Definition</b> AbstractSocket.cpp:390</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1DataArray_html"><div class="ttname"><a href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a></div><div class="ttdoc">The DataArray class, provides an array of bytes.</div><div class="ttdef"><b>Definition</b> DataArray.h:20</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1HttpSocket_html"><div class="ttname"><a href="classAsyncFw_1_1HttpSocket.html">AsyncFw::HttpSocket</a></div><div class="ttdoc">The HttpSocket class.</div><div class="ttdef"><b>Definition</b> HttpSocket.h:18</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1Instance_html"><div class="ttname"><a href="classAsyncFw_1_1Instance.html">AsyncFw::Instance</a></div><div class="ttdoc">The Instance class.</div><div class="ttdef"><b>Definition</b> Instance.h:32</div></div>

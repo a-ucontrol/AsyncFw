@@ -33,6 +33,7 @@ public:
   virtual void close();
   virtual void destroy();
 
+  /*! \brief Listen for incoming connections on address and port. \param address address \param port port \return True if success */
   bool listen(const std::string &, uint16_t);
 
   DataArray &peek();
@@ -44,11 +45,16 @@ public:
   Error error() const;
   std::string errorString() const;
 
+  /*! \brief Return Thread that manages the socket. */
   Thread *thread() const { return thread_; }
 
+  /*! \brief Return address. */
   std::string address() const;
+  /*! \brief Return port. */
   uint16_t port() const;
+  /*! \brief Return peer address. */
   std::string peerAddress() const;
+  /*! \brief Return peer port. */
   uint16_t peerPort() const;
 
 protected:
@@ -56,21 +62,28 @@ protected:
   AbstractSocket(int, int, int);
   virtual ~AbstractSocket();
 
-  int pendingRead() const;
-  int pendingWrite() const;
-  void setError(Error);
-  void setErrorString(const std::string &) const;
+  /*! \brief Called when established connection. */
+  virtual void activateEvent();
+  /*! \brief Called when the connection state changes. */
+  virtual void stateEvent() {}
+  /*! \brief Called when there is data to read. */
+  virtual void readEvent() {}
+  /*! \brief Called when writing to the socket is possible. */
+  virtual void writeEvent() {}
+  /*! \brief Called upon incoming connection. */
+  virtual void incomingEvent() {}
 
   virtual int read_available_fd() const;
   virtual int read_fd(void *_p, int _s);
   virtual int write_fd(const void *_p, int _s);
 
-  virtual void activateEvent();
+  /*! \brief Returns the number of bytes of data pending to be read. */
+  int pendingRead() const;
+  /*! \brief Returns the number of bytes of data pending to be write. */
+  int pendingWrite() const;
 
-  virtual void stateEvent() {}
-  virtual void readEvent() {}
-  virtual void writeEvent() {}
-  virtual void incomingEvent() {}
+  void setError(Error);
+  void setErrorString(const std::string &) const;
 
   Thread *thread_;
   int fd_ = -1;

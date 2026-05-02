@@ -34,9 +34,9 @@ public:
   FunctionConnectorProtected<Thread>::Connector<> destroing {AbstractFunctionConnector::Direct};
 
 protected:
-  /*! \brief Runs started()*/
+  /*! \brief Runs started() */
   void startedEvent() override;
-  /*! \brief Runs finished()*/
+  /*! \brief Runs finished() */
   void finishedEvent() override;
 
   std::vector<AbstractSocket *> sockets_;

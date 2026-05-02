@@ -1,0 +1,12 @@
+<map id="AsyncFw::AbstractSocket::stateEvent" name="AsyncFw::AbstractSocket::stateEvent">
+<area shape="rect" id="Node000001" title="Called when the connection state changes." alt="" coords="666,51,841,93"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractSocket.html#aac7ad6c4f9815d9b8b0817d38864d06d" title="Called when established connection." alt="" coords="444,5,618,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="651,54,618,47,619,42,652,49"/>
+<area shape="rect" id="Node000005" href="$classAsyncFw_1_1AbstractSocket.html#a426c3b10de20344079571d6708f096ca" title="Listen for incoming connections on address and port." alt="" coords="444,96,618,139"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="652,95,619,102,618,97,651,90"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractTlsSocket.html#a57ac6daff9926cf631abcd1e19073cc8" title="Called when established connection." alt="" coords="204,5,396,48"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="428,29,397,29,397,24,428,24"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1HttpSocket.html#ad51bb1bf5880c3037c7ad70231c0767d" title="Called when established connection." alt="" coords="5,5,156,48"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="188,29,156,29,156,24,188,24"/>
+<area shape="poly" id="edge5_Node000005_Node000005" title=" " alt="" coords="567,83,554,77,531,75,510,77,497,81,492,87,494,95,489,96,487,86,494,77,509,71,531,69,555,72,569,78"/>
+</map>

@@ -1,0 +1,9 @@
+<map id="AsyncFw::HttpSocket::activateEvent" name="AsyncFw::HttpSocket::activateEvent">
+<area shape="rect" id="Node000001" title="Called when established connection." alt="" coords="5,5,156,48"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractTlsSocket.html#a57ac6daff9926cf631abcd1e19073cc8" title="Called when established connection." alt="" coords="204,5,396,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="156,24,188,24,188,29,156,29"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractSocket.html#aac7ad6c4f9815d9b8b0817d38864d06d" title="Called when established connection." alt="" coords="444,5,618,48"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="396,24,428,24,428,29,396,29"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1AbstractSocket.html#a5db12267a6d2241e81f570463f2d7ef5" title="Called when the connection state changes." alt="" coords="666,5,841,48"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="619,24,651,24,651,29,619,29"/>
+</map>

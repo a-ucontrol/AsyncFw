@@ -95,7 +95,7 @@ AbstractSocket::~AbstractSocket() {
   lsTrace();
 }
 
-bool AbstractSocket::listen(const std::string &_address, uint16_t _port) {
+bool AbstractSocket::listen(const std::string &address, uint16_t port) {
   int _fd = socket(private_->la_.ss_family, private_->type_, private_->protocol_);
   if (_fd < 0) {
     lsError() << "socket descriptor error" << _fd << errno;
@@ -106,12 +106,12 @@ bool AbstractSocket::listen(const std::string &_address, uint16_t _port) {
 #if defined(SOCKET_REUSEPORT) && !defined(_WIN32)
   if (setsockopt(_fd, SOL_SOCKET, SO_REUSEPORT, &_val, sizeof _val) < 0) lsError("set SO_REUSEPORT");
 #endif
-  reinterpret_cast<sockaddr_in *>(&private_->la_)->sin_port = htons(_port);
-  reinterpret_cast<sockaddr_in *>(&private_->la_)->sin_addr.s_addr = inet_addr(_address.c_str());
+  reinterpret_cast<sockaddr_in *>(&private_->la_)->sin_port = htons(port);
+  reinterpret_cast<sockaddr_in *>(&private_->la_)->sin_addr.s_addr = inet_addr(address.c_str());
 
   if (::bind(_fd, reinterpret_cast<struct sockaddr *>(&private_->la_), sizeof(private_->la_)) || ::listen(_fd, SOCKET_CONNECTION_QUEUED)) {
     close_fd(_fd);
-    lsError() << "listen error:" << _port;
+    lsError() << "listen error:" << port;
     return false;
   }
 

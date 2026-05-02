@@ -123,7 +123,7 @@ $(function(){initNavTree('Socket_2main_8cpp-example.html',''); initResizable(tru
 <div class="line"> </div>
 <div class="line"><span class="keyword">class </span>TcpSocket : <span class="keyword">public</span> <a id="_a0" name="_a0"></a><a class="code hl_class" href="classAsyncFw_1_1AbstractTlsSocket.html">AsyncFw::AbstractTlsSocket</a> {</div>
 <div class="line"><span class="keyword">public</span>:</div>
-<div class="line">  <span class="keywordtype">void</span> stateEvent() {</div>
+<div class="line">  <span class="keywordtype">void</span> <a id="a1" name="a1"></a><a class="code hl_function" href="classAsyncFw_1_1AbstractSocket.html#a5db12267a6d2241e81f570463f2d7ef5">stateEvent</a>() {</div>
 <div class="line">    logDebug() &lt;&lt; <span class="stringliteral">&quot;State event:&quot;</span> &lt;&lt; <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(state_);</div>
 <div class="line">    <span class="keywordflow">if</span> (state_ == Active) {</div>
 <div class="line">      logDebug() &lt;&lt; <span class="stringliteral">&quot;Send request&quot;</span>;</div>
@@ -142,13 +142,13 @@ $(function(){initNavTree('Socket_2main_8cpp-example.html',''); initResizable(tru
 <div class="line">      AsyncFw::MainThread::exit(0);</div>
 <div class="line">    }</div>
 <div class="line">  }</div>
-<div class="line">  <span class="keywordtype">void</span> readEvent() {</div>
-<div class="line">    <a id="_a1" name="_a1"></a><a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> _da = read();</div>
-<div class="line">    logTrace() &lt;&lt; <span class="stringliteral">&quot;Read event:&quot;</span> &lt;&lt; _da.size() &lt;&lt; std::endl &lt;&lt; _da.<a id="a2" name="a2"></a>view(0, 256);</div>
+<div class="line">  <span class="keywordtype">void</span> <a id="a2" name="a2"></a><a class="code hl_function" href="classAsyncFw_1_1AbstractSocket.html#a609ec54ec8aed39769d60319c4c15833">readEvent</a>() {</div>
+<div class="line">    <a id="_a3" name="_a3"></a><a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> _da = read();</div>
+<div class="line">    logTrace() &lt;&lt; <span class="stringliteral">&quot;Read event:&quot;</span> &lt;&lt; _da.size() &lt;&lt; std::endl &lt;&lt; _da.<a id="a4" name="a4"></a>view(0, 256);</div>
 <div class="line">    da += _da;</div>
 <div class="line">  }</div>
 <div class="line"> </div>
-<div class="line">  <a id="_a3" name="_a3"></a><a class="code hl_struct" href="structAsyncFw_1_1CoroutineAwait.html">AsyncFw::CoroutineAwait</a> coConnect(<span class="keyword">const</span> std::string &amp;address, uint16_t port) {</div>
+<div class="line">  <a id="_a5" name="_a5"></a><a class="code hl_struct" href="structAsyncFw_1_1CoroutineAwait.html">AsyncFw::CoroutineAwait</a> coConnect(<span class="keyword">const</span> std::string &amp;address, uint16_t port) {</div>
 <div class="line">    <span class="keywordflow">return</span> <a class="code hl_struct" href="structAsyncFw_1_1CoroutineAwait.html">AsyncFw::CoroutineAwait</a>([<span class="keyword">this</span>, address, port](AsyncFw::CoroutineHandle _h) {</div>
 <div class="line">      h = _h;</div>
 <div class="line">      connect(address, port);</div>
@@ -161,19 +161,19 @@ $(function(){initNavTree('Socket_2main_8cpp-example.html',''); initResizable(tru
 <div class="line">};</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[]) {</div>
-<div class="line">  <a id="_a4" name="_a4"></a><a class="code hl_class" href="classAsyncFw_1_1TlsContext.html">AsyncFw::TlsContext</a> context;</div>
+<div class="line">  <a id="_a6" name="_a6"></a><a class="code hl_class" href="classAsyncFw_1_1TlsContext.html">AsyncFw::TlsContext</a> context;</div>
 <div class="line"> </div>
-<div class="line">  <span class="keywordflow">if</span> (!context.<a id="a5" name="a5"></a>setDefaultVerifyPaths()) {</div>
+<div class="line">  <span class="keywordflow">if</span> (!context.<a id="a7" name="a7"></a>setDefaultVerifyPaths()) {</div>
 <div class="line">    logError(<span class="stringliteral">&quot;Can&#39;t set default verify paths&quot;</span>);</div>
 <div class="line">    <span class="keywordflow">return</span> -1;</div>
 <div class="line">  }</div>
-<div class="line">  context.<a id="a6" name="a6"></a>setVerifyName(<span class="stringliteral">&quot;github.com&quot;</span>);</div>
+<div class="line">  context.<a id="a8" name="a8"></a>setVerifyName(<span class="stringliteral">&quot;github.com&quot;</span>);</div>
 <div class="line">  TcpSocket socket;</div>
 <div class="line">  socket.setContext(context);</div>
 <div class="line"> </div>
-<div class="line">  <span class="keyword">auto</span> coroTask {[&amp;socket]() -&gt; <a id="_a7" name="_a7"></a><a class="code hl_struct" href="structAsyncFw_1_1CoroutineTask.html">AsyncFw::CoroutineTask</a> {</div>
-<div class="line">    <a id="_a8" name="_a8"></a><a class="code hl_class" href="classAsyncFw_1_1AddressInfo.html">AsyncFw::AddressInfo</a> addressInfo;</div>
-<div class="line">    AsyncFw::CoroutineHandle h = <span class="keyword">co_await</span> addressInfo.<a id="a9" name="a9"></a><a class="code hl_function" href="classAsyncFw_1_1AddressInfo.html#a29ed820c53d1c0a621d102ebc6e6088f">coResolve</a>(<span class="stringliteral">&quot;github.com&quot;</span>);</div>
+<div class="line">  <span class="keyword">auto</span> coroTask {[&amp;socket]() -&gt; <a id="_a9" name="_a9"></a><a class="code hl_struct" href="structAsyncFw_1_1CoroutineTask.html">AsyncFw::CoroutineTask</a> {</div>
+<div class="line">    <a id="_a10" name="_a10"></a><a class="code hl_class" href="classAsyncFw_1_1AddressInfo.html">AsyncFw::AddressInfo</a> addressInfo;</div>
+<div class="line">    AsyncFw::CoroutineHandle h = <span class="keyword">co_await</span> addressInfo.<a id="a11" name="a11"></a><a class="code hl_function" href="classAsyncFw_1_1AddressInfo.html#a29ed820c53d1c0a621d102ebc6e6088f">coResolve</a>(<span class="stringliteral">&quot;github.com&quot;</span>);</div>
 <div class="line">    AsyncFw::AddressInfo::Result list = h.promise().data&lt;AsyncFw::AddressInfo::Result&gt;();</div>
 <div class="line">    <span class="keywordflow">if</span> (list.empty()) {</div>
 <div class="line">      logError(<span class="stringliteral">&quot;Resolve error&quot;</span>);</div>
@@ -193,6 +193,8 @@ $(function(){initNavTree('Socket_2main_8cpp-example.html',''); initResizable(tru
 <div class="line">  logNotice() &lt;&lt; <span class="stringliteral">&quot;End Applicaiton&quot;</span> &lt;&lt; ret;</div>
 <div class="line">  <span class="keywordflow">return</span> ret;</div>
 <div class="line">}</div>
+<div class="ttc" id="aclassAsyncFw_1_1AbstractSocket_html_a5db12267a6d2241e81f570463f2d7ef5"><div class="ttname"><a href="classAsyncFw_1_1AbstractSocket.html#a5db12267a6d2241e81f570463f2d7ef5">AsyncFw::AbstractSocket::stateEvent</a></div><div class="ttdeci">virtual void stateEvent()</div><div class="ttdoc">Called when the connection state changes.</div><div class="ttdef"><b>Definition</b> AbstractSocket.h:68</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1AbstractSocket_html_a609ec54ec8aed39769d60319c4c15833"><div class="ttname"><a href="classAsyncFw_1_1AbstractSocket.html#a609ec54ec8aed39769d60319c4c15833">AsyncFw::AbstractSocket::readEvent</a></div><div class="ttdeci">virtual void readEvent()</div><div class="ttdoc">Called when there is data to read.</div><div class="ttdef"><b>Definition</b> AbstractSocket.h:70</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1AbstractTlsSocket_html"><div class="ttname"><a href="classAsyncFw_1_1AbstractTlsSocket.html">AsyncFw::AbstractTlsSocket</a></div><div class="ttdoc">The AbstractTlsSocket class provides the base functionality for TLS encrypted socket.</div><div class="ttdef"><b>Definition</b> AbstractTlsSocket.h:17</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1AddressInfo_html"><div class="ttname"><a href="classAsyncFw_1_1AddressInfo.html">AsyncFw::AddressInfo</a></div><div class="ttdoc">The AddressInfo class.</div><div class="ttdef"><b>Definition</b> AddressInfo.h:29</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1AddressInfo_html_a29ed820c53d1c0a621d102ebc6e6088f"><div class="ttname"><a href="classAsyncFw_1_1AddressInfo.html#a29ed820c53d1c0a621d102ebc6e6088f">AsyncFw::AddressInfo::coResolve</a></div><div class="ttdeci">AsyncFw::CoroutineAwait coResolve(const std::string &amp;, Family=Inet)</div><div class="ttdoc">The AddressInfo::coResolve coroutine awaiter.</div><div class="ttdef"><b>Definition</b> AddressInfo.cpp:129</div></div>
