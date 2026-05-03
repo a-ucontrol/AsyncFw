@@ -45,7 +45,7 @@ public:
   static bool exec(const std::string &cmd, const std::vector<std::string> &args = {}) { return exec_(cmd, args, nullptr); }
 
 private:
-  static bool exec_(const std::string &, const std::vector<std::string> &, AbstractFunction<int, State, const std::string &, const std::string &>::Type<void> *);
+  static bool exec_(const std::string &, const std::vector<std::string> &, Function<int, State, const std::string &, const std::string &>::Abstract<void> *);
 
   void finality();
   struct Private;

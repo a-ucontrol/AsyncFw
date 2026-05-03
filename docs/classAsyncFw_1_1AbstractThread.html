@@ -149,14 +149,14 @@ Public Types</h2></td></tr>
 using&#160;</td><td class="memItemRight" valign="bottom"><b>LockGuard</b> = std::lock_guard&lt;std::mutex&gt;</td></tr>
 <tr class="memdesc:a4e97803ef650d36ba80ef1471c4b643c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="#a4e97803ef650d36ba80ef1471c4b643c" title="The LockGuard type.">LockGuard</a> type. <br /></td></tr>
 <tr class="separator:a4e97803ef650d36ba80ef1471c4b643c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa426f4e876b6a6aa727cd67486afcf9e" id="r_aa426f4e876b6a6aa727cd67486afcf9e"><td class="memItemLeft" align="right" valign="top"><a id="aa426f4e876b6a6aa727cd67486afcf9e" name="aa426f4e876b6a6aa727cd67486afcf9e"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><b>AbstractTask</b> = AbstractFunction&lt;&gt;::Type&lt;void&gt;</td></tr>
-<tr class="memdesc:aa426f4e876b6a6aa727cd67486afcf9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="classAsyncFw_1_1AbstractTask.html" title="The AbstractTask class.">AbstractTask</a> type. <br /></td></tr>
-<tr class="separator:aa426f4e876b6a6aa727cd67486afcf9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acd4fdb810475b2b0bc5d1c34f49799d1" id="r_acd4fdb810475b2b0bc5d1c34f49799d1"><td class="memItemLeft" align="right" valign="top"><a id="acd4fdb810475b2b0bc5d1c34f49799d1" name="acd4fdb810475b2b0bc5d1c34f49799d1"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><b>AbstractPollTask</b> = AbstractFunction&lt;AbstractThread::PollEvents&gt;::Type&lt;void&gt;</td></tr>
-<tr class="memdesc:acd4fdb810475b2b0bc5d1c34f49799d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="#acd4fdb810475b2b0bc5d1c34f49799d1" title="The AbstractPollTask type.">AbstractPollTask</a> type. <br /></td></tr>
-<tr class="separator:acd4fdb810475b2b0bc5d1c34f49799d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa56f431768ac7b69ce5cdc6f98b631a4" id="r_aa56f431768ac7b69ce5cdc6f98b631a4"><td class="memItemLeft" align="right" valign="top"><a id="aa56f431768ac7b69ce5cdc6f98b631a4" name="aa56f431768ac7b69ce5cdc6f98b631a4"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>AbstractTask</b> = Function&lt;&gt;::Abstract&lt;void&gt;</td></tr>
+<tr class="memdesc:aa56f431768ac7b69ce5cdc6f98b631a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="classAsyncFw_1_1AbstractTask.html" title="The AbstractTask class.">AbstractTask</a> type. <br /></td></tr>
+<tr class="separator:aa56f431768ac7b69ce5cdc6f98b631a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac31398ca973f4f8774e3531d8fa302d8" id="r_ac31398ca973f4f8774e3531d8fa302d8"><td class="memItemLeft" align="right" valign="top"><a id="ac31398ca973f4f8774e3531d8fa302d8" name="ac31398ca973f4f8774e3531d8fa302d8"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>AbstractPollTask</b> = Function&lt;AbstractThread::PollEvents&gt;::Abstract&lt;void&gt;</td></tr>
+<tr class="memdesc:ac31398ca973f4f8774e3531d8fa302d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="#ac31398ca973f4f8774e3531d8fa302d8" title="The AbstractPollTask type.">AbstractPollTask</a> type. <br /></td></tr>
+<tr class="separator:ac31398ca973f4f8774e3531d8fa302d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -182,10 +182,10 @@ Public Member Functions</h2></td></tr>
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>running</b> () const</td></tr>
 <tr class="memdesc:aa317731738402e37a8a05d5a5ec9d7c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the managed thread is running. <br /></td></tr>
 <tr class="separator:aa317731738402e37a8a05d5a5ec9d7c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abe96e6b2a1de041f0d25390a6b77e50a" id="r_abe96e6b2a1de041f0d25390a6b77e50a"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abe96e6b2a1de041f0d25390a6b77e50a">invokeTask</a> (<a class="el" href="#aa426f4e876b6a6aa727cd67486afcf9e">AbstractTask</a> *) const</td></tr>
+<tr class="memitem:abe96e6b2a1de041f0d25390a6b77e50a" id="r_abe96e6b2a1de041f0d25390a6b77e50a"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abe96e6b2a1de041f0d25390a6b77e50a">invokeTask</a> (<a class="el" href="#aa56f431768ac7b69ce5cdc6f98b631a4">AbstractTask</a> *) const</td></tr>
 <tr class="memdesc:abe96e6b2a1de041f0d25390a6b77e50a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runs a task in a managed thread.  <br /></td></tr>
 <tr class="separator:abe96e6b2a1de041f0d25390a6b77e50a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1fa8bc43151797cbcfb2013ee1fce2ce" id="r_a1fa8bc43151797cbcfb2013ee1fce2ce"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1fa8bc43151797cbcfb2013ee1fce2ce">appendTimer</a> (int, <a class="el" href="#aa426f4e876b6a6aa727cd67486afcf9e">AbstractTask</a> *)</td></tr>
+<tr class="memitem:a1fa8bc43151797cbcfb2013ee1fce2ce" id="r_a1fa8bc43151797cbcfb2013ee1fce2ce"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1fa8bc43151797cbcfb2013ee1fce2ce">appendTimer</a> (int, <a class="el" href="#aa56f431768ac7b69ce5cdc6f98b631a4">AbstractTask</a> *)</td></tr>
 <tr class="memdesc:a1fa8bc43151797cbcfb2013ee1fce2ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Append timer.  <br /></td></tr>
 <tr class="separator:a1fa8bc43151797cbcfb2013ee1fce2ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4e367b49b300c1b93d2275b5840bb20b" id="r_a4e367b49b300c1b93d2275b5840bb20b"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4e367b49b300c1b93d2275b5840bb20b">modifyTimer</a> (int, int)</td></tr>
@@ -194,7 +194,7 @@ virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>running</b> (
 <tr class="memitem:ae8fc0b3f68faed69e7f0b4e940ef12c0" id="r_ae8fc0b3f68faed69e7f0b4e940ef12c0"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae8fc0b3f68faed69e7f0b4e940ef12c0">removeTimer</a> (int)</td></tr>
 <tr class="memdesc:ae8fc0b3f68faed69e7f0b4e940ef12c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove timer.  <br /></td></tr>
 <tr class="separator:ae8fc0b3f68faed69e7f0b4e940ef12c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9a4001da757d31945c4e6be4e20c31ed" id="r_a9a4001da757d31945c4e6be4e20c31ed"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9a4001da757d31945c4e6be4e20c31ed">appendPollDescriptor</a> (int, PollEvents, <a class="el" href="#acd4fdb810475b2b0bc5d1c34f49799d1">AbstractPollTask</a> *)</td></tr>
+<tr class="memitem:a9a4001da757d31945c4e6be4e20c31ed" id="r_a9a4001da757d31945c4e6be4e20c31ed"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9a4001da757d31945c4e6be4e20c31ed">appendPollDescriptor</a> (int, PollEvents, <a class="el" href="#ac31398ca973f4f8774e3531d8fa302d8">AbstractPollTask</a> *)</td></tr>
 <tr class="memdesc:a9a4001da757d31945c4e6be4e20c31ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Append poll descriptor.  <br /></td></tr>
 <tr class="separator:a9a4001da757d31945c4e6be4e20c31ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af295f768757d3c7d6cf32e5248cbc2e0" id="r_af295f768757d3c7d6cf32e5248cbc2e0"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af295f768757d3c7d6cf32e5248cbc2e0">modifyPollDescriptor</a> (int, PollEvents)</td></tr>
@@ -588,7 +588,7 @@ Here is the caller graph for this function:</div>
         <tr>
           <td class="memname">bool AbstractThread::invokeTask </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="#aa426f4e876b6a6aa727cd67486afcf9e">AbstractTask</a> *</td>          <td class="paramname"><span class="paramname"><em>task</em></span></td><td>)</td>
+          <td class="paramtype"><a class="el" href="#aa56f431768ac7b69ce5cdc6f98b631a4">AbstractTask</a> *</td>          <td class="paramname"><span class="paramname"><em>task</em></span></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
@@ -632,7 +632,7 @@ Here is the caller graph for this function:</div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="#aa426f4e876b6a6aa727cd67486afcf9e">AbstractTask</a> *</td>          <td class="paramname"><span class="paramname"><em>task</em></span>&#160;)</td>
+          <td class="paramtype"><a class="el" href="#aa56f431768ac7b69ce5cdc6f98b631a4">AbstractTask</a> *</td>          <td class="paramname"><span class="paramname"><em>task</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -763,7 +763,7 @@ Here is the call graph for this function:</div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="#acd4fdb810475b2b0bc5d1c34f49799d1">AbstractPollTask</a> *</td>          <td class="paramname"><span class="paramname"><em>task</em></span>&#160;)</td>
+          <td class="paramtype"><a class="el" href="#ac31398ca973f4f8774e3531d8fa302d8">AbstractPollTask</a> *</td>          <td class="paramname"><span class="paramname"><em>task</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -778,7 +778,7 @@ Here is the call graph for this function:</div>
   <table class="params">
     <tr><td class="paramname">fd</td><td>file descriptor</td></tr>
     <tr><td class="paramname">events</td><td>watch events</td></tr>
-    <tr><td class="paramname">task</td><td>pointer to <a class="el" href="#acd4fdb810475b2b0bc5d1c34f49799d1" title="The AbstractPollTask type.">AbstractPollTask</a> </td></tr>
+    <tr><td class="paramname">task</td><td>pointer to <a class="el" href="#ac31398ca973f4f8774e3531d8fa302d8" title="The AbstractPollTask type.">AbstractPollTask</a> </td></tr>
   </table>
   </dd>
 </dl>

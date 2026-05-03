@@ -198,7 +198,7 @@ private:
     template <typename T>
     HttpRule(const Request::Method method, T &f) : method(method), exec(new Function<const Request &>::Value(std::forward<T>(f))) {}
     HttpRule(HttpRule &) = delete;
-    AbstractFunction<const Request &>::Type<void> *exec = nullptr;
+    Function<const Request &>::Abstract<void> *exec = nullptr;
   };
 
 public:
@@ -286,7 +286,7 @@ private:
   std::vector<TcpSocket *> sockets;
   bool cors_request_enabled = true;
   static Instance<HttpServer> instance_;
-  AbstractFunction<const Request &, std::any>::Type<bool> *peek = nullptr;
+  Function<const Request &, std::any>::Abstract<bool> *peek = nullptr;
   Private *private_;
 };
 }  // namespace AsyncFw

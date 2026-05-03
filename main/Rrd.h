@@ -56,7 +56,7 @@ protected:
   bool readOnly = false;
 
 private:
-  AbstractFunction<const ItemList &>::Type<void> *average = nullptr;
+  Function<const ItemList &>::Abstract<void> *average = nullptr;
   int aInterval = 0;
   int aOffset = 0;
   int interval;

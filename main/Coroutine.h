@@ -63,6 +63,6 @@ struct CoroutineAwait {
 
 private:
   mutable CoroutineHandle h_;
-  AbstractFunction<const CoroutineHandle>::Type<void> *f_ = nullptr;
+  Function<const CoroutineHandle>::Abstract<void> *f_ = nullptr;
 };
 }  // namespace AsyncFw

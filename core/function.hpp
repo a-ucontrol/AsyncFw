@@ -9,18 +9,14 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 namespace AsyncFw {
 template <typename... Args>
-struct AbstractFunction {
-  template <typename R>
-  struct Type {
-    virtual R operator()(Args...) = 0;
-    virtual ~Type() = default;
-  };
-};
-
-template <typename... Args>
 struct Function {
+  template <typename R>
+  struct Abstract {
+    virtual R operator()(Args...) = 0;
+    virtual ~Abstract() = default;
+  };
   template <typename T>
-  struct Value : public AbstractFunction<Args...>::template Type<typename std::invoke_result<T, Args...>::type> {
+  struct Value : public Function::Abstract<typename std::invoke_result<T, Args...>::type> {
     typename std::invoke_result<T, Args...>::type operator()(Args... args) override { return f(std::forward<Args>(args)...); }
     Value(T &&_f) : f(std::move(_f)) {}
 
