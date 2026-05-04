@@ -6,5 +6,6 @@ var searchData=
   ['appendpolldescriptor_3',['appendPollDescriptor',['../classAsyncFw_1_1AbstractThread.html#a9a4001da757d31945c4e6be4e20c31ed',1,'AsyncFw::AbstractThread']]],
   ['appendpolltask_4',['appendPollTask',['../classAsyncFw_1_1AbstractThread.html#a0b6d6552ad2d0cdae6ce11fe6cb979be',1,'AsyncFw::AbstractThread']]],
   ['appendtimer_5',['appendTimer',['../classAsyncFw_1_1AbstractThread.html#a1fa8bc43151797cbcfb2013ee1fce2ce',1,'AsyncFw::AbstractThread']]],
-  ['appendtimertask_6',['appendTimerTask',['../classAsyncFw_1_1AbstractThread.html#a6ca7a9fa8bd7197c82529d5b4b83b97d',1,'AsyncFw::AbstractThread']]]
+  ['appendtimertask_6',['appendTimerTask',['../classAsyncFw_1_1AbstractThread.html#a6ca7a9fa8bd7197c82529d5b4b83b97d',1,'AsyncFw::AbstractThread']]],
+  ['appendtrusted_7',['appendTrusted',['../classAsyncFw_1_1TlsContext.html#a98271f22f48785585546a63f4e3f22af',1,'AsyncFw::TlsContext']]]
 ];

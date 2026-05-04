@@ -33,27 +33,42 @@ public:
   ~TlsContext();
   TlsContext &operator=(const TlsContext &);
 
+  /*! \brief Return private key in PEM format */
   DataArray key() const;
+  /*! \brief Return certificate in PEM format */
   DataArray certificate() const;
+  /*! \brief Return list of trusted certificates in PEM format */
   DataArrayList trusted() const;
 
+  /*! \brief Set private key */
   bool setKey(const DataArray &);
+  /*! \brief Set certificate */
   bool setCertificate(const DataArray &);
+  /*! \brief Append trusted certificate */
   bool appendTrusted(const DataArray &);
+
   bool setDefaultVerifyPaths();
 
+  /*! \brief Return True if context empty */
   bool empty() const;
+  /*! \brief Return True if certificate verified */
   bool verifyCertificate() const;
 
+  /*! \brief Generate private key. \param bits number of bits in the generate key \return True if generated */
   bool generateKey(int = 2048);
+  /*! \brief Generate certificate. \param subject subject \param san subject alternative name \param ca ca \param days days \return True if generated */
   bool generateCertificate(const std::vector<std::pair<std::string, std::string>> & = {{"CN", "Root-CA"}}, const std::string & = {}, const std::string & = "CA:TRUE,pathlen:1", int = 365);
   DataArray generateRequest(const std::vector<std::pair<std::string, std::string>> &, const std::string & = {}, const std::string & = {} /*for ca: "CA:TRUE,pathlen:0"*/);
   DataArray signRequest(DataArray &, int = 365);
 
+  /*! \brief Return certificate common name */
   std::string commonName() const;
 
+  /*! \brief Return info of private key */
   std::string infoKey() const;
+  /*! \brief Return info of certificate */
   std::string infoCertificate() const;
+  /*! \brief Return info of trusted certificates */
   std::string infoTrusted() const;
 
   static std::string infoKey(const DataArray &);

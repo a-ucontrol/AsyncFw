@@ -17,6 +17,7 @@ var searchData=
   ['appendpolltask_14',['appendPollTask',['../classAsyncFw_1_1AbstractThread.html#a0b6d6552ad2d0cdae6ce11fe6cb979be',1,'AsyncFw::AbstractThread']]],
   ['appendtimer_15',['appendTimer',['../classAsyncFw_1_1AbstractThread.html#a1fa8bc43151797cbcfb2013ee1fce2ce',1,'AsyncFw::AbstractThread']]],
   ['appendtimertask_16',['appendTimerTask',['../classAsyncFw_1_1AbstractThread.html#a6ca7a9fa8bd7197c82529d5b4b83b97d',1,'AsyncFw::AbstractThread']]],
-  ['applicationnotifier_17',['ApplicationNotifier',['../classAsyncFw_1_1ApplicationNotifier.html',1,'AsyncFw']]],
-  ['asyncfw_18',['AsyncFw',['../index.html',1,'']]]
+  ['appendtrusted_17',['appendTrusted',['../classAsyncFw_1_1TlsContext.html#a98271f22f48785585546a63f4e3f22af',1,'AsyncFw::TlsContext']]],
+  ['applicationnotifier_18',['ApplicationNotifier',['../classAsyncFw_1_1ApplicationNotifier.html',1,'AsyncFw']]],
+  ['asyncfw_19',['AsyncFw',['../index.html',1,'']]]
 ];
