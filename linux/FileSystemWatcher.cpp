@@ -7,6 +7,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #include <sys/ioctl.h>
 #include <sys/inotify.h>
+#include <unistd.h>
 #include "core/AbstractThread.h"
 #include "core/LogStream.h"
 

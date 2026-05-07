@@ -7,6 +7,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #ifndef _WIN32
   #include <arpa/inet.h>
+  #include <unistd.h>
   #define close_fd ::close
 #else
   #include <winsock2.h>

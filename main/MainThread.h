@@ -23,6 +23,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #ifdef EXIT_ON_UNIX_SIGNAL
   #include <sys/eventfd.h>
+  #include <unistd.h>
 #endif
 
 namespace AsyncFw {

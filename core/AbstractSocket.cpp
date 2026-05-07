@@ -20,6 +20,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
   #include <arpa/inet.h>
   #include <netinet/tcp.h>
   #include <linux/sockios.h>
+  #include <unistd.h>
 
   #define close_fd ::close
   #define setsockopt_ptr

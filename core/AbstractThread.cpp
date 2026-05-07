@@ -37,6 +37,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
   #else
     #include <sys/poll.h>
   #endif
+  #include <unistd.h>
 #else
   #include <winsock2.h>
   #include <fcntl.h>
