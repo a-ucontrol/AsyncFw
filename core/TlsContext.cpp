@@ -550,6 +550,7 @@ bool TlsContext::appendTrusted(const DataArray &_da) {
 }
 
 bool TlsContext::setDefaultVerifyPaths() {
+  lsDebug() << X509_get_default_cert_dir() << getenv(X509_get_default_cert_dir_env());
   if (!private_->ctx_) private_->ctx_ = SSL_CTX_new(TLS_method());
   return SSL_CTX_set_default_verify_paths(private_->ctx_);
 }
