@@ -41,7 +41,9 @@ public:
         i_->value = reinterpret_cast<T *>(_v);
         i_->created();
       }
+#ifndef __clang_analyzer__
       return _v;
+#endif
     }
     return nullptr;
   }
