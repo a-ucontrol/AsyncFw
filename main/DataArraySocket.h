@@ -18,7 +18,6 @@ class DataArraySocket : public AbstractTlsSocket {
   friend class DataArrayAbstractTcp;
   friend class DataArrayTcpServer;
   friend class DataArrayTcpClient;
-  friend class RrdClient;
   friend LogStream &operator<<(LogStream &, const DataArraySocket &);
 
 public:
