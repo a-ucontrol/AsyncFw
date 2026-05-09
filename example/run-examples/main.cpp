@@ -77,6 +77,10 @@ void run_examples(bool _socket) {
   logInfo() << "Start:" << app;
   process.start(app);
   process.wait();
+  app = EXAMPLES_PATH "LogTcpExample";
+  logInfo() << "Start:" << app;
+  process.start(app);
+  process.wait();
 
   if (_socket) {
     app = EXAMPLES_PATH "SocketExample";
