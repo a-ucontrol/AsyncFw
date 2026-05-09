@@ -16,13 +16,12 @@ class TlsContext;
 /*! \class DataArraySocket DataArraySocket.h <AsyncFw/DataArraySocket> \brief The DataArraySocket class. */
 class DataArraySocket : public AbstractTlsSocket {
   friend class DataArrayAbstractTcp;
+  friend class DataArrayTcpServer;
   friend class DataArrayTcpClient;
   friend class RrdClient;
   friend LogStream &operator<<(LogStream &, const DataArraySocket &);
 
 public:
-  DataArraySocket();
-  ~DataArraySocket() override;
 
   bool initTls(const TlsContext &data);
   void disableTls();
@@ -61,6 +60,8 @@ public:
   mutable FunctionConnectorProtected<DataArraySocket>::Connector<const DataArray *, uint32_t> received {AbstractFunctionConnector::DirectOnly};
 
 protected:
+  DataArraySocket();
+  ~DataArraySocket() override;
   void stateEvent() override;
   void readEvent() override;
   using AbstractTlsSocket::connect;
