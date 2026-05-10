@@ -30,7 +30,8 @@ int main(int argc, char *argv[]) {
   _rrd_client.connectToHost("127.0.0.1", 10000);
 
   uint64_t index = _log.lastIndex();
-  _log.updated([&_log, &index]() {
+  AsyncFw::FunctionConnectionGuard _g;
+  _g = _log.updated([&_log, &index, &_g]() {
     if(index == _log.lastIndex()) return;
     AsyncFw::Rrd::ItemList _list;
     _log.read(&_list, index, std::numeric_limits<uint32_t>::max(), &index);
@@ -38,7 +39,12 @@ int main(int argc, char *argv[]) {
     for (const AsyncFw::Rrd::Item &_item : _list) {
       AsyncFw::LogStream::Message _message = _log.messageFromRrdItem(_item);
       std::cout << "-----" << _message.string << "-----" << std::endl;
-      if(_message.string == "logAlert") AsyncFw::MainThread::exit();
+      if(_message.string == "logAlert") {
+        std::cout << "----- AsyncFw::MainThread::exit() -----" << std::endl;
+        _g = {};
+        AsyncFw::MainThread::exit();
+        break;
+      }
     }
   }, AsyncFw::AbstractFunctionConnector::Connection::Direct);
 
