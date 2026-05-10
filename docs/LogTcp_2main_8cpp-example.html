@@ -138,15 +138,21 @@ $(function(){initNavTree('LogTcp_2main_8cpp-example.html',''); initResizable(tru
 <div class="line">  _rrd_client.<a id="a10" name="a10"></a>connectToHost(<span class="stringliteral">&quot;127.0.0.1&quot;</span>, 10000);</div>
 <div class="line"> </div>
 <div class="line">  uint64_t index = _log.lastIndex();</div>
-<div class="line">  _log.updated([&amp;_log, &amp;index]() {</div>
+<div class="line">  <a id="_a11" name="_a11"></a><a class="code hl_class" href="classAsyncFw_1_1FunctionConnectionGuard.html">AsyncFw::FunctionConnectionGuard</a> _g;</div>
+<div class="line">  _g = _log.updated([&amp;_log, &amp;index, &amp;_g]() {</div>
 <div class="line">    <span class="keywordflow">if</span>(index == _log.lastIndex()) <span class="keywordflow">return</span>;</div>
 <div class="line">    AsyncFw::Rrd::ItemList _list;</div>
 <div class="line">    _log.read(&amp;_list, index, std::numeric_limits&lt;uint32_t&gt;::max(), &amp;index);</div>
 <div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;=====&quot;</span> &lt;&lt; index &lt;&lt; <span class="stringliteral">&quot;=====&quot;</span> &lt;&lt; _log.lastIndex() &lt;&lt; <span class="stringliteral">&quot;=====&quot;</span>;</div>
 <div class="line">    <span class="keywordflow">for</span> (<span class="keyword">const</span> AsyncFw::Rrd::Item &amp;_item : _list) {</div>
 <div class="line">      AsyncFw::LogStream::Message _message = _log.messageFromRrdItem(_item);</div>
-<div class="line">      std::cout &lt;&lt; <span class="stringliteral">&quot;-----&quot;</span> &lt;&lt; _message.<a id="a11" name="a11"></a>string &lt;&lt; <span class="stringliteral">&quot;-----&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line">      <span class="keywordflow">if</span>(_message.string == <span class="stringliteral">&quot;logAlert&quot;</span>) AsyncFw::MainThread::exit();</div>
+<div class="line">      std::cout &lt;&lt; <span class="stringliteral">&quot;-----&quot;</span> &lt;&lt; _message.<a id="a12" name="a12"></a>string &lt;&lt; <span class="stringliteral">&quot;-----&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line">      <span class="keywordflow">if</span>(_message.string == <span class="stringliteral">&quot;logAlert&quot;</span>) {</div>
+<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;----- AsyncFw::MainThread::exit() -----&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line">        _g = {};</div>
+<div class="line">        AsyncFw::MainThread::exit();</div>
+<div class="line">        <span class="keywordflow">break</span>;</div>
+<div class="line">      }</div>
 <div class="line">    }</div>
 <div class="line">  }, AsyncFw::AbstractFunctionConnector::Connection::Direct);</div>
 <div class="line"> </div>
@@ -184,6 +190,7 @@ $(function(){initNavTree('LogTcp_2main_8cpp-example.html',''); initResizable(tru
 <div class="ttc" id="aclassAsyncFw_1_1DataArraySocket_html"><div class="ttname"><a href="classAsyncFw_1_1DataArraySocket.html">AsyncFw::DataArraySocket</a></div><div class="ttdoc">The DataArraySocket class.</div><div class="ttdef"><b>Definition</b> DataArraySocket.h:17</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1DataArrayTcpClient_html"><div class="ttname"><a href="classAsyncFw_1_1DataArrayTcpClient.html">AsyncFw::DataArrayTcpClient</a></div><div class="ttdoc">The DataArrayTcpClient class.</div><div class="ttdef"><b>Definition</b> DataArrayTcpClient.h:14</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1DataArrayTcpServer_html"><div class="ttname"><a href="classAsyncFw_1_1DataArrayTcpServer.html">AsyncFw::DataArrayTcpServer</a></div><div class="ttdoc">The DataArrayTcpServer class.</div><div class="ttdef"><b>Definition</b> DataArrayTcpServer.h:17</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1FunctionConnectionGuard_html"><div class="ttname"><a href="classAsyncFw_1_1FunctionConnectionGuard.html">AsyncFw::FunctionConnectionGuard</a></div><div class="ttdoc">The FunctionConnectionGuard class.</div><div class="ttdef"><b>Definition</b> FunctionConnector.h:155</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1Log_html"><div class="ttname"><a href="classAsyncFw_1_1Log.html">AsyncFw::Log</a></div><div class="ttdoc">The Log class.</div><div class="ttdef"><b>Definition</b> Log.h:69</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1RrdClient_html"><div class="ttname"><a href="classAsyncFw_1_1RrdClient.html">AsyncFw::RrdClient</a></div><div class="ttdoc">The RrdClient class.</div><div class="ttdef"><b>Definition</b> RrdClient.h:19</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1RrdServer_html"><div class="ttname"><a href="classAsyncFw_1_1RrdServer.html">AsyncFw::RrdServer</a></div><div class="ttdoc">The RrdServer class.</div><div class="ttdef"><b>Definition</b> RrdServer.h:18</div></div>
