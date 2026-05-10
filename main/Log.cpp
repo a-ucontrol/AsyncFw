@@ -201,13 +201,15 @@ Log::Log(int size, const std::string &name) : Rrd(size, name), AbstractLog() {
 
 Log::~Log() {
   lsTrace();
-  if (instance_.value == this) instance_.value = nullptr;
   if (!thread_) return;
   finality();
 }
 
 void Log::finality() {
-  LogStream::setCompleted(&LogStream::console_output);
+  if (instance_.value == this) {
+    LogStream::setCompleted(&LogStream::console_output);
+    instance_.value = nullptr;
+  }
   if (!thread_->invokeMethod(
           [this]() {
             stopTimer(&timerIdAutosave);
