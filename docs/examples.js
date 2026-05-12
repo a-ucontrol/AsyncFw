@@ -1,8 +1,11 @@
 var examples =
 [
+    [ "ApplicationNotifier/main.cpp", "ApplicationNotifier_2main_8cpp-example.html", null ],
     [ "ContainerTask/main.cpp", "ContainerTask_2main_8cpp-example.html", null ],
     [ "Coroutine/main.cpp", "Coroutine_2main_8cpp-example.html", null ],
     [ "CoroutineWait/main.cpp", "CoroutineWait_2main_8cpp-example.html", null ],
+    [ "Cryptor/main.cpp", "Cryptor_2main_8cpp-example.html", null ],
+    [ "DataArrayTcp/main.cpp", "DataArrayTcp_2main_8cpp-example.html", null ],
     [ "FileSystemWatcher/main.cpp", "FileSystemWatcher_2main_8cpp-example.html", null ],
     [ "FunctionConnector/main.cpp", "FunctionConnector_2main_8cpp-example.html", null ],
     [ "HttpServer/main.cpp", "HttpServer_2main_8cpp-example.html", null ],
@@ -12,8 +15,6 @@ var examples =
     [ "Log/main.cpp", "Log_2main_8cpp-example.html", null ],
     [ "LogTcp/main.cpp", "LogTcp_2main_8cpp-example.html", null ],
     [ "MulticastDns/main.cpp", "MulticastDns_2main_8cpp-example.html", null ],
-    [ "ApplicationNotifier/main.cpp", "ApplicationNotifier_2main_8cpp-example.html", null ],
-    [ "DataArrayTcp/main.cpp", "DataArrayTcp_2main_8cpp-example.html", null ],
     [ "Socket/main.cpp", "Socket_2main_8cpp-example.html", null ],
     [ "Stdin/main.cpp", "Stdin_2main_8cpp-example.html", null ],
     [ "SystemProcess/main.cpp", "SystemProcess_2main_8cpp-example.html", null ],
