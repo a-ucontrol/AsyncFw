@@ -8,7 +8,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include <AsyncFw/MainThread>
 #include <AsyncFw/ThreadPool>
 #include <AsyncFw/Coroutine>
-#include <AsyncFw/Log>
+#include <AsyncFw/LogStream>
 
 AsyncFw::CoroutineTask task() {
   AsyncFw::CoroutineAwait await([](AsyncFw::CoroutineHandle h) {

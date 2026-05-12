@@ -6,7 +6,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 */
 
 #include <AsyncFw/MainThread>
-#include <AsyncFw/Log>
+#include <AsyncFw/LogStream>
 
 int main(int argc, char *argv[]) {
   AsyncFw::AbstractThread *_mainThread = AsyncFw::AbstractThread::currentThread();

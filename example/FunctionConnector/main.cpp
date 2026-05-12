@@ -9,7 +9,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include <AsyncFw/FunctionConnector>
 #include <AsyncFw/MainThread>
 #include <AsyncFw/Timer>
-#include <AsyncFw/Log>
+#include <AsyncFw/LogStream>
 
 class MethodConnectionExample {
 public:

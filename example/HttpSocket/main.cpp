@@ -12,7 +12,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include <AsyncFw/AddressInfo>
 #include <AsyncFw/File>
 #include <AsyncFw/HttpSocket>
-#include <AsyncFw/Log>
+#include <AsyncFw/LogStream>
 
 #define SERVER_NAME "github.com"
 #define SERVER_PORT 443

@@ -9,7 +9,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include <AsyncFw/ThreadPool>
 #include <AsyncFw/Coroutine>
 #include <AsyncFw/Timer>
-#include <AsyncFw/Log>
+#include <AsyncFw/LogStream>
 
 #define CURRENT_TIME_MS (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count())
 

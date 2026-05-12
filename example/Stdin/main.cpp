@@ -9,9 +9,9 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 /*
  * This exfample for Unix-like systems only
 */
-#include <iostream>
 #include <AsyncFw/MainThread>
 #include <AsyncFw/PollNotifier>
+#include <AsyncFw/LogStream>
 
 int main(int argc, char *argv[]) {
   AsyncFw::PollNotifier notifier(STDIN_FILENO);
@@ -20,9 +20,9 @@ int main(int argc, char *argv[]) {
     int r = read(STDIN_FILENO, buf, sizeof(buf) - 1);
     buf[r] = 0;
     if (r == 2 && buf[0] == 'q') AsyncFw::MainThread::exit();
-    (std::cout << "stdin: " << buf).flush();
+    (lsDebug() << "stdin: " << buf).flush();
   });
-  (std::cout << "Start Applicaiton" << std::endl).flush();
+  (lsDebug() << "Start Applicaiton").flush();
   int ret = AsyncFw::MainThread::exec();
   return ret;
 }
