@@ -247,14 +247,14 @@ DataArray TlsContext::signRequest(DataArray &req, int days) {
     lsError() << "get key";
     return {};
   }
-  X509 *_rc = X509_new();
-  if (!_rc) {
-    lsError() << "allocate memory";
-    return {};
-  }
   X509 *_c = SSL_CTX_get0_certificate(private_->ctx_);
   if (!_c) {
     lsError() << "get certificate";
+    return {};
+  }
+  X509 *_rc = X509_new();
+  if (!_rc) {
+    lsError() << "allocate memory";
     return {};
   }
   BIO *_bio = BIO_new_mem_buf(req.data(), req.size());
