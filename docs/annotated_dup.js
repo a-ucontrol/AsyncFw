@@ -11,7 +11,7 @@ var annotated_dup =
       [ "AbstractTlsSocket", "classAsyncFw_1_1AbstractTlsSocket.html", "classAsyncFw_1_1AbstractTlsSocket" ],
       [ "AddressInfo", "classAsyncFw_1_1AddressInfo.html", "classAsyncFw_1_1AddressInfo" ],
       [ "AnyData", "structAsyncFw_1_1AnyData.html", null ],
-      [ "ApplicationNotifier", "classAsyncFw_1_1ApplicationNotifier.html", null ],
+      [ "ApplicationNotifier", "classAsyncFw_1_1ApplicationNotifier.html", "classAsyncFw_1_1ApplicationNotifier" ],
       [ "CoroutineAwait", "structAsyncFw_1_1CoroutineAwait.html", null ],
       [ "CoroutineTask", "structAsyncFw_1_1CoroutineTask.html", "structAsyncFw_1_1CoroutineTask" ],
       [ "Cryptor", "classAsyncFw_1_1Cryptor.html", null ],

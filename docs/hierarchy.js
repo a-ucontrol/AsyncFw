@@ -2,7 +2,7 @@ var hierarchy =
 [
     [ "AsyncFw::AbstractFunctionConnector", "classAsyncFw_1_1AbstractFunctionConnector.html", [
       [ "AsyncFw::FunctionConnector< Args... >", "classAsyncFw_1_1FunctionConnector.html", null ],
-      [ "AsyncFw::FunctionConnector< const Value & >", "classAsyncFw_1_1FunctionConnector.html", null ],
+      [ "AsyncFw::FunctionConnector< const AsyncFw::ApplicationNotifier::Value & >", "classAsyncFw_1_1FunctionConnector.html", null ],
       [ "AsyncFw::FunctionConnector< Args >", "classAsyncFw_1_1FunctionConnector.html", null ]
     ] ],
     [ "AsyncFw::AbstractInstance", "classAsyncFw_1_1AbstractInstance.html", [
@@ -41,6 +41,7 @@ var hierarchy =
       [ "AsyncFw::AbstractTask", "classAsyncFw_1_1AbstractTask.html", [
         [ "AsyncFw::Task< M >", "classAsyncFw_1_1Task.html", null ]
       ] ],
+      [ "AsyncFw::ApplicationNotifier::Value", "structAsyncFw_1_1ApplicationNotifier_1_1Value.html", null ],
       [ "AsyncFw::CoroutineTask::promise_type", "structAsyncFw_1_1CoroutineTask_1_1promise__type.html", null ]
     ] ],
     [ "AsyncFw::ApplicationNotifier", "classAsyncFw_1_1ApplicationNotifier.html", null ],

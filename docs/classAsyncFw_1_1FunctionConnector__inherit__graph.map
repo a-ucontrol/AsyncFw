@@ -1,9 +1,9 @@
 <map id="AsyncFw::FunctionConnector&lt; Args &gt;" name="AsyncFw::FunctionConnector&lt; Args &gt;">
-<area shape="rect" id="Node000001" title="Обеспечивает соединение отправитель &#45;&gt; получатели. Получатели могут быть вызваны в своих потоках (по ..." alt="" coords="115,97,309,140"/>
-<area shape="rect" id="Node000003" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="5,204,200,247"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="181,153,126,205,122,202,177,149"/>
-<area shape="rect" id="Node000004" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="224,204,418,247"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="246,149,301,202,298,205,243,153"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractFunctionConnector.html" title="The AbstractFunctionConnector class provides the base functionality for FunctionConnector." alt="" coords="120,5,304,48"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="214,64,214,97,209,97,209,64"/>
+<area shape="rect" id="Node000001" title="Обеспечивает соединение отправитель &#45;&gt; получатели. Получатели могут быть вызваны в своих потоках (по ..." alt="" coords="238,43,432,85"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="680,5,874,48"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="448,52,679,32,680,37,448,57"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="658,72,896,131"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="442,86,457,88,559,97,658,100,658,105,559,102,456,93,441,91"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractFunctionConnector.html" title="The AbstractFunctionConnector class provides the base functionality for FunctionConnector." alt="" coords="5,43,189,85"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="204,61,238,61,238,67,204,67"/>
 </map>

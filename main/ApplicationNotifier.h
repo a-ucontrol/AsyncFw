@@ -9,6 +9,7 @@ namespace AsyncFw {
   \brief Example: \snippet ApplicationNotifier/main.cpp snippet */
 class ApplicationNotifier {
 public:
+  /*! \brief The Value struct. */
   struct Value : public AnyData {
     Value(int type, const std::any &data = {}) : AnyData(data), type(type) {}
     int type;
@@ -17,6 +18,7 @@ public:
   ApplicationNotifier();
   virtual ~ApplicationNotifier();
 
+  /*! \brief The ApplicationNotifier::notify connector */
   FunctionConnector<const Value &> notify;
 
 private:

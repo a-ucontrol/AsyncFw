@@ -1,19 +1,21 @@
 <map id="AsyncFw::AnyData" name="AsyncFw::AnyData">
-<area shape="rect" id="Node000001" title="The AnyData class." alt="" coords="510,5,645,32"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractSocket.html" title="The AbstractSocket class provides the base functionality for socket." alt="" coords="298,88,473,115"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="534,41,416,90,414,85,532,36"/>
-<area shape="rect" id="Node000007" href="$classAsyncFw_1_1AbstractTask.html" title="The AbstractTask class." alt="" coords="497,88,658,115"/>
-<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="580,48,580,88,575,88,575,48"/>
-<area shape="rect" id="Node000009" href="$structAsyncFw_1_1CoroutineTask_1_1promise__type.html" title="The CoroutineTask::promise_type struct." alt="" coords="683,80,851,123"/>
-<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="622,36,719,77,717,82,620,41"/>
-<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractTlsSocket.html" title="The AbstractTlsSocket class provides the base functionality for TLS encrypted socket." alt="" coords="97,171,290,197"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="342,123,224,173,222,168,340,119"/>
-<area shape="rect" id="Node000006" href="$classAsyncFw_1_1ListenSocket.html" title="The ListenSocket class." alt="" coords="313,171,474,197"/>
-<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="391,130,395,170,390,171,386,131"/>
-<area shape="rect" id="Node000004" href="$classAsyncFw_1_1DataArraySocket.html" title="The DataArraySocket class." alt="" coords="5,245,190,272"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="167,209,116,247,112,243,163,205"/>
-<area shape="rect" id="Node000005" href="$classAsyncFw_1_1HttpSocket.html" title="The HttpSocket class." alt="" coords="214,245,365,272"/>
-<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="224,205,275,243,271,247,220,209"/>
-<area shape="rect" id="Node000008" href="$classAsyncFw_1_1Task.html" title="The Task class." alt="" coords="504,171,651,197"/>
-<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="580,130,580,171,575,171,575,130"/>
+<area shape="rect" id="Node000001" title="The AnyData class." alt="" coords="5,161,141,188"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractSocket.html" title="The AbstractSocket class provides the base functionality for socket." alt="" coords="197,81,371,108"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="112,151,188,118,224,106,225,111,190,122,115,156"/>
+<area shape="rect" id="Node000007" href="$classAsyncFw_1_1AbstractTask.html" title="The AbstractTask class." alt="" coords="203,132,364,159"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="156,161,202,154,203,159,156,166"/>
+<area shape="rect" id="Node000009" href="$structAsyncFw_1_1ApplicationNotifier_1_1Value.html" title="The Value struct." alt="" coords="189,183,379,225"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="156,183,189,188,188,193,155,189"/>
+<area shape="rect" id="Node000010" href="$structAsyncFw_1_1CoroutineTask_1_1promise__type.html" title="The CoroutineTask::promise_type struct." alt="" coords="200,249,368,292"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="111,194,190,235,217,246,215,251,188,240,109,198"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractTlsSocket.html" title="The AbstractTlsSocket class provides the base functionality for TLS encrypted socket." alt="" coords="427,31,619,57"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="365,75,456,55,457,61,366,80"/>
+<area shape="rect" id="Node000006" href="$classAsyncFw_1_1ListenSocket.html" title="The ListenSocket class." alt="" coords="443,81,603,108"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="387,92,443,92,443,97,387,97"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1DataArraySocket.html" title="The DataArraySocket class." alt="" coords="667,5,852,32"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="635,29,667,26,667,31,635,35"/>
+<area shape="rect" id="Node000005" href="$classAsyncFw_1_1HttpSocket.html" title="The HttpSocket class." alt="" coords="684,56,835,83"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="635,53,684,59,684,64,635,59"/>
+<area shape="rect" id="Node000008" href="$classAsyncFw_1_1Task.html" title="The Task class." alt="" coords="450,132,597,159"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="380,143,449,143,449,148,380,148"/>
 </map>
