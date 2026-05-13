@@ -3,6 +3,7 @@
 /*! \example Coroutine/main.cpp Coroutine example */
 /*! \example CoroutineWait/main.cpp Coroutine wait example */
 /*! \example Cryptor/main.cpp Cryptor example */
+/*! \example DataArray/main.cpp DataArray example */
 /*! \example DataArrayTcp/main.cpp DataArrayTcpServer and DataArrayTcpClient example */
 /*! \example FileSystemWatcher/main.cpp FileSystemWatcher example */
 /*! \example FunctionConnector/main.cpp FunctionConnector example */
@@ -18,4 +19,5 @@
 /*! \example SystemProcess/main.cpp SystemProcess example */
 /*! \example ThreadPool/main.cpp ThreadPool example */
 /*! \example Timer/main.cpp Timer example */
+/*! \example TlsContext/main.cpp TlsContext example */
 /*! \example Uart/main.cpp PollNotifier example \warning Unix-like systems only */

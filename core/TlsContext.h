@@ -19,8 +19,7 @@ class DataArray;
 class DataArrayList;
 class LogStream;
 /*! \class TlsContext TlsContext.h <AsyncFw/TlsContext> \brief The TlsContext class provides functionality for managing TLS certificates.
- \brief Examlpe:
- \snippet snippet.dox TlsContext */
+\brief Example: \snippet TlsContext/main.cpp snippet */
 class TlsContext {
   friend class AbstractTlsSocket;
   struct Private;

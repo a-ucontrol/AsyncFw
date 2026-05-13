@@ -18,33 +18,6 @@ int main(int argc, char *argv[]) {
 #include <AddressInfo.h>
 using namespace AsyncFw;
 void example() {
-  //! [TlsContext]
-  /*
-   * Create certificate
-  */
-#define KEY_BITS 2048
-
-  TlsContext _root_ca;
-  _root_ca.generateKey(KEY_BITS);
-  _root_ca.generateCertificate();
-
-  TlsContext _ca;
-  _ca.generateKey(KEY_BITS);
-  DataArray req = _ca.generateRequest({{"C", "RU"}, {"CN", "Eample-CA"}}, "", "CA:TRUE,pathlen:0");
-  _ca.setCertificate(_root_ca.signRequest(req));
-
-  TlsContext _cert;
-  _cert.generateKey(KEY_BITS);
-  req = _cert.generateRequest({{"C", "RU"}, {"ST", "Region"}, {"CN", "Eample-cert"}, {"L", "Location"}, {"O", "Org"}, {"OU", "Org-unit"}, {"serialNumber", "device-000-00-00"}, {"emailAddress", "ssl@example.ru"}, {"dnQualifier", "Example-device"}}, "IP:192.168.1.101,IP:192.168.1.102,IP:192.168.1.103,IP:192.168.10.1,IP:192.168.10.100,IP:192.168.10.101,IP:192.168.10.102,IP:192.168.10.103");
-  _cert.setCertificate(_ca.signRequest(req));
-  logInfo() << _cert.infoCertificate();
-  /*
-   * Use certificate
-  */
-  HttpSocket *socket = HttpSocket::create();
-  socket->setContext(_cert);
-  //! [TlsContext]
-
   //! [AddressInfo]
   AsyncFw::AddressInfo addressInfo;
   addressInfo.completed([](int, const std::vector<std::string> &list) {
