@@ -30,7 +30,7 @@ private:
 };
 
 /*! \class Instance Instance.h <AsyncFw/Instance> \brief The Instance class.
- \brief Example: \snippet Instance/main.cpp snippet */
+\brief Example: \snippet Instance/main.cpp snippet */
 template <typename T>
 class Instance : public AbstractInstance {
   friend T;

@@ -12,7 +12,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 namespace AsyncFw {
 /*! \class ListenSocket ListenSocket.h <AsyncFw/ListenSocket> \brief The ListenSocket class.
- \brief Example: \snippet ListenSocket/main.cpp snippet */
+\brief Example: \snippet ListenSocket/main.cpp snippet */
 class ListenSocket : private AbstractSocket {
 public:
   using AbstractSocket::address;

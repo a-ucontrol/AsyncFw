@@ -66,7 +66,7 @@ protected:
  \brief FunctionConnector сообщение генерируются объектом, когда его внутреннее состояние изменяется каким-либо образом, который может представлять интерес других объектов.
  FunctionConnector сообщения являются функциями с открытым доступом и могут генерироваться из любого места, но рекомендуется генерировать их только из класса, который его определяет.
  Для того что бы только объект одного типа мог отправлять сообщения, следует использовать FunctionConnectorProtected.
- \brief Example: \snippet FunctionConnector/main.cpp snippet */
+\brief Example: \snippet FunctionConnector/main.cpp snippet */
 template <typename... Args>
 class FunctionConnector : public AbstractFunctionConnector {
 public:
@@ -129,7 +129,7 @@ protected:
 };
 
 /*! \class FunctionConnectorProtected FunctionConnector.h <AsyncFw/FunctionConnector> \brief Защищенный коннетор, отправитель может быть только один.
-  \copybrief FunctionConnector \brief Example: \snippet FunctionConnector/main.cpp snippet */
+  \copybrief FunctionConnector\brief Example: \snippet FunctionConnector/main.cpp snippet */
 template <typename F>
 class FunctionConnectorProtected {
 public:

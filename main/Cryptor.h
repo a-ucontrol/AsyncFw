@@ -11,7 +11,7 @@ namespace AsyncFw {
 class DataArray;
 class DataArrayView;
 /*! \class Cryptor Cryptor.h <AsyncFw/Cryptor> \brief The Cryptor class.
- \brief Example: \snippet Cryptor/main.cpp snippet */
+\brief Example: \snippet Cryptor/main.cpp snippet */
 class Cryptor {
 public:
   static bool encrypt(const DataArray &key, const DataArray &text, DataArray &ctext);

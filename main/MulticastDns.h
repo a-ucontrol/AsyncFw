@@ -6,7 +6,7 @@
 namespace AsyncFw {
 class AbstractThread;
 /*! \class MulticastDns MulticastDns.h <AsyncFw/MulticastDns> \brief The MulticastDns class.
- \brief Example: \snippet MulticastDns/main.cpp snippet */
+\brief Example: \snippet MulticastDns/main.cpp snippet */
 class MulticastDns {
 public:
   struct Host {

@@ -6,7 +6,7 @@
 
 namespace AsyncFw {
 /*! \class ApplicationNotifier ApplicationNotifier.h <AsyncFw/ApplicationNotifier> \brief The ApplicationNotifier class.
-  \brief Example: \snippet ApplicationNotifier/main.cpp snippet */
+\brief Example: \snippet ApplicationNotifier/main.cpp snippet */
 class ApplicationNotifier {
 public:
   /*! \brief The Value struct. */

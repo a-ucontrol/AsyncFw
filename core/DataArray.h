@@ -16,7 +16,8 @@ class DataArrayList;
 class DataArrayView;
 class LogStream;
 
-/*! \class DataArray DataArray.h <AsyncFw/DataArray> \brief The DataArray class, provides an array of bytes. */
+/*! \class DataArray DataArray.h <AsyncFw/DataArray> \brief The DataArray class, provides an array of bytes.
+\brief Example: \snippet DataArray/main.cpp snippet */
 class DataArray : public std::vector<uint8_t> {
 public:
   static DataArray compress(const DataArrayView &);
@@ -33,7 +34,8 @@ public:
   DataArray operator+(const char);
 };
 
-/*! \class DataArrayView DataArray.h <AsyncFw/DataArray> \brief The DataArrayView class. */
+/*! \class DataArrayView DataArray.h <AsyncFw/DataArray> \brief The DataArrayView class.
+\brief Example: \snippet DataArray/main.cpp snippet */
 class DataArrayView : public std::string_view {
 public:
   template <typename... Args>
@@ -44,14 +46,16 @@ public:
   DataArrayList split(const char) const;
 };
 
-/*! \class DataArrayList DataArray.h <AsyncFw/DataArray> \brief The DataArrayList class. */
+/*! \class DataArrayList DataArray.h <AsyncFw/DataArray> \brief The DataArrayList class.
+\brief Example: \snippet DataArray/main.cpp snippet */
 class DataArrayList : public std::vector<DataArray> {
 public:
   using std::vector<DataArray>::vector;
   DataArray join(const char) const;
 };
 
-/*! \class DataStream DataArray.h <AsyncFw/DataArray> \brief The DataStream class. */
+/*! \class DataStream DataArray.h <AsyncFw/DataArray> \brief The DataStream class.
+\brief Example: \snippet DataArray/main.cpp snippet */
 class DataStream {
 public:
   DataStream();

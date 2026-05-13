@@ -11,7 +11,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 namespace AsyncFw {
 /*! \class Timer Timer.h <AsyncFw/Timer> \brief The Timer class
- \brief Example: \snippet Timer/main.cpp snippet */
+\brief Example: \snippet Timer/main.cpp snippet */
 class Timer {
 public:
   /*! \brief Starts a single shot timer with the specified timeout. \param ms timeout interval in milliseconds \param function runs at timeout */
