@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.13.2"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>AsyncFw: HttpServer/main.cpp</title>
+<title>AsyncFw: DataArray/main.cpp</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -77,7 +77,7 @@ $(function() { codefold.init(0); });
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(function(){initNavTree('HttpServer_2main_8cpp-example.html',''); initResizable(true); });
+$(function(){initNavTree('DataArray_2main_8cpp-example.html',''); initResizable(true); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -103,10 +103,10 @@ $(function(){initNavTree('HttpServer_2main_8cpp-example.html',''); initResizable
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">HttpServer/main.cpp</div></div>
+  <div class="headertitle"><div class="title">DataArray/main.cpp</div></div>
 </div><!--header-->
 <div class="contents">
-<p>HttpServer example</p>
+<p>DataArray example</p>
 <div class="fragment"><div class="line"><span class="comment">/*</span></div>
 <div class="line"><span class="comment">Copyright (c) 2019-2026 Alexandr Kuzmuk</span></div>
 <div class="line"><span class="comment"></span> </div>
@@ -114,53 +114,48 @@ $(function(){initNavTree('HttpServer_2main_8cpp-example.html',''); initResizable
 <div class="line"><span class="comment">See {Link: LICENSE file https://mit-license.org} in the project root for full license information.</span></div>
 <div class="line"><span class="comment">*/</span></div>
 <div class="line"></div>
-<div class="line"><span class="preprocessor">#include &lt;AsyncFw/HttpServer&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;AsyncFw/MainThread&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;AsyncFw/DataArray&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;AsyncFw/LogStream&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">using namespace </span>AsyncFw;</div>
-<div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[]) {</div>
-<div class="line">  <a id="_a0" name="_a0"></a><a class="code hl_class" href="classAsyncFw_1_1HttpServer.html">HttpServer</a> _http {HTTP_SERVER_HOME};</div>
+<div class="line">  <span class="comment">//write</span></div>
+<div class="line">  std::string _string1_w = <span class="stringliteral">&quot;string1&quot;</span>;</div>
+<div class="line">  std::string _string2_w = <span class="stringliteral">&quot;string2&quot;</span>;</div>
+<div class="line">  <a id="_a0" name="_a0"></a><a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> _da1_w = <span class="stringliteral">&quot;_da1&quot;</span>;</div>
+<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> _da2_w = <span class="stringliteral">&quot;_da2&quot;</span>;</div>
+<div class="line">  <a id="_a1" name="_a1"></a><a class="code hl_class" href="classAsyncFw_1_1DataArrayList.html">AsyncFw::DataArrayList</a> _list_w;</div>
+<div class="line">  _list_w.push_back(<span class="stringliteral">&quot;da list item1&quot;</span>);</div>
+<div class="line">  _list_w.push_back(<span class="stringliteral">&quot;da list item2&quot;</span>);</div>
+<div class="line">  _list_w.push_back(<span class="stringliteral">&quot;da list item3&quot;</span>);</div>
+<div class="line">  int8_t _int8_w = 8;</div>
+<div class="line">  int64_t _int64_w = 64;</div>
 <div class="line"> </div>
-<div class="line">  _http.<a id="a1" name="a1"></a>setPeek([](<span class="keyword">const</span> HttpServer::Request &amp;, std::any) { <span class="keywordflow">return</span> <span class="keyword">true</span>; });</div>
+<div class="line">  <a id="_a2" name="_a2"></a><a class="code hl_class" href="classAsyncFw_1_1DataStream.html">AsyncFw::DataStream</a> _ds_w;</div>
+<div class="line">  _ds_w &lt;&lt; _string1_w &lt;&lt; _string2_w &lt;&lt; _da1_w &lt;&lt; _da2_w &lt;&lt; _list_w &lt;&lt; _int8_w &lt;&lt; _int64_w;</div>
+<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> _da_w = AsyncFw::DataArray::compress(_ds_w.<a id="a3" name="a3"></a>array());</div>
 <div class="line"> </div>
-<div class="line">  _http.addRoute(<span class="stringliteral">&quot;/quit&quot;</span>, HttpServer::Request::Method::Get, [](<span class="keyword">const</span> HttpServer::Request &amp;request) {</div>
-<div class="line">    HttpServer::Response *resp = request.<a id="a2" name="a2"></a>response();</div>
-<div class="line">    resp-&gt;<a id="a3" name="a3"></a>setMimeType(<span class="stringliteral">&quot;octet-stream&quot;</span>);</div>
-<div class="line">    resp-&gt;<a id="a4" name="a4"></a>setStatusCode(HttpServer::Response::StatusCode::Ok);</div>
-<div class="line">    resp-&gt;<a id="a5" name="a5"></a>send();</div>
-<div class="line">    MainThread::exit();</div>
-<div class="line">  });</div>
+<div class="line">  <span class="comment">//read</span></div>
+<div class="line">  std::string _string1_r;</div>
+<div class="line">  std::string _string2_r;</div>
+<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> _da1_r;</div>
+<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> _da2_r;</div>
+<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1DataArrayList.html">AsyncFw::DataArrayList</a> _list_r;</div>
+<div class="line">  int8_t _int8_r;</div>
+<div class="line">  int64_t _int64_r;</div>
 <div class="line"> </div>
-<div class="line">  _http.listen(18080);</div>
+<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> _da_r = AsyncFw::DataArray::uncompress(_da_w);</div>
+<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1DataStream.html">AsyncFw::DataStream</a> _ds_r(_da_r);</div>
+<div class="line">  _ds_r &gt;&gt; _string1_r &gt;&gt; _string2_r &gt;&gt; _da1_r &gt;&gt; _da2_r &gt;&gt; _list_r &gt;&gt; _int8_r &gt;&gt; _int64_r;</div>
 <div class="line"> </div>
-<div class="line">  <span class="keywordflow">if</span> (argc == 2 &amp;&amp; std::string(argv[1]) == <span class="stringliteral">&quot;--tst&quot;</span>) {</div>
-<div class="line">    <a id="_a6" name="_a6"></a><a class="code hl_class" href="classAsyncFw_1_1HttpSocket.html">HttpSocket</a> *_socket = HttpSocket::create();</div>
-<div class="line">    _socket-&gt;<a id="a7" name="a7"></a>stateChanged([_socket](<span class="keyword">const</span> AsyncFw::AbstractSocket::State state) {</div>
-<div class="line">      <span class="keywordflow">if</span> (state == AsyncFw::AbstractSocket::State::Active) {</div>
-<div class="line">        logDebug() &lt;&lt; <span class="stringliteral">&quot;Send request&quot;</span>;</div>
-<div class="line">        _socket-&gt;<a id="a8" name="a8"></a>write(<span class="stringliteral">&quot;GET / HTTP/1.1\r\n\r\n&quot;</span>);</div>
-<div class="line">      }</div>
-<div class="line">    });</div>
-<div class="line">    _socket-&gt;<a id="a9" name="a9"></a>received(</div>
-<div class="line">        [_socket](<span class="keyword">const</span> <a id="_a10" name="_a10"></a><a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> &amp;_da) {</div>
-<div class="line">          lsDebug() &lt;&lt; _da.<a id="a11" name="a11"></a>view(0, _da.size() &gt; 1024 ? 1024 : _da.size());</div>
-<div class="line">          _socket-&gt;write(<span class="stringliteral">&quot;GET /quit HTTP/1.1\r\n\r\n&quot;</span>);</div>
-<div class="line">        },</div>
-<div class="line">        AbstractFunctionConnector::Connection::Queued);</div>
-<div class="line">    _socket-&gt;<a id="a12" name="a12"></a>connect(<span class="stringliteral">&quot;127.0.0.1&quot;</span>, 18080);</div>
-<div class="line">  }</div>
+<div class="line">  lsInfoCyan() &lt;&lt; _string1_r &lt;&lt; _string2_r &lt;&lt; _da1_r &lt;&lt; _da2_r &lt;&lt; _list_r &lt;&lt; _int8_r &lt;&lt; _int64_r;</div>
+<div class="line">  <span class="keywordflow">for</span> (<span class="keyword">const</span> <a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> &amp;da : _list_r) lsInfoCyan() &lt;&lt; da;</div>
 <div class="line"> </div>
-<div class="line">  lsNotice() &lt;&lt; <span class="stringliteral">&quot;Start Applicaiton&quot;</span>;</div>
-<div class="line">  <span class="keywordtype">int</span> ret = MainThread::exec();</div>
-<div class="line">  lsNotice() &lt;&lt; <span class="stringliteral">&quot;End Applicaiton&quot;</span> &lt;&lt; ret;</div>
-<div class="line"> </div>
-<div class="line">  <span class="keywordflow">return</span> ret;</div>
+<div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
+<div class="ttc" id="aclassAsyncFw_1_1DataArrayList_html"><div class="ttname"><a href="classAsyncFw_1_1DataArrayList.html">AsyncFw::DataArrayList</a></div><div class="ttdoc">The DataArrayList class.</div><div class="ttdef"><b>Definition</b> DataArray.h:51</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1DataArray_html"><div class="ttname"><a href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a></div><div class="ttdoc">The DataArray class, provides an array of bytes.</div><div class="ttdef"><b>Definition</b> DataArray.h:21</div></div>
-<div class="ttc" id="aclassAsyncFw_1_1HttpServer_html"><div class="ttname"><a href="classAsyncFw_1_1HttpServer.html">AsyncFw::HttpServer</a></div><div class="ttdoc">The HttpServer class.</div><div class="ttdef"><b>Definition</b> HttpServer.h:22</div></div>
-<div class="ttc" id="aclassAsyncFw_1_1HttpSocket_html"><div class="ttname"><a href="classAsyncFw_1_1HttpSocket.html">AsyncFw::HttpSocket</a></div><div class="ttdoc">The HttpSocket class.</div><div class="ttdef"><b>Definition</b> HttpSocket.h:18</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1DataStream_html"><div class="ttname"><a href="classAsyncFw_1_1DataStream.html">AsyncFw::DataStream</a></div><div class="ttdoc">The DataStream class.</div><div class="ttdef"><b>Definition</b> DataArray.h:59</div></div>
 </div><!-- fragment --> </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

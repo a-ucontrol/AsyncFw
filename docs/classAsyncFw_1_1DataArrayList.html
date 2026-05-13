@@ -123,6 +123,47 @@ Public Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The <a class="el" href="classAsyncFw_1_1DataArrayList.html" title="The DataArrayList class.">DataArrayList</a> class. </p>
+<p>Example: </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;AsyncFw/MainThread&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;AsyncFw/DataArray&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;AsyncFw/LogStream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[]) {</div>
+<div class="line">  <span class="comment">//write</span></div>
+<div class="line">  std::string _string1_w = <span class="stringliteral">&quot;string1&quot;</span>;</div>
+<div class="line">  std::string _string2_w = <span class="stringliteral">&quot;string2&quot;</span>;</div>
+<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> _da1_w = <span class="stringliteral">&quot;_da1&quot;</span>;</div>
+<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> _da2_w = <span class="stringliteral">&quot;_da2&quot;</span>;</div>
+<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1DataArrayList.html">AsyncFw::DataArrayList</a> _list_w;</div>
+<div class="line">  _list_w.push_back(<span class="stringliteral">&quot;da list item1&quot;</span>);</div>
+<div class="line">  _list_w.push_back(<span class="stringliteral">&quot;da list item2&quot;</span>);</div>
+<div class="line">  _list_w.push_back(<span class="stringliteral">&quot;da list item3&quot;</span>);</div>
+<div class="line">  int8_t _int8_w = 8;</div>
+<div class="line">  int64_t _int64_w = 64;</div>
+<div class="line"> </div>
+<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1DataStream.html">AsyncFw::DataStream</a> _ds_w;</div>
+<div class="line">  _ds_w &lt;&lt; _string1_w &lt;&lt; _string2_w &lt;&lt; _da1_w &lt;&lt; _da2_w &lt;&lt; _list_w &lt;&lt; _int8_w &lt;&lt; _int64_w;</div>
+<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> _da_w = AsyncFw::DataArray::compress(_ds_w.array());</div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">//read</span></div>
+<div class="line">  std::string _string1_r;</div>
+<div class="line">  std::string _string2_r;</div>
+<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> _da1_r;</div>
+<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> _da2_r;</div>
+<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1DataArrayList.html">AsyncFw::DataArrayList</a> _list_r;</div>
+<div class="line">  int8_t _int8_r;</div>
+<div class="line">  int64_t _int64_r;</div>
+<div class="line"> </div>
+<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> _da_r = AsyncFw::DataArray::uncompress(_da_w);</div>
+<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1DataStream.html">AsyncFw::DataStream</a> _ds_r(_da_r);</div>
+<div class="line">  _ds_r &gt;&gt; _string1_r &gt;&gt; _string2_r &gt;&gt; _da1_r &gt;&gt; _da2_r &gt;&gt; _list_r &gt;&gt; _int8_r &gt;&gt; _int64_r;</div>
+<div class="line"> </div>
+<div class="line">  lsInfoCyan() &lt;&lt; _string1_r &lt;&lt; _string2_r &lt;&lt; _da1_r &lt;&lt; _da2_r &lt;&lt; _list_r &lt;&lt; _int8_r &lt;&lt; _int64_r;</div>
+<div class="line">  <span class="keywordflow">for</span> (<span class="keyword">const</span> <a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> &amp;da : _list_r) lsInfoCyan() &lt;&lt; da;</div>
+<div class="line"> </div>
+<div class="line">  <span class="keywordflow">return</span> 0;</div>
+<div class="line">}</div>
+</div><!-- fragment --> <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="DataArray_2main_8cpp-example.html#_a1">DataArray/main.cpp</a>.</dd>
+</dl>
 </div><hr/>The documentation for this class was generated from the following files:<ul>
 <li>core/<a class="el" href="DataArray_8h_source.html">DataArray.h</a></li>
 <li>core/<b>DataArray.cpp</b></li>

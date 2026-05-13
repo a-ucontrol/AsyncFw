@@ -250,31 +250,45 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>AbstractTlsSocket</b
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The <a class="el" href="classAsyncFw_1_1TlsContext.html" title="The TlsContext class provides functionality for managing TLS certificates.">TlsContext</a> class provides functionality for managing TLS certificates. </p>
-<p>Examlpe: </p><div class="fragment"><div class="line">  <span class="comment">/*</span></div>
-<div class="line"><span class="comment">   * Create certificate</span></div>
-<div class="line"><span class="comment">  */</span></div>
+<p>Example: </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;AsyncFw/MainThread&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;AsyncFw/TlsContext&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;AsyncFw/LogStream&gt;</span></div>
+<div class="line"> </div>
 <div class="line"><span class="preprocessor">#define KEY_BITS 2048</span></div>
 <div class="line"> </div>
-<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1TlsContext.html">TlsContext</a> _root_ca;</div>
+<div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[]) {</div>
+<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1TlsContext.html">AsyncFw::TlsContext</a> _ctx;</div>
+<div class="line"> </div>
+<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1TlsContext.html">AsyncFw::TlsContext</a> _root_ca;</div>
 <div class="line">  _root_ca.<a class="code hl_function" href="#a10b3110e2d30a54d84c276716fb7d10a">generateKey</a>(KEY_BITS);</div>
 <div class="line">  _root_ca.<a class="code hl_function" href="#abda15e8e7a7417b458bdade8a5196ec3">generateCertificate</a>();</div>
 <div class="line"> </div>
-<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1TlsContext.html">TlsContext</a> _ca;</div>
+<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1TlsContext.html">AsyncFw::TlsContext</a> _ca;</div>
 <div class="line">  _ca.<a class="code hl_function" href="#a10b3110e2d30a54d84c276716fb7d10a">generateKey</a>(KEY_BITS);</div>
-<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1DataArray.html">DataArray</a> req = _ca.generateRequest({{<span class="stringliteral">&quot;C&quot;</span>, <span class="stringliteral">&quot;RU&quot;</span>}, {<span class="stringliteral">&quot;CN&quot;</span>, <span class="stringliteral">&quot;Eample-CA&quot;</span>}}, <span class="stringliteral">&quot;&quot;</span>, <span class="stringliteral">&quot;CA:TRUE,pathlen:0&quot;</span>);</div>
+<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> req = _ca.generateRequest({{<span class="stringliteral">&quot;C&quot;</span>, <span class="stringliteral">&quot;RU&quot;</span>}, {<span class="stringliteral">&quot;CN&quot;</span>, <span class="stringliteral">&quot;Test-CA&quot;</span>}}, <span class="stringliteral">&quot;&quot;</span>, <span class="stringliteral">&quot;CA:TRUE,pathlen:0&quot;</span>);</div>
 <div class="line">  _ca.<a class="code hl_function" href="#afb5237df49026bf53948efaafaa2f0f9">setCertificate</a>(_root_ca.signRequest(req));</div>
 <div class="line"> </div>
-<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1TlsContext.html">TlsContext</a> _cert;</div>
-<div class="line">  _cert.<a class="code hl_function" href="#a10b3110e2d30a54d84c276716fb7d10a">generateKey</a>(KEY_BITS);</div>
-<div class="line">  req = _cert.generateRequest({{<span class="stringliteral">&quot;C&quot;</span>, <span class="stringliteral">&quot;RU&quot;</span>}, {<span class="stringliteral">&quot;ST&quot;</span>, <span class="stringliteral">&quot;Region&quot;</span>}, {<span class="stringliteral">&quot;CN&quot;</span>, <span class="stringliteral">&quot;Eample-cert&quot;</span>}, {<span class="stringliteral">&quot;L&quot;</span>, <span class="stringliteral">&quot;Location&quot;</span>}, {<span class="stringliteral">&quot;O&quot;</span>, <span class="stringliteral">&quot;Org&quot;</span>}, {<span class="stringliteral">&quot;OU&quot;</span>, <span class="stringliteral">&quot;Org-unit&quot;</span>}, {<span class="stringliteral">&quot;serialNumber&quot;</span>, <span class="stringliteral">&quot;device-000-00-00&quot;</span>}, {<span class="stringliteral">&quot;emailAddress&quot;</span>, <span class="stringliteral">&quot;ssl@example.ru&quot;</span>}, {<span class="stringliteral">&quot;dnQualifier&quot;</span>, <span class="stringliteral">&quot;Example-device&quot;</span>}}, <span class="stringliteral">&quot;IP:192.168.1.101,IP:192.168.1.102,IP:192.168.1.103,IP:192.168.10.1,IP:192.168.10.100,IP:192.168.10.101,IP:192.168.10.102,IP:192.168.10.103&quot;</span>);</div>
-<div class="line">  _cert.<a class="code hl_function" href="#afb5237df49026bf53948efaafaa2f0f9">setCertificate</a>(_ca.signRequest(req));</div>
-<div class="line">  logInfo() &lt;&lt; _cert.<a class="code hl_function" href="#a6d9871b944dda7508bf311ed1de76031">infoCertificate</a>();</div>
-<div class="line">  <span class="comment">/*</span></div>
-<div class="line"><span class="comment">   * Use certificate</span></div>
-<div class="line"><span class="comment">  */</span></div>
-<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1HttpSocket.html">HttpSocket</a> *socket = HttpSocket::create();</div>
-<div class="line">  socket-&gt;setContext(_cert);</div>
-</div><!-- fragment --> <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="HttpSocket_2main_8cpp-example.html#_a0">HttpSocket/main.cpp</a>, and <a class="el" href="Socket_2main_8cpp-example.html#_a6">Socket/main.cpp</a>.</dd>
+<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1TlsContext.html">AsyncFw::TlsContext</a> _cert1;</div>
+<div class="line">  _cert1.<a class="code hl_function" href="#a10b3110e2d30a54d84c276716fb7d10a">generateKey</a>(KEY_BITS);</div>
+<div class="line">  req = _cert1.generateRequest({{<span class="stringliteral">&quot;C&quot;</span>, <span class="stringliteral">&quot;RU&quot;</span>}, {<span class="stringliteral">&quot;ST&quot;</span>, <span class="stringliteral">&quot;RU-region&quot;</span>}, {<span class="stringliteral">&quot;CN&quot;</span>, <span class="stringliteral">&quot;common_name.org.ru&quot;</span>}, {<span class="stringliteral">&quot;L&quot;</span>, <span class="stringliteral">&quot;RU-l&quot;</span>}, {<span class="stringliteral">&quot;O&quot;</span>, <span class="stringliteral">&quot;Org&quot;</span>}, {<span class="stringliteral">&quot;OU&quot;</span>, <span class="stringliteral">&quot;Org-unit&quot;</span>}, {<span class="stringliteral">&quot;serialNumber&quot;</span>, <span class="stringliteral">&quot;device-000-00-00&quot;</span>}, {<span class="stringliteral">&quot;emailAddress&quot;</span>, <span class="stringliteral">&quot;ssl@org.email.ru&quot;</span>}, {<span class="stringliteral">&quot;dnQualifier&quot;</span>, <span class="stringliteral">&quot;device&quot;</span>}}, <span class="stringliteral">&quot;IP:192.168.100.101,IP:192.168.100.102,IP:192.168.100.103&quot;</span>);</div>
+<div class="line">  _cert1.<a class="code hl_function" href="#afb5237df49026bf53948efaafaa2f0f9">setCertificate</a>(_ca.signRequest(req));</div>
+<div class="line"> </div>
+<div class="line">  _cert1.<a class="code hl_function" href="#a98271f22f48785585546a63f4e3f22af">appendTrusted</a>(_ca.<a class="code hl_function" href="#a1f84d5908bb3af689637ef250ddb1467">certificate</a>());</div>
+<div class="line">  _cert1.setVerifyName(<span class="stringliteral">&quot;VerifyName&quot;</span>);</div>
+<div class="line">  lsInfoCyan() &lt;&lt; _cert1;</div>
+<div class="line"> </div>
+<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1TlsContext.html">AsyncFw::TlsContext</a> _cert2;</div>
+<div class="line">  _cert2.<a class="code hl_function" href="#a10b3110e2d30a54d84c276716fb7d10a">generateKey</a>(KEY_BITS);</div>
+<div class="line">  req = _cert1.generateRequest({{<span class="stringliteral">&quot;C&quot;</span>, <span class="stringliteral">&quot;RU&quot;</span>}, {<span class="stringliteral">&quot;ST&quot;</span>, <span class="stringliteral">&quot;RU-region&quot;</span>}, {<span class="stringliteral">&quot;CN&quot;</span>, <span class="stringliteral">&quot;common_name.org.ru&quot;</span>}, {<span class="stringliteral">&quot;L&quot;</span>, <span class="stringliteral">&quot;RU-l&quot;</span>}, {<span class="stringliteral">&quot;O&quot;</span>, <span class="stringliteral">&quot;Org&quot;</span>}, {<span class="stringliteral">&quot;OU&quot;</span>, <span class="stringliteral">&quot;Org-unit&quot;</span>}, {<span class="stringliteral">&quot;serialNumber&quot;</span>, <span class="stringliteral">&quot;device-000-00-00&quot;</span>}, {<span class="stringliteral">&quot;emailAddress&quot;</span>, <span class="stringliteral">&quot;ssl@org.email.ru&quot;</span>}, {<span class="stringliteral">&quot;dnQualifier&quot;</span>, <span class="stringliteral">&quot;device&quot;</span>}}, <span class="stringliteral">&quot;IP:192.168.100.101,IP:192.168.100.102,IP:192.168.100.103&quot;</span>);</div>
+<div class="line">  _cert2.<a class="code hl_function" href="#afb5237df49026bf53948efaafaa2f0f9">setCertificate</a>(_ca.signRequest(req));</div>
+<div class="line"> </div>
+<div class="line">  _cert2.<a class="code hl_function" href="#a98271f22f48785585546a63f4e3f22af">appendTrusted</a>(_ca.<a class="code hl_function" href="#a1f84d5908bb3af689637ef250ddb1467">certificate</a>());</div>
+<div class="line">  _cert2.setVerifyName(<span class="stringliteral">&quot;VerifyName&quot;</span>);</div>
+<div class="line">  lsInfoMagenta() &lt;&lt; _cert2;</div>
+<div class="line"> </div>
+<div class="line">  <span class="keywordflow">return</span> 0;</div>
+<div class="line">}</div>
+</div><!-- fragment --> <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="HttpSocket_2main_8cpp-example.html#_a0">HttpSocket/main.cpp</a>, <a class="el" href="Socket_2main_8cpp-example.html#_a6">Socket/main.cpp</a>, and <a class="el" href="TlsContext_2main_8cpp-example.html#_a0">TlsContext/main.cpp</a>.</dd>
 </dl>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a10b3110e2d30a54d84c276716fb7d10a" name="a10b3110e2d30a54d84c276716fb7d10a"></a>
@@ -300,6 +314,8 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>AbstractTlsSocket</b
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if generated </dd></dl>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="TlsContext_2main_8cpp-example.html#a1">TlsContext/main.cpp</a>.</dd>
+</dl>
 
 </div>
 </div>
@@ -343,6 +359,8 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>AbstractTlsSocket</b
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if generated </dd></dl>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="TlsContext_2main_8cpp-example.html#a2">TlsContext/main.cpp</a>.</dd>
+</dl>
 
 </div>
 </div>

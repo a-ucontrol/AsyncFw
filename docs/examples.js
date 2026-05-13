@@ -5,6 +5,7 @@ var examples =
     [ "Coroutine/main.cpp", "Coroutine_2main_8cpp-example.html", null ],
     [ "CoroutineWait/main.cpp", "CoroutineWait_2main_8cpp-example.html", null ],
     [ "Cryptor/main.cpp", "Cryptor_2main_8cpp-example.html", null ],
+    [ "DataArray/main.cpp", "DataArray_2main_8cpp-example.html", null ],
     [ "DataArrayTcp/main.cpp", "DataArrayTcp_2main_8cpp-example.html", null ],
     [ "FileSystemWatcher/main.cpp", "FileSystemWatcher_2main_8cpp-example.html", null ],
     [ "FunctionConnector/main.cpp", "FunctionConnector_2main_8cpp-example.html", null ],
@@ -20,5 +21,6 @@ var examples =
     [ "SystemProcess/main.cpp", "SystemProcess_2main_8cpp-example.html", null ],
     [ "ThreadPool/main.cpp", "ThreadPool_2main_8cpp-example.html", null ],
     [ "Timer/main.cpp", "Timer_2main_8cpp-example.html", null ],
+    [ "TlsContext/main.cpp", "TlsContext_2main_8cpp-example.html", null ],
     [ "Uart/main.cpp", "Uart_2main_8cpp-example.html", null ]
 ];
