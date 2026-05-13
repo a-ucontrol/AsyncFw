@@ -85,28 +85,12 @@ public:
   DataStream &operator>>(DataArray &);
   DataStream &operator<<(const DataArrayList &);
   DataStream &operator>>(DataArrayList &);
-  const DataArray &array() const { return *data_; }
-  bool fail() const { return fail_; }
+  const DataArray &array() const;
+  bool fail() const;
 
 private:
-  template <typename T>
-  void rs_(T &_v, std::size_t _s) {
-    if (_s > data_->size() - pos_) {
-      fail_ = true;
-      return;
-    }
-    try {
-      _v.resize(_s);
-    } catch (std::exception &e) { fail_ = true; };
-  }
-  void w_(int, const uint8_t *);
-  void r_(int, uint8_t *);
-  void sw_(std::size_t);
-  void sr_(std::size_t *);
-  DataArray *data_;
-  bool fail_ = false;
-  bool read_ = false;
-  std::size_t pos_ = 0;
+  struct Private;
+  Private &private_;
 };
 LogStream &operator<<(LogStream &, const DataArray &);
 LogStream &operator<<(LogStream &, const DataArrayView &);

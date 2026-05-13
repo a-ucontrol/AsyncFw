@@ -125,164 +125,198 @@ DataArray DataArrayList::join(const char c) const {
   return da;
 }
 
-DataStream::DataStream() { data_ = new DataArray(); }
+struct DataStream::Private {
+  Private(const DataArray *data = nullptr) {
+    if (data) {
+      read_ = true;
+      data_ = const_cast<DataArray *>(data);
+    } else {
+      data_ = new DataArray;
+    }
+  }
+  template <typename T>
+  void rs_(T &_v, std::size_t _s) {
+    if (_s > data_->size() - pos_) {
+      fail_ = true;
+      return;
+    }
+    try {
+      _v.resize(_s);
+    } catch (std::exception &e) { fail_ = true; };
+  }
+  void w_(int, const uint8_t *);
+  void r_(int, uint8_t *);
+  void sw_(std::size_t);
+  void sr_(std::size_t *);
+  DataArray *data_;
+  bool fail_ = false;
+  bool read_ = false;
+  std::size_t pos_ = 0;
+};
 
-DataStream::DataStream(const DataArray &data) : data_(const_cast<DataArray *>(&data)) { read_ = true; }
+DataStream::DataStream() : private_(*new Private) {}
+
+DataStream::DataStream(const DataArray &data) : private_(*new Private(&data)) {}
 
 DataStream::~DataStream() {
-  if (!read_) delete data_;
+  if (!private_.read_) delete private_.data_;
+  delete &private_;
 }
 
 DataStream &DataStream::operator<<(int8_t v) {
-  w_(sizeof(int8_t), reinterpret_cast<uint8_t *>(&v));
+  private_.w_(sizeof(int8_t), reinterpret_cast<uint8_t *>(&v));
   return *this;
 }
 
 DataStream &DataStream::operator>>(int8_t &v) {
-  r_(sizeof(int8_t), reinterpret_cast<uint8_t *>(&v));
+  private_.r_(sizeof(int8_t), reinterpret_cast<uint8_t *>(&v));
   return *this;
 }
 
+const DataArray &DataStream::array() const { return *private_.data_; }
+
+bool DataStream::fail() const { return private_.fail_; }
+
 DataStream &DataStream::operator<<(uint8_t v) {
-  w_(sizeof(uint8_t), &v);
+  private_.w_(sizeof(uint8_t), &v);
   return *this;
 }
 
 DataStream &DataStream::operator>>(uint8_t &v) {
-  r_(sizeof(uint8_t), &v);
+  private_.r_(sizeof(uint8_t), &v);
   return *this;
 }
 
 DataStream &DataStream::operator<<(int16_t v) {
-  w_(sizeof(int16_t), reinterpret_cast<uint8_t *>(&v));
+  private_.w_(sizeof(int16_t), reinterpret_cast<uint8_t *>(&v));
   return *this;
 }
 
 DataStream &DataStream::operator>>(int16_t &v) {
-  r_(sizeof(int16_t), reinterpret_cast<uint8_t *>(&v));
+  private_.r_(sizeof(int16_t), reinterpret_cast<uint8_t *>(&v));
   return *this;
 }
 
 DataStream &DataStream::operator<<(uint16_t v) {
-  w_(sizeof(uint16_t), reinterpret_cast<uint8_t *>(&v));
+  private_.w_(sizeof(uint16_t), reinterpret_cast<uint8_t *>(&v));
   return *this;
 }
 
 DataStream &DataStream::operator>>(uint16_t &v) {
-  r_(sizeof(uint16_t), reinterpret_cast<uint8_t *>(&v));
+  private_.r_(sizeof(uint16_t), reinterpret_cast<uint8_t *>(&v));
   return *this;
 }
 
 DataStream &DataStream::operator<<(int32_t v) {
-  w_(sizeof(int32_t), reinterpret_cast<uint8_t *>(&v));
+  private_.w_(sizeof(int32_t), reinterpret_cast<uint8_t *>(&v));
   return *this;
 }
 
 DataStream &DataStream::operator>>(int32_t &v) {
-  r_(sizeof(int32_t), reinterpret_cast<uint8_t *>(&v));
+  private_.r_(sizeof(int32_t), reinterpret_cast<uint8_t *>(&v));
   return *this;
 }
 
 DataStream &DataStream::operator<<(uint32_t v) {
-  w_(sizeof(uint32_t), reinterpret_cast<uint8_t *>(&v));
+  private_.w_(sizeof(uint32_t), reinterpret_cast<uint8_t *>(&v));
   return *this;
 }
 
 DataStream &DataStream::operator>>(uint32_t &v) {
-  r_(sizeof(uint32_t), reinterpret_cast<uint8_t *>(&v));
+  private_.r_(sizeof(uint32_t), reinterpret_cast<uint8_t *>(&v));
   return *this;
 }
 
 DataStream &DataStream::operator<<(int64_t v) {
-  w_(sizeof(int64_t), reinterpret_cast<uint8_t *>(&v));
+  private_.w_(sizeof(int64_t), reinterpret_cast<uint8_t *>(&v));
   return *this;
 }
 
 DataStream &DataStream::operator>>(int64_t &v) {
-  r_(sizeof(int64_t), reinterpret_cast<uint8_t *>(&v));
+  private_.r_(sizeof(int64_t), reinterpret_cast<uint8_t *>(&v));
   return *this;
 }
 
 DataStream &DataStream::operator<<(uint64_t v) {
-  w_(sizeof(uint64_t), reinterpret_cast<uint8_t *>(&v));
+  private_.w_(sizeof(uint64_t), reinterpret_cast<uint8_t *>(&v));
   return *this;
 }
 
 DataStream &DataStream::operator>>(uint64_t &v) {
-  r_(sizeof(uint64_t), reinterpret_cast<uint8_t *>(&v));
+  private_.r_(sizeof(uint64_t), reinterpret_cast<uint8_t *>(&v));
   return *this;
 }
 
 DataStream &DataStream::operator<<(float v) {
-  w_(sizeof(float), reinterpret_cast<uint8_t *>(&v));
+  private_.w_(sizeof(float), reinterpret_cast<uint8_t *>(&v));
   return *this;
 }
 
 DataStream &DataStream::operator>>(float &v) {
-  r_(sizeof(float), reinterpret_cast<uint8_t *>(&v));
+  private_.r_(sizeof(float), reinterpret_cast<uint8_t *>(&v));
   return *this;
 }
 
 DataStream &DataStream::operator<<(double v) {
-  w_(sizeof(double), reinterpret_cast<uint8_t *>(&v));
+  private_.w_(sizeof(double), reinterpret_cast<uint8_t *>(&v));
   return *this;
 }
 
 DataStream &DataStream::operator>>(double &v) {
-  r_(sizeof(double), reinterpret_cast<uint8_t *>(&v));
+  private_.r_(sizeof(double), reinterpret_cast<uint8_t *>(&v));
   return *this;
 }
 
 DataStream &DataStream::operator>>(std::string &v) {
   std::size_t _s;
-  sr_(&_s);
-  if (fail_) return *this;
-  rs_(v, _s);
-  if (fail_) return *this;
-  r_(_s, reinterpret_cast<uint8_t *>(v.data()));
+  private_.sr_(&_s);
+  if (private_.fail_) return *this;
+  private_.rs_(v, _s);
+  if (private_.fail_) return *this;
+  private_.r_(_s, reinterpret_cast<uint8_t *>(v.data()));
   return *this;
 }
 
 DataStream &DataStream::operator<<(const std::string &v) {
-  sw_(v.size());
-  if (fail_) return *this;
-  w_(v.size(), reinterpret_cast<const uint8_t *>(v.data()));
+  private_.sw_(v.size());
+  if (private_.fail_) return *this;
+  private_.w_(v.size(), reinterpret_cast<const uint8_t *>(v.data()));
   return *this;
 }
 
 DataStream &DataStream::operator>>(DataArray &v) {
   std::size_t _s;
-  sr_(&_s);
-  if (fail_) return *this;
-  rs_(v, _s);
-  if (fail_) return *this;
-  r_(_s, v.data());
+  private_.sr_(&_s);
+  if (private_.fail_) return *this;
+  private_.rs_(v, _s);
+  if (private_.fail_) return *this;
+  private_.r_(_s, v.data());
   return *this;
 }
 
 DataStream &DataStream::operator<<(const DataArray &v) {
-  sw_(v.size());
-  if (fail_) return *this;
-  w_(v.size(), v.data());
+  private_.sw_(v.size());
+  if (private_.fail_) return *this;
+  private_.w_(v.size(), v.data());
   return *this;
 }
 
 DataStream &DataStream::operator<<(const DataArrayView &v) {
-  sw_(v.size());
-  if (fail_) return *this;
-  w_(v.size(), reinterpret_cast<const uint8_t *>(v.data()));
+  private_.sw_(v.size());
+  if (private_.fail_) return *this;
+  private_.w_(v.size(), reinterpret_cast<const uint8_t *>(v.data()));
   return *this;
 }
 
 DataStream &DataStream::operator>>(DataArrayList &v) {
   std::size_t _s;
-  sr_(&_s);
-  if (fail_) return *this;
+  private_.sr_(&_s);
+  if (private_.fail_) return *this;
   DataArrayList _l;
   for (std::size_t i = 0; i != _s; ++i) {
     DataArray _d;
     *this >> _d;
-    if (fail_) return *this;
+    if (private_.fail_) return *this;
     _l.push_back(std::move(_d));
   }
   v = std::move(_l);
@@ -291,16 +325,16 @@ DataStream &DataStream::operator>>(DataArrayList &v) {
 
 DataStream &DataStream::operator<<(const DataArrayList &v) {
   std::size_t _s = v.size();
-  sw_(_s);
-  if (fail_) return *this;
+  private_.sw_(_s);
+  if (private_.fail_) return *this;
   for (std::size_t i = 0; i != _s; ++i) {
     *this << v[i];
-    if (fail_) return *this;
+    if (private_.fail_) return *this;
   }
   return *this;
 }
 
-void DataStream::w_(int size, const uint8_t *p) {
+void DataStream::Private::w_(int size, const uint8_t *p) {
   if (fail_) return;
   if (read_) {
     fail_ = true;
@@ -310,7 +344,7 @@ void DataStream::w_(int size, const uint8_t *p) {
   data_->insert(data_->end(), p, p + size);
 }
 
-void DataStream::r_(int size, uint8_t *p) {
+void DataStream::Private::r_(int size, uint8_t *p) {
   if (fail_ || !size) return;
   if (!read_) {
     fail_ = true;
@@ -325,7 +359,7 @@ void DataStream::r_(int size, uint8_t *p) {
   pos_ += size;
 }
 
-void DataStream::sw_(std::size_t _s) {
+void DataStream::Private::sw_(std::size_t _s) {
   uint8_t i = 0;
   for (;; ++i) {
     if (!(_s >> (5 + i * 8))) break;
@@ -337,7 +371,7 @@ void DataStream::sw_(std::size_t _s) {
   w_(i, reinterpret_cast<uint8_t *>(&_s));
 }
 
-void DataStream::sr_(std::size_t *s) {
+void DataStream::Private::sr_(std::size_t *s) {
   uint8_t i;
   r_(sizeof(uint8_t), &i);
   if (fail_) return;
