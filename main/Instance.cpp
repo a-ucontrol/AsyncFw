@@ -70,5 +70,3 @@ AbstractInstance::~AbstractInstance() {
 }
 
 void AbstractInstance::created() { lsDebug() << LogStream::Color::Cyan << private_.name; }
-
-void AbstractInstance::destroing() { lsDebug() << LogStream::Color::Cyan << private_.name; }

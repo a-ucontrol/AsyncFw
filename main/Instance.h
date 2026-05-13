@@ -20,7 +20,6 @@ protected:
   virtual ~AbstractInstance() = 0;
   virtual bool destroyValue() = 0;
   virtual void created();
-  virtual void destroing();
 
 private:
   struct Private;
@@ -55,13 +54,12 @@ public:
   static T *get() { return i_->value; }
 
   Instance(const std::string &_name = {}) : AbstractInstance(_name) { i_ = this; }
-  virtual ~Instance() override { destroyValue(); }
+  virtual ~Instance() override { Instance<T>::destroyValue(); }
 
 protected:
   Instance(const Instance &) = delete;
   bool destroyValue() override {
     if (value) {
-      destroing();
       delete value;
       return true;
     }
