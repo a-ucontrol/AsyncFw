@@ -138,6 +138,7 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a8000597f0e7ee4bd6669491a5b502beb" id="r_a8000597f0e7ee4bd6669491a5b502beb"><td class="memTemplParams" colspan="2"><a id="a8000597f0e7ee4bd6669491a5b502beb" name="a8000597f0e7ee4bd6669491a5b502beb"></a>
 template&lt;typename CT, typename... Args&gt; </td></tr>
 <tr class="memitem:a8000597f0e7ee4bd6669491a5b502beb"><td class="memTemplItemLeft" align="right" valign="top">static CT *&#160;</td><td class="memTemplItemRight" valign="bottom"><b>create</b> (Args... args)</td></tr>
+<tr class="memdesc:a8000597f0e7ee4bd6669491a5b502beb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create instance value. <br /></td></tr>
 <tr class="separator:a8000597f0e7ee4bd6669491a5b502beb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a158800905f9c1ce225fcabbfa5b1d053" id="r_a158800905f9c1ce225fcabbfa5b1d053"><td class="memTemplParams" colspan="2"><a id="a158800905f9c1ce225fcabbfa5b1d053" name="a158800905f9c1ce225fcabbfa5b1d053"></a>
 template&lt;typename... Args&gt; </td></tr>
@@ -152,6 +153,7 @@ static T *&#160;</td><td class="memItemRight" valign="bottom"><b>get</b> ()</td>
 <tr class="inherit_header pub_static_methods_classAsyncFw_1_1AbstractInstance"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_static_methods_classAsyncFw_1_1AbstractInstance')"><img src="closed.png" alt="-"/>&#160;Static Public Member Functions inherited from <a class="el" href="classAsyncFw_1_1AbstractInstance.html">AsyncFw::AbstractInstance</a></td></tr>
 <tr class="memitem:a53843084f7ba8d6f9fbefcdc5cfead27 inherit pub_static_methods_classAsyncFw_1_1AbstractInstance" id="r_a53843084f7ba8d6f9fbefcdc5cfead27"><td class="memItemLeft" align="right" valign="top">
 static void&#160;</td><td class="memItemRight" valign="bottom"><b>destroyValues</b> ()</td></tr>
+<tr class="memdesc:a53843084f7ba8d6f9fbefcdc5cfead27 inherit pub_static_methods_classAsyncFw_1_1AbstractInstance"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroy values in all instances. <br /></td></tr>
 <tr class="separator:a53843084f7ba8d6f9fbefcdc5cfead27 inherit pub_static_methods_classAsyncFw_1_1AbstractInstance"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
@@ -160,6 +162,7 @@ Protected Member Functions</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><b>Instance</b> (const <a class="el" href="classAsyncFw_1_1Instance.html">Instance</a> &amp;)=delete</td></tr>
 <tr class="separator:a994026e715e5158a02c4e5dc743b4047"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3c6c90c36f431613e8fcfd0c195fdbe0" id="r_a3c6c90c36f431613e8fcfd0c195fdbe0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3c6c90c36f431613e8fcfd0c195fdbe0">destroyValue</a> () override</td></tr>
+<tr class="memdesc:a3c6c90c36f431613e8fcfd0c195fdbe0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroy instance value.  <br /></td></tr>
 <tr class="separator:a3c6c90c36f431613e8fcfd0c195fdbe0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_classAsyncFw_1_1AbstractInstance"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_methods_classAsyncFw_1_1AbstractInstance')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classAsyncFw_1_1AbstractInstance.html">AsyncFw::AbstractInstance</a></td></tr>
 <tr class="memitem:a884cd39afa818f16031336cb8bc87ef1 inherit pro_methods_classAsyncFw_1_1AbstractInstance" id="r_a884cd39afa818f16031336cb8bc87ef1"><td class="memItemLeft" align="right" valign="top">
@@ -167,15 +170,48 @@ Protected Member Functions</h2></td></tr>
 <tr class="separator:a884cd39afa818f16031336cb8bc87ef1 inherit pro_methods_classAsyncFw_1_1AbstractInstance"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad4ae1bfcd37c2450b85b35257f92360f inherit pro_methods_classAsyncFw_1_1AbstractInstance" id="r_ad4ae1bfcd37c2450b85b35257f92360f"><td class="memItemLeft" align="right" valign="top">
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>created</b> ()</td></tr>
+<tr class="memdesc:ad4ae1bfcd37c2450b85b35257f92360f inherit pro_methods_classAsyncFw_1_1AbstractInstance"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runs when the instance value is created. <br /></td></tr>
 <tr class="separator:ad4ae1bfcd37c2450b85b35257f92360f inherit pro_methods_classAsyncFw_1_1AbstractInstance"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a74e33f47150f500410edfd7688ccc0bd inherit pro_methods_classAsyncFw_1_1AbstractInstance" id="r_a74e33f47150f500410edfd7688ccc0bd"><td class="memItemLeft" align="right" valign="top">
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>destroing</b> ()</td></tr>
-<tr class="separator:a74e33f47150f500410edfd7688ccc0bd inherit pro_methods_classAsyncFw_1_1AbstractInstance"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename T&gt;<br />
 class AsyncFw::Instance&lt; T &gt;</div><p>The <a class="el" href="classAsyncFw_1_1Instance.html" title="The Instance class.">Instance</a> class. </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
+<p>Example: </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;AsyncFw/MainThread&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;AsyncFw/LogStream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">class </span>ExampleClass {</div>
+<div class="line"><span class="keyword">public</span>:</div>
+<div class="line">  <span class="keyword">static</span> <span class="keyword">inline</span> ExampleClass *instance() { <span class="keywordflow">return</span> instance_.value; }</div>
+<div class="line">  ExampleClass(<span class="keyword">const</span> std::string &amp;name) : name_(name) { lsDebug() &lt;&lt; name_; }</div>
+<div class="line">  ~ExampleClass() {</div>
+<div class="line">    <span class="keywordflow">if</span> (instance_.value == <span class="keyword">this</span>) instance_.value = <span class="keyword">nullptr</span>;</div>
+<div class="line">    lsDebug() &lt;&lt; name_;</div>
+<div class="line">  }</div>
+<div class="line">  <span class="keyword">const</span> std::string &amp;name() { <span class="keywordflow">return</span> name_; }</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">private</span>:</div>
+<div class="line">  <span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">class </span>Instance : <span class="keyword">public</span> AsyncFw::Instance&lt;ExampleClass&gt; {</div>
+<div class="line">  <span class="keyword">public</span>:</div>
+<div class="line">    <span class="keyword">using </span>AsyncFw::Instance&lt;ExampleClass&gt;::Instance;</div>
+<div class="line">    <span class="keywordtype">void</span> created()<span class="keyword"> override </span>{ lsInfoGreen() &lt;&lt; value-&gt;name(); }</div>
+<div class="line">  } instance_ {<span class="stringliteral">&quot;ExampleClass&quot;</span>};</div>
+<div class="line">  std::string name_;</div>
+<div class="line">};</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[]) {</div>
+<div class="line">  ExampleClass _e(<span class="stringliteral">&quot;ExampleClass&quot;</span>);</div>
+<div class="line">  <a class="code hl_function" href="#a8000597f0e7ee4bd6669491a5b502beb">AsyncFw::Instance&lt;ExampleClass&gt;::create</a>(<span class="stringliteral">&quot;ExampleClassInstance&quot;</span>);</div>
+<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Thread.html#a46662ffa7482f1c1e52b654c51639fd2">AsyncFw::Thread::currentThread</a>()-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#aa58eb4ec370dece81d08f7cea08f2af7">invokeMethod</a>([]() { AsyncFw::MainThread::exit(); });</div>
+<div class="line"> </div>
+<div class="line">  lsInfoMagenta() &lt;&lt; _e.name();</div>
+<div class="line">  lsInfoMagenta() &lt;&lt; ExampleClass::instance()-&gt;name();</div>
+<div class="line"> </div>
+<div class="line">  lsNotice() &lt;&lt; <span class="stringliteral">&quot;Start Applicaiton&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line">  <span class="keywordtype">int</span> ret = AsyncFw::MainThread::exec();</div>
+<div class="line">  lsNotice() &lt;&lt; <span class="stringliteral">&quot;End Applicaiton &quot;</span> &lt;&lt; ret;</div>
+<div class="line">  <span class="keywordflow">return</span> ret;</div>
+<div class="line">}</div>
+</div><!-- fragment --> </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a3c6c90c36f431613e8fcfd0c195fdbe0" name="a3c6c90c36f431613e8fcfd0c195fdbe0"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3c6c90c36f431613e8fcfd0c195fdbe0">&#9670;&#160;</a></span>destroyValue()</h2>
 
@@ -201,7 +237,9 @@ template&lt;typename T&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Implements <a class="el" href="classAsyncFw_1_1AbstractInstance.html">AsyncFw::AbstractInstance</a>.</p>
+<p>Destroy instance value. </p>
+
+<p>Implements <a class="el" href="classAsyncFw_1_1AbstractInstance.html#a2cddd3e61ae002fa6be00ae760cb5123">AsyncFw::AbstractInstance</a>.</p>
 
 </div>
 </div>

@@ -2,7 +2,7 @@ var annotated_dup =
 [
     [ "AsyncFw", null, [
       [ "AbstractFunctionConnector", "classAsyncFw_1_1AbstractFunctionConnector.html", null ],
-      [ "AbstractInstance", "classAsyncFw_1_1AbstractInstance.html", null ],
+      [ "AbstractInstance", "classAsyncFw_1_1AbstractInstance.html", "classAsyncFw_1_1AbstractInstance" ],
       [ "AbstractLog", "classAsyncFw_1_1AbstractLog.html", null ],
       [ "AbstractSocket", "classAsyncFw_1_1AbstractSocket.html", "classAsyncFw_1_1AbstractSocket" ],
       [ "AbstractTask", "classAsyncFw_1_1AbstractTask.html", null ],
@@ -30,7 +30,7 @@ var annotated_dup =
       [ "FunctionConnectorProtected", "classAsyncFw_1_1FunctionConnectorProtected.html", null ],
       [ "HttpServer", "classAsyncFw_1_1HttpServer.html", null ],
       [ "HttpSocket", "classAsyncFw_1_1HttpSocket.html", "classAsyncFw_1_1HttpSocket" ],
-      [ "Instance", "classAsyncFw_1_1Instance.html", null ],
+      [ "Instance", "classAsyncFw_1_1Instance.html", "classAsyncFw_1_1Instance" ],
       [ "ListenSocket", "classAsyncFw_1_1ListenSocket.html", "classAsyncFw_1_1ListenSocket" ],
       [ "Log", "classAsyncFw_1_1Log.html", null ],
       [ "LogStream", "classAsyncFw_1_1LogStream.html", null ],

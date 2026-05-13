@@ -13,12 +13,15 @@ namespace AsyncFw {
 /*! \class AbstractInstance Instance.h <AsyncFw/Instance> \brief The AbstractInstance class. */
 class AbstractInstance {
 public:
+  /*! \brief Destroy values in all instances. */
   static void destroyValues();
 
 protected:
   AbstractInstance(const std::string &name);
   virtual ~AbstractInstance() = 0;
+  /*! \brief Destroy instance value. */
   virtual bool destroyValue() = 0;
+  /*! \brief Runs when the instance value is created. */
   virtual void created();
 
 private:
@@ -26,13 +29,15 @@ private:
   Private &private_;
 };
 
-/*! \class Instance Instance.h <AsyncFw/Instance> \brief The Instance class. */
+/*! \class Instance Instance.h <AsyncFw/Instance> \brief The Instance class.
+ \brief Example: \snippet Instance/main.cpp snippet */
 template <typename T>
 class Instance : public AbstractInstance {
   friend T;
 
 public:
   template <typename CT, typename... Args>
+  /*! \brief Create instance value. */
   static CT *create(Args... args) {
     if (!i_->value) {
       CT *_v = new CT(args...);

@@ -217,7 +217,7 @@ $(function(){initNavTree('MainThread_8h_source.html',''); initResizable(true); }
 <div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>    }</div>
 <div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>    <span class="keyword">delete</span> exitTask;</div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>    AbstractInstance::destroyValues();</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>    <a class="code hl_function" href="classAsyncFw_1_1AbstractInstance.html#a53843084f7ba8d6f9fbefcdc5cfead27">AbstractInstance::destroyValues</a>();</div>
 <div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>    clearId();</div>
 <div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span><span class="preprocessor">#ifdef USE_QAPPLICATION</span></div>
 <div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>    <span class="keywordflow">for</span> (<span class="keyword">const</span> std::shared_ptr&lt;Poll&gt; &amp;_n : notifiers) { <span class="keyword">delete</span> _n-&gt;task; }</div>
@@ -375,6 +375,7 @@ $(function(){initNavTree('MainThread_8h_source.html',''); initResizable(true); }
 </div>
 <div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span><span class="keyword">inline</span> <a class="code hl_class" href="classAsyncFw_1_1MainThread.html">MainThread</a> MainThread::mt_;</div>
 <div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>}  <span class="comment">// namespace AsyncFw</span></div>
+<div class="ttc" id="aclassAsyncFw_1_1AbstractInstance_html_a53843084f7ba8d6f9fbefcdc5cfead27"><div class="ttname"><a href="classAsyncFw_1_1AbstractInstance.html#a53843084f7ba8d6f9fbefcdc5cfead27">AsyncFw::AbstractInstance::destroyValues</a></div><div class="ttdeci">static void destroyValues()</div><div class="ttdoc">Destroy values in all instances.</div><div class="ttdef"><b>Definition</b> Instance.cpp:29</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1AbstractTask_html"><div class="ttname"><a href="classAsyncFw_1_1AbstractTask.html">AsyncFw::AbstractTask</a></div><div class="ttdoc">The AbstractTask class.</div><div class="ttdef"><b>Definition</b> Task.h:17</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1AbstractThread_html_a0b6d6552ad2d0cdae6ce11fe6cb979be"><div class="ttname"><a href="classAsyncFw_1_1AbstractThread.html#a0b6d6552ad2d0cdae6ce11fe6cb979be">AsyncFw::AbstractThread::appendPollTask</a></div><div class="ttdeci">bool appendPollTask(int fd, PollEvents events, M method)</div><div class="ttdoc">Append poll task.</div><div class="ttdef"><b>Definition</b> AbstractThread.h:107</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1AbstractThread_html_a1fa8bc43151797cbcfb2013ee1fce2ce"><div class="ttname"><a href="classAsyncFw_1_1AbstractThread.html#a1fa8bc43151797cbcfb2013ee1fce2ce">AsyncFw::AbstractThread::appendTimer</a></div><div class="ttdeci">virtual int appendTimer(int, AbstractTask *)</div><div class="ttdoc">Append timer.</div><div class="ttdef"><b>Definition</b> AbstractThread.cpp:684</div></div>
