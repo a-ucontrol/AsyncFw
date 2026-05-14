@@ -5,8 +5,6 @@ This file is part of the AsyncFw project. Licensed under the MIT License.
 See {Link: LICENSE file https://mit-license.org} in the project root for full license information.
 */
 
-#include <chrono>
-
 #include <openssl/ssl.h>
 #include <openssl/err.h>
 #include <openssl/x509v3.h>
@@ -102,9 +100,7 @@ void AbstractTlsSocket::activateEvent() {
       if (!SSL_set1_host(private_->ssl_, private_->ctx_.verifyName().c_str())) lsError();
     }
   }
-  lsTrace() << "A-------------------------------------------------------------------" << std::chrono::system_clock::now();
   int r = (private_->encrypt_ == 1) ? SSL_accept(private_->ssl_) : SSL_connect(private_->ssl_);
-  lsTrace() << "B-------------------------------------------------------------------" << std::chrono::system_clock::now();
   //SIGPIPE if (private_->encrypt_ == 1) ::close(fd_); void Thread::startedEvent() disabled it
   if (r <= 0) {
     r = ERR_peek_error();
