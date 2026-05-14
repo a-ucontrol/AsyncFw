@@ -193,7 +193,6 @@ void AbstractSocket::setDescriptor(int _fd) {
   state_ = State::Connected;
   thread_->appendPollTask(fd_, AbstractThread::PollIn, [this](AbstractThread::PollEvents _e) { pollEvent(_e); });
   stateEvent();
-  activateEvent();
 }
 
 bool AbstractSocket::connect(const std::string &_address, uint16_t _port) {

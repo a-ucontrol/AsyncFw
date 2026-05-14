@@ -103,8 +103,7 @@ void AbstractTlsSocket::activateEvent() {
   int r = (private_->encrypt_ == 1) ? SSL_accept(private_->ssl_) : SSL_connect(private_->ssl_);
   //SIGPIPE if (private_->encrypt_ == 1) ::close(fd_); void Thread::startedEvent() disabled it
   if (r <= 0) {
-    r = ERR_peek_error();
-    if (!r && SSL_want_read(private_->ssl_)) return;
+    if (SSL_want_read(private_->ssl_)) return;
     setError(AbstractSocket::Activate);
     setErrorString("Accept TLS error");
     close();
