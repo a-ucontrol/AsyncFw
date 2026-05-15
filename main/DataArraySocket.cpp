@@ -225,8 +225,8 @@ void DataArraySocket::disconnect() {
     lsWarning("tried disconnect closing or unconnected socket");
     return;
   }
-  if (waitTimerType & 0x40) return;
-  waitTimerType |= 0x40;
+  if (waitTimerType & 0x08) return;
+  waitTimerType |= 0x08;
   if (!(waitTimerType & 0x01)) removeTimer();
   else { waitTimerType &= ~0x01; }
   AbstractTlsSocket::disconnect();
