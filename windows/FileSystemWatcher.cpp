@@ -60,12 +60,11 @@ FileSystemWatcher::Private::WatchPath::WatchPath(const std::string &path) {
 
 Instance<FileSystemWatcher> FileSystemWatcher::instance_ {"FileSystemWatcher"};
 
-FileSystemWatcher::FileSystemWatcher(const std::vector<std::string> &paths) {
-  private_ = new Private;
-  private_->thread_ = AbstractThread::currentThread();
-  private_->timerid_ = private_->thread_->appendTimerTask(0, [this]() {
-    private_->thread_->modifyTimer(private_->timerid_, 0);
-    for (const Private::Watch *f : private_->we_) {
+FileSystemWatcher::FileSystemWatcher(const std::vector<std::string> &paths) : private_(*new Private) {
+  private_.thread_ = AbstractThread::currentThread();
+  private_.timerid_ = private_.thread_->appendTimerTask(0, [this]() {
+    private_.thread_->modifyTimer(private_.timerid_, 0);
+    for (const Private::Watch *f : private_.we_) {
       lsInfoMagenta() << "T" << f->directory + '/' + f->name;
       if (!f->d) {
         notify(f->directory + '/' + f->name, 0);
@@ -77,29 +76,29 @@ FileSystemWatcher::FileSystemWatcher(const std::vector<std::string> &paths) {
         notify(f->directory + '/' + f->name, -1);
       }
     }
-    trace() << LogStream::Color::DarkRed << "timer event" << private_->we_.size();
-    private_->we_.clear();
+    trace() << LogStream::Color::DarkRed << "timer event" << private_.we_.size();
+    private_.we_.clear();
   });
 
   addPaths(paths);
 
-  QObject::connect(&private_->watcher_, &QFileSystemWatcher::fileChanged, [this](const QString &path) {
+  QObject::connect(&private_.watcher_, &QFileSystemWatcher::fileChanged, [this](const QString &path) {
     lsInfoMagenta() << "F" << path.toStdString();
-    if (!private_->watcher_.files().contains(path)) notify(path.toStdString(), -1);
+    if (!private_.watcher_.files().contains(path)) notify(path.toStdString(), -1);
     Private::WatchPath w(path.toStdString());
-    std::vector<Private::Watch *>::iterator it = std::lower_bound(private_->files_.begin(), private_->files_.end(), w, Private::CompareWatch());
-    if (it != private_->files_.end() && (*it)->name == w.name && (*it)->directory == w.directory) {
-      private_->append_((*it));
+    std::vector<Private::Watch *>::iterator it = std::lower_bound(private_.files_.begin(), private_.files_.end(), w, Private::CompareWatch());
+    if (it != private_.files_.end() && (*it)->name == w.name && (*it)->directory == w.directory) {
+      private_.append_((*it));
       lsInfoMagenta() << "F" << path.toStdString();
     }
   });
-  QObject::connect(&private_->watcher_, &QFileSystemWatcher::directoryChanged, [this](const QString &path) {
+  QObject::connect(&private_.watcher_, &QFileSystemWatcher::directoryChanged, [this](const QString &path) {
     lsInfoMagenta() << "D" << path.toStdString();
     Private::WatchPath _w(path.toStdString() + "/*");
-    for (const Private::Watch *w : private_->files_) {
+    for (const Private::Watch *w : private_.files_) {
       lsInfoMagenta() << "I" << _w.directory << w->directory << w->name << w->d;
       if (w->d && _w.directory == w->directory) {
-        private_->append_(w);
+        private_.append_(w);
         lsInfoMagenta() << "D" << path.toStdString();
       }
     }
@@ -110,28 +109,28 @@ FileSystemWatcher::FileSystemWatcher(const std::vector<std::string> &paths) {
 
 FileSystemWatcher::~FileSystemWatcher() {
   if (instance_.value == this) instance_.value = nullptr;
-  private_->thread_->removeTimer(private_->timerid_);
-  for (Private::Watch *w : private_->files_) delete w;
-  delete private_;
+  private_.thread_->removeTimer(private_.timerid_);
+  for (Private::Watch *w : private_.files_) delete w;
+  delete &private_;
   lsTrace();
 }
 
 bool FileSystemWatcher::addPath(const std::string &path) {
   Private::Watch *w = new Private::Watch(path);
-  std::vector<Private::Watch *>::iterator it = std::lower_bound(private_->files_.begin(), private_->files_.end(), w, Private::CompareWatch());
-  if (it != private_->files_.end() && (*it)->name == w->name && (*it)->directory == w->directory) {
+  std::vector<Private::Watch *>::iterator it = std::lower_bound(private_.files_.begin(), private_.files_.end(), w, Private::CompareWatch());
+  if (it != private_.files_.end() && (*it)->name == w->name && (*it)->directory == w->directory) {
     delete w;
     return false;
   }
-  w->d = !(w->name != "*") ? private_->watcher_.addPath(path.c_str()) : true;
+  w->d = !(w->name != "*") ? private_.watcher_.addPath(path.c_str()) : true;
   if (w->d) {
-    w->d = private_->watcher_.addPath(w->directory.c_str());
+    w->d = private_.watcher_.addPath(w->directory.c_str());
     if (!w->d) {
       delete w;
       return false;
     }
   }
-  private_->files_.insert(it, w);
+  private_.files_.insert(it, w);
   return true;
 }
 
@@ -144,12 +143,12 @@ bool FileSystemWatcher::addPaths(const std::vector<std::string> &paths) {
 
 bool FileSystemWatcher::removePath(const std::string &path) {
   Private::WatchPath wp {path};
-  std::vector<Private::Watch *>::iterator itw = std::lower_bound(private_->files_.begin(), private_->files_.end(), wp, Private::CompareWatch());
-  if (itw == private_->files_.end() || (*itw)->name != wp.name || (*itw)->directory != wp.directory) return false;
-  private_->remove_(*itw);
-  private_->watcher_.removePath(path.c_str());
+  std::vector<Private::Watch *>::iterator itw = std::lower_bound(private_.files_.begin(), private_.files_.end(), wp, Private::CompareWatch());
+  if (itw == private_.files_.end() || (*itw)->name != wp.name || (*itw)->directory != wp.directory) return false;
+  private_.remove_(*itw);
+  private_.watcher_.removePath(path.c_str());
   delete *itw;
-  private_->files_.erase(itw);
+  private_.files_.erase(itw);
   return true;
 }
 
@@ -161,9 +160,9 @@ bool FileSystemWatcher::removePaths(const std::vector<std::string> &paths) {
 }
 
 std::vector<std::string> FileSystemWatcher::paths() const {
-  if (private_->files_.empty()) return {};
+  if (private_.files_.empty()) return {};
   std::vector<std::string> _p;
-  for (const Private::Watch *f : private_->files_) { _p.push_back(f->directory + '/' + f->name); }
+  for (const Private::Watch *f : private_.files_) { _p.push_back(f->directory + '/' + f->name); }
   return _p;
 }
 
@@ -200,7 +199,7 @@ bool FileSystemWatcher::Private::CompareWatch::operator()(const Watch *w, const 
 namespace AsyncFw {
 LogStream &operator<<(LogStream &log, const FileSystemWatcher &w) {
   std::string str = "File list:";
-  if (w.private_->files_.empty()) return log << str << "empty";
+  if (w.private_.files_.empty()) return log << str << "empty";
   for (const std::string &s : w.paths()) { str += '\n' + s; }
   return log << str;
 }
