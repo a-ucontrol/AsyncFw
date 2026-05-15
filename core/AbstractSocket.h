@@ -21,7 +21,6 @@ class LogStream;
 class AbstractSocket : public AnyData {
   friend Thread;
   friend LogStream &operator<<(LogStream &, const AbstractSocket &);
-  struct Private;
 
 public:
   enum State : uint8_t { Unconnected, Listening, Connecting, Connected, Active, Closing, Destroy };
@@ -87,7 +86,7 @@ protected:
 
   Thread *thread_;
   int fd_ = -1;
-  mutable State state_ = State::Unconnected;
+  State state_ = State::Unconnected;
 
 private:
   AbstractSocket(const AbstractSocket &) = delete;
@@ -95,6 +94,7 @@ private:
   void pollEvent(int);
   void changeDescriptor(int);
   void read_fd();
-  Private *private_;
+  struct Private;
+  Private &private_;
 };
 }  // namespace AsyncFw

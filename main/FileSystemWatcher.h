@@ -33,6 +33,6 @@ public:
 private:
   static Instance<FileSystemWatcher> instance_;
   struct Private;
-  Private *private_;
+  Private &private_;
 };
 }  // namespace AsyncFw

@@ -46,10 +46,9 @@ public:
 
 private:
   static bool exec_(const std::string &, const std::vector<std::string> &, Function<int, State, const std::string &, const std::string &>::Abstract<void> *);
-
   void finality();
   struct Private;
-  Private *private_;
+  Private &private_;
 };
 
 }  // namespace AsyncFw

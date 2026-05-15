@@ -14,8 +14,6 @@ namespace AsyncFw {
 class DataArray;
 /*! \class File File.h <AsyncFw/File> \brief The File class. */
 class File {
-  struct Private;
-
 public:
   File(const std::string & = {});
   ~File();
@@ -38,6 +36,7 @@ public:
 private:
   File(File &) = delete;
   File &operator=(File &) = delete;
-  Private *private_;
+  struct Private;
+  Private &private_;
 };
 }  // namespace AsyncFw

@@ -67,21 +67,18 @@ struct AddressInfo::Private {
   int tid = -1;
 };
 
-AddressInfo::AddressInfo() {
-  private_ = new Private(this);
-  lsTrace();
-}
+AddressInfo::AddressInfo() : private_(*new Private(this)) { lsTrace(); }
 
 AddressInfo::~AddressInfo() {
-  delete private_;
+  delete &private_;
   lsTrace();
 }
 void AddressInfo::resolve(const std::string &name, Family f) {
-  if (private_->tid >= 0) {
+  if (private_.tid >= 0) {
     lsError() << "timer task already exists";
     return;
   }
-  private_->tid = private_->thread->appendTimerTask(private_->timeout, [this]() { ares_cancel(private_->channel); });
+  private_.tid = private_.thread->appendTimerTask(private_.timeout, [this]() { ares_cancel(private_.channel); });
 
   struct ares_addrinfo_hints hints;
   memset(&hints, 0, sizeof(hints));
@@ -90,7 +87,7 @@ void AddressInfo::resolve(const std::string &name, Family f) {
   //hints.ai_socktype = SOCK_STREAM;
 
   ares_getaddrinfo(
-      private_->channel, name.c_str(), nullptr, &hints,
+      private_.channel, name.c_str(), nullptr, &hints,
       [](void *data, int status, int, struct ares_addrinfo *result) {
         static_cast<Private *>(data)->thread->removeTimer(static_cast<Private *>(data)->tid);
         static_cast<Private *>(data)->tid = -1;
@@ -121,10 +118,10 @@ void AddressInfo::resolve(const std::string &name, Family f) {
         }
         static_cast<Private *>(data)->ai->completed(status, _r);
       },
-      private_);
+      &private_);
 }
 
-void AddressInfo::setTimeout(int _timeout) { private_->timeout = _timeout; }
+void AddressInfo::setTimeout(int _timeout) { private_.timeout = _timeout; }
 
 CoroutineAwait AddressInfo::coResolve(const std::string &name, Family f) {
   return AsyncFw::CoroutineAwait([this, name, f](AsyncFw::CoroutineHandle h) {

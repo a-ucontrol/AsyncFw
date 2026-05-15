@@ -426,17 +426,16 @@ HttpServer::HttpRule::HttpRule(HttpRule &&r) : method(r.method) {
 
 Instance<HttpServer> HttpServer::instance_ {"HttpServer"};
 
-HttpServer::HttpServer(const std::string &_httpPath) {
-  private_ = new Private();
-  private_->httpPath = _httpPath;
+HttpServer::HttpServer(const std::string &_httpPath) : private_(*new Private()) {
+  private_.httpPath = _httpPath;
   addRule("/<arg>", Request::Method::Get, [this](const Request &request) {
-    if (private_->httpPath.empty()) {
+    if (private_.httpPath.empty()) {
       lsError("application home not set");
       request.response()->setStatusCode(Response::StatusCode::BadRequest);
       request.response()->send();
       return;
     }
-    std::string path = private_->httpPath + ((request.path() == "/") ? "/index.html" : request.path());
+    std::string path = private_.httpPath + ((request.path() == "/") ? "/index.html" : request.path());
     trace("request file: " + path);
     if (std::filesystem::exists(path)) {
       trace(("return: " + path).c_str());
@@ -455,7 +454,7 @@ HttpServer::~HttpServer() {
   if (instance_.value == this) instance_.value = nullptr;
   if (peek) delete peek;
   clearConnections();
-  delete private_;
+  delete &private_;
   lsTrace();
 }
 
@@ -481,18 +480,18 @@ void HttpServer::sendToWebSockets(const std::string &data) {  //Дичь, для
 }
 
 bool HttpServer::listen(uint16_t port) {
-  trace_if(!private_->tlsContext_.empty()) << private_->tlsContext_.infoCertificate();
-  bool b = private_->listener.listen("0.0.0.0", port);
+  trace_if(!private_.tlsContext_.empty()) << private_.tlsContext_.infoCertificate();
+  bool b = private_.listener.listen("0.0.0.0", port);
   if (b) {
-    private_->listenerGuard = private_->listener.incoming([this](int descriptor, const std::string &address, bool *accept) {
+    private_.listenerGuard = private_.listener.incoming([this](int descriptor, const std::string &address, bool *accept) {
       incoming(descriptor, address, accept);
       if (!*accept) {
         TcpSocket *socket = new TcpSocket(this);
         sockets.emplace_back(socket);
-        trace() << "(incoming) socket created, total:" << sockets.size() << "tls data" << !private_->tlsContext_.empty();
-        if (!private_->tlsContext_.empty()) socket->AbstractSocket::setDescriptor(descriptor);
+        trace() << "(incoming) socket created, total:" << sockets.size() << "tls data" << !private_.tlsContext_.empty();
+        if (!private_.tlsContext_.empty()) socket->AbstractSocket::setDescriptor(descriptor);
         else {
-          socket->setContext(private_->tlsContext_);
+          socket->setContext(private_.tlsContext_);
           socket->setDescriptor(descriptor);
         }
         *accept = true;
@@ -506,13 +505,13 @@ bool HttpServer::listen(uint16_t port) {
 }
 
 void HttpServer::close() {
-  if (!private_->listener.port()) {
+  if (!private_.listener.port()) {
     lsError() << "not listen";
     return;
   }
-  lsDebug() << LogStream::Color::Blue << "Tcp server close, port: " + std::to_string(private_->listener.port());
-  private_->listener.close();
-  private_->listenerGuard = {};
+  lsDebug() << LogStream::Color::Blue << "Tcp server close, port: " + std::to_string(private_.listener.port());
+  private_.listener.close();
+  private_.listenerGuard = {};
 }
 
 bool HttpServer::execRule(const Request &req) {
@@ -535,7 +534,7 @@ bool HttpServer::execRule(const Request &req) {
   return true;
 }
 
-uint16_t HttpServer::port() { return private_->listener.port(); }
+uint16_t HttpServer::port() { return private_.listener.port(); }
 
 void HttpServer::received(TcpSocket *socket, const std::string_view &ba) {
   trace() << LogStream::Color::Red << ba;
@@ -546,7 +545,7 @@ void HttpServer::received(TcpSocket *socket, const std::string_view &ba) {
     req.response_->socket_ = socket;
     socket->response = req.response_;
 
-    if (req.private_->request.versionMajor == 1 && req.private_->request.versionMinor == 0) {
+    if (req.private_.request.versionMajor == 1 && req.private_.request.versionMinor == 0) {
       socket->connectionClose = true;
       req.response_->version = "1.0";
     }
@@ -584,9 +583,9 @@ HttpServer::RulesMap::iterator HttpServer::findRule(const std::string &path, con
 
 void HttpServer::setEnableCorsRequests(bool state) { cors_request_enabled = state; }
 
-bool HttpServer::hasTls() { return !private_->tlsContext_.empty(); }
+bool HttpServer::hasTls() { return !private_.tlsContext_.empty(); }
 
-void HttpServer::setTlsContext(const TlsContext &ctx) { private_->tlsContext_ = ctx; }
+void HttpServer::setTlsContext(const TlsContext &ctx) { private_.tlsContext_ = ctx; }
 
 std::string HttpServer::Response::header() const {
   std::string ba = "HTTP/" + version + ' ' + std::to_string(static_cast<int>(statusCode_)) + "\r\n";
@@ -659,44 +658,42 @@ void HttpServer::Response::setContent(const std::vector<uint8_t> &v) {
   contentLength = content_.size();
 }
 
-HttpServer::Request::Request(const std::string_view &str) {
-  private_ = new Private(str);
-
-  if (private_->res != httpparser::HttpRequestParser::ParsingCompleted) {
+HttpServer::Request::Request(const std::string_view &str) : private_(*new Private(str)) {
+  if (private_.res != httpparser::HttpRequestParser::ParsingCompleted) {
     method_ = Method::Unknown;
     lsWarning() << "Parsing failed\n" << str;
     return;
   }
 
-  if (private_->request.method == "GET") method_ = Method::Get;
-  else if (private_->request.method == "PUT")
+  if (private_.request.method == "GET") method_ = Method::Get;
+  else if (private_.request.method == "PUT")
     method_ = Method::Put;
-  else if (private_->request.method == "DELETE")
+  else if (private_.request.method == "DELETE")
     method_ = Method::Delete;
-  else if (private_->request.method == "POST")
+  else if (private_.request.method == "POST")
     method_ = Method::Post;
-  else if (private_->request.method == "HEAD")
+  else if (private_.request.method == "HEAD")
     method_ = Method::Head;
-  else if (private_->request.method == "OPTIONS")
+  else if (private_.request.method == "OPTIONS")
     method_ = Method::Options;
-  else if (private_->request.method == "PATCH")
+  else if (private_.request.method == "PATCH")
     method_ = Method::Patch;
-  else if (private_->request.method == "CONNECT")
+  else if (private_.request.method == "CONNECT")
     method_ = Method::Connect;
-  else if (private_->request.method == "TRACE")
+  else if (private_.request.method == "TRACE")
     method_ = Method::Trace;
   else
     method_ = Method::Unknown;
 }
 
-HttpServer::Request::~Request() { delete private_; }
+HttpServer::Request::~Request() { delete &private_; }
 
-std::string HttpServer::Request::methodName() const { return private_->request.method; }
+std::string HttpServer::Request::methodName() const { return private_.request.method; }
 
-std::string HttpServer::Request::path() const { return private_->uri->path; }
+std::string HttpServer::Request::path() const { return private_.uri->path; }
 
 std::string HttpServer::Request::heaaderItemValue(const std::string &name) const {
-  for (const httpparser::Request::HeaderItem &item : private_->request.headers) {
+  for (const httpparser::Request::HeaderItem &item : private_.request.headers) {
     if (name.size() == item.name.size()) {
       for (size_t i = 0; i != name.size(); ++i) {
         if (std::tolower(name[i]) != std::tolower(item.name[i])) goto FAIL;
@@ -710,17 +707,17 @@ std::string HttpServer::Request::heaaderItemValue(const std::string &name) const
 }
 
 std::string HttpServer::Request::queryItemValue(const std::string &name) const {
-  for (std::pair<std::string, std::string> q : private_->uri->query)
+  for (std::pair<std::string, std::string> q : private_.uri->query)
     if (q.first == name) return q.second;
   return {};
 }
 
-DataArray HttpServer::Request::content() const { return private_->request.content; }
+DataArray HttpServer::Request::content() const { return private_.request.content; }
 
 bool HttpServer::Request::switchingProtocols() const {
   response_->statusCode_ = Response::StatusCode::SwitchingProtocols;
   response_->socket_->ws_ = new WebSocket;
-  WebSocketFrameType ft = response_->socket_->ws_->parseHandshake(const_cast<unsigned char *>(reinterpret_cast<const unsigned char *>(private_->req_.c_str())), private_->req_.size());
+  WebSocketFrameType ft = response_->socket_->ws_->parseHandshake(const_cast<unsigned char *>(reinterpret_cast<const unsigned char *>(private_.req_.c_str())), private_.req_.size());
   bool b = ft == WebSocketFrameType::OPENING_FRAME;
   if (b) response_->socket_->write(response_->socket_->ws_->answerHandshake());
   else { lsTrace(); }
@@ -728,13 +725,13 @@ bool HttpServer::Request::switchingProtocols() const {
   return b;
 }
 
-bool HttpServer::Request::fail() const { return private_->res != httpparser::HttpRequestParser::ParsingCompleted; }
+bool HttpServer::Request::fail() const { return private_.res != httpparser::HttpRequestParser::ParsingCompleted; }
 
 namespace AsyncFw {
 LogStream &operator<<(LogStream &log, const HttpServer &s) {
-  std::string str = "Listening: " + ((s.private_->listener.port()) ? s.private_->listener.address() + ':' + std::to_string(s.private_->listener.port()) : "no");
-  str += std::string("\nSSL: ") + ((!s.private_->tlsContext_.empty()) ? "enabled" : "disabled");
-  str += "\nWeb root: " + ((!s.private_->httpPath.empty()) ? s.private_->httpPath : "none");
+  std::string str = "Listening: " + ((s.private_.listener.port()) ? s.private_.listener.address() + ':' + std::to_string(s.private_.listener.port()) : "no");
+  str += std::string("\nSSL: ") + ((!s.private_.tlsContext_.empty()) ? "enabled" : "disabled");
+  str += "\nWeb root: " + ((!s.private_.httpPath.empty()) ? s.private_.httpPath : "none");
 
   return log << str;
 }

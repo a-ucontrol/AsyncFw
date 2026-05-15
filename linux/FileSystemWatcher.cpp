@@ -66,26 +66,25 @@ FileSystemWatcher::Private::WatchPath::WatchPath(const std::string &path) {
 
 Instance<FileSystemWatcher> FileSystemWatcher::instance_ {"FileSystemWatcher"};
 
-FileSystemWatcher::FileSystemWatcher(const std::vector<std::string> &paths) {
-  private_ = new Private;
-  private_->thread_ = AbstractThread::currentThread();
-  private_->timerid_ = private_->thread_->appendTimerTask(0, [this]() {
-    private_->thread_->modifyTimer(private_->timerid_, 0);
-    for (const Private::Watch *f : private_->we_) notify(f->directory + '/' + f->name, 0);
-    trace() << LogStream::Color::DarkRed << "timer event" << private_->we_.size();
-    private_->we_.clear();
+FileSystemWatcher::FileSystemWatcher(const std::vector<std::string> &paths) : private_(*new Private) {
+  private_.thread_ = AbstractThread::currentThread();
+  private_.timerid_ = private_.thread_->appendTimerTask(0, [this]() {
+    private_.thread_->modifyTimer(private_.timerid_, 0);
+    for (const Private::Watch *f : private_.we_) notify(f->directory + '/' + f->name, 0);
+    trace() << LogStream::Color::DarkRed << "timer event" << private_.we_.size();
+    private_.we_.clear();
   });
 
-  private_->notifyfd_ = inotify_init();
+  private_.notifyfd_ = inotify_init();
 
-  private_->thread_->appendPollTask(private_->notifyfd_, AbstractThread::PollIn, [this](AbstractThread::PollEvents) {
+  private_.thread_->appendPollTask(private_.notifyfd_, AbstractThread::PollIn, [this](AbstractThread::PollEvents) {
     int size;
-    if (ioctl(private_->notifyfd_, FIONREAD, &size) != 0) {
+    if (ioctl(private_.notifyfd_, FIONREAD, &size) != 0) {
       lsError();
       return;
     }
     char *buf = new char[size];
-    if (read(private_->notifyfd_, buf, size) != size) {
+    if (read(private_.notifyfd_, buf, size) != size) {
       lsError();
       return;
     }
@@ -94,8 +93,8 @@ FileSystemWatcher::FileSystemWatcher(const std::vector<std::string> &paths) {
       const struct inotify_event *e = reinterpret_cast<const struct inotify_event *>(buf + offset);
       offset += sizeof(inotify_event) + e->len;
 
-      std::vector<Private::Watch *>::iterator itd = std::lower_bound(private_->wds_.begin(), private_->wds_.end(), e->wd, Private::CompareWatchDescriptor());
-      if (itd == private_->wds_.end() || (*itd)->d != e->wd) {
+      std::vector<Private::Watch *>::iterator itd = std::lower_bound(private_.wds_.begin(), private_.wds_.end(), e->wd, Private::CompareWatchDescriptor());
+      if (itd == private_.wds_.end() || (*itd)->d != e->wd) {
         trace() << LogStream::Color::Red << "itd == wds_.end() || (*itd)->d != e->wd";
         continue;
       }
@@ -103,20 +102,20 @@ FileSystemWatcher::FileSystemWatcher(const std::vector<std::string> &paths) {
       if (!(*itd)->name.empty()) {
         if (e->mask & (IN_IGNORED | IN_DELETE_SELF)) {
           Private::Watch *w = *itd;
-          private_->wds_.erase(itd);
-          int i = inotify_add_watch(private_->notifyfd_, w->directory.c_str(), IN_CREATE | IN_DELETE);
-          inotify_rm_watch(private_->notifyfd_, w->d);
-          private_->remove_(w);
+          private_.wds_.erase(itd);
+          int i = inotify_add_watch(private_.notifyfd_, w->directory.c_str(), IN_CREATE | IN_DELETE);
+          inotify_rm_watch(private_.notifyfd_, w->d);
+          private_.remove_(w);
           notify(w->directory + '/' + w->name, -1);
           lsDebug() << "removed" << w->directory + '/' + w->name << w->d;
 
-          w->d = inotify_add_watch(private_->notifyfd_, (w->directory + '/' + w->name).c_str(), IN_ATTRIB | IN_MODIFY | IN_CLOSE_WRITE | IN_DELETE_SELF);
+          w->d = inotify_add_watch(private_.notifyfd_, (w->directory + '/' + w->name).c_str(), IN_ATTRIB | IN_MODIFY | IN_CLOSE_WRITE | IN_DELETE_SELF);
           if (w->d >= 0) {
-            inotify_rm_watch(private_->notifyfd_, i);
+            inotify_rm_watch(private_.notifyfd_, i);
             notify(w->directory + '/' + w->name, 1);
             lsDebug() << "created (event missed)" << w->directory + '/' + w->name << w->d;
-            itd = std::lower_bound(private_->wds_.begin(), private_->wds_.end(), w->d, Private::CompareWatchDescriptor());
-            private_->wds_.insert(itd, w);
+            itd = std::lower_bound(private_.wds_.begin(), private_.wds_.end(), w->d, Private::CompareWatchDescriptor());
+            private_.wds_.insert(itd, w);
             continue;
           }
 
@@ -125,25 +124,25 @@ FileSystemWatcher::FileSystemWatcher(const std::vector<std::string> &paths) {
           Private::Watch *dw = new Private::Watch();
           dw->d = i;
           dw->directory = w->directory;
-          itd = std::lower_bound(private_->wds_.begin(), private_->wds_.end(), dw->d, Private::CompareWatchDescriptor());
-          private_->wds_.insert(itd, dw);
+          itd = std::lower_bound(private_.wds_.begin(), private_.wds_.end(), dw->d, Private::CompareWatchDescriptor());
+          private_.wds_.insert(itd, dw);
           continue;
         }
         if (e->mask & IN_CLOSE_WRITE) {
           notify((*itd)->directory + '/' + (*itd)->name, 0);
-          private_->remove_(*itd);
+          private_.remove_(*itd);
           lsDebug() << "close write" << (*itd)->directory + '/' + (*itd)->name << (*itd)->d;
           continue;
         }
         if (e->mask & IN_MODIFY) {
-          private_->append_(*itd);
+          private_.append_(*itd);
           lsDebug() << "modify" << (*itd)->directory + '/' + (*itd)->name << (*itd)->d;
           continue;
         }
         if (e->mask & IN_ATTRIB) {
           //notify((*itd)->directory + '/' + (*itd)->name, 0);
-          //private_->remove_(*itd);
-          private_->append_(*itd);
+          //private_.remove_(*itd);
+          private_.append_(*itd);
           lsDebug() << "attributes changed" << (*itd)->directory + '/' + (*itd)->name << (*itd)->d;
           continue;
         }
@@ -153,21 +152,21 @@ FileSystemWatcher::FileSystemWatcher(const std::vector<std::string> &paths) {
       Private::WatchPath wp;
       wp.directory = (*itd)->directory;
       wp.name = e->name;
-      std::vector<Private::Watch *>::iterator itw = std::lower_bound(private_->files_.begin(), private_->files_.end(), wp, Private::CompareWatch());
-      if (itw == private_->files_.end() || (*itw)->name != wp.name || (*itw)->directory != wp.directory) {
+      std::vector<Private::Watch *>::iterator itw = std::lower_bound(private_.files_.begin(), private_.files_.end(), wp, Private::CompareWatch());
+      if (itw == private_.files_.end() || (*itw)->name != wp.name || (*itw)->directory != wp.directory) {
         wp.name = "*";
-        itw = std::lower_bound(private_->files_.begin(), private_->files_.end(), wp, Private::CompareWatch());
-        if (itw == private_->files_.end() || (*itw)->name != wp.name || (*itw)->directory != wp.directory) continue;
+        itw = std::lower_bound(private_.files_.begin(), private_.files_.end(), wp, Private::CompareWatch());
+        if (itw == private_.files_.end() || (*itw)->name != wp.name || (*itw)->directory != wp.directory) continue;
       }
       if (e->mask & IN_CREATE) {
         if ((*itw)->name == e->name) {
-          (*itw)->d = inotify_add_watch(private_->notifyfd_, (wp.directory + '/' + e->name).c_str(), IN_ATTRIB | IN_MODIFY | IN_CLOSE_WRITE | IN_DELETE_SELF);
+          (*itw)->d = inotify_add_watch(private_.notifyfd_, (wp.directory + '/' + e->name).c_str(), IN_ATTRIB | IN_MODIFY | IN_CLOSE_WRITE | IN_DELETE_SELF);
           if ((*itw)->d < 0) {
             lsWarning() << "inotify add watch error:" << (*itw)->d;
             (*itw)->d = (*itd)->d;
           } else {
-            itd = std::lower_bound(private_->wds_.begin(), private_->wds_.end(), (*itw)->d, Private::CompareWatchDescriptor());
-            private_->wds_.insert(itd, *itw);
+            itd = std::lower_bound(private_.wds_.begin(), private_.wds_.end(), (*itw)->d, Private::CompareWatchDescriptor());
+            private_.wds_.insert(itd, *itw);
           }
         }
         notify(wp.directory + '/' + e->name, 1);
@@ -193,28 +192,28 @@ FileSystemWatcher::FileSystemWatcher(const std::vector<std::string> &paths) {
 
 FileSystemWatcher::~FileSystemWatcher() {
   if (instance_.value == this) instance_.value = nullptr;
-  private_->thread_->removePollDescriptor(private_->notifyfd_);
-  private_->thread_->removeTimer(private_->timerid_);
-  ::close(private_->notifyfd_);
+  private_.thread_->removePollDescriptor(private_.notifyfd_);
+  private_.thread_->removeTimer(private_.timerid_);
+  ::close(private_.notifyfd_);
 
-  for (Private::Watch *w : private_->wds_)
+  for (Private::Watch *w : private_.wds_)
     if (w->name.empty()) delete w;
-  for (Private::Watch *w : private_->files_) delete w;
-  delete private_;
+  for (Private::Watch *w : private_.files_) delete w;
+  delete &private_;
   lsTrace();
 }
 
 bool FileSystemWatcher::addPath(const std::string &path) {
   Private::Watch *w = new Private::Watch(path);
-  std::vector<Private::Watch *>::iterator it = std::lower_bound(private_->files_.begin(), private_->files_.end(), w, Private::CompareWatch());
-  if (it != private_->files_.end() && (*it)->name == w->name && (*it)->directory == w->directory) {
+  std::vector<Private::Watch *>::iterator it = std::lower_bound(private_.files_.begin(), private_.files_.end(), w, Private::CompareWatch());
+  if (it != private_.files_.end() && (*it)->name == w->name && (*it)->directory == w->directory) {
     delete w;
     return false;
   }
 
-  w->d = (w->name != "*") ? inotify_add_watch(private_->notifyfd_, path.c_str(), IN_ATTRIB | IN_MODIFY | IN_CLOSE_WRITE | IN_DELETE_SELF) : -1;
+  w->d = (w->name != "*") ? inotify_add_watch(private_.notifyfd_, path.c_str(), IN_ATTRIB | IN_MODIFY | IN_CLOSE_WRITE | IN_DELETE_SELF) : -1;
   if (w->d < 0) {
-    int i = inotify_add_watch(private_->notifyfd_, w->directory.c_str(), IN_CREATE | IN_DELETE);
+    int i = inotify_add_watch(private_.notifyfd_, w->directory.c_str(), IN_CREATE | IN_DELETE);
     if (i < 0) {
       delete w;
       return false;
@@ -223,18 +222,18 @@ bool FileSystemWatcher::addPath(const std::string &path) {
     Private::Watch *dw = new Private::Watch();
     dw->d = i;
     dw->directory = w->directory;
-    std::vector<Private::Watch *>::iterator itd = std::lower_bound(private_->wds_.begin(), private_->wds_.end(), dw->d, Private::CompareWatchDescriptor());
-    if (itd == private_->wds_.end() || (*itd)->d != dw->d) {
-      private_->wds_.insert(itd, dw);
+    std::vector<Private::Watch *>::iterator itd = std::lower_bound(private_.wds_.begin(), private_.wds_.end(), dw->d, Private::CompareWatchDescriptor());
+    if (itd == private_.wds_.end() || (*itd)->d != dw->d) {
+      private_.wds_.insert(itd, dw);
     } else {
       delete dw;
     }
   } else {
-    std::vector<Private::Watch *>::iterator itd = std::lower_bound(private_->wds_.begin(), private_->wds_.end(), w->d, Private::CompareWatchDescriptor());
-    private_->wds_.insert(itd, w);
+    std::vector<Private::Watch *>::iterator itd = std::lower_bound(private_.wds_.begin(), private_.wds_.end(), w->d, Private::CompareWatchDescriptor());
+    private_.wds_.insert(itd, w);
   }
 
-  private_->files_.insert(it, w);
+  private_.files_.insert(it, w);
   return true;
 }
 
@@ -247,26 +246,26 @@ bool FileSystemWatcher::addPaths(const std::vector<std::string> &paths) {
 
 bool FileSystemWatcher::removePath(const std::string &path) {
   Private::WatchPath wp {path};
-  std::vector<Private::Watch *>::iterator itw = std::lower_bound(private_->files_.begin(), private_->files_.end(), wp, Private::CompareWatch());
-  if (itw == private_->files_.end() || (*itw)->name != wp.name || (*itw)->directory != wp.directory) return false;
-  private_->remove_(*itw);
-  std::vector<Private::Watch *>::iterator itd = std::lower_bound(private_->wds_.begin(), private_->wds_.end(), (*itw)->d, Private::CompareWatchDescriptor());
+  std::vector<Private::Watch *>::iterator itw = std::lower_bound(private_.files_.begin(), private_.files_.end(), wp, Private::CompareWatch());
+  if (itw == private_.files_.end() || (*itw)->name != wp.name || (*itw)->directory != wp.directory) return false;
+  private_.remove_(*itw);
+  std::vector<Private::Watch *>::iterator itd = std::lower_bound(private_.wds_.begin(), private_.wds_.end(), (*itw)->d, Private::CompareWatchDescriptor());
   warning_if(itd == wds_.end() || (*itd)->d != (*itw)->d) << LogStream::Color::Red << "itd == wds_.end() || (*itd)->d != (*itw)->d";
-  inotify_rm_watch(private_->notifyfd_, (*itd)->d);
-  if (!(*itd)->name.empty()) private_->wds_.erase(itd);
+  inotify_rm_watch(private_.notifyfd_, (*itd)->d);
+  if (!(*itd)->name.empty()) private_.wds_.erase(itd);
   else {
     Private::WatchPath wp;
     wp.directory = (*itd)->directory;
-    std::pair<std::vector<Private::Watch *>::iterator, std::vector<Private::Watch *>::iterator> itp = std::equal_range(private_->files_.begin(), private_->files_.end(), wp, Private::CompareWatch());
+    std::pair<std::vector<Private::Watch *>::iterator, std::vector<Private::Watch *>::iterator> itp = std::equal_range(private_.files_.begin(), private_.files_.end(), wp, Private::CompareWatch());
     if (itp.second - itp.first == 1) {
-      inotify_rm_watch(private_->notifyfd_, (*itp.first)->d);
+      inotify_rm_watch(private_.notifyfd_, (*itp.first)->d);
       trace() << LogStream::Color::DarkRed << "remove directory watch" << wp.directory << (*itp.first)->d;
       delete *itd;
-      private_->wds_.erase(itd);
+      private_.wds_.erase(itd);
     }
   }
   delete *itw;
-  private_->files_.erase(itw);
+  private_.files_.erase(itw);
   return true;
 }
 
@@ -278,9 +277,9 @@ bool FileSystemWatcher::removePaths(const std::vector<std::string> &paths) {
 }
 
 std::vector<std::string> FileSystemWatcher::paths() const {
-  if (private_->files_.empty()) return {};
+  if (private_.files_.empty()) return {};
   std::vector<std::string> _p;
-  for (const Private::Watch *f : private_->files_) { _p.push_back(f->directory + '/' + f->name); }
+  for (const Private::Watch *f : private_.files_) { _p.push_back(f->directory + '/' + f->name); }
   return _p;
 }
 
@@ -320,7 +319,7 @@ bool FileSystemWatcher::Private::CompareWatchDescriptor::operator()(const Watch 
 namespace AsyncFw {
 LogStream &operator<<(LogStream &log, const FileSystemWatcher &w) {
   std::string str = "File list:";
-  if (w.private_->files_.empty()) return log << str << "empty";
+  if (w.private_.files_.empty()) return log << str << "empty";
   for (const std::string &s : w.paths()) { str += '\n' + s; }
   return log << str;
 }

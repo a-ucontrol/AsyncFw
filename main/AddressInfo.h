@@ -27,8 +27,6 @@ namespace AsyncFw {
  \brief Examlpe with CoroutineAwait: \snippet snippet.dox AddressInfo coro
 */
 class AddressInfo {
-  struct Private;
-
 public:
   using Result = std::vector<std::string>;
   enum Family : uint8_t { Unspec = AF_UNSPEC_, Inet = AF_INET_, Inet6 = AF_INET6_ };
@@ -44,6 +42,7 @@ public:
   AsyncFw::CoroutineAwait coResolve(const std::string &, Family = Inet);
 
 private:
-  struct Private *private_;
+  struct Private;
+  struct Private &private_;
 };
 }  // namespace AsyncFw

@@ -22,85 +22,84 @@ struct File::Private {
   std::size_t fs_;
 };
 
-File::File(const std::string &fn) {
-  private_ = new Private;
-  private_->fn_ = fn;
+File::File(const std::string &fn) : private_(*new Private) {
+  private_.fn_ = fn;
   lsTrace();
 }
 
 File::~File() {
   close();
   lsTrace();
-  delete private_;
+  delete &private_;
 }
 
 bool File::open(const std::string &fn, std::ios::openmode m) {
-  private_->fn_ = fn;
+  private_.fn_ = fn;
   return open(m);
 }
 
 bool File::open(std::ios::openmode m) {
-  private_->m_ = m;
-  private_->f_.open(std::filesystem::path(private_->fn_), m);
-  private_->fs_ = !private_->f_.fail() ? std::filesystem::file_size(private_->fn_) : 0;
-  lsTrace() << private_->fn_;
-  return !private_->f_.fail();
+  private_.m_ = m;
+  private_.f_.open(std::filesystem::path(private_.fn_), m);
+  private_.fs_ = !private_.f_.fail() ? std::filesystem::file_size(private_.fn_) : 0;
+  lsTrace() << private_.fn_;
+  return !private_.f_.fail();
 }
 
 void File::close() {
-  if (private_->f_.is_open()) {
-    private_->f_.close();
-    lsTrace() << private_->fn_;
+  if (private_.f_.is_open()) {
+    private_.f_.close();
+    lsTrace() << private_.fn_;
     return;
   }
 }
 
 void File::flush() {
-  if (private_->f_.is_open() && (private_->m_ & std::ios::out)) private_->f_.flush();
+  if (private_.f_.is_open() && (private_.m_ & std::ios::out)) private_.f_.flush();
 }
 
 void File::remove() {
   close();
-  std::filesystem::remove(private_->fn_);
+  std::filesystem::remove(private_.fn_);
 }
 
-std::size_t File::size() { return private_->fs_; }
+std::size_t File::size() { return private_.fs_; }
 
-bool File::exists() { return std::filesystem::exists(private_->fn_); }
+bool File::exists() { return std::filesystem::exists(private_.fn_); }
 
 DataArray File::read(std::size_t s) {
-  if (private_->f_.fail()) return {};
+  if (private_.f_.fail()) return {};
   DataArray _da;
   _da.resize((s != SIZE_MAX) ? s : size());
   if (_da.size() == 0) {
     char c;
-    while (private_->f_.get(c)) _da.push_back(c);
+    while (private_.f_.get(c)) _da.push_back(c);
     return _da;
   }
   std::size_t r = read(reinterpret_cast<char *>(_da.data()), _da.size());
-  if (private_->f_.fail() || r <= 0) return {};
+  if (private_.f_.fail() || r <= 0) return {};
   if (r < _da.size()) _da.resize(r);
   return _da;
 }
 
-std::streamsize File::read(char *_v, std::streamsize _s) { return private_->f_.readsome(_v, _s); }
+std::streamsize File::read(char *_v, std::streamsize _s) { return private_.f_.readsome(_v, _s); }
 
 std::streamsize File::write(const DataArray &da) { return write(reinterpret_cast<const char *>(da.data()), da.size()); }
 
 std::streamsize File::write(const char *_v, std::streamsize _s) {
-  std::fstream::pos_type _p = private_->f_.tellp();
-  private_->f_.write(_v, _s);
-  if (private_->f_.fail()) return -1;
-  private_->fs_ = private_->f_.tellp();
-  return private_->fs_ - _p;
+  std::fstream::pos_type _p = private_.f_.tellp();
+  private_.f_.write(_v, _s);
+  if (private_.f_.fail()) return -1;
+  private_.fs_ = private_.f_.tellp();
+  return private_.fs_ - _p;
 }
 
 std::string File::readLine() {
   std::string s;
-  std::getline(private_->f_, s);
+  std::getline(private_.f_, s);
   return s;
 }
 
-bool File::fail() { return private_->f_.fail(); }
+bool File::fail() { return private_.f_.fail(); }
 
-std::fstream &File::fstream() { return private_->f_; }
+std::fstream &File::fstream() { return private_.f_; }

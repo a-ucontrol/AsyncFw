@@ -47,7 +47,6 @@ class LogStream;
 class AbstractThread {
   friend class Thread;
   friend LogStream &operator<<(LogStream &, const AbstractThread &);
-  struct Private;
 
 public:
   enum PollEvents : uint16_t { PollNo = 0, PollIn = POLLIN_, PollPri = POLLPRI_, PollOut = POLLOUT_, PollErr = POLLERR_, PollHup = POLLHUP_, PollNval = POLLNVAL_ };
@@ -175,6 +174,7 @@ protected:
 
 private:
   void processTasks() const;
+  struct Private;
   Private &private_;
 };
 

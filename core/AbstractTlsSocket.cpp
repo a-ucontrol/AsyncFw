@@ -33,40 +33,37 @@ struct AbstractTlsSocket::Private {
   int dataIndex;
 };
 
-AbstractTlsSocket::AbstractTlsSocket() : AbstractSocket() {
-  private_ = new Private;
-  trace() << fd_;
-}
+AbstractTlsSocket::AbstractTlsSocket() : AbstractSocket(), private_(*new Private) { trace() << fd_; }
 
 AbstractTlsSocket::~AbstractTlsSocket() {
-  delete private_;
+  delete &private_;
   trace() << fd_;
 }
 
 void AbstractTlsSocket::setDescriptor(int _fd) {
-  if (private_->ctx_.opensslCtx()) private_->encrypt_ = 1;  //server
+  if (private_.ctx_.opensslCtx()) private_.encrypt_ = 1;  //server
   AbstractSocket::setDescriptor(_fd);
 }
 
 bool AbstractTlsSocket::connect(const std::string &address, uint16_t port) {
-  if (private_->ctx_.opensslCtx()) private_->encrypt_ = 2;  //client
+  if (private_.ctx_.opensslCtx()) private_.encrypt_ = 2;  //client
   return AbstractSocket::connect(address, port);
 }
 
 void AbstractTlsSocket::disconnect() {
-  if (private_->ssl_ && state_ == State::Active) SSL_shutdown(private_->ssl_);
+  if (private_.ssl_ && state_ == State::Active) SSL_shutdown(private_.ssl_);
   AbstractSocket::disconnect();
 }
 
 void AbstractTlsSocket::close() {
-  if (private_->ssl_) {
-    SSL_free(private_->ssl_);
-    private_->ssl_ = nullptr;
+  if (private_.ssl_) {
+    SSL_free(private_.ssl_);
+    private_.ssl_ = nullptr;
   }
   AbstractSocket::close();
 }
 
-void AbstractTlsSocket::setContext(const TlsContext &ctx) const { private_->ctx_ = ctx; }
+void AbstractTlsSocket::setContext(const TlsContext &ctx) const { private_.ctx_ = ctx; }
 
 struct ie {
   int operator()(int, X509_STORE_CTX *) const { return 1; }
@@ -79,38 +76,38 @@ void AbstractTlsSocket::activateEvent() {
     lsError() << "not connected";
     return;
   }
-  if (private_->encrypt_ == 0) {
+  if (private_.encrypt_ == 0) {
     trace() << fd_ << LogStream::Color::Red << "encryption disabled";
     AbstractSocket::activateEvent();
     return;
   }
   trace() << fd_;
-  if (!private_->ssl_) {
-    private_->ssl_ = SSL_new(private_->ctx_.opensslCtx());
-    if (private_->encrypt_ == 1) SSL_set_ssl_method(private_->ssl_, TLS_server_method());
-    else { SSL_set_ssl_method(private_->ssl_, TLS_client_method()); }
+  if (!private_.ssl_) {
+    private_.ssl_ = SSL_new(private_.ctx_.opensslCtx());
+    if (private_.encrypt_ == 1) SSL_set_ssl_method(private_.ssl_, TLS_server_method());
+    else { SSL_set_ssl_method(private_.ssl_, TLS_client_method()); }
 
-    if (private_->ctx_.verifyPeer()) SSL_set_verify(private_->ssl_, SSL_VERIFY_PEER, TlsContext::verify);
-    else { SSL_set_verify(private_->ssl_, SSL_VERIFY_NONE, nullptr); }
+    if (private_.ctx_.verifyPeer()) SSL_set_verify(private_.ssl_, SSL_VERIFY_PEER, TlsContext::verify);
+    else { SSL_set_verify(private_.ssl_, SSL_VERIFY_NONE, nullptr); }
 
-    SSL_set_fd(private_->ssl_, fd_);
-    if (!private_->ctx_.verifyName().empty()) {
-      lsTrace() << fd_ << "verify name" << LogStream::Color::Green << private_->ctx_.verifyName();
-      SSL_set_hostflags(private_->ssl_, X509_CHECK_FLAG_NO_PARTIAL_WILDCARDS);
-      if (!SSL_set1_host(private_->ssl_, private_->ctx_.verifyName().c_str())) lsError();
+    SSL_set_fd(private_.ssl_, fd_);
+    if (!private_.ctx_.verifyName().empty()) {
+      lsTrace() << fd_ << "verify name" << LogStream::Color::Green << private_.ctx_.verifyName();
+      SSL_set_hostflags(private_.ssl_, X509_CHECK_FLAG_NO_PARTIAL_WILDCARDS);
+      if (!SSL_set1_host(private_.ssl_, private_.ctx_.verifyName().c_str())) lsError();
     }
   }
-  int r = (private_->encrypt_ == 1) ? SSL_accept(private_->ssl_) : SSL_connect(private_->ssl_);
-  //SIGPIPE if (private_->encrypt_ == 1) ::close(fd_); void Thread::startedEvent() disabled it
+  int r = (private_.encrypt_ == 1) ? SSL_accept(private_.ssl_) : SSL_connect(private_.ssl_);
+  //SIGPIPE if (private_.encrypt_ == 1) ::close(fd_); void Thread::startedEvent() disabled it
   if (r <= 0) {
-    if (SSL_want_read(private_->ssl_)) return;
+    if (SSL_want_read(private_.ssl_)) return;
     setError(AbstractSocket::Activate);
     setErrorString("Accept TLS error");
     close();
     return;
   }
   char name[64];
-  X509 *_pc = SSL_get_peer_certificate(private_->ssl_);
+  X509 *_pc = SSL_get_peer_certificate(private_.ssl_);
   if (_pc) {
     X509_NAME *_n = X509_get_subject_name(_pc);
     X509_free(_pc);
@@ -118,27 +115,27 @@ void AbstractTlsSocket::activateEvent() {
   } else
     std::sprintf(name, "no peer cerificate");
 
-  trace() << ((private_->encrypt_ == 1) ? "server" : "client") << "connected" << LogStream::Color::Green << name;
+  trace() << ((private_.encrypt_ == 1) ? "server" : "client") << "connected" << LogStream::Color::Green << name;
   activateReady();
 }
 
 int AbstractTlsSocket::read_available_fd() const {
   int r = AbstractSocket::read_available_fd();
-  if (!private_->encrypt_ || r <= 0) return r;
-  if (SSL_peek(private_->ssl_, nullptr, 0) < 0) return 0;
-  return SSL_pending(private_->ssl_);
+  if (!private_.encrypt_ || r <= 0) return r;
+  if (SSL_peek(private_.ssl_, nullptr, 0) < 0) return 0;
+  return SSL_pending(private_.ssl_);
 }
 
 int AbstractTlsSocket::read_fd(void *data, int size) {
-  if (!private_->encrypt_) return AbstractSocket::read_fd(data, size);
-  return SSL_read(private_->ssl_, data, size);
+  if (!private_.encrypt_) return AbstractSocket::read_fd(data, size);
+  return SSL_read(private_.ssl_, data, size);
 }
 
 int AbstractTlsSocket::write_fd(const void *data, int size) {
-  if (!private_->encrypt_) return AbstractSocket::write_fd(data, size);
-  return SSL_write(private_->ssl_, data, size);
+  if (!private_.encrypt_) return AbstractSocket::write_fd(data, size);
+  return SSL_write(private_.ssl_, data, size);
 }
 
 namespace AsyncFw {
-LogStream &operator<<(LogStream &log, const AbstractTlsSocket &s) { return (log << *static_cast<const AbstractSocket *>(&s)) << (!s.private_->ctx_.empty() ? s.private_->ctx_.commonName() + '/' + (!s.private_->ctx_.verifyName().empty() ? s.private_->ctx_.verifyName() : "\"\"") : "null"); }
+LogStream &operator<<(LogStream &log, const AbstractTlsSocket &s) { return (log << *static_cast<const AbstractSocket *>(&s)) << (!s.private_.ctx_.empty() ? s.private_.ctx_.commonName() + '/' + (!s.private_.ctx_.verifyName().empty() ? s.private_.ctx_.verifyName() : "\"\"") : "null"); }
 }  // namespace AsyncFw

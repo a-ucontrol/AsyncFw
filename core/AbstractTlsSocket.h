@@ -16,7 +16,6 @@ class TlsContext;
 \brief Example: \snippet Socket/main.cpp snippet */
 class AbstractTlsSocket : public AbstractSocket {
   friend LogStream &operator<<(LogStream &, const AbstractTlsSocket &);
-  struct Private;
 
 public:
   enum IgnoreErrors : uint8_t { TimeValidity = 0x01 };
@@ -41,6 +40,7 @@ protected:
   int write_fd(const void *_p, int _s) override final;
 
 private:
-  Private *private_;
+  struct Private;
+  Private &private_;
 };
 }  // namespace AsyncFw

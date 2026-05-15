@@ -24,7 +24,6 @@ struct CoroutineTask {
   struct promise_type : public AnyData {
     friend CoroutineAwait;
     friend CoroutineTask;
-    struct Private;
     promise_type();
     ~promise_type();
     CoroutineTask get_return_object();
@@ -36,7 +35,8 @@ struct CoroutineTask {
     void resume_queued();
 
   private:
-    Private *private_;
+    struct Private;
+    Private &private_;
   };
   /*! \brief Return true if task finished. */
   bool finished();

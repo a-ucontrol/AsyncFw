@@ -38,36 +38,35 @@ struct SystemProcess::Private {
   pid_t pid_;
 };
 
-SystemProcess::SystemProcess(bool redirect_stdin) {
-  private_ = new Private;
-  private_->redirect_stdin = redirect_stdin;
-  private_->thread_ = AbstractThread::currentThread();
+SystemProcess::SystemProcess(bool redirect_stdin) : private_(*new Private) {
+  private_.redirect_stdin = redirect_stdin;
+  private_.thread_ = AbstractThread::currentThread();
   lsTrace();
 }
 
 SystemProcess::~SystemProcess() {
-  delete private_;
+  delete &private_;
   lsTrace();
 }
 
 bool SystemProcess::start(const std::string &_cmdline, const std::vector<std::string> &_args) {
-  private_->cmdline_ = _cmdline;
-  private_->args = _args;
+  private_.cmdline_ = _cmdline;
+  private_.args = _args;
   return start();
 }
 
 bool SystemProcess::start() {
-  private_->state_ = None;
-  private_->code_ = 0;
+  private_.state_ = None;
+  private_.code_ = 0;
 
-  if (!private_->process()) {
-    private_->state_ = Error;
-    private_->code_ = -1;
+  if (!private_.process()) {
+    private_.state_ = Error;
+    private_.code_ = -1;
     return false;
   }
 
-  if (private_->redirect_stdin)
-    private_->thread_->appendPollTask(STDIN_FILENO, AbstractThread::PollIn, [this](AbstractThread::PollEvents e) {
+  if (private_.redirect_stdin)
+    private_.thread_->appendPollTask(STDIN_FILENO, AbstractThread::PollIn, [this](AbstractThread::PollEvents e) {
       if (e & AbstractThread::PollIn) {
         char buf[BUFSIZ];
         int r = read(STDIN_FILENO, buf, BUFSIZ - 1);
@@ -78,16 +77,16 @@ bool SystemProcess::start() {
         trace() << "in" << r << LogStream::Color::Green << buf;
       }
       if (e & ~AbstractThread::PollIn) {
-        private_->thread_->removePollDescriptor(STDIN_FILENO);
-        private_->redirect_stdin = false;
+        private_.thread_->removePollDescriptor(STDIN_FILENO);
+        private_.redirect_stdin = false;
         lsWarning() << LogStream::Color::Red << "redirect stdin disabled";
       }
     });
 
-  private_->thread_->appendPollTask(private_->out, AbstractThread::PollIn, [this](AbstractThread::PollEvents e) {
+  private_.thread_->appendPollTask(private_.out, AbstractThread::PollIn, [this](AbstractThread::PollEvents e) {
     if (e & AbstractThread::PollIn) {
       char buf[BUFSIZ];
-      int r = read(private_->out, buf, BUFSIZ - 1);
+      int r = read(private_.out, buf, BUFSIZ - 1);
       if (r > 0) {
         buf[r] = 0;
         output(buf, false);
@@ -95,18 +94,18 @@ bool SystemProcess::start() {
       trace() << "out" << r << LogStream::Color::DarkGreen << buf;
     }
     if (e & ~AbstractThread::PollIn) {
-      private_->thread_->removePollDescriptor(private_->out);
-      ::close(private_->out);
-      private_->out = -1;
+      private_.thread_->removePollDescriptor(private_.out);
+      ::close(private_.out);
+      private_.out = -1;
       lsTrace() << LogStream::Color::Red << "closed out";
-      if (private_->err == -1) finality();
+      if (private_.err == -1) finality();
     }
   });
 
-  private_->thread_->appendPollTask(private_->err, AbstractThread::PollIn, [this](AbstractThread::PollEvents e) {
+  private_.thread_->appendPollTask(private_.err, AbstractThread::PollIn, [this](AbstractThread::PollEvents e) {
     if (e & AbstractThread::PollIn) {
       char buf[BUFSIZ];
-      int r = read(private_->err, buf, BUFSIZ - 1);
+      int r = read(private_.err, buf, BUFSIZ - 1);
       if (r > 0) {
         buf[r] = 0;
         output(buf, true);
@@ -114,66 +113,66 @@ bool SystemProcess::start() {
       trace() << "err" << r << LogStream::Color::DarkRed << buf;
     }
     if (e & ~AbstractThread::PollIn) {
-      private_->thread_->removePollDescriptor(private_->err);
-      ::close(private_->err);
-      private_->err = -1;
+      private_.thread_->removePollDescriptor(private_.err);
+      ::close(private_.err);
+      private_.err = -1;
       lsTrace() << LogStream::Color::Red << "closed err";
-      if (private_->out == -1) finality();
+      if (private_.out == -1) finality();
     }
   });
 
-  lsTrace() << LogStream::Color::Green << private_->cmdline_;
+  lsTrace() << LogStream::Color::Green << private_.cmdline_;
 
-  private_->state_ = Running;
-  stateChanged(private_->state_);
+  private_.state_ = Running;
+  stateChanged(private_.state_);
   return true;
 }
 
-SystemProcess::State SystemProcess::state() { return private_->state_; }
+SystemProcess::State SystemProcess::state() { return private_.state_; }
 
-pid_t SystemProcess::pid() { return private_->pid_; }
+pid_t SystemProcess::pid() { return private_.pid_; }
 
 void SystemProcess::wait() {
-  if (private_->state_ != Running) {
+  if (private_.state_ != Running) {
     lsWarning("process not running");
     return;
   }
   AbstractThread::Holder _h;
-  private_->holder_ = &_h;
+  private_.holder_ = &_h;
   _h.wait();
 }
 
-int SystemProcess::exitCode() { return private_->code_; }
+int SystemProcess::exitCode() { return private_.code_; }
 
 bool SystemProcess::input(const std::string &str) const {
-  if (private_->in < 0) return false;
-  return write(private_->in, str.data(), str.size()) > 0;
+  if (private_.in < 0) return false;
+  return write(private_.in, str.data(), str.size()) > 0;
 }
 
 void SystemProcess::finality() {
   int r;
 
-  if (private_->redirect_stdin) private_->thread_->removePollDescriptor(STDIN_FILENO);
-  ::close(private_->in);
-  private_->in = -1;
+  if (private_.redirect_stdin) private_.thread_->removePollDescriptor(STDIN_FILENO);
+  ::close(private_.in);
+  private_.in = -1;
   lsTrace() << LogStream::Color::Red << "closed input";
 
-  if (waitpid(private_->pid_, &r, 0) == private_->pid_) {
-    private_->state_ = (WIFEXITED(r)) ? Finished : Crashed;
-    private_->code_ = WEXITSTATUS(r);
+  if (waitpid(private_.pid_, &r, 0) == private_.pid_) {
+    private_.state_ = (WIFEXITED(r)) ? Finished : Crashed;
+    private_.code_ = WEXITSTATUS(r);
   } else {
-    private_->state_ = Crashed;
-    private_->code_ = -1;
+    private_.state_ = Crashed;
+    private_.code_ = -1;
     lsError() << "error waitpid";
   }
 
-  if (private_->holder_) {
-    private_->holder_->complete();
-    private_->holder_ = nullptr;
+  if (private_.holder_) {
+    private_.holder_->complete();
+    private_.holder_ = nullptr;
   }
 
-  stateChanged(private_->state_);
-  lsTrace() << LogStream::Color::Red << "End: " + private_->cmdline_ << r << (int)private_->state_;
+  stateChanged(private_.state_);
+  lsTrace() << LogStream::Color::Red << "End: " + private_.cmdline_ << r << (int)private_.state_;
 }
 
 bool SystemProcess::Private::process() {
@@ -259,11 +258,11 @@ bool SystemProcess::exec_(const std::string &cmd, const std::vector<std::string>
             (*f)(_data->process.exitCode(), state, _data->out, _data->err);
             delete f;
           }
-          if (!_data->process.private_->thread_->invokeMethod([_data]() { delete _data; })) delete _data;
+          if (!_data->process.private_.thread_->invokeMethod([_data]() { delete _data; })) delete _data;
         }
       },
       AbstractFunctionConnector::Connection::Direct);
-  if (!_data->process.private_->thread_->invokeMethod([cmd, args, f, _data]() {
+  if (!_data->process.private_.thread_->invokeMethod([cmd, args, f, _data]() {
         if (!_data->process.start(cmd, args)) {
           if (f) {
             (*f)(_data->process.exitCode(), _data->process.state(), _data->out, _data->err);

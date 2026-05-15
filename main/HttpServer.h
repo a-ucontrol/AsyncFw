@@ -21,7 +21,6 @@ using namespace AsyncFw;
 \brief Example: \snippet HttpServer/main.cpp snippet */
 class HttpServer {
   friend LogStream &operator<<(LogStream &, const HttpServer &);
-  struct Private;
 
 public:
   class Response;
@@ -143,7 +142,6 @@ public:
 
   class Request {
     friend class HttpServer;
-    struct Private;
 
   public:
     enum class Method {
@@ -182,7 +180,8 @@ public:
   private:
     Method method_;
     Response *response_ = nullptr;
-    Private *private_;
+    struct Private;
+    Private &private_;
   };
 
 private:
@@ -287,6 +286,7 @@ private:
   bool cors_request_enabled = true;
   static Instance<HttpServer> instance_;
   Function<const Request &, std::any>::Abstract<bool> *peek = nullptr;
-  Private *private_;
+  struct Private;
+  Private &private_;
 };
 }  // namespace AsyncFw
