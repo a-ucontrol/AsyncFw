@@ -14,7 +14,6 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include "../core/function.hpp"
 
 namespace AsyncFw {
-struct CoroutineAwait;
 
 /*! \struct CoroutineTask Coroutine.h <AsyncFw/Coroutine> \brief The CoroutineTask struct. */
 struct CoroutineTask {
@@ -22,7 +21,6 @@ struct CoroutineTask {
   virtual ~CoroutineTask();
   /*! \struct promise_type Coroutine.h <AsyncFw/Coroutine> \brief The CoroutineTask::promise_type struct. */
   struct promise_type : public AnyData {
-    friend CoroutineAwait;
     friend CoroutineTask;
     promise_type();
     ~promise_type();
