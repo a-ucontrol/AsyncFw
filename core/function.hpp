@@ -15,9 +15,9 @@ struct Function {
     virtual R operator()(Args...) = 0;
     virtual ~Abstract() = default;
   };
-  template <typename T>
-  struct Value : public Function::Abstract<typename std::invoke_result<T, Args...>::type> {
-    typename std::invoke_result<T, Args...>::type operator()(Args... args) override { return f(std::forward<Args>(args)...); }
+  template <typename T, typename R = std::invoke_result<T, Args...>::type>
+  struct Value : public Function::Abstract<R> {
+    R operator()(Args... args) override { return f(std::forward<Args>(args)...); }
     Value(T &&_f) : f(std::move(_f)) {}
 
   private:
