@@ -80,8 +80,8 @@ public:
 #endif
   }
   /*! \brief Подключиться */
-  template <typename O, typename M>
-  Connection &connect(O *o, M m, Connection::Type t = Connection::Default) {
+  template <typename M, typename O>
+  Connection &connect(M m, O *o, Connection::Type t = Connection::Default) {
     return operator()([o, m](Args... args) { (o->*m)(args...); }, t);
   }
   /*! \brief Отправить */
