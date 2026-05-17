@@ -45,7 +45,7 @@ void run_examples(bool _socket) {
   logInfo() << "Start:" << app;
   process.start(app);
   process.wait();
-  app = EXAMPLES_PATH "CoroutineAwaitExample";
+  app = EXAMPLES_PATH "CoroutineFunctionAwaitExample";
   logInfo() << "Start:" << app;
   process.start(app);
   process.wait();
