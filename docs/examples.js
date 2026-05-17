@@ -22,5 +22,6 @@ var examples =
     [ "ThreadPool/main.cpp", "ThreadPool_2main_8cpp-example.html", null ],
     [ "Timer/main.cpp", "Timer_2main_8cpp-example.html", null ],
     [ "TlsContext/main.cpp", "TlsContext_2main_8cpp-example.html", null ],
-    [ "Uart/main.cpp", "Uart_2main_8cpp-example.html", null ]
+    [ "Uart/main.cpp", "Uart_2main_8cpp-example.html", null ],
+    [ "CoroutineFunctionAwait/main.cpp", "CoroutineFunctionAwait_2main_8cpp-example.html", null ]
 ];

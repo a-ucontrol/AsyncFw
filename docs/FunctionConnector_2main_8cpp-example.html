@@ -169,7 +169,7 @@ $(function(){initNavTree('FunctionConnector_2main_8cpp-example.html',''); initRe
 <div class="line">  Receiver receiver2(<span class="stringliteral">&quot;R2&quot;</span>, *sender);</div>
 <div class="line"> </div>
 <div class="line">  MethodConnectionExample tst;</div>
-<div class="line">  sender-&gt;connector.connect(&amp;tst, &amp;MethodConnectionExample::method);</div>
+<div class="line">  sender-&gt;connector.connect(&amp;MethodConnectionExample::method, &amp;tst);</div>
 <div class="line">  sender-&gt;connector([](<span class="keywordtype">int</span> val) { lsNotice() &lt;&lt; <span class="stringliteral">&quot;sender-&gt;connector (lambda)&quot;</span> &lt;&lt; val; });</div>
 <div class="line"> </div>
 <div class="line">  logNotice() &lt;&lt; <span class="stringliteral">&quot;Start Applicaiton&quot;</span>;</div>

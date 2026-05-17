@@ -132,11 +132,11 @@ template&lt;typename T&gt; </td></tr>
 <tr class="memitem:a1ab25b31810087bc1d432073c5508f9a"><td class="memTemplItemLeft" align="right" valign="top">Connection &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator()</b> (T f, Connection::Type t=Connection::Default)</td></tr>
 <tr class="memdesc:a1ab25b31810087bc1d432073c5508f9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Подключиться <br /></td></tr>
 <tr class="separator:a1ab25b31810087bc1d432073c5508f9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a36849fd3a6d79bfc0aa1a14a2b7d4c56" id="r_a36849fd3a6d79bfc0aa1a14a2b7d4c56"><td class="memTemplParams" colspan="2"><a id="a36849fd3a6d79bfc0aa1a14a2b7d4c56" name="a36849fd3a6d79bfc0aa1a14a2b7d4c56"></a>
-template&lt;typename O, typename M&gt; </td></tr>
-<tr class="memitem:a36849fd3a6d79bfc0aa1a14a2b7d4c56"><td class="memTemplItemLeft" align="right" valign="top">Connection &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>connect</b> (O *o, M m, Connection::Type t=Connection::Default)</td></tr>
-<tr class="memdesc:a36849fd3a6d79bfc0aa1a14a2b7d4c56"><td class="mdescLeft">&#160;</td><td class="mdescRight">Подключиться <br /></td></tr>
-<tr class="separator:a36849fd3a6d79bfc0aa1a14a2b7d4c56"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48771ac40286a1afed95130b45c21d26" id="r_a48771ac40286a1afed95130b45c21d26"><td class="memTemplParams" colspan="2"><a id="a48771ac40286a1afed95130b45c21d26" name="a48771ac40286a1afed95130b45c21d26"></a>
+template&lt;typename M, typename O&gt; </td></tr>
+<tr class="memitem:a48771ac40286a1afed95130b45c21d26"><td class="memTemplItemLeft" align="right" valign="top">Connection &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>connect</b> (M m, O *o, Connection::Type t=Connection::Default)</td></tr>
+<tr class="memdesc:a48771ac40286a1afed95130b45c21d26"><td class="mdescLeft">&#160;</td><td class="mdescRight">Подключиться <br /></td></tr>
+<tr class="separator:a48771ac40286a1afed95130b45c21d26"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab78eb4bd213a04c987d1230c61e0f354" id="r_ab78eb4bd213a04c987d1230c61e0f354"><td class="memItemLeft" align="right" valign="top"><a id="ab78eb4bd213a04c987d1230c61e0f354" name="ab78eb4bd213a04c987d1230c61e0f354"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>operator()</b> (Args... args)</td></tr>
 <tr class="memdesc:ab78eb4bd213a04c987d1230c61e0f354"><td class="mdescLeft">&#160;</td><td class="mdescRight">Отправить <br /></td></tr>
@@ -235,7 +235,7 @@ class AsyncFw::FunctionConnector&lt; Args &gt;</div><p>Обеспечивает 
 <div class="line">  Receiver receiver2(<span class="stringliteral">&quot;R2&quot;</span>, *sender);</div>
 <div class="line"> </div>
 <div class="line">  MethodConnectionExample tst;</div>
-<div class="line">  sender-&gt;connector.connect(&amp;tst, &amp;MethodConnectionExample::method);</div>
+<div class="line">  sender-&gt;connector.connect(&amp;MethodConnectionExample::method, &amp;tst);</div>
 <div class="line">  sender-&gt;connector([](<span class="keywordtype">int</span> val) { lsNotice() &lt;&lt; <span class="stringliteral">&quot;sender-&gt;connector (lambda)&quot;</span> &lt;&lt; val; });</div>
 <div class="line"> </div>
 <div class="line">  logNotice() &lt;&lt; <span class="stringliteral">&quot;Start Applicaiton&quot;</span>;</div>
