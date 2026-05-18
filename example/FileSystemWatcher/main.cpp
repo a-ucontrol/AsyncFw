@@ -19,7 +19,7 @@ int main(int argc, char *argv[]) {
 #endif
 
   FileSystemWatcher watcher {{"/tmp/FileSystemWatcher.example"}};
-  watcher.notify([](const std::string &name, int event) {
+  watcher.notify.connect([](const std::string &name, int event) {
     lsInfoMagenta() << "file:" << name << event;  // event: -1 removed / 0 changed / 1 created
     MainThread::exit();
   });

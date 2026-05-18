@@ -19,11 +19,11 @@ void run_examples(bool _socket) {
   std::string err;
 
   bool ok = true;
-  process.output([](const std::string &str, bool err) {
+  process.output.connect([](const std::string &str, bool err) {
     if (!err) logInfo() << "OUT:" << std::endl << str;
     else { logError() << "ERR:" << std::endl << str; }
   });
-  process.stateChanged([&ok, &process, &err, &app](AsyncFw::SystemProcess::State _s) {
+  process.stateChanged.connect([&ok, &process, &err, &app](AsyncFw::SystemProcess::State _s) {
     if (_s == AsyncFw::SystemProcess::Running) return;
     if (_s != AsyncFw::SystemProcess::Finished || process.exitCode()) {
       ok = false;

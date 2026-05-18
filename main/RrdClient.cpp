@@ -24,7 +24,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 using namespace AsyncFw;
 RrdClient::RrdClient(DataArraySocket *socket, const std::vector<Rrd *> &rrd) : rrd_(rrd), tcpSocket(socket), lastTime(rrd.size(), 0) {
-  gl_ += socket->received([this](const DataArray *da, uint32_t pi) {
+  gl_ += socket->received.connect([this](const DataArray *da, uint32_t pi) {
     if (pi > 0x0F) {
       lsError() << "(pi > 0x0F)" << pi;
       return;
@@ -32,7 +32,7 @@ RrdClient::RrdClient(DataArraySocket *socket, const std::vector<Rrd *> &rrd) : r
     tcpReadWrite(da, pi);
   });
 
-  gl_ += socket->stateChanged([this](AbstractSocket::State _state) {
+  gl_ += socket->stateChanged.connect([this](AbstractSocket::State _state) {
     if (_state == AbstractSocket::State::Destroy) {
       tcpSocket = nullptr;
       return;

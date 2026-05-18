@@ -13,22 +13,22 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 class MethodConnectionExample {
 public:
-  void method(int val) { lsNotice() << val; }
+  void method(int val, const std::string &str) { lsNotice() << val << str; }
 };
 
 class Sender {
 public:
   Sender() {
-    timer.timeout([this]() {
+    timer.timeout.connect([this]() {
       AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::currentThread();
       logInfo() << cnt << "send from thread:" << ct->name() << ct->id();
-      connector(cnt++);
+      connector(cnt++, "");
       if (cnt == 3) AsyncFw::MainThread::exit(0);
     });
     timer.start(10);
   }
 
-  mutable AsyncFw::FunctionConnectorProtected<Sender>::Connector<int> connector;
+  mutable AsyncFw::FunctionConnectorProtected<Sender>::Connector<int, const std::string &> connector;
 
 private:
   int cnt = 0;
@@ -38,7 +38,7 @@ private:
 class Receiver {
 public:
   Receiver(const std::string &name, const Sender &sender) {
-    fcg = sender.connector([name_ = name](int val) {
+    fcg = sender.connector.connect([name_ = name](int val, const std::string &) {
       AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::currentThread();
       logInfo() << name_ << "received" << val << "run in thread" << ct->name() << ct->id();
     });
@@ -61,8 +61,8 @@ int main(int argc, char *argv[]) {
   Receiver receiver2("R2", *sender);
 
   MethodConnectionExample tst;
-  sender->connector(&MethodConnectionExample::method, &tst);
-  sender->connector([](int val) { lsNotice() << "sender->connector (lambda)" << val; });
+  sender->connector.connect(&MethodConnectionExample::method, &tst);
+  sender->connector.connect([](int val, const std::string &) { lsNotice() << "sender->connector (lambda)" << val; });
 
   logNotice() << "Start Applicaiton";
 

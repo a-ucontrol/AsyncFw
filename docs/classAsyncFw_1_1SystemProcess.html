@@ -202,11 +202,11 @@ Public Attributes</h2></td></tr>
 <div class="line"><span class="preprocessor">#endif</span></div>
 <div class="line"> </div>
 <div class="line">  <a class="code hl_class" href="classAsyncFw_1_1SystemProcess.html">AsyncFw::SystemProcess</a> process;</div>
-<div class="line">  process.<a class="code hl_variable" href="#add4c0b7aff0eb842fa41c81cd0723c41">output</a>([](<span class="keyword">const</span> std::string &amp;str, <span class="keywordtype">bool</span> err) {</div>
+<div class="line">  process.<a class="code hl_variable" href="#add4c0b7aff0eb842fa41c81cd0723c41">output</a>.connect([](<span class="keyword">const</span> std::string &amp;str, <span class="keywordtype">bool</span> err) {</div>
 <div class="line">    <span class="keywordflow">if</span> (!err) logInfo() &lt;&lt; <span class="stringliteral">&quot;OUT:&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span> + str;</div>
 <div class="line">    <span class="keywordflow">else</span> { logError() &lt;&lt; <span class="stringliteral">&quot;ERR:&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span> + str; }</div>
 <div class="line">  });</div>
-<div class="line">  process.<a class="code hl_variable" href="#a2b1dca35fe7a92497a7aad622d878dfb">stateChanged</a>([](AsyncFw::SystemProcess::State _s) {</div>
+<div class="line">  process.<a class="code hl_variable" href="#a2b1dca35fe7a92497a7aad622d878dfb">stateChanged</a>.connect([](AsyncFw::SystemProcess::State _s) {</div>
 <div class="line">    <span class="keywordflow">if</span> (_s == AsyncFw::SystemProcess::Running) <span class="keywordflow">return</span>;</div>
 <div class="line">    AsyncFw::MainThread::exit(0);</div>
 <div class="line">  });</div>

@@ -36,7 +36,7 @@ int main(int argc, char *argv[]) {
   AsyncFw::AddressInfo addressInfo;
   addressInfo.setTimeout(30000);
   addressInfo.resolve(SERVER_NAME);
-  addressInfo.completed([&socket](int r, const std::vector<std::string> &list) {
+  addressInfo.completed.connect([&socket](int r, const std::vector<std::string> &list) {
     if (r == 0 && !list.empty()) {
       for (const std::string _s : list) logNotice() << _s;
       socket->connect(list[0], SERVER_PORT);
@@ -45,7 +45,7 @@ int main(int argc, char *argv[]) {
     AsyncFw::MainThread::exit(-1);
   });
 
-  socket->stateChanged([&socket](const AsyncFw::AbstractSocket::State state) {
+  socket->stateChanged.connect([&socket](const AsyncFw::AbstractSocket::State state) {
     if (state == AsyncFw::AbstractSocket::State::Active) {
       logDebug() << "Send request";
       socket->write("GET " GET_FILE " HTTP/1.1\r\nHost:" SERVER_NAME "\r\n\r\n");
@@ -55,7 +55,7 @@ int main(int argc, char *argv[]) {
       AsyncFw::MainThread::exit(0);
     }
   });
-  socket->received([socket](const AsyncFw::DataArray &answer) {
+  socket->received.connect([socket](const AsyncFw::DataArray &answer) {
     logDebug() << socket->header();
     logDebug() << socket->content();
     logNotice() << answer.view(0, 4096);

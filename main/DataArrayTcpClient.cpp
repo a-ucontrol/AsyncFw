@@ -65,17 +65,17 @@ int DataArrayTcpClient::exchange(const DataArraySocket *socket, const DataArray 
   std::coroutine_handle<> h;
   Timer t;
   int ret = 0;
-  _gl += socket->received([pi, &rda, &h](const DataArray *_rda, uint32_t _pi) {
+  _gl += socket->received.connect([pi, &rda, &h](const DataArray *_rda, uint32_t _pi) {
     if (!h || _pi != pi) return;
     rda = _rda;
     h.resume();
   });
-  _gl += socket->stateChanged([&h, &ret](AbstractSocket::State state) {
+  _gl += socket->stateChanged.connect([&h, &ret](AbstractSocket::State state) {
     if (!h || state != AbstractSocket::State::Unconnected) return;
     ret = ErrorExchangeConnectionClose;
     h.resume();
   });
-  _gl += t.timeout([&h, &ret]() {
+  _gl += t.timeout.connect([&h, &ret]() {
     ret = ErrorExchangeTimeout;
     h.resume();
   });
@@ -127,7 +127,7 @@ DataArraySocket *DataArrayTcpClient::Thread::createSocket() {
   tcpSocket->setConnectTimeout(client()->waitForConnectTimeoutInterval);
   tcpSocket->setReconnectTimeout(client()->reconnectTimeoutInterval);
   socketInit(const_cast<DataArraySocket *>(tcpSocket));
-  tcpSocket->stateChanged([this, tcpSocket](AbstractSocket::State state) {
+  tcpSocket->stateChanged.connect([this, tcpSocket](AbstractSocket::State state) {
     if (state != AbstractSocket::State::Connected && state != AbstractSocket::State::Active && state != AbstractSocket::State::Unconnected) return;
     client()->socketStateChanged(tcpSocket);
   });

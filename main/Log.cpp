@@ -189,7 +189,7 @@ Log::Instance Log::instance_ {"Log"};
 Log::Log(int size, const std::string &name) : Rrd(size, name), AbstractLog() {
   thread_ = Rrd::thread_;
 
-  tdg = thread_->destroing([this]() {
+  tdg = thread_->destroing.connect([this]() {
     lsWarning() << "log thread finished, finalize logger";
     finality();
   });

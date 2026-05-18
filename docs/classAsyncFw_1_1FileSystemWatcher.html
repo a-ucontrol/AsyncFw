@@ -178,7 +178,7 @@ Friends</h2></td></tr>
 <div class="line"><span class="preprocessor">#endif</span></div>
 <div class="line"> </div>
 <div class="line">  <a class="code hl_class" href="classAsyncFw_1_1FileSystemWatcher.html">FileSystemWatcher</a> watcher {{<span class="stringliteral">&quot;/tmp/FileSystemWatcher.example&quot;</span>}};</div>
-<div class="line">  watcher.<a class="code hl_variable" href="#a4d97340ee2f2378dd516411f56ed8498">notify</a>([](<span class="keyword">const</span> std::string &amp;name, <span class="keywordtype">int</span> event) {</div>
+<div class="line">  watcher.<a class="code hl_variable" href="#a4d97340ee2f2378dd516411f56ed8498">notify</a>.connect([](<span class="keyword">const</span> std::string &amp;name, <span class="keywordtype">int</span> event) {</div>
 <div class="line">    lsInfoMagenta() &lt;&lt; <span class="stringliteral">&quot;file:&quot;</span> &lt;&lt; name &lt;&lt; event;  <span class="comment">// event: -1 removed / 0 changed / 1 created</span></div>
 <div class="line">    MainThread::exit();</div>
 <div class="line">  });</div>

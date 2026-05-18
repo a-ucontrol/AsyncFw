@@ -16,16 +16,16 @@ int main(int argc, char *argv[]) {
   AsyncFw::DataArrayTcpClient _client;
   AsyncFw::DataArraySocket *_socket;
 
-  _server.received([](const AsyncFw::DataArraySocket *socket, const AsyncFw::DataArray *data, uint32_t id) {
+  _server.received.connect([](const AsyncFw::DataArraySocket *socket, const AsyncFw::DataArray *data, uint32_t id) {
     lsDebug() << "Server received" << *socket << *data << id;
     socket->transmit("Ok", id);
   });
-  _client.received([](const AsyncFw::DataArraySocket *socket, const AsyncFw::DataArray *data, uint32_t id) {
+  _client.received.connect([](const AsyncFw::DataArraySocket *socket, const AsyncFw::DataArray *data, uint32_t id) {
     lsDebug() << "Client received" << *socket << *data << id;
     if (id == 9) AsyncFw::MainThread::exit();
   });
 
-  _client.connectionStateChanged([](const AsyncFw::DataArraySocket *socket) {
+  _client.connectionStateChanged.connect([](const AsyncFw::DataArraySocket *socket) {
     lsDebug() << *socket;
     if (socket->state() == AsyncFw::AbstractSocket::Active) {
       for (int i = 0; i != 10; ++i) socket->transmit("Client transmit", i);

@@ -32,7 +32,7 @@ int main(int argc, char *argv[]) {
 
   std::string str;
   AsyncFw::PollNotifier notifier(fd);
-  notifier.notify([&notifier, &fd, &str](AsyncFw::AbstractThread::PollEvents) {
+  notifier.notify.connect([&notifier, &fd, &str](AsyncFw::AbstractThread::PollEvents) {
     char buf[128];
     int r = read(fd, buf, sizeof(buf) - 1);
     if (r > 0) {

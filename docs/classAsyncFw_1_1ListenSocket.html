@@ -180,10 +180,10 @@ Protected Member Functions</h2></td></tr>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[]) {</div>
 <div class="line">  <a class="code hl_class" href="classAsyncFw_1_1ListenSocket.html">AsyncFw::ListenSocket</a> ls;</div>
-<div class="line">  ls.<a class="code hl_variable" href="#a7625814dc59ba2cc349c69114416e79a">incoming</a>([](<span class="keywordtype">int</span> fd, <span class="keyword">const</span> std::string &amp;address, <span class="keywordtype">bool</span> *accept) {</div>
+<div class="line">  ls.<a class="code hl_variable" href="#a7625814dc59ba2cc349c69114416e79a">incoming</a>.connect([](<span class="keywordtype">int</span> fd, <span class="keyword">const</span> std::string &amp;address, <span class="keywordtype">bool</span> *accept) {</div>
 <div class="line">    TcpSocket *socket = TcpSocket::create();</div>
 <div class="line">    socket-&gt;setDescriptor(fd);</div>
-<div class="line">    socket-&gt;received([socket](<span class="keyword">const</span> <a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> &amp;data) {</div>
+<div class="line">    socket-&gt;received.connect([socket](<span class="keyword">const</span> <a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> &amp;data) {</div>
 <div class="line">      logNotice() &lt;&lt; <span class="stringliteral">&quot;received:&quot;</span> &lt;&lt; data;</div>
 <div class="line">      socket-&gt;write(<span class="stringliteral">&quot;Answer\n&quot;</span>);</div>
 <div class="line">      <span class="keywordflow">if</span> (data == <a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a>(<span class="charliteral">&#39;q&#39;</span>)) AsyncFw::MainThread::exit(0);</div>
@@ -196,7 +196,7 @@ Protected Member Functions</h2></td></tr>
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">if</span> (argc == 2 &amp;&amp; std::string(argv[1]) == <span class="stringliteral">&quot;--tst&quot;</span>) {</div>
 <div class="line">    TcpSocket *_socket = TcpSocket::create();</div>
-<div class="line">    _socket-&gt;stateChanged([_socket](<span class="keyword">const</span> AsyncFw::AbstractSocket::State state) {</div>
+<div class="line">    _socket-&gt;stateChanged.connect([_socket](<span class="keyword">const</span> AsyncFw::AbstractSocket::State state) {</div>
 <div class="line">      <span class="keywordflow">if</span> (state == AsyncFw::AbstractSocket::State::Active) {</div>
 <div class="line">        logDebug() &lt;&lt; <span class="stringliteral">&quot;Send request&quot;</span>;</div>
 <div class="line">        _socket-&gt;write(<span class="stringliteral">&quot;q&quot;</span>);</div>

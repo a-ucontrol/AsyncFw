@@ -378,19 +378,19 @@ struct HttpServer::Request::Private {
 };
 
 HttpServer::TcpSocket::TcpSocket(HttpServer *server) : HttpSocket(), server_(server) {
-  stateChanged([this](AbstractSocket::State _state) {
+  stateChanged.connect([this](AbstractSocket::State _state) {
     if (_state != Unconnected) return;
     if (response) response->socket_ = nullptr;
     if (server_) server_->sockets.erase(std::find(server_->sockets.begin(), server_->sockets.end(), this));
     lsInfoCyan() << "unconnected" << peerAddress() << peerPort() << "sockets:" << server_->sockets.size();
     destroy();
   });
-  received([this](const DataArray &request) {
+  received.connect([this](const DataArray &request) {
     if (server_) server_->received(this, request.view());
     trace() << LogStream::Color::Magenta << header();
     trace() << LogStream::Color::Cyan << content();
   });
-  progress([this](int progress) {
+  progress.connect([this](int progress) {
     if (server_) server_->fileUploadProgress(this, progress);
   });
   trace();
@@ -483,7 +483,7 @@ bool HttpServer::listen(uint16_t port) {
   trace_if(!private_.tlsContext_.empty()) << private_.tlsContext_.infoCertificate();
   bool b = private_.listener.listen("0.0.0.0", port);
   if (b) {
-    private_.listenerGuard = private_.listener.incoming([this](int descriptor, const std::string &address, bool *accept) {
+    private_.listenerGuard = private_.listener.incoming.connect([this](int descriptor, const std::string &address, bool *accept) {
       incoming(descriptor, address, accept);
       if (!*accept) {
         TcpSocket *socket = new TcpSocket(this);

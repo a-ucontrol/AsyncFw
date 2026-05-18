@@ -18,12 +18,12 @@ int main(int argc, char *argv[]) {
   AsyncFw::Timer timer2;
   timer2.start(20);
 
-  timer1.timeout([&cnt]() {
+  timer1.timeout.connect([&cnt]() {
     lsDebug() << std::chrono::system_clock::now() << " timer1 timeout";
     if (++cnt == 10) AsyncFw::MainThread::exit(0);
   });
 
-  timer2.timeout([]() { lsDebug() << std::chrono::system_clock::now() << " timer2 timeout"; });
+  timer2.timeout.connect([]() { lsDebug() << std::chrono::system_clock::now() << " timer2 timeout"; });
 
   lsNotice() << "Start Applicaiton" << std::endl;
   int ret = AsyncFw::MainThread::exec();

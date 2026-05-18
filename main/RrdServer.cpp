@@ -26,7 +26,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 using namespace AsyncFw;
 RrdServer::RrdServer(DataArrayTcpServer *_tcpServer, const std::vector<Rrd *> &_rrd) : tcpServer(_tcpServer), rrd(_rrd) {
-  rf_ = tcpServer->received([this](const DataArraySocket *socket, const DataArray *da, uint32_t pi) {
+  rf_ = tcpServer->received.connect([this](const DataArraySocket *socket, const DataArray *da, uint32_t pi) {
     if (pi >= rrd.size()) {
       trace() << "failed rrd index" << LogStream::Color::Red << pi;
       return;

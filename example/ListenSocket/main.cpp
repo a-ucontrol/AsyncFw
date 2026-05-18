@@ -26,10 +26,10 @@ public:
 
 int main(int argc, char *argv[]) {
   AsyncFw::ListenSocket ls;
-  ls.incoming([](int fd, const std::string &address, bool *accept) {
+  ls.incoming.connect([](int fd, const std::string &address, bool *accept) {
     TcpSocket *socket = TcpSocket::create();
     socket->setDescriptor(fd);
-    socket->received([socket](const AsyncFw::DataArray &data) {
+    socket->received.connect([socket](const AsyncFw::DataArray &data) {
       logNotice() << "received:" << data;
       socket->write("Answer\n");
       if (data == AsyncFw::DataArray('q')) AsyncFw::MainThread::exit(0);
@@ -42,7 +42,7 @@ int main(int argc, char *argv[]) {
 
   if (argc == 2 && std::string(argv[1]) == "--tst") {
     TcpSocket *_socket = TcpSocket::create();
-    _socket->stateChanged([_socket](const AsyncFw::AbstractSocket::State state) {
+    _socket->stateChanged.connect([_socket](const AsyncFw::AbstractSocket::State state) {
       if (state == AsyncFw::AbstractSocket::State::Active) {
         logDebug() << "Send request";
         _socket->write("q");

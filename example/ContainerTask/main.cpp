@@ -23,7 +23,7 @@ int main(int argc, char *argv[]) {
     tasks.push(task);
   }
 
-  timer.timeout([&tasks]() {
+  timer.timeout.connect([&tasks]() {
     if (tasks.empty()) {
       AsyncFw::MainThread::exit(0);
       return;

@@ -16,9 +16,9 @@ using namespace AsyncFw;
 int main(int argc, char *argv[]) {
   MulticastDns _mdns {"AsyncFw_mdns_example_service"};
 
-  _mdns.hostAdded([](const MulticastDns::Host &host) { lsInfoGreen() << "Added" << host.name << host.ipv4 << host.llipv4 << host.misc << host.port; });
-  _mdns.hostChanged([](const MulticastDns::Host &host) { lsInfoMagenta() << "Changed" << host.name << host.ipv4 << host.llipv4 << host.misc << host.port; });
-  _mdns.hostRemoved([](const MulticastDns::Host &host) { lsInfoRed() << "Removed" << host.name << host.ipv4 << host.llipv4 << host.misc << host.port; });
+  _mdns.hostAdded.connect([](const MulticastDns::Host &host) { lsInfoGreen() << "Added" << host.name << host.ipv4 << host.llipv4 << host.misc << host.port; });
+  _mdns.hostChanged.connect([](const MulticastDns::Host &host) { lsInfoMagenta() << "Changed" << host.name << host.ipv4 << host.llipv4 << host.misc << host.port; });
+  _mdns.hostRemoved.connect([](const MulticastDns::Host &host) { lsInfoRed() << "Removed" << host.name << host.ipv4 << host.llipv4 << host.misc << host.port; });
 
   _mdns.startService("AsyncFw_host", "AsyncFw_misc_string", 18080);
   _mdns.startQuerier(1);

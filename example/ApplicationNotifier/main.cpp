@@ -18,19 +18,19 @@ int main(int argc, char *argv[]) {
 
   AsyncFw::Thread _test;
 
-  AsyncFw::ApplicationNotifier::instance()->notify([&_test](const AsyncFw::ApplicationNotifier::Value &_val) {
+  AsyncFw::ApplicationNotifier::instance()->notify.connect([&_test](const AsyncFw::ApplicationNotifier::Value &_val) {
     lsNotice() << _val.type;
     if (!_val.empty()) lsInfoMagenta() << _val.data<std::chrono::time_point<std::chrono::system_clock>>();
     if (_val.type == TestThreadStarted) _test.quit();
     else if (_val.type == TestThreadFinished) { AsyncFw::MainThread::exit(); }
   });
 
-  _test.started([]() { AsyncFw::ApplicationNotifier::instance()->notify({TestThreadStarted, std::chrono::system_clock::now()}); });
-  _test.finished([]() { AsyncFw::ApplicationNotifier::instance()->notify({TestThreadFinished, std::chrono::system_clock::now()}); });
+  _test.started.connect([]() { AsyncFw::ApplicationNotifier::instance()->notify({TestThreadStarted, std::chrono::system_clock::now()}); });
+  _test.finished.connect([]() { AsyncFw::ApplicationNotifier::instance()->notify({TestThreadFinished, std::chrono::system_clock::now()}); });
   _test.start();
 
-  AsyncFw::Thread::currentThread()->started([]() { AsyncFw::ApplicationNotifier::instance()->notify({MainThreadStarted}); });
-  AsyncFw::Thread::currentThread()->finished([]() { AsyncFw::ApplicationNotifier::instance()->notify({MainThreadFinished}); });
+  AsyncFw::Thread::currentThread()->started.connect([]() { AsyncFw::ApplicationNotifier::instance()->notify({MainThreadStarted}); });
+  AsyncFw::Thread::currentThread()->finished.connect([]() { AsyncFw::ApplicationNotifier::instance()->notify({MainThreadFinished}); });
 
   lsNotice() << "Start Applicaiton";
   int ret = AsyncFw::MainThread::exec();

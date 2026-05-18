@@ -15,7 +15,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 int main(int argc, char *argv[]) {
   AsyncFw::PollNotifier notifier(STDIN_FILENO);
-  notifier.notify([&notifier](AsyncFw::AbstractThread::PollEvents e) {
+  notifier.notify.connect([&notifier](AsyncFw::AbstractThread::PollEvents e) {
     char buf[128];
     int r = read(STDIN_FILENO, buf, sizeof(buf) - 1);
     buf[r] = 0;

@@ -15,7 +15,7 @@ using namespace AsyncFw;
 
 DataArrayTcpServer::DataArrayTcpServer(const std::string &name) : DataArrayAbstractTcp(name) {
   listener = std::make_unique<ListenSocket>();
-  listener->incoming([this](int descriptor, const std::string &address, bool *accept) { *accept = incomingConnection(descriptor, address); });
+  listener->incoming.connect([this](int descriptor, const std::string &address, bool *accept) { *accept = incomingConnection(descriptor, address); });
   alwaysConnect_.emplace_back("127.0.0.1");
   lsTrace();
 }
@@ -67,7 +67,7 @@ void DataArrayTcpServer::Thread::createSocket(int socketDescriptor, bool encrypt
   socketInit(tcpSocket);
   tcpSocket->initServerConnection();
 
-  tcpSocket->stateChanged([tcpSocket, thread = this, server = server()](AbstractSocket::State state) {
+  tcpSocket->stateChanged.connect([tcpSocket, thread = this, server = server()](AbstractSocket::State state) {
     if (state != AbstractSocket::State::Unconnected) return;
     thread->removeSocket(tcpSocket);
   });

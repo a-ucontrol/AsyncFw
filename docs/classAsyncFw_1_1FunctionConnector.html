@@ -127,16 +127,16 @@ Collaboration diagram for AsyncFw::FunctionConnector&lt; Args &gt;:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a1ab25b31810087bc1d432073c5508f9a" id="r_a1ab25b31810087bc1d432073c5508f9a"><td class="memTemplParams" colspan="2"><a id="a1ab25b31810087bc1d432073c5508f9a" name="a1ab25b31810087bc1d432073c5508f9a"></a>
+<tr class="memitem:ab0c621be7a792e256acab8241ae563a0" id="r_ab0c621be7a792e256acab8241ae563a0"><td class="memTemplParams" colspan="2"><a id="ab0c621be7a792e256acab8241ae563a0" name="ab0c621be7a792e256acab8241ae563a0"></a>
 template&lt;typename T&gt; </td></tr>
-<tr class="memitem:a1ab25b31810087bc1d432073c5508f9a"><td class="memTemplItemLeft" align="right" valign="top">Connection &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator()</b> (T f, Connection::Type t=Connection::Default)</td></tr>
-<tr class="memdesc:a1ab25b31810087bc1d432073c5508f9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Подключиться <br /></td></tr>
-<tr class="separator:a1ab25b31810087bc1d432073c5508f9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a97ce7d2135c81092f060ad86a61f4f60" id="r_a97ce7d2135c81092f060ad86a61f4f60"><td class="memTemplParams" colspan="2"><a id="a97ce7d2135c81092f060ad86a61f4f60" name="a97ce7d2135c81092f060ad86a61f4f60"></a>
+<tr class="memitem:ab0c621be7a792e256acab8241ae563a0"><td class="memTemplItemLeft" align="right" valign="top">Connection &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>connect</b> (T f, Connection::Type t=Connection::Default)</td></tr>
+<tr class="memdesc:ab0c621be7a792e256acab8241ae563a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Подключиться <br /></td></tr>
+<tr class="separator:ab0c621be7a792e256acab8241ae563a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48771ac40286a1afed95130b45c21d26" id="r_a48771ac40286a1afed95130b45c21d26"><td class="memTemplParams" colspan="2"><a id="a48771ac40286a1afed95130b45c21d26" name="a48771ac40286a1afed95130b45c21d26"></a>
 template&lt;typename M, typename O&gt; </td></tr>
-<tr class="memitem:a97ce7d2135c81092f060ad86a61f4f60"><td class="memTemplItemLeft" align="right" valign="top">Connection &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator()</b> (M m, O *o, Connection::Type t=Connection::Default)</td></tr>
-<tr class="memdesc:a97ce7d2135c81092f060ad86a61f4f60"><td class="mdescLeft">&#160;</td><td class="mdescRight">Подключиться <br /></td></tr>
-<tr class="separator:a97ce7d2135c81092f060ad86a61f4f60"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48771ac40286a1afed95130b45c21d26"><td class="memTemplItemLeft" align="right" valign="top">Connection &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>connect</b> (M m, O *o, Connection::Type t=Connection::Default)</td></tr>
+<tr class="memdesc:a48771ac40286a1afed95130b45c21d26"><td class="mdescLeft">&#160;</td><td class="mdescRight">Подключиться <br /></td></tr>
+<tr class="separator:a48771ac40286a1afed95130b45c21d26"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab78eb4bd213a04c987d1230c61e0f354" id="r_ab78eb4bd213a04c987d1230c61e0f354"><td class="memItemLeft" align="right" valign="top"><a id="ab78eb4bd213a04c987d1230c61e0f354" name="ab78eb4bd213a04c987d1230c61e0f354"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>operator()</b> (Args... args)</td></tr>
 <tr class="memdesc:ab78eb4bd213a04c987d1230c61e0f354"><td class="mdescLeft">&#160;</td><td class="mdescRight">Отправить <br /></td></tr>
@@ -187,22 +187,22 @@ class AsyncFw::FunctionConnector&lt; Args &gt;</div><p>Обеспечивает 
 <div class="line"> </div>
 <div class="line"><span class="keyword">class </span>MethodConnectionExample {</div>
 <div class="line"><span class="keyword">public</span>:</div>
-<div class="line">  <span class="keywordtype">void</span> method(<span class="keywordtype">int</span> val) { lsNotice() &lt;&lt; val; }</div>
+<div class="line">  <span class="keywordtype">void</span> method(<span class="keywordtype">int</span> val, <span class="keyword">const</span> std::string &amp;str) { lsNotice() &lt;&lt; val &lt;&lt; str; }</div>
 <div class="line">};</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">class </span>Sender {</div>
 <div class="line"><span class="keyword">public</span>:</div>
 <div class="line">  Sender() {</div>
-<div class="line">    timer.timeout([<span class="keyword">this</span>]() {</div>
+<div class="line">    timer.timeout.connect([<span class="keyword">this</span>]() {</div>
 <div class="line">      AsyncFw::AbstractThread *ct = <a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#ac1b35ef04b06ce771f6d6ca0a5b120db">AsyncFw::AbstractThread::currentThread</a>();</div>
 <div class="line">      logInfo() &lt;&lt; cnt &lt;&lt; <span class="stringliteral">&quot;send from thread:&quot;</span> &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd">name</a>() &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a41d1cf92e033bcc11e2394cb949e031a">id</a>();</div>
-<div class="line">      connector(cnt++);</div>
+<div class="line">      connector(cnt++, <span class="stringliteral">&quot;&quot;</span>);</div>
 <div class="line">      <span class="keywordflow">if</span> (cnt == 3) AsyncFw::MainThread::exit(0);</div>
 <div class="line">    });</div>
 <div class="line">    timer.start(10);</div>
 <div class="line">  }</div>
 <div class="line"> </div>
-<div class="line">  <span class="keyword">mutable</span> AsyncFw::FunctionConnectorProtected&lt;Sender&gt;::Connector&lt;<span class="keywordtype">int</span>&gt; connector;</div>
+<div class="line">  <span class="keyword">mutable</span> AsyncFw::FunctionConnectorProtected&lt;Sender&gt;::Connector&lt;int, <span class="keyword">const</span> std::string &amp;&gt; connector;</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">private</span>:</div>
 <div class="line">  <span class="keywordtype">int</span> cnt = 0;</div>
@@ -212,7 +212,7 @@ class AsyncFw::FunctionConnector&lt; Args &gt;</div><p>Обеспечивает 
 <div class="line"><span class="keyword">class </span>Receiver {</div>
 <div class="line"><span class="keyword">public</span>:</div>
 <div class="line">  Receiver(<span class="keyword">const</span> std::string &amp;name, <span class="keyword">const</span> Sender &amp;sender) {</div>
-<div class="line">    fcg = sender.connector([name_ = name](<span class="keywordtype">int</span> val) {</div>
+<div class="line">    fcg = sender.connector.connect([name_ = name](<span class="keywordtype">int</span> val, <span class="keyword">const</span> std::string &amp;) {</div>
 <div class="line">      AsyncFw::AbstractThread *ct = <a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#ac1b35ef04b06ce771f6d6ca0a5b120db">AsyncFw::AbstractThread::currentThread</a>();</div>
 <div class="line">      logInfo() &lt;&lt; name_ &lt;&lt; <span class="stringliteral">&quot;received&quot;</span> &lt;&lt; val &lt;&lt; <span class="stringliteral">&quot;run in thread&quot;</span> &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd">name</a>() &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a41d1cf92e033bcc11e2394cb949e031a">id</a>();</div>
 <div class="line">    });</div>
@@ -235,8 +235,8 @@ class AsyncFw::FunctionConnector&lt; Args &gt;</div><p>Обеспечивает 
 <div class="line">  Receiver receiver2(<span class="stringliteral">&quot;R2&quot;</span>, *sender);</div>
 <div class="line"> </div>
 <div class="line">  MethodConnectionExample tst;</div>
-<div class="line">  sender-&gt;connector(&amp;MethodConnectionExample::method, &amp;tst);</div>
-<div class="line">  sender-&gt;connector([](<span class="keywordtype">int</span> val) { lsNotice() &lt;&lt; <span class="stringliteral">&quot;sender-&gt;connector (lambda)&quot;</span> &lt;&lt; val; });</div>
+<div class="line">  sender-&gt;connector.connect(&amp;MethodConnectionExample::method, &amp;tst);</div>
+<div class="line">  sender-&gt;connector.connect([](<span class="keywordtype">int</span> val, <span class="keyword">const</span> std::string &amp;) { lsNotice() &lt;&lt; <span class="stringliteral">&quot;sender-&gt;connector (lambda)&quot;</span> &lt;&lt; val; });</div>
 <div class="line"> </div>
 <div class="line">  logNotice() &lt;&lt; <span class="stringliteral">&quot;Start Applicaiton&quot;</span>;</div>
 <div class="line"> </div>

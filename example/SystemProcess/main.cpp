@@ -17,11 +17,11 @@ int main(int argc, char *argv[]) {
 #endif
 
   AsyncFw::SystemProcess process;
-  process.output([](const std::string &str, bool err) {
+  process.output.connect([](const std::string &str, bool err) {
     if (!err) logInfo() << "OUT:" << '\n' + str;
     else { logError() << "ERR:" << '\n' + str; }
   });
-  process.stateChanged([](AsyncFw::SystemProcess::State _s) {
+  process.stateChanged.connect([](AsyncFw::SystemProcess::State _s) {
     if (_s == AsyncFw::SystemProcess::Running) return;
     AsyncFw::MainThread::exit(0);
   });

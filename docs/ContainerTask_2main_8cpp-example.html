@@ -132,7 +132,7 @@ $(function(){initNavTree('ContainerTask_2main_8cpp-example.html',''); initResiza
 <div class="line">    tasks.push(task);</div>
 <div class="line">  }</div>
 <div class="line"> </div>
-<div class="line">  timer.<a id="a3" name="a3"></a><a class="code hl_variable" href="classAsyncFw_1_1Timer.html#a746a7b46bc5d405ab0452b09ad1253f3">timeout</a>([&amp;tasks]() {</div>
+<div class="line">  timer.<a id="a3" name="a3"></a><a class="code hl_variable" href="classAsyncFw_1_1Timer.html#a746a7b46bc5d405ab0452b09ad1253f3">timeout</a>.connect([&amp;tasks]() {</div>
 <div class="line">    <span class="keywordflow">if</span> (tasks.empty()) {</div>
 <div class="line">      AsyncFw::MainThread::exit(0);</div>
 <div class="line">      <span class="keywordflow">return</span>;</div>

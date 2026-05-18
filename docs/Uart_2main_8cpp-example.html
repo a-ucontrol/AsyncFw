@@ -140,7 +140,7 @@ $(function(){initNavTree('Uart_2main_8cpp-example.html',''); initResizable(true)
 <div class="line"> </div>
 <div class="line">  std::string str;</div>
 <div class="line">  <a id="_a0" name="_a0"></a><a class="code hl_class" href="classAsyncFw_1_1PollNotifier.html">AsyncFw::PollNotifier</a> notifier(fd);</div>
-<div class="line">  notifier.<a id="a1" name="a1"></a><a class="code hl_variable" href="classAsyncFw_1_1PollNotifier.html#aabd27ec525c6982e95e93ffd20f443cc">notify</a>([&amp;notifier, &amp;fd, &amp;str](AsyncFw::AbstractThread::PollEvents) {</div>
+<div class="line">  notifier.<a id="a1" name="a1"></a><a class="code hl_variable" href="classAsyncFw_1_1PollNotifier.html#aabd27ec525c6982e95e93ffd20f443cc">notify</a>.connect([&amp;notifier, &amp;fd, &amp;str](AsyncFw::AbstractThread::PollEvents) {</div>
 <div class="line">    <span class="keywordtype">char</span> buf[128];</div>
 <div class="line">    <span class="keywordtype">int</span> r = read(fd, buf, <span class="keyword">sizeof</span>(buf) - 1);</div>
 <div class="line">    <span class="keywordflow">if</span> (r &gt; 0) {</div>

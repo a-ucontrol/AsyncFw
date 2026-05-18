@@ -73,15 +73,14 @@ public:
   using AbstractFunctionConnector::AbstractFunctionConnector;
   /*! \brief Подключиться */
   template <typename T>
-  Connection &operator()(T f, Connection::Type t = Connection::Default) {
+  Connection &connect(T f, Connection::Type t = Connection::Default) {
     std::lock_guard<std::mutex> lock(mutex);
 #ifndef __clang_analyzer__
     return *new Connection(f, this, t);
 #endif
-  }
-  /*! \brief Подключиться */
+  } /*! \brief Подключиться */
   template <typename M, typename O>
-  Connection &operator()(M m, O *o, Connection::Type t = Connection::Default) {
+  Connection &connect(M m, O *o, Connection::Type t = Connection::Default) {
     std::lock_guard<std::mutex> lock(mutex);
 #ifndef __clang_analyzer__
     return *new Connection(m, o, this, t);
@@ -155,22 +154,7 @@ public:
 
   public:
     using FunctionConnector<Args...>::FunctionConnector;
-    /*! \brief Подключиться */
-    template <typename T>
-    AbstractFunctionConnector::Connection &operator()(T f, AbstractFunctionConnector::Connection::Type t = AbstractFunctionConnector::Connection::Default) {
-      std::lock_guard<std::mutex> lock(AbstractFunctionConnector::mutex);
-#ifndef __clang_analyzer__
-      return *new FunctionConnector<Args...>::Connection(f, this, t);
-#endif
-    }
-    /*! \brief Подключиться */
-    template <typename M, typename O>
-    AbstractFunctionConnector::Connection &operator()(M m, O *o, AbstractFunctionConnector::Connection::Type t = AbstractFunctionConnector::Connection::Default) {
-      std::lock_guard<std::mutex> lock(AbstractFunctionConnector::mutex);
-#ifndef __clang_analyzer__
-      return *new FunctionConnector<Args...>::Connection(m, o, this, t);
-#endif
-    }
+    using FunctionConnector<Args...>::connect;
 
   protected:
     using FunctionConnector<Args...>::operator();
