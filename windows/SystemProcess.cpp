@@ -125,14 +125,14 @@ bool SystemProcess::exec_(const std::string &cmd, const std::vector<std::string>
   Data *_data = new Data;
 
   if (f) {
-    _data->process.output(
+    _data->process.output.connect(
         [_data](const std::string &msg, bool err) {
           if (!err) _data->out += msg;
           else { _data->err += msg; }
         },
         AbstractFunctionConnector::Connection::Direct);
   }
-  _data->process.stateChanged(
+  _data->process.stateChanged.connect(
       [f, _data](SystemProcess::State state) {
         if (state != SystemProcess::Running) {
           if (f) {
