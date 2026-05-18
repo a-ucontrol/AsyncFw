@@ -61,7 +61,7 @@ int main(int argc, char *argv[]) {
   Receiver receiver2("R2", *sender);
 
   MethodConnectionExample tst;
-  sender->connector.connect(&MethodConnectionExample::method, &tst);
+  sender->connector(&MethodConnectionExample::method, &tst);
   sender->connector([](int val) { lsNotice() << "sender->connector (lambda)" << val; });
 
   logNotice() << "Start Applicaiton";

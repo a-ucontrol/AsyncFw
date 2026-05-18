@@ -81,8 +81,11 @@ public:
   }
   /*! \brief Подключиться */
   template <typename M, typename O>
-  Connection &connect(M m, O *o, Connection::Type t = Connection::Default) {
-    return operator()([o, m](Args... args) { (o->*m)(args...); }, t);
+  Connection &operator()(M m, O *o, Connection::Type t = Connection::Default) {
+    std::lock_guard<std::mutex> lock(mutex);
+#ifndef __clang_analyzer__
+    return *new Connection(m, o, this, t);
+#endif
   }
   /*! \brief Отправить */
   void operator()(Args... args) {
@@ -90,14 +93,14 @@ public:
     for (const Connection *c : *reinterpret_cast<std::vector<Connection *> *>(&list)) {
       if (!c->thread_) continue;
       if (c->type_ == Connection::Direct || (c->type_ != Connection::Queued && c->thread_->id() == std::this_thread::get_id())) {
-        (*c->f)(args...);
+        (c->f_)->invoke(args...);
         continue;
       }
       if (c->type_ != Connection::Sync) {
-        AbstractThread::AbstractTask *_t = new QueuedTask(c->f->copy(), args...);
+        AbstractThread::AbstractTask *_t = new QueuedTask(c->f_->copy(), args...);
         if (!c->thread_->invokeTask(_t)) delete _t;
       } else {
-        c->thread_->invokeMethod([c, &args...]() mutable { (*c->f)(args...); }, true);
+        c->thread_->invokeMethod([c, &args...]() { (c->f_)->invoke(args...); }, true);
       }
     }
   }
@@ -108,23 +111,36 @@ protected:
 
   public:
     template <typename T>
-    Connection(T &_f, AbstractFunctionConnector *c, Type t) : AbstractFunctionConnector::Connection(c, t), f(new Function(_f)) {}
+    Connection(T &f, AbstractFunctionConnector *c, Type t) : AbstractFunctionConnector::Connection(c, t), f_(new Function(f)) {}
+    template <typename M, typename O>
+    Connection(M m, O *o, AbstractFunctionConnector *c, Type t) : AbstractFunctionConnector::Connection(c, t), f_(new MemberFunction(m, o)) {}
 
   private:
     struct AbstractFunction : public AsyncFw::Function<Args &...>::template Abstract<void> {
+      virtual void invoke(Args &...args) = 0;
       virtual AbstractFunction *copy() const = 0;
     };
     template <typename T>
     struct Function : AbstractFunction {
-      Function(T &_f) : f(std::move(_f)) {}
-      Function(const Function *_f) : f(_f->f) {}
-      ~Function() {}
+      Function(T &f) : f_(std::move(f)) {}
+      Function(const Function *f) : f_(f->f_) {}
+      void operator()(Args &...args) override { f_(std::forward<Args>(args)...); }
+      void invoke(Args &...args) override { f_(args...); }
       AbstractFunction *copy() const override { return new Function(this); }
-      void operator()(Args &...args) override { f(std::forward<Args>(args)...); }
-      T f;
+      T f_;
     };
-    ~Connection() override { delete f; }
-    AbstractFunction *f;
+    template <typename M, typename O>
+    struct MemberFunction : AbstractFunction {
+      MemberFunction(M m, O *o) : m_(m), o_(o) {}
+      MemberFunction(const MemberFunction *f) : m_(f->m_), o_(f->o_) {}
+      void operator()(Args &...args) override { (o_->*m_)(std::forward<Args>(args)...); }
+      void invoke(Args &...args) override { (o_->*m_)(args...); }
+      AbstractFunction *copy() const override { return new MemberFunction(this); }
+      M m_;
+      O *o_;
+    };
+    ~Connection() override { delete f_; }
+    AbstractFunction *f_;
   };
 };
 
@@ -139,10 +155,21 @@ public:
 
   public:
     using FunctionConnector<Args...>::FunctionConnector;
-    using FunctionConnector<Args...>::connect;
+    /*! \brief Подключиться */
     template <typename T>
     AbstractFunctionConnector::Connection &operator()(T f, AbstractFunctionConnector::Connection::Type t = AbstractFunctionConnector::Connection::Default) {
-      return FunctionConnector<Args...>::operator()(f, t);
+      std::lock_guard<std::mutex> lock(AbstractFunctionConnector::mutex);
+#ifndef __clang_analyzer__
+      return *new FunctionConnector<Args...>::Connection(f, this, t);
+#endif
+    }
+    /*! \brief Подключиться */
+    template <typename M, typename O>
+    AbstractFunctionConnector::Connection &operator()(M m, O *o, AbstractFunctionConnector::Connection::Type t = AbstractFunctionConnector::Connection::Default) {
+      std::lock_guard<std::mutex> lock(AbstractFunctionConnector::mutex);
+#ifndef __clang_analyzer__
+      return *new FunctionConnector<Args...>::Connection(m, o, this, t);
+#endif
     }
 
   protected:
