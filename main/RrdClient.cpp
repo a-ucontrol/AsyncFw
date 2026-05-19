@@ -62,15 +62,15 @@ void RrdClient::clear(int n) {
 }
 
 void RrdClient::connectToHost(const std::string &address, uint16_t port) {
-  tcpSocket->thread()->invokeMethod([this, address, port]() { tcpSocket->connect(address, port); });
+  tcpSocket->thread()->invoke([this, address, port]() { tcpSocket->connect(address, port); });
 }
 
 void RrdClient::connectToHost() {
-  tcpSocket->thread()->invokeMethod([this]() { tcpSocket->connect(tcpSocket->hostAddress(), tcpSocket->hostPort()); });
+  tcpSocket->thread()->invoke([this]() { tcpSocket->connect(tcpSocket->hostAddress(), tcpSocket->hostPort()); });
 }
 
 void RrdClient::disconnectFromHost() {
-  tcpSocket->thread()->invokeMethod([this]() { tcpSocket->disconnect(); });
+  tcpSocket->thread()->invoke([this]() { tcpSocket->disconnect(); });
 }
 
 int RrdClient::transmit(const DataArray &ba, uint32_t pi, bool wait) { return tcpSocket->transmit(ba, pi, wait); }

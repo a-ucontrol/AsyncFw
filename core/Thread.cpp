@@ -85,7 +85,7 @@ void Thread::removeSocket(AbstractSocket *_socket) {
 namespace AsyncFw {
 LogStream &operator<<(LogStream &log, const Thread &t) {
   int _size;
-  t.invokeMethod([&t, &_size]() { _size = t.sockets_.size(); }, true);
+  t.invoke([&t, &_size]() { _size = t.sockets_.size(); }, true);
   return log << *static_cast<const AbstractThread *>(&t) << '-' << _size;
 }
 }  // namespace AsyncFw

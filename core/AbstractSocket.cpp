@@ -119,7 +119,7 @@ bool AbstractSocket::listen(const std::string &address, uint16_t port) {
   private_.errorString_.clear();
   state_ = State::Listening;
 
-  thread_->invokeMethod([this, _fd]() { changeDescriptor(_fd); }, true);
+  thread_->invoke([this, _fd]() { changeDescriptor(_fd); }, true);
   thread_->appendPollTask(_fd, AbstractThread::PollIn, [this](AbstractThread::PollEvents _e) { pollEvent(_e); });
 
   stateEvent();
@@ -243,7 +243,7 @@ bool AbstractSocket::connect(const std::string &_address, uint16_t _port) {
 
   lsTrace() << _fd << LogStream::Color::DarkGreen << "local:" << address() + ':' + std::to_string(port()) << "peer:" << peerAddress() + ':' + std::to_string(peerPort());
 
-  thread_->invokeMethod([this, _fd]() { changeDescriptor(_fd); }, true);
+  thread_->invoke([this, _fd]() { changeDescriptor(_fd); }, true);
   private_.w_ = 0;
   private_.error_ = None;
   private_.errorString_.clear();
@@ -518,7 +518,7 @@ void AbstractSocket::pollEvent(int _e) {
 
 namespace AsyncFw {
 LogStream &operator<<(LogStream &log, const AbstractSocket &s) {
-  s.thread_->invokeMethod([&log, &s]() { log << '(' + s.thread_->name() + ')' << s.fd_ << static_cast<int>(s.state_) << '-' << s.address() + ':' + std::to_string(s.port()) + '/' + s.peerAddress() + ':' + std::to_string(s.peerPort()); }, true);
+  s.thread_->invoke([&log, &s]() { log << '(' + s.thread_->name() + ')' << s.fd_ << static_cast<int>(s.state_) << '-' << s.address() + ':' + std::to_string(s.port()) + '/' + s.peerAddress() + ':' + std::to_string(s.peerPort()); }, true);
   return log;
 }
 }  // namespace AsyncFw

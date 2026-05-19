@@ -40,7 +40,7 @@ class MainThread : private Thread
 public:
   template <typename M>
   static void setExitTask(M method) {
-    if (mt_.exitTask && !mt_.invokeMethod([_p = mt_.exitTask]() { delete _p; })) delete mt_.exitTask;
+    if (mt_.exitTask && !mt_.invoke([_p = mt_.exitTask]() { delete _p; })) delete mt_.exitTask;
     mt_.exitTask = new Function<>::Value(std::forward<M>(method));
   }
   static int exec() {
@@ -78,7 +78,7 @@ private:
     setId();
     setExitTask([]() { quit(); });
 #ifdef USE_QAPPLICATION
-    AbstractThread::current()->invokeMethod([this]() {
+    AbstractThread::current()->invoke([this]() {
       QObject::connect(qApp, &QCoreApplication::aboutToQuit, [this]() {
         finishedEvent();
         {  //lock scope
@@ -92,7 +92,7 @@ private:
 #ifdef EXIT_ON_UNIX_SIGNAL
     eventfd_ = eventfd(0, EFD_NONBLOCK);
   #ifdef USE_QAPPLICATION
-    AbstractThread::current()->invokeMethod([this]() {
+    AbstractThread::current()->invoke([this]() {
   #endif
       appendPollTask(eventfd_, AbstractThread::PollIn, [this](AbstractThread::PollEvents) {
         eventfd_t _v;

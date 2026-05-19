@@ -240,7 +240,7 @@ void Rrd::save(const std::string &fn) {
   }
   if (std::this_thread::get_id() != thread_->id()) {
     if (thread_->running()) {
-      thread_->invokeMethod([this, fn]() { saveToFile(fn); }, true);
+      thread_->invoke([this, fn]() { saveToFile(fn); }, true);
       return;
     }
     console_msg("Rrd", "save executed from different thread and own thread not running");

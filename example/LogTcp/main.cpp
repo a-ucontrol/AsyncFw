@@ -17,7 +17,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 int main(int argc, char *argv[]) {
   AsyncFw::Thread logThread {"LogThread"};
   logThread.start();
-  logThread.invokeMethod([]() { AsyncFw::Instance<AsyncFw::Log>::create(1000); }, true);
+  logThread.invoke([]() { AsyncFw::Instance<AsyncFw::Log>::create(1000); }, true);
 
   AsyncFw::DataArrayTcpServer _tcp_server;
   AsyncFw::RrdServer _rrd_server {&_tcp_server, {AsyncFw::Log::instance()}};

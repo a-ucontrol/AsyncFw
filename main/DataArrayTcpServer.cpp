@@ -56,7 +56,7 @@ bool DataArrayTcpServer::incomingConnection(int socketDescriptor, const std::str
 
   bool encrypt = std::find(disabledEncrypt_.begin(), disabledEncrypt_.end(), address) == disabledEncrypt_.end() && !tlsData.empty();
 
-  serverThread->invokeMethod([serverThread, socketDescriptor, encrypt]() { serverThread->createSocket(socketDescriptor, encrypt); }, true);
+  serverThread->invoke([serverThread, socketDescriptor, encrypt]() { serverThread->createSocket(socketDescriptor, encrypt); }, true);
   return true;
 }
 

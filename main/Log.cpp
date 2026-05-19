@@ -51,31 +51,31 @@ void AbstractLog::finality() {
 void AbstractLog::append(uint8_t type, const std::string &message, const std::string &sender, const std::string &note) { append({type, sender, message, note}); }
 
 void AbstractLog::setExtendOut(bool b) {
-  thread_->invokeMethod([this, b]() { (b) ? flags |= LOG_STREAM_CONSOLE_EXTEND : flags &= ~LOG_STREAM_CONSOLE_EXTEND; }, true);
+  thread_->invoke([this, b]() { (b) ? flags |= LOG_STREAM_CONSOLE_EXTEND : flags &= ~LOG_STREAM_CONSOLE_EXTEND; }, true);
 }
 
 void AbstractLog::setColorOut(bool b) {
-  thread_->invokeMethod([this, b]() { (b) ? flags |= LOG_STREAM_CONSOLE_COLOR : flags &= ~LOG_STREAM_CONSOLE_COLOR; }, true);
+  thread_->invoke([this, b]() { (b) ? flags |= LOG_STREAM_CONSOLE_COLOR : flags &= ~LOG_STREAM_CONSOLE_COLOR; }, true);
 }
 
 void AbstractLog::setNotesOut(bool b) {
-  thread_->invokeMethod([this, b]() { (b) ? flags |= LOG_STREAM_CONSOLE_LINE : flags &= ~LOG_STREAM_CONSOLE_LINE; }, true);
+  thread_->invoke([this, b]() { (b) ? flags |= LOG_STREAM_CONSOLE_LINE : flags &= ~LOG_STREAM_CONSOLE_LINE; }, true);
 }
 
 void AbstractLog::setHideDuplicates(bool b) {
-  thread_->invokeMethod([this, b]() { hideDuplicates = b; }, true);
+  thread_->invoke([this, b]() { hideDuplicates = b; }, true);
 }
 
 void AbstractLog::setLevel(int i) {
-  thread_->invokeMethod([this, i]() { level = i; }, true);
+  thread_->invoke([this, i]() { level = i; }, true);
 }
 
 void AbstractLog::setConsoleLevel(int i) {
-  thread_->invokeMethod([this, i]() { consoleLevel = i; }, true);
+  thread_->invoke([this, i]() { consoleLevel = i; }, true);
 }
 
 void AbstractLog::setFilter(const std::vector<std::string> &f) {
-  thread_->invokeMethod([this, f]() { filter = f; }, true);
+  thread_->invoke([this, f]() { filter = f; }, true);
 }
 
 void AbstractLog::append(const Message &m) {
@@ -106,7 +106,7 @@ void AbstractLog::append(const Message &m) {
   }
 
   if (size == 0)
-    thread_->invokeMethod([this]() {
+    thread_->invoke([this]() {
       flush();
       if (hideDuplicates) {
         for (int i = 0; i != _messages_; ++i) {
@@ -208,7 +208,7 @@ Log::~Log() {
 void Log::finality() {
   if (instance_.value == this) LogStream::setCompleted(&LogStream::console_output);
   if (!thread_) return;
-  if (!thread_->invokeMethod(
+  if (!thread_->invoke(
           [this]() {
             stopTimer(&timerIdAutosave);
             autoSave = -1;
@@ -266,7 +266,7 @@ void Log::lsAppend(const Message &m, uint8_t f) {
   if (!(f & LOG_STREAM_CONSOLE_ONLY)) {
     _log->append(m);
     if (f & 0x80) {
-      if (!_log->thread_->invokeMethod(
+      if (!_log->thread_->invoke(
               [_log]() {
                 _log->flush();
                 _log->save();

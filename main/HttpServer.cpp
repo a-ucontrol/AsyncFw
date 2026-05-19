@@ -462,7 +462,7 @@ void HttpServer::fileUploadProgress(TcpSocket *, int progress) { trace() << prog
 
 void HttpServer::disconnectFromHost(TcpSocket *socket) {
   lsTrace();
-  AbstractThread::current()->invokeMethod([socket]() { socket->disconnect(); });
+  AbstractThread::current()->invoke([socket]() { socket->disconnect(); });
 }
 
 void HttpServer::sendToWebSockets(const std::string &data) {  //Дичь, для отладки, надо убрать
@@ -610,7 +610,7 @@ std::string HttpServer::Response::header() const {
 
 void HttpServer::Response::destroy() {
   if (socket_) socket_->response = nullptr;
-  AbstractThread::current()->invokeMethod([_p = this]() { delete _p; });
+  AbstractThread::current()->invoke([_p = this]() { delete _p; });
 }
 
 bool HttpServer::Response::send() {

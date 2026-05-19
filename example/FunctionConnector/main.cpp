@@ -51,7 +51,7 @@ int main(int argc, char *argv[]) {
 
   AsyncFw::Thread thread("SenderThread");
   thread.start();
-  thread.invokeMethod(
+  thread.invoke(
       [&sender]() {
         sender = new Sender;  // created in thread SenderThread
       },

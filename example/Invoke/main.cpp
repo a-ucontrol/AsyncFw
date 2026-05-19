@@ -20,17 +20,17 @@ int main(int argc, char *argv[]) {
   logDebug() << "T1 id:" << thread1.id();
   logDebug() << "T2 id:" << thread2.id();
 
-  thread1.invokeMethod([&thread2, _mainThread]() {
+  thread1.invoke([&thread2, _mainThread]() {
     AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::current();
     logInfo() << "run in thread" << ct->name() << ct->id();
     std::this_thread::sleep_for(std::chrono::milliseconds(10));
 
-    thread2.invokeMethod([_mainThread]() {
+    thread2.invoke([_mainThread]() {
       AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::current();
       logInfo() << "run in thread" << ct->name() << ct->id();
       std::this_thread::sleep_for(std::chrono::milliseconds(10));
 
-      _mainThread->invokeMethod([_mainThread]() {
+      _mainThread->invoke([_mainThread]() {
         AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::current();
         logInfo() << "run in thread" << ct->name() << ct->id();
         std::this_thread::sleep_for(std::chrono::milliseconds(10));

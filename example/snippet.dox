@@ -3,7 +3,7 @@
 #include <MainThread.h>
 
 int main(int argc, char *argv[]) {
-  AsyncFw::Thread::current()->invokeMethod([]() { AsyncFw::MainThread::exit(123); });
+  AsyncFw::Thread::current()->invoke([]() { AsyncFw::MainThread::exit(123); });
 
   logDebug() << "Start Application";
   int ret = AsyncFw::MainThread::exec();

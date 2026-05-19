@@ -53,28 +53,28 @@ class ThreadPool : public AbstractThreadPool {
 public:
   template <typename M>
   static bool sync(AbstractThread *_t, M m) {
-    return _t->invokeMethod(m, true);
+    return _t->invoke(m, true);
   }
   template <typename M>
   static bool async(AbstractThread *_t, M m) {
-    return _t->invokeMethod(m);
+    return _t->invoke(m);
   }
   template <typename M>
   static bool async(M m) {
-    return instance_.value->getThread()->invokeMethod(m);
+    return instance_.value->getThread()->invoke(m);
   }
   template <typename M, typename R, typename T = std::invoke_result<M>::type>
   static typename std::enable_if<std::is_void<T>::value, bool>::type async(AbstractThread *thread, M method, R result) {
     AbstractThread *_t = AbstractThread::current();
-    return thread->invokeMethod([_t, method, result]() {
+    return thread->invoke([_t, method, result]() {
       method();
-      _t->invokeMethod([result]() { result(); });
+      _t->invoke([result]() { result(); });
     });
   }
   template <typename M, typename R, typename T = std::invoke_result<M>::type>
   static typename std::enable_if<!std::is_void<T>::value, bool>::type async(AbstractThread *thread, M method, R result) {
     AbstractThread *_t = AbstractThread::current();
-    return thread->invokeMethod([_t, method, result]() { _t->invokeMethod([v = std::move(method()), result]() { result(v); }); });
+    return thread->invoke([_t, method, result]() { _t->invoke([v = std::move(method()), result]() { result(v); }); });
   }
   template <typename M, typename R>
   static bool async(M m, R r) {

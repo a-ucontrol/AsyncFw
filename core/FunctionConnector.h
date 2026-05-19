@@ -99,7 +99,7 @@ public:
         AbstractThread::AbstractTask *_t = new QueuedTask(c->f_->copy(), args...);
         if (!c->thread_->invokeTask(_t)) delete _t;
       } else {
-        c->thread_->invokeMethod([c, &args...]() { (c->f_)->invoke(args...); }, true);
+        c->thread_->invoke([c, &args...]() { (c->f_)->invoke(args...); }, true);
       }
     }
   }

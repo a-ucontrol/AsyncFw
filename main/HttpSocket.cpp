@@ -17,7 +17,7 @@ using namespace AsyncFw;
 
 HttpSocket *HttpSocket::create(AsyncFw::Thread *_t) {
   HttpSocket *_s;
-  if (_t) _t->invokeMethod([&_s]() { _s = new HttpSocket(); }, true);
+  if (_t) _t->invoke([&_s]() { _s = new HttpSocket(); }, true);
   else { _s = new HttpSocket(); }
   return _s;
 }
@@ -165,15 +165,15 @@ void HttpSocket::writeEvent() {
 }
 
 void HttpSocket::disconnect() {
-  thread_->invokeMethod([this]() { AbstractTlsSocket::disconnect(); });
+  thread_->invoke([this]() { AbstractTlsSocket::disconnect(); });
 }
 
 void HttpSocket::close() {
-  thread_->invokeMethod([this]() { AbstractTlsSocket::close(); });
+  thread_->invoke([this]() { AbstractTlsSocket::close(); });
 }
 
 void HttpSocket::destroy() {
-  thread_->invokeMethod([this]() { AbstractTlsSocket::destroy(); });
+  thread_->invoke([this]() { AbstractTlsSocket::destroy(); });
 }
 
 DataArrayView HttpSocket::header() { return received_.view(0, headerSize_); }

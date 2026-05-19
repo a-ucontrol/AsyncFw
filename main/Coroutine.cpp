@@ -74,7 +74,7 @@ CoroutineTask CoroutineTask::promise_type::get_return_object() {
 std::suspend_never CoroutineTask::promise_type::initial_suspend() noexcept { return {}; }
 
 std::suspend_always CoroutineTask::promise_type::final_suspend() noexcept {
-  if (!private_.task) private_.thread->invokeMethod([this]() { std::coroutine_handle<promise_type>::from_promise(*this).destroy(); });
+  if (!private_.task) private_.thread->invoke([this]() { std::coroutine_handle<promise_type>::from_promise(*this).destroy(); });
   return {};
 }
 
@@ -84,5 +84,5 @@ void CoroutineTask::promise_type::return_void() {
 }
 
 void CoroutineTask::promise_type::resume_queued() {
-  private_.thread->invokeMethod([this]() { std::coroutine_handle<promise_type>::from_promise(*this).resume(); });
+  private_.thread->invoke([this]() { std::coroutine_handle<promise_type>::from_promise(*this).resume(); });
 }

@@ -269,7 +269,7 @@ bool DataArraySocket::transmit(const DataArray &ba, uint32_t pi, bool wait) cons
     return false;
   }
   bool _r = false;
-  thread_->invokeMethod(
+  thread_->invoke(
       [this, &_r, &ba, pi, wait]() {
         int buffers = transmitList.size();
         if (buffers >= maxWriteBuffers) {
@@ -293,7 +293,7 @@ bool DataArraySocket::transmit(const DataArray &ba, uint32_t pi, bool wait) cons
         DataArray _da(((uint8_t *)&_v), ((uint8_t *)&_v) + 8);
         _da += ba;
         transmitList.push_back(_da);
-        if (buffers == 0) thread_->invokeMethod([this]() { const_cast<DataArraySocket *>(this)->writeSocket(); }, wait);
+        if (buffers == 0) thread_->invoke([this]() { const_cast<DataArraySocket *>(this)->writeSocket(); }, wait);
         else {
           if (wait) {
             thread_->requestInterrupt();
@@ -307,7 +307,7 @@ bool DataArraySocket::transmit(const DataArray &ba, uint32_t pi, bool wait) cons
 }
 
 void DataArraySocket::clearBuffer(const DataArray *da) const {
-  if (thread_) thread_->invokeMethod([this, da]() { clearBuffer_(da); });
+  if (thread_) thread_->invoke([this, da]() { clearBuffer_(da); });
 }
 
 void DataArraySocket::clearBuffer_(const DataArray *da) const {
@@ -376,7 +376,7 @@ bool DataArraySocket::connectToHost(int timeout) {
     return false;
   }
 
-  thread_->invokeMethod(
+  thread_->invoke(
       [this, timeout]() {
         waitTimerType |= 0x04;
         startTimer(timeout);

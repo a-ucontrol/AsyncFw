@@ -20,7 +20,7 @@ DataArrayTcpClient::DataArrayTcpClient(const std::string &name) : DataArrayAbstr
 void DataArrayTcpClient::socketStateChanged(const DataArraySocket *socket) {
   bool connected = socket->state_ == DataArraySocket::State::Active;
   if (!connected && socket->state_ != DataArraySocket::State::Unconnected) return;
-  thread_->invokeMethod([this, socket, connected]() {
+  thread_->invoke([this, socket, connected]() {
     bool b = connected == (socket->state_ == DataArraySocket::State::Active);
     if (b) connectionStateChanged(socket);
   });
@@ -48,14 +48,14 @@ DataArraySocket *DataArrayTcpClient::createSocket(Thread *thread) {
     clientThread = thread;
 
   DataArraySocket *socket;
-  clientThread->invokeMethod([clientThread, &socket]() { socket = clientThread->createSocket(); }, true);
+  clientThread->invoke([clientThread, &socket]() { socket = clientThread->createSocket(); }, true);
   if (thread == nullptr && !b) mutex.unlock();
   return socket;
 }
 
 void DataArrayTcpClient::removeSocket(DataArraySocket *socket) {
   Thread *thread = static_cast<Thread *>(socket->thread());
-  thread->invokeMethod([thread, socket]() { thread->removeSocket(socket); }, true);
+  thread->invoke([thread, socket]() { thread->removeSocket(socket); }, true);
 }
 
 int DataArrayTcpClient::exchange(const DataArraySocket *socket, const DataArray &wda, const DataArray *rda, uint32_t pi, int timeout) {
@@ -109,7 +109,7 @@ void DataArrayTcpClient::connectToHost(const DataArraySocket *socket, int timeou
     return;
   }
   if (std::find(disabledEncrypt_.begin(), disabledEncrypt_.end(), socket->hostAddress()) != disabledEncrypt_.end()) const_cast<DataArraySocket *>(socket)->disableTls();
-  clientThread->invokeMethod([&socket, &timeout]() { const_cast<DataArraySocket *>(socket)->connectToHost(timeout); }, true);
+  clientThread->invoke([&socket, &timeout]() { const_cast<DataArraySocket *>(socket)->connectToHost(timeout); }, true);
   lsTrace();
 }
 

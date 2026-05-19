@@ -37,7 +37,7 @@ public:
       running_ = false;
       return;
     }
-    thread_->invokeMethod([this]() {
+    thread_->invoke([this]() {
       method(&data_);
       running_ = false;
     });

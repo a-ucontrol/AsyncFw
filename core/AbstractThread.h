@@ -71,7 +71,7 @@ public:
 
   /*! \brief Runs a method in a managed thread. \param method runs method \param sync blocking wait if true \return True if the method is added to the queue */
   template <typename M>
-  typename std::enable_if<std::is_void<typename std::invoke_result<M>::type>::value, bool>::type invokeMethod(M method, bool sync = false) const {
+  typename std::enable_if<std::is_void<typename std::invoke_result<M>::type>::value, bool>::type invoke(M method, bool sync = false) const {
     if (!sync) {
       AbstractTask *_t = new Function<>::Value(std::forward<M>(method));
       if (!invokeTask(_t)) {

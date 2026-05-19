@@ -23,7 +23,7 @@ int main(int argc, char *argv[]) {
   logInfo() << threadPool->text();
 
   AsyncFw::AbstractThread *_lt = AsyncFw::ThreadPool::instance()->createThread("LogThread");
-  _lt->invokeMethod([]() { AsyncFw::Instance<AsyncFw::Log>::create(); }, true);  //create log instance in log thread _lt
+  _lt->invoke([]() { AsyncFw::Instance<AsyncFw::Log>::create(); }, true);  //create log instance in log thread _lt
 
   AsyncFw::AbstractThread *_t = AsyncFw::ThreadPool::instance()->createThread("SyncExample");
 
@@ -64,7 +64,7 @@ int main(int argc, char *argv[]) {
       });
 
   AsyncFw::AbstractThreadPool::Thread *_t1 = AsyncFw::ThreadPool::instance()->createThread("DestroyFromThreadExample");
-  _t1->invokeMethod([_t1]() { _t1->destroy(); });
+  _t1->invoke([_t1]() { _t1->destroy(); });
 
   logNotice() << "Start Applicaiton";
 

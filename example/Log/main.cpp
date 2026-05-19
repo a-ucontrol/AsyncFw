@@ -13,7 +13,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 int main(int argc, char *argv[]) {
   AsyncFw::Thread logThread {"LogThread"};
   logThread.start();
-  logThread.invokeMethod([]() { AsyncFw::Instance<AsyncFw::Log>::create(1000, "log-file-name"); }, true);
+  logThread.invoke([]() { AsyncFw::Instance<AsyncFw::Log>::create(1000, "log-file-name"); }, true);
 
   AsyncFw::Log::instance()->setColorOut(true);
 
@@ -41,7 +41,7 @@ int main(int argc, char *argv[]) {
   logAlert() << "logAlert";
   //logEmergency() << "Emergency";  // throw
 
-  AsyncFw::Thread::current()->invokeMethod([]() { AsyncFw::MainThread::exit(); });
+  AsyncFw::Thread::current()->invoke([]() { AsyncFw::MainThread::exit(); });
 
   int ret = AsyncFw::MainThread::exec();
 

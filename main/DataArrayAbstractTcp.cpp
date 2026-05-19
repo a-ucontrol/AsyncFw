@@ -42,7 +42,7 @@ int DataArrayAbstractTcp::transmit(const DataArraySocket *socket, const DataArra
 }
 
 void DataArrayAbstractTcp::disconnectFromHost(const DataArraySocket *socket) {
-  socket->thread()->invokeMethod([socket]() { const_cast<DataArraySocket *>(socket)->disconnect(); });
+  socket->thread()->invoke([socket]() { const_cast<DataArraySocket *>(socket)->disconnect(); });
 }
 
 void DataArrayAbstractTcp::setEncryptDisabled(const std::string &address, bool disabled) {
@@ -76,7 +76,7 @@ void DataArrayAbstractTcp::Thread::socketInit(DataArraySocket *socket) {
   socket->setReadBuffers(tcp->maxReadBuffers, tcp->maxReadSize);
   socket->setWriteBuffers(tcp->maxWriteBuffers, tcp->maxWriteSize);
   socket->received.connect([tcp, socket](const DataArray *da, uint32_t pi) {
-    tcp->thread_->invokeMethod([tcp, socket, da, pi]() {
+    tcp->thread_->invoke([tcp, socket, da, pi]() {
       tcp->received(socket, da, pi);
       socket->clearBuffer(da);
     });
@@ -88,10 +88,10 @@ void DataArrayAbstractTcp::Thread::removeSocket(DataArraySocket *socket) {
   checkCurrentThread();
   socket->removeTimer();
   socket->close();
-  pool->thread()->invokeMethod([socket, this]() {
+  pool->thread()->invoke([socket, this]() {
     socket->destroy();
-    invokeMethod([this]() {
-      if (sockets_.empty()) pool->thread()->invokeMethod([this]() { destroy(); });
+    invoke([this]() {
+      if (sockets_.empty()) pool->thread()->invoke([this]() { destroy(); });
     });
   });
 }
