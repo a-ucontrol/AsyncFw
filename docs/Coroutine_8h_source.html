@@ -156,7 +156,7 @@ $(function(){initNavTree('Coroutine_8h_source.html',''); initResizable(true); })
 <div class="foldopen" id="foldopen00050" data-start="{" data-end="};">
 <div class="line"><a id="l00050" name="l00050"></a><span class="lineno"><a class="line" href="structAsyncFw_1_1CoroutineAwait.html">   50</a></span><span class="keyword">struct </span>CoroutineAwait {</div>
 <div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>  <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>  CoroutineAwait(T f) : f_(<span class="keyword">new</span> Function&lt;const CoroutineHandle&gt;::Value(std::forward&lt;T&gt;(f))) {}</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>  CoroutineAwait(T f) : f_(<span class="keyword">new</span> Invocable&lt;const CoroutineHandle&gt;::Function(std::forward&lt;T&gt;(f))) {}</div>
 <div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>  CoroutineAwait() = <span class="keywordflow">default</span>;</div>
 <div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>  CoroutineAwait(<span class="keyword">const</span> CoroutineAwait &amp;) = <span class="keyword">delete</span>;</div>
 <div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>  CoroutineAwait &amp;operator=(<span class="keyword">const</span> CoroutineAwait &amp;) = <span class="keyword">delete</span>;</div>
@@ -167,7 +167,7 @@ $(function(){initNavTree('Coroutine_8h_source.html',''); initResizable(true); })
 <div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> </div>
 <div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span><span class="keyword">private</span>:</div>
 <div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>  <span class="keyword">mutable</span> CoroutineHandle h_;</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>  Function&lt;const CoroutineHandle&gt;::Abstract&lt;<span class="keywordtype">void</span>&gt; *f_ = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>  Invocable&lt;const CoroutineHandle&gt;::Abstract&lt;<span class="keywordtype">void</span>&gt; *f_ = <span class="keyword">nullptr</span>;</div>
 <div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>};</div>
 </div>
 <div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
