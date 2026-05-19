@@ -14,5 +14,6 @@ var searchData=
   ['instance_3c_20asyncfw_3a_3athreadpool_20_3e_11',['Instance&lt; AsyncFw::ThreadPool &gt;',['../classAsyncFw_1_1Instance.html',1,'AsyncFw']]],
   ['instance_3c_20log_20_3e_12',['Instance&lt; Log &gt;',['../classAsyncFw_1_1Instance.html',1,'AsyncFw']]],
   ['interruptrequested_13',['interruptRequested',['../classAsyncFw_1_1AbstractThread.html#ab614c8e9a266d924e86c3c49c1a6ff36',1,'AsyncFw::AbstractThread']]],
-  ['invoke_14',['invoke',['../classAsyncFw_1_1AbstractThread.html#a786474d037b50053f1a97af7b67e6069',1,'AsyncFw::AbstractThread::invoke(F function, bool sync=false) const'],['../classAsyncFw_1_1AbstractThread.html#ae17a11d9e960083f5e98dc68c257cd36',1,'AsyncFw::AbstractThread::invoke(AbstractTask *) const']]]
+  ['invoke_14',['invoke',['../classAsyncFw_1_1AbstractThread.html#a786474d037b50053f1a97af7b67e6069',1,'AsyncFw::AbstractThread']]],
+  ['invoketask_15',['invokeTask',['../classAsyncFw_1_1AbstractThread.html#abe96e6b2a1de041f0d25390a6b77e50a',1,'AsyncFw::AbstractThread']]]
 ];

@@ -200,7 +200,7 @@ $(function(){initNavTree('FunctionConnector_8h_source.html',''); initResizable(t
 <div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>      }</div>
 <div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>      <span class="keywordflow">if</span> (c-&gt;type_ != Connection::Sync) {</div>
 <div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>        <a class="code hl_typedef" href="classAsyncFw_1_1AbstractThread.html#a550aea367810d9151c369975e194b924">AbstractThread::AbstractTask</a> *_t = <span class="keyword">new</span> QueuedTask(c-&gt;f_-&gt;copy(), args...);</div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>        <span class="keywordflow">if</span> (!c-&gt;thread_-&gt;invoke(_t)) <span class="keyword">delete</span> _t;</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>        <span class="keywordflow">if</span> (!c-&gt;thread_-&gt;invokeTask(_t)) <span class="keyword">delete</span> _t;</div>
 <div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>      } <span class="keywordflow">else</span> {</div>
 <div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>        c-&gt;thread_-&gt;invoke([c, &amp;args...]() { (c-&gt;f_)-&gt;invoke(args...); }, <span class="keyword">true</span>);</div>
 <div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>      }</div>

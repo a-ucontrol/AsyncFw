@@ -11,7 +11,7 @@ var classAsyncFw_1_1AbstractThread =
     [ "startedEvent", "classAsyncFw_1_1AbstractThread.html#a9b9db94ad8c90eafe1ef34a076af8498", null ],
     [ "finishedEvent", "classAsyncFw_1_1AbstractThread.html#ad43b7b79e541bd1d6cce20f0231cc64d", null ],
     [ "running", "classAsyncFw_1_1AbstractThread.html#aa317731738402e37a8a05d5a5ec9d7c4", null ],
-    [ "invoke", "classAsyncFw_1_1AbstractThread.html#ae17a11d9e960083f5e98dc68c257cd36", null ],
+    [ "invokeTask", "classAsyncFw_1_1AbstractThread.html#abe96e6b2a1de041f0d25390a6b77e50a", null ],
     [ "appendTimer", "classAsyncFw_1_1AbstractThread.html#a1fa8bc43151797cbcfb2013ee1fce2ce", null ],
     [ "modifyTimer", "classAsyncFw_1_1AbstractThread.html#a4e367b49b300c1b93d2275b5840bb20b", null ],
     [ "removeTimer", "classAsyncFw_1_1AbstractThread.html#ae8fc0b3f68faed69e7f0b4e940ef12c0", null ],

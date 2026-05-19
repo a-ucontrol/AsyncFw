@@ -182,9 +182,9 @@ Public Member Functions</h2></td></tr>
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>running</b> () const</td></tr>
 <tr class="memdesc:aa317731738402e37a8a05d5a5ec9d7c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the managed thread is running. <br /></td></tr>
 <tr class="separator:aa317731738402e37a8a05d5a5ec9d7c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae17a11d9e960083f5e98dc68c257cd36" id="r_ae17a11d9e960083f5e98dc68c257cd36"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae17a11d9e960083f5e98dc68c257cd36">invoke</a> (<a class="el" href="#a550aea367810d9151c369975e194b924">AbstractTask</a> *) const</td></tr>
-<tr class="memdesc:ae17a11d9e960083f5e98dc68c257cd36"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runs a task in a managed thread.  <br /></td></tr>
-<tr class="separator:ae17a11d9e960083f5e98dc68c257cd36"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe96e6b2a1de041f0d25390a6b77e50a" id="r_abe96e6b2a1de041f0d25390a6b77e50a"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abe96e6b2a1de041f0d25390a6b77e50a">invokeTask</a> (<a class="el" href="#a550aea367810d9151c369975e194b924">AbstractTask</a> *) const</td></tr>
+<tr class="memdesc:abe96e6b2a1de041f0d25390a6b77e50a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runs a task in a managed thread.  <br /></td></tr>
+<tr class="separator:abe96e6b2a1de041f0d25390a6b77e50a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1fa8bc43151797cbcfb2013ee1fce2ce" id="r_a1fa8bc43151797cbcfb2013ee1fce2ce"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1fa8bc43151797cbcfb2013ee1fce2ce">appendTimer</a> (int, <a class="el" href="#a550aea367810d9151c369975e194b924">AbstractTask</a> *)</td></tr>
 <tr class="memdesc:a1fa8bc43151797cbcfb2013ee1fce2ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Append timer.  <br /></td></tr>
 <tr class="separator:a1fa8bc43151797cbcfb2013ee1fce2ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -329,7 +329,7 @@ Here is the caller graph for this function:</div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="a786474d037b50053f1a97af7b67e6069" name="a786474d037b50053f1a97af7b67e6069"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a786474d037b50053f1a97af7b67e6069">&#9670;&#160;</a></span>invoke() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a786474d037b50053f1a97af7b67e6069">&#9670;&#160;</a></span>invoke()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -371,12 +371,7 @@ template&lt;typename F&gt; </div>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1AbstractThread_a786474d037b50053f1a97af7b67e6069_cgraph.svg" width="184" height="78"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1AbstractThread_a786474d037b50053f1a97af7b67e6069_icgraph.svg" width="406" height="120"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1AbstractThread_a786474d037b50053f1a97af7b67e6069_cgraph.svg" width="406" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -581,8 +576,8 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
-<a id="ae17a11d9e960083f5e98dc68c257cd36" name="ae17a11d9e960083f5e98dc68c257cd36"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae17a11d9e960083f5e98dc68c257cd36">&#9670;&#160;</a></span>invoke() <span class="overload">[2/2]</span></h2>
+<a id="abe96e6b2a1de041f0d25390a6b77e50a" name="abe96e6b2a1de041f0d25390a6b77e50a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abe96e6b2a1de041f0d25390a6b77e50a">&#9670;&#160;</a></span>invokeTask()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -591,7 +586,7 @@ Here is the caller graph for this function:</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool AbstractThread::invoke </td>
+          <td class="memname">bool AbstractThread::invokeTask </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="#a550aea367810d9151c369975e194b924">AbstractTask</a> *</td>          <td class="paramname"><span class="paramname"><em>task</em></span></td><td>)</td>
           <td> const</td>
@@ -612,6 +607,11 @@ Here is the caller graph for this function:</div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if the task is added to the queue </dd></dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1AbstractThread_abe96e6b2a1de041f0d25390a6b77e50a_icgraph.svg" width="406" height="187"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
 
 </div>
 </div>
@@ -736,7 +736,7 @@ Here is the caller graph for this function:</div>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1AbstractThread_ae8fc0b3f68faed69e7f0b4e940ef12c0_cgraph.svg" width="406" height="78"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1AbstractThread_ae8fc0b3f68faed69e7f0b4e940ef12c0_cgraph.svg" width="406" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -863,7 +863,7 @@ Here is the caller graph for this function:</div>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1AbstractThread_a499a70b1d68a82fcded917a331f4cdef_cgraph.svg" width="406" height="78"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1AbstractThread_a499a70b1d68a82fcded917a331f4cdef_cgraph.svg" width="406" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
