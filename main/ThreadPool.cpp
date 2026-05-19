@@ -38,7 +38,7 @@ AbstractThreadPool::Private::List::~List() {
 std::vector<AbstractThreadPool *> AbstractThreadPool::pools() { return Private::list_; }
 
 AbstractThreadPool::AbstractThreadPool(const std::string &name) : private_(*new Private) {
-  thread_ = AbstractThread::currentThread();
+  thread_ = AbstractThread::current();
   private_.name_ = name;
   std::vector<AbstractThreadPool *>::iterator it = std::lower_bound(Private::list_.begin(), Private::list_.end(), this, Private::Compare());
   Private::list_.insert(it, this);

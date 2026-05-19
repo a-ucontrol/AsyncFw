@@ -9,7 +9,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include <AsyncFw/LogStream>
 
 int main(int argc, char *argv[]) {
-  AsyncFw::AbstractThread *_mainThread = AsyncFw::AbstractThread::currentThread();
+  AsyncFw::AbstractThread *_mainThread = AsyncFw::AbstractThread::current();
   AsyncFw::Thread thread1("T1");
   AsyncFw::Thread thread2("T2");
 
@@ -21,17 +21,17 @@ int main(int argc, char *argv[]) {
   logDebug() << "T2 id:" << thread2.id();
 
   thread1.invokeMethod([&thread2, _mainThread]() {
-    AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::currentThread();
+    AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::current();
     logInfo() << "run in thread" << ct->name() << ct->id();
     std::this_thread::sleep_for(std::chrono::milliseconds(10));
 
     thread2.invokeMethod([_mainThread]() {
-      AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::currentThread();
+      AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::current();
       logInfo() << "run in thread" << ct->name() << ct->id();
       std::this_thread::sleep_for(std::chrono::milliseconds(10));
 
       _mainThread->invokeMethod([_mainThread]() {
-        AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::currentThread();
+        AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::current();
         logInfo() << "run in thread" << ct->name() << ct->id();
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
         logInfo() << "exit application";

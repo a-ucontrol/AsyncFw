@@ -20,9 +20,9 @@ CoroutineTask task(uint64_t &end, int _ms) {
   co_await CoroutineAwait([&end, &_ms](CoroutineHandle _h) {
     ThreadPool::async(
         [&_ms]() {
-          logDebug() << "async" << _ms << Thread::currentThread()->name();
+          logDebug() << "async" << _ms << Thread::current()->name();
           std::this_thread::sleep_for(std::chrono::milliseconds(_ms));
-          logDebug() << "async end" << _ms << Thread::currentThread()->name();
+          logDebug() << "async end" << _ms << Thread::current()->name();
         },
         [&end, _h]() {
           logDebug() << "resume";

@@ -180,7 +180,7 @@ void AbstractThread::Holder::complete() {
 
 void AbstractThread::Holder::wait() {
   waiting = true;
-  thread = AbstractThread::currentThread();
+  thread = AbstractThread::current();
   int _q = 0;
   for (;;) {
     thread->exec();
@@ -295,7 +295,7 @@ AbstractThread::~AbstractThread() {
   delete &private_;
 }
 
-AbstractThread *AbstractThread::currentThread() {
+AbstractThread *AbstractThread::current() {
   std::thread::id _id = std::this_thread::get_id();
   {  //lock scope
     LockGuard lock(Private::list.mutex);

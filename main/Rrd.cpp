@@ -28,7 +28,7 @@ using namespace AsyncFw;
 
 Rrd::Rrd(int size, int interval, int fillInterval, const std::string &name) : dbSize(size), interval(interval), fill(interval ? fillInterval / interval : 0) {
   lsTrace();
-  thread_ = Thread::currentThread();
+  thread_ = Thread::current();
   if (size == 0) {
     readOnly = true;
     if (name.empty()) return;

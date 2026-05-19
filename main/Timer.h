@@ -35,7 +35,7 @@ private:
   class SingleTimerTask : public AbstractThread::AbstractTask {
   public:
     SingleTimerTask(int ms, T _f) : f(std::move(_f)) {
-      t = AbstractThread::currentThread();
+      t = AbstractThread::current();
       id = t->appendTimer(ms, this);
     }
     void operator()() override {

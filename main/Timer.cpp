@@ -13,7 +13,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 using namespace AsyncFw;
 
 Timer::Timer() {
-  thread_ = AbstractThread::currentThread();
+  thread_ = AbstractThread::current();
   timerId = thread_->appendTimerTask(0, [this]() {
     if (single_) stop();
     timeout();

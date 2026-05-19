@@ -29,8 +29,8 @@ int main(int argc, char *argv[]) {
   _test.finished.connect([]() { AsyncFw::ApplicationNotifier::instance()->notify({TestThreadFinished, std::chrono::system_clock::now()}); });
   _test.start();
 
-  AsyncFw::Thread::currentThread()->started.connect([]() { AsyncFw::ApplicationNotifier::instance()->notify({MainThreadStarted}); });
-  AsyncFw::Thread::currentThread()->finished.connect([]() { AsyncFw::ApplicationNotifier::instance()->notify({MainThreadFinished}); });
+  AsyncFw::Thread::current()->started.connect([]() { AsyncFw::ApplicationNotifier::instance()->notify({MainThreadStarted}); });
+  AsyncFw::Thread::current()->finished.connect([]() { AsyncFw::ApplicationNotifier::instance()->notify({MainThreadFinished}); });
 
   lsNotice() << "Start Applicaiton";
   int ret = AsyncFw::MainThread::exec();

@@ -147,7 +147,7 @@ int main(int argc, char *argv[]) {
   bool _socket = false;
   if (argc == 2 && std::string(argv[1]) == "--socket") _socket = true;
 
-  AsyncFw::AbstractThread::currentThread()->invokeMethod([_socket]() { run_examples(_socket); });
+  AsyncFw::AbstractThread::current()->invokeMethod([_socket]() { run_examples(_socket); });
 
   logNotice() << "Start Applicaiton";
   int ret = AsyncFw::MainThread::exec();

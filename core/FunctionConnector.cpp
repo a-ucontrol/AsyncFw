@@ -39,7 +39,7 @@ AbstractFunctionConnector::Connection::Connection(AbstractFunctionConnector *con
     lsError().flush() << "fixed connection type, throw exception...";
     throw std::runtime_error("fixed connection type");
   }
-  thread_ = AbstractThread::currentThread();
+  thread_ = AbstractThread::current();
   std::vector<Connection *>::iterator it = std::lower_bound(connector_->list.begin(), connector_->list.end(), this, [](const Connection *c1, const Connection *c2) { return c1 < c2; });
   connector_->list.insert(it, this);
   trace() << LogStream::Color::Green << static_cast<int>(type_) << thread_->name() << this << connector_ << connector_->list.size();

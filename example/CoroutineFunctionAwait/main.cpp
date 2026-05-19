@@ -14,11 +14,11 @@ using namespace AsyncFw;
 class Example {
 public:
   double tst_double(int v1, double v2) {
-    lsDebug() << v1 << v2 << Thread::currentThread()->name();
+    lsDebug() << v1 << v2 << Thread::current()->name();
     std::chrono::milliseconds(10);
     return v1 + v2 + 10000.0;
   }
-  void tst_void(const std::string &s) { lsDebug() << s << Thread::currentThread()->name(); }
+  void tst_void(const std::string &s) { lsDebug() << s << Thread::current()->name(); }
 };
 
 CoroutineTask task() {
@@ -57,7 +57,7 @@ CoroutineTask task() {
   std::string str {"string2"};
   co_await coFunction(&_thread, &Example::tst_void, &_e, str);
 
-  lsNotice() << i << j1 << j2 << k1 << k2 << str << AsyncFw::Thread::currentThread()->name();
+  lsNotice() << i << j1 << j2 << k1 << k2 << str << AsyncFw::Thread::current()->name();
 
   MainThread::exit();
 }

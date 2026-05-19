@@ -113,7 +113,7 @@ public:
   }
 
   /*! \brief Returns a pointer to the AsyncFw::AbstractThread that manages the currently executing thread. */
-  static AbstractThread *currentThread();
+  static AbstractThread *current();
   /*! \brief Assigns a pointer to the list of all threads. \param list pointer to the list of threads \return AbstractThread::LockGuard */
   static AbstractThread::LockGuard threads(std::vector<AbstractThread *> **);
 

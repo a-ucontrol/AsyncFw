@@ -29,7 +29,7 @@ bool Thread::Compare::operator()(const AbstractSocket *_s1, const AbstractSocket
   return _s1 < _s2;
 }
 
-Thread *Thread::currentThread() { return static_cast<Thread *>(AbstractThread::currentThread()); }
+Thread *Thread::current() { return static_cast<Thread *>(AbstractThread::current()); }
 
 Thread::Thread(const std::string &name) : AbstractThread(name) { trace(); }
 

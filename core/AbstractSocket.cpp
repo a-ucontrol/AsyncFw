@@ -71,7 +71,7 @@ struct AbstractSocket::Private {
 AbstractSocket::AbstractSocket() : private_(*new Private) {
   private_.la_.ss_family = AF_INET;
   private_.pa_.ss_family = AF_INET;
-  thread_ = Thread::currentThread();
+  thread_ = Thread::current();
   thread_->appendSocket(this);
   trace();
 }

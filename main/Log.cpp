@@ -230,7 +230,7 @@ void Log::output(const Message &m) {
   if (i <= level) {
     Rrd::append(rrdItemFromMessage(m));
     if (!thread_->running()) return;
-    if (std::this_thread::get_id() != thread_->id()) { console_msg("Log", "output executed from different thread, log thread: " + thread_->name() + ", current thread: " + AbstractThread::currentThread()->name()); }
+    if (std::this_thread::get_id() != thread_->id()) { console_msg("Log", "output executed from different thread, log thread: " + thread_->name() + ", current thread: " + AbstractThread::current()->name()); }
     if (autoSave > 0) {
       autoSave--;
       if (timerIdAutosave >= 0) thread_->modifyTimer(timerIdAutosave, 15000);

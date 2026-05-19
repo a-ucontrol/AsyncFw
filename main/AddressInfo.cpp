@@ -23,7 +23,7 @@ using namespace AsyncFw;
 
 struct AddressInfo::Private {
   Private(AddressInfo *_ai) : ai(_ai) {
-    thread = AbstractThread::currentThread();
+    thread = AbstractThread::current();
     memset(&options, 0, sizeof(options));
     options.sock_state_cb_data = this;
     options.sock_state_cb = [](void *data, ares_socket_t s, int read, int write) {

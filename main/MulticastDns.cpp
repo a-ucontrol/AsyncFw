@@ -129,7 +129,7 @@ Instance<MulticastDns> MulticastDns::instance_ {"MulticastDns"};
 MulticastDns::MulticastDns(const std::string &_serviceType) {
   if (!instance_.value) instance_.value = this;
   else { logEmergency("Only one MulticastDNS can exist"); }
-  thread_ = AbstractThread::currentThread();
+  thread_ = AbstractThread::current();
   setServiceType(_serviceType);
   lsTrace();
 }

@@ -14,18 +14,18 @@ AsyncFw::CoroutineTask task() {
   AsyncFw::CoroutineAwait await([](AsyncFw::CoroutineHandle h) {
     AsyncFw::ThreadPool::async(
         [h]() {
-          AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::currentThread();
+          AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::current();
           logInfo() << "task: run in thread" << ct->name() << ct->id();
           std::this_thread::sleep_for(std::chrono::milliseconds(10));
         },
         [h]() {
-          AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::currentThread();
+          AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::current();
           logInfo() << "task: resume in thread" << ct->name() << ct->id();
           h.resume();
         });
   });
   co_await await;
-  AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::currentThread();
+  AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::current();
   logNotice() << "task: resumed in thread" << ct->name() << ct->id();
 }
 
@@ -38,18 +38,18 @@ int main(int argc, char *argv[]) {
     AsyncFw::CoroutineAwait await([](AsyncFw::CoroutineHandle h) {
       AsyncFw::ThreadPool::async(
           [h]() {
-            AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::currentThread();
+            AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::current();
             logInfo() << "coro_task: run in thread" << ct->name() << ct->id();
             std::this_thread::sleep_for(std::chrono::milliseconds(15));
           },
           [h]() {
-            AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::currentThread();
+            AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::current();
             logInfo() << "coro_task: resume in thread" << ct->name() << ct->id();
             h.resume();
           });
     });
     co_await await;
-    AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::currentThread();
+    AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::current();
     logNotice() << "coro_task: resumed in thread" << ct->name() << ct->id();
     AsyncFw::MainThread::exit(0);
   });

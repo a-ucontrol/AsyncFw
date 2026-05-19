@@ -40,7 +40,7 @@ struct SystemProcess::Private {
 
 SystemProcess::SystemProcess(bool redirect_stdin) : private_(*new Private) {
   private_.redirect_stdin = redirect_stdin;
-  private_.thread_ = AbstractThread::currentThread();
+  private_.thread_ = AbstractThread::current();
   lsTrace();
 }
 

@@ -41,7 +41,7 @@ int main(int argc, char *argv[]) {
   logAlert() << "logAlert";
   //logEmergency() << "Emergency";  // throw
 
-  AsyncFw::Thread::currentThread()->invokeMethod([]() { AsyncFw::MainThread::exit(); });
+  AsyncFw::Thread::current()->invokeMethod([]() { AsyncFw::MainThread::exit(); });
 
   int ret = AsyncFw::MainThread::exec();
 

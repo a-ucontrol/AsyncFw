@@ -31,7 +31,7 @@ private:
 int main(int argc, char *argv[]) {
   ExampleClass _e("ExampleClass");
   AsyncFw::Instance<ExampleClass>::create("ExampleClassInstance");
-  AsyncFw::Thread::currentThread()->invokeMethod([]() { AsyncFw::MainThread::exit(); });
+  AsyncFw::Thread::current()->invokeMethod([]() { AsyncFw::MainThread::exit(); });
 
   lsInfoMagenta() << _e.name();
   lsInfoMagenta() << ExampleClass::instance()->name();

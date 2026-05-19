@@ -20,7 +20,7 @@ class Thread : public AbstractThread {
 
 public:
   /*! \brief Returns a pointer to the AsyncFw::Thread that manages the currently executing thread. */
-  static Thread *currentThread();
+  static Thread *current();
 
   /*! \brief Constructs a thread. \param name thread name */
   Thread(const std::string & = "Thread");

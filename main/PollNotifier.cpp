@@ -11,7 +11,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 using namespace AsyncFw;
 
 PollNotifier::PollNotifier() {
-  thread_ = AbstractThread::currentThread();
+  thread_ = AbstractThread::current();
   lsTrace();
 }
 

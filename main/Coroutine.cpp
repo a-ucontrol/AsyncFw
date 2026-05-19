@@ -55,7 +55,7 @@ void CoroutineTask::wait() {
 bool CoroutineTask::finished() { return promise->private_.finished; }
 
 CoroutineTask::promise_type::promise_type() : private_(*new Private) {
-  private_.thread = AbstractThread::currentThread();
+  private_.thread = AbstractThread::current();
   lsTrace();
 }
 

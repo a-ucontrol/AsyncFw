@@ -59,7 +59,7 @@ void DataArrayTcpClient::removeSocket(DataArraySocket *socket) {
 }
 
 int DataArrayTcpClient::exchange(const DataArraySocket *socket, const DataArray &wda, const DataArray *rda, uint32_t pi, int timeout) {
-  if (AbstractThread::currentThread() != thread_) return ErrorExchangeThread;
+  if (AbstractThread::current() != thread_) return ErrorExchangeThread;
   if (socket->state_ != AbstractSocket::State::Active) return ErrorExchangeNotActive;
   FunctionConnectionGuardList _gl;
   std::coroutine_handle<> h;

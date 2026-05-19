@@ -20,7 +20,7 @@ class Sender {
 public:
   Sender() {
     timer.timeout.connect([this]() {
-      AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::currentThread();
+      AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::current();
       logInfo() << cnt << "send from thread:" << ct->name() << ct->id();
       connector(cnt++, "");
       if (cnt == 3) AsyncFw::MainThread::exit(0);
@@ -39,7 +39,7 @@ class Receiver {
 public:
   Receiver(const std::string &name, const Sender &sender) {
     fcg = sender.connector.connect([name_ = name](int val, const std::string &) {
-      AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::currentThread();
+      AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::current();
       logInfo() << name_ << "received" << val << "run in thread" << ct->name() << ct->id();
     });
   }
