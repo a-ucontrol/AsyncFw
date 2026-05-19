@@ -624,7 +624,7 @@ void AbstractThread::Private::wake() {
 #endif
 }
 
-bool AbstractThread::invokeTask(AbstractTask *task) const {
+bool AbstractThread::invoke(AbstractTask *task) const {
   {  //lock scope
     LockGuard lock(private_.mutex);
     warning_if(!private_.state) << LogStream::Color::Red << "thread not running" << LOG_THREAD_NAME << private_.id;
@@ -731,7 +731,7 @@ void AbstractThread::removeTimer(int id) {
     _t = new Function<>::Value([p = it->task] { delete p; });
     private_.timers.erase(it);
   }
-  if (!invokeTask(_t)) {
+  if (!invoke(_t)) {
     (*_t)();
     delete _t;
   }
@@ -824,7 +824,7 @@ void AbstractThread::removePollDescriptor(int fd) {
     private_.wake();
     private_.poll_tasks.erase(it);
   }
-  if (!invokeTask(_t)) {
+  if (!invoke(_t)) {
     (*_t)();
     delete _t;
   }
@@ -842,7 +842,7 @@ void AbstractThread::removePollDescriptor(int fd) {
     _t = new Function<>::Value([p = *it] { delete p; });
     private_.poll_tasks.erase(it);
   }
-  if (!invokeTask(_t)) {
+  if (!invoke(_t)) {
     (*_t)();
     delete _t;
   }
