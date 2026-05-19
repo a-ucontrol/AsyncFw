@@ -115,7 +115,7 @@ protected:
     Connection(M m, O *o, AbstractFunctionConnector *c, Type t) : AbstractFunctionConnector::Connection(c, t), f_(new MemberFunction(m, o)) {}
 
   private:
-    struct AbstractFunction : public AsyncFw::Function<Args &...>::template Abstract<void> {
+    struct AbstractFunction : public AsyncFw::Invocable<Args &...>::template Abstract<void> {
       virtual void invoke(Args &...args) = 0;
       virtual AbstractFunction *copy() const = 0;
     };

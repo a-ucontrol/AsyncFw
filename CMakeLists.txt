@@ -80,7 +80,7 @@ set(AsyncFw_CORE_HEADERS
   "${CMAKE_CURRENT_LIST_DIR}/core/FunctionConnector.h"
   "${CMAKE_CURRENT_LIST_DIR}/core/LogStream.h"
   "${CMAKE_CURRENT_LIST_DIR}/core/DataArray.h"
-  "${CMAKE_CURRENT_LIST_DIR}/core/function.hpp"
+  "${CMAKE_CURRENT_LIST_DIR}/core/invocable.hpp"
 )
 
 set(AsyncFw_CORE_SOURCES

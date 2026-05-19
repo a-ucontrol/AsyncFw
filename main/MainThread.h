@@ -41,7 +41,7 @@ public:
   template <typename F>
   static void setExitTask(F function) {
     if (mt_.exitTask && !mt_.invoke([_p = mt_.exitTask]() { delete _p; })) delete mt_.exitTask;
-    mt_.exitTask = new Function<>::Value(std::forward<F>(function));
+    mt_.exitTask = new Invocable<>::Function(std::forward<F>(function));
   }
   static int exec() {
 #ifndef USE_QAPPLICATION
@@ -163,7 +163,7 @@ private:
       for (std::vector<Timer>::iterator it = timers.begin(); it != timers.end(); ++it) {
         if (it->id == id) {
           if (it->qid >= 0) QObject::killTimer(it->qid);
-          _t = new Function<>::Value([p = it->task] { delete p; });
+          _t = new Invocable<>::Function([p = it->task] { delete p; });
           timers.erase(it);
           break;
         }
@@ -243,7 +243,7 @@ private:
       LockGuard lock = lockGuard();
       for (const std::shared_ptr<Poll> &poll : notifiers)
         if (poll->in.socket() == fd) {
-          _t = new Function<>::Value([p = poll->task] { delete p; });
+          _t = new Invocable<>::Function([p = poll->task] { delete p; });
           notifiers.removeAll(poll);
           break;
         }
