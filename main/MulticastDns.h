@@ -9,6 +9,7 @@ class AbstractThread;
 \brief Example: \snippet MulticastDns/main.cpp snippet */
 class MulticastDns {
 public:
+  /*! \brief The Host struct. */
   struct Host {
     std::string name;
     std::string ipv4;

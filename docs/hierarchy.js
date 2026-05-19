@@ -57,6 +57,7 @@ var hierarchy =
     [ "AsyncFw::FunctionConnectionGuard", "classAsyncFw_1_1FunctionConnectionGuard.html", null ],
     [ "AsyncFw::FunctionConnectorProtected< F >", "classAsyncFw_1_1FunctionConnectorProtected.html", null ],
     [ "AsyncFw::AbstractThread::Holder", "classAsyncFw_1_1AbstractThread_1_1Holder.html", null ],
+    [ "AsyncFw::MulticastDns::Host", "structAsyncFw_1_1MulticastDns_1_1Host.html", null ],
     [ "AsyncFw::HttpServer", "classAsyncFw_1_1HttpServer.html", null ],
     [ "AsyncFw::LogStream", "classAsyncFw_1_1LogStream.html", null ],
     [ "AsyncFw::MulticastDns", "classAsyncFw_1_1MulticastDns.html", null ],

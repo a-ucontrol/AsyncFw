@@ -35,7 +35,7 @@ var annotated_dup =
       [ "Log", "classAsyncFw_1_1Log.html", null ],
       [ "LogStream", "classAsyncFw_1_1LogStream.html", null ],
       [ "MainThread", "classAsyncFw_1_1MainThread.html", null ],
-      [ "MulticastDns", "classAsyncFw_1_1MulticastDns.html", null ],
+      [ "MulticastDns", "classAsyncFw_1_1MulticastDns.html", "classAsyncFw_1_1MulticastDns" ],
       [ "PollNotifier", "classAsyncFw_1_1PollNotifier.html", "classAsyncFw_1_1PollNotifier" ],
       [ "Rrd", "classAsyncFw_1_1Rrd.html", null ],
       [ "RrdClient", "classAsyncFw_1_1RrdClient.html", null ],

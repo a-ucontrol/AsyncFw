@@ -36,8 +36,8 @@ class Instance : public AbstractInstance {
   friend T;
 
 public:
-  template <typename CT, typename... Args>
   /*! \brief Create instance value. */
+  template <typename CT, typename... Args>
   static CT *create(Args... args) {
     if (!i_->value) {
       CT *_v = new CT(args...);
@@ -52,10 +52,13 @@ public:
     return nullptr;
   }
   template <typename... Args>
+  /*! \brief Create instance value. */
   static T *create(Args... args) {
     return create<T>(args...);
   }
+  /*! \brief Set instance value. */
   static void set(T *p) { i_->value = p; }
+  /*! \brief Get instance value. */
   static T *get() { return i_->value; }
 
   Instance(const std::string &_name = {}) : AbstractInstance(_name) { i_ = this; }
