@@ -21,10 +21,10 @@
 <!-- Node2 -->
 <g id="Node000002" class="node">
 <title>Node2</title>
-<g id="a_Node000002"><a xlink:href="classAsyncFw_1_1AbstractThread.html#ac1b35ef04b06ce771f6d6ca0a5b120db" target="_top" xlink:title="Returns a pointer to the AsyncFw::AbstractThread that manages the currently executing thread.">
+<g id="a_Node000002"><a xlink:href="classAsyncFw_1_1AbstractThread.html#af33c5949edb374d673a7a9ac0c81ec32" target="_top" xlink:title="Returns a pointer to the AsyncFw::AbstractThread that manages the currently executing thread.">
 <polygon fill="white" stroke="#666666" points="299,-32 169,-32 169,0 299,0 299,-32"/>
 <text text-anchor="start" x="177" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AbstractThread</text>
-<text text-anchor="middle" x="234" y="-6.5" font-family="Helvetica,sans-Serif" font-size="10.00">::currentThread</text>
+<text text-anchor="middle" x="234" y="-6.5" font-family="Helvetica,sans-Serif" font-size="10.00">::current</text>
 </a>
 </g>
 </g>

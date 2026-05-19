@@ -26,24 +26,24 @@ protected:
 };
 
 /*! \class Task Task.h <AsyncFw/Task> \brief The Task class. */
-template <typename M>
+template <typename F>
 class Task : public AbstractTask {
 public:
-  Task(M &&method, AbstractThread *thread = nullptr) : AbstractTask(thread), method(std::move(method)) {}
+  Task(F &&function, AbstractThread *thread = nullptr) : AbstractTask(thread), function(std::move(function)) {}
   void operator()() override {
     running_ = true;
     if (!thread_) {
-      method(&data_);
+      function(&data_);
       running_ = false;
       return;
     }
     thread_->invoke([this]() {
-      method(&data_);
+      function(&data_);
       running_ = false;
     });
   }
 
 private:
-  M method;
+  F function;
 };
 }  // namespace AsyncFw

@@ -127,10 +127,10 @@ Collaboration diagram for AsyncFw::MainThread:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a25688475c59b58e4da8184a8358323dc" id="r_a25688475c59b58e4da8184a8358323dc"><td class="memTemplParams" colspan="2"><a id="a25688475c59b58e4da8184a8358323dc" name="a25688475c59b58e4da8184a8358323dc"></a>
-template&lt;typename M&gt; </td></tr>
-<tr class="memitem:a25688475c59b58e4da8184a8358323dc"><td class="memTemplItemLeft" align="right" valign="top">static void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>setExitTask</b> (M method)</td></tr>
-<tr class="separator:a25688475c59b58e4da8184a8358323dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a93d09b1d05c3960729f1fe77ea5b31d9" id="r_a93d09b1d05c3960729f1fe77ea5b31d9"><td class="memTemplParams" colspan="2"><a id="a93d09b1d05c3960729f1fe77ea5b31d9" name="a93d09b1d05c3960729f1fe77ea5b31d9"></a>
+template&lt;typename F&gt; </td></tr>
+<tr class="memitem:a93d09b1d05c3960729f1fe77ea5b31d9"><td class="memTemplItemLeft" align="right" valign="top">static void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>setExitTask</b> (F function)</td></tr>
+<tr class="separator:a93d09b1d05c3960729f1fe77ea5b31d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad12e620772820ad751868c7b49fa4190" id="r_ad12e620772820ad751868c7b49fa4190"><td class="memItemLeft" align="right" valign="top"><a id="ad12e620772820ad751868c7b49fa4190" name="ad12e620772820ad751868c7b49fa4190"></a>
 static int&#160;</td><td class="memItemRight" valign="bottom"><b>exec</b> ()</td></tr>
 <tr class="separator:ad12e620772820ad751868c7b49fa4190"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -150,7 +150,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><b>quit</b> ()</t
 <div class="line"><span class="preprocessor">#include &lt;MainThread.h&gt;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[]) {</div>
-<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Thread.html#a46662ffa7482f1c1e52b654c51639fd2">AsyncFw::Thread::currentThread</a>()-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#aa58eb4ec370dece81d08f7cea08f2af7">invokeMethod</a>([]() { AsyncFw::MainThread::exit(123); });</div>
+<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Thread.html#a0a3bd6a54db28f73ff59cfea6a40b07a">AsyncFw::Thread::current</a>()-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a786474d037b50053f1a97af7b67e6069">invoke</a>([]() { AsyncFw::MainThread::exit(123); });</div>
 <div class="line"> </div>
 <div class="line">  logDebug() &lt;&lt; <span class="stringliteral">&quot;Start Application&quot;</span>;</div>
 <div class="line">  <span class="keywordtype">int</span> ret = AsyncFw::MainThread::exec();</div>

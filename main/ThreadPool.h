@@ -51,34 +51,34 @@ private:
 */
 class ThreadPool : public AbstractThreadPool {
 public:
-  template <typename M>
-  static bool sync(AbstractThread *_t, M m) {
-    return _t->invoke(m, true);
+  template <typename F>
+  static bool sync(AbstractThread *_t, F f) {
+    return _t->invoke(f, true);
   }
-  template <typename M>
-  static bool async(AbstractThread *_t, M m) {
-    return _t->invoke(m);
+  template <typename F>
+  static bool async(AbstractThread *_t, F f) {
+    return _t->invoke(f);
   }
-  template <typename M>
-  static bool async(M m) {
-    return instance_.value->getThread()->invoke(m);
+  template <typename F>
+  static bool async(F f) {
+    return instance_.value->getThread()->invoke(f);
   }
-  template <typename M, typename R, typename T = std::invoke_result<M>::type>
-  static typename std::enable_if<std::is_void<T>::value, bool>::type async(AbstractThread *thread, M method, R result) {
+  template <typename F, typename R, typename T = std::invoke_result<F>::type>
+  static typename std::enable_if<std::is_void<T>::value, bool>::type async(AbstractThread *thread, F function, R result) {
     AbstractThread *_t = AbstractThread::current();
-    return thread->invoke([_t, method, result]() {
-      method();
+    return thread->invoke([_t, function, result]() {
+      function();
       _t->invoke([result]() { result(); });
     });
   }
-  template <typename M, typename R, typename T = std::invoke_result<M>::type>
-  static typename std::enable_if<!std::is_void<T>::value, bool>::type async(AbstractThread *thread, M method, R result) {
+  template <typename F, typename R, typename T = std::invoke_result<F>::type>
+  static typename std::enable_if<!std::is_void<T>::value, bool>::type async(AbstractThread *thread, F function, R result) {
     AbstractThread *_t = AbstractThread::current();
-    return thread->invoke([_t, method, result]() { _t->invoke([v = std::move(method()), result]() { result(v); }); });
+    return thread->invoke([_t, function, result]() { _t->invoke([v = std::move(function()), result]() { result(v); }); });
   }
-  template <typename M, typename R>
-  static bool async(M m, R r) {
-    return async(instance_.value->getThread(), m, r);
+  template <typename F, typename R>
+  static bool async(F f, R r) {
+    return async(instance_.value->getThread(), f, r);
   }
 
   static inline ThreadPool *instance() { return instance_.value; }

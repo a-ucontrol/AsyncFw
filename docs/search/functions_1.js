@@ -6,5 +6,5 @@ var searchData=
   ['coresolve_3',['coResolve',['../classAsyncFw_1_1AddressInfo.html#a29ed820c53d1c0a621d102ebc6e6088f',1,'AsyncFw::AddressInfo']]],
   ['create_4',['create',['../classAsyncFw_1_1Instance.html#a8000597f0e7ee4bd6669491a5b502beb',1,'AsyncFw::Instance']]],
   ['created_5',['created',['../classAsyncFw_1_1AbstractInstance.html#ad4ae1bfcd37c2450b85b35257f92360f',1,'AsyncFw::AbstractInstance']]],
-  ['currentthread_6',['currentThread',['../classAsyncFw_1_1AbstractThread.html#ac1b35ef04b06ce771f6d6ca0a5b120db',1,'AsyncFw::AbstractThread::currentThread()'],['../classAsyncFw_1_1Thread.html#a46662ffa7482f1c1e52b654c51639fd2',1,'AsyncFw::Thread::currentThread()']]]
+  ['current_6',['current',['../classAsyncFw_1_1AbstractThread.html#af33c5949edb374d673a7a9ac0c81ec32',1,'AsyncFw::AbstractThread::current()'],['../classAsyncFw_1_1Thread.html#a0a3bd6a54db28f73ff59cfea6a40b07a',1,'AsyncFw::Thread::current()']]]
 ];

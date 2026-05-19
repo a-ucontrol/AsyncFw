@@ -6,6 +6,5 @@ var searchData=
   ['infokey_3',['infoKey',['../classAsyncFw_1_1TlsContext.html#aac5676503ece10fccb60192d4cd573c5',1,'AsyncFw::TlsContext']]],
   ['infotrusted_4',['infoTrusted',['../classAsyncFw_1_1TlsContext.html#ae71ae4d15772edd1b68914cdc2e6e3b1',1,'AsyncFw::TlsContext']]],
   ['interruptrequested_5',['interruptRequested',['../classAsyncFw_1_1AbstractThread.html#ab614c8e9a266d924e86c3c49c1a6ff36',1,'AsyncFw::AbstractThread']]],
-  ['invokemethod_6',['invokeMethod',['../classAsyncFw_1_1AbstractThread.html#aa58eb4ec370dece81d08f7cea08f2af7',1,'AsyncFw::AbstractThread']]],
-  ['invoketask_7',['invokeTask',['../classAsyncFw_1_1AbstractThread.html#abe96e6b2a1de041f0d25390a6b77e50a',1,'AsyncFw::AbstractThread']]]
+  ['invoke_6',['invoke',['../classAsyncFw_1_1AbstractThread.html#a786474d037b50053f1a97af7b67e6069',1,'AsyncFw::AbstractThread::invoke(F function, bool sync=false) const'],['../classAsyncFw_1_1AbstractThread.html#ae17a11d9e960083f5e98dc68c257cd36',1,'AsyncFw::AbstractThread::invoke(AbstractTask *) const']]]
 ];

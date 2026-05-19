@@ -38,10 +38,10 @@ class MainThread : private Thread
 #endif
 {
 public:
-  template <typename M>
-  static void setExitTask(M method) {
+  template <typename F>
+  static void setExitTask(F function) {
     if (mt_.exitTask && !mt_.invoke([_p = mt_.exitTask]() { delete _p; })) delete mt_.exitTask;
-    mt_.exitTask = new Function<>::Value(std::forward<M>(method));
+    mt_.exitTask = new Function<>::Value(std::forward<F>(function));
   }
   static int exec() {
 #ifndef USE_QAPPLICATION

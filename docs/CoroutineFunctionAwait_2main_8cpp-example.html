@@ -123,11 +123,11 @@ $(function(){initNavTree('CoroutineFunctionAwait_2main_8cpp-example.html',''); i
 <div class="line"><span class="keyword">class </span>Example {</div>
 <div class="line"><span class="keyword">public</span>:</div>
 <div class="line">  <span class="keywordtype">double</span> tst_double(<span class="keywordtype">int</span> v1, <span class="keywordtype">double</span> v2) {</div>
-<div class="line">    lsDebug() &lt;&lt; v1 &lt;&lt; v2 &lt;&lt; <a class="code hl_function" href="classAsyncFw_1_1Thread.html#a46662ffa7482f1c1e52b654c51639fd2">Thread::currentThread</a>()-&gt;name();</div>
+<div class="line">    lsDebug() &lt;&lt; v1 &lt;&lt; v2 &lt;&lt; <a class="code hl_function" href="classAsyncFw_1_1Thread.html#a0a3bd6a54db28f73ff59cfea6a40b07a">Thread::current</a>()-&gt;name();</div>
 <div class="line">    std::chrono::milliseconds(10);</div>
 <div class="line">    <span class="keywordflow">return</span> v1 + v2 + 10000.0;</div>
 <div class="line">  }</div>
-<div class="line">  <span class="keywordtype">void</span> tst_void(<span class="keyword">const</span> std::string &amp;s) { lsDebug() &lt;&lt; s &lt;&lt; <a class="code hl_function" href="classAsyncFw_1_1Thread.html#a46662ffa7482f1c1e52b654c51639fd2">Thread::currentThread</a>()-&gt;name(); }</div>
+<div class="line">  <span class="keywordtype">void</span> tst_void(<span class="keyword">const</span> std::string &amp;s) { lsDebug() &lt;&lt; s &lt;&lt; <a class="code hl_function" href="classAsyncFw_1_1Thread.html#a0a3bd6a54db28f73ff59cfea6a40b07a">Thread::current</a>()-&gt;name(); }</div>
 <div class="line">};</div>
 <div class="line"> </div>
 <div class="line"><a id="_a0" name="_a0"></a><a class="code hl_struct" href="structAsyncFw_1_1CoroutineTask.html">CoroutineTask</a> task() {</div>
@@ -166,7 +166,7 @@ $(function(){initNavTree('CoroutineFunctionAwait_2main_8cpp-example.html',''); i
 <div class="line">  std::string str {<span class="stringliteral">&quot;string2&quot;</span>};</div>
 <div class="line">  <span class="keyword">co_await</span> coFunction(&amp;_thread, &amp;Example::tst_void, &amp;_e, str);</div>
 <div class="line"> </div>
-<div class="line">  lsNotice() &lt;&lt; i &lt;&lt; j1 &lt;&lt; j2 &lt;&lt; k1 &lt;&lt; k2 &lt;&lt; str &lt;&lt; <a id="a3" name="a3"></a><a class="code hl_function" href="classAsyncFw_1_1Thread.html#a46662ffa7482f1c1e52b654c51639fd2">AsyncFw::Thread::currentThread</a>()-&gt;<a id="a4" name="a4"></a><a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd">name</a>();</div>
+<div class="line">  lsNotice() &lt;&lt; i &lt;&lt; j1 &lt;&lt; j2 &lt;&lt; k1 &lt;&lt; k2 &lt;&lt; str &lt;&lt; <a id="a3" name="a3"></a><a class="code hl_function" href="classAsyncFw_1_1Thread.html#a0a3bd6a54db28f73ff59cfea6a40b07a">AsyncFw::Thread::current</a>()-&gt;<a id="a4" name="a4"></a><a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd">name</a>();</div>
 <div class="line"> </div>
 <div class="line">  MainThread::exit();</div>
 <div class="line">}</div>
@@ -185,7 +185,7 @@ $(function(){initNavTree('CoroutineFunctionAwait_2main_8cpp-example.html',''); i
 <div class="ttc" id="aclassAsyncFw_1_1AbstractThread_html_afdaccb5da7d4bee5e9ff687f761bd21f"><div class="ttname"><a href="classAsyncFw_1_1AbstractThread.html#afdaccb5da7d4bee5e9ff687f761bd21f">AsyncFw::AbstractThread::start</a></div><div class="ttdeci">void start()</div><div class="ttdoc">Create a managed thread and run exec().</div><div class="ttdef"><b>Definition</b> AbstractThread.cpp:643</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1Instance_html_a8000597f0e7ee4bd6669491a5b502beb"><div class="ttname"><a href="classAsyncFw_1_1Instance.html#a8000597f0e7ee4bd6669491a5b502beb">AsyncFw::Instance::create</a></div><div class="ttdeci">static CT * create(Args... args)</div><div class="ttdoc">Create instance value.</div><div class="ttdef"><b>Definition</b> Instance.h:41</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1Thread_html"><div class="ttname"><a href="classAsyncFw_1_1Thread.html">AsyncFw::Thread</a></div><div class="ttdoc">AsyncFw::Thread thread with sockets.</div><div class="ttdef"><b>Definition</b> Thread.h:16</div></div>
-<div class="ttc" id="aclassAsyncFw_1_1Thread_html_a46662ffa7482f1c1e52b654c51639fd2"><div class="ttname"><a href="classAsyncFw_1_1Thread.html#a46662ffa7482f1c1e52b654c51639fd2">AsyncFw::Thread::currentThread</a></div><div class="ttdeci">static Thread * currentThread()</div><div class="ttdoc">Returns a pointer to the AsyncFw::Thread that manages the currently executing thread.</div><div class="ttdef"><b>Definition</b> Thread.cpp:32</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1Thread_html_a0a3bd6a54db28f73ff59cfea6a40b07a"><div class="ttname"><a href="classAsyncFw_1_1Thread.html#a0a3bd6a54db28f73ff59cfea6a40b07a">AsyncFw::Thread::current</a></div><div class="ttdeci">static Thread * current()</div><div class="ttdoc">Returns a pointer to the AsyncFw::Thread that manages the currently executing thread.</div><div class="ttdef"><b>Definition</b> Thread.cpp:32</div></div>
 <div class="ttc" id="astructAsyncFw_1_1CoroutineTask_html"><div class="ttname"><a href="structAsyncFw_1_1CoroutineTask.html">AsyncFw::CoroutineTask</a></div><div class="ttdoc">The CoroutineTask struct.</div><div class="ttdef"><b>Definition</b> Coroutine.h:18</div></div>
 </div><!-- fragment --> </div><!-- contents -->
 </div><!-- doc-content -->

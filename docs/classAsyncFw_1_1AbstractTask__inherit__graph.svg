@@ -21,8 +21,8 @@
 <g id="Node000003" class="node">
 <title>Node3</title>
 <g id="a_Node000003"><a xlink:href="classAsyncFw_1_1Task.html" target="_top" xlink:title="The Task class.">
-<polygon fill="white" stroke="#666666" points="115.75,-20 5.25,-20 5.25,0 115.75,0 115.75,-20"/>
-<text text-anchor="middle" x="60.5" y="-6.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::Task&lt; M &gt;</text>
+<polygon fill="white" stroke="#666666" points="114.62,-20 6.38,-20 6.38,0 114.62,0 114.62,-20"/>
+<text text-anchor="middle" x="60.5" y="-6.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::Task&lt; F &gt;</text>
 </a>
 </g>
 </g>

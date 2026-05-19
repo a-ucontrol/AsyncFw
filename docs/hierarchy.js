@@ -39,7 +39,7 @@ var hierarchy =
         [ "AsyncFw::ListenSocket", "classAsyncFw_1_1ListenSocket.html", null ]
       ] ],
       [ "AsyncFw::AbstractTask", "classAsyncFw_1_1AbstractTask.html", [
-        [ "AsyncFw::Task< M >", "classAsyncFw_1_1Task.html", null ]
+        [ "AsyncFw::Task< F >", "classAsyncFw_1_1Task.html", null ]
       ] ],
       [ "AsyncFw::ApplicationNotifier::Value", "structAsyncFw_1_1ApplicationNotifier_1_1Value.html", null ],
       [ "AsyncFw::CoroutineTask::promise_type", "structAsyncFw_1_1CoroutineTask_1_1promise__type.html", null ]

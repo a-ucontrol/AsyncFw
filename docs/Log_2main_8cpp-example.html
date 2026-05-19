@@ -121,7 +121,7 @@ $(function(){initNavTree('Log_2main_8cpp-example.html',''); initResizable(true);
 <div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[]) {</div>
 <div class="line">  <a id="_a0" name="_a0"></a><a class="code hl_class" href="classAsyncFw_1_1Thread.html">AsyncFw::Thread</a> logThread {<span class="stringliteral">&quot;LogThread&quot;</span>};</div>
 <div class="line">  logThread.<a id="a1" name="a1"></a><a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#afdaccb5da7d4bee5e9ff687f761bd21f">start</a>();</div>
-<div class="line">  logThread.invokeMethod([]() { <a id="a2" name="a2"></a><a class="code hl_function" href="classAsyncFw_1_1Instance.html#a8000597f0e7ee4bd6669491a5b502beb">AsyncFw::Instance&lt;AsyncFw::Log&gt;::create</a>(1000, <span class="stringliteral">&quot;log-file-name&quot;</span>); }, <span class="keyword">true</span>);</div>
+<div class="line">  logThread.invoke([]() { <a id="a2" name="a2"></a><a class="code hl_function" href="classAsyncFw_1_1Instance.html#a8000597f0e7ee4bd6669491a5b502beb">AsyncFw::Instance&lt;AsyncFw::Log&gt;::create</a>(1000, <span class="stringliteral">&quot;log-file-name&quot;</span>); }, <span class="keyword">true</span>);</div>
 <div class="line"> </div>
 <div class="line">  AsyncFw::Log::instance()-&gt;setColorOut(<span class="keyword">true</span>);</div>
 <div class="line"> </div>
@@ -149,7 +149,7 @@ $(function(){initNavTree('Log_2main_8cpp-example.html',''); initResizable(true);
 <div class="line">  logAlert() &lt;&lt; <span class="stringliteral">&quot;logAlert&quot;</span>;</div>
 <div class="line">  <span class="comment">//logEmergency() &lt;&lt; &quot;Emergency&quot;;  // throw</span></div>
 <div class="line"> </div>
-<div class="line">  <a id="a3" name="a3"></a><a class="code hl_function" href="classAsyncFw_1_1Thread.html#a46662ffa7482f1c1e52b654c51639fd2">AsyncFw::Thread::currentThread</a>()-&gt;<a id="a4" name="a4"></a><a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#aa58eb4ec370dece81d08f7cea08f2af7">invokeMethod</a>([]() { AsyncFw::MainThread::exit(); });</div>
+<div class="line">  <a id="a3" name="a3"></a><a class="code hl_function" href="classAsyncFw_1_1Thread.html#a0a3bd6a54db28f73ff59cfea6a40b07a">AsyncFw::Thread::current</a>()-&gt;<a id="a4" name="a4"></a><a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a786474d037b50053f1a97af7b67e6069">invoke</a>([]() { AsyncFw::MainThread::exit(); });</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordtype">int</span> ret = AsyncFw::MainThread::exec();</div>
 <div class="line"> </div>
@@ -157,11 +157,11 @@ $(function(){initNavTree('Log_2main_8cpp-example.html',''); initResizable(true);
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">return</span> ret;</div>
 <div class="line">}</div>
-<div class="ttc" id="aclassAsyncFw_1_1AbstractThread_html_aa58eb4ec370dece81d08f7cea08f2af7"><div class="ttname"><a href="classAsyncFw_1_1AbstractThread.html#aa58eb4ec370dece81d08f7cea08f2af7">AsyncFw::AbstractThread::invokeMethod</a></div><div class="ttdeci">std::enable_if&lt; std::is_void&lt; typenamestd::invoke_result&lt; M &gt;::type &gt;::value, bool &gt;::type invokeMethod(M method, bool sync=false) const</div><div class="ttdoc">Runs a method in a managed thread.</div><div class="ttdef"><b>Definition</b> AbstractThread.h:74</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1AbstractThread_html_a786474d037b50053f1a97af7b67e6069"><div class="ttname"><a href="classAsyncFw_1_1AbstractThread.html#a786474d037b50053f1a97af7b67e6069">AsyncFw::AbstractThread::invoke</a></div><div class="ttdeci">std::enable_if&lt; std::is_void&lt; typenamestd::invoke_result&lt; F &gt;::type &gt;::value, bool &gt;::type invoke(F function, bool sync=false) const</div><div class="ttdoc">Runs a function in a managed thread.</div><div class="ttdef"><b>Definition</b> AbstractThread.h:74</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1AbstractThread_html_afdaccb5da7d4bee5e9ff687f761bd21f"><div class="ttname"><a href="classAsyncFw_1_1AbstractThread.html#afdaccb5da7d4bee5e9ff687f761bd21f">AsyncFw::AbstractThread::start</a></div><div class="ttdeci">void start()</div><div class="ttdoc">Create a managed thread and run exec().</div><div class="ttdef"><b>Definition</b> AbstractThread.cpp:643</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1Instance_html_a8000597f0e7ee4bd6669491a5b502beb"><div class="ttname"><a href="classAsyncFw_1_1Instance.html#a8000597f0e7ee4bd6669491a5b502beb">AsyncFw::Instance::create</a></div><div class="ttdeci">static CT * create(Args... args)</div><div class="ttdoc">Create instance value.</div><div class="ttdef"><b>Definition</b> Instance.h:41</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1Thread_html"><div class="ttname"><a href="classAsyncFw_1_1Thread.html">AsyncFw::Thread</a></div><div class="ttdoc">AsyncFw::Thread thread with sockets.</div><div class="ttdef"><b>Definition</b> Thread.h:16</div></div>
-<div class="ttc" id="aclassAsyncFw_1_1Thread_html_a46662ffa7482f1c1e52b654c51639fd2"><div class="ttname"><a href="classAsyncFw_1_1Thread.html#a46662ffa7482f1c1e52b654c51639fd2">AsyncFw::Thread::currentThread</a></div><div class="ttdeci">static Thread * currentThread()</div><div class="ttdoc">Returns a pointer to the AsyncFw::Thread that manages the currently executing thread.</div><div class="ttdef"><b>Definition</b> Thread.cpp:32</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1Thread_html_a0a3bd6a54db28f73ff59cfea6a40b07a"><div class="ttname"><a href="classAsyncFw_1_1Thread.html#a0a3bd6a54db28f73ff59cfea6a40b07a">AsyncFw::Thread::current</a></div><div class="ttdeci">static Thread * current()</div><div class="ttdoc">Returns a pointer to the AsyncFw::Thread that manages the currently executing thread.</div><div class="ttdef"><b>Definition</b> Thread.cpp:32</div></div>
 </div><!-- fragment --> </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

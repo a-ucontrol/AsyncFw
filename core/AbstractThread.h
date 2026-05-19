@@ -69,11 +69,11 @@ public:
     bool waiting;
   };
 
-  /*! \brief Runs a method in a managed thread. \param method runs method \param sync blocking wait if true \return True if the method is added to the queue */
-  template <typename M>
-  typename std::enable_if<std::is_void<typename std::invoke_result<M>::type>::value, bool>::type invoke(M method, bool sync = false) const {
+  /*! \brief Runs a function in a managed thread. \param function runs function \param sync blocking wait if true \return True if the function is added to the queue */
+  template <typename F>
+  typename std::enable_if<std::is_void<typename std::invoke_result<F>::type>::value, bool>::type invoke(F function, bool sync = false) const {
     if (!sync) {
-      AbstractTask *_t = new Function<>::Value(std::forward<M>(method));
+      AbstractTask *_t = new Function<>::Value(std::forward<F>(function));
       if (!invoke(_t)) {
         delete _t;
         return false;
@@ -82,12 +82,12 @@ public:
     }
     if (std::this_thread::get_id() == id()) {
       processTasks();
-      method();
+      function();
       return true;
     }
     std::atomic_flag finished;
-    AbstractTask *_t = new Function<>::Value([&method, &finished]() {
-      method();
+    AbstractTask *_t = new Function<>::Value([&function, &finished]() {
+      function();
       finished.test_and_set();
       finished.notify_one();
     });
@@ -101,15 +101,15 @@ public:
     }
     return true;
   }
-  /*! \brief Append poll task. \param fd file descriptor \param events watch events \param method task method \return True if the task added */
-  template <typename M>
-  bool appendPollTask(int fd, PollEvents events, M method) {
-    return appendPollDescriptor(fd, events, new Function<PollEvents>::Value(std::forward<M>(method)));
+  /*! \brief Append poll task. \param fd file descriptor \param events watch events \param function task function \return True if the task added */
+  template <typename F>
+  bool appendPollTask(int fd, PollEvents events, F function) {
+    return appendPollDescriptor(fd, events, new Function<PollEvents>::Value(std::forward<F>(function)));
   }
-  /*! \brief Append timer task. \param ms timeout in milliseconds \param method task method \return timer id if the task added or value less than zero */
-  template <typename M>
-  int appendTimerTask(int timeout, M method) {
-    return appendTimer(timeout, new Function<>::Value(std::forward<M>(method)));
+  /*! \brief Append timer task. \param ms timeout in milliseconds \param function task function \return timer id if the task added or value less than zero */
+  template <typename F>
+  int appendTimerTask(int timeout, F function) {
+    return appendTimer(timeout, new Function<>::Value(std::forward<F>(function)));
   }
 
   /*! \brief Returns a pointer to the AsyncFw::AbstractThread that manages the currently executing thread. */

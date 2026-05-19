@@ -160,30 +160,30 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>name</b> () co
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a8423d2a0b099d04259e54affa78de6bb" id="r_a8423d2a0b099d04259e54affa78de6bb"><td class="memTemplParams" colspan="2"><a id="a8423d2a0b099d04259e54affa78de6bb" name="a8423d2a0b099d04259e54affa78de6bb"></a>
-template&lt;typename M&gt; </td></tr>
-<tr class="memitem:a8423d2a0b099d04259e54affa78de6bb"><td class="memTemplItemLeft" align="right" valign="top">static bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>sync</b> (<a class="el" href="classAsyncFw_1_1AbstractThread.html">AbstractThread</a> *_t, M m)</td></tr>
-<tr class="separator:a8423d2a0b099d04259e54affa78de6bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1573a02d0ce92c7f80bb93cba73c266a" id="r_a1573a02d0ce92c7f80bb93cba73c266a"><td class="memTemplParams" colspan="2"><a id="a1573a02d0ce92c7f80bb93cba73c266a" name="a1573a02d0ce92c7f80bb93cba73c266a"></a>
-template&lt;typename M&gt; </td></tr>
-<tr class="memitem:a1573a02d0ce92c7f80bb93cba73c266a"><td class="memTemplItemLeft" align="right" valign="top">static bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>async</b> (<a class="el" href="classAsyncFw_1_1AbstractThread.html">AbstractThread</a> *_t, M m)</td></tr>
-<tr class="separator:a1573a02d0ce92c7f80bb93cba73c266a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae69539570db83f8744f009eee0bebfcd" id="r_ae69539570db83f8744f009eee0bebfcd"><td class="memTemplParams" colspan="2"><a id="ae69539570db83f8744f009eee0bebfcd" name="ae69539570db83f8744f009eee0bebfcd"></a>
-template&lt;typename M&gt; </td></tr>
-<tr class="memitem:ae69539570db83f8744f009eee0bebfcd"><td class="memTemplItemLeft" align="right" valign="top">static bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>async</b> (M m)</td></tr>
-<tr class="separator:ae69539570db83f8744f009eee0bebfcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af6289f981e7e8cab8adbcc7d70df80ff" id="r_af6289f981e7e8cab8adbcc7d70df80ff"><td class="memTemplParams" colspan="2"><a id="af6289f981e7e8cab8adbcc7d70df80ff" name="af6289f981e7e8cab8adbcc7d70df80ff"></a>
-template&lt;typename M, typename R, typename T = std::invoke_result&lt;M&gt;::type&gt; </td></tr>
-<tr class="memitem:af6289f981e7e8cab8adbcc7d70df80ff"><td class="memTemplItemLeft" align="right" valign="top">static std::enable_if&lt; std::is_void&lt; T &gt;::value, bool &gt;::type&#160;</td><td class="memTemplItemRight" valign="bottom"><b>async</b> (<a class="el" href="classAsyncFw_1_1AbstractThread.html">AbstractThread</a> *thread, M method, R result)</td></tr>
-<tr class="separator:af6289f981e7e8cab8adbcc7d70df80ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:affab43c791eb39ef88061a1f8dd06051" id="r_affab43c791eb39ef88061a1f8dd06051"><td class="memTemplParams" colspan="2"><a id="affab43c791eb39ef88061a1f8dd06051" name="affab43c791eb39ef88061a1f8dd06051"></a>
-template&lt;typename M, typename R, typename T = std::invoke_result&lt;M&gt;::type&gt; </td></tr>
-<tr class="memitem:affab43c791eb39ef88061a1f8dd06051"><td class="memTemplItemLeft" align="right" valign="top">static std::enable_if&lt;!std::is_void&lt; T &gt;::value, bool &gt;::type&#160;</td><td class="memTemplItemRight" valign="bottom"><b>async</b> (<a class="el" href="classAsyncFw_1_1AbstractThread.html">AbstractThread</a> *thread, M method, R result)</td></tr>
-<tr class="separator:affab43c791eb39ef88061a1f8dd06051"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a676c0271d861135b49d9fc53848d7554" id="r_a676c0271d861135b49d9fc53848d7554"><td class="memTemplParams" colspan="2"><a id="a676c0271d861135b49d9fc53848d7554" name="a676c0271d861135b49d9fc53848d7554"></a>
-template&lt;typename M, typename R&gt; </td></tr>
-<tr class="memitem:a676c0271d861135b49d9fc53848d7554"><td class="memTemplItemLeft" align="right" valign="top">static bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>async</b> (M m, R r)</td></tr>
-<tr class="separator:a676c0271d861135b49d9fc53848d7554"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add8ee85dd7581acb117a805ff5a8c18a" id="r_add8ee85dd7581acb117a805ff5a8c18a"><td class="memTemplParams" colspan="2"><a id="add8ee85dd7581acb117a805ff5a8c18a" name="add8ee85dd7581acb117a805ff5a8c18a"></a>
+template&lt;typename F&gt; </td></tr>
+<tr class="memitem:add8ee85dd7581acb117a805ff5a8c18a"><td class="memTemplItemLeft" align="right" valign="top">static bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>sync</b> (<a class="el" href="classAsyncFw_1_1AbstractThread.html">AbstractThread</a> *_t, F f)</td></tr>
+<tr class="separator:add8ee85dd7581acb117a805ff5a8c18a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a35c4070964e69b187842b69b04d325" id="r_a0a35c4070964e69b187842b69b04d325"><td class="memTemplParams" colspan="2"><a id="a0a35c4070964e69b187842b69b04d325" name="a0a35c4070964e69b187842b69b04d325"></a>
+template&lt;typename F&gt; </td></tr>
+<tr class="memitem:a0a35c4070964e69b187842b69b04d325"><td class="memTemplItemLeft" align="right" valign="top">static bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>async</b> (<a class="el" href="classAsyncFw_1_1AbstractThread.html">AbstractThread</a> *_t, F f)</td></tr>
+<tr class="separator:a0a35c4070964e69b187842b69b04d325"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad32cb5c2bd270bee821034f402c7b86b" id="r_ad32cb5c2bd270bee821034f402c7b86b"><td class="memTemplParams" colspan="2"><a id="ad32cb5c2bd270bee821034f402c7b86b" name="ad32cb5c2bd270bee821034f402c7b86b"></a>
+template&lt;typename F&gt; </td></tr>
+<tr class="memitem:ad32cb5c2bd270bee821034f402c7b86b"><td class="memTemplItemLeft" align="right" valign="top">static bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>async</b> (F f)</td></tr>
+<tr class="separator:ad32cb5c2bd270bee821034f402c7b86b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9919894e586310a7ea5b780845376e17" id="r_a9919894e586310a7ea5b780845376e17"><td class="memTemplParams" colspan="2"><a id="a9919894e586310a7ea5b780845376e17" name="a9919894e586310a7ea5b780845376e17"></a>
+template&lt;typename F, typename R, typename T = std::invoke_result&lt;F&gt;::type&gt; </td></tr>
+<tr class="memitem:a9919894e586310a7ea5b780845376e17"><td class="memTemplItemLeft" align="right" valign="top">static std::enable_if&lt; std::is_void&lt; T &gt;::value, bool &gt;::type&#160;</td><td class="memTemplItemRight" valign="bottom"><b>async</b> (<a class="el" href="classAsyncFw_1_1AbstractThread.html">AbstractThread</a> *thread, F function, R result)</td></tr>
+<tr class="separator:a9919894e586310a7ea5b780845376e17"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af44552a3cac2283e594f35e697ce05c9" id="r_af44552a3cac2283e594f35e697ce05c9"><td class="memTemplParams" colspan="2"><a id="af44552a3cac2283e594f35e697ce05c9" name="af44552a3cac2283e594f35e697ce05c9"></a>
+template&lt;typename F, typename R, typename T = std::invoke_result&lt;F&gt;::type&gt; </td></tr>
+<tr class="memitem:af44552a3cac2283e594f35e697ce05c9"><td class="memTemplItemLeft" align="right" valign="top">static std::enable_if&lt;!std::is_void&lt; T &gt;::value, bool &gt;::type&#160;</td><td class="memTemplItemRight" valign="bottom"><b>async</b> (<a class="el" href="classAsyncFw_1_1AbstractThread.html">AbstractThread</a> *thread, F function, R result)</td></tr>
+<tr class="separator:af44552a3cac2283e594f35e697ce05c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5af6a927b72eec19abb94ee2477d00b5" id="r_a5af6a927b72eec19abb94ee2477d00b5"><td class="memTemplParams" colspan="2"><a id="a5af6a927b72eec19abb94ee2477d00b5" name="a5af6a927b72eec19abb94ee2477d00b5"></a>
+template&lt;typename F, typename R&gt; </td></tr>
+<tr class="memitem:a5af6a927b72eec19abb94ee2477d00b5"><td class="memTemplItemLeft" align="right" valign="top">static bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>async</b> (F f, R r)</td></tr>
+<tr class="separator:a5af6a927b72eec19abb94ee2477d00b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a086c0271dcb7c4be416705d622145f83" id="r_a086c0271dcb7c4be416705d622145f83"><td class="memItemLeft" align="right" valign="top"><a id="a086c0271dcb7c4be416705d622145f83" name="a086c0271dcb7c4be416705d622145f83"></a>
 static <a class="el" href="classAsyncFw_1_1ThreadPool.html">ThreadPool</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>instance</b> ()</td></tr>
 <tr class="separator:a086c0271dcb7c4be416705d622145f83"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -228,48 +228,48 @@ std::mutex&#160;</td><td class="memItemRight" valign="bottom"><b>mutex</b></td><
 <div class="line">  logInfo() &lt;&lt; threadPool-&gt;text();</div>
 <div class="line"> </div>
 <div class="line">  <a class="code hl_class" href="classAsyncFw_1_1AbstractThread.html">AsyncFw::AbstractThread</a> *_lt = AsyncFw::ThreadPool::instance()-&gt;createThread(<span class="stringliteral">&quot;LogThread&quot;</span>);</div>
-<div class="line">  _lt-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#aa58eb4ec370dece81d08f7cea08f2af7">invokeMethod</a>([]() { <a class="code hl_function" href="classAsyncFw_1_1Instance.html#a8000597f0e7ee4bd6669491a5b502beb">AsyncFw::Instance&lt;AsyncFw::Log&gt;::create</a>(); }, <span class="keyword">true</span>);  <span class="comment">//create log instance in log thread _lt</span></div>
+<div class="line">  _lt-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a786474d037b50053f1a97af7b67e6069">invoke</a>([]() { <a class="code hl_function" href="classAsyncFw_1_1Instance.html#a8000597f0e7ee4bd6669491a5b502beb">AsyncFw::Instance&lt;AsyncFw::Log&gt;::create</a>(); }, <span class="keyword">true</span>);  <span class="comment">//create log instance in log thread _lt</span></div>
 <div class="line"> </div>
 <div class="line">  <a class="code hl_class" href="classAsyncFw_1_1AbstractThread.html">AsyncFw::AbstractThread</a> *_t = AsyncFw::ThreadPool::instance()-&gt;createThread(<span class="stringliteral">&quot;SyncExample&quot;</span>);</div>
 <div class="line"> </div>
 <div class="line">  AsyncFw::ThreadPool::sync(_t, []() {</div>
-<div class="line">    <a class="code hl_class" href="classAsyncFw_1_1AbstractThread.html">AsyncFw::AbstractThread</a> *ct = <a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#ac1b35ef04b06ce771f6d6ca0a5b120db">AsyncFw::AbstractThread::currentThread</a>();</div>
+<div class="line">    <a class="code hl_class" href="classAsyncFw_1_1AbstractThread.html">AsyncFw::AbstractThread</a> *ct = <a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#af33c5949edb374d673a7a9ac0c81ec32">AsyncFw::AbstractThread::current</a>();</div>
 <div class="line">    std::this_thread::sleep_for(std::chrono::milliseconds(10));</div>
 <div class="line">    logInfo() &lt;&lt; <span class="stringliteral">&quot;sync run in thread&quot;</span> &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd">name</a>() &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a41d1cf92e033bcc11e2394cb949e031a">id</a>();</div>
 <div class="line">  });</div>
 <div class="line"> </div>
 <div class="line">  AsyncFw::ThreadPool::async([]() {</div>
-<div class="line">    <a class="code hl_class" href="classAsyncFw_1_1AbstractThread.html">AsyncFw::AbstractThread</a> *ct = <a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#ac1b35ef04b06ce771f6d6ca0a5b120db">AsyncFw::AbstractThread::currentThread</a>();</div>
+<div class="line">    <a class="code hl_class" href="classAsyncFw_1_1AbstractThread.html">AsyncFw::AbstractThread</a> *ct = <a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#af33c5949edb374d673a7a9ac0c81ec32">AsyncFw::AbstractThread::current</a>();</div>
 <div class="line">    std::this_thread::sleep_for(std::chrono::milliseconds(10));</div>
 <div class="line">    logInfo() &lt;&lt; <span class="stringliteral">&quot;async run in thread&quot;</span> &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd">name</a>() &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a41d1cf92e033bcc11e2394cb949e031a">id</a>();</div>
 <div class="line">  });</div>
 <div class="line"> </div>
 <div class="line">  AsyncFw::ThreadPool::async(</div>
 <div class="line">      []() {</div>
-<div class="line">        <a class="code hl_class" href="classAsyncFw_1_1AbstractThread.html">AsyncFw::AbstractThread</a> *ct = <a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#ac1b35ef04b06ce771f6d6ca0a5b120db">AsyncFw::AbstractThread::currentThread</a>();</div>
+<div class="line">        <a class="code hl_class" href="classAsyncFw_1_1AbstractThread.html">AsyncFw::AbstractThread</a> *ct = <a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#af33c5949edb374d673a7a9ac0c81ec32">AsyncFw::AbstractThread::current</a>();</div>
 <div class="line">        std::this_thread::sleep_for(std::chrono::milliseconds(10));</div>
 <div class="line">        logInfo() &lt;&lt; <span class="stringliteral">&quot;async run in thread&quot;</span> &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd">name</a>() &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a41d1cf92e033bcc11e2394cb949e031a">id</a>();</div>
 <div class="line">      },</div>
 <div class="line">      []() {</div>
-<div class="line">        <a class="code hl_class" href="classAsyncFw_1_1AbstractThread.html">AsyncFw::AbstractThread</a> *ct = <a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#ac1b35ef04b06ce771f6d6ca0a5b120db">AsyncFw::AbstractThread::currentThread</a>();</div>
+<div class="line">        <a class="code hl_class" href="classAsyncFw_1_1AbstractThread.html">AsyncFw::AbstractThread</a> *ct = <a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#af33c5949edb374d673a7a9ac0c81ec32">AsyncFw::AbstractThread::current</a>();</div>
 <div class="line">        logNotice() &lt;&lt; <span class="stringliteral">&quot;result without value, run in thread&quot;</span> &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd">name</a>() &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a41d1cf92e033bcc11e2394cb949e031a">id</a>();</div>
 <div class="line">      });</div>
 <div class="line"> </div>
 <div class="line">  AsyncFw::ThreadPool::async(</div>
 <div class="line">      []() {</div>
-<div class="line">        <a class="code hl_class" href="classAsyncFw_1_1AbstractThread.html">AsyncFw::AbstractThread</a> *ct = <a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#ac1b35ef04b06ce771f6d6ca0a5b120db">AsyncFw::AbstractThread::currentThread</a>();</div>
+<div class="line">        <a class="code hl_class" href="classAsyncFw_1_1AbstractThread.html">AsyncFw::AbstractThread</a> *ct = <a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#af33c5949edb374d673a7a9ac0c81ec32">AsyncFw::AbstractThread::current</a>();</div>
 <div class="line">        std::this_thread::sleep_for(std::chrono::milliseconds(15));</div>
 <div class="line">        logInfo() &lt;&lt; <span class="stringliteral">&quot;async run in thread&quot;</span> &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd">name</a>() &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a41d1cf92e033bcc11e2394cb949e031a">id</a>();</div>
 <div class="line">        <span class="keywordflow">return</span> 1;</div>
 <div class="line">      },</div>
 <div class="line">      [](<span class="keywordtype">int</span> r) {</div>
-<div class="line">        <a class="code hl_class" href="classAsyncFw_1_1AbstractThread.html">AsyncFw::AbstractThread</a> *ct = <a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#ac1b35ef04b06ce771f6d6ca0a5b120db">AsyncFw::AbstractThread::currentThread</a>();</div>
+<div class="line">        <a class="code hl_class" href="classAsyncFw_1_1AbstractThread.html">AsyncFw::AbstractThread</a> *ct = <a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#af33c5949edb374d673a7a9ac0c81ec32">AsyncFw::AbstractThread::current</a>();</div>
 <div class="line">        logNotice() &lt;&lt; <span class="stringliteral">&quot;result:&quot;</span> &lt;&lt; r &lt;&lt; <span class="stringliteral">&quot;run in thread&quot;</span> &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd">name</a>() &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a41d1cf92e033bcc11e2394cb949e031a">id</a>();</div>
 <div class="line">        AsyncFw::MainThread::exit(0);</div>
 <div class="line">      });</div>
 <div class="line"> </div>
 <div class="line">  AsyncFw::AbstractThreadPool::Thread *_t1 = AsyncFw::ThreadPool::instance()-&gt;createThread(<span class="stringliteral">&quot;DestroyFromThreadExample&quot;</span>);</div>
-<div class="line">  _t1-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#aa58eb4ec370dece81d08f7cea08f2af7">invokeMethod</a>([_t1]() { _t1-&gt;destroy(); });</div>
+<div class="line">  _t1-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a786474d037b50053f1a97af7b67e6069">invoke</a>([_t1]() { _t1-&gt;destroy(); });</div>
 <div class="line"> </div>
 <div class="line">  logNotice() &lt;&lt; <span class="stringliteral">&quot;Start Applicaiton&quot;</span>;</div>
 <div class="line"> </div>

@@ -201,7 +201,7 @@ class AsyncFw::Instance&lt; T &gt;</div><p>The <a class="el" href="classAsyncFw_
 <div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[]) {</div>
 <div class="line">  ExampleClass _e(<span class="stringliteral">&quot;ExampleClass&quot;</span>);</div>
 <div class="line">  <a class="code hl_function" href="#a8000597f0e7ee4bd6669491a5b502beb">AsyncFw::Instance&lt;ExampleClass&gt;::create</a>(<span class="stringliteral">&quot;ExampleClassInstance&quot;</span>);</div>
-<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Thread.html#a46662ffa7482f1c1e52b654c51639fd2">AsyncFw::Thread::currentThread</a>()-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#aa58eb4ec370dece81d08f7cea08f2af7">invokeMethod</a>([]() { AsyncFw::MainThread::exit(); });</div>
+<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Thread.html#a0a3bd6a54db28f73ff59cfea6a40b07a">AsyncFw::Thread::current</a>()-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a786474d037b50053f1a97af7b67e6069">invoke</a>([]() { AsyncFw::MainThread::exit(); });</div>
 <div class="line"> </div>
 <div class="line">  lsInfoMagenta() &lt;&lt; _e.name();</div>
 <div class="line">  lsInfoMagenta() &lt;&lt; ExampleClass::instance()-&gt;name();</div>
