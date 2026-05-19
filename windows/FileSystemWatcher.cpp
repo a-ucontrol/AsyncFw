@@ -61,7 +61,7 @@ FileSystemWatcher::Private::WatchPath::WatchPath(const std::string &path) {
 Instance<FileSystemWatcher> FileSystemWatcher::instance_ {"FileSystemWatcher"};
 
 FileSystemWatcher::FileSystemWatcher(const std::vector<std::string> &paths) : private_(*new Private) {
-  private_.thread_ = AbstractThread::currentThread();
+  private_.thread_ = AbstractThread::current();
   private_.timerid_ = private_.thread_->appendTimerTask(0, [this]() {
     private_.thread_->modifyTimer(private_.timerid_, 0);
     for (const Private::Watch *f : private_.we_) {

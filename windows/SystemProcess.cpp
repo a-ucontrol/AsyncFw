@@ -35,7 +35,7 @@ struct SystemProcess::Private {
 
 SystemProcess::SystemProcess(bool redirect_stdin) : private_(*new Private) {
   private_.redirect_stdin = redirect_stdin;
-  private_.thread_ = AbstractThread::currentThread();
+  private_.thread_ = AbstractThread::current();
   lsTrace();
 }
 
@@ -139,11 +139,11 @@ bool SystemProcess::exec_(const std::string &cmd, const std::vector<std::string>
             (*f)(_data->process.exitCode(), state, _data->out, _data->err);
             delete f;
           }
-          if (!_data->process.private_.thread_->invokeMethod([_data]() { delete _data; })) delete _data;
+          if (!_data->process.private_.thread_->invoke([_data]() { delete _data; })) delete _data;
         }
       },
       AbstractFunctionConnector::Connection::Direct);
-  if (!_data->process.private_.thread_->invokeMethod([cmd, args, f, _data]() {
+  if (!_data->process.private_.thread_->invoke([cmd, args, f, _data]() {
         if (!_data->process.start(cmd, args)) {
           if (f) {
             (*f)(_data->process.exitCode(), _data->process.state(), _data->out, _data->err);
