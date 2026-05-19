@@ -169,7 +169,7 @@ private:
         }
       }
     }
-    if (!invoke(_t)) {
+    if (!invokeTask(_t)) {
       (*_t)();
       delete _t;
     }
@@ -190,7 +190,7 @@ private:
     if (_t) (*_t)();
   }
 
-  bool invoke(AbstractTask *task) const override {
+  bool invokeTask(AbstractTask *task) const override {
     LockGuard lock = lockGuard();
     if (state_ == 2) return false;
     QMetaObject::invokeMethod(
@@ -249,7 +249,7 @@ private:
         }
     }
     if (!_t) return;
-    if (!invoke(_t)) {
+    if (!invokeTask(_t)) {
       (*_t)();
       delete _t;
     }

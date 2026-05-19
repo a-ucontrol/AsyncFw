@@ -74,7 +74,7 @@ public:
   typename std::enable_if<std::is_void<typename std::invoke_result<F>::type>::value, bool>::type invoke(F function, bool sync = false) const {
     if (!sync) {
       AbstractTask *_t = new Invocable<>::Function(std::forward<F>(function));
-      if (!invoke(_t)) {
+      if (!invokeTask(_t)) {
         delete _t;
         return false;
       }
@@ -91,7 +91,7 @@ public:
       finished.test_and_set();
       finished.notify_one();
     });
-    if (!invoke(_t)) {
+    if (!invokeTask(_t)) {
       delete _t;
       return false;
     }
@@ -125,7 +125,7 @@ public:
   /*! \brief Returns true if the managed thread is running. */
   virtual bool running() const;
   /*! \brief Runs a task in a managed thread. \param task poiner to AbstractTask \return True if the task is added to the queue */
-  virtual bool invoke(AbstractTask *) const;
+  virtual bool invokeTask(AbstractTask *) const;
   /*! \brief Append timer. \param ms timeout in milliseconds \param task pointer to AbstractTask \return timer id if timer added or value less than zero */
   virtual int appendTimer(int, AbstractTask *);
   /*! \brief Modify timer. \param id timer id \param ms timeout in milliseconds \return True if the timer modified */
