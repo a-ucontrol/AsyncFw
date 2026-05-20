@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.23)
 
-set(TARGET InvokeExample)
+set(TARGET CoroutineInvokeExample)
 
 project(${TARGET} VERSION 0.1 LANGUAGES CXX)
 

@@ -22,10 +22,10 @@ public:
 };
 
 CoroutineTask task() {
-  Thread _thread = Thread("CoroutineFunctionAwait");
+  Thread _thread = Thread("CoroutineInvokeAwait");
   _thread.start();
 
-  double i = co_await CoroutineFunctionAwait(
+  double i = co_await CoroutineInvokeAwait(
       &_thread,
       [](double v1, double v2) {
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
@@ -33,14 +33,14 @@ CoroutineTask task() {
       },
       100.5, 10.5);
 
-  double j1 = co_await coFunction(
+  double j1 = co_await coInvoke(
       [](double v1, double v2) {
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
         return v1 + v2 + 2.5;
       },
       100.5, 15.5);
 
-  double j2 = co_await coFunction(
+  double j2 = co_await coInvoke(
       &_thread,
       [](double v1, double v2) {
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
@@ -50,12 +50,12 @@ CoroutineTask task() {
 
   Example _e;
 
-  double k1 = co_await coFunction(&Example::tst_double, &_e, 10, 10.5);
-  double k2 = co_await coFunction(&_thread, &Example::tst_double, &_e, 10, 11.5);
+  double k1 = co_await coInvoke(&Example::tst_double, &_e, 10, 10.5);
+  double k2 = co_await coInvoke(&_thread, &Example::tst_double, &_e, 10, 11.5);
 
-  co_await coFunction(&Example::tst_void, &_e, std::string {"string1"});
+  co_await coInvoke(&Example::tst_void, &_e, std::string {"string1"});
   std::string str {"string2"};
-  co_await coFunction(&_thread, &Example::tst_void, &_e, str);
+  co_await coInvoke(&_thread, &Example::tst_void, &_e, str);
 
   lsNotice() << i << j1 << j2 << k1 << k2 << str << AsyncFw::Thread::current()->name();
 

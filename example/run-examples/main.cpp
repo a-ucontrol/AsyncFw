@@ -45,7 +45,7 @@ void run_examples(bool _socket) {
   logInfo() << "Start:" << app;
   process.start(app);
   process.wait();
-  app = EXAMPLES_PATH "CoroutineFunctionAwaitExample";
+  app = EXAMPLES_PATH "CoroutineInvokeExample";
   logInfo() << "Start:" << app;
   process.start(app);
   process.wait();
@@ -53,7 +53,7 @@ void run_examples(bool _socket) {
   logInfo() << "Start:" << app;
   process.start(app);
   process.wait();
-  app = EXAMPLES_PATH "InvokeExample";
+  app = EXAMPLES_PATH "ThreadInvokeExample";
   logInfo() << "Start:" << app;
   process.start(app);
   process.wait();

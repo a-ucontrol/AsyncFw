@@ -7,7 +7,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #pragma once
 
-/*! \example Coroutine/main.cpp Coroutine example \example CoroutineWait/main.cpp CoroutineWait example \example CoroutineInvokeAwait/main.cpp CoroutineInvokeAwait example */
+/*! \example Coroutine/main.cpp Coroutine example \example CoroutineWait/main.cpp CoroutineWait example \example CoroutineInvoke/main.cpp CoroutineInvoke example */
 
 #include <coroutine>
 #include "../core/AnyData.h"

@@ -1,6 +1,7 @@
 /*! \example ApplicationNotifier/main.cpp ApplicationNotifier example */
 /*! \example ContainerTask/main.cpp Task in container example */
 /*! \example Coroutine/main.cpp Coroutine example */
+/*! \example CoroutineInvoke/main.cpp Coroutine invoke example */
 /*! \example CoroutineWait/main.cpp Coroutine wait example */
 /*! \example Cryptor/main.cpp Cryptor example */
 /*! \example DataArray/main.cpp DataArray example */
@@ -9,7 +10,7 @@
 /*! \example FunctionConnector/main.cpp FunctionConnector example */
 /*! \example HttpServer/main.cpp HttpServer example */
 /*! \example HttpSocket/main.cpp HttpSocket example */
-/*! \example Invoke/main.cpp Invoke method example */
+/*! \example ThreadInvoke/main.cpp Thread invoke example */
 /*! \example ListenSocket/main.cpp ListenSocket example */
 /*! \example Log/main.cpp Log example */
 /*! \example LogTcp/main.cpp Remote log example */
