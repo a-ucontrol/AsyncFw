@@ -235,7 +235,7 @@ FAIL:
   std::terminate();
 }
 
-bool SystemProcess::exec_(const std::string &cmd, const std::vector<std::string> &args, Invocable<int, State, const std::string &, const std::string &>::Abstract<void> *f) {
+bool SystemProcess::exec_(const std::string &cmd, const std::vector<std::string> &args, Invocable<void(int, State, const std::string &, const std::string &)>::Abstract *f) {
   struct Data {
     SystemProcess process;
     std::string out;

@@ -41,7 +41,7 @@ public:
   template <typename F>
   static void setExitTask(F function) {
     if (mt_.exitTask && !mt_.invoke([_p = mt_.exitTask]() { delete _p; })) delete mt_.exitTask;
-    mt_.exitTask = new Invocable<>::Function(std::forward<F>(function));
+    mt_.exitTask = new Invocable<void()>::Function(std::forward<F>(function));
   }
   static int exec() {
 #ifndef USE_QAPPLICATION

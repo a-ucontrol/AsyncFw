@@ -49,7 +49,7 @@ using CoroutineHandle = std::coroutine_handle<CoroutineTask::promise_type>;
 /*! \struct CoroutineAwait Coroutine.h <AsyncFw/Coroutine> \brief The CoroutineAwait struct. */
 struct CoroutineAwait {
   template <typename T>
-  CoroutineAwait(T f) : f_(new Invocable<const CoroutineHandle>::Function(std::forward<T>(f))) {}
+  CoroutineAwait(T f) : f_(new Invocable<void(const CoroutineHandle)>::Function(std::forward<T>(f))) {}
   CoroutineAwait() = default;
   CoroutineAwait(const CoroutineAwait &) = delete;
   CoroutineAwait &operator=(const CoroutineAwait &) = delete;
@@ -60,7 +60,7 @@ struct CoroutineAwait {
 
 private:
   mutable CoroutineHandle h_;
-  Invocable<const CoroutineHandle>::Abstract<void> *f_ = nullptr;
+  Invocable<void(const CoroutineHandle)>::Abstract *f_ = nullptr;
 };
 
 template <typename F, typename... Args>

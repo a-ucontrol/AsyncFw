@@ -7,29 +7,31 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #pragma once
 namespace AsyncFw {
-template <typename... Args>
-struct Invocable {
-  template <typename R>
+template <typename T>
+struct Invocable;
+template <typename R, typename... Args>
+struct Invocable<R(Args...)> {
   struct Abstract {
     virtual R operator()(Args...) = 0;
     virtual ~Abstract() = default;
   };
-  template <typename F, typename R = std::invoke_result<F, Args...>::type>
-  struct Function : public Invocable::Abstract<R> {
-    R operator()(Args... args) override { return f_(std::forward<Args>(args)...); }
+  template <typename F>
+  struct Function : public Abstract {
     Function(F &&f) : f_(std::move(f)) {}
+    R operator()(Args... args) override { return f_(std::forward<Args>(args)...); }
 
   private:
     F f_;
   };
-  template <typename M, typename O, typename R = std::invoke_result<M, O, Args...>::type>
-  struct MemberFunction : public Invocable::Abstract<R> {
+  template <typename M, typename O>
+  struct MemberFunction : public Abstract {
+    MemberFunction(M m, O *o) : m_(m), o_(o) {}
     R operator()(Args... args) override { return (o_->*m_)(std::forward<Args>(args)...); }
-    MemberFunction(M m, O o) : m_(m), o_(o) {}
 
   private:
     M m_;
-    O o_;
+    O *o_;
   };
 };
+
 }  // namespace AsyncFw

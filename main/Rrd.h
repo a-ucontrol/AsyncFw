@@ -19,7 +19,7 @@ public:
   using ItemList = DataArrayList;
   template <typename T>
   void setAverage(int _interval, T f, int _offset = 0) {
-    average = new Invocable<const ItemList &>::Function(std::forward<T>(f));
+    average = new Invocable<void(const ItemList &)>::Function(std::forward<T>(f));
     aInterval = _interval / interval;
     aOffset = _offset;
   }
@@ -56,7 +56,7 @@ protected:
   bool readOnly = false;
 
 private:
-  Invocable<const ItemList &>::Abstract<void> *average = nullptr;
+  Invocable<void(const ItemList &)>::Abstract *average = nullptr;
   int aInterval = 0;
   int aOffset = 0;
   int interval;

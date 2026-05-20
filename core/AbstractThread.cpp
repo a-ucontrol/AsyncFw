@@ -728,7 +728,7 @@ void AbstractThread::removeTimer(int id) {
       console_msg("AbstractThread " + LOG_THREAD_NAME, "timer: " + std::to_string(id) + " not found");
       return;
     }
-    _t = new Invocable<>::Function([p = it->task] { delete p; });
+    _t = new Invocable<void()>::Function([p = it->task] { delete p; });
     private_.timers.erase(it);
   }
   if (!invokeTask(_t)) {
@@ -839,7 +839,7 @@ void AbstractThread::removePollDescriptor(int fd) {
       return;
     }
     if (private_.poll_tasks.size() == 1) private_.wake();
-    _t = new Invocable<>::Function([p = *it] { delete p; });
+    _t = new Invocable<void()>::Function([p = *it] { delete p; });
     private_.poll_tasks.erase(it);
   }
   if (!invokeTask(_t)) {

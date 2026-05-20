@@ -195,9 +195,9 @@ private:
 
   private:
     template <typename T>
-    HttpRule(const Request::Method method, T &f) : method(method), exec(new Invocable<const Request &>::Function(std::forward<T>(f))) {}
+    HttpRule(const Request::Method method, T &f) : method(method), exec(new Invocable<void(const Request &)>::Function(std::forward<T>(f))) {}
     HttpRule(HttpRule &) = delete;
-    Invocable<const Request &>::Abstract<void> *exec = nullptr;
+    Invocable<void(const Request &)>::Abstract *exec = nullptr;
   };
 
 public:
@@ -245,7 +245,7 @@ public:
   }
   template <typename T>
   void setPeek(T f) {
-    peek = new Invocable<const Request &, std::any>::Function(std::forward<T>(f));
+    peek = new Invocable<bool(const Request &, std::any)>::Function(std::forward<T>(f));
   }
   template <typename T>
   void clearConnections(const T &_data) {
@@ -285,7 +285,7 @@ private:
   std::vector<TcpSocket *> sockets;
   bool cors_request_enabled = true;
   static Instance<HttpServer> instance_;
-  Invocable<const Request &, std::any>::Abstract<bool> *peek = nullptr;
+  Invocable<bool(const Request &, std::any)>::Abstract *peek = nullptr;
   struct Private;
   Private &private_;
 };

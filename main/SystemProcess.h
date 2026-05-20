@@ -36,16 +36,16 @@ public:
 
   template <typename T>
   static bool exec(const std::string &cmd, const std::vector<std::string> &args, T f) {
-    return exec_(cmd, args, new Invocable<int, State, const std::string &, const std::string &>::Function(std::forward<T>(f)));
+    return exec_(cmd, args, new Invocable<void(int, State, const std::string &, const std::string &)>::Function(std::forward<T>(f)));
   }
   template <typename T>
   static bool exec(const std::string &cmd, T f) {
-    return exec_(cmd, {}, new Invocable<int, State, const std::string &, const std::string &>::Function(std::forward<T>(f)));
+    return exec_(cmd, {}, new Invocable<void(int, State, const std::string &, const std::string &)>::Function(std::forward<T>(f)));
   }
   static bool exec(const std::string &cmd, const std::vector<std::string> &args = {}) { return exec_(cmd, args, nullptr); }
 
 private:
-  static bool exec_(const std::string &, const std::vector<std::string> &, Invocable<int, State, const std::string &, const std::string &>::Abstract<void> *);
+  static bool exec_(const std::string &, const std::vector<std::string> &, Invocable<void(int, State, const std::string &, const std::string &)>::Abstract *);
   void finality();
   struct Private;
   Private &private_;

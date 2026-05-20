@@ -53,9 +53,9 @@ public:
   /*! \brief The LockGuard type. */
   using LockGuard = std::lock_guard<std::mutex>;
   /*! \brief The AbstractTask type. */
-  using AbstractTask = Invocable<>::Abstract<void>;
+  using AbstractTask = Invocable<void()>::Abstract;
   /*! \brief The AbstractPollTask type. */
-  using AbstractPollTask = Invocable<AbstractThread::PollEvents>::Abstract<void>;
+  using AbstractPollTask = Invocable<void(AbstractThread::PollEvents)>::Abstract;
 
   /*! \brief The Holder class. */
   class Holder {
@@ -73,7 +73,7 @@ public:
   template <typename F>
   typename std::enable_if<std::is_void<typename std::invoke_result<F>::type>::value, bool>::type invoke(F function, bool sync = false) const {
     if (!sync) {
-      AbstractTask *_t = new Invocable<>::Function(std::forward<F>(function));
+      AbstractTask *_t = new Invocable<void()>::Function(std::forward<F>(function));
       if (!invokeTask(_t)) {
         delete _t;
         return false;
@@ -86,7 +86,7 @@ public:
       return true;
     }
     std::atomic_flag finished;
-    AbstractTask *_t = new Invocable<>::Function([&function, &finished]() {
+    AbstractTask *_t = new Invocable<void()>::Function([&function, &finished]() {
       function();
       finished.test_and_set();
       finished.notify_one();
@@ -104,12 +104,12 @@ public:
   /*! \brief Append poll task. \param fd file descriptor \param events watch events \param function task function \return True if the task added */
   template <typename F>
   bool appendPollTask(int fd, PollEvents events, F function) {
-    return appendPollDescriptor(fd, events, new Invocable<PollEvents>::Function(std::forward<F>(function)));
+    return appendPollDescriptor(fd, events, new Invocable<void(PollEvents)>::Function(std::forward<F>(function)));
   }
   /*! \brief Append timer task. \param ms timeout in milliseconds \param function task function \return timer id if the task added or value less than zero */
   template <typename F>
   int appendTimerTask(int timeout, F function) {
-    return appendTimer(timeout, new Invocable<>::Function(std::forward<F>(function)));
+    return appendTimer(timeout, new Invocable<void()>::Function(std::forward<F>(function)));
   }
 
   /*! \brief Returns a pointer to the AsyncFw::AbstractThread that manages the currently executing thread. */
