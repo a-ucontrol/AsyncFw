@@ -7,7 +7,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #pragma once
 
-/*! \example Coroutine/main.cpp Coroutine example \example CoroutineWait/main.cpp CoroutineWait example \example CoroutineFunctionAwait/main.cpp CoroutineFunctionAwait example */
+/*! \example Coroutine/main.cpp Coroutine example \example CoroutineWait/main.cpp CoroutineWait example \example CoroutineInvokeAwait/main.cpp CoroutineInvokeAwait example */
 
 #include <coroutine>
 #include "../core/AnyData.h"
@@ -64,10 +64,10 @@ private:
 };
 
 template <typename F, typename... Args>
-struct CoroutineFunctionAwait {
+struct CoroutineInvokeAwait {
   using R = typename std::invoke_result<F, Args...>::type;
-  CoroutineFunctionAwait(AbstractThread *thread, F &&f, Args &&...a) : thread_(thread), f_(std::move(f)), t_(std::tuple(std::forward<Args>(a)...)) {}
-  CoroutineFunctionAwait(AbstractThread *thread, F &&f, const Args &...a) : thread_(thread), f_(std::move(f)), t_(std::tuple(a...)) {}
+  CoroutineInvokeAwait(AbstractThread *thread, F &&f, Args &&...a) : thread_(thread), f_(std::move(f)), t_(std::tuple(std::forward<Args>(a)...)) {}
+  CoroutineInvokeAwait(AbstractThread *thread, F &&f, const Args &...a) : thread_(thread), f_(std::move(f)), t_(std::tuple(a...)) {}
   void await_suspend(CoroutineHandle h) const noexcept {
     h_ = h;
     ThreadPool::async(thread_ ? thread_ : ThreadPool::instance()->getThread(), [this]() {
@@ -92,41 +92,41 @@ private:
 };
 
 template <typename F, typename... Args>
-CoroutineFunctionAwait<F, Args...> coFunction(F &&f, Args &&...args) {
-  return CoroutineFunctionAwait {nullptr, std::forward<F>(f), std::forward<Args>(args)...};
+CoroutineInvokeAwait<F, Args...> coInvoke(F &&f, Args &&...args) {
+  return CoroutineInvokeAwait {nullptr, std::forward<F>(f), std::forward<Args>(args)...};
 }
 
 template <typename T = AbstractThread, typename F, typename... Args>
-CoroutineFunctionAwait<F, Args...> coFunction(T *t, F &&f, Args &&...args) {
-  return CoroutineFunctionAwait {t, std::forward<F>(f), std::forward<Args>(args)...};
+CoroutineInvokeAwait<F, Args...> coInvoke(T *t, F &&f, Args &&...args) {
+  return CoroutineInvokeAwait {t, std::forward<F>(f), std::forward<Args>(args)...};
 }
 
 template <typename F, typename... Args>
-CoroutineFunctionAwait<F, Args...> coFunction(F &&f, Args &...args) {
-  return CoroutineFunctionAwait {nullptr, std::forward<F>(f), args...};
+CoroutineInvokeAwait<F, Args...> coInvoke(F &&f, Args &...args) {
+  return CoroutineInvokeAwait {nullptr, std::forward<F>(f), args...};
 }
 
 template <typename T = AbstractThread, typename F, typename... Args>
-CoroutineFunctionAwait<F, Args...> coFunction(T *t, F &&f, Args &...args) {
-  return CoroutineFunctionAwait {t, std::forward<F>(f), args...};
+CoroutineInvokeAwait<F, Args...> coInvoke(T *t, F &&f, Args &...args) {
+  return CoroutineInvokeAwait {t, std::forward<F>(f), args...};
 }
 template <typename M, typename O, typename... Args>
-auto coFunction(M m, O *o, const Args &&...args) {
-  return CoroutineFunctionAwait {nullptr, [o, m](Args... args) { return (o->*m)(std::move(args)...); }, std::forward<Args>(args)...};
+auto coInvoke(M m, O *o, const Args &&...args) {
+  return CoroutineInvokeAwait {nullptr, [o, m](Args... args) { return (o->*m)(std::move(args)...); }, std::forward<Args>(args)...};
 }
 
 template <typename T = AbstractThread, typename M, typename O, typename... Args>
-auto coFunction(T *t, M m, O *o, Args &&...args) {
-  return CoroutineFunctionAwait {t, [o, m](Args... args) { return (o->*m)(std::move(args)...); }, std::forward<Args>(args)...};
+auto coInvoke(T *t, M m, O *o, Args &&...args) {
+  return CoroutineInvokeAwait {t, [o, m](Args... args) { return (o->*m)(std::move(args)...); }, std::forward<Args>(args)...};
 }
 
 template <typename M, typename O, typename... Args>
-auto coFunction(M m, O *o, Args &...args) {
-  return CoroutineFunctionAwait {nullptr, [o, m](Args... args) { return (o->*m)(std::move(args)...); }, args...};
+auto coInvoke(M m, O *o, Args &...args) {
+  return CoroutineInvokeAwait {nullptr, [o, m](Args... args) { return (o->*m)(std::move(args)...); }, args...};
 }
 
 template <typename T = AbstractThread, typename M, typename O, typename... Args>
-auto coFunction(T *t, M m, O *o, Args &...args) {
-  return CoroutineFunctionAwait {t, [o, m](Args... args) { return (o->*m)(std::move(args)...); }, args...};
+auto coInvoke(T *t, M m, O *o, Args &...args) {
+  return CoroutineInvokeAwait {t, [o, m](Args... args) { return (o->*m)(std::move(args)...); }, args...};
 }
 }  // namespace AsyncFw
