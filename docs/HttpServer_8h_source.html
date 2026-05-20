@@ -302,9 +302,9 @@ $(function(){initNavTree('HttpServer_8h_source.html',''); initResizable(true); }
 <div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span> </div>
 <div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>  <span class="keyword">private</span>:</div>
 <div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>    HttpRule(<span class="keyword">const</span> Request::Method method, T &amp;f) : method(method), exec(<span class="keyword">new</span> Invocable&lt;const Request &amp;&gt;::Function(std::forward&lt;T&gt;(f))) {}</div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>    HttpRule(<span class="keyword">const</span> Request::Method method, T &amp;f) : method(method), exec(<span class="keyword">new</span> Invocable&lt;<span class="keywordtype">void</span>(<span class="keyword">const</span> Request &amp;)&gt;::Function(std::forward&lt;T&gt;(f))) {}</div>
 <div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>    HttpRule(HttpRule &amp;) = <span class="keyword">delete</span>;</div>
-<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>    Invocable&lt;const Request &amp;&gt;::Abstract&lt;<span class="keywordtype">void</span>&gt; *exec = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>    Invocable&lt;void(<span class="keyword">const</span> Request &amp;)&gt;::Abstract *exec = <span class="keyword">nullptr</span>;</div>
 <div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>  };</div>
 <div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span> </div>
 <div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span><span class="keyword">public</span>:</div>
@@ -352,7 +352,7 @@ $(function(){initNavTree('HttpServer_8h_source.html',''); initResizable(true); }
 <div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>  }</div>
 <div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>  <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
 <div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>  <span class="keywordtype">void</span> setPeek(T f) {</div>
-<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>    peek = <span class="keyword">new</span> Invocable&lt;const Request &amp;, std::any&gt;::Function(std::forward&lt;T&gt;(f));</div>
+<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>    peek = <span class="keyword">new</span> Invocable&lt;bool(<span class="keyword">const</span> Request &amp;, std::any)&gt;::Function(std::forward&lt;T&gt;(f));</div>
 <div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>  }</div>
 <div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>  <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
 <div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>  <span class="keywordtype">void</span> clearConnections(<span class="keyword">const</span> T &amp;_data) {</div>
@@ -392,7 +392,7 @@ $(function(){initNavTree('HttpServer_8h_source.html',''); initResizable(true); }
 <div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>  std::vector&lt;TcpSocket *&gt; sockets;</div>
 <div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>  <span class="keywordtype">bool</span> cors_request_enabled = <span class="keyword">true</span>;</div>
 <div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>  <span class="keyword">static</span> <a class="code hl_class" href="classAsyncFw_1_1Instance.html">Instance&lt;HttpServer&gt;</a> instance_;</div>
-<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>  Invocable&lt;const Request &amp;, std::any&gt;::Abstract&lt;<span class="keywordtype">bool</span>&gt; *peek = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>  Invocable&lt;bool(<span class="keyword">const</span> Request &amp;, std::any)&gt;::Abstract *peek = <span class="keyword">nullptr</span>;</div>
 <div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>  <span class="keyword">struct </span>Private;</div>
 <div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>  Private &amp;private_;</div>
 <div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>};</div>

@@ -158,13 +158,13 @@ Public Attributes</h2></td></tr>
 <div class="line">  AsyncFw::ApplicationNotifier::instance()-&gt;notify.connect([&amp;_test](<span class="keyword">const</span> <a class="code hl_struct" href="structAsyncFw_1_1ApplicationNotifier_1_1Value.html">AsyncFw::ApplicationNotifier::Value</a> &amp;_val) {</div>
 <div class="line">    lsNotice() &lt;&lt; _val.type;</div>
 <div class="line">    <span class="keywordflow">if</span> (!_val.empty()) lsInfoMagenta() &lt;&lt; _val.data&lt;std::chrono::time_point&lt;std::chrono::system_clock&gt;&gt;();</div>
-<div class="line">    <span class="keywordflow">if</span> (_val.type == TestThreadStarted) _test.<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#afef57401f138e8de37eb8d817772d9ff">quit</a>();</div>
+<div class="line">    <span class="keywordflow">if</span> (_val.type == TestThreadStarted) _test.<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#af61572d4713347fcac3ce80f8be2eb20">quit</a>();</div>
 <div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (_val.type == TestThreadFinished) { AsyncFw::MainThread::exit(); }</div>
 <div class="line">  });</div>
 <div class="line"> </div>
 <div class="line">  _test.<a class="code hl_variable" href="classAsyncFw_1_1Thread.html#a3aad54bdeeeb5ed95996bd30c67ce3b2">started</a>.connect([]() { AsyncFw::ApplicationNotifier::instance()-&gt;notify({TestThreadStarted, std::chrono::system_clock::now()}); });</div>
 <div class="line">  _test.<a class="code hl_variable" href="classAsyncFw_1_1Thread.html#af1e818b40f0aa5bef7ea81573d29a463">finished</a>.connect([]() { AsyncFw::ApplicationNotifier::instance()-&gt;notify({TestThreadFinished, std::chrono::system_clock::now()}); });</div>
-<div class="line">  _test.<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#afdaccb5da7d4bee5e9ff687f761bd21f">start</a>();</div>
+<div class="line">  _test.<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a933858c9506f67f17c5ada5caeaa8508">start</a>();</div>
 <div class="line"> </div>
 <div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Thread.html#a0a3bd6a54db28f73ff59cfea6a40b07a">AsyncFw::Thread::current</a>()-&gt;<a class="code hl_variable" href="classAsyncFw_1_1Thread.html#a3aad54bdeeeb5ed95996bd30c67ce3b2">started</a>.connect([]() { AsyncFw::ApplicationNotifier::instance()-&gt;notify({MainThreadStarted}); });</div>
 <div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Thread.html#a0a3bd6a54db28f73ff59cfea6a40b07a">AsyncFw::Thread::current</a>()-&gt;<a class="code hl_variable" href="classAsyncFw_1_1Thread.html#af1e818b40f0aa5bef7ea81573d29a463">finished</a>.connect([]() { AsyncFw::ApplicationNotifier::instance()-&gt;notify({MainThreadFinished}); });</div>

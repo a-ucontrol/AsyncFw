@@ -3,6 +3,7 @@ var examples =
     [ "ApplicationNotifier/main.cpp", "ApplicationNotifier_2main_8cpp-example.html", null ],
     [ "ContainerTask/main.cpp", "ContainerTask_2main_8cpp-example.html", null ],
     [ "Coroutine/main.cpp", "Coroutine_2main_8cpp-example.html", null ],
+    [ "CoroutineInvoke/main.cpp", "CoroutineInvoke_2main_8cpp-example.html", null ],
     [ "CoroutineWait/main.cpp", "CoroutineWait_2main_8cpp-example.html", null ],
     [ "Cryptor/main.cpp", "Cryptor_2main_8cpp-example.html", null ],
     [ "DataArray/main.cpp", "DataArray_2main_8cpp-example.html", null ],
@@ -11,7 +12,7 @@ var examples =
     [ "FunctionConnector/main.cpp", "FunctionConnector_2main_8cpp-example.html", null ],
     [ "HttpServer/main.cpp", "HttpServer_2main_8cpp-example.html", null ],
     [ "HttpSocket/main.cpp", "HttpSocket_2main_8cpp-example.html", null ],
-    [ "Invoke/main.cpp", "Invoke_2main_8cpp-example.html", null ],
+    [ "ThreadInvoke/main.cpp", "ThreadInvoke_2main_8cpp-example.html", null ],
     [ "ListenSocket/main.cpp", "ListenSocket_2main_8cpp-example.html", null ],
     [ "Log/main.cpp", "Log_2main_8cpp-example.html", null ],
     [ "LogTcp/main.cpp", "LogTcp_2main_8cpp-example.html", null ],
@@ -22,6 +23,5 @@ var examples =
     [ "ThreadPool/main.cpp", "ThreadPool_2main_8cpp-example.html", null ],
     [ "Timer/main.cpp", "Timer_2main_8cpp-example.html", null ],
     [ "TlsContext/main.cpp", "TlsContext_2main_8cpp-example.html", null ],
-    [ "Uart/main.cpp", "Uart_2main_8cpp-example.html", null ],
-    [ "CoroutineFunctionAwait/main.cpp", "CoroutineFunctionAwait_2main_8cpp-example.html", null ]
+    [ "Uart/main.cpp", "Uart_2main_8cpp-example.html", null ]
 ];
