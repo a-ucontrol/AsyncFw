@@ -93,26 +93,20 @@ private:
   Invocable<R(Args...)>::Abstract *f_;
 };
 
-template <typename T>  // rvalue (T&&) -> lvalue (T&)
-using co_invoke_args_t = std::conditional_t<std::is_rvalue_reference_v<T &&>, std::decay_t<T> &, T>;
 template <typename F, typename... Args>
 auto coInvoke(F &&f, Args &&...args) {
-  using R = std::invoke_result_t<F, co_invoke_args_t<Args &&>...>;
-  return CoroutineInvokeAwait<R(co_invoke_args_t<Args &&>...)> {nullptr, std::forward<F>(f), std::forward<Args>(args)...};
+  return CoroutineInvokeAwait<std::invoke_result_t<F, Args &...>(Args & ...)>(nullptr, std::forward<F>(f), std::forward<Args>(args)...);
 }
 template <typename T = AbstractThread, typename F, typename... Args>
 auto coInvoke(T *t, F &&f, Args &&...args) {
-  using R = std::invoke_result_t<F, co_invoke_args_t<Args &&>...>;
-  return CoroutineInvokeAwait<R(co_invoke_args_t<Args &&>...)> {t, std::forward<F>(f), std::forward<Args>(args)...};
+  return CoroutineInvokeAwait<std::invoke_result_t<F, Args &...>(Args & ...)>(t, std::forward<F>(f), std::forward<Args>(args)...);
 }
 template <typename M, typename O, typename... Args>
 auto coInvoke(M m, O *o, Args &&...args) {
-  using R = std::invoke_result_t<M, O, co_invoke_args_t<Args &&>...>;
-  return CoroutineInvokeAwait<R(co_invoke_args_t<Args &&>...)> {nullptr, m, o, std::forward<Args>(args)...};
+  return CoroutineInvokeAwait<std::invoke_result_t<M, O,  Args &...>(Args & ...)>(nullptr, m, o, std::forward<Args>(args)...);
 }
 template <typename T = AbstractThread, typename M, typename O, typename... Args>
 auto coInvoke(T *t, M m, O *o, Args &&...args) {
-  using R = std::invoke_result_t<M, O, co_invoke_args_t<Args &&>...>;
-  return CoroutineInvokeAwait<R(co_invoke_args_t<Args &&>...)> {t, m, o, std::forward<Args>(args)...};
+  return CoroutineInvokeAwait<std::invoke_result_t<M, O,  Args &...>(Args & ...)>(t, m, o, std::forward<Args>(args)...);
 }
 }  // namespace AsyncFw

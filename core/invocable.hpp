@@ -17,7 +17,7 @@ struct Invocable<R(Args...)> {
   };
   template <typename F>
   struct Function : public Abstract {
-    Function(F &&f) : f_(std::move(f)) {}
+    Function(F &&f) : f_(std::forward<F>(f)) {}
     R operator()(Args... args) override { return f_(std::forward<Args>(args)...); }
 
   private:

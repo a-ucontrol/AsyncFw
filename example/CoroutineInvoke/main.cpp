@@ -29,12 +29,12 @@ struct TST {
 
 class Example {
 public:
-  double tst_double(int v1, double v2)const {
+  double tst_double(int v1, double v2) const {
     std::chrono::milliseconds(10);
     lsDebug() << v1 << v2 << Thread::current()->name();
     return v1 + v2 + 10000.0;
   }
-  void tst_void(std::string &s) const  {
+  void tst_void(std::string &s) const {
     std::chrono::milliseconds(10);
     lsDebug() << s << Thread::current()->name();
   }
@@ -47,8 +47,9 @@ CoroutineTask task() {
   TST _tst {12345};
 
   double j1 = co_await coInvoke(
-      [](double v1, double v2) {
+      [_tst](double v1, double v2) {
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
+        lsInfoGreen() << _tst.val;
         return v1 + v2 + 2.5;
       },
       100.5, 15.5);
@@ -62,13 +63,17 @@ CoroutineTask task() {
       100.5, 15.5);
 
   double j3;
+  double j4;
+  double j5;
   {
-    auto lambda = [_tst](double v1, double v2) {
+    auto lambda = [](double v1, double v2) {
       std::this_thread::sleep_for(std::chrono::milliseconds(10));
-      lsInfoCyan() << _tst.val;
+      //lsInfoCyan() << _tst.val;
       return v1 + v2 + 30.5;
     };
-    j3 = co_await coInvoke(&_thread, std::move(lambda), 100.5, 15.5);
+    j3 = co_await coInvoke(&_thread, lambda, 100.5, 15.5);
+    j4 = co_await coInvoke(&_thread, lambda, 100.5, 25.5);
+    j5 = co_await coInvoke(&_thread, std::move(lambda), 100.5, 25.5);
   }
 
   const Example _e;
@@ -80,7 +85,7 @@ CoroutineTask task() {
   std::string str {"string2"};
   co_await coInvoke(&_thread, &Example::tst_void, &_e, str);
 
-  lsNotice() << j1 << j2 << k1 << k2 << j3 << str << AsyncFw::Thread::current()->name() << _tst.val;
+  lsNotice() << j1 << j2 << j3 << j4 << k1 << k2 << str << AsyncFw::Thread::current()->name() << _tst.val;
 
   MainThread::exit();
 }
