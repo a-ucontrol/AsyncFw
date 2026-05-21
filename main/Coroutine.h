@@ -107,12 +107,12 @@ auto coInvoke(T *t, F &&f, Args &&...args) {
 }
 template <typename M, typename O, typename... Args>
 auto coInvoke(M m, O *o, Args &&...args) {
-  using R = std::invoke_result_t<M, O *, co_invoke_args_t<Args &&>...>;  // O* гарантирует точный вывод типов для const/non-const
+  using R = std::invoke_result_t<M, O, co_invoke_args_t<Args &&>...>;
   return CoroutineInvokeAwait<R(co_invoke_args_t<Args &&>...)> {nullptr, m, o, std::forward<Args>(args)...};
 }
 template <typename T = AbstractThread, typename M, typename O, typename... Args>
 auto coInvoke(T *t, M m, O *o, Args &&...args) {
-  using R = std::invoke_result_t<M, O *, co_invoke_args_t<Args &&>...>;
+  using R = std::invoke_result_t<M, O, co_invoke_args_t<Args &&>...>;
   return CoroutineInvokeAwait<R(co_invoke_args_t<Args &&>...)> {t, m, o, std::forward<Args>(args)...};
 }
 }  // namespace AsyncFw

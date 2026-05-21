@@ -29,12 +29,12 @@ struct TST {
 
 class Example {
 public:
-  double tst_double(int v1, double v2) {
+  double tst_double(int v1, double v2)const {
     std::chrono::milliseconds(10);
     lsDebug() << v1 << v2 << Thread::current()->name();
     return v1 + v2 + 10000.0;
   }
-  void tst_void(std::string &s) const {
+  void tst_void(std::string &s) const  {
     std::chrono::milliseconds(10);
     lsDebug() << s << Thread::current()->name();
   }
@@ -71,7 +71,7 @@ CoroutineTask task() {
     j3 = co_await coInvoke(&_thread, std::move(lambda), 100.5, 15.5);
   }
 
-  Example _e;
+  const Example _e;
 
   double k1 = co_await coInvoke(&Example::tst_double, &_e, 10, 10.5);
   double k2 = co_await coInvoke(&_thread, &Example::tst_double, &_e, 10, 11.5);
