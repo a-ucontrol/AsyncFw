@@ -138,12 +138,12 @@ $(function(){initNavTree('CoroutineInvoke_2main_8cpp-example.html',''); initResi
 <div class="line"> </div>
 <div class="line"><span class="keyword">class </span>Example {</div>
 <div class="line"><span class="keyword">public</span>:</div>
-<div class="line">  <span class="keywordtype">double</span> tst_double(<span class="keywordtype">int</span> v1, <span class="keywordtype">double</span> v2) {</div>
+<div class="line">  <span class="keywordtype">double</span> tst_double(<span class="keywordtype">int</span> v1, <span class="keywordtype">double</span> v2)<span class="keyword">const </span>{</div>
 <div class="line">    std::chrono::milliseconds(10);</div>
 <div class="line">    lsDebug() &lt;&lt; v1 &lt;&lt; v2 &lt;&lt; <a class="code hl_function" href="classAsyncFw_1_1Thread.html#a0a3bd6a54db28f73ff59cfea6a40b07a">Thread::current</a>()-&gt;name();</div>
 <div class="line">    <span class="keywordflow">return</span> v1 + v2 + 10000.0;</div>
 <div class="line">  }</div>
-<div class="line">  <span class="keywordtype">void</span> tst_void(std::string &amp;s)<span class="keyword"> const </span>{</div>
+<div class="line">  <span class="keywordtype">void</span> tst_void(std::string &amp;s)<span class="keyword"> const  </span>{</div>
 <div class="line">    std::chrono::milliseconds(10);</div>
 <div class="line">    lsDebug() &lt;&lt; s &lt;&lt; Thread::current()-&gt;name();</div>
 <div class="line">  }</div>
@@ -180,7 +180,7 @@ $(function(){initNavTree('CoroutineInvoke_2main_8cpp-example.html',''); initResi
 <div class="line">    j3 = <span class="keyword">co_await</span> coInvoke(&amp;_thread, std::move(lambda), 100.5, 15.5);</div>
 <div class="line">  }</div>
 <div class="line"> </div>
-<div class="line">  Example _e;</div>
+<div class="line">  <span class="keyword">const</span> Example _e;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordtype">double</span> k1 = <span class="keyword">co_await</span> coInvoke(&amp;Example::tst_double, &amp;_e, 10, 10.5);</div>
 <div class="line">  <span class="keywordtype">double</span> k2 = <span class="keyword">co_await</span> coInvoke(&amp;_thread, &amp;Example::tst_double, &amp;_e, 10, 11.5);</div>
