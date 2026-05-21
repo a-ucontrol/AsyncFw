@@ -171,73 +171,59 @@ $(function(){initNavTree('Coroutine_8h_source.html',''); initResizable(true); })
 <div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>};</div>
 </div>
 <div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> F, <span class="keyword">typename</span>... Args&gt;</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span><span class="keyword">struct </span>CoroutineInvokeAwait {</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>  <span class="keyword">using </span>R = <span class="keyword">typename</span> std::invoke_result&lt;F, Args...&gt;::type;</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>  CoroutineInvokeAwait(<a class="code hl_class" href="classAsyncFw_1_1AbstractThread.html">AbstractThread</a> *thread, F &amp;&amp;f, Args &amp;&amp;...a) : thread_(thread), f_(std::move(f)), t_(std::tuple(std::forward&lt;Args&gt;(a)...)) {}</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>  CoroutineInvokeAwait(AbstractThread *thread, F &amp;&amp;f, <span class="keyword">const</span> Args &amp;...a) : thread_(thread), f_(std::move(f)), t_(std::tuple(a...)) {}</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>  <span class="keywordtype">void</span> await_suspend(CoroutineHandle h) <span class="keyword">const</span> <span class="keyword">noexcept</span> {</div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>    h_ = h;</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>    ThreadPool::async(thread_ ? thread_ : ThreadPool::instance()-&gt;getThread(), [<span class="keyword">this</span>]() {</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>      <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (std::is_void&lt;R&gt;::value) std::apply(f_, t_);</div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>      <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>        R _r = std::apply(f_, t_);</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>        h_.promise().setData(_r);</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>      }</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>      h_.promise().resume_queued();</div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>    });</div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>  }</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>  <span class="keywordtype">bool</span> await_ready() const noexcept { <span class="keywordflow">return</span> <span class="keyword">false</span>; }</div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>  R await_resume() const noexcept {</div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>    <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (!std::is_void&lt;R&gt;::value) <span class="keywordflow">return</span> h_.promise().data&lt;R&gt;();</div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>  }</div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span> </div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>  AbstractThread *thread_;</div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>  <span class="keyword">mutable</span> CoroutineHandle h_;</div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>  std::tuple&lt;Args...&gt; t_;</div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>  F f_;</div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>};</div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span> </div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> F, <span class="keyword">typename</span>... Args&gt;</div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>CoroutineInvokeAwait&lt;F, Args...&gt; coInvoke(F &amp;&amp;f, Args &amp;&amp;...args) {</div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>  <span class="keywordflow">return</span> CoroutineInvokeAwait {<span class="keyword">nullptr</span>, std::forward&lt;F&gt;(f), std::forward&lt;Args&gt;(args)...};</div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>}</div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span> </div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T = <a class="code hl_class" href="classAsyncFw_1_1AbstractThread.html">AbstractThread</a>, <span class="keyword">typename</span> F, <span class="keyword">typename</span>... Args&gt;</div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>CoroutineInvokeAwait&lt;F, Args...&gt; coInvoke(T *t, F &amp;&amp;f, Args &amp;&amp;...args) {</div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>  <span class="keywordflow">return</span> CoroutineInvokeAwait {t, std::forward&lt;F&gt;(f), std::forward&lt;Args&gt;(args)...};</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span><span class="keyword">struct </span>CoroutineInvokeAwait;</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> R, <span class="keyword">typename</span>... Args&gt;</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span><span class="keyword">struct </span>CoroutineInvokeAwait&lt;R(Args...)&gt; {</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>  <span class="keyword">template</span> &lt;<span class="keyword">typename</span> F, <span class="keyword">typename</span>... A&gt;</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>  CoroutineInvokeAwait(<a class="code hl_class" href="classAsyncFw_1_1AbstractThread.html">AbstractThread</a> *thread, F &amp;&amp;f, A &amp;&amp;...a) : t_(thread), f_(new Invocable&lt;R(Args...)&gt;::template Function&lt;F&gt;(std::forward&lt;F&gt;(f))), a_(std::forward&lt;A&gt;(a)...) {}</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>  <span class="keyword">template</span> &lt;<span class="keyword">typename</span> M, <span class="keyword">typename</span> O, <span class="keyword">typename</span>... A&gt;</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>  CoroutineInvokeAwait(AbstractThread *thread, M m, O *o, A &amp;&amp;...a) : t_(thread), f_(new Invocable&lt;R(Args...)&gt;::template MemberFunction&lt;M, O&gt;(m, o)), a_(std::forward&lt;A&gt;(a)...) {}</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>  ~CoroutineInvokeAwait() { <span class="keyword">delete</span> f_; }</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span> </div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>  <span class="keywordtype">void</span> await_suspend(CoroutineHandle h) <span class="keyword">const</span> <span class="keyword">noexcept</span> {</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>    h_ = h;</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    ThreadPool::async(t_ ? t_ : ThreadPool::instance()-&gt;getThread(), [<span class="keyword">this</span>]() {</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>      <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (std::is_void_v&lt;R&gt;) std::apply(*f_, a_);</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>      <span class="keywordflow">else</span> { h_.promise().setData(std::apply(*f_, a_)); }</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>      h_.promise().resume_queued();</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>    });</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>  }</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>  <span class="keywordtype">bool</span> await_ready() const noexcept { <span class="keywordflow">return</span> <span class="keyword">false</span>; }</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>  R await_resume() const noexcept {</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>    <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (!std::is_void_v&lt;R&gt;) <span class="keywordflow">return</span> h_.promise().data&lt;R&gt;();</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>  }</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span> </div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>  AbstractThread *t_;</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>  <span class="keyword">mutable</span> CoroutineHandle h_;</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>  <span class="keyword">mutable</span> std::tuple&lt;std::decay_t&lt;Args&gt;...&gt; a_;</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>  Invocable&lt;R(Args...)&gt;::Abstract *f_;</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>};</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span> </div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;  <span class="comment">// rvalue (T&amp;&amp;) -&gt; lvalue (T&amp;)</span></div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span><span class="keyword">using </span>co_invoke_args_t = std::conditional_t&lt;std::is_rvalue_reference_v&lt;T &amp;&amp;&gt;, std::decay_t&lt;T&gt; &amp;, T&gt;;</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> F, <span class="keyword">typename</span>... Args&gt;</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span><span class="keyword">auto</span> coInvoke(F &amp;&amp;f, Args &amp;&amp;...args) {</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>  <span class="keyword">using </span>R = std::invoke_result_t&lt;F, co_invoke_args_t&lt;Args &amp;&amp;&gt;...&gt;;</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>  <span class="keywordflow">return</span> CoroutineInvokeAwait&lt;R(co_invoke_args_t&lt;Args &amp;&amp;&gt;...)&gt; {<span class="keyword">nullptr</span>, std::forward&lt;F&gt;(f), std::forward&lt;Args&gt;(args)...};</div>
 <div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>}</div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span> </div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> F, <span class="keyword">typename</span>... Args&gt;</div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>CoroutineInvokeAwait&lt;F, Args...&gt; coInvoke(F &amp;&amp;f, Args &amp;...args) {</div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>  <span class="keywordflow">return</span> CoroutineInvokeAwait {<span class="keyword">nullptr</span>, std::forward&lt;F&gt;(f), args...};</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T = <a class="code hl_class" href="classAsyncFw_1_1AbstractThread.html">AbstractThread</a>, <span class="keyword">typename</span> F, <span class="keyword">typename</span>... Args&gt;</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span><span class="keyword">auto</span> coInvoke(T *t, F &amp;&amp;f, Args &amp;&amp;...args) {</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>  <span class="keyword">using </span>R = std::invoke_result_t&lt;F, co_invoke_args_t&lt;Args &amp;&amp;&gt;...&gt;;</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>  <span class="keywordflow">return</span> CoroutineInvokeAwait&lt;R(co_invoke_args_t&lt;Args &amp;&amp;&gt;...)&gt; {t, std::forward&lt;F&gt;(f), std::forward&lt;Args&gt;(args)...};</div>
 <div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>}</div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span> </div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T = <a class="code hl_class" href="classAsyncFw_1_1AbstractThread.html">AbstractThread</a>, <span class="keyword">typename</span> F, <span class="keyword">typename</span>... Args&gt;</div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>CoroutineInvokeAwait&lt;F, Args...&gt; coInvoke(T *t, F &amp;&amp;f, Args &amp;...args) {</div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>  <span class="keywordflow">return</span> CoroutineInvokeAwait {t, std::forward&lt;F&gt;(f), args...};</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> M, <span class="keyword">typename</span> O, <span class="keyword">typename</span>... Args&gt;</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span><span class="keyword">auto</span> coInvoke(M m, O *o, Args &amp;&amp;...args) {</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>  <span class="keyword">using </span>R = std::invoke_result_t&lt;M, O *, co_invoke_args_t&lt;Args &amp;&amp;&gt;...&gt;;  <span class="comment">// O* гарантирует точный вывод типов для const/non-const</span></div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>  <span class="keywordflow">return</span> CoroutineInvokeAwait&lt;R(co_invoke_args_t&lt;Args &amp;&amp;&gt;...)&gt; {<span class="keyword">nullptr</span>, m, o, std::forward&lt;Args&gt;(args)...};</div>
 <div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>}</div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> M, <span class="keyword">typename</span> O, <span class="keyword">typename</span>... Args&gt;</div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span><span class="keyword">auto</span> coInvoke(M m, O *o, <span class="keyword">const</span> Args &amp;&amp;...args) {</div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>  <span class="keywordflow">return</span> CoroutineInvokeAwait {<span class="keyword">nullptr</span>, [o, m](Args... args) { <span class="keywordflow">return</span> (o-&gt;*m)(std::move(args)...); }, std::forward&lt;Args&gt;(args)...};</div>
-<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>}</div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span> </div>
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T = <a class="code hl_class" href="classAsyncFw_1_1AbstractThread.html">AbstractThread</a>, <span class="keyword">typename</span> M, <span class="keyword">typename</span> O, <span class="keyword">typename</span>... Args&gt;</div>
-<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span><span class="keyword">auto</span> coInvoke(T *t, M m, O *o, Args &amp;&amp;...args) {</div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>  <span class="keywordflow">return</span> CoroutineInvokeAwait {t, [o, m](Args... args) { <span class="keywordflow">return</span> (o-&gt;*m)(std::move(args)...); }, std::forward&lt;Args&gt;(args)...};</div>
-<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>}</div>
-<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span> </div>
-<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> M, <span class="keyword">typename</span> O, <span class="keyword">typename</span>... Args&gt;</div>
-<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span><span class="keyword">auto</span> coInvoke(M m, O *o, Args &amp;...args) {</div>
-<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>  <span class="keywordflow">return</span> CoroutineInvokeAwait {<span class="keyword">nullptr</span>, [o, m](Args... args) { <span class="keywordflow">return</span> (o-&gt;*m)(std::move(args)...); }, args...};</div>
-<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>}</div>
-<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span> </div>
-<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T = <a class="code hl_class" href="classAsyncFw_1_1AbstractThread.html">AbstractThread</a>, <span class="keyword">typename</span> M, <span class="keyword">typename</span> O, <span class="keyword">typename</span>... Args&gt;</div>
-<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span><span class="keyword">auto</span> coInvoke(T *t, M m, O *o, Args &amp;...args) {</div>
-<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>  <span class="keywordflow">return</span> CoroutineInvokeAwait {t, [o, m](Args... args) { <span class="keywordflow">return</span> (o-&gt;*m)(std::move(args)...); }, args...};</div>
-<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>}</div>
-<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>}  <span class="comment">// namespace AsyncFw</span></div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T = <a class="code hl_class" href="classAsyncFw_1_1AbstractThread.html">AbstractThread</a>, <span class="keyword">typename</span> M, <span class="keyword">typename</span> O, <span class="keyword">typename</span>... Args&gt;</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span><span class="keyword">auto</span> coInvoke(T *t, M m, O *o, Args &amp;&amp;...args) {</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>  <span class="keyword">using </span>R = std::invoke_result_t&lt;M, O *, co_invoke_args_t&lt;Args &amp;&amp;&gt;...&gt;;</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>  <span class="keywordflow">return</span> CoroutineInvokeAwait&lt;R(co_invoke_args_t&lt;Args &amp;&amp;&gt;...)&gt; {t, m, o, std::forward&lt;Args&gt;(args)...};</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>}</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>}  <span class="comment">// namespace AsyncFw</span></div>
 <div class="ttc" id="aclassAsyncFw_1_1AbstractThread_html"><div class="ttname"><a href="classAsyncFw_1_1AbstractThread.html">AsyncFw::AbstractThread</a></div><div class="ttdoc">The AbstractThread class provides the base functionality for thread management.</div><div class="ttdef"><b>Definition</b> AbstractThread.h:47</div></div>
 <div class="ttc" id="astructAsyncFw_1_1CoroutineTask_1_1promise__type_html"><div class="ttname"><a href="structAsyncFw_1_1CoroutineTask_1_1promise__type.html">AsyncFw::CoroutineTask::promise_type</a></div><div class="ttdoc">The CoroutineTask::promise_type struct.</div><div class="ttdef"><b>Definition</b> Coroutine.h:22</div></div>
 <div class="ttc" id="astructAsyncFw_1_1CoroutineTask_1_1promise__type_html_a6ef8c84c53068677172b21f5e08aa0b7"><div class="ttname"><a href="structAsyncFw_1_1CoroutineTask_1_1promise__type.html#a6ef8c84c53068677172b21f5e08aa0b7">AsyncFw::CoroutineTask::promise_type::resume_queued</a></div><div class="ttdeci">void resume_queued()</div><div class="ttdoc">Execute coroutine_handle::resume on the thread where the promise_type is created.</div><div class="ttdef"><b>Definition</b> Coroutine.cpp:86</div></div>
