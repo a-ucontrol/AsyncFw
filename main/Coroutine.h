@@ -68,9 +68,9 @@ struct CoroutineInvokeAwait;
 template <typename R, typename... Args>
 struct CoroutineInvokeAwait<R(Args...)> {
   template <typename F, typename... A>
-  CoroutineInvokeAwait(AbstractThread *thread, F &&f, A &&...a) : t_(thread), f_(new Invocable<R(Args...)>::template Function<F>(std::forward<F>(f))), a_(std::forward<A>(a)...) {}
+  CoroutineInvokeAwait(AbstractThread *thread, F &&f, A &&...a) : t_(thread), f_(new Invocable<R(Args...)>::template Function<F>(std::forward<F>(f))), a_(std::forward_as_tuple(std::forward<A>(a)...)) {}
   template <typename M, typename O, typename... A>
-  CoroutineInvokeAwait(AbstractThread *thread, M m, O *o, A &&...a) : t_(thread), f_(new Invocable<R(Args...)>::template MemberFunction<M, O>(m, o)), a_(std::forward<A>(a)...) {}
+  CoroutineInvokeAwait(AbstractThread *thread, M m, O *o, A &&...a) : t_(thread), f_(new Invocable<R(Args...)>::template MemberFunction<M, O>(m, o)), a_(std::forward_as_tuple(std::forward<A>(a)...)) {}
   ~CoroutineInvokeAwait() { delete f_; }
 
   void await_suspend(CoroutineHandle h) const noexcept {
@@ -89,7 +89,7 @@ struct CoroutineInvokeAwait<R(Args...)> {
 private:
   AbstractThread *t_;
   mutable CoroutineHandle h_;
-  mutable std::tuple<std::decay_t<Args>...> a_;
+  mutable std::tuple<Args...> a_;
   Invocable<R(Args...)>::Abstract *f_;
 };
 
@@ -103,10 +103,10 @@ auto coInvoke(T *t, F &&f, Args &&...args) {
 }
 template <typename M, typename O, typename... Args>
 auto coInvoke(M m, O *o, Args &&...args) {
-  return CoroutineInvokeAwait<std::invoke_result_t<M, O,  Args &...>(Args & ...)>(nullptr, m, o, std::forward<Args>(args)...);
+  return CoroutineInvokeAwait<std::invoke_result_t<M, O, Args &...>(Args & ...)>(nullptr, m, o, std::forward<Args>(args)...);
 }
 template <typename T = AbstractThread, typename M, typename O, typename... Args>
 auto coInvoke(T *t, M m, O *o, Args &&...args) {
-  return CoroutineInvokeAwait<std::invoke_result_t<M, O,  Args &...>(Args & ...)>(t, m, o, std::forward<Args>(args)...);
+  return CoroutineInvokeAwait<std::invoke_result_t<M, O, Args &...>(Args & ...)>(t, m, o, std::forward<Args>(args)...);
 }
 }  // namespace AsyncFw
