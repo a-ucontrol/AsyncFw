@@ -11,6 +11,22 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include <AsyncFw/Timer>
 #include <AsyncFw/LogStream>
 
+struct TST {
+  TST(int i) : val(i) { lsInfoGreen() << val; }
+  ~TST() { lsInfoRed() << val; }
+  TST(const TST &v) {
+    val = v.val;
+    lsInfoMagenta() << val;
+  }
+  TST(TST &&v) {
+    val = v.val;
+    v.val = -1;
+    lsInfoCyan() << val;
+  }
+
+  int val = 0;
+};
+
 class MethodConnectionExample {
 public:
   void method(int val, const std::string &str) { lsNotice() << val << str; }
@@ -23,7 +39,7 @@ public:
       AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::current();
       logInfo() << cnt << "send from thread:" << ct->name() << ct->id();
       connector(cnt++, "");
-      if (cnt == 3) AsyncFw::MainThread::exit(0);
+      if (cnt == 1) AsyncFw::MainThread::exit(0);
     });
     timer.start(10);
   }
@@ -60,9 +76,17 @@ int main(int argc, char *argv[]) {
   Receiver receiver1("R1", *sender);
   Receiver receiver2("R2", *sender);
 
-  MethodConnectionExample tst;
-  sender->connector.connect(&MethodConnectionExample::method, &tst);
-  sender->connector.connect([](int val, const std::string &) { lsNotice() << "sender->connector (lambda)" << val; });
+  MethodConnectionExample _e;
+  sender->connector.connect(&MethodConnectionExample::method, &_e);
+
+  TST _tst(12345);
+
+  auto lambda = [_tst](int val, const std::string &) { lsNotice() << "sender->connector (lambda)" << val << _tst.val; };
+
+  sender->connector.connect(lambda, AsyncFw::AbstractFunctionConnector::Connection::Queued);
+  sender->connector.connect(lambda, AsyncFw::AbstractFunctionConnector::Connection::Queued);
+
+  //AsyncFw::Thread::current()->invoke([_tst](){lsNotice() << "invoke" << _tst.val;});
 
   logNotice() << "Start Applicaiton";
 

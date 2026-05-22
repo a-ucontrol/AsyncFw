@@ -109,8 +109,8 @@ protected:
     friend class FunctionConnector<Args...>;
 
   public:
-    template <typename T>
-    Connection(T &f, AbstractFunctionConnector *c, Type t) : AbstractFunctionConnector::Connection(c, t), f_(new Function(f)) {}
+    template <typename F>
+    Connection(F &f, AbstractFunctionConnector *c, Type t) : AbstractFunctionConnector::Connection(c, t), f_(new Function(std::forward<F>(f))) {}
     template <typename M, typename O>
     Connection(M m, O *o, AbstractFunctionConnector *c, Type t) : AbstractFunctionConnector::Connection(c, t), f_(new MemberFunction(m, o)) {}
 
@@ -119,14 +119,14 @@ protected:
       virtual void invoke(Args &...args) = 0;
       virtual AbstractFunction *copy() const = 0;
     };
-    template <typename T>
+    template <typename F>
     struct Function : AbstractFunction {
-      Function(T &f) : f_(std::move(f)) {}
+      Function(F &&f) : f_(std::forward<F>(f)) {}
       Function(const Function *f) : f_(f->f_) {}
       void operator()(Args &...args) override { f_(std::forward<Args>(args)...); }
       void invoke(Args &...args) override { f_(args...); }
       AbstractFunction *copy() const override { return new Function(this); }
-      T f_;
+      F f_;
     };
     template <typename M, typename O>
     struct MemberFunction : AbstractFunction {

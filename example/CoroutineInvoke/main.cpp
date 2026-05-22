@@ -71,9 +71,9 @@ CoroutineTask task() {
       //lsInfoCyan() << _tst.val;
       return v1 + v2 + 30.5;
     };
-    j3 = co_await coInvoke(&_thread, lambda, 100.5, 15.5);
-    j4 = co_await coInvoke(&_thread, lambda, 100.5, 25.5);
-    j5 = co_await coInvoke(&_thread, std::move(lambda), 100.5, 25.5);
+    //j3 = co_await coInvoke(&_thread, lambda, 100.5, 15.5);
+    //j4 = co_await coInvoke(&_thread, lambda, 100.5, 25.5);
+    //j5 = co_await coInvoke(&_thread, std::move(lambda), 100.5, 25.5);
   }
 
   const Example _e;
