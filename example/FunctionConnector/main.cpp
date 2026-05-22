@@ -11,22 +11,6 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include <AsyncFw/Timer>
 #include <AsyncFw/LogStream>
 
-struct TST {
-  TST(int i) : val(i) { lsInfoGreen() << val; }
-  ~TST() { lsInfoRed() << val; }
-  TST(const TST &v) {
-    val = v.val;
-    lsInfoMagenta() << val;
-  }
-  TST(TST &&v) {
-    val = v.val;
-    v.val = -1;
-    lsInfoCyan() << val;
-  }
-
-  int val = 0;
-};
-
 class MethodConnectionExample {
 public:
   void method(int val, const std::string &str) { lsNotice() << val << str; }
@@ -79,14 +63,8 @@ int main(int argc, char *argv[]) {
   MethodConnectionExample _e;
   sender->connector.connect(&MethodConnectionExample::method, &_e);
 
-  TST _tst(12345);
-
-  auto lambda = [_tst](int val, const std::string &) { lsNotice() << "sender->connector (lambda)" << val << _tst.val; };
-
-  sender->connector.connect(lambda, AsyncFw::AbstractFunctionConnector::Connection::Queued);
-  sender->connector.connect(lambda, AsyncFw::AbstractFunctionConnector::Connection::Queued);
-
-  //AsyncFw::Thread::current()->invoke([_tst](){lsNotice() << "invoke" << _tst.val;});
+  auto lambda = [](int val, const std::string &) { lsNotice() << "sender->connector (lambda)" << val; };
+  sender->connector.connect(lambda);
 
   logNotice() << "Start Applicaiton";
 

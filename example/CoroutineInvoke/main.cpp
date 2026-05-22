@@ -11,22 +11,6 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 using namespace AsyncFw;
 
-struct TST {
-  TST(int i) : val(i) { lsInfoGreen() << val; }
-  ~TST() { lsInfoRed() << val; }
-  TST(const TST &v) {
-    val = v.val;
-    lsInfoMagenta() << val;
-  }
-  TST(TST &&v) {
-    val = v.val;
-    v.val = -1;
-    lsInfoCyan() << val;
-  }
-
-  int val = 0;
-};
-
 class Example {
 public:
   double tst_double(int v1, double v2) const {
@@ -38,18 +22,29 @@ public:
     std::chrono::milliseconds(10);
     lsDebug() << s << Thread::current()->name();
   }
+  std::string tst_string(std::string &s) const {
+    std::chrono::milliseconds(10);
+    lsDebug() << s << Thread::current()->name();
+    s = "-" + s + "-";
+    return "***";
+  }
 };
 
 CoroutineTask task() {
   Thread _thread = Thread("CoroutineInvokeAwait");
   _thread.start();
 
-  TST _tst {12345};
+  const Example _e;
+  double i1 = co_await coInvoke(&Example::tst_double, &_e, 10, 10.5);
+  double i2 = co_await coInvoke(&_thread, &Example::tst_double, &_e, 10, 11.5);
+  co_await coInvoke(&Example::tst_void, &_e, std::string {"string1"});
+  std::string _s {"string2"};
+  co_await coInvoke(&_thread, &Example::tst_void, &_e, _s);
+  std::string s = co_await coInvoke(&_thread, &Example::tst_string, &_e, _s);
 
   double j1 = co_await coInvoke(
-      [_tst](double v1, double v2) {
+      [](double v1, double v2) {
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
-        lsInfoGreen() << _tst.val;
         return v1 + v2 + 2.5;
       },
       100.5, 15.5);
@@ -63,29 +58,15 @@ CoroutineTask task() {
       100.5, 15.5);
 
   double j3;
-  double j4;
-  double j5;
-  {
+  {  //lambda scope
     auto lambda = [](double v1, double v2) {
       std::this_thread::sleep_for(std::chrono::milliseconds(10));
-      //lsInfoCyan() << _tst.val;
       return v1 + v2 + 30.5;
     };
-    //j3 = co_await coInvoke(&_thread, lambda, 100.5, 15.5);
-    //j4 = co_await coInvoke(&_thread, lambda, 100.5, 25.5);
-    //j5 = co_await coInvoke(&_thread, std::move(lambda), 100.5, 25.5);
+    j3 = co_await coInvoke(&_thread, lambda, 100.5, 15.5);
   }
 
-  const Example _e;
-
-  double k1 = co_await coInvoke(&Example::tst_double, &_e, 10, 10.5);
-  double k2 = co_await coInvoke(&_thread, &Example::tst_double, &_e, 10, 11.5);
-
-  co_await coInvoke(&Example::tst_void, &_e, std::string {"string1"});
-  std::string str {"string2"};
-  co_await coInvoke(&_thread, &Example::tst_void, &_e, str);
-
-  lsNotice() << j1 << j2 << j3 << j4 << k1 << k2 << str << AsyncFw::Thread::current()->name() << _tst.val;
+  lsNotice() << i1 << i2 << j1 << j2 << j3 << s << _s << AsyncFw::Thread::current()->name();
 
   MainThread::exit();
 }
