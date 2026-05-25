@@ -210,7 +210,7 @@ class AsyncFw::Instance&lt; T &gt;</div><p>A template-based global registry wrap
 <div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[]) {</div>
 <div class="line">  ExampleClass _e(<span class="stringliteral">&quot;ExampleClass&quot;</span>);</div>
 <div class="line">  <a class="code hl_function" href="#a8000597f0e7ee4bd6669491a5b502beb">AsyncFw::Instance&lt;ExampleClass&gt;::create</a>(<span class="stringliteral">&quot;ExampleClassInstance&quot;</span>);</div>
-<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Thread.html#a0a3bd6a54db28f73ff59cfea6a40b07a">AsyncFw::Thread::current</a>()-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a786474d037b50053f1a97af7b67e6069">invoke</a>([]() { AsyncFw::MainThread::exit(); });</div>
+<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Thread.html#a0a3bd6a54db28f73ff59cfea6a40b07a">AsyncFw::Thread::current</a>()-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a786474d037b50053f1a97af7b67e6069">invoke</a>([]() { <a class="code hl_function" href="classAsyncFw_1_1MainThread.html#a76fed3a2c1cfdbdb67f2b209e6457657">AsyncFw::MainThread::exit</a>(); });</div>
 <div class="line"> </div>
 <div class="line">  lsInfoMagenta() &lt;&lt; _e.name();</div>
 <div class="line">  lsInfoMagenta() &lt;&lt; ExampleClass::instance()-&gt;name();</div>

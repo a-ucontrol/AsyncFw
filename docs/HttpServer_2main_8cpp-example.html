@@ -130,7 +130,7 @@ $(function(){initNavTree('HttpServer_2main_8cpp-example.html',''); initResizable
 <div class="line">    resp-&gt;<a id="a3" name="a3"></a>setMimeType(<span class="stringliteral">&quot;octet-stream&quot;</span>);</div>
 <div class="line">    resp-&gt;<a id="a4" name="a4"></a>setStatusCode(HttpServer::Response::StatusCode::Ok);</div>
 <div class="line">    resp-&gt;<a id="a5" name="a5"></a>send();</div>
-<div class="line">    MainThread::exit();</div>
+<div class="line">    <a class="code hl_function" href="classAsyncFw_1_1MainThread.html#a76fed3a2c1cfdbdb67f2b209e6457657">MainThread::exit</a>();</div>
 <div class="line">  });</div>
 <div class="line"> </div>
 <div class="line">  _http.listen(18080);</div>
@@ -161,6 +161,7 @@ $(function(){initNavTree('HttpServer_2main_8cpp-example.html',''); initResizable
 <div class="ttc" id="aclassAsyncFw_1_1DataArray_html"><div class="ttname"><a href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a></div><div class="ttdoc">The DataArray class, provides an array of bytes.</div><div class="ttdef"><b>Definition</b> DataArray.h:21</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1HttpServer_html"><div class="ttname"><a href="classAsyncFw_1_1HttpServer.html">AsyncFw::HttpServer</a></div><div class="ttdoc">The HttpServer class.</div><div class="ttdef"><b>Definition</b> HttpServer.h:22</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1HttpSocket_html"><div class="ttname"><a href="classAsyncFw_1_1HttpSocket.html">AsyncFw::HttpSocket</a></div><div class="ttdoc">The HttpSocket class.</div><div class="ttdef"><b>Definition</b> HttpSocket.h:18</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1MainThread_html_a76fed3a2c1cfdbdb67f2b209e6457657"><div class="ttname"><a href="classAsyncFw_1_1MainThread.html#a76fed3a2c1cfdbdb67f2b209e6457657">AsyncFw::MainThread::exit</a></div><div class="ttdeci">static void exit()</div><div class="ttdoc">Signals the master event loop to terminate gracefully.</div><div class="ttdef"><b>Definition</b> MainThread.h:59</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1MainThread_html_ad12e620772820ad751868c7b49fa4190"><div class="ttname"><a href="classAsyncFw_1_1MainThread.html#ad12e620772820ad751868c7b49fa4190">AsyncFw::MainThread::exec</a></div><div class="ttdeci">static int exec()</div><div class="ttdoc">Starts the master application event loop on the current thread. This call is blocking....</div><div class="ttdef"><b>Definition</b> MainThread.h:47</div></div>
 </div><!-- fragment --> </div><!-- contents -->
 </div><!-- doc-content -->

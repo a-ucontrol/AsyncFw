@@ -151,7 +151,7 @@ $(function(){initNavTree('LogTcp_2main_8cpp-example.html',''); initResizable(tru
 <div class="line">          <span class="keywordflow">if</span> (_message.string == <span class="stringliteral">&quot;logAlert&quot;</span>) {</div>
 <div class="line">            std::cout &lt;&lt; <span class="stringliteral">&quot;----- AsyncFw::MainThread::exit() -----&quot;</span> &lt;&lt; std::endl;</div>
 <div class="line">            _g = {};</div>
-<div class="line">            AsyncFw::MainThread::exit();</div>
+<div class="line">            <a id="a14" name="a14"></a><a class="code hl_function" href="classAsyncFw_1_1MainThread.html#a76fed3a2c1cfdbdb67f2b209e6457657">AsyncFw::MainThread::exit</a>();</div>
 <div class="line">            <span class="keywordflow">break</span>;</div>
 <div class="line">          }</div>
 <div class="line">        }</div>
@@ -183,7 +183,7 @@ $(function(){initNavTree('LogTcp_2main_8cpp-example.html',''); initResizable(tru
 <div class="line">  <span class="comment">//logEmergency() &lt;&lt; &quot;Emergency&quot;;  // throw</span></div>
 <div class="line"> </div>
 <div class="line">  lsNotice() &lt;&lt; <span class="stringliteral">&quot;Start Applicaiton&quot;</span>;</div>
-<div class="line">  <span class="keywordtype">int</span> ret = <a id="a14" name="a14"></a><a class="code hl_function" href="classAsyncFw_1_1MainThread.html#ad12e620772820ad751868c7b49fa4190">AsyncFw::MainThread::exec</a>();</div>
+<div class="line">  <span class="keywordtype">int</span> ret = <a id="a15" name="a15"></a><a class="code hl_function" href="classAsyncFw_1_1MainThread.html#ad12e620772820ad751868c7b49fa4190">AsyncFw::MainThread::exec</a>();</div>
 <div class="line">  lsNotice() &lt;&lt; <span class="stringliteral">&quot;End Applicaiton&quot;</span> &lt;&lt; ret;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">return</span> ret;</div>
@@ -195,6 +195,7 @@ $(function(){initNavTree('LogTcp_2main_8cpp-example.html',''); initResizable(tru
 <div class="ttc" id="aclassAsyncFw_1_1FunctionConnectionGuard_html"><div class="ttname"><a href="classAsyncFw_1_1FunctionConnectionGuard.html">AsyncFw::FunctionConnectionGuard</a></div><div class="ttdoc">The FunctionConnectionGuard class.</div><div class="ttdef"><b>Definition</b> FunctionConnector.h:172</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1Instance_html_a8000597f0e7ee4bd6669491a5b502beb"><div class="ttname"><a href="classAsyncFw_1_1Instance.html#a8000597f0e7ee4bd6669491a5b502beb">AsyncFw::Instance::create</a></div><div class="ttdeci">static CT * create(Args... args)</div><div class="ttdoc">Creates a custom polymorphically derived object inside this instance container.</div><div class="ttdef"><b>Definition</b> Instance.h:46</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1Log_html"><div class="ttname"><a href="classAsyncFw_1_1Log.html">AsyncFw::Log</a></div><div class="ttdoc">The Log class.</div><div class="ttdef"><b>Definition</b> Log.h:69</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1MainThread_html_a76fed3a2c1cfdbdb67f2b209e6457657"><div class="ttname"><a href="classAsyncFw_1_1MainThread.html#a76fed3a2c1cfdbdb67f2b209e6457657">AsyncFw::MainThread::exit</a></div><div class="ttdeci">static void exit()</div><div class="ttdoc">Signals the master event loop to terminate gracefully.</div><div class="ttdef"><b>Definition</b> MainThread.h:59</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1MainThread_html_ad12e620772820ad751868c7b49fa4190"><div class="ttname"><a href="classAsyncFw_1_1MainThread.html#ad12e620772820ad751868c7b49fa4190">AsyncFw::MainThread::exec</a></div><div class="ttdeci">static int exec()</div><div class="ttdoc">Starts the master application event loop on the current thread. This call is blocking....</div><div class="ttdef"><b>Definition</b> MainThread.h:47</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1RrdClient_html"><div class="ttname"><a href="classAsyncFw_1_1RrdClient.html">AsyncFw::RrdClient</a></div><div class="ttdoc">The RrdClient class.</div><div class="ttdef"><b>Definition</b> RrdClient.h:19</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1RrdServer_html"><div class="ttname"><a href="classAsyncFw_1_1RrdServer.html">AsyncFw::RrdServer</a></div><div class="ttdoc">The RrdServer class.</div><div class="ttdef"><b>Definition</b> RrdServer.h:18</div></div>

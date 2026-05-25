@@ -1,0 +1,5 @@
+<map id="AsyncFw::MainThread::exit" name="AsyncFw::MainThread::exit">
+<area shape="rect" id="Node000001" title="Signals the master event loop to terminate gracefully with a specific exit code." alt="" coords="5,5,158,48"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1MainThread.html#a76fed3a2c1cfdbdb67f2b209e6457657" title="Signals the master event loop to terminate gracefully." alt="" coords="206,5,358,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="158,24,190,24,190,29,158,29"/>
+</map>

@@ -167,7 +167,7 @@ Public Attributes</h2></td></tr>
 <div class="line">    <span class="keywordtype">char</span> buf[128];</div>
 <div class="line">    <span class="keywordtype">int</span> r = read(STDIN_FILENO, buf, <span class="keyword">sizeof</span>(buf) - 1);</div>
 <div class="line">    buf[r] = 0;</div>
-<div class="line">    <span class="keywordflow">if</span> (r == 2 &amp;&amp; buf[0] == <span class="charliteral">&#39;q&#39;</span>) AsyncFw::MainThread::exit();</div>
+<div class="line">    <span class="keywordflow">if</span> (r == 2 &amp;&amp; buf[0] == <span class="charliteral">&#39;q&#39;</span>) <a class="code hl_function" href="classAsyncFw_1_1MainThread.html#a76fed3a2c1cfdbdb67f2b209e6457657">AsyncFw::MainThread::exit</a>();</div>
 <div class="line">    (lsDebug() &lt;&lt; <span class="stringliteral">&quot;stdin: &quot;</span> &lt;&lt; buf).flush();</div>
 <div class="line">  });</div>
 <div class="line">  (lsDebug() &lt;&lt; <span class="stringliteral">&quot;Start Applicaiton&quot;</span>).flush();</div>

@@ -328,7 +328,7 @@ Friends</h2></td></tr>
 <div class="line">        h = {};</div>
 <div class="line">        <span class="keywordflow">return</span>;</div>
 <div class="line">      }</div>
-<div class="line">      AsyncFw::MainThread::exit(0);</div>
+<div class="line">      <a class="code hl_function" href="classAsyncFw_1_1MainThread.html#a76fed3a2c1cfdbdb67f2b209e6457657">AsyncFw::MainThread::exit</a>(0);</div>
 <div class="line">    }</div>
 <div class="line">  }</div>
 <div class="line">  <span class="keywordtype">void</span> <a class="code hl_function" href="#a609ec54ec8aed39769d60319c4c15833">readEvent</a>() {</div>
@@ -365,12 +365,12 @@ Friends</h2></td></tr>
 <div class="line">    AsyncFw::AddressInfo::Result list = <span class="keyword">co_await</span> addressInfo.<a class="code hl_function" href="classAsyncFw_1_1AddressInfo.html#a27a4f3c86d76a2c2735de96a0df9bd59">coResolve</a>(<span class="stringliteral">&quot;github.com&quot;</span>);</div>
 <div class="line">    <span class="keywordflow">if</span> (list.empty()) {</div>
 <div class="line">      logError(<span class="stringliteral">&quot;Resolve error&quot;</span>);</div>
-<div class="line">      AsyncFw::MainThread::exit(-1);</div>
+<div class="line">      <a class="code hl_function" href="classAsyncFw_1_1MainThread.html#a76fed3a2c1cfdbdb67f2b209e6457657">AsyncFw::MainThread::exit</a>(-1);</div>
 <div class="line">      <span class="keyword">co_return</span>;</div>
 <div class="line">    }</div>
 <div class="line">    <span class="keywordflow">for</span> (<span class="keyword">const</span> std::string _s : list) logNotice() &lt;&lt; _s;</div>
 <div class="line">    <span class="keyword">co_await</span> socket.coConnect(list[0], 443);</div>
-<div class="line">    AsyncFw::MainThread::exit(0);</div>
+<div class="line">    <a class="code hl_function" href="classAsyncFw_1_1MainThread.html#a76fed3a2c1cfdbdb67f2b209e6457657">AsyncFw::MainThread::exit</a>(0);</div>
 <div class="line">  }};</div>
 <div class="line">  coroTask();</div>
 <div class="line"> </div>
@@ -381,7 +381,7 @@ Friends</h2></td></tr>
 <div class="line">  logNotice() &lt;&lt; <span class="stringliteral">&quot;End Applicaiton&quot;</span> &lt;&lt; ret;</div>
 <div class="line">  <span class="keywordflow">return</span> ret;</div>
 <div class="line">}</div>
-</div><!-- fragment --> <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="HttpSocket_2main_8cpp-example.html#_a22">HttpSocket/main.cpp</a>.</dd>
+</div><!-- fragment --> <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="HttpSocket_2main_8cpp-example.html#_a23">HttpSocket/main.cpp</a>.</dd>
 </dl>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a426c3b10de20344079571d6708f096ca" name="a426c3b10de20344079571d6708f096ca"></a>
@@ -526,7 +526,7 @@ Here is the caller graph for this function:</div>
 <p>Called when there is data to read. </p>
 
 <p>Reimplemented in <a class="el" href="classAsyncFw_1_1DataArraySocket.html#a1a1f3404abcb93af27de1d7bc0a958b1">AsyncFw::DataArraySocket</a>, and <a class="el" href="classAsyncFw_1_1HttpSocket.html#a7163448458d68f433dbdb214a6175be3">AsyncFw::HttpSocket</a>.</p>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="ListenSocket_2main_8cpp-example.html#a2">ListenSocket/main.cpp</a>, and <a class="el" href="Socket_2main_8cpp-example.html#a2">Socket/main.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="ListenSocket_2main_8cpp-example.html#a2">ListenSocket/main.cpp</a>, and <a class="el" href="Socket_2main_8cpp-example.html#a3">Socket/main.cpp</a>.</dd>
 </dl>
 
 </div>

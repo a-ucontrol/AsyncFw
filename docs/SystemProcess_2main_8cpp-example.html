@@ -131,15 +131,15 @@ $(function(){initNavTree('SystemProcess_2main_8cpp-example.html',''); initResiza
 <div class="line">  });</div>
 <div class="line">  process.<a id="a2" name="a2"></a><a class="code hl_variable" href="classAsyncFw_1_1SystemProcess.html#a2b1dca35fe7a92497a7aad622d878dfb">stateChanged</a>.connect([](AsyncFw::SystemProcess::State _s) {</div>
 <div class="line">    <span class="keywordflow">if</span> (_s == AsyncFw::SystemProcess::Running) <span class="keywordflow">return</span>;</div>
-<div class="line">    AsyncFw::MainThread::exit(0);</div>
+<div class="line">    <a id="a3" name="a3"></a><a class="code hl_function" href="classAsyncFw_1_1MainThread.html#a76fed3a2c1cfdbdb67f2b209e6457657">AsyncFw::MainThread::exit</a>(0);</div>
 <div class="line">  });</div>
 <div class="line"><span class="preprocessor">#ifndef _WIN32</span></div>
-<div class="line">  <span class="keywordtype">bool</span> _r = process.<a id="a3" name="a3"></a>start(<span class="stringliteral">&quot;/bin/bash&quot;</span>);</div>
+<div class="line">  <span class="keywordtype">bool</span> _r = process.<a id="a4" name="a4"></a>start(<span class="stringliteral">&quot;/bin/bash&quot;</span>);</div>
 <div class="line">  <span class="keywordflow">if</span> (!_r) {</div>
 <div class="line">    logNotice() &lt;&lt; <span class="stringliteral">&quot;Start &#39;/bin/bash&#39; error&quot;</span>;</div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">  }</div>
-<div class="line">  <a id="a4" name="a4"></a><a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">AsyncFw::Timer::single</a>(10, [&amp;process]() { process.<a id="a5" name="a5"></a>input(<span class="stringliteral">&quot;echo 1234567890\n&quot;</span>); });</div>
+<div class="line">  <a id="a5" name="a5"></a><a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">AsyncFw::Timer::single</a>(10, [&amp;process]() { process.<a id="a6" name="a6"></a>input(<span class="stringliteral">&quot;echo 1234567890\n&quot;</span>); });</div>
 <div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">AsyncFw::Timer::single</a>(20, [&amp;process]() { process.input(<span class="stringliteral">&quot;_cmd_\n&quot;</span>); });  <span class="comment">//error: _cmd_ not found</span></div>
 <div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">AsyncFw::Timer::single</a>(30, [&amp;process]() { process.input(<span class="stringliteral">&quot;ls\n&quot;</span>); });</div>
 <div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">AsyncFw::Timer::single</a>(40, [&amp;process]() { process.input(<span class="stringliteral">&quot;exit\n&quot;</span>); });</div>
@@ -155,9 +155,10 @@ $(function(){initNavTree('SystemProcess_2main_8cpp-example.html',''); initResiza
 <div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">AsyncFw::Timer::single</a>(40, [&amp;process]() { process.input(<span class="stringliteral">&quot;exit\n&quot;</span>); });</div>
 <div class="line"><span class="preprocessor">#endif</span></div>
 <div class="line">  logNotice() &lt;&lt; <span class="stringliteral">&quot;Start Applicaiton&quot;</span>;</div>
-<div class="line">  <span class="keywordtype">int</span> ret = <a id="a6" name="a6"></a><a class="code hl_function" href="classAsyncFw_1_1MainThread.html#ad12e620772820ad751868c7b49fa4190">AsyncFw::MainThread::exec</a>();</div>
+<div class="line">  <span class="keywordtype">int</span> ret = <a id="a7" name="a7"></a><a class="code hl_function" href="classAsyncFw_1_1MainThread.html#ad12e620772820ad751868c7b49fa4190">AsyncFw::MainThread::exec</a>();</div>
 <div class="line">  <span class="keywordflow">return</span> ret;</div>
 <div class="line">}</div>
+<div class="ttc" id="aclassAsyncFw_1_1MainThread_html_a76fed3a2c1cfdbdb67f2b209e6457657"><div class="ttname"><a href="classAsyncFw_1_1MainThread.html#a76fed3a2c1cfdbdb67f2b209e6457657">AsyncFw::MainThread::exit</a></div><div class="ttdeci">static void exit()</div><div class="ttdoc">Signals the master event loop to terminate gracefully.</div><div class="ttdef"><b>Definition</b> MainThread.h:59</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1MainThread_html_ad12e620772820ad751868c7b49fa4190"><div class="ttname"><a href="classAsyncFw_1_1MainThread.html#ad12e620772820ad751868c7b49fa4190">AsyncFw::MainThread::exec</a></div><div class="ttdeci">static int exec()</div><div class="ttdoc">Starts the master application event loop on the current thread. This call is blocking....</div><div class="ttdef"><b>Definition</b> MainThread.h:47</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1SystemProcess_html"><div class="ttname"><a href="classAsyncFw_1_1SystemProcess.html">AsyncFw::SystemProcess</a></div><div class="ttdoc">The SystemProcess class.</div><div class="ttdef"><b>Definition</b> SystemProcess.h:16</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1SystemProcess_html_a2b1dca35fe7a92497a7aad622d878dfb"><div class="ttname"><a href="classAsyncFw_1_1SystemProcess.html#a2b1dca35fe7a92497a7aad622d878dfb">AsyncFw::SystemProcess::stateChanged</a></div><div class="ttdeci">FunctionConnectorProtected&lt; SystemProcess &gt;::Connector&lt; State &gt; stateChanged</div><div class="ttdoc">The FunctionConnector for SystemProcess stateChanged.</div><div class="ttdef"><b>Definition</b> SystemProcess.h:33</div></div>

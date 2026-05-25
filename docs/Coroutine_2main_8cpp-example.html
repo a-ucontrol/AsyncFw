@@ -160,14 +160,14 @@ $(function(){initNavTree('Coroutine_2main_8cpp-example.html',''); initResizable(
 <div class="line">    <span class="keyword">co_await</span> await;</div>
 <div class="line">    <a class="code hl_class" href="classAsyncFw_1_1AbstractThread.html">AsyncFw::AbstractThread</a> *ct = <a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a09cdd1972b9416a7ddb2a1921f36938c">AsyncFw::AbstractThread::current</a>();</div>
 <div class="line">    logNotice() &lt;&lt; <span class="stringliteral">&quot;coro_task: resumed in thread&quot;</span> &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a8ebcc00d7ecbc1f9a2cc0c44d52ee071">name</a>() &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a110a64706041760010cd3f83b783e265">id</a>();</div>
-<div class="line">    AsyncFw::MainThread::exit(0);</div>
+<div class="line">    <a id="a8" name="a8"></a><a class="code hl_function" href="classAsyncFw_1_1MainThread.html#a76fed3a2c1cfdbdb67f2b209e6457657">AsyncFw::MainThread::exit</a>(0);</div>
 <div class="line">  });</div>
 <div class="line"> </div>
 <div class="line">  coro_task();</div>
 <div class="line"> </div>
 <div class="line">  logNotice() &lt;&lt; <span class="stringliteral">&quot;Start Applicaiton&quot;</span>;</div>
 <div class="line"> </div>
-<div class="line">  <span class="keywordtype">int</span> ret = <a id="a8" name="a8"></a><a class="code hl_function" href="classAsyncFw_1_1MainThread.html#ad12e620772820ad751868c7b49fa4190">AsyncFw::MainThread::exec</a>();</div>
+<div class="line">  <span class="keywordtype">int</span> ret = <a id="a9" name="a9"></a><a class="code hl_function" href="classAsyncFw_1_1MainThread.html#ad12e620772820ad751868c7b49fa4190">AsyncFw::MainThread::exec</a>();</div>
 <div class="line"> </div>
 <div class="line">  logNotice() &lt;&lt; <span class="stringliteral">&quot;End Applicaiton&quot;</span>;</div>
 <div class="line">  <span class="keywordflow">return</span> ret;</div>
@@ -177,6 +177,7 @@ $(function(){initNavTree('Coroutine_2main_8cpp-example.html',''); initResizable(
 <div class="ttc" id="aclassAsyncFw_1_1AbstractThread_html_a110a64706041760010cd3f83b783e265"><div class="ttname"><a href="classAsyncFw_1_1AbstractThread.html#a110a64706041760010cd3f83b783e265">AsyncFw::AbstractThread::id</a></div><div class="ttdeci">std::thread::id id() const</div><div class="ttdoc">Returns unique identifier of managed thread.</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1AbstractThread_html_a8ebcc00d7ecbc1f9a2cc0c44d52ee071"><div class="ttname"><a href="classAsyncFw_1_1AbstractThread.html#a8ebcc00d7ecbc1f9a2cc0c44d52ee071">AsyncFw::AbstractThread::name</a></div><div class="ttdeci">std::string name() const</div><div class="ttdoc">Returns name of managed thread.</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1Instance_html_a8000597f0e7ee4bd6669491a5b502beb"><div class="ttname"><a href="classAsyncFw_1_1Instance.html#a8000597f0e7ee4bd6669491a5b502beb">AsyncFw::Instance::create</a></div><div class="ttdeci">static CT * create(Args... args)</div><div class="ttdoc">Creates a custom polymorphically derived object inside this instance container.</div><div class="ttdef"><b>Definition</b> Instance.h:46</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1MainThread_html_a76fed3a2c1cfdbdb67f2b209e6457657"><div class="ttname"><a href="classAsyncFw_1_1MainThread.html#a76fed3a2c1cfdbdb67f2b209e6457657">AsyncFw::MainThread::exit</a></div><div class="ttdeci">static void exit()</div><div class="ttdoc">Signals the master event loop to terminate gracefully.</div><div class="ttdef"><b>Definition</b> MainThread.h:59</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1MainThread_html_ad12e620772820ad751868c7b49fa4190"><div class="ttname"><a href="classAsyncFw_1_1MainThread.html#ad12e620772820ad751868c7b49fa4190">AsyncFw::MainThread::exec</a></div><div class="ttdeci">static int exec()</div><div class="ttdoc">Starts the master application event loop on the current thread. This call is blocking....</div><div class="ttdef"><b>Definition</b> MainThread.h:47</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1ThreadPool_html_a0a35c4070964e69b187842b69b04d325"><div class="ttname"><a href="classAsyncFw_1_1ThreadPool.html#a0a35c4070964e69b187842b69b04d325">AsyncFw::ThreadPool::async</a></div><div class="ttdeci">static bool async(AbstractThread *_t, F f)</div><div class="ttdoc">Asynchronously invokes a function in the given thread&#39;s event loop.</div><div class="ttdef"><b>Definition</b> ThreadPool.h:69</div></div>
 <div class="ttc" id="astructAsyncFw_1_1CoroutineAwait_html"><div class="ttname"><a href="structAsyncFw_1_1CoroutineAwait.html">AsyncFw::CoroutineAwait</a></div><div class="ttdoc">The CoroutineAwait struct.</div><div class="ttdef"><b>Definition</b> Coroutine.h:51</div></div>

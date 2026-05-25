@@ -208,7 +208,7 @@ Public Attributes</h2></td></tr>
 <div class="line">  });</div>
 <div class="line">  process.<a class="code hl_variable" href="#a2b1dca35fe7a92497a7aad622d878dfb">stateChanged</a>.connect([](AsyncFw::SystemProcess::State _s) {</div>
 <div class="line">    <span class="keywordflow">if</span> (_s == AsyncFw::SystemProcess::Running) <span class="keywordflow">return</span>;</div>
-<div class="line">    AsyncFw::MainThread::exit(0);</div>
+<div class="line">    <a class="code hl_function" href="classAsyncFw_1_1MainThread.html#a76fed3a2c1cfdbdb67f2b209e6457657">AsyncFw::MainThread::exit</a>(0);</div>
 <div class="line">  });</div>
 <div class="line"><span class="preprocessor">#ifndef _WIN32</span></div>
 <div class="line">  <span class="keywordtype">bool</span> _r = process.start(<span class="stringliteral">&quot;/bin/bash&quot;</span>);</div>

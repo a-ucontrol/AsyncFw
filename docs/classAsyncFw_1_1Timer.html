@@ -162,7 +162,7 @@ Public Attributes</h2></td></tr>
 <div class="line"> </div>
 <div class="line">  timer1.<a class="code hl_variable" href="#a746a7b46bc5d405ab0452b09ad1253f3">timeout</a>.connect([&amp;cnt]() {</div>
 <div class="line">    lsDebug() &lt;&lt; std::chrono::system_clock::now() &lt;&lt; <span class="stringliteral">&quot; timer1 timeout&quot;</span>;</div>
-<div class="line">    <span class="keywordflow">if</span> (++cnt == 10) AsyncFw::MainThread::exit(0);</div>
+<div class="line">    <span class="keywordflow">if</span> (++cnt == 10) <a class="code hl_function" href="classAsyncFw_1_1MainThread.html#a76fed3a2c1cfdbdb67f2b209e6457657">AsyncFw::MainThread::exit</a>(0);</div>
 <div class="line">  });</div>
 <div class="line"> </div>
 <div class="line">  timer2.<a class="code hl_variable" href="#a746a7b46bc5d405ab0452b09ad1253f3">timeout</a>.connect([]() { lsDebug() &lt;&lt; std::chrono::system_clock::now() &lt;&lt; <span class="stringliteral">&quot; timer2 timeout&quot;</span>; });</div>
@@ -212,7 +212,7 @@ template&lt;typename T&gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="SystemProcess_2main_8cpp-example.html#a4">SystemProcess/main.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="SystemProcess_2main_8cpp-example.html#a5">SystemProcess/main.cpp</a>.</dd>
 </dl>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
@@ -249,7 +249,7 @@ Here is the caller graph for this function:</div>
   </table>
   </dd>
 </dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="ContainerTask_2main_8cpp-example.html#a5">ContainerTask/main.cpp</a>, and <a class="el" href="Timer_2main_8cpp-example.html#a1">Timer/main.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="ContainerTask_2main_8cpp-example.html#a6">ContainerTask/main.cpp</a>, and <a class="el" href="Timer_2main_8cpp-example.html#a1">Timer/main.cpp</a>.</dd>
 </dl>
 <div class="dynheader">
 Here is the call graph for this function:</div>

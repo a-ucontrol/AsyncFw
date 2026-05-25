@@ -150,32 +150,32 @@ $(function(){initNavTree('HttpSocket_2main_8cpp-example.html',''); initResizable
 <div class="line">      socket-&gt;<a id="a11" name="a11"></a>connect(list[0], SERVER_PORT);</div>
 <div class="line">      <span class="keywordflow">return</span>;</div>
 <div class="line">    }</div>
-<div class="line">    AsyncFw::MainThread::exit(-1);</div>
+<div class="line">    <a id="a12" name="a12"></a><a class="code hl_function" href="classAsyncFw_1_1MainThread.html#a76fed3a2c1cfdbdb67f2b209e6457657">AsyncFw::MainThread::exit</a>(-1);</div>
 <div class="line">  });</div>
 <div class="line"> </div>
-<div class="line">  socket-&gt;<a id="a12" name="a12"></a>stateChanged.connect([&amp;socket](<span class="keyword">const</span> AsyncFw::AbstractSocket::State state) {</div>
+<div class="line">  socket-&gt;<a id="a13" name="a13"></a>stateChanged.connect([&amp;socket](<span class="keyword">const</span> AsyncFw::AbstractSocket::State state) {</div>
 <div class="line">    <span class="keywordflow">if</span> (state == AsyncFw::AbstractSocket::State::Active) {</div>
 <div class="line">      logDebug() &lt;&lt; <span class="stringliteral">&quot;Send request&quot;</span>;</div>
-<div class="line">      socket-&gt;<a id="a13" name="a13"></a>write(<span class="stringliteral">&quot;GET &quot;</span> GET_FILE <span class="stringliteral">&quot; HTTP/1.1\r\nHost:&quot;</span> SERVER_NAME <span class="stringliteral">&quot;\r\n\r\n&quot;</span>);</div>
+<div class="line">      socket-&gt;<a id="a14" name="a14"></a>write(<span class="stringliteral">&quot;GET &quot;</span> GET_FILE <span class="stringliteral">&quot; HTTP/1.1\r\nHost:&quot;</span> SERVER_NAME <span class="stringliteral">&quot;\r\n\r\n&quot;</span>);</div>
 <div class="line">    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (state == AsyncFw::AbstractSocket::State::Unconnected) {</div>
-<div class="line">      <span class="keywordflow">if</span> (socket-&gt;<a id="a14" name="a14"></a>errorString().empty()) logInfo() &lt;&lt; <span class="stringliteral">&quot;Unconnected&quot;</span>;</div>
+<div class="line">      <span class="keywordflow">if</span> (socket-&gt;<a id="a15" name="a15"></a>errorString().empty()) logInfo() &lt;&lt; <span class="stringliteral">&quot;Unconnected&quot;</span>;</div>
 <div class="line">      <span class="keywordflow">else</span> { logError() &lt;&lt; socket-&gt;errorString(); }</div>
-<div class="line">      AsyncFw::MainThread::exit(0);</div>
+<div class="line">      <a class="code hl_function" href="classAsyncFw_1_1MainThread.html#a76fed3a2c1cfdbdb67f2b209e6457657">AsyncFw::MainThread::exit</a>(0);</div>
 <div class="line">    }</div>
 <div class="line">  });</div>
-<div class="line">  socket-&gt;<a id="a15" name="a15"></a>received.connect([socket](<span class="keyword">const</span> <a id="_a16" name="_a16"></a><a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> &amp;answer) {</div>
-<div class="line">    logDebug() &lt;&lt; socket-&gt;<a id="a17" name="a17"></a>header();</div>
-<div class="line">    logDebug() &lt;&lt; socket-&gt;<a id="a18" name="a18"></a>content();</div>
-<div class="line">    logNotice() &lt;&lt; answer.<a id="a19" name="a19"></a>view(0, 4096);</div>
-<div class="line">    socket-&gt;<a id="a20" name="a20"></a>disconnect();</div>
+<div class="line">  socket-&gt;<a id="a16" name="a16"></a>received.connect([socket](<span class="keyword">const</span> <a id="_a17" name="_a17"></a><a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> &amp;answer) {</div>
+<div class="line">    logDebug() &lt;&lt; socket-&gt;<a id="a18" name="a18"></a>header();</div>
+<div class="line">    logDebug() &lt;&lt; socket-&gt;<a id="a19" name="a19"></a>content();</div>
+<div class="line">    logNotice() &lt;&lt; answer.<a id="a20" name="a20"></a>view(0, 4096);</div>
+<div class="line">    socket-&gt;<a id="a21" name="a21"></a>disconnect();</div>
 <div class="line">  });</div>
 <div class="line"> </div>
 <div class="line">  logNotice() &lt;&lt; <span class="stringliteral">&quot;Start Applicaiton&quot;</span>;</div>
 <div class="line"> </div>
-<div class="line">  logDebug() &lt;&lt; *<a id="a21" name="a21"></a><a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a09cdd1972b9416a7ddb2a1921f36938c">AsyncFw::AbstractThread::current</a>();</div>
-<div class="line">  logDebug() &lt;&lt; *(<a id="_a22" name="_a22"></a><a class="code hl_class" href="classAsyncFw_1_1AbstractSocket.html">AsyncFw::AbstractSocket</a> *)socket;</div>
+<div class="line">  logDebug() &lt;&lt; *<a id="a22" name="a22"></a><a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a09cdd1972b9416a7ddb2a1921f36938c">AsyncFw::AbstractThread::current</a>();</div>
+<div class="line">  logDebug() &lt;&lt; *(<a id="_a23" name="_a23"></a><a class="code hl_class" href="classAsyncFw_1_1AbstractSocket.html">AsyncFw::AbstractSocket</a> *)socket;</div>
 <div class="line"> </div>
-<div class="line">  <span class="keywordtype">int</span> ret = <a id="a23" name="a23"></a><a class="code hl_function" href="classAsyncFw_1_1MainThread.html#ad12e620772820ad751868c7b49fa4190">AsyncFw::MainThread::exec</a>();</div>
+<div class="line">  <span class="keywordtype">int</span> ret = <a id="a24" name="a24"></a><a class="code hl_function" href="classAsyncFw_1_1MainThread.html#ad12e620772820ad751868c7b49fa4190">AsyncFw::MainThread::exec</a>();</div>
 <div class="line"> </div>
 <div class="line">  logDebug() &lt;&lt; *(<a class="code hl_class" href="classAsyncFw_1_1AbstractSocket.html">AsyncFw::AbstractSocket</a> *)socket;</div>
 <div class="line"> </div>
@@ -190,6 +190,7 @@ $(function(){initNavTree('HttpSocket_2main_8cpp-example.html',''); initResizable
 <div class="ttc" id="aclassAsyncFw_1_1AddressInfo_html_a724e55a870a6eec5b857d00bc7a72ecd"><div class="ttname"><a href="classAsyncFw_1_1AddressInfo.html#a724e55a870a6eec5b857d00bc7a72ecd">AsyncFw::AddressInfo::completed</a></div><div class="ttdeci">FunctionConnectorProtected&lt; AddressInfo &gt;::Connector&lt; int, const std::vector&lt; std::string &gt; &amp; &gt; completed</div><div class="ttdoc">The AddressInfo::completed connector.</div><div class="ttdef"><b>Definition</b> AddressInfo.h:40</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1DataArray_html"><div class="ttname"><a href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a></div><div class="ttdoc">The DataArray class, provides an array of bytes.</div><div class="ttdef"><b>Definition</b> DataArray.h:21</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1HttpSocket_html"><div class="ttname"><a href="classAsyncFw_1_1HttpSocket.html">AsyncFw::HttpSocket</a></div><div class="ttdoc">The HttpSocket class.</div><div class="ttdef"><b>Definition</b> HttpSocket.h:18</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1MainThread_html_a76fed3a2c1cfdbdb67f2b209e6457657"><div class="ttname"><a href="classAsyncFw_1_1MainThread.html#a76fed3a2c1cfdbdb67f2b209e6457657">AsyncFw::MainThread::exit</a></div><div class="ttdeci">static void exit()</div><div class="ttdoc">Signals the master event loop to terminate gracefully.</div><div class="ttdef"><b>Definition</b> MainThread.h:59</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1MainThread_html_ad12e620772820ad751868c7b49fa4190"><div class="ttname"><a href="classAsyncFw_1_1MainThread.html#ad12e620772820ad751868c7b49fa4190">AsyncFw::MainThread::exec</a></div><div class="ttdeci">static int exec()</div><div class="ttdoc">Starts the master application event loop on the current thread. This call is blocking....</div><div class="ttdef"><b>Definition</b> MainThread.h:47</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1Thread_html"><div class="ttname"><a href="classAsyncFw_1_1Thread.html">AsyncFw::Thread</a></div><div class="ttdoc">AsyncFw::Thread thread with sockets.</div><div class="ttdef"><b>Definition</b> Thread.h:16</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1TlsContext_html"><div class="ttname"><a href="classAsyncFw_1_1TlsContext.html">AsyncFw::TlsContext</a></div><div class="ttdoc">The TlsContext class provides functionality for managing TLS certificates.</div><div class="ttdef"><b>Definition</b> TlsContext.h:23</div></div>

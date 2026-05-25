@@ -159,7 +159,7 @@ Public Attributes</h2></td></tr>
 <div class="line">    lsNotice() &lt;&lt; _val.type;</div>
 <div class="line">    <span class="keywordflow">if</span> (!_val.empty()) lsInfoMagenta() &lt;&lt; _val.data&lt;std::chrono::time_point&lt;std::chrono::system_clock&gt;&gt;();</div>
 <div class="line">    <span class="keywordflow">if</span> (_val.type == TestThreadStarted) _test.<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#af61572d4713347fcac3ce80f8be2eb20">quit</a>();</div>
-<div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (_val.type == TestThreadFinished) { AsyncFw::MainThread::exit(); }</div>
+<div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (_val.type == TestThreadFinished) { <a class="code hl_function" href="classAsyncFw_1_1MainThread.html#a76fed3a2c1cfdbdb67f2b209e6457657">AsyncFw::MainThread::exit</a>(); }</div>
 <div class="line">  });</div>
 <div class="line"> </div>
 <div class="line">  _test.<a class="code hl_variable" href="classAsyncFw_1_1Thread.html#a3aad54bdeeeb5ed95996bd30c67ce3b2">started</a>.connect([]() { AsyncFw::ApplicationNotifier::instance()-&gt;notify({TestThreadStarted, std::chrono::system_clock::now()}); });</div>

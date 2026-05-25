@@ -383,7 +383,7 @@ Additional Inherited Members</h2></td></tr>
 <div class="line">      socket-&gt;connect(list[0], SERVER_PORT);</div>
 <div class="line">      <span class="keywordflow">return</span>;</div>
 <div class="line">    }</div>
-<div class="line">    AsyncFw::MainThread::exit(-1);</div>
+<div class="line">    <a class="code hl_function" href="classAsyncFw_1_1MainThread.html#a76fed3a2c1cfdbdb67f2b209e6457657">AsyncFw::MainThread::exit</a>(-1);</div>
 <div class="line">  });</div>
 <div class="line"> </div>
 <div class="line">  socket-&gt;stateChanged.connect([&amp;socket](<span class="keyword">const</span> AsyncFw::AbstractSocket::State state) {</div>
@@ -393,7 +393,7 @@ Additional Inherited Members</h2></td></tr>
 <div class="line">    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (state == AsyncFw::AbstractSocket::State::Unconnected) {</div>
 <div class="line">      <span class="keywordflow">if</span> (socket-&gt;errorString().empty()) logInfo() &lt;&lt; <span class="stringliteral">&quot;Unconnected&quot;</span>;</div>
 <div class="line">      <span class="keywordflow">else</span> { logError() &lt;&lt; socket-&gt;errorString(); }</div>
-<div class="line">      AsyncFw::MainThread::exit(0);</div>
+<div class="line">      <a class="code hl_function" href="classAsyncFw_1_1MainThread.html#a76fed3a2c1cfdbdb67f2b209e6457657">AsyncFw::MainThread::exit</a>(0);</div>
 <div class="line">    }</div>
 <div class="line">  });</div>
 <div class="line">  socket-&gt;received.connect([socket](<span class="keyword">const</span> <a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> &amp;answer) {</div>
@@ -569,7 +569,7 @@ Here is the call graph for this function:</div>
 </div><div class="memdoc">
 
 <p>Reimplemented from <a class="el" href="classAsyncFw_1_1AbstractTlsSocket.html">AsyncFw::AbstractTlsSocket</a>.</p>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="HttpSocket_2main_8cpp-example.html#a20">HttpSocket/main.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="HttpSocket_2main_8cpp-example.html#a21">HttpSocket/main.cpp</a>.</dd>
 </dl>
 
 </div>

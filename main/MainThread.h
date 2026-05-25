@@ -55,6 +55,7 @@ public:
     return qApp->exec();
 #endif
   }
+  /*! \brief Signals the master event loop to terminate gracefully. */
   static void exit() {
 #ifdef EXIT_ON_UNIX_SIGNAL
     if (mt_.eventfd_ >= 0) eventfd_write(mt_.eventfd_, 1);

@@ -198,7 +198,7 @@ class AsyncFw::FunctionConnector&lt; Args &gt;</div><p>Provides a sender-to-rece
 <div class="line">      AsyncFw::AbstractThread *ct = <a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a09cdd1972b9416a7ddb2a1921f36938c">AsyncFw::AbstractThread::current</a>();</div>
 <div class="line">      logInfo() &lt;&lt; cnt &lt;&lt; <span class="stringliteral">&quot;send from thread:&quot;</span> &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a8ebcc00d7ecbc1f9a2cc0c44d52ee071">name</a>() &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a110a64706041760010cd3f83b783e265">id</a>();</div>
 <div class="line">      connector(cnt++, <span class="stringliteral">&quot;&quot;</span>);</div>
-<div class="line">      <span class="keywordflow">if</span> (cnt == 1) AsyncFw::MainThread::exit(0);</div>
+<div class="line">      <span class="keywordflow">if</span> (cnt == 1) <a class="code hl_function" href="classAsyncFw_1_1MainThread.html#a76fed3a2c1cfdbdb67f2b209e6457657">AsyncFw::MainThread::exit</a>(0);</div>
 <div class="line">    });</div>
 <div class="line">    timer.start(10);</div>
 <div class="line">  }</div>

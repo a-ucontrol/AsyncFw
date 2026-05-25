@@ -186,7 +186,7 @@ Protected Member Functions</h2></td></tr>
 <div class="line">    socket-&gt;received.connect([socket](<span class="keyword">const</span> <a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> &amp;data) {</div>
 <div class="line">      logNotice() &lt;&lt; <span class="stringliteral">&quot;received:&quot;</span> &lt;&lt; data;</div>
 <div class="line">      socket-&gt;write(<span class="stringliteral">&quot;Answer\n&quot;</span>);</div>
-<div class="line">      <span class="keywordflow">if</span> (data == <a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a>(<span class="charliteral">&#39;q&#39;</span>)) AsyncFw::MainThread::exit(0);</div>
+<div class="line">      <span class="keywordflow">if</span> (data == <a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a>(<span class="charliteral">&#39;q&#39;</span>)) <a class="code hl_function" href="classAsyncFw_1_1MainThread.html#a76fed3a2c1cfdbdb67f2b209e6457657">AsyncFw::MainThread::exit</a>(0);</div>
 <div class="line">    });</div>
 <div class="line">    logInfo() &lt;&lt; <span class="stringliteral">&quot;Incoming:&quot;</span> &lt;&lt; fd &lt;&lt; address;</div>
 <div class="line">    *accept = <span class="keyword">true</span>;</div>
@@ -325,7 +325,7 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if success </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="ListenSocket_2main_8cpp-example.html#a6">ListenSocket/main.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="ListenSocket_2main_8cpp-example.html#a7">ListenSocket/main.cpp</a>.</dd>
 </dl>
 
 </div>
