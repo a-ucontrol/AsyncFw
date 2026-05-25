@@ -166,7 +166,7 @@ private:
       for (std::vector<Timer>::iterator it = timers.begin(); it != timers.end(); ++it) {
         if (it->id == id) {
           if (it->qid >= 0) QObject::killTimer(it->qid);
-          _t = new Invocable<>::Function([p = it->task] { delete p; });
+          _t = new Invocable<void()>::Function([p = it->task] { delete p; });
           timers.erase(it);
           break;
         }
@@ -246,7 +246,7 @@ private:
       LockGuard lock = lockGuard();
       for (const std::shared_ptr<Poll> &poll : notifiers)
         if (poll->in.socket() == fd) {
-          _t = new Invocable<>::Function([p = poll->task] { delete p; });
+          _t = new Invocable<void()>::Function([p = poll->task] { delete p; });
           notifiers.removeAll(poll);
           break;
         }
