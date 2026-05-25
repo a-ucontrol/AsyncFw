@@ -1,5 +1,5 @@
 <map id="AsyncFw::MainThread" name="AsyncFw::MainThread">
-<area shape="rect" id="Node000001" title="A static control interface managing the application&#39;s primary execution thread (Main Thread)...." alt="" coords="16,155,168,181"/>
+<area shape="rect" id="Node000001" title="A static control interface managing the application&#39;s primary execution thread (Main Thread)." alt="" coords="16,155,168,181"/>
 <area shape="rect" id="Node000002" href="$classAsyncFw_1_1Thread.html" title="AsyncFw::Thread thread with sockets." alt="" coords="30,80,154,107"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="95,122,95,154,89,154,89,122"/>
 <area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractThread.html" title="The AbstractThread class provides the base functionality for thread management." alt="" coords="5,5,179,32"/>

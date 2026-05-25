@@ -13,8 +13,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #define ThreadPool_DEFAULT_WORK_THREADS 1
 
 namespace AsyncFw {
-/*! \class AbstractThreadPool ThreadPool.h <AsyncFw/ThreadPool>
-\brief Abstract base class for creating and managing thread pools. */
+/*! \class AbstractThreadPool ThreadPool.h <AsyncFw/ThreadPool> \brief Abstract base class for creating and managing thread pools. */
 class AbstractThreadPool {
 public:
   /*! \class Thread \brief A specialized thread managed by an AbstractThreadPool. */
@@ -55,8 +54,7 @@ private:
   Private &private_;
 };
 
-/*! \class ThreadPool ThreadPool.h <AsyncFw/ThreadPool>
-\brief Manages a set of reusable worker threads for concurrent task execution, eliminating the need to spawn a new thread for each individual task.
+/*! \class ThreadPool ThreadPool.h <AsyncFw/ThreadPool> \brief Manages a set of reusable worker threads for concurrent task execution, eliminating the need to spawn a new thread for each individual task.
 \brief By queuing tasks and recycling existing threads, it improves system performance, constrains resource allocation, and significantly reduces the overhead associated with thread creation and destruction.
 \snippet ThreadPool/main.cpp snippet */
 class ThreadPool : public AbstractThreadPool {

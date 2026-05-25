@@ -10,8 +10,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include <string>
 
 namespace AsyncFw {
-/*! \class AbstractInstance Instance.h <AsyncFw/Instance>
-\brief Abstract base class for global singleton service providers and managed instances. */
+/*! \class AbstractInstance Instance.h <AsyncFw/Instance> \brief Abstract base class for global singleton service providers and managed instances. */
 class AbstractInstance {
 public:
   /*! \brief Destroys stored values across all registered global instances. */
@@ -35,8 +34,7 @@ private:
   Private &private_;
 };
 
-/*! \class Instance Instance.h <AsyncFw/Instance>
-\brief A template-based global registry wrapper for managing application-wide unique objects (Singletons).
+/*! \class Instance Instance.h <AsyncFw/Instance> \brief A template-based global registry wrapper for managing application-wide unique objects (Singletons).
 \brief Example: \snippet Instance/main.cpp snippet */
 template <typename T>
 class Instance : public AbstractInstance {

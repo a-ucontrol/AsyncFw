@@ -39,7 +39,7 @@
 <!-- Node4 -->
 <g id="Node000004" class="node">
 <title>Node4</title>
-<g id="a_Node000004"><a xlink:href="classAsyncFw_1_1MainThread.html" target="_top" xlink:title="A static control interface managing the application&#39;s primary execution thread (Main Thread)....">
+<g id="a_Node000004"><a xlink:href="classAsyncFw_1_1MainThread.html" target="_top" xlink:title="A static control interface managing the application&#39;s primary execution thread (Main Thread).">
 <polygon fill="white" stroke="#666666" points="281.88,-26 167.62,-26 167.62,-6 281.88,-6 281.88,-26"/>
 <text text-anchor="middle" x="224.75" y="-12.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::MainThread</text>
 </a>

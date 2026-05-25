@@ -43,15 +43,13 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 namespace AsyncFw {
 class LogStream;
-/*! \class AbstractThread AbstractThread.h <AsyncFw/AbstractThread>
-\brief The AbstractThread class provides the base functionality for thread management. */
+/*! \class AbstractThread AbstractThread.h <AsyncFw/AbstractThread> \brief The AbstractThread class provides the base functionality for thread management. */
 class AbstractThread {
   friend class Thread;
   friend LogStream &operator<<(LogStream &, const AbstractThread &);
 
 public:
-  /*! \enum PollEvents
-  \brief Bitmask constants mirroring system poll definitions (POLLIN, POLLOUT, etc.) for I/O monitoring. */
+  /*! \enum PollEvents \brief Bitmask constants mirroring system poll definitions (POLLIN, POLLOUT, etc.) for I/O monitoring. */
   enum PollEvents : uint16_t { PollNo = 0, PollIn = POLLIN_, PollPri = POLLPRI_, PollOut = POLLOUT_, PollErr = POLLERR_, PollHup = POLLHUP_, PollNval = POLLNVAL_ };
   /*! \brief The LockGuard type. */
   using LockGuard = std::lock_guard<std::mutex>;
