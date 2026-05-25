@@ -1,13 +1,13 @@
 var annotated_dup =
 [
     [ "AsyncFw", null, [
-      [ "AbstractFunctionConnector", "classAsyncFw_1_1AbstractFunctionConnector.html", null ],
+      [ "AbstractFunctionConnector", "classAsyncFw_1_1AbstractFunctionConnector.html", "classAsyncFw_1_1AbstractFunctionConnector" ],
       [ "AbstractInstance", "classAsyncFw_1_1AbstractInstance.html", "classAsyncFw_1_1AbstractInstance" ],
       [ "AbstractLog", "classAsyncFw_1_1AbstractLog.html", null ],
       [ "AbstractSocket", "classAsyncFw_1_1AbstractSocket.html", "classAsyncFw_1_1AbstractSocket" ],
       [ "AbstractTask", "classAsyncFw_1_1AbstractTask.html", null ],
       [ "AbstractThread", "classAsyncFw_1_1AbstractThread.html", "classAsyncFw_1_1AbstractThread" ],
-      [ "AbstractThreadPool", "classAsyncFw_1_1AbstractThreadPool.html", null ],
+      [ "AbstractThreadPool", "classAsyncFw_1_1AbstractThreadPool.html", "classAsyncFw_1_1AbstractThreadPool" ],
       [ "AbstractTlsSocket", "classAsyncFw_1_1AbstractTlsSocket.html", "classAsyncFw_1_1AbstractTlsSocket" ],
       [ "AddressInfo", "classAsyncFw_1_1AddressInfo.html", "classAsyncFw_1_1AddressInfo" ],
       [ "AnyData", "structAsyncFw_1_1AnyData.html", null ],
@@ -26,6 +26,7 @@ var annotated_dup =
       [ "File", "classAsyncFw_1_1File.html", null ],
       [ "FileSystemWatcher", "classAsyncFw_1_1FileSystemWatcher.html", "classAsyncFw_1_1FileSystemWatcher" ],
       [ "FunctionConnectionGuard", "classAsyncFw_1_1FunctionConnectionGuard.html", null ],
+      [ "FunctionConnectionGuardList", "classAsyncFw_1_1FunctionConnectionGuardList.html", "classAsyncFw_1_1FunctionConnectionGuardList" ],
       [ "FunctionConnector", "classAsyncFw_1_1FunctionConnector.html", "classAsyncFw_1_1FunctionConnector" ],
       [ "FunctionConnectorProtected", "classAsyncFw_1_1FunctionConnectorProtected.html", null ],
       [ "HttpServer", "classAsyncFw_1_1HttpServer.html", null ],
@@ -43,7 +44,7 @@ var annotated_dup =
       [ "SystemProcess", "classAsyncFw_1_1SystemProcess.html", "classAsyncFw_1_1SystemProcess" ],
       [ "Task", "classAsyncFw_1_1Task.html", null ],
       [ "Thread", "classAsyncFw_1_1Thread.html", "classAsyncFw_1_1Thread" ],
-      [ "ThreadPool", "classAsyncFw_1_1ThreadPool.html", null ],
+      [ "ThreadPool", "classAsyncFw_1_1ThreadPool.html", "classAsyncFw_1_1ThreadPool" ],
       [ "Timer", "classAsyncFw_1_1Timer.html", "classAsyncFw_1_1Timer" ],
       [ "TlsContext", "classAsyncFw_1_1TlsContext.html", "classAsyncFw_1_1TlsContext" ],
       [ "Version", "structAsyncFw_1_1Version.html", null ]

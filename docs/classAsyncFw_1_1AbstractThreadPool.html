@@ -104,6 +104,7 @@ $(function(){initNavTree('classAsyncFw_1_1AbstractThreadPool.html',''); initResi
 
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
@@ -113,7 +114,7 @@ $(function(){initNavTree('classAsyncFw_1_1AbstractThreadPool.html',''); initResi
 </div><!--header-->
 <div class="contents">
 
-<p>Абстрактный класс для создания пулов управления потоками.  
+<p>Abstract base class for creating and managing thread pools.  
  <a href="#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="ThreadPool_8h_source.html">AsyncFw/ThreadPool</a>&gt;</code></p>
@@ -128,6 +129,11 @@ Collaboration diagram for AsyncFw::AbstractThreadPool:</div>
 <div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1AbstractThreadPool__coll__graph.svg" width="211" height="128"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAsyncFw_1_1AbstractThreadPool_1_1Thread.html">Thread</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:afcf27d92b9cb65d40ecc1457eca8b652" id="r_afcf27d92b9cb65d40ecc1457eca8b652"><td class="memItemLeft" align="right" valign="top"><a id="afcf27d92b9cb65d40ecc1457eca8b652" name="afcf27d92b9cb65d40ecc1457eca8b652"></a>
@@ -141,30 +147,34 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>quit</b> ()</
 <tr class="separator:a48b93b9caf8972713ca6c8b9c438f7c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac312e723c2e0fa3e4cc18e518853bdf2" id="r_ac312e723c2e0fa3e4cc18e518853bdf2"><td class="memItemLeft" align="right" valign="top"><a id="ac312e723c2e0fa3e4cc18e518853bdf2" name="ac312e723c2e0fa3e4cc18e518853bdf2"></a>
 std::string&#160;</td><td class="memItemRight" valign="bottom"><b>name</b> () const</td></tr>
+<tr class="memdesc:ac312e723c2e0fa3e4cc18e518853bdf2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the identifier name of the thread pool. <br /></td></tr>
 <tr class="separator:ac312e723c2e0fa3e4cc18e518853bdf2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a15294f7912a633e62e26fe0f7848eb68" id="r_a15294f7912a633e62e26fe0f7848eb68"><td class="memItemLeft" align="right" valign="top"><a id="a15294f7912a633e62e26fe0f7848eb68" name="a15294f7912a633e62e26fe0f7848eb68"></a>
-<a class="el" href="classAsyncFw_1_1AbstractThread.html#a4e97803ef650d36ba80ef1471c4b643c">AbstractThread::LockGuard</a>&#160;</td><td class="memItemRight" valign="bottom"><b>threads</b> (std::vector&lt; AbstractThreadPool::Thread * &gt; **)</td></tr>
+<a class="el" href="classAsyncFw_1_1AbstractThread.html#a4e97803ef650d36ba80ef1471c4b643c">AbstractThread::LockGuard</a>&#160;</td><td class="memItemRight" valign="bottom"><b>threads</b> (std::vector&lt; <a class="el" href="classAsyncFw_1_1AbstractThreadPool_1_1Thread.html">AbstractThreadPool::Thread</a> * &gt; **)</td></tr>
+<tr class="memdesc:a15294f7912a633e62e26fe0f7848eb68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thread-safely returns the internal list of threads managed by this pool. <br /></td></tr>
 <tr class="separator:a15294f7912a633e62e26fe0f7848eb68"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a8b3a66a03bf52ef75c7427f2778bfd44" id="r_a8b3a66a03bf52ef75c7427f2778bfd44"><td class="memItemLeft" align="right" valign="top"><a id="a8b3a66a03bf52ef75c7427f2778bfd44" name="a8b3a66a03bf52ef75c7427f2778bfd44"></a>
 static std::vector&lt; <a class="el" href="classAsyncFw_1_1AbstractThreadPool.html">AbstractThreadPool</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pools</b> ()</td></tr>
+<tr class="memdesc:a8b3a66a03bf52ef75c7427f2778bfd44"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a list of all active thread pools in the application. <br /></td></tr>
 <tr class="separator:a8b3a66a03bf52ef75c7427f2778bfd44"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:a1b2d31f7db01a7cacec702eb7323e620" id="r_a1b2d31f7db01a7cacec702eb7323e620"><td class="memItemLeft" align="right" valign="top"><a id="a1b2d31f7db01a7cacec702eb7323e620" name="a1b2d31f7db01a7cacec702eb7323e620"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>appendThread</b> (AbstractThreadPool::Thread *)</td></tr>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>appendThread</b> (<a class="el" href="classAsyncFw_1_1AbstractThreadPool_1_1Thread.html">AbstractThreadPool::Thread</a> *)</td></tr>
+<tr class="memdesc:a1b2d31f7db01a7cacec702eb7323e620"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers a new thread into the pool. <br /></td></tr>
 <tr class="separator:a1b2d31f7db01a7cacec702eb7323e620"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8dd6e5afe3b1c8f0fac9176568909c54" id="r_a8dd6e5afe3b1c8f0fac9176568909c54"><td class="memItemLeft" align="right" valign="top"><a id="a8dd6e5afe3b1c8f0fac9176568909c54" name="a8dd6e5afe3b1c8f0fac9176568909c54"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>removeThread</b> (AbstractThreadPool::Thread *)</td></tr>
+<tr class="memitem:a8dd6e5afe3b1c8f0fac9176568909c54" id="r_a8dd6e5afe3b1c8f0fac9176568909c54"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8dd6e5afe3b1c8f0fac9176568909c54">removeThread</a> (<a class="el" href="classAsyncFw_1_1AbstractThreadPool_1_1Thread.html">AbstractThreadPool::Thread</a> *)</td></tr>
+<tr class="memdesc:a8dd6e5afe3b1c8f0fac9176568909c54"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unregisters a thread from the pool.  <br /></td></tr>
 <tr class="separator:a8dd6e5afe3b1c8f0fac9176568909c54"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
 <tr class="memitem:a6c0ae22d30b2c62a38474f66d8d2ead9" id="r_a6c0ae22d30b2c62a38474f66d8d2ead9"><td class="memItemLeft" align="right" valign="top"><a id="a6c0ae22d30b2c62a38474f66d8d2ead9" name="a6c0ae22d30b2c62a38474f66d8d2ead9"></a>
-std::vector&lt; AbstractThreadPool::Thread * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>threads_</b></td></tr>
+std::vector&lt; <a class="el" href="classAsyncFw_1_1AbstractThreadPool_1_1Thread.html">AbstractThreadPool::Thread</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>threads_</b></td></tr>
 <tr class="separator:a6c0ae22d30b2c62a38474f66d8d2ead9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af6aa5cdefed96b78a8abe59edfccc3d2" id="r_af6aa5cdefed96b78a8abe59edfccc3d2"><td class="memItemLeft" align="right" valign="top"><a id="af6aa5cdefed96b78a8abe59edfccc3d2" name="af6aa5cdefed96b78a8abe59edfccc3d2"></a>
 std::mutex&#160;</td><td class="memItemRight" valign="bottom"><b>mutex</b></td></tr>
@@ -174,8 +184,43 @@ std::mutex&#160;</td><td class="memItemRight" valign="bottom"><b>mutex</b></td><
 <tr class="separator:ab939b6de13195d740c16bff1e866e43a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Абстрактный класс для создания пулов управления потоками. </p>
-</div><hr/>The documentation for this class was generated from the following files:<ul>
+<div class="textblock"><p>Abstract base class for creating and managing thread pools. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a8dd6e5afe3b1c8f0fac9176568909c54" name="a8dd6e5afe3b1c8f0fac9176568909c54"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8dd6e5afe3b1c8f0fac9176568909c54">&#9670;&#160;</a></span>removeThread()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AbstractThreadPool::removeThread </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classAsyncFw_1_1AbstractThreadPool_1_1Thread.html">AbstractThreadPool::Thread</a> *</td>          <td class="paramname"><span class="paramname"><em>thread</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span><span class="mlabel virtual">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Unregisters a thread from the pool. </p>
+
+<p>Reimplemented in <a class="el" href="classAsyncFw_1_1ThreadPool.html#ad7f14a964e683f021a4d6c1c0a8bbf5d">AsyncFw::ThreadPool</a>.</p>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1AbstractThreadPool_a8dd6e5afe3b1c8f0fac9176568909c54_icgraph.svg" width="408" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li>main/<a class="el" href="ThreadPool_8h_source.html">ThreadPool.h</a></li>
 <li>main/<b>ThreadPool.cpp</b></li>
 </ul>

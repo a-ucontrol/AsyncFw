@@ -4,7 +4,7 @@
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="127,294,127,342,121,342,121,294"/>
 <area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractFunctionConnector.html" title="The AbstractFunctionConnector class provides the base functionality for FunctionConnector." alt="" coords="27,5,210,48"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="122,63,126,219,121,220,117,63"/>
-<area shape="rect" id="Node000004" href="$classAsyncFw_1_1FunctionConnector.html" title="Обеспечивает соединение отправитель &#45;&gt; получатели. Получатели могут быть вызваны в своих потоках (по ..." alt="" coords="140,97,334,140"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1FunctionConnector.html" title="Provides a sender&#45;to&#45;receivers connection. Receivers can be invoked in their own threads (default beh..." alt="" coords="140,97,334,140"/>
 <area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="159,55,212,95,208,99,156,59"/>
 <area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="211,154,151,221,147,218,207,150"/>
 </map>

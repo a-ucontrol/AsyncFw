@@ -60,7 +60,7 @@
 <!-- Node3 -->
 <g id="Node000003" class="node">
 <title>Node3</title>
-<g id="a_Node000003"><a xlink:href="classAsyncFw_1_1FunctionConnector.html" target="_top" xlink:title="Обеспечивает соединение отправитель &#45;&gt; получатели. Получатели могут быть вызваны в своих потоках (по ...">
+<g id="a_Node000003"><a xlink:href="classAsyncFw_1_1FunctionConnector.html" target="_top" xlink:title="Provides a sender&#45;to&#45;receivers connection. Receivers can be invoked in their own threads (default beh...">
 <polygon fill="white" stroke="#666666" points="335.38,-32 189.62,-32 189.62,0 335.38,0 335.38,-32"/>
 <text text-anchor="start" x="197.62" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::FunctionConnector</text>
 <text text-anchor="middle" x="262.5" y="-6.5" font-family="Helvetica,sans-Serif" font-size="10.00">&lt; Args &gt;</text>

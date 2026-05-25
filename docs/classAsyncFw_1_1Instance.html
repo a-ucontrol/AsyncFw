@@ -112,7 +112,7 @@ $(function(){initNavTree('classAsyncFw_1_1Instance.html',''); initResizable(true
 </div><!--header-->
 <div class="contents">
 
-<p>The <a class="el" href="classAsyncFw_1_1Instance.html" title="The Instance class.">Instance</a> class.  
+<p>A template-based global registry wrapper for managing application-wide unique objects (Singletons).  
  <a href="#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="Instance_8h_source.html">AsyncFw/Instance</a>&gt;</code></p>
@@ -131,32 +131,33 @@ Collaboration diagram for AsyncFw::Instance&lt; T &gt;:</div>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:aebedc097b43f8535a70880c28a0c8f85" id="r_aebedc097b43f8535a70880c28a0c8f85"><td class="memItemLeft" align="right" valign="top"><a id="aebedc097b43f8535a70880c28a0c8f85" name="aebedc097b43f8535a70880c28a0c8f85"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>Instance</b> (const std::string &amp;_name={})</td></tr>
+<tr class="memdesc:aebedc097b43f8535a70880c28a0c8f85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the instance tracker shell and updates the internal static reference context pointer. <br /></td></tr>
 <tr class="separator:aebedc097b43f8535a70880c28a0c8f85"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f25472f8b38f5cd6fa3d681919bf50a" id="r_a6f25472f8b38f5cd6fa3d681919bf50a"><td class="memItemLeft" align="right" valign="top"><a id="a6f25472f8b38f5cd6fa3d681919bf50a" name="a6f25472f8b38f5cd6fa3d681919bf50a"></a>
+virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~Instance</b> () override</td></tr>
+<tr class="memdesc:a6f25472f8b38f5cd6fa3d681919bf50a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overridden destructor that guarantees explicit deferred memory release for the managed resource. <br /></td></tr>
+<tr class="separator:a6f25472f8b38f5cd6fa3d681919bf50a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a8000597f0e7ee4bd6669491a5b502beb" id="r_a8000597f0e7ee4bd6669491a5b502beb"><td class="memTemplParams" colspan="2"><a id="a8000597f0e7ee4bd6669491a5b502beb" name="a8000597f0e7ee4bd6669491a5b502beb"></a>
-template&lt;typename CT, typename... Args&gt; </td></tr>
-<tr class="memitem:a8000597f0e7ee4bd6669491a5b502beb"><td class="memTemplItemLeft" align="right" valign="top">static CT *&#160;</td><td class="memTemplItemRight" valign="bottom"><b>create</b> (Args... args)</td></tr>
-<tr class="memdesc:a8000597f0e7ee4bd6669491a5b502beb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create instance value. <br /></td></tr>
+<tr class="memitem:a8000597f0e7ee4bd6669491a5b502beb" id="r_a8000597f0e7ee4bd6669491a5b502beb"><td class="memTemplParams" colspan="2">template&lt;typename CT, typename... Args&gt; </td></tr>
+<tr class="memitem:a8000597f0e7ee4bd6669491a5b502beb"><td class="memTemplItemLeft" align="right" valign="top">static CT *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a8000597f0e7ee4bd6669491a5b502beb">create</a> (Args... args)</td></tr>
+<tr class="memdesc:a8000597f0e7ee4bd6669491a5b502beb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a custom polymorphically derived object inside this instance container.  <br /></td></tr>
 <tr class="separator:a8000597f0e7ee4bd6669491a5b502beb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a158800905f9c1ce225fcabbfa5b1d053" id="r_a158800905f9c1ce225fcabbfa5b1d053"><td class="memTemplParams" colspan="2"><a id="a158800905f9c1ce225fcabbfa5b1d053" name="a158800905f9c1ce225fcabbfa5b1d053"></a>
-template&lt;typename... Args&gt; </td></tr>
-<tr class="memitem:a158800905f9c1ce225fcabbfa5b1d053"><td class="memTemplItemLeft" align="right" valign="top">static T *&#160;</td><td class="memTemplItemRight" valign="bottom"><b>create</b> (Args... args)</td></tr>
-<tr class="memdesc:a158800905f9c1ce225fcabbfa5b1d053"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create instance value. <br /></td></tr>
+<tr class="memitem:a158800905f9c1ce225fcabbfa5b1d053" id="r_a158800905f9c1ce225fcabbfa5b1d053"><td class="memTemplParams" colspan="2">template&lt;typename... Args&gt; </td></tr>
+<tr class="memitem:a158800905f9c1ce225fcabbfa5b1d053"><td class="memTemplItemLeft" align="right" valign="top">static T *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a158800905f9c1ce225fcabbfa5b1d053">create</a> (Args... args)</td></tr>
+<tr class="memdesc:a158800905f9c1ce225fcabbfa5b1d053"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates the singleton instance value of the exact type T.  <br /></td></tr>
 <tr class="separator:a158800905f9c1ce225fcabbfa5b1d053"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac288330eee2512b0f87ce1013697abff" id="r_ac288330eee2512b0f87ce1013697abff"><td class="memItemLeft" align="right" valign="top"><a id="ac288330eee2512b0f87ce1013697abff" name="ac288330eee2512b0f87ce1013697abff"></a>
-static void&#160;</td><td class="memItemRight" valign="bottom"><b>set</b> (T *p)</td></tr>
-<tr class="memdesc:ac288330eee2512b0f87ce1013697abff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set instance value. <br /></td></tr>
+<tr class="memitem:ac288330eee2512b0f87ce1013697abff" id="r_ac288330eee2512b0f87ce1013697abff"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac288330eee2512b0f87ce1013697abff">set</a> (T *p)</td></tr>
+<tr class="memdesc:ac288330eee2512b0f87ce1013697abff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Manually sets or replaces the internal instance tracking pointer.  <br /></td></tr>
 <tr class="separator:ac288330eee2512b0f87ce1013697abff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a30d476114eb37aafb60ac3a6467c2fcd" id="r_a30d476114eb37aafb60ac3a6467c2fcd"><td class="memItemLeft" align="right" valign="top"><a id="a30d476114eb37aafb60ac3a6467c2fcd" name="a30d476114eb37aafb60ac3a6467c2fcd"></a>
-static T *&#160;</td><td class="memItemRight" valign="bottom"><b>get</b> ()</td></tr>
-<tr class="memdesc:a30d476114eb37aafb60ac3a6467c2fcd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get instance value. <br /></td></tr>
+<tr class="memitem:a30d476114eb37aafb60ac3a6467c2fcd" id="r_a30d476114eb37aafb60ac3a6467c2fcd"><td class="memItemLeft" align="right" valign="top">static T *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a30d476114eb37aafb60ac3a6467c2fcd">get</a> ()</td></tr>
+<tr class="memdesc:a30d476114eb37aafb60ac3a6467c2fcd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the active global pointer for this instance type.  <br /></td></tr>
 <tr class="separator:a30d476114eb37aafb60ac3a6467c2fcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_static_methods_classAsyncFw_1_1AbstractInstance"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_static_methods_classAsyncFw_1_1AbstractInstance')"><img src="closed.png" alt="-"/>&#160;Static Public Member Functions inherited from <a class="el" href="classAsyncFw_1_1AbstractInstance.html">AsyncFw::AbstractInstance</a></td></tr>
 <tr class="memitem:a53843084f7ba8d6f9fbefcdc5cfead27 inherit pub_static_methods_classAsyncFw_1_1AbstractInstance" id="r_a53843084f7ba8d6f9fbefcdc5cfead27"><td class="memItemLeft" align="right" valign="top">
 static void&#160;</td><td class="memItemRight" valign="bottom"><b>destroyValues</b> ()</td></tr>
-<tr class="memdesc:a53843084f7ba8d6f9fbefcdc5cfead27 inherit pub_static_methods_classAsyncFw_1_1AbstractInstance"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroy values in all instances. <br /></td></tr>
+<tr class="memdesc:a53843084f7ba8d6f9fbefcdc5cfead27 inherit pub_static_methods_classAsyncFw_1_1AbstractInstance"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroys stored values across all registered global instances. <br /></td></tr>
 <tr class="separator:a53843084f7ba8d6f9fbefcdc5cfead27 inherit pub_static_methods_classAsyncFw_1_1AbstractInstance"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
@@ -165,20 +166,25 @@ Protected Member Functions</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><b>Instance</b> (const <a class="el" href="classAsyncFw_1_1Instance.html">Instance</a> &amp;)=delete</td></tr>
 <tr class="separator:a994026e715e5158a02c4e5dc743b4047"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3c6c90c36f431613e8fcfd0c195fdbe0" id="r_a3c6c90c36f431613e8fcfd0c195fdbe0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3c6c90c36f431613e8fcfd0c195fdbe0">destroyValue</a> () override</td></tr>
-<tr class="memdesc:a3c6c90c36f431613e8fcfd0c195fdbe0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroy instance value.  <br /></td></tr>
+<tr class="memdesc:a3c6c90c36f431613e8fcfd0c195fdbe0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Concretely frees the managed object allocation using standard C++ delete semantics.  <br /></td></tr>
 <tr class="separator:a3c6c90c36f431613e8fcfd0c195fdbe0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_classAsyncFw_1_1AbstractInstance"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_methods_classAsyncFw_1_1AbstractInstance')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classAsyncFw_1_1AbstractInstance.html">AsyncFw::AbstractInstance</a></td></tr>
 <tr class="memitem:a884cd39afa818f16031336cb8bc87ef1 inherit pro_methods_classAsyncFw_1_1AbstractInstance" id="r_a884cd39afa818f16031336cb8bc87ef1"><td class="memItemLeft" align="right" valign="top">
 &#160;</td><td class="memItemRight" valign="bottom"><b>AbstractInstance</b> (const std::string &amp;name)</td></tr>
+<tr class="memdesc:a884cd39afa818f16031336cb8bc87ef1 inherit pro_methods_classAsyncFw_1_1AbstractInstance"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an abstract instance registry entry with a specific identifier name. <br /></td></tr>
 <tr class="separator:a884cd39afa818f16031336cb8bc87ef1 inherit pro_methods_classAsyncFw_1_1AbstractInstance"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1809713ff787e9f05d8458d15493146a inherit pro_methods_classAsyncFw_1_1AbstractInstance" id="r_a1809713ff787e9f05d8458d15493146a"><td class="memItemLeft" align="right" valign="top">
+virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~AbstractInstance</b> ()=0</td></tr>
+<tr class="memdesc:a1809713ff787e9f05d8458d15493146a inherit pro_methods_classAsyncFw_1_1AbstractInstance"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pure virtual destructor requiring an explicit implementation body. <br /></td></tr>
+<tr class="separator:a1809713ff787e9f05d8458d15493146a inherit pro_methods_classAsyncFw_1_1AbstractInstance"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad4ae1bfcd37c2450b85b35257f92360f inherit pro_methods_classAsyncFw_1_1AbstractInstance" id="r_ad4ae1bfcd37c2450b85b35257f92360f"><td class="memItemLeft" align="right" valign="top">
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>created</b> ()</td></tr>
-<tr class="memdesc:ad4ae1bfcd37c2450b85b35257f92360f inherit pro_methods_classAsyncFw_1_1AbstractInstance"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runs when the instance value is created. <br /></td></tr>
+<tr class="memdesc:ad4ae1bfcd37c2450b85b35257f92360f inherit pro_methods_classAsyncFw_1_1AbstractInstance"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hook callback method executed immediately after the instance value is created. <br /></td></tr>
 <tr class="separator:ad4ae1bfcd37c2450b85b35257f92360f inherit pro_methods_classAsyncFw_1_1AbstractInstance"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename T&gt;<br />
-class AsyncFw::Instance&lt; T &gt;</div><p>The <a class="el" href="classAsyncFw_1_1Instance.html" title="The Instance class.">Instance</a> class. </p>
+class AsyncFw::Instance&lt; T &gt;</div><p>A template-based global registry wrapper for managing application-wide unique objects (Singletons). </p>
 <p>Example: </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;AsyncFw/MainThread&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;AsyncFw/LogStream&gt;</span></div>
 <div class="line"> </div>
@@ -215,6 +221,165 @@ class AsyncFw::Instance&lt; T &gt;</div><p>The <a class="el" href="classAsyncFw_
 <div class="line">  <span class="keywordflow">return</span> ret;</div>
 <div class="line">}</div>
 </div><!-- fragment --> </div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a8000597f0e7ee4bd6669491a5b502beb" name="a8000597f0e7ee4bd6669491a5b502beb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8000597f0e7ee4bd6669491a5b502beb">&#9670;&#160;</a></span>create() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<div class="memtemplate">
+template&lt;typename CT, typename... Args&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static CT * <a class="el" href="classAsyncFw_1_1Instance.html">AsyncFw::Instance</a>&lt; T &gt;::create </td>
+          <td>(</td>
+          <td class="paramtype">Args...</td>          <td class="paramname"><span class="paramname"><em>args</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates a custom polymorphically derived object inside this instance container. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">CT</td><td>The concrete target type to instantiate (must derive from or be type T).</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">args</td><td>Variadic arguments forwarded to the constructor of type CT. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A pointer to the newly created object, or nullptr if an instance already exists. </dd></dl>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="ApplicationNotifier_2main_8cpp-example.html#a0">ApplicationNotifier/main.cpp</a>, <a class="el" href="Coroutine_2main_8cpp-example.html#a7">Coroutine/main.cpp</a>, <a class="el" href="CoroutineInvoke_2main_8cpp-example.html#a5">CoroutineInvoke/main.cpp</a>, <a class="el" href="CoroutineWait_2main_8cpp-example.html#a3">CoroutineWait/main.cpp</a>, <a class="el" href="Log_2main_8cpp-example.html#a2">Log/main.cpp</a>, <a class="el" href="LogTcp_2main_8cpp-example.html#a2">LogTcp/main.cpp</a>, and <a class="el" href="ThreadPool_2main_8cpp-example.html#a1">ThreadPool/main.cpp</a>.</dd>
+</dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1Instance_a8000597f0e7ee4bd6669491a5b502beb_icgraph.svg" width="344" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<a id="a158800905f9c1ce225fcabbfa5b1d053" name="a158800905f9c1ce225fcabbfa5b1d053"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a158800905f9c1ce225fcabbfa5b1d053">&#9670;&#160;</a></span>create() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<div class="memtemplate">
+template&lt;typename... Args&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static T * <a class="el" href="classAsyncFw_1_1Instance.html">AsyncFw::Instance</a>&lt; T &gt;::create </td>
+          <td>(</td>
+          <td class="paramtype">Args...</td>          <td class="paramname"><span class="paramname"><em>args</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates the singleton instance value of the exact type T. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">args</td><td>Variadic arguments forwarded directly to the constructor of T. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A pointer to the created instance object of type T, or nullptr if it already exists. </dd></dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1Instance_a158800905f9c1ce225fcabbfa5b1d053_cgraph.svg" width="344" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<a id="ac288330eee2512b0f87ce1013697abff" name="ac288330eee2512b0f87ce1013697abff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac288330eee2512b0f87ce1013697abff">&#9670;&#160;</a></span>set()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void <a class="el" href="classAsyncFw_1_1Instance.html">AsyncFw::Instance</a>&lt; T &gt;::set </td>
+          <td>(</td>
+          <td class="paramtype">T *</td>          <td class="paramname"><span class="paramname"><em>p</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Manually sets or replaces the internal instance tracking pointer. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">p</td><td>Pointer to the pre-allocated object of type T. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a30d476114eb37aafb60ac3a6467c2fcd" name="a30d476114eb37aafb60ac3a6467c2fcd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a30d476114eb37aafb60ac3a6467c2fcd">&#9670;&#160;</a></span>get()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static T * <a class="el" href="classAsyncFw_1_1Instance.html">AsyncFw::Instance</a>&lt; T &gt;::get </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Retrieves the active global pointer for this instance type. </p>
+<dl class="section return"><dt>Returns</dt><dd>A raw pointer to the managed object of type T, or nullptr if uninitialized. </dd></dl>
+
+</div>
+</div>
 <a id="a3c6c90c36f431613e8fcfd0c195fdbe0" name="a3c6c90c36f431613e8fcfd0c195fdbe0"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3c6c90c36f431613e8fcfd0c195fdbe0">&#9670;&#160;</a></span>destroyValue()</h2>
 
@@ -240,9 +405,14 @@ template&lt;typename T&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Destroy instance value. </p>
+<p>Concretely frees the managed object allocation using standard C++ delete semantics. </p>
 
 <p>Implements <a class="el" href="classAsyncFw_1_1AbstractInstance.html#a2cddd3e61ae002fa6be00ae760cb5123">AsyncFw::AbstractInstance</a>.</p>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1Instance_a3c6c90c36f431613e8fcfd0c195fdbe0_icgraph.svg" width="344" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
 
 </div>
 </div>

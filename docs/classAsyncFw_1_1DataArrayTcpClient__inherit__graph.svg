@@ -38,7 +38,7 @@
 <!-- Node3 -->
 <g id="Node000003" class="node">
 <title>Node3</title>
-<g id="a_Node000003"><a xlink:href="classAsyncFw_1_1AbstractThreadPool.html" target="_top" xlink:title="Абстрактный класс для создания пулов управления потоками.">
+<g id="a_Node000003"><a xlink:href="classAsyncFw_1_1AbstractThreadPool.html" target="_top" xlink:title="Abstract base class for creating and managing thread pools.">
 <polygon fill="white" stroke="#666666" points="154.38,-132 4.88,-132 4.88,-112 154.38,-112 154.38,-132"/>
 <text text-anchor="middle" x="79.62" y="-118.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AbstractThreadPool</text>
 </a>

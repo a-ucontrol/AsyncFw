@@ -3,8 +3,9 @@ var searchData=
   ['readevent_0',['readEvent',['../classAsyncFw_1_1AbstractSocket.html#a609ec54ec8aed39769d60319c4c15833',1,'AsyncFw::AbstractSocket::readEvent()'],['../classAsyncFw_1_1DataArraySocket.html#a1a1f3404abcb93af27de1d7bc0a958b1',1,'AsyncFw::DataArraySocket::readEvent()'],['../classAsyncFw_1_1HttpSocket.html#a7163448458d68f433dbdb214a6175be3',1,'AsyncFw::HttpSocket::readEvent()']]],
   ['removedescriptor_1',['removeDescriptor',['../classAsyncFw_1_1PollNotifier.html#a63d989535fa3af6dcb2e8656999f8315',1,'AsyncFw::PollNotifier']]],
   ['removepolldescriptor_2',['removePollDescriptor',['../classAsyncFw_1_1AbstractThread.html#acbfc67a3648c22a2567435daaba427d7',1,'AsyncFw::AbstractThread']]],
-  ['removetimer_3',['removeTimer',['../classAsyncFw_1_1AbstractThread.html#a8a7d3f95b3f993ad814bc15cd2568e30',1,'AsyncFw::AbstractThread']]],
-  ['requestinterrupt_4',['requestInterrupt',['../classAsyncFw_1_1AbstractThread.html#a7081163fdedb69e372c9f5356d9a7c7b',1,'AsyncFw::AbstractThread']]],
-  ['resume_5fqueued_5',['resume_queued',['../structAsyncFw_1_1CoroutineTask_1_1promise__type.html#a6ef8c84c53068677172b21f5e08aa0b7',1,'AsyncFw::CoroutineTask::promise_type']]],
-  ['running_6',['running',['../classAsyncFw_1_1AbstractThread.html#a899bcebf342e5770f6a2ace877d49981',1,'AsyncFw::AbstractThread']]]
+  ['removethread_3',['removeThread',['../classAsyncFw_1_1AbstractThreadPool.html#a8dd6e5afe3b1c8f0fac9176568909c54',1,'AsyncFw::AbstractThreadPool::removeThread()'],['../classAsyncFw_1_1ThreadPool.html#ad7f14a964e683f021a4d6c1c0a8bbf5d',1,'AsyncFw::ThreadPool::removeThread()']]],
+  ['removetimer_4',['removeTimer',['../classAsyncFw_1_1AbstractThread.html#a8a7d3f95b3f993ad814bc15cd2568e30',1,'AsyncFw::AbstractThread']]],
+  ['requestinterrupt_5',['requestInterrupt',['../classAsyncFw_1_1AbstractThread.html#a7081163fdedb69e372c9f5356d9a7c7b',1,'AsyncFw::AbstractThread']]],
+  ['resume_5fqueued_6',['resume_queued',['../structAsyncFw_1_1CoroutineTask_1_1promise__type.html#a6ef8c84c53068677172b21f5e08aa0b7',1,'AsyncFw::CoroutineTask::promise_type']]],
+  ['running_7',['running',['../classAsyncFw_1_1AbstractThread.html#a899bcebf342e5770f6a2ace877d49981',1,'AsyncFw::AbstractThread']]]
 ];

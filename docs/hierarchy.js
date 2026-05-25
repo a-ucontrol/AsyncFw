@@ -19,6 +19,7 @@ var hierarchy =
     ] ],
     [ "AsyncFw::AbstractThread", "classAsyncFw_1_1AbstractThread.html", [
       [ "AsyncFw::Thread", "classAsyncFw_1_1Thread.html", [
+        [ "AsyncFw::AbstractThreadPool::Thread", "classAsyncFw_1_1AbstractThreadPool_1_1Thread.html", null ],
         [ "AsyncFw::MainThread", "classAsyncFw_1_1MainThread.html", null ]
       ] ]
     ] ],
@@ -45,7 +46,7 @@ var hierarchy =
       [ "AsyncFw::CoroutineTask::promise_type", "structAsyncFw_1_1CoroutineTask_1_1promise__type.html", null ]
     ] ],
     [ "AsyncFw::ApplicationNotifier", "classAsyncFw_1_1ApplicationNotifier.html", null ],
-    [ "AsyncFw::CoroutineAwait", "structAsyncFw_1_1CoroutineAwait.html", null ],
+    [ "AsyncFw::CoroutineAwait< R >", "structAsyncFw_1_1CoroutineAwait.html", null ],
     [ "AsyncFw::CoroutineTask", "structAsyncFw_1_1CoroutineTask.html", null ],
     [ "AsyncFw::Cryptor", "classAsyncFw_1_1Cryptor.html", null ],
     [ "AsyncFw::DataArray", "classAsyncFw_1_1DataArray.html", null ],
@@ -55,6 +56,7 @@ var hierarchy =
     [ "AsyncFw::File", "classAsyncFw_1_1File.html", null ],
     [ "AsyncFw::FileSystemWatcher", "classAsyncFw_1_1FileSystemWatcher.html", null ],
     [ "AsyncFw::FunctionConnectionGuard", "classAsyncFw_1_1FunctionConnectionGuard.html", null ],
+    [ "AsyncFw::FunctionConnectionGuardList", "classAsyncFw_1_1FunctionConnectionGuardList.html", null ],
     [ "AsyncFw::FunctionConnectorProtected< F >", "classAsyncFw_1_1FunctionConnectorProtected.html", null ],
     [ "AsyncFw::AbstractThread::Holder", "classAsyncFw_1_1AbstractThread_1_1Holder.html", null ],
     [ "AsyncFw::MulticastDns::Host", "structAsyncFw_1_1MulticastDns_1_1Host.html", null ],

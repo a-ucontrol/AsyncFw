@@ -1,0 +1,11 @@
+<map id="AsyncFw::AbstractThread::invoke" name="AsyncFw::AbstractThread::invoke">
+<area shape="rect" id="Node000001" title="Runs a function in a managed thread." alt="" coords="402,72,575,115"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1ThreadPool.html#a0a35c4070964e69b187842b69b04d325" title="Asynchronously invokes a function in the given thread&#39;s event loop." alt="" coords="204,5,354,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="405,69,348,51,349,46,406,64"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1ThreadPool.html#a9919894e586310a7ea5b780845376e17" title="Asynchronously invokes a void function in the target thread, and executes a result callback in the ca..." alt="" coords="204,72,354,115"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="387,96,354,96,354,91,387,91"/>
+<area shape="rect" id="Node000005" href="$classAsyncFw_1_1ThreadPool.html#add8ee85dd7581acb117a805ff5a8c18a" title="Synchronously invokes a function in the given thread&#39;s event loop (blocks the caller)." alt="" coords="204,139,354,181"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="406,122,349,141,348,135,405,117"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1ThreadPool.html#a5af6a927b72eec19abb94ee2477d00b5" title="Asynchronously invokes a function in the global pool, returning the result to a callback in the calle..." alt="" coords="5,5,156,48"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="188,29,156,29,156,24,188,24"/>
+</map>

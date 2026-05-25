@@ -11,7 +11,7 @@
 <!-- Node1 -->
 <g id="Node000001" class="node">
 <title>Node1</title>
-<g id="a_Node000001"><a xlink:title="Абстрактный класс для создания пулов управления потоками.">
+<g id="a_Node000001"><a xlink:title="Abstract base class for creating and managing thread pools.">
 <polygon fill="#999999" stroke="#666666" points="309.75,-132 160.25,-132 160.25,-112 309.75,-112 309.75,-132"/>
 <text text-anchor="middle" x="235" y="-118.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AbstractThreadPool</text>
 </a>
@@ -38,7 +38,7 @@
 <!-- Node5 -->
 <g id="Node000005" class="node">
 <title>Node5</title>
-<g id="a_Node000005"><a xlink:href="classAsyncFw_1_1ThreadPool.html" target="_top" xlink:title="Управляет набором многократно используемых рабочих потоков для параллельного выполнения задач,...">
+<g id="a_Node000005"><a xlink:href="classAsyncFw_1_1ThreadPool.html" target="_top" xlink:title="Manages a set of reusable worker threads for concurrent task execution, eliminating the need to spawn...">
 <polygon fill="white" stroke="#666666" points="368.38,-76 255.62,-76 255.62,-56 368.38,-56 368.38,-76"/>
 <text text-anchor="middle" x="312" y="-62.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::ThreadPool</text>
 </a>

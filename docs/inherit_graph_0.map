@@ -4,6 +4,6 @@
 <area shape="poly" id="edge1_Node000000_Node000001" title=" " alt="" coords="185,72,236,57,276,46,277,51,237,63,187,78"/>
 <area shape="rect" id="Node000002" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="237,72,474,131"/>
 <area shape="poly" id="edge2_Node000000_Node000002" title=" " alt="" coords="204,99,236,99,236,104,204,104"/>
-<area shape="rect" id="Node000003" href="$classAsyncFw_1_1FunctionConnector.html" title="Обеспечивает соединение отправитель &#45;&gt; получатели. Получатели могут быть вызваны в своих потоках (по ..." alt="" coords="258,155,452,197"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1FunctionConnector.html" title="Provides a sender&#45;to&#45;receivers connection. Receivers can be invoked in their own threads (default beh..." alt="" coords="258,155,452,197"/>
 <area shape="poly" id="edge3_Node000000_Node000003" title=" " alt="" coords="187,125,237,140,277,152,276,157,236,145,185,130"/>
 </map>

@@ -112,7 +112,7 @@ $(function(){initNavTree('classAsyncFw_1_1AbstractFunctionConnector.html',''); i
 </div><!--header-->
 <div class="contents">
 
-<p>The <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector.html" title="The AbstractFunctionConnector class provides the base functionality for FunctionConnector.">AbstractFunctionConnector</a> class provides the base functionality for <a class="el" href="classAsyncFw_1_1FunctionConnector.html" title="Обеспечивает соединение отправитель -&gt; получатели. Получатели могут быть вызваны в своих потоках (по ...">FunctionConnector</a>.  
+<p>The <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector.html" title="The AbstractFunctionConnector class provides the base functionality for FunctionConnector.">AbstractFunctionConnector</a> class provides the base functionality for <a class="el" href="classAsyncFw_1_1FunctionConnector.html" title="Provides a sender-to-receivers connection. Receivers can be invoked in their own threads (default beh...">FunctionConnector</a>.  
  <a href="#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="FunctionConnector_8h_source.html">AsyncFw/FunctionConnector</a>&gt;</code></p>
@@ -124,7 +124,7 @@ Inheritance diagram for AsyncFw::AbstractFunctionConnector:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a689b16cc2d3709b2b9d8970398b79efa" id="r_a689b16cc2d3709b2b9d8970398b79efa"><td class="memItemLeft" align="right" valign="top"><a id="a689b16cc2d3709b2b9d8970398b79efa" name="a689b16cc2d3709b2b9d8970398b79efa"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>ConnectionType</b> : uint8_t { <br />
+<tr class="memitem:a689b16cc2d3709b2b9d8970398b79efa" id="r_a689b16cc2d3709b2b9d8970398b79efa"><td class="memItemLeft" align="right" valign="top"><a id="a689b16cc2d3709b2b9d8970398b79efa" name="a689b16cc2d3709b2b9d8970398b79efa"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a689b16cc2d3709b2b9d8970398b79efa">ConnectionType</a> : uint8_t { <br />
 &#160;&#160;<b>Auto</b> = 0
 , <b>Direct</b> = 0x01
 , <b>Queued</b> = 0x02
@@ -136,12 +136,13 @@ Public Types</h2></td></tr>
 , <b>SyncOnly</b> = 0x14
 <br />
  }</td></tr>
+<tr class="memdesc:a689b16cc2d3709b2b9d8970398b79efa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines validation and behavior constraints for connections (e.g., forcing Direct or Queued modes). <br /></td></tr>
 <tr class="separator:a689b16cc2d3709b2b9d8970398b79efa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a95d2b8d8992c7233063cdd7a7a24e4f8" id="r_a95d2b8d8992c7233063cdd7a7a24e4f8"><td class="memItemLeft" align="right" valign="top"><a id="a95d2b8d8992c7233063cdd7a7a24e4f8" name="a95d2b8d8992c7233063cdd7a7a24e4f8"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>AbstractFunctionConnector</b> (ConnectionType=Auto)</td></tr>
+&#160;</td><td class="memItemRight" valign="bottom"><b>AbstractFunctionConnector</b> (<a class="el" href="#a689b16cc2d3709b2b9d8970398b79efa">ConnectionType</a>=Auto)</td></tr>
 <tr class="separator:a95d2b8d8992c7233063cdd7a7a24e4f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
@@ -150,17 +151,17 @@ Protected Attributes</h2></td></tr>
 std::vector&lt; Connection * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>list</b></td></tr>
 <tr class="separator:a45286993b0bf30d1ca32bd6d87de34c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa669ee8ce028429ce441464294738937" id="r_aa669ee8ce028429ce441464294738937"><td class="memItemLeft" align="right" valign="top"><a id="aa669ee8ce028429ce441464294738937" name="aa669ee8ce028429ce441464294738937"></a>
-ConnectionType&#160;</td><td class="memItemRight" valign="bottom"><b>defaultConnectionType</b></td></tr>
+<a class="el" href="#a689b16cc2d3709b2b9d8970398b79efa">ConnectionType</a>&#160;</td><td class="memItemRight" valign="bottom"><b>defaultConnectionType</b></td></tr>
 <tr class="separator:aa669ee8ce028429ce441464294738937"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9cbe19db2de586f96ea1810ca2863cf6" id="r_a9cbe19db2de586f96ea1810ca2863cf6"><td class="memItemLeft" align="right" valign="top"><a id="a9cbe19db2de586f96ea1810ca2863cf6" name="a9cbe19db2de586f96ea1810ca2863cf6"></a>
 std::mutex&#160;</td><td class="memItemRight" valign="bottom"><b>mutex</b></td></tr>
 <tr class="separator:a9cbe19db2de586f96ea1810ca2863cf6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>The <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector.html" title="The AbstractFunctionConnector class provides the base functionality for FunctionConnector.">AbstractFunctionConnector</a> class provides the base functionality for <a class="el" href="classAsyncFw_1_1FunctionConnector.html" title="Обеспечивает соединение отправитель -&gt; получатели. Получатели могут быть вызваны в своих потоках (по ...">FunctionConnector</a>. </p>
+<div class="textblock"><p>The <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector.html" title="The AbstractFunctionConnector class provides the base functionality for FunctionConnector.">AbstractFunctionConnector</a> class provides the base functionality for <a class="el" href="classAsyncFw_1_1FunctionConnector.html" title="Provides a sender-to-receivers connection. Receivers can be invoked in their own threads (default beh...">FunctionConnector</a>. </p>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">std::runtime_error</td><td>If the default connection type (AbstractFunctionConnector::ConnectionType) is DirectOnly, AutoOnly, or SyncOnly and there is a type mismatch when connecting (AbstractFunctionConnector::Connection::Type), the exception std::runtime_error("fixed connection type") will be raised. </td></tr>
+    <tr><td class="paramname">std::runtime_error</td><td>If the default connection type (<a class="el" href="#a689b16cc2d3709b2b9d8970398b79efa" title="Defines validation and behavior constraints for connections (e.g., forcing Direct or Queued modes).">AbstractFunctionConnector::ConnectionType</a>) is DirectOnly, AutoOnly, or SyncOnly and there is a type mismatch when connecting (AbstractFunctionConnector::Connection::Type), the exception std::runtime_error("fixed connection type") will be raised. </td></tr>
   </table>
   </dd>
 </dl>

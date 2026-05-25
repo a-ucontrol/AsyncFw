@@ -11,7 +11,7 @@
 <!-- Node1 -->
 <g id="Node000001" class="node">
 <title>Node1</title>
-<g id="a_Node000001"><a xlink:title="Абстрактный класс для создания пулов управления потоками.">
+<g id="a_Node000001"><a xlink:title="Abstract base class for creating and managing thread pools.">
 <polygon fill="#999999" stroke="#666666" points="149.5,-20 0,-20 0,0 149.5,0 149.5,-20"/>
 <text text-anchor="middle" x="74.75" y="-6.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AbstractThreadPool</text>
 </a>

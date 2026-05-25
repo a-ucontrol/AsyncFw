@@ -1,0 +1,14 @@
+<map id="AsyncFw::AbstractThreadPool::Thread" name="AsyncFw::AbstractThreadPool::Thread">
+<area shape="rect" id="Node000001" title=" " alt="" coords="97,341,297,384"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1Thread.html" title="AsyncFw::Thread thread with sockets." alt="" coords="228,251,352,277"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="270,290,219,343,215,339,266,287"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractThread.html" title="The AbstractThread class provides the base functionality for thread management." alt="" coords="18,120,192,147"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="137,154,274,248,271,252,134,158"/>
+<area shape="rect" id="Node000006" href="$classAsyncFw_1_1AbstractThreadPool.html" title="Abstract base class for creating and managing thread pools." alt="" coords="5,251,205,277"/>
+<area shape="poly" id="edge6_Node000006_Node000003" title=" " alt="" coords="108,162,108,250,102,250,102,162"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1FunctionConnectorProtected.html" title=" " alt="" coords="215,112,419,155"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="312,171,296,251,290,250,307,170"/>
+<area shape="rect" id="Node000005" href="$classAsyncFw_1_1FunctionConnectorProtected.html" title="A protected connector where only a single designated sender can emit messages. &#160;&#160;Provides a sender&#45;to..." alt="" coords="220,5,414,48"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="320,64,320,111,314,111,314,64"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="130,287,179,339,175,343,126,291"/>
+</map>

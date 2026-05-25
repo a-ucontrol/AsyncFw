@@ -111,7 +111,7 @@ $(function(){initNavTree('classAsyncFw_1_1AbstractInstance.html',''); initResiza
 </div><!--header-->
 <div class="contents">
 
-<p>The <a class="el" href="classAsyncFw_1_1AbstractInstance.html" title="The AbstractInstance class.">AbstractInstance</a> class.  
+<p>Abstract base class for global singleton service providers and managed instances.  
  <a href="#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="Instance_8h_source.html">AsyncFw/Instance</a>&gt;</code></p>
@@ -125,24 +125,29 @@ Inheritance diagram for AsyncFw::AbstractInstance:</div>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a53843084f7ba8d6f9fbefcdc5cfead27" id="r_a53843084f7ba8d6f9fbefcdc5cfead27"><td class="memItemLeft" align="right" valign="top"><a id="a53843084f7ba8d6f9fbefcdc5cfead27" name="a53843084f7ba8d6f9fbefcdc5cfead27"></a>
 static void&#160;</td><td class="memItemRight" valign="bottom"><b>destroyValues</b> ()</td></tr>
-<tr class="memdesc:a53843084f7ba8d6f9fbefcdc5cfead27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroy values in all instances. <br /></td></tr>
+<tr class="memdesc:a53843084f7ba8d6f9fbefcdc5cfead27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroys stored values across all registered global instances. <br /></td></tr>
 <tr class="separator:a53843084f7ba8d6f9fbefcdc5cfead27"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:a884cd39afa818f16031336cb8bc87ef1" id="r_a884cd39afa818f16031336cb8bc87ef1"><td class="memItemLeft" align="right" valign="top"><a id="a884cd39afa818f16031336cb8bc87ef1" name="a884cd39afa818f16031336cb8bc87ef1"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>AbstractInstance</b> (const std::string &amp;name)</td></tr>
+<tr class="memdesc:a884cd39afa818f16031336cb8bc87ef1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an abstract instance registry entry with a specific identifier name. <br /></td></tr>
 <tr class="separator:a884cd39afa818f16031336cb8bc87ef1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1809713ff787e9f05d8458d15493146a" id="r_a1809713ff787e9f05d8458d15493146a"><td class="memItemLeft" align="right" valign="top"><a id="a1809713ff787e9f05d8458d15493146a" name="a1809713ff787e9f05d8458d15493146a"></a>
+virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~AbstractInstance</b> ()=0</td></tr>
+<tr class="memdesc:a1809713ff787e9f05d8458d15493146a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pure virtual destructor requiring an explicit implementation body. <br /></td></tr>
+<tr class="separator:a1809713ff787e9f05d8458d15493146a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2cddd3e61ae002fa6be00ae760cb5123" id="r_a2cddd3e61ae002fa6be00ae760cb5123"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2cddd3e61ae002fa6be00ae760cb5123">destroyValue</a> ()=0</td></tr>
-<tr class="memdesc:a2cddd3e61ae002fa6be00ae760cb5123"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroy instance value.  <br /></td></tr>
+<tr class="memdesc:a2cddd3e61ae002fa6be00ae760cb5123"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroys the underlying instance value.  <br /></td></tr>
 <tr class="separator:a2cddd3e61ae002fa6be00ae760cb5123"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad4ae1bfcd37c2450b85b35257f92360f" id="r_ad4ae1bfcd37c2450b85b35257f92360f"><td class="memItemLeft" align="right" valign="top"><a id="ad4ae1bfcd37c2450b85b35257f92360f" name="ad4ae1bfcd37c2450b85b35257f92360f"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>created</b> ()</td></tr>
-<tr class="memdesc:ad4ae1bfcd37c2450b85b35257f92360f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runs when the instance value is created. <br /></td></tr>
+<tr class="memdesc:ad4ae1bfcd37c2450b85b35257f92360f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hook callback method executed immediately after the instance value is created. <br /></td></tr>
 <tr class="separator:ad4ae1bfcd37c2450b85b35257f92360f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>The <a class="el" href="classAsyncFw_1_1AbstractInstance.html" title="The AbstractInstance class.">AbstractInstance</a> class. </p>
+<div class="textblock"><p>Abstract base class for global singleton service providers and managed instances. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a2cddd3e61ae002fa6be00ae760cb5123" name="a2cddd3e61ae002fa6be00ae760cb5123"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2cddd3e61ae002fa6be00ae760cb5123">&#9670;&#160;</a></span>destroyValue()</h2>
@@ -167,7 +172,8 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>created</b> (
 </table>
 </div><div class="memdoc">
 
-<p>Destroy instance value. </p>
+<p>Destroys the underlying instance value. </p>
+<dl class="section return"><dt>Returns</dt><dd>True if the value was alive and successfully destroyed. </dd></dl>
 
 <p>Implemented in <a class="el" href="classAsyncFw_1_1Instance.html#a3c6c90c36f431613e8fcfd0c195fdbe0">AsyncFw::Instance&lt; T &gt;</a>, <a class="el" href="classAsyncFw_1_1Instance.html#a3c6c90c36f431613e8fcfd0c195fdbe0">AsyncFw::Instance&lt; AsyncFw::ApplicationNotifier &gt;</a>, <a class="el" href="classAsyncFw_1_1Instance.html#a3c6c90c36f431613e8fcfd0c195fdbe0">AsyncFw::Instance&lt; AsyncFw::FileSystemWatcher &gt;</a>, <a class="el" href="classAsyncFw_1_1Instance.html#a3c6c90c36f431613e8fcfd0c195fdbe0">AsyncFw::Instance&lt; AsyncFw::HttpServer &gt;</a>, <a class="el" href="classAsyncFw_1_1Instance.html#a3c6c90c36f431613e8fcfd0c195fdbe0">AsyncFw::Instance&lt; AsyncFw::MulticastDns &gt;</a>, <a class="el" href="classAsyncFw_1_1Instance.html#a3c6c90c36f431613e8fcfd0c195fdbe0">AsyncFw::Instance&lt; AsyncFw::ThreadPool &gt;</a>, and <a class="el" href="classAsyncFw_1_1Instance.html#a3c6c90c36f431613e8fcfd0c195fdbe0">AsyncFw::Instance&lt; Log &gt;</a>.</p>
 <div class="dynheader">

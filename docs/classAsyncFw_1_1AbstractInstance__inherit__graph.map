@@ -1,5 +1,5 @@
 <map id="AsyncFw::AbstractInstance" name="AsyncFw::AbstractInstance">
-<area shape="rect" id="Node000001" title="The AbstractInstance class." alt="" coords="5,233,189,260"/>
+<area shape="rect" id="Node000001" title="Abstract base class for global singleton service providers and managed instances." alt="" coords="5,233,189,260"/>
 <area shape="rect" id="Node000002" href="$classAsyncFw_1_1Instance.html" title=" " alt="" coords="692,188,834,231"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="145,225,236,195,357,165,424,154,494,148,564,148,633,156,678,169,719,185,717,190,676,174,632,161,564,153,494,153,425,159,358,170,237,200,147,230"/>
 <area shape="rect" id="Node000003" href="$classAsyncFw_1_1Instance.html" title=" " alt="" coords="660,88,866,131"/>
@@ -12,7 +12,7 @@
 <area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="128,268,178,306,239,344,331,391,373,406,429,419,486,428,530,432,575,428,632,419,678,405,719,387,721,392,680,410,633,424,576,434,530,437,485,434,428,424,371,411,329,396,237,349,175,310,125,272"/>
 <area shape="rect" id="Node000007" href="$classAsyncFw_1_1Instance.html" title=" " alt="" coords="680,447,846,489"/>
 <area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="113,272,133,308,161,348,197,388,239,419,294,444,352,462,411,474,471,481,585,484,680,477,680,482,585,489,471,486,411,479,350,467,292,449,237,424,193,392,157,352,129,310,109,275"/>
-<area shape="rect" id="Node000008" href="$classAsyncFw_1_1Instance.html" title="The Instance class." alt="" coords="238,233,404,260"/>
+<area shape="rect" id="Node000008" href="$classAsyncFw_1_1Instance.html" title="A template&#45;based global registry wrapper for managing application&#45;wide unique objects (Singletons)." alt="" coords="238,233,404,260"/>
 <area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="204,244,237,244,237,249,204,249"/>
 <area shape="poly" id="edge8_Node000008_Node000002" title=" " alt="" coords="420,236,632,219,691,213,691,219,633,224,420,242"/>
 <area shape="poly" id="edge9_Node000008_Node000003" title=" " alt="" coords="369,225,427,203,558,162,677,129,678,134,560,167,429,208,370,230"/>

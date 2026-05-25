@@ -11,7 +11,7 @@
 <!-- Node1 -->
 <g id="Node000001" class="node">
 <title>Node1</title>
-<g id="a_Node000001"><a xlink:title="Обеспечивает соединение отправитель &#45;&gt; получатели. Получатели могут быть вызваны в своих потоках (по ...">
+<g id="a_Node000001"><a xlink:title="Provides a sender&#45;to&#45;receivers connection. Receivers can be invoked in their own threads (default beh...">
 <polygon fill="#999999" stroke="#666666" points="320.25,-66 174.5,-66 174.5,-34 320.25,-34 320.25,-66"/>
 <text text-anchor="start" x="182.5" y="-52.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::FunctionConnector</text>
 <text text-anchor="middle" x="247.38" y="-40.5" font-family="Helvetica,sans-Serif" font-size="10.00">&lt; Args &gt;</text>

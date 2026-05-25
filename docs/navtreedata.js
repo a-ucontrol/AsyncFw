@@ -33,7 +33,8 @@ var NAVTREE =
         [ "All", "functions.html", null ],
         [ "Functions", "functions_func.html", null ],
         [ "Variables", "functions_vars.html", null ],
-        [ "Typedefs", "functions_type.html", null ]
+        [ "Typedefs", "functions_type.html", null ],
+        [ "Enumerations", "functions_enum.html", null ]
       ] ]
     ] ],
     [ "Files", "files.html", [
@@ -45,7 +46,8 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"AbstractSocket_8h_source.html"
+"AbstractSocket_8h_source.html",
+"structAsyncFw_1_1AnyData.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronization';
