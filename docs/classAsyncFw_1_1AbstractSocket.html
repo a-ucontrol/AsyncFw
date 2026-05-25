@@ -114,7 +114,7 @@ $(function(){initNavTree('classAsyncFw_1_1AbstractSocket.html',''); initResizabl
 </div><!--header-->
 <div class="contents">
 
-<p>The <a class="el" href="classAsyncFw_1_1AbstractSocket.html" title="The AbstractSocket class provides the base functionality for socket.">AbstractSocket</a> class provides the base functionality for socket.  
+<p>Abstract base class providing core network socket functionality and OS descriptor abstraction.  
  <a href="#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="AbstractSocket_8h_source.html">AsyncFw/AbstractSocket</a>&gt;</code></p>
@@ -301,7 +301,8 @@ Friends</h2></td></tr>
 <tr class="separator:ae425fcf0d1af4b1b2c6047e72ab4dc0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>The <a class="el" href="classAsyncFw_1_1AbstractSocket.html" title="The AbstractSocket class provides the base functionality for socket.">AbstractSocket</a> class provides the base functionality for socket. </p>
+<div class="textblock"><p>Abstract base class providing core network socket functionality and OS descriptor abstraction. </p>
+<p><a class="el" href="classAsyncFw_1_1AbstractSocket.html" title="Abstract base class providing core network socket functionality and OS descriptor abstraction.">AbstractSocket</a> wraps native operating system network handles into a clean C++ interface. It handles non-blocking socket initialization, address binding, option configuration, and integrates directly into the <code><a class="el" href="classAsyncFw_1_1AbstractThread.html" title="The AbstractThread class provides the base functionality for thread management.">AbstractThread</a></code> I/O multiplexing event loop (<code>epoll</code> / <code>poll</code>).</p>
 <p>Example: </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;AsyncFw/Thread&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;AsyncFw/AbstractTlsSocket&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;AsyncFw/TlsContext&gt;</span></div>
@@ -375,7 +376,7 @@ Friends</h2></td></tr>
 <div class="line"> </div>
 <div class="line">  logNotice() &lt;&lt; <span class="stringliteral">&quot;Start Applicaiton&quot;</span>;</div>
 <div class="line"> </div>
-<div class="line">  <span class="keywordtype">int</span> ret = AsyncFw::MainThread::exec();</div>
+<div class="line">  <span class="keywordtype">int</span> ret = <a class="code hl_function" href="classAsyncFw_1_1MainThread.html#ad12e620772820ad751868c7b49fa4190">AsyncFw::MainThread::exec</a>();</div>
 <div class="line"> </div>
 <div class="line">  logNotice() &lt;&lt; <span class="stringliteral">&quot;End Applicaiton&quot;</span> &lt;&lt; ret;</div>
 <div class="line">  <span class="keywordflow">return</span> ret;</div>

@@ -168,7 +168,7 @@ Public Attributes</h2></td></tr>
 <div class="line">  timer2.<a class="code hl_variable" href="#a746a7b46bc5d405ab0452b09ad1253f3">timeout</a>.connect([]() { lsDebug() &lt;&lt; std::chrono::system_clock::now() &lt;&lt; <span class="stringliteral">&quot; timer2 timeout&quot;</span>; });</div>
 <div class="line"> </div>
 <div class="line">  lsNotice() &lt;&lt; <span class="stringliteral">&quot;Start Applicaiton&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line">  <span class="keywordtype">int</span> ret = AsyncFw::MainThread::exec();</div>
+<div class="line">  <span class="keywordtype">int</span> ret = <a class="code hl_function" href="classAsyncFw_1_1MainThread.html#ad12e620772820ad751868c7b49fa4190">AsyncFw::MainThread::exec</a>();</div>
 <div class="line">  lsNotice() &lt;&lt; <span class="stringliteral">&quot;End Applicaiton &quot;</span> &lt;&lt; ret;</div>
 <div class="line">  <span class="keywordflow">return</span> ret;</div>
 <div class="line">}</div>

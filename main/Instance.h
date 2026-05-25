@@ -72,7 +72,7 @@ public:
   static T *get() { return i_->value; }
 
   /*! \brief Initializes the instance tracker shell and updates the internal static reference context pointer. */
-  Instance(const std::string &_name = {}) : AbstractInstance(_name) { i_ = this; }
+  Instance(const std::string &name = {}) : AbstractInstance(name) { i_ = this; }
 
   /*! \brief Overridden destructor that guarantees explicit deferred memory release for the managed resource. */
   virtual ~Instance() override { Instance<T>::destroyValue(); }

@@ -135,11 +135,12 @@ $(function(){initNavTree('MulticastDns_2main_8cpp-example.html',''); initResizab
 <div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">Timer::single</a>(20, [&amp;_mdns]() { MainThread::exit(); });</div>
 <div class="line"> </div>
 <div class="line">  lsNotice() &lt;&lt; <span class="stringliteral">&quot;Start Applicaiton&quot;</span>;</div>
-<div class="line">  <span class="keywordtype">int</span> ret = MainThread::exec();</div>
+<div class="line">  <span class="keywordtype">int</span> ret = <a class="code hl_function" href="classAsyncFw_1_1MainThread.html#ad12e620772820ad751868c7b49fa4190">MainThread::exec</a>();</div>
 <div class="line">  lsNotice() &lt;&lt; <span class="stringliteral">&quot;End Applicaiton&quot;</span> &lt;&lt; ret;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">return</span> ret;</div>
 <div class="line">}</div>
+<div class="ttc" id="aclassAsyncFw_1_1MainThread_html_ad12e620772820ad751868c7b49fa4190"><div class="ttname"><a href="classAsyncFw_1_1MainThread.html#ad12e620772820ad751868c7b49fa4190">AsyncFw::MainThread::exec</a></div><div class="ttdeci">static int exec()</div><div class="ttdoc">Starts the master application event loop on the current thread. This call is blocking....</div><div class="ttdef"><b>Definition</b> MainThread.h:47</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1MulticastDns_html"><div class="ttname"><a href="classAsyncFw_1_1MulticastDns.html">AsyncFw::MulticastDns</a></div><div class="ttdoc">The MulticastDns class.</div><div class="ttdef"><b>Definition</b> MulticastDns.h:10</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1Timer_html_ac71f0729e65046914c3358e87759f9e9"><div class="ttname"><a href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">AsyncFw::Timer::single</a></div><div class="ttdeci">static void single(int ms, T function)</div><div class="ttdoc">Starts a single shot timer with the specified timeout.</div><div class="ttdef"><b>Definition</b> Timer.h:20</div></div>
 <div class="ttc" id="astructAsyncFw_1_1MulticastDns_1_1Host_html"><div class="ttname"><a href="structAsyncFw_1_1MulticastDns_1_1Host.html">AsyncFw::MulticastDns::Host</a></div><div class="ttdoc">The Host struct.</div><div class="ttdef"><b>Definition</b> MulticastDns.h:13</div></div>

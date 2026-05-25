@@ -147,11 +147,12 @@ $(function(){initNavTree('ContainerTask_2main_8cpp-example.html',''); initResiza
 <div class="line">  timer.<a id="a5" name="a5"></a><a class="code hl_function" href="classAsyncFw_1_1Timer.html#a14d02d88bd3682afd7c8fd72cc670e46">start</a>(50);</div>
 <div class="line"> </div>
 <div class="line">  logNotice() &lt;&lt; <span class="stringliteral">&quot;Start Applicaiton&quot;</span>;</div>
-<div class="line">  <span class="keywordtype">int</span> ret = AsyncFw::MainThread::exec();</div>
+<div class="line">  <span class="keywordtype">int</span> ret = <a id="a6" name="a6"></a><a class="code hl_function" href="classAsyncFw_1_1MainThread.html#ad12e620772820ad751868c7b49fa4190">AsyncFw::MainThread::exec</a>();</div>
 <div class="line">  logNotice() &lt;&lt; <span class="stringliteral">&quot;End Applicaiton&quot;</span>;</div>
 <div class="line">  <span class="keywordflow">return</span> ret;</div>
 <div class="line">}</div>
 <div class="ttc" id="aclassAsyncFw_1_1AbstractThread_html_a933858c9506f67f17c5ada5caeaa8508"><div class="ttname"><a href="classAsyncFw_1_1AbstractThread.html#a933858c9506f67f17c5ada5caeaa8508">AsyncFw::AbstractThread::start</a></div><div class="ttdeci">void start()</div><div class="ttdoc">Create a managed thread and run exec().</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1MainThread_html_ad12e620772820ad751868c7b49fa4190"><div class="ttname"><a href="classAsyncFw_1_1MainThread.html#ad12e620772820ad751868c7b49fa4190">AsyncFw::MainThread::exec</a></div><div class="ttdeci">static int exec()</div><div class="ttdoc">Starts the master application event loop on the current thread. This call is blocking....</div><div class="ttdef"><b>Definition</b> MainThread.h:47</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1Task_html"><div class="ttname"><a href="classAsyncFw_1_1Task.html">AsyncFw::Task</a></div><div class="ttdoc">The Task class.</div><div class="ttdef"><b>Definition</b> Task.h:30</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1Thread_html"><div class="ttname"><a href="classAsyncFw_1_1Thread.html">AsyncFw::Thread</a></div><div class="ttdoc">AsyncFw::Thread thread with sockets.</div><div class="ttdef"><b>Definition</b> Thread.h:16</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1Timer_html"><div class="ttname"><a href="classAsyncFw_1_1Timer.html">AsyncFw::Timer</a></div><div class="ttdoc">The Timer class.</div><div class="ttdef"><b>Definition</b> Timer.h:16</div></div>

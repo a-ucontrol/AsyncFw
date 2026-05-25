@@ -129,10 +129,10 @@ Collaboration diagram for AsyncFw::Instance&lt; T &gt;:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aebedc097b43f8535a70880c28a0c8f85" id="r_aebedc097b43f8535a70880c28a0c8f85"><td class="memItemLeft" align="right" valign="top"><a id="aebedc097b43f8535a70880c28a0c8f85" name="aebedc097b43f8535a70880c28a0c8f85"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Instance</b> (const std::string &amp;_name={})</td></tr>
-<tr class="memdesc:aebedc097b43f8535a70880c28a0c8f85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the instance tracker shell and updates the internal static reference context pointer. <br /></td></tr>
-<tr class="separator:aebedc097b43f8535a70880c28a0c8f85"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aec767689656fb7dbb79dd7a130caa4ab" id="r_aec767689656fb7dbb79dd7a130caa4ab"><td class="memItemLeft" align="right" valign="top"><a id="aec767689656fb7dbb79dd7a130caa4ab" name="aec767689656fb7dbb79dd7a130caa4ab"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Instance</b> (const std::string &amp;name={})</td></tr>
+<tr class="memdesc:aec767689656fb7dbb79dd7a130caa4ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the instance tracker shell and updates the internal static reference context pointer. <br /></td></tr>
+<tr class="separator:aec767689656fb7dbb79dd7a130caa4ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6f25472f8b38f5cd6fa3d681919bf50a" id="r_a6f25472f8b38f5cd6fa3d681919bf50a"><td class="memItemLeft" align="right" valign="top"><a id="a6f25472f8b38f5cd6fa3d681919bf50a" name="a6f25472f8b38f5cd6fa3d681919bf50a"></a>
 virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~Instance</b> () override</td></tr>
 <tr class="memdesc:a6f25472f8b38f5cd6fa3d681919bf50a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overridden destructor that guarantees explicit deferred memory release for the managed resource. <br /></td></tr>
@@ -216,7 +216,7 @@ class AsyncFw::Instance&lt; T &gt;</div><p>A template-based global registry wrap
 <div class="line">  lsInfoMagenta() &lt;&lt; ExampleClass::instance()-&gt;name();</div>
 <div class="line"> </div>
 <div class="line">  lsNotice() &lt;&lt; <span class="stringliteral">&quot;Start Applicaiton&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line">  <span class="keywordtype">int</span> ret = AsyncFw::MainThread::exec();</div>
+<div class="line">  <span class="keywordtype">int</span> ret = <a class="code hl_function" href="classAsyncFw_1_1MainThread.html#ad12e620772820ad751868c7b49fa4190">AsyncFw::MainThread::exec</a>();</div>
 <div class="line">  lsNotice() &lt;&lt; <span class="stringliteral">&quot;End Applicaiton &quot;</span> &lt;&lt; ret;</div>
 <div class="line">  <span class="keywordflow">return</span> ret;</div>
 <div class="line">}</div>
