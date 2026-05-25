@@ -8,6 +8,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #pragma once
 
 #include "../core/FunctionConnector.h"
+#include "Coroutine.h"
 
 namespace AsyncFw {
 /*! \class Timer Timer.h <AsyncFw/Timer> \brief The Timer class
@@ -52,4 +53,5 @@ private:
   int timerId = -1;
   bool single_;
 };
+CoroutineAwait<void> coTimer(int timeout);
 }  // namespace AsyncFw
