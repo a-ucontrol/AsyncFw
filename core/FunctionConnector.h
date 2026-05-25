@@ -115,6 +115,13 @@ protected:
 
   private:
     struct AbstractFunction : public AsyncFw::Invocable<void(Args &...)>::Abstract {
+      /*
+      Invokes the target callable, guaranteeing COPY semantics for arguments.
+      This method is explicitly used during immediate signal dispatching (Direct/Sync) within the loop.
+      It passes arguments as plain lvalues, forcing the compiler to generate independent copies for each distinct receiver slot.
+      The default operator() cannot be used for this purpose because it uses std::forward, which casts lvalues to rvalues (triggering move semantics).
+      If operator() were called in a loop, the very first receiver would empty out (steal resources from) the arguments, leaving subsequent subscribers with moved-from, empty objects.
+      */
       virtual void invoke(Args &...args) = 0;
       virtual AbstractFunction *copy() const = 0;
     };

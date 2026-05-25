@@ -276,7 +276,7 @@ $(function(){initNavTree('MainThread_8h_source.html',''); initResizable(true); }
 <div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>      <span class="keywordflow">for</span> (std::vector&lt;Timer&gt;::iterator it = timers.begin(); it != timers.end(); ++it) {</div>
 <div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>        <span class="keywordflow">if</span> (it-&gt;id == <span class="keywordtype">id</span>) {</div>
 <div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>          <span class="keywordflow">if</span> (it-&gt;qid &gt;= 0) QObject::killTimer(it-&gt;qid);</div>
-<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>          _t = <span class="keyword">new</span> Invocable&lt;&gt;::Function([p = it-&gt;task] { delete p; });</div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>          _t = <span class="keyword">new</span> Invocable&lt;void()&gt;::Function([p = it-&gt;task] { delete p; });</div>
 <div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>          timers.erase(it);</div>
 <div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>          <span class="keywordflow">break</span>;</div>
 <div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>        }</div>
@@ -356,7 +356,7 @@ $(function(){initNavTree('MainThread_8h_source.html',''); initResizable(true); }
 <div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>      <a class="code hl_typedef" href="classAsyncFw_1_1AbstractThread.html#a4e97803ef650d36ba80ef1471c4b643c">LockGuard</a> lock = <a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a4a8cbb3fec33a81a2de43e7f5217acfb">lockGuard</a>();</div>
 <div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>      <span class="keywordflow">for</span> (<span class="keyword">const</span> std::shared_ptr&lt;Poll&gt; &amp;poll : notifiers)</div>
 <div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>        <span class="keywordflow">if</span> (poll-&gt;in.socket() == fd) {</div>
-<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>          _t = <span class="keyword">new</span> Invocable&lt;&gt;::Function([p = poll-&gt;task] { delete p; });</div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>          _t = <span class="keyword">new</span> Invocable&lt;void()&gt;::Function([p = poll-&gt;task] { delete p; });</div>
 <div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>          notifiers.removeAll(poll);</div>
 <div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>          <span class="keywordflow">break</span>;</div>
 <div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>        }</div>
