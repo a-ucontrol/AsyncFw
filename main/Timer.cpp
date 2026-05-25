@@ -33,6 +33,6 @@ void Timer::start(int ms, bool single) {
 
 void Timer::stop() { thread_->modifyTimer(timerId, 0); }
 
-CoroutineAwait<void> coTimer(int timeout) {
+CoroutineAwait<void> AsyncFw::coTimer(int timeout) {
   return CoroutineAwait<void>([timeout](CoroutineHandle h) { Timer::single(timeout, [h]() { h.promise().resume_queued(); }); });
 }
