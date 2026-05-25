@@ -80,7 +80,7 @@ int DataArrayTcpClient::exchange(const DataArraySocket *socket, const DataArray 
     h.resume();
   });
   auto _ct([&h, &wda, &ret, socket, pi, timeout, &t]() -> CoroutineTask {
-    co_await CoroutineAwait([&h, &wda, &ret, socket, pi, timeout, &t](std::coroutine_handle<> _h) {
+    co_await CoroutineAwait<void>([&h, &wda, &ret, socket, pi, timeout, &t](std::coroutine_handle<> _h) {
       h = _h;
       if (!const_cast<DataArraySocket *>(socket)->transmit(wda, pi)) {
         ret = ErrorExchangeTransmit;

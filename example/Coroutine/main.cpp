@@ -11,7 +11,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include <AsyncFw/LogStream>
 
 AsyncFw::CoroutineTask task() {
-  AsyncFw::CoroutineAwait await([](AsyncFw::CoroutineHandle h) {
+  AsyncFw::CoroutineAwait<void> await([](AsyncFw::CoroutineHandle h) {
     AsyncFw::ThreadPool::async(
         [h]() {
           AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::current();
@@ -35,7 +35,7 @@ int main(int argc, char *argv[]) {
   task();
 
   auto coro_task([]() -> AsyncFw::CoroutineTask {
-    AsyncFw::CoroutineAwait await([](AsyncFw::CoroutineHandle h) {
+    AsyncFw::CoroutineAwait<void> await([](AsyncFw::CoroutineHandle h) {
       AsyncFw::ThreadPool::async(
           [h]() {
             AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::current();

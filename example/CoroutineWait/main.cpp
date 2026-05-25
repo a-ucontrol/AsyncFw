@@ -17,7 +17,7 @@ using namespace AsyncFw;
 
 CoroutineTask task(uint64_t &end, int _ms) {
   logDebug() << "task started";
-  co_await CoroutineAwait([&end, &_ms](CoroutineHandle _h) {
+  co_await CoroutineAwait<void>([&end, &_ms](CoroutineHandle _h) {
     ThreadPool::async(
         [&_ms]() {
           logDebug() << "async" << _ms << Thread::current()->name();

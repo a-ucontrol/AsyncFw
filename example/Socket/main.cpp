@@ -40,8 +40,8 @@ public:
     da += _da;
   }
 
-  AsyncFw::CoroutineAwait coConnect(const std::string &address, uint16_t port) {
-    return AsyncFw::CoroutineAwait([this, address, port](AsyncFw::CoroutineHandle _h) {
+  AsyncFw::CoroutineAwait<void> coConnect(const std::string &address, uint16_t port) {
+    return AsyncFw::CoroutineAwait<void>([this, address, port](AsyncFw::CoroutineHandle _h) {
       h = _h;
       connect(address, port);
     });
@@ -65,8 +65,7 @@ int main(int argc, char *argv[]) {
 
   auto coroTask {[&socket]() -> AsyncFw::CoroutineTask {
     AsyncFw::AddressInfo addressInfo;
-    AsyncFw::CoroutineHandle h = co_await addressInfo.coResolve("github.com");
-    AsyncFw::AddressInfo::Result list = h.promise().data<AsyncFw::AddressInfo::Result>();
+    AsyncFw::AddressInfo::Result list = co_await addressInfo.coResolve("github.com");
     if (list.empty()) {
       logError("Resolve error");
       AsyncFw::MainThread::exit(-1);

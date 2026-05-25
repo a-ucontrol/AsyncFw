@@ -47,16 +47,24 @@ private:
 using CoroutineHandle = std::coroutine_handle<CoroutineTask::promise_type>;
 
 /*! \struct CoroutineAwait Coroutine.h <AsyncFw/Coroutine> \brief The CoroutineAwait struct. */
+template <typename R>
 struct CoroutineAwait {
   template <typename T>
   CoroutineAwait(T f) : f_(new Invocable<void(const CoroutineHandle)>::Function(std::forward<T>(f))) {}
   CoroutineAwait() = default;
   CoroutineAwait(const CoroutineAwait &) = delete;
   CoroutineAwait &operator=(const CoroutineAwait &) = delete;
-  virtual ~CoroutineAwait();
-  virtual void await_suspend(CoroutineHandle) const noexcept;
-  virtual bool await_ready() const noexcept;
-  virtual CoroutineHandle await_resume() const noexcept;
+  virtual ~CoroutineAwait() {
+    if (f_) delete f_;
+  }
+  virtual void await_suspend(CoroutineHandle h) const noexcept {
+    h_ = h;
+    if (f_) (*f_)(h);
+  }
+  virtual bool await_ready() const noexcept { return false; }
+  virtual R await_resume() const noexcept {
+    if constexpr (!std::is_void_v<R>) return h_.promise().data<R>();
+  }
 
 private:
   mutable CoroutineHandle h_;
