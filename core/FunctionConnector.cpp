@@ -69,22 +69,24 @@ FunctionConnectionGuard::FunctionConnectionGuard(AbstractFunctionConnector::Conn
 
 FunctionConnectionGuard::~FunctionConnectionGuard() {
   if (!c_) return;
-  delete c_;
+  destroyConnection();
   trace() << this;
 }
 
+void FunctionConnectionGuard::destroyConnection() {
+  c_->guard_ = nullptr;
+  if ((c_->type_ != AbstractFunctionConnector::Connection::Direct && c_->thread_->id() != std::this_thread::get_id()) || !c_->thread_->invoke([_p = c_]() { delete _p; })) delete c_;
+  else { c_->thread_ = nullptr; }
+}
+
 void FunctionConnectionGuard::operator=(AbstractFunctionConnector::Connection &_c) {
-  if (c_) delete c_;
+  if (c_) destroyConnection();
   c_ = &_c;
   c_->guard_ = this;
 }
 
 void FunctionConnectionGuard::operator=(FunctionConnectionGuard &&_g) {
-  if (c_) {
-    c_->guard_ = nullptr;
-    if ((c_->type_ != AbstractFunctionConnector::Connection::Direct && c_->thread_->id() != std::this_thread::get_id()) || !c_->thread_->invoke([_p = c_]() { delete _p; })) delete c_;
-    else { c_->thread_ = nullptr; }
-  }
+  if (c_) destroyConnection();
   c_ = _g.c_;
   _g.c_ = nullptr;
   if (c_) c_->guard_ = this;

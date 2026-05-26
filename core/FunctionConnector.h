@@ -183,6 +183,7 @@ public:
 
 private:
   AbstractFunctionConnector::Connection *c_;
+  void destroyConnection();
 };
 
 /*! \class FunctionConnectionGuardList \brief A helper container that manages multiple FunctionConnectionGuard lifecycles simultaneously. */
