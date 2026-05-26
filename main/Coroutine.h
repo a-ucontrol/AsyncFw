@@ -14,7 +14,8 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include "ThreadPool.h"
 
 namespace AsyncFw {
-/*! \struct CoroutineTask Coroutine.h <AsyncFw/Coroutine> \brief The CoroutineTask struct. */
+/*! \struct CoroutineTask Coroutine.h <AsyncFw/Coroutine> \brief A class representing a coroutine task that can be suspended and resumed.
+\brief It manages the C++20 coroutine state, holds the underlying handle, and orchestrates the lifecycle via its internal promise_type. */
 struct CoroutineTask {
   CoroutineTask();
   virtual ~CoroutineTask();

@@ -22,10 +22,10 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #endif
 
 namespace AsyncFw {
-/*! \class AddressInfo AddressInfo.h <AsyncFw/AddressInfo> \brief The AddressInfo class.
- \brief Examlpe with FunctionConnector: \snippet snippet.dox AddressInfo
- \brief Examlpe with CoroutineAwait: \snippet snippet.dox AddressInfo coro
-*/
+/*! \class AddressInfo AddressInfo.h <AsyncFw/AddressInfo> \brief Manages network address structures, protocol family resolution, and IP metadata endpoints.
+\brief AddressInfo encapsulates low-level POSIX address abstractions (such as `struct addrinfo` and `sockaddr`). It handles asynchronous domain name resolution (DNS lookups), protocol family mapping (IPv4 vs IPv6), and provides a clean interface for extracting IP strings and port numbers for sockets.
+\brief Examlpe with FunctionConnector: \snippet snippet.dox AddressInfo
+\brief Examlpe with CoroutineAwait: \snippet snippet.dox AddressInfo coro */
 class AddressInfo {
 public:
   using Result = std::vector<std::string>;

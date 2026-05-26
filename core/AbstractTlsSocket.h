@@ -12,7 +12,8 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 namespace AsyncFw {
 class TlsContext;
 
-/*! \class AbstractTlsSocket AbstractTlsSocket.h <AsyncFw/AbstractTlsSocket> \brief The AbstractTlsSocket class provides the base functionality for TLS encrypted socket.
+/*! \class AbstractTlsSocket AbstractTlsSocket.h <AsyncFw/AbstractTlsSocket> \brief Abstract base class providing Transport Layer Security (TLS/SSL) encryption layers on top of standard network sockets.
+\brief AbstractSocket serves as the core cryptographic wrapper interface. It manages secure session initiation, manages incoming/outgoing encrypted packet streams, handles TLS handshakes, and provides mechanisms for public-key infrastructure (PKI) certificate verification.
 \brief Example: \snippet Socket/main.cpp snippet */
 class AbstractTlsSocket : public AbstractSocket {
   friend LogStream &operator<<(LogStream &, const AbstractTlsSocket &);

@@ -18,7 +18,8 @@ namespace AsyncFw {
 class DataArray;
 class DataArrayList;
 class LogStream;
-/*! \class TlsContext TlsContext.h <AsyncFw/TlsContext> \brief The TlsContext class provides functionality for managing TLS certificates.
+/*! \class TlsContext TlsContext.h <AsyncFw/TlsContext> \brief Manages cryptographic configurations, security profiles, credentials, and certificates for TLS sessions.
+\brief TlsContext encapsulates the shared state required to establish secure Transport Layer Security (TLS) connections. It acts as a centralized repository for loading public key infrastructure (PKI) certificates, private keys, trusted Certificate Authorities (CAs), and configuring allowed cipher suites and TLS protocol versions.
 \brief Example: \snippet TlsContext/main.cpp snippet */
 class TlsContext {
   friend class AbstractTlsSocket;
