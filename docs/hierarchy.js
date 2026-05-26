@@ -30,7 +30,7 @@ var hierarchy =
       ] ],
       [ "AsyncFw::ThreadPool", "classAsyncFw_1_1ThreadPool.html", null ]
     ] ],
-    [ "AsyncFw::AddressInfo", "classAsyncFw_1_1AddressInfo.html", null ],
+    [ "AsyncFw::AddressResolver", "classAsyncFw_1_1AddressResolver.html", null ],
     [ "AsyncFw::AnyData", "structAsyncFw_1_1AnyData.html", [
       [ "AsyncFw::AbstractSocket", "classAsyncFw_1_1AbstractSocket.html", [
         [ "AsyncFw::AbstractTlsSocket", "classAsyncFw_1_1AbstractTlsSocket.html", [
@@ -47,6 +47,7 @@ var hierarchy =
     ] ],
     [ "AsyncFw::ApplicationNotifier", "classAsyncFw_1_1ApplicationNotifier.html", null ],
     [ "AsyncFw::CoroutineAwait< R >", "structAsyncFw_1_1CoroutineAwait.html", null ],
+    [ "AsyncFw::CoroutineInvokeAwait< T >", "structAsyncFw_1_1CoroutineInvokeAwait.html", null ],
     [ "AsyncFw::CoroutineTask", "structAsyncFw_1_1CoroutineTask.html", null ],
     [ "AsyncFw::Cryptor", "classAsyncFw_1_1Cryptor.html", null ],
     [ "AsyncFw::DataArray", "classAsyncFw_1_1DataArray.html", null ],

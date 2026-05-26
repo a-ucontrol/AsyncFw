@@ -1,6 +1,6 @@
 <map id="AsyncFw::DataArraySocket" name="AsyncFw::DataArraySocket">
 <area shape="rect" id="Node000001" title="The DataArraySocket class." alt="" coords="9,229,194,256"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractTlsSocket.html" title="The AbstractTlsSocket class provides the base functionality for TLS encrypted socket." alt="" coords="5,155,198,181"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractTlsSocket.html" title="Abstract base class providing Transport Layer Security (TLS/SSL) encryption layers on top of standard..." alt="" coords="5,155,198,181"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="104,197,104,229,99,229,99,197"/>
 <area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractSocket.html" title="Abstract base class providing core network socket functionality and OS descriptor abstraction." alt="" coords="14,80,189,107"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="104,122,104,154,99,154,99,122"/>

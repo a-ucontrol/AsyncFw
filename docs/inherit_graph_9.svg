@@ -11,7 +11,7 @@
 <!-- Node0 -->
 <g id="Node000000" class="node">
 <title>Node0</title>
-<g id="a_Node000000"><a xlink:href="structAsyncFw_1_1CoroutineAwait.html" target="_top" xlink:title="The CoroutineAwait struct.">
+<g id="a_Node000000"><a xlink:href="structAsyncFw_1_1CoroutineAwait.html" target="_top" xlink:title="Generic awaiter for wrapping asynchronous triggers or callback&#45;based APIs into co_await.">
 <polygon fill="white" stroke="#666666" points="155.5,-20 0,-20 0,0 155.5,0 155.5,-20"/>
 <text text-anchor="middle" x="77.75" y="-6.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::CoroutineAwait&lt; R &gt;</text>
 </a>

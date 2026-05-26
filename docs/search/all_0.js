@@ -11,7 +11,7 @@ var searchData=
   ['abstracttlssocket_8',['AbstractTlsSocket',['../classAsyncFw_1_1AbstractTlsSocket.html',1,'AsyncFw']]],
   ['activateevent_9',['activateEvent',['../classAsyncFw_1_1AbstractSocket.html#aac7ad6c4f9815d9b8b0817d38864d06d',1,'AsyncFw::AbstractSocket::activateEvent()'],['../classAsyncFw_1_1AbstractTlsSocket.html#a57ac6daff9926cf631abcd1e19073cc8',1,'AsyncFw::AbstractTlsSocket::activateEvent()'],['../classAsyncFw_1_1HttpSocket.html#ad51bb1bf5880c3037c7ad70231c0767d',1,'AsyncFw::HttpSocket::activateEvent()']]],
   ['address_10',['address',['../classAsyncFw_1_1AbstractSocket.html#a3dd69e137ca3cf50f90607c17bbdc312',1,'AsyncFw::AbstractSocket::address()'],['../classAsyncFw_1_1ListenSocket.html#a3dd69e137ca3cf50f90607c17bbdc312',1,'AsyncFw::ListenSocket::address()']]],
-  ['addressinfo_11',['AddressInfo',['../classAsyncFw_1_1AddressInfo.html',1,'AsyncFw']]],
+  ['addressresolver_11',['AddressResolver',['../classAsyncFw_1_1AddressResolver.html',1,'AsyncFw']]],
   ['anydata_12',['AnyData',['../structAsyncFw_1_1AnyData.html',1,'AsyncFw']]],
   ['appendpolldescriptor_13',['appendPollDescriptor',['../classAsyncFw_1_1AbstractThread.html#a5d77136157f34e21722ee4ff7b10813e',1,'AsyncFw::AbstractThread']]],
   ['appendpolltask_14',['appendPollTask',['../classAsyncFw_1_1AbstractThread.html#a7e5b6e93c0e2afca24874900b8aec919',1,'AsyncFw::AbstractThread']]],

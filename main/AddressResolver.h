@@ -31,12 +31,14 @@ public:
   enum Family : uint8_t { Unspec = AF_UNSPEC_, Inet = AF_INET_, Inet6 = AF_INET6_ };
   AddressResolver();
   ~AddressResolver();
-  /*! \brief Starts an asynchronous DNS resolution for the specified hostname. \param name Hostname or domain name to resolve (e.g., "example.com"). \param family Protocol family filter (defaults to IPv4 / Inet).
+  /*! \brief Starts an asynchronous DNS resolution for the specified hostname.
+  \param name Hostname or domain name to resolve (e.g., "example.com"). \param family Protocol family filter (defaults to IPv4 / Inet).
   \note Triggers the \ref completed connector upon finishing. */
   void resolve(const std::string &, Family = Inet, int timeout = 10000);
   /*! \brief The AddressResolver::completed connector. \details Emitted when the DNS resolution completes or times out. \param status Status code of the operation (0 / ARES_SUCCESS on success). \param results Vector of resolved IP address strings. */
   FunctionConnectorProtected<AddressResolver>::Connector<int, const std::vector<std::string> &> completed;
-  /*! \brief Asynchronously resolves the specified hostname (for coroutines). \param name Hostname or domain name to resolve. \param family Protocol family filter (defaults to IPv4 / Inet). \return CoroutineAwait object containing a vector of resolved IP strings.
+  /*! \brief Asynchronously resolves the specified hostname (for coroutines).
+  \param name Hostname or domain name to resolve. \param family Protocol family filter (defaults to IPv4 / Inet). \return CoroutineAwait object containing a vector of resolved IP strings.
   \brief Example: \code auto ips = co_await ai.coResolve("example.com", AddressResolver::Inet); \endcode */
   AsyncFw::CoroutineAwait<Result> coResolve(const std::string &, Family = Inet, int = 10000);
 

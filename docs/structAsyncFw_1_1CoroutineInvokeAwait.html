@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.13.2"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>AsyncFw: Member List</title>
+<title>AsyncFw: AsyncFw::CoroutineInvokeAwait&lt; T &gt; Struct Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -77,7 +77,7 @@ $(function() { codefold.init(0); });
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(function(){initNavTree('classAsyncFw_1_1AddressInfo.html',''); initResizable(true); });
+$(function(){initNavTree('structAsyncFw_1_1CoroutineInvokeAwait.html',''); initResizable(true); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -103,28 +103,32 @@ $(function(){initNavTree('classAsyncFw_1_1AddressInfo.html',''); initResizable(t
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">AsyncFw::AddressInfo Member List</div></div>
+  <div class="headertitle"><div class="title">AsyncFw::CoroutineInvokeAwait&lt; T &gt; Struct Template Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>This is the complete list of members for <a class="el" href="classAsyncFw_1_1AddressInfo.html">AsyncFw::AddressInfo</a>, including all inherited members.</p>
-<table class="directory">
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>AddressInfo</b>() (defined in <a class="el" href="classAsyncFw_1_1AddressInfo.html">AsyncFw::AddressInfo</a>)</td><td class="entry"><a class="el" href="classAsyncFw_1_1AddressInfo.html">AsyncFw::AddressInfo</a></td><td class="entry"></td></tr>
-  <tr class="odd"><td class="entry"><a class="el" href="classAsyncFw_1_1AddressInfo.html#a724e55a870a6eec5b857d00bc7a72ecd">completed</a></td><td class="entry"><a class="el" href="classAsyncFw_1_1AddressInfo.html">AsyncFw::AddressInfo</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classAsyncFw_1_1AddressInfo.html#a27a4f3c86d76a2c2735de96a0df9bd59">coResolve</a>(const std::string &amp;, Family=Inet)</td><td class="entry"><a class="el" href="classAsyncFw_1_1AddressInfo.html">AsyncFw::AddressInfo</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0" class="odd"><td class="entry"><b>Family</b> enum name (defined in <a class="el" href="classAsyncFw_1_1AddressInfo.html">AsyncFw::AddressInfo</a>)</td><td class="entry"><a class="el" href="classAsyncFw_1_1AddressInfo.html">AsyncFw::AddressInfo</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>Inet</b> enum value (defined in <a class="el" href="classAsyncFw_1_1AddressInfo.html">AsyncFw::AddressInfo</a>)</td><td class="entry"><a class="el" href="classAsyncFw_1_1AddressInfo.html">AsyncFw::AddressInfo</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0" class="odd"><td class="entry"><b>Inet6</b> enum value (defined in <a class="el" href="classAsyncFw_1_1AddressInfo.html">AsyncFw::AddressInfo</a>)</td><td class="entry"><a class="el" href="classAsyncFw_1_1AddressInfo.html">AsyncFw::AddressInfo</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>resolve</b>(const std::string &amp;, Family=Inet) (defined in <a class="el" href="classAsyncFw_1_1AddressInfo.html">AsyncFw::AddressInfo</a>)</td><td class="entry"><a class="el" href="classAsyncFw_1_1AddressInfo.html">AsyncFw::AddressInfo</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0" class="odd"><td class="entry"><b>Result</b> typedef (defined in <a class="el" href="classAsyncFw_1_1AddressInfo.html">AsyncFw::AddressInfo</a>)</td><td class="entry"><a class="el" href="classAsyncFw_1_1AddressInfo.html">AsyncFw::AddressInfo</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>setTimeout</b>(int) (defined in <a class="el" href="classAsyncFw_1_1AddressInfo.html">AsyncFw::AddressInfo</a>)</td><td class="entry"><a class="el" href="classAsyncFw_1_1AddressInfo.html">AsyncFw::AddressInfo</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0" class="odd"><td class="entry"><b>Unspec</b> enum value (defined in <a class="el" href="classAsyncFw_1_1AddressInfo.html">AsyncFw::AddressInfo</a>)</td><td class="entry"><a class="el" href="classAsyncFw_1_1AddressInfo.html">AsyncFw::AddressInfo</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>~AddressInfo</b>() (defined in <a class="el" href="classAsyncFw_1_1AddressInfo.html">AsyncFw::AddressInfo</a>)</td><td class="entry"><a class="el" href="classAsyncFw_1_1AddressInfo.html">AsyncFw::AddressInfo</a></td><td class="entry"></td></tr>
-</table></div><!-- contents -->
+<p>Internal awaiter that moves a specific function call to an event loop or <a class="el" href="classAsyncFw_1_1ThreadPool.html" title="Manages a set of reusable worker threads for concurrent task execution, eliminating the need to spawn...">ThreadPool</a> thread.  
+ <a href="#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="Coroutine_8h_source.html">AsyncFw/Coroutine</a>&gt;</code></p>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename T&gt;<br />
+struct AsyncFw::CoroutineInvokeAwait&lt; T &gt;</div><p>Internal awaiter that moves a specific function call to an event loop or <a class="el" href="classAsyncFw_1_1ThreadPool.html" title="Manages a set of reusable worker threads for concurrent task execution, eliminating the need to spawn...">ThreadPool</a> thread. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Signature</td><td>Signature matching R(Args...). </td></tr>
+  </table>
+  </dd>
+</dl>
+</div><hr/>The documentation for this struct was generated from the following file:<ul>
+<li>main/<a class="el" href="Coroutine_8h_source.html">Coroutine.h</a></li>
+</ul>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
+    <li class="navelem"><b>AsyncFw</b></li><li class="navelem"><a class="el" href="structAsyncFw_1_1CoroutineInvokeAwait.html">CoroutineInvokeAwait</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
   </ul>
 </div>

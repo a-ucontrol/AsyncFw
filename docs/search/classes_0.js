@@ -8,7 +8,7 @@ var searchData=
   ['abstractthread_5',['AbstractThread',['../classAsyncFw_1_1AbstractThread.html',1,'AsyncFw']]],
   ['abstractthreadpool_6',['AbstractThreadPool',['../classAsyncFw_1_1AbstractThreadPool.html',1,'AsyncFw']]],
   ['abstracttlssocket_7',['AbstractTlsSocket',['../classAsyncFw_1_1AbstractTlsSocket.html',1,'AsyncFw']]],
-  ['addressinfo_8',['AddressInfo',['../classAsyncFw_1_1AddressInfo.html',1,'AsyncFw']]],
+  ['addressresolver_8',['AddressResolver',['../classAsyncFw_1_1AddressResolver.html',1,'AsyncFw']]],
   ['anydata_9',['AnyData',['../structAsyncFw_1_1AnyData.html',1,'AsyncFw']]],
   ['applicationnotifier_10',['ApplicationNotifier',['../classAsyncFw_1_1ApplicationNotifier.html',1,'AsyncFw']]]
 ];

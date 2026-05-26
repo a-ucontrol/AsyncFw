@@ -75,7 +75,7 @@
 <!-- Node10 -->
 <g id="Node000010" class="node">
 <title>Node10</title>
-<g id="a_Node000010"><a xlink:href="structAsyncFw_1_1CoroutineTask_1_1promise__type.html" target="_top" xlink:title="The CoroutineTask::promise_type struct.">
+<g id="a_Node000010"><a xlink:href="structAsyncFw_1_1CoroutineTask_1_1promise__type.html" target="_top" xlink:title="The promise type object required by the C++20 coroutine standard.">
 <polygon fill="white" stroke="#666666" points="272,-32 145.75,-32 145.75,0 272,0 272,-32"/>
 <text text-anchor="start" x="153.75" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::CoroutineTask</text>
 <text text-anchor="middle" x="208.88" y="-6.5" font-family="Helvetica,sans-Serif" font-size="10.00">::promise_type</text>
@@ -94,7 +94,7 @@
 <!-- Node3 -->
 <g id="Node000003" class="node">
 <title>Node3</title>
-<g id="a_Node000003"><a xlink:href="classAsyncFw_1_1AbstractTlsSocket.html" target="_top" xlink:title="The AbstractTlsSocket class provides the base functionality for TLS encrypted socket.">
+<g id="a_Node000003"><a xlink:href="classAsyncFw_1_1AbstractTlsSocket.html" target="_top" xlink:title="Abstract base class providing Transport Layer Security (TLS/SSL) encryption layers on top of standard...">
 <polygon fill="white" stroke="#666666" points="460.5,-196 316.25,-196 316.25,-176 460.5,-176 460.5,-196"/>
 <text text-anchor="middle" x="388.38" y="-182.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AbstractTlsSocket</text>
 </a>

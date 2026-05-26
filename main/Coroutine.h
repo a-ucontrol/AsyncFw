@@ -15,11 +15,12 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 namespace AsyncFw {
 /*! \struct CoroutineTask Coroutine.h <AsyncFw/Coroutine> \brief A class representing a coroutine task that can be suspended and resumed.
-\brief It manages the C++20 coroutine state, holds the underlying handle, and orchestrates the lifecycle via its internal promise_type. */
+\details It manages the C++20 coroutine state, holds the underlying handle, and orchestrates the lifecycle via its internal promise_type. */
 struct CoroutineTask {
   CoroutineTask();
   virtual ~CoroutineTask();
-  /*! \struct promise_type Coroutine.h <AsyncFw/Coroutine> \brief The CoroutineTask::promise_type struct. */
+  /*! \struct promise_type Coroutine.h <AsyncFw/Coroutine> \brief The promise type object required by the C++20 coroutine standard.
+  \details Inherits from AnyData to allow coroutine state to pass and hold dynamic data types between suspension points and resumption steps. */
   struct promise_type : public AnyData {
     friend CoroutineTask;
     promise_type();
@@ -29,7 +30,8 @@ struct CoroutineTask {
     std::suspend_always final_suspend() noexcept;
     void unhandled_exception() {}
     void return_void();
-    /*! \brief Execute coroutine_handle::resume on the thread where the promise_type is created. */
+    /*! \brief Schedules the coroutine continuation on the thread where the promise_type was created.
+    \details Postpones or queues coroutine_handle::resume via the thread event loop. */
     void resume_queued();
 
   private:
@@ -47,7 +49,7 @@ private:
 
 using CoroutineHandle = std::coroutine_handle<CoroutineTask::promise_type>;
 
-/*! \struct CoroutineAwait Coroutine.h <AsyncFw/Coroutine> \brief The CoroutineAwait struct. */
+/*! \struct CoroutineAwait Coroutine.h <AsyncFw/Coroutine> \brief Generic awaiter for wrapping asynchronous triggers or callback-based APIs into co_await. \tparam R The return type yielded by co_await  by `co_await` */
 template <typename R>
 struct CoroutineAwait {
   template <typename T>
@@ -72,6 +74,7 @@ private:
   Invocable<void(const CoroutineHandle)>::Abstract *f_ = nullptr;
 };
 
+/*! \struct CoroutineInvokeAwait Coroutine.h <AsyncFw/Coroutine> \brief Internal awaiter that moves a specific function call to an event loop or ThreadPool thread. \tparam Signature Signature matching R(Args...). */
 template <typename T>
 struct CoroutineInvokeAwait;
 template <typename R, typename... Args>
@@ -102,18 +105,26 @@ private:
   Invocable<R(Args...)>::Abstract *f_;
 };
 
+/*! \brief Offloads a callable function/lambda to the global ThreadPool and awaits its completion.
+\param f Free function, lambda, or functor. \param args Arguments to pass into the function. \return An awaitable object yielding the function's return type. */
 template <typename F, typename... Args>
 auto coInvoke(F &&f, Args &&...args) {
   return CoroutineInvokeAwait<std::invoke_result_t<F, Args &...>(Args & ...)>(nullptr, std::forward<F>(f), std::forward<Args>(args)...);
 }
+/*! \brief Offloads a callable function/lambda to a specific Thread loop and awaits its completion.
+\param t Target AbstractThread pointer. \param f Free function, lambda, or functor. \param args Arguments to pass into the function. \return An awaitable object yielding the function's return type. */
 template <typename T = AbstractThread, typename F, typename... Args>
 auto coInvoke(T *t, F &&f, Args &&...args) {
   return CoroutineInvokeAwait<std::invoke_result_t<F, Args &...>(Args & ...)>(t, std::forward<F>(f), std::forward<Args>(args)...);
 }
+/*! \brief Offloads a class member function to the global ThreadPool and awaits its completion.
+\param m Member function pointer. \param o Target class object instance. \param args Arguments to pass into the member function. \return An awaitable object yielding the member function's return type. */
 template <typename M, typename O, typename... Args>
 auto coInvoke(M m, O *o, Args &&...args) {
   return CoroutineInvokeAwait<std::invoke_result_t<M, O, Args &...>(Args & ...)>(nullptr, m, o, std::forward<Args>(args)...);
 }
+/*! \brief Offloads a class member function to a specific Thread loop and awaits its completion.
+\param t Target AbstractThread pointer. \param m Member function pointer. \param o Target class object instance. \param args Arguments to pass into the member function. \return An awaitable object yielding the member function's return type. */
 template <typename T = AbstractThread, typename M, typename O, typename... Args>
 auto coInvoke(T *t, M m, O *o, Args &&...args) {
   return CoroutineInvokeAwait<std::invoke_result_t<M, O, Args &...>(Args & ...)>(t, m, o, std::forward<Args>(args)...);

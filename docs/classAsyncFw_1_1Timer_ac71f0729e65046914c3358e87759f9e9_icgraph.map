@@ -1,5 +1,7 @@
 <map id="AsyncFw::Timer::single" name="AsyncFw::Timer::single">
-<area shape="rect" id="Node000001" title="Starts a single shot timer with the specified timeout." alt="" coords="205,5,364,32"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1Timer.html#a14d02d88bd3682afd7c8fd72cc670e46" title="Starts or restarts a timer with the specified timeout. If the timer is already running,..." alt="" coords="5,5,157,32"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="189,21,157,21,157,16,189,16"/>
+<area shape="rect" id="Node000001" title="Starts a single shot timer with the specified timeout." alt="" coords="439,5,598,32"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1Timer.html#a14d02d88bd3682afd7c8fd72cc670e46" title="Starts or restarts a timer with the specified timeout. If the timer is already running,..." alt="" coords="240,5,391,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="423,21,391,21,391,16,423,16"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1Timer.html#a2578293bf0bd7eef49a48039853d3b37" title="Asynchronously waits for the specified timeout interval." alt="" coords="5,5,192,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="224,21,192,21,192,16,224,16"/>
 </map>

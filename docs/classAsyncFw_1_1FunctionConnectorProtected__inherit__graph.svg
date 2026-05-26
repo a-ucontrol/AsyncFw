@@ -22,9 +22,9 @@
 <g id="Node000002" class="node">
 <title>Node2</title>
 <g id="a_Node000002"><a xlink:href="classAsyncFw_1_1FunctionConnectorProtected.html" target="_top" xlink:title=" ">
-<polygon fill="white" stroke="#666666" points="531.5,-713.47 356.5,-713.47 356.5,-681.47 531.5,-681.47 531.5,-713.47"/>
-<text text-anchor="start" x="364.5" y="-699.97" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::FunctionConnector</text>
-<text text-anchor="middle" x="444" y="-687.97" font-family="Helvetica,sans-Serif" font-size="10.00">Protected&lt; AsyncFw::AddressInfo &gt;</text>
+<polygon fill="white" stroke="#666666" points="542.75,-713.47 345.25,-713.47 345.25,-681.47 542.75,-681.47 542.75,-713.47"/>
+<text text-anchor="start" x="353.25" y="-699.97" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::FunctionConnector</text>
+<text text-anchor="middle" x="444" y="-687.97" font-family="Helvetica,sans-Serif" font-size="10.00">Protected&lt; AsyncFw::AddressResolver &gt;</text>
 </a>
 </g>
 </g>
@@ -36,7 +36,7 @@
 <polygon fill="orange" stroke="orange" points="80.92,-375.71 76.12,-366.27 73.98,-376.64 80.92,-375.71"/>
 </a>
 </g>
-<text text-anchor="middle" x="240.25" y="-719.41" font-family="Helvetica,sans-Serif" font-size="10.00" fill="grey"> &lt; AsyncFw::AddressInfo &gt;</text>
+<text text-anchor="middle" x="240.25" y="-719.41" font-family="Helvetica,sans-Serif" font-size="10.00" fill="grey"> &lt; AsyncFw::AddressResolver &gt;</text>
 </g>
 <!-- Node3 -->
 <g id="Node000003" class="node">

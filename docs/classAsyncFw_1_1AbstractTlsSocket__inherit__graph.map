@@ -1,5 +1,5 @@
 <map id="AsyncFw::AbstractTlsSocket" name="AsyncFw::AbstractTlsSocket">
-<area shape="rect" id="Node000001" title="The AbstractTlsSocket class provides the base functionality for TLS encrypted socket." alt="" coords="97,155,290,181"/>
+<area shape="rect" id="Node000001" title="Abstract base class providing Transport Layer Security (TLS/SSL) encryption layers on top of standard..." alt="" coords="97,155,290,181"/>
 <area shape="rect" id="Node000004" href="$classAsyncFw_1_1DataArraySocket.html" title="The DataArraySocket class." alt="" coords="5,229,190,256"/>
 <area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="167,193,116,231,112,227,163,189"/>
 <area shape="rect" id="Node000005" href="$classAsyncFw_1_1HttpSocket.html" title="The HttpSocket class." alt="" coords="214,229,365,256"/>

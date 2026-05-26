@@ -111,7 +111,7 @@ $(function(){initNavTree('structAsyncFw_1_1CoroutineTask.html',''); initResizabl
 </div><!--header-->
 <div class="contents">
 
-<p>The <a class="el" href="structAsyncFw_1_1CoroutineTask.html" title="The CoroutineTask struct.">CoroutineTask</a> struct.  
+<p>A class representing a coroutine task that can be suspended and resumed.  
  <a href="#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="Coroutine_8h_source.html">AsyncFw/Coroutine</a>&gt;</code></p>
@@ -119,7 +119,7 @@ $(function(){initNavTree('structAsyncFw_1_1CoroutineTask.html',''); initResizabl
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structAsyncFw_1_1CoroutineTask_1_1promise__type.html">promise_type</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="structAsyncFw_1_1CoroutineTask_1_1promise__type.html" title="The CoroutineTask::promise_type struct.">CoroutineTask::promise_type</a> struct.  <a href="structAsyncFw_1_1CoroutineTask_1_1promise__type.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The promise type object required by the C++20 coroutine standard.  <a href="structAsyncFw_1_1CoroutineTask_1_1promise__type.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
@@ -134,8 +134,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>wait</b> ()</td></tr>
 <tr class="separator:a820a0a3410c4a14a71ad3599f46c1bb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>The <a class="el" href="structAsyncFw_1_1CoroutineTask.html" title="The CoroutineTask struct.">CoroutineTask</a> struct. </p>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="Coroutine_2main_8cpp-example.html#_a0">Coroutine/main.cpp</a>, <a class="el" href="CoroutineInvoke_2main_8cpp-example.html#_a0">CoroutineInvoke/main.cpp</a>, <a class="el" href="CoroutineWait_2main_8cpp-example.html#_a0">CoroutineWait/main.cpp</a>, and <a class="el" href="Socket_2main_8cpp-example.html#_a10">Socket/main.cpp</a>.</dd>
+<div class="textblock"><p>A class representing a coroutine task that can be suspended and resumed. </p>
+<p>It manages the C++20 coroutine state, holds the underlying handle, and orchestrates the lifecycle via its internal <a class="el" href="structAsyncFw_1_1CoroutineTask_1_1promise__type.html" title="The promise type object required by the C++20 coroutine standard.">promise_type</a>. </p>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="Coroutine_2main_8cpp-example.html#_a0">Coroutine/main.cpp</a>, <a class="el" href="CoroutineInvoke_2main_8cpp-example.html#_a0">CoroutineInvoke/main.cpp</a>, <a class="el" href="CoroutineWait_2main_8cpp-example.html#_a0">CoroutineWait/main.cpp</a>, <a class="el" href="Socket_2main_8cpp-example.html#_a10">Socket/main.cpp</a>, and <a class="el" href="Timer_2main_8cpp-example.html#_a0">Timer/main.cpp</a>.</dd>
 </dl>
 </div><hr/>The documentation for this struct was generated from the following files:<ul>
 <li>main/<a class="el" href="Coroutine_8h_source.html">Coroutine.h</a></li>

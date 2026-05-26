@@ -20,7 +20,7 @@
 <!-- Node3 -->
 <g id="Node000003" class="node">
 <title>Node3</title>
-<g id="a_Node000003"><a xlink:href="classAsyncFw_1_1AbstractTlsSocket.html" target="_top" xlink:title="The AbstractTlsSocket class provides the base functionality for TLS encrypted socket.">
+<g id="a_Node000003"><a xlink:href="classAsyncFw_1_1AbstractTlsSocket.html" target="_top" xlink:title="Abstract base class providing Transport Layer Security (TLS/SSL) encryption layers on top of standard...">
 <polygon fill="white" stroke="#666666" points="213.25,-76 69,-76 69,-56 213.25,-56 213.25,-76"/>
 <text text-anchor="middle" x="141.12" y="-62.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AbstractTlsSocket</text>
 </a>

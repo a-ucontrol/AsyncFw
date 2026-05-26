@@ -11,7 +11,7 @@
 <!-- Node1 -->
 <g id="Node000001" class="node">
 <title>Node1</title>
-<g id="a_Node000001"><a xlink:title="The AbstractTlsSocket class provides the base functionality for TLS encrypted socket.">
+<g id="a_Node000001"><a xlink:title="Abstract base class providing Transport Layer Security (TLS/SSL) encryption layers on top of standard...">
 <polygon fill="#999999" stroke="#666666" points="213.25,-76 69,-76 69,-56 213.25,-56 213.25,-76"/>
 <text text-anchor="middle" x="141.12" y="-62.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AbstractTlsSocket</text>
 </a>

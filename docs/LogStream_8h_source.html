@@ -147,26 +147,25 @@ $(function(){initNavTree('LogStream_8h_source.html',''); initResizable(true); })
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
 <div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="keyword">namespace </span>AsyncFw {</div>
-<div class="foldopen" id="foldopen00045" data-start="{" data-end="};">
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="classAsyncFw_1_1LogStream.html">   45</a></span><span class="keyword">class </span>LogStream {</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>  <span class="keyword">enum</span> MessageType : uint8_t {</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    Emergency = 0x00,</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    Alert = 0x01,</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    Error = 0x02,</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    Warning = 0x03,</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    Notice = 0x04,</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    Info = 0x05,</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    Debug = 0x06,</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    Trace = 0x07,</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>  };</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> </div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>  <span class="keyword">enum</span> Output : uint8_t {</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    NoConsole = 0x08,</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>  };</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>  <span class="comment">//color names</span></div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>  <span class="comment">//https://doc.qt.io/qt-6/qcolor.html, Predefined Colors</span></div>
+<div class="foldopen" id="foldopen00046" data-start="{" data-end="};">
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno"><a class="line" href="classAsyncFw_1_1LogStream.html">   46</a></span><span class="keyword">class </span>LogStream {</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>  <span class="keyword">enum</span> MessageType : uint8_t {</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    Emergency = 0x00,</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    Alert = 0x01,</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    Error = 0x02,</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    Warning = 0x03,</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    Notice = 0x04,</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    Info = 0x05,</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    Debug = 0x06,</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    Trace = 0x07,</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>  };</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>  <span class="keyword">enum</span> Output : uint8_t {</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    NoConsole = 0x08,</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>  };</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>  <span class="comment">//color names</span></div>
 <div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>  <span class="keyword">enum</span> Color : uint8_t {</div>
 <div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>    Default = 0x00,</div>
 <div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>    White = 0x10,</div>

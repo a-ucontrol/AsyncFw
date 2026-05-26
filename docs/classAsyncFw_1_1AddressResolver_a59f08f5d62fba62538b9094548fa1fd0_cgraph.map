@@ -1,0 +1,5 @@
+<map id="AsyncFw::AddressResolver::coResolve" name="AsyncFw::AddressResolver::coResolve">
+<area shape="rect" id="Node000001" title="Asynchronously resolves the specified hostname (for coroutines)." alt="" coords="5,5,190,48"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AddressResolver.html#a9a5b78be91762ae5adc7f19aede8a662" title="Starts an asynchronous DNS resolution for the specified hostname." alt="" coords="238,5,422,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="190,24,222,24,222,29,190,29"/>
+</map>

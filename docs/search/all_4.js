@@ -11,7 +11,7 @@ var searchData=
   ['functionconnector_3c_20args_2e_2e_2e_20_3e_8',['FunctionConnector&lt; Args... &gt;',['../classAsyncFw_1_1FunctionConnector.html',1,'AsyncFw']]],
   ['functionconnector_3c_20const_20asyncfw_3a_3aapplicationnotifier_3a_3avalue_20_26_20_3e_9',['FunctionConnector&lt; const AsyncFw::ApplicationNotifier::Value &amp; &gt;',['../classAsyncFw_1_1FunctionConnector.html',1,'AsyncFw']]],
   ['functionconnectorprotected_10',['FunctionConnectorProtected',['../classAsyncFw_1_1FunctionConnectorProtected.html',1,'AsyncFw']]],
-  ['functionconnectorprotected_3c_20asyncfw_3a_3aaddressinfo_20_3e_11',['FunctionConnectorProtected&lt; AsyncFw::AddressInfo &gt;',['../classAsyncFw_1_1FunctionConnectorProtected.html',1,'AsyncFw']]],
+  ['functionconnectorprotected_3c_20asyncfw_3a_3aaddressresolver_20_3e_11',['FunctionConnectorProtected&lt; AsyncFw::AddressResolver &gt;',['../classAsyncFw_1_1FunctionConnectorProtected.html',1,'AsyncFw']]],
   ['functionconnectorprotected_3c_20asyncfw_3a_3adataarrayabstracttcp_20_3e_12',['FunctionConnectorProtected&lt; AsyncFw::DataArrayAbstractTcp &gt;',['../classAsyncFw_1_1FunctionConnectorProtected.html',1,'AsyncFw']]],
   ['functionconnectorprotected_3c_20asyncfw_3a_3adataarraysocket_20_3e_13',['FunctionConnectorProtected&lt; AsyncFw::DataArraySocket &gt;',['../classAsyncFw_1_1FunctionConnectorProtected.html',1,'AsyncFw']]],
   ['functionconnectorprotected_3c_20asyncfw_3a_3adataarraytcpclient_20_3e_14',['FunctionConnectorProtected&lt; AsyncFw::DataArrayTcpClient &gt;',['../classAsyncFw_1_1FunctionConnectorProtected.html',1,'AsyncFw']]],

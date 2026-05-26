@@ -114,7 +114,7 @@ $(function(){initNavTree('classAsyncFw_1_1TlsContext.html',''); initResizable(tr
 </div><!--header-->
 <div class="contents">
 
-<p>The <a class="el" href="classAsyncFw_1_1TlsContext.html" title="The TlsContext class provides functionality for managing TLS certificates.">TlsContext</a> class provides functionality for managing TLS certificates.  
+<p>Manages cryptographic configurations, security profiles, credentials, and certificates for TLS sessions.  
  <a href="#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="TlsContext_8h_source.html">AsyncFw/TlsContext</a>&gt;</code></p>
@@ -249,7 +249,8 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>AbstractTlsSocket</b
 <tr class="separator:a518aea46f858b8f8be7f78a472cb2bab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>The <a class="el" href="classAsyncFw_1_1TlsContext.html" title="The TlsContext class provides functionality for managing TLS certificates.">TlsContext</a> class provides functionality for managing TLS certificates. </p>
+<div class="textblock"><p>Manages cryptographic configurations, security profiles, credentials, and certificates for TLS sessions. </p>
+<p><a class="el" href="classAsyncFw_1_1TlsContext.html" title="Manages cryptographic configurations, security profiles, credentials, and certificates for TLS sessio...">TlsContext</a> encapsulates the shared state required to establish secure Transport Layer Security (TLS) connections. It acts as a centralized repository for loading public key infrastructure (PKI) certificates, private keys, trusted Certificate Authorities (CAs), and configuring allowed cipher suites and TLS protocol versions.</p>
 <p>Example: </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;AsyncFw/MainThread&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;AsyncFw/TlsContext&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;AsyncFw/LogStream&gt;</span></div>

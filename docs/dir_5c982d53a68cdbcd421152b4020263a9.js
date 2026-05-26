@@ -1,6 +1,6 @@
 var dir_5c982d53a68cdbcd421152b4020263a9 =
 [
-    [ "AddressInfo.h", "AddressInfo_8h_source.html", null ],
+    [ "AddressResolver.h", "AddressResolver_8h_source.html", null ],
     [ "ApplicationNotifier.h", "ApplicationNotifier_8h_source.html", null ],
     [ "Coroutine.h", "Coroutine_8h_source.html", null ],
     [ "Cryptor.h", "Cryptor_8h_source.html", null ],
