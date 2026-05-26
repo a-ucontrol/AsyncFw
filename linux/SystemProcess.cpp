@@ -244,33 +244,29 @@ bool SystemProcess::exec_(const std::string &cmd, const std::vector<std::string>
   Data *_data = new Data;
 
   if (f) {
-    _data->process.output.connect(
-        [_data](const std::string &msg, bool err) {
-          if (!err) _data->out += msg;
-          else { _data->err += msg; }
-        },
-        AbstractFunctionConnector::Connection::Direct);
+    _data->process.output.connect([_data](const std::string &msg, bool err) {
+      if (!err) _data->out += msg;
+      else { _data->err += msg; }
+    }, AbstractFunctionConnector::Connection::Direct);
   }
-  _data->process.stateChanged.connect(
-      [f, _data](SystemProcess::State state) {
-        if (state != SystemProcess::Running) {
-          if (f) {
-            (*f)(_data->process.exitCode(), state, _data->out, _data->err);
-            delete f;
-          }
-          if (!_data->process.private_.thread_->invoke([_data]() { delete _data; })) delete _data;
-        }
-      },
-      AbstractFunctionConnector::Connection::Direct);
+  _data->process.stateChanged.connect([f, _data](SystemProcess::State state) {
+    if (state != SystemProcess::Running) {
+      if (f) {
+        (*f)(_data->process.exitCode(), state, _data->out, _data->err);
+        delete f;
+      }
+      if (!_data->process.private_.thread_->invoke([_data]() { delete _data; })) delete _data;
+    }
+  }, AbstractFunctionConnector::Connection::Direct);
   if (!_data->process.private_.thread_->invoke([cmd, args, f, _data]() {
-        if (!_data->process.start(cmd, args)) {
-          if (f) {
-            (*f)(_data->process.exitCode(), _data->process.state(), _data->out, _data->err);
-            delete f;
-          }
-          delete _data;
-        }
-      })) {
+    if (!_data->process.start(cmd, args)) {
+      if (f) {
+        (*f)(_data->process.exitCode(), _data->process.state(), _data->out, _data->err);
+        delete f;
+      }
+      delete _data;
+    }
+  })) {
     if (f) {
       (*f)(-1, Error, _data->out, _data->err);
       delete f;

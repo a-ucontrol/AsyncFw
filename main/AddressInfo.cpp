@@ -86,51 +86,46 @@ void AddressInfo::resolve(const std::string &name, Family f) {
   hints.ai_flags = ARES_AI_CANONNAME;
   //hints.ai_socktype = SOCK_STREAM;
 
-  ares_getaddrinfo(
-      private_.channel, name.c_str(), nullptr, &hints,
-      [](void *data, int status, int, struct ares_addrinfo *result) {
-        static_cast<Private *>(data)->thread->removeTimer(static_cast<Private *>(data)->tid);
-        static_cast<Private *>(data)->tid = -1;
-        std::vector<std::string> _r;
-        if (!result) lsWarning("Result: {}", ares_strerror(status));
-        else {
-          lsDebug("Result: {}, name: {}", ares_strerror(status), (result->name) ? result->name : "unknown");
-          struct ares_addrinfo_node *node;
-          for (node = result->nodes; node != nullptr; node = node->ai_next) {
-            std::string addr_buf;
-            const void *ptr = nullptr;
-            if (node->ai_family == AF_INET) {
-              const struct sockaddr_in *in_addr = (const struct sockaddr_in *)((void *)node->ai_addr);
-              ptr = &in_addr->sin_addr;
-              addr_buf.resize(INET_ADDRSTRLEN);
-            } else if (node->ai_family == AF_INET6) {
-              const struct sockaddr_in6 *in_addr = (const struct sockaddr_in6 *)((void *)node->ai_addr);
-              ptr = &in_addr->sin6_addr;
-              addr_buf.resize(INET6_ADDRSTRLEN);
-            } else
-              continue;
+  ares_getaddrinfo(private_.channel, name.c_str(), nullptr, &hints, [](void *data, int status, int, struct ares_addrinfo *result) {
+    static_cast<Private *>(data)->thread->removeTimer(static_cast<Private *>(data)->tid);
+    static_cast<Private *>(data)->tid = -1;
+    std::vector<std::string> _r;
+    if (!result) lsWarning("Result: {}", ares_strerror(status));
+    else {
+      lsDebug("Result: {}, name: {}", ares_strerror(status), (result->name) ? result->name : "unknown");
+      struct ares_addrinfo_node *node;
+      for (node = result->nodes; node != nullptr; node = node->ai_next) {
+        std::string addr_buf;
+        const void *ptr = nullptr;
+        if (node->ai_family == AF_INET) {
+          const struct sockaddr_in *in_addr = (const struct sockaddr_in *)((void *)node->ai_addr);
+          ptr = &in_addr->sin_addr;
+          addr_buf.resize(INET_ADDRSTRLEN);
+        } else if (node->ai_family == AF_INET6) {
+          const struct sockaddr_in6 *in_addr = (const struct sockaddr_in6 *)((void *)node->ai_addr);
+          ptr = &in_addr->sin6_addr;
+          addr_buf.resize(INET6_ADDRSTRLEN);
+        } else
+          continue;
 
-            ares_inet_ntop(node->ai_family, ptr, addr_buf.data(), addr_buf.size());
-            addr_buf.resize(strlen(addr_buf.data()));
-            _r.push_back(addr_buf);
-          }
-          ares_freeaddrinfo(result);
-        }
-        static_cast<Private *>(data)->ai->completed(status, _r);
-      },
-      &private_);
+        ares_inet_ntop(node->ai_family, ptr, addr_buf.data(), addr_buf.size());
+        addr_buf.resize(strlen(addr_buf.data()));
+        _r.push_back(addr_buf);
+      }
+      ares_freeaddrinfo(result);
+    }
+    static_cast<Private *>(data)->ai->completed(status, _r);
+  }, &private_);
 }
 
 void AddressInfo::setTimeout(int _timeout) { private_.timeout = _timeout; }
 
 CoroutineAwait<AddressInfo::Result> AddressInfo::coResolve(const std::string &name, Family f) {
   return CoroutineAwait<Result>([this, name, f](AsyncFw::CoroutineHandle h) {
-    completed.connect(
-        [h](int, const std::vector<std::string> &list) {
-          h.promise().setData(list);
-          h.resume();
-        },
-        AsyncFw::AbstractFunctionConnector::Connection::Queued);
+    completed.connect([h](int, const std::vector<std::string> &list) {
+      h.promise().setData(list);
+      h.resume();
+    }, AsyncFw::AbstractFunctionConnector::Connection::Queued);
     resolve(name, f);
   });
 }
