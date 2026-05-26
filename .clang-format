@@ -1,17 +1,8 @@
 BasedOnStyle: Google
 
 AccessModifierOffset: -2 
-#AlignAfterOpenBracket: DontAlign
-#AlignConsecutiveMacros: true
-#AlignConsecutiveAssignments: true
-#AlignConsecutiveDeclarations: false
-#AlignEscapedNewlines: Left
-#AlignOperands: true
-#AlignTrailingComments: true
-#AllowAllArgumentsOnNextLine: true
-#AllowAllConstructorInitializersOnNextLine: false 
-#AllowAllParametersOfDeclarationOnNextLine: true
 
+AllowAllArgumentsOnNextLine: false
 AllowShortBlocksOnASingleLine: true
 AllowShortCaseLabelsOnASingleLine: true
 AllowShortFunctionsOnASingleLine: All
@@ -27,6 +18,9 @@ BreakConstructorInitializers: BeforeComma
 BreakStringLiterals: true
 ColumnLimit: 1200
 Cpp11BracedListStyle: true
+
+LambdaBodyIndentation: OuterScope
+
 DerivePointerAlignment: false 
 FixNamespaceComments: true
 IndentCaseLabels: true
