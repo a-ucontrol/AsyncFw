@@ -7,6 +7,8 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #pragma once
 
+/*! \file AbstractThread.h \brief The AbstractThread class. */
+
 #include <thread>
 #include <mutex>
 #include <vector>
@@ -70,7 +72,7 @@ public:
     bool waiting;
   };
 
-  /*! \brief Runs a function in a managed thread. \param function runs function \param sync blocking wait if true \return True if the function is added to the queue */
+  /*! \brief Runs a function in a managed thread. \param function Runs function. \param sync Blocking wait if true. \return True if the function is added to the queue. */
   template <typename F>
   typename std::enable_if<std::is_void<typename std::invoke_result<F>::type>::value, bool>::type invoke(F function, bool sync = false) const {
     if (!sync) {
@@ -102,12 +104,12 @@ public:
     }
     return true;
   }
-  /*! \brief Append poll task. \param fd file descriptor \param events watch events \param function task function \return True if the task added */
+  /*! \brief Append poll task. \param fd File descriptor. \param events Watch events. \param function Task function. \return True if the task added. */
   template <typename F>
   bool appendPollTask(int fd, PollEvents events, F function) {
     return appendPollDescriptor(fd, events, new Invocable<void(PollEvents)>::Function(std::forward<F>(function)));
   }
-  /*! \brief Append timer task. \param ms timeout in milliseconds \param function task function \return timer id if the task added or value less than zero */
+  /*! \brief Append timer task. \param ms Timeout in milliseconds. \param function Task function. \return timer id if the task added or value less than zero. */
   template <typename F>
   int appendTimerTask(int timeout, F function) {
     return appendTimer(timeout, new Invocable<void()>::Function(std::forward<F>(function)));
@@ -115,7 +117,7 @@ public:
 
   /*! \brief Returns a pointer to the AsyncFw::AbstractThread that manages the currently executing thread. */
   static AbstractThread *current();
-  /*! \brief Assigns a pointer to the list of all threads. \param list pointer to the list of threads \return AbstractThread::LockGuard */
+  /*! \brief Assigns a pointer to the list of all threads. \param list Pointer to the list of threads. \return AbstractThread::LockGuard. */
   static AbstractThread::LockGuard threads(std::vector<AbstractThread *> **);
 
   /*! \brief This call from thread when it starts executing. */
@@ -125,19 +127,19 @@ public:
 
   /*! \brief Returns true if the managed thread is running. */
   virtual bool running() const;
-  /*! \brief Runs a task in a managed thread. \param task poiner to AbstractTask \return True if the task is added to the queue */
+  /*! \brief Runs a task in a managed thread. \param task Poiner to AbstractTask. \return True if the task is added to the queue. */
   virtual bool invokeTask(AbstractTask *) const;
-  /*! \brief Append timer. \param ms timeout in milliseconds \param task pointer to AbstractTask \return timer id if timer added or value less than zero */
+  /*! \brief Append timer. \param ms timeout in milliseconds \param task Pointer to AbstractTask. \return timer Id if timer added or value less than zero. */
   virtual int appendTimer(int, AbstractTask *);
-  /*! \brief Modify timer. \param id timer id \param ms timeout in milliseconds \return True if the timer modified */
+  /*! \brief Modify timer. \param id timer id \param ms Timeout in milliseconds. \return True if the timer modified. */
   virtual bool modifyTimer(int, int);
-  /*! \brief Remove timer. \param id timer id */
+  /*! \brief Remove timer. \param id Timer id. */
   virtual void removeTimer(int);
-  /*! \brief Append poll descriptor. \param fd file descriptor \param events watch events \param task pointer to AbstractPollTask \return True if the poll descriptor added */
+  /*! \brief Append poll descriptor. \param fd File descriptor. \param events Watch events. \param task Pointer to AbstractPollTask. \return True if the poll descriptor added. */
   virtual bool appendPollDescriptor(int, PollEvents, AbstractPollTask *);
-  /*! \brief Modify poll descriptor. \param fd file descriptor \param events watch events \return True if the poll descriptor modified */
+  /*! \brief Modify poll descriptor. \param fd File descriptor. \param events Watch events. \return True if the poll descriptor modified. */
   virtual bool modifyPollDescriptor(int, PollEvents);
-  /*! \brief Remove poll descriptor. \param fd file descriptor */
+  /*! \brief Remove poll descriptor. \param fd File descriptor. */
   virtual void removePollDescriptor(int);
 
   /*! \brief Create a managed thread and run exec(). */
@@ -164,7 +166,7 @@ public:
   LockGuard lockGuard() const;
 
 protected:
-  /*! \brief Constructs a thread. \param name thread name */
+  /*! \brief Constructs a thread. \param name Thread name. */
   AbstractThread(const std::string &);
   virtual ~AbstractThread() = 0;
 

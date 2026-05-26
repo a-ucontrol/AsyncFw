@@ -7,6 +7,8 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #pragma once
 
+/*! \file DataArraySocket.h \brief The DataArraySocket class. */
+
 #include <deque>
 #include "../core/AbstractTlsSocket.h"
 #include "../core/FunctionConnector.h"

@@ -7,6 +7,8 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #pragma once
 
+/*! \file DataArray.h \brief The DataArray, DataArrayView, DataArrayList and DataStream classes. */
+
 #include <vector>
 #include <cstdint>
 #include <string>

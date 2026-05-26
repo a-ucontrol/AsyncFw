@@ -7,6 +7,8 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #pragma once
 
+/*! \file Rrd.h \brief The Rrd class. */
+
 #include "../core/FunctionConnector.h"
 #include "../core/DataArray.h"
 

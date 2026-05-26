@@ -7,6 +7,8 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #pragma once
 
+/*! \file DataArrayAbstractTcp.h \brief The DataArrayAbstractTcp class. */
+
 #include "../core/FunctionConnector.h"
 #include "ThreadPool.h"
 

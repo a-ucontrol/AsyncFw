@@ -199,7 +199,8 @@ Public Attributes</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">name</td><td>Hostname or domain name to resolve (e.g., "example.com").</td></tr>
-    <tr><td class="paramname">family</td><td>Protocol family filter (defaults to IPv4 / Inet). </td></tr>
+    <tr><td class="paramname">family</td><td>Protocol family filter (defaults to IPv4 / Inet).</td></tr>
+    <tr><td class="paramname">timeout</td><td>Timeout interval for this request in milliseconds (default: 10000 ms). </td></tr>
   </table>
   </dd>
 </dl>
@@ -242,12 +243,13 @@ Here is the caller graph for this function:</div>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">name</td><td>Hostname or domain name to resolve.</td></tr>
-    <tr><td class="paramname">family</td><td>Protocol family filter (defaults to IPv4 / Inet). </td></tr>
+    <tr><td class="paramname">family</td><td>Protocol family filter (defaults to IPv4 / Inet).</td></tr>
+    <tr><td class="paramname">timeout</td><td>Timeout interval for this request in milliseconds (default: 10000 ms). </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="structAsyncFw_1_1CoroutineAwait.html" title="Generic awaiter for wrapping asynchronous triggers or callback-based APIs into co_await.">CoroutineAwait</a> object containing a vector of resolved IP strings.</dd></dl>
-<p>Example: </p><div class="fragment"><div class="line"><span class="keyword">auto</span> ips = <span class="keyword">co_await</span> ai.coResolve(<span class="stringliteral">&quot;example.com&quot;</span>, AddressResolver::Inet); </div>
+<p>Example: </p><div class="fragment"><div class="line"><span class="keyword">auto</span> ips = <span class="keyword">co_await</span> resolver.coResolve(<span class="stringliteral">&quot;example.com&quot;</span>, AddressResolver::Inet); </div>
 </div><!-- fragment --> <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="Socket_2main_8cpp-example.html#a12">Socket/main.cpp</a>.</dd>
 </dl>
 <div class="dynheader">

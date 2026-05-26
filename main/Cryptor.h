@@ -7,6 +7,8 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #pragma once
 
+/*! \file Cryptor.h \brief The Cryptor class. */
+
 namespace AsyncFw {
 class DataArray;
 class DataArrayView;

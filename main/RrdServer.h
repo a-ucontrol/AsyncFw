@@ -7,6 +7,8 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #pragma once
 
+/*! \file RrdServer.h \brief The RrdServer class. */
+
 #include "../core/FunctionConnector.h"
 
 namespace AsyncFw {

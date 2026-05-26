@@ -7,6 +7,8 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #pragma once
 
+/*! \file TlsContext.h \brief The TlsContext class. */
+
 #include <string>
 #include <vector>
 #include <cstdint>

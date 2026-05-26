@@ -7,6 +7,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #pragma once
 
+/*! \file Task.h \brief The AbstractTask and Task classes. */
 /*! \example ContainerTask/main.cpp ContainerTask example */
 
 #include "../core/AbstractThread.h"

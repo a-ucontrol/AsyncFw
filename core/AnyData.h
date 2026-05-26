@@ -7,6 +7,8 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #pragma once
 
+/*! \file AnyData.h \brief The AnyData class. */
+
 #include <any>
 
 namespace AsyncFw {

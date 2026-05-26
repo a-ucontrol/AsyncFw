@@ -7,6 +7,8 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #pragma once
 
+/*! \file ThreadPool.h \brief The AbstractThreadPool and ThreadPool classes. */
+
 #include "../core/Thread.h"
 #include "Instance.h"
 

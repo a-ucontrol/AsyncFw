@@ -7,6 +7,8 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #pragma once
 
+/*! \file LogStream.h \brief The LogStream class. */
+
 #include <sstream>
 #include <vector>
 #include <format>

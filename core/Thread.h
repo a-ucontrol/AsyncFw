@@ -7,6 +7,8 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #pragma once
 
+/*! \file Thread.h \brief The Thread class. */
+
 #include "FunctionConnector.h"
 
 namespace AsyncFw {

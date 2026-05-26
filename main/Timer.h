@@ -7,6 +7,8 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #pragma once
 
+/*! \file Timer.h \brief The Timer class. */
+
 #include "../core/FunctionConnector.h"
 #include "Coroutine.h"
 
@@ -15,7 +17,7 @@ namespace AsyncFw {
 \brief Example: \snippet Timer/main.cpp snippet */
 class Timer {
 public:
-  /*! \brief Starts a single shot timer with the specified timeout. \param ms timeout interval in milliseconds \param function runs at timeout */
+  /*! \brief Starts a single shot timer with the specified timeout \param ms timeout interval in milliseconds \param function runs at timeout */
   template <typename T>
   static void single(int ms, T function) {
     new SingleTimerTask(ms, function);
@@ -23,14 +25,15 @@ public:
 
   Timer();
   ~Timer();
-  /*! \brief Starts or restarts a timer with the specified timeout. If the timer is already running, it will be restarted. \param ms timeout interval in milliseconds \param single if true, the timer will be a single shot */
+  /*! \brief Starts or restarts a timer with the specified timeout. If the timer is already running, it will be restarted \param ms timeout interval in milliseconds \param single if true, the timer will be a single shot */
   void start(int, bool = false);
   /*! \brief Stops the timer */
   void stop();
 
   /*! \brief The Timer::timeout connector */
   FunctionConnectorProtected<Timer>::Connector<> timeout;
-  /*! \brief Asynchronously waits for the specified timeout interval. \param timeout interval in milliseconds \return CoroutineAwait object to be used with co_await */
+  /*! \brief Asynchronously waits for the specified timeout interval \param timeout interval in milliseconds \return CoroutineAwait object to be used with co_await
+  \brief Example: \code co_await timer.coTimeout(500); // Sleep for 500 milliseconds \endcode */
   CoroutineAwait<void> coTimeout(int timeout);
 
 private:
@@ -55,6 +58,9 @@ private:
   int timerId = -1;
   bool single_;
 };
-/*! \brief Non-blocking coroutine sleep for the specified timeout interval. \details Helper function to pause the current coroutine without creating a explicit Timer object. \param ms timeout interval in milliseconds \return CoroutineAwait object to be used with co_await */
+/*! \brief Non-blocking coroutine sleep for the specified timeout interval. \param ms Timeout interval in milliseconds. \return CoroutineAwait object to be used with co_await.
+\details Helper function to pause the current coroutine execution on the spot without creating or managing an explicit AsyncFw::Timer object instance.
+\ingroup coroutine_api
+\brief Example: \code co_await AsyncFw::coTimeout(500); // Sleep for 500 milliseconds without a Timer object \endcode */
 CoroutineAwait<void> coTimeout(int timeout);
 }  // namespace AsyncFw

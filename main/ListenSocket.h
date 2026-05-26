@@ -7,6 +7,8 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #pragma once
 
+/*! \file ListenSocket.h \brief The ListenSocket class. */
+
 #include "../core/AbstractSocket.h"
 #include "../core/FunctionConnector.h"
 

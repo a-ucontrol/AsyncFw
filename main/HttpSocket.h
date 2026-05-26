@@ -7,6 +7,8 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #pragma once
 
+/*! \file HttpSocket.h \brief The HttpSocket class. */
+
 #include "../core/FunctionConnector.h"
 #include "../core/DataArray.h"
 #include "../core/AbstractTlsSocket.h"

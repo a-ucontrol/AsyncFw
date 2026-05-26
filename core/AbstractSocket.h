@@ -7,6 +7,8 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #pragma once
 
+/*! \file AbstractSocket.h \brief The AbstractSocket class. */
+
 #include <cstdint>
 #include <string>
 #include "AnyData.h"
@@ -33,7 +35,7 @@ public:
   virtual void close();
   virtual void destroy();
 
-  /*! \brief Listen for incoming connections on address and port. \param address address \param port port \return True if success */
+  /*! \brief Listen for incoming connections on address and port. \param address Address. \param port Port \return True if success. */
   bool listen(const std::string &, uint16_t);
 
   DataArray &peek();

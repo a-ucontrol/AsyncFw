@@ -1,0 +1,19 @@
+<map id="core/Thread.h" name="core/Thread.h">
+<area shape="rect" id="Node000001" title="The Thread class." alt="" coords="196,5,298,32"/>
+<area shape="rect" id="Node000002" href="$MainThread_8h.html" title="The MainThread class." alt="" coords="104,80,236,107"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="224,45,185,82,181,78,221,41"/>
+<area shape="rect" id="Node000003" href="$ThreadPool_8h.html" title="The AbstractThreadPool and ThreadPool classes." alt="" coords="260,80,391,107"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="274,41,314,78,310,82,270,45"/>
+<area shape="rect" id="Node000004" href="$Coroutine_8h.html" title="The CoroutineTask, CoroutineAwait, CoroutineInvokeAwait structs." alt="" coords="175,155,295,181"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="300,119,252,156,249,152,297,114"/>
+<area shape="rect" id="Node000007" href="$DataArrayAbstractTcp_8h.html" title="The DataArrayAbstractTcp class." alt="" coords="319,155,511,181"/>
+<area shape="poly" id="edge6_Node000003_Node000007" title=" " alt="" coords="355,115,401,152,398,156,351,119"/>
+<area shape="rect" id="Node000005" href="$AddressResolver_8h.html" title="The AddressResolver class." alt="" coords="5,229,169,256"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="197,191,114,231,112,226,194,186"/>
+<area shape="rect" id="Node000006" href="$Timer_8h.html" title="The Timer class." alt="" coords="192,229,288,256"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="240,197,242,229,237,229,234,197"/>
+<area shape="rect" id="Node000008" href="$DataArrayTcpClient_8h.html" title="The DataArrayTcpClient class." alt="" coords="322,229,500,256"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="416,197,414,229,409,229,411,197"/>
+<area shape="rect" id="Node000009" href="$DataArrayTcpServer_8h.html" title="The DataArrayTcpServer class." alt="" coords="524,229,704,256"/>
+<area shape="poly" id="edge8_Node000007_Node000009" title=" " alt="" coords="465,184,580,226,578,231,463,189"/>
+</map>

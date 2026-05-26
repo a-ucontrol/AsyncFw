@@ -7,6 +7,8 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #pragma once
 
+/*! \file SystemProcess.h \brief The SystemProcess class. */
+
 #include <string>
 #include "../core/FunctionConnector.h"
 

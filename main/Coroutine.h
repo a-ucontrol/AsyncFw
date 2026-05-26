@@ -7,6 +7,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #pragma once
 
+/*! \file Coroutine.h \brief The CoroutineTask, CoroutineAwait, CoroutineInvokeAwait structs. */
 /*! \example Coroutine/main.cpp Coroutine example \example CoroutineWait/main.cpp CoroutineWait example \example CoroutineInvoke/main.cpp CoroutineInvoke example */
 
 #include <coroutine>
@@ -105,28 +106,28 @@ private:
   Invocable<R(Args...)>::Abstract *f_;
 };
 
-/*! \brief Offloads a callable function/lambda to the global ThreadPool and awaits its completion.
-\param f Free function, lambda, or functor. \param args Arguments to pass into the function. \return An awaitable object yielding the function's return type. */
+/*! \defgroup coroutine_api Coroutine API Helpers
+\brief Global functions and utilities for seamless C++20 coroutine orchestration.
+@{ */
+/*! \brief Offloads a callable function/lambda to the global ThreadPool and awaits its completion. \param f Free function, lambda, or functor. \param args Arguments to pass into the function. \return An awaitable object yielding the function's return type. */
 template <typename F, typename... Args>
 auto coInvoke(F &&f, Args &&...args) {
   return CoroutineInvokeAwait<std::invoke_result_t<F, Args &...>(Args & ...)>(nullptr, std::forward<F>(f), std::forward<Args>(args)...);
 }
-/*! \brief Offloads a callable function/lambda to a specific Thread loop and awaits its completion.
-\param t Target AbstractThread pointer. \param f Free function, lambda, or functor. \param args Arguments to pass into the function. \return An awaitable object yielding the function's return type. */
+/*! \brief Offloads a callable function/lambda to a specific Thread loop and awaits its completion. \param t Target AbstractThread pointer. \param f Free function, lambda, or functor. \param args Arguments to pass into the function. \return An awaitable object yielding the function's return type. */
 template <typename T = AbstractThread, typename F, typename... Args>
 auto coInvoke(T *t, F &&f, Args &&...args) {
   return CoroutineInvokeAwait<std::invoke_result_t<F, Args &...>(Args & ...)>(t, std::forward<F>(f), std::forward<Args>(args)...);
 }
-/*! \brief Offloads a class member function to the global ThreadPool and awaits its completion.
-\param m Member function pointer. \param o Target class object instance. \param args Arguments to pass into the member function. \return An awaitable object yielding the member function's return type. */
+/*! \brief Offloads a class member function to the global ThreadPool and awaits its completion. \param m Member function pointer. \param o Target class object instance. \param args Arguments to pass into the member function. \return An awaitable object yielding the member function's return type. */
 template <typename M, typename O, typename... Args>
 auto coInvoke(M m, O *o, Args &&...args) {
   return CoroutineInvokeAwait<std::invoke_result_t<M, O, Args &...>(Args & ...)>(nullptr, m, o, std::forward<Args>(args)...);
 }
-/*! \brief Offloads a class member function to a specific Thread loop and awaits its completion.
-\param t Target AbstractThread pointer. \param m Member function pointer. \param o Target class object instance. \param args Arguments to pass into the member function. \return An awaitable object yielding the member function's return type. */
+/*! \brief Offloads a class member function to a specific Thread loop and awaits its completion. \param t Target AbstractThread pointer. \param m Member function pointer. \param o Target class object instance. \param args Arguments to pass into the member function. \return An awaitable object yielding the member function's return type. */
 template <typename T = AbstractThread, typename M, typename O, typename... Args>
 auto coInvoke(T *t, M m, O *o, Args &&...args) {
   return CoroutineInvokeAwait<std::invoke_result_t<M, O, Args &...>(Args & ...)>(t, m, o, std::forward<Args>(args)...);
 }
+/*! @} */
 }  // namespace AsyncFw

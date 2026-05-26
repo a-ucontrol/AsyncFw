@@ -7,6 +7,8 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #pragma once
 
+/*! \file DataArrayTcpClient.h \brief The DataArrayTcpClient class. */
+
 #include "DataArrayAbstractTcp.h"
 
 namespace AsyncFw {

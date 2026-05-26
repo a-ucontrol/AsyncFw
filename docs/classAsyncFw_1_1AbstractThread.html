@@ -311,7 +311,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>Thread</b></td></tr>
 <p>Constructs a thread. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">name</td><td>thread name </td></tr>
+    <tr><td class="paramname">name</td><td><a class="el" href="classAsyncFw_1_1Thread.html" title="AsyncFw::Thread thread with sockets.">Thread</a> name. </td></tr>
   </table>
   </dd>
 </dl>
@@ -361,12 +361,12 @@ template&lt;typename F&gt; </div>
 <p>Runs a function in a managed thread. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">function</td><td>runs function</td></tr>
-    <tr><td class="paramname">sync</td><td>blocking wait if true </td></tr>
+    <tr><td class="paramname">function</td><td>Runs function.</td></tr>
+    <tr><td class="paramname">sync</td><td>Blocking wait if true. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>True if the function is added to the queue </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the function is added to the queue. </dd></dl>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="Log_2main_8cpp-example.html#a4">Log/main.cpp</a>, <a class="el" href="ThreadInvoke_2main_8cpp-example.html#a5">ThreadInvoke/main.cpp</a>, and <a class="el" href="ThreadPool_2main_8cpp-example.html#a5">ThreadPool/main.cpp</a>.</dd>
 </dl>
 <div class="dynheader">
@@ -419,13 +419,13 @@ template&lt;typename F&gt; </div>
 <p>Append poll task. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">fd</td><td>file descriptor</td></tr>
-    <tr><td class="paramname">events</td><td>watch events</td></tr>
-    <tr><td class="paramname">function</td><td>task function </td></tr>
+    <tr><td class="paramname">fd</td><td><a class="el" href="classAsyncFw_1_1File.html" title="The File class.">File</a> descriptor.</td></tr>
+    <tr><td class="paramname">events</td><td>Watch events.</td></tr>
+    <tr><td class="paramname">function</td><td><a class="el" href="classAsyncFw_1_1Task.html" title="The Task class.">Task</a> function. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>True if the task added </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the task added. </dd></dl>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -466,12 +466,12 @@ template&lt;typename F&gt; </div>
 <p>Append timer task. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">ms</td><td>timeout in milliseconds</td></tr>
-    <tr><td class="paramname">function</td><td>task function </td></tr>
+    <tr><td class="paramname">ms</td><td>Timeout in milliseconds.</td></tr>
+    <tr><td class="paramname">function</td><td><a class="el" href="classAsyncFw_1_1Task.html" title="The Task class.">Task</a> function. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>timer id if the task added or value less than zero </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>timer id if the task added or value less than zero. </dd></dl>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -506,11 +506,11 @@ Here is the call graph for this function:</div>
 <p>Assigns a pointer to the list of all threads. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">list</td><td>pointer to the list of threads </td></tr>
+    <tr><td class="paramname">list</td><td>Pointer to the list of threads. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd><a class="el" href="#a4e97803ef650d36ba80ef1471c4b643c" title="The LockGuard type.">AbstractThread::LockGuard</a> </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="#a4e97803ef650d36ba80ef1471c4b643c" title="The LockGuard type.">AbstractThread::LockGuard</a>. </dd></dl>
 
 </div>
 </div>
@@ -608,11 +608,11 @@ Here is the caller graph for this function:</div>
 <p>Runs a task in a managed thread. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">task</td><td>poiner to <a class="el" href="classAsyncFw_1_1AbstractTask.html" title="The AbstractTask class.">AbstractTask</a> </td></tr>
+    <tr><td class="paramname">task</td><td>Poiner to <a class="el" href="classAsyncFw_1_1AbstractTask.html" title="The AbstractTask class.">AbstractTask</a>. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>True if the task is added to the queue </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the task is added to the queue. </dd></dl>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -652,11 +652,11 @@ Here is the caller graph for this function:</div>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">ms</td><td>timeout in milliseconds</td></tr>
-    <tr><td class="paramname">task</td><td>pointer to <a class="el" href="classAsyncFw_1_1AbstractTask.html" title="The AbstractTask class.">AbstractTask</a> </td></tr>
+    <tr><td class="paramname">task</td><td>Pointer to <a class="el" href="classAsyncFw_1_1AbstractTask.html" title="The AbstractTask class.">AbstractTask</a>. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>timer id if timer added or value less than zero </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>timer Id if timer added or value less than zero. </dd></dl>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -696,11 +696,11 @@ Here is the caller graph for this function:</div>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">id</td><td>timer id</td></tr>
-    <tr><td class="paramname">ms</td><td>timeout in milliseconds </td></tr>
+    <tr><td class="paramname">ms</td><td>Timeout in milliseconds. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>True if the timer modified </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the timer modified. </dd></dl>
 
 </div>
 </div>
@@ -730,7 +730,7 @@ Here is the caller graph for this function:</div>
 <p>Remove timer. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">id</td><td>timer id </td></tr>
+    <tr><td class="paramname">id</td><td><a class="el" href="classAsyncFw_1_1Timer.html" title="The Timer class.">Timer</a> id. </td></tr>
   </table>
   </dd>
 </dl>
@@ -772,13 +772,13 @@ Here is the caller graph for this function:</div>
 <p>Append poll descriptor. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">fd</td><td>file descriptor</td></tr>
-    <tr><td class="paramname">events</td><td>watch events</td></tr>
-    <tr><td class="paramname">task</td><td>pointer to <a class="el" href="#ad3dad9f7e0852a4c24c2bae48c701802" title="The AbstractPollTask type.">AbstractPollTask</a> </td></tr>
+    <tr><td class="paramname">fd</td><td><a class="el" href="classAsyncFw_1_1File.html" title="The File class.">File</a> descriptor.</td></tr>
+    <tr><td class="paramname">events</td><td>Watch events.</td></tr>
+    <tr><td class="paramname">task</td><td>Pointer to <a class="el" href="#ad3dad9f7e0852a4c24c2bae48c701802" title="The AbstractPollTask type.">AbstractPollTask</a>. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>True if the poll descriptor added </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the poll descriptor added. </dd></dl>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -817,12 +817,12 @@ Here is the caller graph for this function:</div>
 <p>Modify poll descriptor. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">fd</td><td>file descriptor</td></tr>
-    <tr><td class="paramname">events</td><td>watch events </td></tr>
+    <tr><td class="paramname">fd</td><td><a class="el" href="classAsyncFw_1_1File.html" title="The File class.">File</a> descriptor.</td></tr>
+    <tr><td class="paramname">events</td><td>Watch events. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>True if the poll descriptor modified </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the poll descriptor modified. </dd></dl>
 
 </div>
 </div>
@@ -852,7 +852,7 @@ Here is the caller graph for this function:</div>
 <p>Remove poll descriptor. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">fd</td><td>file descriptor </td></tr>
+    <tr><td class="paramname">fd</td><td><a class="el" href="classAsyncFw_1_1File.html" title="The File class.">File</a> descriptor. </td></tr>
   </table>
   </dd>
 </dl>

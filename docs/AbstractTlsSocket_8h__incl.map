@@ -1,0 +1,13 @@
+<map id="core/AbstractTlsSocket.h" name="core/AbstractTlsSocket.h">
+<area shape="rect" id="Node000001" title="The AbstractTlsSocket class." alt="" coords="32,5,202,32"/>
+<area shape="rect" id="Node000002" href="$AbstractSocket_8h.html" title="The AbstractSocket class." alt="" coords="56,80,178,107"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="120,33,120,64,114,64,114,33"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,155,66,181"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="104,109,62,146,59,142,101,105"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="90,155,144,181"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="120,107,120,139,114,139,114,107"/>
+<area shape="rect" id="Node000005" href="$AnyData_8h.html" title="The AnyData class." alt="" coords="167,155,250,181"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="135,105,183,143,180,147,131,109"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="188,229,230,256"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="212,182,212,214,206,214,206,182"/>
+</map>

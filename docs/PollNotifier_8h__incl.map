@@ -1,0 +1,15 @@
+<map id="main/PollNotifier.h" name="main/PollNotifier.h">
+<area shape="rect" id="Node000001" title="The PollNotifier class." alt="" coords="92,5,219,32"/>
+<area shape="rect" id="Node000002" href="$FunctionConnector_8h.html" title="The AbstractFunctionConnector, FunctionConnector, FunctionConnectorProtected and FunctionConnectionGu..." alt="" coords="64,80,246,107"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="158,33,158,64,153,64,153,33"/>
+<area shape="rect" id="Node000003" href="$AbstractThread_8h.html" title="The AbstractThread class." alt="" coords="95,155,216,181"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="158,107,158,139,153,139,153,107"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="5,229,63,256"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="136,184,70,223,67,219,133,180"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="87,229,144,256"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="151,183,132,217,127,214,146,181"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="168,229,225,256"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="165,181,184,215,180,217,160,183"/>
+<area shape="rect" id="Node000007" href="$invocable_8hpp_source.html" title=" " alt="" coords="250,229,351,256"/>
+<area shape="poly" id="edge6_Node000003_Node000007" title=" " alt="" coords="182,179,263,220,261,224,179,184"/>
+</map>

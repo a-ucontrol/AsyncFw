@@ -7,6 +7,8 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #pragma once
 
+/*! \file MainThread.h \brief The MainThread class. */
+
 #include "../core/Thread.h"
 #include "Instance.h"
 

@@ -1,0 +1,20 @@
+<map id="main/FileSystemWatcher.h" name="main/FileSystemWatcher.h">
+<area shape="rect" id="Node000001" title="The FileSystemWatcher class." alt="" coords="5,5,183,32"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="18,155,71,181"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="70,35,43,54,22,81,18,96,19,111,31,141,26,143,14,112,13,95,17,79,39,50,67,30"/>
+<area shape="rect" id="Node000003" href="$FunctionConnector_8h.html" title="The AbstractFunctionConnector, FunctionConnector, FunctionConnectorProtected and FunctionConnectionGu..." alt="" coords="182,80,364,107"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="126,30,228,71,226,76,124,35"/>
+<area shape="rect" id="Node000009" href="$Instance_8h.html" title="The AbstractInstance and Instance classes." alt="" coords="31,80,157,107"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="97,33,97,64,91,64,91,33"/>
+<area shape="rect" id="Node000004" href="$AbstractThread_8h.html" title="The AbstractThread class." alt="" coords="212,155,333,181"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="275,107,275,139,270,139,270,107"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="123,229,180,256"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="253,184,187,223,184,219,250,180"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="204,229,261,256"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="268,183,249,217,245,214,263,181"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="285,229,343,256"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="282,181,302,215,297,217,278,183"/>
+<area shape="rect" id="Node000008" href="$invocable_8hpp_source.html" title=" " alt="" coords="367,229,469,256"/>
+<area shape="poly" id="edge7_Node000004_Node000008" title=" " alt="" coords="299,179,380,220,378,224,297,184"/>
+<area shape="poly" id="edge9_Node000009_Node000002" title=" " alt="" coords="88,109,64,143,60,140,83,106"/>
+</map>
