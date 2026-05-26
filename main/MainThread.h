@@ -28,7 +28,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 namespace AsyncFw {
 /*! \class MainThread MainThread.h <AsyncFw/MainThread>. \brief A static control interface managing the application's primary execution thread (Main Thread).
-\brief MainThread initializes the master Event Loop on the application's boot thread (typically `main()`). It handles core process-wide shutdown interceptors and manages the primary event loop execution frame.
+\brief MainThread initializes the master Event Loop on the application's boot thread (typically main()). It handles core process-wide shutdown interceptors and manages the primary event loop execution frame.
 \brief Examlpe: \snippet snippet.dox MainThread */
 
 class MainThread : private Thread
@@ -43,7 +43,7 @@ public:
     if (mt_.exitTask && !mt_.invoke([_p = mt_.exitTask]() { delete _p; })) delete mt_.exitTask;
     mt_.exitTask = new Invocable<void()>::Function(std::forward<F>(function));
   }
-  /*! \brief Starts the master application event loop on the current thread. This call is blocking. It stalls the `main()` function execution and continuously dispatches incoming tasks, socket I/O interrupts, and timers until `exit()` or `quit()` is requested. \return The application exit status code (typically 0 on clean exit). */
+  /*! \brief Starts the master application event loop on the current thread. This call is blocking. It stalls the main() function execution and continuously dispatches incoming tasks, socket I/O interrupts, and timers until exit() or quit() is requested. \return The application exit status code (typically 0 on clean exit). */
   static int exec() {
 #ifndef USE_QAPPLICATION
     if (mt_.running()) return -1;
@@ -63,12 +63,12 @@ public:
     (*mt_.exitTask)();
 #endif
   }
-  /*! \brief Signals the master event loop to terminate gracefully with a specific exit code. \param code The exit code returned by `exec()` to the operating system shell. */
+  /*! \brief Signals the master event loop to terminate gracefully with a specific exit code. \param code The exit code returned by exec() to the operating system shell. */
   static void exit(int code) {
     mt_.code_ = code;
     exit();
   }
-  /*! \brief Alias wrapper for `exit(0)`. Initiates an immediate graceful shutdown of the primary event loop. */
+  /*! \brief Alias wrapper for exit(0). Initiates an immediate graceful shutdown of the primary event loop. */
   static void quit() {
 #ifndef USE_QAPPLICATION
     mt_.Thread::quit();

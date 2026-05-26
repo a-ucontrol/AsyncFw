@@ -17,7 +17,7 @@ class DataArray;
 class LogStream;
 
 /*! \class AbstractSocket AbstractSocket.h <AsyncFw/AbstractSocket> \brief Abstract base class providing core network socket functionality and OS descriptor abstraction.
-\brief AbstractSocket wraps native operating system network handles into a clean C++ interface. It handles non-blocking socket initialization, address binding, option configuration, and integrates directly into the `AbstractThread` I/O multiplexing event loop (`epoll` / `poll`).
+\brief AbstractSocket wraps native operating system network handles into a clean C++ interface. It handles non-blocking socket initialization, address binding, option configuration, and integrates directly into the AbstractThread I/O multiplexing event loop (epoll / poll).
 \brief Example: \snippet Socket/main.cpp snippet */
 class AbstractSocket : public AnyData {
   friend Thread;

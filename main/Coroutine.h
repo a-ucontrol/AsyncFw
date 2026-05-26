@@ -49,7 +49,7 @@ private:
 
 using CoroutineHandle = std::coroutine_handle<CoroutineTask::promise_type>;
 
-/*! \struct CoroutineAwait Coroutine.h <AsyncFw/Coroutine> \brief Generic awaiter for wrapping asynchronous triggers or callback-based APIs into co_await. \tparam R The return type yielded by co_await  by `co_await` */
+/*! \struct CoroutineAwait Coroutine.h <AsyncFw/Coroutine> \brief Generic awaiter for wrapping asynchronous triggers or callback-based APIs into co_await. \tparam R The return type yielded by co_await */
 template <typename R>
 struct CoroutineAwait {
   template <typename T>
