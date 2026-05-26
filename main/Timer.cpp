@@ -33,6 +33,17 @@ void Timer::start(int ms, bool single) {
 
 void Timer::stop() { thread_->modifyTimer(timerId, 0); }
 
-CoroutineAwait<void> AsyncFw::coTimer(int timeout) {
+CoroutineAwait<void> Timer::coTimeout(int ms) {
+  FunctionConnectionGuard *_g = new FunctionConnectionGuard;
+  return CoroutineAwait<void>([this, ms, _g](CoroutineHandle h) {
+    start(ms, true);
+    *_g = timeout.connect([h, _g]() {
+      delete _g;
+      h.resume();
+    }, AbstractFunctionConnector::Connection::Queued);
+  });
+}
+
+CoroutineAwait<void> AsyncFw::coTimeout(int timeout) {
   return CoroutineAwait<void>([timeout](CoroutineHandle h) { Timer::single(timeout, [h]() { h.promise().resume_queued(); }); });
 }

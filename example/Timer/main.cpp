@@ -11,19 +11,25 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include <AsyncFw/Timer>
 #include <AsyncFw/LogStream>
 
+AsyncFw::CoroutineTask task(AsyncFw::Timer *timer) {
+  lsDebug() << "coro task" << std::chrono::system_clock::now();
+  co_await timer->coTimeout(10);
+  lsDebug() << "coro task" << std::chrono::system_clock::now();
+  co_await timer->coTimeout(10);
+  lsDebug() << "coro task" << std::chrono::system_clock::now();
+  AsyncFw::MainThread::exit(0);
+}
+
 int main(int argc, char *argv[]) {
-  int cnt = 0;
   AsyncFw::Timer timer1;
   timer1.start(10);
   AsyncFw::Timer timer2;
-  timer2.start(20);
 
-  timer1.timeout.connect([&cnt]() {
-    lsDebug() << std::chrono::system_clock::now() << " timer1 timeout";
-    if (++cnt == 10) AsyncFw::MainThread::exit(0);
-  });
+  timer1.timeout.connect([]() { lsDebug() << std::chrono::system_clock::now() << " timer1 timeout"; });
 
   timer2.timeout.connect([]() { lsDebug() << std::chrono::system_clock::now() << " timer2 timeout"; });
+
+  task(&timer2);
 
   lsNotice() << "Start Applicaiton" << std::endl;
   int ret = AsyncFw::MainThread::exec();
