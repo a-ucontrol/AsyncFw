@@ -10,7 +10,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include <AsyncFw/AbstractTlsSocket>
 #include <AsyncFw/TlsContext>
 #include <AsyncFw/LogStream>
-#include <AsyncFw/AddressInfo>
+#include <AsyncFw/AddressResolver>
 #include <AsyncFw/MainThread>
 
 class TcpSocket : public AsyncFw::AbstractTlsSocket {
@@ -64,8 +64,8 @@ int main(int argc, char *argv[]) {
   socket.setContext(context);
 
   auto coroTask {[&socket]() -> AsyncFw::CoroutineTask {
-    AsyncFw::AddressInfo addressInfo;
-    AsyncFw::AddressInfo::Result list = co_await addressInfo.coResolve("github.com");
+    AsyncFw::AddressResolver addressInfo;
+    AsyncFw::AddressResolver::Result list = co_await addressInfo.coResolve("github.com");
     if (list.empty()) {
       logError("Resolve error");
       AsyncFw::MainThread::exit(-1);

@@ -10,7 +10,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #include "core/AbstractThread.h"
 #include "core/LogStream.h"
-#include "AddressInfo.h"
+#include "AddressResolver.h"
 
 #ifdef _WIN32
 static struct _ares_library {
@@ -21,8 +21,8 @@ static struct _ares_library {
 
 using namespace AsyncFw;
 
-struct AddressInfo::Private {
-  Private(AddressInfo *_ai) : ai(_ai) {
+struct AddressResolver::Private {
+  Private(AddressResolver *_ai) : ai(_ai) {
     thread = AbstractThread::current();
     memset(&options, 0, sizeof(options));
     options.sock_state_cb_data = this;
@@ -62,17 +62,17 @@ struct AddressInfo::Private {
   ares_channel channel;
   ares_options options;
   AbstractThread *thread;
-  AddressInfo *ai;
+  AddressResolver *ai;
   int tid = -1;
 };
 
-AddressInfo::AddressInfo() : private_(*new Private(this)) { lsTrace(); }
+AddressResolver::AddressResolver() : private_(*new Private(this)) { lsTrace(); }
 
-AddressInfo::~AddressInfo() {
+AddressResolver::~AddressResolver() {
   delete &private_;
   lsTrace();
 }
-void AddressInfo::resolve(const std::string &name, Family family, int timeout) {
+void AddressResolver::resolve(const std::string &name, Family family, int timeout) {
   if (private_.tid >= 0) {
     lsError() << "timer task already exists";
     return;
@@ -116,7 +116,7 @@ void AddressInfo::resolve(const std::string &name, Family family, int timeout) {
   }, &private_);
 }
 
-CoroutineAwait<AddressInfo::Result> AddressInfo::coResolve(const std::string &name, Family family, int timeout) {
+CoroutineAwait<AddressResolver::Result> AddressResolver::coResolve(const std::string &name, Family family, int timeout) {
   return CoroutineAwait<Result>([this, name, family, timeout](AsyncFw::CoroutineHandle h) {
     completed.connect([h](int, const std::vector<std::string> &list) {
       h.promise().setData(list);

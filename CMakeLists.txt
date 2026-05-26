@@ -122,7 +122,7 @@ set(AsyncFw_MAIN_HEADERS
   "${CMAKE_CURRENT_LIST_DIR}/main/Version.h"
   "${CMAKE_CURRENT_LIST_DIR}/main/log-types.hpp"
 
-  "${CMAKE_CURRENT_LIST_DIR}/main/AddressInfo.h"
+  "${CMAKE_CURRENT_LIST_DIR}/main/AddressResolver.h"
   "${CMAKE_CURRENT_LIST_DIR}/main/SystemProcess.h"
   "${CMAKE_CURRENT_LIST_DIR}/main/FileSystemWatcher.h"
 )
@@ -154,13 +154,13 @@ set(AsyncFw_MAIN_SOURCES
 )
 
 set(AsyncFw_LINUX_SOURCES
-  "main/AddressInfo.cpp" #need cares for AMD64
+  "main/AddressResolver.cpp" #need cares for AMD64
   "linux/FileSystemWatcher.cpp"
   "linux/SystemProcess.cpp"
 )
 
 #set(AsyncFw_WINDOWS_SOURCES
-#  "main/AddressInfo.cpp" #need cares for AMD64 #!!!
+#  "main/AddressResolver.cpp" #need cares for AMD64 #!!!
 #  "windows/FileSystemWatcher.cpp"
 #  "windows/SystemProcess.cpp"
 #)
@@ -186,7 +186,7 @@ set(PROJECT_SOURCES ${AsyncFw_CORE_SOURCES} ${AsyncFw_MAIN_SOURCES} ${AsyncFw_IN
 
 if(${CMAKE_SYSTEM_PROCESSOR} STREQUAL "AMD64")
   if(AMD64_USE_CARES)
-    set(PROJECT_SOURCES ${PROJECT_SOURCES} "main/AddressInfo.cpp")
+    set(PROJECT_SOURCES ${PROJECT_SOURCES} "main/AddressResolver.cpp")
   endif()
   if(AMD64_USE_QAPPLICATION)
     set(PROJECT_SOURCES ${PROJECT_SOURCES} "windows/FileSystemWatcher.cpp" "windows/SystemProcess.cpp")

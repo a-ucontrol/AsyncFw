@@ -9,7 +9,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include <AsyncFw/MainThread>
 #include <AsyncFw/AbstractTlsSocket>
 #include <AsyncFw/TlsContext>
-#include <AsyncFw/AddressInfo>
+#include <AsyncFw/AddressResolver>
 #include <AsyncFw/File>
 #include <AsyncFw/HttpSocket>
 #include <AsyncFw/LogStream>
@@ -33,7 +33,7 @@ int main(int argc, char *argv[]) {
 
   socket->setContext(context);
 
-  AsyncFw::AddressInfo addressInfo;
+  AsyncFw::AddressResolver addressInfo;
   addressInfo.resolve(SERVER_NAME);
   addressInfo.completed.connect([&socket](int r, const std::vector<std::string> &list) {
     if (r == 0 && !list.empty()) {
