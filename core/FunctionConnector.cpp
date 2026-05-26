@@ -29,7 +29,7 @@ AbstractFunctionConnector::~AbstractFunctionConnector() {
   trace() << this << list.size();
   for (Connection *c : list) {
     c->connector_ = nullptr;
-    delete c;
+    if (c->thread_) delete c;
   }
 }
 
