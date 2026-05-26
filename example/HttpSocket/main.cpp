@@ -34,7 +34,6 @@ int main(int argc, char *argv[]) {
   socket->setContext(context);
 
   AsyncFw::AddressInfo addressInfo;
-  addressInfo.setTimeout(30000);
   addressInfo.resolve(SERVER_NAME);
   addressInfo.completed.connect([&socket](int r, const std::vector<std::string> &list) {
     if (r == 0 && !list.empty()) {

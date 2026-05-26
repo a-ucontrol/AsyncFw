@@ -63,7 +63,6 @@ struct AddressInfo::Private {
   ares_options options;
   AbstractThread *thread;
   AddressInfo *ai;
-  int timeout = 10000;
   int tid = -1;
 };
 
@@ -73,16 +72,16 @@ AddressInfo::~AddressInfo() {
   delete &private_;
   lsTrace();
 }
-void AddressInfo::resolve(const std::string &name, Family f) {
+void AddressInfo::resolve(const std::string &name, Family family, int timeout) {
   if (private_.tid >= 0) {
     lsError() << "timer task already exists";
     return;
   }
-  private_.tid = private_.thread->appendTimerTask(private_.timeout, [this]() { ares_cancel(private_.channel); });
+  private_.tid = private_.thread->appendTimerTask(timeout, [this]() { ares_cancel(private_.channel); });
 
   struct ares_addrinfo_hints hints;
   memset(&hints, 0, sizeof(hints));
-  hints.ai_family = f;
+  hints.ai_family = family;
   hints.ai_flags = ARES_AI_CANONNAME;
   //hints.ai_socktype = SOCK_STREAM;
 
@@ -105,8 +104,7 @@ void AddressInfo::resolve(const std::string &name, Family f) {
           const struct sockaddr_in6 *in_addr = (const struct sockaddr_in6 *)((void *)node->ai_addr);
           ptr = &in_addr->sin6_addr;
           addr_buf.resize(INET6_ADDRSTRLEN);
-        } else
-          continue;
+        } else continue;
 
         ares_inet_ntop(node->ai_family, ptr, addr_buf.data(), addr_buf.size());
         addr_buf.resize(strlen(addr_buf.data()));
@@ -118,14 +116,12 @@ void AddressInfo::resolve(const std::string &name, Family f) {
   }, &private_);
 }
 
-void AddressInfo::setTimeout(int _timeout) { private_.timeout = _timeout; }
-
-CoroutineAwait<AddressInfo::Result> AddressInfo::coResolve(const std::string &name, Family f) {
-  return CoroutineAwait<Result>([this, name, f](AsyncFw::CoroutineHandle h) {
+CoroutineAwait<AddressInfo::Result> AddressInfo::coResolve(const std::string &name, Family family, int timeout) {
+  return CoroutineAwait<Result>([this, name, family, timeout](AsyncFw::CoroutineHandle h) {
     completed.connect([h](int, const std::vector<std::string> &list) {
       h.promise().setData(list);
       h.resume();
     }, AsyncFw::AbstractFunctionConnector::Connection::Queued);
-    resolve(name, f);
+    resolve(name, family, timeout);
   });
 }
