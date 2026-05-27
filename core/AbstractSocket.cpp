@@ -72,8 +72,9 @@ AbstractSocket::AbstractSocket() : private_(*new Private) {
   private_.la_.ss_family = AF_INET;
   private_.pa_.ss_family = AF_INET;
   thread_ = Thread::current();
-  thread_->appendSocket(this);
-  trace();
+  std::vector<AbstractSocket *>::iterator it = std::lower_bound(thread_->sockets_.begin(), thread_->sockets_.end(), this, Thread::Compare());
+  thread_->sockets_.insert(it, this);
+  trace() << LogStream::Color::Green << fd_ << thread_->name();
 }
 
 AbstractSocket::AbstractSocket(int _family, int _type, int _protocol) : AbstractSocket() {

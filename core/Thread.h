@@ -40,7 +40,7 @@ protected:
   void startedEvent() override;
   /*! \brief Runs finished() */
   void finishedEvent() override;
-  void appendSocket(AbstractSocket *);
+  /*! \brief Remove socket from thread */
   void removeSocket(AbstractSocket *);
 
   std::vector<AbstractSocket *> sockets_;

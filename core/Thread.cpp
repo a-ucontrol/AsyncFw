@@ -65,13 +65,6 @@ void Thread::finishedEvent() {
   finished();
 }
 
-void Thread::appendSocket(AbstractSocket *_socket) {
-  checkCurrentThread();
-  std::vector<AbstractSocket *>::iterator it = std::lower_bound(sockets_.begin(), sockets_.end(), _socket, Compare());
-  sockets_.insert(it, _socket);
-  trace() << LogStream::Color::Green << _socket->fd_;
-}
-
 void Thread::removeSocket(AbstractSocket *_socket) {
   checkCurrentThread();
   std::vector<AbstractSocket *>::iterator it = std::lower_bound(sockets_.begin(), sockets_.end(), _socket, Compare());
