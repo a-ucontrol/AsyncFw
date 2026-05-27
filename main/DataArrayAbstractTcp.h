@@ -57,7 +57,7 @@ protected:
 
   protected:
     void socketInit(DataArraySocket *);
-    void removeSocket(DataArraySocket *);
+    void destroySocket(DataArraySocket *);
     AbstractThreadPool *pool;
   };
   Thread *findMinimalSocketsThread();

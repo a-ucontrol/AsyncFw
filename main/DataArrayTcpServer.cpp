@@ -69,7 +69,7 @@ void DataArrayTcpServer::Thread::createSocket(int socketDescriptor, bool encrypt
 
   tcpSocket->stateChanged.connect([tcpSocket, thread = this, server = server()](AbstractSocket::State state) {
     if (state != AbstractSocket::State::Unconnected) return;
-    thread->removeSocket(tcpSocket);
+    thread->destroySocket(tcpSocket);
   });
 
   if (encrypt) {

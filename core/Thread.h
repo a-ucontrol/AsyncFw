@@ -40,6 +40,8 @@ protected:
   void startedEvent() override;
   /*! \brief Runs finished() */
   void finishedEvent() override;
+  void appendSocket(AbstractSocket *);
+  void removeSocket(AbstractSocket *);
 
   std::vector<AbstractSocket *> sockets_;
 
@@ -47,7 +49,5 @@ private:
   struct Compare {
     bool operator()(const AbstractSocket *, const AbstractSocket *) const;
   };
-  void appendSocket(AbstractSocket *);
-  void removeSocket(AbstractSocket *);
 };
 }  // namespace AsyncFw

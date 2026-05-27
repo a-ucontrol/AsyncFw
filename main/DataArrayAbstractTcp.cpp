@@ -5,6 +5,7 @@ This file is part of the AsyncFw project. Licensed under the MIT License.
 See {Link: LICENSE file https://mit-license.org} in the project root for full license information.
 */
 
+#include <openssl/crypto.h>
 #include <algorithm>
 #include "core/LogStream.h"
 #include "DataArraySocket.h"
@@ -84,14 +85,14 @@ void DataArrayAbstractTcp::Thread::socketInit(DataArraySocket *socket) {
   lsTrace() << LogStream::Color::Green << this << LogStream::Color::Magenta << sockets_.size();
 }
 
-void DataArrayAbstractTcp::Thread::removeSocket(DataArraySocket *socket) {
+void DataArrayAbstractTcp::Thread::destroySocket(DataArraySocket *socket) {
   checkCurrentThread();
   socket->removeTimer();
   socket->close();
-  pool->thread()->invoke([socket, this]() {
-    socket->destroy();
-    invoke([this]() {
-      if (sockets_.empty()) pool->thread()->invoke([this]() { destroy(); });
-    });
-  });
+  removeSocket(socket);
+  if (sockets_.empty()) {
+    OPENSSL_thread_stop();
+    pool->thread()->invoke([this]() { destroy(); });
+  }
+  if (!pool->thread()->invoke([socket]() { socket->destroy(); })) socket->destroy();
 }

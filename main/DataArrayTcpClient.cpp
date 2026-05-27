@@ -53,9 +53,9 @@ DataArraySocket *DataArrayTcpClient::createSocket(Thread *thread) {
   return socket;
 }
 
-void DataArrayTcpClient::removeSocket(DataArraySocket *socket) {
+void DataArrayTcpClient::destroySocket(DataArraySocket *socket) {
   Thread *thread = static_cast<Thread *>(socket->thread());
-  thread->invoke([thread, socket]() { thread->removeSocket(socket); }, true);
+  thread->invoke([thread, socket]() { thread->destroySocket(socket); }, true);
 }
 
 int DataArrayTcpClient::exchange(const DataArraySocket *socket, const DataArray &wda, const DataArray *rda, uint32_t pi, int timeout) {
