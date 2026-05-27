@@ -94,5 +94,5 @@ void DataArrayAbstractTcp::Thread::destroySocket(DataArraySocket *socket) {
     OPENSSL_thread_stop();
     pool->thread()->invoke([this]() { destroy(); });
   }
-  if (!pool->thread()->invoke([socket]() { socket->destroy(); })) socket->destroy();
+  if (!pool->thread()->invoke([socket]() { socket->destroy(); })) invoke([socket]() { socket->destroy(); });
 }
