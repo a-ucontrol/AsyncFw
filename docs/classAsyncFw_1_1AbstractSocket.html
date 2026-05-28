@@ -131,17 +131,18 @@ Collaboration diagram for AsyncFw::AbstractSocket:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a6fc3dae51b6b38d67f1c3861dcbb23bd" id="r_a6fc3dae51b6b38d67f1c3861dcbb23bd"><td class="memItemLeft" align="right" valign="top"><a id="a6fc3dae51b6b38d67f1c3861dcbb23bd" name="a6fc3dae51b6b38d67f1c3861dcbb23bd"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>State</b> : uint8_t { <br />
-&#160;&#160;<b>Unconnected</b>
-, <b>Listening</b>
-, <b>Connecting</b>
-, <b>Connected</b>
+<tr class="memitem:a6fc3dae51b6b38d67f1c3861dcbb23bd" id="r_a6fc3dae51b6b38d67f1c3861dcbb23bd"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6fc3dae51b6b38d67f1c3861dcbb23bd">State</a> : uint8_t { <br />
+&#160;&#160;<a class="el" href="#a6fc3dae51b6b38d67f1c3861dcbb23bda65e37b7a6b547c0da9a63972db5dfd49">Unconnected</a>
+, <a class="el" href="#a6fc3dae51b6b38d67f1c3861dcbb23bda5b13d3f73cf426c72bbd8598ede9442d">Listening</a>
+, <a class="el" href="#a6fc3dae51b6b38d67f1c3861dcbb23bdabba7ae24638871f8e94de4b4af31c37f">Connecting</a>
+, <a class="el" href="#a6fc3dae51b6b38d67f1c3861dcbb23bdaccd0feb91061e2ddcac7f6b90bf9efa5">Connected</a>
 , <br />
-&#160;&#160;<b>Active</b>
-, <b>Closing</b>
-, <b>Destroy</b>
+&#160;&#160;<a class="el" href="#a6fc3dae51b6b38d67f1c3861dcbb23bdabc8b14ad3e5c48f1e2be50e1f70fc237">Active</a>
+, <a class="el" href="#a6fc3dae51b6b38d67f1c3861dcbb23bda516ec5c0c571fe5c0d60881eddc2c22e">Closing</a>
+, <a class="el" href="#a6fc3dae51b6b38d67f1c3861dcbb23bda1bc468bc996ac9ce17018c3320ac5516">Destroy</a>
 <br />
  }</td></tr>
+<tr class="memdesc:a6fc3dae51b6b38d67f1c3861dcbb23bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execution and lifecycle states of the socket.  <a href="#a6fc3dae51b6b38d67f1c3861dcbb23bd">More...</a><br /></td></tr>
 <tr class="separator:a6fc3dae51b6b38d67f1c3861dcbb23bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a940a10b5f063e970cb7e46a61cab2415" id="r_a940a10b5f063e970cb7e46a61cab2415"><td class="memItemLeft" align="right" valign="top"><a id="a940a10b5f063e970cb7e46a61cab2415" name="a940a10b5f063e970cb7e46a61cab2415"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>Error</b> : uint8_t { <br />
 &#160;&#160;<b>None</b>
@@ -160,18 +161,21 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a0ffc2cb5dd293722a9336a528357f9c5" id="r_a0ffc2cb5dd293722a9336a528357f9c5"><td class="memItemLeft" align="right" valign="top"><a id="a0ffc2cb5dd293722a9336a528357f9c5" name="a0ffc2cb5dd293722a9336a528357f9c5"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>setDescriptor</b> (int)</td></tr>
 <tr class="separator:a0ffc2cb5dd293722a9336a528357f9c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac4b8765d203b4d4bc77d9d6e00d5dd85" id="r_ac4b8765d203b4d4bc77d9d6e00d5dd85"><td class="memItemLeft" align="right" valign="top"><a id="ac4b8765d203b4d4bc77d9d6e00d5dd85" name="ac4b8765d203b4d4bc77d9d6e00d5dd85"></a>
-virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>connect</b> (const std::string &amp;, uint16_t)</td></tr>
+<tr class="memitem:ac4b8765d203b4d4bc77d9d6e00d5dd85" id="r_ac4b8765d203b4d4bc77d9d6e00d5dd85"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac4b8765d203b4d4bc77d9d6e00d5dd85">connect</a> (const std::string &amp;, uint16_t)</td></tr>
+<tr class="memdesc:ac4b8765d203b4d4bc77d9d6e00d5dd85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initiates an asynchronous connection to a remote host.  <br /></td></tr>
 <tr class="separator:ac4b8765d203b4d4bc77d9d6e00d5dd85"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a96c331ff22db7a34923c34f575075e6a" id="r_a96c331ff22db7a34923c34f575075e6a"><td class="memItemLeft" align="right" valign="top"><a id="a96c331ff22db7a34923c34f575075e6a" name="a96c331ff22db7a34923c34f575075e6a"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>disconnect</b> ()</td></tr>
 <tr class="separator:a96c331ff22db7a34923c34f575075e6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a77c0a9ea7c5061c406673bbe8b18d60d" id="r_a77c0a9ea7c5061c406673bbe8b18d60d"><td class="memItemLeft" align="right" valign="top"><a id="a77c0a9ea7c5061c406673bbe8b18d60d" name="a77c0a9ea7c5061c406673bbe8b18d60d"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>close</b> ()</td></tr>
+<tr class="memitem:a77c0a9ea7c5061c406673bbe8b18d60d" id="r_a77c0a9ea7c5061c406673bbe8b18d60d"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a77c0a9ea7c5061c406673bbe8b18d60d">close</a> ()</td></tr>
+<tr class="memdesc:a77c0a9ea7c5061c406673bbe8b18d60d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Closes the network connection and unsubscribes from thread polling events.  <br /></td></tr>
 <tr class="separator:a77c0a9ea7c5061c406673bbe8b18d60d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a73a200f0008dbf9f820bdb2b8a0054cf" id="r_a73a200f0008dbf9f820bdb2b8a0054cf"><td class="memItemLeft" align="right" valign="top"><a id="a73a200f0008dbf9f820bdb2b8a0054cf" name="a73a200f0008dbf9f820bdb2b8a0054cf"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>destroy</b> ()</td></tr>
+<tr class="memitem:a73a200f0008dbf9f820bdb2b8a0054cf" id="r_a73a200f0008dbf9f820bdb2b8a0054cf"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a73a200f0008dbf9f820bdb2b8a0054cf">destroy</a> ()</td></tr>
+<tr class="memdesc:a73a200f0008dbf9f820bdb2b8a0054cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Schedules the socket for deferred asynchronous destruction.  <br /></td></tr>
 <tr class="separator:a73a200f0008dbf9f820bdb2b8a0054cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa0f81593deeb67fe6a3031e9d57738d4" id="r_aa0f81593deeb67fe6a3031e9d57738d4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa0f81593deeb67fe6a3031e9d57738d4">removeFromThread</a> ()</td></tr>
+<tr class="memdesc:aa0f81593deeb67fe6a3031e9d57738d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Synchronously detaches the socket from its execution thread.  <br /></td></tr>
+<tr class="separator:aa0f81593deeb67fe6a3031e9d57738d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a426c3b10de20344079571d6708f096ca" id="r_a426c3b10de20344079571d6708f096ca"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a426c3b10de20344079571d6708f096ca">listen</a> (const std::string &amp;, uint16_t)</td></tr>
 <tr class="memdesc:a426c3b10de20344079571d6708f096ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Listen for incoming connections on address and port.  <br /></td></tr>
 <tr class="separator:a426c3b10de20344079571d6708f096ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -236,9 +240,17 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>empty</b> () const</t
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:ad82c1584c2664dd89cd94cc217974afe" id="r_ad82c1584c2664dd89cd94cc217974afe"><td class="memItemLeft" align="right" valign="top"><a id="ad82c1584c2664dd89cd94cc217974afe" name="ad82c1584c2664dd89cd94cc217974afe"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>AbstractSocket</b> (int, int, int)</td></tr>
+<tr class="memitem:a94ae146fe8047af98d2dcfd14d20e261" id="r_a94ae146fe8047af98d2dcfd14d20e261"><td class="memItemLeft" align="right" valign="top"><a id="a94ae146fe8047af98d2dcfd14d20e261" name="a94ae146fe8047af98d2dcfd14d20e261"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>AbstractSocket</b> ()</td></tr>
+<tr class="memdesc:a94ae146fe8047af98d2dcfd14d20e261"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an <a class="el" href="classAsyncFw_1_1AbstractSocket.html" title="Abstract base class providing core network socket functionality and OS descriptor abstraction.">AbstractSocket</a> with default patameters (AF_INET, SOCK_STREAM, IPPROTO_TCP) and binds it to the current thread context. <br /></td></tr>
+<tr class="separator:a94ae146fe8047af98d2dcfd14d20e261"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad82c1584c2664dd89cd94cc217974afe" id="r_ad82c1584c2664dd89cd94cc217974afe"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad82c1584c2664dd89cd94cc217974afe">AbstractSocket</a> (int, int, int)</td></tr>
+<tr class="memdesc:ad82c1584c2664dd89cd94cc217974afe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an <a class="el" href="classAsyncFw_1_1AbstractSocket.html" title="Abstract base class providing core network socket functionality and OS descriptor abstraction.">AbstractSocket</a> and binds it to the current thread context.  <br /></td></tr>
 <tr class="separator:ad82c1584c2664dd89cd94cc217974afe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5fb89c73a0f4bcca190d3a4cab15a97" id="r_ad5fb89c73a0f4bcca190d3a4cab15a97"><td class="memItemLeft" align="right" valign="top"><a id="ad5fb89c73a0f4bcca190d3a4cab15a97" name="ad5fb89c73a0f4bcca190d3a4cab15a97"></a>
+virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~AbstractSocket</b> ()</td></tr>
+<tr class="memdesc:ad5fb89c73a0f4bcca190d3a4cab15a97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual destructor. Automatically detaches socket from thread if still attached. <br /></td></tr>
+<tr class="separator:ad5fb89c73a0f4bcca190d3a4cab15a97"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aac7ad6c4f9815d9b8b0817d38864d06d" id="r_aac7ad6c4f9815d9b8b0817d38864d06d"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aac7ad6c4f9815d9b8b0817d38864d06d">activateEvent</a> ()</td></tr>
 <tr class="memdesc:aac7ad6c4f9815d9b8b0817d38864d06d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when established connection.  <br /></td></tr>
 <tr class="separator:aac7ad6c4f9815d9b8b0817d38864d06d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -280,14 +292,11 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>setErrorString</b> (c
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:a49a607ef9c268469124164ab86971787" id="r_a49a607ef9c268469124164ab86971787"><td class="memItemLeft" align="right" valign="top"><a id="a49a607ef9c268469124164ab86971787" name="a49a607ef9c268469124164ab86971787"></a>
-<a class="el" href="classAsyncFw_1_1Thread.html">Thread</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>thread_</b></td></tr>
+<tr class="memitem:a49a607ef9c268469124164ab86971787" id="r_a49a607ef9c268469124164ab86971787"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classAsyncFw_1_1Thread.html">Thread</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a49a607ef9c268469124164ab86971787">thread_</a></td></tr>
 <tr class="separator:a49a607ef9c268469124164ab86971787"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1380ccdb23066b7084eca638b4232761" id="r_a1380ccdb23066b7084eca638b4232761"><td class="memItemLeft" align="right" valign="top"><a id="a1380ccdb23066b7084eca638b4232761" name="a1380ccdb23066b7084eca638b4232761"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>fd_</b> = -1</td></tr>
+<tr class="memitem:a1380ccdb23066b7084eca638b4232761" id="r_a1380ccdb23066b7084eca638b4232761"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1380ccdb23066b7084eca638b4232761">fd_</a> = -1</td></tr>
 <tr class="separator:a1380ccdb23066b7084eca638b4232761"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa4b74ce0259d4424ef41b2d10290351c" id="r_aa4b74ce0259d4424ef41b2d10290351c"><td class="memItemLeft" align="right" valign="top"><a id="aa4b74ce0259d4424ef41b2d10290351c" name="aa4b74ce0259d4424ef41b2d10290351c"></a>
-State&#160;</td><td class="memItemRight" valign="bottom"><b>state_</b> = State::Unconnected</td></tr>
+<tr class="memitem:aa4b74ce0259d4424ef41b2d10290351c" id="r_aa4b74ce0259d4424ef41b2d10290351c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#a6fc3dae51b6b38d67f1c3861dcbb23bd">State</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa4b74ce0259d4424ef41b2d10290351c">state_</a> = <a class="el" href="#a6fc3dae51b6b38d67f1c3861dcbb23bda65e37b7a6b547c0da9a63972db5dfd49">State::Unconnected</a></td></tr>
 <tr class="separator:aa4b74ce0259d4424ef41b2d10290351c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_structAsyncFw_1_1AnyData"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_attribs_structAsyncFw_1_1AnyData')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="structAsyncFw_1_1AnyData.html">AsyncFw::AnyData</a></td></tr>
 <tr class="memitem:adc2b97818be013fcf912ca9c8e086fa3 inherit pro_attribs_structAsyncFw_1_1AnyData" id="r_adc2b97818be013fcf912ca9c8e086fa3"><td class="memItemLeft" align="right" valign="top">
@@ -340,7 +349,7 @@ Friends</h2></td></tr>
 <div class="line">  AsyncFw::CoroutineAwait&lt;void&gt; coConnect(<span class="keyword">const</span> std::string &amp;address, uint16_t port) {</div>
 <div class="line">    <span class="keywordflow">return</span> AsyncFw::CoroutineAwait&lt;void&gt;([<span class="keyword">this</span>, address, port](AsyncFw::CoroutineHandle _h) {</div>
 <div class="line">      h = _h;</div>
-<div class="line">      connect(address, port);</div>
+<div class="line">      <a class="code hl_function" href="classAsyncFw_1_1AbstractTlsSocket.html#a2d9c3d5d540b82fb516f5c56def48a02">connect</a>(address, port);</div>
 <div class="line">    });</div>
 <div class="line">  }</div>
 <div class="line"> </div>
@@ -383,7 +392,244 @@ Friends</h2></td></tr>
 <div class="line">}</div>
 </div><!-- fragment --> <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="HttpSocket_2main_8cpp-example.html#_a22">HttpSocket/main.cpp</a>.</dd>
 </dl>
-</div><h2 class="groupheader">Member Function Documentation</h2>
+</div><h2 class="groupheader">Member Enumeration Documentation</h2>
+<a id="a6fc3dae51b6b38d67f1c3861dcbb23bd" name="a6fc3dae51b6b38d67f1c3861dcbb23bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6fc3dae51b6b38d67f1c3861dcbb23bd">&#9670;&#160;</a></span>State</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="#a6fc3dae51b6b38d67f1c3861dcbb23bd">AsyncFw::AbstractSocket::State</a> : uint8_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Execution and lifecycle states of the socket. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a6fc3dae51b6b38d67f1c3861dcbb23bda65e37b7a6b547c0da9a63972db5dfd49" name="a6fc3dae51b6b38d67f1c3861dcbb23bda65e37b7a6b547c0da9a63972db5dfd49"></a>Unconnected&#160;</td><td class="fielddoc"><p>Initial state, no connection active. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a6fc3dae51b6b38d67f1c3861dcbb23bda5b13d3f73cf426c72bbd8598ede9442d" name="a6fc3dae51b6b38d67f1c3861dcbb23bda5b13d3f73cf426c72bbd8598ede9442d"></a>Listening&#160;</td><td class="fielddoc"><p>Server mode: listening for incoming connections. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a6fc3dae51b6b38d67f1c3861dcbb23bdabba7ae24638871f8e94de4b4af31c37f" name="a6fc3dae51b6b38d67f1c3861dcbb23bdabba7ae24638871f8e94de4b4af31c37f"></a>Connecting&#160;</td><td class="fielddoc"><p>Client connection handshake in progress. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a6fc3dae51b6b38d67f1c3861dcbb23bdaccd0feb91061e2ddcac7f6b90bf9efa5" name="a6fc3dae51b6b38d67f1c3861dcbb23bdaccd0feb91061e2ddcac7f6b90bf9efa5"></a>Connected&#160;</td><td class="fielddoc"><p>TCP layer connected (TLS handshake starts here if applicable). </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a6fc3dae51b6b38d67f1c3861dcbb23bdabc8b14ad3e5c48f1e2be50e1f70fc237" name="a6fc3dae51b6b38d67f1c3861dcbb23bdabc8b14ad3e5c48f1e2be50e1f70fc237"></a>Active&#160;</td><td class="fielddoc"><p>Fully functional data transfer state. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a6fc3dae51b6b38d67f1c3861dcbb23bda516ec5c0c571fe5c0d60881eddc2c22e" name="a6fc3dae51b6b38d67f1c3861dcbb23bda516ec5c0c571fe5c0d60881eddc2c22e"></a>Closing&#160;</td><td class="fielddoc"><p>Connection closing in progress. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a6fc3dae51b6b38d67f1c3861dcbb23bda1bc468bc996ac9ce17018c3320ac5516" name="a6fc3dae51b6b38d67f1c3861dcbb23bda1bc468bc996ac9ce17018c3320ac5516"></a>Destroy&#160;</td><td class="fielddoc"><p>Final destruction phase. WARNING: socket thread is nullptr during <a class="el" href="#a5db12267a6d2241e81f570463f2d7ef5" title="Called when the connection state changes.">stateEvent()</a>. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="ad82c1584c2664dd89cd94cc217974afe" name="ad82c1584c2664dd89cd94cc217974afe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad82c1584c2664dd89cd94cc217974afe">&#9670;&#160;</a></span>AbstractSocket()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">AbstractSocket::AbstractSocket </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>family</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>type</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>protocol</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructs an <a class="el" href="classAsyncFw_1_1AbstractSocket.html" title="Abstract base class providing core network socket functionality and OS descriptor abstraction.">AbstractSocket</a> and binds it to the current thread context. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">family</td><td>Address family</td></tr>
+    <tr><td class="paramname">type</td><td>Socket type</td></tr>
+    <tr><td class="paramname">protocol</td><td>Internet protocol </td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1AbstractSocket_ad82c1584c2664dd89cd94cc217974afe_cgraph.svg" width="408" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="ac4b8765d203b4d4bc77d9d6e00d5dd85" name="ac4b8765d203b4d4bc77d9d6e00d5dd85"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac4b8765d203b4d4bc77d9d6e00d5dd85">&#9670;&#160;</a></span>connect()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool AbstractSocket::connect </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>_address</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>_port</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel virtual">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Initiates an asynchronous connection to a remote host. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ip</td><td>Remote target IPv4 or IPv6 address string.</td></tr>
+    <tr><td class="paramname">port</td><td>Remote target port number. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if connection initiation succeeded. </dd></dl>
+
+<p>Reimplemented in <a class="el" href="classAsyncFw_1_1AbstractTlsSocket.html#a2d9c3d5d540b82fb516f5c56def48a02">AsyncFw::AbstractTlsSocket</a>, and <a class="el" href="classAsyncFw_1_1DataArraySocket.html#aed242e797aea527f8b86c4bc866ab454">AsyncFw::DataArraySocket</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1AbstractSocket_ac4b8765d203b4d4bc77d9d6e00d5dd85_cgraph.svg" width="408" height="254"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1AbstractSocket_ac4b8765d203b4d4bc77d9d6e00d5dd85_icgraph.svg" width="426" height="78"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<a id="a77c0a9ea7c5061c406673bbe8b18d60d" name="a77c0a9ea7c5061c406673bbe8b18d60d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a77c0a9ea7c5061c406673bbe8b18d60d">&#9670;&#160;</a></span>close()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AbstractSocket::close </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel virtual">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Closes the network connection and unsubscribes from thread polling events. </p>
+
+<p>Reimplemented in <a class="el" href="classAsyncFw_1_1AbstractTlsSocket.html#a46dbd8e4895445214a4f46ee46433d6c">AsyncFw::AbstractTlsSocket</a>, <a class="el" href="classAsyncFw_1_1HttpSocket.html#a96932e5f6b5f84c4f204b0e6e4ef8472">AsyncFw::HttpSocket</a>, and <a class="el" href="classAsyncFw_1_1ListenSocket.html#a77c0a9ea7c5061c406673bbe8b18d60d">AsyncFw::ListenSocket</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a77c0a9ea7c5061c406673bbe8b18d60d_cgraph.svg" width="408" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a77c0a9ea7c5061c406673bbe8b18d60d_icgraph.svg" width="864" height="187"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<a id="a73a200f0008dbf9f820bdb2b8a0054cf" name="a73a200f0008dbf9f820bdb2b8a0054cf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a73a200f0008dbf9f820bdb2b8a0054cf">&#9670;&#160;</a></span>destroy()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AbstractSocket::destroy </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel virtual">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Schedules the socket for deferred asynchronous destruction. </p>
+
+<p>Reimplemented in <a class="el" href="classAsyncFw_1_1HttpSocket.html#a8268467d3581a4d393e9ccd288de32ff">AsyncFw::HttpSocket</a>, and <a class="el" href="classAsyncFw_1_1ListenSocket.html#a73a200f0008dbf9f820bdb2b8a0054cf">AsyncFw::ListenSocket</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a73a200f0008dbf9f820bdb2b8a0054cf_cgraph.svg" width="851" height="262"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a73a200f0008dbf9f820bdb2b8a0054cf_icgraph.svg" width="384" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<a id="aa0f81593deeb67fe6a3031e9d57738d4" name="aa0f81593deeb67fe6a3031e9d57738d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa0f81593deeb67fe6a3031e9d57738d4">&#9670;&#160;</a></span>removeFromThread()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AbstractSocket::removeFromThread </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Synchronously detaches the socket from its execution thread. </p>
+<dl class="section note"><dt>Note</dt><dd>Sets socket thread to nullptr. Not thread-safe. </dd></dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1AbstractSocket_aa0f81593deeb67fe6a3031e9d57738d4_icgraph.svg" width="408" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
 <a id="a426c3b10de20344079571d6708f096ca" name="a426c3b10de20344079571d6708f096ca"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a426c3b10de20344079571d6708f096ca">&#9670;&#160;</a></span>listen()</h2>
 
@@ -488,6 +734,7 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p>Called when the connection state changes. </p>
+<dl class="section warning"><dt>Warning</dt><dd>When state is <a class="el" href="#a6fc3dae51b6b38d67f1c3861dcbb23bda1bc468bc996ac9ce17018c3320ac5516">State::Destroy</a>, the socket thread pointer is guaranteed to be nullptr. </dd></dl>
 
 <p>Reimplemented in <a class="el" href="classAsyncFw_1_1DataArraySocket.html#afae26d6d937eddd4b7c64f48933c0984">AsyncFw::DataArraySocket</a>, and <a class="el" href="classAsyncFw_1_1HttpSocket.html#ab3ee95c329a5f5c7ea659fe7809cc37e">AsyncFw::HttpSocket</a>.</p>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="ListenSocket_2main_8cpp-example.html#a1">ListenSocket/main.cpp</a>, and <a class="el" href="Socket_2main_8cpp-example.html#a1">Socket/main.cpp</a>.</dd>
@@ -495,7 +742,7 @@ Here is the caller graph for this function:</div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a5db12267a6d2241e81f570463f2d7ef5_icgraph.svg" width="847" height="144"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a5db12267a6d2241e81f570463f2d7ef5_icgraph.svg" width="1087" height="211"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -586,6 +833,76 @@ Here is the caller graph for this function:</div>
 <p>Called upon incoming connection. </p>
 
 <p>Reimplemented in <a class="el" href="classAsyncFw_1_1ListenSocket.html#ac1bc405f0f80094fd63f200f81977c57">AsyncFw::ListenSocket</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a49a607ef9c268469124164ab86971787" name="a49a607ef9c268469124164ab86971787"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a49a607ef9c268469124164ab86971787">&#9670;&#160;</a></span>thread_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classAsyncFw_1_1Thread.html">Thread</a>* AsyncFw::AbstractSocket::thread_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Pointer to the execution thread managing this socket. </p>
+
+</div>
+</div>
+<a id="a1380ccdb23066b7084eca638b4232761" name="a1380ccdb23066b7084eca638b4232761"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1380ccdb23066b7084eca638b4232761">&#9670;&#160;</a></span>fd_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int AsyncFw::AbstractSocket::fd_ = -1</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Native operating system socket file descriptor. </p>
+
+</div>
+</div>
+<a id="aa4b74ce0259d4424ef41b2d10290351c" name="aa4b74ce0259d4424ef41b2d10290351c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa4b74ce0259d4424ef41b2d10290351c">&#9670;&#160;</a></span>state_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a6fc3dae51b6b38d67f1c3861dcbb23bd">State</a> AsyncFw::AbstractSocket::state_ = <a class="el" href="#a6fc3dae51b6b38d67f1c3861dcbb23bda65e37b7a6b547c0da9a63972db5dfd49">State::Unconnected</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Current tracking state of this socket. </p>
 
 </div>
 </div>

@@ -1,0 +1,16 @@
+<map id="AsyncFw::AbstractTlsSocket::connect" name="AsyncFw::AbstractTlsSocket::connect">
+<area shape="rect" id="Node000001" title="Initiates an asynchronous connection to a remote host." alt="" coords="5,113,198,156"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractSocket.html#a3dd69e137ca3cf50f90607c17bbdc312" title="Return address." alt="" coords="468,5,642,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="149,110,195,92,245,75,351,51,452,35,453,40,352,56,246,80,196,97,151,115"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractSocket.html#ac4b8765d203b4d4bc77d9d6e00d5dd85" title="Initiates an asynchronous connection to a remote host." alt="" coords="246,113,420,156"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="198,132,230,132,230,137,198,137"/>
+<area shape="rect" id="Node000006" href="$classAsyncFw_1_1AbstractSocket.html#aa29d033332c09e341d159b2189c774e9" title="Return port." alt="" coords="468,205,642,248"/>
+<area shape="poly" id="edge8_Node000001_Node000006" title=" " alt="" coords="195,154,246,165,454,206,453,211,245,171,194,159"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="369,110,467,58,479,52,482,57,469,62,372,115"/>
+<area shape="poly" id="edge4_Node000003_Node000003" title=" " alt="" coords="291,113,289,103,296,94,311,89,333,87,357,89,371,95,369,100,355,94,333,92,312,94,299,99,294,105,296,112"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1AbstractSocket.html#ab05320fcb1c111e06a56587b4abbb639" title="Return peer address." alt="" coords="468,72,642,115"/>
+<area shape="poly" id="edge5_Node000003_Node000004" title=" " alt="" coords="420,116,452,110,453,115,421,121"/>
+<area shape="rect" id="Node000005" href="$classAsyncFw_1_1AbstractSocket.html#aa91adbe0ea3297083d63e26531daa266" title="Return peer port." alt="" coords="468,139,642,181"/>
+<area shape="poly" id="edge6_Node000003_Node000005" title=" " alt="" coords="421,142,453,146,452,151,420,147"/>
+<area shape="poly" id="edge7_Node000003_Node000006" title=" " alt="" coords="384,154,469,191,484,197,482,202,467,196,382,159"/>
+</map>

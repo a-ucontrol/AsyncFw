@@ -1,5 +1,8 @@
 var searchData=
 [
-  ['_7eabstractinstance_0',['~AbstractInstance',['../classAsyncFw_1_1AbstractInstance.html#a1809713ff787e9f05d8458d15493146a',1,'AsyncFw::AbstractInstance']]],
-  ['_7einstance_1',['~Instance',['../classAsyncFw_1_1Instance.html#a6f25472f8b38f5cd6fa3d681919bf50a',1,'AsyncFw::Instance']]]
+  ['wait_0',['wait',['../classAsyncFw_1_1AbstractThread_1_1Holder.html#a795fc5bb1d23123fc892b8d414c56083',1,'AsyncFw::AbstractThread::Holder::wait()'],['../structAsyncFw_1_1CoroutineTask.html#a820a0a3410c4a14a71ad3599f46c1bb0',1,'AsyncFw::CoroutineTask::wait()']]],
+  ['waitfinished_1',['waitFinished',['../classAsyncFw_1_1AbstractThread.html#a2c37d275a098bbcb92912646d773186a',1,'AsyncFw::AbstractThread']]],
+  ['waitinterrupted_2',['waitInterrupted',['../classAsyncFw_1_1AbstractThread.html#a3b5605a008bf64620fac9d28717d98fb',1,'AsyncFw::AbstractThread']]],
+  ['workload_3',['workLoad',['../classAsyncFw_1_1AbstractThread.html#a1c4c7bde4ac10ed166139be4eafb04e3',1,'AsyncFw::AbstractThread']]],
+  ['writeevent_4',['writeEvent',['../classAsyncFw_1_1AbstractSocket.html#af8141e7714603e6c83c0640a2d74ec90',1,'AsyncFw::AbstractSocket::writeEvent()'],['../classAsyncFw_1_1HttpSocket.html#ac276bcd3a5e86289eb37ea7fd062559b',1,'AsyncFw::HttpSocket::writeEvent()']]]
 ];

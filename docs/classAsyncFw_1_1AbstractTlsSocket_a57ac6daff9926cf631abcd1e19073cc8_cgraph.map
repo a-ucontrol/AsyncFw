@@ -1,7 +1,12 @@
 <map id="AsyncFw::AbstractTlsSocket::activateEvent" name="AsyncFw::AbstractTlsSocket::activateEvent">
-<area shape="rect" id="Node000001" title="Called when established connection." alt="" coords="5,5,198,48"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractSocket.html#aac7ad6c4f9815d9b8b0817d38864d06d" title="Called when established connection." alt="" coords="246,5,420,48"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="198,24,230,24,230,29,198,29"/>
-<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractSocket.html#a5db12267a6d2241e81f570463f2d7ef5" title="Called when the connection state changes." alt="" coords="468,5,642,48"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="420,24,452,24,452,29,420,29"/>
+<area shape="rect" id="Node000001" title="Called when established connection." alt="" coords="5,39,198,81"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractSocket.html#aac7ad6c4f9815d9b8b0817d38864d06d" title="Called when established connection." alt="" coords="486,5,660,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="198,51,470,31,471,37,198,56"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1AbstractTlsSocket.html#a46dbd8e4895445214a4f46ee46433d6c" title="Closes the network connection and unsubscribes from thread polling events." alt="" coords="246,68,438,111"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="198,69,230,73,230,78,198,74"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractSocket.html#a5db12267a6d2241e81f570463f2d7ef5" title="Called when the connection state changes." alt="" coords="708,39,883,81"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="661,37,693,42,692,47,660,42"/>
+<area shape="rect" id="Node000005" href="$classAsyncFw_1_1AbstractSocket.html#a77c0a9ea7c5061c406673bbe8b18d60d" title="Closes the network connection and unsubscribes from thread polling events." alt="" coords="486,72,660,115"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="438,88,471,89,470,94,438,94"/>
+<area shape="poly" id="edge5_Node000005_Node000003" title=" " alt="" coords="660,78,692,73,693,78,661,83"/>
 </map>

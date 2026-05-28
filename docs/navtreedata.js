@@ -35,7 +35,8 @@ var NAVTREE =
         [ "Functions", "functions_func.html", null ],
         [ "Variables", "functions_vars.html", null ],
         [ "Typedefs", "functions_type.html", null ],
-        [ "Enumerations", "functions_enum.html", null ]
+        [ "Enumerations", "functions_enum.html", null ],
+        [ "Enumerator", "functions_eval.html", null ]
       ] ]
     ] ],
     [ "Files", "files.html", [
@@ -48,7 +49,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "AbstractSocket_8h.html",
-"classAsyncFw_1_1ThreadPool.html#a4e73e16c0af130d6311c29952b11f720"
+"classAsyncFw_1_1PollNotifier.html#a383eab2a439eb7cf82f1ddc38a6204cb"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronization';

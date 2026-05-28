@@ -15,7 +15,8 @@ var searchData=
   ['datastream_12',['DataStream',['../classAsyncFw_1_1DataStream.html',1,'AsyncFw']]],
   ['descriptor_13',['descriptor',['../classAsyncFw_1_1PollNotifier.html#a5b2ff26b63b3d2f46b04892c6899217c',1,'AsyncFw::PollNotifier']]],
   ['destroing_14',['destroing',['../classAsyncFw_1_1Thread.html#af5dd6d74a47e9134240e7720d3348f70',1,'AsyncFw::Thread']]],
-  ['destroy_15',['destroy',['../classAsyncFw_1_1AbstractThreadPool_1_1Thread.html#aa4a8873e426f02286f1082de4083cb01',1,'AsyncFw::AbstractThreadPool::Thread']]],
-  ['destroyvalue_16',['destroyValue',['../classAsyncFw_1_1AbstractInstance.html#a2cddd3e61ae002fa6be00ae760cb5123',1,'AsyncFw::AbstractInstance::destroyValue()'],['../classAsyncFw_1_1Instance.html#a3c6c90c36f431613e8fcfd0c195fdbe0',1,'AsyncFw::Instance::destroyValue()']]],
-  ['destroyvalues_17',['destroyValues',['../classAsyncFw_1_1AbstractInstance.html#a53843084f7ba8d6f9fbefcdc5cfead27',1,'AsyncFw::AbstractInstance']]]
+  ['destroy_15',['Destroy',['../classAsyncFw_1_1AbstractSocket.html#a6fc3dae51b6b38d67f1c3861dcbb23bda1bc468bc996ac9ce17018c3320ac5516',1,'AsyncFw::AbstractSocket']]],
+  ['destroy_16',['destroy',['../classAsyncFw_1_1AbstractSocket.html#a73a200f0008dbf9f820bdb2b8a0054cf',1,'AsyncFw::AbstractSocket::destroy()'],['../classAsyncFw_1_1HttpSocket.html#a8268467d3581a4d393e9ccd288de32ff',1,'AsyncFw::HttpSocket::destroy()'],['../classAsyncFw_1_1AbstractThreadPool_1_1Thread.html#aa4a8873e426f02286f1082de4083cb01',1,'AsyncFw::AbstractThreadPool::Thread::destroy()'],['../classAsyncFw_1_1ListenSocket.html#a73a200f0008dbf9f820bdb2b8a0054cf',1,'AsyncFw::ListenSocket::destroy()']]],
+  ['destroyvalue_17',['destroyValue',['../classAsyncFw_1_1AbstractInstance.html#a2cddd3e61ae002fa6be00ae760cb5123',1,'AsyncFw::AbstractInstance::destroyValue()'],['../classAsyncFw_1_1Instance.html#a3c6c90c36f431613e8fcfd0c195fdbe0',1,'AsyncFw::Instance::destroyValue()']]],
+  ['destroyvalues_18',['destroyValues',['../classAsyncFw_1_1AbstractInstance.html#a53843084f7ba8d6f9fbefcdc5cfead27',1,'AsyncFw::AbstractInstance']]]
 ];

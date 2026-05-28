@@ -134,8 +134,10 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>address</b> ()
 <tr class="memdesc:a3dd69e137ca3cf50f90607c17bbdc312"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return address. <br /></td></tr>
 <tr class="separator:a3dd69e137ca3cf50f90607c17bbdc312"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a77c0a9ea7c5061c406673bbe8b18d60d" id="r_a77c0a9ea7c5061c406673bbe8b18d60d"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a77c0a9ea7c5061c406673bbe8b18d60d">close</a> ()</td></tr>
+<tr class="memdesc:a77c0a9ea7c5061c406673bbe8b18d60d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Closes the network connection and unsubscribes from thread polling events.  <br /></td></tr>
 <tr class="separator:a77c0a9ea7c5061c406673bbe8b18d60d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a73a200f0008dbf9f820bdb2b8a0054cf" id="r_a73a200f0008dbf9f820bdb2b8a0054cf"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a73a200f0008dbf9f820bdb2b8a0054cf">destroy</a> ()</td></tr>
+<tr class="memdesc:a73a200f0008dbf9f820bdb2b8a0054cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Schedules the socket for deferred asynchronous destruction.  <br /></td></tr>
 <tr class="separator:a73a200f0008dbf9f820bdb2b8a0054cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a426c3b10de20344079571d6708f096ca" id="r_a426c3b10de20344079571d6708f096ca"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a426c3b10de20344079571d6708f096ca">listen</a> (const std::string &amp;, uint16_t)</td></tr>
 <tr class="memdesc:a426c3b10de20344079571d6708f096ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Listen for incoming connections on address and port.  <br /></td></tr>
@@ -175,7 +177,7 @@ Protected Member Functions</h2></td></tr>
 <div class="line">  }</div>
 <div class="line">  <span class="keywordtype">void</span> <a class="code hl_function" href="classAsyncFw_1_1AbstractSocket.html#a609ec54ec8aed39769d60319c4c15833">readEvent</a>() { received(read()); }</div>
 <div class="line">  AsyncFw::FunctionConnectorProtected&lt;TcpSocket&gt;::Connector&lt;<span class="keyword">const</span> AsyncFw::DataArray &amp;&gt; received;</div>
-<div class="line">  AsyncFw::FunctionConnectorProtected&lt;TcpSocket&gt;::Connector&lt;AsyncFw::AbstractSocket::State&gt; stateChanged;</div>
+<div class="line">  AsyncFw::FunctionConnectorProtected&lt;TcpSocket&gt;::Connector&lt;<a class="code hl_enumeration" href="classAsyncFw_1_1AbstractSocket.html#a6fc3dae51b6b38d67f1c3861dcbb23bd">AsyncFw::AbstractSocket::State</a>&gt; stateChanged;</div>
 <div class="line">};</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[]) {</div>
@@ -196,8 +198,8 @@ Protected Member Functions</h2></td></tr>
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">if</span> (argc == 2 &amp;&amp; std::string(argv[1]) == <span class="stringliteral">&quot;--tst&quot;</span>) {</div>
 <div class="line">    TcpSocket *_socket = TcpSocket::create();</div>
-<div class="line">    _socket-&gt;stateChanged.connect([_socket](<span class="keyword">const</span> AsyncFw::AbstractSocket::State state) {</div>
-<div class="line">      <span class="keywordflow">if</span> (state == AsyncFw::AbstractSocket::State::Active) {</div>
+<div class="line">    _socket-&gt;stateChanged.connect([_socket](<span class="keyword">const</span> <a class="code hl_enumeration" href="classAsyncFw_1_1AbstractSocket.html#a6fc3dae51b6b38d67f1c3861dcbb23bd">AsyncFw::AbstractSocket::State</a> state) {</div>
+<div class="line">      <span class="keywordflow">if</span> (state == <a class="code hl_enumvalue" href="classAsyncFw_1_1AbstractSocket.html#a6fc3dae51b6b38d67f1c3861dcbb23bdabc8b14ad3e5c48f1e2be50e1f70fc237">AsyncFw::AbstractSocket::State::Active</a>) {</div>
 <div class="line">        logDebug() &lt;&lt; <span class="stringliteral">&quot;Send request&quot;</span>;</div>
 <div class="line">        _socket-&gt;write(<span class="stringliteral">&quot;q&quot;</span>);</div>
 <div class="line">      }</div>
@@ -266,7 +268,9 @@ Protected Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Reimplemented from <a class="el" href="classAsyncFw_1_1AbstractSocket.html">AsyncFw::AbstractSocket</a>.</p>
+<p>Closes the network connection and unsubscribes from thread polling events. </p>
+
+<p>Reimplemented from <a class="el" href="classAsyncFw_1_1AbstractSocket.html#a77c0a9ea7c5061c406673bbe8b18d60d">AsyncFw::AbstractSocket</a>.</p>
 
 </div>
 </div>
@@ -293,7 +297,9 @@ Protected Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Reimplemented from <a class="el" href="classAsyncFw_1_1AbstractSocket.html">AsyncFw::AbstractSocket</a>.</p>
+<p>Schedules the socket for deferred asynchronous destruction. </p>
+
+<p>Reimplemented from <a class="el" href="classAsyncFw_1_1AbstractSocket.html#a73a200f0008dbf9f820bdb2b8a0054cf">AsyncFw::AbstractSocket</a>.</p>
 
 </div>
 </div>

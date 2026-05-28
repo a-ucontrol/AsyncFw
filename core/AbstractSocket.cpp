@@ -77,11 +77,11 @@ AbstractSocket::AbstractSocket() : private_(*new Private) {
   trace() << LogStream::Color::Green << fd_ << thread_->name();
 }
 
-AbstractSocket::AbstractSocket(int _family, int _type, int _protocol) : AbstractSocket() {
-  private_.la_.ss_family = _family;
-  private_.pa_.ss_family = _family;
-  private_.type_ = _type;
-  private_.protocol_ = _protocol;
+AbstractSocket::AbstractSocket(int family, int type, int protocol) : AbstractSocket() {
+  private_.la_.ss_family = family;
+  private_.pa_.ss_family = family;
+  private_.type_ = type;
+  private_.protocol_ = protocol;
 }
 
 AbstractSocket::~AbstractSocket() {

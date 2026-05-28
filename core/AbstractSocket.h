@@ -19,22 +19,37 @@ class DataArray;
 class LogStream;
 
 /*! \class AbstractSocket AbstractSocket.h <AsyncFw/AbstractSocket> \brief Abstract base class providing core network socket functionality and OS descriptor abstraction.
-\brief AbstractSocket wraps native operating system network handles into a clean C++ interface. It handles non-blocking socket initialization, address binding, option configuration, and integrates directly into the AbstractThread I/O multiplexing event loop (epoll / poll).
+\details AbstractSocket wraps native operating system network handles into a clean C++ interface. It handles non-blocking socket initialization, address binding, option configuration, and integrates directly into the AbstractThread I/O multiplexing event loop (epoll / poll).
 \brief Example: \snippet Socket/main.cpp snippet */
 class AbstractSocket : public AnyData {
   friend Thread;
   friend LogStream &operator<<(LogStream &, const AbstractSocket &);
 
 public:
-  enum State : uint8_t { Unconnected, Listening, Connecting, Connected, Active, Closing, Destroy };
+  /*! \brief Execution and lifecycle states of the socket. */
+  enum State : uint8_t {
+    Unconnected, /*!< Initial state, no connection active. */
+    Listening,   /*!< Server mode: listening for incoming connections. */
+    Connecting,  /*!< Client connection handshake in progress. */
+    Connected,   /*!< TCP layer connected (TLS handshake starts here if applicable). */
+    Active,      /*!< Fully functional data transfer state. */
+    Closing,     /*!< Connection closing in progress. */
+    Destroy      /*!< Final destruction phase. WARNING: socket thread is nullptr during stateEvent(). */
+  };
+
   enum Error : uint8_t { None, Closed, Refused, Read, Write, Activate };
 
   virtual void setDescriptor(int);
+  /*! \brief Initiates an asynchronous connection to a remote host. \param ip Remote target IPv4 or IPv6 address string. \param port Remote target port number. \return True if connection initiation succeeded. */
   virtual bool connect(const std::string &, uint16_t);
   virtual void disconnect();
+  /*! \brief Closes the network connection and unsubscribes from thread polling events. */
   virtual void close();
+  /*! \brief Schedules the socket for deferred asynchronous destruction. */
   virtual void destroy();
 
+  /*! \brief Synchronously detaches the socket from its execution thread.
+  \note Sets socket thread to nullptr. Not thread-safe. */
   void removeFromThread();
 
   /*! \brief Listen for incoming connections on address and port. \param address Address. \param port Port \return True if success. */
@@ -62,13 +77,18 @@ public:
   uint16_t peerPort() const;
 
 protected:
+  /*! \brief Constructs an AbstractSocket with default patameters (AF_INET, SOCK_STREAM, IPPROTO_TCP) and binds it to the current thread context. */
   AbstractSocket();
+  /*! \brief Constructs an AbstractSocket and binds it to the current thread context.
+  \param family Address family \param type Socket type \param protocol Internet protocol */
   AbstractSocket(int, int, int);
+  /*! \brief Virtual destructor. Automatically detaches socket from thread if still attached. */
   virtual ~AbstractSocket();
 
   /*! \brief Called when established connection. */
   virtual void activateEvent();
-  /*! \brief Called when the connection state changes. */
+  /*! \brief Called when the connection state changes.
+  \warning When state is State::Destroy, the socket thread pointer is guaranteed to be nullptr. */
   virtual void stateEvent() {}
   /*! \brief Called when there is data to read. */
   virtual void readEvent() {}
@@ -89,9 +109,9 @@ protected:
   void setError(Error);
   void setErrorString(const std::string &) const;
 
-  Thread *thread_;
-  int fd_ = -1;
-  State state_ = State::Unconnected;
+  Thread *thread_;                   /*!< Pointer to the execution thread managing this socket. */
+  int fd_ = -1;                      /*!< Native operating system socket file descriptor. */
+  State state_ = State::Unconnected; /*!< Current tracking state of this socket. */
 
 private:
   AbstractSocket(const AbstractSocket &) = delete;
