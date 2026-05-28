@@ -40,8 +40,6 @@ protected:
   void startedEvent() override;
   /*! \brief Runs finished() */
   void finishedEvent() override;
-  /*! \brief Remove socket from thread */
-  void removeSocket(AbstractSocket *);
 
   std::vector<AbstractSocket *> sockets_;
 

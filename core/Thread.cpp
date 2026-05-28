@@ -65,16 +65,6 @@ void Thread::finishedEvent() {
   finished();
 }
 
-void Thread::removeSocket(AbstractSocket *_socket) {
-  checkCurrentThread();
-  std::vector<AbstractSocket *>::iterator it = std::lower_bound(sockets_.begin(), sockets_.end(), _socket, Compare());
-  if (it != sockets_.end() && (*it) == _socket) {
-    sockets_.erase(it);
-    return;
-  }
-  lsTrace() << LogStream::Color::DarkRed << "not found" << _socket->fd_;
-}
-
 namespace AsyncFw {
 LogStream &operator<<(LogStream &log, const Thread &t) {
   int _size;

@@ -47,15 +47,14 @@ DataArraySocket::DataArraySocket() : AbstractTlsSocket() {
 }
 
 DataArraySocket::~DataArraySocket() {
-  removeTimer();
+  if (thread_) removeTimer();
   while (!receiveList.empty()) clearBuffer_(receiveList.back());
   trace();
 }
 
 void DataArraySocket::startTimer(int _ms) {
   if (tid_ < 0) tid_ = thread_->appendTimerTask(_ms, [this]() { timerEvent(); });
-  else
-    thread_->modifyTimer(tid_, _ms);
+  else thread_->modifyTimer(tid_, _ms);
 }
 
 void DataArraySocket::removeTimer() {
@@ -113,8 +112,7 @@ void DataArraySocket::timerEvent() {
     } else {
       std::string e;
       if (sslConnection == 3) e = "Error wait encryption";
-      else
-        e = (waitTimerType & 0x02) ? "Connection lost" : "Read timeout";
+      else e = (waitTimerType & 0x02) ? "Connection lost" : "Read timeout";
       e += " (" + peerString() + ')';
       setErrorString(e);
       waitTimerType |= 0x01;
@@ -174,8 +172,7 @@ void DataArraySocket::readEvent() {
         if (readId == 0xffffffff) {
           trace("receive keep alive (" + peerString() + ')');
           if (!(waitTimerType & 0x02)) transmitKeepAlive(false);
-          else
-            waitTimerType &= ~0x02;
+          else waitTimerType &= ~0x02;
           continue;
         }
         warning_if(readId != 0xffffffff) << LogStream::Color::Red << "read array empty (" + peerString() + ')';
@@ -269,40 +266,38 @@ bool DataArraySocket::transmit(const DataArray &ba, uint32_t pi, bool wait) cons
     return false;
   }
   bool _r = false;
-  thread_->invoke(
-      [this, &_r, &ba, pi, wait]() {
-        int buffers = transmitList.size();
-        if (buffers >= maxWriteBuffers) {
-          setErrorString("Many transmit buffers (" + peerString() + ')');
-          if (!hostPort_v) const_cast<DataArraySocket *>(this)->disconnect();
-          return;
-        }
-        int size = 0;
-        for (const DataArray &t : transmitList) {
-          size += t.size() - 8;
-          if (size > maxWriteSize) {
-            setErrorString("Transmit overflow (" + peerString() + ')');
-            if (!hostPort_v) const_cast<DataArraySocket *>(this)->disconnect();
-            return;
-          }
-        }
+  thread_->invoke([this, &_r, &ba, pi, wait]() {
+    int buffers = transmitList.size();
+    if (buffers >= maxWriteBuffers) {
+      setErrorString("Many transmit buffers (" + peerString() + ')');
+      if (!hostPort_v) const_cast<DataArraySocket *>(this)->disconnect();
+      return;
+    }
+    int size = 0;
+    for (const DataArray &t : transmitList) {
+      size += t.size() - 8;
+      if (size > maxWriteSize) {
+        setErrorString("Transmit overflow (" + peerString() + ')');
+        if (!hostPort_v) const_cast<DataArraySocket *>(this)->disconnect();
+        return;
+      }
+    }
 
-        uint64_t _v = pi;
-        _v <<= 32;
-        _v |= static_cast<uint32_t>(ba.size());
-        DataArray _da(((uint8_t *)&_v), ((uint8_t *)&_v) + 8);
-        _da += ba;
-        transmitList.push_back(_da);
-        if (buffers == 0) thread_->invoke([this]() { const_cast<DataArraySocket *>(this)->writeSocket(); }, wait);
-        else {
-          if (wait) {
-            thread_->requestInterrupt();
-            thread_->waitInterrupted();
-          }
-        }
-        _r = true;
-      },
-      true);
+    uint64_t _v = pi;
+    _v <<= 32;
+    _v |= static_cast<uint32_t>(ba.size());
+    DataArray _da(((uint8_t *)&_v), ((uint8_t *)&_v) + 8);
+    _da += ba;
+    transmitList.push_back(_da);
+    if (buffers == 0) thread_->invoke([this]() { const_cast<DataArraySocket *>(this)->writeSocket(); }, wait);
+    else {
+      if (wait) {
+        thread_->requestInterrupt();
+        thread_->waitInterrupted();
+      }
+    }
+    _r = true;
+  }, true);
   return _r;
 }
 
@@ -361,8 +356,7 @@ bool DataArraySocket::connectToHost() {
   if (sslConnection) {
     sslConnection = 3;
     return AbstractTlsSocket::connect(address, port);
-  } else
-    return AbstractSocket::connect(address, port);
+  } else return AbstractSocket::connect(address, port);
 }
 
 bool DataArraySocket::connectToHost(int timeout) {
@@ -376,13 +370,11 @@ bool DataArraySocket::connectToHost(int timeout) {
     return false;
   }
 
-  thread_->invoke(
-      [this, timeout]() {
-        waitTimerType |= 0x04;
-        startTimer(timeout);
-        connectToHost();
-      },
-      true);
+  thread_->invoke([this, timeout]() {
+    waitTimerType |= 0x04;
+    startTimer(timeout);
+    connectToHost();
+  }, true);
 
   AbstractThread::Holder h;
   wait_holder_ = &h;

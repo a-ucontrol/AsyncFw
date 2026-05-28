@@ -85,10 +85,12 @@ AbstractSocket::AbstractSocket(int _family, int _type, int _protocol) : Abstract
 }
 
 AbstractSocket::~AbstractSocket() {
-  if (state_ != State::Destroy) {
-    thread_->removeSocket(this);
+  if (state_ != Destroy) {
     lsWarning() << this << LogStream::Color::Red << "not destroy state:" << static_cast<int>(state_);
-    if (fd_ >= 0) thread_->removePollDescriptor(fd_);
+    if (thread_) {
+      if (fd_ >= 0) thread_->removePollDescriptor(fd_);
+      removeFromThread();
+    }
   }
   if (fd_ >= 0) close_fd(fd_);
 
@@ -426,17 +428,28 @@ void AbstractSocket::destroy() {
   }
   close();
   state_ = State::Destroy;
-  stateEvent();
-  AbstractThread::AbstractTask *_t = new Invocable<void()>::Function([_p = this]() {
-    _p->thread_->removeSocket(_p);
-    delete _p;
-  });
-  if (!thread_->invokeTask(_t)) {
-    lsError() << "socket thread not running" << '(' + thread_->name() + ')';
-    (*_t)();
-    delete _t;
+  if (!thread_) {
+    Thread::current()->invoke([_p = this]() {
+      _p->stateEvent();
+      delete _p;
+    });
+    return;
   }
+  thread_->invoke([_p = this]() {
+    _p->removeFromThread();
+    _p->stateEvent();
+    delete _p;
+  }, true);
   trace();
+}
+
+void AbstractSocket::removeFromThread() {
+  checkCurrentThread();
+  std::vector<AbstractSocket *>::iterator it = std::lower_bound(thread_->sockets_.begin(), thread_->sockets_.end(), this, Thread::Compare());
+  if (it != thread_->sockets_.end() && (*it) == this) {
+    thread_->sockets_.erase(it);
+  } else lsTrace() << LogStream::Color::DarkRed << "not found" << fd_;
+  thread_ = nullptr;
 }
 
 void AbstractSocket::pollEvent(int _e) {

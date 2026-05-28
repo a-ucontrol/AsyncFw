@@ -35,6 +35,8 @@ public:
   virtual void close();
   virtual void destroy();
 
+  void removeFromThread();
+
   /*! \brief Listen for incoming connections on address and port. \param address Address. \param port Port \return True if success. */
   bool listen(const std::string &, uint16_t);
 
