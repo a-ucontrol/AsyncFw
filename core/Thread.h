@@ -17,7 +17,6 @@ class AbstractSocket;
 /*! \class Thread Thread.h <AsyncFw/Thread> \brief AsyncFw::Thread thread with sockets. */
 class Thread : public AbstractThread {
   friend AbstractSocket;
-  friend class ListenSocket;
   friend LogStream &operator<<(LogStream &, const Thread &);
 
 public:
