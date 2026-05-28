@@ -439,7 +439,7 @@ void AbstractSocket::destroy() {
     _p->removeFromThread();
     _p->stateEvent();
     delete _p;
-  }, true);
+  });
   trace();
 }
 
