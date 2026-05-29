@@ -7,7 +7,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #pragma once
 
-/*! \file LogStream.h \brief The LogStream class. */
+/** @file LogStream.h @brief The LogStream class. */
 
 #include <sstream>
 #include <vector>
@@ -41,10 +41,10 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #endif
 
 namespace AsyncFw {
-/*! \class LogStream LogStream.h <AsyncFw/LogStream> \brief A high-performance, thread-safe logging stream utility utilizing RAII execution semantics.
-\brief LogStream provides dynamic string and data formatting using standard C++ stream insertion operators (operator<<). The logged content is accumulated in an internal buffer and is guaranteed to flush automatically to the configured outputs when the temporary LogStream instance is destroyed at the end of the statement (RAII).
+/** @class LogStream LogStream.h <AsyncFw/LogStream> @brief A high-performance, thread-safe logging stream utility utilizing RAII execution semantics.
+@brief LogStream provides dynamic string and data formatting using standard C++ stream insertion operators (operator<<). The logged content is accumulated in an internal buffer and is guaranteed to flush automatically to the configured outputs when the temporary LogStream instance is destroyed at the end of the statement (RAII).
 \exception std::runtime_error If log level emergency the exception std::runtime_error("log level emergency") will be raised.
-\brief Examlpe: \snippet snippet.dox LogStream */
+@brief Examlpe: @snippet snippet.dox LogStream */
 class LogStream {
 public:
   enum MessageType : uint8_t {

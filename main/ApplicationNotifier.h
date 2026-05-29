@@ -7,18 +7,18 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #pragma once
 
-/*! \file ApplicationNotifier.h \brief The ApplicationNotifier class. */
+/** @file ApplicationNotifier.h @brief The ApplicationNotifier class. */
 
 #include "../core/FunctionConnector.h"
 #include "../core/AnyData.h"
 #include "Instance.h"
 
 namespace AsyncFw {
-/*! \class ApplicationNotifier ApplicationNotifier.h <AsyncFw/ApplicationNotifier> \brief The ApplicationNotifier class.
-\brief Example: \snippet ApplicationNotifier/main.cpp snippet */
+/** @class ApplicationNotifier ApplicationNotifier.h <AsyncFw/ApplicationNotifier> @brief The ApplicationNotifier class.
+@brief Example: @snippet ApplicationNotifier/main.cpp snippet */
 class ApplicationNotifier {
 public:
-  /*! \brief The Value struct. */
+  /** @brief The Value struct. */
   struct Value : public AnyData {
     Value(int type, const std::any &data = {}) : AnyData(data), type(type) {}
     int type;
@@ -27,7 +27,7 @@ public:
   ApplicationNotifier();
   virtual ~ApplicationNotifier();
 
-  /*! \brief The ApplicationNotifier::notify connector */
+  /** @brief The ApplicationNotifier::notify connector */
   FunctionConnector<const Value &> notify;
 
 private:

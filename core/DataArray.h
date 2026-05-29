@@ -7,7 +7,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #pragma once
 
-/*! \file DataArray.h \brief The DataArray, DataArrayView, DataArrayList and DataStream classes. */
+/** @file DataArray.h @brief The DataArray, DataArrayView, DataArrayList and DataStream classes. */
 
 #include <vector>
 #include <cstdint>
@@ -18,8 +18,8 @@ class DataArrayList;
 class DataArrayView;
 class LogStream;
 
-/*! \class DataArray DataArray.h <AsyncFw/DataArray> \brief The DataArray class, provides an array of bytes.
-\brief Example: \snippet DataArray/main.cpp snippet */
+/** @class DataArray DataArray.h <AsyncFw/DataArray> @brief The DataArray class, provides an array of bytes.
+@brief Example: @snippet DataArray/main.cpp snippet */
 class DataArray : public std::vector<uint8_t> {
 public:
   static DataArray compress(const DataArrayView &);
@@ -36,8 +36,8 @@ public:
   DataArray operator+(const char);
 };
 
-/*! \class DataArrayView DataArray.h <AsyncFw/DataArray> \brief The DataArrayView class.
-\brief Example: \snippet DataArray/main.cpp snippet */
+/** @class DataArrayView DataArray.h <AsyncFw/DataArray> @brief The DataArrayView class.
+@brief Example: @snippet DataArray/main.cpp snippet */
 class DataArrayView : public std::string_view {
 public:
   template <typename... Args>
@@ -48,16 +48,16 @@ public:
   DataArrayList split(const char) const;
 };
 
-/*! \class DataArrayList DataArray.h <AsyncFw/DataArray> \brief The DataArrayList class.
-\brief Example: \snippet DataArray/main.cpp snippet */
+/** @class DataArrayList DataArray.h <AsyncFw/DataArray> @brief The DataArrayList class.
+@brief Example: @snippet DataArray/main.cpp snippet */
 class DataArrayList : public std::vector<DataArray> {
 public:
   using std::vector<DataArray>::vector;
   DataArray join(const char) const;
 };
 
-/*! \class DataStream DataArray.h <AsyncFw/DataArray> \brief The DataStream class.
-\brief Example: \snippet DataArray/main.cpp snippet */
+/** @class DataStream DataArray.h <AsyncFw/DataArray> @brief The DataStream class.
+@brief Example: @snippet DataArray/main.cpp snippet */
 class DataStream {
 public:
   DataStream();

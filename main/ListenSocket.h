@@ -7,14 +7,14 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #pragma once
 
-/*! \file ListenSocket.h \brief The ListenSocket class. */
+/** @file ListenSocket.h @brief The ListenSocket class. */
 
 #include "../core/AbstractSocket.h"
 #include "../core/FunctionConnector.h"
 
 namespace AsyncFw {
-/*! \class ListenSocket ListenSocket.h <AsyncFw/ListenSocket> \brief The ListenSocket class.
-\brief Example: \snippet ListenSocket/main.cpp snippet */
+/** @class ListenSocket ListenSocket.h <AsyncFw/ListenSocket> @brief The ListenSocket class.
+@brief Example: @snippet ListenSocket/main.cpp snippet */
 class ListenSocket : private AbstractSocket {
 public:
   using AbstractSocket::address;
@@ -23,7 +23,7 @@ public:
   using AbstractSocket::listen;
   using AbstractSocket::port;
   ~ListenSocket();
-  /*! \brief The FunctionConnector for incoming connections. */
+  /** @brief The FunctionConnector for incoming connections. */
   AsyncFw::FunctionConnector<int, const std::string &, bool *>::Protected<ListenSocket> incoming {AsyncFw::AbstractFunctionConnector::SyncOnly};
 
 protected:

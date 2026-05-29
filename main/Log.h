@@ -7,7 +7,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #pragma once
 
-/*! \file Log.h \brief The AbstractLog and Log classes. */
+/** @file Log.h @brief The AbstractLog and Log classes. */
 
 #include <queue>
 
@@ -18,7 +18,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #define _messages_ 8
 
 namespace AsyncFw {
-/*! \class AbstractLog Log.h <AsyncFw/Log> \brief The AbstractLog class provides the base functionality for logger. */
+/** @class AbstractLog Log.h <AsyncFw/Log> @brief The AbstractLog class provides the base functionality for logger. */
 class AbstractLog {
 public:
   using Message = LogStream::Message;
@@ -66,8 +66,8 @@ private:
   std::vector<std::string> filter;
 };
 
-/*! \class Log Log.h <AsyncFw/Log> \brief The Log class.
-\brief Example: \snippet Log/main.cpp snippet */
+/** @class Log Log.h <AsyncFw/Log> @brief The Log class.
+@brief Example: @snippet Log/main.cpp snippet */
 class Log : public Rrd, public AbstractLog {
 public:
   using Message = LogStream::Message;

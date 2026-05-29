@@ -1,24 +1,24 @@
-/*! \example ApplicationNotifier/main.cpp ApplicationNotifier example */
-/*! \example ContainerTask/main.cpp Task in container example */
-/*! \example Coroutine/main.cpp Coroutine example */
-/*! \example CoroutineInvoke/main.cpp Coroutine invoke example */
-/*! \example CoroutineWait/main.cpp Coroutine wait example */
-/*! \example Cryptor/main.cpp Cryptor example */
-/*! \example DataArray/main.cpp DataArray example */
-/*! \example DataArrayTcp/main.cpp DataArrayTcpServer and DataArrayTcpClient example */
-/*! \example FileSystemWatcher/main.cpp FileSystemWatcher example */
-/*! \example FunctionConnector/main.cpp FunctionConnector example */
-/*! \example HttpServer/main.cpp HttpServer example */
-/*! \example HttpSocket/main.cpp HttpSocket example */
-/*! \example ThreadInvoke/main.cpp Thread invoke example */
-/*! \example ListenSocket/main.cpp ListenSocket example */
-/*! \example Log/main.cpp Log example */
-/*! \example LogTcp/main.cpp Remote log example */
-/*! \example MulticastDns/main.cpp MulticastDns example */
-/*! \example Socket/main.cpp Socket example */
-/*! \example Stdin/main.cpp Stdin example \warning Unix-like systems only */
-/*! \example SystemProcess/main.cpp SystemProcess example */
-/*! \example ThreadPool/main.cpp ThreadPool example */
-/*! \example Timer/main.cpp Timer example */
-/*! \example TlsContext/main.cpp TlsContext example */
-/*! \example Uart/main.cpp PollNotifier example \warning Unix-like systems only */
+/** @example ApplicationNotifier/main.cpp ApplicationNotifier example */
+/** @example ContainerTask/main.cpp Task in container example */
+/** @example Coroutine/main.cpp Coroutine example */
+/** @example CoroutineInvoke/main.cpp Coroutine invoke example */
+/** @example CoroutineWait/main.cpp Coroutine wait example */
+/** @example Cryptor/main.cpp Cryptor example */
+/** @example DataArray/main.cpp DataArray example */
+/** @example DataArrayTcp/main.cpp DataArrayTcpServer and DataArrayTcpClient example */
+/** @example FileSystemWatcher/main.cpp FileSystemWatcher example */
+/** @example FunctionConnector/main.cpp FunctionConnector example */
+/** @example HttpServer/main.cpp HttpServer example */
+/** @example HttpSocket/main.cpp HttpSocket example */
+/** @example ThreadInvoke/main.cpp Thread invoke example */
+/** @example ListenSocket/main.cpp ListenSocket example */
+/** @example Log/main.cpp Log example */
+/** @example LogTcp/main.cpp Remote log example */
+/** @example MulticastDns/main.cpp MulticastDns example */
+/** @example Socket/main.cpp Socket example */
+/** @example Stdin/main.cpp Stdin example \warning Unix-like systems only */
+/** @example SystemProcess/main.cpp SystemProcess example */
+/** @example ThreadPool/main.cpp ThreadPool example */
+/** @example Timer/main.cpp Timer example */
+/** @example TlsContext/main.cpp TlsContext example */
+/** @example Uart/main.cpp PollNotifier example \warning Unix-like systems only */

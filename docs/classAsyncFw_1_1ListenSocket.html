@@ -32,7 +32,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">AsyncFw<span id="projectnumber">&#160;1.2</span>
+   <div id="projectname">AsyncFw<span id="projectnumber">&#160;1.3</span>
    </div>
    <div id="projectbrief">Async Framework is c++ runtime with timers, poll notifiers, sockets, coroutines, etc.</div>
   </td>
@@ -124,7 +124,7 @@ Inheritance diagram for AsyncFw::ListenSocket:</div>
 <div class="dynheader">
 Collaboration diagram for AsyncFw::ListenSocket:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1ListenSocket__coll__graph.svg" width="1534" height="170"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1ListenSocket__coll__graph.svg" width="1291" height="198"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
@@ -149,10 +149,10 @@ uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>port</b> () const
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a7625814dc59ba2cc349c69114416e79a" id="r_a7625814dc59ba2cc349c69114416e79a"><td class="memItemLeft" align="right" valign="top"><a id="a7625814dc59ba2cc349c69114416e79a" name="a7625814dc59ba2cc349c69114416e79a"></a>
-<a class="el" href="classAsyncFw_1_1FunctionConnectorProtected.html">AsyncFw::FunctionConnectorProtected</a>&lt; <a class="el" href="classAsyncFw_1_1ListenSocket.html">ListenSocket</a> &gt;::Connector&lt; int, const std::string &amp;, bool * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>incoming</b> {AsyncFw::AbstractFunctionConnector::SyncOnly}</td></tr>
-<tr class="memdesc:a7625814dc59ba2cc349c69114416e79a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="classAsyncFw_1_1FunctionConnector.html" title="Provides a sender-to-receivers connection. Receivers can be invoked in their own threads (default beh...">FunctionConnector</a> for incoming connections. <br /></td></tr>
-<tr class="separator:a7625814dc59ba2cc349c69114416e79a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a46a4bfdbf8a2b3139c704f5dc6ec2832" id="r_a46a4bfdbf8a2b3139c704f5dc6ec2832"><td class="memItemLeft" align="right" valign="top"><a id="a46a4bfdbf8a2b3139c704f5dc6ec2832" name="a46a4bfdbf8a2b3139c704f5dc6ec2832"></a>
+<a class="el" href="classAsyncFw_1_1FunctionConnector.html">AsyncFw::FunctionConnector</a>&lt; int, const std::string &amp;, bool * &gt;::Protected&lt; <a class="el" href="classAsyncFw_1_1ListenSocket.html">ListenSocket</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>incoming</b> {AsyncFw::AbstractFunctionConnector::SyncOnly}</td></tr>
+<tr class="memdesc:a46a4bfdbf8a2b3139c704f5dc6ec2832"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="classAsyncFw_1_1FunctionConnector.html" title="Provides a sender-to-receivers connection. Receivers can be invoked in their own threads (default beh...">FunctionConnector</a> for incoming connections. <br /></td></tr>
+<tr class="separator:a46a4bfdbf8a2b3139c704f5dc6ec2832"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -176,13 +176,13 @@ Protected Member Functions</h2></td></tr>
 <div class="line">    logDebug() &lt;&lt; <span class="stringliteral">&quot;State event:&quot;</span> &lt;&lt; <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(state_);</div>
 <div class="line">  }</div>
 <div class="line">  <span class="keywordtype">void</span> <a class="code hl_function" href="classAsyncFw_1_1AbstractSocket.html#a609ec54ec8aed39769d60319c4c15833">readEvent</a>() { received(read()); }</div>
-<div class="line">  AsyncFw::FunctionConnectorProtected&lt;TcpSocket&gt;::Connector&lt;<span class="keyword">const</span> AsyncFw::DataArray &amp;&gt; received;</div>
-<div class="line">  AsyncFw::FunctionConnectorProtected&lt;TcpSocket&gt;::Connector&lt;<a class="code hl_enumeration" href="classAsyncFw_1_1AbstractSocket.html#a6fc3dae51b6b38d67f1c3861dcbb23bd">AsyncFw::AbstractSocket::State</a>&gt; stateChanged;</div>
+<div class="line">  AsyncFw::FunctionConnector&lt;const AsyncFw::DataArray &amp;&gt;::Protected&lt;TcpSocket&gt; received;</div>
+<div class="line">  <a class="code hl_typedef" href="classAsyncFw_1_1FunctionConnector.html#a734e080cd73646c75b4b40fe5aa8d19d">AsyncFw::FunctionConnector&lt;AsyncFw::AbstractSocket::State&gt;::Protected</a>&lt;TcpSocket&gt; stateChanged;</div>
 <div class="line">};</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[]) {</div>
 <div class="line">  <a class="code hl_class" href="classAsyncFw_1_1ListenSocket.html">AsyncFw::ListenSocket</a> ls;</div>
-<div class="line">  ls.<a class="code hl_variable" href="#a7625814dc59ba2cc349c69114416e79a">incoming</a>.connect([](<span class="keywordtype">int</span> fd, <span class="keyword">const</span> std::string &amp;address, <span class="keywordtype">bool</span> *accept) {</div>
+<div class="line">  ls.<a class="code hl_variable" href="#a46a4bfdbf8a2b3139c704f5dc6ec2832">incoming</a>.<a class="code hl_function" href="classAsyncFw_1_1FunctionConnector.html#ab0c621be7a792e256acab8241ae563a0">connect</a>([](<span class="keywordtype">int</span> fd, <span class="keyword">const</span> std::string &amp;address, <span class="keywordtype">bool</span> *accept) {</div>
 <div class="line">    TcpSocket *socket = TcpSocket::create();</div>
 <div class="line">    socket-&gt;setDescriptor(fd);</div>
 <div class="line">    socket-&gt;received.connect([socket](<span class="keyword">const</span> <a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> &amp;data) {</div>
@@ -213,7 +213,7 @@ Protected Member Functions</h2></td></tr>
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">return</span> ret;</div>
 <div class="line">}</div>
-</div><!-- fragment --> <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="ListenSocket_2main_8cpp-example.html#_a4">ListenSocket/main.cpp</a>.</dd>
+</div><!-- fragment --> <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="ListenSocket_2main_8cpp-example.html#_a3">ListenSocket/main.cpp</a>.</dd>
 </dl>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="ac1bc405f0f80094fd63f200f81977c57" name="ac1bc405f0f80094fd63f200f81977c57"></a>
@@ -331,7 +331,7 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if success. </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="ListenSocket_2main_8cpp-example.html#a7">ListenSocket/main.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="ListenSocket_2main_8cpp-example.html#a8">ListenSocket/main.cpp</a>.</dd>
 </dl>
 
 </div>

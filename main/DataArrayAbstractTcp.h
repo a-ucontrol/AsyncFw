@@ -7,7 +7,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #pragma once
 
-/*! \file DataArrayAbstractTcp.h \brief The DataArrayAbstractTcp class. */
+/** @file DataArrayAbstractTcp.h @brief The DataArrayAbstractTcp class. */
 
 #include "../core/FunctionConnector.h"
 #include "ThreadPool.h"
@@ -17,7 +17,7 @@ class DataArraySocket;
 class DataArray;
 class TlsContext;
 
-/*! \class DataArrayAbstractTcp DataArrayAbstractTcp.h <AsyncFw/DataArrayAbstractTcp> \brief The DataArrayAbstractTcp class. */
+/** @class DataArrayAbstractTcp DataArrayAbstractTcp.h <AsyncFw/DataArrayAbstractTcp> @brief The DataArrayAbstractTcp class. */
 class DataArrayAbstractTcp : public AbstractThreadPool {
 public:
   enum Result {

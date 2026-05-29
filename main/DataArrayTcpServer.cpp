@@ -60,6 +60,10 @@ bool DataArrayTcpServer::incomingConnection(int socketDescriptor, const std::str
   return true;
 }
 
+#if !defined LS_NO_ERROR
+  #define AsyncFw_THREAD this
+#endif
+
 void DataArrayTcpServer::Thread::createSocket(int socketDescriptor, bool encrypt) {
   checkCurrentThread();
   DataArraySocket *tcpSocket = new DataArraySocket();

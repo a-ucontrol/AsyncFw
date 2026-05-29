@@ -86,7 +86,6 @@ void DataArrayAbstractTcp::Thread::socketInit(DataArraySocket *socket) {
 }
 
 void DataArrayAbstractTcp::Thread::destroySocket(DataArraySocket *socket) {
-  checkCurrentThread();
   socket->removeTimer();
   socket->close();
   socket->removeFromThread();

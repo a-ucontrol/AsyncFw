@@ -7,7 +7,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #pragma once
 
-/*! \file HttpServer.h \brief The HttpServer class. */
+/** @file HttpServer.h @brief The HttpServer class. */
 
 #include <map>
 #include <memory>
@@ -19,8 +19,8 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 class WebSocket;
 namespace AsyncFw {
 using namespace AsyncFw;
-/*! \class HttpServer HttpServer.h <AsyncFw/HttpServer> \brief The HttpServer class.
-\brief Example: \snippet HttpServer/main.cpp snippet */
+/** @class HttpServer HttpServer.h <AsyncFw/HttpServer> @brief The HttpServer class.
+@brief Example: @snippet HttpServer/main.cpp snippet */
 class HttpServer {
   friend LogStream &operator<<(LogStream &, const HttpServer &);
 

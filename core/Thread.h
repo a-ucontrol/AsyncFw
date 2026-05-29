@@ -7,38 +7,38 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #pragma once
 
-/*! \file Thread.h \brief The Thread class. */
+/** @file Thread.h @brief The Thread class. */
 
 #include "FunctionConnector.h"
 
 namespace AsyncFw {
 class AbstractSocket;
 
-/*! \class Thread Thread.h <AsyncFw/Thread> \brief AsyncFw::Thread thread with sockets. */
+/** @class Thread Thread.h <AsyncFw/Thread> @brief AsyncFw::Thread thread with sockets. */
 class Thread : public AbstractThread {
   friend AbstractSocket;
   friend class ListenSocket;
   friend LogStream &operator<<(LogStream &, const Thread &);
 
 public:
-  /*! \brief Returns a pointer to the AsyncFw::Thread that manages the currently executing thread. */
+  /** @brief Returns a pointer to the AsyncFw::Thread that manages the currently executing thread. */
   static Thread *current();
 
-  /*! \brief Constructs a thread. \param name thread name */
+  /** @brief Constructs a thread. @param name thread name */
   Thread(const std::string & = "Thread");
   ~Thread() override;
 
-  /*! \brief The Thread::started connector */
+  /** @brief The Thread::started connector */
   FunctionConnector<>::Protected<Thread> started {AbstractFunctionConnector::Direct};
-  /*! \brief The Thread::finished connector */
+  /** @brief The Thread::finished connector */
   FunctionConnector<>::Protected<Thread> finished {AbstractFunctionConnector::Direct};
-  /*! \brief The Thread::destroing connector */
+  /** @brief The Thread::destroing connector */
   FunctionConnector<>::Protected<Thread> destroing {AbstractFunctionConnector::Direct};
 
 protected:
-  /*! \brief Runs started() */
+  /** @brief Runs started() */
   void startedEvent() override;
-  /*! \brief Runs finished() */
+  /** @brief Runs finished() */
   void finishedEvent() override;
 
   std::vector<AbstractSocket *> sockets_;

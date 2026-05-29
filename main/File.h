@@ -7,14 +7,14 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #pragma once
 
-/*! \file File.h \brief The File class. */
+/** @file File.h @brief The File class. */
 
 #include <ios>
 #include <cstdint>
 
 namespace AsyncFw {
 class DataArray;
-/*! \class File File.h <AsyncFw/File> \brief The File class. */
+/** @class File File.h <AsyncFw/File> @brief The File class. */
 class File {
 public:
   File(const std::string & = {});

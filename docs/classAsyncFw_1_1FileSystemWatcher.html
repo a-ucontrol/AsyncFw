@@ -32,7 +32,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">AsyncFw<span id="projectnumber">&#160;1.2</span>
+   <div id="projectname">AsyncFw<span id="projectnumber">&#160;1.3</span>
    </div>
    <div id="projectbrief">Async Framework is c++ runtime with timers, poll notifiers, sockets, coroutines, etc.</div>
   </td>
@@ -120,7 +120,7 @@ $(function(){initNavTree('classAsyncFw_1_1FileSystemWatcher.html',''); initResiz
 <div class="dynheader">
 Collaboration diagram for AsyncFw::FileSystemWatcher:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1FileSystemWatcher__coll__graph.svg" width="324" height="267"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1FileSystemWatcher__coll__graph.svg" width="320" height="359"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
@@ -152,10 +152,10 @@ static <a class="el" href="classAsyncFw_1_1FileSystemWatcher.html">FileSystemWat
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a4d97340ee2f2378dd516411f56ed8498" id="r_a4d97340ee2f2378dd516411f56ed8498"><td class="memItemLeft" align="right" valign="top"><a id="a4d97340ee2f2378dd516411f56ed8498" name="a4d97340ee2f2378dd516411f56ed8498"></a>
-<a class="el" href="classAsyncFw_1_1FunctionConnectorProtected.html">FunctionConnectorProtected</a>&lt; <a class="el" href="classAsyncFw_1_1FileSystemWatcher.html">FileSystemWatcher</a> &gt;::Connector&lt; const std::string &amp;, int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>notify</b></td></tr>
-<tr class="memdesc:a4d97340ee2f2378dd516411f56ed8498"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="classAsyncFw_1_1FunctionConnector.html" title="Provides a sender-to-receivers connection. Receivers can be invoked in their own threads (default beh...">FunctionConnector</a> for notification of file-related events. <br /></td></tr>
-<tr class="separator:a4d97340ee2f2378dd516411f56ed8498"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c808b22785dbc3182a9e7fa600b0919" id="r_a4c808b22785dbc3182a9e7fa600b0919"><td class="memItemLeft" align="right" valign="top"><a id="a4c808b22785dbc3182a9e7fa600b0919" name="a4c808b22785dbc3182a9e7fa600b0919"></a>
+<a class="el" href="classAsyncFw_1_1FunctionConnector.html">FunctionConnector</a>&lt; const std::string &amp;, int &gt;::Protected&lt; <a class="el" href="classAsyncFw_1_1FileSystemWatcher.html">FileSystemWatcher</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>notify</b></td></tr>
+<tr class="memdesc:a4c808b22785dbc3182a9e7fa600b0919"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="classAsyncFw_1_1FunctionConnector.html" title="Provides a sender-to-receivers connection. Receivers can be invoked in their own threads (default beh...">FunctionConnector</a> for notification of file-related events. <br /></td></tr>
+<tr class="separator:a4c808b22785dbc3182a9e7fa600b0919"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="friends" name="friends"></a>
 Friends</h2></td></tr>
@@ -178,7 +178,7 @@ Friends</h2></td></tr>
 <div class="line"><span class="preprocessor">#endif</span></div>
 <div class="line"> </div>
 <div class="line">  <a class="code hl_class" href="classAsyncFw_1_1FileSystemWatcher.html">FileSystemWatcher</a> watcher {{<span class="stringliteral">&quot;/tmp/FileSystemWatcher.example&quot;</span>}};</div>
-<div class="line">  watcher.<a class="code hl_variable" href="#a4d97340ee2f2378dd516411f56ed8498">notify</a>.connect([](<span class="keyword">const</span> std::string &amp;name, <span class="keywordtype">int</span> event) {</div>
+<div class="line">  watcher.<a class="code hl_variable" href="#a4c808b22785dbc3182a9e7fa600b0919">notify</a>.<a class="code hl_function" href="classAsyncFw_1_1FunctionConnector.html#ab0c621be7a792e256acab8241ae563a0">connect</a>([](<span class="keyword">const</span> std::string &amp;name, <span class="keywordtype">int</span> event) {</div>
 <div class="line">    lsInfoMagenta() &lt;&lt; <span class="stringliteral">&quot;file:&quot;</span> &lt;&lt; name &lt;&lt; event;  <span class="comment">// event: -1 removed / 0 changed / 1 created</span></div>
 <div class="line">    <a class="code hl_function" href="classAsyncFw_1_1MainThread.html#a76fed3a2c1cfdbdb67f2b209e6457657">MainThread::exit</a>();</div>
 <div class="line">  });</div>

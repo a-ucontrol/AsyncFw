@@ -7,7 +7,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #pragma once
 
-/*! \file HttpSocket.h \brief The HttpSocket class. */
+/** @file HttpSocket.h @brief The HttpSocket class. */
 
 #include "../core/FunctionConnector.h"
 #include "../core/DataArray.h"
@@ -15,8 +15,8 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include "File.h"
 
 namespace AsyncFw {
-/*! \class HttpSocket HttpSocket.h <AsyncFw/HttpSocket> \brief The HttpSocket class.
-\brief Example: \snippet HttpSocket/main.cpp snippet */
+/** @class HttpSocket HttpSocket.h <AsyncFw/HttpSocket> @brief The HttpSocket class.
+@brief Example: @snippet HttpSocket/main.cpp snippet */
 class HttpSocket : public AsyncFw::AbstractTlsSocket {
   friend LogStream &operator<<(LogStream &, const HttpSocket &);
 

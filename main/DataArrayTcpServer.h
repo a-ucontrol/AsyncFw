@@ -7,7 +7,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #pragma once
 
-/*! \file DataArrayTcpServer.h \brief The DataArrayTcpServer class. */
+/** @file DataArrayTcpServer.h @brief The DataArrayTcpServer class. */
 
 #include "../core/TlsContext.h"
 #include "ListenSocket.h"
@@ -15,7 +15,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 namespace AsyncFw {
 class ListenSocket;
-/*! \class DataArrayTcpServer DataArrayTcpServer.h <AsyncFw/DataArrayTcpServer> \brief The DataArrayTcpServer class. */
+/** @class DataArrayTcpServer DataArrayTcpServer.h <AsyncFw/DataArrayTcpServer> @brief The DataArrayTcpServer class. */
 class DataArrayTcpServer : public DataArrayAbstractTcp {
 public:
   DataArrayTcpServer(const std::string & = "TcpServer");

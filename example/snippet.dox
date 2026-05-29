@@ -41,6 +41,21 @@ void example() {
   for (const std::string _s : list) logNotice() << _s;
   //! [AddressResolver coro]
 
+  //! [FunctionConnectorProtected]
+  class Sensor {
+  public:
+    // Public interface for subscriptions, but emission is restricted to Sensor
+    FunctionConnector<int>::Protected<Sensor> valueChanged;
+    void update(int val) {
+      valueChanged(val);  // OK: Emission is allowed inside Sensor
+    }
+  };
+  // External code:
+  Sensor sensor;
+  sensor.valueChanged.connect([](int v) { ... });  // OK: Subscription works
+  // sensor.valueChanged(42); // COMPILER ERROR: Emission from outside is forbidden!
+  //! [FunctionConnectorProtected]
+
   //! [LogStream]
   lsTrace() << "Trace";
   lsDebug() << "Debug";

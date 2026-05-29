@@ -7,7 +7,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #pragma once
 
-/*! \file RrdClient.h \brief The RrdClient class. */
+/** @file RrdClient.h @brief The RrdClient class. */
 
 #include "../core/FunctionConnector.h"
 
@@ -17,7 +17,7 @@ class DataArray;
 class TlsContext;
 class DataArraySocket;
 
-/*! \class RrdClient RrdClient.h <AsyncFw/RrdClient> \brief The RrdClient class */
+/** @class RrdClient RrdClient.h <AsyncFw/RrdClient> @brief The RrdClient class */
 class RrdClient {
 public:
   RrdClient(DataArraySocket *, const std::vector<Rrd *> &);

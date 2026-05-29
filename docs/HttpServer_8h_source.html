@@ -32,7 +32,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">AsyncFw<span id="projectnumber">&#160;1.2</span>
+   <div id="projectname">AsyncFw<span id="projectnumber">&#160;1.3</span>
    </div>
    <div id="projectbrief">Async Framework is c++ runtime with timers, poll notifiers, sockets, coroutines, etc.</div>
   </td>
@@ -380,7 +380,7 @@ $(function(){initNavTree('HttpServer_8h_source.html',''); initResizable(true); }
 <div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>  <span class="keywordtype">void</span> setEnableCorsRequests(<span class="keywordtype">bool</span>);</div>
 <div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span> </div>
 <div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>  <span class="keyword">static</span> <span class="keyword">inline</span> HttpServer *instance() { <span class="keywordflow">return</span> instance_.value; }</div>
-<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>  AsyncFw::FunctionConnectorProtected&lt;HttpServer&gt;::Connector&lt;int, <span class="keyword">const</span> std::string &amp;, <span class="keywordtype">bool</span> *&gt; incoming {AsyncFw::AbstractFunctionConnector::SyncOnly};</div>
+<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>  <a class="code hl_typedef" href="classAsyncFw_1_1FunctionConnector.html#a734e080cd73646c75b4b40fe5aa8d19d">AsyncFw::FunctionConnector&lt;int, const std::string &amp;, bool *&gt;::Protected</a>&lt;HttpServer&gt; incoming {AsyncFw::AbstractFunctionConnector::SyncOnly};</div>
 <div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span> </div>
 <div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span><span class="keyword">protected</span>:</div>
 <div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>  <span class="keyword">virtual</span> <span class="keywordtype">void</span> fileUploadProgress(TcpSocket *, <span class="keywordtype">int</span>);</div>
@@ -402,8 +402,9 @@ $(function(){initNavTree('HttpServer_8h_source.html',''); initResizable(true); }
 <div class="ttc" id="aHttpSocket_8h_html"><div class="ttname"><a href="HttpSocket_8h.html">HttpSocket.h</a></div><div class="ttdoc">The HttpSocket class.</div></div>
 <div class="ttc" id="aInstance_8h_html"><div class="ttname"><a href="Instance_8h.html">Instance.h</a></div><div class="ttdoc">The AbstractInstance and Instance classes.</div></div>
 <div class="ttc" id="aTlsContext_8h_html"><div class="ttname"><a href="TlsContext_8h.html">TlsContext.h</a></div><div class="ttdoc">The TlsContext class.</div></div>
-<div class="ttc" id="aclassAsyncFw_1_1AbstractSocket_html_ab05320fcb1c111e06a56587b4abbb639"><div class="ttname"><a href="classAsyncFw_1_1AbstractSocket.html#ab05320fcb1c111e06a56587b4abbb639">AsyncFw::AbstractSocket::peerAddress</a></div><div class="ttdeci">std::string peerAddress() const</div><div class="ttdoc">Return peer address.</div><div class="ttdef"><b>Definition</b> AbstractSocket.cpp:392</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1AbstractSocket_html_ab05320fcb1c111e06a56587b4abbb639"><div class="ttname"><a href="classAsyncFw_1_1AbstractSocket.html#ab05320fcb1c111e06a56587b4abbb639">AsyncFw::AbstractSocket::peerAddress</a></div><div class="ttdeci">std::string peerAddress() const</div><div class="ttdoc">Return peer address.</div><div class="ttdef"><b>Definition</b> AbstractSocket.cpp:394</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1DataArray_html"><div class="ttname"><a href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a></div><div class="ttdoc">The DataArray class, provides an array of bytes.</div><div class="ttdef"><b>Definition</b> DataArray.h:23</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1FunctionConnector_html_a734e080cd73646c75b4b40fe5aa8d19d"><div class="ttname"><a href="classAsyncFw_1_1FunctionConnector.html#a734e080cd73646c75b4b40fe5aa8d19d">AsyncFw::FunctionConnector::Protected</a></div><div class="ttdeci">internal::FunctionConnectorProtected&lt; T, Args... &gt; Protected</div><div class="ttdoc">A protected connector where only a single designated sender class can emit messages.</div><div class="ttdef"><b>Definition</b> FunctionConnector.h:117</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1HttpSocket_html"><div class="ttname"><a href="classAsyncFw_1_1HttpSocket.html">AsyncFw::HttpSocket</a></div><div class="ttdoc">The HttpSocket class.</div><div class="ttdef"><b>Definition</b> HttpSocket.h:20</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1Instance_html"><div class="ttname"><a href="classAsyncFw_1_1Instance.html">AsyncFw::Instance</a></div><div class="ttdoc">A template-based global registry wrapper for managing application-wide unique objects (Singletons).</div><div class="ttdef"><b>Definition</b> Instance.h:42</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1LogStream_html"><div class="ttname"><a href="classAsyncFw_1_1LogStream.html">AsyncFw::LogStream</a></div><div class="ttdoc">A high-performance, thread-safe logging stream utility utilizing RAII execution semantics.</div><div class="ttdef"><b>Definition</b> LogStream.h:48</div></div>

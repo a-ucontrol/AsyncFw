@@ -7,7 +7,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #pragma once
 
-/*! \file DataArraySocket.h \brief The DataArraySocket class. */
+/** @file DataArraySocket.h @brief The DataArraySocket class. */
 
 #include <deque>
 #include "../core/AbstractTlsSocket.h"
@@ -15,7 +15,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 namespace AsyncFw {
 class TlsContext;
-/*! \class DataArraySocket DataArraySocket.h <AsyncFw/DataArraySocket> \brief The DataArraySocket class. */
+/** @class DataArraySocket DataArraySocket.h <AsyncFw/DataArraySocket> @brief The DataArraySocket class. */
 class DataArraySocket : public AbstractTlsSocket {
   friend class DataArrayAbstractTcp;
   friend class DataArrayTcpServer;

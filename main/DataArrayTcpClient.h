@@ -7,12 +7,12 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #pragma once
 
-/*! \file DataArrayTcpClient.h \brief The DataArrayTcpClient class. */
+/** @file DataArrayTcpClient.h @brief The DataArrayTcpClient class. */
 
 #include "DataArrayAbstractTcp.h"
 
 namespace AsyncFw {
-/*! \class DataArrayTcpClient DataArrayTcpClient.h <AsyncFw/DataArrayTcpClient> \brief The DataArrayTcpClient class. */
+/** @class DataArrayTcpClient DataArrayTcpClient.h <AsyncFw/DataArrayTcpClient> @brief The DataArrayTcpClient class. */
 class DataArrayTcpClient : public DataArrayAbstractTcp {
 protected:
   class Thread : public DataArrayAbstractTcp::Thread {

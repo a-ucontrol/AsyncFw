@@ -7,15 +7,15 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #pragma once
 
-/*! \file FileSystemWatcher.h \brief The FileSystemWatcher class. */
+/** @file FileSystemWatcher.h @brief The FileSystemWatcher class. */
 
 #include <string>
 #include "../core/FunctionConnector.h"
 #include "../main/Instance.h"
 
 namespace AsyncFw {
-/*! \class FileSystemWatcher FileSystemWatcher.h <AsyncFw/FileSystemWatcher> \brief The FileSystemWatcher class.
-\brief Example: \snippet FileSystemWatcher/main.cpp snippet */
+/** @class FileSystemWatcher FileSystemWatcher.h <AsyncFw/FileSystemWatcher> @brief The FileSystemWatcher class.
+@brief Example: @snippet FileSystemWatcher/main.cpp snippet */
 class FileSystemWatcher {
   friend LogStream &operator<<(LogStream &, const FileSystemWatcher &);
 
@@ -29,7 +29,7 @@ public:
   bool removePaths(const std::vector<std::string> &paths);
   std::vector<std::string> paths() const;
 
-  /*! \brief The FunctionConnector for notification of file-related events. */
+  /** @brief The FunctionConnector for notification of file-related events. */
   FunctionConnector<const std::string &, int>::Protected<FileSystemWatcher> notify;
 
 private:

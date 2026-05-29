@@ -7,14 +7,14 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #pragma once
 
-/*! \file Task.h \brief The AbstractTask and Task classes. */
-/*! \example ContainerTask/main.cpp ContainerTask example */
+/** @file Task.h @brief The AbstractTask and Task classes. */
+/** @example ContainerTask/main.cpp ContainerTask example */
 
 #include "../core/AbstractThread.h"
 #include "../core/AnyData.h"
 
 namespace AsyncFw {
-/*! \class AbstractTask Task.h <AsyncFw/Task> \brief The AbstractTask class. */
+/** @class AbstractTask Task.h <AsyncFw/Task> @brief The AbstractTask class. */
 class AbstractTask : public AsyncFw::AbstractThread::AbstractTask, public AnyData {
 public:
   AbstractTask(AbstractThread * = nullptr);
@@ -26,7 +26,7 @@ protected:
   AbstractThread *thread_;
 };
 
-/*! \class Task Task.h <AsyncFw/Task> \brief The Task class. */
+/** @class Task Task.h <AsyncFw/Task> @brief The Task class. */
 template <typename F>
 class Task : public AbstractTask {
 public:

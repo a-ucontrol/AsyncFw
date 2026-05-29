@@ -35,8 +35,9 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #include "AbstractSocket.h"
 
-#define SOCKET_CONNECTION_QUEUED 16
-//#define SOCKET_REUSEPORT
+#if !defined LS_NO_ERROR
+  #define AsyncFw_THREAD thread_
+#endif
 
 #ifdef EXTEND_SOCKET_TRACE
   #define trace LogStream(+LogStream::Trace | LogStream::Black, __PRETTY_FUNCTION__, __FILE__, __LINE__, LS_DEFAULT_FLAGS | LOG_STREAM_CONSOLE_ONLY).output
@@ -48,6 +49,9 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
   #define warning_if(x) \
     if constexpr (0) LogStream()
 #endif
+
+#define SOCKET_CONNECTION_QUEUED 16
+//#define SOCKET_REUSEPORT
 
 using namespace AsyncFw;
 
@@ -64,9 +68,6 @@ struct AbstractSocket::Private {
   int protocol_ = IPPROTO_TCP;
   int rs_ = 0;
 };
-
-#undef AsyncFw_THREAD
-#define AsyncFw_THREAD this->thread()
 
 AbstractSocket::AbstractSocket() : private_(*new Private) {
   private_.la_.ss_family = AF_INET;
@@ -369,7 +370,8 @@ int AbstractSocket::pendingRead() const {
 }
 
 int AbstractSocket::pendingWrite() const {
-  checkCurrentThread();
+  //checkCurrentThread();
+  if (std::this_thread::get_id() != AsyncFw_THREAD->id()) lsError() << "executed from different thread";
   return private_.wda_.size();
 }
 

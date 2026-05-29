@@ -16,6 +16,10 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
   #define EPOLL_WAIT
 #endif
 
+#if !defined LS_NO_ERROR
+  #define AsyncFw_THREAD this
+#endif
+
 #ifdef EXTEND_THREAD_TRACE
   #define trace LogStream(+LogStream::Debug | LogStream::Black, __PRETTY_FUNCTION__, __FILE__, __LINE__, LS_DEFAULT_FLAGS | LOG_STREAM_CONSOLE_ONLY).output
   #define warning_if(x) \

@@ -1,21 +1,21 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
 <area shape="rect" id="Node000000" href="$structAsyncFw_1_1AnyData.html" title="The AnyData class." alt="" coords="5,161,141,188"/>
 <area shape="rect" id="Node000001" href="$classAsyncFw_1_1AbstractSocket.html" title="Abstract base class providing core network socket functionality and OS descriptor abstraction." alt="" coords="197,81,371,108"/>
-<area shape="poly" id="edge20_Node000000_Node000001" title=" " alt="" coords="112,151,188,118,224,106,225,111,190,122,115,156"/>
+<area shape="poly" id="edge34_Node000000_Node000001" title=" " alt="" coords="112,151,188,118,224,106,225,111,190,122,115,156"/>
 <area shape="rect" id="Node000006" href="$classAsyncFw_1_1AbstractTask.html" title="The AbstractTask class." alt="" coords="203,132,364,159"/>
-<area shape="poly" id="edge25_Node000000_Node000006" title=" " alt="" coords="156,161,202,154,203,159,156,166"/>
+<area shape="poly" id="edge39_Node000000_Node000006" title=" " alt="" coords="156,161,202,154,203,159,156,166"/>
 <area shape="rect" id="Node000008" href="$structAsyncFw_1_1ApplicationNotifier_1_1Value.html" title="The Value struct." alt="" coords="189,183,379,225"/>
-<area shape="poly" id="edge27_Node000000_Node000008" title=" " alt="" coords="156,183,189,188,188,193,155,189"/>
+<area shape="poly" id="edge41_Node000000_Node000008" title=" " alt="" coords="156,183,189,188,188,193,155,189"/>
 <area shape="rect" id="Node000009" href="$structAsyncFw_1_1CoroutineTask_1_1promise__type.html" title="The promise type object required by the C++20 coroutine standard." alt="" coords="200,249,368,292"/>
-<area shape="poly" id="edge28_Node000000_Node000009" title=" " alt="" coords="111,194,190,235,217,246,215,251,188,240,109,198"/>
+<area shape="poly" id="edge42_Node000000_Node000009" title=" " alt="" coords="111,194,190,235,217,246,215,251,188,240,109,198"/>
 <area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractTlsSocket.html" title="Abstract base class providing Transport Layer Security (TLS/SSL) encryption layers on top of standard..." alt="" coords="427,31,619,57"/>
-<area shape="poly" id="edge21_Node000001_Node000002" title=" " alt="" coords="365,75,456,55,457,61,366,80"/>
+<area shape="poly" id="edge35_Node000001_Node000002" title=" " alt="" coords="365,75,456,55,457,61,366,80"/>
 <area shape="rect" id="Node000005" href="$classAsyncFw_1_1ListenSocket.html" title="The ListenSocket class." alt="" coords="443,81,603,108"/>
-<area shape="poly" id="edge24_Node000001_Node000005" title=" " alt="" coords="387,92,443,92,443,97,387,97"/>
+<area shape="poly" id="edge38_Node000001_Node000005" title=" " alt="" coords="387,92,443,92,443,97,387,97"/>
 <area shape="rect" id="Node000003" href="$classAsyncFw_1_1DataArraySocket.html" title="The DataArraySocket class." alt="" coords="667,5,852,32"/>
-<area shape="poly" id="edge22_Node000002_Node000003" title=" " alt="" coords="635,29,667,26,667,31,635,35"/>
+<area shape="poly" id="edge36_Node000002_Node000003" title=" " alt="" coords="635,29,667,26,667,31,635,35"/>
 <area shape="rect" id="Node000004" href="$classAsyncFw_1_1HttpSocket.html" title="The HttpSocket class." alt="" coords="684,56,835,83"/>
-<area shape="poly" id="edge23_Node000002_Node000004" title=" " alt="" coords="635,53,684,59,684,64,635,59"/>
+<area shape="poly" id="edge37_Node000002_Node000004" title=" " alt="" coords="635,53,684,59,684,64,635,59"/>
 <area shape="rect" id="Node000007" href="$classAsyncFw_1_1Task.html" title="The Task class." alt="" coords="451,132,595,159"/>
-<area shape="poly" id="edge26_Node000006_Node000007" title=" " alt="" coords="380,143,451,143,451,148,380,148"/>
+<area shape="poly" id="edge40_Node000006_Node000007" title=" " alt="" coords="380,143,451,143,451,148,380,148"/>
 </map>

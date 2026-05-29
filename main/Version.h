@@ -7,12 +7,12 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #pragma once
 
-/*! \file Version.h \brief The Version class. */
+/** @file Version.h @brief The Version class. */
 
 #include <string>
 
 namespace AsyncFw {
-/*! \struct Version Version.h <AsyncFw/Version> \brief The Version struct */
+/** @struct Version Version.h <AsyncFw/Version> @brief The Version struct */
 struct Version {
   static std::string str();
   static std::string git();

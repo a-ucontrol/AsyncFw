@@ -7,18 +7,18 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #pragma once
 
-/*! \file MulticastDns.h \brief The MulticastDns class. */
+/** @file MulticastDns.h @brief The MulticastDns class. */
 
 #include "../core/FunctionConnector.h"
 #include "Instance.h"
 
 namespace AsyncFw {
 class AbstractThread;
-/*! \class MulticastDns MulticastDns.h <AsyncFw/MulticastDns> \brief The MulticastDns class.
-\brief Example: \snippet MulticastDns/main.cpp snippet */
+/** @class MulticastDns MulticastDns.h <AsyncFw/MulticastDns> @brief The MulticastDns class.
+@brief Example: @snippet MulticastDns/main.cpp snippet */
 class MulticastDns {
 public:
-  /*! \brief The Host struct. */
+  /** @brief The Host struct. */
   struct Host {
     std::string name;
     std::string ipv4;

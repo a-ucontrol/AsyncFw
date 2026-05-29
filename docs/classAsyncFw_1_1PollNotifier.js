@@ -6,5 +6,5 @@ var classAsyncFw_1_1PollNotifier =
     [ "removeDescriptor", "classAsyncFw_1_1PollNotifier.html#a63d989535fa3af6dcb2e8656999f8315", null ],
     [ "descriptor", "classAsyncFw_1_1PollNotifier.html#a5b2ff26b63b3d2f46b04892c6899217c", null ],
     [ "fail", "classAsyncFw_1_1PollNotifier.html#a52d96002ff262ab846331324c64882e0", null ],
-    [ "notify", "classAsyncFw_1_1PollNotifier.html#aabd27ec525c6982e95e93ffd20f443cc", null ]
+    [ "notify", "classAsyncFw_1_1PollNotifier.html#a8bcd61fb697ec4d0d53b942feb5b8026", null ]
 ];

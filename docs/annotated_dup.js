@@ -29,7 +29,6 @@ var annotated_dup =
       [ "FunctionConnectionGuard", "classAsyncFw_1_1FunctionConnectionGuard.html", null ],
       [ "FunctionConnectionGuardList", "classAsyncFw_1_1FunctionConnectionGuardList.html", "classAsyncFw_1_1FunctionConnectionGuardList" ],
       [ "FunctionConnector", "classAsyncFw_1_1FunctionConnector.html", "classAsyncFw_1_1FunctionConnector" ],
-      [ "FunctionConnectorProtected", "classAsyncFw_1_1FunctionConnectorProtected.html", null ],
       [ "HttpServer", "classAsyncFw_1_1HttpServer.html", null ],
       [ "HttpSocket", "classAsyncFw_1_1HttpSocket.html", "classAsyncFw_1_1HttpSocket" ],
       [ "Instance", "classAsyncFw_1_1Instance.html", "classAsyncFw_1_1Instance" ],

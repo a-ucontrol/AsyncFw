@@ -1,7 +1,10 @@
 <map id="AsyncFw::AddressResolver" name="AsyncFw::AddressResolver">
-<area shape="rect" id="Node000001" title="Provides asynchronous DNS resolution using c&#45;ares." alt="" coords="45,219,229,245"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1FunctionConnectorProtected.html" title=" " alt="" coords="5,112,269,155"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="140,170,140,218,134,218,134,170"/>
-<area shape="rect" id="Node000003" href="$classAsyncFw_1_1FunctionConnectorProtected.html" title="A protected connector where only a single designated sender can emit messages. &#160;&#160;Provides a sender&#45;to..." alt="" coords="40,5,234,48"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="140,64,140,111,134,111,134,64"/>
+<area shape="rect" id="Node000001" title="Provides asynchronous DNS resolution using c&#45;ares." alt="" coords="10,343,195,369"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="5,220,200,279"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="105,294,105,342,100,342,100,294"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractFunctionConnector.html" title="The AbstractFunctionConnector class provides the base functionality for FunctionConnector." alt="" coords="6,5,189,48"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="101,63,104,219,99,220,95,63"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1FunctionConnector.html" title="Provides a sender&#45;to&#45;receivers connection. Receivers can be invoked in their own threads (default beh..." alt="" coords="119,97,313,140"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="138,55,190,95,187,99,134,59"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="190,154,130,221,126,218,186,150"/>
 </map>

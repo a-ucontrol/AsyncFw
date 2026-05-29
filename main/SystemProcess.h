@@ -7,20 +7,20 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #pragma once
 
-/*! \file SystemProcess.h \brief The SystemProcess class. */
+/** @file SystemProcess.h @brief The SystemProcess class. */
 
 #include <string>
 #include "../core/FunctionConnector.h"
 
 namespace AsyncFw {
-/*! \class SystemProcess SystemProcess.h <AsyncFw/SystemProcess> \brief The SystemProcess class. \warning Unix-like systems only
-\brief Example: \snippet SystemProcess/main.cpp snippet */
+/** @class SystemProcess SystemProcess.h <AsyncFw/SystemProcess> @brief The SystemProcess class. \warning Unix-like systems only
+@brief Example: @snippet SystemProcess/main.cpp snippet */
 class SystemProcess {
 public:
   enum State : uint8_t { None, Running, Finished, Crashed, Error };
-  /*! \param redirect_stdin
-    \brief False Управляет вводом данных в запущенный процесс. Это режим ввода по умолчанию для канала ввода
-    \brief True  Дочерний процесс перенаправляет ввод основного процесса на работающий процесс. Дочерний процесс считывает свой стандартный ввод из того же источника, что и основной процесс. Обратите внимание, что основной процесс не должен пытаться считывать свой стандартный ввод, пока работает дочерний процесс. */
+  /** @param redirect_stdin
+    @brief False Управляет вводом данных в запущенный процесс. Это режим ввода по умолчанию для канала ввода
+    @brief True  Дочерний процесс перенаправляет ввод основного процесса на работающий процесс. Дочерний процесс считывает свой стандартный ввод из того же источника, что и основной процесс. Обратите внимание, что основной процесс не должен пытаться считывать свой стандартный ввод, пока работает дочерний процесс. */
   SystemProcess(bool = false);
   ~SystemProcess();
   bool start(const std::string &, const std::vector<std::string> & = {});
@@ -31,9 +31,9 @@ public:
   int exitCode();
   bool input(const std::string &) const;
 
-  /*! \brief The FunctionConnector for SystemProcess stateChanged. */
+  /** @brief The FunctionConnector for SystemProcess stateChanged. */
   FunctionConnector<State>::Protected<SystemProcess> stateChanged {AbstractFunctionConnector::Queued};
-  /*! \brief The FunctionConnector for SystemProcess output. */
+  /** @brief The FunctionConnector for SystemProcess output. */
   FunctionConnector<const std::string &, bool /*stdout: 0, stderr: 1*/>::Protected<SystemProcess> output {AbstractFunctionConnector::Queued};
 
   template <typename T>

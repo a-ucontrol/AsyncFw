@@ -7,7 +7,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #pragma once
 
-/*! \file AbstractThread.h \brief The AbstractThread class. */
+/** @file AbstractThread.h @brief The AbstractThread class. */
 
 #include <thread>
 #include <mutex>
@@ -33,7 +33,6 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #endif
 
 #if !defined LS_NO_ERROR
-  #define AsyncFw_THREAD this
   #define checkCurrentThread() \
     if (std::this_thread::get_id() != AsyncFw_THREAD->id()) lsError() << "executed from different thread"
   #define checkDifferentThread() \
@@ -45,27 +44,27 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 namespace AsyncFw {
 class LogStream;
-/*! \class AbstractThread AbstractThread.h <AsyncFw/AbstractThread> \brief The AbstractThread class provides the base functionality for thread management.
-\details Provides core primitives for thread lifecycle management, naming, and scheduling asynchronous tasks via a task queue. */
+/** @class AbstractThread AbstractThread.h <AsyncFw/AbstractThread> @brief The AbstractThread class provides the base functionality for thread management.
+@details Provides core primitives for thread lifecycle management, naming, and scheduling asynchronous tasks via a task queue. */
 class AbstractThread {
   friend class Thread;
   friend LogStream &operator<<(LogStream &, const AbstractThread &);
 
 public:
-  /*! \enum PollEvents \brief Bitmask constants mirroring system poll definitions (POLLIN, POLLOUT, etc.) for I/O monitoring. */
+  /** \enum PollEvents @brief Bitmask constants mirroring system poll definitions (POLLIN, POLLOUT, etc.) for I/O monitoring. */
   enum PollEvents : uint16_t { PollNo = 0, PollIn = POLLIN_, PollPri = POLLPRI_, PollOut = POLLOUT_, PollErr = POLLERR_, PollHup = POLLHUP_, PollNval = POLLNVAL_ };
-  /*! \brief The LockGuard type. */
+  /** @brief The LockGuard type. */
   using LockGuard = std::lock_guard<std::mutex>;
-  /*! \brief The AbstractTask type. */
+  /** @brief The AbstractTask type. */
   using AbstractTask = Invocable<void()>::Abstract;
-  /*! \brief The AbstractPollTask type. */
+  /** @brief The AbstractPollTask type. */
   using AbstractPollTask = Invocable<void(AbstractThread::PollEvents)>::Abstract;
 
-  /*! \brief The Holder class. */
+  /** @brief The Holder class. */
   class Holder {
   public:
     void complete();
-    /*! \brief Runs nested exec() and wait for it completed. */
+    /** @brief Runs nested exec() and wait for it completed. */
     void wait();
 
   private:
@@ -73,7 +72,7 @@ public:
     bool waiting;
   };
 
-  /*! \brief Runs a function in a managed thread. \param function Runs function. \param sync Blocking wait if true. \return True if the function is added to the queue. */
+  /** @brief Runs a function in a managed thread. @param function Runs function. @param sync Blocking wait if true. @return True if the function is added to the queue. */
   template <typename F>
   typename std::enable_if<std::is_void<typename std::invoke_result<F>::type>::value, bool>::type invoke(F function, bool sync = false) const {
     if (!sync) {
@@ -105,75 +104,75 @@ public:
     }
     return true;
   }
-  /*! \brief Append poll task. \param fd File descriptor. \param events Watch events. \param function Task function. \return True if the task added. */
+  /** @brief Append poll task. @param fd File descriptor. @param events Watch events. @param function Task function. @return True if the task added. */
   template <typename F>
   bool appendPollTask(int fd, PollEvents events, F function) {
     return appendPollDescriptor(fd, events, new Invocable<void(PollEvents)>::Function(std::forward<F>(function)));
   }
-  /*! \brief Append timer task. \param ms Timeout in milliseconds. \param function Task function. \return timer id if the task added or value less than zero. */
+  /** @brief Append timer task. @param ms Timeout in milliseconds. @param function Task function. @return timer id if the task added or value less than zero. */
   template <typename F>
   int appendTimerTask(int timeout, F function) {
     return appendTimer(timeout, new Invocable<void()>::Function(std::forward<F>(function)));
   }
 
-  /*! \brief Returns a pointer to the AsyncFw::AbstractThread that manages the currently executing thread. */
+  /** @brief Returns a pointer to the AsyncFw::AbstractThread that manages the currently executing thread. */
   static AbstractThread *current();
-  /*! \brief Assigns a pointer to the list of all threads. \param list Pointer to the list of threads. \return AbstractThread::LockGuard. */
+  /** @brief Assigns a pointer to the list of all threads. @param list Pointer to the list of threads. @return AbstractThread::LockGuard. */
   static AbstractThread::LockGuard threads(std::vector<AbstractThread *> **);
 
-  /*! \brief This call from thread when it starts executing. */
+  /** @brief This call from thread when it starts executing. */
   virtual void startedEvent();
-  /*! \brief This call from the thread when it finishing execution. */
+  /** @brief This call from the thread when it finishing execution. */
   virtual void finishedEvent();
 
-  /*! \brief Returns true if the managed thread is running. */
+  /** @brief Returns true if the managed thread is running. */
   virtual bool running() const;
-  /*! \brief Runs a task in a managed thread. \param task Poiner to AbstractTask. \return True if the task is added to the queue. */
+  /** @brief Runs a task in a managed thread. @param task Poiner to AbstractTask. @return True if the task is added to the queue. */
   virtual bool invokeTask(AbstractTask *) const;
-  /*! \brief Append timer. \param ms timeout in milliseconds \param task Pointer to AbstractTask. \return timer Id if timer added or value less than zero. */
+  /** @brief Append timer. @param ms timeout in milliseconds @param task Pointer to AbstractTask. @return timer Id if timer added or value less than zero. */
   virtual int appendTimer(int, AbstractTask *);
-  /*! \brief Modify timer. \param id timer id \param ms Timeout in milliseconds. \return True if the timer modified. */
+  /** @brief Modify timer. @param id timer id @param ms Timeout in milliseconds. @return True if the timer modified. */
   virtual bool modifyTimer(int, int);
-  /*! \brief Remove timer. \param id Timer id. */
+  /** @brief Remove timer. @param id Timer id. */
   virtual void removeTimer(int);
-  /*! \brief Append poll descriptor. \param fd File descriptor. \param events Watch events. \param task Pointer to AbstractPollTask. \return True if the poll descriptor added. */
+  /** @brief Append poll descriptor. @param fd File descriptor. @param events Watch events. @param task Pointer to AbstractPollTask. @return True if the poll descriptor added. */
   virtual bool appendPollDescriptor(int, PollEvents, AbstractPollTask *);
-  /*! \brief Modify poll descriptor. \param fd File descriptor. \param events Watch events. \return True if the poll descriptor modified. */
+  /** @brief Modify poll descriptor. @param fd File descriptor. @param events Watch events. @return True if the poll descriptor modified. */
   virtual bool modifyPollDescriptor(int, PollEvents);
-  /*! \brief Remove poll descriptor. \param fd File descriptor. */
+  /** @brief Remove poll descriptor. @param fd File descriptor. */
   virtual void removePollDescriptor(int);
 
-  /*! \brief Create a managed thread and run exec(). */
+  /** @brief Create a managed thread and run exec(). */
   void start();
-  /*! \brief Request the interruption of the thread.*/
+  /** @brief Request the interruption of the thread.*/
   void requestInterrupt();
-  /*! \brief Returns true if an interrupt is requested.*/
+  /** @brief Returns true if an interrupt is requested.*/
   bool interruptRequested() const;
-  /*! \brief Wait for thread interrupted. This means that requestInterrupt() has been called and all queue tasks have completed. */
+  /** @brief Wait for thread interrupted. This means that requestInterrupt() has been called and all queue tasks have completed. */
   void waitInterrupted() const;
-  /*! \brief Tells the thread's exec() to exit. */
+  /** @brief Tells the thread's exec() to exit. */
   void quit();
-  /*! \brief Wait for the thread's exec() function finished. */
+  /** @brief Wait for the thread's exec() function finished. */
   void waitFinished() const;
-  /*! \brief Returns the number of tasks in the queue, plus one if there are running task. */
+  /** @brief Returns the number of tasks in the queue, plus one if there are running task. */
   int workLoad() const;
 
-  /*! \brief Returns unique identifier of managed thread. */
+  /** @brief Returns unique identifier of managed thread. */
   std::thread::id id() const;
-  /*! \brief Returns name of managed thread */
+  /** @brief Returns name of managed thread */
   std::string name() const;
 
-  /*! \brief Locks the managed thread and returns a LockGuard variable. The thread is unblocked after this variable is destroyed. */
+  /** @brief Locks the managed thread and returns a LockGuard variable. The thread is unblocked after this variable is destroyed. */
   LockGuard lockGuard() const;
 
 protected:
-  /*! \brief Constructs a thread. \param name Thread name. */
+  /** @brief Constructs a thread. @param name Thread name. */
   AbstractThread(const std::string &);
   virtual ~AbstractThread() = 0;
 
   void setId();
   void clearId();
-  /*! \brief Run manage loop */
+  /** @brief Run manage loop */
   void exec();
 
 private:

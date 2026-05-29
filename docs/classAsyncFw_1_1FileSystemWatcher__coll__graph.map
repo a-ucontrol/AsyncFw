@@ -1,7 +1,10 @@
 <map id="AsyncFw::FileSystemWatcher" name="AsyncFw::FileSystemWatcher">
-<area shape="rect" id="Node000001" title="The FileSystemWatcher class." alt="" coords="15,235,213,261"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1FunctionConnectorProtected.html" title=" " alt="" coords="5,112,223,171"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="117,186,117,234,111,234,111,186"/>
-<area shape="rect" id="Node000003" href="$classAsyncFw_1_1FunctionConnectorProtected.html" title="A protected connector where only a single designated sender can emit messages. &#160;&#160;Provides a sender&#45;to..." alt="" coords="17,5,211,48"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="117,64,117,112,111,112,111,64"/>
+<area shape="rect" id="Node000001" title="The FileSystemWatcher class." alt="" coords="5,327,204,353"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="7,220,202,263"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="107,278,107,326,102,326,102,278"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractFunctionConnector.html" title="The AbstractFunctionConnector class provides the base functionality for FunctionConnector." alt="" coords="8,5,191,48"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="103,63,107,219,101,219,97,63"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1FunctionConnector.html" title="Provides a sender&#45;to&#45;receivers connection. Receivers can be invoked in their own threads (default beh..." alt="" coords="121,97,315,140"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="140,55,192,95,189,99,136,59"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="191,153,126,221,122,218,187,149"/>
 </map>
