@@ -12,9 +12,9 @@
 <area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="900,79,985,69,985,74,900,84"/>
 <area shape="rect" id="Node000007" href="$classAsyncFw_1_1AbstractFunctionConnector.html" title="The AbstractFunctionConnector class provides the base functionality for FunctionConnector." alt="" coords="5,92,189,135"/>
 <area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="204,107,456,100,653,96,653,101,456,105,205,113"/>
-<area shape="rect" id="Node000008" href="$classAsyncFw_1_1FunctionConnector.html" title="Provides a sender&#45;to&#45;receivers connection. Receivers can be invoked in their own threads (default beh..." alt="" coords="238,125,432,168"/>
+<area shape="rect" id="Node000008" href="$classAsyncFw_1_1FunctionConnector.html" title="Provides a thread&#45;safe, publisher&#45;subscriber mechanism to establish sender&#45;to&#45;receivers connections." alt="" coords="238,125,432,168"/>
 <area shape="poly" id="edge8_Node000008_Node000007" title=" " alt="" coords="205,126,238,130,237,136,204,131"/>
 <area shape="poly" id="edge7_Node000006_Node000008" title=" " alt="" coords="448,156,537,157,629,148,686,131,687,136,630,153,537,163,448,161"/>
-<area shape="rect" id="Node000009" href="$classAsyncFw_1_1FunctionConnectionGuard.html" title="The FunctionConnectionGuard class." alt="" coords="1248,97,1448,140"/>
+<area shape="rect" id="Node000009" href="$classAsyncFw_1_1FunctionConnectionGuard.html" title="An RAII guard that automatically manages the lifecycle of a FunctionConnector connection." alt="" coords="1248,97,1448,140"/>
 <area shape="poly" id="edge9_Node000001_Node000009" title=" " alt="" coords="1463,114,1532,109,1556,106,1556,112,1533,115,1464,120"/>
 </map>

@@ -14,7 +14,9 @@ var searchData=
   ['statechanged_11',['stateChanged',['../classAsyncFw_1_1SystemProcess.html#ac37ed190f6de484145739309656f3698',1,'AsyncFw::SystemProcess']]],
   ['stateevent_12',['stateEvent',['../classAsyncFw_1_1AbstractSocket.html#a5db12267a6d2241e81f570463f2d7ef5',1,'AsyncFw::AbstractSocket::stateEvent()'],['../classAsyncFw_1_1DataArraySocket.html#afae26d6d937eddd4b7c64f48933c0984',1,'AsyncFw::DataArraySocket::stateEvent()'],['../classAsyncFw_1_1HttpSocket.html#ab3ee95c329a5f5c7ea659fe7809cc37e',1,'AsyncFw::HttpSocket::stateEvent()']]],
   ['stop_13',['stop',['../classAsyncFw_1_1Timer.html#a63f0eb44b27402196590a03781515dba',1,'AsyncFw::Timer']]],
-  ['sync_14',['sync',['../classAsyncFw_1_1ThreadPool.html#add8ee85dd7581acb117a805ff5a8c18a',1,'AsyncFw::ThreadPool']]],
-  ['systemprocess_15',['SystemProcess',['../classAsyncFw_1_1SystemProcess.html',1,'AsyncFw::SystemProcess'],['../classAsyncFw_1_1SystemProcess.html#acf60a585a89304fdb3580e9add06d155',1,'AsyncFw::SystemProcess::SystemProcess()']]],
-  ['systemprocess_2eh_16',['SystemProcess.h',['../SystemProcess_8h.html',1,'']]]
+  ['sync_14',['Sync',['../classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html#a860b83046c90e62d768e0acde74626c6a5c9e5da34d6f0f6d7d4f11cdbbac4f97',1,'AsyncFw::AbstractFunctionConnector::Connection::Sync'],['../classAsyncFw_1_1AbstractFunctionConnector.html#ab248bd16cbfcac609f58d401abec4368aa337dbe9151a9446d65ecebf21f57cc7',1,'AsyncFw::AbstractFunctionConnector::Sync']]],
+  ['sync_15',['sync',['../classAsyncFw_1_1ThreadPool.html#add8ee85dd7581acb117a805ff5a8c18a',1,'AsyncFw::ThreadPool']]],
+  ['synconly_16',['SyncOnly',['../classAsyncFw_1_1AbstractFunctionConnector.html#ab248bd16cbfcac609f58d401abec4368a067289a8bc60cc7b0be0e021db9ce81d',1,'AsyncFw::AbstractFunctionConnector']]],
+  ['systemprocess_17',['SystemProcess',['../classAsyncFw_1_1SystemProcess.html',1,'AsyncFw::SystemProcess'],['../classAsyncFw_1_1SystemProcess.html#acf60a585a89304fdb3580e9add06d155',1,'AsyncFw::SystemProcess::SystemProcess()']]],
+  ['systemprocess_2eh_18',['SystemProcess.h',['../SystemProcess_8h.html',1,'']]]
 ];

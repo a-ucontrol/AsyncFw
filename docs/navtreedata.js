@@ -49,7 +49,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "AbstractSocket_8h.html",
-"classAsyncFw_1_1PollNotifier.html#a383eab2a439eb7cf82f1ddc38a6204cb"
+"classAsyncFw_1_1Instance.html#a6f25472f8b38f5cd6fa3d681919bf50a"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronization';

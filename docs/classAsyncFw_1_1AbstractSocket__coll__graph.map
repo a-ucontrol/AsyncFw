@@ -6,7 +6,7 @@
 <area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="196,274,115,328,112,324,193,269"/>
 <area shape="rect" id="Node000004" href="$classAsyncFw_1_1AbstractThread.html" title="The AbstractThread class provides the base functionality for thread management." alt="" coords="77,105,250,132"/>
 <area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="179,145,223,234,218,237,174,147"/>
-<area shape="rect" id="Node000005" href="$classAsyncFw_1_1FunctionConnector.html" title="Provides a sender&#45;to&#45;receivers connection. Receivers can be invoked in their own threads (default beh..." alt="" coords="274,97,469,140"/>
+<area shape="rect" id="Node000005" href="$classAsyncFw_1_1FunctionConnector.html" title="Provides a thread&#45;safe, publisher&#45;subscriber mechanism to establish sender&#45;to&#45;receivers connections." alt="" coords="274,97,469,140"/>
 <area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="339,152,242,238,239,234,335,148"/>
 <area shape="rect" id="Node000006" href="$classAsyncFw_1_1AbstractFunctionConnector.html" title="The AbstractFunctionConnector class provides the base functionality for FunctionConnector." alt="" coords="280,5,463,48"/>
 <area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="374,64,374,97,369,97,369,64"/>

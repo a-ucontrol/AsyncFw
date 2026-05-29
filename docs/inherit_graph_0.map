@@ -32,6 +32,6 @@
 <area shape="poly" id="edge15_Node000000_Node000015" title=" " alt="" coords="102,685,111,762,132,861,150,913,173,964,202,1011,238,1053,266,1071,264,1075,235,1057,198,1015,168,967,145,915,127,863,106,763,97,685"/>
 <area shape="rect" id="Node000016" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="266,1133,460,1176"/>
 <area shape="poly" id="edge16_Node000000_Node000016" title=" " alt="" coords="100,684,105,773,112,829,123,890,141,952,165,1013,197,1070,238,1119,267,1138,264,1142,235,1123,193,1073,160,1015,136,954,118,891,106,830,99,773,95,685"/>
-<area shape="rect" id="Node000017" href="$classAsyncFw_1_1FunctionConnector.html" title="Provides a sender&#45;to&#45;receivers connection. Receivers can be invoked in their own threads (default beh..." alt="" coords="266,1200,460,1243"/>
+<area shape="rect" id="Node000017" href="$classAsyncFw_1_1FunctionConnector.html" title="Provides a thread&#45;safe, publisher&#45;subscriber mechanism to establish sender&#45;to&#45;receivers connections." alt="" coords="266,1200,460,1243"/>
 <area shape="poly" id="edge17_Node000000_Node000017" title=" " alt="" coords="106,684,122,799,151,949,169,1025,190,1093,213,1149,239,1186,267,1205,264,1209,235,1190,208,1151,185,1095,164,1026,146,950,117,799,100,685"/>
 </map>

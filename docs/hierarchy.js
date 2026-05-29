@@ -60,6 +60,9 @@ var hierarchy =
       [ "AsyncFw::CoroutineTask::promise_type", "structAsyncFw_1_1CoroutineTask_1_1promise__type.html", null ]
     ] ],
     [ "AsyncFw::ApplicationNotifier", "classAsyncFw_1_1ApplicationNotifier.html", null ],
+    [ "AsyncFw::AbstractFunctionConnector::Connection", "classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html", [
+      [ "AsyncFw::FunctionConnector< Args >::Connection", "classAsyncFw_1_1FunctionConnector_1_1Connection.html", null ]
+    ] ],
     [ "AsyncFw::CoroutineAwait< R >", "structAsyncFw_1_1CoroutineAwait.html", null ],
     [ "AsyncFw::CoroutineInvokeAwait< T >", "structAsyncFw_1_1CoroutineInvokeAwait.html", null ],
     [ "AsyncFw::CoroutineTask", "structAsyncFw_1_1CoroutineTask.html", null ],

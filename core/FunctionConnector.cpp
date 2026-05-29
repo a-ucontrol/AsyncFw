@@ -22,7 +22,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 using namespace AsyncFw;
 
-AbstractFunctionConnector::AbstractFunctionConnector(ConnectionType type) : defaultConnectionType(type) { trace() << this; }
+AbstractFunctionConnector::AbstractFunctionConnector(ConnectionPolicy type) : connectionPolicy(type) { trace() << this; }
 
 AbstractFunctionConnector::~AbstractFunctionConnector() {
   std::lock_guard<std::mutex> lock(mutex);
@@ -34,8 +34,8 @@ AbstractFunctionConnector::~AbstractFunctionConnector() {
 }
 
 AbstractFunctionConnector::Connection::Connection(AbstractFunctionConnector *connector, Type type) : connector_(connector) {
-  type_ = (type != Default) ? type : static_cast<Type>(connector->defaultConnectionType & ~0x10);
-  if ((connector->defaultConnectionType & 0x10) && type_ != (connector->defaultConnectionType & ~0x10)) {
+  type_ = (type != Default) ? type : static_cast<Type>(connector->connectionPolicy & ~0x10);
+  if ((connector->connectionPolicy & 0x10) && type_ != (connector->connectionPolicy & ~0x10)) {
     lsError().flush() << "fixed connection type, throw exception...";
     throw std::runtime_error("fixed connection type");
   }

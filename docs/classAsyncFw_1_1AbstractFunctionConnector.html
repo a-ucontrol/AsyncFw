@@ -104,6 +104,7 @@ $(function(){initNavTree('classAsyncFw_1_1AbstractFunctionConnector.html',''); i
 
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
@@ -112,7 +113,7 @@ $(function(){initNavTree('classAsyncFw_1_1AbstractFunctionConnector.html',''); i
 </div><!--header-->
 <div class="contents">
 
-<p>The <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector.html" title="The AbstractFunctionConnector class provides the base functionality for FunctionConnector.">AbstractFunctionConnector</a> class provides the base functionality for <a class="el" href="classAsyncFw_1_1FunctionConnector.html" title="Provides a sender-to-receivers connection. Receivers can be invoked in their own threads (default beh...">FunctionConnector</a>.  
+<p>The <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector.html" title="The AbstractFunctionConnector class provides the base functionality for FunctionConnector.">AbstractFunctionConnector</a> class provides the base functionality for <a class="el" href="classAsyncFw_1_1FunctionConnector.html" title="Provides a thread-safe, publisher-subscriber mechanism to establish sender-to-receivers connections.">FunctionConnector</a>.  
  <a href="#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="FunctionConnector_8h_source.html">AsyncFw/FunctionConnector</a>&gt;</code></p>
@@ -124,50 +125,95 @@ $(function(){initNavTree('classAsyncFw_1_1AbstractFunctionConnector.html',''); i
 <div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1AbstractFunctionConnector__inherit__graph.svg" width="936" height="1488"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html">Connection</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents an active linkage between a sender's signal/connector and a specific receiver slot.  <a href="classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a689b16cc2d3709b2b9d8970398b79efa" id="r_a689b16cc2d3709b2b9d8970398b79efa"><td class="memItemLeft" align="right" valign="top"><a id="a689b16cc2d3709b2b9d8970398b79efa" name="a689b16cc2d3709b2b9d8970398b79efa"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a689b16cc2d3709b2b9d8970398b79efa">ConnectionType</a> : uint8_t { <br />
-&#160;&#160;<b>Auto</b> = 0
-, <b>Direct</b> = 0x01
-, <b>Queued</b> = 0x02
-, <b>Sync</b> = 0x04
+<tr class="memitem:ab248bd16cbfcac609f58d401abec4368" id="r_ab248bd16cbfcac609f58d401abec4368"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab248bd16cbfcac609f58d401abec4368">ConnectionPolicy</a> : uint8_t { <br />
+&#160;&#160;<a class="el" href="#ab248bd16cbfcac609f58d401abec4368a480f988213a099791809a06ce8e412ff">Auto</a> = 0
+, <a class="el" href="#ab248bd16cbfcac609f58d401abec4368aff480e11cf0224228dd92a034987e47a">Direct</a> = 0x01
+, <a class="el" href="#ab248bd16cbfcac609f58d401abec4368a5d08e36148e4f87ea06266376ac65da9">Queued</a> = 0x02
+, <a class="el" href="#ab248bd16cbfcac609f58d401abec4368aa337dbe9151a9446d65ecebf21f57cc7">Sync</a> = 0x04
 , <br />
-&#160;&#160;<b>AutoOnly</b> = 0x10
-, <b>DirectOnly</b> = 0x11
-, <b>QueuedOnly</b> = 0x12
-, <b>SyncOnly</b> = 0x14
+&#160;&#160;<a class="el" href="#ab248bd16cbfcac609f58d401abec4368a0f64e26ca67609e7e75f03d1c563c99b">AutoOnly</a> = 0x10
+, <a class="el" href="#ab248bd16cbfcac609f58d401abec4368a3b1695a20470728ef441d8ccdd549b78">DirectOnly</a> = 0x11
+, <a class="el" href="#ab248bd16cbfcac609f58d401abec4368af29d50765264f3f426d354883428c288">QueuedOnly</a> = 0x12
+, <a class="el" href="#ab248bd16cbfcac609f58d401abec4368a067289a8bc60cc7b0be0e021db9ce81d">SyncOnly</a> = 0x14
 <br />
  }</td></tr>
-<tr class="memdesc:a689b16cc2d3709b2b9d8970398b79efa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines validation and behavior constraints for connections (e.g., forcing Direct or Queued modes). <br /></td></tr>
-<tr class="separator:a689b16cc2d3709b2b9d8970398b79efa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:ab248bd16cbfcac609f58d401abec4368"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the default invocation behavior and validation constraints for the connector.  <a href="#ab248bd16cbfcac609f58d401abec4368">More...</a><br /></td></tr>
+<tr class="separator:ab248bd16cbfcac609f58d401abec4368"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a95d2b8d8992c7233063cdd7a7a24e4f8" id="r_a95d2b8d8992c7233063cdd7a7a24e4f8"><td class="memItemLeft" align="right" valign="top"><a id="a95d2b8d8992c7233063cdd7a7a24e4f8" name="a95d2b8d8992c7233063cdd7a7a24e4f8"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>AbstractFunctionConnector</b> (<a class="el" href="#a689b16cc2d3709b2b9d8970398b79efa">ConnectionType</a>=Auto)</td></tr>
-<tr class="separator:a95d2b8d8992c7233063cdd7a7a24e4f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acec5c0dd2b96446c4cb1b22d8c587bca" id="r_acec5c0dd2b96446c4cb1b22d8c587bca"><td class="memItemLeft" align="right" valign="top"><a id="acec5c0dd2b96446c4cb1b22d8c587bca" name="acec5c0dd2b96446c4cb1b22d8c587bca"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>AbstractFunctionConnector</b> (<a class="el" href="#ab248bd16cbfcac609f58d401abec4368">ConnectionPolicy</a>=<a class="el" href="#ab248bd16cbfcac609f58d401abec4368a480f988213a099791809a06ce8e412ff">Auto</a>)</td></tr>
+<tr class="separator:acec5c0dd2b96446c4cb1b22d8c587bca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
 <tr class="memitem:a45286993b0bf30d1ca32bd6d87de34c0" id="r_a45286993b0bf30d1ca32bd6d87de34c0"><td class="memItemLeft" align="right" valign="top"><a id="a45286993b0bf30d1ca32bd6d87de34c0" name="a45286993b0bf30d1ca32bd6d87de34c0"></a>
-std::vector&lt; Connection * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>list</b></td></tr>
+std::vector&lt; <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html">Connection</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>list</b></td></tr>
 <tr class="separator:a45286993b0bf30d1ca32bd6d87de34c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa669ee8ce028429ce441464294738937" id="r_aa669ee8ce028429ce441464294738937"><td class="memItemLeft" align="right" valign="top"><a id="aa669ee8ce028429ce441464294738937" name="aa669ee8ce028429ce441464294738937"></a>
-<a class="el" href="#a689b16cc2d3709b2b9d8970398b79efa">ConnectionType</a>&#160;</td><td class="memItemRight" valign="bottom"><b>defaultConnectionType</b></td></tr>
-<tr class="separator:aa669ee8ce028429ce441464294738937"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adaae220e6f5d33782357524b6b153929" id="r_adaae220e6f5d33782357524b6b153929"><td class="memItemLeft" align="right" valign="top"><a id="adaae220e6f5d33782357524b6b153929" name="adaae220e6f5d33782357524b6b153929"></a>
+<a class="el" href="#ab248bd16cbfcac609f58d401abec4368">ConnectionPolicy</a>&#160;</td><td class="memItemRight" valign="bottom"><b>connectionPolicy</b></td></tr>
+<tr class="separator:adaae220e6f5d33782357524b6b153929"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9cbe19db2de586f96ea1810ca2863cf6" id="r_a9cbe19db2de586f96ea1810ca2863cf6"><td class="memItemLeft" align="right" valign="top"><a id="a9cbe19db2de586f96ea1810ca2863cf6" name="a9cbe19db2de586f96ea1810ca2863cf6"></a>
 std::mutex&#160;</td><td class="memItemRight" valign="bottom"><b>mutex</b></td></tr>
 <tr class="separator:a9cbe19db2de586f96ea1810ca2863cf6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>The <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector.html" title="The AbstractFunctionConnector class provides the base functionality for FunctionConnector.">AbstractFunctionConnector</a> class provides the base functionality for <a class="el" href="classAsyncFw_1_1FunctionConnector.html" title="Provides a sender-to-receivers connection. Receivers can be invoked in their own threads (default beh...">FunctionConnector</a>. </p>
+<div class="textblock"><p>The <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector.html" title="The AbstractFunctionConnector class provides the base functionality for FunctionConnector.">AbstractFunctionConnector</a> class provides the base functionality for <a class="el" href="classAsyncFw_1_1FunctionConnector.html" title="Provides a thread-safe, publisher-subscriber mechanism to establish sender-to-receivers connections.">FunctionConnector</a>. </p>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">std::runtime_error</td><td>If the default connection type (<a class="el" href="#a689b16cc2d3709b2b9d8970398b79efa" title="Defines validation and behavior constraints for connections (e.g., forcing Direct or Queued modes).">AbstractFunctionConnector::ConnectionType</a>) is DirectOnly, AutoOnly, or SyncOnly and there is a type mismatch when connecting (AbstractFunctionConnector::Connection::Type), the exception std::runtime_error("fixed connection type") will be raised. </td></tr>
+    <tr><td class="paramname">std::runtime_error</td><td>If the connector active policy <a class="el" href="#ab248bd16cbfcac609f58d401abec4368" title="Defines the default invocation behavior and validation constraints for the connector.">ConnectionPolicy</a> is DirectOnly, QueuedOnly, AutoOnly, or SyncOnly, and there is a type mismatch when connecting via <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html#a860b83046c90e62d768e0acde74626c6" title="Specifies how a particular receiver slot should be invoked relative to the sender&#39;s thread.">Connection::Type</a>, the exception std::runtime_error("fixed connection type") will be raised. </td></tr>
   </table>
   </dd>
 </dl>
-</div><hr/>The documentation for this class was generated from the following files:<ul>
+</div><h2 class="groupheader">Member Enumeration Documentation</h2>
+<a id="ab248bd16cbfcac609f58d401abec4368" name="ab248bd16cbfcac609f58d401abec4368"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab248bd16cbfcac609f58d401abec4368">&#9670;&#160;</a></span>ConnectionPolicy</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="#ab248bd16cbfcac609f58d401abec4368">AsyncFw::AbstractFunctionConnector::ConnectionPolicy</a> : uint8_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Defines the default invocation behavior and validation constraints for the connector. </p>
+<p>This enumeration serves two purposes based on the value provided:</p><ol type="1">
+<li><b>Default Value (Relaxed Modes):</b> If a subscriber connects using <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html#a860b83046c90e62d768e0acde74626c6aa6ac69ca7e3f98af70b7ed067e4f9bdc">Connection::Type::Default</a>, the connector substitutes <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html#a860b83046c90e62d768e0acde74626c6aa6ac69ca7e3f98af70b7ed067e4f9bdc">Connection::Type::Default</a> with this configured value (Auto, Direct, Queued, or Sync).</li>
+<li><b>Strict Constraints (Only Modes):</b> Values with the Only suffix act as strict runtime validators. They establish the default and ensure that any explicit attempt to use a <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html#a860b83046c90e62d768e0acde74626c6" title="Specifies how a particular receiver slot should be invoked relative to the sender&#39;s thread.">Connection::Type</a> during connect will immediately throw a std::runtime_error("fixed connection type") </li>
+</ol>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ab248bd16cbfcac609f58d401abec4368a480f988213a099791809a06ce8e412ff" name="ab248bd16cbfcac609f58d401abec4368a480f988213a099791809a06ce8e412ff"></a>Auto&#160;</td><td class="fielddoc"><p>Default is Auto. Any explicit connection types are allowed. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ab248bd16cbfcac609f58d401abec4368aff480e11cf0224228dd92a034987e47a" name="ab248bd16cbfcac609f58d401abec4368aff480e11cf0224228dd92a034987e47a"></a>Direct&#160;</td><td class="fielddoc"><p>Default is Direct. Any explicit connection types are allowed. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ab248bd16cbfcac609f58d401abec4368a5d08e36148e4f87ea06266376ac65da9" name="ab248bd16cbfcac609f58d401abec4368a5d08e36148e4f87ea06266376ac65da9"></a>Queued&#160;</td><td class="fielddoc"><p>Default is Queued. Any explicit connection types are allowed. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ab248bd16cbfcac609f58d401abec4368aa337dbe9151a9446d65ecebf21f57cc7" name="ab248bd16cbfcac609f58d401abec4368aa337dbe9151a9446d65ecebf21f57cc7"></a>Sync&#160;</td><td class="fielddoc"><p>Default is Sync. Any explicit connection types are allowed. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ab248bd16cbfcac609f58d401abec4368a0f64e26ca67609e7e75f03d1c563c99b" name="ab248bd16cbfcac609f58d401abec4368a0f64e26ca67609e7e75f03d1c563c99b"></a>AutoOnly&#160;</td><td class="fielddoc"><p>Enforces Auto mode. Throws if a subscriber explicitly requests Direct, Queued, or Sync. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ab248bd16cbfcac609f58d401abec4368a3b1695a20470728ef441d8ccdd549b78" name="ab248bd16cbfcac609f58d401abec4368a3b1695a20470728ef441d8ccdd549b78"></a>DirectOnly&#160;</td><td class="fielddoc"><p>Enforces Direct mode. Throws if a subscriber explicitly requests Auto, Queued, or Sync. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ab248bd16cbfcac609f58d401abec4368af29d50765264f3f426d354883428c288" name="ab248bd16cbfcac609f58d401abec4368af29d50765264f3f426d354883428c288"></a>QueuedOnly&#160;</td><td class="fielddoc"><p>Enforces Queued mode. Throws if a subscriber explicitly requests Auto, Direct, or Sync. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ab248bd16cbfcac609f58d401abec4368a067289a8bc60cc7b0be0e021db9ce81d" name="ab248bd16cbfcac609f58d401abec4368a067289a8bc60cc7b0be0e021db9ce81d"></a>SyncOnly&#160;</td><td class="fielddoc"><p>Enforces Sync mode. Throws if a subscriber explicitly requests Auto, Direct, or Queued. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li>core/<a class="el" href="FunctionConnector_8h_source.html">FunctionConnector.h</a></li>
 <li>core/<b>FunctionConnector.cpp</b></li>
 </ul>

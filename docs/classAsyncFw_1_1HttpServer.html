@@ -203,7 +203,7 @@ static <a class="el" href="classAsyncFw_1_1HttpServer.html">HttpServer</a> *&#16
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a4039e49a0da82794db89caa50b46b3e8" id="r_a4039e49a0da82794db89caa50b46b3e8"><td class="memItemLeft" align="right" valign="top"><a id="a4039e49a0da82794db89caa50b46b3e8" name="a4039e49a0da82794db89caa50b46b3e8"></a>
-<a class="el" href="classAsyncFw_1_1FunctionConnector.html">AsyncFw::FunctionConnector</a>&lt; int, const std::string &amp;, bool * &gt;::Protected&lt; <a class="el" href="classAsyncFw_1_1HttpServer.html">HttpServer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>incoming</b> {AsyncFw::AbstractFunctionConnector::SyncOnly}</td></tr>
+<a class="el" href="classAsyncFw_1_1FunctionConnector.html">AsyncFw::FunctionConnector</a>&lt; int, const std::string &amp;, bool * &gt;::Protected&lt; <a class="el" href="classAsyncFw_1_1HttpServer.html">HttpServer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>incoming</b> {<a class="el" href="classAsyncFw_1_1AbstractFunctionConnector.html#ab248bd16cbfcac609f58d401abec4368a067289a8bc60cc7b0be0e021db9ce81d">AsyncFw::AbstractFunctionConnector::SyncOnly</a>}</td></tr>
 <tr class="separator:a4039e49a0da82794db89caa50b46b3e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
@@ -258,7 +258,7 @@ Friends</h2></td></tr>
 <div class="line">    _socket-&gt;received.connect([_socket](<span class="keyword">const</span> <a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> &amp;_da) {</div>
 <div class="line">      lsDebug() &lt;&lt; _da.view(0, _da.size() &gt; 1024 ? 1024 : _da.size());</div>
 <div class="line">      _socket-&gt;write(<span class="stringliteral">&quot;GET /quit HTTP/1.1\r\n\r\n&quot;</span>);</div>
-<div class="line">    }, AbstractFunctionConnector::Connection::Queued);</div>
+<div class="line">    }, <a class="code hl_enumvalue" href="classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html#a860b83046c90e62d768e0acde74626c6a6c561775a673adbed77c380ee036a01f">AbstractFunctionConnector::Connection::Queued</a>);</div>
 <div class="line">    _socket-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractTlsSocket.html#a2d9c3d5d540b82fb516f5c56def48a02">connect</a>(<span class="stringliteral">&quot;127.0.0.1&quot;</span>, 18080);</div>
 <div class="line">  }</div>
 <div class="line"> </div>

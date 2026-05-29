@@ -29,5 +29,7 @@ var searchData=
   ['applicationnotifier_26',['ApplicationNotifier',['../classAsyncFw_1_1ApplicationNotifier.html',1,'AsyncFw']]],
   ['applicationnotifier_2eh_27',['ApplicationNotifier.h',['../ApplicationNotifier_8h.html',1,'']]],
   ['async_28',['async',['../classAsyncFw_1_1ThreadPool.html#a0a35c4070964e69b187842b69b04d325',1,'AsyncFw::ThreadPool::async(AbstractThread *_t, F f)'],['../classAsyncFw_1_1ThreadPool.html#ad32cb5c2bd270bee821034f402c7b86b',1,'AsyncFw::ThreadPool::async(F f)'],['../classAsyncFw_1_1ThreadPool.html#a9919894e586310a7ea5b780845376e17',1,'AsyncFw::ThreadPool::async(AbstractThread *thread, F function, R result)'],['../classAsyncFw_1_1ThreadPool.html#af44552a3cac2283e594f35e697ce05c9',1,'AsyncFw::ThreadPool::async(AbstractThread *thread, F function, R result)'],['../classAsyncFw_1_1ThreadPool.html#a5af6a927b72eec19abb94ee2477d00b5',1,'AsyncFw::ThreadPool::async(F f, R r)']]],
-  ['asyncfw_29',['AsyncFw',['../index.html',1,'']]]
+  ['asyncfw_29',['AsyncFw',['../index.html',1,'']]],
+  ['auto_30',['Auto',['../classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html#a860b83046c90e62d768e0acde74626c6af3aceaa2c172acce94b8685ce05697b7',1,'AsyncFw::AbstractFunctionConnector::Connection::Auto'],['../classAsyncFw_1_1AbstractFunctionConnector.html#ab248bd16cbfcac609f58d401abec4368a480f988213a099791809a06ce8e412ff',1,'AsyncFw::AbstractFunctionConnector::Auto']]],
+  ['autoonly_31',['AutoOnly',['../classAsyncFw_1_1AbstractFunctionConnector.html#ab248bd16cbfcac609f58d401abec4368a0f64e26ca67609e7e75f03d1c563c99b',1,'AsyncFw::AbstractFunctionConnector']]]
 ];

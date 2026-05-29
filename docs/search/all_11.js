@@ -14,5 +14,6 @@ var searchData=
   ['timer_2eh_11',['Timer.h',['../Timer_8h.html',1,'']]],
   ['tlscontext_12',['TlsContext',['../classAsyncFw_1_1TlsContext.html',1,'AsyncFw']]],
   ['tlscontext_2eh_13',['TlsContext.h',['../TlsContext_8h.html',1,'']]],
-  ['trusted_14',['trusted',['../classAsyncFw_1_1TlsContext.html#a0c268a29a857a658f0ed1254cbff746b',1,'AsyncFw::TlsContext']]]
+  ['trusted_14',['trusted',['../classAsyncFw_1_1TlsContext.html#a0c268a29a857a658f0ed1254cbff746b',1,'AsyncFw::TlsContext']]],
+  ['type_15',['Type',['../classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html#a860b83046c90e62d768e0acde74626c6',1,'AsyncFw::AbstractFunctionConnector::Connection']]]
 ];

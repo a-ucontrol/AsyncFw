@@ -109,6 +109,11 @@ $(function(){initNavTree('classAsyncFw_1_1FunctionConnectionGuardList.html','');
   <div class="headertitle"><div class="title">AsyncFw::FunctionConnectionGuardList Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>A helper container designed to manage multiple <a class="el" href="classAsyncFw_1_1FunctionConnectionGuard.html" title="An RAII guard that automatically manages the lifecycle of a FunctionConnector connection.">FunctionConnectionGuard</a> lifecycles at once.  
+ <a href="#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="FunctionConnector_8h_source.html">AsyncFw/FunctionConnector</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -118,8 +123,20 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>operator+=</b> (<a cl
 <tr class="separator:a1868fe28dabfb86ed0d0eb500eeda9f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>helper container that manages multiple <a class="el" href="classAsyncFw_1_1FunctionConnectionGuard.html" title="The FunctionConnectionGuard class.">FunctionConnectionGuard</a> lifecycles simultaneously. </p>
-</div><hr/>The documentation for this class was generated from the following files:<ul>
+<div class="textblock"><p>A helper container designed to manage multiple <a class="el" href="classAsyncFw_1_1FunctionConnectionGuard.html" title="An RAII guard that automatically manages the lifecycle of a FunctionConnector connection.">FunctionConnectionGuard</a> lifecycles at once. </p>
+<p>Inherits from std::vector&lt;FunctionConnectionGuard&gt;. It provides a convenient way to aggregate multiple connection guards within a single scope (e.g., inside a controller or view class). When the list goes out of scope, all registered connections are safely and automatically disconnected.</p>
+<p>Examlpe: </p><div class="fragment"><div class="line">  <span class="keyword">class </span>Controller {</div>
+<div class="line">    AsyncFw::FunctionConnectionGuardList connections;</div>
+<div class="line"> </div>
+<div class="line">  <span class="keyword">public</span>:</div>
+<div class="line">    <span class="keywordtype">void</span> init(Sensor &amp;sensor) {</div>
+<div class="line">      <span class="comment">// Conveniently append connection guards using the += operator</span></div>
+<div class="line">      connections += sensor.valueChanged.connect(<span class="keyword">this</span>, &amp;Controller::onValueChanged);</div>
+<div class="line">      connections += sensor.statusChanged.connect(<span class="keyword">this</span>, &amp;Controller::onStatusChanged);</div>
+<div class="line">    }</div>
+<div class="line">    <span class="comment">// All connections are severed automatically when Controller is destroyed</span></div>
+<div class="line">  };</div>
+</div><!-- fragment --> </div><hr/>The documentation for this class was generated from the following files:<ul>
 <li>core/<a class="el" href="FunctionConnector_8h_source.html">FunctionConnector.h</a></li>
 <li>core/<b>FunctionConnector.cpp</b></li>
 </ul>

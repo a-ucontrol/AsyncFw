@@ -1,6 +1,6 @@
 <map id="AsyncFw::Rrd" name="AsyncFw::Rrd">
 <area shape="rect" id="Node000001" title="The Rrd class." alt="" coords="247,327,353,353"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1FunctionConnector.html" title="Provides a sender&#45;to&#45;receivers connection. Receivers can be invoked in their own threads (default beh..." alt="" coords="203,97,397,140"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1FunctionConnector.html" title="Provides a thread&#45;safe, publisher&#45;subscriber mechanism to establish sender&#45;to&#45;receivers connections." alt="" coords="203,97,397,140"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="303,156,303,326,297,326,297,156"/>
 <area shape="rect" id="Node000004" href="$classAsyncFw_1_1Thread.html" title="AsyncFw::Thread thread with sockets." alt="" coords="127,236,252,263"/>
 <area shape="poly" id="edge5_Node000004_Node000002" title=" " alt="" coords="243,151,226,166,214,183,205,202,194,237,189,235,200,200,210,180,222,162,239,147"/>

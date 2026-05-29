@@ -26,7 +26,7 @@ var annotated_dup =
       [ "DataStream", "classAsyncFw_1_1DataStream.html", null ],
       [ "File", "classAsyncFw_1_1File.html", null ],
       [ "FileSystemWatcher", "classAsyncFw_1_1FileSystemWatcher.html", "classAsyncFw_1_1FileSystemWatcher" ],
-      [ "FunctionConnectionGuard", "classAsyncFw_1_1FunctionConnectionGuard.html", null ],
+      [ "FunctionConnectionGuard", "classAsyncFw_1_1FunctionConnectionGuard.html", "classAsyncFw_1_1FunctionConnectionGuard" ],
       [ "FunctionConnectionGuardList", "classAsyncFw_1_1FunctionConnectionGuardList.html", "classAsyncFw_1_1FunctionConnectionGuardList" ],
       [ "FunctionConnector", "classAsyncFw_1_1FunctionConnector.html", "classAsyncFw_1_1FunctionConnector" ],
       [ "HttpServer", "classAsyncFw_1_1HttpServer.html", null ],

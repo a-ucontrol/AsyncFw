@@ -153,15 +153,15 @@ Public Attributes</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Provides asynchronous DNS resolution using c-ares. </p>
 <p><a class="el" href="classAsyncFw_1_1AddressResolver.html" title="Provides asynchronous DNS resolution using c-ares.">AddressResolver</a> encapsulates low-level POSIX address resolution abstractions. It handles asynchronous domain name resolution (DNS lookups) with support for protocol family selection (IPv4 vs IPv6) and custom per-request timeouts.</p>
-<p>Examlpe with <a class="el" href="classAsyncFw_1_1FunctionConnector.html" title="Provides a sender-to-receivers connection. Receivers can be invoked in their own threads (default beh...">FunctionConnector</a>: </p><div class="fragment"><div class="line">  <a class="code hl_class" href="classAsyncFw_1_1AddressResolver.html">AsyncFw::AddressResolver</a> addressInfo;</div>
-<div class="line">  addressInfo.<a class="code hl_variable" href="#adc88c3beebbade60ab2005599de37051">completed</a>([](<span class="keywordtype">int</span>, <span class="keyword">const</span> std::vector&lt;std::string&gt; &amp;list) {</div>
-<div class="line">    <span class="keywordflow">if</span> (!list.empty()) {</div>
+<p>Examlpe with <a class="el" href="classAsyncFw_1_1FunctionConnector.html" title="Provides a thread-safe, publisher-subscriber mechanism to establish sender-to-receivers connections.">FunctionConnector</a>: </p><div class="fragment"><div class="line">  <a class="code hl_class" href="classAsyncFw_1_1AddressResolver.html">AsyncFw::AddressResolver</a> addressInfo2;</div>
+<div class="line">  addressInfo2.<a class="code hl_variable" href="#adc88c3beebbade60ab2005599de37051">completed</a>.<a class="code hl_function" href="classAsyncFw_1_1FunctionConnector.html#ab0c621be7a792e256acab8241ae563a0">connect</a>([](<span class="keywordtype">int</span>, <span class="keyword">const</span> std::vector&lt;std::string&gt; &amp;list) {</div>
+<div class="line">    <span class="keywordflow">if</span> (list.empty()) {</div>
 <div class="line">      logError(<span class="stringliteral">&quot;Resolve error&quot;</span>);</div>
 <div class="line">    } <span class="keywordflow">else</span> {</div>
 <div class="line">      <span class="keywordflow">for</span> (<span class="keyword">const</span> std::string _s : list) logNotice() &lt;&lt; _s;</div>
 <div class="line">    }</div>
 <div class="line">  });</div>
-<div class="line">  addressInfo.<a class="code hl_function" href="#a9a5b78be91762ae5adc7f19aede8a662">resolve</a>(<span class="stringliteral">&quot;github.com&quot;</span>);</div>
+<div class="line">  addressInfo2.<a class="code hl_function" href="#a9a5b78be91762ae5adc7f19aede8a662">resolve</a>(<span class="stringliteral">&quot;github.com&quot;</span>);</div>
 </div><!-- fragment --><p> Examlpe with <a class="el" href="structAsyncFw_1_1CoroutineAwait.html" title="Generic awaiter for wrapping asynchronous triggers or callback-based APIs into co_await.">CoroutineAwait</a>: </p><div class="fragment"><div class="line">  <a class="code hl_class" href="classAsyncFw_1_1AddressResolver.html">AsyncFw::AddressResolver</a> addressInfo;</div>
 <div class="line">  AsyncFw::CoroutineHandle h = <span class="keyword">co_await</span> addressInfo.<a class="code hl_function" href="#a59f08f5d62fba62538b9094548fa1fd0">coResolve</a>(<span class="stringliteral">&quot;github.com&quot;</span>);</div>
 <div class="line">  AsyncFw::AddressResolver::Result list = h.promise().data&lt;AsyncFw::AddressResolver::Result&gt;();</div>

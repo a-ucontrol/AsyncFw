@@ -1,6 +1,6 @@
 //! [MainThread]
 #include <core/LogStream.h>
-#include <MainThread.h>
+#include <main/MainThread.h>
 
 int main(int argc, char *argv[]) {
   AsyncFw::Thread::current()->invoke([]() { AsyncFw::MainThread::exit(123); });
@@ -14,20 +14,19 @@ int main(int argc, char *argv[]) {
 
 #include <core/TlsContext.h>
 #include <core/DataArray.h>
-#include <HttpSocket.h>
-#include <AddressResolver.h>
+#include <main/AddressResolver.h>
 using namespace AsyncFw;
 void example() {
   //! [AddressResolver]
-  AsyncFw::AddressResolver addressInfo;
-  addressInfo.completed([](int, const std::vector<std::string> &list) {
-    if (!list.empty()) {
+  AsyncFw::AddressResolver addressInfo2;
+  addressInfo2.completed.connect([](int, const std::vector<std::string> &list) {
+    if (list.empty()) {
       logError("Resolve error");
     } else {
       for (const std::string _s : list) logNotice() << _s;
     }
   });
-  addressInfo.resolve("github.com");
+  addressInfo2.resolve("github.com");
   //! [AddressResolver]
 
   //! [AddressResolver coro]
@@ -45,16 +44,48 @@ void example() {
   class Sensor {
   public:
     // Public interface for subscriptions, but emission is restricted to Sensor
-    FunctionConnector<int>::Protected<Sensor> valueChanged;
+    FunctionConnector<int>::Protected<Sensor> valueChanged2;
     void update(int val) {
-      valueChanged(val);  // OK: Emission is allowed inside Sensor
+      valueChanged2(val);  // OK: Emission is allowed inside Sensor
     }
   };
   // External code:
   Sensor sensor;
-  sensor.valueChanged.connect([](int v) { ... });  // OK: Subscription works
-  // sensor.valueChanged(42); // COMPILER ERROR: Emission from outside is forbidden!
+  sensor.valueChanged2.connect([](int v) { /* ... */ });  // OK: Subscription works
+  // sensor.valueChanged(17); // COMPILER ERROR: Emission from outside is forbidden!
   //! [FunctionConnectorProtected]
+
+  //! [FunctionConnectorGuard]
+  class Downloader {
+  public:
+    AsyncFw::FunctionConnector<int> progressChanged;
+    void start() { /* ... */ }
+  };
+
+  void monitorDownload(Downloader & downloader) {
+    // Bind the connection to a local guard scope
+    AsyncFw::FunctionConnectionGuard guard = downloader.progressChanged.connect([](int percent) { std::cout << "Download progress: " << percent << "%" << std::endl; });
+    downloader.start();
+    // ... do some work ...
+    // When monitorDownload exits, guard is destroyed.
+    // The connection is automatically severed, preventing further lambda invocations.
+  }
+
+  //! [FunctionConnectorGuard]
+
+  //! [FunctionConnectorGuardList]
+  class Controller {
+    AsyncFw::FunctionConnectionGuardList connections;
+
+  public:
+    void init(Sensor &sensor) {
+      // Conveniently append connection guards using the += operator
+      connections += sensor.valueChanged.connect(this, &Controller::onValueChanged);
+      connections += sensor.statusChanged.connect(this, &Controller::onStatusChanged);
+    }
+    // All connections are severed automatically when Controller is destroyed
+  };
+  //! [FunctionConnectorGuardList]
 
   //! [LogStream]
   lsTrace() << "Trace";

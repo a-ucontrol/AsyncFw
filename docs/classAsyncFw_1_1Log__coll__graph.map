@@ -2,7 +2,7 @@
 <area shape="rect" id="Node000001" title="The Log class." alt="" coords="230,403,335,429"/>
 <area shape="rect" id="Node000002" href="$classAsyncFw_1_1Rrd.html" title="The Rrd class." alt="" coords="154,327,259,353"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="232,363,272,400,268,404,229,366"/>
-<area shape="rect" id="Node000003" href="$classAsyncFw_1_1FunctionConnector.html" title="Provides a sender&#45;to&#45;receivers connection. Receivers can be invoked in their own threads (default beh..." alt="" coords="5,97,200,140"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1FunctionConnector.html" title="Provides a thread&#45;safe, publisher&#45;subscriber mechanism to establish sender&#45;to&#45;receivers connections." alt="" coords="5,97,200,140"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="79,154,64,179,53,207,49,235,58,261,76,284,101,302,127,315,154,325,152,330,125,320,98,306,73,288,53,264,44,235,47,206,59,177,74,152"/>
 <area shape="rect" id="Node000005" href="$classAsyncFw_1_1Thread.html" title="AsyncFw::Thread thread with sockets." alt="" coords="306,236,430,263"/>
 <area shape="poly" id="edge6_Node000005_Node000003" title=" " alt="" coords="160,145,343,233,341,238,158,150"/>

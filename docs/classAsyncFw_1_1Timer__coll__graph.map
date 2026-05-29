@@ -1,6 +1,6 @@
 <map id="AsyncFw::Timer" name="AsyncFw::Timer">
 <area shape="rect" id="Node000001" title="The Timer class." alt="" coords="44,204,161,231"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1FunctionConnector.html" title="Provides a sender&#45;to&#45;receivers connection. Receivers can be invoked in their own threads (default beh..." alt="" coords="5,97,200,140"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1FunctionConnector.html" title="Provides a thread&#45;safe, publisher&#45;subscriber mechanism to establish sender&#45;to&#45;receivers connections." alt="" coords="5,97,200,140"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="105,156,105,204,100,204,100,156"/>
 <area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractFunctionConnector.html" title="The AbstractFunctionConnector class provides the base functionality for FunctionConnector." alt="" coords="11,5,194,48"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="105,64,105,97,100,97,100,64"/>

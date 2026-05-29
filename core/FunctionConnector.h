@@ -13,26 +13,43 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include "AbstractThread.h"
 
 namespace AsyncFw {
-
 class FunctionConnectionGuard;
-
-/** @class AbstractFunctionConnector FunctionConnector.h <AsyncFw/FunctionConnector> @brief The AbstractFunctionConnector class provides the base functionality for FunctionConnector
-\exception std::runtime_error If the default connection type (AbstractFunctionConnector::ConnectionType) is DirectOnly, AutoOnly, or SyncOnly and there is a type mismatch when connecting (AbstractFunctionConnector::Connection::Type), the exception std::runtime_error("fixed connection type") will be raised. */
+/** @class AbstractFunctionConnector FunctionConnector.h <AsyncFw/FunctionConnector> @brief The AbstractFunctionConnector class provides the base functionality for FunctionConnector.
+@exception std::runtime_error If the connector active policy ConnectionPolicy is DirectOnly, QueuedOnly, AutoOnly, or SyncOnly, and there is a type mismatch when connecting via Connection::Type, the exception std::runtime_error("fixed connection type") will be raised. */
 class AbstractFunctionConnector {
   friend FunctionConnectionGuard;
 
 public:
-  /** \enum ConnectionType
-  @brief Defines validation and behavior constraints for connections (e.g., forcing Direct or Queued modes). */
-  enum ConnectionType : uint8_t { Auto = 0, Direct = 0x01, Queued = 0x02, Sync = 0x04, AutoOnly = 0x10, DirectOnly = 0x11, QueuedOnly = 0x12, SyncOnly = 0x14 };
+  /** @enum ConnectionPolicy @brief Defines the default invocation behavior and validation constraints for the connector.
+  @details This enumeration serves two purposes based on the value provided:
+  1. **Default Value (Relaxed Modes):** If a subscriber connects using Connection::Type::Default, the connector substitutes Connection::Type::Default with this configured value (Auto, Direct, Queued, or Sync).
+  2. **Strict Constraints (Only Modes):** Values with the Only suffix act as strict runtime validators. They establish the default  and ensure that any explicit attempt to use a  Connection::Type during connect will immediately throw a std::runtime_error("fixed connection type") */
+  enum ConnectionPolicy : uint8_t {
+    Auto = 0,          /**< Default is Auto. Any explicit connection types are allowed. */
+    Direct = 0x01,     /**< Default is Direct. Any explicit connection types are allowed. */
+    Queued = 0x02,     /**< Default is Queued. Any explicit connection types are allowed. */
+    Sync = 0x04,       /**< Default is Sync. Any explicit connection types are allowed. */
+    AutoOnly = 0x10,   /**< Enforces Auto mode. Throws if a subscriber explicitly requests Direct, Queued, or Sync. */
+    DirectOnly = 0x11, /**< Enforces Direct mode. Throws if a subscriber explicitly requests Auto, Queued, or Sync. */
+    QueuedOnly = 0x12, /**< Enforces Queued mode. Throws if a subscriber explicitly requests Auto, Direct, or Sync. */
+    SyncOnly = 0x14    /**< Enforces Sync mode. Throws if a subscriber explicitly requests Auto, Direct, or Queued. */
+  };
+  /** @class Connection FunctionConnector.h <AsyncFw/FunctionConnector> @brief Represents an active linkage between a sender's signal/connector and a specific receiver slot.
+  @details The Connection class  representing a single active subscription. @n It stores crucial metadata required for dispatching events, including the target execution context AsyncFw::AbstractThread and the requested synchronization strategy Type. @n Instances of this class are typically allocated on the heap when a subscriber calls connect. Lifetime and memory cleanup are managed automatically by the framework, or can be tied to scopes via FunctionConnectionGuard. */
   class Connection {
     friend AbstractFunctionConnector;
     friend FunctionConnectionGuard;
 
   public:
-    /** \enum Type
-    @brief Specifies how the receiver slot should be invoked relative to the sender's thread. */
-    enum Type : uint8_t { Auto = AbstractFunctionConnector::Auto, Direct = AbstractFunctionConnector::Direct, Queued = AbstractFunctionConnector::Queued, Sync = AbstractFunctionConnector::Sync, Default = 0x80 };
+    /** @enum Type @brief Specifies how a particular receiver slot should be invoked relative to the sender's thread.
+    @details Defines the precise execution context and thread synchronization semantics for a specific connection instance during event dispatching. */
+    enum Type : uint8_t {
+      Auto = AbstractFunctionConnector::Auto,     /**< Evaluates the context at runtime. Uses Direct if the sender and receiver share the same thread ID, otherwise uses Queued. */
+      Direct = AbstractFunctionConnector::Direct, /**< Invokes the receiver slot immediately inside the sender's thread. No context switching occurs. */
+      Queued = AbstractFunctionConnector::Queued, /**< Posts a task containing a copy of the arguments into the receiver thread's event loop. Execution is asynchronous. */
+      Sync = AbstractFunctionConnector::Sync,     /**< Dispatches the invocation to the receiver's thread loop, but blocks the sender's thread until execution completes. */
+      Default = 0x80                              /**< Falls back to the default ConnectionPolicy configuration defined by the parent connector instance. */
+    };
 
   protected:
     Connection(AbstractFunctionConnector *, Type);
@@ -44,8 +61,7 @@ public:
     AbstractFunctionConnector *connector_;
     FunctionConnectionGuard *guard_ = nullptr;
   };
-
-  AbstractFunctionConnector(ConnectionType = Auto);
+  AbstractFunctionConnector(ConnectionPolicy = Auto);
 
 protected:
   template <typename F, typename... Args>
@@ -59,7 +75,7 @@ protected:
   };
   virtual ~AbstractFunctionConnector() = 0;
   std::vector<Connection *> list;
-  ConnectionType defaultConnectionType;
+  ConnectionPolicy connectionPolicy;
   std::mutex mutex;
 };
 
@@ -68,14 +84,15 @@ template <typename T, typename... Args>
 class FunctionConnectorProtected;
 }
 
-/** @class FunctionConnector FunctionConnector.h <AsyncFw/FunctionConnector> @brief Provides a sender-to-receivers connection. Receivers can be invoked in their own threads (default behavior). Other tools typically implement this type of communication using callbacks. A callback is a function pointer; if you want a processing function to notify you about an event, you pass a pointer to another function (the callback) into it. The processing function then invokes the callback when necessary.
-@brief FunctionConnector messages are generated by an object when its internal state changes in a way that might be of interest to other objects. FunctionConnector messages are public functions and can be emitted from anywhere, but it is highly recommended to emit them only from within the class that defines them. To restrict message emission to only one specific object type, use FunctionConnector<Args...>::Protected instead.
+/** @class FunctionConnector FunctionConnector.h <AsyncFw/FunctionConnector> @brief Provides a thread-safe, publisher-subscriber mechanism to establish sender-to-receivers connections.
+@details Receivers can be automatically invoked in their own designated target threads (the default behavior). Other frameworks typically implement this asynchronous communication pattern using bare callbacks or function pointers. @n FunctionConnector messages (signals) are generated by an object when its internal state changes in a way that might be of interest to other application components. While these connectors are public functions and can technically be emitted from anywhere, it is highly recommended to emit them exclusively from within the class that defines them. @n To strictly restrict message emission to only one specific object type and enforce encapsulation, use the FunctionConnector::Protected variant instead.
+@note All subscription registrations and signal emissions are fully synchronized internally.
 @brief Example: @snippet FunctionConnector/main.cpp snippet */
 template <typename... Args>
 class FunctionConnector : public AbstractFunctionConnector {
 public:
   using AbstractFunctionConnector::AbstractFunctionConnector;
-  /** @brief Connect a callable object (lambda, function pointer, functor) */
+  /** @brief Connects a callable object (such as a lambda, static function pointer, or functor). @param f The callable target object representing the receiver slot. @param t The thread execution context strategy. Defaults to Connection::Default (uses the parent's policy). @return Reference to the newly allocated Connection. */
   template <typename T>
   Connection &connect(T f, Connection::Type t = Connection::Default) {
     std::lock_guard<std::mutex> lock(mutex);
@@ -83,7 +100,7 @@ public:
     return *new Connection(f, this, t);
 #endif
   }
-  /** @brief Connect a class member method */
+  /** @brief Connects a specific class member method. @param m The pointer to the member function of the target object. @param o The pointer to the specific instance of the object containing the member function. @param t The thread execution context strategy. Defaults to Connection::Default (uses the parent's policy). @return Reference to the newly allocated Connection. */
   template <typename M, typename O>
   Connection &connect(M m, O *o, Connection::Type t = Connection::Default) {
     std::lock_guard<std::mutex> lock(mutex);
@@ -91,7 +108,8 @@ public:
     return *new Connection(m, o, this, t);
 #endif
   }
-  /** @brief Emit/Send the signal to all connected receivers */
+  /** @brief Emits/Sends the signal, notifying all connected receivers.
+  @details Iterates through the delivery list and dispatches arguments to each slot based on their configured Connection::Type (Direct, Queued, or Sync). @param args The pack of arguments to forward to all subscribed receivers. */
   void operator()(Args... args) {
     std::lock_guard<std::mutex> lock(mutex);
     for (const Connection *c : *reinterpret_cast<std::vector<Connection *> *>(&list)) {
@@ -112,11 +130,13 @@ public:
   /** @brief A protected connector where only a single designated sender class can emit messages.
   @details Enhances encapsulation by preventing external code from triggering the connector. The exclusive right to generate events is granted solely to the class specified as the template argument. External code can only subscribe to notifications.
   @tparam T The owner class (emitter) that is granted exclusive access to message emission.
-  @brief Examlpe: @snippet snippet.dox FunctionConnectorProtected */
+  @brief Example: @snippet snippet.dox FunctionConnectorProtected */
   template <typename T>
   using Protected = internal::FunctionConnectorProtected<T, Args...>;
 
 protected:
+  /** @class Connection FunctionConnector.h <AsyncFw/FunctionConnector> @brief Implementation of a connection with specific argument.
+  @details Inherited from AbstractFunctionConnector::Connection */
   class Connection : public AbstractFunctionConnector::Connection {
     friend class FunctionConnector<Args...>;
 
@@ -177,18 +197,28 @@ protected:
 };
 }  // namespace internal
 
-/** @class FunctionConnectionGuard FunctionConnector.h <AsyncFw/FunctionConnector> @brief The FunctionConnectionGuard class.
-@brief Disconnects the connection automatically upon destruction (RAII). */
+/** @class FunctionConnectionGuard FunctionConnector.h <AsyncFw/FunctionConnector> @brief An RAII guard that automatically manages the lifecycle of a FunctionConnector connection.
+@details This class provides automated connection management using the Resource Acquisition Is Initialization (RAII) idiom. When a FunctionConnectionGuard goes out of scope or is destroyed, it automatically disconnects and cleans up its associated connection. It supports move semantics, allowing the guard to be transferred between scopes or stored inside containers. It explicitly disables copying.
+@note The destruction of the connection is thread-safe. If the connection type is asynchronous and managed by another thread, the actual deletion of the connection object is safely dispatched to that specific thread event loop.
+@brief Examlpe: @snippet snippet.dox FunctionConnectorGuard */
 class FunctionConnectionGuard {
   friend AbstractFunctionConnector::Connection;
 
 public:
+  /** @brief Constructs an empty, uninitialized connection guard. */
   FunctionConnectionGuard();
+  /** @brief Move constructor. Transfers connection ownership from another guard.
+  @param && FunctionConnectionGuard Explicit rvalue reference to the source guard. */
   FunctionConnectionGuard(FunctionConnectionGuard &&);
+  /** @brief Constructs a guard and binds it to an active connection. @param & AbstractFunctionConnector::Connection Reference to the connection to be managed. */
   FunctionConnectionGuard(AbstractFunctionConnector::Connection &);
+  /** @brief Destructor. Automatically triggers disconnection and frees connection resources. */
   ~FunctionConnectionGuard();
+  /** @brief Assigns a new active connection to this guard. Disconnects  previously managed connection. @param & AbstractFunctionConnector::Connection Reference to the new connection. */
   void operator=(AbstractFunctionConnector::Connection &);
+  /** @brief Move assignment operator. Safely releases current connection and takes ownership of another. @param && FunctionConnectionGuard Rvalue reference to the source guard. */
   void operator=(FunctionConnectionGuard &&);
+  /** @brief Checks if the guard is currently managing an active connection. @return True If managing an active connection. */
   operator bool() const { return c_; }
 
 private:
@@ -196,7 +226,9 @@ private:
   void destroyConnection();
 };
 
-/** @class FunctionConnectionGuardList @brief A helper container that manages multiple FunctionConnectionGuard lifecycles simultaneously. */
+/** @class FunctionConnectionGuardList FunctionConnector.h <AsyncFw/FunctionConnector> @brief A helper container designed to manage multiple FunctionConnectionGuard lifecycles at once.
+@details Inherits from std::vector<FunctionConnectionGuard>. It provides a convenient way to aggregate multiple connection guards within a single scope (e.g., inside a controller or view class). When the list goes out of scope, all registered connections are safely and automatically disconnected.
+@brief Examlpe: @snippet snippet.dox FunctionConnectorGuardList */
 class FunctionConnectionGuardList : public std::vector<FunctionConnectionGuard> {
 public:
   /** @brief Appends a moving connection guard to the management list. */

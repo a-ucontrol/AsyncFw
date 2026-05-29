@@ -1,0 +1,5 @@
+<map id="AsyncFw::AbstractFunctionConnector::Connection" name="AsyncFw::AbstractFunctionConnector::Connection">
+<area shape="rect" id="Node000001" title="Represents an active linkage between a sender&#39;s signal/connector and a specific receiver slot." alt="" coords="11,5,194,48"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1FunctionConnector_1_1Connection.html" title="Implementation of a connection with specific argument." alt="" coords="5,96,200,139"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="105,64,105,96,100,96,100,64"/>
+</map>
