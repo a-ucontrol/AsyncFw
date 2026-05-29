@@ -30,7 +30,7 @@ public:
   std::vector<std::string> paths() const;
 
   /*! \brief The FunctionConnector for notification of file-related events. */
-  FunctionConnectorProtected<FileSystemWatcher>::Connector<const std::string &, int> notify;
+  FunctionConnector<const std::string &, int>::Protected<FileSystemWatcher> notify;
 
 private:
   static Instance<FileSystemWatcher> instance_;

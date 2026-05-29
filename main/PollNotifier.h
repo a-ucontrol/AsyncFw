@@ -32,7 +32,7 @@ public:
   bool fail() { return fail_; }
 
   /*! \brief The PollNotifier::notify connector */
-  FunctionConnectorProtected<PollNotifier>::Connector<AbstractThread::PollEvents> notify;
+  FunctionConnector<AbstractThread::PollEvents>::Protected<PollNotifier> notify;
 
 private:
   AbstractThread *thread_;

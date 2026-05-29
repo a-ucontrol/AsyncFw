@@ -36,10 +36,10 @@ public:
   DataArrayView content();
   void sendFile(const std::string &);
 
-  FunctionConnectorProtected<HttpSocket>::Connector<const AbstractSocket::State> stateChanged;
-  FunctionConnectorProtected<HttpSocket>::Connector<const DataArray &> received;
-  FunctionConnectorProtected<HttpSocket>::Connector<> writeContent;
-  FunctionConnectorProtected<HttpSocket>::Connector<int> progress;
+  FunctionConnector<const AbstractSocket::State>::Protected<HttpSocket> stateChanged;
+  FunctionConnector<const DataArray &>::Protected<HttpSocket> received;
+  FunctionConnector<>::Protected<HttpSocket> writeContent;
+  FunctionConnector<int>::Protected<HttpSocket> progress;
 
 protected:
   HttpSocket();

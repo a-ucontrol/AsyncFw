@@ -28,7 +28,7 @@ public:
     timer.start(10);
   }
 
-  mutable AsyncFw::FunctionConnectorProtected<Sender>::Connector<int, const std::string &> connector;
+  mutable AsyncFw::FunctionConnector<int, const std::string &>::Protected<Sender> connector;
 
 private:
   int cnt = 0;
@@ -51,11 +51,9 @@ int main(int argc, char *argv[]) {
 
   AsyncFw::Thread thread("SenderThread");
   thread.start();
-  thread.invoke(
-      [&sender]() {
-        sender = new Sender;  // created in thread SenderThread
-      },
-      true);
+  thread.invoke([&sender]() {
+    sender = new Sender;  // created in thread SenderThread
+  }, true);
 
   Receiver receiver1("R1", *sender);
   Receiver receiver2("R2", *sender);

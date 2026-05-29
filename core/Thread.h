@@ -17,6 +17,7 @@ class AbstractSocket;
 /*! \class Thread Thread.h <AsyncFw/Thread> \brief AsyncFw::Thread thread with sockets. */
 class Thread : public AbstractThread {
   friend AbstractSocket;
+  friend class ListenSocket;
   friend LogStream &operator<<(LogStream &, const Thread &);
 
 public:
@@ -28,11 +29,11 @@ public:
   ~Thread() override;
 
   /*! \brief The Thread::started connector */
-  FunctionConnectorProtected<Thread>::Connector<> started {AbstractFunctionConnector::Direct};
+  FunctionConnector<>::Protected<Thread> started {AbstractFunctionConnector::Direct};
   /*! \brief The Thread::finished connector */
-  FunctionConnectorProtected<Thread>::Connector<> finished {AbstractFunctionConnector::Direct};
+  FunctionConnector<>::Protected<Thread> finished {AbstractFunctionConnector::Direct};
   /*! \brief The Thread::destroing connector */
-  FunctionConnectorProtected<Thread>::Connector<> destroing {AbstractFunctionConnector::Direct};
+  FunctionConnector<>::Protected<Thread> destroing {AbstractFunctionConnector::Direct};
 
 protected:
   /*! \brief Runs started() */

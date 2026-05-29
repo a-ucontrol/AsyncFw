@@ -23,7 +23,6 @@ class DataArraySocket : public AbstractTlsSocket {
   friend LogStream &operator<<(LogStream &, const DataArraySocket &);
 
 public:
-
   bool initTls(const TlsContext &data);
   void disableTls();
 
@@ -57,8 +56,8 @@ public:
   bool connect(const std::string &, uint16_t) override;
   void disconnect() override;
 
-  mutable FunctionConnectorProtected<DataArraySocket>::Connector<AbstractSocket::State> stateChanged {AbstractFunctionConnector::DirectOnly};
-  mutable FunctionConnectorProtected<DataArraySocket>::Connector<const DataArray *, uint32_t> received {AbstractFunctionConnector::DirectOnly};
+  mutable FunctionConnector<AbstractSocket::State>::Protected<DataArraySocket> stateChanged {AbstractFunctionConnector::DirectOnly};
+  mutable FunctionConnector<const DataArray *, uint32_t>::Protected<DataArraySocket> received {AbstractFunctionConnector::DirectOnly};
 
 protected:
   DataArraySocket();

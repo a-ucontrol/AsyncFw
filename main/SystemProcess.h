@@ -32,9 +32,9 @@ public:
   bool input(const std::string &) const;
 
   /*! \brief The FunctionConnector for SystemProcess stateChanged. */
-  FunctionConnectorProtected<SystemProcess>::Connector<State> stateChanged {AbstractFunctionConnector::Queued};
+  FunctionConnector<State>::Protected<SystemProcess> stateChanged {AbstractFunctionConnector::Queued};
   /*! \brief The FunctionConnector for SystemProcess output. */
-  FunctionConnectorProtected<SystemProcess>::Connector<const std::string &, bool /*stdout: 0, stderr: 1*/> output {AbstractFunctionConnector::Queued};
+  FunctionConnector<const std::string &, bool /*stdout: 0, stderr: 1*/>::Protected<SystemProcess> output {AbstractFunctionConnector::Queued};
 
   template <typename T>
   static bool exec(const std::string &cmd, const std::vector<std::string> &args, T f) {

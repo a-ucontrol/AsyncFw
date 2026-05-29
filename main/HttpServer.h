@@ -274,7 +274,7 @@ public:
   void setEnableCorsRequests(bool);
 
   static inline HttpServer *instance() { return instance_.value; }
-  AsyncFw::FunctionConnectorProtected<HttpServer>::Connector<int, const std::string &, bool *> incoming {AsyncFw::AbstractFunctionConnector::SyncOnly};
+  AsyncFw::FunctionConnector<int, const std::string &, bool *>::Protected<HttpServer> incoming {AsyncFw::AbstractFunctionConnector::SyncOnly};
 
 protected:
   virtual void fileUploadProgress(TcpSocket *, int);

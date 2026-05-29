@@ -45,7 +45,7 @@ public:
   void clear();
   uint64_t lastIndex();
 
-  FunctionConnectorProtected<Rrd>::Connector<> updated;
+  FunctionConnector<>::Protected<Rrd> updated;
 
   Thread *thread() { return thread_; }
 

@@ -31,7 +31,7 @@ public:
   void stop();
 
   /*! \brief The Timer::timeout connector */
-  FunctionConnectorProtected<Timer>::Connector<> timeout;
+  FunctionConnector<>::Protected<Timer> timeout;
   /*! \brief Asynchronously waits for the specified timeout interval \param timeout interval in milliseconds \return CoroutineAwait object to be used with co_await
   \brief Example: \code co_await timer.coTimeout(500); // Sleep for 500 milliseconds \endcode */
   CoroutineAwait<void> coTimeout(int timeout);

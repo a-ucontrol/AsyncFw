@@ -42,7 +42,7 @@ public:
   void disconnectFromHost(const DataArraySocket *);
   int sockets(std::vector<DataArraySocket *> * = nullptr);
 
-  FunctionConnectorProtected<DataArrayAbstractTcp>::Connector<const DataArraySocket *, const DataArray *, uint32_t> received {AbstractFunctionConnector::DirectOnly};
+  FunctionConnector<const DataArraySocket *, const DataArray *, uint32_t>::Protected<DataArrayAbstractTcp> received {AbstractFunctionConnector::DirectOnly};
 
   void setEncryptDisabled(const std::vector<std::string> &list) { disabledEncrypt_ = list; }
   void setEncryptDisabled(const std::string &, bool = true);

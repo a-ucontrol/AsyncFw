@@ -37,7 +37,7 @@ public:
   \note Triggers the \ref completed connector upon finishing. */
   void resolve(const std::string &, Family = Inet, int timeout = 10000);
   /*! \brief The AddressResolver::completed connector. \details Emitted when the DNS resolution completes or times out. \param status Status code of the operation (0 / ARES_SUCCESS on success). \param results Vector of resolved IP address strings. */
-  FunctionConnectorProtected<AddressResolver>::Connector<int, const std::vector<std::string> &> completed;
+  FunctionConnector<int, const std::vector<std::string> &>::Protected<AddressResolver> completed;
   /*! \brief Asynchronously resolves the specified hostname (for coroutines). \param name Hostname or domain name to resolve. \param family Protocol family filter (defaults to IPv4 / Inet). \param timeout Timeout interval for this request in milliseconds (default: 10000 ms). \return CoroutineAwait object containing a vector of resolved IP strings.
   \brief Example: \code auto ips = co_await resolver.coResolve("example.com", AddressResolver::Inet); \endcode */
   AsyncFw::CoroutineAwait<Result> coResolve(const std::string &, Family = Inet, int = 10000);

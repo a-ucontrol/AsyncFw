@@ -54,9 +54,9 @@ public:
 
   void append_(const Host &host);
 
-  FunctionConnectorProtected<MulticastDns>::Connector<const Host &> hostAdded;
-  FunctionConnectorProtected<MulticastDns>::Connector<const Host &> hostChanged;
-  FunctionConnectorProtected<MulticastDns>::Connector<const Host &> hostRemoved;
+  FunctionConnector<const Host &>::Protected<MulticastDns> hostAdded;
+  FunctionConnector<const Host &>::Protected<MulticastDns> hostChanged;
+  FunctionConnector<const Host &>::Protected<MulticastDns> hostRemoved;
 
 private:
   static Instance<MulticastDns> instance_;

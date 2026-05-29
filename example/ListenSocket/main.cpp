@@ -20,8 +20,8 @@ public:
     logDebug() << "State event:" << static_cast<int>(state_);
   }
   void readEvent() { received(read()); }
-  AsyncFw::FunctionConnectorProtected<TcpSocket>::Connector<const AsyncFw::DataArray &> received;
-  AsyncFw::FunctionConnectorProtected<TcpSocket>::Connector<AsyncFw::AbstractSocket::State> stateChanged;
+  AsyncFw::FunctionConnector<const AsyncFw::DataArray &>::Protected<TcpSocket> received;
+  AsyncFw::FunctionConnector<AsyncFw::AbstractSocket::State>::Protected<TcpSocket> stateChanged;
 };
 
 int main(int argc, char *argv[]) {
