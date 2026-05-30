@@ -86,13 +86,13 @@ See the [GitHub repository], [documentation] and [examples] for details.
     return ret;
   }
   ```
-  ### 3. Deep Coroutine Orchestration & RPC: `coInvoke`
-  `AsyncFw` supercharges C++20 coroutines by tying their suspension hooks directly into the framework's cross-thread architecture via `CoroutineTask` and generic awaiters (`CoroutineAwait`, `CoroutineInvokeAwait`).
-  * **Automated Thread Marshalling**: When a coroutine yields via `co_await`, heavy jobs are offloaded to background workers. Once done, the internal `promise_type::resume_queued()` automatically schedules continuation back onto the thread where the coroutine was originally created.
-  * **Stateful Data Transport**: The coroutine `promise_type` inherits from `AnyData`, turning the underlying compiler-generated coroutine frame into a dynamic data store. Background tasks push computed results directly into the frame.
-  * **The `coInvoke` Engine**: Provides an elite, non-blocking remote procedure call (RPC) syntax. Developers can await free functions, lambdas, or class member methods using `co_await coInvoke(...)`.
+### 3. Deep Coroutine Orchestration & RPC: `coInvoke`
+`AsyncFw` supercharges C++20 coroutines by tying their suspension hooks directly into the framework's cross-thread architecture via `CoroutineTask` and generic awaiters (`CoroutineAwait`, `CoroutineInvokeAwait`).
+* **Automated Thread Marshalling**: When a coroutine yields via `co_await`, heavy jobs are offloaded to background workers. Once done, the internal `promise_type::resume_queued()` automatically schedules continuation back onto the thread where the coroutine was originally created.
+* **Stateful Data Transport**: The coroutine `promise_type` inherits from `AnyData`, turning the underlying compiler-generated coroutine frame into a dynamic data store. Background tasks push computed results directly into the frame.
+* **The `coInvoke` Engine**: Provides an elite, non-blocking remote procedure call (RPC) syntax. Developers can await free functions, lambdas, or class member methods using `co_await coInvoke(...)`.
   
-  * **Code Example (Offloading work to ThreadPool):**
+* **Code Example (Offloading work to ThreadPool):**
     ```cpp
     #include <chrono>
     #include <string>
@@ -119,7 +119,7 @@ See the [GitHub repository], [documentation] and [examples] for details.
     }
     ```
   
-  * **Code Example (Asynchronous wait via Timer):**
+* **Code Example (Asynchronous wait via Timer):**
     ```cpp
     #include <chrono>
     #include <AsyncFw/MainThread>
@@ -151,28 +151,28 @@ See the [GitHub repository], [documentation] and [examples] for details.
     }
     ```
   
-  ### 4. Network Worker Thread: `Thread` & Secure Sockets
+### 4. Network Worker Thread: `Thread` & Secure Sockets
   `Thread` inherits from `AbstractThread` and specializes in managing network connections, asynchronous sockets (`AbstractSocket`), and connection pools.
   * **Socket Lifecycle Management**: Acts as an RAII container for asynchronous sockets. When a `Thread` instance is destroyed, it automatically interrupts its loop, safely waits for finish, and gracefully closes and deletes all registered sockets.
   * **Robust Crash Prevention (`SIGPIPE`)**: On POSIX/Unix systems, the worker automatically blocks `SIGPIPE` at startup. This prevents the entire application from terminating abruptly if a remote client disconnects during a TLS handshake.
   * **TLS/SSL Cryptographic Layer**: Through `AbstractTlsSocket`, the framework builds a secure layer on top of standard network sockets.
   
-  ### 5. Cryptographic State & PKI: `TlsContext`
+### 5. Cryptographic State & PKI: `TlsContext`
   `TlsContext` acts as the secure state machine wrapping OpenSSL (`SSL_CTX`), decoupling TLS configuration logic from network I/O routines.
   * **Automated OpenSSL Lifecycle**: Uses a reference-counted `Private` implementation to manage raw OpenSSL pointers, guaranteeing that resources like `SSL_CTX_free` are safely called.
   * **On-the-Fly PKI Generation**: Natively provides capability to generate RSA keys (`generateKey`), export certificate signing requests (`generateRequest`), and sign x509 certificates (`signRequest`).
   
-  ### 6. Smart Task Distribution: `ThreadPool`
+### 6. Smart Task Distribution: `ThreadPool`
   `ThreadPool` manages a set of reusable worker threads to eliminate the overhead of spawning new threads for individual tasks.
   * **Load-Balanced Distribution**: Features automated thread selection via `getThread()`, which automatically routes new tasks to the least loaded worker thread.
   * **Cross-Thread Return Pipes**: You can execute a computing function inside a background pool thread, and `AsyncFw` will automatically capture its return value and route it back as a callback invocation inside the caller's thread context.
   
-  ### 7. Thread-Safe Diagnostic Stream: `LogStream`
+### 7. Thread-Safe Diagnostic Stream: `LogStream`
   `LogStream` provides a high-performance, thread-safe diagnostics and logging architecture utilizing strict RAII execution semantics.
   * **Automatic RAII Flushing**: Logged content is accumulated inside an internal thread-isolated buffer stream. It is guaranteed to safely flush when the temporary statement-level `LogStream` instance goes out of scope and is destroyed.
   * **Modern C++20 Formatting**: Natively supports standard stream insertion chains (`operator<<`) alongside modern, type-safe compile-time text formatting via `std::format` engines.
   
-  ### 8. The Application Master: `MainThread`
+### 8. The Application Master: `MainThread`
   `MainThread` (inheriting from `Thread`) manages the application's primary boot thread (the one driving your `main()` function).
   * **Global Execution Frame**: Triggered via the blocking `MainThread::exec()`, it stalls the main function to orchestrate timers, system interrupts, and queued procedures.
   * **Transparent Qt Integration**: If the `USE_QAPPLICATION` macro is defined, `MainThread` swaps its internal poll-engine for `qApp->exec()`, mapping `AsyncFw` timers and descriptor hooks onto the native Qt event loop.
