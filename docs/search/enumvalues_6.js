@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['unconnected_0',['Unconnected',['../classAsyncFw_1_1AbstractSocket.html#a6fc3dae51b6b38d67f1c3861dcbb23bda65e37b7a6b547c0da9a63972db5dfd49',1,'AsyncFw::AbstractSocket']]]
+  ['notice_0',['Notice',['../classAsyncFw_1_1LogStream.html#afa2f6c5311ced6b973d39d6e5ced5731ae60e1a6347736018009842563cd57231',1,'AsyncFw::LogStream']]]
 ];

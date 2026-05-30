@@ -88,6 +88,8 @@ void example() {
   //! [FunctionConnectorGuardList]
 
   //! [LogStream]
+  // 1. Inline streaming macros (ls*): Print FULL function signatures (__PRETTY_FUNCTION__)
+  // These macros can be completely stripped out at compile-time (e.g. via #define LS_NO_TRACE)
   lsTrace() << "Trace";
   lsDebug() << "Debug";
   lsInfo() << "Info";
@@ -100,6 +102,8 @@ void example() {
   lsWarning() << "Warning";
   lsError() << "Error";
 
+  // 2. Formatting macros (log*): Print only the parsed Class Name or "Application"
+  // Unlike ls* macros, these are always compiled into the binary
   logTrace() << "Trace";
   logDebug() << "Debug";
   logInfo() << "Info";
@@ -107,6 +111,6 @@ void example() {
   logWarning() << "Warning";
   logError() << "Error";
   logAlert() << "logAlert";
-  logEmergency() << "Emergency";  // throw
+  //logEmergency() << "Emergency";  // Un-commenting this will automatically throw a std::runtime_error
   //! [LogStream]
 }

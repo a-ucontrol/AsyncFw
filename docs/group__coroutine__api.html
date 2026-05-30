@@ -118,10 +118,10 @@ Functions</h2></td></tr>
 <tr class="memitem:ga0005f3892c4f008098e0ee2634481d5a"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ga0005f3892c4f008098e0ee2634481d5a">AsyncFw::coInvoke</a> (F &amp;&amp;f, Args &amp;&amp;...args)</td></tr>
 <tr class="memdesc:ga0005f3892c4f008098e0ee2634481d5a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Offloads a callable function/lambda to the global <a class="el" href="classAsyncFw_1_1ThreadPool.html" title="Manages a set of reusable worker threads for concurrent task execution, eliminating the need to spawn...">ThreadPool</a> and awaits its completion.  <br /></td></tr>
 <tr class="separator:ga0005f3892c4f008098e0ee2634481d5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf5e6c6d5280aa43ba18416534dd955fa" id="r_gaf5e6c6d5280aa43ba18416534dd955fa"><td class="memTemplParams" colspan="2">template&lt;typename T = AbstractThread, typename F, typename... Args&gt; </td></tr>
-<tr class="memitem:gaf5e6c6d5280aa43ba18416534dd955fa"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#gaf5e6c6d5280aa43ba18416534dd955fa">AsyncFw::coInvoke</a> (T *t, F &amp;&amp;f, Args &amp;&amp;...args)</td></tr>
-<tr class="memdesc:gaf5e6c6d5280aa43ba18416534dd955fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Offloads a callable function/lambda to a specific <a class="el" href="classAsyncFw_1_1Thread.html" title="AsyncFw::Thread thread with sockets.">Thread</a> loop and awaits its completion.  <br /></td></tr>
-<tr class="separator:gaf5e6c6d5280aa43ba18416534dd955fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad114e5309a86890f0fa504ff94f3edef" id="r_gad114e5309a86890f0fa504ff94f3edef"><td class="memTemplParams" colspan="2">template&lt;typename T = AbstractThread, typename F, typename... Args, typename = std::enable_if_t&lt;std::is_base_of_v&lt;AbstractThread, T&gt;&gt;&gt; </td></tr>
+<tr class="memitem:gad114e5309a86890f0fa504ff94f3edef"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#gad114e5309a86890f0fa504ff94f3edef">AsyncFw::coInvoke</a> (T *t, F &amp;&amp;f, Args &amp;&amp;...args)</td></tr>
+<tr class="memdesc:gad114e5309a86890f0fa504ff94f3edef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Offloads a callable function/lambda to a specific <a class="el" href="classAsyncFw_1_1Thread.html" title="AsyncFw::Thread thread with sockets.">Thread</a> loop and awaits its completion.  <br /></td></tr>
+<tr class="separator:gad114e5309a86890f0fa504ff94f3edef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga36873f186789bdcd404e10d179081bc4" id="r_ga36873f186789bdcd404e10d179081bc4"><td class="memTemplParams" colspan="2">template&lt;typename M, typename O, typename... Args&gt; </td></tr>
 <tr class="memitem:ga36873f186789bdcd404e10d179081bc4"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ga36873f186789bdcd404e10d179081bc4">AsyncFw::coInvoke</a> (M m, O *o, Args &amp;&amp;...args)</td></tr>
 <tr class="memdesc:ga36873f186789bdcd404e10d179081bc4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Offloads a class member function to the global <a class="el" href="classAsyncFw_1_1ThreadPool.html" title="Manages a set of reusable worker threads for concurrent task execution, eliminating the need to spawn...">ThreadPool</a> and awaits its completion.  <br /></td></tr>
@@ -130,9 +130,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga4000deb9d729812b431fc3345fca5eba"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ga4000deb9d729812b431fc3345fca5eba">AsyncFw::coInvoke</a> (T *t, M m, O *o, Args &amp;&amp;...args)</td></tr>
 <tr class="memdesc:ga4000deb9d729812b431fc3345fca5eba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Offloads a class member function to a specific <a class="el" href="classAsyncFw_1_1Thread.html" title="AsyncFw::Thread thread with sockets.">Thread</a> loop and awaits its completion.  <br /></td></tr>
 <tr class="separator:ga4000deb9d729812b431fc3345fca5eba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2f5c202b3a290939feba04811f8ec888" id="r_ga2f5c202b3a290939feba04811f8ec888"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structAsyncFw_1_1CoroutineAwait.html">CoroutineAwait</a>&lt; void &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga2f5c202b3a290939feba04811f8ec888">AsyncFw::coTimeout</a> (int timeout)</td></tr>
-<tr class="memdesc:ga2f5c202b3a290939feba04811f8ec888"><td class="mdescLeft">&#160;</td><td class="mdescRight">Non-blocking coroutine sleep for the specified timeout interval.  <br /></td></tr>
-<tr class="separator:ga2f5c202b3a290939feba04811f8ec888"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga37b3a970310b55e69ed1cb7aa9ab3646" id="r_ga37b3a970310b55e69ed1cb7aa9ab3646"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structAsyncFw_1_1CoroutineAwait.html">CoroutineAwait</a>&lt; void &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga37b3a970310b55e69ed1cb7aa9ab3646">AsyncFw::coTimeout</a> (int)</td></tr>
+<tr class="memdesc:ga37b3a970310b55e69ed1cb7aa9ab3646"><td class="mdescLeft">&#160;</td><td class="mdescRight">Non-blocking coroutine sleep for the specified timeout interval.  <br /></td></tr>
+<tr class="separator:ga37b3a970310b55e69ed1cb7aa9ab3646"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Global functions and utilities for seamless C++20 coroutine orchestration. </p>
@@ -167,16 +167,18 @@ template&lt;typename F, typename... Args&gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>An awaitable object yielding the function's return type. </dd></dl>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="Timer_2main_8cpp-example.html#a1">Timer/main.cpp</a>.</dd>
+</dl>
 
 </div>
 </div>
-<a id="gaf5e6c6d5280aa43ba18416534dd955fa" name="gaf5e6c6d5280aa43ba18416534dd955fa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaf5e6c6d5280aa43ba18416534dd955fa">&#9670;&#160;</a></span>coInvoke() <span class="overload">[2/4]</span></h2>
+<a id="gad114e5309a86890f0fa504ff94f3edef" name="gad114e5309a86890f0fa504ff94f3edef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad114e5309a86890f0fa504ff94f3edef">&#9670;&#160;</a></span>coInvoke() <span class="overload">[2/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T = AbstractThread, typename F, typename... Args&gt; </div>
+template&lt;typename T = AbstractThread, typename F, typename... Args, typename = std::enable_if_t&lt;std::is_base_of_v&lt;AbstractThread, T&gt;&gt;&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">auto AsyncFw::coInvoke </td>
@@ -293,8 +295,8 @@ template&lt;typename T = AbstractThread, typename M, typename O, typename... Arg
 
 </div>
 </div>
-<a id="ga2f5c202b3a290939feba04811f8ec888" name="ga2f5c202b3a290939feba04811f8ec888"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga2f5c202b3a290939feba04811f8ec888">&#9670;&#160;</a></span>coTimeout()</h2>
+<a id="ga37b3a970310b55e69ed1cb7aa9ab3646" name="ga37b3a970310b55e69ed1cb7aa9ab3646"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga37b3a970310b55e69ed1cb7aa9ab3646">&#9670;&#160;</a></span>coTimeout()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -302,7 +304,7 @@ template&lt;typename T = AbstractThread, typename M, typename O, typename... Arg
         <tr>
           <td class="memname"><a class="el" href="structAsyncFw_1_1CoroutineAwait.html">CoroutineAwait</a>&lt; void &gt; AsyncFw::coTimeout </td>
           <td>(</td>
-          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>timeout</em></span></td><td>)</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>ms</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -317,14 +319,14 @@ template&lt;typename T = AbstractThread, typename M, typename O, typename... Arg
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="structAsyncFw_1_1CoroutineAwait.html" title="Generic awaiter for wrapping asynchronous triggers or callback-based APIs into co_await.">CoroutineAwait</a> object to be used with co_await.</dd></dl>
 <p>Helper function to pause the current coroutine execution on the spot without creating or managing an explicit <a class="el" href="classAsyncFw_1_1Timer.html" title="The Timer class.">AsyncFw::Timer</a> object instance.</p>
-<p>Example: </p><div class="fragment"><div class="line"><span class="keyword">co_await</span> <a class="code hl_function" href="#ga2f5c202b3a290939feba04811f8ec888">AsyncFw::coTimeout</a>(500); <span class="comment">// Sleep for 500 milliseconds without a Timer object </span></div>
-<div class="ttc" id="agroup__coroutine__api_html_ga2f5c202b3a290939feba04811f8ec888"><div class="ttname"><a href="#ga2f5c202b3a290939feba04811f8ec888">AsyncFw::coTimeout</a></div><div class="ttdeci">CoroutineAwait&lt; void &gt; coTimeout(int timeout)</div><div class="ttdoc">Non-blocking coroutine sleep for the specified timeout interval.</div><div class="ttdef"><b>Definition</b> Timer.cpp:47</div></div>
+<p>Example: </p><div class="fragment"><div class="line"><span class="keyword">co_await</span> <a class="code hl_function" href="#ga37b3a970310b55e69ed1cb7aa9ab3646">AsyncFw::coTimeout</a>(500); <span class="comment">// Sleep for 500 milliseconds without a Timer object </span></div>
+<div class="ttc" id="agroup__coroutine__api_html_ga37b3a970310b55e69ed1cb7aa9ab3646"><div class="ttname"><a href="#ga37b3a970310b55e69ed1cb7aa9ab3646">AsyncFw::coTimeout</a></div><div class="ttdeci">CoroutineAwait&lt; void &gt; coTimeout(int)</div><div class="ttdoc">Non-blocking coroutine sleep for the specified timeout interval.</div><div class="ttdef"><b>Definition</b> Timer.cpp:47</div></div>
 </div><!-- fragment --> <div id="dynsection-0" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" frameborder="0" src="group__coroutine__api_ga2f5c202b3a290939feba04811f8ec888_cgraph.svg" width="364" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="group__coroutine__api_ga37b3a970310b55e69ed1cb7aa9ab3646_cgraph.svg" width="364" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>

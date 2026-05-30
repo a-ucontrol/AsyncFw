@@ -133,9 +133,9 @@ Public Member Functions</h2></td></tr>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>stop</b> ()</td></tr>
 <tr class="memdesc:a63f0eb44b27402196590a03781515dba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops the timer. <br /></td></tr>
 <tr class="separator:a63f0eb44b27402196590a03781515dba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2578293bf0bd7eef49a48039853d3b37" id="r_a2578293bf0bd7eef49a48039853d3b37"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structAsyncFw_1_1CoroutineAwait.html">CoroutineAwait</a>&lt; void &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2578293bf0bd7eef49a48039853d3b37">coTimeout</a> (int <a class="el" href="#acf307d575a38d2b3bb852202d0126fcd">timeout</a>)</td></tr>
-<tr class="memdesc:a2578293bf0bd7eef49a48039853d3b37"><td class="mdescLeft">&#160;</td><td class="mdescRight">Asynchronously waits for the specified timeout interval.  <br /></td></tr>
-<tr class="separator:a2578293bf0bd7eef49a48039853d3b37"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aad1874fc8c5f41c278e4e4de81609e54" id="r_aad1874fc8c5f41c278e4e4de81609e54"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structAsyncFw_1_1CoroutineAwait.html">CoroutineAwait</a>&lt; void &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aad1874fc8c5f41c278e4e4de81609e54">coTimeout</a> (int)</td></tr>
+<tr class="memdesc:aad1874fc8c5f41c278e4e4de81609e54"><td class="mdescLeft">&#160;</td><td class="mdescRight">Asynchronously waits for the specified timeout interval.  <br /></td></tr>
+<tr class="separator:aad1874fc8c5f41c278e4e4de81609e54"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -153,37 +153,35 @@ Public Attributes</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The <a class="el" href="classAsyncFw_1_1Timer.html" title="The Timer class.">Timer</a> class. </p>
-<p>Example: </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;chrono&gt;</span></div>
+<p>Example: </p><div class="fragment"><div class="line"><span class="comment">//#include &lt;chrono&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;AsyncFw/MainThread&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;AsyncFw/Timer&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;AsyncFw/LogStream&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><a class="code hl_struct" href="structAsyncFw_1_1CoroutineTask.html">AsyncFw::CoroutineTask</a> task(<a class="code hl_class" href="classAsyncFw_1_1Timer.html">AsyncFw::Timer</a> *timer) {</div>
-<div class="line">  lsDebug() &lt;&lt; <span class="stringliteral">&quot;coro task&quot;</span> &lt;&lt; std::chrono::system_clock::now();</div>
-<div class="line">  <span class="keyword">co_await</span> timer-&gt;<a class="code hl_function" href="#a2578293bf0bd7eef49a48039853d3b37">coTimeout</a>(10);</div>
-<div class="line">  lsDebug() &lt;&lt; <span class="stringliteral">&quot;coro task&quot;</span> &lt;&lt; std::chrono::system_clock::now();</div>
-<div class="line">  <span class="keyword">co_await</span> timer-&gt;<a class="code hl_function" href="#a2578293bf0bd7eef49a48039853d3b37">coTimeout</a>(10);</div>
-<div class="line">  lsDebug() &lt;&lt; <span class="stringliteral">&quot;coro task&quot;</span> &lt;&lt; std::chrono::system_clock::now();</div>
+<div class="line"><span class="preprocessor">#include &lt;AsyncFw/MainThread&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;AsyncFw/Coroutine&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;AsyncFw/LogStream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> heavyCalculation(<span class="keywordtype">int</span> input) {</div>
+<div class="line">  <span class="keywordflow">return</span> input * 42;</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><a class="code hl_struct" href="structAsyncFw_1_1CoroutineTask.html">AsyncFw::CoroutineTask</a> runApplicationLogic() {</div>
+<div class="line">  lsNotice() &lt;&lt; <span class="stringliteral">&quot;Starting application flow on Main Thread...&quot;</span>;</div>
+<div class="line">  <span class="keywordtype">int</span> computationResult = <span class="keyword">co_await</span> <a class="code hl_function" href="group__coroutine__api.html#ga0005f3892c4f008098e0ee2634481d5a">AsyncFw::coInvoke</a>(heavyCalculation, 10);</div>
+<div class="line">  lsNotice() &lt;&lt; <span class="stringliteral">&quot;Computation successfully returned: &quot;</span> &lt;&lt; computationResult;</div>
 <div class="line">  <a class="code hl_function" href="classAsyncFw_1_1MainThread.html#a76fed3a2c1cfdbdb67f2b209e6457657">AsyncFw::MainThread::exit</a>(0);</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[]) {</div>
-<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1Timer.html">AsyncFw::Timer</a> timer1;</div>
-<div class="line">  timer1.<a class="code hl_function" href="#a14d02d88bd3682afd7c8fd72cc670e46">start</a>(10);</div>
-<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1Timer.html">AsyncFw::Timer</a> timer2;</div>
-<div class="line"> </div>
-<div class="line">  timer1.<a class="code hl_variable" href="#acf307d575a38d2b3bb852202d0126fcd">timeout</a>.<a class="code hl_function" href="classAsyncFw_1_1FunctionConnector.html#ab0c621be7a792e256acab8241ae563a0">connect</a>([]() { lsDebug() &lt;&lt; std::chrono::system_clock::now() &lt;&lt; <span class="stringliteral">&quot; timer1 timeout&quot;</span>; });</div>
-<div class="line"> </div>
-<div class="line">  timer2.<a class="code hl_variable" href="#acf307d575a38d2b3bb852202d0126fcd">timeout</a>.<a class="code hl_function" href="classAsyncFw_1_1FunctionConnector.html#ab0c621be7a792e256acab8241ae563a0">connect</a>([]() { lsDebug() &lt;&lt; std::chrono::system_clock::now() &lt;&lt; <span class="stringliteral">&quot; timer2 timeout&quot;</span>; });</div>
-<div class="line"> </div>
-<div class="line">  task(&amp;timer2);</div>
-<div class="line"> </div>
-<div class="line">  lsNotice() &lt;&lt; <span class="stringliteral">&quot;Start Applicaiton&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Instance.html#a8000597f0e7ee4bd6669491a5b502beb">AsyncFw::Instance&lt;AsyncFw::ThreadPool&gt;::create</a>(<span class="stringliteral">&quot;ExampleThreadPool&quot;</span>);</div>
+<div class="line">  runApplicationLogic();</div>
+<div class="line">  logNotice() &lt;&lt; <span class="stringliteral">&quot;Booting Main Engine Event Loop...&quot;</span>;</div>
 <div class="line">  <span class="keywordtype">int</span> ret = <a class="code hl_function" href="classAsyncFw_1_1MainThread.html#ad12e620772820ad751868c7b49fa4190">AsyncFw::MainThread::exec</a>();</div>
-<div class="line">  lsNotice() &lt;&lt; <span class="stringliteral">&quot;End Applicaiton &quot;</span> &lt;&lt; ret;</div>
 <div class="line">  <span class="keywordflow">return</span> ret;</div>
 <div class="line">}</div>
-</div><!-- fragment --> <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="ContainerTask_2main_8cpp-example.html#_a1">ContainerTask/main.cpp</a>, and <a class="el" href="Timer_2main_8cpp-example.html#_a1">Timer/main.cpp</a>.</dd>
+<div class="line"> </div>
+</div><!-- fragment --> <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="ContainerTask_2main_8cpp-example.html#_a1">ContainerTask/main.cpp</a>.</dd>
 </dl>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="ac71f0729e65046914c3358e87759f9e9" name="ac71f0729e65046914c3358e87759f9e9"></a>
@@ -262,7 +260,7 @@ template&lt;typename T&gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="ContainerTask_2main_8cpp-example.html#a7">ContainerTask/main.cpp</a>, and <a class="el" href="Timer_2main_8cpp-example.html#a4">Timer/main.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="ContainerTask_2main_8cpp-example.html#a7">ContainerTask/main.cpp</a>.</dd>
 </dl>
 <div id="dynsection-2" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-2-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
@@ -281,8 +279,8 @@ template&lt;typename T&gt; </div>
 
 </div>
 </div>
-<a id="a2578293bf0bd7eef49a48039853d3b37" name="a2578293bf0bd7eef49a48039853d3b37"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2578293bf0bd7eef49a48039853d3b37">&#9670;&#160;</a></span>coTimeout()</h2>
+<a id="aad1874fc8c5f41c278e4e4de81609e54" name="aad1874fc8c5f41c278e4e4de81609e54"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aad1874fc8c5f41c278e4e4de81609e54">&#9670;&#160;</a></span>coTimeout()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -290,7 +288,7 @@ template&lt;typename T&gt; </div>
         <tr>
           <td class="memname"><a class="el" href="structAsyncFw_1_1CoroutineAwait.html">CoroutineAwait</a>&lt; void &gt; Timer::coTimeout </td>
           <td>(</td>
-          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>timeout</em></span></td><td>)</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>ms</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -299,20 +297,18 @@ template&lt;typename T&gt; </div>
 <p>Asynchronously waits for the specified timeout interval. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">timeout</td><td>interval in milliseconds </td></tr>
+    <tr><td class="paramname">ms</td><td>interval in milliseconds </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="structAsyncFw_1_1CoroutineAwait.html" title="Generic awaiter for wrapping asynchronous triggers or callback-based APIs into co_await.">CoroutineAwait</a> object to be used with co_await</dd></dl>
 <p>Example: </p><div class="fragment"><div class="line"><span class="keyword">co_await</span> timer.coTimeout(500); <span class="comment">// Sleep for 500 milliseconds </span></div>
-</div><!-- fragment --> <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="Timer_2main_8cpp-example.html#a2">Timer/main.cpp</a>.</dd>
-</dl>
-<div id="dynsection-4" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+</div><!-- fragment --> <div id="dynsection-4" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-4-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
 <div id="dynsection-4-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-4-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1Timer_a2578293bf0bd7eef49a48039853d3b37_cgraph.svg" width="604" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1Timer_aad1874fc8c5f41c278e4e4de81609e54_cgraph.svg" width="604" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>

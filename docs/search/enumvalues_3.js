@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['listening_0',['Listening',['../classAsyncFw_1_1AbstractSocket.html#a6fc3dae51b6b38d67f1c3861dcbb23bda5b13d3f73cf426c72bbd8598ede9442d',1,'AsyncFw::AbstractSocket']]]
+  ['emergency_0',['Emergency',['../classAsyncFw_1_1LogStream.html#afa2f6c5311ced6b973d39d6e5ced5731a66e8e44e1adfebd567c25c6611a5e418',1,'AsyncFw::LogStream']]],
+  ['error_1',['Error',['../classAsyncFw_1_1LogStream.html#afa2f6c5311ced6b973d39d6e5ced5731a735a344d42befe22f3f60ed4f1125351',1,'AsyncFw::LogStream']]]
 ];

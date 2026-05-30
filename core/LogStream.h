@@ -42,27 +42,29 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 namespace AsyncFw {
 /** @class LogStream LogStream.h <AsyncFw/LogStream> @brief A high-performance, thread-safe logging stream utility utilizing RAII execution semantics.
-@brief LogStream provides dynamic string and data formatting using standard C++ stream insertion operators (operator<<). The logged content is accumulated in an internal buffer and is guaranteed to flush automatically to the configured outputs when the temporary LogStream instance is destroyed at the end of the statement (RAII).
-\exception std::runtime_error If log level emergency the exception std::runtime_error("log level emergency") will be raised.
+@details LogStream provides dynamic string and data formatting using standard C++ stream insertion operators (operator<<). The logged content is accumulated in an internal buffer and is guaranteed to flush automatically to the configured outputs when the temporary LogStream instance is destroyed at the end of the statement (RAII).
+@exception std::runtime_error If log level emergency the exception std::runtime_error("log level emergency") will be raised.
+@note Throwing a log with `Emergency` level will automatically raise a `std::runtime_error`.
+@note Please refer to the **example** for compile-time log optimizations (like LS_NO_TRACE) and standard inline vs formatting syntax usage styles.
 @brief Examlpe: @snippet snippet.dox LogStream */
 class LogStream {
 public:
   enum MessageType : uint8_t {
-    Emergency = 0x00,
-    Alert = 0x01,
-    Error = 0x02,
-    Warning = 0x03,
-    Notice = 0x04,
-    Info = 0x05,
-    Debug = 0x06,
-    Trace = 0x07,
+    Emergency = 0x00,  ///< Critical failure. Crashes the app with an exception.
+    Alert = 0x01,      ///< Action must be taken immediately.
+    Error = 0x02,      ///< Error conditions.
+    Warning = 0x03,    ///< Warning conditions.
+    Notice = 0x04,     ///< Normal but significant messages
+    Info = 0x05,       ///< Informational messages.
+    Debug = 0x06,      ///< Debug-level messages.
+    Trace = 0x07,      ///< Deep trace-level messages.
   };
 
   enum Output : uint8_t {
     NoConsole = 0x08,
   };
 
-  //color names
+  /** @enum Color @brief ANSI Terminal colors to toggle inline styling inside logs. */
   enum Color : uint8_t {
     Default = 0x00,
     White = 0x10,
@@ -82,15 +84,16 @@ public:
     DarkYellow = 0xf0,
   };
 
+  /** @brief Complete container representing an unrolled, processed log entry. */
   struct Message {
     Message() = default;
     Message(uint8_t, const std::string &, const std::string &, const std::string &);
     Message(uint64_t time, uint8_t type, const std::string &name, const std::string &string, const std::string &note) : time(time), type(type), name(name), string(string), note(note) {}
-    uint64_t time;
-    uint8_t type;
-    std::string name;
-    std::string string;
-    std::string note;
+    uint64_t time;       ///< Unix timestamp in milliseconds.
+    uint8_t type;        ///< Тип сообщения (MessageType).
+    std::string name;    ///< Extracted signature/sender identification context.
+    std::string string;  ///< Main log message body payload text.
+    std::string note;    ///< Debug context notes (source file code trace location).
     bool operator==(const Message &m) const { return type == m.type && string == m.string && name == m.name && note == m.note; }
   };
 
@@ -108,6 +111,7 @@ public:
     bool empty_;
   };
 
+  /** @brief Programmatically forwards a raw pre-built Message structure to the active logging router. */
   static void message(const Message &m, uint8_t f = LOG_STREAM_CONSOLE_COLOR | LOG_STREAM_CONSOLE_EXTEND) { data.completed(m, f); }
   static void console_output(const Message &, uint8_t = LOG_STREAM_CONSOLE_COLOR | LOG_STREAM_CONSOLE_EXTEND);
   static std::string levelName(uint8_t);
@@ -116,15 +120,21 @@ public:
   static std::string timeString(const uint64_t, const TimeFormat & = {});
   static std::string currentTimeString(const TimeFormat & = {});
 
+  /** @brief Globally changes the datetime presentation format across all incoming log streams. */
   static void setTimeFormat(const std::string &, bool = false);
+  /** @brief Adjusts the timestamp output offset (in seconds) to account for target time zones.
+  @details **By default, it automatically uses the current local time zone** of the host operating system (via C++20 standard zoned_time and current_zone). This method should only be used if you need to manually override the system time zone detection.
+  @param secondsOffset The explicit timezone offset in seconds. */
   static void setTimeOffset(int);
-  static void setCompleted(void (*_completed)(const Message &, uint8_t)) { data.completed = _completed; }
+  /** @brief Intercepts completed log messages to route them to a custom sink (e.g. file, database, syslog). */
+  static void setCompleted(void (*completed)(const Message &, uint8_t)) { data.completed = completed; }
   static void setFunctionPrefixIgnoreList(const std::vector<std::string> &list) { data.functionPrefixIgnoreList_ = list; }
   static void setSenderPrefix(const std::string &prefix) { data.senderPrefix_ = prefix; }
 
   LogStream(uint8_t, const char *, const char *, int, uint8_t = 0);
   LogStream() = default;
   ~LogStream() noexcept(false);
+  /** @brief Generic stream insertion operator for appending variables and primitives. */
   template <typename T>
   inline LogStream &operator<<(T val) {
     typedef const typename std::remove_reference<T>::type type;
@@ -158,9 +168,9 @@ public:
   }
   LogStream &output() { return *this; }
   LogStream &output(const std::string &);
-  LogStream &space();
-  LogStream &nospace();
-  LogStream &flush();
+  LogStream &space();    ///< Enables automatic spacing between subsequent `<<` insertions.
+  LogStream &nospace();  ///< Disables automatic spacing for the rest of this log line.
+  LogStream &flush();    ///< Dispatches the current contents to the log output immediately.
 
 private:
   static class Data {

@@ -44,6 +44,6 @@ CoroutineAwait<void> Timer::coTimeout(int ms) {
   });
 }
 
-CoroutineAwait<void> AsyncFw::coTimeout(int timeout) {
-  return CoroutineAwait<void>([timeout](CoroutineHandle h) { Timer::single(timeout, [h]() { h.promise().resume_queued(); }); });
+CoroutineAwait<void> AsyncFw::coTimeout(int ms) {
+  return CoroutineAwait<void>([ms](CoroutineHandle h) { Timer::single(ms, [h]() { h.promise().resume_queued(); }); });
 }

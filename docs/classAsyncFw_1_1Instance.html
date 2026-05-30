@@ -112,7 +112,7 @@ $(function(){initNavTree('classAsyncFw_1_1Instance.html',''); initResizable(true
 </div><!--header-->
 <div class="contents">
 
-<p>A template-based global registry wrapper for managing application-wide unique objects (Singletons).  
+<p>A template-based global registry wrapper for managing application-wide default objects (Global Default Instances).  
  <a href="#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="Instance_8h_source.html">AsyncFw/Instance</a>&gt;</code></p>
@@ -146,17 +146,17 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~Instance</b> () o
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a8000597f0e7ee4bd6669491a5b502beb" id="r_a8000597f0e7ee4bd6669491a5b502beb"><td class="memTemplParams" colspan="2">template&lt;typename CT, typename... Args&gt; </td></tr>
 <tr class="memitem:a8000597f0e7ee4bd6669491a5b502beb"><td class="memTemplItemLeft" align="right" valign="top">static CT *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a8000597f0e7ee4bd6669491a5b502beb">create</a> (Args... args)</td></tr>
-<tr class="memdesc:a8000597f0e7ee4bd6669491a5b502beb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a custom polymorphically derived object inside this instance container.  <br /></td></tr>
+<tr class="memdesc:a8000597f0e7ee4bd6669491a5b502beb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a custom polymorphically derived object inside this instance container as the global default.  <br /></td></tr>
 <tr class="separator:a8000597f0e7ee4bd6669491a5b502beb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a158800905f9c1ce225fcabbfa5b1d053" id="r_a158800905f9c1ce225fcabbfa5b1d053"><td class="memTemplParams" colspan="2">template&lt;typename... Args&gt; </td></tr>
 <tr class="memitem:a158800905f9c1ce225fcabbfa5b1d053"><td class="memTemplItemLeft" align="right" valign="top">static T *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a158800905f9c1ce225fcabbfa5b1d053">create</a> (Args... args)</td></tr>
-<tr class="memdesc:a158800905f9c1ce225fcabbfa5b1d053"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates the singleton instance value of the exact type T.  <br /></td></tr>
+<tr class="memdesc:a158800905f9c1ce225fcabbfa5b1d053"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates the global default instance value of the exact type T.  <br /></td></tr>
 <tr class="separator:a158800905f9c1ce225fcabbfa5b1d053"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac288330eee2512b0f87ce1013697abff" id="r_ac288330eee2512b0f87ce1013697abff"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac288330eee2512b0f87ce1013697abff">set</a> (T *p)</td></tr>
 <tr class="memdesc:ac288330eee2512b0f87ce1013697abff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Manually sets or replaces the internal instance tracking pointer.  <br /></td></tr>
 <tr class="separator:ac288330eee2512b0f87ce1013697abff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a30d476114eb37aafb60ac3a6467c2fcd" id="r_a30d476114eb37aafb60ac3a6467c2fcd"><td class="memItemLeft" align="right" valign="top">static T *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a30d476114eb37aafb60ac3a6467c2fcd">get</a> ()</td></tr>
-<tr class="memdesc:a30d476114eb37aafb60ac3a6467c2fcd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the active global pointer for this instance type.  <br /></td></tr>
+<tr class="memdesc:a30d476114eb37aafb60ac3a6467c2fcd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the active engine-wide global default pointer for this instance type.  <br /></td></tr>
 <tr class="separator:a30d476114eb37aafb60ac3a6467c2fcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_static_methods_classAsyncFw_1_1AbstractInstance"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_static_methods_classAsyncFw_1_1AbstractInstance')"><img src="closed.png" alt="-"/>&#160;Static Public Member Functions inherited from <a class="el" href="classAsyncFw_1_1AbstractInstance.html">AsyncFw::AbstractInstance</a></td></tr>
 <tr class="memitem:a53843084f7ba8d6f9fbefcdc5cfead27 inherit pub_static_methods_classAsyncFw_1_1AbstractInstance" id="r_a53843084f7ba8d6f9fbefcdc5cfead27"><td class="memItemLeft" align="right" valign="top">
@@ -188,7 +188,8 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>created</b> (
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename T&gt;<br />
-class AsyncFw::Instance&lt; T &gt;</div><p>A template-based global registry wrapper for managing application-wide unique objects (Singletons). </p>
+class AsyncFw::Instance&lt; T &gt;</div><p>A template-based global registry wrapper for managing application-wide default objects (Global Default Instances). </p>
+<p>Unlike a strict Singleton pattern, the underlying class (e.g., <a class="el" href="classAsyncFw_1_1ThreadPool.html" title="Manages a set of reusable worker threads for concurrent task execution, eliminating the need to spawn...">ThreadPool</a>) remains a standard class that can be instantiated multiple times independently. This wrapper acts as a Service Locator, managing a single engine-wide global default instance.</p>
 <p>Example: </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;AsyncFw/MainThread&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;AsyncFw/LogStream&gt;</span></div>
 <div class="line"> </div>
@@ -219,9 +220,9 @@ class AsyncFw::Instance&lt; T &gt;</div><p>A template-based global registry wrap
 <div class="line">  lsInfoMagenta() &lt;&lt; _e.name();</div>
 <div class="line">  lsInfoMagenta() &lt;&lt; ExampleClass::instance()-&gt;name();</div>
 <div class="line"> </div>
-<div class="line">  lsNotice() &lt;&lt; <span class="stringliteral">&quot;Start Applicaiton&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line">  lsNotice() &lt;&lt; <span class="stringliteral">&quot;Start Application&quot;</span> &lt;&lt; std::endl;</div>
 <div class="line">  <span class="keywordtype">int</span> ret = <a class="code hl_function" href="classAsyncFw_1_1MainThread.html#ad12e620772820ad751868c7b49fa4190">AsyncFw::MainThread::exec</a>();</div>
-<div class="line">  lsNotice() &lt;&lt; <span class="stringliteral">&quot;End Applicaiton &quot;</span> &lt;&lt; ret;</div>
+<div class="line">  lsNotice() &lt;&lt; <span class="stringliteral">&quot;End Application &quot;</span> &lt;&lt; ret;</div>
 <div class="line">  <span class="keywordflow">return</span> ret;</div>
 <div class="line">}</div>
 </div><!-- fragment --> </div><h2 class="groupheader">Member Function Documentation</h2>
@@ -252,7 +253,7 @@ template&lt;typename CT, typename... Args&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Creates a custom polymorphically derived object inside this instance container. </p>
+<p>Creates a custom polymorphically derived object inside this instance container as the global default. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">CT</td><td>The concrete target type to instantiate (must derive from or be type T).</td></tr>
@@ -266,7 +267,7 @@ template&lt;typename CT, typename... Args&gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A pointer to the newly created object, or nullptr if an instance already exists. </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="ApplicationNotifier_2main_8cpp-example.html#a0">ApplicationNotifier/main.cpp</a>, <a class="el" href="Coroutine_2main_8cpp-example.html#a7">Coroutine/main.cpp</a>, <a class="el" href="CoroutineInvoke_2main_8cpp-example.html#a5">CoroutineInvoke/main.cpp</a>, <a class="el" href="CoroutineWait_2main_8cpp-example.html#a3">CoroutineWait/main.cpp</a>, <a class="el" href="Log_2main_8cpp-example.html#a2">Log/main.cpp</a>, <a class="el" href="LogTcp_2main_8cpp-example.html#a2">LogTcp/main.cpp</a>, and <a class="el" href="ThreadPool_2main_8cpp-example.html#a1">ThreadPool/main.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="ApplicationNotifier_2main_8cpp-example.html#a0">ApplicationNotifier/main.cpp</a>, <a class="el" href="Coroutine_2main_8cpp-example.html#a7">Coroutine/main.cpp</a>, <a class="el" href="CoroutineInvoke_2main_8cpp-example.html#a5">CoroutineInvoke/main.cpp</a>, <a class="el" href="CoroutineWait_2main_8cpp-example.html#a3">CoroutineWait/main.cpp</a>, <a class="el" href="Log_2main_8cpp-example.html#a2">Log/main.cpp</a>, <a class="el" href="LogTcp_2main_8cpp-example.html#a2">LogTcp/main.cpp</a>, <a class="el" href="ThreadPool_2main_8cpp-example.html#a2">ThreadPool/main.cpp</a>, and <a class="el" href="Timer_2main_8cpp-example.html#a3">Timer/main.cpp</a>.</dd>
 </dl>
 <div id="dynsection-2" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-2-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
@@ -305,7 +306,7 @@ template&lt;typename... Args&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Creates the singleton instance value of the exact type T. </p>
+<p>Creates the global default instance value of the exact type T. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">args</td><td>Variadic arguments forwarded directly to the constructor of T. </td></tr>
@@ -383,7 +384,7 @@ template&lt;typename T&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Retrieves the active global pointer for this instance type. </p>
+<p>Retrieves the active engine-wide global default pointer for this instance type. </p>
 <dl class="section return"><dt>Returns</dt><dd>A raw pointer to the managed object of type T, or nullptr if uninitialized. </dd></dl>
 
 </div>

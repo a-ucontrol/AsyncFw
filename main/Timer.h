@@ -32,9 +32,9 @@ public:
 
   /** @brief The Timer::timeout connector */
   FunctionConnector<>::Protected<Timer> timeout;
-  /** @brief Asynchronously waits for the specified timeout interval @param timeout interval in milliseconds @return CoroutineAwait object to be used with co_await
+  /** @brief Asynchronously waits for the specified timeout interval @param ms interval in milliseconds @return CoroutineAwait object to be used with co_await
   @brief Example: \code co_await timer.coTimeout(500); // Sleep for 500 milliseconds \endcode */
-  CoroutineAwait<void> coTimeout(int timeout);
+  CoroutineAwait<void> coTimeout(int);
 
 private:
   template <typename T>
@@ -62,5 +62,5 @@ private:
 @details Helper function to pause the current coroutine execution on the spot without creating or managing an explicit AsyncFw::Timer object instance.
 \ingroup coroutine_api
 @brief Example: \code co_await AsyncFw::coTimeout(500); // Sleep for 500 milliseconds without a Timer object \endcode */
-CoroutineAwait<void> coTimeout(int timeout);
+CoroutineAwait<void> coTimeout(int);
 }  // namespace AsyncFw

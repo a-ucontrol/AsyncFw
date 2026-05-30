@@ -2,7 +2,7 @@ var classAsyncFw_1_1FunctionConnector =
 [
     [ "Connection", "classAsyncFw_1_1FunctionConnector_1_1Connection.html", null ],
     [ "Protected", "classAsyncFw_1_1FunctionConnector.html#a734e080cd73646c75b4b40fe5aa8d19d", null ],
-    [ "connect", "classAsyncFw_1_1FunctionConnector.html#ab0c621be7a792e256acab8241ae563a0", null ],
-    [ "connect", "classAsyncFw_1_1FunctionConnector.html#a48771ac40286a1afed95130b45c21d26", null ],
-    [ "operator()", "classAsyncFw_1_1FunctionConnector.html#ab78eb4bd213a04c987d1230c61e0f354", null ]
+    [ "connect", "classAsyncFw_1_1FunctionConnector.html#a359a9c03d52bc62db628e4f53be72457", null ],
+    [ "connect", "classAsyncFw_1_1FunctionConnector.html#aec525ebc3b70cc3b4eeb2ec7d6fc0bd0", null ],
+    [ "operator()", "classAsyncFw_1_1FunctionConnector.html#acc31eb4d17c3cc86ef80c37b169f846d", null ]
 ];

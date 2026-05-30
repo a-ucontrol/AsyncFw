@@ -20,7 +20,7 @@
 <!-- Node2 -->
 <g id="Node000002" class="node">
 <title>Node2</title>
-<g id="a_Node000002"><a xlink:href="group__coroutine__api.html#ga2f5c202b3a290939feba04811f8ec888" target="_top" xlink:title="Non&#45;blocking coroutine sleep for the specified timeout interval.">
+<g id="a_Node000002"><a xlink:href="group__coroutine__api.html#ga37b3a970310b55e69ed1cb7aa9ab3646" target="_top" xlink:title="Non&#45;blocking coroutine sleep for the specified timeout interval.">
 <polygon fill="white" stroke="#666666" points="287,-58 178,-58 178,-38 287,-38 287,-58"/>
 <text text-anchor="middle" x="232.5" y="-44.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::coTimeout</text>
 </a>
@@ -56,7 +56,7 @@
 <!-- Node4 -->
 <g id="Node000004" class="node">
 <title>Node4</title>
-<g id="a_Node000004"><a xlink:href="classAsyncFw_1_1Timer.html#a2578293bf0bd7eef49a48039853d3b37" target="_top" xlink:title="Asynchronously waits for the specified timeout interval.">
+<g id="a_Node000004"><a xlink:href="classAsyncFw_1_1Timer.html#aad1874fc8c5f41c278e4e4de81609e54" target="_top" xlink:title="Asynchronously waits for the specified timeout interval.">
 <polygon fill="white" stroke="#666666" points="139.75,-20 0,-20 0,0 139.75,0 139.75,-20"/>
 <text text-anchor="middle" x="69.88" y="-6.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::Timer::coTimeout</text>
 </a>

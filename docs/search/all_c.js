@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['operator_20bool_0',['operator bool',['../classAsyncFw_1_1FunctionConnectionGuard.html#acf91863f12533d5e289f9b2c085ea71f',1,'AsyncFw::FunctionConnectionGuard']]],
-  ['operator_28_29_1',['operator()',['../classAsyncFw_1_1FunctionConnector.html#ab78eb4bd213a04c987d1230c61e0f354',1,'AsyncFw::FunctionConnector']]],
-  ['operator_2b_3d_2',['operator+=',['../classAsyncFw_1_1FunctionConnectionGuardList.html#a1868fe28dabfb86ed0d0eb500eeda9f2',1,'AsyncFw::FunctionConnectionGuardList']]],
-  ['operator_3d_3',['operator=',['../classAsyncFw_1_1FunctionConnectionGuard.html#a6dcd772a1fc087de360b5d0b4588f83e',1,'AsyncFw::FunctionConnectionGuard::operator=(AbstractFunctionConnector::Connection &amp;)'],['../classAsyncFw_1_1FunctionConnectionGuard.html#aa887547d9a0d2889e172893ae9421a8d',1,'AsyncFw::FunctionConnectionGuard::operator=(FunctionConnectionGuard &amp;&amp;)']]],
-  ['output_4',['output',['../classAsyncFw_1_1SystemProcess.html#a8a8a88ab7ee97a636144d72ce64cba2e',1,'AsyncFw::SystemProcess']]]
+  ['emergency_0',['Emergency',['../classAsyncFw_1_1LogStream.html#afa2f6c5311ced6b973d39d6e5ced5731a66e8e44e1adfebd567c25c6611a5e418',1,'AsyncFw::LogStream']]],
+  ['empty_1',['empty',['../classAsyncFw_1_1TlsContext.html#a84b0d6eb6ccb1e73664cb059e4ae0bb6',1,'AsyncFw::TlsContext']]],
+  ['error_2',['Error',['../classAsyncFw_1_1LogStream.html#afa2f6c5311ced6b973d39d6e5ced5731a735a344d42befe22f3f60ed4f1125351',1,'AsyncFw::LogStream']]],
+  ['exec_3',['exec',['../classAsyncFw_1_1AbstractThread.html#a9182c0b4b442300a64b8536f65ffe417',1,'AsyncFw::AbstractThread::exec()'],['../classAsyncFw_1_1MainThread.html#ad12e620772820ad751868c7b49fa4190',1,'AsyncFw::MainThread::exec()']]],
+  ['exit_4',['exit',['../classAsyncFw_1_1MainThread.html#a76fed3a2c1cfdbdb67f2b209e6457657',1,'AsyncFw::MainThread::exit()'],['../classAsyncFw_1_1MainThread.html#a4f68db1062428237c247332121c93612',1,'AsyncFw::MainThread::exit(int code)']]]
 ];

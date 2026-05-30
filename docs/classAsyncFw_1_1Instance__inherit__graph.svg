@@ -11,7 +11,7 @@
 <!-- Node1 -->
 <g id="Node000001" class="node">
 <title>Node1</title>
-<g id="a_Node000001"><a xlink:title="A template&#45;based global registry wrapper for managing application&#45;wide unique objects (Singletons).">
+<g id="a_Node000001"><a xlink:title="A template&#45;based global registry wrapper for managing application&#45;wide default objects (Global Defaul...">
 <polygon fill="#999999" stroke="#666666" points="299.25,-151 174.5,-151 174.5,-131 299.25,-131 299.25,-151"/>
 <text text-anchor="middle" x="236.88" y="-137.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::Instance&lt; T &gt;</text>
 </a>
@@ -140,7 +140,7 @@
 <!-- Node2 -->
 <g id="Node000002" class="node">
 <title>Node2</title>
-<g id="a_Node000002"><a xlink:href="classAsyncFw_1_1AbstractInstance.html" target="_top" xlink:title="Abstract base class for global singleton service providers and managed instances.">
+<g id="a_Node000002"><a xlink:href="classAsyncFw_1_1AbstractInstance.html" target="_top" xlink:title="Abstract base class for global default service providers and managed instances.">
 <polygon fill="white" stroke="#666666" points="137.5,-151 0,-151 0,-131 137.5,-131 137.5,-151"/>
 <text text-anchor="middle" x="68.75" y="-137.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AbstractInstance</text>
 </a>

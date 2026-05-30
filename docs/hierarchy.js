@@ -79,6 +79,7 @@ var hierarchy =
     [ "AsyncFw::MulticastDns::Host", "structAsyncFw_1_1MulticastDns_1_1Host.html", null ],
     [ "AsyncFw::HttpServer", "classAsyncFw_1_1HttpServer.html", null ],
     [ "AsyncFw::LogStream", "classAsyncFw_1_1LogStream.html", null ],
+    [ "AsyncFw::LogStream::Message", "structAsyncFw_1_1LogStream_1_1Message.html", null ],
     [ "AsyncFw::MulticastDns", "classAsyncFw_1_1MulticastDns.html", null ],
     [ "AsyncFw::PollNotifier", "classAsyncFw_1_1PollNotifier.html", null ],
     [ "AsyncFw::Rrd", "classAsyncFw_1_1Rrd.html", [

@@ -34,7 +34,7 @@ var annotated_dup =
       [ "Instance", "classAsyncFw_1_1Instance.html", "classAsyncFw_1_1Instance" ],
       [ "ListenSocket", "classAsyncFw_1_1ListenSocket.html", "classAsyncFw_1_1ListenSocket" ],
       [ "Log", "classAsyncFw_1_1Log.html", null ],
-      [ "LogStream", "classAsyncFw_1_1LogStream.html", null ],
+      [ "LogStream", "classAsyncFw_1_1LogStream.html", "classAsyncFw_1_1LogStream" ],
       [ "MainThread", "classAsyncFw_1_1MainThread.html", null ],
       [ "MulticastDns", "classAsyncFw_1_1MulticastDns.html", "classAsyncFw_1_1MulticastDns" ],
       [ "PollNotifier", "classAsyncFw_1_1PollNotifier.html", "classAsyncFw_1_1PollNotifier" ],

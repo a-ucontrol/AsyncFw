@@ -11,7 +11,7 @@
 <!-- Node1 -->
 <g id="Node000001" class="node">
 <title>Node1</title>
-<g id="a_Node000001"><a xlink:title="Creates a custom polymorphically derived object inside this instance container.">
+<g id="a_Node000001"><a xlink:title="Creates a custom polymorphically derived object inside this instance container as the global default.">
 <polygon fill="#999999" stroke="#666666" points="249.5,-32 142.75,-32 142.75,0 249.5,0 249.5,-32"/>
 <text text-anchor="start" x="150.75" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::Instance::</text>
 <text text-anchor="middle" x="196.12" y="-6.5" font-family="Helvetica,sans-Serif" font-size="10.00">create</text>
@@ -21,7 +21,7 @@
 <!-- Node2 -->
 <g id="Node000002" class="node">
 <title>Node2</title>
-<g id="a_Node000002"><a xlink:href="classAsyncFw_1_1Instance.html#a158800905f9c1ce225fcabbfa5b1d053" target="_top" xlink:title="Creates the singleton instance value of the exact type T.">
+<g id="a_Node000002"><a xlink:href="classAsyncFw_1_1Instance.html#a158800905f9c1ce225fcabbfa5b1d053" target="_top" xlink:title="Creates the global default instance value of the exact type T.">
 <polygon fill="white" stroke="#666666" points="106.75,-32 0,-32 0,0 106.75,0 106.75,-32"/>
 <text text-anchor="start" x="8" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::Instance::</text>
 <text text-anchor="middle" x="53.38" y="-6.5" font-family="Helvetica,sans-Serif" font-size="10.00">create</text>

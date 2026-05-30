@@ -104,6 +104,7 @@ $(function(){initNavTree('classAsyncFw_1_1LogStream.html',''); initResizable(tru
 
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
@@ -117,25 +118,31 @@ $(function(){initNavTree('classAsyncFw_1_1LogStream.html',''); initResizable(tru
 
 <p><code>#include &lt;<a class="el" href="LogStream_8h_source.html">AsyncFw/LogStream</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structAsyncFw_1_1LogStream_1_1Message.html">Message</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Complete container representing an unrolled, processed log entry.  <a href="structAsyncFw_1_1LogStream_1_1Message.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:afa2f6c5311ced6b973d39d6e5ced5731" id="r_afa2f6c5311ced6b973d39d6e5ced5731"><td class="memItemLeft" align="right" valign="top"><a id="afa2f6c5311ced6b973d39d6e5ced5731" name="afa2f6c5311ced6b973d39d6e5ced5731"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>MessageType</b> : uint8_t { <br />
-&#160;&#160;<b>Emergency</b> = 0x00
-, <b>Alert</b> = 0x01
-, <b>Error</b> = 0x02
-, <b>Warning</b> = 0x03
+<tr class="memitem:afa2f6c5311ced6b973d39d6e5ced5731" id="r_afa2f6c5311ced6b973d39d6e5ced5731"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afa2f6c5311ced6b973d39d6e5ced5731">MessageType</a> : uint8_t { <br />
+&#160;&#160;<a class="el" href="#afa2f6c5311ced6b973d39d6e5ced5731a66e8e44e1adfebd567c25c6611a5e418">Emergency</a> = 0x00
+, <a class="el" href="#afa2f6c5311ced6b973d39d6e5ced5731a8e7cdb29641eddbcac3012fe6eb3cd3d">Alert</a> = 0x01
+, <a class="el" href="#afa2f6c5311ced6b973d39d6e5ced5731a735a344d42befe22f3f60ed4f1125351">Error</a> = 0x02
+, <a class="el" href="#afa2f6c5311ced6b973d39d6e5ced5731a96aad685f21a4a927c6c3a74274efd5a">Warning</a> = 0x03
 , <br />
-&#160;&#160;<b>Notice</b> = 0x04
-, <b>Info</b> = 0x05
-, <b>Debug</b> = 0x06
-, <b>Trace</b> = 0x07
+&#160;&#160;<a class="el" href="#afa2f6c5311ced6b973d39d6e5ced5731ae60e1a6347736018009842563cd57231">Notice</a> = 0x04
+, <a class="el" href="#afa2f6c5311ced6b973d39d6e5ced5731a55700379cc50408c01860c3a700d20a0">Info</a> = 0x05
+, <a class="el" href="#afa2f6c5311ced6b973d39d6e5ced5731a39dfd70cbe9922423fa0db22b9dddfa2">Debug</a> = 0x06
+, <a class="el" href="#afa2f6c5311ced6b973d39d6e5ced5731ab9e4aeca51d007c66abb1ad6b93c3c37">Trace</a> = 0x07
 <br />
  }</td></tr>
 <tr class="separator:afa2f6c5311ced6b973d39d6e5ced5731"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adf975594e80bd8277d2a391af26c0f3a" id="r_adf975594e80bd8277d2a391af26c0f3a"><td class="memItemLeft" align="right" valign="top"><a id="adf975594e80bd8277d2a391af26c0f3a" name="adf975594e80bd8277d2a391af26c0f3a"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>Output</b> : uint8_t { <b>NoConsole</b> = 0x08
  }</td></tr>
 <tr class="separator:adf975594e80bd8277d2a391af26c0f3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a17519bc7bb8b2108963175a62d990931" id="r_a17519bc7bb8b2108963175a62d990931"><td class="memItemLeft" align="right" valign="top"><a id="a17519bc7bb8b2108963175a62d990931" name="a17519bc7bb8b2108963175a62d990931"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>Color</b> : uint8_t { <br />
+<tr class="memitem:a17519bc7bb8b2108963175a62d990931" id="r_a17519bc7bb8b2108963175a62d990931"><td class="memItemLeft" align="right" valign="top"><a id="a17519bc7bb8b2108963175a62d990931" name="a17519bc7bb8b2108963175a62d990931"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a17519bc7bb8b2108963175a62d990931">Color</a> : uint8_t { <br />
 &#160;&#160;<b>Default</b> = 0x00
 , <b>White</b> = 0x10
 , <b>Gray</b> = 0x20
@@ -157,6 +164,7 @@ Public Types</h2></td></tr>
 , <b>DarkYellow</b> = 0xf0
 <br />
  }</td></tr>
+<tr class="memdesc:a17519bc7bb8b2108963175a62d990931"><td class="mdescLeft">&#160;</td><td class="mdescRight">ANSI Terminal colors to toggle inline styling inside logs. <br /></td></tr>
 <tr class="separator:a17519bc7bb8b2108963175a62d990931"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
@@ -167,12 +175,13 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a9803fa0aa3fed41eb72f4b63314579a6" id="r_a9803fa0aa3fed41eb72f4b63314579a6"><td class="memTemplParams" colspan="2"><a id="a9803fa0aa3fed41eb72f4b63314579a6" name="a9803fa0aa3fed41eb72f4b63314579a6"></a>
 template&lt;typename T&gt; </td></tr>
 <tr class="memitem:a9803fa0aa3fed41eb72f4b63314579a6"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classAsyncFw_1_1LogStream.html">LogStream</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator&lt;&lt;</b> (T val)</td></tr>
+<tr class="memdesc:a9803fa0aa3fed41eb72f4b63314579a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generic stream insertion operator for appending variables and primitives. <br /></td></tr>
 <tr class="separator:a9803fa0aa3fed41eb72f4b63314579a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afb72b04a49ca6069c5aa5340f4b3c57f" id="r_afb72b04a49ca6069c5aa5340f4b3c57f"><td class="memItemLeft" align="right" valign="top"><a id="afb72b04a49ca6069c5aa5340f4b3c57f" name="afb72b04a49ca6069c5aa5340f4b3c57f"></a>
 <a class="el" href="classAsyncFw_1_1LogStream.html">LogStream</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator&lt;&lt;</b> (decltype(std::endl&lt; char, std::char_traits&lt; char &gt; &gt;) &amp;)</td></tr>
 <tr class="separator:afb72b04a49ca6069c5aa5340f4b3c57f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae9f061fc87f6980af8bf3023fc62dd5d" id="r_ae9f061fc87f6980af8bf3023fc62dd5d"><td class="memItemLeft" align="right" valign="top"><a id="ae9f061fc87f6980af8bf3023fc62dd5d" name="ae9f061fc87f6980af8bf3023fc62dd5d"></a>
-<a class="el" href="classAsyncFw_1_1LogStream.html">LogStream</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator&lt;&lt;</b> (const Color)</td></tr>
+<a class="el" href="classAsyncFw_1_1LogStream.html">LogStream</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator&lt;&lt;</b> (const <a class="el" href="#a17519bc7bb8b2108963175a62d990931">Color</a>)</td></tr>
 <tr class="separator:ae9f061fc87f6980af8bf3023fc62dd5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abd008ac368aee48b3e93295dff41e3aa" id="r_abd008ac368aee48b3e93295dff41e3aa"><td class="memItemLeft" align="right" valign="top"><a id="abd008ac368aee48b3e93295dff41e3aa" name="abd008ac368aee48b3e93295dff41e3aa"></a>
 <a class="el" href="classAsyncFw_1_1LogStream.html">LogStream</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator&lt;&lt;</b> (const int8_t)</td></tr>
@@ -198,27 +207,31 @@ template&lt;typename... Args&gt; </td></tr>
 <tr class="separator:ac5b47da87b2f3cf94d0e2445f4dbce3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abaece5fcf0e6a72bc5cc468d851cd02e" id="r_abaece5fcf0e6a72bc5cc468d851cd02e"><td class="memItemLeft" align="right" valign="top"><a id="abaece5fcf0e6a72bc5cc468d851cd02e" name="abaece5fcf0e6a72bc5cc468d851cd02e"></a>
 <a class="el" href="classAsyncFw_1_1LogStream.html">LogStream</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>space</b> ()</td></tr>
+<tr class="memdesc:abaece5fcf0e6a72bc5cc468d851cd02e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables automatic spacing between subsequent <code>&lt;&lt;</code> insertions. <br /></td></tr>
 <tr class="separator:abaece5fcf0e6a72bc5cc468d851cd02e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae131a8f28831e608f08a311eaac8ccc5" id="r_ae131a8f28831e608f08a311eaac8ccc5"><td class="memItemLeft" align="right" valign="top"><a id="ae131a8f28831e608f08a311eaac8ccc5" name="ae131a8f28831e608f08a311eaac8ccc5"></a>
 <a class="el" href="classAsyncFw_1_1LogStream.html">LogStream</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>nospace</b> ()</td></tr>
+<tr class="memdesc:ae131a8f28831e608f08a311eaac8ccc5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables automatic spacing for the rest of this log line. <br /></td></tr>
 <tr class="separator:ae131a8f28831e608f08a311eaac8ccc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1c31d56a7729253b17bb8cff44d06dda" id="r_a1c31d56a7729253b17bb8cff44d06dda"><td class="memItemLeft" align="right" valign="top"><a id="a1c31d56a7729253b17bb8cff44d06dda" name="a1c31d56a7729253b17bb8cff44d06dda"></a>
 <a class="el" href="classAsyncFw_1_1LogStream.html">LogStream</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>flush</b> ()</td></tr>
+<tr class="memdesc:a1c31d56a7729253b17bb8cff44d06dda"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dispatches the current contents to the log output immediately. <br /></td></tr>
 <tr class="separator:a1c31d56a7729253b17bb8cff44d06dda"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a43ecc969a022f7c4a21174068e438ed4" id="r_a43ecc969a022f7c4a21174068e438ed4"><td class="memItemLeft" align="right" valign="top"><a id="a43ecc969a022f7c4a21174068e438ed4" name="a43ecc969a022f7c4a21174068e438ed4"></a>
-static void&#160;</td><td class="memItemRight" valign="bottom"><b>message</b> (const Message &amp;m, uint8_t f=LOG_STREAM_CONSOLE_COLOR|LOG_STREAM_CONSOLE_EXTEND)</td></tr>
+static void&#160;</td><td class="memItemRight" valign="bottom"><b>message</b> (const <a class="el" href="structAsyncFw_1_1LogStream_1_1Message.html">Message</a> &amp;m, uint8_t f=LOG_STREAM_CONSOLE_COLOR|LOG_STREAM_CONSOLE_EXTEND)</td></tr>
+<tr class="memdesc:a43ecc969a022f7c4a21174068e438ed4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Programmatically forwards a raw pre-built <a class="el" href="structAsyncFw_1_1LogStream_1_1Message.html" title="Complete container representing an unrolled, processed log entry.">Message</a> structure to the active logging router. <br /></td></tr>
 <tr class="separator:a43ecc969a022f7c4a21174068e438ed4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a71a01c0b5b52550e8637316a3d64e0ca" id="r_a71a01c0b5b52550e8637316a3d64e0ca"><td class="memItemLeft" align="right" valign="top"><a id="a71a01c0b5b52550e8637316a3d64e0ca" name="a71a01c0b5b52550e8637316a3d64e0ca"></a>
-static void&#160;</td><td class="memItemRight" valign="bottom"><b>console_output</b> (const Message &amp;, uint8_t=LOG_STREAM_CONSOLE_COLOR|LOG_STREAM_CONSOLE_EXTEND)</td></tr>
+static void&#160;</td><td class="memItemRight" valign="bottom"><b>console_output</b> (const <a class="el" href="structAsyncFw_1_1LogStream_1_1Message.html">Message</a> &amp;, uint8_t=LOG_STREAM_CONSOLE_COLOR|LOG_STREAM_CONSOLE_EXTEND)</td></tr>
 <tr class="separator:a71a01c0b5b52550e8637316a3d64e0ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a340d4378b7e49607dfe0db0e104631ff" id="r_a340d4378b7e49607dfe0db0e104631ff"><td class="memItemLeft" align="right" valign="top"><a id="a340d4378b7e49607dfe0db0e104631ff" name="a340d4378b7e49607dfe0db0e104631ff"></a>
 static std::string&#160;</td><td class="memItemRight" valign="bottom"><b>levelName</b> (uint8_t)</td></tr>
 <tr class="separator:a340d4378b7e49607dfe0db0e104631ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afaddbaa41b170351b90ada7ccac38396" id="r_afaddbaa41b170351b90ada7ccac38396"><td class="memItemLeft" align="right" valign="top"><a id="afaddbaa41b170351b90ada7ccac38396" name="afaddbaa41b170351b90ada7ccac38396"></a>
-static std::string&#160;</td><td class="memItemRight" valign="bottom"><b>colorString</b> (Color)</td></tr>
+static std::string&#160;</td><td class="memItemRight" valign="bottom"><b>colorString</b> (<a class="el" href="#a17519bc7bb8b2108963175a62d990931">Color</a>)</td></tr>
 <tr class="separator:afaddbaa41b170351b90ada7ccac38396"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a775ae92e342a0e15c8945f6d536edbba" id="r_a775ae92e342a0e15c8945f6d536edbba"><td class="memItemLeft" align="right" valign="top"><a id="a775ae92e342a0e15c8945f6d536edbba" name="a775ae92e342a0e15c8945f6d536edbba"></a>
 static std::string&#160;</td><td class="memItemRight" valign="bottom"><b>sender</b> (const char *)</td></tr>
@@ -231,13 +244,15 @@ static std::string&#160;</td><td class="memItemRight" valign="bottom"><b>current
 <tr class="separator:aafb785749f5025eb7c4f5eb40c939deb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a06c9086f31d54eeacec98a9ba8e72171" id="r_a06c9086f31d54eeacec98a9ba8e72171"><td class="memItemLeft" align="right" valign="top"><a id="a06c9086f31d54eeacec98a9ba8e72171" name="a06c9086f31d54eeacec98a9ba8e72171"></a>
 static void&#160;</td><td class="memItemRight" valign="bottom"><b>setTimeFormat</b> (const std::string &amp;, bool=false)</td></tr>
+<tr class="memdesc:a06c9086f31d54eeacec98a9ba8e72171"><td class="mdescLeft">&#160;</td><td class="mdescRight">Globally changes the datetime presentation format across all incoming log streams. <br /></td></tr>
 <tr class="separator:a06c9086f31d54eeacec98a9ba8e72171"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad0d9e117f63caa55ea3177f09dbc19a6" id="r_ad0d9e117f63caa55ea3177f09dbc19a6"><td class="memItemLeft" align="right" valign="top"><a id="ad0d9e117f63caa55ea3177f09dbc19a6" name="ad0d9e117f63caa55ea3177f09dbc19a6"></a>
-static void&#160;</td><td class="memItemRight" valign="bottom"><b>setTimeOffset</b> (int)</td></tr>
+<tr class="memitem:ad0d9e117f63caa55ea3177f09dbc19a6" id="r_ad0d9e117f63caa55ea3177f09dbc19a6"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad0d9e117f63caa55ea3177f09dbc19a6">setTimeOffset</a> (int)</td></tr>
+<tr class="memdesc:ad0d9e117f63caa55ea3177f09dbc19a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adjusts the timestamp output offset (in seconds) to account for target time zones.  <br /></td></tr>
 <tr class="separator:ad0d9e117f63caa55ea3177f09dbc19a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aec104d19a8d0fa7a1af04662cb1c6af6" id="r_aec104d19a8d0fa7a1af04662cb1c6af6"><td class="memItemLeft" align="right" valign="top"><a id="aec104d19a8d0fa7a1af04662cb1c6af6" name="aec104d19a8d0fa7a1af04662cb1c6af6"></a>
-static void&#160;</td><td class="memItemRight" valign="bottom"><b>setCompleted</b> (void(*_completed)(const Message &amp;, uint8_t))</td></tr>
-<tr class="separator:aec104d19a8d0fa7a1af04662cb1c6af6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b004052ecdfc044a5369b90db412d40" id="r_a2b004052ecdfc044a5369b90db412d40"><td class="memItemLeft" align="right" valign="top"><a id="a2b004052ecdfc044a5369b90db412d40" name="a2b004052ecdfc044a5369b90db412d40"></a>
+static void&#160;</td><td class="memItemRight" valign="bottom"><b>setCompleted</b> (void(*completed)(const <a class="el" href="structAsyncFw_1_1LogStream_1_1Message.html">Message</a> &amp;, uint8_t))</td></tr>
+<tr class="memdesc:a2b004052ecdfc044a5369b90db412d40"><td class="mdescLeft">&#160;</td><td class="mdescRight">Intercepts completed log messages to route them to a custom sink (e.g. file, database, syslog). <br /></td></tr>
+<tr class="separator:a2b004052ecdfc044a5369b90db412d40"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aec0a4b369add8f6fe6ec86045ee6a809" id="r_aec0a4b369add8f6fe6ec86045ee6a809"><td class="memItemLeft" align="right" valign="top"><a id="aec0a4b369add8f6fe6ec86045ee6a809" name="aec0a4b369add8f6fe6ec86045ee6a809"></a>
 static void&#160;</td><td class="memItemRight" valign="bottom"><b>setFunctionPrefixIgnoreList</b> (const std::vector&lt; std::string &gt; &amp;list)</td></tr>
 <tr class="separator:aec0a4b369add8f6fe6ec86045ee6a809"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -249,11 +264,16 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><b>setSenderPrefi
 <div class="textblock"><p>A high-performance, thread-safe logging stream utility utilizing RAII execution semantics. </p>
 <p><a class="el" href="classAsyncFw_1_1LogStream.html" title="A high-performance, thread-safe logging stream utility utilizing RAII execution semantics.">LogStream</a> provides dynamic string and data formatting using standard C++ stream insertion operators (operator&lt;&lt;). The logged content is accumulated in an internal buffer and is guaranteed to flush automatically to the configured outputs when the temporary <a class="el" href="classAsyncFw_1_1LogStream.html" title="A high-performance, thread-safe logging stream utility utilizing RAII execution semantics.">LogStream</a> instance is destroyed at the end of the statement (RAII). </p><dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">std::runtime_error</td><td>If log level emergency the exception std::runtime_error("log level emergency") will be raised.</td></tr>
+    <tr><td class="paramname">std::runtime_error</td><td>If log level emergency the exception std::runtime_error("log level emergency") will be raised. </td></tr>
   </table>
   </dd>
 </dl>
-<p>Examlpe: </p><div class="fragment"><div class="line">  lsTrace() &lt;&lt; <span class="stringliteral">&quot;Trace&quot;</span>;</div>
+<dl class="section note"><dt>Note</dt><dd>Throwing a log with <code>Emergency</code> level will automatically raise a <code>std::runtime_error</code>. </dd>
+<dd>
+Please refer to the <b>example</b> for compile-time log optimizations (like LS_NO_TRACE) and standard inline vs formatting syntax usage styles.</dd></dl>
+<p>Examlpe: </p><div class="fragment"><div class="line">  <span class="comment">// 1. Inline streaming macros (ls*): Print FULL function signatures (__PRETTY_FUNCTION__)</span></div>
+<div class="line">  <span class="comment">// These macros can be completely stripped out at compile-time (e.g. via #define LS_NO_TRACE)</span></div>
+<div class="line">  lsTrace() &lt;&lt; <span class="stringliteral">&quot;Trace&quot;</span>;</div>
 <div class="line">  lsDebug() &lt;&lt; <span class="stringliteral">&quot;Debug&quot;</span>;</div>
 <div class="line">  lsInfo() &lt;&lt; <span class="stringliteral">&quot;Info&quot;</span>;</div>
 <div class="line">  lsInfoRed() &lt;&lt; <span class="stringliteral">&quot;Info red&quot;</span>;</div>
@@ -265,6 +285,8 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><b>setSenderPrefi
 <div class="line">  lsWarning() &lt;&lt; <span class="stringliteral">&quot;Warning&quot;</span>;</div>
 <div class="line">  lsError() &lt;&lt; <span class="stringliteral">&quot;Error&quot;</span>;</div>
 <div class="line"> </div>
+<div class="line">  <span class="comment">// 2. Formatting macros (log*): Print only the parsed Class Name or &quot;Application&quot;</span></div>
+<div class="line">  <span class="comment">// Unlike ls* macros, these are always compiled into the binary</span></div>
 <div class="line">  logTrace() &lt;&lt; <span class="stringliteral">&quot;Trace&quot;</span>;</div>
 <div class="line">  logDebug() &lt;&lt; <span class="stringliteral">&quot;Debug&quot;</span>;</div>
 <div class="line">  logInfo() &lt;&lt; <span class="stringliteral">&quot;Info&quot;</span>;</div>
@@ -272,8 +294,75 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><b>setSenderPrefi
 <div class="line">  logWarning() &lt;&lt; <span class="stringliteral">&quot;Warning&quot;</span>;</div>
 <div class="line">  logError() &lt;&lt; <span class="stringliteral">&quot;Error&quot;</span>;</div>
 <div class="line">  logAlert() &lt;&lt; <span class="stringliteral">&quot;logAlert&quot;</span>;</div>
-<div class="line">  logEmergency() &lt;&lt; <span class="stringliteral">&quot;Emergency&quot;</span>;  <span class="comment">// throw</span></div>
-</div><!-- fragment --> </div><hr/>The documentation for this class was generated from the following files:<ul>
+<div class="line">  <span class="comment">//logEmergency() &lt;&lt; &quot;Emergency&quot;;  // Un-commenting this will automatically throw a std::runtime_error</span></div>
+</div><!-- fragment --> </div><h2 class="groupheader">Member Enumeration Documentation</h2>
+<a id="afa2f6c5311ced6b973d39d6e5ced5731" name="afa2f6c5311ced6b973d39d6e5ced5731"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afa2f6c5311ced6b973d39d6e5ced5731">&#9670;&#160;</a></span>MessageType</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="#afa2f6c5311ced6b973d39d6e5ced5731">AsyncFw::LogStream::MessageType</a> : uint8_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="afa2f6c5311ced6b973d39d6e5ced5731a66e8e44e1adfebd567c25c6611a5e418" name="afa2f6c5311ced6b973d39d6e5ced5731a66e8e44e1adfebd567c25c6611a5e418"></a>Emergency&#160;</td><td class="fielddoc"><p>Critical failure. Crashes the app with an exception. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="afa2f6c5311ced6b973d39d6e5ced5731a8e7cdb29641eddbcac3012fe6eb3cd3d" name="afa2f6c5311ced6b973d39d6e5ced5731a8e7cdb29641eddbcac3012fe6eb3cd3d"></a>Alert&#160;</td><td class="fielddoc"><p>Action must be taken immediately. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="afa2f6c5311ced6b973d39d6e5ced5731a735a344d42befe22f3f60ed4f1125351" name="afa2f6c5311ced6b973d39d6e5ced5731a735a344d42befe22f3f60ed4f1125351"></a>Error&#160;</td><td class="fielddoc"><p>Error conditions. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="afa2f6c5311ced6b973d39d6e5ced5731a96aad685f21a4a927c6c3a74274efd5a" name="afa2f6c5311ced6b973d39d6e5ced5731a96aad685f21a4a927c6c3a74274efd5a"></a>Warning&#160;</td><td class="fielddoc"><p>Warning conditions. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="afa2f6c5311ced6b973d39d6e5ced5731ae60e1a6347736018009842563cd57231" name="afa2f6c5311ced6b973d39d6e5ced5731ae60e1a6347736018009842563cd57231"></a>Notice&#160;</td><td class="fielddoc"><p>Normal but significant messages. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="afa2f6c5311ced6b973d39d6e5ced5731a55700379cc50408c01860c3a700d20a0" name="afa2f6c5311ced6b973d39d6e5ced5731a55700379cc50408c01860c3a700d20a0"></a>Info&#160;</td><td class="fielddoc"><p>Informational messages. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="afa2f6c5311ced6b973d39d6e5ced5731a39dfd70cbe9922423fa0db22b9dddfa2" name="afa2f6c5311ced6b973d39d6e5ced5731a39dfd70cbe9922423fa0db22b9dddfa2"></a>Debug&#160;</td><td class="fielddoc"><p>Debug-level messages. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="afa2f6c5311ced6b973d39d6e5ced5731ab9e4aeca51d007c66abb1ad6b93c3c37" name="afa2f6c5311ced6b973d39d6e5ced5731ab9e4aeca51d007c66abb1ad6b93c3c37"></a>Trace&#160;</td><td class="fielddoc"><p>Deep trace-level messages. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="ad0d9e117f63caa55ea3177f09dbc19a6" name="ad0d9e117f63caa55ea3177f09dbc19a6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad0d9e117f63caa55ea3177f09dbc19a6">&#9670;&#160;</a></span>setTimeOffset()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void LogStream::setTimeOffset </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>seconds</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Adjusts the timestamp output offset (in seconds) to account for target time zones. </p>
+<p><b>By default, it automatically uses the current local time zone</b> of the host operating system (via C++20 standard zoned_time and current_zone). This method should only be used if you need to manually override the system time zone detection. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">secondsOffset</td><td>The explicit timezone offset in seconds. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li>core/<a class="el" href="LogStream_8h_source.html">LogStream.h</a></li>
 <li>core/<b>LogStream.cpp</b></li>
 </ul>

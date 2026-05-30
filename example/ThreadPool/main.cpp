@@ -19,7 +19,7 @@ public:
 int main(int argc, char *argv[]) {
   AsyncFw::LogStream::setTimeFormat("%Y-%m-%d %H:%M:%S", true);
 
-  Pool *threadPool = AsyncFw::Instance<AsyncFw::ThreadPool>::create<Pool>("ExampeThreadPool");
+  Pool *threadPool = AsyncFw::Instance<AsyncFw::ThreadPool>::create<Pool>("ExampleThreadPool");
   logInfo() << threadPool->text();
 
   AsyncFw::AbstractThread *_lt = AsyncFw::ThreadPool::instance()->createThread("LogThread");

@@ -115,7 +115,7 @@ auto coInvoke(F &&f, Args &&...args) {
   return CoroutineInvokeAwait<std::invoke_result_t<F, Args &...>(Args & ...)>(nullptr, std::forward<F>(f), std::forward<Args>(args)...);
 }
 /** @brief Offloads a callable function/lambda to a specific Thread loop and awaits its completion. @param t Target AbstractThread pointer. @param f Free function, lambda, or functor. @param args Arguments to pass into the function. @return An awaitable object yielding the function's return type. */
-template <typename T = AbstractThread, typename F, typename... Args>
+template <typename T = AbstractThread, typename F, typename... Args, typename = std::enable_if_t<std::is_base_of_v<AbstractThread, T>>>
 auto coInvoke(T *t, F &&f, Args &&...args) {
   return CoroutineInvokeAwait<std::invoke_result_t<F, Args &...>(Args & ...)>(t, std::forward<F>(f), std::forward<Args>(args)...);
 }

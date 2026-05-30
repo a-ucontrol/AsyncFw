@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['type_0',['Type',['../classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html#a860b83046c90e62d768e0acde74626c6',1,'AsyncFw::AbstractFunctionConnector::Connection']]]
+  ['state_0',['State',['../classAsyncFw_1_1AbstractSocket.html#a6fc3dae51b6b38d67f1c3861dcbb23bd',1,'AsyncFw::AbstractSocket']]]
 ];

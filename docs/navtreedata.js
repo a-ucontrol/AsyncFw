@@ -25,13 +25,23 @@
 var NAVTREE =
 [
   [ "AsyncFw", "index.html", [
+    [ "Core Architecture & Components", "index.html#autotoc_md2", [
+      [ "The Core Backbone: AbstractThread", "index.html#autotoc_md3", null ],
+      [ "Cross-Thread Signals: FunctionConnector", "index.html#autotoc_md4", null ],
+      [ "Deep Coroutine Orchestration & RPC: coInvoke", "index.html#autotoc_md5", null ],
+      [ "Network Worker Thread: Thread & Secure Sockets", "index.html#autotoc_md6", null ],
+      [ "Cryptographic State & PKI: TlsContext", "index.html#autotoc_md7", null ],
+      [ "Smart Task Distribution: ThreadPool", "index.html#autotoc_md8", null ],
+      [ "Thread-Safe Diagnostic Stream: LogStream", "index.html#autotoc_md9", null ],
+      [ "The Application Master: MainThread", "index.html#autotoc_md10", null ]
+    ] ],
     [ "Topics", "topics.html", "topics" ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
       [ "Class Index", "classes.html", null ],
       [ "Class Hierarchy", "hierarchy.html", "hierarchy" ],
       [ "Class Members", "functions.html", [
-        [ "All", "functions.html", null ],
+        [ "All", "functions.html", "functions_dup" ],
         [ "Functions", "functions_func.html", null ],
         [ "Variables", "functions_vars.html", null ],
         [ "Typedefs", "functions_type.html", null ],

@@ -1,5 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$classAsyncFw_1_1AbstractInstance.html" title="Abstract base class for global singleton service providers and managed instances." alt="" coords="5,213,189,240"/>
+<area shape="rect" id="Node000000" href="$classAsyncFw_1_1AbstractInstance.html" title="Abstract base class for global default service providers and managed instances." alt="" coords="5,213,189,240"/>
 <area shape="rect" id="Node000001" href="$classAsyncFw_1_1Instance.html" title=" " alt="" coords="272,5,414,48"/>
 <area shape="poly" id="edge19_Node000000_Node000001" title=" " alt="" coords="112,198,161,128,195,90,235,58,271,40,273,45,238,62,199,94,165,132,116,201"/>
 <area shape="rect" id="Node000002" href="$classAsyncFw_1_1Instance.html" title=" " alt="" coords="241,72,446,115"/>
@@ -12,6 +12,6 @@
 <area shape="poly" id="edge23_Node000000_Node000005" title=" " alt="" coords="165,242,262,269,261,274,163,247"/>
 <area shape="rect" id="Node000006" href="$classAsyncFw_1_1Instance.html" title=" " alt="" coords="261,339,426,381"/>
 <area shape="poly" id="edge24_Node000000_Node000006" title=" " alt="" coords="127,248,177,287,238,324,264,336,262,341,235,329,174,291,124,252"/>
-<area shape="rect" id="Node000007" href="$classAsyncFw_1_1Instance.html" title="A template&#45;based global registry wrapper for managing application&#45;wide unique objects (Singletons)." alt="" coords="260,405,426,432"/>
+<area shape="rect" id="Node000007" href="$classAsyncFw_1_1Instance.html" title="A template&#45;based global registry wrapper for managing application&#45;wide default objects (Global Defaul..." alt="" coords="260,405,426,432"/>
 <area shape="poly" id="edge25_Node000000_Node000007" title=" " alt="" coords="115,252,164,323,198,360,238,391,262,402,259,407,235,396,195,364,160,326,111,255"/>
 </map>

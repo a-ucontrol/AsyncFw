@@ -1,27 +1,4 @@
 var searchData=
 [
-  ['certificate_0',['certificate',['../classAsyncFw_1_1TlsContext.html#a1f84d5908bb3af689637ef250ddb1467',1,'AsyncFw::TlsContext']]],
-  ['close_1',['close',['../classAsyncFw_1_1AbstractSocket.html#a77c0a9ea7c5061c406673bbe8b18d60d',1,'AsyncFw::AbstractSocket::close()'],['../classAsyncFw_1_1AbstractTlsSocket.html#a46dbd8e4895445214a4f46ee46433d6c',1,'AsyncFw::AbstractTlsSocket::close()'],['../classAsyncFw_1_1HttpSocket.html#a96932e5f6b5f84c4f204b0e6e4ef8472',1,'AsyncFw::HttpSocket::close()'],['../classAsyncFw_1_1ListenSocket.html#a77c0a9ea7c5061c406673bbe8b18d60d',1,'AsyncFw::ListenSocket::close()']]],
-  ['closing_2',['Closing',['../classAsyncFw_1_1AbstractSocket.html#a6fc3dae51b6b38d67f1c3861dcbb23bda516ec5c0c571fe5c0d60881eddc2c22e',1,'AsyncFw::AbstractSocket']]],
-  ['coinvoke_3',['coInvoke',['../group__coroutine__api.html#ga0005f3892c4f008098e0ee2634481d5a',1,'AsyncFw::coInvoke(F &amp;&amp;f, Args &amp;&amp;...args)'],['../group__coroutine__api.html#gaf5e6c6d5280aa43ba18416534dd955fa',1,'AsyncFw::coInvoke(T *t, F &amp;&amp;f, Args &amp;&amp;...args)'],['../group__coroutine__api.html#ga36873f186789bdcd404e10d179081bc4',1,'AsyncFw::coInvoke(M m, O *o, Args &amp;&amp;...args)'],['../group__coroutine__api.html#ga4000deb9d729812b431fc3345fca5eba',1,'AsyncFw::coInvoke(T *t, M m, O *o, Args &amp;&amp;...args)']]],
-  ['commonname_4',['commonName',['../classAsyncFw_1_1TlsContext.html#a305eeaf7d1cab7631a9a29ddc9b937b8',1,'AsyncFw::TlsContext']]],
-  ['completed_5',['completed',['../classAsyncFw_1_1AddressResolver.html#adc88c3beebbade60ab2005599de37051',1,'AsyncFw::AddressResolver']]],
-  ['connect_6',['connect',['../classAsyncFw_1_1AbstractSocket.html#ac4b8765d203b4d4bc77d9d6e00d5dd85',1,'AsyncFw::AbstractSocket::connect()'],['../classAsyncFw_1_1AbstractTlsSocket.html#a2d9c3d5d540b82fb516f5c56def48a02',1,'AsyncFw::AbstractTlsSocket::connect()'],['../classAsyncFw_1_1FunctionConnector.html#ab0c621be7a792e256acab8241ae563a0',1,'AsyncFw::FunctionConnector::connect(T f, Connection::Type t=Connection::Default)'],['../classAsyncFw_1_1FunctionConnector.html#a48771ac40286a1afed95130b45c21d26',1,'AsyncFw::FunctionConnector::connect(M m, O *o, Connection::Type t=Connection::Default)'],['../classAsyncFw_1_1DataArraySocket.html#aed242e797aea527f8b86c4bc866ab454',1,'AsyncFw::DataArraySocket::connect()']]],
-  ['connected_7',['Connected',['../classAsyncFw_1_1AbstractSocket.html#a6fc3dae51b6b38d67f1c3861dcbb23bdaccd0feb91061e2ddcac7f6b90bf9efa5',1,'AsyncFw::AbstractSocket']]],
-  ['connecting_8',['Connecting',['../classAsyncFw_1_1AbstractSocket.html#a6fc3dae51b6b38d67f1c3861dcbb23bdabba7ae24638871f8e94de4b4af31c37f',1,'AsyncFw::AbstractSocket']]],
-  ['connection_9',['Connection',['../classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html',1,'AsyncFw::AbstractFunctionConnector::Connection'],['../classAsyncFw_1_1FunctionConnector_1_1Connection.html',1,'AsyncFw::FunctionConnector&lt; Args &gt;::Connection']]],
-  ['connectionpolicy_10',['ConnectionPolicy',['../classAsyncFw_1_1AbstractFunctionConnector.html#ab248bd16cbfcac609f58d401abec4368',1,'AsyncFw::AbstractFunctionConnector']]],
-  ['coresolve_11',['coResolve',['../classAsyncFw_1_1AddressResolver.html#a59f08f5d62fba62538b9094548fa1fd0',1,'AsyncFw::AddressResolver']]],
-  ['coroutine_20api_20helpers_12',['Coroutine API Helpers',['../group__coroutine__api.html',1,'']]],
-  ['coroutine_2eh_13',['Coroutine.h',['../Coroutine_8h.html',1,'']]],
-  ['coroutineawait_14',['CoroutineAwait',['../structAsyncFw_1_1CoroutineAwait.html',1,'AsyncFw']]],
-  ['coroutineinvokeawait_15',['CoroutineInvokeAwait',['../structAsyncFw_1_1CoroutineInvokeAwait.html',1,'AsyncFw']]],
-  ['coroutinetask_16',['CoroutineTask',['../structAsyncFw_1_1CoroutineTask.html',1,'AsyncFw']]],
-  ['cotimeout_17',['coTimeout',['../classAsyncFw_1_1Timer.html#a2578293bf0bd7eef49a48039853d3b37',1,'AsyncFw::Timer::coTimeout()'],['../group__coroutine__api.html#ga2f5c202b3a290939feba04811f8ec888',1,'AsyncFw::coTimeout()']]],
-  ['create_18',['create',['../classAsyncFw_1_1Instance.html#a8000597f0e7ee4bd6669491a5b502beb',1,'AsyncFw::Instance::create(Args... args)'],['../classAsyncFw_1_1Instance.html#a158800905f9c1ce225fcabbfa5b1d053',1,'AsyncFw::Instance::create(Args... args)']]],
-  ['created_19',['created',['../classAsyncFw_1_1AbstractInstance.html#ad4ae1bfcd37c2450b85b35257f92360f',1,'AsyncFw::AbstractInstance']]],
-  ['createthread_20',['createThread',['../classAsyncFw_1_1ThreadPool.html#a02cf5b98df2bbd01b4757e09fceece49',1,'AsyncFw::ThreadPool']]],
-  ['cryptor_21',['Cryptor',['../classAsyncFw_1_1Cryptor.html',1,'AsyncFw']]],
-  ['cryptor_2eh_22',['Cryptor.h',['../Cryptor_8h.html',1,'']]],
-  ['current_23',['current',['../classAsyncFw_1_1AbstractThread.html#a09cdd1972b9416a7ddb2a1921f36938c',1,'AsyncFw::AbstractThread::current()'],['../classAsyncFw_1_1Thread.html#a0a3bd6a54db28f73ff59cfea6a40b07a',1,'AsyncFw::Thread::current()']]]
+  ['2_20cross_20thread_20signals_3a_20tt_20functionconnector_20tt_0',['2. Cross-Thread Signals: &lt;tt&gt;FunctionConnector&lt;/tt&gt;',['../index.html#autotoc_md4',1,'']]]
 ];

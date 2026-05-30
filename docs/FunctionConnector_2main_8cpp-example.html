@@ -136,7 +136,7 @@ $(function(){initNavTree('FunctionConnector_2main_8cpp-example.html',''); initRe
 <div class="line">    timer.start(10);</div>
 <div class="line">  }</div>
 <div class="line"> </div>
-<div class="line">  <span class="keyword">mutable</span> <a id="a5" name="a5"></a><a class="code hl_typedef" href="classAsyncFw_1_1FunctionConnector.html#a734e080cd73646c75b4b40fe5aa8d19d">AsyncFw::FunctionConnector&lt;int, const std::string &amp;&gt;::Protected</a>&lt;Sender&gt; connector;</div>
+<div class="line">  <a id="a5" name="a5"></a><a class="code hl_typedef" href="classAsyncFw_1_1FunctionConnector.html#a734e080cd73646c75b4b40fe5aa8d19d">AsyncFw::FunctionConnector&lt;int, const std::string &amp;&gt;::Protected</a>&lt;Sender&gt; connector;</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">private</span>:</div>
 <div class="line">  <span class="keywordtype">int</span> cnt = 0;</div>
@@ -172,11 +172,11 @@ $(function(){initNavTree('FunctionConnector_2main_8cpp-example.html',''); initRe
 <div class="line">  <span class="keyword">auto</span> lambda = [](<span class="keywordtype">int</span> val, <span class="keyword">const</span> std::string &amp;) { lsNotice() &lt;&lt; <span class="stringliteral">&quot;sender-&gt;connector (lambda)&quot;</span> &lt;&lt; val; };</div>
 <div class="line">  sender-&gt;connector.connect(lambda);</div>
 <div class="line"> </div>
-<div class="line">  logNotice() &lt;&lt; <span class="stringliteral">&quot;Start Applicaiton&quot;</span>;</div>
+<div class="line">  logNotice() &lt;&lt; <span class="stringliteral">&quot;Start Application&quot;</span>;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordtype">int</span> ret = <a id="a7" name="a7"></a><a class="code hl_function" href="classAsyncFw_1_1MainThread.html#ad12e620772820ad751868c7b49fa4190">AsyncFw::MainThread::exec</a>();</div>
 <div class="line"> </div>
-<div class="line">  logNotice() &lt;&lt; <span class="stringliteral">&quot;End Applicaiton&quot;</span>;</div>
+<div class="line">  logNotice() &lt;&lt; <span class="stringliteral">&quot;End Application&quot;</span>;</div>
 <div class="line">  <span class="keyword">delete</span> sender;</div>
 <div class="line">  <span class="keywordflow">return</span> ret;</div>
 <div class="line">}</div>

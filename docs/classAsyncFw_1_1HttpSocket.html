@@ -392,7 +392,7 @@ Additional Inherited Members</h2></td></tr>
 <div class="line"> </div>
 <div class="line">  <a class="code hl_class" href="classAsyncFw_1_1AddressResolver.html">AsyncFw::AddressResolver</a> addressInfo;</div>
 <div class="line">  addressInfo.<a class="code hl_function" href="classAsyncFw_1_1AddressResolver.html#a9a5b78be91762ae5adc7f19aede8a662">resolve</a>(SERVER_NAME);</div>
-<div class="line">  addressInfo.<a class="code hl_variable" href="classAsyncFw_1_1AddressResolver.html#adc88c3beebbade60ab2005599de37051">completed</a>.<a class="code hl_function" href="classAsyncFw_1_1FunctionConnector.html#ab0c621be7a792e256acab8241ae563a0">connect</a>([&amp;socket](<span class="keywordtype">int</span> r, <span class="keyword">const</span> std::vector&lt;std::string&gt; &amp;list) {</div>
+<div class="line">  addressInfo.<a class="code hl_variable" href="classAsyncFw_1_1AddressResolver.html#adc88c3beebbade60ab2005599de37051">completed</a>.<a class="code hl_function" href="classAsyncFw_1_1FunctionConnector.html#a359a9c03d52bc62db628e4f53be72457">connect</a>([&amp;socket](<span class="keywordtype">int</span> r, <span class="keyword">const</span> std::vector&lt;std::string&gt; &amp;list) {</div>
 <div class="line">    <span class="keywordflow">if</span> (r == 0 &amp;&amp; !list.empty()) {</div>
 <div class="line">      <span class="keywordflow">for</span> (<span class="keyword">const</span> std::string _s : list) logNotice() &lt;&lt; _s;</div>
 <div class="line">      socket-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractTlsSocket.html#a2d9c3d5d540b82fb516f5c56def48a02">connect</a>(list[0], SERVER_PORT);</div>
@@ -401,7 +401,7 @@ Additional Inherited Members</h2></td></tr>
 <div class="line">    <a class="code hl_function" href="classAsyncFw_1_1MainThread.html#a76fed3a2c1cfdbdb67f2b209e6457657">AsyncFw::MainThread::exit</a>(-1);</div>
 <div class="line">  });</div>
 <div class="line"> </div>
-<div class="line">  socket-&gt;stateChanged.<a class="code hl_function" href="classAsyncFw_1_1FunctionConnector.html#ab0c621be7a792e256acab8241ae563a0">connect</a>([&amp;socket](<span class="keyword">const</span> <a class="code hl_enumeration" href="classAsyncFw_1_1AbstractSocket.html#a6fc3dae51b6b38d67f1c3861dcbb23bd">AsyncFw::AbstractSocket::State</a> state) {</div>
+<div class="line">  socket-&gt;stateChanged.<a class="code hl_function" href="classAsyncFw_1_1FunctionConnector.html#a359a9c03d52bc62db628e4f53be72457">connect</a>([&amp;socket](<span class="keyword">const</span> <a class="code hl_enumeration" href="classAsyncFw_1_1AbstractSocket.html#a6fc3dae51b6b38d67f1c3861dcbb23bd">AsyncFw::AbstractSocket::State</a> state) {</div>
 <div class="line">    <span class="keywordflow">if</span> (state == <a class="code hl_enumvalue" href="classAsyncFw_1_1AbstractSocket.html#a6fc3dae51b6b38d67f1c3861dcbb23bdabc8b14ad3e5c48f1e2be50e1f70fc237">AsyncFw::AbstractSocket::State::Active</a>) {</div>
 <div class="line">      logDebug() &lt;&lt; <span class="stringliteral">&quot;Send request&quot;</span>;</div>
 <div class="line">      socket-&gt;write(<span class="stringliteral">&quot;GET &quot;</span> GET_FILE <span class="stringliteral">&quot; HTTP/1.1\r\nHost:&quot;</span> SERVER_NAME <span class="stringliteral">&quot;\r\n\r\n&quot;</span>);</div>
@@ -418,7 +418,7 @@ Additional Inherited Members</h2></td></tr>
 <div class="line">    socket-&gt;disconnect();</div>
 <div class="line">  });</div>
 <div class="line"> </div>
-<div class="line">  logNotice() &lt;&lt; <span class="stringliteral">&quot;Start Applicaiton&quot;</span>;</div>
+<div class="line">  logNotice() &lt;&lt; <span class="stringliteral">&quot;Start Application&quot;</span>;</div>
 <div class="line"> </div>
 <div class="line">  logDebug() &lt;&lt; *<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a09cdd1972b9416a7ddb2a1921f36938c">AsyncFw::AbstractThread::current</a>();</div>
 <div class="line">  logDebug() &lt;&lt; *(<a class="code hl_class" href="classAsyncFw_1_1AbstractSocket.html">AsyncFw::AbstractSocket</a> *)socket;</div>
@@ -427,7 +427,7 @@ Additional Inherited Members</h2></td></tr>
 <div class="line"> </div>
 <div class="line">  logDebug() &lt;&lt; *(<a class="code hl_class" href="classAsyncFw_1_1AbstractSocket.html">AsyncFw::AbstractSocket</a> *)socket;</div>
 <div class="line"> </div>
-<div class="line">  logNotice() &lt;&lt; <span class="stringliteral">&quot;End Applicaiton&quot;</span> &lt;&lt; ret;</div>
+<div class="line">  logNotice() &lt;&lt; <span class="stringliteral">&quot;End Application&quot;</span> &lt;&lt; ret;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">return</span> ret;</div>
 <div class="line">}</div>

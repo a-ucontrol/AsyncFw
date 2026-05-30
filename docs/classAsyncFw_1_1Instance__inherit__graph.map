@@ -1,5 +1,5 @@
 <map id="AsyncFw::Instance&lt; T &gt;" name="AsyncFw::Instance&lt; T &gt;">
-<area shape="rect" id="Node000001" title="A template&#45;based global registry wrapper for managing application&#45;wide unique objects (Singletons)." alt="" coords="238,180,404,207"/>
+<area shape="rect" id="Node000001" title="A template&#45;based global registry wrapper for managing application&#45;wide default objects (Global Defaul..." alt="" coords="238,180,404,207"/>
 <area shape="rect" id="Node000003" href="$classAsyncFw_1_1Instance.html" title=" " alt="" coords="692,5,834,48"/>
 <area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="339,166,376,123,400,102,427,84,494,57,564,39,632,29,691,25,692,30,633,34,565,44,496,62,430,89,403,106,380,127,343,169"/>
 <area shape="rect" id="Node000004" href="$classAsyncFw_1_1Instance.html" title=" " alt="" coords="660,72,866,115"/>
@@ -12,6 +12,6 @@
 <area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="362,211,429,239,492,255,557,268,675,284,674,289,556,273,491,260,427,244,360,216"/>
 <area shape="rect" id="Node000008" href="$classAsyncFw_1_1Instance.html" title=" " alt="" coords="680,339,846,381"/>
 <area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="343,218,380,261,403,282,430,299,492,325,558,342,622,352,680,357,680,362,622,357,557,347,490,330,427,304,400,286,376,264,339,221"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractInstance.html" title="Abstract base class for global singleton service providers and managed instances." alt="" coords="5,180,189,207"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractInstance.html" title="Abstract base class for global default service providers and managed instances." alt="" coords="5,180,189,207"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="204,191,237,191,237,196,204,196"/>
 </map>
