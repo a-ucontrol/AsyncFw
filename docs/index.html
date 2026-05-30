@@ -199,18 +199,66 @@ Core Architecture &amp; Components</h1>
 <li><b>Automated Thread Marshalling</b>: When a coroutine yields via <code>co_await</code>, heavy jobs are offloaded to background workers. Once done, the internal <code>promise_type::resume_queued()</code> automatically schedules continuation back onto the thread where the coroutine was originally created.</li>
 <li><b>Stateful Data Transport</b>: The coroutine <code>promise_type</code> inherits from <code>AnyData</code>, turning the underlying compiler-generated coroutine frame into a dynamic data store. Background tasks push computed results directly into the frame.</li>
 <li><b>The <code>coInvoke</code> Engine</b>: Provides an elite, non-blocking remote procedure call (RPC) syntax. Developers can await free functions, lambdas, or class member methods using <code>co_await coInvoke(...)</code>.</li>
-<li><p class="startli"><b>Code Example (Offloading work to ThreadPool):</b> ```cpp #include &lt;chrono&gt; #include &lt;string&gt; #include &lt;AsyncFw/MainThread&gt; #include &lt;AsyncFw/Coroutine&gt; #include &lt;AsyncFw/LogStream&gt;</p>
-<p class="startli">int heavyCalculation(int input) { return input * 42; }</p>
-<p class="startli"><a class="el" href="structAsyncFw_1_1CoroutineTask.html" title="A class representing a coroutine task that can be suspended and resumed.">AsyncFw::CoroutineTask</a> runApplicationLogic() { lsNotice() &lt;&lt; "Starting application flow on Main Thread..."; int computationResult = co_await AsyncFw::coInvoke(heavyCalculation, 10); lsNotice() &lt;&lt; "Computation successfully returned: " &lt;&lt; computationResult; AsyncFw::MainThread::exit(0); }</p>
-<p class="startli">int main(int argc, char *argv[]) { runApplicationLogic(); logNotice() &lt;&lt; "Booting Main Engine Event Loop..."; int ret = <a class="el" href="classAsyncFw_1_1MainThread.html#ad12e620772820ad751868c7b49fa4190" title="Starts the master application event loop on the current thread. This call is blocking....">AsyncFw::MainThread::exec()</a>; return ret; } ```</p>
-</li>
-<li><p class="startli"><b>Code Example (Asynchronous wait via Timer):</b> ```cpp #include &lt;chrono&gt; #include &lt;AsyncFw/MainThread&gt; #include &lt;AsyncFw/Timer&gt; #include &lt;AsyncFw/LogStream&gt;</p>
-<p class="startli"><a class="el" href="structAsyncFw_1_1CoroutineTask.html" title="A class representing a coroutine task that can be suspended and resumed.">AsyncFw::CoroutineTask</a> task(AsyncFw::Timer *timer) { lsDebug() &lt;&lt; "coro task" &lt;&lt; std::chrono::system_clock::now(); co_await timer-&gt;coTimeout(10); lsDebug() &lt;&lt; "coro task" &lt;&lt; std::chrono::system_clock::now(); co_await timer-&gt;coTimeout(10); lsDebug() &lt;&lt; "coro task" &lt;&lt; std::chrono::system_clock::now(); AsyncFw::MainThread::exit(0); }</p>
-<p class="startli">int main(int argc, char *argv[]) { <a class="el" href="classAsyncFw_1_1Timer.html" title="The Timer class.">AsyncFw::Timer</a> timer1; timer1.start(10); <a class="el" href="classAsyncFw_1_1Timer.html" title="The Timer class.">AsyncFw::Timer</a> timer2;</p>
-<p class="startli">timer1.timeout.connect([]() { lsDebug() &lt;&lt; std::chrono::system_clock::now() &lt;&lt; " timer1 timeout"; }); timer2.timeout.connect([]() { lsDebug() &lt;&lt; std::chrono::system_clock::now() &lt;&lt; " timer2 timeout"; });</p>
-<p class="startli">task(&amp;timer2);</p>
-<p class="startli">logNotice() &lt;&lt; "Start Application"; int ret = <a class="el" href="classAsyncFw_1_1MainThread.html#ad12e620772820ad751868c7b49fa4190" title="Starts the master application event loop on the current thread. This call is blocking....">AsyncFw::MainThread::exec()</a>; return ret; } ```</p>
-</li>
+<li><b>Code Example (Offloading work to ThreadPool):</b> <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;chrono&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;AsyncFw/MainThread&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;AsyncFw/Coroutine&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;AsyncFw/LogStream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> heavyCalculation(<span class="keywordtype">int</span> input) {</div>
+<div class="line">  <span class="keywordflow">return</span> input * 42;</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><a class="code hl_struct" href="structAsyncFw_1_1CoroutineTask.html">AsyncFw::CoroutineTask</a> runApplicationLogic() {</div>
+<div class="line">  lsNotice() &lt;&lt; <span class="stringliteral">&quot;Starting application flow on Main Thread...&quot;</span>;</div>
+<div class="line">  <span class="keywordtype">int</span> computationResult = <span class="keyword">co_await</span> <a class="code hl_function" href="group__coroutine__api.html#ga0005f3892c4f008098e0ee2634481d5a">AsyncFw::coInvoke</a>(heavyCalculation, 10);</div>
+<div class="line">  lsNotice() &lt;&lt; <span class="stringliteral">&quot;Computation successfully returned: &quot;</span> &lt;&lt; computationResult;</div>
+<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1MainThread.html#a76fed3a2c1cfdbdb67f2b209e6457657">AsyncFw::MainThread::exit</a>(0);</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[]) {</div>
+<div class="line">  runApplicationLogic();</div>
+<div class="line">  logNotice() &lt;&lt; <span class="stringliteral">&quot;Booting Main Engine Event Loop...&quot;</span>;</div>
+<div class="line">  <span class="keywordtype">int</span> ret = <a class="code hl_function" href="classAsyncFw_1_1MainThread.html#ad12e620772820ad751868c7b49fa4190">AsyncFw::MainThread::exec</a>();</div>
+<div class="line">  <span class="keywordflow">return</span> ret;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__coroutine__api_html_ga0005f3892c4f008098e0ee2634481d5a"><div class="ttname"><a href="group__coroutine__api.html#ga0005f3892c4f008098e0ee2634481d5a">AsyncFw::coInvoke</a></div><div class="ttdeci">auto coInvoke(F &amp;&amp;f, Args &amp;&amp;...args)</div><div class="ttdoc">Offloads a callable function/lambda to the global ThreadPool and awaits its completion.</div><div class="ttdef"><b>Definition</b> Coroutine.h:114</div></div>
+<div class="ttc" id="astructAsyncFw_1_1CoroutineTask_html"><div class="ttname"><a href="structAsyncFw_1_1CoroutineTask.html">AsyncFw::CoroutineTask</a></div><div class="ttdoc">A class representing a coroutine task that can be suspended and resumed.</div><div class="ttdef"><b>Definition</b> Coroutine.h:20</div></div>
+</div><!-- fragment --></li>
+<li><b>Code Example (Asynchronous wait via Timer):</b> <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;chrono&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;AsyncFw/MainThread&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;AsyncFw/Timer&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;AsyncFw/LogStream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><a class="code hl_struct" href="structAsyncFw_1_1CoroutineTask.html">AsyncFw::CoroutineTask</a> task(<a class="code hl_class" href="classAsyncFw_1_1Timer.html">AsyncFw::Timer</a> *timer) {</div>
+<div class="line">  lsDebug() &lt;&lt; <span class="stringliteral">&quot;coro task&quot;</span> &lt;&lt; std::chrono::system_clock::now();</div>
+<div class="line">  <span class="keyword">co_await</span> timer-&gt;<a class="code hl_function" href="classAsyncFw_1_1Timer.html#aad1874fc8c5f41c278e4e4de81609e54">coTimeout</a>(10);</div>
+<div class="line">  lsDebug() &lt;&lt; <span class="stringliteral">&quot;coro task&quot;</span> &lt;&lt; std::chrono::system_clock::now();</div>
+<div class="line">  <span class="keyword">co_await</span> timer-&gt;<a class="code hl_function" href="classAsyncFw_1_1Timer.html#aad1874fc8c5f41c278e4e4de81609e54">coTimeout</a>(10);</div>
+<div class="line">  lsDebug() &lt;&lt; <span class="stringliteral">&quot;coro task&quot;</span> &lt;&lt; std::chrono::system_clock::now();</div>
+<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1MainThread.html#a76fed3a2c1cfdbdb67f2b209e6457657">AsyncFw::MainThread::exit</a>(0);</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[]) {</div>
+<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1Timer.html">AsyncFw::Timer</a> timer1;</div>
+<div class="line">  timer1.<a class="code hl_function" href="classAsyncFw_1_1Timer.html#a14d02d88bd3682afd7c8fd72cc670e46">start</a>(10);</div>
+<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1Timer.html">AsyncFw::Timer</a> timer2;</div>
+<div class="line"> </div>
+<div class="line">  timer1.<a class="code hl_variable" href="classAsyncFw_1_1Timer.html#acf307d575a38d2b3bb852202d0126fcd">timeout</a>.<a class="code hl_function" href="classAsyncFw_1_1FunctionConnector.html#a359a9c03d52bc62db628e4f53be72457">connect</a>([]() { lsDebug() &lt;&lt; std::chrono::system_clock::now() &lt;&lt; <span class="stringliteral">&quot; timer1 timeout&quot;</span>; });</div>
+<div class="line">  timer2.<a class="code hl_variable" href="classAsyncFw_1_1Timer.html#acf307d575a38d2b3bb852202d0126fcd">timeout</a>.<a class="code hl_function" href="classAsyncFw_1_1FunctionConnector.html#a359a9c03d52bc62db628e4f53be72457">connect</a>([]() { lsDebug() &lt;&lt; std::chrono::system_clock::now() &lt;&lt; <span class="stringliteral">&quot; timer2 timeout&quot;</span>; });</div>
+<div class="line"> </div>
+<div class="line">  task(&amp;timer2);</div>
+<div class="line"> </div>
+<div class="line">  logNotice() &lt;&lt; <span class="stringliteral">&quot;Start Application&quot;</span>;</div>
+<div class="line">  <span class="keywordtype">int</span> ret = <a class="code hl_function" href="classAsyncFw_1_1MainThread.html#ad12e620772820ad751868c7b49fa4190">AsyncFw::MainThread::exec</a>();</div>
+<div class="line">  <span class="keywordflow">return</span> ret;</div>
+<div class="line">}</div>
+<div class="ttc" id="aclassAsyncFw_1_1FunctionConnector_html_a359a9c03d52bc62db628e4f53be72457"><div class="ttname"><a href="classAsyncFw_1_1FunctionConnector.html#a359a9c03d52bc62db628e4f53be72457">AsyncFw::FunctionConnector::connect</a></div><div class="ttdeci">Connection &amp; connect(T f, Connection::Type t=Connection::Default) const</div><div class="ttdoc">Connects a callable object (such as a lambda, static function pointer, or functor).</div><div class="ttdef"><b>Definition</b> FunctionConnector.h:97</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1Timer_html"><div class="ttname"><a href="classAsyncFw_1_1Timer.html">AsyncFw::Timer</a></div><div class="ttdoc">The Timer class.</div><div class="ttdef"><b>Definition</b> Timer.h:18</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1Timer_html_a14d02d88bd3682afd7c8fd72cc670e46"><div class="ttname"><a href="classAsyncFw_1_1Timer.html#a14d02d88bd3682afd7c8fd72cc670e46">AsyncFw::Timer::start</a></div><div class="ttdeci">void start(int, bool=false)</div><div class="ttdoc">Starts or restarts a timer with the specified timeout. If the timer is already running,...</div><div class="ttdef"><b>Definition</b> Timer.cpp:29</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1Timer_html_aad1874fc8c5f41c278e4e4de81609e54"><div class="ttname"><a href="classAsyncFw_1_1Timer.html#aad1874fc8c5f41c278e4e4de81609e54">AsyncFw::Timer::coTimeout</a></div><div class="ttdeci">CoroutineAwait&lt; void &gt; coTimeout(int)</div><div class="ttdoc">Asynchronously waits for the specified timeout interval.</div><div class="ttdef"><b>Definition</b> Timer.cpp:36</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1Timer_html_acf307d575a38d2b3bb852202d0126fcd"><div class="ttname"><a href="classAsyncFw_1_1Timer.html#acf307d575a38d2b3bb852202d0126fcd">AsyncFw::Timer::timeout</a></div><div class="ttdeci">FunctionConnector ::Protected&lt; Timer &gt; timeout</div><div class="ttdoc">The Timer::timeout connector.</div><div class="ttdef"><b>Definition</b> Timer.h:34</div></div>
+</div><!-- fragment --></li>
 </ul>
 <h2><a class="anchor" id="autotoc_md6"></a>
 4. Network Worker Thread: <code>Thread</code> &amp; Secure Sockets</h2>
