@@ -17,7 +17,7 @@ See the [GitHub repository], [documentation] and [examples] for details.
 ### 1. The Core Backbone: `AbstractThread`
 `AbstractThread` is the foundational element of the entire framework. It goes beyond a simple `std::thread` wrapper by maintaining its own **Task Queue** and a localized **Event Loop (Reactor)**.
 * **The Reactor Loop**: Internally, `AbstractThread::exec()` runs a highly optimized polling loop. On Linux, it leverages **`epoll`** (`epoll_wait`); on other systems, it falls back to standard **`poll`**. 
-* **Non-Blocking Inter-Thread Wakeup**: When a foreign thread posts a task via `.invoke()`, it inserts the task into a synchronized queue and wakes up the target thread's blocking `epoll_wait` instantly. On Linux, this is achieved via **`eventfd`** (`EVENTFD_WAKE`), which introduces near-zero overhead compared to traditional pipe-based signaling.
+* **Non-Blocking Inter-Thread Wakeup**: When a foreign thread posts a task via `invoke()`, it inserts the task into a synchronized queue and wakes up the target thread's blocking `epoll_wait` instantly. On Linux, this is achieved via **`eventfd`**, which introduces near-zero overhead compared to traditional pipe-based signaling.
 * **Intelligent Nested Loops**: It handles nested invocation processing safely (`nested_` tracking). If an inner loop is executed, it can yield to process waiting asynchronous callbacks, prevent deadlines from slipping, and protect against stack overflow or event deadlocks.
 * **Deterministic Graceful Shutdown**: Using `requestInterrupt()` and `waitInterrupted()`, a thread transitions through safe structural states, ensuring that pending items in the pipeline are safely flushed before resources are released.
 
