@@ -38,7 +38,7 @@
 <!-- Node7 -->
 <g id="Node000007" class="node">
 <title>Node7</title>
-<g id="a_Node000007"><a xlink:href="FunctionConnector_8h.html" target="_top" xlink:title="The AbstractFunctionConnector, FunctionConnector, FunctionConnectorProtected and FunctionConnectionGu...">
+<g id="a_Node000007"><a xlink:href="FunctionConnector_8h.html" target="_top" xlink:title="The AbstractFunctionConnector, FunctionConnector, FunctionConnectorProtected, FunctionConnectionGuard...">
 <polygon fill="white" stroke="#666666" points="319,-132 182.25,-132 182.25,-112 319,-112 319,-132"/>
 <text text-anchor="middle" x="250.62" y="-118.5" font-family="Helvetica,sans-Serif" font-size="10.00">../core/FunctionConnector.h</text>
 </a>

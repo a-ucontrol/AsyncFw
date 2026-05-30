@@ -1,6 +1,6 @@
 <map id="core/AbstractThread.h" name="core/AbstractThread.h">
 <area shape="rect" id="Node000001" title="The AbstractThread class." alt="" coords="980,5,1130,32"/>
-<area shape="rect" id="Node000002" href="$FunctionConnector_8h.html" title="The AbstractFunctionConnector, FunctionConnector, FunctionConnectorProtected and FunctionConnectionGu..." alt="" coords="892,80,1063,107"/>
+<area shape="rect" id="Node000002" href="$FunctionConnector_8h.html" title="The AbstractFunctionConnector, FunctionConnector, FunctionConnectorProtected, FunctionConnectionGuard..." alt="" coords="892,80,1063,107"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="1032,45,993,82,989,78,1029,41"/>
 <area shape="rect" id="Node000025" href="$Task_8h.html" title="The AbstractTask and Task classes." alt="" coords="1088,80,1180,107"/>
 <area shape="poly" id="edge28_Node000001_Node000025" title=" " alt="" coords="1082,41,1122,78,1118,82,1078,45"/>

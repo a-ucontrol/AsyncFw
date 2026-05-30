@@ -1,6 +1,6 @@
 <map id="main/Rrd.h" name="main/Rrd.h">
 <area shape="rect" id="Node000001" title="The Rrd class." alt="" coords="258,5,343,32"/>
-<area shape="rect" id="Node000002" href="$FunctionConnector_8h.html" title="The AbstractFunctionConnector, FunctionConnector, FunctionConnectorProtected and FunctionConnectionGu..." alt="" coords="120,80,302,107"/>
+<area shape="rect" id="Node000002" href="$FunctionConnector_8h.html" title="The AbstractFunctionConnector, FunctionConnector, FunctionConnectorProtected, FunctionConnectionGuard..." alt="" coords="120,80,302,107"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="287,35,240,72,237,68,283,30"/>
 <area shape="rect" id="Node000008" href="$DataArray_8h.html" title="The DataArray, DataArrayView, DataArrayList and DataStream classes." alt="" coords="326,80,456,107"/>
 <area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="318,30,366,68,362,72,315,35"/>

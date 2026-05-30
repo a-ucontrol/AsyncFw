@@ -1,6 +1,6 @@
 <map id="main/ApplicationNotifier.h" name="main/ApplicationNotifier.h">
 <area shape="rect" id="Node000001" title="The ApplicationNotifier class." alt="" coords="248,5,417,32"/>
-<area shape="rect" id="Node000002" href="$FunctionConnector_8h.html" title="The AbstractFunctionConnector, FunctionConnector, FunctionConnectorProtected and FunctionConnectionGu..." alt="" coords="64,80,246,107"/>
+<area shape="rect" id="Node000002" href="$FunctionConnector_8h.html" title="The AbstractFunctionConnector, FunctionConnector, FunctionConnectorProtected, FunctionConnectionGuard..." alt="" coords="64,80,246,107"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="303,35,201,76,199,71,301,30"/>
 <area shape="rect" id="Node000008" href="$AnyData_8h.html" title="The AnyData class." alt="" coords="270,80,395,107"/>
 <area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="335,33,335,64,330,64,330,33"/>

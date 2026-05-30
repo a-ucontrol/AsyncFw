@@ -14,7 +14,7 @@
 <area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="89,255,128,291,124,295,85,258"/>
 <area shape="rect" id="Node000007" href="$AbstractSocket_8h.html" title="The AbstractSocket class." alt="" coords="167,229,330,256"/>
 <area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="313,184,274,221,271,217,310,180"/>
-<area shape="rect" id="Node000010" href="$FunctionConnector_8h.html" title="The AbstractFunctionConnector, FunctionConnector, FunctionConnectorProtected and FunctionConnectionGu..." alt="" coords="432,304,614,331"/>
+<area shape="rect" id="Node000010" href="$FunctionConnector_8h.html" title="The AbstractFunctionConnector, FunctionConnector, FunctionConnectorProtected, FunctionConnectionGuard..." alt="" coords="432,304,614,331"/>
 <area shape="poly" id="edge11_Node000006_Node000010" title=" " alt="" coords="334,180,358,216,394,254,432,278,471,296,469,301,429,282,391,258,354,219,329,183"/>
 <area shape="poly" id="edge8_Node000007_Node000003" title=" " alt="" coords="266,254,314,292,310,296,263,259"/>
 <area shape="poly" id="edge7_Node000007_Node000005" title=" " alt="" coords="233,259,181,297,178,293,230,254"/>

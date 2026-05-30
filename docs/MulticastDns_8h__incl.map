@@ -1,6 +1,6 @@
 <map id="main/MulticastDns.h" name="main/MulticastDns.h">
 <area shape="rect" id="Node000001" title="The MulticastDns class." alt="" coords="162,5,303,32"/>
-<area shape="rect" id="Node000002" href="$FunctionConnector_8h.html" title="The AbstractFunctionConnector, FunctionConnector, FunctionConnectorProtected and FunctionConnectionGu..." alt="" coords="64,80,246,107"/>
+<area shape="rect" id="Node000002" href="$FunctionConnector_8h.html" title="The AbstractFunctionConnector, FunctionConnector, FunctionConnectorProtected, FunctionConnectionGuard..." alt="" coords="64,80,246,107"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="221,34,182,71,178,67,217,31"/>
 <area shape="rect" id="Node000008" href="$Instance_8h.html" title="The AbstractInstance and Instance classes." alt="" coords="270,80,352,107"/>
 <area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="248,31,288,67,285,71,245,35"/>

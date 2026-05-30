@@ -16,7 +16,7 @@
 <area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="509,259,421,299,418,295,507,254"/>
 <area shape="rect" id="Node000007" title=" " alt="" coords="445,304,506,331"/>
 <area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="527,258,497,294,493,290,523,255"/>
-<area shape="rect" id="Node000009" href="$FunctionConnector_8h.html" title="The AbstractFunctionConnector, FunctionConnector, FunctionConnectorProtected and FunctionConnectionGu..." alt="" coords="31,155,213,181"/>
+<area shape="rect" id="Node000009" href="$FunctionConnector_8h.html" title="The AbstractFunctionConnector, FunctionConnector, FunctionConnectorProtected, FunctionConnectionGuard..." alt="" coords="31,155,213,181"/>
 <area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="370,109,189,153,188,148,369,104"/>
 <area shape="rect" id="Node000014" href="$DataArray_8h.html" title="The DataArray, DataArrayView, DataArrayList and DataStream classes." alt="" coords="313,229,443,256"/>
 <area shape="poly" id="edge14_Node000008_Node000014" title=" " alt="" coords="411,109,396,130,383,155,378,185,378,214,372,214,373,185,378,154,391,127,406,105"/>

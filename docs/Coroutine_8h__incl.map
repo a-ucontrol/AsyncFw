@@ -12,7 +12,7 @@
 <area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="302,108,294,140,289,139,297,107"/>
 <area shape="rect" id="Node000013" href="$Instance_8h.html" title="The AbstractInstance and Instance classes." alt="" coords="365,155,448,181"/>
 <area shape="poly" id="edge12_Node000005_Node000013" title=" " alt="" coords="322,105,378,143,375,148,319,109"/>
-<area shape="rect" id="Node000007" href="$FunctionConnector_8h.html" title="The AbstractFunctionConnector, FunctionConnector, FunctionConnectorProtected and FunctionConnectionGu..." alt="" coords="214,229,356,256"/>
+<area shape="rect" id="Node000007" href="$FunctionConnector_8h.html" title="The AbstractFunctionConnector, FunctionConnector, FunctionConnectorProtected, FunctionConnectionGuard..." alt="" coords="214,229,356,256"/>
 <area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="288,182,288,214,282,214,282,182"/>
 <area shape="rect" id="Node000008" href="$AbstractThread_8h.html" title="The AbstractThread class." alt="" coords="224,304,346,331"/>
 <area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="288,257,288,288,282,288,282,257"/>

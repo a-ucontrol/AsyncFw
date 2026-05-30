@@ -1,6 +1,6 @@
 <map id="main/DataArrayAbstractTcp.h" name="main/DataArrayAbstractTcp.h">
 <area shape="rect" id="Node000001" title="The DataArrayAbstractTcp class." alt="" coords="68,5,261,32"/>
-<area shape="rect" id="Node000002" href="$FunctionConnector_8h.html" title="The AbstractFunctionConnector, FunctionConnector, FunctionConnectorProtected and FunctionConnectionGu..." alt="" coords="64,229,246,256"/>
+<area shape="rect" id="Node000002" href="$FunctionConnector_8h.html" title="The AbstractFunctionConnector, FunctionConnector, FunctionConnectorProtected, FunctionConnectionGuard..." alt="" coords="64,229,246,256"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="164,33,150,97,145,139,146,181,151,214,146,215,141,182,140,138,145,96,158,32"/>
 <area shape="rect" id="Node000008" href="$ThreadPool_8h.html" title="The AbstractThreadPool and ThreadPool classes." alt="" coords="164,80,262,107"/>
 <area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="175,31,198,66,194,69,171,34"/>

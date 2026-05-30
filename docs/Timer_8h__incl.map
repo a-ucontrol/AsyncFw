@@ -1,6 +1,6 @@
 <map id="main/Timer.h" name="main/Timer.h">
 <area shape="rect" id="Node000001" title="The Timer class." alt="" coords="7,5,104,32"/>
-<area shape="rect" id="Node000002" href="$FunctionConnector_8h.html" title="The AbstractFunctionConnector, FunctionConnector, FunctionConnectorProtected and FunctionConnectionGu..." alt="" coords="64,304,246,331"/>
+<area shape="rect" id="Node000002" href="$FunctionConnector_8h.html" title="The AbstractFunctionConnector, FunctionConnector, FunctionConnectorProtected, FunctionConnectionGuard..." alt="" coords="64,304,246,331"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="53,33,45,61,37,98,35,140,43,180,60,214,82,245,130,292,126,296,78,248,55,217,38,182,30,140,32,97,40,60,48,32"/>
 <area shape="rect" id="Node000008" href="$Coroutine_8h.html" title="The CoroutineTask, CoroutineAwait, CoroutineInvokeAwait structs." alt="" coords="111,80,200,107"/>
 <area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="74,30,127,68,124,73,71,35"/>

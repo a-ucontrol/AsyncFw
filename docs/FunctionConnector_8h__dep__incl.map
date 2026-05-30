@@ -1,5 +1,5 @@
 <map id="core/FunctionConnector.h" name="core/FunctionConnector.h">
-<area shape="rect" id="Node000001" title="The AbstractFunctionConnector, FunctionConnector, FunctionConnectorProtected and FunctionConnectionGu..." alt="" coords="892,5,1063,32"/>
+<area shape="rect" id="Node000001" title="The AbstractFunctionConnector, FunctionConnector, FunctionConnectorProtected, FunctionConnectionGuard..." alt="" coords="892,5,1063,32"/>
 <area shape="rect" id="Node000002" href="$Thread_8h.html" title="The Thread class." alt="" coords="215,80,316,107"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="877,31,637,52,350,83,317,87,316,82,349,77,636,47,877,25"/>
 <area shape="rect" id="Node000006" href="$AddressResolver_8h.html" title="The AddressResolver class." alt="" coords="5,304,169,331"/>

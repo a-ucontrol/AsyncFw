@@ -7,7 +7,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #pragma once
 
-/** @file FunctionConnector.h @brief The AbstractFunctionConnector, FunctionConnector, FunctionConnectorProtected and FunctionConnectionGuard classes. */
+/** @file FunctionConnector.h @brief The AbstractFunctionConnector, FunctionConnector, FunctionConnectorProtected, FunctionConnectionGuard and FunctionConnectionGuardList classes. */
 /** @example FunctionConnector/main.cpp FunctionConnector example */
 
 #include "AbstractThread.h"
@@ -135,8 +135,7 @@ public:
   using Protected = internal::FunctionConnectorProtected<T, Args...>;
 
 protected:
-  /** @class Connection FunctionConnector.h <AsyncFw/FunctionConnector> @brief Implementation of a connection with specific argument.
-  @details Inherited from AbstractFunctionConnector::Connection */
+  /** @class Connection FunctionConnector.h <AsyncFw/FunctionConnector> @brief Implementation of a connection with specific argument. */
   class Connection : public AbstractFunctionConnector::Connection {
     friend class FunctionConnector<Args...>;
 
@@ -184,9 +183,9 @@ protected:
 
 namespace internal {
 //A protected connector where only a single designated sender can emit messages.
-template <typename F, typename... Args>
+template <typename T, typename... Args>
 class FunctionConnectorProtected : private FunctionConnector<Args...> {
-  friend F;
+  friend T;
 
 public:
   using FunctionConnector<Args...>::FunctionConnector;
@@ -207,22 +206,21 @@ class FunctionConnectionGuard {
 public:
   /** @brief Constructs an empty, uninitialized connection guard. */
   FunctionConnectionGuard();
-  /** @brief Move constructor. Transfers connection ownership from another guard.
-  @param && FunctionConnectionGuard Explicit rvalue reference to the source guard. */
+  /** @brief Move constructor. Transfers connection ownership from another guard. @param guard Explicit rvalue reference to the source guard. */
   FunctionConnectionGuard(FunctionConnectionGuard &&);
-  /** @brief Constructs a guard and binds it to an active connection. @param & AbstractFunctionConnector::Connection Reference to the connection to be managed. */
+  /** @brief Constructs a guard and binds it to an active connection. @param connection Reference to the connection to be managed. */
   FunctionConnectionGuard(AbstractFunctionConnector::Connection &);
   /** @brief Destructor. Automatically triggers disconnection and frees connection resources. */
   ~FunctionConnectionGuard();
-  /** @brief Assigns a new active connection to this guard. Disconnects  previously managed connection. @param & AbstractFunctionConnector::Connection Reference to the new connection. */
+  /** @brief Assigns a new active connection to this guard. Disconnects  previously managed connection. @param connection Reference to the new connection. */
   void operator=(AbstractFunctionConnector::Connection &);
-  /** @brief Move assignment operator. Safely releases current connection and takes ownership of another. @param && FunctionConnectionGuard Rvalue reference to the source guard. */
+  /** @brief Move assignment operator. Safely releases current connection and takes ownership of another. @param guard Rvalue reference to the source guard. */
   void operator=(FunctionConnectionGuard &&);
   /** @brief Checks if the guard is currently managing an active connection. @return True If managing an active connection. */
-  operator bool() const { return c_; }
+  operator bool() const { return connection_; }
 
 private:
-  AbstractFunctionConnector::Connection *c_;
+  AbstractFunctionConnector::Connection *connection_;
   void destroyConnection();
 };
 
@@ -231,7 +229,7 @@ private:
 @brief Examlpe: @snippet snippet.dox FunctionConnectorGuardList */
 class FunctionConnectionGuardList : public std::vector<FunctionConnectionGuard> {
 public:
-  /** @brief Appends a moving connection guard to the management list. */
+  /** @brief Appends a moving connection guard to the management list. @param guard Explicit rvalue reference to the source guard. */
   void operator+=(FunctionConnectionGuard &&);
 };
 }  // namespace AsyncFw

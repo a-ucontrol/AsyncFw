@@ -2,7 +2,7 @@
 <area shape="rect" id="Node000001" title="The FileSystemWatcher class." alt="" coords="5,5,183,32"/>
 <area shape="rect" id="Node000002" title=" " alt="" coords="18,155,71,181"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="70,35,43,54,22,81,18,96,19,111,31,141,26,143,14,112,13,95,17,79,39,50,67,30"/>
-<area shape="rect" id="Node000003" href="$FunctionConnector_8h.html" title="The AbstractFunctionConnector, FunctionConnector, FunctionConnectorProtected and FunctionConnectionGu..." alt="" coords="182,80,364,107"/>
+<area shape="rect" id="Node000003" href="$FunctionConnector_8h.html" title="The AbstractFunctionConnector, FunctionConnector, FunctionConnectorProtected, FunctionConnectionGuard..." alt="" coords="182,80,364,107"/>
 <area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="126,30,228,71,226,76,124,35"/>
 <area shape="rect" id="Node000009" href="$Instance_8h.html" title="The AbstractInstance and Instance classes." alt="" coords="31,80,157,107"/>
 <area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="97,33,97,64,91,64,91,33"/>

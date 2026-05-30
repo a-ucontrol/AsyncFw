@@ -2,7 +2,7 @@
 <area shape="rect" id="Node000001" title="The AddressResolver class." alt="" coords="142,5,305,32"/>
 <area shape="rect" id="Node000002" title=" " alt="" coords="101,304,154,331"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="184,35,141,52,94,78,49,112,31,133,15,156,9,175,10,195,17,214,28,232,61,266,96,293,93,298,57,270,24,236,12,216,5,196,4,175,11,153,26,130,46,108,91,73,139,47,182,30"/>
-<area shape="rect" id="Node000003" href="$FunctionConnector_8h.html" title="The AbstractFunctionConnector, FunctionConnector, FunctionConnectorProtected and FunctionConnectionGu..." alt="" coords="267,304,449,331"/>
+<area shape="rect" id="Node000003" href="$FunctionConnector_8h.html" title="The AbstractFunctionConnector, FunctionConnector, FunctionConnectorProtected, FunctionConnectionGuard..." alt="" coords="267,304,449,331"/>
 <area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="251,30,284,49,322,77,358,112,386,154,395,190,393,227,385,262,374,291,369,289,380,260,388,226,390,190,381,156,354,115,319,81,281,54,248,35"/>
 <area shape="rect" id="Node000009" href="$Coroutine_8h.html" title="The CoroutineTask, CoroutineAwait, CoroutineInvokeAwait structs." alt="" coords="179,80,268,107"/>
 <area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="226,33,226,64,221,64,221,33"/>

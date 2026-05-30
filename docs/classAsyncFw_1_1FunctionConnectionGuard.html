@@ -171,7 +171,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">FunctionConnectionGuard::FunctionConnectionGuard </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classAsyncFw_1_1FunctionConnectionGuard.html">FunctionConnectionGuard</a> &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>_g</em></span></td><td>)</td>
+          <td class="paramtype"><a class="el" href="classAsyncFw_1_1FunctionConnectionGuard.html">FunctionConnectionGuard</a> &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>guarg</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -180,7 +180,7 @@ Public Member Functions</h2></td></tr>
 <p>Move constructor. Transfers connection ownership from another guard. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">&amp;&amp;</td><td><a class="el" href="classAsyncFw_1_1FunctionConnectionGuard.html" title="An RAII guard that automatically manages the lifecycle of a FunctionConnector connection.">FunctionConnectionGuard</a> Explicit rvalue reference to the source guard. </td></tr>
+    <tr><td class="paramname">guard</td><td>Explicit rvalue reference to the source guard. </td></tr>
   </table>
   </dd>
 </dl>
@@ -203,7 +203,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">FunctionConnectionGuard::FunctionConnectionGuard </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html">AbstractFunctionConnector::Connection</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>_c</em></span></td><td>)</td>
+          <td class="paramtype"><a class="el" href="classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html">AbstractFunctionConnector::Connection</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>connection</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -212,7 +212,7 @@ Public Member Functions</h2></td></tr>
 <p>Constructs a guard and binds it to an active connection. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">&amp;</td><td><a class="el" href="classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html" title="Represents an active linkage between a sender&#39;s signal/connector and a specific receiver slot.">AbstractFunctionConnector::Connection</a> Reference to the connection to be managed. </td></tr>
+    <tr><td class="paramname">connection</td><td>Reference to the connection to be managed. </td></tr>
   </table>
   </dd>
 </dl>
@@ -229,7 +229,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">void FunctionConnectionGuard::operator= </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html">AbstractFunctionConnector::Connection</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>_c</em></span></td><td>)</td>
+          <td class="paramtype"><a class="el" href="classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html">AbstractFunctionConnector::Connection</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>connection</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -238,7 +238,7 @@ Public Member Functions</h2></td></tr>
 <p>Assigns a new active connection to this guard. Disconnects previously managed connection. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">&amp;</td><td><a class="el" href="classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html" title="Represents an active linkage between a sender&#39;s signal/connector and a specific receiver slot.">AbstractFunctionConnector::Connection</a> Reference to the new connection. </td></tr>
+    <tr><td class="paramname">connection</td><td>Reference to the new connection. </td></tr>
   </table>
   </dd>
 </dl>
@@ -254,7 +254,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">void FunctionConnectionGuard::operator= </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classAsyncFw_1_1FunctionConnectionGuard.html">FunctionConnectionGuard</a> &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>_g</em></span></td><td>)</td>
+          <td class="paramtype"><a class="el" href="classAsyncFw_1_1FunctionConnectionGuard.html">FunctionConnectionGuard</a> &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>guarg</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -263,7 +263,7 @@ Public Member Functions</h2></td></tr>
 <p>Move assignment operator. Safely releases current connection and takes ownership of another. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">&amp;&amp;</td><td><a class="el" href="classAsyncFw_1_1FunctionConnectionGuard.html" title="An RAII guard that automatically manages the lifecycle of a FunctionConnector connection.">FunctionConnectionGuard</a> Rvalue reference to the source guard. </td></tr>
+    <tr><td class="paramname">guard</td><td>Rvalue reference to the source guard. </td></tr>
   </table>
   </dd>
 </dl>

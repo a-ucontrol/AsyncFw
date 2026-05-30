@@ -128,7 +128,7 @@
 <!-- Node7 -->
 <g id="Node000007" class="node">
 <title>Node7</title>
-<g id="a_Node000007"><a xlink:href="FunctionConnector_8h.html" target="_top" xlink:title="The AbstractFunctionConnector, FunctionConnector, FunctionConnectorProtected and FunctionConnectionGu...">
+<g id="a_Node000007"><a xlink:href="FunctionConnector_8h.html" target="_top" xlink:title="The AbstractFunctionConnector, FunctionConnector, FunctionConnectorProtected, FunctionConnectionGuard...">
 <polygon fill="white" stroke="#666666" points="262.88,-132 156.88,-132 156.88,-112 262.88,-112 262.88,-132"/>
 <text text-anchor="middle" x="209.88" y="-118.5" font-family="Helvetica,sans-Serif" font-size="10.00">FunctionConnector.h</text>
 </a>

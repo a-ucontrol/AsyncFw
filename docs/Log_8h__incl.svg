@@ -164,7 +164,7 @@
 <!-- Node9 -->
 <g id="Node000009" class="node">
 <title>Node9</title>
-<g id="a_Node000009"><a xlink:href="FunctionConnector_8h.html" target="_top" xlink:title="The AbstractFunctionConnector, FunctionConnector, FunctionConnectorProtected and FunctionConnectionGu...">
+<g id="a_Node000009"><a xlink:href="FunctionConnector_8h.html" target="_top" xlink:title="The AbstractFunctionConnector, FunctionConnector, FunctionConnectorProtected, FunctionConnectionGuard...">
 <polygon fill="white" stroke="#666666" points="479,-132 342.25,-132 342.25,-112 479,-112 479,-132"/>
 <text text-anchor="middle" x="410.62" y="-118.5" font-family="Helvetica,sans-Serif" font-size="10.00">../core/FunctionConnector.h</text>
 </a>

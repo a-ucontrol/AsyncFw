@@ -1,6 +1,6 @@
 <map id="main/HttpSocket.h" name="main/HttpSocket.h">
 <area shape="rect" id="Node000001" title="The HttpSocket class." alt="" coords="344,5,474,32"/>
-<area shape="rect" id="Node000002" href="$FunctionConnector_8h.html" title="The AbstractFunctionConnector, FunctionConnector, FunctionConnectorProtected and FunctionConnectionGu..." alt="" coords="115,80,297,107"/>
+<area shape="rect" id="Node000002" href="$FunctionConnector_8h.html" title="The AbstractFunctionConnector, FunctionConnector, FunctionConnectorProtected, FunctionConnectionGuard..." alt="" coords="115,80,297,107"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="374,35,257,77,255,72,372,30"/>
 <area shape="rect" id="Node000008" href="$DataArray_8h.html" title="The DataArray, DataArrayView, DataArrayList and DataStream classes." alt="" coords="280,155,410,181"/>
 <area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="402,34,372,81,353,141,348,139,368,79,397,31"/>

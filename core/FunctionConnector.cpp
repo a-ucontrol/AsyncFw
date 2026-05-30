@@ -46,7 +46,7 @@ AbstractFunctionConnector::Connection::Connection(AbstractFunctionConnector *con
 }
 
 AbstractFunctionConnector::Connection::~Connection() {
-  if (guard_) guard_->c_ = nullptr;
+  if (guard_) guard_->connection_ = nullptr;
   if (!connector_) return;
   std::lock_guard<std::mutex> lock(connector_->mutex);
   std::vector<Connection *>::iterator it = std::lower_bound(connector_->list.begin(), connector_->list.end(), this, [](const Connection *c1, const Connection *c2) { return c1 < c2; });
@@ -54,42 +54,42 @@ AbstractFunctionConnector::Connection::~Connection() {
   trace() << this << connector_ << connector_->list.size();
 }
 
-FunctionConnectionGuard::FunctionConnectionGuard() { c_ = nullptr; }
+FunctionConnectionGuard::FunctionConnectionGuard() { connection_ = nullptr; }
 
-FunctionConnectionGuard::FunctionConnectionGuard(FunctionConnectionGuard &&_g) {
-  c_ = _g.c_;
-  _g.c_ = nullptr;
-  if (c_) c_->guard_ = this;
+FunctionConnectionGuard::FunctionConnectionGuard(FunctionConnectionGuard &&guarg) {
+  connection_ = guarg.connection_;
+  guarg.connection_ = nullptr;
+  if (connection_) connection_->guard_ = this;
 }
 
-FunctionConnectionGuard::FunctionConnectionGuard(AbstractFunctionConnector::Connection &_c) : c_(&_c) {
-  c_->guard_ = this;
+FunctionConnectionGuard::FunctionConnectionGuard(AbstractFunctionConnector::Connection &connection) : connection_(&connection) {
+  connection_->guard_ = this;
   trace() << this;
 }
 
 FunctionConnectionGuard::~FunctionConnectionGuard() {
-  if (c_) destroyConnection();
+  if (connection_) destroyConnection();
   trace() << this;
 }
 
 void FunctionConnectionGuard::destroyConnection() {
-  AbstractThread *_thread = c_->thread_;
-  c_->thread_ = nullptr;
-  c_->guard_ = nullptr;
-  if ((c_->type_ != AbstractFunctionConnector::Connection::Direct && _thread->id() != std::this_thread::get_id()) || !_thread->invoke([_p = c_]() { delete _p; })) { delete c_; }
+  AbstractThread *_thread = connection_->thread_;
+  connection_->thread_ = nullptr;
+  connection_->guard_ = nullptr;
+  if ((connection_->type_ != AbstractFunctionConnector::Connection::Direct && _thread->id() != std::this_thread::get_id()) || !_thread->invoke([_p = connection_]() { delete _p; })) { delete connection_; }
 }
 
-void FunctionConnectionGuard::operator=(AbstractFunctionConnector::Connection &_c) {
-  if (c_) destroyConnection();
-  c_ = &_c;
-  c_->guard_ = this;
+void FunctionConnectionGuard::operator=(AbstractFunctionConnector::Connection &connection) {
+  if (connection_) destroyConnection();
+  connection_ = &connection;
+  connection_->guard_ = this;
 }
 
-void FunctionConnectionGuard::operator=(FunctionConnectionGuard &&_g) {
-  if (c_) destroyConnection();
-  c_ = _g.c_;
-  _g.c_ = nullptr;
-  if (c_) c_->guard_ = this;
+void FunctionConnectionGuard::operator=(FunctionConnectionGuard &&guarg) {
+  if (connection_) destroyConnection();
+  connection_ = guarg.connection_;
+  guarg.connection_ = nullptr;
+  if (connection_) connection_->guard_ = this;
 }
 
-void FunctionConnectionGuardList::operator+=(FunctionConnectionGuard &&_g) { push_back(std::move(_g)); }
+void FunctionConnectionGuardList::operator+=(FunctionConnectionGuard &&guarg) { push_back(std::move(guarg)); }

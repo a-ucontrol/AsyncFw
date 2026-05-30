@@ -11,7 +11,7 @@
 <!-- Node1 -->
 <g id="Node000001" class="node">
 <title>Node1</title>
-<g id="a_Node000001"><a xlink:title="The AbstractFunctionConnector, FunctionConnector, FunctionConnectorProtected and FunctionConnectionGu...">
+<g id="a_Node000001"><a xlink:title="The AbstractFunctionConnector, FunctionConnector, FunctionConnectorProtected, FunctionConnectionGuard...">
 <polygon fill="#999999" stroke="#666666" points="793.12,-244 665.38,-244 665.38,-224 793.12,-224 793.12,-244"/>
 <text text-anchor="middle" x="729.25" y="-230.5" font-family="Helvetica,sans-Serif" font-size="10.00">core/FunctionConnector.h</text>
 </a>

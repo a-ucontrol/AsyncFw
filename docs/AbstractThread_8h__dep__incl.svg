@@ -20,7 +20,7 @@
 <!-- Node2 -->
 <g id="Node000002" class="node">
 <title>Node2</title>
-<g id="a_Node000002"><a xlink:href="FunctionConnector_8h.html" target="_top" xlink:title="The AbstractFunctionConnector, FunctionConnector, FunctionConnectorProtected and FunctionConnectionGu...">
+<g id="a_Node000002"><a xlink:href="FunctionConnector_8h.html" target="_top" xlink:title="The AbstractFunctionConnector, FunctionConnector, FunctionConnectorProtected, FunctionConnectionGuard...">
 <polygon fill="white" stroke="#666666" points="793.12,-244 665.38,-244 665.38,-224 793.12,-224 793.12,-244"/>
 <text text-anchor="middle" x="729.25" y="-230.5" font-family="Helvetica,sans-Serif" font-size="10.00">core/FunctionConnector.h</text>
 </a>

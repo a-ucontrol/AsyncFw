@@ -2,7 +2,7 @@
 <area shape="rect" id="Node000001" title="The DataArrayTcpClient class." alt="" coords="76,5,253,32"/>
 <area shape="rect" id="Node000002" href="$DataArrayAbstractTcp_8h.html" title="The DataArrayAbstractTcp class." alt="" coords="84,80,245,107"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="167,33,167,64,162,64,162,33"/>
-<area shape="rect" id="Node000003" href="$FunctionConnector_8h.html" title="The AbstractFunctionConnector, FunctionConnector, FunctionConnectorProtected and FunctionConnectionGu..." alt="" coords="64,304,246,331"/>
+<area shape="rect" id="Node000003" href="$FunctionConnector_8h.html" title="The AbstractFunctionConnector, FunctionConnector, FunctionConnectorProtected, FunctionConnectionGuard..." alt="" coords="64,304,246,331"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="164,108,150,171,145,213,146,256,151,288,146,289,141,256,140,213,145,170,158,107"/>
 <area shape="rect" id="Node000009" href="$ThreadPool_8h.html" title="The AbstractThreadPool and ThreadPool classes." alt="" coords="164,155,262,181"/>
 <area shape="poly" id="edge8_Node000002_Node000009" title=" " alt="" coords="175,106,198,140,194,143,171,109"/>
