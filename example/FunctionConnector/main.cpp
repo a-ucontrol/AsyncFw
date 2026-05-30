@@ -28,7 +28,7 @@ public:
     timer.start(10);
   }
 
-  mutable AsyncFw::FunctionConnector<int, const std::string &>::Protected<Sender> connector;
+  AsyncFw::FunctionConnector<int, const std::string &>::Protected<Sender> connector;
 
 private:
   int cnt = 0;

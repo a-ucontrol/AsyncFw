@@ -33,7 +33,7 @@ AbstractFunctionConnector::~AbstractFunctionConnector() {
   }
 }
 
-AbstractFunctionConnector::Connection::Connection(AbstractFunctionConnector *connector, Type type) : connector_(connector) {
+AbstractFunctionConnector::Connection::Connection(const AbstractFunctionConnector *connector, Type type) : connector_(connector) {
   type_ = (type != Default) ? type : static_cast<Type>(connector->connectionPolicy & ~0x10);
   if ((connector->connectionPolicy & 0x10) && type_ != (connector->connectionPolicy & ~0x10)) {
     lsError().flush() << "fixed connection type, throw exception...";

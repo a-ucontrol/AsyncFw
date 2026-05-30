@@ -52,13 +52,13 @@ public:
     };
 
   protected:
-    Connection(AbstractFunctionConnector *, Type);
+    Connection(const AbstractFunctionConnector *, Type);
     virtual ~Connection() = 0;
     AbstractThread *thread_;
     Type type_;
 
   private:
-    AbstractFunctionConnector *connector_;
+    const AbstractFunctionConnector *connector_;
     FunctionConnectionGuard *guard_ = nullptr;
   };
   AbstractFunctionConnector(ConnectionPolicy = Auto);
@@ -74,9 +74,9 @@ protected:
     std::tuple<Args...> args_;
   };
   virtual ~AbstractFunctionConnector() = 0;
-  std::vector<Connection *> list;
   ConnectionPolicy connectionPolicy;
-  std::mutex mutex;
+  mutable std::vector<Connection *> list;
+  mutable std::mutex mutex;
 };
 
 namespace internal {
@@ -94,7 +94,7 @@ public:
   using AbstractFunctionConnector::AbstractFunctionConnector;
   /** @brief Connects a callable object (such as a lambda, static function pointer, or functor). @param f The callable target object representing the receiver slot. @param t The thread execution context strategy. Defaults to Connection::Default (uses the parent's policy). @return Reference to the newly allocated Connection. */
   template <typename T>
-  Connection &connect(T f, Connection::Type t = Connection::Default) {
+  Connection &connect(T f, Connection::Type t = Connection::Default) const {
     std::lock_guard<std::mutex> lock(mutex);
 #ifndef __clang_analyzer__
     return *new Connection(f, this, t);
@@ -102,7 +102,7 @@ public:
   }
   /** @brief Connects a specific class member method. @param m The pointer to the member function of the target object. @param o The pointer to the specific instance of the object containing the member function. @param t The thread execution context strategy. Defaults to Connection::Default (uses the parent's policy). @return Reference to the newly allocated Connection. */
   template <typename M, typename O>
-  Connection &connect(M m, O *o, Connection::Type t = Connection::Default) {
+  Connection &connect(M m, O *o, Connection::Type t = Connection::Default) const {
     std::lock_guard<std::mutex> lock(mutex);
 #ifndef __clang_analyzer__
     return *new Connection(m, o, this, t);
@@ -110,7 +110,7 @@ public:
   }
   /** @brief Emits/Sends the signal, notifying all connected receivers.
   @details Iterates through the delivery list and dispatches arguments to each slot based on their configured Connection::Type (Direct, Queued, or Sync). @param args The pack of arguments to forward to all subscribed receivers. */
-  void operator()(Args... args) {
+  void operator()(Args... args) const {
     std::lock_guard<std::mutex> lock(mutex);
     for (const Connection *c : *reinterpret_cast<std::vector<Connection *> *>(&list)) {
       if (!c->thread_) continue;
@@ -141,9 +141,9 @@ protected:
 
   public:
     template <typename F>
-    Connection(F &f, AbstractFunctionConnector *c, Type t) : AbstractFunctionConnector::Connection(c, t), f_(new Function(std::forward<F>(f))) {}
+    Connection(F &f, const AbstractFunctionConnector *c, Type t) : AbstractFunctionConnector::Connection(c, t), f_(new Function(std::forward<F>(f))) {}
     template <typename M, typename O>
-    Connection(M m, O *o, AbstractFunctionConnector *c, Type t) : AbstractFunctionConnector::Connection(c, t), f_(new MemberFunction(m, o)) {}
+    Connection(M m, O *o, const AbstractFunctionConnector *c, Type t) : AbstractFunctionConnector::Connection(c, t), f_(new MemberFunction(m, o)) {}
 
   private:
     struct AbstractFunction : public AsyncFw::Invocable<void(Args &...)>::Abstract {
