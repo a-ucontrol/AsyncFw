@@ -64,11 +64,11 @@ int main(int argc, char *argv[]) {
   auto lambda = [](int val, const std::string &) { lsNotice() << "sender->connector (lambda)" << val; };
   sender->connector.connect(lambda);
 
-  logNotice() << "Start Applicaiton";
+  logNotice() << "Start Application";
 
   int ret = AsyncFw::MainThread::exec();
 
-  logNotice() << "End Applicaiton";
+  logNotice() << "End Application";
   delete sender;
   return ret;
 }

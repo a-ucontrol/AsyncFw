@@ -76,8 +76,8 @@ int main(int argc, char *argv[]) {
 
   task();
 
-  lsNotice() << "Start Applicaiton" << std::endl;
+  lsNotice() << "Start Application" << std::endl;
   int ret = AsyncFw::MainThread::exec();
-  lsNotice() << "End Applicaiton " << ret;
+  lsNotice() << "End Application " << ret;
   return ret;
 }

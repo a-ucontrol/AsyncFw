@@ -149,9 +149,9 @@ int main(int argc, char *argv[]) {
 
   AsyncFw::AbstractThread::current()->invoke([_socket]() { run_examples(_socket); });
 
-  logNotice() << "Start Applicaiton";
+  logNotice() << "Start Application";
   int ret = AsyncFw::MainThread::exec();
-  logNotice() << "Finished Applicaiton";
+  logNotice() << "Finished Application";
 
   logNotice() << "Version:" << AsyncFw::Version::str();
   logNotice() << "Git:" << AsyncFw::Version::git();

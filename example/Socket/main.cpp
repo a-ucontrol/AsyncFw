@@ -77,11 +77,11 @@ int main(int argc, char *argv[]) {
   }};
   coroTask();
 
-  logNotice() << "Start Applicaiton";
+  logNotice() << "Start Application";
 
   int ret = AsyncFw::MainThread::exec();
 
-  logNotice() << "End Applicaiton" << ret;
+  logNotice() << "End Application" << ret;
   return ret;
 }
 //! [snippet]

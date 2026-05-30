@@ -66,11 +66,11 @@ int main(int argc, char *argv[]) {
   AsyncFw::AbstractThreadPool::Thread *_t1 = AsyncFw::ThreadPool::instance()->createThread("DestroyFromThreadExample");
   _t1->invoke([_t1]() { _t1->destroy(); });
 
-  logNotice() << "Start Applicaiton";
+  logNotice() << "Start Application";
 
   int ret = AsyncFw::MainThread::exec();
 
-  logNotice() << "End Applicaiton" << ret;
+  logNotice() << "End Application" << ret;
   return ret;
 }
 //! [snippet]

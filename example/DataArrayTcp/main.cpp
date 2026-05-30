@@ -36,9 +36,9 @@ int main(int argc, char *argv[]) {
   _socket = _client.createSocket();
   _client.connectToHost(_socket, "127.0.0.1", 18080);
 
-  lsNotice() << "Start Applicaiton";
+  lsNotice() << "Start Application";
   int ret = AsyncFw::MainThread::exec();
-  lsNotice() << "End Applicaiton" << ret;
+  lsNotice() << "End Application" << ret;
   return ret;
 }
 //! [snippet]

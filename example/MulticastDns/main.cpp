@@ -26,9 +26,9 @@ int main(int argc, char *argv[]) {
   Timer::single(10, [&_mdns]() { _mdns.stopService(); });
   Timer::single(20, [&_mdns]() { MainThread::exit(); });
 
-  lsNotice() << "Start Applicaiton";
+  lsNotice() << "Start Application";
   int ret = MainThread::exec();
-  lsNotice() << "End Applicaiton" << ret;
+  lsNotice() << "End Application" << ret;
 
   return ret;
 }

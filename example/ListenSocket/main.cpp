@@ -51,9 +51,9 @@ int main(int argc, char *argv[]) {
     _socket->connect("127.0.0.1", 18080);
   }
 
-  logNotice() << "Start Applicaiton";
+  logNotice() << "Start Application";
   int ret = AsyncFw::MainThread::exec();
-  logNotice() << "End Applicaiton" << ret;
+  logNotice() << "End Application" << ret;
 
   return ret;
 }

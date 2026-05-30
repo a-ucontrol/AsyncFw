@@ -40,10 +40,10 @@ int main(int argc, char *argv[]) {
     });
   });
 
-  logNotice() << "Start Applicaiton";
+  logNotice() << "Start Application";
 
   int ret = AsyncFw::MainThread::exec();
 
-  logNotice() << "End Applicaiton";
+  logNotice() << "End Application";
   return ret;
 }

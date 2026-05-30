@@ -42,9 +42,9 @@ int main(int argc, char *argv[]) {
     _socket->connect("127.0.0.1", 18080);
   }
 
-  lsNotice() << "Start Applicaiton";
+  lsNotice() << "Start Application";
   int ret = MainThread::exec();
-  lsNotice() << "End Applicaiton" << ret;
+  lsNotice() << "End Application" << ret;
 
   return ret;
 }

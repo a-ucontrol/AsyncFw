@@ -32,9 +32,9 @@ int main(int argc, char *argv[]) {
   AsyncFw::Thread::current()->started.connect([]() { AsyncFw::ApplicationNotifier::instance()->notify({MainThreadStarted}); });
   AsyncFw::Thread::current()->finished.connect([]() { AsyncFw::ApplicationNotifier::instance()->notify({MainThreadFinished}); });
 
-  lsNotice() << "Start Applicaiton";
+  lsNotice() << "Start Application";
   int ret = AsyncFw::MainThread::exec();
-  lsNotice() << "End Applicaiton" << ret;
+  lsNotice() << "End Application" << ret;
   return ret;
 }
 //! [snippet]

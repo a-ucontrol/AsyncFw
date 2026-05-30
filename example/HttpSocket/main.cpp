@@ -61,7 +61,7 @@ int main(int argc, char *argv[]) {
     socket->disconnect();
   });
 
-  logNotice() << "Start Applicaiton";
+  logNotice() << "Start Application";
 
   logDebug() << *AsyncFw::AbstractThread::current();
   logDebug() << *(AsyncFw::AbstractSocket *)socket;
@@ -70,7 +70,7 @@ int main(int argc, char *argv[]) {
 
   logDebug() << *(AsyncFw::AbstractSocket *)socket;
 
-  logNotice() << "End Applicaiton" << ret;
+  logNotice() << "End Application" << ret;
 
   return ret;
 }

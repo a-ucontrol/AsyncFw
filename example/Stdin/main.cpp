@@ -22,7 +22,7 @@ int main(int argc, char *argv[]) {
     if (r == 2 && buf[0] == 'q') AsyncFw::MainThread::exit();
     (lsDebug() << "stdin: " << buf).flush();
   });
-  (lsDebug() << "Start Applicaiton").flush();
+  (lsDebug() << "Start Application").flush();
   int ret = AsyncFw::MainThread::exec();
   return ret;
 }

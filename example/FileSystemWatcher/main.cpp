@@ -30,9 +30,9 @@ int main(int argc, char *argv[]) {
 
   lsInfoGreen() << watcher;
 
-  lsNotice() << "Start Applicaiton";
+  lsNotice() << "Start Application";
   int ret = MainThread::exec();
-  lsNotice() << "End Applicaiton" << ret;
+  lsNotice() << "End Application" << ret;
 
   return ret;
 }

@@ -46,7 +46,7 @@ int main(int argc, char *argv[]) {
   AsyncFw::Timer::single(30, [&process]() { process.input("dir\n"); });
   AsyncFw::Timer::single(40, [&process]() { process.input("exit\n"); });
 #endif
-  logNotice() << "Start Applicaiton";
+  logNotice() << "Start Application";
   int ret = AsyncFw::MainThread::exec();
   return ret;
 }
