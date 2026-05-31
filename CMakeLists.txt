@@ -117,6 +117,7 @@ set(AsyncFw_MAIN_HEADERS
   "${CMAKE_CURRENT_LIST_DIR}/main/HttpSocket.h"
   "${CMAKE_CURRENT_LIST_DIR}/main/HttpServer.h"
   "${CMAKE_CURRENT_LIST_DIR}/main/MulticastDns.h"
+  "${CMAKE_CURRENT_LIST_DIR}/main/mdns_data_types.h"
   "${CMAKE_CURRENT_LIST_DIR}/main/Instance.h"
   "${CMAKE_CURRENT_LIST_DIR}/main/ApplicationNotifier.h"
   "${CMAKE_CURRENT_LIST_DIR}/main/Version.h"

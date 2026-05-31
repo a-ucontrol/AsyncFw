@@ -50,7 +50,7 @@ public:
     if (!i_->value) {
       CT *_v = new CT(args...);
       if (!i_->value) {
-        i_->value = reinterpret_cast<T *>(_v);
+        i_->value = static_cast<T *>(_v);
         i_->created();
       }
 #ifndef __clang_analyzer__

@@ -23,8 +23,6 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 using namespace AsyncFw;
 
-static std::vector<MulticastDns::Host> hostList;
-
 extern "C" {
 extern mdns_string_t ipv4_address_to_string(char *buffer, size_t capacity, const struct sockaddr_in *addr, size_t addrlen);
 extern mdns_string_t ipv6_address_to_string(char *buffer, size_t capacity, const struct sockaddr_in6 *addr, size_t addrlen);
@@ -37,14 +35,15 @@ extern mdns_record_txt_t txtbuffer[128];
 extern char mdns_misc[128];
 extern int mdns_send_goodbye;
 
-extern int start_mdns_service(const char *hostname, const char *service_name, int service_port, int *_sockets[], int *_num_sockets);
-extern void stop_mdns_service();
-extern void mdns_service_event(int fd);
+// Обновленные Си-функции: теперь они не хранят состояние, а принимают данные из C++
+extern int start_mdns_service(const char *hostname, const char *service_name, int service_port, void *sd_void_ptr);
+extern void stop_mdns_service(void *sd_void_ptr);
+extern void mdns_service_event(int fd, void *sd_void_ptr);
 
-extern int start_mdns_querier(int *_sockets[], int *_num_sockets);
-extern void stop_mdns_querier();
-extern void mdns_querier_event(int fd);
-extern int send_mdns_query(mdns_query_t *query, size_t count);
+extern int start_mdns_querier(void *qd_void_ptr);
+extern void stop_mdns_querier(void *qd_void_ptr);
+extern void mdns_querier_event(int fd, void *cpp_instance, void *qd_void_ptr);
+extern int send_mdns_query(void *qd_void_ptr, mdns_query_t *query, size_t count);
 
 struct Compare {
   bool operator()(const MulticastDns::Host &h, const std::string &n) const { return h.name.compare(n); }
@@ -52,6 +51,11 @@ struct Compare {
 
 // Callback handling parsing answers to queries sent
 int query_callback(int, const struct sockaddr *from, size_t addrlen, mdns_entry_type_t entry, uint16_t, uint16_t rtype, uint16_t rclass, uint32_t ttl, const void *data, size_t size, size_t name_offset, size_t, size_t record_offset, size_t record_length, void *user_data) {
+  QueryContext *ctx = static_cast<QueryContext *>(user_data);
+  if (!ctx || !ctx->instance) return 0;
+  MulticastDns *current_instance = static_cast<MulticastDns *>(ctx->instance);
+  auto &currentHostList = current_instance->hostList_;  // Ссылка на локальный вектор объекта
+
   mdns_string_t fromaddrstr = ip_address_to_string(addrbuffer, sizeof(addrbuffer), from, addrlen);
   const char *entrytype = (entry == MDNS_ENTRYTYPE_ANSWER) ? "answer" : ((entry == MDNS_ENTRYTYPE_AUTHORITY) ? "authority" : "additional");
 #ifdef LS_NO_TRACE
@@ -60,68 +64,64 @@ int query_callback(int, const struct sockaddr *from, size_t addrlen, mdns_entry_
 #endif
   mdns_string_t entrystr = mdns_string_extract(data, size, &name_offset, entrybuffer, sizeof(entrybuffer));
   if (rtype == MDNS_RECORDTYPE_PTR) {
-    if (MDNS_STRING_FORMAT(entrystr) == MulticastDns::instance()->serviceType()) {
+    if (MDNS_STRING_FORMAT(entrystr) == current_instance->serviceType()) {
       mdns_string_t namestr = mdns_record_parse_ptr(data, size, record_offset, record_length, namebuffer, sizeof(namebuffer));
       std::string name = std::regex_replace(MDNS_STRING_FORMAT(namestr), std::regex("\\..*"), "");
-      std::vector<MulticastDns::Host>::iterator it = std::lower_bound(hostList.begin(), hostList.end(), name, Compare());
-      if (it != hostList.end() && (*it).name == name) (*it).ipv4.clear();
-      else { hostList.insert(it, {name, {}, {}, {}, 0}); }
+      std::vector<MulticastDns::Host>::iterator it = std::lower_bound(currentHostList.begin(), currentHostList.end(), name, Compare());
+      if (it != currentHostList.end() && (*it).name == name) (*it).ipv4.clear();
+      else { currentHostList.insert(it, {name, {}, {}, {}, 0}); }
       trace() << "PTR" << std::endl << MDNS_STRING_FORMAT(fromaddrstr) << entrytype << MDNS_STRING_FORMAT(entrystr) << name;
-    } else
-      trace() << "PTR" << std::endl << MDNS_STRING_FORMAT(fromaddrstr) << entrytype << MDNS_STRING_FORMAT(entrystr);
+    } else trace() << "PTR" << std::endl << MDNS_STRING_FORMAT(fromaddrstr) << entrytype << MDNS_STRING_FORMAT(entrystr);
   } else if (rtype == MDNS_RECORDTYPE_SRV) {
-    if (std::regex_replace(MDNS_STRING_FORMAT(entrystr), std::regex("^[^\\.]*\\."), "") == MulticastDns::instance()->serviceType()) {
+    if (std::regex_replace(MDNS_STRING_FORMAT(entrystr), std::regex("^[^\\.]*\\."), "") == current_instance->serviceType()) {
       mdns_record_srv_t srv = mdns_record_parse_srv(data, size, record_offset, record_length, namebuffer, sizeof(namebuffer));
       uint16_t port = (ttl) ? srv.port : 0;
       std::string name = std::regex_replace(MDNS_STRING_FORMAT(srv.name), std::regex(".local."), "");
 
-      std::vector<MulticastDns::Host>::iterator it = std::lower_bound(hostList.begin(), hostList.end(), name, Compare());
-      if (it != hostList.end() && (*it).name == name) {
+      std::vector<MulticastDns::Host>::iterator it = std::lower_bound(currentHostList.begin(), currentHostList.end(), name, Compare());
+      if (it != currentHostList.end() && (*it).name == name) {
         (*it).port = port;
         if (!port) {
           (*it).ipv4.clear();
           (*it).llipv4.clear();
           (*it).misc.clear();
         }
-        if (*(void **)user_data == 0) *(void **)user_data = &(*it);
+        if (ctx->resultHost == nullptr) ctx->resultHost = &(*it);
       }
       trace() << "SRV" << std::endl << MDNS_STRING_FORMAT(fromaddrstr) << entrytype << MDNS_STRING_FORMAT(entrystr) << name << port;
-    } else
-      trace() << "SRV" << std::endl << MDNS_STRING_FORMAT(fromaddrstr) << entrytype << MDNS_STRING_FORMAT(entrystr);
+    } else trace() << "SRV" << std::endl << MDNS_STRING_FORMAT(fromaddrstr) << entrytype << MDNS_STRING_FORMAT(entrystr);
   } else if (rtype == MDNS_RECORDTYPE_A) {
     struct sockaddr_in addr;
     mdns_record_parse_a(data, size, record_offset, record_length, &addr);
     mdns_string_t addrstr = ipv4_address_to_string(namebuffer, sizeof(namebuffer), &addr, sizeof(addr));
     std::string address = MDNS_STRING_FORMAT(addrstr);
     std::string name = std::regex_replace(MDNS_STRING_FORMAT(entrystr), std::regex(".local."), "");
-    std::vector<MulticastDns::Host>::iterator it = std::lower_bound(hostList.begin(), hostList.end(), name, Compare());
-    if (it != hostList.end() && (*it).name == name) {
+    std::vector<MulticastDns::Host>::iterator it = std::lower_bound(currentHostList.begin(), currentHostList.end(), name, Compare());
+    if (it != currentHostList.end() && (*it).name == name) {
       (*it).ipv4 = address;
-      if (*(void **)user_data == 0) *(void **)user_data = &(*it);
+      if (ctx->resultHost == nullptr) ctx->resultHost = &(*it);
     }
     trace() << "A" << std::endl << MDNS_STRING_FORMAT(fromaddrstr) << entrytype << MDNS_STRING_FORMAT(entrystr) << MDNS_STRING_FORMAT(addrstr);
   } else if (rtype == MDNS_RECORDTYPE_TXT) {
-    if (std::regex_replace(MDNS_STRING_FORMAT(entrystr), std::regex("^[^\\.]*\\."), "") == MulticastDns::instance()->serviceType()) {
+    if (std::regex_replace(MDNS_STRING_FORMAT(entrystr), std::regex("^[^\\.]*\\."), "") == current_instance->serviceType()) {
       size_t parsed = mdns_record_parse_txt(data, size, record_offset, record_length, txtbuffer, sizeof(txtbuffer) / sizeof(mdns_record_txt_t));
       for (size_t itxt = 0; itxt < parsed; ++itxt) {
         std::string key = MDNS_STRING_FORMAT(txtbuffer[itxt].key);
         if (key != "llip" && key != "misc") continue;
         std::string name = std::regex_replace(MDNS_STRING_FORMAT(entrystr), std::regex("[.].*"), "");
         std::string val = MDNS_STRING_FORMAT(txtbuffer[itxt].value);
-        std::vector<MulticastDns::Host>::iterator it = std::lower_bound(hostList.begin(), hostList.end(), name, Compare());
-        if (it != hostList.end() && (*it).name == name) {
+        std::vector<MulticastDns::Host>::iterator it = std::lower_bound(currentHostList.begin(), currentHostList.end(), name, Compare());
+        if (it != currentHostList.end() && (*it).name == name) {
           if (key == "llip") (*it).llipv4 = val;
           else if (key == "misc") { (*it).misc = val; }
-          if (*(void **)user_data == 0) *(void **)user_data = &(*it);
+          if (ctx->resultHost == nullptr) ctx->resultHost = &(*it);
         }
         trace() << "TXT" << std::endl << MDNS_STRING_FORMAT(fromaddrstr) << entrytype << MDNS_STRING_FORMAT(entrystr) << MDNS_STRING_FORMAT(txtbuffer[itxt].key) << "=" << MDNS_STRING_FORMAT(txtbuffer[itxt].value);
       }
-    } else
-      trace() << "TXT" << std::endl << MDNS_STRING_FORMAT(fromaddrstr) << entrytype << MDNS_STRING_FORMAT(entrystr);
+    } else trace() << "TXT" << std::endl << MDNS_STRING_FORMAT(fromaddrstr) << entrytype << MDNS_STRING_FORMAT(entrystr);
   } else if (rtype == MDNS_RECORDTYPE_AAAA) {
     trace() << MDNS_STRING_FORMAT(fromaddrstr) << entrytype << "MDNS_RECORDTYPE_AAAA ignored";
-  } else
-    lsTrace() << "unknown RECORDTYPE:" << MDNS_STRING_FORMAT(fromaddrstr) << entrytype << MDNS_STRING_FORMAT(entrystr) << rtype << rclass << ttl << record_length;
+  } else lsTrace() << "unknown RECORDTYPE:" << MDNS_STRING_FORMAT(fromaddrstr) << entrytype << MDNS_STRING_FORMAT(entrystr) << rtype << rclass << ttl << record_length;
   return 0;
 }
 
@@ -134,8 +134,6 @@ void append_host(void *_host) {
 Instance<MulticastDns> MulticastDns::instance_ {"MulticastDns"};
 
 MulticastDns::MulticastDns(const std::string &_serviceType) {
-  if (!instance_.value) instance_.value = this;
-  else { logEmergency("Only one MulticastDNS can exist"); }
   thread_ = AbstractThread::current();
   setServiceType(_serviceType);
   lsTrace();
@@ -165,22 +163,17 @@ int MulticastDns::sendDnsSd() {
 int MulticastDns::sendQuery(const std::vector<std::pair<std::string, std::string>> &list, int timeout) {
   lsTrace("send query");
 
-  hostList.clear();
+  hostList_.clear();
   mdns_query_t query[16];
   int query_count = 0;
   for (const std::pair<std::string, std::string> &pair : list) {
     query[query_count].name = pair.second.c_str();
     if (pair.first == "PTR") query[query_count].type = MDNS_RECORDTYPE_PTR;
-    else if (pair.first == "SRV")
-      query[query_count].type = MDNS_RECORDTYPE_SRV;
-    else if (pair.first == "A")
-      query[query_count].type = MDNS_RECORDTYPE_A;
-    else if (pair.first == "AAAA")
-      query[query_count].type = MDNS_RECORDTYPE_AAAA;
-    else if (pair.first == "TXT")
-      query[query_count].type = MDNS_RECORDTYPE_TXT;
-    else
-      query[query_count].type = MDNS_RECORDTYPE_ANY;
+    else if (pair.first == "SRV") query[query_count].type = MDNS_RECORDTYPE_SRV;
+    else if (pair.first == "A") query[query_count].type = MDNS_RECORDTYPE_A;
+    else if (pair.first == "AAAA") query[query_count].type = MDNS_RECORDTYPE_AAAA;
+    else if (pair.first == "TXT") query[query_count].type = MDNS_RECORDTYPE_TXT;
+    else query[query_count].type = MDNS_RECORDTYPE_ANY;
 
     trace() << query[query_count].type << query[query_count].name << pair.first;
 
@@ -191,7 +184,7 @@ int MulticastDns::sendQuery(const std::vector<std::pair<std::string, std::string
     }
   }
 
-  int ret = send_mdns_query(query, query_count);
+  int ret = send_mdns_query(&qd_, query, query_count);
   if (ret < 0) lsError() << "error send query:" << ret;
 
   if (!timeout && !queryTimeout_) return ret;
@@ -201,27 +194,25 @@ int MulticastDns::sendQuery(const std::vector<std::pair<std::string, std::string
   return ret;
 }
 
-bool MulticastDns::serviceRunning() { return !sfds.empty(); }
+//bool MulticastDns::serviceRunning() const { return !sfds.empty(); } //!!!
+bool MulticastDns::serviceRunning() const { return sd_.num_sockets > 0; }
 
 bool MulticastDns::startService(const std::string &hostname, const std::string &misc, uint16_t port) {
   if (!sfds.empty()) return false;
   snprintf(mdns_misc, sizeof(mdns_misc), "%s", misc.c_str());
   lsDebug() << hostname << serviceType_ << mdns_misc << port;
-  int *sockets;
-  int num;
-  int r = start_mdns_service(hostname.c_str(), serviceType_.c_str(), port, &sockets, &num);
-  lsTrace() << r << num;
-  if (r || !num) return false;
-  sfds.resize(num);
-  for (size_t i = 0; i != sfds.size(); ++i) {
-    sfds[i] = sockets[i];
-    thread_->appendPollTask(sfds[i], AbstractThread::PollIn, [this, fd = sfds[i]](AbstractThread::PollEvents) { servicePollEvent(fd); });
+  int r = start_mdns_service(hostname.c_str(), serviceType_.c_str(), port, &sd_);
+  lsTrace() << r << sd_.num_sockets;
+  if (r || !sd_.num_sockets) return false;
+  for (int i = 0; i != sd_.num_sockets; ++i) {
+    int fd = (sd_.sockets)[i];  // Получаем доступ к сокету из массива
+    thread_->appendPollTask(fd, AbstractThread::PollIn, [this, fd](AbstractThread::PollEvents) { servicePollEvent(fd); });
   }
   return true;
 }
 
 void MulticastDns::servicePollEvent(int fd) {
-  mdns_service_event(fd);
+  mdns_service_event(fd, &sd_);
   trace() << LogStream::Color::Magenta << fd;
 }
 
@@ -230,23 +221,24 @@ void MulticastDns::stopService(bool send_goodbye) {
     lsDebug() << LogStream::Color::Blue << "not running";
     return;
   }
+  if (sd_.num_sockets == 0) {
+    lsDebug() << LogStream::Color::Blue << "not running";
+    return;
+  }
   mdns_send_goodbye = send_goodbye;
-  for (size_t i = 0; i != sfds.size(); ++i) thread_->removePollDescriptor(sfds[i]);
-  sfds.clear();
-  stop_mdns_service();
+  for (int i = 0; i != sd_.num_sockets; ++i) { thread_->removePollDescriptor((sd_.sockets)[i]); }
+  stop_mdns_service(&sd_);
+  sd_.num_sockets = 0;
 }
 
 bool MulticastDns::startQuerier(int timeout) {
-  if (!qfds.empty()) return false;
-  int *sockets;
-  int num;
-  int r = start_mdns_querier(&sockets, &num);
-  lsTrace() << r << num;
-  if (r || !num) return false;
-  qfds.resize(num);
-  for (size_t i = 0; i != qfds.size(); ++i) {
-    qfds[i] = sockets[i];
-    thread_->appendPollTask(qfds[i], AbstractThread::PollIn, [this, fd = qfds[i]](AbstractThread::PollEvents) { querierPollEvent(fd); });
+  if (qd_.num_sockets > 0) return false;
+  int r = start_mdns_querier(&qd_);
+  lsTrace() << r << qd_.num_sockets;
+  if (r || !qd_.num_sockets) return false;
+  for (int i = 0; i != qd_.num_sockets; ++i) {
+    int fd = (qd_.sockets)[i];
+    thread_->appendPollTask(fd, AbstractThread::PollIn, [this, fd](AbstractThread::PollEvents) { querierPollEvent(fd); });
   }
   qtid = thread_->appendTimerTask(0, [this]() { querierTimerEvent(); });
   queryTimeout_ = timeout;
@@ -255,7 +247,7 @@ bool MulticastDns::startQuerier(int timeout) {
 }
 
 void MulticastDns::querierPollEvent(int fd) {
-  mdns_querier_event(fd);
+  mdns_querier_event(fd, this, &qd_);
   trace() << LogStream::Color::Magenta << fd;
 }
 
@@ -267,21 +259,22 @@ void MulticastDns::querierTimerEvent() {
 }
 
 void MulticastDns::stopQuerier() {
-  if (qfds.empty()) {
+  if (qd_.num_sockets == 0) {
     lsDebug() << LogStream::Color::Blue << "not running";
     return;
   }
-  for (size_t i = 0; i != qfds.size(); ++i) thread_->removePollDescriptor(qfds[i]);
+  for (int i = 0; i != qd_.num_sockets; ++i) { thread_->removePollDescriptor((qd_.sockets)[i]); }
   thread_->removeTimer(qtid);
-  qfds.clear();
-  stop_mdns_querier();
+  stop_mdns_querier(&qd_);
+  qd_.num_sockets = 0;
 
-  hostList.clear();
+  hostList_.clear();
   update();
   lsDebug() << "host list size:" << hosts_.size();
 }
 
-bool MulticastDns::querierRunning() { return !qfds.empty(); }
+bool MulticastDns::querierRunning() const { return qd_.num_sockets > 0; }
+//bool MulticastDns::querierRunning() const { return !qfds.empty(); } //!!!
 
 void MulticastDns::append_(const Host &_host) {
   for (auto host = hosts_.begin(); host != hosts_.end();) {
@@ -303,8 +296,8 @@ void MulticastDns::append_(const Host &_host) {
 void MulticastDns::update() {
   std::lock_guard<std::mutex> lock(mutex);
   for (std::vector<MulticastDns::Host>::iterator host = hosts_.begin(); host != hosts_.end();) {
-    std::vector<MulticastDns::Host>::iterator it = std::lower_bound(hostList.begin(), hostList.end(), host->name, Compare());
-    if (it != hostList.end() && (*it).name == host->name) host++;
+    std::vector<MulticastDns::Host>::iterator it = std::lower_bound(hostList_.begin(), hostList_.end(), host->name, Compare());
+    if (it != hostList_.end() && (*it).name == host->name) host++;
     else {
       hostRemoved(*host);
       host = hosts_.erase(host);
