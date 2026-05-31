@@ -50,12 +50,12 @@ public:
       Sync = AbstractFunctionConnector::Sync,     /**< Dispatches the invocation to the receiver's thread loop, but blocks the sender's thread until execution completes. */
       Default = 0x80                              /**< Falls back to the default ConnectionPolicy configuration defined by the parent connector instance. */
     };
+    AbstractThread *thread_;
+    Type type_;
 
   protected:
     Connection(const AbstractFunctionConnector *, Type);
     virtual ~Connection() = 0;
-    AbstractThread *thread_;
-    Type type_;
 
   private:
     const AbstractFunctionConnector *connector_;
@@ -112,17 +112,17 @@ public:
   @details Iterates through the delivery list and dispatches arguments to each slot based on their configured Connection::Type (Direct, Queued, or Sync). @param args The pack of arguments to forward to all subscribed receivers. */
   void operator()(Args... args) const {
     std::lock_guard<std::mutex> lock(mutex);
-    for (const Connection *c : *reinterpret_cast<std::vector<Connection *> *>(&list)) {
+    for (const AbstractFunctionConnector::Connection *c : list) {
       if (!c->thread_) continue;
       if (c->type_ == Connection::Direct || (c->type_ != Connection::Queued && c->thread_->id() == std::this_thread::get_id())) {
-        (c->f_)->invoke(args...);
+        (static_cast<const Connection *>(c)->f_)->invoke(args...);
         continue;
       }
       if (c->type_ != Connection::Sync) {
-        AbstractThread::AbstractTask *_t = new QueuedTask(c->f_->copy(), args...);
+        AbstractThread::AbstractTask *_t = new QueuedTask(static_cast<const Connection *>(c)->f_->copy(), args...);
         if (!c->thread_->invokeTask(_t)) delete _t;
       } else {
-        c->thread_->invoke([c, &args...]() { (c->f_)->invoke(args...); }, true);
+        c->thread_->invoke([c, &args...]() { (static_cast<const Connection *>(c)->f_)->invoke(args...); }, true);
       }
     }
   }
