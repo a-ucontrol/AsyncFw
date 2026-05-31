@@ -14,6 +14,7 @@ public:
   static inline ExampleClass *instance() { return instance_.value; }
   ExampleClass(const std::string &name) : name_(name) { lsDebug() << name_; }
   ~ExampleClass() {
+    // Clear the global pointer if the instance is being destroyed.
     if (instance_.value == this) instance_.value = nullptr;
     lsDebug() << name_;
   }

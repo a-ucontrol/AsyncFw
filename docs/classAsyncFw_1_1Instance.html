@@ -198,6 +198,7 @@ class AsyncFw::Instance&lt; T &gt;</div><p>A template-based global registry wrap
 <div class="line">  <span class="keyword">static</span> <span class="keyword">inline</span> ExampleClass *instance() { <span class="keywordflow">return</span> instance_.value; }</div>
 <div class="line">  ExampleClass(<span class="keyword">const</span> std::string &amp;name) : name_(name) { lsDebug() &lt;&lt; name_; }</div>
 <div class="line">  ~ExampleClass() {</div>
+<div class="line">    <span class="comment">// Clear the global pointer if the instance is being destroyed.</span></div>
 <div class="line">    <span class="keywordflow">if</span> (instance_.value == <span class="keyword">this</span>) instance_.value = <span class="keyword">nullptr</span>;</div>
 <div class="line">    lsDebug() &lt;&lt; name_;</div>
 <div class="line">  }</div>
