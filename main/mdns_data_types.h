@@ -7,12 +7,6 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #pragma once
 
-#ifdef _WIN32
-  #include <winsock2.h>
-#else
-  #include <netinet/in.h>
-#endif
-
 #include "3rdparty/mdns/mdns.h"
 
 typedef struct service_t {
@@ -56,6 +50,6 @@ typedef struct querier_data_t {
 } querier_data_t;
 
 typedef struct QueryContext {
-  void *instance;
+  void *privData;
   void *resultHost;
 } QueryContext;

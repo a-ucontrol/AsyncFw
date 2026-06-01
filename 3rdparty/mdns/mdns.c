@@ -31,11 +31,6 @@ const IN_ADDR in4addr_any = {0};
 
 #include "../main/mdns_data_types.h"
 
-// int dns_sd_timeout = 5;
-
-extern void
-append_host(void* host, void* cpp_instance);
-
 extern int
 query_callback(int sock, const struct sockaddr* from, size_t addrlen, mdns_entry_type_t entry,
 			   uint16_t query_id, uint16_t rtype, uint16_t rclass, uint32_t ttl, const void* data,
@@ -112,7 +107,9 @@ service_callback(int sock, const struct sockaddr* from, size_t addrlen, mdns_ent
 		return 0;
 	const service_t* service = &(sd_local->service);
 
-	// char addrbuffer[64];
+#ifdef EXTEND_MDNS_TRACE
+	char addrbuffer[64];
+#endif
 	char namebuffer[256];
 	char sendbuffer[1024];
 
@@ -444,7 +441,7 @@ open_client_sockets(int* sockets, int max_sockets, int port, struct sockaddr_in*
 					int log_addr = 0;
 #endif
 					if (first_ipv4) {
-						service_address_ipv4 = *saddr;
+						*out_ipv4 = *saddr;
 						first_ipv4 = 0;
 #ifdef EXTEND_MDNS_TRACE
 						log_addr = 1;
@@ -487,7 +484,7 @@ open_client_sockets(int* sockets, int max_sockets, int port, struct sockaddr_in*
 					int log_addr = 0;
 #endif
 					if (first_ipv6) {
-						service_address_ipv6 = *saddr;
+						*out_ipv6 = *saddr;
 						first_ipv6 = 0;
 #ifdef EXTEND_MDNS_TRACE
 						log_addr = 1;
@@ -518,9 +515,8 @@ open_client_sockets(int* sockets, int max_sockets, int port, struct sockaddr_in*
 		}
 	}
 	if (first_ipv4 && !first_llipv4) {
-		// service_address_ipv4 = service_address_llipv4;
 		if (num_sockets < max_sockets) {
-			int sock = mdns_socket_open_ipv4(&service_address_llipv4);
+			int sock = mdns_socket_open_ipv4(out_llipv4);
 			if (sock >= 0) {
 				sockets[num_sockets++] = sock;
 				printf("Local IPv4 address is empty");
@@ -641,7 +637,6 @@ open_client_sockets(int* sockets, int max_sockets, int port, struct sockaddr_in*
 		}
 	}
 	if (first_ipv4 && !first_llipv4) {
-		// service_address_ipv4 = service_address_llipv4;
 		if (num_sockets < max_sockets) {
 			out_ipv4->sin_port = htons(port);
 			int sock = mdns_socket_open_ipv4(out_llipv4);
@@ -833,30 +828,17 @@ send_mdns_query(void* qd_void_ptr, mdns_query_t* query, size_t count) {
 	}
 	return ret;
 }
-void
-mdns_querier_event(int fd, void* cpp_instance, void* qd_void_ptr) {
+void mdns_querier_event(int fd, void* qd_void_ptr, void* ctx_void_ptr) {
 	struct querier_data_t* qd = (struct querier_data_t*)qd_void_ptr;
-	if (!qd)
-		return;
+	if (!qd) return;
 
 	int query_id = -1;
-	int* sockets = qd->sockets;
-	int* query_ids = qd->query_id;
-
 	for (int isock = 0; isock < qd->num_sockets; ++isock) {
-		if (sockets[isock] == fd)
-			query_id = query_ids[isock];
+		if (qd->sockets[isock] == fd) query_id = qd->query_id[isock];
 	}
 
-	struct QueryContext ctx;
-	ctx.instance = cpp_instance;
-	ctx.resultHost = NULL;
-
-	mdns_query_recv(fd, qd->buffer, qd->capacity, query_callback, &ctx, query_id);
-
-	if (ctx.resultHost != NULL) {
-		append_host(ctx.resultHost, ctx.instance);
-	}
+			// Передаем Си-библиотеке контекст, который пришел из C++
+	mdns_query_recv(fd, qd->buffer, qd->capacity, query_callback, ctx_void_ptr, query_id);
 }
 void
 stop_mdns_querier(void* qd_void_ptr) {

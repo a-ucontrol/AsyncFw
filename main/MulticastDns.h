@@ -9,25 +9,16 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 /** @file MulticastDns.h @brief The MulticastDns class. */
 
-#include <vector>
-#include <string>
-#include <mutex>
 #include "../core/FunctionConnector.h"
 #include "Instance.h"
-#include "main/mdns_data_types.h"
-
-extern "C" {
-int query_callback(int, const struct sockaddr *, size_t, mdns_entry_type_t, uint16_t, uint16_t, uint16_t, uint32_t, const void *, size_t, size_t, size_t, size_t, size_t, void *);
-}
 
 namespace AsyncFw {
 class AbstractThread;
 /** @class MulticastDns MulticastDns.h <AsyncFw/MulticastDns> @brief Asynchronous mDNS/DNS-SD service responder and discovery browser.
 @details Multiple instances can run independently with different service types. */
 class MulticastDns {
-  friend int ::query_callback(int, const struct sockaddr *, size_t, mdns_entry_type_t, uint16_t, uint16_t, uint16_t, uint32_t, const void *, size_t, size_t, size_t, size_t, size_t, void *);
-
 public:
+  struct Private;
   /** @brief Represents a discovered network node or service instance. */
   struct Host {
     std::string name;    ///< Host or service name (e.g., "printer").
@@ -42,12 +33,11 @@ public:
   /** @brief Returns the global default instance pointer. */
   static inline MulticastDns *instance() { return instance_.value; }
   /** @brief Initializes the mDNS node with a specific target service type (e.g., "_http._tcp"). */
-  MulticastDns(const std::string &serviceType = {});
+  MulticastDns(const std::string & = {});
   virtual ~MulticastDns();
 
-  //int sendDnsSd();
   /** @brief Broadcasts an immediate multicast query to discover hosts. */
-  int sendQuery(int timeout = 0);
+  int sendQuery(int = 0);
 
   /** @brief Thread-safe getter returning a snapshot of all discovered network hosts. */
   const std::vector<Host> hosts() const {
@@ -56,25 +46,23 @@ public:
   }
 
   /** @brief Sets the target mDNS/DNS-SD service descriptor pattern for the browser. */
-  void setServiceType(const std::string &_serviceType);
-  /** @brief Returns the current tracked service classification filter. */
-  std::string serviceType() { return serviceType_; };
+  void setServiceType(const std::string &);
+  /** @brief Returns the current tracked service classification. */
+  std::string serviceType();
 
   /** @brief Registers and publishes a new local service to the network loop. */
-  bool startService(const std::string &hostname, const std::string &misc, uint16_t port);
+  bool startService(const std::string &, const std::string &, uint16_t);
   /** @brief Unregisters the published service and optionally sends a goodbye notify pack. */
   void stopService(bool send_goodbye = true);
   /** @brief Checks if the mDNS local responder is running. */
   bool serviceRunning() const;
 
   /** @brief Starts the background cyclic network polling task for host discovery. */
-  bool startQuerier(int timeout = 60);
+  bool startQuerier(int = 60);
   /** @brief Terminates the active host search routine. */
   void stopQuerier();
   /** @brief Checks if the network query browser is actively polling. */
   bool querierRunning() const;
-
-  void append_(const Host &host);
 
   FunctionConnector<const Host &>::Protected<MulticastDns> hostAdded;    ///< Triggered when a new device is found.
   FunctionConnector<const Host &>::Protected<MulticastDns> hostChanged;  ///< Triggered when a device alters parameters.
@@ -82,20 +70,18 @@ public:
 
 private:
   static Instance<MulticastDns> instance_;
-  void servicePollEvent(int fd);
-  void querierPollEvent(int fd);
+  void servicePollEvent(int);
+  void querierPollEvent(int);
   void querierTimerEvent();
   int queryTimeout_;
   int qtid;
   std::vector<Host> hosts_;
-  std::string serviceType_;
-  int sendQuery(const std::vector<std::pair<std::string, std::string>> &list, int timeout = 0);
+  int sendQuery(const std::vector<std::pair<std::string, std::string>> &, int = 0);
   void update();
   mutable std::mutex mutex;
   AbstractThread *thread_;
 
-  service_data_t sd_ = {};      // Low-level C-responder configuration buffers.
-  querier_data_t qd_ = {};      // Low-level C-browser tracking buffers.
-  std::vector<Host> hostList_;  // Internal temporary host storage for cache synchronization.
+public:
+  Private &private_;
 };
 }  // namespace AsyncFw
