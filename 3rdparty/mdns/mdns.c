@@ -9,8 +9,6 @@
 
 #include <stdio.h>
 
-// #include <signal.h>
-
 #ifdef _WIN32
 #include <winsock2.h>
 #include <iphlpapi.h>
@@ -25,12 +23,6 @@ const IN_ADDR in4addr_any = {0};
 #include <sys/time.h>
 #endif
 
-// Alias some things to simulate recieving data to fuzz library
-#if defined(MDNS_FUZZING)
-#define recvfrom(sock, buffer, capacity, flags, src_addr, addrlen) ((mdns_ssize_t)capacity)
-#define printf
-#endif
-
 #ifndef EXTEND_MDNS_TRACE
 #define printf(...)
 #else
@@ -39,27 +31,10 @@ const IN_ADDR in4addr_any = {0};
 
 #include "../main/mdns_data_types.h"
 
-#if defined(MDNS_FUZZING)
-#undef recvfrom
-#endif
-
-char addrbuffer[64];
-char entrybuffer[256];
-char namebuffer[256];
-static char sendbuffer[1024];
-mdns_record_txt_t txtbuffer[128];
 // int dns_sd_timeout = 5;
-char mdns_llip[16];
-char mdns_misc[128];
-
-static struct sockaddr_in service_address_llipv4;
-static struct sockaddr_in service_address_ipv4;
-static struct sockaddr_in6 service_address_ipv6;
-
-int mdns_send_goodbye;
 
 extern void
-append_host(void* host);
+append_host(void* host, void* cpp_instance);
 
 extern int
 query_callback(int sock, const struct sockaddr* from, size_t addrlen, mdns_entry_type_t entry,
@@ -117,71 +92,6 @@ ip_address_to_string(char* buffer, size_t capacity, const struct sockaddr* addr,
 		return ipv6_address_to_string(buffer, capacity, (const struct sockaddr_in6*)addr, addrlen);
 	return ipv4_address_to_string(buffer, capacity, (const struct sockaddr_in*)addr, addrlen);
 }
-#if 0
-// Callback handling parsing answers to queries sent
-static int
-query_callback(int sock, const struct sockaddr* from, size_t addrlen, mdns_entry_type_t entry,
-               uint16_t query_id, uint16_t rtype, uint16_t rclass, uint32_t ttl, const void* data,
-               size_t size, size_t name_offset, size_t name_length, size_t record_offset,
-               size_t record_length, void* user_data) {
-  (void)sizeof(sock);
-  (void)sizeof(query_id);
-  (void)sizeof(name_length);
-  (void)sizeof(user_data);
-  mdns_string_t fromaddrstr = ip_address_to_string(addrbuffer, sizeof(addrbuffer), from, addrlen);
-  const char* entrytype = (entry == MDNS_ENTRYTYPE_ANSWER) ?
-                                "answer" :
-                                ((entry == MDNS_ENTRYTYPE_AUTHORITY) ? "authority" : "additional");
-  mdns_string_t entrystr =
-      mdns_string_extract(data, size, &name_offset, entrybuffer, sizeof(entrybuffer));
-  if (rtype == MDNS_RECORDTYPE_PTR) {
-    mdns_string_t namestr = mdns_record_parse_ptr(data, size, record_offset, record_length,
-                                                  namebuffer, sizeof(namebuffer));
-    printf("%.*s : %s %.*s PTR %.*s rclass 0x%x ttl %u length %d\n",
-           MDNS_STRING_FORMAT(fromaddrstr), entrytype, MDNS_STRING_FORMAT(entrystr),
-           MDNS_STRING_FORMAT(namestr), rclass, ttl, (int)record_length);
-  } else if (rtype == MDNS_RECORDTYPE_SRV) {
-    mdns_record_srv_t srv = mdns_record_parse_srv(data, size, record_offset, record_length,
-                                                  namebuffer, sizeof(namebuffer));
-    printf("%.*s : %s %.*s SRV %.*s priority %d weight %d port %d\n",
-           MDNS_STRING_FORMAT(fromaddrstr), entrytype, MDNS_STRING_FORMAT(entrystr),
-           MDNS_STRING_FORMAT(srv.name), srv.priority, srv.weight, srv.port);
-  } else if (rtype == MDNS_RECORDTYPE_A) {
-    struct sockaddr_in addr;
-    mdns_record_parse_a(data, size, record_offset, record_length, &addr);
-    mdns_string_t addrstr =
-        ipv4_address_to_string(namebuffer, sizeof(namebuffer), &addr, sizeof(addr));
-    printf("%.*s : %s %.*s A %.*s\n", MDNS_STRING_FORMAT(fromaddrstr), entrytype,
-           MDNS_STRING_FORMAT(entrystr), MDNS_STRING_FORMAT(addrstr));
-  } else if (rtype == MDNS_RECORDTYPE_AAAA) {
-    struct sockaddr_in6 addr;
-    mdns_record_parse_aaaa(data, size, record_offset, record_length, &addr);
-    mdns_string_t addrstr =
-        ipv6_address_to_string(namebuffer, sizeof(namebuffer), &addr, sizeof(addr));
-    printf("%.*s : %s %.*s AAAA %.*s\n", MDNS_STRING_FORMAT(fromaddrstr), entrytype,
-           MDNS_STRING_FORMAT(entrystr), MDNS_STRING_FORMAT(addrstr));
-  } else if (rtype == MDNS_RECORDTYPE_TXT) {
-    size_t parsed = mdns_record_parse_txt(data, size, record_offset, record_length, txtbuffer,
-                                          sizeof(txtbuffer) / sizeof(mdns_record_txt_t));
-    for (size_t itxt = 0; itxt < parsed; ++itxt) {
-      if (txtbuffer[itxt].value.length) {
-        printf("%.*s : %s %.*s TXT %.*s = %.*s\n", MDNS_STRING_FORMAT(fromaddrstr),
-               entrytype, MDNS_STRING_FORMAT(entrystr),
-               MDNS_STRING_FORMAT(txtbuffer[itxt].key),
-               MDNS_STRING_FORMAT(txtbuffer[itxt].value));
-      } else {
-        printf("%.*s : %s %.*s TXT %.*s\n", MDNS_STRING_FORMAT(fromaddrstr), entrytype,
-               MDNS_STRING_FORMAT(entrystr), MDNS_STRING_FORMAT(txtbuffer[itxt].key));
-      }
-    }
-  } else {
-    printf("%.*s : %s %.*s type %u rclass 0x%x ttl %u length %d\n",
-           MDNS_STRING_FORMAT(fromaddrstr), entrytype, MDNS_STRING_FORMAT(entrystr), rtype,
-           rclass, ttl, (int)record_length);
-  }
-  return 0;
-}
-#endif
 
 // Callback handling questions incoming on service sockets
 static int
@@ -197,10 +107,14 @@ service_callback(int sock, const struct sockaddr* from, size_t addrlen, mdns_ent
 		return 0;
 
 	const char dns_sd[] = "_services._dns-sd._udp.local.";
-	const struct service_data_t* sd_local = (const struct service_data_t*)user_data;
+	struct service_data_t* sd_local = (struct service_data_t*)user_data;
 	if (!sd_local)
 		return 0;
 	const service_t* service = &(sd_local->service);
+
+	// char addrbuffer[64];
+	char namebuffer[256];
+	char sendbuffer[1024];
 
 	// mdns_string_t fromaddrstr = ip_address_to_string(addrbuffer, sizeof(addrbuffer), from,
 	// addrlen);
@@ -467,7 +381,9 @@ dump_callback(int sock, const struct sockaddr* from, size_t addrlen, mdns_entry_
 #endif
 // Open sockets for sending one-shot multicast queries from an ephemeral port
 static int
-open_client_sockets(int* sockets, int max_sockets, int port) {
+open_client_sockets(int* sockets, int max_sockets, int port, struct sockaddr_in* out_llipv4,
+					struct sockaddr_in* out_ipv4, struct sockaddr_in6* out_ipv6,
+					char* out_llip_str) {
 	// When sending, each socket can only send to one network interface
 	// Thus we need to open one socket for each interface and address family
 	int num_sockets = 0;
@@ -519,10 +435,9 @@ open_client_sockets(int* sockets, int max_sockets, int port) {
 							continue;
 						first_llipv4 = 0;
 						saddr->sin_port = htons(port);
-						service_address_llipv4 = *saddr;
-						ipv4_address_to_string(mdns_llip, sizeof(mdns_llip), saddr,
-											   sizeof(struct sockaddr_in));
-						printf("LinkLocal IPv4 address: %s\n", mdns_llip);
+						*out_llipv4 = *saddr;
+						ipv4_address_to_string(out_llip_str, 16, saddr, sizeof(struct sockaddr_in));
+						printf("LinkLocal IPv4 address: %s\n", out_llip_str);
 						continue;
 					}
 #ifdef EXTEND_MDNS_TRACE
@@ -643,17 +558,16 @@ open_client_sockets(int* sockets, int max_sockets, int port) {
 						continue;
 					first_llipv4 = 0;
 					saddr->sin_port = htons(port);
-					service_address_llipv4 = *saddr;
-					ipv4_address_to_string(mdns_llip, sizeof(mdns_llip), saddr,
-										   sizeof(struct sockaddr_in));
-					printf("LinkLocal IPv4 address: %s\n", mdns_llip);
+					*out_llipv4 = *saddr;
+					ipv4_address_to_string(out_llip_str, 16, saddr, sizeof(struct sockaddr_in));
+					printf("LinkLocal IPv4 address: %s\n", out_llip_str);
 					continue;
 				}
 #ifdef EXTEND_MDNS_TRACE
 				int log_addr = 0;
 #endif
 				if (first_ipv4) {
-					service_address_ipv4 = *saddr;
+					*out_ipv4 = *saddr;
 					first_ipv4 = 0;
 #ifdef EXTEND_MDNS_TRACE
 					log_addr = 1;
@@ -697,7 +611,7 @@ open_client_sockets(int* sockets, int max_sockets, int port) {
 				int log_addr = 0;
 #endif
 				if (first_ipv6) {
-					service_address_ipv6 = *saddr;
+					*out_ipv6 = *saddr;
 					first_ipv6 = 0;
 #ifdef EXTEND_MDNS_TRACE
 					log_addr = 1;
@@ -729,8 +643,8 @@ open_client_sockets(int* sockets, int max_sockets, int port) {
 	if (first_ipv4 && !first_llipv4) {
 		// service_address_ipv4 = service_address_llipv4;
 		if (num_sockets < max_sockets) {
-			service_address_ipv4.sin_port = htons(port);
-			int sock = mdns_socket_open_ipv4(&service_address_llipv4);
+			out_ipv4->sin_port = htons(port);
+			int sock = mdns_socket_open_ipv4(out_llipv4);
 			if (sock >= 0) {
 				sockets[num_sockets++] = sock;
 				printf("Local IPv4 address is empty");
@@ -747,14 +661,16 @@ open_client_sockets(int* sockets, int max_sockets, int port) {
 
 // Open sockets to listen to incoming mDNS queries on port 5353
 static int
-open_service_sockets(int* sockets, int max_sockets) {
+open_service_sockets(int* sockets, int max_sockets, service_data_t* sd) {
 	// When recieving, each socket can recieve data from all network interfaces
 	// Thus we only need to open one socket for each address family
 	int num_sockets = 0;
 
 	// Call the client socket function to enumerate and get local addresses,
 	// but not open the actual sockets
-	open_client_sockets(0, 0, 0);
+	num_sockets = open_client_sockets(sockets, max_sockets, 5353, &(sd->service_address_llipv4),
+									  &(sd->service_address_ipv4), &(sd->service_address_ipv6),
+									  sd->txt_llip_buffer);
 
 	if (num_sockets < max_sockets) {
 		struct sockaddr_in sock_addr;
@@ -859,8 +775,14 @@ start_mdns_querier(void* qd_void_ptr) {
 	if (!qd)
 		return -1;
 
-	// Работаем с массивом сокетов, который теперь лежит в C++ объекте
-	qd->num_sockets = open_client_sockets(qd->sockets, 256, MDNS_REQUEST_PORT);
+	struct sockaddr_in dummy_llipv4;
+	struct sockaddr_in dummy_ipv4;
+	struct sockaddr_in6 dummy_ipv6;
+	char dummy_llip_str[16] = {0};
+
+	qd->num_sockets = open_client_sockets(qd->sockets, 256, MDNS_REQUEST_PORT, &dummy_llipv4,
+										  &dummy_ipv4, &dummy_ipv6, dummy_llip_str);
+
 	if (qd->num_sockets <= 0) {
 		printf("Failed to open any client sockets\n");
 		return -1;
@@ -871,7 +793,6 @@ start_mdns_querier(void* qd_void_ptr) {
 	qd->buffer = malloc(qd->capacity);
 	return 0;
 }
-
 int
 send_mdns_query(void* qd_void_ptr, mdns_query_t* query, size_t count) {
 #if 0
@@ -912,7 +833,6 @@ send_mdns_query(void* qd_void_ptr, mdns_query_t* query, size_t count) {
 	}
 	return ret;
 }
-
 void
 mdns_querier_event(int fd, void* cpp_instance, void* qd_void_ptr) {
 	struct querier_data_t* qd = (struct querier_data_t*)qd_void_ptr;
@@ -924,18 +844,19 @@ mdns_querier_event(int fd, void* cpp_instance, void* qd_void_ptr) {
 	int* query_ids = qd->query_id;
 
 	for (int isock = 0; isock < qd->num_sockets; ++isock) {
-		if (sockets[isock] == fd) {
+		if (sockets[isock] == fd)
 			query_id = query_ids[isock];
-		}
 	}
 
-	/* Си-контекст хранит только сырые указатели void* */
 	struct QueryContext ctx;
 	ctx.instance = cpp_instance;
 	ctx.resultHost = NULL;
 
-	/* Вызов Си-библиотеки, которая заполнит ctx.resultHost через query_callback */
 	mdns_query_recv(fd, qd->buffer, qd->capacity, query_callback, &ctx, query_id);
+
+	if (ctx.resultHost != NULL) {
+		append_host(ctx.resultHost, ctx.instance);
+	}
 }
 void
 stop_mdns_querier(void* qd_void_ptr) {
@@ -960,11 +881,13 @@ start_mdns_service(const char* _hostname, const char* _service_name, int service
 	if (!sd)
 		return -1;
 
-	memset(&service_address_ipv4, 0, sizeof(struct sockaddr_in));
-	memset(&service_address_ipv6, 0, sizeof(struct sockaddr_in6));
+	char sendbuffer[1024];
+
+	memset(&(sd->service_address_ipv4), 0, sizeof(struct sockaddr_in));
+	memset(&(sd->service_address_ipv6), 0, sizeof(struct sockaddr_in6));
 
 	/* Передаем адрес массива sockets, который теперь физически лежит в C++ */
-	sd->num_sockets = open_service_sockets(sd->sockets, 256);
+	sd->num_sockets = open_service_sockets(sd->sockets, 256, sd);
 	if (sd->num_sockets <= 0) {
 		printf("Failed to open any service sockets\n");
 		return -1;
@@ -1010,8 +933,8 @@ start_mdns_service(const char* _hostname, const char* _service_name, int service
 	sd->service.hostname = hostname_string;
 	sd->service.service_instance = service_instance_string;
 	sd->service.hostname_qualified = hostname_qualified_string;
-	sd->service.address_ipv4 = service_address_ipv4;
-	sd->service.address_ipv6 = service_address_ipv6;
+	sd->service.address_ipv4 = sd->service_address_ipv4;
+	sd->service.address_ipv6 = sd->service_address_ipv6;
 	sd->service.port = service_port;
 
 	sd->service.record_ptr = (mdns_record_t){.name = sd->service.service,
@@ -1041,18 +964,20 @@ start_mdns_service(const char* _hostname, const char* _service_name, int service
 											  .rclass = 0,
 											  .ttl = 0};
 
-	sd->service.txt_record[0] = (mdns_record_t){.name = sd->service.service_instance,
-												.type = MDNS_RECORDTYPE_TXT,
-												.data.txt.key = {MDNS_STRING_CONST("llip")},
-												.data.txt.value = {mdns_llip, strlen(mdns_llip)},
-												.rclass = 0,
-												.ttl = 0};
-	sd->service.txt_record[1] = (mdns_record_t){.name = sd->service.service_instance,
-												.type = MDNS_RECORDTYPE_TXT,
-												.data.txt.key = {MDNS_STRING_CONST("misc")},
-												.data.txt.value = {mdns_misc, strlen(mdns_misc)},
-												.rclass = 0,
-												.ttl = 0};
+	sd->service.txt_record[0] =
+		(mdns_record_t){.name = sd->service.service_instance,
+						.type = MDNS_RECORDTYPE_TXT,
+						.data.txt.key = {MDNS_STRING_CONST("llip")},
+						.data.txt.value = {sd->txt_llip_buffer, strlen(sd->txt_llip_buffer)},
+						.rclass = 0,
+						.ttl = 0};
+	sd->service.txt_record[1] =
+		(mdns_record_t){.name = sd->service.service_instance,
+						.type = MDNS_RECORDTYPE_TXT,
+						.data.txt.key = {MDNS_STRING_CONST("misc")},
+						.data.txt.value = {sd->txt_misc_buffer, strlen(sd->txt_misc_buffer)},
+						.rclass = 0,
+						.ttl = 0};
 
 	{
 		printf("Sending announce\n");
@@ -1084,12 +1009,12 @@ mdns_service_event(int fd, void* sd_void_ptr) {
 }
 
 void
-stop_mdns_service(void* sd_void_ptr) {
+stop_mdns_service(void* sd_void_ptr, int send_goodbye) {
 	service_data_t* sd = (service_data_t*)sd_void_ptr;
 	if (!sd)
 		return;
 
-	if (mdns_send_goodbye) {
+	if (send_goodbye) {
 		printf("Sending goodbye\n");
 		mdns_record_t additional[5] = {0};
 		size_t additional_count = 0;

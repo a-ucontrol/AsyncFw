@@ -8,7 +8,6 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include <regex>
 #include "core/AbstractThread.h"
 #include "core/LogStream.h"
-#include "3rdparty/mdns/mdns.h"
 #include "MulticastDns.h"
 
 #ifdef EXTEND_MDNS_TRACE
@@ -28,16 +27,10 @@ extern mdns_string_t ipv4_address_to_string(char *buffer, size_t capacity, const
 extern mdns_string_t ipv6_address_to_string(char *buffer, size_t capacity, const struct sockaddr_in6 *addr, size_t addrlen);
 extern mdns_string_t ip_address_to_string(char *buffer, size_t capacity, const struct sockaddr *addr, size_t addrlen);
 extern int send_dns_sd();
-extern char addrbuffer[64];
-extern char entrybuffer[256];
-extern char namebuffer[256];
-extern mdns_record_txt_t txtbuffer[128];
-extern char mdns_misc[128];
-extern int mdns_send_goodbye;
 
 // Обновленные Си-функции: теперь они не хранят состояние, а принимают данные из C++
 extern int start_mdns_service(const char *hostname, const char *service_name, int service_port, void *sd_void_ptr);
-extern void stop_mdns_service(void *sd_void_ptr);
+extern void stop_mdns_service(void *sd_void_ptr, int send_goodbye);
 extern void mdns_service_event(int fd, void *sd_void_ptr);
 
 extern int start_mdns_querier(void *qd_void_ptr);
@@ -53,9 +46,11 @@ struct Compare {
 int query_callback(int, const struct sockaddr *from, size_t addrlen, mdns_entry_type_t entry, uint16_t, uint16_t rtype, uint16_t rclass, uint32_t ttl, const void *data, size_t size, size_t name_offset, size_t, size_t record_offset, size_t record_length, void *user_data) {
   QueryContext *ctx = static_cast<QueryContext *>(user_data);
   if (!ctx || !ctx->instance) return 0;
+  char addrbuffer[64];
+  char namebuffer[256];
+  char entrybuffer[256];
   MulticastDns *current_instance = static_cast<MulticastDns *>(ctx->instance);
   auto &currentHostList = current_instance->hostList_;  // Ссылка на локальный вектор объекта
-
   mdns_string_t fromaddrstr = ip_address_to_string(addrbuffer, sizeof(addrbuffer), from, addrlen);
   const char *entrytype = (entry == MDNS_ENTRYTYPE_ANSWER) ? "answer" : ((entry == MDNS_ENTRYTYPE_AUTHORITY) ? "authority" : "additional");
 #ifdef LS_NO_TRACE
@@ -104,6 +99,7 @@ int query_callback(int, const struct sockaddr *from, size_t addrlen, mdns_entry_
     trace() << "A" << std::endl << MDNS_STRING_FORMAT(fromaddrstr) << entrytype << MDNS_STRING_FORMAT(entrystr) << MDNS_STRING_FORMAT(addrstr);
   } else if (rtype == MDNS_RECORDTYPE_TXT) {
     if (std::regex_replace(MDNS_STRING_FORMAT(entrystr), std::regex("^[^\\.]*\\."), "") == current_instance->serviceType()) {
+      mdns_record_txt_t txtbuffer[128];
       size_t parsed = mdns_record_parse_txt(data, size, record_offset, record_length, txtbuffer, sizeof(txtbuffer) / sizeof(mdns_record_txt_t));
       for (size_t itxt = 0; itxt < parsed; ++itxt) {
         std::string key = MDNS_STRING_FORMAT(txtbuffer[itxt].key);
@@ -125,9 +121,21 @@ int query_callback(int, const struct sockaddr *from, size_t addrlen, mdns_entry_
   return 0;
 }
 
-void append_host(void *_host) {
+//void append_host(void *_host) {
+//  MulticastDns::Host host = *(static_cast<MulticastDns::Host *>(_host));
+//  MulticastDns::instance()->append_(host);
+//}
+//}
+
+void append_host(void *_host, void *cpp_instance) {
+  if (!cpp_instance || !_host) return;
+
+  // Восстанавливаем конкретный экземпляр C++ класса, который владеет этим квериером
+  MulticastDns *current_instance = static_cast<MulticastDns *>(cpp_instance);
   MulticastDns::Host host = *(static_cast<MulticastDns::Host *>(_host));
-  MulticastDns::instance()->append_(host);
+
+  // Вызываем append_ строго для этого инстанса!
+  current_instance->append_(host);
 }
 }
 
@@ -198,14 +206,20 @@ int MulticastDns::sendQuery(const std::vector<std::pair<std::string, std::string
 bool MulticastDns::serviceRunning() const { return sd_.num_sockets > 0; }
 
 bool MulticastDns::startService(const std::string &hostname, const std::string &misc, uint16_t port) {
-  if (!sfds.empty()) return false;
-  snprintf(mdns_misc, sizeof(mdns_misc), "%s", misc.c_str());
-  lsDebug() << hostname << serviceType_ << mdns_misc << port;
+  if (sd_.num_sockets > 0) return false;
+
+  // Копируем misc в локальный буфер структуры средствами C++
+  std::snprintf(sd_.txt_misc_buffer, sizeof(sd_.txt_misc_buffer), "%s", misc.c_str());
+
+  lsDebug() << hostname << serviceType_ << sd_.txt_misc_buffer << port;
+
+  // Вызываем функцию, где ровно 4 аргумента — регистры идеально совпадут!
   int r = start_mdns_service(hostname.c_str(), serviceType_.c_str(), port, &sd_);
   lsTrace() << r << sd_.num_sockets;
   if (r || !sd_.num_sockets) return false;
+
   for (int i = 0; i != sd_.num_sockets; ++i) {
-    int fd = (sd_.sockets)[i];  // Получаем доступ к сокету из массива
+    int fd = sd_.sockets[i];
     thread_->appendPollTask(fd, AbstractThread::PollIn, [this, fd](AbstractThread::PollEvents) { servicePollEvent(fd); });
   }
   return true;
@@ -217,17 +231,12 @@ void MulticastDns::servicePollEvent(int fd) {
 }
 
 void MulticastDns::stopService(bool send_goodbye) {
-  if (sfds.empty()) {
-    lsDebug() << LogStream::Color::Blue << "not running";
-    return;
-  }
   if (sd_.num_sockets == 0) {
     lsDebug() << LogStream::Color::Blue << "not running";
     return;
   }
-  mdns_send_goodbye = send_goodbye;
-  for (int i = 0; i != sd_.num_sockets; ++i) { thread_->removePollDescriptor((sd_.sockets)[i]); }
-  stop_mdns_service(&sd_);
+  for (int i = 0; i != sd_.num_sockets; ++i) { thread_->removePollDescriptor(sd_.sockets[i]); }
+  stop_mdns_service(&sd_, send_goodbye);
   sd_.num_sockets = 0;
 }
 

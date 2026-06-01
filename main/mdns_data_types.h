@@ -40,6 +40,11 @@ typedef struct service_data_t {
   char hostname_buffer[256];
   char service_instance_buffer[256];
   char qualified_hostname_buffer[256];
+  char txt_misc_buffer[128];
+  char txt_llip_buffer[16];
+  struct sockaddr_in service_address_llipv4;
+  struct sockaddr_in service_address_ipv4;
+  struct sockaddr_in6 service_address_ipv6;
 } service_data_t;
 
 typedef struct querier_data_t {

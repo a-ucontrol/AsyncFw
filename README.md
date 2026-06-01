@@ -176,3 +176,10 @@ See the [GitHub repository], [documentation] and [examples] for details.
   `MainThread` (inheriting from `Thread`) manages the application's primary boot thread (the one driving your `main()` function).
   * **Global Execution Frame**: Triggered via the blocking `MainThread::exec()`, it stalls the main function to orchestrate timers, system interrupts, and queued procedures.
   * **Transparent Qt Integration**: If the `USE_QAPPLICATION` macro is defined, `MainThread` swaps its internal poll-engine for `qApp->exec()`, mapping `AsyncFw` timers and descriptor hooks onto the native Qt event loop.
+
+### 9. Asynchronous Service Discovery: `MulticastDns`
+  `MulticastDns` delivers a high-performance, asynchronous zero-configuration networking engine implementing **mDNS (Multicast DNS)** and **DNS-SD (DNS Service Discovery)** protocols.
+  * **Reactive I/O Multiplexing**: Seamlessly delegates low-level mDNS network descriptors directly to the active `AbstractThread` event loop. It executes completely non-blocking network operations, drawing negligible CPU overhead without spawning heavy system threads.
+  * **State-Isolated Multi-Instance Architecture**: Engineered with a strict stateless underlying C-layer wrapped inside a robust C++ RAII container. Multiple independent `MulticastDns` instances can run concurrently to browse, query, or publish entirely different service types without cross-instance memory corruption.
+  * **Unified Lifecycle & Memory Management**: Leverages a private internal storage buffer synchronized via `std::mutex` to guarantee bulletproof thread safety. All network sockets and memory buffers are bound to the instance lifespan and gracefully cleaned up upon destruction.
+  * **Event-Driven Signal Notifications**: Exposes type-safe reactive callback interfaces powered by `FunctionConnector` (`hostAdded`, `hostChanged`, `hostRemoved`). This allows application business logic to hook into real-time network topology shifts via expressive lambda routines.
