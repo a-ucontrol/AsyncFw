@@ -1,7 +1,27 @@
 var searchData=
 [
-  ['thread_0',['Thread',['../classAsyncFw_1_1Thread.html#afc5e422090767dd84020381fb9a4d490',1,'AsyncFw::Thread::Thread()'],['../classAsyncFw_1_1AbstractThreadPool_1_1Thread.html#a787b048ddebfd8b5d5d6c3988d0d90d3',1,'AsyncFw::AbstractThreadPool::Thread::Thread()']]],
-  ['thread_1',['thread',['../classAsyncFw_1_1AbstractSocket.html#ac1b9b68ae7fe6c9312d9d713a7b444a9',1,'AsyncFw::AbstractSocket']]],
-  ['threads_2',['threads',['../classAsyncFw_1_1AbstractThread.html#af4faa2d900f06dd3b4716b9a24c9099e',1,'AsyncFw::AbstractThread::threads()'],['../classAsyncFw_1_1AbstractThreadPool.html#a15294f7912a633e62e26fe0f7848eb68',1,'AsyncFw::AbstractThreadPool::threads()']]],
-  ['trusted_3',['trusted',['../classAsyncFw_1_1TlsContext.html#a0c268a29a857a658f0ed1254cbff746b',1,'AsyncFw::TlsContext']]]
+  ['sendquery_0',['sendQuery',['../classAsyncFw_1_1MulticastDns.html#a091b0f3d62c8f78f33a396f4cbf140b0',1,'AsyncFw::MulticastDns']]],
+  ['servicerunning_1',['serviceRunning',['../classAsyncFw_1_1MulticastDns.html#acfe6df81240db7979782c2df5a117c91',1,'AsyncFw::MulticastDns']]],
+  ['servicetype_2',['serviceType',['../classAsyncFw_1_1MulticastDns.html#a23e336e5c39f79f847b12014558e8dda',1,'AsyncFw::MulticastDns']]],
+  ['set_3',['set',['../classAsyncFw_1_1Instance.html#ac288330eee2512b0f87ce1013697abff',1,'AsyncFw::Instance']]],
+  ['setcertificate_4',['setCertificate',['../classAsyncFw_1_1TlsContext.html#afb5237df49026bf53948efaafaa2f0f9',1,'AsyncFw::TlsContext']]],
+  ['setcompleted_5',['setCompleted',['../classAsyncFw_1_1LogStream.html#a2b004052ecdfc044a5369b90db412d40',1,'AsyncFw::LogStream']]],
+  ['setdescriptor_6',['setDescriptor',['../classAsyncFw_1_1PollNotifier.html#a383eab2a439eb7cf82f1ddc38a6204cb',1,'AsyncFw::PollNotifier']]],
+  ['setevents_7',['setEvents',['../classAsyncFw_1_1PollNotifier.html#a5a1c30a1fcfc343457e07db934165893',1,'AsyncFw::PollNotifier']]],
+  ['setkey_8',['setKey',['../classAsyncFw_1_1TlsContext.html#acbec0996184d7c2de72f7ea02344d849',1,'AsyncFw::TlsContext']]],
+  ['setservicetype_9',['setServiceType',['../classAsyncFw_1_1MulticastDns.html#a6604b92ff217e3502a3eca746efe9403',1,'AsyncFw::MulticastDns']]],
+  ['settimeformat_10',['setTimeFormat',['../classAsyncFw_1_1LogStream.html#a06c9086f31d54eeacec98a9ba8e72171',1,'AsyncFw::LogStream']]],
+  ['settimeoffset_11',['setTimeOffset',['../classAsyncFw_1_1LogStream.html#ad0d9e117f63caa55ea3177f09dbc19a6',1,'AsyncFw::LogStream']]],
+  ['single_12',['single',['../classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9',1,'AsyncFw::Timer']]],
+  ['space_13',['space',['../classAsyncFw_1_1LogStream.html#abaece5fcf0e6a72bc5cc468d851cd02e',1,'AsyncFw::LogStream']]],
+  ['start_14',['start',['../classAsyncFw_1_1AbstractThread.html#a933858c9506f67f17c5ada5caeaa8508',1,'AsyncFw::AbstractThread::start()'],['../classAsyncFw_1_1Timer.html#a14d02d88bd3682afd7c8fd72cc670e46',1,'AsyncFw::Timer::start()']]],
+  ['startedevent_15',['startedEvent',['../classAsyncFw_1_1AbstractThread.html#a7382428ae20b315b9b55fa68b700603d',1,'AsyncFw::AbstractThread::startedEvent()'],['../classAsyncFw_1_1Thread.html#ae03f85da53209734bdafe450f45e5d53',1,'AsyncFw::Thread::startedEvent()']]],
+  ['startquerier_16',['startQuerier',['../classAsyncFw_1_1MulticastDns.html#a1aaa9222fa44159da442b8ce403152ab',1,'AsyncFw::MulticastDns']]],
+  ['startservice_17',['startService',['../classAsyncFw_1_1MulticastDns.html#a010507720899efd7b653d3e33bc64f0a',1,'AsyncFw::MulticastDns']]],
+  ['stateevent_18',['stateEvent',['../classAsyncFw_1_1AbstractSocket.html#a5db12267a6d2241e81f570463f2d7ef5',1,'AsyncFw::AbstractSocket::stateEvent()'],['../classAsyncFw_1_1DataArraySocket.html#afae26d6d937eddd4b7c64f48933c0984',1,'AsyncFw::DataArraySocket::stateEvent()'],['../classAsyncFw_1_1HttpSocket.html#ab3ee95c329a5f5c7ea659fe7809cc37e',1,'AsyncFw::HttpSocket::stateEvent()']]],
+  ['stop_19',['stop',['../classAsyncFw_1_1Timer.html#a63f0eb44b27402196590a03781515dba',1,'AsyncFw::Timer']]],
+  ['stopquerier_20',['stopQuerier',['../classAsyncFw_1_1MulticastDns.html#a03b1bd87ba47f61a0443e42cec2a78cb',1,'AsyncFw::MulticastDns']]],
+  ['stopservice_21',['stopService',['../classAsyncFw_1_1MulticastDns.html#ac14f4f10b2dda8f9f441bac8163da521',1,'AsyncFw::MulticastDns']]],
+  ['sync_22',['sync',['../classAsyncFw_1_1ThreadPool.html#add8ee85dd7581acb117a805ff5a8c18a',1,'AsyncFw::ThreadPool']]],
+  ['systemprocess_23',['SystemProcess',['../classAsyncFw_1_1SystemProcess.html#acf60a585a89304fdb3580e9add06d155',1,'AsyncFw::SystemProcess']]]
 ];

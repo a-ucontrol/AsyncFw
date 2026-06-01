@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['started_0',['started',['../classAsyncFw_1_1Thread.html#ac3e069b7be3340e8f9e24e717ad0cc22',1,'AsyncFw::Thread']]],
-  ['state_5f_1',['state_',['../classAsyncFw_1_1AbstractSocket.html#aa4b74ce0259d4424ef41b2d10290351c',1,'AsyncFw::AbstractSocket']]],
-  ['statechanged_2',['stateChanged',['../classAsyncFw_1_1SystemProcess.html#ac37ed190f6de484145739309656f3698',1,'AsyncFw::SystemProcess']]],
-  ['string_3',['string',['../structAsyncFw_1_1LogStream_1_1Message.html#a7d55dbc7e3fd3c5b106977df3ca2bbbb',1,'AsyncFw::LogStream::Message']]]
+  ['name_0',['name',['../structAsyncFw_1_1LogStream_1_1Message.html#af6373a2f7362ff25d5341e5c373e1554',1,'AsyncFw::LogStream::Message::name'],['../structAsyncFw_1_1MulticastDns_1_1Host.html#a505099c452dad4bfcaa5e1bdc3f56f82',1,'AsyncFw::MulticastDns::Host::name']]],
+  ['note_1',['note',['../structAsyncFw_1_1LogStream_1_1Message.html#abac2923c4b2c7076a731b88df2420fa5',1,'AsyncFw::LogStream::Message']]],
+  ['notify_2',['notify',['../classAsyncFw_1_1ApplicationNotifier.html#a989eaa483fec75f7d90730d031db0b2a',1,'AsyncFw::ApplicationNotifier::notify'],['../classAsyncFw_1_1FileSystemWatcher.html#a4c808b22785dbc3182a9e7fa600b0919',1,'AsyncFw::FileSystemWatcher::notify'],['../classAsyncFw_1_1PollNotifier.html#a8bcd61fb697ec4d0d53b942feb5b8026',1,'AsyncFw::PollNotifier::notify']]]
 ];

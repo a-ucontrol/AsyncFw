@@ -289,7 +289,15 @@ Core Architecture &amp; Components</h1>
 8. The Application Master: <code>MainThread</code></h2>
 <p><code>MainThread</code> (inheriting from <code>Thread</code>) manages the application's primary boot thread (the one driving your <code>main()</code> function).</p><ul>
 <li><b>Global Execution Frame</b>: Triggered via the blocking <code>MainThread::exec()</code>, it stalls the main function to orchestrate timers, system interrupts, and queued procedures.</li>
-<li><b>Transparent Qt Integration</b>: If the <code>USE_QAPPLICATION</code> macro is defined, <code>MainThread</code> swaps its internal poll-engine for <code>qApp-&gt;exec()</code>, mapping <code>AsyncFw</code> timers and descriptor hooks onto the native Qt event loop. </li>
+<li><b>Transparent Qt Integration</b>: If the <code>USE_QAPPLICATION</code> macro is defined, <code>MainThread</code> swaps its internal poll-engine for <code>qApp-&gt;exec()</code>, mapping <code>AsyncFw</code> timers and descriptor hooks onto the native Qt event loop.</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md11"></a>
+9. Asynchronous Service Discovery: <code>MulticastDns</code></h2>
+<p><code>MulticastDns</code> delivers a high-performance, asynchronous zero-configuration networking engine implementing <b>mDNS (Multicast DNS)</b> and <b>DNS-SD (DNS Service Discovery)</b> protocols.</p><ul>
+<li><b>Reactive I/O Multiplexing</b>: Seamlessly delegates low-level mDNS network descriptors directly to the active <code>AbstractThread</code> event loop. It executes completely non-blocking network operations, drawing negligible CPU overhead without spawning heavy system threads.</li>
+<li><b>State-Isolated Multi-Instance Architecture</b>: Engineered with a strict stateless underlying C-layer wrapped inside a robust C++ RAII container. Multiple independent <code>MulticastDns</code> instances can run concurrently to browse, query, or publish entirely different service types without cross-instance memory corruption.</li>
+<li><b>Unified Lifecycle &amp; Memory Management</b>: Leverages a private internal storage buffer synchronized via <code>std::mutex</code> to guarantee bulletproof thread safety. All network sockets and memory buffers are bound to the instance lifespan and gracefully cleaned up upon destruction.</li>
+<li><b>Event-Driven Signal Notifications</b>: Exposes type-safe reactive callback interfaces powered by <code>FunctionConnector</code> (<code>hostAdded</code>, <code>hostChanged</code>, <code>hostRemoved</code>). This allows application business logic to hook into real-time network topology shifts via expressive lambda routines. </li>
 </ul>
 </div></div><!-- PageDoc -->
 <a href="doxygen_crawl.html"></a>

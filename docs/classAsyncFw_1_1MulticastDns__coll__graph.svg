@@ -11,7 +11,7 @@
 <!-- Node1 -->
 <g id="Node000001" class="node">
 <title>Node1</title>
-<g id="a_Node000001"><a xlink:title="The MulticastDns class.">
+<g id="a_Node000001"><a xlink:title="Asynchronous mDNS/DNS&#45;SD service responder and discovery browser.">
 <polygon fill="#999999" stroke="#666666" points="138.62,-20 17.62,-20 17.62,0 138.62,0 138.62,-20"/>
 <text text-anchor="middle" x="78.12" y="-6.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::MulticastDns</text>
 </a>

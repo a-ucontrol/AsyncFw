@@ -1,7 +1,4 @@
 var searchData=
 [
-  ['value_0',['Value',['../structAsyncFw_1_1ApplicationNotifier_1_1Value.html',1,'AsyncFw::ApplicationNotifier']]],
-  ['verifycertificate_1',['verifyCertificate',['../classAsyncFw_1_1TlsContext.html#a0355cba7c5bc6468bc9b53e0a21cfaef',1,'AsyncFw::TlsContext']]],
-  ['version_2',['Version',['../structAsyncFw_1_1Version.html',1,'AsyncFw']]],
-  ['version_2eh_3',['Version.h',['../Version_8h.html',1,'']]]
+  ['unconnected_0',['Unconnected',['../classAsyncFw_1_1AbstractSocket.html#a6fc3dae51b6b38d67f1c3861dcbb23bda65e37b7a6b547c0da9a63972db5dfd49',1,'AsyncFw::AbstractSocket']]]
 ];

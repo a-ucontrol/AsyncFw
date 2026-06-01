@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['name_0',['name',['../classAsyncFw_1_1AbstractThread.html#a8ebcc00d7ecbc1f9a2cc0c44d52ee071',1,'AsyncFw::AbstractThread::name()'],['../classAsyncFw_1_1AbstractThreadPool.html#ac312e723c2e0fa3e4cc18e518853bdf2',1,'AsyncFw::AbstractThreadPool::name()']]],
-  ['nospace_1',['nospace',['../classAsyncFw_1_1LogStream.html#ae131a8f28831e608f08a311eaac8ccc5',1,'AsyncFw::LogStream']]]
+  ['message_0',['message',['../classAsyncFw_1_1LogStream.html#a43ecc969a022f7c4a21174068e438ed4',1,'AsyncFw::LogStream']]],
+  ['modifypolldescriptor_1',['modifyPollDescriptor',['../classAsyncFw_1_1AbstractThread.html#a04d4f3fbcd28474e8834329fdb290ea8',1,'AsyncFw::AbstractThread']]],
+  ['modifytimer_2',['modifyTimer',['../classAsyncFw_1_1AbstractThread.html#a215d591f056ad7bdf5a30bff56f06508',1,'AsyncFw::AbstractThread']]],
+  ['multicastdns_3',['MulticastDns',['../classAsyncFw_1_1MulticastDns.html#ab9bfb41e98cd4ecf1cc63f8acd023afd',1,'AsyncFw::MulticastDns']]]
 ];

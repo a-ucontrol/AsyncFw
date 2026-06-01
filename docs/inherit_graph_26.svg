@@ -11,7 +11,7 @@
 <!-- Node0 -->
 <g id="Node000000" class="node">
 <title>Node0</title>
-<g id="a_Node000000"><a xlink:href="structAsyncFw_1_1MulticastDns_1_1Host.html" target="_top" xlink:title="The Host struct.">
+<g id="a_Node000000"><a xlink:href="structAsyncFw_1_1MulticastDns_1_1Host.html" target="_top" xlink:title="Represents a discovered network node or service instance.">
 <polygon fill="white" stroke="#666666" points="121,-32 0,-32 0,0 121,0 121,-32"/>
 <text text-anchor="start" x="8" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::MulticastDns</text>
 <text text-anchor="middle" x="60.5" y="-6.5" font-family="Helvetica,sans-Serif" font-size="10.00">::Host</text>

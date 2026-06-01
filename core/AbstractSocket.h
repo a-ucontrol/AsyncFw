@@ -28,13 +28,13 @@ class AbstractSocket : public AnyData {
 public:
   /** @brief Execution and lifecycle states of the socket. */
   enum State : uint8_t {
-    Unconnected, /**< Initial state, no connection active. */
-    Listening,   /**< Server mode: listening for incoming connections. */
-    Connecting,  /**< Client connection handshake in progress. */
-    Connected,   /**< TCP layer connected (TLS handshake starts here if applicable). */
-    Active,      /**< Fully functional data transfer state. */
-    Closing,     /**< Connection closing in progress. */
-    Destroy      /**< Final destruction phase. WARNING: socket thread is nullptr during stateEvent(). */
+    Unconnected,  ///< Initial state, no connection active.
+    Listening,    ///< Server mode: listening for incoming connections.
+    Connecting,   ///< Client connection handshake in progress.
+    Connected,    ///< TCP layer connected (TLS handshake starts here if applicable).
+    Active,       ///< Fully functional data transfer state.
+    Closing,      ///< Connection closing in progress.
+    Destroy       ///< Final destruction phase. WARNING: socket thread is nullptr during stateEvent().
   };
 
   enum Error : uint8_t { None, Closed, Refused, Read, Write, Activate };
@@ -109,9 +109,9 @@ protected:
   void setError(Error);
   void setErrorString(const std::string &) const;
 
-  Thread *thread_;                   /**< Pointer to the execution thread managing this socket. */
-  int fd_ = -1;                      /**< Native operating system socket file descriptor. */
-  State state_ = State::Unconnected; /**< Current tracking state of this socket. */
+  Thread *thread_;                    ///< Pointer to the execution thread managing this socket.
+  int fd_ = -1;                       ///< Native operating system socket file descriptor.
+  State state_ = State::Unconnected;  ///< Current tracking state of this socket.
 
 private:
   AbstractSocket(const AbstractSocket &) = delete;

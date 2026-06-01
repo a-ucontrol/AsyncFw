@@ -296,11 +296,17 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>setErrorString</b> (c
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:a49a607ef9c268469124164ab86971787" id="r_a49a607ef9c268469124164ab86971787"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classAsyncFw_1_1Thread.html">Thread</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a49a607ef9c268469124164ab86971787">thread_</a></td></tr>
+<tr class="memitem:a49a607ef9c268469124164ab86971787" id="r_a49a607ef9c268469124164ab86971787"><td class="memItemLeft" align="right" valign="top"><a id="a49a607ef9c268469124164ab86971787" name="a49a607ef9c268469124164ab86971787"></a>
+<a class="el" href="classAsyncFw_1_1Thread.html">Thread</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>thread_</b></td></tr>
+<tr class="memdesc:a49a607ef9c268469124164ab86971787"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the execution thread managing this socket. <br /></td></tr>
 <tr class="separator:a49a607ef9c268469124164ab86971787"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1380ccdb23066b7084eca638b4232761" id="r_a1380ccdb23066b7084eca638b4232761"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1380ccdb23066b7084eca638b4232761">fd_</a> = -1</td></tr>
+<tr class="memitem:a1380ccdb23066b7084eca638b4232761" id="r_a1380ccdb23066b7084eca638b4232761"><td class="memItemLeft" align="right" valign="top"><a id="a1380ccdb23066b7084eca638b4232761" name="a1380ccdb23066b7084eca638b4232761"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>fd_</b> = -1</td></tr>
+<tr class="memdesc:a1380ccdb23066b7084eca638b4232761"><td class="mdescLeft">&#160;</td><td class="mdescRight">Native operating system socket file descriptor. <br /></td></tr>
 <tr class="separator:a1380ccdb23066b7084eca638b4232761"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa4b74ce0259d4424ef41b2d10290351c" id="r_aa4b74ce0259d4424ef41b2d10290351c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#a6fc3dae51b6b38d67f1c3861dcbb23bd">State</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa4b74ce0259d4424ef41b2d10290351c">state_</a> = <a class="el" href="#a6fc3dae51b6b38d67f1c3861dcbb23bda65e37b7a6b547c0da9a63972db5dfd49">State::Unconnected</a></td></tr>
+<tr class="memitem:aa4b74ce0259d4424ef41b2d10290351c" id="r_aa4b74ce0259d4424ef41b2d10290351c"><td class="memItemLeft" align="right" valign="top"><a id="aa4b74ce0259d4424ef41b2d10290351c" name="aa4b74ce0259d4424ef41b2d10290351c"></a>
+<a class="el" href="#a6fc3dae51b6b38d67f1c3861dcbb23bd">State</a>&#160;</td><td class="memItemRight" valign="bottom"><b>state_</b> = <a class="el" href="#a6fc3dae51b6b38d67f1c3861dcbb23bda65e37b7a6b547c0da9a63972db5dfd49">State::Unconnected</a></td></tr>
+<tr class="memdesc:aa4b74ce0259d4424ef41b2d10290351c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Current tracking state of this socket. <br /></td></tr>
 <tr class="separator:aa4b74ce0259d4424ef41b2d10290351c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_structAsyncFw_1_1AnyData"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_attribs_structAsyncFw_1_1AnyData')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="structAsyncFw_1_1AnyData.html">AsyncFw::AnyData</a></td></tr>
 <tr class="memitem:adc2b97818be013fcf912ca9c8e086fa3 inherit pro_attribs_structAsyncFw_1_1AnyData" id="r_adc2b97818be013fcf912ca9c8e086fa3"><td class="memItemLeft" align="right" valign="top">
@@ -762,7 +768,7 @@ Friends</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Called when the connection state changes. </p>
-<dl class="section warning"><dt>Warning</dt><dd>When state is <a class="el" href="#a6fc3dae51b6b38d67f1c3861dcbb23bda1bc468bc996ac9ce17018c3320ac5516">State::Destroy</a>, the socket thread pointer is guaranteed to be nullptr. </dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>When state is <a class="el" href="#a6fc3dae51b6b38d67f1c3861dcbb23bda1bc468bc996ac9ce17018c3320ac5516" title="Final destruction phase. WARNING: socket thread is nullptr during stateEvent().">State::Destroy</a>, the socket thread pointer is guaranteed to be nullptr. </dd></dl>
 
 <p>Reimplemented in <a class="el" href="classAsyncFw_1_1DataArraySocket.html#afae26d6d937eddd4b7c64f48933c0984">AsyncFw::DataArraySocket</a>, and <a class="el" href="classAsyncFw_1_1HttpSocket.html#ab3ee95c329a5f5c7ea659fe7809cc37e">AsyncFw::HttpSocket</a>.</p>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="ListenSocket_2main_8cpp-example.html#a1">ListenSocket/main.cpp</a>, and <a class="el" href="Socket_2main_8cpp-example.html#a1">Socket/main.cpp</a>.</dd>
@@ -863,76 +869,6 @@ Friends</h2></td></tr>
 <p>Called upon incoming connection. </p>
 
 <p>Reimplemented in <a class="el" href="classAsyncFw_1_1ListenSocket.html#ac1bc405f0f80094fd63f200f81977c57">AsyncFw::ListenSocket</a>.</p>
-
-</div>
-</div>
-<h2 class="groupheader">Member Data Documentation</h2>
-<a id="a49a607ef9c268469124164ab86971787" name="a49a607ef9c268469124164ab86971787"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a49a607ef9c268469124164ab86971787">&#9670;&#160;</a></span>thread_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classAsyncFw_1_1Thread.html">Thread</a>* AsyncFw::AbstractSocket::thread_</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Pointer to the execution thread managing this socket. </p>
-
-</div>
-</div>
-<a id="a1380ccdb23066b7084eca638b4232761" name="a1380ccdb23066b7084eca638b4232761"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1380ccdb23066b7084eca638b4232761">&#9670;&#160;</a></span>fd_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">int AsyncFw::AbstractSocket::fd_ = -1</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Native operating system socket file descriptor. </p>
-
-</div>
-</div>
-<a id="aa4b74ce0259d4424ef41b2d10290351c" name="aa4b74ce0259d4424ef41b2d10290351c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa4b74ce0259d4424ef41b2d10290351c">&#9670;&#160;</a></span>state_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="#a6fc3dae51b6b38d67f1c3861dcbb23bd">State</a> AsyncFw::AbstractSocket::state_ = <a class="el" href="#a6fc3dae51b6b38d67f1c3861dcbb23bda65e37b7a6b547c0da9a63972db5dfd49">State::Unconnected</a></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Current tracking state of this socket. </p>
 
 </div>
 </div>

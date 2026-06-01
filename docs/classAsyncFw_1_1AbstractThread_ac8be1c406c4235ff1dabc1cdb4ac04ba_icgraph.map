@@ -1,24 +1,28 @@
 <map id="AsyncFw::AbstractThread::AbstractThread" name="AsyncFw::AbstractThread::AbstractThread">
-<area shape="rect" id="Node000001" title="Constructs a thread." alt="" coords="873,51,1046,93"/>
-<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="995,37,982,32,959,29,938,31,926,36,921,42,922,50,917,51,916,41,923,32,937,26,959,24,983,26,997,33"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractThread.html#a09cdd1972b9416a7ddb2a1921f36938c" title="Returns a pointer to the AsyncFw::AbstractThread that manages the currently executing thread." alt="" coords="651,80,825,123"/>
-<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="858,88,826,92,825,87,857,83"/>
-<area shape="rect" id="Node000010" href="$classAsyncFw_1_1Thread.html#afc5e422090767dd84020381fb9a4d490" title="Constructs a thread." alt="" coords="652,29,824,56"/>
-<area shape="poly" id="edge10_Node000001_Node000010" title=" " alt="" coords="857,61,824,57,825,51,858,56"/>
-<area shape="rect" id="Node000003" href="$classAsyncFw_1_1ThreadPool.html#a9919894e586310a7ea5b780845376e17" title="Asynchronously invokes a void function in the target thread, and executes a result callback in the ca..." alt="" coords="440,80,590,123"/>
-<area shape="poly" id="edge3_Node000002_Node000003" title=" " alt="" coords="636,104,590,104,590,99,636,99"/>
-<area shape="rect" id="Node000004" href="$classAsyncFw_1_1Thread.html#a0a3bd6a54db28f73ff59cfea6a40b07a" title="Returns a pointer to the AsyncFw::Thread that manages the currently executing thread." alt="" coords="428,29,601,56"/>
-<area shape="poly" id="edge4_Node000002_Node000004" title=" " alt="" coords="639,78,567,59,569,54,640,73"/>
-<area shape="rect" id="Node000007" href="$classAsyncFw_1_1SystemProcess.html#acf60a585a89304fdb3580e9add06d155" title="False Управляет вводом данных в запущенный процесс. Это режим ввода по умолчанию для канала ввода" alt="" coords="426,147,603,189"/>
-<area shape="poly" id="edge7_Node000002_Node000007" title=" " alt="" coords="651,130,590,149,588,143,649,125"/>
-<area shape="rect" id="Node000008" href="$classAsyncFw_1_1AbstractThread_1_1Holder.html#a795fc5bb1d23123fc892b8d414c56083" title="Runs nested exec() and wait for it completed." alt="" coords="428,213,601,256"/>
-<area shape="poly" id="edge8_Node000002_Node000008" title=" " alt="" coords="702,135,657,170,605,204,581,215,578,210,602,199,654,166,699,131"/>
-<area shape="rect" id="Node000005" href="$classAsyncFw_1_1AbstractSocket.html#a73a200f0008dbf9f820bdb2b8a0054cf" title="Schedules the socket for deferred asynchronous destruction." alt="" coords="204,21,378,64"/>
-<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="413,45,379,45,379,40,413,40"/>
-<area shape="rect" id="Node000006" href="$classAsyncFw_1_1HttpSocket.html#a8268467d3581a4d393e9ccd288de32ff" title="Schedules the socket for deferred asynchronous destruction." alt="" coords="5,21,156,64"/>
-<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="188,45,156,45,156,40,188,40"/>
-<area shape="rect" id="Node000009" href="$structAsyncFw_1_1CoroutineTask.html#a820a0a3410c4a14a71ad3599f46c1bb0" title="Runs nested Thread::exec() and wait for task finished." alt="" coords="207,213,375,256"/>
-<area shape="poly" id="edge9_Node000008_Node000009" title=" " alt="" coords="413,237,376,237,376,232,413,232"/>
-<area shape="poly" id="edge11_Node000010_Node000004" title=" " alt="" coords="636,45,601,45,601,40,636,40"/>
-<area shape="poly" id="edge12_Node000010_Node000010" title=" " alt="" coords="776,16,763,10,738,8,715,10,702,15,699,20,705,27,701,30,694,21,699,11,714,5,738,3,764,5,778,12"/>
+<area shape="rect" id="Node000001" title="Constructs a thread." alt="" coords="873,68,1046,111"/>
+<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="995,55,982,49,959,47,938,49,926,53,921,59,922,67,917,68,916,58,923,49,937,43,959,41,983,44,997,50"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractThread.html#a09cdd1972b9416a7ddb2a1921f36938c" title="Returns a pointer to the AsyncFw::AbstractThread that manages the currently executing thread." alt="" coords="651,97,825,140"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="858,105,826,110,825,104,857,100"/>
+<area shape="rect" id="Node000012" href="$classAsyncFw_1_1Thread.html#afc5e422090767dd84020381fb9a4d490" title="Constructs a thread." alt="" coords="652,31,824,57"/>
+<area shape="poly" id="edge12_Node000001_Node000012" title=" " alt="" coords="857,71,806,61,807,55,858,66"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1ThreadPool.html#a9919894e586310a7ea5b780845376e17" title="Asynchronously invokes a void function in the target thread, and executes a result callback in the ca..." alt="" coords="440,64,590,107"/>
+<area shape="poly" id="edge3_Node000002_Node000003" title=" " alt="" coords="635,106,590,99,591,94,636,101"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1Thread.html#a0a3bd6a54db28f73ff59cfea6a40b07a" title="Returns a pointer to the AsyncFw::Thread that manages the currently executing thread." alt="" coords="428,13,601,40"/>
+<area shape="poly" id="edge4_Node000002_Node000004" title=" " alt="" coords="683,92,602,54,569,43,570,38,604,50,686,87"/>
+<area shape="rect" id="Node000007" href="$classAsyncFw_1_1MulticastDns.html#ab9bfb41e98cd4ecf1cc63f8acd023afd" title="Initializes the mDNS node with a specific target service type (e.g., &quot;_http._tcp&quot;)." alt="" coords="434,131,595,173"/>
+<area shape="poly" id="edge7_Node000002_Node000007" title=" " alt="" coords="636,137,596,143,596,137,635,131"/>
+<area shape="rect" id="Node000009" href="$classAsyncFw_1_1SystemProcess.html#acf60a585a89304fdb3580e9add06d155" title="False Управляет вводом данных в запущенный процесс. Это режим ввода по умолчанию для канала ввода" alt="" coords="426,197,603,240"/>
+<area shape="poly" id="edge9_Node000002_Node000009" title=" " alt="" coords="683,150,604,188,577,199,575,194,602,183,681,145"/>
+<area shape="rect" id="Node000010" href="$classAsyncFw_1_1AbstractThread_1_1Holder.html#a795fc5bb1d23123fc892b8d414c56083" title="Runs nested exec() and wait for it completed." alt="" coords="428,264,601,307"/>
+<area shape="poly" id="edge10_Node000002_Node000010" title=" " alt="" coords="712,154,665,205,636,231,605,254,584,266,581,261,602,250,633,227,661,201,708,150"/>
+<area shape="rect" id="Node000005" href="$classAsyncFw_1_1AbstractSocket.html#a73a200f0008dbf9f820bdb2b8a0054cf" title="Schedules the socket for deferred asynchronous destruction." alt="" coords="204,5,378,48"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="413,29,379,29,379,24,413,24"/>
+<area shape="rect" id="Node000006" href="$classAsyncFw_1_1HttpSocket.html#a8268467d3581a4d393e9ccd288de32ff" title="Schedules the socket for deferred asynchronous destruction." alt="" coords="5,5,156,48"/>
+<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="188,29,156,29,156,24,188,24"/>
+<area shape="rect" id="Node000008" href="$classAsyncFw_1_1MulticastDns.html#a61341fa78536e7a787bbbce75116ef3e" title="Returns the global default instance pointer." alt="" coords="210,131,372,173"/>
+<area shape="poly" id="edge8_Node000007_Node000008" title=" " alt="" coords="418,155,372,155,372,149,418,149"/>
+<area shape="rect" id="Node000011" href="$structAsyncFw_1_1CoroutineTask.html#a820a0a3410c4a14a71ad3599f46c1bb0" title="Runs nested Thread::exec() and wait for task finished." alt="" coords="207,264,375,307"/>
+<area shape="poly" id="edge11_Node000010_Node000011" title=" " alt="" coords="413,288,376,288,376,283,413,283"/>
+<area shape="poly" id="edge13_Node000012_Node000004" title=" " alt="" coords="636,39,601,36,602,31,636,33"/>
+<area shape="poly" id="edge14_Node000012_Node000012" title=" " alt="" coords="776,18,763,12,738,9,715,11,702,16,699,21,705,29,701,32,694,22,699,12,714,6,738,4,764,7,778,13"/>
 </map>

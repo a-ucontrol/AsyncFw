@@ -33,7 +33,8 @@ var NAVTREE =
       [ "Cryptographic State & PKI: TlsContext", "index.html#autotoc_md7", null ],
       [ "Smart Task Distribution: ThreadPool", "index.html#autotoc_md8", null ],
       [ "Thread-Safe Diagnostic Stream: LogStream", "index.html#autotoc_md9", null ],
-      [ "The Application Master: MainThread", "index.html#autotoc_md10", null ]
+      [ "The Application Master: MainThread", "index.html#autotoc_md10", null ],
+      [ "Asynchronous Service Discovery: MulticastDns", "index.html#autotoc_md11", null ]
     ] ],
     [ "Topics", "topics.html", "topics" ],
     [ "Classes", "annotated.html", [

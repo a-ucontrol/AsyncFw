@@ -1,5 +1,5 @@
 <map id="AsyncFw::MulticastDns" name="AsyncFw::MulticastDns">
-<area shape="rect" id="Node000001" title="The MulticastDns class." alt="" coords="29,375,190,401"/>
+<area shape="rect" id="Node000001" title="Asynchronous mDNS/DNS&#45;SD service responder and discovery browser." alt="" coords="29,375,190,401"/>
 <area shape="rect" id="Node000002" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="5,220,214,279"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="112,294,112,374,107,374,107,294"/>
 <area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractFunctionConnector.html" title="The AbstractFunctionConnector class provides the base functionality for FunctionConnector." alt="" coords="12,5,196,48"/>

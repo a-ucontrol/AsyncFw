@@ -312,11 +312,17 @@ Protected Attributes</h2></td></tr>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>connectionClose</b> = false</td></tr>
 <tr class="separator:a4cb41d05f476a5d75856c01036d6183b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_classAsyncFw_1_1AbstractSocket"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_attribs_classAsyncFw_1_1AbstractSocket')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classAsyncFw_1_1AbstractSocket.html">AsyncFw::AbstractSocket</a></td></tr>
-<tr class="memitem:a49a607ef9c268469124164ab86971787 inherit pro_attribs_classAsyncFw_1_1AbstractSocket" id="r_a49a607ef9c268469124164ab86971787"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classAsyncFw_1_1Thread.html">Thread</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAsyncFw_1_1AbstractSocket.html#a49a607ef9c268469124164ab86971787">thread_</a></td></tr>
+<tr class="memitem:a49a607ef9c268469124164ab86971787 inherit pro_attribs_classAsyncFw_1_1AbstractSocket" id="r_a49a607ef9c268469124164ab86971787"><td class="memItemLeft" align="right" valign="top">
+<a class="el" href="classAsyncFw_1_1Thread.html">Thread</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>thread_</b></td></tr>
+<tr class="memdesc:a49a607ef9c268469124164ab86971787 inherit pro_attribs_classAsyncFw_1_1AbstractSocket"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the execution thread managing this socket. <br /></td></tr>
 <tr class="separator:a49a607ef9c268469124164ab86971787 inherit pro_attribs_classAsyncFw_1_1AbstractSocket"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1380ccdb23066b7084eca638b4232761 inherit pro_attribs_classAsyncFw_1_1AbstractSocket" id="r_a1380ccdb23066b7084eca638b4232761"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAsyncFw_1_1AbstractSocket.html#a1380ccdb23066b7084eca638b4232761">fd_</a> = -1</td></tr>
+<tr class="memitem:a1380ccdb23066b7084eca638b4232761 inherit pro_attribs_classAsyncFw_1_1AbstractSocket" id="r_a1380ccdb23066b7084eca638b4232761"><td class="memItemLeft" align="right" valign="top">
+int&#160;</td><td class="memItemRight" valign="bottom"><b>fd_</b> = -1</td></tr>
+<tr class="memdesc:a1380ccdb23066b7084eca638b4232761 inherit pro_attribs_classAsyncFw_1_1AbstractSocket"><td class="mdescLeft">&#160;</td><td class="mdescRight">Native operating system socket file descriptor. <br /></td></tr>
 <tr class="separator:a1380ccdb23066b7084eca638b4232761 inherit pro_attribs_classAsyncFw_1_1AbstractSocket"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa4b74ce0259d4424ef41b2d10290351c inherit pro_attribs_classAsyncFw_1_1AbstractSocket" id="r_aa4b74ce0259d4424ef41b2d10290351c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classAsyncFw_1_1AbstractSocket.html#a6fc3dae51b6b38d67f1c3861dcbb23bd">State</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAsyncFw_1_1AbstractSocket.html#aa4b74ce0259d4424ef41b2d10290351c">state_</a> = <a class="el" href="classAsyncFw_1_1AbstractSocket.html#a6fc3dae51b6b38d67f1c3861dcbb23bda65e37b7a6b547c0da9a63972db5dfd49">State::Unconnected</a></td></tr>
+<tr class="memitem:aa4b74ce0259d4424ef41b2d10290351c inherit pro_attribs_classAsyncFw_1_1AbstractSocket" id="r_aa4b74ce0259d4424ef41b2d10290351c"><td class="memItemLeft" align="right" valign="top">
+<a class="el" href="classAsyncFw_1_1AbstractSocket.html#a6fc3dae51b6b38d67f1c3861dcbb23bd">State</a>&#160;</td><td class="memItemRight" valign="bottom"><b>state_</b> = <a class="el" href="classAsyncFw_1_1AbstractSocket.html#a6fc3dae51b6b38d67f1c3861dcbb23bda65e37b7a6b547c0da9a63972db5dfd49">State::Unconnected</a></td></tr>
+<tr class="memdesc:aa4b74ce0259d4424ef41b2d10290351c inherit pro_attribs_classAsyncFw_1_1AbstractSocket"><td class="mdescLeft">&#160;</td><td class="mdescRight">Current tracking state of this socket. <br /></td></tr>
 <tr class="separator:aa4b74ce0259d4424ef41b2d10290351c inherit pro_attribs_classAsyncFw_1_1AbstractSocket"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_structAsyncFw_1_1AnyData"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_attribs_structAsyncFw_1_1AnyData')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="structAsyncFw_1_1AnyData.html">AsyncFw::AnyData</a></td></tr>
 <tr class="memitem:adc2b97818be013fcf912ca9c8e086fa3 inherit pro_attribs_structAsyncFw_1_1AnyData" id="r_adc2b97818be013fcf912ca9c8e086fa3"><td class="memItemLeft" align="right" valign="top">
@@ -458,7 +464,7 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Called when the connection state changes. </p>
-<dl class="section warning"><dt>Warning</dt><dd>When state is <a class="el" href="classAsyncFw_1_1AbstractSocket.html#a6fc3dae51b6b38d67f1c3861dcbb23bda1bc468bc996ac9ce17018c3320ac5516">State::Destroy</a>, the socket thread pointer is guaranteed to be nullptr. </dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>When state is <a class="el" href="classAsyncFw_1_1AbstractSocket.html#a6fc3dae51b6b38d67f1c3861dcbb23bda1bc468bc996ac9ce17018c3320ac5516" title="Final destruction phase. WARNING: socket thread is nullptr during stateEvent().">State::Destroy</a>, the socket thread pointer is guaranteed to be nullptr. </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classAsyncFw_1_1AbstractSocket.html#a5db12267a6d2241e81f570463f2d7ef5">AsyncFw::AbstractSocket</a>.</p>
 

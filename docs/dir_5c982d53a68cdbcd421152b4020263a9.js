@@ -17,6 +17,7 @@ var dir_5c982d53a68cdbcd421152b4020263a9 =
     [ "log-types.hpp", "log-types_8hpp_source.html", null ],
     [ "Log.h", "Log_8h.html", "Log_8h" ],
     [ "MainThread.h", "MainThread_8h.html", "MainThread_8h" ],
+    [ "mdns_data_types.h", "mdns__data__types_8h_source.html", null ],
     [ "MulticastDns.h", "MulticastDns_8h.html", "MulticastDns_8h" ],
     [ "PollNotifier.h", "PollNotifier_8h.html", "PollNotifier_8h" ],
     [ "Rrd.h", "Rrd_8h.html", "Rrd_8h" ],

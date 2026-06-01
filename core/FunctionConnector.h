@@ -25,14 +25,14 @@ public:
   1. **Default Value (Relaxed Modes):** If a subscriber connects using Connection::Type::Default, the connector substitutes Connection::Type::Default with this configured value (Auto, Direct, Queued, or Sync).
   2. **Strict Constraints (Only Modes):** Values with the Only suffix act as strict runtime validators. They establish the default  and ensure that any explicit attempt to use a  Connection::Type during connect will immediately throw a std::runtime_error("fixed connection type") */
   enum ConnectionPolicy : uint8_t {
-    Auto = 0,          /**< Default is Auto. Any explicit connection types are allowed. */
-    Direct = 0x01,     /**< Default is Direct. Any explicit connection types are allowed. */
-    Queued = 0x02,     /**< Default is Queued. Any explicit connection types are allowed. */
-    Sync = 0x04,       /**< Default is Sync. Any explicit connection types are allowed. */
-    AutoOnly = 0x10,   /**< Enforces Auto mode. Throws if a subscriber explicitly requests Direct, Queued, or Sync. */
-    DirectOnly = 0x11, /**< Enforces Direct mode. Throws if a subscriber explicitly requests Auto, Queued, or Sync. */
-    QueuedOnly = 0x12, /**< Enforces Queued mode. Throws if a subscriber explicitly requests Auto, Direct, or Sync. */
-    SyncOnly = 0x14    /**< Enforces Sync mode. Throws if a subscriber explicitly requests Auto, Direct, or Queued. */
+    Auto = 0,           ///< Default is Auto. Any explicit connection types are allowed.
+    Direct = 0x01,      ///< Default is Direct. Any explicit connection types are allowed.
+    Queued = 0x02,      ///< Default is Queued. Any explicit connection types are allowed.
+    Sync = 0x04,        ///< Default is Sync. Any explicit connection types are allowed.
+    AutoOnly = 0x10,    ///< Enforces Auto mode. Throws if a subscriber explicitly requests Direct, Queued, or Sync.
+    DirectOnly = 0x11,  ///< Enforces Direct mode. Throws if a subscriber explicitly requests Auto, Queued, or Sync.
+    QueuedOnly = 0x12,  ///< Enforces Queued mode. Throws if a subscriber explicitly requests Auto, Direct, or Sync.
+    SyncOnly = 0x14     ///< Enforces Sync mode. Throws if a subscriber explicitly requests Auto, Direct, or Queued.
   };
   /** @class Connection FunctionConnector.h <AsyncFw/FunctionConnector> @brief Represents an active linkage between a sender's signal/connector and a specific receiver slot.
   @details The Connection class  representing a single active subscription. @n It stores crucial metadata required for dispatching events, including the target execution context AsyncFw::AbstractThread and the requested synchronization strategy Type. @n Instances of this class are typically allocated on the heap when a subscriber calls connect. Lifetime and memory cleanup are managed automatically by the framework, or can be tied to scopes via FunctionConnectionGuard. */
@@ -44,11 +44,11 @@ public:
     /** @enum Type @brief Specifies how a particular receiver slot should be invoked relative to the sender's thread.
     @details Defines the precise execution context and thread synchronization semantics for a specific connection instance during event dispatching. */
     enum Type : uint8_t {
-      Auto = AbstractFunctionConnector::Auto,     /**< Evaluates the context at runtime. Uses Direct if the sender and receiver share the same thread ID, otherwise uses Queued. */
-      Direct = AbstractFunctionConnector::Direct, /**< Invokes the receiver slot immediately inside the sender's thread. No context switching occurs. */
-      Queued = AbstractFunctionConnector::Queued, /**< Posts a task containing a copy of the arguments into the receiver thread's event loop. Execution is asynchronous. */
-      Sync = AbstractFunctionConnector::Sync,     /**< Dispatches the invocation to the receiver's thread loop, but blocks the sender's thread until execution completes. */
-      Default = 0x80                              /**< Falls back to the default ConnectionPolicy configuration defined by the parent connector instance. */
+      Auto = AbstractFunctionConnector::Auto,      ///< Evaluates the context at runtime. Uses Direct if the sender and receiver share the same thread ID, otherwise uses Queued.
+      Direct = AbstractFunctionConnector::Direct,  ///< Invokes the receiver slot immediately inside the sender's thread. No context switching occurs.
+      Queued = AbstractFunctionConnector::Queued,  ///< Posts a task containing a copy of the arguments into the receiver thread's event loop. Execution is asynchronous.
+      Sync = AbstractFunctionConnector::Sync,      ///< Dispatches the invocation to the receiver's thread loop, but blocks the sender's thread until execution completes.
+      Default = 0x80                               ///< Falls back to the default ConnectionPolicy configuration defined by the parent connector instance.
     };
     AbstractThread *thread_;
     Type type_;
