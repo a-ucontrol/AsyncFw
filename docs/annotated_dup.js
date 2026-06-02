@@ -48,6 +48,5 @@ var annotated_dup =
       [ "Timer", "classAsyncFw_1_1Timer.html", "classAsyncFw_1_1Timer" ],
       [ "TlsContext", "classAsyncFw_1_1TlsContext.html", "classAsyncFw_1_1TlsContext" ],
       [ "Version", "structAsyncFw_1_1Version.html", null ]
-    ] ],
-    [ "Protected", "classProtected.html", null ]
+    ] ]
 ];

@@ -154,7 +154,7 @@ uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>port</b> () const
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:ad0eef1c8a0e89ee08edc4b40d4cb87e4" id="r_ad0eef1c8a0e89ee08edc4b40d4cb87e4"><td class="memItemLeft" align="right" valign="top"><a id="ad0eef1c8a0e89ee08edc4b40d4cb87e4" name="ad0eef1c8a0e89ee08edc4b40d4cb87e4"></a>
-<a class="el" href="classAsyncFw_1_1FunctionConnector.html">AsyncFw::FunctionConnector</a>&lt; int, const std::string &amp;, bool * &gt;::Policy&lt; <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector.html#ab248bd16cbfcac609f58d401abec4368a067289a8bc60cc7b0be0e021db9ce81d">AsyncFw::AbstractFunctionConnector::SyncOnly</a> &gt;<a class="el" href="classProtected.html">::Protected</a>&lt; <a class="el" href="classAsyncFw_1_1ListenSocket.html">ListenSocket</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>incoming</b></td></tr>
+<a class="el" href="classAsyncFw_1_1FunctionConnector.html">AsyncFw::FunctionConnector</a>&lt; int, const std::string &amp;, bool * &gt;::Policy&lt; <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector.html#ab248bd16cbfcac609f58d401abec4368a067289a8bc60cc7b0be0e021db9ce81d">AsyncFw::AbstractFunctionConnector::SyncOnly</a> &gt;::Protected&lt; <a class="el" href="classAsyncFw_1_1ListenSocket.html">ListenSocket</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>incoming</b></td></tr>
 <tr class="memdesc:ad0eef1c8a0e89ee08edc4b40d4cb87e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="classAsyncFw_1_1FunctionConnector.html" title="Provides a thread-safe, publisher-subscriber mechanism to establish sender-to-receivers connections.">FunctionConnector</a> for incoming connections. <br /></td></tr>
 <tr class="separator:ad0eef1c8a0e89ee08edc4b40d4cb87e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -181,12 +181,12 @@ Protected Member Functions</h2></td></tr>
 <div class="line">  }</div>
 <div class="line">  <span class="keywordtype">void</span> <a class="code hl_function" href="classAsyncFw_1_1AbstractSocket.html#a609ec54ec8aed39769d60319c4c15833">readEvent</a>() { received(read()); }</div>
 <div class="line">  AsyncFw::FunctionConnector&lt;const AsyncFw::DataArray &amp;&gt;::Protected&lt;TcpSocket&gt; received;</div>
-<div class="line">  AsyncFw::FunctionConnector&lt;AsyncFw::AbstractSocket::State&gt;::Protected&lt;TcpSocket&gt; stateChanged;</div>
+<div class="line">  <a class="code hl_typedef" href="classAsyncFw_1_1FunctionConnector.html#a9fb8f282c88da90aeaab52a3c174d82b">AsyncFw::FunctionConnector&lt;AsyncFw::AbstractSocket::State&gt;::Protected</a>&lt;TcpSocket&gt; stateChanged;</div>
 <div class="line">};</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[]) {</div>
 <div class="line">  <a class="code hl_class" href="classAsyncFw_1_1ListenSocket.html">AsyncFw::ListenSocket</a> ls;</div>
-<div class="line">  ls.<a class="code hl_variable" href="#ad0eef1c8a0e89ee08edc4b40d4cb87e4">incoming</a>.connect([](<span class="keywordtype">int</span> fd, <span class="keyword">const</span> std::string &amp;address, <span class="keywordtype">bool</span> *accept) {</div>
+<div class="line">  ls.<a class="code hl_variable" href="#ad0eef1c8a0e89ee08edc4b40d4cb87e4">incoming</a>.<a class="code hl_function" href="classAsyncFw_1_1FunctionConnector.html#ae1f65144956b3b1247d58614e4080f63">connect</a>([](<span class="keywordtype">int</span> fd, <span class="keyword">const</span> std::string &amp;address, <span class="keywordtype">bool</span> *accept) {</div>
 <div class="line">    TcpSocket *socket = TcpSocket::create();</div>
 <div class="line">    socket-&gt;setDescriptor(fd);</div>
 <div class="line">    socket-&gt;received.connect([socket](<span class="keyword">const</span> <a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> &amp;data) {</div>

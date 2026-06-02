@@ -123,7 +123,7 @@ Core Architecture &amp; Components</h1>
 </ul>
 <h2><a class="anchor" id="autotoc_md4"></a>
 2. Cross-Thread Signals: <code>FunctionConnector</code></h2>
-<p><code>FunctionConnector</code> provides a synchronized signaling system. By utilizing the <code><a class="el" href="classProtected.html">Protected</a></code> variant, you enforce strict encapsulation: <b>only the owner class can emit the signal</b>, while any external component can safely connect to it using a clean, non-mutating <code>const</code> reference.</p>
+<p><code>FunctionConnector</code> provides a synchronized signaling system. By utilizing the <code>Protected</code> variant, you enforce strict encapsulation: <b>only the owner class can emit the signal</b>, while any external component can safely connect to it using a clean, non-mutating <code>const</code> reference.</p>
 <ul>
 <li><b>Code Example (Signals &amp; Slots):</b> <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;AsyncFw/FunctionConnector&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;AsyncFw/MainThread&gt;</span></div>
@@ -147,7 +147,7 @@ Core Architecture &amp; Components</h1>
 <div class="line">    });</div>
 <div class="line">    timer.start(10);</div>
 <div class="line">  }</div>
-<div class="line">  AsyncFw::FunctionConnector&lt;int, const std::string &amp;&gt;::Protected&lt;Sender&gt; connector;</div>
+<div class="line">  <a class="code hl_typedef" href="classAsyncFw_1_1FunctionConnector.html#a9fb8f282c88da90aeaab52a3c174d82b">AsyncFw::FunctionConnector&lt;int, const std::string &amp;&gt;::Protected</a>&lt;Sender&gt; connector;</div>
 <div class="line"><span class="keyword">private</span>:</div>
 <div class="line">  <span class="keywordtype">int</span> cnt = 0;</div>
 <div class="line">  AsyncFw::Timer timer;</div>
@@ -187,6 +187,7 @@ Core Architecture &amp; Components</h1>
 <div class="ttc" id="aclassAsyncFw_1_1AbstractThread_html_a09cdd1972b9416a7ddb2a1921f36938c"><div class="ttname"><a href="classAsyncFw_1_1AbstractThread.html#a09cdd1972b9416a7ddb2a1921f36938c">AsyncFw::AbstractThread::current</a></div><div class="ttdeci">static AbstractThread * current()</div><div class="ttdoc">Returns a pointer to the AsyncFw::AbstractThread that manages the currently executing thread.</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1AbstractThread_html_a110a64706041760010cd3f83b783e265"><div class="ttname"><a href="classAsyncFw_1_1AbstractThread.html#a110a64706041760010cd3f83b783e265">AsyncFw::AbstractThread::id</a></div><div class="ttdeci">std::thread::id id() const</div><div class="ttdoc">Returns unique identifier of managed thread.</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1AbstractThread_html_a8ebcc00d7ecbc1f9a2cc0c44d52ee071"><div class="ttname"><a href="classAsyncFw_1_1AbstractThread.html#a8ebcc00d7ecbc1f9a2cc0c44d52ee071">AsyncFw::AbstractThread::name</a></div><div class="ttdeci">std::string name() const</div><div class="ttdoc">Returns name of managed thread.</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1FunctionConnector_html_a9fb8f282c88da90aeaab52a3c174d82b"><div class="ttname"><a href="classAsyncFw_1_1FunctionConnector.html#a9fb8f282c88da90aeaab52a3c174d82b">AsyncFw::FunctionConnector::Protected</a></div><div class="ttdeci">internal::FunctionConnectorProtected&lt; AbstractFunctionConnector::Auto, T, Args... &gt; Protected</div><div class="ttdoc">A protected connector variant where only a single designated owner class can emit messages.</div><div class="ttdef"><b>Definition</b> FunctionConnector.h:230</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1MainThread_html_a76fed3a2c1cfdbdb67f2b209e6457657"><div class="ttname"><a href="classAsyncFw_1_1MainThread.html#a76fed3a2c1cfdbdb67f2b209e6457657">AsyncFw::MainThread::exit</a></div><div class="ttdeci">static void exit()</div><div class="ttdoc">Signals the master event loop to terminate gracefully.</div><div class="ttdef"><b>Definition</b> MainThread.h:61</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1MainThread_html_ad12e620772820ad751868c7b49fa4190"><div class="ttname"><a href="classAsyncFw_1_1MainThread.html#ad12e620772820ad751868c7b49fa4190">AsyncFw::MainThread::exec</a></div><div class="ttdeci">static int exec()</div><div class="ttdoc">Starts the master application event loop on the current thread. This call is blocking....</div><div class="ttdef"><b>Definition</b> MainThread.h:49</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1Thread_html"><div class="ttname"><a href="classAsyncFw_1_1Thread.html">AsyncFw::Thread</a></div><div class="ttdoc">AsyncFw::Thread thread with sockets.</div><div class="ttdef"><b>Definition</b> Thread.h:18</div></div>
@@ -243,8 +244,8 @@ Core Architecture &amp; Components</h1>
 <div class="line">  timer1.<a class="code hl_function" href="classAsyncFw_1_1Timer.html#a14d02d88bd3682afd7c8fd72cc670e46">start</a>(10);</div>
 <div class="line">  <a class="code hl_class" href="classAsyncFw_1_1Timer.html">AsyncFw::Timer</a> timer2;</div>
 <div class="line"> </div>
-<div class="line">  timer1.<a class="code hl_variable" href="classAsyncFw_1_1Timer.html#acf307d575a38d2b3bb852202d0126fcd">timeout</a>.connect([]() { lsDebug() &lt;&lt; std::chrono::system_clock::now() &lt;&lt; <span class="stringliteral">&quot; timer1 timeout&quot;</span>; });</div>
-<div class="line">  timer2.<a class="code hl_variable" href="classAsyncFw_1_1Timer.html#acf307d575a38d2b3bb852202d0126fcd">timeout</a>.connect([]() { lsDebug() &lt;&lt; std::chrono::system_clock::now() &lt;&lt; <span class="stringliteral">&quot; timer2 timeout&quot;</span>; });</div>
+<div class="line">  timer1.<a class="code hl_variable" href="classAsyncFw_1_1Timer.html#acf307d575a38d2b3bb852202d0126fcd">timeout</a>.<a class="code hl_function" href="classAsyncFw_1_1FunctionConnector.html#ae1f65144956b3b1247d58614e4080f63">connect</a>([]() { lsDebug() &lt;&lt; std::chrono::system_clock::now() &lt;&lt; <span class="stringliteral">&quot; timer1 timeout&quot;</span>; });</div>
+<div class="line">  timer2.<a class="code hl_variable" href="classAsyncFw_1_1Timer.html#acf307d575a38d2b3bb852202d0126fcd">timeout</a>.<a class="code hl_function" href="classAsyncFw_1_1FunctionConnector.html#ae1f65144956b3b1247d58614e4080f63">connect</a>([]() { lsDebug() &lt;&lt; std::chrono::system_clock::now() &lt;&lt; <span class="stringliteral">&quot; timer2 timeout&quot;</span>; });</div>
 <div class="line"> </div>
 <div class="line">  task(&amp;timer2);</div>
 <div class="line"> </div>
@@ -252,6 +253,7 @@ Core Architecture &amp; Components</h1>
 <div class="line">  <span class="keywordtype">int</span> ret = <a class="code hl_function" href="classAsyncFw_1_1MainThread.html#ad12e620772820ad751868c7b49fa4190">AsyncFw::MainThread::exec</a>();</div>
 <div class="line">  <span class="keywordflow">return</span> ret;</div>
 <div class="line">}</div>
+<div class="ttc" id="aclassAsyncFw_1_1FunctionConnector_html_ae1f65144956b3b1247d58614e4080f63"><div class="ttname"><a href="classAsyncFw_1_1FunctionConnector.html#ae1f65144956b3b1247d58614e4080f63">AsyncFw::FunctionConnector::connect</a></div><div class="ttdeci">AbstractFunctionConnector::Connection &amp; connect(F f) const</div><div class="ttdoc">Establishes a connection to a callable target.</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1Timer_html"><div class="ttname"><a href="classAsyncFw_1_1Timer.html">AsyncFw::Timer</a></div><div class="ttdoc">The Timer class.</div><div class="ttdef"><b>Definition</b> Timer.h:18</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1Timer_html_a14d02d88bd3682afd7c8fd72cc670e46"><div class="ttname"><a href="classAsyncFw_1_1Timer.html#a14d02d88bd3682afd7c8fd72cc670e46">AsyncFw::Timer::start</a></div><div class="ttdeci">void start(int, bool=false)</div><div class="ttdoc">Starts or restarts a timer with the specified timeout. If the timer is already running,...</div><div class="ttdef"><b>Definition</b> Timer.cpp:29</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1Timer_html_aad1874fc8c5f41c278e4e4de81609e54"><div class="ttname"><a href="classAsyncFw_1_1Timer.html#aad1874fc8c5f41c278e4e4de81609e54">AsyncFw::Timer::coTimeout</a></div><div class="ttdeci">CoroutineAwait&lt; void &gt; coTimeout(int)</div><div class="ttdoc">Asynchronously waits for the specified timeout interval.</div><div class="ttdef"><b>Definition</b> Timer.cpp:36</div></div>

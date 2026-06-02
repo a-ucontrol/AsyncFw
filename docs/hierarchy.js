@@ -65,7 +65,6 @@ var hierarchy =
     [ "AsyncFw::MulticastDns", "classAsyncFw_1_1MulticastDns.html", null ],
     [ "AsyncFw::FunctionConnector< Args >::Policy< P >", "structAsyncFw_1_1FunctionConnector_1_1Policy.html", null ],
     [ "AsyncFw::PollNotifier", "classAsyncFw_1_1PollNotifier.html", null ],
-    [ "Protected", "classProtected.html", null ],
     [ "AsyncFw::Rrd", "classAsyncFw_1_1Rrd.html", [
       [ "AsyncFw::Log", "classAsyncFw_1_1Log.html", null ]
     ] ],

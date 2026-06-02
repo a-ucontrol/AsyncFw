@@ -146,7 +146,7 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:adc88c3beebbade60ab2005599de37051" id="r_adc88c3beebbade60ab2005599de37051"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classAsyncFw_1_1FunctionConnector.html">FunctionConnector</a>&lt; int, const std::vector&lt; std::string &gt; &amp; &gt;<a class="el" href="classProtected.html">::Protected</a>&lt; <a class="el" href="classAsyncFw_1_1AddressResolver.html">AddressResolver</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adc88c3beebbade60ab2005599de37051">completed</a></td></tr>
+<tr class="memitem:adc88c3beebbade60ab2005599de37051" id="r_adc88c3beebbade60ab2005599de37051"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classAsyncFw_1_1FunctionConnector.html">FunctionConnector</a>&lt; int, const std::vector&lt; std::string &gt; &amp; &gt;::Protected&lt; <a class="el" href="classAsyncFw_1_1AddressResolver.html">AddressResolver</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adc88c3beebbade60ab2005599de37051">completed</a></td></tr>
 <tr class="memdesc:adc88c3beebbade60ab2005599de37051"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="#adc88c3beebbade60ab2005599de37051" title="The AddressResolver::completed connector.">AddressResolver::completed</a> connector.  <br /></td></tr>
 <tr class="separator:adc88c3beebbade60ab2005599de37051"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -154,7 +154,7 @@ Public Attributes</h2></td></tr>
 <div class="textblock"><p>Provides asynchronous DNS resolution using c-ares. </p>
 <p><a class="el" href="classAsyncFw_1_1AddressResolver.html" title="Provides asynchronous DNS resolution using c-ares.">AddressResolver</a> encapsulates low-level POSIX address resolution abstractions. It handles asynchronous domain name resolution (DNS lookups) with support for protocol family selection (IPv4 vs IPv6) and custom per-request timeouts.</p>
 <p>Examlpe with <a class="el" href="classAsyncFw_1_1FunctionConnector.html" title="Provides a thread-safe, publisher-subscriber mechanism to establish sender-to-receivers connections.">FunctionConnector</a>: </p><div class="fragment"><div class="line">  <a class="code hl_class" href="classAsyncFw_1_1AddressResolver.html">AsyncFw::AddressResolver</a> addressInfo2;</div>
-<div class="line">  addressInfo2.<a class="code hl_variable" href="#adc88c3beebbade60ab2005599de37051">completed</a>.connect([](<span class="keywordtype">int</span>, <span class="keyword">const</span> std::vector&lt;std::string&gt; &amp;list) {</div>
+<div class="line">  addressInfo2.<a class="code hl_variable" href="#adc88c3beebbade60ab2005599de37051">completed</a>.<a class="code hl_function" href="classAsyncFw_1_1FunctionConnector.html#ae1f65144956b3b1247d58614e4080f63">connect</a>([](<span class="keywordtype">int</span>, <span class="keyword">const</span> std::vector&lt;std::string&gt; &amp;list) {</div>
 <div class="line">    <span class="keywordflow">if</span> (list.empty()) {</div>
 <div class="line">      logError(<span class="stringliteral">&quot;Resolve error&quot;</span>);</div>
 <div class="line">    } <span class="keywordflow">else</span> {</div>
@@ -274,7 +274,7 @@ Public Attributes</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classAsyncFw_1_1FunctionConnector.html">FunctionConnector</a>&lt;int, const std::vector&lt;std::string&gt; &amp;&gt;<a class="el" href="classProtected.html">::Protected</a>&lt;<a class="el" href="classAsyncFw_1_1AddressResolver.html">AddressResolver</a>&gt; AsyncFw::AddressResolver::completed</td>
+          <td class="memname"><a class="el" href="classAsyncFw_1_1FunctionConnector.html">FunctionConnector</a>&lt;int, const std::vector&lt;std::string&gt; &amp;&gt;::Protected&lt;<a class="el" href="classAsyncFw_1_1AddressResolver.html">AddressResolver</a>&gt; AsyncFw::AddressResolver::completed</td>
         </tr>
       </table>
 </div><div class="memdoc">

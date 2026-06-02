@@ -13,5 +13,5 @@ var searchData=
   ['pools_10',['pools',['../classAsyncFw_1_1AbstractThreadPool.html#a8b3a66a03bf52ef75c7427f2778bfd44',1,'AsyncFw::AbstractThreadPool']]],
   ['port_11',['port',['../structAsyncFw_1_1MulticastDns_1_1Host.html#a52a728b597d34fc89757944f97a002b8',1,'AsyncFw::MulticastDns::Host::port'],['../classAsyncFw_1_1AbstractSocket.html#aa29d033332c09e341d159b2189c774e9',1,'AsyncFw::AbstractSocket::port()'],['../classAsyncFw_1_1ListenSocket.html#aa29d033332c09e341d159b2189c774e9',1,'AsyncFw::ListenSocket::port()']]],
   ['promise_5ftype_12',['promise_type',['../structAsyncFw_1_1CoroutineTask_1_1promise__type.html',1,'AsyncFw::CoroutineTask']]],
-  ['protected_13',['Protected',['../classProtected.html',1,'']]]
+  ['protected_13',['Protected',['../classAsyncFw_1_1FunctionConnector.html#a9fb8f282c88da90aeaab52a3c174d82b',1,'AsyncFw::FunctionConnector']]]
 ];
