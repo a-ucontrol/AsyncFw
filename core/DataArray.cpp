@@ -361,9 +361,7 @@ void DataStream::Private::r_(int size, uint8_t *p) {
 
 void DataStream::Private::sw_(std::size_t _s) {
   uint8_t i = 0;
-  for (;; ++i) {
-    if (!(_s >> (5 + i * 8))) break;
-  }
+  for (std::size_t _tmp = _s >> 5; _tmp; ++i) _tmp >>= 8;
   uint8_t j = i | (_s << 3);
   w_(sizeof(uint8_t), &j);
   if (fail_ || !i) return;
@@ -375,7 +373,7 @@ void DataStream::Private::sr_(std::size_t *s) {
   uint8_t i;
   r_(sizeof(uint8_t), &i);
   if (fail_) return;
-  uint8_t j = (i & 0x07);
+  uint8_t j = (i & (sizeof(std::size_t) - 1));
   i >>= 3;
   if (!j) {
     *s = i;
