@@ -1,10 +1,9 @@
 var searchData=
 [
-  ['operator_20bool_0',['operator bool',['../classAsyncFw_1_1FunctionConnectionGuard.html#acf91863f12533d5e289f9b2c085ea71f',1,'AsyncFw::FunctionConnectionGuard']]],
-  ['operator_28_29_1',['operator()',['../classAsyncFw_1_1FunctionConnector.html#acc31eb4d17c3cc86ef80c37b169f846d',1,'AsyncFw::FunctionConnector']]],
-  ['operator_2b_3d_2',['operator+=',['../classAsyncFw_1_1FunctionConnectionGuardList.html#a1868fe28dabfb86ed0d0eb500eeda9f2',1,'AsyncFw::FunctionConnectionGuardList']]],
-  ['operator_3c_3c_3',['operator&lt;&lt;',['../classAsyncFw_1_1LogStream.html#a9803fa0aa3fed41eb72f4b63314579a6',1,'AsyncFw::LogStream']]],
-  ['operator_3d_4',['operator=',['../classAsyncFw_1_1FunctionConnectionGuard.html#a6dcd772a1fc087de360b5d0b4588f83e',1,'AsyncFw::FunctionConnectionGuard::operator=(AbstractFunctionConnector::Connection &amp;)'],['../classAsyncFw_1_1FunctionConnectionGuard.html#aa887547d9a0d2889e172893ae9421a8d',1,'AsyncFw::FunctionConnectionGuard::operator=(FunctionConnectionGuard &amp;&amp;)']]],
-  ['orchestration_20rpc_3a_20tt_20coinvoke_20tt_5',['3. Deep Coroutine Orchestration &amp; RPC: &lt;tt&gt;coInvoke&lt;/tt&gt;',['../index.html#autotoc_md5',1,'']]],
-  ['output_6',['output',['../classAsyncFw_1_1SystemProcess.html#abbb594e48966f013c2efaf50e26b5e36',1,'AsyncFw::SystemProcess']]]
+  ['name_0',['name',['../structAsyncFw_1_1LogStream_1_1Message.html#af6373a2f7362ff25d5341e5c373e1554',1,'AsyncFw::LogStream::Message::name'],['../structAsyncFw_1_1MulticastDns_1_1Host.html#a505099c452dad4bfcaa5e1bdc3f56f82',1,'AsyncFw::MulticastDns::Host::name'],['../classAsyncFw_1_1AbstractThread.html#a8ebcc00d7ecbc1f9a2cc0c44d52ee071',1,'AsyncFw::AbstractThread::name()'],['../classAsyncFw_1_1AbstractThreadPool.html#ac312e723c2e0fa3e4cc18e518853bdf2',1,'AsyncFw::AbstractThreadPool::name()']]],
+  ['network_20worker_20thread_3a_20tt_20thread_20tt_20secure_20sockets_1',['4. Network Worker Thread: &lt;tt&gt;Thread&lt;/tt&gt; &amp; Secure Sockets',['../index.html#autotoc_md6',1,'']]],
+  ['nospace_2',['nospace',['../classAsyncFw_1_1LogStream.html#ae131a8f28831e608f08a311eaac8ccc5',1,'AsyncFw::LogStream']]],
+  ['note_3',['note',['../structAsyncFw_1_1LogStream_1_1Message.html#abac2923c4b2c7076a731b88df2420fa5',1,'AsyncFw::LogStream::Message']]],
+  ['notice_4',['Notice',['../classAsyncFw_1_1LogStream.html#afa2f6c5311ced6b973d39d6e5ced5731ae60e1a6347736018009842563cd57231',1,'AsyncFw::LogStream']]],
+  ['notify_5',['notify',['../classAsyncFw_1_1ApplicationNotifier.html#a989eaa483fec75f7d90730d031db0b2a',1,'AsyncFw::ApplicationNotifier::notify'],['../classAsyncFw_1_1FileSystemWatcher.html#a4c808b22785dbc3182a9e7fa600b0919',1,'AsyncFw::FileSystemWatcher::notify'],['../classAsyncFw_1_1PollNotifier.html#a8bcd61fb697ec4d0d53b942feb5b8026',1,'AsyncFw::PollNotifier::notify']]]
 ];

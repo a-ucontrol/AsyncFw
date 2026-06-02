@@ -110,7 +110,7 @@ $(function(){initNavTree('classAsyncFw_1_1DataArrayView.html',''); initResizable
 </div><!--header-->
 <div class="contents">
 
-<p>The <a class="el" href="classAsyncFw_1_1DataArrayView.html" title="The DataArrayView class.">DataArrayView</a> class.  
+<p>A lightweight, non-allocating string-like descriptor pointing to a contiguous block of binary data.  
  <a href="#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="DataArray_8h_source.html">AsyncFw/DataArray</a>&gt;</code></p>
@@ -120,22 +120,27 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ad04f46e3d78a878d98603a6820e6039d" id="r_ad04f46e3d78a878d98603a6820e6039d"><td class="memTemplParams" colspan="2"><a id="ad04f46e3d78a878d98603a6820e6039d" name="ad04f46e3d78a878d98603a6820e6039d"></a>
 template&lt;typename... Args&gt; </td></tr>
 <tr class="memitem:ad04f46e3d78a878d98603a6820e6039d"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>DataArrayView</b> (Args... args)</td></tr>
+<tr class="memdesc:ad04f46e3d78a878d98603a6820e6039d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Universal perfect-forwarding constructor proxying arguments directly to the underlying std::string_view. <br /></td></tr>
 <tr class="separator:ad04f46e3d78a878d98603a6820e6039d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0614fa75fc23b3a9839c45733957d6e0" id="r_a0614fa75fc23b3a9839c45733957d6e0"><td class="memItemLeft" align="right" valign="top"><a id="a0614fa75fc23b3a9839c45733957d6e0" name="a0614fa75fc23b3a9839c45733957d6e0"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>DataArrayView</b> (const uint8_t *, std::size_t)</td></tr>
+<tr class="memdesc:a0614fa75fc23b3a9839c45733957d6e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a data view pointing to an explicit raw memory address with a specific size. <br /></td></tr>
 <tr class="separator:a0614fa75fc23b3a9839c45733957d6e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5a35bb0c7c6c44781b883a789520128c" id="r_a5a35bb0c7c6c44781b883a789520128c"><td class="memItemLeft" align="right" valign="top"><a id="a5a35bb0c7c6c44781b883a789520128c" name="a5a35bb0c7c6c44781b883a789520128c"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>DataArrayView</b> (const DataArray::iterator, const DataArray::iterator)</td></tr>
+<tr class="memdesc:a5a35bb0c7c6c44781b883a789520128c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a data view mapping a precise iterator-bounded range of an existing <a class="el" href="classAsyncFw_1_1DataArray.html" title="The DataArray class, provides an array of bytes.">DataArray</a>. <br /></td></tr>
 <tr class="separator:a5a35bb0c7c6c44781b883a789520128c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5037f9b6a55397a1a999e22198bb54ea" id="r_a5037f9b6a55397a1a999e22198bb54ea"><td class="memItemLeft" align="right" valign="top"><a id="a5037f9b6a55397a1a999e22198bb54ea" name="a5037f9b6a55397a1a999e22198bb54ea"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>DataArrayView</b> (const <a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> &amp;)</td></tr>
+<tr class="memdesc:a5037f9b6a55397a1a999e22198bb54ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a data view mapping the entire memory buffer of an existing <a class="el" href="classAsyncFw_1_1DataArray.html" title="The DataArray class, provides an array of bytes.">DataArray</a>. <br /></td></tr>
 <tr class="separator:a5037f9b6a55397a1a999e22198bb54ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af0409dfe7cdeea6df5d33174abb0e464" id="r_af0409dfe7cdeea6df5d33174abb0e464"><td class="memItemLeft" align="right" valign="top"><a id="af0409dfe7cdeea6df5d33174abb0e464" name="af0409dfe7cdeea6df5d33174abb0e464"></a>
-<a class="el" href="classAsyncFw_1_1DataArrayList.html">DataArrayList</a>&#160;</td><td class="memItemRight" valign="bottom"><b>split</b> (const char) const</td></tr>
+<tr class="memitem:af0409dfe7cdeea6df5d33174abb0e464" id="r_af0409dfe7cdeea6df5d33174abb0e464"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classAsyncFw_1_1DataArrayList.html">DataArrayList</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af0409dfe7cdeea6df5d33174abb0e464">split</a> (const char) const</td></tr>
+<tr class="memdesc:af0409dfe7cdeea6df5d33174abb0e464"><td class="mdescLeft">&#160;</td><td class="mdescRight">Splices the viewed binary stream into a tokenized list using a specific delimiter character.  <br /></td></tr>
 <tr class="separator:af0409dfe7cdeea6df5d33174abb0e464"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>The <a class="el" href="classAsyncFw_1_1DataArrayView.html" title="The DataArrayView class.">DataArrayView</a> class. </p>
+<div class="textblock"><p>A lightweight, non-allocating string-like descriptor pointing to a contiguous block of binary data. </p>
+<p>Inherits from std::string_view. Used to pass references to chunks of external memory safely without triggering expensive deep copies.</p>
 <p>Example: </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;AsyncFw/MainThread&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;AsyncFw/DataArray&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;AsyncFw/LogStream&gt;</span></div>
@@ -155,7 +160,7 @@ template&lt;typename... Args&gt; </td></tr>
 <div class="line"> </div>
 <div class="line">  <a class="code hl_class" href="classAsyncFw_1_1DataStream.html">AsyncFw::DataStream</a> _ds_w;</div>
 <div class="line">  _ds_w &lt;&lt; _string1_w &lt;&lt; _string2_w &lt;&lt; _da1_w &lt;&lt; _da2_w &lt;&lt; _list_w &lt;&lt; _int8_w &lt;&lt; _int64_w;</div>
-<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> _da_w = AsyncFw::DataArray::compress(_ds_w.array());</div>
+<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> _da_w = <a class="code hl_function" href="classAsyncFw_1_1DataArray.html#a10279d86624995c981d2786aa43e6803">AsyncFw::DataArray::compress</a>(_ds_w.<a class="code hl_function" href="classAsyncFw_1_1DataStream.html#ae64c4b08a3259146d4476c0385352479">array</a>());</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">//read</span></div>
 <div class="line">  std::string _string1_r;</div>
@@ -166,7 +171,7 @@ template&lt;typename... Args&gt; </td></tr>
 <div class="line">  int8_t _int8_r;</div>
 <div class="line">  int64_t _int64_r;</div>
 <div class="line"> </div>
-<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> _da_r = AsyncFw::DataArray::uncompress(_da_w);</div>
+<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> _da_r = <a class="code hl_function" href="classAsyncFw_1_1DataArray.html#aa0850e8337161108595ab6d910db1da8">AsyncFw::DataArray::uncompress</a>(_da_w);</div>
 <div class="line">  <a class="code hl_class" href="classAsyncFw_1_1DataStream.html">AsyncFw::DataStream</a> _ds_r(_da_r);</div>
 <div class="line">  _ds_r &gt;&gt; _string1_r &gt;&gt; _string2_r &gt;&gt; _da1_r &gt;&gt; _da2_r &gt;&gt; _list_r &gt;&gt; _int8_r &gt;&gt; _int64_r;</div>
 <div class="line"> </div>
@@ -175,7 +180,34 @@ template&lt;typename... Args&gt; </td></tr>
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-</div><!-- fragment --> </div><hr/>The documentation for this class was generated from the following files:<ul>
+</div><!-- fragment --> </div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="af0409dfe7cdeea6df5d33174abb0e464" name="af0409dfe7cdeea6df5d33174abb0e464"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af0409dfe7cdeea6df5d33174abb0e464">&#9670;&#160;</a></span>split()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classAsyncFw_1_1DataArrayList.html">DataArrayList</a> DataArrayView::split </td>
+          <td>(</td>
+          <td class="paramtype">const char</td>          <td class="paramname"><span class="paramname"><em>c</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Splices the viewed binary stream into a tokenized list using a specific delimiter character. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">delimiter</td><td>The dividing boundary byte/character. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A newly constructed list container holding independent slices. </dd></dl>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li>core/<a class="el" href="DataArray_8h_source.html">DataArray.h</a></li>
 <li>core/<b>DataArray.cpp</b></li>
 </ul>

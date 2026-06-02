@@ -7,6 +7,6 @@
 <area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="241,186,241,234,236,234,236,186"/>
 <area shape="rect" id="Node000004" href="$classAsyncFw_1_1AbstractThread.html" title="The AbstractThread class provides the base functionality for thread management." alt="" coords="224,13,397,40"/>
 <area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="299,55,248,145,243,142,294,52"/>
-<area shape="rect" id="Node000005" href="$classAsyncFw_1_1DataArrayList.html" title="The DataArrayList class." alt="" coords="324,144,489,171"/>
+<area shape="rect" id="Node000005" href="$classAsyncFw_1_1DataArrayList.html" title="A specialized container aggregating multiple DataArray instances." alt="" coords="324,144,489,171"/>
 <area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="370,181,264,236,261,232,368,176"/>
 </map>

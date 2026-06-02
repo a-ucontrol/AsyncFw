@@ -11,7 +11,7 @@
 <area shape="poly" id="edge8_Node000007_Node000004" title=" " alt="" coords="220,184,174,236,170,232,216,181"/>
 <area shape="rect" id="Node000005" href="$classAsyncFw_1_1AbstractThread.html" title="The AbstractThread class provides the base functionality for thread management." alt="" coords="224,13,397,40"/>
 <area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="299,55,248,145,243,142,294,52"/>
-<area shape="rect" id="Node000006" href="$classAsyncFw_1_1DataArrayList.html" title="The DataArrayList class." alt="" coords="324,144,489,171"/>
+<area shape="rect" id="Node000006" href="$classAsyncFw_1_1DataArrayList.html" title="A specialized container aggregating multiple DataArray instances." alt="" coords="324,144,489,171"/>
 <area shape="poly" id="edge6_Node000002_Node000006" title=" " alt="" coords="384,184,330,236,326,232,380,180"/>
 <area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="190,269,238,308,235,312,187,273"/>
 </map>

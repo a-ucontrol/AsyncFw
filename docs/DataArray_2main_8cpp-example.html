@@ -133,7 +133,7 @@ $(function(){initNavTree('DataArray_2main_8cpp-example.html',''); initResizable(
 <div class="line"> </div>
 <div class="line">  <a id="_a2" name="_a2"></a><a class="code hl_class" href="classAsyncFw_1_1DataStream.html">AsyncFw::DataStream</a> _ds_w;</div>
 <div class="line">  _ds_w &lt;&lt; _string1_w &lt;&lt; _string2_w &lt;&lt; _da1_w &lt;&lt; _da2_w &lt;&lt; _list_w &lt;&lt; _int8_w &lt;&lt; _int64_w;</div>
-<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> _da_w = AsyncFw::DataArray::compress(_ds_w.<a id="a3" name="a3"></a>array());</div>
+<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> _da_w = <a id="a3" name="a3"></a><a class="code hl_function" href="classAsyncFw_1_1DataArray.html#a10279d86624995c981d2786aa43e6803">AsyncFw::DataArray::compress</a>(_ds_w.<a id="a4" name="a4"></a><a class="code hl_function" href="classAsyncFw_1_1DataStream.html#ae64c4b08a3259146d4476c0385352479">array</a>());</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">//read</span></div>
 <div class="line">  std::string _string1_r;</div>
@@ -144,7 +144,7 @@ $(function(){initNavTree('DataArray_2main_8cpp-example.html',''); initResizable(
 <div class="line">  int8_t _int8_r;</div>
 <div class="line">  int64_t _int64_r;</div>
 <div class="line"> </div>
-<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> _da_r = AsyncFw::DataArray::uncompress(_da_w);</div>
+<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> _da_r = <a id="a5" name="a5"></a><a class="code hl_function" href="classAsyncFw_1_1DataArray.html#aa0850e8337161108595ab6d910db1da8">AsyncFw::DataArray::uncompress</a>(_da_w);</div>
 <div class="line">  <a class="code hl_class" href="classAsyncFw_1_1DataStream.html">AsyncFw::DataStream</a> _ds_r(_da_r);</div>
 <div class="line">  _ds_r &gt;&gt; _string1_r &gt;&gt; _string2_r &gt;&gt; _da1_r &gt;&gt; _da2_r &gt;&gt; _list_r &gt;&gt; _int8_r &gt;&gt; _int64_r;</div>
 <div class="line"> </div>
@@ -153,9 +153,12 @@ $(function(){initNavTree('DataArray_2main_8cpp-example.html',''); initResizable(
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="aclassAsyncFw_1_1DataArrayList_html"><div class="ttname"><a href="classAsyncFw_1_1DataArrayList.html">AsyncFw::DataArrayList</a></div><div class="ttdoc">The DataArrayList class.</div><div class="ttdef"><b>Definition</b> DataArray.h:53</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1DataArrayList_html"><div class="ttname"><a href="classAsyncFw_1_1DataArrayList.html">AsyncFw::DataArrayList</a></div><div class="ttdoc">A specialized container aggregating multiple DataArray instances.</div><div class="ttdef"><b>Definition</b> DataArray.h:72</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1DataArray_html"><div class="ttname"><a href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a></div><div class="ttdoc">The DataArray class, provides an array of bytes.</div><div class="ttdef"><b>Definition</b> DataArray.h:23</div></div>
-<div class="ttc" id="aclassAsyncFw_1_1DataStream_html"><div class="ttname"><a href="classAsyncFw_1_1DataStream.html">AsyncFw::DataStream</a></div><div class="ttdoc">The DataStream class.</div><div class="ttdef"><b>Definition</b> DataArray.h:61</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1DataArray_html_a10279d86624995c981d2786aa43e6803"><div class="ttname"><a href="classAsyncFw_1_1DataArray.html#a10279d86624995c981d2786aa43e6803">AsyncFw::DataArray::compress</a></div><div class="ttdeci">static DataArray compress(const DataArrayView &amp;)</div><div class="ttdoc">Compresses the provided data view using the framework&#39;s default compression algorithm.</div><div class="ttdef"><b>Definition</b> DataArray.cpp:17</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1DataArray_html_aa0850e8337161108595ab6d910db1da8"><div class="ttname"><a href="classAsyncFw_1_1DataArray.html#aa0850e8337161108595ab6d910db1da8">AsyncFw::DataArray::uncompress</a></div><div class="ttdeci">static DataArray uncompress(const DataArrayView &amp;)</div><div class="ttdoc">Uncompresses the provided compressed data view back to its original raw form.</div><div class="ttdef"><b>Definition</b> DataArray.cpp:37</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1DataStream_html"><div class="ttname"><a href="classAsyncFw_1_1DataStream.html">AsyncFw::DataStream</a></div><div class="ttdoc">A fast, compact binary serialization stream.</div><div class="ttdef"><b>Definition</b> DataArray.h:83</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1DataStream_html_ae64c4b08a3259146d4476c0385352479"><div class="ttname"><a href="classAsyncFw_1_1DataStream.html#ae64c4b08a3259146d4476c0385352479">AsyncFw::DataStream::array</a></div><div class="ttdeci">const DataArray &amp; array() const</div><div class="ttdoc">Retrieves a reference to the active cumulative raw byte array built by the stream.</div><div class="ttdef"><b>Definition</b> DataArray.cpp:176</div></div>
 </div><!-- fragment --> </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

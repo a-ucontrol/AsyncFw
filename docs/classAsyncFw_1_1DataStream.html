@@ -110,19 +110,28 @@ $(function(){initNavTree('classAsyncFw_1_1DataStream.html',''); initResizable(tr
 </div><!--header-->
 <div class="contents">
 
-<p>The <a class="el" href="classAsyncFw_1_1DataStream.html" title="The DataStream class.">DataStream</a> class.  
+<p>A fast, compact binary serialization stream.  
  <a href="#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="DataArray_8h_source.html">AsyncFw/DataArray</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:aadb8f27fe18a349a25b2cd656d686f92" id="r_aadb8f27fe18a349a25b2cd656d686f92"><td class="memItemLeft" align="right" valign="top"><a id="aadb8f27fe18a349a25b2cd656d686f92" name="aadb8f27fe18a349a25b2cd656d686f92"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>DataStream</b> ()</td></tr>
+<tr class="memdesc:aadb8f27fe18a349a25b2cd656d686f92"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a write-only serialization stream building an internal data container from scratch. <br /></td></tr>
+<tr class="separator:aadb8f27fe18a349a25b2cd656d686f92"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5483f91b758e0383fec1fd3c540425ef" id="r_a5483f91b758e0383fec1fd3c540425ef"><td class="memItemLeft" align="right" valign="top"><a id="a5483f91b758e0383fec1fd3c540425ef" name="a5483f91b758e0383fec1fd3c540425ef"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>DataStream</b> (const <a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> &amp;)</td></tr>
+<tr class="memdesc:a5483f91b758e0383fec1fd3c540425ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a read-only deserialization stream operating directly on top of an existing immutable byte array. <br /></td></tr>
 <tr class="separator:a5483f91b758e0383fec1fd3c540425ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad7127c67173035eabba3c2780be7c105" id="r_ad7127c67173035eabba3c2780be7c105"><td class="memItemLeft" align="right" valign="top"><a id="ad7127c67173035eabba3c2780be7c105" name="ad7127c67173035eabba3c2780be7c105"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>DataStream</b> (const <a class="el" href="classAsyncFw_1_1DataStream.html">DataStream</a> &amp;)=delete</td></tr>
-<tr class="separator:ad7127c67173035eabba3c2780be7c105"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae64c4b08a3259146d4476c0385352479" id="r_ae64c4b08a3259146d4476c0385352479"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae64c4b08a3259146d4476c0385352479">array</a> () const</td></tr>
+<tr class="memdesc:ae64c4b08a3259146d4476c0385352479"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves a reference to the active cumulative raw byte array built by the stream.  <br /></td></tr>
+<tr class="separator:ae64c4b08a3259146d4476c0385352479"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a58e67062bf6cd3f77a8203758b01eaf8" id="r_a58e67062bf6cd3f77a8203758b01eaf8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a58e67062bf6cd3f77a8203758b01eaf8">fail</a> () const</td></tr>
+<tr class="memdesc:a58e67062bf6cd3f77a8203758b01eaf8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the stream pipeline encountered a boundary check failure, bad memory, or malformed data packets.  <br /></td></tr>
+<tr class="separator:a58e67062bf6cd3f77a8203758b01eaf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader">Serialization Operators</div></td></tr>
 <tr class="memitem:ac2fcf2fccb05fc820d943721eb827f20" id="r_ac2fcf2fccb05fc820d943721eb827f20"><td class="memItemLeft" align="right" valign="top"><a id="ac2fcf2fccb05fc820d943721eb827f20" name="ac2fcf2fccb05fc820d943721eb827f20"></a>
 <a class="el" href="classAsyncFw_1_1DataStream.html">DataStream</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator&lt;&lt;</b> (int8_t)</td></tr>
 <tr class="separator:ac2fcf2fccb05fc820d943721eb827f20"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -204,15 +213,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:af05612df60008a72fed5908210ff07b7" id="r_af05612df60008a72fed5908210ff07b7"><td class="memItemLeft" align="right" valign="top"><a id="af05612df60008a72fed5908210ff07b7" name="af05612df60008a72fed5908210ff07b7"></a>
 <a class="el" href="classAsyncFw_1_1DataStream.html">DataStream</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator&gt;&gt;</b> (<a class="el" href="classAsyncFw_1_1DataArrayList.html">DataArrayList</a> &amp;)</td></tr>
 <tr class="separator:af05612df60008a72fed5908210ff07b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae64c4b08a3259146d4476c0385352479" id="r_ae64c4b08a3259146d4476c0385352479"><td class="memItemLeft" align="right" valign="top"><a id="ae64c4b08a3259146d4476c0385352479" name="ae64c4b08a3259146d4476c0385352479"></a>
-const <a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>array</b> () const</td></tr>
-<tr class="separator:ae64c4b08a3259146d4476c0385352479"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a58e67062bf6cd3f77a8203758b01eaf8" id="r_a58e67062bf6cd3f77a8203758b01eaf8"><td class="memItemLeft" align="right" valign="top"><a id="a58e67062bf6cd3f77a8203758b01eaf8" name="a58e67062bf6cd3f77a8203758b01eaf8"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>fail</b> () const</td></tr>
-<tr class="separator:a58e67062bf6cd3f77a8203758b01eaf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>The <a class="el" href="classAsyncFw_1_1DataStream.html" title="The DataStream class.">DataStream</a> class. </p>
+<div class="textblock"><p>A fast, compact binary serialization stream. </p>
+<p>Supports stream operators (&lt;&lt; and &gt;&gt;) to easily pack and unpack primitives, strings, and byte arrays into variable-length compressed blocks. </p><dl class="section note"><dt>Note</dt><dd>This class explicitly blocks copying and moving.</dd></dl>
 <p>Example: </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;AsyncFw/MainThread&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;AsyncFw/DataArray&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;AsyncFw/LogStream&gt;</span></div>
@@ -232,7 +236,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>fail</b> () const</td
 <div class="line"> </div>
 <div class="line">  <a class="code hl_class" href="classAsyncFw_1_1DataStream.html">AsyncFw::DataStream</a> _ds_w;</div>
 <div class="line">  _ds_w &lt;&lt; _string1_w &lt;&lt; _string2_w &lt;&lt; _da1_w &lt;&lt; _da2_w &lt;&lt; _list_w &lt;&lt; _int8_w &lt;&lt; _int64_w;</div>
-<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> _da_w = AsyncFw::DataArray::compress(_ds_w.array());</div>
+<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> _da_w = <a class="code hl_function" href="classAsyncFw_1_1DataArray.html#a10279d86624995c981d2786aa43e6803">AsyncFw::DataArray::compress</a>(_ds_w.<a class="code hl_function" href="#ae64c4b08a3259146d4476c0385352479">array</a>());</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">//read</span></div>
 <div class="line">  std::string _string1_r;</div>
@@ -243,7 +247,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>fail</b> () const</td
 <div class="line">  int8_t _int8_r;</div>
 <div class="line">  int64_t _int64_r;</div>
 <div class="line"> </div>
-<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> _da_r = AsyncFw::DataArray::uncompress(_da_w);</div>
+<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> _da_r = <a class="code hl_function" href="classAsyncFw_1_1DataArray.html#aa0850e8337161108595ab6d910db1da8">AsyncFw::DataArray::uncompress</a>(_da_w);</div>
 <div class="line">  <a class="code hl_class" href="classAsyncFw_1_1DataStream.html">AsyncFw::DataStream</a> _ds_r(_da_r);</div>
 <div class="line">  _ds_r &gt;&gt; _string1_r &gt;&gt; _string2_r &gt;&gt; _da1_r &gt;&gt; _da2_r &gt;&gt; _list_r &gt;&gt; _int8_r &gt;&gt; _int64_r;</div>
 <div class="line"> </div>
@@ -254,7 +258,50 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>fail</b> () const</td
 <div class="line">}</div>
 </div><!-- fragment --> <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="DataArray_2main_8cpp-example.html#_a2">DataArray/main.cpp</a>.</dd>
 </dl>
-</div><hr/>The documentation for this class was generated from the following files:<ul>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="ae64c4b08a3259146d4476c0385352479" name="ae64c4b08a3259146d4476c0385352479"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae64c4b08a3259146d4476c0385352479">&#9670;&#160;</a></span>array()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> &amp; DataStream::array </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Retrieves a reference to the active cumulative raw byte array built by the stream. </p>
+<dl class="section return"><dt>Returns</dt><dd>Immutable reference to the binary buffer. </dd></dl>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="DataArray_2main_8cpp-example.html#a4">DataArray/main.cpp</a>.</dd>
+</dl>
+
+</div>
+</div>
+<a id="a58e67062bf6cd3f77a8203758b01eaf8" name="a58e67062bf6cd3f77a8203758b01eaf8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a58e67062bf6cd3f77a8203758b01eaf8">&#9670;&#160;</a></span>fail()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool DataStream::fail </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Checks if the stream pipeline encountered a boundary check failure, bad memory, or malformed data packets. </p>
+<dl class="section return"><dt>Returns</dt><dd>True if an operation failed or the stream is corrupted. </dd></dl>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li>core/<a class="el" href="DataArray_8h_source.html">DataArray.h</a></li>
 <li>core/<b>DataArray.cpp</b></li>
 </ul>

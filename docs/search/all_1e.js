@@ -1,10 +1,8 @@
 var searchData=
 [
-  ['wait_0',['wait',['../classAsyncFw_1_1AbstractThread_1_1Holder.html#a795fc5bb1d23123fc892b8d414c56083',1,'AsyncFw::AbstractThread::Holder::wait()'],['../structAsyncFw_1_1CoroutineTask.html#a820a0a3410c4a14a71ad3599f46c1bb0',1,'AsyncFw::CoroutineTask::wait()']]],
-  ['waitfinished_1',['waitFinished',['../classAsyncFw_1_1AbstractThread.html#a2c37d275a098bbcb92912646d773186a',1,'AsyncFw::AbstractThread']]],
-  ['waitinterrupted_2',['waitInterrupted',['../classAsyncFw_1_1AbstractThread.html#a3b5605a008bf64620fac9d28717d98fb',1,'AsyncFw::AbstractThread']]],
-  ['warning_3',['Warning',['../classAsyncFw_1_1LogStream.html#afa2f6c5311ced6b973d39d6e5ced5731a96aad685f21a4a927c6c3a74274efd5a',1,'AsyncFw::LogStream']]],
-  ['worker_20thread_3a_20tt_20thread_20tt_20secure_20sockets_4',['4. Network Worker Thread: &lt;tt&gt;Thread&lt;/tt&gt; &amp; Secure Sockets',['../index.html#autotoc_md6',1,'']]],
-  ['workload_5',['workLoad',['../classAsyncFw_1_1AbstractThread.html#a1c4c7bde4ac10ed166139be4eafb04e3',1,'AsyncFw::AbstractThread']]],
-  ['writeevent_6',['writeEvent',['../classAsyncFw_1_1AbstractSocket.html#af8141e7714603e6c83c0640a2d74ec90',1,'AsyncFw::AbstractSocket::writeEvent()'],['../classAsyncFw_1_1HttpSocket.html#ac276bcd3a5e86289eb37ea7fd062559b',1,'AsyncFw::HttpSocket::writeEvent()']]]
+  ['value_0',['Value',['../structAsyncFw_1_1ApplicationNotifier_1_1Value.html',1,'AsyncFw::ApplicationNotifier']]],
+  ['verifycertificate_1',['verifyCertificate',['../classAsyncFw_1_1TlsContext.html#a0355cba7c5bc6468bc9b53e0a21cfaef',1,'AsyncFw::TlsContext']]],
+  ['version_2',['Version',['../structAsyncFw_1_1Version.html',1,'AsyncFw']]],
+  ['version_2eh_3',['Version.h',['../Version_8h.html',1,'']]],
+  ['view_4',['view',['../classAsyncFw_1_1DataArray.html#a5406261e5730adfa64e4d0bbd0083e31',1,'AsyncFw::DataArray']]]
 ];

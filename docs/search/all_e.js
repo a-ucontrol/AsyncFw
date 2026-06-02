@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['fail_0',['fail',['../classAsyncFw_1_1PollNotifier.html#a52d96002ff262ab846331324c64882e0',1,'AsyncFw::PollNotifier']]],
+  ['fail_0',['fail',['../classAsyncFw_1_1DataStream.html#a58e67062bf6cd3f77a8203758b01eaf8',1,'AsyncFw::DataStream::fail()'],['../classAsyncFw_1_1PollNotifier.html#a52d96002ff262ab846331324c64882e0',1,'AsyncFw::PollNotifier::fail()']]],
   ['fd_5f_1',['fd_',['../classAsyncFw_1_1AbstractSocket.html#a1380ccdb23066b7084eca638b4232761',1,'AsyncFw::AbstractSocket']]],
   ['file_2',['File',['../classAsyncFw_1_1File.html',1,'AsyncFw']]],
   ['file_2eh_3',['File.h',['../File_8h.html',1,'']]],

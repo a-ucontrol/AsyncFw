@@ -1,0 +1,5 @@
+<map id="AsyncFw::DataArray::view" name="AsyncFw::DataArray::view">
+<area shape="rect" id="Node000001" title="Creates a lightweight, non&#45;allocating view slicing a sub&#45;region of this byte array." alt="" coords="204,5,347,48"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1HttpSocket.html#a7163448458d68f433dbdb214a6175be3" title="Called when there is data to read." alt="" coords="5,5,156,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="188,29,156,29,156,24,188,24"/>
+</map>

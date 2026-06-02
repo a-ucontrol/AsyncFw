@@ -359,7 +359,7 @@ std::any&#160;</td><td class="memItemRight" valign="bottom"><b>data_</b></td></t
 <div class="line">  }</div>
 <div class="line">  <span class="keywordtype">void</span> <a class="code hl_function" href="classAsyncFw_1_1AbstractSocket.html#a609ec54ec8aed39769d60319c4c15833">readEvent</a>() {</div>
 <div class="line">    AsyncFw::DataArray _da = read();</div>
-<div class="line">    logTrace() &lt;&lt; <span class="stringliteral">&quot;Read event:&quot;</span> &lt;&lt; _da.size() &lt;&lt; std::endl &lt;&lt; _da.view(0, 256);</div>
+<div class="line">    logTrace() &lt;&lt; <span class="stringliteral">&quot;Read event:&quot;</span> &lt;&lt; _da.size() &lt;&lt; std::endl &lt;&lt; _da.<a class="code hl_function" href="classAsyncFw_1_1DataArray.html#a5406261e5730adfa64e4d0bbd0083e31">view</a>(0, 256);</div>
 <div class="line">    da += _da;</div>
 <div class="line">  }</div>
 <div class="line"> </div>

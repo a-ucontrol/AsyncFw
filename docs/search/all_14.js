@@ -1,16 +1,15 @@
 var searchData=
 [
-  ['mainthread_0',['MainThread',['../classAsyncFw_1_1MainThread.html',1,'AsyncFw']]],
-  ['mainthread_20tt_1',['8. The Application Master: &lt;tt&gt;MainThread&lt;/tt&gt;',['../index.html#autotoc_md10',1,'']]],
-  ['mainthread_2eh_2',['MainThread.h',['../MainThread_8h.html',1,'']]],
-  ['master_3a_20tt_20mainthread_20tt_3',['8. The Application Master: &lt;tt&gt;MainThread&lt;/tt&gt;',['../index.html#autotoc_md10',1,'']]],
-  ['message_4',['Message',['../structAsyncFw_1_1LogStream_1_1Message.html',1,'AsyncFw::LogStream']]],
-  ['message_5',['message',['../classAsyncFw_1_1LogStream.html#a43ecc969a022f7c4a21174068e438ed4',1,'AsyncFw::LogStream']]],
-  ['messagetype_6',['MessageType',['../classAsyncFw_1_1LogStream.html#afa2f6c5311ced6b973d39d6e5ced5731',1,'AsyncFw::LogStream']]],
-  ['misc_7',['misc',['../structAsyncFw_1_1MulticastDns_1_1Host.html#a987597239d178d34f2bea34880e11cd8',1,'AsyncFw::MulticastDns::Host']]],
-  ['modifypolldescriptor_8',['modifyPollDescriptor',['../classAsyncFw_1_1AbstractThread.html#a04d4f3fbcd28474e8834329fdb290ea8',1,'AsyncFw::AbstractThread']]],
-  ['modifytimer_9',['modifyTimer',['../classAsyncFw_1_1AbstractThread.html#a215d591f056ad7bdf5a30bff56f06508',1,'AsyncFw::AbstractThread']]],
-  ['multicastdns_10',['MulticastDns',['../classAsyncFw_1_1MulticastDns.html',1,'AsyncFw::MulticastDns'],['../classAsyncFw_1_1MulticastDns.html#ab9bfb41e98cd4ecf1cc63f8acd023afd',1,'AsyncFw::MulticastDns::MulticastDns()']]],
-  ['multicastdns_20tt_11',['9. Asynchronous Service Discovery: &lt;tt&gt;MulticastDns&lt;/tt&gt;',['../index.html#autotoc_md11',1,'']]],
-  ['multicastdns_2eh_12',['MulticastDns.h',['../MulticastDns_8h.html',1,'']]]
+  ['listen_0',['listen',['../classAsyncFw_1_1AbstractSocket.html#a426c3b10de20344079571d6708f096ca',1,'AsyncFw::AbstractSocket::listen()'],['../classAsyncFw_1_1ListenSocket.html#a426c3b10de20344079571d6708f096ca',1,'AsyncFw::ListenSocket::listen()']]],
+  ['listening_1',['Listening',['../classAsyncFw_1_1AbstractSocket.html#a6fc3dae51b6b38d67f1c3861dcbb23bda5b13d3f73cf426c72bbd8598ede9442d',1,'AsyncFw::AbstractSocket']]],
+  ['listensocket_2',['ListenSocket',['../classAsyncFw_1_1ListenSocket.html',1,'AsyncFw']]],
+  ['listensocket_2eh_3',['ListenSocket.h',['../ListenSocket_8h.html',1,'']]],
+  ['llipv4_4',['llipv4',['../structAsyncFw_1_1MulticastDns_1_1Host.html#a153d28d6f64ff9992efef53a035d35c3',1,'AsyncFw::MulticastDns::Host']]],
+  ['lockguard_5',['LockGuard',['../classAsyncFw_1_1AbstractThread.html#a4e97803ef650d36ba80ef1471c4b643c',1,'AsyncFw::AbstractThread']]],
+  ['lockguard_6',['lockGuard',['../classAsyncFw_1_1AbstractThread.html#a4a8cbb3fec33a81a2de43e7f5217acfb',1,'AsyncFw::AbstractThread']]],
+  ['log_7',['Log',['../classAsyncFw_1_1Log.html',1,'AsyncFw']]],
+  ['log_2eh_8',['Log.h',['../Log_8h.html',1,'']]],
+  ['logstream_9',['LogStream',['../classAsyncFw_1_1LogStream.html',1,'AsyncFw']]],
+  ['logstream_20tt_10',['7. Thread-Safe Diagnostic Stream: &lt;tt&gt;LogStream&lt;/tt&gt;',['../index.html#autotoc_md9',1,'']]],
+  ['logstream_2eh_11',['LogStream.h',['../LogStream_8h.html',1,'']]]
 ];

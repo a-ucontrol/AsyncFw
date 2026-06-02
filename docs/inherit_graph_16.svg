@@ -11,7 +11,7 @@
 <!-- Node0 -->
 <g id="Node000000" class="node">
 <title>Node0</title>
-<g id="a_Node000000"><a xlink:href="classAsyncFw_1_1DataArrayView.html" target="_top" xlink:title="The DataArrayView class.">
+<g id="a_Node000000"><a xlink:href="classAsyncFw_1_1DataArrayView.html" target="_top" xlink:title="A lightweight, non&#45;allocating string&#45;like descriptor pointing to a contiguous block of binary data.">
 <polygon fill="white" stroke="#666666" points="129.25,-20 0,-20 0,0 129.25,0 129.25,-20"/>
 <text text-anchor="middle" x="64.62" y="-6.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::DataArrayView</text>
 </a>

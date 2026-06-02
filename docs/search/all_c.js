@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['dataarray_0',['DataArray',['../classAsyncFw_1_1DataArray.html',1,'AsyncFw']]],
+  ['dataarray_0',['DataArray',['../classAsyncFw_1_1DataArray.html',1,'AsyncFw::DataArray'],['../classAsyncFw_1_1DataArray.html#ab3ca8135417a38c8438a82f226b792ec',1,'AsyncFw::DataArray::DataArray(const std::string &amp;)'],['../classAsyncFw_1_1DataArray.html#a80e9cc4ecd584fae8211c51838db9ba1',1,'AsyncFw::DataArray::DataArray(const char *)'],['../classAsyncFw_1_1DataArray.html#adc24fdbdf9a018f646ac690cd7e2d52c',1,'AsyncFw::DataArray::DataArray(const char)'],['../classAsyncFw_1_1DataArray.html#ad3f202b6a0817e784de6018dcd2792c7',1,'AsyncFw::DataArray::DataArray(const std::vector&lt; char &gt; &amp;)']]],
   ['dataarray_2eh_1',['DataArray.h',['../DataArray_8h.html',1,'']]],
   ['dataarrayabstracttcp_2',['DataArrayAbstractTcp',['../classAsyncFw_1_1DataArrayAbstractTcp.html',1,'AsyncFw']]],
   ['dataarrayabstracttcp_2eh_3',['DataArrayAbstractTcp.h',['../DataArrayAbstractTcp_8h.html',1,'']]],
@@ -11,8 +11,8 @@ var searchData=
   ['dataarraytcpclient_2eh_8',['DataArrayTcpClient.h',['../DataArrayTcpClient_8h.html',1,'']]],
   ['dataarraytcpserver_9',['DataArrayTcpServer',['../classAsyncFw_1_1DataArrayTcpServer.html',1,'AsyncFw']]],
   ['dataarraytcpserver_2eh_10',['DataArrayTcpServer.h',['../DataArrayTcpServer_8h.html',1,'']]],
-  ['dataarrayview_11',['DataArrayView',['../classAsyncFw_1_1DataArrayView.html',1,'AsyncFw']]],
-  ['datastream_12',['DataStream',['../classAsyncFw_1_1DataStream.html',1,'AsyncFw']]],
+  ['dataarrayview_11',['DataArrayView',['../classAsyncFw_1_1DataArrayView.html',1,'AsyncFw::DataArrayView'],['../classAsyncFw_1_1DataArrayView.html#ad04f46e3d78a878d98603a6820e6039d',1,'AsyncFw::DataArrayView::DataArrayView(Args... args)'],['../classAsyncFw_1_1DataArrayView.html#a0614fa75fc23b3a9839c45733957d6e0',1,'AsyncFw::DataArrayView::DataArrayView(const uint8_t *, std::size_t)'],['../classAsyncFw_1_1DataArrayView.html#a5a35bb0c7c6c44781b883a789520128c',1,'AsyncFw::DataArrayView::DataArrayView(const DataArray::iterator, const DataArray::iterator)'],['../classAsyncFw_1_1DataArrayView.html#a5037f9b6a55397a1a999e22198bb54ea',1,'AsyncFw::DataArrayView::DataArrayView(const DataArray &amp;)']]],
+  ['datastream_12',['DataStream',['../classAsyncFw_1_1DataStream.html',1,'AsyncFw::DataStream'],['../classAsyncFw_1_1DataStream.html#aadb8f27fe18a349a25b2cd656d686f92',1,'AsyncFw::DataStream::DataStream()'],['../classAsyncFw_1_1DataStream.html#a5483f91b758e0383fec1fd3c540425ef',1,'AsyncFw::DataStream::DataStream(const DataArray &amp;)']]],
   ['debug_13',['Debug',['../classAsyncFw_1_1LogStream.html#afa2f6c5311ced6b973d39d6e5ced5731a39dfd70cbe9922423fa0db22b9dddfa2',1,'AsyncFw::LogStream']]],
   ['deep_20coroutine_20orchestration_20rpc_3a_20tt_20coinvoke_20tt_14',['3. Deep Coroutine Orchestration &amp; RPC: &lt;tt&gt;coInvoke&lt;/tt&gt;',['../index.html#autotoc_md5',1,'']]],
   ['default_15',['Default',['../classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html#a860b83046c90e62d768e0acde74626c6aa6ac69ca7e3f98af70b7ed067e4f9bdc',1,'AsyncFw::AbstractFunctionConnector::Connection']]],

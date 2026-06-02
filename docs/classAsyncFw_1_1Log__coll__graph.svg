@@ -126,7 +126,7 @@
 <!-- Node6 -->
 <g id="Node000006" class="node">
 <title>Node6</title>
-<g id="a_Node000006"><a xlink:href="classAsyncFw_1_1DataArrayList.html" target="_top" xlink:title="The DataArrayList class.">
+<g id="a_Node000006"><a xlink:href="classAsyncFw_1_1DataArrayList.html" target="_top" xlink:title="A specialized container aggregating multiple DataArray instances.">
 <polygon fill="white" stroke="#666666" points="362.5,-145 239.25,-145 239.25,-125 362.5,-125 362.5,-145"/>
 <text text-anchor="middle" x="300.88" y="-131.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::DataArrayList</text>
 </a>
