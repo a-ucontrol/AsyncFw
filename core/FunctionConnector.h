@@ -80,38 +80,37 @@ protected:
 };
 
 namespace internal {
-template <AbstractFunctionConnector::ConnectionPolicy Policy, typename T, typename... Args>
+template <AbstractFunctionConnector::ConnectionPolicy P, typename T, typename... Args>
 class FunctionConnectorProtected;
-template <AbstractFunctionConnector::ConnectionPolicy Policy = AbstractFunctionConnector::Auto, typename... Args>
-class FunctionConnectorImpl : public AbstractFunctionConnector {
+template <AbstractFunctionConnector::ConnectionPolicy P = AbstractFunctionConnector::Auto, typename... Args>
+class FunctionConnector : public AbstractFunctionConnector {
 public:
-  FunctionConnectorImpl() : AbstractFunctionConnector(Policy) {}
+  FunctionConnector() : AbstractFunctionConnector(P) {}
+  /** @brief Connects a callable object (such as a lambda, static function pointer, or functor).
+  @tparam T The thread execution context strategy. Defaults to Connection::Default (falls back to the connector's policy). @param f The callable target object representing the receiver slot. @return Reference to the newly allocated Connection. */
   template <Connection::Type T = Connection::Default, typename F>
   Connection &connect(F f) const {
-    constexpr uint8_t policyVal = static_cast<uint8_t>(Policy);
-    constexpr bool isStrict = (policyVal & 0x10) != 0;
-    constexpr typename Connection::Type basePolicyType = static_cast<Connection::Type>(policyVal & ~0x10);
-    constexpr typename Connection::Type finalType = (T != Connection::Default) ? T : basePolicyType;
-    if constexpr (isStrict) { static_assert(finalType == basePolicyType, "Error: Connection type mismatch!"); }
+    constexpr typename Connection::Type type = (T != Connection::Default) ? T : static_cast<Connection::Type>(P & ~0x10);
+    if constexpr ((P & 0x10) != 0) { static_assert(type == static_cast<Connection::Type>(P & ~0x10), "Error: Connection type mismatch!"); }
     std::lock_guard<std::mutex> lock(mutex);
 #ifndef __clang_analyzer__
-    return *new Connection(f, this, finalType);
+    return *new Connection(f, this, type);
 #endif
   }
+  /** @brief Connects a specific class member method.
+  @tparam T The thread execution context strategy. Defaults to Connection::Default. @param m The pointer to the member function of the target object. @param o The pointer to the specific instance of the object containing the member function. @return Reference to the newly allocated Connection. */
   template <Connection::Type T = Connection::Default, typename M, typename O>
   Connection &connect(M m, O *o) const {
-    constexpr uint8_t policyVal = static_cast<uint8_t>(Policy);
-    constexpr bool isStrict = (policyVal & 0x10) != 0;
-    constexpr typename Connection::Type basePolicyType = static_cast<Connection::Type>(policyVal & ~0x10);
-    constexpr typename Connection::Type finalType = (T != Connection::Default) ? T : basePolicyType;
-    if constexpr (isStrict) { static_assert(finalType == basePolicyType, "Error: Connection type mismatch!"); }
+    constexpr typename Connection::Type type = (T != Connection::Default) ? T : static_cast<Connection::Type>(P & ~0x10);
+    if constexpr ((P & 0x10) != 0) { static_assert(type == static_cast<Connection::Type>(P & ~0x10), "Error: Connection type mismatch!"); }
     std::lock_guard<std::mutex> lock(mutex);
 #ifndef __clang_analyzer__
-    return *new Connection(m, o, this, finalType);
+    return *new Connection(m, o, this, type);
 #endif
   }
   /** @brief Emits/Sends the signal, notifying all connected receivers.
-  @details Iterates through the delivery list and dispatches arguments to each slot based on their configured Connection::Type (Direct, Queued, or Sync). @param args The pack of arguments to forward to all subscribed receivers. */
+  @details Iterates through the delivery list and dispatches arguments to each slot based on their configured Connection::Type.
+  @param args The pack of arguments to forward to all subscribed receivers. */
   void operator()(Args... args) const {
     std::lock_guard<std::mutex> lock(mutex);
     for (const AbstractFunctionConnector::Connection *c : list) {
@@ -133,13 +132,12 @@ public:
   @tparam T The owner class (emitter) that is granted exclusive access to message emission.
   @brief Example: @snippet snippet.dox FunctionConnectorProtected */
   template <typename T>
-  using Protected = internal::FunctionConnectorProtected<Policy, T, Args...>;
+  using Protected = internal::FunctionConnectorProtected<P, T, Args...>;
 
 protected:
   /** @class Connection FunctionConnector.h <AsyncFw/FunctionConnector> @brief Implementation of a connection with specific argument. */
   class Connection : public AbstractFunctionConnector::Connection {
-    template <AbstractFunctionConnector::ConnectionPolicy P, typename... A>  //!!!
-    friend class FunctionConnectorImpl;
+    friend FunctionConnector;
 
   public:
     template <typename F>
@@ -184,37 +182,45 @@ protected:
 };
 //A protected connector where only a single designated sender can emit messages.
 template <AbstractFunctionConnector::ConnectionPolicy P, typename T, typename... Args>
-class FunctionConnectorProtected : private FunctionConnectorImpl<P, Args...> {
+class FunctionConnectorProtected : private FunctionConnector<P, Args...> {
   friend T;
 
 public:
-  using FunctionConnectorImpl<P, Args...>::connect;
+  using FunctionConnector<P, Args...>::connect;
 
 protected:
-  using FunctionConnectorImpl<P, Args...>::operator();
+  using FunctionConnector<P, Args...>::operator();
 };
 }  // namespace internal
 
 /** @class FunctionConnector FunctionConnector.h <AsyncFw/FunctionConnector> @brief Provides a thread-safe, publisher-subscriber mechanism to establish sender-to-receivers connections.
 @details Receivers can be automatically invoked in their own designated target threads (the default behavior). Other frameworks typically implement this asynchronous communication pattern using bare callbacks or function pointers. @n FunctionConnector messages (signals) are generated by an object when its internal state changes in a way that might be of interest to other application components. While these connectors are public functions and can technically be emitted from anywhere, it is highly recommended to emit them exclusively from within the class that defines them. @n To strictly restrict message emission to only one specific object type and enforce encapsulation, use the FunctionConnector::Protected variant instead.
+@par The class supports three declaration variants depending on encapsulation and validation needs:
+1. **Basic Variant (Auto policy):** @code AsyncFw::FunctionConnector<int, std::string> connector; @endcode
+2. **Protected Variant (Auto policy, emission restricted to Owner):** @code AsyncFw::FunctionConnector<int, std::string>::Protected<Sender> connector; @endcode
+3. **Strict Compile-Time Variant (Emission restricted to Owner + strict connection type validation):** @code AsyncFw::FunctionConnector<int, std::string>::Policy<AsyncFw::AbstractFunctionConnector::DirectOnly>::Protected<Sender> connector; @endcode
 @note All subscription registrations and signal emissions are fully synchronized internally.
 @brief Example: @snippet FunctionConnector/main.cpp snippet */
 template <typename... Args>
-class FunctionConnector : public internal::FunctionConnectorImpl<AbstractFunctionConnector::Auto, Args...> {
+class FunctionConnector : public internal::FunctionConnector<AbstractFunctionConnector::Auto, Args...> {
 public:
-  using internal::FunctionConnectorImpl<AbstractFunctionConnector::Auto, Args...>::FunctionConnectorImpl;
-
-  // Сокращенный вариант с политикой Auto
+  using internal::FunctionConnector<AbstractFunctionConnector::Auto, Args...>::FunctionConnector;
+  /** @brief Establishes a connection to a callable target.
+  @details Allows registering lambdas, static functions, and class member methods. If an explicit, incompatible connection type is requested (e.g., requesting `Queued` on a `DirectOnly` policy), the error is detected at compile time via a static assertion.
+  @tparam T The thread execution context strategy (Connection::Type). Defaults to Connection::Default. */
+  using internal::FunctionConnector<AbstractFunctionConnector::Auto, Args...>::connect;
+  /** @class Protected @brief A protected connector variant where only a single designated owner class can emit messages.
+  @details Enhances encapsulation by preventing external code from triggering the connector. External code can only subscribe to notifications. Uses the default `ConnectionPolicy::Auto`.
+  @tparam T The owner class (emitter) that is granted exclusive access to message emission. */
   template <typename T>
   using Protected = internal::FunctionConnectorProtected<AbstractFunctionConnector::Auto, T, Args...>;
-
-  // Шаблонная структура для полной цепочки вызова
-  template <AbstractFunctionConnector::ConnectionPolicy CustomPolicy>
+  /** @struct Policy @brief A configuration interface to enforce a specific connection policy at compile time.
+  @tparam P The enforced strict policy (e.g., Direct, QueuedOnly, etc.). */
+  template <AbstractFunctionConnector::ConnectionPolicy P>
   struct Policy {
-    using Public = internal::FunctionConnectorImpl<CustomPolicy, Args...>;
-
+    using Public = internal::FunctionConnector<P, Args...>;
     template <typename T>
-    using Protected = internal::FunctionConnectorProtected<CustomPolicy, T, Args...>;
+    using Protected = internal::FunctionConnectorProtected<P, T, Args...>;
   };
 };
 
