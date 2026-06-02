@@ -1,10 +1,7 @@
 <map id="AsyncFw::HttpServer" name="AsyncFw::HttpServer">
-<area shape="rect" id="Node000001" title="The HttpServer class." alt="" coords="29,343,176,369"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="5,220,200,279"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="105,294,105,342,100,342,100,294"/>
-<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractFunctionConnector.html" title="The AbstractFunctionConnector class provides the base functionality for FunctionConnector." alt="" coords="6,5,189,48"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="101,63,104,219,99,220,95,63"/>
-<area shape="rect" id="Node000004" href="$classAsyncFw_1_1FunctionConnector.html" title="Provides a thread&#45;safe, publisher&#45;subscriber mechanism to establish sender&#45;to&#45;receivers connections." alt="" coords="119,97,313,140"/>
-<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="138,55,190,95,187,99,134,59"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="190,154,130,221,126,218,186,150"/>
+<area shape="rect" id="Node000001" title="The HttpServer class." alt="" coords="29,251,176,277"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="5,128,200,187"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="105,202,105,250,100,250,100,202"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1FunctionConnector.html" title="Provides a thread&#45;safe, publisher&#45;subscriber mechanism to establish sender&#45;to&#45;receivers connections." alt="" coords="5,5,200,48"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="105,63,105,127,100,127,100,63"/>
 </map>

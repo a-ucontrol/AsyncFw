@@ -132,7 +132,7 @@ $(function(){initNavTree('ContainerTask_2main_8cpp-example.html',''); initResiza
 <div class="line">    tasks.push(task);</div>
 <div class="line">  }</div>
 <div class="line"> </div>
-<div class="line">  timer.<a id="a3" name="a3"></a><a class="code hl_variable" href="classAsyncFw_1_1Timer.html#acf307d575a38d2b3bb852202d0126fcd">timeout</a>.<a id="a4" name="a4"></a><a class="code hl_function" href="classAsyncFw_1_1FunctionConnector.html#a359a9c03d52bc62db628e4f53be72457">connect</a>([&amp;tasks]() {</div>
+<div class="line">  timer.<a id="a3" name="a3"></a><a class="code hl_variable" href="classAsyncFw_1_1Timer.html#acf307d575a38d2b3bb852202d0126fcd">timeout</a>.<a id="a4" name="a4"></a>connect([&amp;tasks]() {</div>
 <div class="line">    <span class="keywordflow">if</span> (tasks.empty()) {</div>
 <div class="line">      <a id="a5" name="a5"></a><a class="code hl_function" href="classAsyncFw_1_1MainThread.html#a76fed3a2c1cfdbdb67f2b209e6457657">AsyncFw::MainThread::exit</a>(0);</div>
 <div class="line">      <span class="keywordflow">return</span>;</div>
@@ -152,7 +152,6 @@ $(function(){initNavTree('ContainerTask_2main_8cpp-example.html',''); initResiza
 <div class="line">  <span class="keywordflow">return</span> ret;</div>
 <div class="line">}</div>
 <div class="ttc" id="aclassAsyncFw_1_1AbstractThread_html_a933858c9506f67f17c5ada5caeaa8508"><div class="ttname"><a href="classAsyncFw_1_1AbstractThread.html#a933858c9506f67f17c5ada5caeaa8508">AsyncFw::AbstractThread::start</a></div><div class="ttdeci">void start()</div><div class="ttdoc">Create a managed thread and run exec().</div></div>
-<div class="ttc" id="aclassAsyncFw_1_1FunctionConnector_html_a359a9c03d52bc62db628e4f53be72457"><div class="ttname"><a href="classAsyncFw_1_1FunctionConnector.html#a359a9c03d52bc62db628e4f53be72457">AsyncFw::FunctionConnector::connect</a></div><div class="ttdeci">Connection &amp; connect(T f, Connection::Type t=Connection::Default) const</div><div class="ttdoc">Connects a callable object (such as a lambda, static function pointer, or functor).</div><div class="ttdef"><b>Definition</b> FunctionConnector.h:97</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1MainThread_html_a76fed3a2c1cfdbdb67f2b209e6457657"><div class="ttname"><a href="classAsyncFw_1_1MainThread.html#a76fed3a2c1cfdbdb67f2b209e6457657">AsyncFw::MainThread::exit</a></div><div class="ttdeci">static void exit()</div><div class="ttdoc">Signals the master event loop to terminate gracefully.</div><div class="ttdef"><b>Definition</b> MainThread.h:61</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1MainThread_html_ad12e620772820ad751868c7b49fa4190"><div class="ttname"><a href="classAsyncFw_1_1MainThread.html#ad12e620772820ad751868c7b49fa4190">AsyncFw::MainThread::exec</a></div><div class="ttdeci">static int exec()</div><div class="ttdoc">Starts the master application event loop on the current thread. This call is blocking....</div><div class="ttdef"><b>Definition</b> MainThread.h:49</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1Task_html"><div class="ttname"><a href="classAsyncFw_1_1Task.html">AsyncFw::Task</a></div><div class="ttdoc">The Task class.</div><div class="ttdef"><b>Definition</b> Task.h:31</div></div>

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.13.2"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>AsyncFw: AsyncFw::FunctionConnector&lt; Args &gt;::Connection Class Reference</title>
+<title>AsyncFw: AsyncFw::internal::FunctionConnector&lt; P, Args &gt;::Connection Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -77,7 +77,7 @@ $(function() { codefold.init(0); });
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(function(){initNavTree('classAsyncFw_1_1FunctionConnector_1_1Connection.html',''); initResizable(true); });
+$(function(){initNavTree('classAsyncFw_1_1internal_1_1FunctionConnector_1_1Connection.html',''); initResizable(true); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -105,9 +105,8 @@ $(function(){initNavTree('classAsyncFw_1_1FunctionConnector_1_1Connection.html',
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#friends">Friends</a> &#124;
-<a href="classAsyncFw_1_1FunctionConnector_1_1Connection-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">AsyncFw::FunctionConnector&lt; Args &gt;::Connection Class Reference</div></div>
+<a href="classAsyncFw_1_1internal_1_1FunctionConnector_1_1Connection-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">AsyncFw::internal::FunctionConnector&lt; P, Args &gt;::Connection Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
@@ -116,36 +115,30 @@ $(function(){initNavTree('classAsyncFw_1_1FunctionConnector_1_1Connection.html',
 
 <p><code>#include &lt;<a class="el" href="FunctionConnector_8h_source.html">AsyncFw/FunctionConnector</a>&gt;</code></p>
 <div id="dynsection-0" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Inheritance diagram for AsyncFw::FunctionConnector&lt; Args &gt;::Connection:</div>
+  <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Inheritance diagram for AsyncFw::internal::FunctionConnector&lt; P, Args &gt;::Connection:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1FunctionConnector_1_1Connection__inherit__graph.svg" width="206" height="144"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1internal_1_1FunctionConnector_1_1Connection__inherit__graph.svg" width="195" height="160"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <div id="dynsection-1" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-1-trigger" src="closed.png" alt="+"/> Collaboration diagram for AsyncFw::FunctionConnector&lt; Args &gt;::Connection:</div>
+  <img id="dynsection-1-trigger" src="closed.png" alt="+"/> Collaboration diagram for AsyncFw::internal::FunctionConnector&lt; P, Args &gt;::Connection:</div>
 <div id="dynsection-1-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-1-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1FunctionConnector_1_1Connection__coll__graph.svg" width="206" height="236"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1internal_1_1FunctionConnector_1_1Connection__coll__graph.svg" width="195" height="252"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a0cc93a6ebc2b385d1a46a0accec108e4" id="r_a0cc93a6ebc2b385d1a46a0accec108e4"><td class="memTemplParams" colspan="2"><a id="a0cc93a6ebc2b385d1a46a0accec108e4" name="a0cc93a6ebc2b385d1a46a0accec108e4"></a>
+<tr class="memitem:accf9beaacbcdae14be275eae517e657d" id="r_accf9beaacbcdae14be275eae517e657d"><td class="memTemplParams" colspan="2"><a id="accf9beaacbcdae14be275eae517e657d" name="accf9beaacbcdae14be275eae517e657d"></a>
 template&lt;typename F&gt; </td></tr>
-<tr class="memitem:a0cc93a6ebc2b385d1a46a0accec108e4"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>Connection</b> (F &amp;f, const <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector.html">AbstractFunctionConnector</a> *c, <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html#a860b83046c90e62d768e0acde74626c6">Type</a> t)</td></tr>
-<tr class="separator:a0cc93a6ebc2b385d1a46a0accec108e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a47e699990197238991a5278e29d419fc" id="r_a47e699990197238991a5278e29d419fc"><td class="memTemplParams" colspan="2"><a id="a47e699990197238991a5278e29d419fc" name="a47e699990197238991a5278e29d419fc"></a>
+<tr class="memitem:accf9beaacbcdae14be275eae517e657d"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>Connection</b> (F &amp;f, const <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector.html">AbstractFunctionConnector</a> *c, <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html#a860b83046c90e62d768e0acde74626c6">Type</a> t)</td></tr>
+<tr class="separator:accf9beaacbcdae14be275eae517e657d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace3e9c279d4d2094e166ee6dd59dc0e8" id="r_ace3e9c279d4d2094e166ee6dd59dc0e8"><td class="memTemplParams" colspan="2"><a id="ace3e9c279d4d2094e166ee6dd59dc0e8" name="ace3e9c279d4d2094e166ee6dd59dc0e8"></a>
 template&lt;typename M, typename O&gt; </td></tr>
-<tr class="memitem:a47e699990197238991a5278e29d419fc"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>Connection</b> (M m, O *o, const <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector.html">AbstractFunctionConnector</a> *c, <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html#a860b83046c90e62d768e0acde74626c6">Type</a> t)</td></tr>
-<tr class="separator:a47e699990197238991a5278e29d419fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="friends" name="friends"></a>
-Friends</h2></td></tr>
-<tr class="memitem:a4428d446a0cf1a5715ba2bda15163d30" id="r_a4428d446a0cf1a5715ba2bda15163d30"><td class="memItemLeft" align="right" valign="top"><a id="a4428d446a0cf1a5715ba2bda15163d30" name="a4428d446a0cf1a5715ba2bda15163d30"></a>
-class&#160;</td><td class="memItemRight" valign="bottom"><b>FunctionConnector&lt; Args... &gt;</b></td></tr>
-<tr class="separator:a4428d446a0cf1a5715ba2bda15163d30"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace3e9c279d4d2094e166ee6dd59dc0e8"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>Connection</b> (M m, O *o, const <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector.html">AbstractFunctionConnector</a> *c, <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html#a860b83046c90e62d768e0acde74626c6">Type</a> t)</td></tr>
+<tr class="separator:ace3e9c279d4d2094e166ee6dd59dc0e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -174,8 +167,8 @@ Additional Inherited Members</h2></td></tr>
 <tr class="separator:a6f668b2485a1e03d730923260e597cd3 inherit pro_methods_classAsyncFw_1_1AbstractFunctionConnector_1_1Connection"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><div class="compoundTemplParams">template&lt;typename... Args&gt;<br />
-class AsyncFw::FunctionConnector&lt; Args &gt;::Connection</div><p>Implementation of a connection with specific argument. </p>
+<div class="textblock"><div class="compoundTemplParams">template&lt;<a class="el" href="classAsyncFw_1_1AbstractFunctionConnector.html#ab248bd16cbfcac609f58d401abec4368">AbstractFunctionConnector::ConnectionPolicy</a> P = AbstractFunctionConnector::Auto, typename... Args&gt;<br />
+class AsyncFw::internal::FunctionConnector&lt; P, Args &gt;::Connection</div><p>Implementation of a connection with specific argument. </p>
 </div><hr/>The documentation for this class was generated from the following file:<ul>
 <li>core/<a class="el" href="FunctionConnector_8h_source.html">FunctionConnector.h</a></li>
 </ul>
@@ -184,7 +177,7 @@ class AsyncFw::FunctionConnector&lt; Args &gt;::Connection</div><p>Implementatio
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><b>AsyncFw</b></li><li class="navelem"><a class="el" href="classAsyncFw_1_1FunctionConnector.html">FunctionConnector</a></li><li class="navelem"><a class="el" href="classAsyncFw_1_1FunctionConnector_1_1Connection.html">Connection</a></li>
+    <li class="navelem"><b>AsyncFw</b></li><li class="navelem"><b>internal</b></li><li class="navelem"><b>FunctionConnector</b></li><li class="navelem"><a class="el" href="classAsyncFw_1_1internal_1_1FunctionConnector_1_1Connection.html">Connection</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
   </ul>
 </div>

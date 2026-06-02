@@ -106,7 +106,6 @@ $(function(){initNavTree('classAsyncFw_1_1FunctionConnector.html',''); initResiz
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-types">Public Types</a> &#124;
-<a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classAsyncFw_1_1FunctionConnector-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">AsyncFw::FunctionConnector&lt; Args &gt; Class Template Reference</div></div>
 </div><!--header-->
@@ -121,84 +120,39 @@ $(function(){initNavTree('classAsyncFw_1_1FunctionConnector.html',''); initResiz
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1FunctionConnector__inherit__graph.svg" width="936" height="1216"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
-<div id="dynsection-1" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-1-trigger" src="closed.png" alt="+"/> Collaboration diagram for AsyncFw::FunctionConnector&lt; Args &gt;:</div>
-<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-1-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1FunctionConnector__coll__graph.svg" width="206" height="144"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1FunctionConnector__inherit__graph.svg" width="704" height="1160"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAsyncFw_1_1FunctionConnector_1_1Connection.html">Connection</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implementation of a connection with specific argument.  <a href="classAsyncFw_1_1FunctionConnector_1_1Connection.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structAsyncFw_1_1FunctionConnector_1_1Policy.html">Policy</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a734e080cd73646c75b4b40fe5aa8d19d" id="r_a734e080cd73646c75b4b40fe5aa8d19d"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
-<tr class="memitem:a734e080cd73646c75b4b40fe5aa8d19d"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a734e080cd73646c75b4b40fe5aa8d19d">Protected</a> = internal::FunctionConnectorProtected&lt;T, Args...&gt;</td></tr>
-<tr class="memdesc:a734e080cd73646c75b4b40fe5aa8d19d"><td class="mdescLeft">&#160;</td><td class="mdescRight">A protected connector where only a single designated sender class can emit messages.  <br /></td></tr>
-<tr class="separator:a734e080cd73646c75b4b40fe5aa8d19d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pub_types_classAsyncFw_1_1AbstractFunctionConnector"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_types_classAsyncFw_1_1AbstractFunctionConnector')"><img src="closed.png" alt="-"/>&#160;Public Types inherited from <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector.html">AsyncFw::AbstractFunctionConnector</a></td></tr>
-<tr class="memitem:ab248bd16cbfcac609f58d401abec4368 inherit pub_types_classAsyncFw_1_1AbstractFunctionConnector" id="r_ab248bd16cbfcac609f58d401abec4368"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAsyncFw_1_1AbstractFunctionConnector.html#ab248bd16cbfcac609f58d401abec4368">ConnectionPolicy</a> : uint8_t { <br />
-&#160;&#160;<a class="el" href="classAsyncFw_1_1AbstractFunctionConnector.html#ab248bd16cbfcac609f58d401abec4368a480f988213a099791809a06ce8e412ff">Auto</a> = 0
-, <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector.html#ab248bd16cbfcac609f58d401abec4368aff480e11cf0224228dd92a034987e47a">Direct</a> = 0x01
-, <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector.html#ab248bd16cbfcac609f58d401abec4368a5d08e36148e4f87ea06266376ac65da9">Queued</a> = 0x02
-, <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector.html#ab248bd16cbfcac609f58d401abec4368aa337dbe9151a9446d65ecebf21f57cc7">Sync</a> = 0x04
-, <br />
-&#160;&#160;<a class="el" href="classAsyncFw_1_1AbstractFunctionConnector.html#ab248bd16cbfcac609f58d401abec4368a0f64e26ca67609e7e75f03d1c563c99b">AutoOnly</a> = 0x10
-, <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector.html#ab248bd16cbfcac609f58d401abec4368a3b1695a20470728ef441d8ccdd549b78">DirectOnly</a> = 0x11
-, <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector.html#ab248bd16cbfcac609f58d401abec4368af29d50765264f3f426d354883428c288">QueuedOnly</a> = 0x12
-, <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector.html#ab248bd16cbfcac609f58d401abec4368a067289a8bc60cc7b0be0e021db9ce81d">SyncOnly</a> = 0x14
-<br />
- }</td></tr>
-<tr class="memdesc:ab248bd16cbfcac609f58d401abec4368"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the default invocation behavior and validation constraints for the connector.  <a href="classAsyncFw_1_1AbstractFunctionConnector.html#ab248bd16cbfcac609f58d401abec4368">More...</a><br /></td></tr>
-<tr class="separator:ab248bd16cbfcac609f58d401abec4368 inherit pub_types_classAsyncFw_1_1AbstractFunctionConnector"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
-Public Member Functions</h2></td></tr>
-<tr class="memitem:a359a9c03d52bc62db628e4f53be72457" id="r_a359a9c03d52bc62db628e4f53be72457"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
-<tr class="memitem:a359a9c03d52bc62db628e4f53be72457"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classAsyncFw_1_1FunctionConnector_1_1Connection.html">Connection</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a359a9c03d52bc62db628e4f53be72457">connect</a> (T f, <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html#a860b83046c90e62d768e0acde74626c6">Connection::Type</a> t=<a class="el" href="classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html#a860b83046c90e62d768e0acde74626c6aa6ac69ca7e3f98af70b7ed067e4f9bdc">Connection::Default</a>) const</td></tr>
-<tr class="memdesc:a359a9c03d52bc62db628e4f53be72457"><td class="mdescLeft">&#160;</td><td class="mdescRight">Connects a callable object (such as a lambda, static function pointer, or functor).  <br /></td></tr>
-<tr class="separator:a359a9c03d52bc62db628e4f53be72457"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aec525ebc3b70cc3b4eeb2ec7d6fc0bd0" id="r_aec525ebc3b70cc3b4eeb2ec7d6fc0bd0"><td class="memTemplParams" colspan="2">template&lt;typename M, typename O&gt; </td></tr>
-<tr class="memitem:aec525ebc3b70cc3b4eeb2ec7d6fc0bd0"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classAsyncFw_1_1FunctionConnector_1_1Connection.html">Connection</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#aec525ebc3b70cc3b4eeb2ec7d6fc0bd0">connect</a> (M m, O *o, <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html#a860b83046c90e62d768e0acde74626c6">Connection::Type</a> t=<a class="el" href="classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html#a860b83046c90e62d768e0acde74626c6aa6ac69ca7e3f98af70b7ed067e4f9bdc">Connection::Default</a>) const</td></tr>
-<tr class="memdesc:aec525ebc3b70cc3b4eeb2ec7d6fc0bd0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Connects a specific class member method.  <br /></td></tr>
-<tr class="separator:aec525ebc3b70cc3b4eeb2ec7d6fc0bd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acc31eb4d17c3cc86ef80c37b169f846d" id="r_acc31eb4d17c3cc86ef80c37b169f846d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acc31eb4d17c3cc86ef80c37b169f846d">operator()</a> (Args... args) const</td></tr>
-<tr class="memdesc:acc31eb4d17c3cc86ef80c37b169f846d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emits/Sends the signal, notifying all connected receivers.  <br /></td></tr>
-<tr class="separator:acc31eb4d17c3cc86ef80c37b169f846d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acec5c0dd2b96446c4cb1b22d8c587bca" id="r_acec5c0dd2b96446c4cb1b22d8c587bca"><td class="memItemLeft" align="right" valign="top"><a id="acec5c0dd2b96446c4cb1b22d8c587bca" name="acec5c0dd2b96446c4cb1b22d8c587bca"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>AbstractFunctionConnector</b> (<a class="el" href="classAsyncFw_1_1AbstractFunctionConnector.html#ab248bd16cbfcac609f58d401abec4368">ConnectionPolicy</a>=<a class="el" href="classAsyncFw_1_1AbstractFunctionConnector.html#ab248bd16cbfcac609f58d401abec4368a480f988213a099791809a06ce8e412ff">Auto</a>)</td></tr>
-<tr class="separator:acec5c0dd2b96446c4cb1b22d8c587bca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pub_methods_classAsyncFw_1_1AbstractFunctionConnector"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_classAsyncFw_1_1AbstractFunctionConnector')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector.html">AsyncFw::AbstractFunctionConnector</a></td></tr>
-<tr class="memitem:acec5c0dd2b96446c4cb1b22d8c587bca inherit pub_methods_classAsyncFw_1_1AbstractFunctionConnector" id="r_acec5c0dd2b96446c4cb1b22d8c587bca"><td class="memItemLeft" align="right" valign="top">
-&#160;</td><td class="memItemRight" valign="bottom"><b>AbstractFunctionConnector</b> (<a class="el" href="classAsyncFw_1_1AbstractFunctionConnector.html#ab248bd16cbfcac609f58d401abec4368">ConnectionPolicy</a>=<a class="el" href="classAsyncFw_1_1AbstractFunctionConnector.html#ab248bd16cbfcac609f58d401abec4368a480f988213a099791809a06ce8e412ff">Auto</a>)</td></tr>
-<tr class="separator:acec5c0dd2b96446c4cb1b22d8c587bca inherit pub_methods_classAsyncFw_1_1AbstractFunctionConnector"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
-Additional Inherited Members</h2></td></tr>
-<tr class="inherit_header pro_attribs_classAsyncFw_1_1AbstractFunctionConnector"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_attribs_classAsyncFw_1_1AbstractFunctionConnector')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector.html">AsyncFw::AbstractFunctionConnector</a></td></tr>
-<tr class="memitem:adaae220e6f5d33782357524b6b153929 inherit pro_attribs_classAsyncFw_1_1AbstractFunctionConnector" id="r_adaae220e6f5d33782357524b6b153929"><td class="memItemLeft" align="right" valign="top">
-<a class="el" href="classAsyncFw_1_1AbstractFunctionConnector.html#ab248bd16cbfcac609f58d401abec4368">ConnectionPolicy</a>&#160;</td><td class="memItemRight" valign="bottom"><b>connectionPolicy</b></td></tr>
-<tr class="separator:adaae220e6f5d33782357524b6b153929 inherit pro_attribs_classAsyncFw_1_1AbstractFunctionConnector"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a45286993b0bf30d1ca32bd6d87de34c0 inherit pro_attribs_classAsyncFw_1_1AbstractFunctionConnector" id="r_a45286993b0bf30d1ca32bd6d87de34c0"><td class="memItemLeft" align="right" valign="top">
-std::vector&lt; <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html">Connection</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>list</b></td></tr>
-<tr class="separator:a45286993b0bf30d1ca32bd6d87de34c0 inherit pro_attribs_classAsyncFw_1_1AbstractFunctionConnector"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9cbe19db2de586f96ea1810ca2863cf6 inherit pro_attribs_classAsyncFw_1_1AbstractFunctionConnector" id="r_a9cbe19db2de586f96ea1810ca2863cf6"><td class="memItemLeft" align="right" valign="top">
-std::mutex&#160;</td><td class="memItemRight" valign="bottom"><b>mutex</b></td></tr>
-<tr class="separator:a9cbe19db2de586f96ea1810ca2863cf6 inherit pro_attribs_classAsyncFw_1_1AbstractFunctionConnector"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9fb8f282c88da90aeaab52a3c174d82b" id="r_a9fb8f282c88da90aeaab52a3c174d82b"><td class="memTemplParams" colspan="2"><a id="a9fb8f282c88da90aeaab52a3c174d82b" name="a9fb8f282c88da90aeaab52a3c174d82b"></a>
+template&lt;typename T&gt; </td></tr>
+<tr class="memitem:a9fb8f282c88da90aeaab52a3c174d82b"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><b>Protected</b> = internal::FunctionConnectorProtected&lt;<a class="el" href="classAsyncFw_1_1AbstractFunctionConnector.html#ab248bd16cbfcac609f58d401abec4368a480f988213a099791809a06ce8e412ff">AbstractFunctionConnector::Auto</a>, T, Args...&gt;</td></tr>
+<tr class="separator:a9fb8f282c88da90aeaab52a3c174d82b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename... Args&gt;<br />
 class AsyncFw::FunctionConnector&lt; Args &gt;</div><p>Provides a thread-safe, publisher-subscriber mechanism to establish sender-to-receivers connections. </p>
 <p>Receivers can be automatically invoked in their own designated target threads (the default behavior). Other frameworks typically implement this asynchronous communication pattern using bare callbacks or function pointers. <br  />
  <a class="el" href="classAsyncFw_1_1FunctionConnector.html" title="Provides a thread-safe, publisher-subscriber mechanism to establish sender-to-receivers connections.">FunctionConnector</a> messages (signals) are generated by an object when its internal state changes in a way that might be of interest to other application components. While these connectors are public functions and can technically be emitted from anywhere, it is highly recommended to emit them exclusively from within the class that defines them. <br  />
- To strictly restrict message emission to only one specific object type and enforce encapsulation, use the <a class="el" href="#a734e080cd73646c75b4b40fe5aa8d19d" title="A protected connector where only a single designated sender class can emit messages.">FunctionConnector::Protected</a> variant instead. </p><dl class="section note"><dt>Note</dt><dd>All subscription registrations and signal emissions are fully synchronized internally.</dd></dl>
+ To strictly restrict message emission to only one specific object type and enforce encapsulation, use the FunctionConnector::Protected variant instead. </p><dl class="section user"><dt>The class supports three declaration variants depending on encapsulation and validation needs:</dt><dd><ol type="1">
+<li><b>Basic Variant (Auto policy):</b> <div class="fragment"><div class="line"><a class="code hl_class" href="classAsyncFw_1_1FunctionConnector.html">AsyncFw::FunctionConnector&lt;int, std::string&gt;</a> connector; </div>
+<div class="ttc" id="aclassAsyncFw_1_1FunctionConnector_html"><div class="ttname"><a href="classAsyncFw_1_1FunctionConnector.html">AsyncFw::FunctionConnector</a></div><div class="ttdoc">Provides a thread-safe, publisher-subscriber mechanism to establish sender-to-receivers connections.</div><div class="ttdef"><b>Definition</b> FunctionConnector.h:205</div></div>
+</div><!-- fragment --></li>
+<li><b><a class="el" href="classProtected.html">Protected</a> Variant (Auto policy, emission restricted to Owner):</b> <div class="fragment"><div class="line">AsyncFw::FunctionConnector&lt;int, std::string&gt;::Protected&lt;Sender&gt; connector; </div>
+</div><!-- fragment --></li>
+<li><b>Strict Compile-Time Variant (Emission restricted to Owner + strict connection type validation):</b> <div class="fragment"><div class="line"><a class="code hl_struct" href="structAsyncFw_1_1FunctionConnector_1_1Policy.html">AsyncFw::FunctionConnector&lt;int, std::string&gt;::Policy</a>&lt;<a class="code hl_enumvalue" href="classAsyncFw_1_1AbstractFunctionConnector.html#ab248bd16cbfcac609f58d401abec4368a3b1695a20470728ef441d8ccdd549b78">AsyncFw::AbstractFunctionConnector::DirectOnly</a>&gt;::Protected&lt;Sender&gt; connector; </div>
+<div class="ttc" id="aclassAsyncFw_1_1AbstractFunctionConnector_html_ab248bd16cbfcac609f58d401abec4368a3b1695a20470728ef441d8ccdd549b78"><div class="ttname"><a href="classAsyncFw_1_1AbstractFunctionConnector.html#ab248bd16cbfcac609f58d401abec4368a3b1695a20470728ef441d8ccdd549b78">AsyncFw::AbstractFunctionConnector::DirectOnly</a></div><div class="ttdeci">@ DirectOnly</div><div class="ttdoc">Enforces Direct mode. Throws if a subscriber explicitly requests Auto, Queued, or Sync.</div><div class="ttdef"><b>Definition</b> FunctionConnector.h:33</div></div>
+<div class="ttc" id="astructAsyncFw_1_1FunctionConnector_1_1Policy_html"><div class="ttname"><a href="structAsyncFw_1_1FunctionConnector_1_1Policy.html">AsyncFw::FunctionConnector::Policy</a></div><div class="ttdef"><b>Definition</b> FunctionConnector.h:220</div></div>
+</div><!-- fragment --> </li>
+</ol>
+</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>All subscription registrations and signal emissions are fully synchronized internally.</dd></dl>
 <p>Example: </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;AsyncFw/FunctionConnector&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;AsyncFw/MainThread&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;AsyncFw/Timer&gt;</span></div>
@@ -221,7 +175,7 @@ class AsyncFw::FunctionConnector&lt; Args &gt;</div><p>Provides a thread-safe, p
 <div class="line">    timer.start(10);</div>
 <div class="line">  }</div>
 <div class="line"> </div>
-<div class="line">  <a class="code hl_typedef" href="#a734e080cd73646c75b4b40fe5aa8d19d">AsyncFw::FunctionConnector&lt;int, const std::string &amp;&gt;::Protected</a>&lt;Sender&gt; connector;</div>
+<div class="line">  AsyncFw::FunctionConnector&lt;int, const std::string &amp;&gt;::Protected&lt;Sender&gt; connector;</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">private</span>:</div>
 <div class="line">  <span class="keywordtype">int</span> cnt = 0;</div>
@@ -265,178 +219,7 @@ class AsyncFw::FunctionConnector&lt; Args &gt;</div><p>Provides a thread-safe, p
 <div class="line">  <span class="keyword">delete</span> sender;</div>
 <div class="line">  <span class="keywordflow">return</span> ret;</div>
 <div class="line">}</div>
-</div><!-- fragment --> </div><h2 class="groupheader">Member Typedef Documentation</h2>
-<a id="a734e080cd73646c75b4b40fe5aa8d19d" name="a734e080cd73646c75b4b40fe5aa8d19d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a734e080cd73646c75b4b40fe5aa8d19d">&#9670;&#160;</a></span>Protected</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename... Args&gt; </div>
-<div class="memtemplate">
-template&lt;typename T&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">using <a class="el" href="classAsyncFw_1_1FunctionConnector.html">AsyncFw::FunctionConnector</a>&lt; Args &gt;::Protected = internal::FunctionConnectorProtected&lt;T, Args...&gt;</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>A protected connector where only a single designated sender class can emit messages. </p>
-<p>Enhances encapsulation by preventing external code from triggering the connector. The exclusive right to generate events is granted solely to the class specified as the template argument. External code can only subscribe to notifications. </p><dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">T</td><td>The owner class (emitter) that is granted exclusive access to message emission.</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>Example: </p><div class="fragment"><div class="line">  <span class="keyword">class </span>Sensor {</div>
-<div class="line">  <span class="keyword">public</span>:</div>
-<div class="line">    <span class="comment">// Public interface for subscriptions, but emission is restricted to Sensor</span></div>
-<div class="line">    FunctionConnector&lt;int&gt;::Protected&lt;Sensor&gt; valueChanged2;</div>
-<div class="line">    <span class="keywordtype">void</span> update(<span class="keywordtype">int</span> val) {</div>
-<div class="line">      valueChanged2(val);  <span class="comment">// OK: Emission is allowed inside Sensor</span></div>
-<div class="line">    }</div>
-<div class="line">  };</div>
-<div class="line">  <span class="comment">// External code:</span></div>
-<div class="line">  Sensor sensor;</div>
-<div class="line">  sensor.valueChanged2.connect([](<span class="keywordtype">int</span> v) { <span class="comment">/* ... */</span> });  <span class="comment">// OK: Subscription works</span></div>
-<div class="line">  <span class="comment">// sensor.valueChanged(17); // COMPILER ERROR: Emission from outside is forbidden!</span></div>
-</div><!-- fragment --> <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="FunctionConnector_2main_8cpp-example.html#a5">FunctionConnector/main.cpp</a>.</dd>
-</dl>
-
-</div>
-</div>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a id="a359a9c03d52bc62db628e4f53be72457" name="a359a9c03d52bc62db628e4f53be72457"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a359a9c03d52bc62db628e4f53be72457">&#9670;&#160;</a></span>connect() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename... Args&gt; </div>
-<div class="memtemplate">
-template&lt;typename T&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classAsyncFw_1_1FunctionConnector_1_1Connection.html">Connection</a> &amp; <a class="el" href="classAsyncFw_1_1FunctionConnector.html">AsyncFw::FunctionConnector</a>&lt; Args &gt;::connect </td>
-          <td>(</td>
-          <td class="paramtype">T</td>          <td class="paramname"><span class="paramname"><em>f</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html#a860b83046c90e62d768e0acde74626c6">Connection::Type</a></td>          <td class="paramname"><span class="paramname"><em>t</em></span><span class="paramdefsep"> = </span><span class="paramdefval"><a class="el" href="classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html#a860b83046c90e62d768e0acde74626c6aa6ac69ca7e3f98af70b7ed067e4f9bdc">Connection::Default</a></span>&#160;) const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Connects a callable object (such as a lambda, static function pointer, or functor). </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">f</td><td>The callable target object representing the receiver slot.</td></tr>
-    <tr><td class="paramname">t</td><td>The thread execution context strategy. Defaults to <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html#a860b83046c90e62d768e0acde74626c6aa6ac69ca7e3f98af70b7ed067e4f9bdc" title="Falls back to the default ConnectionPolicy configuration defined by the parent connector instance.">Connection::Default</a> (uses the parent's policy). </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Reference to the newly allocated <a class="el" href="classAsyncFw_1_1FunctionConnector_1_1Connection.html" title="Implementation of a connection with specific argument.">Connection</a>. </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="ApplicationNotifier_2main_8cpp-example.html#a9">ApplicationNotifier/main.cpp</a>, and <a class="el" href="ContainerTask_2main_8cpp-example.html#a4">ContainerTask/main.cpp</a>.</dd>
-</dl>
-
-</div>
-</div>
-<a id="aec525ebc3b70cc3b4eeb2ec7d6fc0bd0" name="aec525ebc3b70cc3b4eeb2ec7d6fc0bd0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aec525ebc3b70cc3b4eeb2ec7d6fc0bd0">&#9670;&#160;</a></span>connect() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename... Args&gt; </div>
-<div class="memtemplate">
-template&lt;typename M, typename O&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classAsyncFw_1_1FunctionConnector_1_1Connection.html">Connection</a> &amp; <a class="el" href="classAsyncFw_1_1FunctionConnector.html">AsyncFw::FunctionConnector</a>&lt; Args &gt;::connect </td>
-          <td>(</td>
-          <td class="paramtype">M</td>          <td class="paramname"><span class="paramname"><em>m</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">O *</td>          <td class="paramname"><span class="paramname"><em>o</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html#a860b83046c90e62d768e0acde74626c6">Connection::Type</a></td>          <td class="paramname"><span class="paramname"><em>t</em></span><span class="paramdefsep"> = </span><span class="paramdefval"><a class="el" href="classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html#a860b83046c90e62d768e0acde74626c6aa6ac69ca7e3f98af70b7ed067e4f9bdc">Connection::Default</a></span>&#160;) const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Connects a specific class member method. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">m</td><td>The pointer to the member function of the target object.</td></tr>
-    <tr><td class="paramname">o</td><td>The pointer to the specific instance of the object containing the member function.</td></tr>
-    <tr><td class="paramname">t</td><td>The thread execution context strategy. Defaults to <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html#a860b83046c90e62d768e0acde74626c6aa6ac69ca7e3f98af70b7ed067e4f9bdc" title="Falls back to the default ConnectionPolicy configuration defined by the parent connector instance.">Connection::Default</a> (uses the parent's policy). </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Reference to the newly allocated <a class="el" href="classAsyncFw_1_1FunctionConnector_1_1Connection.html" title="Implementation of a connection with specific argument.">Connection</a>. </dd></dl>
-
-</div>
-</div>
-<a id="acc31eb4d17c3cc86ef80c37b169f846d" name="acc31eb4d17c3cc86ef80c37b169f846d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acc31eb4d17c3cc86ef80c37b169f846d">&#9670;&#160;</a></span>operator()()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename... Args&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void <a class="el" href="classAsyncFw_1_1FunctionConnector.html">AsyncFw::FunctionConnector</a>&lt; Args &gt;::operator() </td>
-          <td>(</td>
-          <td class="paramtype">Args...</td>          <td class="paramname"><span class="paramname"><em>args</em></span></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Emits/Sends the signal, notifying all connected receivers. </p>
-<p>Iterates through the delivery list and dispatches arguments to each slot based on their configured <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html#a860b83046c90e62d768e0acde74626c6" title="Specifies how a particular receiver slot should be invoked relative to the sender&#39;s thread.">Connection::Type</a> (Direct, Queued, or Sync).</p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">args</td><td>The pack of arguments to forward to all subscribed receivers. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<hr/>The documentation for this class was generated from the following file:<ul>
+</div><!-- fragment --> </div><hr/>The documentation for this class was generated from the following file:<ul>
 <li>core/<a class="el" href="FunctionConnector_8h_source.html">FunctionConnector.h</a></li>
 </ul>
 </div><!-- contents -->

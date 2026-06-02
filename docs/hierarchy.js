@@ -1,24 +1,6 @@
 var hierarchy =
 [
-    [ "AsyncFw::AbstractFunctionConnector", "classAsyncFw_1_1AbstractFunctionConnector.html", [
-      [ "AsyncFw::FunctionConnector< Args... >", "classAsyncFw_1_1FunctionConnector.html", null ],
-      [ "AsyncFw::FunctionConnector< int, const std::vector< std::string > & >", "classAsyncFw_1_1FunctionConnector.html", null ],
-      [ "AsyncFw::FunctionConnector< const AsyncFw::ApplicationNotifier::Value & >", "classAsyncFw_1_1FunctionConnector.html", null ],
-      [ "AsyncFw::FunctionConnector< const AsyncFw::DataArraySocket *, const AsyncFw::DataArray *, uint32_t >", "classAsyncFw_1_1FunctionConnector.html", null ],
-      [ "AsyncFw::FunctionConnector< AbstractSocket::State >", "classAsyncFw_1_1FunctionConnector.html", null ],
-      [ "AsyncFw::FunctionConnector< const AsyncFw::DataArray *, uint32_t >", "classAsyncFw_1_1FunctionConnector.html", null ],
-      [ "AsyncFw::FunctionConnector< const AsyncFw::DataArraySocket * >", "classAsyncFw_1_1FunctionConnector.html", null ],
-      [ "AsyncFw::FunctionConnector< const std::string &, int >", "classAsyncFw_1_1FunctionConnector.html", null ],
-      [ "AsyncFw::FunctionConnector< int, const std::string &, bool * >", "classAsyncFw_1_1FunctionConnector.html", null ],
-      [ "AsyncFw::FunctionConnector< const AbstractSocket::State >", "classAsyncFw_1_1FunctionConnector.html", null ],
-      [ "AsyncFw::FunctionConnector< const AsyncFw::DataArray & >", "classAsyncFw_1_1FunctionConnector.html", null ],
-      [ "AsyncFw::FunctionConnector< int >", "classAsyncFw_1_1FunctionConnector.html", null ],
-      [ "AsyncFw::FunctionConnector< const AsyncFw::MulticastDns::Host & >", "classAsyncFw_1_1FunctionConnector.html", null ],
-      [ "AsyncFw::FunctionConnector< AbstractThread::PollEvents >", "classAsyncFw_1_1FunctionConnector.html", null ],
-      [ "AsyncFw::FunctionConnector< State >", "classAsyncFw_1_1FunctionConnector.html", null ],
-      [ "AsyncFw::FunctionConnector< const std::string &, bool >", "classAsyncFw_1_1FunctionConnector.html", null ],
-      [ "AsyncFw::FunctionConnector< Args >", "classAsyncFw_1_1FunctionConnector.html", null ]
-    ] ],
+    [ "AsyncFw::AbstractFunctionConnector", "classAsyncFw_1_1AbstractFunctionConnector.html", null ],
     [ "AsyncFw::AbstractInstance", "classAsyncFw_1_1AbstractInstance.html", [
       [ "AsyncFw::Instance< Log >", "classAsyncFw_1_1Instance.html", null ],
       [ "AsyncFw::Instance< AsyncFw::ApplicationNotifier >", "classAsyncFw_1_1Instance.html", null ],
@@ -61,7 +43,7 @@ var hierarchy =
     ] ],
     [ "AsyncFw::ApplicationNotifier", "classAsyncFw_1_1ApplicationNotifier.html", null ],
     [ "AsyncFw::AbstractFunctionConnector::Connection", "classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html", [
-      [ "AsyncFw::FunctionConnector< Args >::Connection", "classAsyncFw_1_1FunctionConnector_1_1Connection.html", null ]
+      [ "AsyncFw::internal::FunctionConnector< P, Args >::Connection", "classAsyncFw_1_1internal_1_1FunctionConnector_1_1Connection.html", null ]
     ] ],
     [ "AsyncFw::CoroutineAwait< R >", "structAsyncFw_1_1CoroutineAwait.html", null ],
     [ "AsyncFw::CoroutineInvokeAwait< T >", "structAsyncFw_1_1CoroutineInvokeAwait.html", null ],
@@ -81,7 +63,9 @@ var hierarchy =
     [ "AsyncFw::LogStream", "classAsyncFw_1_1LogStream.html", null ],
     [ "AsyncFw::LogStream::Message", "structAsyncFw_1_1LogStream_1_1Message.html", null ],
     [ "AsyncFw::MulticastDns", "classAsyncFw_1_1MulticastDns.html", null ],
+    [ "AsyncFw::FunctionConnector< Args >::Policy< P >", "structAsyncFw_1_1FunctionConnector_1_1Policy.html", null ],
     [ "AsyncFw::PollNotifier", "classAsyncFw_1_1PollNotifier.html", null ],
+    [ "Protected", "classProtected.html", null ],
     [ "AsyncFw::Rrd", "classAsyncFw_1_1Rrd.html", [
       [ "AsyncFw::Log", "classAsyncFw_1_1Log.html", null ]
     ] ],

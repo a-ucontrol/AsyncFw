@@ -1,10 +1,7 @@
 <map id="AsyncFw::ApplicationNotifier" name="AsyncFw::ApplicationNotifier">
-<area shape="rect" id="Node000001" title="The ApplicationNotifier class." alt="" coords="29,343,219,369"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="5,220,243,279"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="127,294,127,342,121,342,121,294"/>
-<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractFunctionConnector.html" title="The AbstractFunctionConnector class provides the base functionality for FunctionConnector." alt="" coords="27,5,210,48"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="122,63,126,219,121,220,117,63"/>
-<area shape="rect" id="Node000004" href="$classAsyncFw_1_1FunctionConnector.html" title="Provides a thread&#45;safe, publisher&#45;subscriber mechanism to establish sender&#45;to&#45;receivers connections." alt="" coords="140,97,334,140"/>
-<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="159,55,212,95,208,99,156,59"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="211,154,151,221,147,218,207,150"/>
+<area shape="rect" id="Node000001" title="The ApplicationNotifier class." alt="" coords="29,251,219,277"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="5,128,243,187"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="127,202,127,250,121,250,121,202"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1FunctionConnector.html" title="Provides a thread&#45;safe, publisher&#45;subscriber mechanism to establish sender&#45;to&#45;receivers connections." alt="" coords="27,5,221,48"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="127,63,127,127,121,127,121,63"/>
 </map>

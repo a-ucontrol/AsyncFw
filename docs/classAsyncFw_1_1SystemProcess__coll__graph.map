@@ -1,14 +1,10 @@
 <map id="AsyncFw::SystemProcess" name="AsyncFw::SystemProcess">
-<area shape="rect" id="Node000001" title="The SystemProcess class." alt="" coords="918,48,1095,75"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="590,5,785,48"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="800,36,918,49,917,54,800,42"/>
-<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractFunctionConnector.html" title="The AbstractFunctionConnector class provides the base functionality for FunctionConnector." alt="" coords="5,43,189,85"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="194,36,238,28,329,17,402,12,566,16,590,17,590,22,566,21,402,18,330,22,238,33,195,41"/>
-<area shape="rect" id="Node000004" href="$classAsyncFw_1_1FunctionConnector.html" title="Provides a thread&#45;safe, publisher&#45;subscriber mechanism to establish sender&#45;to&#45;receivers connections." alt="" coords="238,43,432,85"/>
-<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="204,61,238,61,238,67,204,67"/>
-<area shape="rect" id="Node000005" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="590,72,785,115"/>
-<area shape="poly" id="edge6_Node000005_Node000003" title=" " alt="" coords="192,87,238,95,331,103,425,105,590,99,590,104,425,110,331,108,238,100,191,92"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="448,49,590,34,590,40,448,55"/>
-<area shape="poly" id="edge7_Node000005_Node000004" title=" " alt="" coords="448,86,457,87,524,92,590,93,590,98,524,97,456,92,447,91"/>
-<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="800,83,893,75,917,72,918,77,894,80,800,89"/>
+<area shape="rect" id="Node000001" title="The SystemProcess class." alt="" coords="685,45,862,72"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="358,5,552,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="568,35,685,47,684,52,567,41"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1FunctionConnector.html" title="Provides a thread&#45;safe, publisher&#45;subscriber mechanism to establish sender&#45;to&#45;receivers connections." alt="" coords="5,40,200,83"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="215,48,357,34,358,39,216,53"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="358,72,552,115"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="203,83,224,87,291,92,357,94,357,99,291,97,223,92,202,89"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="567,78,684,66,685,71,568,84"/>
 </map>

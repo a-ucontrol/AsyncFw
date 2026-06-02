@@ -139,7 +139,7 @@ $(function(){initNavTree('LogTcp_2main_8cpp-example.html',''); initResizable(tru
 <div class="line"> </div>
 <div class="line">  uint64_t index = _log.lastIndex();</div>
 <div class="line">  <a id="_a12" name="_a12"></a><a class="code hl_class" href="classAsyncFw_1_1FunctionConnectionGuard.html">AsyncFw::FunctionConnectionGuard</a> _g;</div>
-<div class="line">  _g = _log.updated.connect([&amp;_log, &amp;index, &amp;_g]() {</div>
+<div class="line">  _g = _log.updated.connect&lt;<a class="code hl_enumvalue" href="classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html#a860b83046c90e62d768e0acde74626c6a64d3a4cb989751b7834f3fa0cb7a0021">AsyncFw::AbstractFunctionConnector::Connection::Direct</a>&gt;([&amp;_log, &amp;index, &amp;_g]() {</div>
 <div class="line">    <span class="keywordflow">if</span> (index == _log.lastIndex()) <span class="keywordflow">return</span>;</div>
 <div class="line">    AsyncFw::Rrd::ItemList _list;</div>
 <div class="line">    _log.read(&amp;_list, index, std::numeric_limits&lt;uint32_t&gt;::max(), &amp;index);</div>
@@ -154,7 +154,7 @@ $(function(){initNavTree('LogTcp_2main_8cpp-example.html',''); initResizable(tru
 <div class="line">        <span class="keywordflow">break</span>;</div>
 <div class="line">      }</div>
 <div class="line">    }</div>
-<div class="line">  }, <a class="code hl_enumvalue" href="classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html#a860b83046c90e62d768e0acde74626c6a64d3a4cb989751b7834f3fa0cb7a0021">AsyncFw::AbstractFunctionConnector::Connection::Direct</a>);</div>
+<div class="line">  });</div>
 <div class="line"> </div>
 <div class="line">  logNotice() &lt;&lt; <span class="stringliteral">&quot;Version:&quot;</span> &lt;&lt; AsyncFw::Version::str();</div>
 <div class="line">  logNotice() &lt;&lt; <span class="stringliteral">&quot;Git:&quot;</span> &lt;&lt; AsyncFw::Version::git();</div>
@@ -191,7 +191,7 @@ $(function(){initNavTree('LogTcp_2main_8cpp-example.html',''); initResizable(tru
 <div class="ttc" id="aclassAsyncFw_1_1DataArraySocket_html"><div class="ttname"><a href="classAsyncFw_1_1DataArraySocket.html">AsyncFw::DataArraySocket</a></div><div class="ttdoc">The DataArraySocket class.</div><div class="ttdef"><b>Definition</b> DataArraySocket.h:19</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1DataArrayTcpClient_html"><div class="ttname"><a href="classAsyncFw_1_1DataArrayTcpClient.html">AsyncFw::DataArrayTcpClient</a></div><div class="ttdoc">The DataArrayTcpClient class.</div><div class="ttdef"><b>Definition</b> DataArrayTcpClient.h:16</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1DataArrayTcpServer_html"><div class="ttname"><a href="classAsyncFw_1_1DataArrayTcpServer.html">AsyncFw::DataArrayTcpServer</a></div><div class="ttdoc">The DataArrayTcpServer class.</div><div class="ttdef"><b>Definition</b> DataArrayTcpServer.h:19</div></div>
-<div class="ttc" id="aclassAsyncFw_1_1FunctionConnectionGuard_html"><div class="ttname"><a href="classAsyncFw_1_1FunctionConnectionGuard.html">AsyncFw::FunctionConnectionGuard</a></div><div class="ttdoc">An RAII guard that automatically manages the lifecycle of a FunctionConnector connection.</div><div class="ttdef"><b>Definition</b> FunctionConnector.h:203</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1FunctionConnectionGuard_html"><div class="ttname"><a href="classAsyncFw_1_1FunctionConnectionGuard.html">AsyncFw::FunctionConnectionGuard</a></div><div class="ttdoc">An RAII guard that automatically manages the lifecycle of a FunctionConnector connection.</div><div class="ttdef"><b>Definition</b> FunctionConnector.h:231</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1Instance_html_a8000597f0e7ee4bd6669491a5b502beb"><div class="ttname"><a href="classAsyncFw_1_1Instance.html#a8000597f0e7ee4bd6669491a5b502beb">AsyncFw::Instance::create</a></div><div class="ttdeci">static CT * create(Args... args)</div><div class="ttdoc">Creates a custom polymorphically derived object inside this instance container as the global default.</div><div class="ttdef"><b>Definition</b> Instance.h:49</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1Log_html"><div class="ttname"><a href="classAsyncFw_1_1Log.html">AsyncFw::Log</a></div><div class="ttdoc">The Log class.</div><div class="ttdef"><b>Definition</b> Log.h:71</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1MainThread_html_a76fed3a2c1cfdbdb67f2b209e6457657"><div class="ttname"><a href="classAsyncFw_1_1MainThread.html#a76fed3a2c1cfdbdb67f2b209e6457657">AsyncFw::MainThread::exit</a></div><div class="ttdeci">static void exit()</div><div class="ttdoc">Signals the master event loop to terminate gracefully.</div><div class="ttdef"><b>Definition</b> MainThread.h:61</div></div>
