@@ -31,7 +31,7 @@ int main(int argc, char *argv[]) {
 
   uint64_t index = _log.lastIndex();
   AsyncFw::FunctionConnectionGuard _g;
-  _g = _log.updated.connect([&_log, &index, &_g]() {
+  _g = _log.updated.connect<AsyncFw::AbstractFunctionConnector::Connection::Direct>([&_log, &index, &_g]() {
     if (index == _log.lastIndex()) return;
     AsyncFw::Rrd::ItemList _list;
     _log.read(&_list, index, std::numeric_limits<uint32_t>::max(), &index);
@@ -46,7 +46,7 @@ int main(int argc, char *argv[]) {
         break;
       }
     }
-  }, AsyncFw::AbstractFunctionConnector::Connection::Direct);
+  });
 
   logNotice() << "Version:" << AsyncFw::Version::str();
   logNotice() << "Git:" << AsyncFw::Version::git();

@@ -35,10 +35,10 @@ int main(int argc, char *argv[]) {
         _socket->write("GET / HTTP/1.1\r\n\r\n");
       }
     });
-    _socket->received.connect([_socket](const AsyncFw::DataArray &_da) {
+    _socket->received.connect<AbstractFunctionConnector::Connection::Queued>([_socket](const AsyncFw::DataArray &_da) {
       lsDebug() << _da.view(0, _da.size() > 1024 ? 1024 : _da.size());
       _socket->write("GET /quit HTTP/1.1\r\n\r\n");
-    }, AbstractFunctionConnector::Connection::Queued);
+    });
     _socket->connect("127.0.0.1", 18080);
   }
 

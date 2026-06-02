@@ -118,10 +118,10 @@ void AddressResolver::resolve(const std::string &name, Family family, int timeou
 
 CoroutineAwait<AddressResolver::Result> AddressResolver::coResolve(const std::string &name, Family family, int timeout) {
   return CoroutineAwait<Result>([this, name, family, timeout](AsyncFw::CoroutineHandle h) {
-    completed.connect([h](int, const std::vector<std::string> &list) {
+    completed.connect<AsyncFw::AbstractFunctionConnector::Connection::Queued>([h](int, const std::vector<std::string> &list) {
       h.promise().setData(list);
       h.resume();
-    }, AsyncFw::AbstractFunctionConnector::Connection::Queued);
+    });
     resolve(name, family, timeout);
   });
 }

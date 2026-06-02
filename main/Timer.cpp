@@ -37,10 +37,10 @@ CoroutineAwait<void> Timer::coTimeout(int ms) {
   FunctionConnectionGuard *_g = new FunctionConnectionGuard;
   return CoroutineAwait<void>([this, ms, _g](CoroutineHandle h) {
     start(ms, true);
-    *_g = timeout.connect([h, _g]() {
+    *_g = timeout.connect<AbstractFunctionConnector::Connection::Queued>([h, _g]() {
       delete _g;
       h.resume();
-    }, AbstractFunctionConnector::Connection::Queued);
+    });
   });
 }
 

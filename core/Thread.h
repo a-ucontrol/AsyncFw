@@ -29,11 +29,11 @@ public:
   ~Thread() override;
 
   /** @brief The Thread::started connector */
-  FunctionConnector<>::Protected<Thread> started {AbstractFunctionConnector::Direct};
+  FunctionConnector<>::Policy<AbstractFunctionConnector::Direct>::Protected<Thread> started;
   /** @brief The Thread::finished connector */
-  FunctionConnector<>::Protected<Thread> finished {AbstractFunctionConnector::Direct};
+  FunctionConnector<>::Policy<AbstractFunctionConnector::Direct>::Protected<Thread> finished;
   /** @brief The Thread::destroing connector */
-  FunctionConnector<>::Protected<Thread> destroing {AbstractFunctionConnector::Direct};
+  FunctionConnector<>::Policy<AbstractFunctionConnector::Direct>::Protected<Thread> destroing;
 
 protected:
   /** @brief Runs started() */

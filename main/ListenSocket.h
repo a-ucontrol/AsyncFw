@@ -24,7 +24,7 @@ public:
   using AbstractSocket::port;
   ~ListenSocket();
   /** @brief The FunctionConnector for incoming connections. */
-  AsyncFw::FunctionConnector<int, const std::string &, bool *>::Protected<ListenSocket> incoming {AsyncFw::AbstractFunctionConnector::SyncOnly};
+  AsyncFw::FunctionConnector<int, const std::string &, bool *>::Policy<AsyncFw::AbstractFunctionConnector::SyncOnly>::Protected<ListenSocket> incoming;
 
 protected:
   void incomingEvent() override;
