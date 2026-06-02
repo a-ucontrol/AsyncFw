@@ -33,9 +33,7 @@ AbstractFunctionConnector::~AbstractFunctionConnector() {
   }
 }
 
-AbstractFunctionConnector::Connection::Connection(const AbstractFunctionConnector *connector, Type type) : connector_(connector) {
-  type_ = (type != Default) ? type : static_cast<Type>(connector->connectionPolicy & ~0x10);
-  thread_ = AbstractThread::current();
+AbstractFunctionConnector::Connection::Connection(const AbstractFunctionConnector *connector, Type type) : thread_(AbstractThread::current()), type_(type != Default ? type : static_cast<Type>(connector->connectionPolicy & ~0x10)), connector_(connector) {
   std::vector<Connection *>::iterator it = std::lower_bound(connector_->list.begin(), connector_->list.end(), this, [](const Connection *c1, const Connection *c2) { return c1 < c2; });
   connector_->list.insert(it, this);
   trace() << LogStream::Color::Green << static_cast<int>(type_) << thread_->name() << this << connector_ << connector_->list.size();
