@@ -34,6 +34,7 @@ AbstractFunctionConnector::~AbstractFunctionConnector() {
 }
 
 AbstractFunctionConnector::Connection::Connection(const AbstractFunctionConnector *connector, Type type) : connector_(connector) {
+  type_ = (type != Default) ? type : static_cast<Type>(connector->connectionPolicy & ~0x10);
   thread_ = AbstractThread::current();
   std::vector<Connection *>::iterator it = std::lower_bound(connector_->list.begin(), connector_->list.end(), this, [](const Connection *c1, const Connection *c2) { return c1 < c2; });
   connector_->list.insert(it, this);
