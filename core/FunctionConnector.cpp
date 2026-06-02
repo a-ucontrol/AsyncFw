@@ -34,11 +34,6 @@ AbstractFunctionConnector::~AbstractFunctionConnector() {
 }
 
 AbstractFunctionConnector::Connection::Connection(const AbstractFunctionConnector *connector, Type type) : connector_(connector) {
-  type_ = (type != Default) ? type : static_cast<Type>(connector->connectionPolicy & ~0x10);
-  if ((connector->connectionPolicy & 0x10) && type_ != (connector->connectionPolicy & ~0x10)) {
-    lsError().flush() << "fixed connection type, throw exception...";
-    throw std::runtime_error("fixed connection type");
-  }
   thread_ = AbstractThread::current();
   std::vector<Connection *>::iterator it = std::lower_bound(connector_->list.begin(), connector_->list.end(), this, [](const Connection *c1, const Connection *c2) { return c1 < c2; });
   connector_->list.insert(it, this);
@@ -54,7 +49,7 @@ AbstractFunctionConnector::Connection::~Connection() {
   trace() << this << connector_ << connector_->list.size();
 }
 
-FunctionConnectionGuard::FunctionConnectionGuard() { connection_ = nullptr; }
+FunctionConnectionGuard::FunctionConnectionGuard() : connection_(nullptr) {}
 
 FunctionConnectionGuard::FunctionConnectionGuard(FunctionConnectionGuard &&guarg) {
   connection_ = guarg.connection_;
