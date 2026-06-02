@@ -222,7 +222,6 @@ public:
   @param args The pack of arguments to forward to all subscribed receivers. */
   void operator()(Args... args) const;
 #endif
-
   /** @brief A protected connector variant where only a single designated owner class can emit messages.
   @details Enhances encapsulation by preventing external code from triggering the connector. External code can only subscribe to notifications. Uses the default `ConnectionPolicy::Auto`.
   @tparam T The owner class (emitter) that is granted exclusive access to message emission. */
@@ -231,8 +230,7 @@ public:
   /** @struct Policy @brief A configuration interface to enforce a specific connection policy at compile time.
   @tparam P The enforced strict policy (e.g., Direct, QueuedOnly, etc.). */
   template <AbstractFunctionConnector::ConnectionPolicy P>
-  struct Policy {
-    using Public = internal::FunctionConnector<P, Args...>;
+  struct Policy : internal::FunctionConnector<P, Args...> {
     template <typename T>
     using Protected = internal::FunctionConnectorProtected<P, T, Args...>;
   };
