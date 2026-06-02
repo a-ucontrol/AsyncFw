@@ -14,8 +14,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 namespace AsyncFw {
 class FunctionConnectionGuard;
-/** @class AbstractFunctionConnector FunctionConnector.h <AsyncFw/FunctionConnector> @brief The AbstractFunctionConnector class provides the base functionality for FunctionConnector.
-@exception std::runtime_error If the connector active policy ConnectionPolicy is DirectOnly, QueuedOnly, AutoOnly, or SyncOnly, and there is a type mismatch when connecting via Connection::Type, the exception std::runtime_error("fixed connection type") will be raised. */
+/** @class AbstractFunctionConnector FunctionConnector.h <AsyncFw/FunctionConnector> @brief The AbstractFunctionConnector class provides the base functionality for FunctionConnector. */
 class AbstractFunctionConnector {
   friend FunctionConnectionGuard;
 
@@ -23,16 +22,16 @@ public:
   /** @enum ConnectionPolicy @brief Defines the default invocation behavior and validation constraints for the connector.
   @details This enumeration serves two purposes based on the value provided:
   1. **Default Value (Relaxed Modes):** If a subscriber connects using Connection::Type::Default, the connector substitutes Connection::Type::Default with this configured value (Auto, Direct, Queued, or Sync).
-  2. **Strict Constraints (Only Modes):** Values with the Only suffix act as strict runtime validators. They establish the default  and ensure that any explicit attempt to use a  Connection::Type during connect will immediately throw a std::runtime_error("fixed connection type") */
+  2. **Strict Constraints (Only Modes):** Values with the Only suffix act as strict compile time validators. */
   enum ConnectionPolicy : uint8_t {
     Auto = 0,           ///< Default is Auto. Any explicit connection types are allowed.
     Direct = 0x01,      ///< Default is Direct. Any explicit connection types are allowed.
     Queued = 0x02,      ///< Default is Queued. Any explicit connection types are allowed.
     Sync = 0x04,        ///< Default is Sync. Any explicit connection types are allowed.
-    AutoOnly = 0x10,    ///< Enforces Auto mode. Throws if a subscriber explicitly requests Direct, Queued, or Sync.
-    DirectOnly = 0x11,  ///< Enforces Direct mode. Throws if a subscriber explicitly requests Auto, Queued, or Sync.
-    QueuedOnly = 0x12,  ///< Enforces Queued mode. Throws if a subscriber explicitly requests Auto, Direct, or Sync.
-    SyncOnly = 0x14     ///< Enforces Sync mode. Throws if a subscriber explicitly requests Auto, Direct, or Queued.
+    AutoOnly = 0x10,    ///< Enforces Auto mode. Error if a subscriber explicitly requests Direct, Queued, or Sync.
+    DirectOnly = 0x11,  ///< Enforces Direct mode. Error if a subscriber explicitly requests Auto, Queued, or Sync.
+    QueuedOnly = 0x12,  ///< Enforces Queued mode. Error if a subscriber explicitly requests Auto, Direct, or Sync.
+    SyncOnly = 0x14     ///< Enforces Sync mode. Error if a subscriber explicitly requests Auto, Direct, or Queued.
   };
   /** @class Connection FunctionConnector.h <AsyncFw/FunctionConnector> @brief Represents an active linkage between a sender's signal/connector and a specific receiver slot.
   @details The Connection class  representing a single active subscription. @n It stores crucial metadata required for dispatching events, including the target execution context AsyncFw::AbstractThread and the requested synchronization strategy Type. @n Instances of this class are typically allocated on the heap when a subscriber calls connect. Lifetime and memory cleanup are managed automatically by the framework, or can be tied to scopes via FunctionConnectionGuard. */

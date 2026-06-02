@@ -161,12 +161,6 @@ std::mutex&#160;</td><td class="memItemRight" valign="bottom"><b>mutex</b></td><
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector.html" title="The AbstractFunctionConnector class provides the base functionality for FunctionConnector.">AbstractFunctionConnector</a> class provides the base functionality for <a class="el" href="classAsyncFw_1_1FunctionConnector.html" title="Provides a thread-safe, publisher-subscriber mechanism to establish sender-to-receivers connections.">FunctionConnector</a>. </p>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">std::runtime_error</td><td>If the connector active policy <a class="el" href="#ab248bd16cbfcac609f58d401abec4368" title="Defines the default invocation behavior and validation constraints for the connector.">ConnectionPolicy</a> is DirectOnly, QueuedOnly, AutoOnly, or SyncOnly, and there is a type mismatch when connecting via <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html#a860b83046c90e62d768e0acde74626c6" title="Specifies how a particular receiver slot should be invoked relative to the sender&#39;s thread.">Connection::Type</a>, the exception std::runtime_error("fixed connection type") will be raised. </td></tr>
-  </table>
-  </dd>
-</dl>
 </div><h2 class="groupheader">Member Enumeration Documentation</h2>
 <a id="ab248bd16cbfcac609f58d401abec4368" name="ab248bd16cbfcac609f58d401abec4368"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab248bd16cbfcac609f58d401abec4368">&#9670;&#160;</a></span>ConnectionPolicy</h2>
@@ -183,7 +177,7 @@ std::mutex&#160;</td><td class="memItemRight" valign="bottom"><b>mutex</b></td><
 <p>Defines the default invocation behavior and validation constraints for the connector. </p>
 <p>This enumeration serves two purposes based on the value provided:</p><ol type="1">
 <li><b>Default Value (Relaxed Modes):</b> If a subscriber connects using <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html#a860b83046c90e62d768e0acde74626c6aa6ac69ca7e3f98af70b7ed067e4f9bdc" title="Falls back to the default ConnectionPolicy configuration defined by the parent connector instance.">Connection::Type::Default</a>, the connector substitutes <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html#a860b83046c90e62d768e0acde74626c6aa6ac69ca7e3f98af70b7ed067e4f9bdc" title="Falls back to the default ConnectionPolicy configuration defined by the parent connector instance.">Connection::Type::Default</a> with this configured value (Auto, Direct, Queued, or Sync).</li>
-<li><b>Strict Constraints (Only Modes):</b> Values with the Only suffix act as strict runtime validators. They establish the default and ensure that any explicit attempt to use a <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html#a860b83046c90e62d768e0acde74626c6" title="Specifies how a particular receiver slot should be invoked relative to the sender&#39;s thread.">Connection::Type</a> during connect will immediately throw a std::runtime_error("fixed connection type") </li>
+<li><b>Strict Constraints (Only Modes):</b> Values with the Only suffix act as strict compile time validators. </li>
 </ol>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ab248bd16cbfcac609f58d401abec4368a480f988213a099791809a06ce8e412ff" name="ab248bd16cbfcac609f58d401abec4368a480f988213a099791809a06ce8e412ff"></a>Auto&#160;</td><td class="fielddoc"><p>Default is Auto. Any explicit connection types are allowed. </p>
@@ -194,13 +188,13 @@ std::mutex&#160;</td><td class="memItemRight" valign="bottom"><b>mutex</b></td><
 </td></tr>
 <tr><td class="fieldname"><a id="ab248bd16cbfcac609f58d401abec4368aa337dbe9151a9446d65ecebf21f57cc7" name="ab248bd16cbfcac609f58d401abec4368aa337dbe9151a9446d65ecebf21f57cc7"></a>Sync&#160;</td><td class="fielddoc"><p>Default is Sync. Any explicit connection types are allowed. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ab248bd16cbfcac609f58d401abec4368a0f64e26ca67609e7e75f03d1c563c99b" name="ab248bd16cbfcac609f58d401abec4368a0f64e26ca67609e7e75f03d1c563c99b"></a>AutoOnly&#160;</td><td class="fielddoc"><p>Enforces Auto mode. Throws if a subscriber explicitly requests Direct, Queued, or Sync. </p>
+<tr><td class="fieldname"><a id="ab248bd16cbfcac609f58d401abec4368a0f64e26ca67609e7e75f03d1c563c99b" name="ab248bd16cbfcac609f58d401abec4368a0f64e26ca67609e7e75f03d1c563c99b"></a>AutoOnly&#160;</td><td class="fielddoc"><p>Enforces Auto mode. Error if a subscriber explicitly requests Direct, Queued, or Sync. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ab248bd16cbfcac609f58d401abec4368a3b1695a20470728ef441d8ccdd549b78" name="ab248bd16cbfcac609f58d401abec4368a3b1695a20470728ef441d8ccdd549b78"></a>DirectOnly&#160;</td><td class="fielddoc"><p>Enforces Direct mode. Throws if a subscriber explicitly requests Auto, Queued, or Sync. </p>
+<tr><td class="fieldname"><a id="ab248bd16cbfcac609f58d401abec4368a3b1695a20470728ef441d8ccdd549b78" name="ab248bd16cbfcac609f58d401abec4368a3b1695a20470728ef441d8ccdd549b78"></a>DirectOnly&#160;</td><td class="fielddoc"><p>Enforces Direct mode. Error if a subscriber explicitly requests Auto, Queued, or Sync. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ab248bd16cbfcac609f58d401abec4368af29d50765264f3f426d354883428c288" name="ab248bd16cbfcac609f58d401abec4368af29d50765264f3f426d354883428c288"></a>QueuedOnly&#160;</td><td class="fielddoc"><p>Enforces Queued mode. Throws if a subscriber explicitly requests Auto, Direct, or Sync. </p>
+<tr><td class="fieldname"><a id="ab248bd16cbfcac609f58d401abec4368af29d50765264f3f426d354883428c288" name="ab248bd16cbfcac609f58d401abec4368af29d50765264f3f426d354883428c288"></a>QueuedOnly&#160;</td><td class="fielddoc"><p>Enforces Queued mode. Error if a subscriber explicitly requests Auto, Direct, or Sync. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ab248bd16cbfcac609f58d401abec4368a067289a8bc60cc7b0be0e021db9ce81d" name="ab248bd16cbfcac609f58d401abec4368a067289a8bc60cc7b0be0e021db9ce81d"></a>SyncOnly&#160;</td><td class="fielddoc"><p>Enforces Sync mode. Throws if a subscriber explicitly requests Auto, Direct, or Queued. </p>
+<tr><td class="fieldname"><a id="ab248bd16cbfcac609f58d401abec4368a067289a8bc60cc7b0be0e021db9ce81d" name="ab248bd16cbfcac609f58d401abec4368a067289a8bc60cc7b0be0e021db9ce81d"></a>SyncOnly&#160;</td><td class="fielddoc"><p>Enforces Sync mode. Error if a subscriber explicitly requests Auto, Direct, or Queued. </p>
 </td></tr>
 </table>
 
