@@ -6,32 +6,34 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 */
 
 //! [snippet]
-//#include <chrono>
+#include <chrono>
 #include <AsyncFw/MainThread>
 #include <AsyncFw/Timer>
 #include <AsyncFw/LogStream>
 
-#include <AsyncFw/MainThread>
-#include <AsyncFw/Coroutine>
-#include <AsyncFw/LogStream>
-
-int heavyCalculation(int input) {
-  return input * 42;
-}
-
-AsyncFw::CoroutineTask runApplicationLogic() {
-  lsNotice() << "Starting application flow on Main Thread...";
-  int computationResult = co_await AsyncFw::coInvoke(heavyCalculation, 10);
-  lsNotice() << "Computation successfully returned: " << computationResult;
+AsyncFw::CoroutineTask task(AsyncFw::Timer *timer) {
+  lsDebug() << "coro task" << std::chrono::system_clock::now();
+  co_await timer->coTimeout(10);
+  lsDebug() << "coro task" << std::chrono::system_clock::now();
+  co_await timer->coTimeout(10);
+  lsDebug() << "coro task" << std::chrono::system_clock::now();
   AsyncFw::MainThread::exit(0);
 }
 
 int main(int argc, char *argv[]) {
-  AsyncFw::Instance<AsyncFw::ThreadPool>::create("ExampleThreadPool");
-  runApplicationLogic();
-  logNotice() << "Booting Main Engine Event Loop...";
+  AsyncFw::Timer timer1;
+  timer1.start(10);
+  AsyncFw::Timer timer2;
+
+  timer1.timeout.connect([]() { lsDebug() << std::chrono::system_clock::now() << " timer1 timeout"; });
+
+  timer2.timeout.connect([]() { lsDebug() << std::chrono::system_clock::now() << " timer2 timeout"; });
+
+  task(&timer2);
+
+  lsNotice() << "Start Application" << std::endl;
   int ret = AsyncFw::MainThread::exec();
+  lsNotice() << "End Application " << ret;
   return ret;
 }
-
 //! [snippet]
