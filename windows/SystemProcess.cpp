@@ -125,14 +125,13 @@ bool SystemProcess::exec_(const std::string &cmd, const std::vector<std::string>
   Data *_data = new Data;
 
   if (f) {
-    _data->process.output.connect(
+    _data->process.output.connect<AbstractFunctionConnector::Connection::Direct>(
         [_data](const std::string &msg, bool err) {
           if (!err) _data->out += msg;
           else { _data->err += msg; }
-        },
-        AbstractFunctionConnector::Connection::Direct);
+        });
   }
-  _data->process.stateChanged.connect(
+  _data->process.stateChanged.connect<AbstractFunctionConnector::Connection::Direct>(
       [f, _data](SystemProcess::State state) {
         if (state != SystemProcess::Running) {
           if (f) {
@@ -141,8 +140,7 @@ bool SystemProcess::exec_(const std::string &cmd, const std::vector<std::string>
           }
           if (!_data->process.private_.thread_->invoke([_data]() { delete _data; })) delete _data;
         }
-      },
-      AbstractFunctionConnector::Connection::Direct);
+      });
   if (!_data->process.private_.thread_->invoke([cmd, args, f, _data]() {
         if (!_data->process.start(cmd, args)) {
           if (f) {
