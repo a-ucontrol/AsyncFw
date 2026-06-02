@@ -220,7 +220,7 @@ Static Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname"><a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> DataArray::compress </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classAsyncFw_1_1DataArrayView.html">DataArrayView</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>_u</em></span></td><td>)</td>
+          <td class="paramtype">const <a class="el" href="classAsyncFw_1_1DataArrayView.html">DataArrayView</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>v</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -234,7 +234,7 @@ Static Public Member Functions</h2></td></tr>
 <p>Compresses the provided data view using the framework's default compression algorithm. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">view</td><td>The source binary data view to compress. </td></tr>
+    <tr><td class="paramname">v</td><td>The source binary data view to compress. </td></tr>
   </table>
   </dd>
 </dl>
@@ -270,7 +270,7 @@ Static Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname"><a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> DataArray::uncompress </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classAsyncFw_1_1DataArrayView.html">DataArrayView</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>_c</em></span></td><td>)</td>
+          <td class="paramtype">const <a class="el" href="classAsyncFw_1_1DataArrayView.html">DataArrayView</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>v</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -284,7 +284,7 @@ Static Public Member Functions</h2></td></tr>
 <p>Uncompresses the provided compressed data view back to its original raw form. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">view</td><td>The compressed binary data view. </td></tr>
+    <tr><td class="paramname">v</td><td>The compressed binary data view. </td></tr>
   </table>
   </dd>
 </dl>
@@ -330,8 +330,8 @@ Static Public Member Functions</h2></td></tr>
 <p>Creates a lightweight, non-allocating view slicing a sub-region of this byte array. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">offset</td><td>The starting index of the slice. Defaults to 0.</td></tr>
-    <tr><td class="paramname">length</td><td>The length of the slice. If 0, captures everything up to the end of the array. </td></tr>
+    <tr><td class="paramname">i</td><td>The starting index of the slice. Defaults to 0.</td></tr>
+    <tr><td class="paramname">j</td><td>The length of the slice. If 0, captures everything up to the end of the array. </td></tr>
   </table>
   </dd>
 </dl>

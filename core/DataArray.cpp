@@ -14,8 +14,8 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #define LOG_DATA_ARAY_SIZE_LIMIT 4096
 
 using namespace AsyncFw;
-DataArray DataArray::compress(const DataArrayView &_u) {
-  std::size_t _size = _u.size();
+DataArray DataArray::compress(const DataArrayView &v) {
+  std::size_t _size = v.size();
   uLongf _uLongf = compressBound(_size);
   uint8_t j = 0;
   for (;; ++j) {
@@ -23,7 +23,7 @@ DataArray DataArray::compress(const DataArrayView &_u) {
   }
   DataArray _c;
   _c.resize(_uLongf + sizeof(uint8_t) + j);
-  if (::compress(_c.data() + sizeof(uint8_t) + j, &_uLongf, reinterpret_cast<const uint8_t *>(_u.data()), _u.size())) {
+  if (::compress(_c.data() + sizeof(uint8_t) + j, &_uLongf, reinterpret_cast<const uint8_t *>(v.data()), v.size())) {
     console_msg("DataArray", "compress failed");
     return {};
   }
@@ -34,16 +34,16 @@ DataArray DataArray::compress(const DataArrayView &_u) {
   return _c;
 }
 
-DataArray DataArray::uncompress(const DataArrayView &_c) {
-  if (_c.empty()) return {};
+DataArray DataArray::uncompress(const DataArrayView &v) {
+  if (v.empty()) return {};
   std::size_t _size = 0;
-  uint8_t j = (_c[0] & 0x07);
+  uint8_t j = (v[0] & 0x07);
   if (j) {
-    if (_c.size() < sizeof(uint8_t) + j) return {};
-    for (int i = 0; i != j; ++i) (reinterpret_cast<char *>(&_size))[i] = _c[sizeof(uint8_t) + i];
+    if (v.size() < sizeof(uint8_t) + j) return {};
+    for (int i = 0; i != j; ++i) (reinterpret_cast<char *>(&_size))[i] = v[sizeof(uint8_t) + i];
     _size <<= 5;
   }
-  _size |= (static_cast<uint8_t>(_c[0]) >> 3);
+  _size |= (static_cast<uint8_t>(v[0]) >> 3);
   DataArray _u;
   try {
     _u.resize(_size);
@@ -52,7 +52,7 @@ DataArray DataArray::uncompress(const DataArrayView &_c) {
     return {};
   }
   uLongf _uLongf = _size;
-  if (::uncompress(_u.data(), &_uLongf, reinterpret_cast<const uint8_t *>(_c.data()) + sizeof(uint8_t) + j, _c.size() - sizeof(uint8_t) - j)) {
+  if (::uncompress(_u.data(), &_uLongf, reinterpret_cast<const uint8_t *>(v.data()) + sizeof(uint8_t) + j, v.size() - sizeof(uint8_t) - j)) {
     console_msg("DataArray", "uncompress failed");
     return {};
   }

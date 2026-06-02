@@ -23,10 +23,10 @@ class LogStream;
 class DataArray : public std::vector<uint8_t> {
 public:
   /** @brief Compresses the provided data view using the framework's default compression algorithm.
-  @param view The source binary data view to compress. @return A new compressed DataArray container. */
+  @param v The source binary data view to compress. @return A new compressed DataArray container. */
   static DataArray compress(const DataArrayView &);
   /** @brief Uncompresses the provided compressed data view back to its original raw form.
-  @param view The compressed binary data view. @return A new decompressed DataArray container. */
+  @param v The compressed binary data view. @return A new decompressed DataArray container. */
   static DataArray uncompress(const DataArrayView &);
   using std::vector<uint8_t>::vector;
   /** @brief Constructs a byte array from a standard string instance. */
@@ -38,7 +38,7 @@ public:
   /** @brief Constructs a byte array by copying raw values from a signed character vector. */
   DataArray(const std::vector<char> &);
   /** @brief Creates a lightweight, non-allocating view slicing a sub-region of this byte array.
-  @param offset The starting index of the slice. Defaults to 0. @param length The length of the slice. If 0, captures everything up to the end of the array. @return A read-only DataArrayView mapping the selected range. */
+  @param i The starting index of the slice. Defaults to 0. @param j The length of the slice. If 0, captures everything up to the end of the array. @return A read-only DataArrayView mapping the selected range. */
   const DataArrayView view(std::size_t = 0, std::size_t = 0) const;
   /** @brief Appends the contents of a data view directly to the end of this array. */
   DataArray &operator+=(const DataArrayView &);
@@ -64,7 +64,7 @@ public:
   /** @brief Constructs a data view mapping the entire memory buffer of an existing DataArray. */
   DataArrayView(const DataArray &);
   /** @brief Splices the viewed binary stream into a tokenized list using a specific delimiter character.
-  @param delimiter The dividing boundary byte/character. @return A newly constructed list container holding independent slices. */
+  @param c The dividing boundary byte/character. @return A newly constructed list container holding independent slices. */
   DataArrayList split(const char) const;
 };
 /** @class DataArrayList DataArray.h <AsyncFw/DataArray> @brief A specialized container aggregating multiple DataArray instances.
@@ -73,7 +73,7 @@ class DataArrayList : public std::vector<DataArray> {
 public:
   using std::vector<DataArray>::vector;
   /** @brief Flattens and concatenates all elements in this list into a single unified array, separated by a glue character.
-  @param delimiter The spacer byte inserted between adjacent items. @return A newly allocation-merged DataArray. */
+  @param c The spacer byte inserted between adjacent items. @return A newly allocation-merged DataArray. */
   DataArray join(const char) const;
 };
 /** @class DataStream DataArray.h <AsyncFw/DataArray> @brief A fast, compact binary serialization stream.
