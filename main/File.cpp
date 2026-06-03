@@ -100,17 +100,17 @@ DataArray File::read(std::size_t s) {
   return _da;
 }
 
-std::streamsize File::read(char *_v, std::streamsize _s) {
-  private_.f_.read(_v, _s);
+std::streamsize File::read(char *b, std::streamsize s) {
+  private_.f_.read(b, s);
   return private_.f_.gcount();
 }
 
 std::streamsize File::write(const DataArray &da) { return write(reinterpret_cast<const char *>(da.data()), static_cast<std::streamsize>(da.size())); }
 
-std::streamsize File::write(const char *_v, std::streamsize _s) {
+std::streamsize File::write(const char *b, std::streamsize s) {
   if (private_.f_.fail() || !private_.f_.is_open()) return -1;
   std::fstream::pos_type pos = private_.f_.tellp();
-  private_.f_.write(_v, _s);
+  private_.f_.write(b, s);
   if (private_.f_.fail()) return -1;
   std::fstream::pos_type _p = private_.f_.tellp();
   if (_p != std::fstream::pos_type(-1) && static_cast<std::size_t>(_p) > private_.fs_) private_.fs_ = static_cast<std::size_t>(_p);

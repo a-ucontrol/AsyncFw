@@ -109,11 +109,16 @@ $(function(){initNavTree('classAsyncFw_1_1File.html',''); initResizable(true); }
   <div class="headertitle"><div class="title">AsyncFw::File Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Provides basic file I/O operations.  
+ <a href="#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="File_8h_source.html">AsyncFw/File</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:aac258c3ca8290c71ed3f6118caa3652e" id="r_aac258c3ca8290c71ed3f6118caa3652e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aac258c3ca8290c71ed3f6118caa3652e">File</a> (const std::string &amp;={})</td></tr>
-<tr class="memdesc:aac258c3ca8290c71ed3f6118caa3652e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="classAsyncFw_1_1File.html">File</a> object.  <br /></td></tr>
+<tr class="memdesc:aac258c3ca8290c71ed3f6118caa3652e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="classAsyncFw_1_1File.html" title="Provides basic file I/O operations.">File</a> object.  <br /></td></tr>
 <tr class="separator:aac258c3ca8290c71ed3f6118caa3652e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac704ebdf5f57d7a1c5ddf409d797fb69" id="r_ac704ebdf5f57d7a1c5ddf409d797fb69"><td class="memItemLeft" align="right" valign="top"><a id="ac704ebdf5f57d7a1c5ddf409d797fb69" name="ac704ebdf5f57d7a1c5ddf409d797fb69"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>~File</b> ()</td></tr>
@@ -166,8 +171,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>remove</b> ()</td></t
 <tr class="separator:aa6ae13a7d7a317da534536f29d4bd803"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>for basic file I/O operations.</p>
-<p>Provides a wrapper over the standard std::fstream. The class object is non-copyable and non-movable. </p>
+<div class="textblock"><p>Provides basic file I/O operations. </p>
+<p>A wrapper over the standard std::fstream. The class object is non-copyable and non-movable. </p>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="FileSystemWatcher_2main_8cpp-example.html#_a3">FileSystemWatcher/main.cpp</a>.</dd>
 </dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
@@ -186,10 +191,10 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>remove</b> ()</td></t
       </table>
 </div><div class="memdoc">
 
-<p>Constructs a <a class="el" href="classAsyncFw_1_1File.html">File</a> object. </p>
+<p>Constructs a <a class="el" href="classAsyncFw_1_1File.html" title="Provides basic file I/O operations.">File</a> object. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">filename</td><td>Optional file path </td></tr>
+    <tr><td class="paramname">fn</td><td>Optional file path </td></tr>
   </table>
   </dd>
 </dl>
@@ -219,8 +224,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>remove</b> ()</td></t
 <p>Opens a file with the specified name and access mode. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">filename</td><td>The path or name of the file to open.</td></tr>
-    <tr><td class="paramname">mode</td><td>The file open mode flags (defaults to binary input). </td></tr>
+    <tr><td class="paramname">fn</td><td>The path or name of the file to open.</td></tr>
+    <tr><td class="paramname">m</td><td>The file open mode flags (defaults to binary input). </td></tr>
   </table>
   </dd>
 </dl>
@@ -260,11 +265,11 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>remove</b> ()</td></t
 <p>Opens the file using the previously specified name. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">mode</td><td>The file open mode flags (defaults to binary input). </td></tr>
+    <tr><td class="paramname">m</td><td>The file open mode flags (defaults to binary input). </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>true if the file was opened successfully, false otherwise. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the file was opened successfully. </dd></dl>
 
 </div>
 </div>
@@ -284,7 +289,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>remove</b> ()</td></t
 </div><div class="memdoc">
 
 <p>Returns the cached size of the file determined when it was opened. </p>
-<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classAsyncFw_1_1File.html">File</a> size in bytes. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classAsyncFw_1_1File.html" title="Provides basic file I/O operations.">File</a> size in bytes. </dd></dl>
 
 </div>
 </div>
@@ -326,7 +331,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>remove</b> ()</td></t
 <p>Reads data from the file into a <a class="el" href="classAsyncFw_1_1DataArray.html" title="The DataArray class, provides an array of bytes.">DataArray</a> container. </p>
 <p>If the parameter is set to SIZE_MAX, it reads all remaining data from the current position to the end of the file. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">bytes_to_read</td><td>Number of bytes to read (defaults to SIZE_MAX). </td></tr>
+    <tr><td class="paramname">s</td><td>Number of bytes to read (defaults to SIZE_MAX). </td></tr>
   </table>
   </dd>
 </dl>
@@ -366,7 +371,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>remove</b> ()</td></t
 <p>Writes the entire content of a <a class="el" href="classAsyncFw_1_1DataArray.html" title="The DataArray class, provides an array of bytes.">DataArray</a> container to the file. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">data_array</td><td>Container containing binary data. </td></tr>
+    <tr><td class="paramname">da</td><td>Container containing binary data. </td></tr>
   </table>
   </dd>
 </dl>
@@ -397,12 +402,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>remove</b> ()</td></t
         <tr>
           <td class="memname">std::streamsize File::read </td>
           <td>(</td>
-          <td class="paramtype">char *</td>          <td class="paramname"><span class="paramname"><em>_v</em></span>, </td>
+          <td class="paramtype">char *</td>          <td class="paramname"><span class="paramname"><em>b</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::streamsize</td>          <td class="paramname"><span class="paramname"><em>_s</em></span>&#160;)</td>
+          <td class="paramtype">std::streamsize</td>          <td class="paramname"><span class="paramname"><em>s</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -410,8 +415,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>remove</b> ()</td></t
 <p>Reads data from the file into a raw character buffer. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">buffer</td><td>Pointer to the destination memory buffer.</td></tr>
-    <tr><td class="paramname">buffer_size</td><td>Maximum number of bytes to read. </td></tr>
+    <tr><td class="paramname">b</td><td>Pointer to the destination memory buffer.</td></tr>
+    <tr><td class="paramname">s</td><td>Maximum number of bytes to read. </td></tr>
   </table>
   </dd>
 </dl>
@@ -428,12 +433,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>remove</b> ()</td></t
         <tr>
           <td class="memname">std::streamsize File::write </td>
           <td>(</td>
-          <td class="paramtype">const char *</td>          <td class="paramname"><span class="paramname"><em>_v</em></span>, </td>
+          <td class="paramtype">const char *</td>          <td class="paramname"><span class="paramname"><em>b</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::streamsize</td>          <td class="paramname"><span class="paramname"><em>_s</em></span>&#160;)</td>
+          <td class="paramtype">std::streamsize</td>          <td class="paramname"><span class="paramname"><em>s</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -441,8 +446,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>remove</b> ()</td></t
 <p>Writes data from a raw buffer to the file. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">buffer</td><td>Pointer to the data buffer.</td></tr>
-    <tr><td class="paramname">data_size</td><td>Number of bytes to write. </td></tr>
+    <tr><td class="paramname">b</td><td>Pointer to the data buffer.</td></tr>
+    <tr><td class="paramname">s</td><td>Number of bytes to write. </td></tr>
   </table>
   </dd>
 </dl>
@@ -466,7 +471,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>remove</b> ()</td></t
 </div><div class="memdoc">
 
 <p>Reads a single text line from the file up to a newline character. </p>
-<dl class="section return"><dt>Returns</dt><dd>The extracted string (the trailing <code>\\n</code> character is excluded). </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The extracted string. </dd></dl>
 
 </div>
 </div>
@@ -486,7 +491,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>remove</b> ()</td></t
 </div><div class="memdoc">
 
 <p>Checks if the internal stream has its error flag (failbit) set. </p>
-<dl class="section return"><dt>Returns</dt><dd>true if the last operation failed, false otherwise. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the last operation failed. </dd></dl>
 
 </div>
 </div>
