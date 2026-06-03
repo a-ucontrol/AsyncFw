@@ -218,7 +218,7 @@
 <!-- Node19 -->
 <g id="Node000019" class="node">
 <title>Node19</title>
-<g id="a_Node000019"><a xlink:href="File_8h.html" target="_top" xlink:title="The File class.">
+<g id="a_Node000019"><a xlink:href="File_8h.html" target="_top" xlink:title="Definition of the File class for file system operations.">
 <polygon fill="white" stroke="#666666" points="218.5,-188 178.5,-188 178.5,-168 218.5,-168 218.5,-188"/>
 <text text-anchor="middle" x="198.5" y="-174.5" font-family="Helvetica,sans-Serif" font-size="10.00">File.h</text>
 </a>

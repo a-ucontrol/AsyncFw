@@ -74,7 +74,7 @@
 <!-- Node15 -->
 <g id="Node000015" class="node">
 <title>Node15</title>
-<g id="a_Node000015"><a xlink:href="File_8h.html" target="_top" xlink:title="The File class.">
+<g id="a_Node000015"><a xlink:href="File_8h.html" target="_top" xlink:title="Definition of the File class for file system operations.">
 <polygon fill="white" stroke="#666666" points="476.5,-188 436.5,-188 436.5,-168 476.5,-168 476.5,-188"/>
 <text text-anchor="middle" x="456.5" y="-174.5" font-family="Helvetica,sans-Serif" font-size="10.00">File.h</text>
 </a>

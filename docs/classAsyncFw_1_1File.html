@@ -109,65 +109,408 @@ $(function(){initNavTree('classAsyncFw_1_1File.html',''); initResizable(true); }
   <div class="headertitle"><div class="title">AsyncFw::File Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
-
-<p>The <a class="el" href="classAsyncFw_1_1File.html" title="The File class.">File</a> class.  
- <a href="#details">More...</a></p>
-
-<p><code>#include &lt;<a class="el" href="File_8h_source.html">AsyncFw/File</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aac258c3ca8290c71ed3f6118caa3652e" id="r_aac258c3ca8290c71ed3f6118caa3652e"><td class="memItemLeft" align="right" valign="top"><a id="aac258c3ca8290c71ed3f6118caa3652e" name="aac258c3ca8290c71ed3f6118caa3652e"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>File</b> (const std::string &amp;={})</td></tr>
+<tr class="memitem:aac258c3ca8290c71ed3f6118caa3652e" id="r_aac258c3ca8290c71ed3f6118caa3652e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aac258c3ca8290c71ed3f6118caa3652e">File</a> (const std::string &amp;={})</td></tr>
+<tr class="memdesc:aac258c3ca8290c71ed3f6118caa3652e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="classAsyncFw_1_1File.html">File</a> object.  <br /></td></tr>
 <tr class="separator:aac258c3ca8290c71ed3f6118caa3652e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a212a2b7db1a9cffd87c78b0285671bea" id="r_a212a2b7db1a9cffd87c78b0285671bea"><td class="memItemLeft" align="right" valign="top"><a id="a212a2b7db1a9cffd87c78b0285671bea" name="a212a2b7db1a9cffd87c78b0285671bea"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>open</b> (const std::string &amp;, std::ios::openmode=std::ios::binary|std::ios::in)</td></tr>
+<tr class="memitem:ac704ebdf5f57d7a1c5ddf409d797fb69" id="r_ac704ebdf5f57d7a1c5ddf409d797fb69"><td class="memItemLeft" align="right" valign="top"><a id="ac704ebdf5f57d7a1c5ddf409d797fb69" name="ac704ebdf5f57d7a1c5ddf409d797fb69"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>~File</b> ()</td></tr>
+<tr class="memdesc:ac704ebdf5f57d7a1c5ddf409d797fb69"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. Closes the file if open and frees internal resources. <br /></td></tr>
+<tr class="separator:ac704ebdf5f57d7a1c5ddf409d797fb69"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a212a2b7db1a9cffd87c78b0285671bea" id="r_a212a2b7db1a9cffd87c78b0285671bea"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a212a2b7db1a9cffd87c78b0285671bea">open</a> (const std::string &amp;, std::ios::openmode=std::ios::binary|std::ios::in)</td></tr>
+<tr class="memdesc:a212a2b7db1a9cffd87c78b0285671bea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opens a file with the specified name and access mode.  <br /></td></tr>
 <tr class="separator:a212a2b7db1a9cffd87c78b0285671bea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8f534ddab32c516f07c26b766b99fabc" id="r_a8f534ddab32c516f07c26b766b99fabc"><td class="memItemLeft" align="right" valign="top"><a id="a8f534ddab32c516f07c26b766b99fabc" name="a8f534ddab32c516f07c26b766b99fabc"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>open</b> (std::ios::openmode=std::ios::binary|std::ios::in)</td></tr>
+<tr class="memitem:a8f534ddab32c516f07c26b766b99fabc" id="r_a8f534ddab32c516f07c26b766b99fabc"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8f534ddab32c516f07c26b766b99fabc">open</a> (std::ios::openmode=std::ios::binary|std::ios::in)</td></tr>
+<tr class="memdesc:a8f534ddab32c516f07c26b766b99fabc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opens the file using the previously specified name.  <br /></td></tr>
 <tr class="separator:a8f534ddab32c516f07c26b766b99fabc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a83cbce54d6c3b8c2f417b51f6b3f488c" id="r_a83cbce54d6c3b8c2f417b51f6b3f488c"><td class="memItemLeft" align="right" valign="top"><a id="a83cbce54d6c3b8c2f417b51f6b3f488c" name="a83cbce54d6c3b8c2f417b51f6b3f488c"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>close</b> ()</td></tr>
+<tr class="memdesc:a83cbce54d6c3b8c2f417b51f6b3f488c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Closes the file and flushes outstanding buffers to disk. <br /></td></tr>
 <tr class="separator:a83cbce54d6c3b8c2f417b51f6b3f488c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af87fa862de707575b8badd044a5af80e" id="r_af87fa862de707575b8badd044a5af80e"><td class="memItemLeft" align="right" valign="top"><a id="af87fa862de707575b8badd044a5af80e" name="af87fa862de707575b8badd044a5af80e"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>flush</b> ()</td></tr>
+<tr class="memdesc:af87fa862de707575b8badd044a5af80e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Forces internal output buffers to be written to the physical disk. <br /></td></tr>
 <tr class="separator:af87fa862de707575b8badd044a5af80e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a22c7e349dbcc3242374c6c685948d201" id="r_a22c7e349dbcc3242374c6c685948d201"><td class="memItemLeft" align="right" valign="top"><a id="a22c7e349dbcc3242374c6c685948d201" name="a22c7e349dbcc3242374c6c685948d201"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>remove</b> ()</td></tr>
+<tr class="memdesc:a22c7e349dbcc3242374c6c685948d201"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deletes file from disk. <br /></td></tr>
 <tr class="separator:a22c7e349dbcc3242374c6c685948d201"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a51e2de0b42a61ced3dff12675e78490e" id="r_a51e2de0b42a61ced3dff12675e78490e"><td class="memItemLeft" align="right" valign="top"><a id="a51e2de0b42a61ced3dff12675e78490e" name="a51e2de0b42a61ced3dff12675e78490e"></a>
-std::size_t&#160;</td><td class="memItemRight" valign="bottom"><b>size</b> ()</td></tr>
+<tr class="memitem:a51e2de0b42a61ced3dff12675e78490e" id="r_a51e2de0b42a61ced3dff12675e78490e"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a51e2de0b42a61ced3dff12675e78490e">size</a> ()</td></tr>
+<tr class="memdesc:a51e2de0b42a61ced3dff12675e78490e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the cached size of the file determined when it was opened.  <br /></td></tr>
 <tr class="separator:a51e2de0b42a61ced3dff12675e78490e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4260fca380a387a8347b83bb4bee91b5" id="r_a4260fca380a387a8347b83bb4bee91b5"><td class="memItemLeft" align="right" valign="top"><a id="a4260fca380a387a8347b83bb4bee91b5" name="a4260fca380a387a8347b83bb4bee91b5"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>exists</b> ()</td></tr>
+<tr class="memitem:a4260fca380a387a8347b83bb4bee91b5" id="r_a4260fca380a387a8347b83bb4bee91b5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4260fca380a387a8347b83bb4bee91b5">exists</a> ()</td></tr>
+<tr class="memdesc:a4260fca380a387a8347b83bb4bee91b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the file physically exists on disk.  <br /></td></tr>
 <tr class="separator:a4260fca380a387a8347b83bb4bee91b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adbf0a8f50fafc8c28e29f9448aad9b41" id="r_adbf0a8f50fafc8c28e29f9448aad9b41"><td class="memItemLeft" align="right" valign="top"><a id="adbf0a8f50fafc8c28e29f9448aad9b41" name="adbf0a8f50fafc8c28e29f9448aad9b41"></a>
-<a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a>&#160;</td><td class="memItemRight" valign="bottom"><b>read</b> (std::size_t=SIZE_MAX)</td></tr>
+<tr class="memitem:adbf0a8f50fafc8c28e29f9448aad9b41" id="r_adbf0a8f50fafc8c28e29f9448aad9b41"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adbf0a8f50fafc8c28e29f9448aad9b41">read</a> (std::size_t=SIZE_MAX)</td></tr>
+<tr class="memdesc:adbf0a8f50fafc8c28e29f9448aad9b41"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads data from the file into a <a class="el" href="classAsyncFw_1_1DataArray.html" title="The DataArray class, provides an array of bytes.">DataArray</a> container.  <br /></td></tr>
 <tr class="separator:adbf0a8f50fafc8c28e29f9448aad9b41"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0cd5ad18548cd40cd34f2146a63bb147" id="r_a0cd5ad18548cd40cd34f2146a63bb147"><td class="memItemLeft" align="right" valign="top"><a id="a0cd5ad18548cd40cd34f2146a63bb147" name="a0cd5ad18548cd40cd34f2146a63bb147"></a>
-std::streamsize&#160;</td><td class="memItemRight" valign="bottom"><b>write</b> (const <a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> &amp;)</td></tr>
+<tr class="memitem:a0cd5ad18548cd40cd34f2146a63bb147" id="r_a0cd5ad18548cd40cd34f2146a63bb147"><td class="memItemLeft" align="right" valign="top">std::streamsize&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0cd5ad18548cd40cd34f2146a63bb147">write</a> (const <a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> &amp;)</td></tr>
+<tr class="memdesc:a0cd5ad18548cd40cd34f2146a63bb147"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes the entire content of a <a class="el" href="classAsyncFw_1_1DataArray.html" title="The DataArray class, provides an array of bytes.">DataArray</a> container to the file.  <br /></td></tr>
 <tr class="separator:a0cd5ad18548cd40cd34f2146a63bb147"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a39260c14055a9f001825ec3c454ecf0f" id="r_a39260c14055a9f001825ec3c454ecf0f"><td class="memItemLeft" align="right" valign="top"><a id="a39260c14055a9f001825ec3c454ecf0f" name="a39260c14055a9f001825ec3c454ecf0f"></a>
-std::streamsize&#160;</td><td class="memItemRight" valign="bottom"><b>read</b> (char *, std::streamsize)</td></tr>
+<tr class="memitem:a39260c14055a9f001825ec3c454ecf0f" id="r_a39260c14055a9f001825ec3c454ecf0f"><td class="memItemLeft" align="right" valign="top">std::streamsize&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a39260c14055a9f001825ec3c454ecf0f">read</a> (char *, std::streamsize)</td></tr>
+<tr class="memdesc:a39260c14055a9f001825ec3c454ecf0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads data from the file into a raw character buffer.  <br /></td></tr>
 <tr class="separator:a39260c14055a9f001825ec3c454ecf0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2965e419210567f0a2f81f30b0862ee6" id="r_a2965e419210567f0a2f81f30b0862ee6"><td class="memItemLeft" align="right" valign="top"><a id="a2965e419210567f0a2f81f30b0862ee6" name="a2965e419210567f0a2f81f30b0862ee6"></a>
-std::streamsize&#160;</td><td class="memItemRight" valign="bottom"><b>write</b> (const char *, std::streamsize)</td></tr>
+<tr class="memitem:a2965e419210567f0a2f81f30b0862ee6" id="r_a2965e419210567f0a2f81f30b0862ee6"><td class="memItemLeft" align="right" valign="top">std::streamsize&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2965e419210567f0a2f81f30b0862ee6">write</a> (const char *, std::streamsize)</td></tr>
+<tr class="memdesc:a2965e419210567f0a2f81f30b0862ee6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes data from a raw buffer to the file.  <br /></td></tr>
 <tr class="separator:a2965e419210567f0a2f81f30b0862ee6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a861146c8fe75ac121d094faa88dca18f" id="r_a861146c8fe75ac121d094faa88dca18f"><td class="memItemLeft" align="right" valign="top"><a id="a861146c8fe75ac121d094faa88dca18f" name="a861146c8fe75ac121d094faa88dca18f"></a>
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>readLine</b> ()</td></tr>
+<tr class="memitem:a861146c8fe75ac121d094faa88dca18f" id="r_a861146c8fe75ac121d094faa88dca18f"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a861146c8fe75ac121d094faa88dca18f">readLine</a> ()</td></tr>
+<tr class="memdesc:a861146c8fe75ac121d094faa88dca18f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads a single text line from the file up to a newline character.  <br /></td></tr>
 <tr class="separator:a861146c8fe75ac121d094faa88dca18f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad16ba208a1a58d6c8fda79766fe42aaa" id="r_ad16ba208a1a58d6c8fda79766fe42aaa"><td class="memItemLeft" align="right" valign="top"><a id="ad16ba208a1a58d6c8fda79766fe42aaa" name="ad16ba208a1a58d6c8fda79766fe42aaa"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>fail</b> ()</td></tr>
+<tr class="memitem:ad16ba208a1a58d6c8fda79766fe42aaa" id="r_ad16ba208a1a58d6c8fda79766fe42aaa"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad16ba208a1a58d6c8fda79766fe42aaa">fail</a> ()</td></tr>
+<tr class="memdesc:ad16ba208a1a58d6c8fda79766fe42aaa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the internal stream has its error flag (failbit) set.  <br /></td></tr>
 <tr class="separator:ad16ba208a1a58d6c8fda79766fe42aaa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa6ae13a7d7a317da534536f29d4bd803" id="r_aa6ae13a7d7a317da534536f29d4bd803"><td class="memItemLeft" align="right" valign="top"><a id="aa6ae13a7d7a317da534536f29d4bd803" name="aa6ae13a7d7a317da534536f29d4bd803"></a>
-std::fstream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>fstream</b> ()</td></tr>
+<tr class="memitem:aa6ae13a7d7a317da534536f29d4bd803" id="r_aa6ae13a7d7a317da534536f29d4bd803"><td class="memItemLeft" align="right" valign="top">std::fstream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa6ae13a7d7a317da534536f29d4bd803">fstream</a> ()</td></tr>
+<tr class="memdesc:aa6ae13a7d7a317da534536f29d4bd803"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides direct access to the underlying std::fstream object.  <br /></td></tr>
 <tr class="separator:aa6ae13a7d7a317da534536f29d4bd803"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>The <a class="el" href="classAsyncFw_1_1File.html" title="The File class.">File</a> class. </p>
+<div class="textblock"><p>for basic file I/O operations.</p>
+<p>Provides a wrapper over the standard std::fstream. The class object is non-copyable and non-movable. </p>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="FileSystemWatcher_2main_8cpp-example.html#_a3">FileSystemWatcher/main.cpp</a>.</dd>
 </dl>
-</div><hr/>The documentation for this class was generated from the following files:<ul>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="aac258c3ca8290c71ed3f6118caa3652e" name="aac258c3ca8290c71ed3f6118caa3652e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aac258c3ca8290c71ed3f6118caa3652e">&#9670;&#160;</a></span>File()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">File::File </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>fn</em></span><span class="paramdefsep"> = </span><span class="paramdefval">{}</span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructs a <a class="el" href="classAsyncFw_1_1File.html">File</a> object. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">filename</td><td>Optional file path </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a212a2b7db1a9cffd87c78b0285671bea" name="a212a2b7db1a9cffd87c78b0285671bea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a212a2b7db1a9cffd87c78b0285671bea">&#9670;&#160;</a></span>open() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool File::open </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>fn</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::ios::openmode</td>          <td class="paramname"><span class="paramname"><em>m</em></span><span class="paramdefsep"> = </span><span class="paramdefval">std::ios::binary&#160;|&#160;std::ios::in</span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Opens a file with the specified name and access mode. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">filename</td><td>The path or name of the file to open.</td></tr>
+    <tr><td class="paramname">mode</td><td>The file open mode flags (defaults to binary input). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the file was opened successfully. </dd></dl>
+<div id="dynsection-0" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-0-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1File_a212a2b7db1a9cffd87c78b0285671bea_cgraph.svg" width="152" height="62"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+<div id="dynsection-1" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-1-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-1-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1File_a212a2b7db1a9cffd87c78b0285671bea_icgraph.svg" width="152" height="62"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<a id="a8f534ddab32c516f07c26b766b99fabc" name="a8f534ddab32c516f07c26b766b99fabc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8f534ddab32c516f07c26b766b99fabc">&#9670;&#160;</a></span>open() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool File::open </td>
+          <td>(</td>
+          <td class="paramtype">std::ios::openmode</td>          <td class="paramname"><span class="paramname"><em>m</em></span><span class="paramdefsep"> = </span><span class="paramdefval">std::ios::binary&#160;|&#160;std::ios::in</span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Opens the file using the previously specified name. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mode</td><td>The file open mode flags (defaults to binary input). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if the file was opened successfully, false otherwise. </dd></dl>
+
+</div>
+</div>
+<a id="a51e2de0b42a61ced3dff12675e78490e" name="a51e2de0b42a61ced3dff12675e78490e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a51e2de0b42a61ced3dff12675e78490e">&#9670;&#160;</a></span>size()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::size_t File::size </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the cached size of the file determined when it was opened. </p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classAsyncFw_1_1File.html">File</a> size in bytes. </dd></dl>
+
+</div>
+</div>
+<a id="a4260fca380a387a8347b83bb4bee91b5" name="a4260fca380a387a8347b83bb4bee91b5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4260fca380a387a8347b83bb4bee91b5">&#9670;&#160;</a></span>exists()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool File::exists </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Checks if the file physically exists on disk. </p>
+<dl class="section return"><dt>Returns</dt><dd>True if the file exists. </dd></dl>
+
+</div>
+</div>
+<a id="adbf0a8f50fafc8c28e29f9448aad9b41" name="adbf0a8f50fafc8c28e29f9448aad9b41"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adbf0a8f50fafc8c28e29f9448aad9b41">&#9670;&#160;</a></span>read() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> File::read </td>
+          <td>(</td>
+          <td class="paramtype">std::size_t</td>          <td class="paramname"><span class="paramname"><em>s</em></span><span class="paramdefsep"> = </span><span class="paramdefval">SIZE_MAX</span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Reads data from the file into a <a class="el" href="classAsyncFw_1_1DataArray.html" title="The DataArray class, provides an array of bytes.">DataArray</a> container. </p>
+<p>If the parameter is set to SIZE_MAX, it reads all remaining data from the current position to the end of the file. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">bytes_to_read</td><td>Number of bytes to read (defaults to SIZE_MAX). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A filled <a class="el" href="classAsyncFw_1_1DataArray.html" title="The DataArray class, provides an array of bytes.">DataArray</a> object, or an empty one on failure. </dd></dl>
+<div id="dynsection-2" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-2-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-2-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-2-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1File_adbf0a8f50fafc8c28e29f9448aad9b41_cgraph.svg" width="150" height="62"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+<div id="dynsection-3" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-3-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-3-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1File_adbf0a8f50fafc8c28e29f9448aad9b41_icgraph.svg" width="150" height="62"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<a id="a0cd5ad18548cd40cd34f2146a63bb147" name="a0cd5ad18548cd40cd34f2146a63bb147"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0cd5ad18548cd40cd34f2146a63bb147">&#9670;&#160;</a></span>write() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::streamsize File::write </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>da</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Writes the entire content of a <a class="el" href="classAsyncFw_1_1DataArray.html" title="The DataArray class, provides an array of bytes.">DataArray</a> container to the file. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">data_array</td><td>Container containing binary data. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The number of bytes successfully written, or -1 on error. </dd></dl>
+<div id="dynsection-4" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-4-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-4-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-4-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1File_a0cd5ad18548cd40cd34f2146a63bb147_cgraph.svg" width="152" height="62"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+<div id="dynsection-5" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-5-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-5-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-5-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1File_a0cd5ad18548cd40cd34f2146a63bb147_icgraph.svg" width="152" height="62"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<a id="a39260c14055a9f001825ec3c454ecf0f" name="a39260c14055a9f001825ec3c454ecf0f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a39260c14055a9f001825ec3c454ecf0f">&#9670;&#160;</a></span>read() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::streamsize File::read </td>
+          <td>(</td>
+          <td class="paramtype">char *</td>          <td class="paramname"><span class="paramname"><em>_v</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::streamsize</td>          <td class="paramname"><span class="paramname"><em>_s</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Reads data from the file into a raw character buffer. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">buffer</td><td>Pointer to the destination memory buffer.</td></tr>
+    <tr><td class="paramname">buffer_size</td><td>Maximum number of bytes to read. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The actual number of bytes read. </dd></dl>
+
+</div>
+</div>
+<a id="a2965e419210567f0a2f81f30b0862ee6" name="a2965e419210567f0a2f81f30b0862ee6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2965e419210567f0a2f81f30b0862ee6">&#9670;&#160;</a></span>write() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::streamsize File::write </td>
+          <td>(</td>
+          <td class="paramtype">const char *</td>          <td class="paramname"><span class="paramname"><em>_v</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::streamsize</td>          <td class="paramname"><span class="paramname"><em>_s</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Writes data from a raw buffer to the file. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">buffer</td><td>Pointer to the data buffer.</td></tr>
+    <tr><td class="paramname">data_size</td><td>Number of bytes to write. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The number of bytes successfully written, or -1 on error. </dd></dl>
+
+</div>
+</div>
+<a id="a861146c8fe75ac121d094faa88dca18f" name="a861146c8fe75ac121d094faa88dca18f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a861146c8fe75ac121d094faa88dca18f">&#9670;&#160;</a></span>readLine()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string File::readLine </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Reads a single text line from the file up to a newline character. </p>
+<dl class="section return"><dt>Returns</dt><dd>The extracted string (the trailing <code>\\n</code> character is excluded). </dd></dl>
+
+</div>
+</div>
+<a id="ad16ba208a1a58d6c8fda79766fe42aaa" name="ad16ba208a1a58d6c8fda79766fe42aaa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad16ba208a1a58d6c8fda79766fe42aaa">&#9670;&#160;</a></span>fail()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool File::fail </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Checks if the internal stream has its error flag (failbit) set. </p>
+<dl class="section return"><dt>Returns</dt><dd>true if the last operation failed, false otherwise. </dd></dl>
+
+</div>
+</div>
+<a id="aa6ae13a7d7a317da534536f29d4bd803" name="aa6ae13a7d7a317da534536f29d4bd803"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa6ae13a7d7a317da534536f29d4bd803">&#9670;&#160;</a></span>fstream()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::fstream &amp; File::fstream </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Provides direct access to the underlying std::fstream object. </p>
+<p>Calling this method invalidates the internal file size cache (sets <a class="el" href="#a51e2de0b42a61ced3dff12675e78490e" title="Returns the cached size of the file determined when it was opened.">size()</a> to SIZE_MAX). Any direct modifications or writes to the stream will be handled safely, and the cache will be recalculated upon the next internal write operation. </p><dl class="section return"><dt>Returns</dt><dd>Reference to the std::fstream instance. </dd></dl>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li>main/<a class="el" href="File_8h_source.html">File.h</a></li>
 <li>main/<b>File.cpp</b></li>
 </ul>
