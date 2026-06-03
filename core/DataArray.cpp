@@ -398,7 +398,7 @@ LogStream &operator<<(LogStream &log, const DataArrayView &v) {
     return log;
   }
   for (const std::basic_string_view<char>::value_type &c : v)
-    if (!std::isprint(c) && c != '\n' && c != '\r') {
+    if (!std::isprint(c) && c != '\n' && c != '\r' && c != '\t') {
       log << "[Binary data, size: " + std::to_string(v.size()) + "]";
       return log;
     }
