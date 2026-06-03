@@ -90,18 +90,14 @@ public:
     constexpr typename Connection::Type type = (T != Connection::Default) ? T : static_cast<Connection::Type>(P & ~0x10);
     if constexpr ((P & 0x10) != 0) { static_assert(type == static_cast<Connection::Type>(P & ~0x10), "Error: Connection type mismatch!"); }
     std::lock_guard<std::mutex> lock(mutex);
-#ifndef __clang_analyzer__
     return *new Connection(f, this, type);
-#endif
   }
   template <Connection::Type T = Connection::Default, typename M, typename O>
   Connection &connect(M m, O *o) const {
     constexpr typename Connection::Type type = (T != Connection::Default) ? T : static_cast<Connection::Type>(P & ~0x10);
     if constexpr ((P & 0x10) != 0) { static_assert(type == static_cast<Connection::Type>(P & ~0x10), "Error: Connection type mismatch!"); }
     std::lock_guard<std::mutex> lock(mutex);
-#ifndef __clang_analyzer__
     return *new Connection(m, o, this, type);
-#endif
   }
   void operator()(Args... args) const {
     std::lock_guard<std::mutex> lock(mutex);
@@ -121,7 +117,6 @@ public:
   }
 
 protected:
-  /** @class Connection FunctionConnector.h <AsyncFw/FunctionConnector> @brief Implementation of a connection with specific argument. */
   class Connection : public AbstractFunctionConnector::Connection {
     friend FunctionConnector;
 
@@ -166,7 +161,7 @@ protected:
     AbstractFunction *f_;
   };
 };
-//A protected connector where only a single designated sender can emit messages.
+// A protected connector where only a single designated sender can emit messages.
 template <AbstractFunctionConnector::ConnectionPolicy P, typename T, typename... Args>
 class FunctionConnectorProtected : private FunctionConnector<P, Args...> {
   friend T;
@@ -190,7 +185,7 @@ protected:
 template <typename... Args>
 class FunctionConnector : public internal::FunctionConnector<AbstractFunctionConnector::Auto, Args...> {
 public:
-#ifdef __AsyncFw_DOC__  //for doxygen
+#ifdef __AsyncFw_DOC__  // for doxygen
   /** @brief Establishes a connection to a callable target.
   @details Allows registering lambdas, static functions, and functors. @n If the connector has a strict policy (like DirectOnly), requesting an incompatible type at compile time will trigger a `static_assert` error.
   @note **Usage styles:**

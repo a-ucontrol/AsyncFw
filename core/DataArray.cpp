@@ -373,7 +373,7 @@ void DataStream::Private::sr_(std::size_t *s) {
   uint8_t i;
   r_(sizeof(uint8_t), &i);
   if (fail_) return;
-  uint8_t j = (i & (sizeof(std::size_t) - 1));
+  uint8_t j = (i & (sizeof(std::size_t) - 1));  // (i & 0x07) -> sizeof(std::size_t) == 8 , (i & 0x03) -> sizeof(std::size_t) == 4
   i >>= 3;
   if (!j) {
     *s = i;
