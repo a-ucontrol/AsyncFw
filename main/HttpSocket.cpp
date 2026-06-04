@@ -6,9 +6,8 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 */
 
 #include <algorithm>
-#include <fstream>
-#include "core/LogStream.h"
 #include "core/Thread.h"
+#include "core/LogStream.h"
 #include "HttpSocket.h"
 
 #define SOCKET_WRITE_SIZE 8192
@@ -148,14 +147,18 @@ void HttpSocket::writeEvent() {
   lsTrace();
   if (full_) clearReceived();
   if (pendingWrite() >= SOCKET_WRITE_SIZE) return;
-  if (file_.fstream().is_open()) {
+  if (file_.isOpen()) {
     DataArray da;
     da.resize(SOCKET_WRITE_SIZE);
-    int r = file_.fstream().readsome(reinterpret_cast<char *>(da.data()), da.size());
+    std::streamsize r = file_.read(reinterpret_cast<char *>(da.data()), da.size());
     if (r > 0) write(da.data(), r);
-    int p = file_.fstream().tellg() * 100 / file_.size();
-    if (progress_ != p) progress(progress_ = p);
-    if (static_cast<std::size_t>(file_.fstream().tellg()) == file_.size() || file_.fail()) {
+    std::streamsize _p = file_.tellg();
+    std::size_t _s = file_.size();
+    if (_p != -1 && _s > 0 && _s != std::numeric_limits<std::size_t>::max()) {
+      int p = _p * 100 / _s;
+      if (progress_ != p) progress(progress_ = p);
+    }
+    if (_p == static_cast<int>(_s) || file_.fail()) {
       file_.close();
       if (connectionClose || file_.fail()) disconnect();
     }
@@ -187,7 +190,7 @@ void HttpSocket::clearReceived() {
 }
 
 void HttpSocket::sendFile(const std::string &fn) {
-  if (file_.fstream().is_open()) {
+  if (file_.isOpen()) {
     lsError() << "file already opened:" << fn;
     return;
   }

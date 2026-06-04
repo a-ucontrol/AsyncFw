@@ -19,5 +19,6 @@ var searchData=
   ['interruptrequested_16',['interruptRequested',['../classAsyncFw_1_1AbstractThread.html#a213b2eff5c0d6b670e31dbfe3f1199e8',1,'AsyncFw::AbstractThread']]],
   ['invoke_17',['invoke',['../classAsyncFw_1_1AbstractThread.html#a786474d037b50053f1a97af7b67e6069',1,'AsyncFw::AbstractThread']]],
   ['invoketask_18',['invokeTask',['../classAsyncFw_1_1AbstractThread.html#a84745a4ab129e734d273fa8a5e358a2b',1,'AsyncFw::AbstractThread']]],
-  ['ipv4_19',['ipv4',['../structAsyncFw_1_1MulticastDns_1_1Host.html#a57f0b04e6bb05cc48b7c205c959ec964',1,'AsyncFw::MulticastDns::Host']]]
+  ['ipv4_19',['ipv4',['../structAsyncFw_1_1MulticastDns_1_1Host.html#a57f0b04e6bb05cc48b7c205c959ec964',1,'AsyncFw::MulticastDns::Host']]],
+  ['isopen_20',['isOpen',['../classAsyncFw_1_1File.html#af6794f27c00b09ee3d5ea65c16de7334',1,'AsyncFw::File']]]
 ];

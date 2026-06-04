@@ -9,5 +9,6 @@ var searchData=
   ['instance_6',['instance',['../classAsyncFw_1_1MulticastDns.html#a61341fa78536e7a787bbbce75116ef3e',1,'AsyncFw::MulticastDns::instance()'],['../classAsyncFw_1_1ThreadPool.html#a086c0271dcb7c4be416705d622145f83',1,'AsyncFw::ThreadPool::instance()']]],
   ['interruptrequested_7',['interruptRequested',['../classAsyncFw_1_1AbstractThread.html#a213b2eff5c0d6b670e31dbfe3f1199e8',1,'AsyncFw::AbstractThread']]],
   ['invoke_8',['invoke',['../classAsyncFw_1_1AbstractThread.html#a786474d037b50053f1a97af7b67e6069',1,'AsyncFw::AbstractThread']]],
-  ['invoketask_9',['invokeTask',['../classAsyncFw_1_1AbstractThread.html#a84745a4ab129e734d273fa8a5e358a2b',1,'AsyncFw::AbstractThread']]]
+  ['invoketask_9',['invokeTask',['../classAsyncFw_1_1AbstractThread.html#a84745a4ab129e734d273fa8a5e358a2b',1,'AsyncFw::AbstractThread']]],
+  ['isopen_10',['isOpen',['../classAsyncFw_1_1File.html#af6794f27c00b09ee3d5ea65c16de7334',1,'AsyncFw::File']]]
 ];

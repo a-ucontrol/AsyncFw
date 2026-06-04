@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['read_0',['read',['../classAsyncFw_1_1File.html#adbf0a8f50fafc8c28e29f9448aad9b41',1,'AsyncFw::File::read(std::size_t=SIZE_MAX)'],['../classAsyncFw_1_1File.html#a39260c14055a9f001825ec3c454ecf0f',1,'AsyncFw::File::read(char *, std::streamsize)']]],
+  ['read_0',['read',['../classAsyncFw_1_1File.html#a7e940f76fe48e35d1273f06e376541eb',1,'AsyncFw::File::read(std::size_t s=std::numeric_limits&lt; std::size_t &gt;::max())'],['../classAsyncFw_1_1File.html#a39260c14055a9f001825ec3c454ecf0f',1,'AsyncFw::File::read(char *, std::streamsize)']]],
   ['readevent_1',['readEvent',['../classAsyncFw_1_1AbstractSocket.html#a609ec54ec8aed39769d60319c4c15833',1,'AsyncFw::AbstractSocket::readEvent()'],['../classAsyncFw_1_1DataArraySocket.html#a1a1f3404abcb93af27de1d7bc0a958b1',1,'AsyncFw::DataArraySocket::readEvent()'],['../classAsyncFw_1_1HttpSocket.html#a7163448458d68f433dbdb214a6175be3',1,'AsyncFw::HttpSocket::readEvent()']]],
   ['readline_2',['readLine',['../classAsyncFw_1_1File.html#a861146c8fe75ac121d094faa88dca18f',1,'AsyncFw::File']]],
   ['remove_3',['remove',['../classAsyncFw_1_1File.html#a22c7e349dbcc3242374c6c685948d201',1,'AsyncFw::File']]],
