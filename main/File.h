@@ -10,7 +10,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 /** @file File.h @brief Definition of the File class for file system operations. */
 
 #include <ios>
-#include <cstdint>
+#include <limits>
 
 namespace AsyncFw {
 class DataArray;
@@ -41,9 +41,9 @@ public:
   @return True if the file exists. */
   bool exists();
   /** @brief Reads data from the file into a DataArray container.
-  @details If the parameter is set to SIZE_MAX, it reads all remaining data from the current position to the end of the file.
-  @param s Number of bytes to read (defaults to SIZE_MAX). @return A filled DataArray object, or an empty one on failure. */
-  DataArray read(std::size_t = SIZE_MAX);
+  @details If the parameter is set to @b std::numeric_limits<std::size_t>::max(), it reads all remaining data from the current position to the end of the file.
+  @param s Number of bytes to read (defaults to @b std::numeric_limits<std::size_t>::max()). @return A filled DataArray object, or an empty one on failure. */
+  DataArray read(std::size_t s = std::numeric_limits<std::size_t>::max());
   /** @brief Writes the entire content of a DataArray container to the file.
   @param da Container containing binary data. @return The number of bytes successfully written, or -1 on error. */
   std::streamsize write(const DataArray &);
@@ -59,8 +59,12 @@ public:
   /** @brief Checks if the internal stream has its error flag (failbit) set.
   @return True if the last operation failed. */
   bool fail();
+  /** @brief Returns the current read position in the file (stream get). @return The current byte offset for reading, or -1 on error. */
+  std::streamsize tellg();
+  /** @brief Returns the current write position in the file (stream put). @return The current byte offset for writing, or -1 on error. */
+  std::streamsize tellp();
   /** @brief Provides direct access to the underlying std::fstream object.
-  @details Calling this method invalidates the internal file size cache (sets size() to SIZE_MAX). Any direct modifications or writes to the stream will be handled safely, and the cache will be recalculated upon the next internal write operation.
+  @warning If the file is opened in any write or modification mode (out or app), calling this method invalidates the internal file size cache (sets size() to @b std::numeric_limits<std::size_t>::max()). @n For read-only modes, the cache remains valid and untouched.
   @return Reference to the std::fstream instance. */
   std::fstream &fstream();
 

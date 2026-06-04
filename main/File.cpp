@@ -77,7 +77,7 @@ bool File::exists() { return std::filesystem::exists(private_.fn_); }
 DataArray File::read(std::size_t s) {
   if (private_.f_.fail() || !private_.f_.is_open()) return {};
   std::size_t _s = s;
-  if (_s == SIZE_MAX) {
+  if (_s == std::numeric_limits<std::size_t>::max()) {
     std::fstream::pos_type _p = private_.f_.tellg();
     if (_p != std::fstream::pos_type(-1) && private_.fs_ > static_cast<std::size_t>(_p)) {
       _s = private_.fs_ - static_cast<std::size_t>(_p);
@@ -127,7 +127,11 @@ std::string File::readLine() {
 
 bool File::fail() { return private_.f_.fail(); }
 
+std::streamsize File::tellg() { return private_.f_.tellg(); }
+
+std::streamsize File::tellp() { return private_.f_.tellp(); }
+
 std::fstream &File::fstream() {
-  private_.fs_ = -1;
+  if (private_.m_ & (std::ios::out | std::ios::app)) private_.fs_ = std::numeric_limits<std::size_t>::max();
   return private_.f_;
 }
