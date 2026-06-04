@@ -175,7 +175,7 @@ std::mutex&#160;</td><td class="memItemRight" valign="bottom"><b>mutex</b></td><
 
 <p>Defines the default invocation behavior and validation constraints for the connector. </p>
 <p>This enumeration serves two purposes based on the value provided:</p><ol type="1">
-<li><b>Default Value (Relaxed Modes):</b> If a subscriber connects using Connection::Type::Default, the connector substitutes Connection::Type::Default with this configured value (Auto, Direct, Queued, or Sync).</li>
+<li><b>Default Value (Relaxed Modes):</b> If a subscriber connects without a specific <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html#a860b83046c90e62d768e0acde74626c6" title="Specifies how a particular receiver slot should be invoked relative to the sender&#39;s thread.">Connection::Type</a>, the connector falls back to the configured <a class="el" href="#ab248bd16cbfcac609f58d401abec4368" title="Defines the default invocation behavior and validation constraints for the connector.">ConnectionPolicy</a> (Auto, Direct, Queued, or Sync).</li>
 <li><b>Strict Constraints (Only Modes):</b> Values with the Only suffix act as strict compile time validators. </li>
 </ol>
 <table class="fieldtable">

@@ -138,11 +138,11 @@ Public Types</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ae1f65144956b3b1247d58614e4080f63" id="r_ae1f65144956b3b1247d58614e4080f63"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html#a860b83046c90e62d768e0acde74626c6">AbstractFunctionConnector::Connection::Type</a> T = AbstractFunctionConnector::Connection::Default, typename F&gt; </td></tr>
+<tr class="memitem:ae1f65144956b3b1247d58614e4080f63" id="r_ae1f65144956b3b1247d58614e4080f63"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html#a860b83046c90e62d768e0acde74626c6">AbstractFunctionConnector::Connection::Type</a> T = static_cast&lt;AbstractFunctionConnector::Connection::Type&gt;(0x80), typename F&gt; </td></tr>
 <tr class="memitem:ae1f65144956b3b1247d58614e4080f63"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html">AbstractFunctionConnector::Connection</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ae1f65144956b3b1247d58614e4080f63">connect</a> (F f) const</td></tr>
 <tr class="memdesc:ae1f65144956b3b1247d58614e4080f63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Establishes a connection to a callable target.  <br /></td></tr>
 <tr class="separator:ae1f65144956b3b1247d58614e4080f63"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af022579793868d73d23c179298930724" id="r_af022579793868d73d23c179298930724"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html#a860b83046c90e62d768e0acde74626c6">AbstractFunctionConnector::Connection::Type</a> T = AbstractFunctionConnector::Connection::Default, typename M, typename O&gt; </td></tr>
+<tr class="memitem:af022579793868d73d23c179298930724" id="r_af022579793868d73d23c179298930724"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html#a860b83046c90e62d768e0acde74626c6">AbstractFunctionConnector::Connection::Type</a> T = static_cast&lt;AbstractFunctionConnector::Connection::Type&gt;(0x80), typename M, typename O&gt; </td></tr>
 <tr class="memitem:af022579793868d73d23c179298930724"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html">AbstractFunctionConnector::Connection</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#af022579793868d73d23c179298930724">connect</a> (M m, O *o) const</td></tr>
 <tr class="memdesc:af022579793868d73d23c179298930724"><td class="mdescLeft">&#160;</td><td class="mdescRight">Connects a specific class member method.  <br /></td></tr>
 <tr class="separator:af022579793868d73d23c179298930724"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -255,7 +255,7 @@ template&lt;typename T&gt; </div>
 </div><div class="memdoc">
 
 <p>A protected connector variant where only a single designated owner class can emit messages. </p>
-<p>Enhances encapsulation by preventing external code from triggering the connector. External code can only subscribe to notifications. Uses the default <code><a class="el" href="classAsyncFw_1_1AbstractFunctionConnector.html#ab248bd16cbfcac609f58d401abec4368a480f988213a099791809a06ce8e412ff" title="Default is Auto. Any explicit connection types are allowed.">ConnectionPolicy::Auto</a></code>. </p><dl class="tparams"><dt>Template Parameters</dt><dd>
+<p>Enhances encapsulation by preventing external code from triggering the connector. External code can only subscribe to notifications. Uses the default <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector.html#ab248bd16cbfcac609f58d401abec4368a480f988213a099791809a06ce8e412ff" title="Default is Auto. Any explicit connection types are allowed.">ConnectionPolicy::Auto</a>. </p><dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">T</td><td>The owner class (emitter) that is granted exclusive access to message emission. </td></tr>
   </table>
@@ -275,7 +275,7 @@ template&lt;typename T&gt; </div>
 <div class="memtemplate">
 template&lt;typename... Args&gt; </div>
 <div class="memtemplate">
-template&lt;<a class="el" href="classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html#a860b83046c90e62d768e0acde74626c6">AbstractFunctionConnector::Connection::Type</a> T = AbstractFunctionConnector::Connection::Default, typename F&gt; </div>
+template&lt;<a class="el" href="classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html#a860b83046c90e62d768e0acde74626c6">AbstractFunctionConnector::Connection::Type</a> T = static_cast&lt;AbstractFunctionConnector::Connection::Type&gt;(0x80), typename F&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html">AbstractFunctionConnector::Connection</a> &amp; <a class="el" href="classAsyncFw_1_1FunctionConnector.html">AsyncFw::FunctionConnector</a>&lt; Args &gt;::connect </td>
@@ -288,7 +288,7 @@ template&lt;<a class="el" href="classAsyncFw_1_1AbstractFunctionConnector_1_1Con
 
 <p>Establishes a connection to a callable target. </p>
 <p>Allows registering lambdas, static functions, and functors. <br  />
- If the connector has a strict policy (like DirectOnly), requesting an incompatible type at compile time will trigger a <code>static_assert</code> error. </p><dl class="section note"><dt>Note</dt><dd><b>Usage styles:</b> <div class="fragment"><div class="line"><span class="comment">// Style 1: Use default policy configuration</span></div>
+ If the connector has a strict policy (like DirectOnly), requesting an incompatible type at compile time will trigger a static_assert error. </p><dl class="section note"><dt>Note</dt><dd><b>Usage styles:</b> <div class="fragment"><div class="line"><span class="comment">// Style 1: Use default policy configuration</span></div>
 <div class="line">sender-&gt;connector.connect(lambda);</div>
 <div class="line"><span class="comment">// Style 2: Explicitly enforce connection behavior via template argument</span></div>
 <div class="line">sender-&gt;connector.connect&lt;<a class="code hl_enumvalue" href="classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html#a860b83046c90e62d768e0acde74626c6a6c561775a673adbed77c380ee036a01f">AsyncFw::AbstractFunctionConnector::Connection::Queued</a>&gt;(lambda);</div>
@@ -296,7 +296,7 @@ template&lt;<a class="el" href="classAsyncFw_1_1AbstractFunctionConnector_1_1Con
 </div><!-- fragment --> </dd></dl>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">T</td><td>The thread execution context strategy. Defaults to Connection::Default.</td></tr>
+    <tr><td class="paramname">T</td><td>The thread execution context strategy.</td></tr>
   </table>
   </dd>
 </dl>
@@ -320,7 +320,7 @@ template&lt;<a class="el" href="classAsyncFw_1_1AbstractFunctionConnector_1_1Con
 <div class="memtemplate">
 template&lt;typename... Args&gt; </div>
 <div class="memtemplate">
-template&lt;<a class="el" href="classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html#a860b83046c90e62d768e0acde74626c6">AbstractFunctionConnector::Connection::Type</a> T = AbstractFunctionConnector::Connection::Default, typename M, typename O&gt; </div>
+template&lt;<a class="el" href="classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html#a860b83046c90e62d768e0acde74626c6">AbstractFunctionConnector::Connection::Type</a> T = static_cast&lt;AbstractFunctionConnector::Connection::Type&gt;(0x80), typename M, typename O&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html">AbstractFunctionConnector::Connection</a> &amp; <a class="el" href="classAsyncFw_1_1FunctionConnector.html">AsyncFw::FunctionConnector</a>&lt; Args &gt;::connect </td>
@@ -343,7 +343,7 @@ template&lt;<a class="el" href="classAsyncFw_1_1AbstractFunctionConnector_1_1Con
 </div><!-- fragment --> </dd></dl>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">T</td><td>The thread execution context strategy. Defaults to Connection::Default.</td></tr>
+    <tr><td class="paramname">T</td><td>The thread execution context strategy.</td></tr>
   </table>
   </dd>
 </dl>

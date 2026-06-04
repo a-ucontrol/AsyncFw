@@ -21,7 +21,7 @@ class AbstractFunctionConnector {
 public:
   /** @enum ConnectionPolicy @brief Defines the default invocation behavior and validation constraints for the connector.
   @details This enumeration serves two purposes based on the value provided:
-  1. **Default Value (Relaxed Modes):** If a subscriber connects using Connection::Type::Default, the connector substitutes Connection::Type::Default with this configured value (Auto, Direct, Queued, or Sync).
+  1. **Default Value (Relaxed Modes):** If a subscriber connects without a specific Connection::Type, the connector falls back to the configured ConnectionPolicy (Auto, Direct, Queued, or Sync).
   2. **Strict Constraints (Only Modes):** Values with the Only suffix act as strict compile time validators. */
   enum ConnectionPolicy : uint8_t {
     Auto = 0,           ///< Default is Auto. Any explicit connection types are allowed.
@@ -189,7 +189,7 @@ class FunctionConnector : public internal::FunctionConnector<AbstractFunctionCon
 public:
 #ifdef __AsyncFw_DOC__  // for doxygen
   /** @brief Establishes a connection to a callable target.
-  @details Allows registering lambdas, static functions, and functors. @n If the connector has a strict policy (like DirectOnly), requesting an incompatible type at compile time will trigger a `static_assert` error.
+  @details Allows registering lambdas, static functions, and functors. @n If the connector has a strict policy (like DirectOnly), requesting an incompatible type at compile time will trigger a static_assert error.
   @note **Usage styles:**
   @code
   // Style 1: Use default policy configuration
@@ -197,8 +197,8 @@ public:
   // Style 2: Explicitly enforce connection behavior via template argument
   sender->connector.connect<AsyncFw::AbstractFunctionConnector::Connection::Queued>(lambda);
   @endcode
-  @tparam T The thread execution context strategy. Defaults to Connection::Default. @param f The callable target object representing the receiver slot. @return Reference to the newly allocated Connection. */
-  template <AbstractFunctionConnector::Connection::Type T = AbstractFunctionConnector::Connection::Default, typename F>
+  @tparam T The thread execution context strategy. @param f The callable target object representing the receiver slot. @return Reference to the newly allocated Connection. */
+  template <AbstractFunctionConnector::Connection::Type T = static_cast<AbstractFunctionConnector::Connection::Type>(0x80), typename F>
   AbstractFunctionConnector::Connection &connect(F f) const;
 
   /** @brief Connects a specific class member method.
@@ -209,8 +209,8 @@ public:
   // Style 2: Explicitly enforce connection behavior via template argument
   sender->connector.connect<Connection::Direct>(&MethodConnectionExample::method, &object);
   @endcode
-  @tparam T The thread execution context strategy. Defaults to Connection::Default. @param m The pointer to the member function of the target object. @param o The pointer to the specific instance of the object containing the member function. @return Reference to the newly allocated Connection. */
-  template <AbstractFunctionConnector::Connection::Type T = AbstractFunctionConnector::Connection::Default, typename M, typename O>
+  @tparam T The thread execution context strategy. @param m The pointer to the member function of the target object. @param o The pointer to the specific instance of the object containing the member function. @return Reference to the newly allocated Connection. */
+  template <AbstractFunctionConnector::Connection::Type T = static_cast<AbstractFunctionConnector::Connection::Type>(0x80), typename M, typename O>
   AbstractFunctionConnector::Connection &connect(M m, O *o) const;
 
   /** @brief Emits/Sends the signal, notifying all connected receivers.
@@ -219,7 +219,7 @@ public:
   void operator()(Args... args) const;
 #endif
   /** @brief A protected connector variant where only a single designated owner class can emit messages.
-  @details Enhances encapsulation by preventing external code from triggering the connector. External code can only subscribe to notifications. Uses the default `ConnectionPolicy::Auto`.
+  @details Enhances encapsulation by preventing external code from triggering the connector. External code can only subscribe to notifications. Uses the default ConnectionPolicy::Auto.
   @tparam T The owner class (emitter) that is granted exclusive access to message emission. */
   template <typename T>
   using Protected = internal::FunctionConnectorProtected<AbstractFunctionConnector::Auto, T, Args...>;
