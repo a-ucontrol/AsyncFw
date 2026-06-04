@@ -1,8 +1,7 @@
 var NAVTREEINDEX1 =
 {
-"classAsyncFw_1_1File.html#a83cbce54d6c3b8c2f417b51f6b3f488c":[2,0,0,23,5],
-"classAsyncFw_1_1File.html#a861146c8fe75ac121d094faa88dca18f":[2,0,0,23,14],
 "classAsyncFw_1_1File.html#a8f534ddab32c516f07c26b766b99fabc":[2,0,0,23,3],
+"classAsyncFw_1_1File.html#aa6ae13a7d7a317da534536f29d4bd803":[2,0,0,23,18],
 "classAsyncFw_1_1File.html#aac258c3ca8290c71ed3f6118caa3652e":[2,0,0,23,0],
 "classAsyncFw_1_1File.html#aaec950aa1cced82715667e8d0bd9664b":[2,0,0,23,16],
 "classAsyncFw_1_1File.html#ac704ebdf5f57d7a1c5ddf409d797fb69":[2,0,0,23,1],
@@ -29,8 +28,6 @@ var NAVTREEINDEX1 =
 "classAsyncFw_1_1HttpServer.html":[2,0,0,28],
 "classAsyncFw_1_1HttpSocket.html":[2,0,0,29],
 "classAsyncFw_1_1HttpSocket.html#a7163448458d68f433dbdb214a6175be3":[2,0,0,29,2],
-"classAsyncFw_1_1HttpSocket.html#a8268467d3581a4d393e9ccd288de32ff":[2,0,0,29,5],
-"classAsyncFw_1_1HttpSocket.html#a96932e5f6b5f84c4f204b0e6e4ef8472":[2,0,0,29,4],
 "classAsyncFw_1_1HttpSocket.html#ab3ee95c329a5f5c7ea659fe7809cc37e":[2,0,0,29,0],
 "classAsyncFw_1_1HttpSocket.html#ac276bcd3a5e86289eb37ea7fd062559b":[2,0,0,29,3],
 "classAsyncFw_1_1HttpSocket.html#ad51bb1bf5880c3037c7ad70231c0767d":[2,0,0,29,1],

@@ -175,6 +175,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>remove</b> ()</td></t
 <tr class="memitem:a5d34b6e9d6a397e82a6f7bec62ea2f4d" id="r_a5d34b6e9d6a397e82a6f7bec62ea2f4d"><td class="memItemLeft" align="right" valign="top">std::streamsize&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5d34b6e9d6a397e82a6f7bec62ea2f4d">tellp</a> ()</td></tr>
 <tr class="memdesc:a5d34b6e9d6a397e82a6f7bec62ea2f4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current write position in the file (stream put).  <br /></td></tr>
 <tr class="separator:a5d34b6e9d6a397e82a6f7bec62ea2f4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa6ae13a7d7a317da534536f29d4bd803" id="r_aa6ae13a7d7a317da534536f29d4bd803"><td class="memItemLeft" align="right" valign="top">std::fstream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa6ae13a7d7a317da534536f29d4bd803">fstream</a> ()</td></tr>
+<tr class="memdesc:aa6ae13a7d7a317da534536f29d4bd803"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides direct access to the underlying std::fstream object.  <br /></td></tr>
+<tr class="separator:aa6ae13a7d7a317da534536f29d4bd803"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Provides basic file I/O operations. </p>
@@ -558,6 +561,28 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>remove</b> ()</td></t
 
 <p>Returns the current write position in the file (stream put). </p>
 <dl class="section return"><dt>Returns</dt><dd>The current byte offset for writing, or -1 on error. </dd></dl>
+
+</div>
+</div>
+<a id="aa6ae13a7d7a317da534536f29d4bd803" name="aa6ae13a7d7a317da534536f29d4bd803"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa6ae13a7d7a317da534536f29d4bd803">&#9670;&#160;</a></span>fstream()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::fstream &amp; File::fstream </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Provides direct access to the underlying std::fstream object. </p>
+<dl class="section warning"><dt>Warning</dt><dd>If the file is opened in any write or modification mode (out or app), calling this method invalidates the internal file size cache (sets <a class="el" href="#a51e2de0b42a61ced3dff12675e78490e" title="Returns the cached size of the file determined when it was opened.">size()</a> to <b>std::numeric_limits&lt;std::size_t&gt;::max()</b>). <br  />
+ For read-only modes, the cache remains valid and untouched. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Reference to the std::fstream instance. </dd></dl>
 
 </div>
 </div>

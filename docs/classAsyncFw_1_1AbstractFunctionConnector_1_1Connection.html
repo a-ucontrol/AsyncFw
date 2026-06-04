@@ -126,14 +126,10 @@ $(function(){initNavTree('classAsyncFw_1_1AbstractFunctionConnector_1_1Connectio
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a860b83046c90e62d768e0acde74626c6" id="r_a860b83046c90e62d768e0acde74626c6"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a860b83046c90e62d768e0acde74626c6">Type</a> : uint8_t { <br />
-&#160;&#160;<a class="el" href="#a860b83046c90e62d768e0acde74626c6af3aceaa2c172acce94b8685ce05697b7">Auto</a> = AbstractFunctionConnector::Auto
+<tr class="memitem:a860b83046c90e62d768e0acde74626c6" id="r_a860b83046c90e62d768e0acde74626c6"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a860b83046c90e62d768e0acde74626c6">Type</a> : uint8_t { <a class="el" href="#a860b83046c90e62d768e0acde74626c6af3aceaa2c172acce94b8685ce05697b7">Auto</a> = AbstractFunctionConnector::Auto
 , <a class="el" href="#a860b83046c90e62d768e0acde74626c6a64d3a4cb989751b7834f3fa0cb7a0021">Direct</a> = AbstractFunctionConnector::Direct
 , <a class="el" href="#a860b83046c90e62d768e0acde74626c6a6c561775a673adbed77c380ee036a01f">Queued</a> = AbstractFunctionConnector::Queued
 , <a class="el" href="#a860b83046c90e62d768e0acde74626c6a5c9e5da34d6f0f6d7d4f11cdbbac4f97">Sync</a> = AbstractFunctionConnector::Sync
-, <br />
-&#160;&#160;<a class="el" href="#a860b83046c90e62d768e0acde74626c6aa6ac69ca7e3f98af70b7ed067e4f9bdc">Default</a> = 0x80
-<br />
  }</td></tr>
 <tr class="memdesc:a860b83046c90e62d768e0acde74626c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specifies how a particular receiver slot should be invoked relative to the sender's thread.  <a href="#a860b83046c90e62d768e0acde74626c6">More...</a><br /></td></tr>
 <tr class="separator:a860b83046c90e62d768e0acde74626c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -181,8 +177,6 @@ Protected Member Functions</h2></td></tr>
 <tr><td class="fieldname"><a id="a860b83046c90e62d768e0acde74626c6a6c561775a673adbed77c380ee036a01f" name="a860b83046c90e62d768e0acde74626c6a6c561775a673adbed77c380ee036a01f"></a>Queued&#160;</td><td class="fielddoc"><p>Posts a task containing a copy of the arguments into the receiver thread's event loop. Execution is asynchronous. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="a860b83046c90e62d768e0acde74626c6a5c9e5da34d6f0f6d7d4f11cdbbac4f97" name="a860b83046c90e62d768e0acde74626c6a5c9e5da34d6f0f6d7d4f11cdbbac4f97"></a>Sync&#160;</td><td class="fielddoc"><p>Dispatches the invocation to the receiver's thread loop, but blocks the sender's thread until execution completes. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="a860b83046c90e62d768e0acde74626c6aa6ac69ca7e3f98af70b7ed067e4f9bdc" name="a860b83046c90e62d768e0acde74626c6aa6ac69ca7e3f98af70b7ed067e4f9bdc"></a>Default&#160;</td><td class="fielddoc"><p>Falls back to the default <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector.html#ab248bd16cbfcac609f58d401abec4368" title="Defines the default invocation behavior and validation constraints for the connector.">ConnectionPolicy</a> configuration defined by the parent connector instance. </p>
 </td></tr>
 </table>
 

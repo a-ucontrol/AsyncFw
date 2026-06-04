@@ -75,20 +75,20 @@
 </a>
 </g>
 </g>
-<!-- Node7 -->
-<g id="Node000007" class="node">
-<title>Node7</title>
-<g id="a_Node000007"><a xlink:href="classAsyncFw_1_1ThreadPool.html#add8ee85dd7581acb117a805ff5a8c18a" target="_top" xlink:title="Synchronously invokes a function in the given thread&#39;s event loop (blocks the caller).">
+<!-- Node6 -->
+<g id="Node000006" class="node">
+<title>Node6</title>
+<g id="a_Node000006"><a xlink:href="classAsyncFw_1_1ThreadPool.html#add8ee85dd7581acb117a805ff5a8c18a" target="_top" xlink:title="Synchronously invokes a function in the given thread&#39;s event loop (blocks the caller).">
 <polygon fill="white" stroke="#666666" points="270.5,-32 157.75,-32 157.75,0 270.5,0 270.5,-32"/>
 <text text-anchor="start" x="165.75" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::ThreadPool</text>
 <text text-anchor="middle" x="214.12" y="-6.5" font-family="Helvetica,sans-Serif" font-size="10.00">::sync</text>
 </a>
 </g>
 </g>
-<!-- Node1&#45;&gt;Node7 -->
-<g id="edge6_Node000001_Node000007" class="edge">
-<title>Node1&#45;&gt;Node7</title>
-<g id="a_edge6_Node000001_Node000007"><a xlink:title=" ">
+<!-- Node1&#45;&gt;Node6 -->
+<g id="edge5_Node000001_Node000006" class="edge">
+<title>Node1&#45;&gt;Node6</title>
+<g id="a_edge5_Node000001_Node000006"><a xlink:title=" ">
 <path fill="none" stroke="#63b8ff" d="M338.64,-69.49C320.68,-60.32 299.23,-49.74 279.5,-41 272.92,-38.09 265.89,-35.16 258.98,-32.4"/>
 <polygon fill="#63b8ff" stroke="#63b8ff" points="336.94,-72.55 347.43,-74.01 340.14,-66.33 336.94,-72.55"/>
 </a>
@@ -110,25 +110,6 @@
 <g id="a_edge2_Node000002_Node000003"><a xlink:title=" ">
 <path fill="none" stroke="#63b8ff" d="M146.01,-166C135.01,-166 123.72,-166 113.04,-166"/>
 <polygon fill="#63b8ff" stroke="#63b8ff" points="145.82,-169.5 155.82,-166 145.82,-162.5 145.82,-169.5"/>
-</a>
-</g>
-</g>
-<!-- Node6 -->
-<g id="Node000006" class="node">
-<title>Node6</title>
-<g id="a_Node000006"><a xlink:href="classAsyncFw_1_1HttpSocket.html#a8268467d3581a4d393e9ccd288de32ff" target="_top" xlink:title="Schedules the socket for deferred asynchronous destruction.">
-<polygon fill="white" stroke="#666666" points="112.75,-82 0,-82 0,-50 112.75,-50 112.75,-82"/>
-<text text-anchor="start" x="8" y="-68.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::HttpSocket</text>
-<text text-anchor="middle" x="56.38" y="-56.5" font-family="Helvetica,sans-Serif" font-size="10.00">::destroy</text>
-</a>
-</g>
-</g>
-<!-- Node5&#45;&gt;Node6 -->
-<g id="edge5_Node000005_Node000006" class="edge">
-<title>Node5&#45;&gt;Node6</title>
-<g id="a_edge5_Node000005_Node000006"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M137.09,-66C129.04,-66 120.96,-66 113.2,-66"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="136.91,-69.5 146.91,-66 136.91,-62.5 136.91,-69.5"/>
 </a>
 </g>
 </g>

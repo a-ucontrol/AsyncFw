@@ -17,5 +17,6 @@ var classAsyncFw_1_1File =
     [ "readLine", "classAsyncFw_1_1File.html#a861146c8fe75ac121d094faa88dca18f", null ],
     [ "fail", "classAsyncFw_1_1File.html#ad16ba208a1a58d6c8fda79766fe42aaa", null ],
     [ "tellg", "classAsyncFw_1_1File.html#aaec950aa1cced82715667e8d0bd9664b", null ],
-    [ "tellp", "classAsyncFw_1_1File.html#a5d34b6e9d6a397e82a6f7bec62ea2f4d", null ]
+    [ "tellp", "classAsyncFw_1_1File.html#a5d34b6e9d6a397e82a6f7bec62ea2f4d", null ],
+    [ "fstream", "classAsyncFw_1_1File.html#aa6ae13a7d7a317da534536f29d4bd803", null ]
 ];
