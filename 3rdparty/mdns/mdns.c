@@ -431,7 +431,6 @@ open_client_sockets(int* sockets, int max_sockets, int port, struct sockaddr_in*
 						if (!first_llipv4)
 							continue;
 						first_llipv4 = 0;
-						saddr->sin_port = htons(port);
 						*out_llipv4 = *saddr;
 						ipv4_address_to_string(out_llip_str, 16, saddr, sizeof(struct sockaddr_in));
 						printf("LinkLocal IPv4 address: %s\n", out_llip_str);
@@ -553,7 +552,6 @@ open_client_sockets(int* sockets, int max_sockets, int port, struct sockaddr_in*
 					if (!first_llipv4)
 						continue;
 					first_llipv4 = 0;
-					saddr->sin_port = htons(port);
 					*out_llipv4 = *saddr;
 					ipv4_address_to_string(out_llip_str, 16, saddr, sizeof(struct sockaddr_in));
 					printf("LinkLocal IPv4 address: %s\n", out_llip_str);
@@ -828,16 +826,19 @@ send_mdns_query(void* qd_void_ptr, mdns_query_t* query, size_t count) {
 	}
 	return ret;
 }
-void mdns_querier_event(int fd, void* qd_void_ptr, void* ctx_void_ptr) {
+void
+mdns_querier_event(int fd, void* qd_void_ptr, void* ctx_void_ptr) {
 	struct querier_data_t* qd = (struct querier_data_t*)qd_void_ptr;
-	if (!qd) return;
+	if (!qd)
+		return;
 
 	int query_id = -1;
 	for (int isock = 0; isock < qd->num_sockets; ++isock) {
-		if (qd->sockets[isock] == fd) query_id = qd->query_id[isock];
+		if (qd->sockets[isock] == fd)
+			query_id = qd->query_id[isock];
 	}
 
-			// Передаем Си-библиотеке контекст, который пришел из C++
+	// Передаем Си-библиотеке контекст, который пришел из C++
 	mdns_query_recv(fd, qd->buffer, qd->capacity, query_callback, ctx_void_ptr, query_id);
 }
 void
