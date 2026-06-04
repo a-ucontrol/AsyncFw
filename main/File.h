@@ -34,7 +34,7 @@ public:
   void flush();
   /** @brief Deletes file from disk. */
   void remove();
-  /** @brief Returns the cached size of the file determined when it was opened. @return File size in bytes. */
+  /** @brief Returns the cached size of the file determined when it was opened. @return Size of file in bytes. */
   std::size_t size();
   /** @brief Checks if the file physically exists on disk. @return True if the file exists. */
   bool exists();
