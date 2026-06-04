@@ -112,8 +112,7 @@ void AbstractTlsSocket::activateEvent() {
     X509_NAME *_n = X509_get_subject_name(_pc);
     X509_free(_pc);
     X509_NAME_get_text_by_NID(_n, NID_commonName, name, sizeof(name));
-  } else
-    std::sprintf(name, "no peer cerificate");
+  } else std::sprintf(name, "no peer cerificate");
 
   trace() << ((private_.encrypt_ == 1) ? "server" : "client") << "connected" << LogStream::Color::Green << name;
   activateReady();
@@ -137,5 +136,5 @@ int AbstractTlsSocket::write_fd(const void *data, int size) {
 }
 
 namespace AsyncFw {
-LogStream &operator<<(LogStream &log, const AbstractTlsSocket &s) { return (log << *static_cast<const AbstractSocket *>(&s)) << (!s.private_.ctx_.empty() ? s.private_.ctx_.commonName() + '/' + (!s.private_.ctx_.verifyName().empty() ? s.private_.ctx_.verifyName() : "\"\"") : "null"); }
+LogStream &operator<<(LogStream &log, const AbstractTlsSocket &s) { return (log << *static_cast<const AbstractSocket *>(&s)) << (!s.private_.ctx_.empty() ? s.private_.ctx_.commonName() + '/' + (!s.private_.ctx_.verifyName().empty() ? s.private_.ctx_.verifyName() : "\"\"") : "empty"); }
 }  // namespace AsyncFw

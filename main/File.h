@@ -59,7 +59,7 @@ public:
   /** @brief Provides direct access to the underlying std::fstream object.
   @warning If the file is opened in any write or modification mode (out or app), calling this method invalidates the internal file size cache (sets size() to @b std::numeric_limits<std::size_t>::max()). @n For read-only modes, the cache remains valid and untouched.
   @return Reference to the std::fstream instance. */
-  //std::fstream &fstream();
+  std::fstream &fstream();
 
 private:
   struct Private;

@@ -133,7 +133,7 @@ std::streamsize File::tellg() { return private_.f_.tellg(); }
 
 std::streamsize File::tellp() { return private_.f_.tellp(); }
 
-//std::fstream &File::fstream() {
-//  if (private_.m_ & (std::ios::out | std::ios::app)) private_.fs_ = std::numeric_limits<std::size_t>::max();
-//  return private_.f_;
-//}
+std::fstream &File::fstream() {
+  if (private_.m_ & (std::ios::out | std::ios::app)) private_.fs_ = std::numeric_limits<std::size_t>::max();
+  return private_.f_;
+}

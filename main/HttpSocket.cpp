@@ -167,18 +167,6 @@ void HttpSocket::writeEvent() {
   writeContent();
 }
 
-void HttpSocket::disconnect() {
-  thread_->invoke([this]() { AbstractTlsSocket::disconnect(); });
-}
-
-void HttpSocket::close() {
-  thread_->invoke([this]() { AbstractTlsSocket::close(); });
-}
-
-void HttpSocket::destroy() {
-  thread_->invoke([this]() { AbstractTlsSocket::destroy(); });
-}
-
 DataArrayView HttpSocket::header() { return received_.view(0, headerSize_); }
 
 DataArrayView HttpSocket::content() { return received_.view(headerSize_ + 4); }

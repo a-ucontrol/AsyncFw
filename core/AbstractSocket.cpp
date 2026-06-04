@@ -370,8 +370,7 @@ int AbstractSocket::pendingRead() const {
 }
 
 int AbstractSocket::pendingWrite() const {
-  //checkCurrentThread();
-  if (std::this_thread::get_id() != AsyncFw_THREAD->id()) lsError() << "executed from different thread";
+  checkCurrentThread();
   return private_.wda_.size();
 }
 
@@ -534,7 +533,8 @@ void AbstractSocket::pollEvent(int _e) {
 
 namespace AsyncFw {
 LogStream &operator<<(LogStream &log, const AbstractSocket &s) {
-  s.thread_->invoke([&log, &s]() { log << '(' + s.thread_->name() + ')' << s.fd_ << static_cast<int>(s.state_) << '-' << s.address() + ':' + std::to_string(s.port()) + '/' + s.peerAddress() + ':' + std::to_string(s.peerPort()); }, true);
+  if (s.thread_) s.thread_->invoke([&log, &s]() { log << '(' + s.thread_->name() + ')' << s.fd_ << static_cast<int>(s.state_) << '-' << s.address() + ':' + std::to_string(s.port()) + '/' + s.peerAddress() + ':' + std::to_string(s.peerPort()); }, true);
+  else log << "destroing:" << s.address() + ':' + std::to_string(s.port()) + '/' + s.peerAddress() + ':' + std::to_string(s.peerPort());
   return log;
 }
 }  // namespace AsyncFw

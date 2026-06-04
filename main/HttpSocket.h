@@ -28,10 +28,6 @@ public:
   void readEvent() override;
   void writeEvent() override;
 
-  void disconnect() override;
-  void close() override;
-  void destroy() override;
-
   DataArrayView header();
   DataArrayView content();
   void sendFile(const std::string &);
