@@ -62,6 +62,7 @@ void ListenSocket::incomingEvent() {
 ListenSocket::~ListenSocket() {
   lsTrace();
   if (state_ == Destroy || fd_ == -1) return;
+  state_ = Destroy;
   thread_->removePollDescriptor(fd_);
   removeFromThread();
 }
