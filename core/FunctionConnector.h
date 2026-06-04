@@ -28,10 +28,9 @@ public:
     Direct = 0x01,      ///< Default is Direct. Any explicit connection types are allowed.
     Queued = 0x02,      ///< Default is Queued. Any explicit connection types are allowed.
     Sync = 0x04,        ///< Default is Sync. Any explicit connection types are allowed.
-    AutoOnly = 0x10,    ///< Enforces Auto mode. Error if a subscriber explicitly requests Direct, Queued, or Sync.
-    DirectOnly = 0x11,  ///< Enforces Direct mode. Error if a subscriber explicitly requests Auto, Queued, or Sync.
-    QueuedOnly = 0x12,  ///< Enforces Queued mode. Error if a subscriber explicitly requests Auto, Direct, or Sync.
-    SyncOnly = 0x14     ///< Enforces Sync mode. Error if a subscriber explicitly requests Auto, Direct, or Queued.
+    DirectOnly = 0x11,  ///< Enforces Direct mode. Error if a subscriber explicitly requests type.
+    QueuedOnly = 0x12,  ///< Enforces Queued mode. Error if a subscriber explicitly requests type.
+    SyncOnly = 0x14     ///< Enforces Sync mode. Error if a subscriber explicitly requests type.
   };
   /** @class Connection FunctionConnector.h <AsyncFw/FunctionConnector> @brief Represents an active linkage between a sender's signal/connector and a specific receiver slot.
   @details The Connection class  representing a single active subscription. @n It stores crucial metadata required for dispatching events, including the target execution context AsyncFw::AbstractThread and the requested synchronization strategy Type. @n Instances of this class are typically allocated on the heap when a subscriber calls connect. Lifetime and memory cleanup are managed automatically by the framework, or can be tied to scopes via FunctionConnectionGuard. */
@@ -47,7 +46,6 @@ public:
       Direct = AbstractFunctionConnector::Direct,  ///< Invokes the receiver slot immediately inside the sender's thread. No context switching occurs.
       Queued = AbstractFunctionConnector::Queued,  ///< Posts a task containing a copy of the arguments into the receiver thread's event loop. Execution is asynchronous.
       Sync = AbstractFunctionConnector::Sync,      ///< Dispatches the invocation to the receiver's thread loop, but blocks the sender's thread until execution completes.
-      Default = 0x80                               ///< Falls back to the default ConnectionPolicy configuration defined by the parent connector instance.
     };
     AbstractThread *thread_;
     Type type_;
@@ -85,19 +83,19 @@ template <AbstractFunctionConnector::ConnectionPolicy P = AbstractFunctionConnec
 class FunctionConnector : public AbstractFunctionConnector {
 public:
   FunctionConnector() : AbstractFunctionConnector(P) {}
-  template <Connection::Type T = Connection::Default, typename F>
+  template <Connection::Type T = static_cast<Connection::Type>(0x80), typename F>
   Connection &connect(F f) const {
-    constexpr typename Connection::Type type = (T != Connection::Default) ? T : static_cast<Connection::Type>(P & ~0x10);
-    if constexpr ((P & 0x10) != 0) { static_assert(type == static_cast<Connection::Type>(P & ~0x10), "Error: Connection type mismatch!"); }
+    if constexpr ((P & 0x10) != 0) { static_assert(T == static_cast<Connection::Type>(0x80), "Error: Connection type mismatch!"); }
+    constexpr typename Connection::Type type = (T != static_cast<Connection::Type>(0x80)) ? T : static_cast<Connection::Type>(P & ~0x10);
     std::lock_guard<std::mutex> lock(mutex);
 #ifndef __clang_analyzer__
     return *new Connection(f, this, type);
 #endif
   }
-  template <Connection::Type T = Connection::Default, typename M, typename O>
+  template <Connection::Type T = static_cast<Connection::Type>(0x80), typename M, typename O>
   Connection &connect(M m, O *o) const {
-    constexpr typename Connection::Type type = (T != Connection::Default) ? T : static_cast<Connection::Type>(P & ~0x10);
-    if constexpr ((P & 0x10) != 0) { static_assert(type == static_cast<Connection::Type>(P & ~0x10), "Error: Connection type mismatch!"); }
+    if constexpr ((P & 0x10) != 0) { static_assert(T == static_cast<Connection::Type>(0x80), "Error: Connection type mismatch!"); }
+    constexpr typename Connection::Type type = (T != static_cast<Connection::Type>(0x80)) ? T : static_cast<Connection::Type>(P & ~0x10);
     std::lock_guard<std::mutex> lock(mutex);
 #ifndef __clang_analyzer__
     return *new Connection(m, o, this, type);
