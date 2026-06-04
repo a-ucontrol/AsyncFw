@@ -208,17 +208,17 @@ void MulticastDns::servicePollEvent(int fd) {
   trace() << LogStream::Color::Magenta << fd;
 }
 
-void MulticastDns::stopService(bool send_goodbye) {
+void MulticastDns::stopService(bool goodbye) {
   if (private_.sd_.num_sockets == 0) {
     lsDebug() << LogStream::Color::Blue << "not running";
     return;
   }
   for (int i = 0; i != private_.sd_.num_sockets; ++i) { thread_->removePollDescriptor(private_.sd_.sockets[i]); }
-  stop_mdns_service(&private_.sd_, send_goodbye);
+  stop_mdns_service(&private_.sd_, goodbye);
   private_.sd_.num_sockets = 0;
 }
 
-bool MulticastDns::startQuerier(int timeout) {
+bool MulticastDns::startQuerier(int seconds) {
   if (private_.qd_.num_sockets > 0) return false;
   int r = start_mdns_querier(&private_.qd_);
   lsTrace() << r << private_.qd_.num_sockets;
@@ -228,7 +228,7 @@ bool MulticastDns::startQuerier(int timeout) {
     thread_->appendPollTask(fd, AbstractThread::PollIn, [this, fd](AbstractThread::PollEvents) { querierPollEvent(fd); });
   }
   qtid = thread_->appendTimerTask(0, [this]() { querierTimerEvent(); });
-  queryTimeout_ = timeout;
+  queryTimeout_ = seconds;
   sendQuery();
   return true;
 }

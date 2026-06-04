@@ -53,7 +53,7 @@ public:
   /** @brief Registers and publishes a new local service to the network loop. */
   bool startService(const std::string &, const std::string &, uint16_t);
   /** @brief Unregisters the published service and optionally sends a goodbye notify pack. */
-  void stopService(bool send_goodbye = true);
+  void stopService(bool = true);
   /** @brief Checks if the mDNS local responder is running. */
   bool serviceRunning() const;
 
