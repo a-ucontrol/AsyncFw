@@ -78,13 +78,8 @@ bool File::exists() { return std::filesystem::exists(private_.fn_); }
 
 DataArray File::read(std::size_t s) {
   if (private_.f_.fail() || !private_.f_.is_open()) return {};
-  std::size_t _s = s;
-  if (_s == std::numeric_limits<std::size_t>::max()) {
-    std::fstream::pos_type _p = private_.f_.tellg();
-    if (_p != std::fstream::pos_type(-1) && private_.fs_ > static_cast<std::size_t>(_p)) {
-      _s = private_.fs_ - static_cast<std::size_t>(_p);
-    } else _s = 0;
-  }
+  std::size_t v = (private_.fs_ > static_cast<std::size_t>(tellg())) ? (private_.fs_ - tellg()) : 0;
+  std::size_t _s = s > v ? v : s;
   DataArray _da;
   if (_s > 0) {
     _da.resize(_s);
@@ -93,12 +88,14 @@ DataArray File::read(std::size_t s) {
     if (static_cast<std::size_t>(r) < _da.size()) { _da.resize(static_cast<std::size_t>(r)); }
     return _da;
   }
+  // _s == 0 read files in /proc /sys on Linux
   char buf[1024];
   while (true) {
     std::streamsize r = read(buf, sizeof(buf));
     if (r > 0) _da.insert(_da.end(), buf, buf + r);
     else break;
   }
+  if (!_da.empty()) private_.f_.clear();
   return _da;
 }
 

@@ -148,10 +148,8 @@ void HttpSocket::writeEvent() {
   if (full_) clearReceived();
   if (pendingWrite() >= SOCKET_WRITE_SIZE) return;
   if (file_.isOpen()) {
-    DataArray da;
-    da.resize(SOCKET_WRITE_SIZE);
-    std::streamsize r = file_.read(reinterpret_cast<char *>(da.data()), da.size());
-    if (r > 0) write(da.data(), r);
+    DataArray da = file_.read(SOCKET_WRITE_SIZE);
+    if (!da.empty()) write(da);
     std::streamsize _p = file_.tellg();
     std::size_t _s = file_.size();
     if (_p != -1 && _s > 0 && _s != std::numeric_limits<std::size_t>::max()) {
