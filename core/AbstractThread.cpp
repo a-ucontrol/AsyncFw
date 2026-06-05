@@ -11,17 +11,13 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include "AbstractThread.h"
 #include "LogStream.h"
 
-#define PIPE_WAKE
-//#define EVENTFD_WAKE
-//#define SOCKET_PAIR_WAKE
-//#define SOCKET_CLOSE_WAKE
-
-//#define POLL_WAIT
-//#define EPOLL_WAIT
-
 #ifdef __linux
+  //#define PIPE_WAKE
   #define EVENTFD_WAKE
-  #define EPOLL_WAIT
+  //#define SOCKET_PAIR_WAKE
+  //#define SOCKET_CLOSE_WAKE
+  #define POLL_WAIT
+//#define EPOLL_WAIT
 #elif defined _WIN32
   #define SOCKET_PAIR_WAKE
   //#define SOCKET_CLOSE_WAKE
@@ -236,7 +232,21 @@ AbstractThread::AbstractThread(const std::string &name) : private_(*new Private)
   Private::list.insert(it, this);
   trace() << "threads:" << std::to_string(Private::list.size());
 
+#ifdef POLL_WAIT
+  pollfd _w;
+  _w.events = POLLIN;
+  private_.fds_.push_back(_w);
+#elif defined EPOLL_WAIT
+  private_.epoll_fd = epoll_create1(0);
+  struct epoll_event event;
+  event.events = EPOLLIN;
+  private_.wake_task.task = nullptr;
+  event.data.ptr = &private_.wake_task;
+  epoll_ctl(private_.epoll_fd, EPOLL_CTL_ADD, private_.WAKE_FD, &event);
+#endif
+
 #ifdef PIPE_WAKE
+  ::pipe(private_.pipe);
   private_.WAKE_FD = private_.pipe[0];
 #elif defined EVENTFD_WAKE
   private_.WAKE_FD = eventfd(0, EFD_NONBLOCK);
@@ -263,20 +273,6 @@ AbstractThread::AbstractThread(const std::string &name) : private_(*new Private)
   ::connect(private_.WAKE_FD_WRITE, (const struct sockaddr *)&addr, sizeof(addr));
 #elif defined SOCKET_CLOSE_WAKE
   private_.WAKE_FD = socket(AF_INET, 0, 0);
-#endif
-
-#ifdef POLL_WAIT
-  pollfd _w;
-  _w.events = POLLIN;
-  private_.fds_.push_back(_w);
-#endif
-#ifdef EPOLL_WAIT
-  private_.epoll_fd = epoll_create1(0);
-  struct epoll_event event;
-  event.events = EPOLLIN;
-  private_.wake_task.task = nullptr;
-  event.data.ptr = &private_.wake_task;
-  epoll_ctl(private_.epoll_fd, EPOLL_CTL_ADD, private_.WAKE_FD, &event);
 #endif
 
   lsTrace() << LOG_THREAD_NAME;
