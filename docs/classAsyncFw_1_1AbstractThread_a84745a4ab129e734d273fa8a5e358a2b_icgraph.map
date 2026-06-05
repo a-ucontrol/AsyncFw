@@ -8,8 +8,10 @@
 <area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="410,114,366,107,367,102,411,109"/>
 <area shape="rect" id="Node000006" href="$classAsyncFw_1_1AbstractSocket.html#a73a200f0008dbf9f820bdb2b8a0054cf" title="Schedules the socket for deferred asynchronous destruction." alt="" coords="204,139,378,181"/>
 <area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="411,145,379,149,378,144,410,139"/>
-<area shape="rect" id="Node000007" href="$classAsyncFw_1_1ThreadPool.html#add8ee85dd7581acb117a805ff5a8c18a" title="Synchronously invokes a function in the given thread&#39;s event loop (blocks the caller)." alt="" coords="216,205,366,248"/>
-<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="458,158,379,196,352,207,350,202,377,191,456,153"/>
+<area shape="rect" id="Node000008" href="$classAsyncFw_1_1ThreadPool.html#add8ee85dd7581acb117a805ff5a8c18a" title="Synchronously invokes a function in the given thread&#39;s event loop (blocks the caller)." alt="" coords="216,205,366,248"/>
+<area shape="poly" id="edge7_Node000002_Node000008" title=" " alt="" coords="458,158,379,196,352,207,350,202,377,191,456,153"/>
 <area shape="rect" id="Node000004" href="$classAsyncFw_1_1ThreadPool.html#a5af6a927b72eec19abb94ee2477d00b5" title="Asynchronously invokes a function in the global pool, returning the result to a callback in the calle..." alt="" coords="5,5,156,48"/>
 <area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="200,29,156,29,156,24,200,24"/>
+<area shape="rect" id="Node000007" href="$classAsyncFw_1_1HttpSocket.html#a8268467d3581a4d393e9ccd288de32ff" title="Schedules the socket for deferred asynchronous destruction." alt="" coords="5,139,156,181"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="188,163,156,163,156,157,188,157"/>
 </map>
