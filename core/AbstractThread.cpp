@@ -15,6 +15,9 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
   #define EVENTFD_WAKE
   #define EPOLL_WAIT
 #endif
+//#ifndef _WIN32
+//  #define SOCKET_PAIR_WAKE
+//#endif
 
 #if !defined LS_NO_ERROR
   #define AsyncFw_THREAD this
@@ -34,6 +37,11 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #ifndef _WIN32
   #ifdef EVENTFD_WAKE
     #include <sys/eventfd.h>
+    #define WAKE_FD_WRITE WAKE_FD
+  #endif
+  #ifdef SOCKET_PAIR_WAKE
+    #include <sys/socket.h>
+    #include <netinet/in.h>
   #endif
   #ifdef EPOLL_WAIT
     #include <sys/epoll.h>
@@ -41,7 +49,6 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
   #else
     #include <sys/poll.h>
   #endif
-  #include <unistd.h>
 #else
   #include <winsock2.h>
   #include <fcntl.h>
@@ -96,8 +103,14 @@ struct AbstractThread::Private {
 
   std::vector<PollTask *> poll_tasks;
 
-#if !defined EVENTFD_WAKE && !defined _WIN32
+#ifndef EVENTFD_WAKE
+  #ifndef SOCKET_PAIR_WAKE
   int pipe[2];
+    #define WAKE_FD_WRITE pipe[1]
+  #else
+  int socketpair_write;
+    #define WAKE_FD_WRITE socketpair_write
+  #endif
 #endif
 
 #ifndef EPOLL_WAIT
@@ -216,16 +229,45 @@ AbstractThread::AbstractThread(const std::string &name) : private_(*new Private)
   pollfd _w;
   _w.events = POLLIN;
   private_.fds_.push_back(_w);
-  #ifndef _WIN32
-    #ifndef EVENTFD_WAKE
+
+  #ifndef SOCKET_PAIR_WAKE
+    #ifndef _WIN32
+      #ifndef EVENTFD_WAKE
   if (::pipe(private_.pipe)) lsError() << "error create pipe";
   private_.WAKE_FD = private_.pipe[0];
-    #else
+      #else
   private_.WAKE_FD = eventfd(0, EFD_NONBLOCK);
-    #endif
-  #else
+      #endif
+    #else
   private_.WAKE_FD = socket(AF_INET, 0, 0);
+    #endif
+
+  #else
+  // Инициализация socketpair для Windows
+  struct sockaddr_in addr;
+  unsigned int len = sizeof(addr);
+
+  // 1. Создаем два UDP сокета
+  private_.WAKE_FD_WRITE = ::socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+  private_.WAKE_FD = ::socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+
+  // Выставляем SO_REUSEADDR, чтобы не было конфликтов при бинде локального порта
+  int reuse = 1;
+  ::setsockopt(private_.WAKE_FD, SOL_SOCKET, SO_REUSEADDR, (const char *)&reuse, sizeof(reuse));
+
+  // 2. Биндим читающий сокет на любой свободный порт localhost
+  addr.sin_family = AF_INET;
+  addr.sin_addr.s_addr = ::htonl(INADDR_LOOPBACK);  // 127.0.0.1
+  addr.sin_port = ::htons(0);                       // Автоматический выбор свободного порта ОС
+  ::bind(private_.WAKE_FD, (const struct sockaddr *)&addr, sizeof(addr));
+
+  // Узнаем, какой порт выделила операционная система
+  ::getsockname(private_.WAKE_FD, (struct sockaddr *)&addr, &len);
+
+  // 3. Соединяем пишущий сокет с читающим
+  ::connect(private_.WAKE_FD_WRITE, (const struct sockaddr *)&addr, sizeof(addr));
   #endif
+
 #else
   private_.epoll_fd = epoll_create1(0);
   struct epoll_event event;
@@ -263,7 +305,7 @@ AbstractThread::~AbstractThread() {
 #ifndef _WIN32
   ::close(private_.WAKE_FD);
   #ifndef EVENTFD_WAKE
-  ::close(private_.pipe[1]);
+  ::close(private_.WAKE_FD_WRITE);
   #endif
   #ifdef EPOLL_WAIT
   ::close(private_.epoll_fd);
@@ -619,12 +661,12 @@ void AbstractThread::Private::wake() {
 #ifndef _WIN32
   #ifndef EVENTFD_WAKE
   char _c = '\x0';
-  (void)!write(pipe[1], &_c, 1);
+  (void)!write(WAKE_FD_WRITE, &_c, 1);
   #else
-  eventfd_write(WAKE_FD, 1);
+  eventfd_write(WAKE_FD_WRITE, 1);
   #endif
 #else
-  ::closesocket(WAKE_FD);
+  ::closesocket(WAKE_FD_WRITE);
 #endif
 }
 
