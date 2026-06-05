@@ -85,7 +85,6 @@ DataArray File::read(std::size_t s) {
     _da.resize(_s);
     std::streamsize r = read(reinterpret_cast<char *>(_da.data()), static_cast<std::streamsize>(_s));
     if (private_.f_.fail() || r <= 0) return {};
-    if (static_cast<std::size_t>(r) < _da.size()) { _da.resize(static_cast<std::size_t>(r)); }
     return _da;
   }
   // _s == 0 read files in /proc /sys on Linux
