@@ -11,13 +11,24 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include "AbstractThread.h"
 #include "LogStream.h"
 
+#define PIPE_WAKE
+//#define EVENTFD_WAKE
+//#define SOCKET_PAIR_WAKE
+//#define SOCKET_CLOSE_WAKE
+
+//#define POLL_WAIT
+//#define EPOLL_WAIT
+
 #ifdef __linux
   #define EVENTFD_WAKE
   #define EPOLL_WAIT
+#elif defined _WIN32
+  #define SOCKET_PAIR_WAKE
+  //#define SOCKET_CLOSE_WAKE
+  #define POLL_WAIT
+#else
+  #define PIPE_WAKE
 #endif
-//#ifndef _WIN32
-//  #define SOCKET_PAIR_WAKE
-//#endif
 
 #if !defined LS_NO_ERROR
   #define AsyncFw_THREAD this
@@ -37,17 +48,15 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #ifndef _WIN32
   #ifdef EVENTFD_WAKE
     #include <sys/eventfd.h>
-    #define WAKE_FD_WRITE WAKE_FD
-  #endif
-  #ifdef SOCKET_PAIR_WAKE
+  #elif defined SOCKET_PAIR_WAKE
     #include <sys/socket.h>
     #include <netinet/in.h>
   #endif
-  #ifdef EPOLL_WAIT
+  #ifdef POLL_WAIT
+    #include <sys/poll.h>
+  #elif defined EPOLL_WAIT
     #include <sys/epoll.h>
     #define EPOLL_WAIT_EVENTS 32
-  #else
-    #include <sys/poll.h>
   #endif
 #else
   #include <winsock2.h>
@@ -55,10 +64,10 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
   #define poll(ptr, size, timeout) WSAPoll(ptr, size, timeout)
 #endif
 
-#ifdef EPOLL_WAIT
-  #define WAKE_FD wake_task.fd
-#else
+#ifdef POLL_WAIT
   #define WAKE_FD fds_[0].fd
+#elif defined EPOLL_WAIT
+  #define WAKE_FD wake_task.fd
 #endif
 
 #define LOG_THREAD_NAME ('(' + private_.name + ')')
@@ -88,7 +97,7 @@ struct AbstractThread::Private {
     bool operator()(const AbstractThread *t, std::thread::id id) const { return t->private_.id < id; }
     bool operator()(const Timer &t, int id) const { return t.id < id; }
     bool operator()(const PollTask *d, int fd) const { return d->fd < fd; }
-#ifndef EPOLL_WAIT
+#ifdef POLL_WAIT
     bool operator()(const pollfd pfd, int fd) const { return static_cast<int>(pfd.fd) < fd; }
 #endif
   };
@@ -103,17 +112,19 @@ struct AbstractThread::Private {
 
   std::vector<PollTask *> poll_tasks;
 
-#ifndef EVENTFD_WAKE
-  #ifndef SOCKET_PAIR_WAKE
+#ifdef PIPE_WAKE
   int pipe[2];
-    #define WAKE_FD_WRITE pipe[1]
-  #else
+  #define WAKE_FD_WRITE pipe[1]
+#elif defined EVENTFD_WAKE
+  #define WAKE_FD_WRITE WAKE_FD
+#elif defined SOCKET_PAIR_WAKE
   int socketpair_write;
-    #define WAKE_FD_WRITE socketpair_write
-  #endif
+  #define WAKE_FD_WRITE socketpair_write
+#elif defined SOCKET_CLOSE_WAKE
+  #define WAKE_FD_WRITE WAKE_FD
 #endif
 
-#ifndef EPOLL_WAIT
+#ifdef POLL_WAIT
   struct update_pollfd {
     int fd;
     short int events;
@@ -123,7 +134,7 @@ struct AbstractThread::Private {
   std::vector<struct update_pollfd> update_pollfd;
   std::vector<pollfd> fds_;
   std::vector<AbstractPollTask *> fdts_;
-#else
+#elif defined EPOLL_WAIT
   int epoll_fd;
   PollTask wake_task;
 #endif
@@ -134,9 +145,9 @@ struct AbstractThread::Private {
   };
   struct ProcessPollTask {
     int fd;
-#ifndef EPOLL_WAIT
+#ifdef POLL_WAIT
     short int events;
-#else
+#elif defined EPOLL_WAIT
     uint32_t events;
 #endif
     AbstractPollTask *task;
@@ -225,31 +236,15 @@ AbstractThread::AbstractThread(const std::string &name) : private_(*new Private)
   Private::list.insert(it, this);
   trace() << "threads:" << std::to_string(Private::list.size());
 
-#ifndef EPOLL_WAIT
-  pollfd _w;
-  _w.events = POLLIN;
-  private_.fds_.push_back(_w);
-
-  #ifndef SOCKET_PAIR_WAKE
-    #ifndef _WIN32
-      #ifndef EVENTFD_WAKE
-  if (::pipe(private_.pipe)) lsError() << "error create pipe";
+#ifdef PIPE_WAKE
   private_.WAKE_FD = private_.pipe[0];
-      #else
+#elif defined EVENTFD_WAKE
   private_.WAKE_FD = eventfd(0, EFD_NONBLOCK);
-      #endif
-    #else
-  private_.WAKE_FD = socket(AF_INET, 0, 0);
-    #endif
-
-  #else
-  // Инициализация socketpair для Windows
+#elif defined SOCKET_PAIR_WAKE
   struct sockaddr_in addr;
   unsigned int len = sizeof(addr);
-
-  // 1. Создаем два UDP сокета
-  private_.WAKE_FD_WRITE = ::socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
   private_.WAKE_FD = ::socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+  private_.WAKE_FD_WRITE = ::socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
 
   // Выставляем SO_REUSEADDR, чтобы не было конфликтов при бинде локального порта
   int reuse = 1;
@@ -266,18 +261,19 @@ AbstractThread::AbstractThread(const std::string &name) : private_(*new Private)
 
   // 3. Соединяем пишущий сокет с читающим
   ::connect(private_.WAKE_FD_WRITE, (const struct sockaddr *)&addr, sizeof(addr));
-  #endif
+#elif defined SOCKET_CLOSE_WAKE
+  private_.WAKE_FD = socket(AF_INET, 0, 0);
+#endif
 
-#else
+#ifdef POLL_WAIT
+  pollfd _w;
+  _w.events = POLLIN;
+  private_.fds_.push_back(_w);
+#endif
+#ifdef EPOLL_WAIT
   private_.epoll_fd = epoll_create1(0);
   struct epoll_event event;
   event.events = EPOLLIN;
-  #ifdef EVENTFD_WAKE
-  private_.wake_task.fd = eventfd(0, EFD_NONBLOCK);
-  #else
-  if (::pipe(private_.pipe)) lsError() << "error create pipe";
-  private_.wake_task.fd = private_.pipe[0];
-  #endif
   private_.wake_task.task = nullptr;
   event.data.ptr = &private_.wake_task;
   epoll_ctl(private_.epoll_fd, EPOLL_CTL_ADD, private_.WAKE_FD, &event);
@@ -509,7 +505,7 @@ void AbstractThread::exec() {
           }
         } else {
           uint64_t ms = std::chrono::duration_cast<std::chrono::milliseconds>(private_.wakeup - now).count();
-#ifndef EPOLL_WAIT
+#ifdef POLL_WAIT
           if (!private_.update_pollfd.empty()) {
             for (const struct Private::update_pollfd &pfd : private_.update_pollfd) {
               std::vector<pollfd>::iterator it = std::lower_bound(private_.fds_.begin() + 1, private_.fds_.end(), pfd.fd, Private::Compare());
@@ -541,18 +537,16 @@ void AbstractThread::exec() {
           int i = 0;
           if (private_.wake_) {
             trace() << LogStream::Color::Magenta << "waked" << LOG_THREAD_NAME << private_.id << private_.fds_[0].revents << r;
-  #ifndef _WIN32
-    #ifndef EVENTFD_WAKE
-            char _c;
-      #ifndef __clang_analyzer__
-            (void)!read(private_.WAKE_FD, &_c, sizeof(_c));
-      #endif
-    #else
+  #ifdef EVENTFD_WAKE
             eventfd_t _v;
             eventfd_read(private_.WAKE_FD, &_v);
-    #endif
-  #else
+  #elif defined SOCKET_CLOSE_WAIT
             private_.WAKE_FD = socket(AF_INET, 0, 0);
+  #else
+            char _c;
+    #ifndef __clang_analyzer__
+            (void)!read(private_.WAKE_FD, &_c, sizeof(_c));
+    #endif
   #endif
             if (private_.fds_[0].revents) {
               if (r == 1) goto CONTINUE;
@@ -566,7 +560,7 @@ void AbstractThread::exec() {
                 private_.process_poll_tasks_.push({static_cast<int>(it->fd), it->revents, *(private_.fdts_.begin() + (it - 1 - private_.fds_.begin()))});
                 i++;
               }
-#else
+#elif defined EPOLL_WAIT
           struct epoll_event event[EPOLL_WAIT_EVENTS];
           private_.mutex.unlock();
           int r = epoll_wait(private_.epoll_fd, event, EPOLL_WAIT_EVENTS, ms);
@@ -574,14 +568,16 @@ void AbstractThread::exec() {
           if (r > 0) {
             for (int i = 0; i != r; ++i) {
               if (static_cast<Private::PollTask *>(event[i].data.ptr)->fd == private_.WAKE_FD) {
-  #ifndef EVENTFD_WAKE
+  #ifdef EVENTFD_WAKE
+                eventfd_t _v;
+                eventfd_read(private_.WAKE_FD, &_v);
+  #elif defined SOCKET_CLOSE_WAIT
+                private_.WAKE_FD = socket(AF_INET, 0, 0);
+  #else
                 char _c;
     #ifndef __clang_analyzer__
                 (void)!read(private_.WAKE_FD, &_c, sizeof(_c));
     #endif
-  #else
-                eventfd_t _v;
-                eventfd_read(private_.WAKE_FD, &_v);
   #endif
                 trace() << LogStream::Color::Magenta << "waked" << LOG_THREAD_NAME << private_.id << event[i].events << private_.wake_;
                 continue;
@@ -784,7 +780,7 @@ void AbstractThread::removeTimer(int id) {
 }
 
 bool AbstractThread::appendPollDescriptor(int fd, PollEvents events, AbstractPollTask *task) {
-#ifndef EPOLL_WAIT
+#ifdef POLL_WAIT
   LockGuard lock(private_.mutex);
   std::vector<Private::PollTask *>::iterator it = std::lower_bound(private_.poll_tasks.begin(), private_.poll_tasks.end(), fd, Private::Compare());
   if (it != private_.poll_tasks.end() && (*it)->fd == fd) {
@@ -799,7 +795,7 @@ bool AbstractThread::appendPollDescriptor(int fd, PollEvents events, AbstractPol
   private_.update_pollfd.push_back({fd, pollfd.events, task, 1});
   private_.wake();
   private_.poll_tasks.insert(it, _d);
-#else
+#elif defined EPOLL_WAIT
   struct epoll_event event;
   event.events = events;
   Private::PollTask *_d = new Private::PollTask(fd, task);
@@ -821,7 +817,7 @@ bool AbstractThread::appendPollDescriptor(int fd, PollEvents events, AbstractPol
 }
 
 bool AbstractThread::modifyPollDescriptor(int fd, PollEvents events) {
-#ifndef EPOLL_WAIT
+#ifdef POLL_WAIT
   LockGuard lock(private_.mutex);
   std::vector<Private::PollTask *>::iterator it = std::lower_bound(private_.poll_tasks.begin(), private_.poll_tasks.end(), fd, Private::Compare());
   if (it != private_.poll_tasks.end() && (*it)->fd != fd) {
@@ -834,7 +830,7 @@ bool AbstractThread::modifyPollDescriptor(int fd, PollEvents events) {
   v.action = 0;
   private_.update_pollfd.push_back(v);
   private_.wake();
-#else
+#elif defined EPOLL_WAIT
   struct epoll_event event;
   event.events = events;
   {  //lock scope
@@ -853,7 +849,7 @@ bool AbstractThread::modifyPollDescriptor(int fd, PollEvents events) {
 }
 
 void AbstractThread::removePollDescriptor(int fd) {
-#ifndef EPOLL_WAIT
+#ifdef POLL_WAIT
   AbstractTask *_t;
   {  //lock scope
     LockGuard lock(private_.mutex);
@@ -874,7 +870,7 @@ void AbstractThread::removePollDescriptor(int fd) {
     (*_t)();
     delete _t;
   }
-#else
+#elif defined EPOLL_WAIT
   epoll_ctl(private_.epoll_fd, EPOLL_CTL_DEL, fd, nullptr);
   AbstractTask *_t;
   {  //lock scope
