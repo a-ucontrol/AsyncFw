@@ -12,11 +12,11 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include "LogStream.h"
 
 #ifdef __linux
-//  #define PIPE_WAKE
-#define EVENTFD_WAKE
-//#define SOCKET_PAIR_WAKE
-//#define SOCKET_CLOSE_WAKE
-//#define POLL_WAIT
+  //#define PIPE_WAKE
+  #define EVENTFD_WAKE
+  //#define SOCKET_PAIR_WAKE
+  //#define SOCKET_CLOSE_WAKE
+  //#define POLL_WAIT
   #define EPOLL_WAIT
 #elif defined _WIN32
   #define SOCKET_PAIR_WAKE
@@ -44,7 +44,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #ifndef _WIN32
   #ifdef EVENTFD_WAKE
     #include <sys/eventfd.h>
-  #elif defined SOCKET_PAIR_WAKE
+  #elif defined SOCKET_PAIR_WAKE || defined SOCKET_CLOSE_WAKE
     #include <sys/socket.h>
     #include <netinet/in.h>
   #endif
@@ -265,7 +265,8 @@ AbstractThread::AbstractThread(const std::string &name) : private_(*new Private)
   // 3. Соединяем пишущий сокет с читающим
   ::connect(private_.WAKE_FD_WRITE, (const struct sockaddr *)&addr, sizeof(addr));
 #elif defined SOCKET_CLOSE_WAKE
-  private_.WAKE_FD = socket(AF_INET, 0, 0);
+  private_.WAKE_FD = socket(AF_INET, SOCK_STREAM, 0);
+  lsNotice() << "AAAAAAAAAAAAAAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" << private_.WAKE_FD;
 #endif
 
 #ifdef EPOLL_WAIT
@@ -298,7 +299,7 @@ AbstractThread::~AbstractThread() {
 
 #ifndef _WIN32
   ::close(private_.WAKE_FD);
-  #ifndef EVENTFD_WAKE
+  #ifndef EVENTFD_WAKE  //!!! +++ SOCKET_CLOSE_WAKE
   ::close(private_.WAKE_FD_WRITE);
   #endif
   #ifdef EPOLL_WAIT
@@ -538,7 +539,7 @@ void AbstractThread::exec() {
   #ifdef EVENTFD_WAKE
             eventfd_t _v;
             eventfd_read(private_.WAKE_FD, &_v);
-  #elif defined SOCKET_CLOSE_WAIT
+  #elif defined SOCKET_CLOSE_WAKE
             private_.WAKE_FD = socket(AF_INET, 0, 0);
   #else
             char _c;
@@ -647,17 +648,23 @@ void AbstractThread::Private::wake() {
   if (wake_) return;
   warning_if(std::this_thread::get_id() == id) << LogStream::Color::Red << '(' + name + ')';
   wake_ = true;
+  trace() << LogStream::Color::Cyan << "BBBBB" << poll_tasks.empty();
   if (poll_tasks.empty()) {
     condition_variable.notify_all();
     return;
   }
   trace() << LogStream::Color::Cyan << '(' + name + ')' << id;
+
+  lsNotice() << "BBBBB";
+
 #ifndef _WIN32
-  #ifndef EVENTFD_WAKE
+  #ifdef EVENTFD_WAKE
+  eventfd_write(WAKE_FD_WRITE, 1);
+  #elif defined SOCKET_CLOSE_WAKE
+  ::close(WAKE_FD_WRITE);
+  #else
   char _c = '\x0';
   (void)!write(WAKE_FD_WRITE, &_c, 1);
-  #else
-  eventfd_write(WAKE_FD_WRITE, 1);
   #endif
 #else
   ::closesocket(WAKE_FD_WRITE);
