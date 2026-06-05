@@ -12,12 +12,12 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include "LogStream.h"
 
 #ifdef __linux
-  //#define PIPE_WAKE
-  #define EVENTFD_WAKE
-  //#define SOCKET_PAIR_WAKE
-  //#define SOCKET_CLOSE_WAKE
-  #define POLL_WAIT
-//#define EPOLL_WAIT
+//  #define PIPE_WAKE
+#define EVENTFD_WAKE
+//#define SOCKET_PAIR_WAKE
+//#define SOCKET_CLOSE_WAKE
+//#define POLL_WAIT
+  #define EPOLL_WAIT
 #elif defined _WIN32
   #define SOCKET_PAIR_WAKE
   //#define SOCKET_CLOSE_WAKE
@@ -236,13 +236,6 @@ AbstractThread::AbstractThread(const std::string &name) : private_(*new Private)
   pollfd _w;
   _w.events = POLLIN;
   private_.fds_.push_back(_w);
-#elif defined EPOLL_WAIT
-  private_.epoll_fd = epoll_create1(0);
-  struct epoll_event event;
-  event.events = EPOLLIN;
-  private_.wake_task.task = nullptr;
-  event.data.ptr = &private_.wake_task;
-  epoll_ctl(private_.epoll_fd, EPOLL_CTL_ADD, private_.WAKE_FD, &event);
 #endif
 
 #ifdef PIPE_WAKE
@@ -273,6 +266,15 @@ AbstractThread::AbstractThread(const std::string &name) : private_(*new Private)
   ::connect(private_.WAKE_FD_WRITE, (const struct sockaddr *)&addr, sizeof(addr));
 #elif defined SOCKET_CLOSE_WAKE
   private_.WAKE_FD = socket(AF_INET, 0, 0);
+#endif
+
+#ifdef EPOLL_WAIT
+  private_.epoll_fd = epoll_create1(0);
+  struct epoll_event event;
+  event.events = EPOLLIN;
+  private_.wake_task.task = nullptr;
+  event.data.ptr = &private_.wake_task;
+  epoll_ctl(private_.epoll_fd, EPOLL_CTL_ADD, private_.WAKE_FD, &event);
 #endif
 
   lsTrace() << LOG_THREAD_NAME;
