@@ -13,14 +13,14 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #ifdef __linux
   //#define PIPE_WAKE
-  #define EVENTFD_WAKE
+  //#define EVENTFD_WAKE
   //#define SOCKET_PAIR_WAKE
-  //#define SOCKET_CLOSE_WAKE
-  //#define POLL_WAIT
-  #define EPOLL_WAIT
+  #define SOCKET_CLOSE_WAKE
+  #define POLL_WAIT
+//#define EPOLL_WAIT
 #elif defined _WIN32
-  #define SOCKET_PAIR_WAKE
-  //#define SOCKET_CLOSE_WAKE
+  //#define SOCKET_PAIR_WAKE
+  #define SOCKET_CLOSE_WAKE
   #define POLL_WAIT
 #else
   #define PIPE_WAKE
@@ -245,7 +245,7 @@ AbstractThread::AbstractThread(const std::string &name) : private_(*new Private)
   private_.WAKE_FD = eventfd(0, EFD_NONBLOCK);
 #elif defined SOCKET_PAIR_WAKE
   struct sockaddr_in addr;
-  unsigned int len = sizeof(addr);
+  int len = sizeof(addr);
   private_.WAKE_FD = ::socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
   private_.WAKE_FD_WRITE = ::socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
 
@@ -299,7 +299,7 @@ AbstractThread::~AbstractThread() {
 
 #ifndef _WIN32
   ::close(private_.WAKE_FD);
-  #ifndef EVENTFD_WAKE  //!!! +++ SOCKET_CLOSE_WAKE
+  #if !defined EVENTFD_WAKE && !defined SOCKET_CLOSE_WAKE
   ::close(private_.WAKE_FD_WRITE);
   #endif
   #ifdef EPOLL_WAIT
@@ -307,6 +307,9 @@ AbstractThread::~AbstractThread() {
   #endif
 #else
   ::closesocket(private_.WAKE_FD);
+  #ifdef SOCKET_PAIR_WAKE
+  ::close(private_.WAKE_FD_WRITE);
+  #endif
 #endif
 
   lsTrace() << LOG_THREAD_NAME << LogStream::Color::Magenta << private_.id << LogStream::Color::Default << "-" << private_.tasks.size() << private_.timers.size() << private_.poll_tasks.size() << "-" << private_.process_tasks_.size() << private_.process_timer_tasks_.size() << private_.process_poll_tasks_.size();
