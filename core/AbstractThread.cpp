@@ -16,11 +16,11 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
   //#define EVENTFD_WAKE
   //#define SOCKET_PAIR_WAKE
   #define SOCKET_CLOSE_WAKE
-  #define POLL_WAIT
-//#define EPOLL_WAIT
+  //#define POLL_WAIT
+  #define EPOLL_WAIT
 #elif defined _WIN32
-  //#define SOCKET_PAIR_WAKE
-  #define SOCKET_CLOSE_WAKE
+  #define SOCKET_PAIR_WAKE
+  //#define SOCKET_CLOSE_WAKE
   #define POLL_WAIT
 #else
   #define PIPE_WAKE
@@ -265,8 +265,7 @@ AbstractThread::AbstractThread(const std::string &name) : private_(*new Private)
   // 3. Соединяем пишущий сокет с читающим
   ::connect(private_.WAKE_FD_WRITE, (const struct sockaddr *)&addr, sizeof(addr));
 #elif defined SOCKET_CLOSE_WAKE
-  private_.WAKE_FD = socket(AF_INET, SOCK_STREAM, 0);
-  lsNotice() << "AAAAAAAAAAAAAAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" << private_.WAKE_FD;
+  private_.WAKE_FD = socket(AF_INET, SOCK_DGRAM, 0);
 #endif
 
 #ifdef EPOLL_WAIT
@@ -299,16 +298,14 @@ AbstractThread::~AbstractThread() {
 
 #ifndef _WIN32
   ::close(private_.WAKE_FD);
-  #if !defined EVENTFD_WAKE && !defined SOCKET_CLOSE_WAKE
-  ::close(private_.WAKE_FD_WRITE);
-  #endif
-  #ifdef EPOLL_WAIT
-  ::close(private_.epoll_fd);
-  #endif
 #else
   ::closesocket(private_.WAKE_FD);
-  #ifdef SOCKET_PAIR_WAKE
+#endif
+#if !defined EVENTFD_WAKE && !defined SOCKET_CLOSE_WAKE
+  #ifndef _WIN32
   ::close(private_.WAKE_FD_WRITE);
+  #else
+  ::closesocket(private_.WAKE_FD_WRITE);
   #endif
 #endif
 
@@ -569,19 +566,26 @@ void AbstractThread::exec() {
           private_.mutex.lock();
           if (r > 0) {
             for (int i = 0; i != r; ++i) {
-              if (static_cast<Private::PollTask *>(event[i].data.ptr)->fd == private_.WAKE_FD) {
+              if (event[i].data.ptr == &private_.wake_task) {
   #ifdef EVENTFD_WAKE
                 eventfd_t _v;
                 eventfd_read(private_.WAKE_FD, &_v);
-  #elif defined SOCKET_CLOSE_WAIT
-                private_.WAKE_FD = socket(AF_INET, 0, 0);
+  #elif defined SOCKET_CLOSE_WAKE
+                if (!private_.wake_) {
+                  trace() << LogStream::Color::Red << event[i].events;
+                  continue;
+                }
+                close(private_.WAKE_FD);
+                private_.WAKE_FD = socket(AF_INET, SOCK_DGRAM, 0);
+                event[i].events = 0;
+                epoll_ctl(private_.epoll_fd, EPOLL_CTL_ADD, private_.WAKE_FD, &event[i]);
   #else
                 char _c;
     #ifndef __clang_analyzer__
                 (void)!read(private_.WAKE_FD, &_c, sizeof(_c));
     #endif
   #endif
-                trace() << LogStream::Color::Magenta << "waked" << LOG_THREAD_NAME << private_.id << event[i].events << private_.wake_;
+                trace() << LogStream::Color::Magenta << "waked" << LOG_THREAD_NAME << private_.id << event[i].events << private_.wake_ << static_cast<Private::PollTask *>(event[i].data.ptr)->fd << private_.WAKE_FD;
                 continue;
               }
               Private::PollTask *_d = static_cast<Private::PollTask *>(event[i].data.ptr);
@@ -651,26 +655,22 @@ void AbstractThread::Private::wake() {
   if (wake_) return;
   warning_if(std::this_thread::get_id() == id) << LogStream::Color::Red << '(' + name + ')';
   wake_ = true;
-  trace() << LogStream::Color::Cyan << "BBBBB" << poll_tasks.empty();
+  trace() << LogStream::Color::Cyan << poll_tasks.empty();
   if (poll_tasks.empty()) {
     condition_variable.notify_all();
     return;
   }
-  trace() << LogStream::Color::Cyan << '(' + name + ')' << id;
-
-  lsNotice() << "BBBBB";
-
-#ifndef _WIN32
-  #ifdef EVENTFD_WAKE
+#ifdef EVENTFD_WAKE
   eventfd_write(WAKE_FD_WRITE, 1);
-  #elif defined SOCKET_CLOSE_WAKE
-  ::close(WAKE_FD_WRITE);
+#elif defined SOCKET_CLOSE_WAKE
+  #ifndef _WIN32
+  ::shutdown(WAKE_FD_WRITE, SHUT_RDWR);
   #else
-  char _c = '\x0';
-  (void)!write(WAKE_FD_WRITE, &_c, 1);
+  ::closesocket(WAKE_FD_WRITE);
   #endif
 #else
-  ::closesocket(WAKE_FD_WRITE);
+  char _c = '\x0';
+  (void)!write(WAKE_FD_WRITE, &_c, 1);
 #endif
 }
 
