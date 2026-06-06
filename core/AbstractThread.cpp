@@ -250,25 +250,17 @@ AbstractThread::AbstractThread(const std::string &name) : private_(*new Private)
   private_.WAKE_FD = eventfd(0, EFD_NONBLOCK);
 #elif defined SOCKET_PAIR_WAKE
   struct sockaddr_in addr;
-  unsigned int len = sizeof(addr);
   private_.WAKE_FD = ::socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
   private_.WAKE_FD_WRITE = ::socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-
-  // Выставляем SO_REUSEADDR, чтобы не было конфликтов при бинде локального порта
   int reuse = 1;
-  ::setsockopt(private_.WAKE_FD, SOL_SOCKET, SO_REUSEADDR, (const char *)&reuse, sizeof(reuse));
-
-  // 2. Биндим читающий сокет на любой свободный порт localhost
+  ::setsockopt(private_.WAKE_FD, SOL_SOCKET, SO_REUSEADDR, reinterpret_cast<const char *>(&reuse), sizeof(reuse));
   addr.sin_family = AF_INET;
-  addr.sin_addr.s_addr = ::htonl(INADDR_LOOPBACK);  // 127.0.0.1
-  addr.sin_port = ::htons(0);                       // Автоматический выбор свободного порта ОС
-  ::bind(private_.WAKE_FD, (const struct sockaddr *)&addr, sizeof(addr));
-
-  // Узнаем, какой порт выделила операционная система
-  ::getsockname(private_.WAKE_FD, (struct sockaddr *)&addr, &len);
-
-  // 3. Соединяем пишущий сокет с читающим
-  ::connect(private_.WAKE_FD_WRITE, (const struct sockaddr *)&addr, sizeof(addr));
+  addr.sin_addr.s_addr = ::htonl(INADDR_LOOPBACK);
+  addr.sin_port = 0;
+  ::bind(private_.WAKE_FD, reinterpret_cast<sockaddr *>(&addr), sizeof(addr));
+  socklen_t _tmp = sizeof(addr);
+  ::getsockname(private_.WAKE_FD, reinterpret_cast<sockaddr *>(&addr), &_tmp);
+  ::connect(private_.WAKE_FD_WRITE, reinterpret_cast<sockaddr *>(&addr), sizeof(addr));
 #elif defined SOCKET_CLOSE_WAKE
   private_.WAKE_FD = socket(AF_INET, SOCK_DGRAM, 0);
 #endif
