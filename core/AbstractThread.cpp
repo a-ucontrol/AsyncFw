@@ -61,6 +61,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
   #endif
 #else
   #include <winsock2.h>
+  #include <ws2tcpip.h>
   #include <fcntl.h>
   #define poll(ptr, size, timeout) WSAPoll(ptr, size, timeout)
 #endif
