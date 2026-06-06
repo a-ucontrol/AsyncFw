@@ -11,19 +11,24 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include "AbstractThread.h"
 #include "LogStream.h"
 
-#ifdef __linux
+#if 0  // 1 - for debug only
   //#define PIPE_WAKE
   //#define EVENTFD_WAKE
   //#define SOCKET_PAIR_WAKE
   #define SOCKET_CLOSE_WAKE
-  //#define POLL_WAIT
-  #define EPOLL_WAIT
-#elif defined _WIN32
-  #define SOCKET_PAIR_WAKE
-  //#define SOCKET_CLOSE_WAKE
   #define POLL_WAIT
+  //#define EPOLL_WAIT
 #else
-  #define PIPE_WAKE
+  #ifdef __linux
+    #define EVENTFD_WAKE
+    #define EPOLL_WAIT
+  #elif defined _WIN32
+    #define SOCKET_PAIR_WAKE
+    #define POLL_WAIT
+  #else
+    #define PIPE_WAKE
+    #define POLL_WAIT
+  #endif
 #endif
 
 #if !defined LS_NO_ERROR
@@ -245,7 +250,7 @@ AbstractThread::AbstractThread(const std::string &name) : private_(*new Private)
   private_.WAKE_FD = eventfd(0, EFD_NONBLOCK);
 #elif defined SOCKET_PAIR_WAKE
   struct sockaddr_in addr;
-  int len = sizeof(addr);
+  unsigned int len = sizeof(addr);
   private_.WAKE_FD = ::socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
   private_.WAKE_FD_WRITE = ::socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
 
@@ -442,7 +447,6 @@ void AbstractThread::clearId() {
 
 void AbstractThread::exec() {
   int _nested;
-
   {  //lock scope
     LockGuard lock(private_.mutex);
     warning_if(private_.process_tasks_.size() || private_.process_poll_tasks_.size() || private_.process_timer_tasks_.size()) << LogStream::Color::Red << "not empty" << private_.process_tasks_.size() << private_.process_poll_tasks_.size() << private_.process_timer_tasks_.size();
@@ -535,12 +539,12 @@ void AbstractThread::exec() {
 
           int i = 0;
           if (private_.wake_) {
-            trace() << LogStream::Color::Magenta << "waked" << LOG_THREAD_NAME << private_.id << private_.fds_[0].revents << r;
+            trace() << LogStream::Color::Magenta << "waked" << LOG_THREAD_NAME << private_.fds_[0].revents << r << private_.WAKE_FD;
   #ifdef EVENTFD_WAKE
             eventfd_t _v;
             eventfd_read(private_.WAKE_FD, &_v);
   #elif defined SOCKET_CLOSE_WAKE
-            private_.WAKE_FD = socket(AF_INET, 0, 0);
+            private_.WAKE_FD = ::socket(AF_INET, SOCK_DGRAM, 0);
   #else
             char _c;
     #ifndef __clang_analyzer__
@@ -551,7 +555,7 @@ void AbstractThread::exec() {
               if (r == 1) goto CONTINUE;
               i = 1;
             }
-          }
+          };
 
           if (r > 0) {
             for (std::vector<pollfd>::const_iterator it = private_.fds_.begin() + 1; i != r; ++it)
@@ -567,6 +571,7 @@ void AbstractThread::exec() {
           if (r > 0) {
             for (int i = 0; i != r; ++i) {
               if (event[i].data.ptr == &private_.wake_task) {
+                trace() << LogStream::Color::Magenta << "waked" << LOG_THREAD_NAME << event[i].events << r << private_.WAKE_FD << private_.wake_;
   #ifdef EVENTFD_WAKE
                 eventfd_t _v;
                 eventfd_read(private_.WAKE_FD, &_v);
@@ -575,7 +580,6 @@ void AbstractThread::exec() {
                   trace() << LogStream::Color::Red << event[i].events;
                   continue;
                 }
-                close(private_.WAKE_FD);
                 private_.WAKE_FD = socket(AF_INET, SOCK_DGRAM, 0);
                 event[i].events = 0;
                 epoll_ctl(private_.epoll_fd, EPOLL_CTL_ADD, private_.WAKE_FD, &event[i]);
@@ -585,7 +589,6 @@ void AbstractThread::exec() {
                 (void)!read(private_.WAKE_FD, &_c, sizeof(_c));
     #endif
   #endif
-                trace() << LogStream::Color::Magenta << "waked" << LOG_THREAD_NAME << private_.id << event[i].events << private_.wake_ << static_cast<Private::PollTask *>(event[i].data.ptr)->fd << private_.WAKE_FD;
                 continue;
               }
               Private::PollTask *_d = static_cast<Private::PollTask *>(event[i].data.ptr);
