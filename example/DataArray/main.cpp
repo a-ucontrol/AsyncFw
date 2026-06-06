@@ -41,7 +41,7 @@ int main(int argc, char *argv[]) {
   _ds_r >> _string1_r >> _string2_r >> _da1_r >> _da2_r >> _list_r >> _int8_r >> _int64_r;
 
   lsInfoCyan() << _string1_r << _string2_r << _da1_r << _da2_r << _list_r << _int8_r << _int64_r;
-  for (const AsyncFw::DataArray &da : _list_r) lsInfoCyan() << da;
+  for (const AsyncFw::DataArray &da : _list_r) { lsInfoCyan() << da; }
 
   return 0;
 }

@@ -20,9 +20,9 @@ int main(int argc, char *argv[]) {
     int r = read(STDIN_FILENO, buf, sizeof(buf) - 1);
     buf[r] = 0;
     if (r == 2 && buf[0] == 'q') AsyncFw::MainThread::exit();
-    (lsDebug() << "stdin: " << buf).flush();
+    lsDebug() << "stdin: " << buf << std::flush;
   });
-  (lsDebug() << "Start Application").flush();
+  lsDebug() << "Start Application" << std::flush;
   int ret = AsyncFw::MainThread::exec();
   return ret;
 }
