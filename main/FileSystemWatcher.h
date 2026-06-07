@@ -18,6 +18,7 @@ namespace AsyncFw {
 @brief Example: @snippet FileSystemWatcher/main.cpp snippet */
 class FileSystemWatcher {
   friend LogStream &operator<<(LogStream &, const FileSystemWatcher &);
+  enum Event : int8_t { Removed = -1, Changed = 0, Created = 1 };
 
 public:
   static FileSystemWatcher *instance() { return instance_.value; }

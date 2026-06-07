@@ -70,7 +70,7 @@ FileSystemWatcher::FileSystemWatcher(const std::vector<std::string> &paths) : pr
   private_.thread_ = AbstractThread::current();
   private_.timerid_ = private_.thread_->appendTimerTask(0, [this]() {
     private_.thread_->modifyTimer(private_.timerid_, 0);
-    for (const Private::Watch *f : private_.we_) notify(f->directory + '/' + f->name, 0);
+    for (const Private::Watch *f : private_.we_) notify(f->directory + '/' + f->name, Changed);
     trace() << LogStream::Color::DarkRed << "timer event" << private_.we_.size();
     private_.we_.clear();
   });
@@ -106,13 +106,13 @@ FileSystemWatcher::FileSystemWatcher(const std::vector<std::string> &paths) : pr
           int i = inotify_add_watch(private_.notifyfd_, w->directory.c_str(), IN_CREATE | IN_DELETE);
           inotify_rm_watch(private_.notifyfd_, w->d);
           private_.remove_(w);
-          notify(w->directory + '/' + w->name, -1);
+          notify(w->directory + '/' + w->name, Removed);
           lsDebug() << "removed" << w->directory + '/' + w->name << w->d;
 
           w->d = inotify_add_watch(private_.notifyfd_, (w->directory + '/' + w->name).c_str(), IN_ATTRIB | IN_MODIFY | IN_CLOSE_WRITE | IN_DELETE_SELF);
           if (w->d >= 0) {
             inotify_rm_watch(private_.notifyfd_, i);
-            notify(w->directory + '/' + w->name, 1);
+            notify(w->directory + '/' + w->name, Created);
             lsDebug() << "created (event missed)" << w->directory + '/' + w->name << w->d;
             itd = std::lower_bound(private_.wds_.begin(), private_.wds_.end(), w->d, Private::CompareWatchDescriptor());
             private_.wds_.insert(itd, w);
@@ -169,13 +169,13 @@ FileSystemWatcher::FileSystemWatcher(const std::vector<std::string> &paths) : pr
             private_.wds_.insert(itd, *itw);
           }
         }
-        notify(wp.directory + '/' + e->name, 1);
+        notify(wp.directory + '/' + e->name, Created);
         lsDebug() << "created (watch directory)" << wp.directory + '/' + wp.name;
         continue;
       }
       if (e->mask & IN_DELETE) {
         if ((*itw)->d == (*itd)->d) {
-          notify(wp.directory + '/' + e->name, -1);
+          notify(wp.directory + '/' + e->name, Removed);
           lsDebug() << "removed" << wp.directory + '/' + wp.name;
         }
         continue;

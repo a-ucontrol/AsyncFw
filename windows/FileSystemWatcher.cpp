@@ -67,13 +67,13 @@ FileSystemWatcher::FileSystemWatcher(const std::vector<std::string> &paths) : pr
     for (const Private::Watch *f : private_.we_) {
       lsInfoMagenta() << "T" << f->directory + '/' + f->name;
       if (!f->d) {
-        notify(f->directory + '/' + f->name, 0);
+        notify(f->directory + '/' + f->name, Changed);
         return;
       }
       if (std::filesystem::exists(f->directory + '/' + f->name)) {
-        notify(f->directory + '/' + f->name, 1);
+        notify(f->directory + '/' + f->name, Created);
       } else {
-        notify(f->directory + '/' + f->name, -1);
+        notify(f->directory + '/' + f->name, Removed);
       }
     }
     trace() << LogStream::Color::DarkRed << "timer event" << private_.we_.size();
@@ -84,7 +84,7 @@ FileSystemWatcher::FileSystemWatcher(const std::vector<std::string> &paths) : pr
 
   QObject::connect(&private_.watcher_, &QFileSystemWatcher::fileChanged, [this](const QString &path) {
     lsInfoMagenta() << "F" << path.toStdString();
-    if (!private_.watcher_.files().contains(path)) notify(path.toStdString(), -1);
+    if (!private_.watcher_.files().contains(path)) notify(path.toStdString(), Removed);
     Private::WatchPath w(path.toStdString());
     std::vector<Private::Watch *>::iterator it = std::lower_bound(private_.files_.begin(), private_.files_.end(), w, Private::CompareWatch());
     if (it != private_.files_.end() && (*it)->name == w.name && (*it)->directory == w.directory) {
