@@ -537,6 +537,7 @@ void AbstractThread::exec() {
             eventfd_t _v;
             eventfd_read(private_.WAKE_FD, &_v);
   #elif defined SOCKET_CLOSE_WAKE
+            close(private_.WAKE_FD);
             private_.WAKE_FD = ::socket(AF_INET, SOCK_DGRAM, 0);
   #else
             char _c;
@@ -573,6 +574,7 @@ void AbstractThread::exec() {
                   trace() << LogStream::Color::Red << event[i].events;
                   continue;
                 }
+                close(private_.WAKE_FD);
                 private_.WAKE_FD = socket(AF_INET, SOCK_DGRAM, 0);
                 event[i].events = 0;
                 epoll_ctl(private_.epoll_fd, EPOLL_CTL_ADD, private_.WAKE_FD, &event[i]);
