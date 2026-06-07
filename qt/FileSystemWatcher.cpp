@@ -52,10 +52,11 @@ struct FileSystemWatcher::Private {
 };
 
 FileSystemWatcher::Private::WatchPath::WatchPath(const std::string &path) {
-  size_t i = path.find_last_of('/');
+  size_t i = path.find_last_of("/\\");
   if (i == std::string::npos) return;
   directory = path.substr(0, i);
   name = path.substr(i + 1);
+  std::replace(directory.begin(), directory.end(), '\\', '/');
 }
 
 Instance<FileSystemWatcher> FileSystemWatcher::instance_ {"FileSystemWatcher"};
@@ -64,46 +65,60 @@ FileSystemWatcher::FileSystemWatcher(const std::vector<std::string> &paths) : pr
   private_.thread_ = AbstractThread::current();
   private_.timerid_ = private_.thread_->appendTimerTask(0, [this]() {
     private_.thread_->modifyTimer(private_.timerid_, 0);
+
+    // Забираем накопившиеся за 1 секунду тишины файлы
     for (const Private::Watch *f : private_.we_) {
       lsInfoMagenta() << "T" << f->directory + '/' + f->name;
-      if (!f->d) {
-        notify(f->directory + '/' + f->name, Changed);
-        return;
-      }
-      if (std::filesystem::exists(f->directory + '/' + f->name)) {
-        notify(f->directory + '/' + f->name, Created);
-      } else {
-        notify(f->directory + '/' + f->name, Removed);
-      }
+      // Таймер отвечает ТОЛЬКО за событие Changed (0)
+      notify(f->directory + '/' + f->name, Changed);
     }
-    trace() << LogStream::Color::DarkRed << "timer event" << private_.we_.size();
+
+    trace() << LogStream::Color::DarkRed << "timer event fired, processed:" << private_.we_.size();
     private_.we_.clear();
   });
-
   addPaths(paths);
 
   QObject::connect(&private_.watcher_, &QFileSystemWatcher::fileChanged, [this](const QString &path) {
-    lsInfoMagenta() << "F" << path.toStdString();
-    if (!private_.watcher_.files().contains(path)) notify(path.toStdString(), Removed);
-    Private::WatchPath w(path.toStdString());
-    std::vector<Private::Watch *>::iterator it = std::lower_bound(private_.files_.begin(), private_.files_.end(), w, Private::CompareWatch());
+    std::string stdPath = path.toStdString();
+    std::replace(stdPath.begin(), stdPath.end(), '\\', '/');
+    lsInfoMagenta() << "F" << stdPath;
+
+    Private::WatchPath w(stdPath);
+    auto it = std::lower_bound(private_.files_.begin(), private_.files_.end(), w, Private::CompareWatch());
     if (it != private_.files_.end() && (*it)->name == w.name && (*it)->directory == w.directory) {
-      private_.append_((*it));
-      lsInfoMagenta() << "F" << path.toStdString();
-    }
-  });
-  QObject::connect(&private_.watcher_, &QFileSystemWatcher::directoryChanged, [this](const QString &path) {
-    lsInfoMagenta() << "D" << path.toStdString();
-    Private::WatchPath _w(path.toStdString() + "/*");
-    for (const Private::Watch *w : private_.files_) {
-      lsInfoMagenta() << "I" << _w.directory << w->directory << w->name << w->d;
-      if (w->d && _w.directory == w->directory) {
-        private_.append_(w);
-        lsInfoMagenta() << "D" << path.toStdString();
+      Private::Watch *watchItem = *it;
+
+      if (!private_.watcher_.files().contains(path)) notify(stdPath, Removed);
+      else {
+        // Имитируем Linux: отправляем Changed мгновенно (как при IN_CLOSE_WRITE)
+        notify(stdPath, Changed);
+
+        // КРИТИЧНО: Удаляем его из очереди таймера (как private_.remove_ в Linux),
+        // чтобы избежать двойного вызова Changed через секунду!
+        private_.remove_(watchItem);
+
+        lsInfoMagenta() << "F_changed" << stdPath;
       }
     }
   });
+  QObject::connect(&private_.watcher_, &QFileSystemWatcher::directoryChanged, [this](const QString &path) {
+    std::string dirPath = path.toStdString();
+    std::replace(dirPath.begin(), dirPath.end(), '\\', '/');
+    lsInfoMagenta() << "D" << dirPath;
 
+    for (Private::Watch *w : private_.files_) {
+      if (w->directory == dirPath) {
+        std::string fullPath = w->directory + '/' + w->name;
+
+        // Если наш целевой файл создался заново, возвращаем его в пул слежения Qt
+        if (std::filesystem::exists(fullPath) && !private_.watcher_.files().contains(QString::fromStdString(fullPath))) {
+          private_.watcher_.addPath(QString::fromStdString(fullPath));
+          notify(fullPath, Created);
+          lsInfoMagenta() << "D_created" << fullPath;
+        }
+      }
+    }
+  });
   lsTrace();
 }
 
@@ -117,12 +132,18 @@ FileSystemWatcher::~FileSystemWatcher() {
 
 bool FileSystemWatcher::addPath(const std::string &path) {
   Private::Watch *w = new Private::Watch(path);
+  if (w->name == "*") {
+    delete w;
+    lsError() << "Wildcard paths like '*' are supported on Linux implementation only.";
+    return false;
+  }
   std::vector<Private::Watch *>::iterator it = std::lower_bound(private_.files_.begin(), private_.files_.end(), w, Private::CompareWatch());
   if (it != private_.files_.end() && (*it)->name == w->name && (*it)->directory == w->directory) {
     delete w;
     return false;
   }
-  w->d = !(w->name != "*") ? private_.watcher_.addPath(path.c_str()) : true;
+  //w->d = !((w->name != "*") ? private_.watcher_.addPath(path.c_str()) : true);
+  w->d = !private_.watcher_.addPath(path.c_str());
   if (w->d) {
     w->d = private_.watcher_.addPath(w->directory.c_str());
     if (!w->d) {

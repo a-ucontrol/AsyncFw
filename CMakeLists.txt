@@ -162,8 +162,8 @@ set(AsyncFw_LINUX_SOURCES
 
 #set(AsyncFw_WINDOWS_SOURCES
 #  "main/AddressResolver.cpp" #need cares for AMD64 #!!!
-#  "windows/FileSystemWatcher.cpp"
-#  "windows/SystemProcess.cpp"
+#  "qt/FileSystemWatcher.cpp"
+#  "qt/SystemProcess.cpp"
 #)
 
 set(AsyncFw_3rdparty_SOURCES
@@ -190,7 +190,7 @@ if(${CMAKE_SYSTEM_PROCESSOR} STREQUAL "AMD64")
     set(PROJECT_SOURCES ${PROJECT_SOURCES} "main/AddressResolver.cpp")
   endif()
   if(AMD64_USE_QAPPLICATION)
-    set(PROJECT_SOURCES ${PROJECT_SOURCES} "windows/FileSystemWatcher.cpp" "windows/SystemProcess.cpp")
+    set(PROJECT_SOURCES ${PROJECT_SOURCES} "qt/FileSystemWatcher.cpp" "qt/SystemProcess.cpp")
   endif()
   set(PROJECT_SOURCES ${PROJECT_SOURCES})
 else()
