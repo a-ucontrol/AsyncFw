@@ -59,11 +59,18 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
     #include <sys/epoll.h>
     #define EPOLL_WAIT_EVENTS 32
   #endif
+  #define close_fd close
+  #define read_fd(fd, ptr, size) ::read(fd, ptr, size)
+  #define write_fd(fd, ptr, size) ::write(fd, ptr, size)
 #else
   #include <winsock2.h>
   #include <ws2tcpip.h>
   #include <fcntl.h>
   #define poll(ptr, size, timeout) WSAPoll(ptr, size, timeout)
+  #define close_fd closesocket
+  #define read_fd(fd, ptr, size) ::recv(fd, ptr, size, 0)
+  #define write_fd(fd, ptr, size) ::send(fd, ptr, size, 0)
+  #define SHUT_RDWR SD_BOTH
 #endif
 
 #ifdef POLL_WAIT
@@ -237,7 +244,6 @@ AbstractThread::AbstractThread(const std::string &name) : private_(*new Private)
   std::vector<AbstractThread *>::iterator it = std::lower_bound(Private::list.begin(), Private::list.end(), this, Private::Compare());
   Private::list.insert(it, this);
   trace() << "threads:" << std::to_string(Private::list.size());
-
 #ifdef POLL_WAIT
   pollfd _w;
   _w.events = POLLIN;
@@ -274,7 +280,6 @@ AbstractThread::AbstractThread(const std::string &name) : private_(*new Private)
   event.data.ptr = &private_.wake_task;
   epoll_ctl(private_.epoll_fd, EPOLL_CTL_ADD, private_.WAKE_FD, &event);
 #endif
-
   lsTrace() << LOG_THREAD_NAME;
 }
 
@@ -294,17 +299,9 @@ AbstractThread::~AbstractThread() {
     trace() << "threads:" << std::to_string(Private::list.size());
   }
 
-#ifndef _WIN32
-  ::close(private_.WAKE_FD);
-#else
-  ::closesocket(private_.WAKE_FD);
-#endif
+  ::close_fd(private_.WAKE_FD);
 #if !defined EVENTFD_WAKE && !defined SOCKET_CLOSE_WAKE
-  #ifndef _WIN32
-  ::close(private_.WAKE_FD_WRITE);
-  #else
-  ::closesocket(private_.WAKE_FD_WRITE);
-  #endif
+  ::close_fd(private_.WAKE_FD_WRITE);
 #endif
 
   lsTrace() << LOG_THREAD_NAME << LogStream::Color::Magenta << private_.id << LogStream::Color::Default << "-" << private_.tasks.size() << private_.timers.size() << private_.poll_tasks.size() << "-" << private_.process_tasks_.size() << private_.process_timer_tasks_.size() << private_.process_poll_tasks_.size();
@@ -537,12 +534,12 @@ void AbstractThread::exec() {
             eventfd_t _v;
             eventfd_read(private_.WAKE_FD, &_v);
   #elif defined SOCKET_CLOSE_WAKE
-            close(private_.WAKE_FD);
+            close_fd(private_.WAKE_FD);
             private_.WAKE_FD = ::socket(AF_INET, SOCK_DGRAM, 0);
   #else
             char _c;
     #ifndef __clang_analyzer__
-            (void)!read(private_.WAKE_FD, &_c, sizeof(_c));
+            read_fd(private_.WAKE_FD, &_c, sizeof(_c));
     #endif
   #endif
             if (private_.fds_[0].revents) {
@@ -574,14 +571,14 @@ void AbstractThread::exec() {
                   trace() << LogStream::Color::Red << event[i].events;
                   continue;
                 }
-                close(private_.WAKE_FD);
+                close_fd(private_.WAKE_FD);
                 private_.WAKE_FD = socket(AF_INET, SOCK_DGRAM, 0);
                 event[i].events = 0;
                 epoll_ctl(private_.epoll_fd, EPOLL_CTL_ADD, private_.WAKE_FD, &event[i]);
   #else
                 char _c;
     #ifndef __clang_analyzer__
-                (void)!read(private_.WAKE_FD, &_c, sizeof(_c));
+                read_fd(private_.WAKE_FD, &_c, sizeof(_c));
     #endif
   #endif
                 continue;
@@ -661,14 +658,10 @@ void AbstractThread::Private::wake() {
 #ifdef EVENTFD_WAKE
   eventfd_write(WAKE_FD_WRITE, 1);
 #elif defined SOCKET_CLOSE_WAKE
-  #ifndef _WIN32
   ::shutdown(WAKE_FD_WRITE, SHUT_RDWR);
-  #else
-  ::closesocket(WAKE_FD_WRITE);
-  #endif
 #else
   char _c = '\x0';
-  (void)!write(WAKE_FD_WRITE, &_c, 1);
+  write_fd(WAKE_FD_WRITE, &_c, 1);
 #endif
 }
 
