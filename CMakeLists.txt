@@ -184,9 +184,11 @@ else()
   )
 endif()
 
-#set(AsyncFw_WINDOWS_SOURCES
-#  "main/AddressResolver.cpp" #need cares for AMD64 #!!!
-#)
+if(AMD64_USE_CARES)
+  set(AsyncFw_WINDOWS_SOURCES
+    "main/AddressResolver.cpp" #need cares for AMD64 #!!!
+  )
+endif()
 
 set(AsyncFw_3rdparty_SOURCES
   "3rdparty/WebSocket/WebSocket/WebSocket.cpp"
@@ -207,8 +209,8 @@ include_directories(.)
 set(PROJECT_SOURCES ${AsyncFw_CORE_SOURCES} ${AsyncFw_MAIN_SOURCES} ${AsyncFw_INTERNAL_HEADERS} ${AsyncFw_CORE_HEADERS} ${AsyncFw_MAIN_HEADERS} ${AsyncFw_LINUX_SOURCES} ${AsyncFw_QT_SOURCES} ${AsyncFw_3rdparty_SOURCES})
 
 if(${CMAKE_SYSTEM_PROCESSOR} STREQUAL "AMD64")
-  if(AMD64_USE_CARES)
-    set(PROJECT_SOURCES ${PROJECT_SOURCES} "main/AddressResolver.cpp")
+  if(AsyncFw_WINDOWS_SOURCES)
+    set(PROJECT_SOURCES ${PROJECT_SOURCES} ${AsyncFw_WINDOWS_SOURCES})
   endif()
 endif()
 
