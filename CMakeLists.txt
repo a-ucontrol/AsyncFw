@@ -47,16 +47,18 @@ if(${CMAKE_SYSTEM_PROCESSOR} STREQUAL "AMD64")
   if(NOT AMD64_OPENSSL_INCLUDE_DIR OR NOT AMD64_OPENSSL_LIB_DIR)
     message(FATAL_ERROR "AMD64_OPENSSL_INCLUDE_DIR OR AMD64_OPENSSL_LIB_DIR not set")
   endif()
+  set(USE_QAPPLICATION ON)
   include_directories(${AMD64_OPENSSL_INCLUDE_DIR})
   link_directories(${AMD64_OPENSSL_LIB_DIR})
   if(AMD64_USE_CARES)
     message(STATUS "AMD64_USE_CARES")
     find_package(c-ares CONFIG)
   endif()
-  if(AMD64_USE_QAPPLICATION)
-    message(STATUS "AMD64_USE_QAPPLICATION")
-    find_package(Qt6 CONFIG COMPONENTS Core)
-  endif()
+endif()
+
+if(USE_QAPPLICATION)
+  message(STATUS "USE_QAPPLICATION")
+  find_package(Qt6 CONFIG COMPONENTS Core)
 endif()
 
 file(GLOB AsyncFw_INCLUDE include/AsyncFw/*)
@@ -156,14 +158,22 @@ set(AsyncFw_MAIN_SOURCES
 
 set(AsyncFw_LINUX_SOURCES
   "main/AddressResolver.cpp" #need cares for AMD64
-  "linux/FileSystemWatcher.cpp"
-  "linux/SystemProcess.cpp"
 )
+
+if(NOT USE_QAPPLICATION)
+  set(AsyncFw_LINUX_SOURCES ${AsyncFw_LINUX_SOURCES}
+    "linux/FileSystemWatcher.cpp"
+    "linux/SystemProcess.cpp"
+  )
+else()
+  set(AsyncFw_QT_SOURCES
+    "qt/FileSystemWatcher.cpp"
+    "qt/SystemProcess.cpp"
+  )
+endif()
 
 #set(AsyncFw_WINDOWS_SOURCES
 #  "main/AddressResolver.cpp" #need cares for AMD64 #!!!
-#  "qt/FileSystemWatcher.cpp"
-#  "qt/SystemProcess.cpp"
 #)
 
 set(AsyncFw_3rdparty_SOURCES
@@ -182,19 +192,12 @@ endif()
 include_directories(include)
 include_directories(.)
 
-set(PROJECT_SOURCES ${AsyncFw_CORE_SOURCES} ${AsyncFw_MAIN_SOURCES} ${AsyncFw_INTERNAL_HEADERS} ${AsyncFw_CORE_HEADERS} ${AsyncFw_MAIN_HEADERS} ${AsyncFw_3rdparty_SOURCES})
-
+set(PROJECT_SOURCES ${AsyncFw_CORE_SOURCES} ${AsyncFw_MAIN_SOURCES} ${AsyncFw_INTERNAL_HEADERS} ${AsyncFw_CORE_HEADERS} ${AsyncFw_MAIN_HEADERS} ${AsyncFw_LINUX_SOURCES} ${AsyncFw_QT_SOURCES} ${AsyncFw_3rdparty_SOURCES})
 
 if(${CMAKE_SYSTEM_PROCESSOR} STREQUAL "AMD64")
   if(AMD64_USE_CARES)
     set(PROJECT_SOURCES ${PROJECT_SOURCES} "main/AddressResolver.cpp")
   endif()
-  if(AMD64_USE_QAPPLICATION)
-    set(PROJECT_SOURCES ${PROJECT_SOURCES} "qt/FileSystemWatcher.cpp" "qt/SystemProcess.cpp")
-  endif()
-  set(PROJECT_SOURCES ${PROJECT_SOURCES})
-else()
-  set(PROJECT_SOURCES ${PROJECT_SOURCES} ${AsyncFw_LINUX_SOURCES})
 endif()
 
 include(GNUInstallDirs)
@@ -222,6 +225,10 @@ else()
   install(TARGETS ${AsyncFw_PROJECT_NAME} EXPORT AsyncFw_TARGETS DESTINATION ${CMAKE_INSTALL_LIBDIR})
 endif()
 
+if(USE_QAPPLICATION)
+  target_link_libraries(${AsyncFw_PROJECT_NAME} Qt6::Core)
+endif()
+
 target_link_libraries(${AsyncFw_PROJECT_NAME} z crypto ssl)
 if(NOT ${CMAKE_SYSTEM_PROCESSOR} STREQUAL "AMD64")
   target_link_libraries(${AsyncFw_PROJECT_NAME} cares)
@@ -229,9 +236,6 @@ else()
   target_link_libraries(${AsyncFw_PROJECT_NAME} iphlpapi Ws2_32)
   if(AMD64_USE_CARES)
     target_link_libraries(${AsyncFw_PROJECT_NAME} c-ares::cares)
-  endif()
-  if(AMD64_USE_QAPPLICATION)
-    target_link_libraries(${AsyncFw_PROJECT_NAME} Qt6::Core)
   endif()
 endif()
 
@@ -271,7 +275,7 @@ if(NOT AsyncFw_DISABLE_BUILD_EXAMPLES)
     add_subdirectory(example/Socket)
     add_subdirectory(example/HttpSocket)
   endif()
-  if(NOT ${CMAKE_SYSTEM_PROCESSOR} STREQUAL "AMD64" OR AMD64_USE_QAPPLICATION)
+  if(NOT ${CMAKE_SYSTEM_PROCESSOR} STREQUAL "AMD64" OR USE_QAPPLICATION)
     add_subdirectory(example/FileSystemWatcher)
     add_subdirectory(example/SystemProcess)
     add_subdirectory(example/run-examples)
