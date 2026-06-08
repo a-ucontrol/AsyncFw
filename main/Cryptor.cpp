@@ -17,7 +17,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 using namespace AsyncFw;
 using EVP_CIPHER_CTX_free_ptr = std::unique_ptr<EVP_CIPHER_CTX, decltype(&::EVP_CIPHER_CTX_free)>;
 
-void Cryptor::encrypt(const DataArray &key, const DataArrayView &iv, const DataArrayView &text, DataArray &ctext) {
+void Cryptor::encrypt(const DataArrayView &key, const DataArrayView &iv, const DataArrayView &text, DataArray &ctext) {
   if (key.size() != 32 || iv.size() != 16) throw std::runtime_error("Key or iv size incorrect");
   EVP_CIPHER_CTX_free_ptr ctx(EVP_CIPHER_CTX_new(), ::EVP_CIPHER_CTX_free);
   int rc = EVP_EncryptInit_ex(ctx.get(), EVP_aes_256_cbc(), NULL, reinterpret_cast<const unsigned char *>(key.data()), reinterpret_cast<const unsigned char *>(iv.data()));
@@ -38,7 +38,7 @@ void Cryptor::encrypt(const DataArray &key, const DataArrayView &iv, const DataA
   ctext.resize(out_len1 + out_len2);
 }
 
-void Cryptor::decrypt(const DataArray &key, const DataArrayView &iv, const DataArrayView &ctext, DataArray &text) {
+void Cryptor::decrypt(const DataArrayView &key, const DataArrayView &iv, const DataArrayView &ctext, DataArray &text) {
   if (key.size() != 32 || iv.size() != 16) throw std::runtime_error("Key or iv size incorrect");
   EVP_CIPHER_CTX_free_ptr ctx(EVP_CIPHER_CTX_new(), ::EVP_CIPHER_CTX_free);
   int rc = EVP_DecryptInit_ex(ctx.get(), EVP_aes_256_cbc(), NULL, reinterpret_cast<const unsigned char *>(key.data()), reinterpret_cast<const unsigned char *>(iv.data()));
@@ -59,7 +59,7 @@ void Cryptor::decrypt(const DataArray &key, const DataArrayView &iv, const DataA
   text.resize(out_len1 + out_len2);
 }
 
-bool Cryptor::encrypt(const DataArray &key, const DataArray &text, DataArray &ctext) {
+bool Cryptor::encrypt(const DataArrayView &key, const DataArrayView &text, DataArray &ctext) {
   DataArray iv;
   iv.resize(16);
   int rc = RAND_bytes(reinterpret_cast<unsigned char *>(iv.data()), iv.size());
@@ -68,7 +68,7 @@ bool Cryptor::encrypt(const DataArray &key, const DataArray &text, DataArray &ct
     return false;
   }
   try {
-    encrypt(key, iv.view(), text.view(), ctext);
+    encrypt(key, iv.view(), text, ctext);
   } catch (const std::exception &e) {
     lsError() << e.what();
     return false;
@@ -77,7 +77,7 @@ bool Cryptor::encrypt(const DataArray &key, const DataArray &text, DataArray &ct
   return true;
 }
 
-bool Cryptor::decrypt(const DataArray &key, const DataArray &ctext, DataArray &text) {
+bool Cryptor::decrypt(const DataArrayView &key, const DataArrayView &ctext, DataArray &text) {
   std::size_t i = 16;
   try {
     decrypt(key, DataArrayView(ctext.data() + ctext.size() - i, i), DataArrayView(ctext.data(), ctext.size() - i), text);
