@@ -59,7 +59,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
     #include <sys/epoll.h>
     #define EPOLL_WAIT_EVENTS 32
   #endif
-  #define close_fd close
+  #define close_fd ::close
   #define read_fd(fd, ptr, size) ::read(fd, ptr, size)
   #define write_fd(fd, ptr, size) ::write(fd, ptr, size)
 #else
@@ -67,10 +67,9 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
   #include <ws2tcpip.h>
   #include <fcntl.h>
   #define poll(ptr, size, timeout) WSAPoll(ptr, size, timeout)
-  #define close_fd closesocket
+  #define close_fd ::closesocket
   #define read_fd(fd, ptr, size) ::recv(fd, ptr, size, 0)
   #define write_fd(fd, ptr, size) ::send(fd, ptr, size, 0)
-  #define SHUT_RDWR SD_BOTH
 #endif
 
 #ifdef POLL_WAIT
@@ -299,9 +298,9 @@ AbstractThread::~AbstractThread() {
     trace() << "threads:" << std::to_string(Private::list.size());
   }
 
-  ::close_fd(private_.WAKE_FD);
+  close_fd(private_.WAKE_FD);
 #if !defined EVENTFD_WAKE && !defined SOCKET_CLOSE_WAKE
-  ::close_fd(private_.WAKE_FD_WRITE);
+  close_fd(private_.WAKE_FD_WRITE);
 #endif
 
   lsTrace() << LOG_THREAD_NAME << LogStream::Color::Magenta << private_.id << LogStream::Color::Default << "-" << private_.tasks.size() << private_.timers.size() << private_.poll_tasks.size() << "-" << private_.process_tasks_.size() << private_.process_timer_tasks_.size() << private_.process_poll_tasks_.size();
@@ -534,7 +533,6 @@ void AbstractThread::exec() {
             eventfd_t _v;
             eventfd_read(private_.WAKE_FD, &_v);
   #elif defined SOCKET_CLOSE_WAKE
-            close_fd(private_.WAKE_FD);
             private_.WAKE_FD = ::socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
   #else
             char _c;
@@ -658,7 +656,11 @@ void AbstractThread::Private::wake() {
 #ifdef EVENTFD_WAKE
   eventfd_write(WAKE_FD_WRITE, 1);
 #elif defined SOCKET_CLOSE_WAKE
+  #ifdef POLL_WAIT
+  close_fd(WAKE_FD_WRITE);
+  #elif defined EPOLL_WAIT
   ::shutdown(WAKE_FD_WRITE, SHUT_RDWR);
+  #endif
 #else
   char _c = '\x0';
   write_fd(WAKE_FD_WRITE, &_c, 1);
