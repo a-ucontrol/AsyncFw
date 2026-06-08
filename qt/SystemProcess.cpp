@@ -65,6 +65,7 @@ bool SystemProcess::start() {
   QObject::connect(&private_.process_, &QProcess::readyReadStandardError, [this]() {
     std::string buf = private_.process_.readAllStandardError().toStdString();
     output(buf, true);
+    trace() << "out" << buf.size() << LogStream::Color::DarkRed << buf;
   });
 
   QObject::connect(&private_.process_, &QProcess::finished, [this](int exitCode, QProcess::ExitStatus exitStatus) {
@@ -110,9 +111,12 @@ int SystemProcess::exitCode() { return private_.code_; }
 bool SystemProcess::input(const std::string &str) const { return private_.process_.write(QByteArray::fromStdString(str)) > 0; }
 
 void SystemProcess::finality() {
-  if (private_.loop.isRunning()) { private_.loop.quit(); }
   private_.process_.disconnect();
   stateChanged(private_.state_);
+  if (private_.loop.isRunning()) {
+    private_.loop.processEvents();
+    private_.loop.quit();
+  }
   lsTrace() << LogStream::Color::Red << "End: " + private_.cmdline_ << private_.code_ << static_cast<int>(private_.state_);
 }
 
@@ -125,31 +129,29 @@ bool SystemProcess::exec_(const std::string &cmd, const std::vector<std::string>
   Data *_data = new Data;
 
   if (f) {
-    _data->process.output.connect<AbstractFunctionConnector::Connection::Direct>(
-        [_data](const std::string &msg, bool err) {
-          if (!err) _data->out += msg;
-          else { _data->err += msg; }
-        });
+    _data->process.output.connect<AbstractFunctionConnector::Connection::Direct>([_data](const std::string &msg, bool err) {
+      if (!err) _data->out += msg;
+      else { _data->err += msg; }
+    });
   }
-  _data->process.stateChanged.connect<AbstractFunctionConnector::Connection::Direct>(
-      [f, _data](SystemProcess::State state) {
-        if (state != SystemProcess::Running) {
-          if (f) {
-            (*f)(_data->process.exitCode(), state, _data->out, _data->err);
-            delete f;
-          }
-          if (!_data->process.private_.thread_->invoke([_data]() { delete _data; })) delete _data;
-        }
-      });
+  _data->process.stateChanged.connect<AbstractFunctionConnector::Connection::Direct>([f, _data](SystemProcess::State state) {
+    if (state != SystemProcess::Running) {
+      if (f) {
+        (*f)(_data->process.exitCode(), state, _data->out, _data->err);
+        delete f;
+      }
+      if (!_data->process.private_.thread_->invoke([_data]() { delete _data; })) delete _data;
+    }
+  });
   if (!_data->process.private_.thread_->invoke([cmd, args, f, _data]() {
-        if (!_data->process.start(cmd, args)) {
-          if (f) {
-            (*f)(_data->process.exitCode(), _data->process.state(), _data->out, _data->err);
-            delete f;
-          }
-          delete _data;
-        }
-      })) {
+    if (!_data->process.start(cmd, args)) {
+      if (f) {
+        (*f)(_data->process.exitCode(), _data->process.state(), _data->out, _data->err);
+        delete f;
+      }
+      delete _data;
+    }
+  })) {
     if (f) {
       (*f)(-1, Error, _data->out, _data->err);
       delete f;
