@@ -1,5 +1,5 @@
 <map id="AsyncFw::ListenSocket" name="AsyncFw::ListenSocket">
-<area shape="rect" id="Node000001" title="The ListenSocket class." alt="" coords="12,155,173,181"/>
+<area shape="rect" id="Node000001" title="Server&#45;side socket wrapper specialized for listening and accepting incoming network connections." alt="" coords="12,155,173,181"/>
 <area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractSocket.html" title="Abstract base class providing core network socket functionality and OS descriptor abstraction." alt="" coords="5,80,180,107"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="95,122,95,154,90,154,90,122"/>
 <area shape="rect" id="Node000003" href="$structAsyncFw_1_1AnyData.html" title="A generic, type&#45;safe data container block wrapper utilizing std::any." alt="" coords="25,5,160,32"/>

@@ -112,7 +112,7 @@
 <!-- Node5 -->
 <g id="Node000005" class="node">
 <title>Node5</title>
-<g id="a_Node000005"><a xlink:href="classAsyncFw_1_1ListenSocket.html" target="_top" xlink:title="The ListenSocket class.">
+<g id="a_Node000005"><a xlink:href="classAsyncFw_1_1ListenSocket.html" target="_top" xlink:title="Server&#45;side socket wrapper specialized for listening and accepting incoming network connections.">
 <polygon fill="white" stroke="#666666" points="448.5,-158 328.25,-158 328.25,-138 448.5,-138 448.5,-158"/>
 <text text-anchor="middle" x="388.38" y="-144.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::ListenSocket</text>
 </a>

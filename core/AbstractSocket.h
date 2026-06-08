@@ -77,7 +77,7 @@ public:
   uint16_t peerPort() const;
 
 protected:
-  /** @brief Constructs an AbstractSocket with default patameters (AF_INET, SOCK_STREAM, IPPROTO_TCP) and binds it to the current thread context. */
+  /** @brief Constructs an AbstractSocket with default parameters (AF_INET, SOCK_STREAM, IPPROTO_TCP) and binds it to the current thread context. */
   AbstractSocket();
   /** @brief Constructs an AbstractSocket and binds it to the current thread context.
   @param family Address family @param type Socket type @param protocol Internet protocol */
