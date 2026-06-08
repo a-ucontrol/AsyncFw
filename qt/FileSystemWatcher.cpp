@@ -65,56 +65,35 @@ FileSystemWatcher::FileSystemWatcher(const std::vector<std::string> &paths) : pr
   private_.thread_ = AbstractThread::current();
   private_.timerid_ = private_.thread_->appendTimerTask(0, [this]() {
     private_.thread_->modifyTimer(private_.timerid_, 0);
-
-    // Забираем накопившиеся за 1 секунду тишины файлы
-    for (const Private::Watch *f : private_.we_) {
-      lsInfoMagenta() << "T" << f->directory + '/' + f->name;
-      // Таймер отвечает ТОЛЬКО за событие Changed (0)
-      notify(f->directory + '/' + f->name, Changed);
-    }
-
+    for (const Private::Watch *f : private_.we_) { notify(f->directory + '/' + f->name, Changed); }
     trace() << LogStream::Color::DarkRed << "timer event fired, processed:" << private_.we_.size();
     private_.we_.clear();
   });
   addPaths(paths);
 
   QObject::connect(&private_.watcher_, &QFileSystemWatcher::fileChanged, [this](const QString &path) {
-    std::string stdPath = path.toStdString();
-    std::replace(stdPath.begin(), stdPath.end(), '\\', '/');
-    lsInfoMagenta() << "F" << stdPath;
-
-    Private::WatchPath w(stdPath);
+    std::string _path = path.toStdString();
+    std::replace(_path.begin(), _path.end(), '\\', '/');
+    Private::WatchPath w(_path);
     auto it = std::lower_bound(private_.files_.begin(), private_.files_.end(), w, Private::CompareWatch());
     if (it != private_.files_.end() && (*it)->name == w.name && (*it)->directory == w.directory) {
       Private::Watch *watchItem = *it;
-
-      if (!private_.watcher_.files().contains(path)) notify(stdPath, Removed);
+      if (!private_.watcher_.files().contains(path)) notify(_path, Removed);
       else {
-        // Имитируем Linux: отправляем Changed мгновенно (как при IN_CLOSE_WRITE)
-        notify(stdPath, Changed);
-
-        // КРИТИЧНО: Удаляем его из очереди таймера (как private_.remove_ в Linux),
-        // чтобы избежать двойного вызова Changed через секунду!
+        notify(_path, Changed);
         private_.remove_(watchItem);
-
-        lsInfoMagenta() << "F_changed" << stdPath;
       }
     }
   });
   QObject::connect(&private_.watcher_, &QFileSystemWatcher::directoryChanged, [this](const QString &path) {
-    std::string dirPath = path.toStdString();
-    std::replace(dirPath.begin(), dirPath.end(), '\\', '/');
-    lsInfoMagenta() << "D" << dirPath;
-
+    std::string _path = path.toStdString();
+    std::replace(_path.begin(), _path.end(), '\\', '/');
     for (Private::Watch *w : private_.files_) {
-      if (w->directory == dirPath) {
-        std::string fullPath = w->directory + '/' + w->name;
-
-        // Если наш целевой файл создался заново, возвращаем его в пул слежения Qt
-        if (std::filesystem::exists(fullPath) && !private_.watcher_.files().contains(QString::fromStdString(fullPath))) {
-          private_.watcher_.addPath(QString::fromStdString(fullPath));
-          notify(fullPath, Created);
-          lsInfoMagenta() << "D_created" << fullPath;
+      if (w->directory == _path) {
+        _path = w->directory + '/' + w->name;
+        if (std::filesystem::exists(_path) && !private_.watcher_.files().contains(QString::fromStdString(_path))) {
+          private_.watcher_.addPath(QString::fromStdString(_path));
+          notify(_path, Created);
         }
       }
     }
