@@ -169,7 +169,7 @@ set(AsyncFw_MAIN_SOURCES
 )
 
 set(AsyncFw_LINUX_SOURCES
-  "main/AddressResolver.cpp" #need cares for AMD64
+  "main/AddressResolver.cpp"
 )
 
 if(NOT USE_QAPPLICATION)
@@ -206,12 +206,14 @@ endif()
 include_directories(include)
 include_directories(.)
 
-set(PROJECT_SOURCES ${AsyncFw_CORE_SOURCES} ${AsyncFw_MAIN_SOURCES} ${AsyncFw_INTERNAL_HEADERS} ${AsyncFw_CORE_HEADERS} ${AsyncFw_MAIN_HEADERS} ${AsyncFw_LINUX_SOURCES} ${AsyncFw_QT_SOURCES} ${AsyncFw_3rdparty_SOURCES})
+set(PROJECT_SOURCES ${AsyncFw_CORE_SOURCES} ${AsyncFw_MAIN_SOURCES} ${AsyncFw_INTERNAL_HEADERS} ${AsyncFw_CORE_HEADERS} ${AsyncFw_MAIN_HEADERS} ${AsyncFw_QT_SOURCES} ${AsyncFw_3rdparty_SOURCES})
 
 if(${CMAKE_SYSTEM_PROCESSOR} STREQUAL "AMD64")
   if(AsyncFw_WINDOWS_SOURCES)
     set(PROJECT_SOURCES ${PROJECT_SOURCES} ${AsyncFw_WINDOWS_SOURCES})
   endif()
+else()
+  set(PROJECT_SOURCES ${PROJECT_SOURCES} ${AsyncFw_LINUX_SOURCES})
 endif()
 
 include(GNUInstallDirs)
