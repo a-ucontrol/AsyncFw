@@ -269,7 +269,7 @@ AbstractThread::AbstractThread(const std::string &name) : private_(*new Private)
   ::getsockname(private_.WAKE_FD, reinterpret_cast<sockaddr *>(&addr), &_tmp);
   ::connect(private_.WAKE_FD_WRITE, reinterpret_cast<sockaddr *>(&addr), sizeof(addr));
 #elif defined SOCKET_CLOSE_WAKE
-  private_.WAKE_FD = socket(AF_INET, SOCK_DGRAM, 0);
+  private_.WAKE_FD = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
 #endif
 
 #ifdef EPOLL_WAIT
@@ -535,7 +535,7 @@ void AbstractThread::exec() {
             eventfd_read(private_.WAKE_FD, &_v);
   #elif defined SOCKET_CLOSE_WAKE
             close_fd(private_.WAKE_FD);
-            private_.WAKE_FD = ::socket(AF_INET, SOCK_DGRAM, 0);
+            private_.WAKE_FD = ::socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
   #else
             char _c;
     #ifndef __clang_analyzer__
@@ -572,7 +572,7 @@ void AbstractThread::exec() {
                   continue;
                 }
                 close_fd(private_.WAKE_FD);
-                private_.WAKE_FD = socket(AF_INET, SOCK_DGRAM, 0);
+                private_.WAKE_FD = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
                 event[i].events = 0;
                 epoll_ctl(private_.epoll_fd, EPOLL_CTL_ADD, private_.WAKE_FD, &event[i]);
   #else
