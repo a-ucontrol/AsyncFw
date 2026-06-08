@@ -59,6 +59,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
     #include <sys/epoll.h>
     #define EPOLL_WAIT_EVENTS 32
   #endif
+  #include <unistd.h>
   #define close_fd ::close
   #define read_fd(fd, ptr, size) ::read(fd, ptr, size)
   #define write_fd(fd, ptr, size) ::write(fd, ptr, size)
