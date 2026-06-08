@@ -2,7 +2,7 @@
 <area shape="rect" id="Node000001" title="The ListenSocket class." alt="" coords="981,108,1141,135"/>
 <area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractSocket.html" title="Abstract base class providing core network socket functionality and OS descriptor abstraction." alt="" coords="757,73,932,100"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="947,100,981,106,980,111,946,106"/>
-<area shape="rect" id="Node000003" href="$structAsyncFw_1_1AnyData.html" title="The AnyData class." alt="" coords="380,23,515,49"/>
+<area shape="rect" id="Node000003" href="$structAsyncFw_1_1AnyData.html" title="A generic, type&#45;safe data container block wrapper utilizing std::any." alt="" coords="380,23,515,49"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="531,40,734,63,777,70,776,75,733,68,530,45"/>
 <area shape="rect" id="Node000004" href="$classAsyncFw_1_1Thread.html" title="AsyncFw::Thread thread with sockets." alt="" coords="385,73,510,100"/>
 <area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="525,84,757,84,757,89,525,89"/>

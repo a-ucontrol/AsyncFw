@@ -21,7 +21,7 @@ var searchData=
   ['addressresolver_18',['AddressResolver',['../classAsyncFw_1_1AddressResolver.html',1,'AsyncFw']]],
   ['addressresolver_2eh_19',['AddressResolver.h',['../AddressResolver_8h.html',1,'']]],
   ['alert_20',['Alert',['../classAsyncFw_1_1LogStream.html#afa2f6c5311ced6b973d39d6e5ced5731a8e7cdb29641eddbcac3012fe6eb3cd3d',1,'AsyncFw::LogStream']]],
-  ['anydata_21',['AnyData',['../structAsyncFw_1_1AnyData.html',1,'AsyncFw']]],
+  ['anydata_21',['AnyData',['../structAsyncFw_1_1AnyData.html',1,'AsyncFw::AnyData'],['../structAsyncFw_1_1AnyData.html#a667ea182dec03e9ca81e86cdc7db8842',1,'AsyncFw::AnyData::AnyData()']]],
   ['anydata_2eh_22',['AnyData.h',['../AnyData_8h.html',1,'']]],
   ['api_20helpers_23',['Coroutine API Helpers',['../group__coroutine__api.html',1,'']]],
   ['appendpolldescriptor_24',['appendPollDescriptor',['../classAsyncFw_1_1AbstractThread.html#a5d77136157f34e21722ee4ff7b10813e',1,'AsyncFw::AbstractThread']]],

@@ -111,32 +111,32 @@ $(function(){initNavTree('classAsyncFw_1_1Cryptor.html',''); initResizable(true)
 </div><!--header-->
 <div class="contents">
 
-<p>The <a class="el" href="classAsyncFw_1_1Cryptor.html" title="The Cryptor class.">Cryptor</a> class.  
+<p>Utility class providing static interfaces for high-performance symmetric data cryptography.  
  <a href="#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="Cryptor_8h_source.html">AsyncFw/Cryptor</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a177f0c094fe698d640f7345888252ed7" id="r_a177f0c094fe698d640f7345888252ed7"><td class="memItemLeft" align="right" valign="top"><a id="a177f0c094fe698d640f7345888252ed7" name="a177f0c094fe698d640f7345888252ed7"></a>
-static bool&#160;</td><td class="memItemRight" valign="bottom"><b>encrypt</b> (const <a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> &amp;key, const <a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> &amp;text, <a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> &amp;ctext)</td></tr>
-<tr class="separator:a177f0c094fe698d640f7345888252ed7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a14c0b80f3a99352b6e890887370df855" id="r_a14c0b80f3a99352b6e890887370df855"><td class="memItemLeft" align="right" valign="top"><a id="a14c0b80f3a99352b6e890887370df855" name="a14c0b80f3a99352b6e890887370df855"></a>
-static bool&#160;</td><td class="memItemRight" valign="bottom"><b>decrypt</b> (const <a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> &amp;key, const <a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> &amp;ctext, <a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> &amp;text)</td></tr>
-<tr class="separator:a14c0b80f3a99352b6e890887370df855"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a85041f8d5b2a6c69be47a811039b2aec" id="r_a85041f8d5b2a6c69be47a811039b2aec"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a85041f8d5b2a6c69be47a811039b2aec">encrypt</a> (const <a class="el" href="classAsyncFw_1_1DataArrayView.html">DataArrayView</a> &amp;, const <a class="el" href="classAsyncFw_1_1DataArrayView.html">DataArrayView</a> &amp;, <a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> &amp;)</td></tr>
+<tr class="memdesc:a85041f8d5b2a6c69be47a811039b2aec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type-safely encrypts raw data payload into a secure ciphertext buffer.  <br /></td></tr>
+<tr class="separator:a85041f8d5b2a6c69be47a811039b2aec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acfeb3368adf946544bf0341cda8338ef" id="r_acfeb3368adf946544bf0341cda8338ef"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acfeb3368adf946544bf0341cda8338ef">decrypt</a> (const <a class="el" href="classAsyncFw_1_1DataArrayView.html">DataArrayView</a> &amp;, const <a class="el" href="classAsyncFw_1_1DataArrayView.html">DataArrayView</a> &amp;, <a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> &amp;)</td></tr>
+<tr class="memdesc:acfeb3368adf946544bf0341cda8338ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type-safely decrypts ciphertext back into the original raw data layout.  <br /></td></tr>
+<tr class="separator:acfeb3368adf946544bf0341cda8338ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-static-methods" name="pro-static-methods"></a>
 Static Protected Member Functions</h2></td></tr>
-<tr class="memitem:a71425ee2d774d30ac425c068bb70b12e" id="r_a71425ee2d774d30ac425c068bb70b12e"><td class="memItemLeft" align="right" valign="top"><a id="a71425ee2d774d30ac425c068bb70b12e" name="a71425ee2d774d30ac425c068bb70b12e"></a>
-static void&#160;</td><td class="memItemRight" valign="bottom"><b>encrypt</b> (const <a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> &amp;key, const <a class="el" href="classAsyncFw_1_1DataArrayView.html">DataArrayView</a> &amp;iv, const <a class="el" href="classAsyncFw_1_1DataArrayView.html">DataArrayView</a> &amp;text, <a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> &amp;ctext)</td></tr>
-<tr class="separator:a71425ee2d774d30ac425c068bb70b12e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1cb9b22f8e8f4cc4936442d6eda55f6e" id="r_a1cb9b22f8e8f4cc4936442d6eda55f6e"><td class="memItemLeft" align="right" valign="top"><a id="a1cb9b22f8e8f4cc4936442d6eda55f6e" name="a1cb9b22f8e8f4cc4936442d6eda55f6e"></a>
-static void&#160;</td><td class="memItemRight" valign="bottom"><b>decrypt</b> (const <a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> &amp;key, const <a class="el" href="classAsyncFw_1_1DataArrayView.html">DataArrayView</a> &amp;iv, const <a class="el" href="classAsyncFw_1_1DataArrayView.html">DataArrayView</a> &amp;ctext, <a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> &amp;text)</td></tr>
-<tr class="separator:a1cb9b22f8e8f4cc4936442d6eda55f6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a09ad9b06d3963fc3519785bd9ac532be" id="r_a09ad9b06d3963fc3519785bd9ac532be"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a09ad9b06d3963fc3519785bd9ac532be">encrypt</a> (const <a class="el" href="classAsyncFw_1_1DataArrayView.html">DataArrayView</a> &amp;, const <a class="el" href="classAsyncFw_1_1DataArrayView.html">DataArrayView</a> &amp;, const <a class="el" href="classAsyncFw_1_1DataArrayView.html">DataArrayView</a> &amp;, <a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> &amp;)</td></tr>
+<tr class="memdesc:a09ad9b06d3963fc3519785bd9ac532be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Internal low-level block encryption engine accepting an explicit Initialization Vector (IV) token view.  <br /></td></tr>
+<tr class="separator:a09ad9b06d3963fc3519785bd9ac532be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a554d294ea456a4eb8afc83261e8cdce5" id="r_a554d294ea456a4eb8afc83261e8cdce5"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a554d294ea456a4eb8afc83261e8cdce5">decrypt</a> (const <a class="el" href="classAsyncFw_1_1DataArrayView.html">DataArrayView</a> &amp;, const <a class="el" href="classAsyncFw_1_1DataArrayView.html">DataArrayView</a> &amp;, const <a class="el" href="classAsyncFw_1_1DataArrayView.html">DataArrayView</a> &amp;, <a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> &amp;)</td></tr>
+<tr class="memdesc:a554d294ea456a4eb8afc83261e8cdce5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Internal low-level block decryption engine accepting an explicit Initialization Vector (IV) token view.  <br /></td></tr>
+<tr class="separator:a554d294ea456a4eb8afc83261e8cdce5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>The <a class="el" href="classAsyncFw_1_1Cryptor.html" title="The Cryptor class.">Cryptor</a> class. </p>
-<p>Example: </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;AsyncFw/MainThread&gt;</span></div>
+<div class="textblock"><p>Utility class providing static interfaces for high-performance symmetric data cryptography. </p>
+<p>Wraps low-level cryptographic backends (e.g., OpenSSL cipher suites) into a clean, type-safe interface operating with the framework's <a class="el" href="classAsyncFw_1_1DataArray.html" title="The DataArray class, provides an array of bytes.">DataArray</a> and <a class="el" href="classAsyncFw_1_1DataArrayView.html" title="A lightweight, non-allocating string-like descriptor pointing to a contiguous block of binary data.">DataArrayView</a> containers. Natively supports automated Initialization Vector (IV) generation and secure block padding. Example: </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;AsyncFw/MainThread&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;AsyncFw/Cryptor&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;AsyncFw/LogStream&gt;</span></div>
 <div class="line"> </div>
@@ -149,17 +149,240 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><b>decrypt</b> (c
 <div class="line"> </div>
 <div class="line">  <a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> _encrypted;</div>
 <div class="line">  <a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> _decrypted;</div>
-<div class="line">  <span class="keywordtype">bool</span> _r = AsyncFw::Cryptor::encrypt(_key, _str, _encrypted);</div>
+<div class="line">  <span class="keywordtype">bool</span> _r = <a class="code hl_function" href="#a85041f8d5b2a6c69be47a811039b2aec">AsyncFw::Cryptor::encrypt</a>(_key, _str, _encrypted);</div>
 <div class="line"> </div>
 <div class="line">  lsDebug() &lt;&lt; _r &lt;&lt; std::endl &lt;&lt; _encrypted;</div>
 <div class="line"> </div>
-<div class="line">  _r = AsyncFw::Cryptor::decrypt(_key, _encrypted, _decrypted);</div>
+<div class="line">  _r = <a class="code hl_function" href="#acfeb3368adf946544bf0341cda8338ef">AsyncFw::Cryptor::decrypt</a>(_key, _encrypted, _decrypted);</div>
 <div class="line"> </div>
 <div class="line">  lsInfoGreen() &lt;&lt; _r &lt;&lt; std::endl &lt;&lt; _decrypted;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-</div><!-- fragment --> </div><hr/>The documentation for this class was generated from the following files:<ul>
+</div><!-- fragment --> </div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a85041f8d5b2a6c69be47a811039b2aec" name="a85041f8d5b2a6c69be47a811039b2aec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a85041f8d5b2a6c69be47a811039b2aec">&#9670;&#160;</a></span>encrypt() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Cryptor::encrypt </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classAsyncFw_1_1DataArrayView.html">DataArrayView</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>key</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classAsyncFw_1_1DataArrayView.html">DataArrayView</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>text</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>ctext</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Type-safely encrypts raw data payload into a secure ciphertext buffer. </p>
+<p>Accepts input parameters via lightweight <a class="el" href="classAsyncFw_1_1DataArrayView.html" title="A lightweight, non-allocating string-like descriptor pointing to a contiguous block of binary data.">DataArrayView</a> to avoid expensive memory allocations and copies when passing strings, raw buffers, or vector slices. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td>The symmetric encryption key view (e.g., must be 32 bytes for AES-256).</td></tr>
+    <tr><td class="paramname">text</td><td>The source raw unencrypted input text or binary byte buffer view.</td></tr>
+    <tr><td class="paramname">ctext</td><td>Out-parameter array container where the computed encrypted data stream will be appended. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the cipher cryptographic context successfully initialized and finalized. </dd></dl>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="Cryptor_2main_8cpp-example.html#a1">Cryptor/main.cpp</a>.</dd>
+</dl>
+<div id="dynsection-0" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-0-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1Cryptor_a85041f8d5b2a6c69be47a811039b2aec_cgraph.svg" width="380" height="70"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+<div id="dynsection-1" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-1-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-1-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1Cryptor_a85041f8d5b2a6c69be47a811039b2aec_icgraph.svg" width="190" height="62"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<a id="acfeb3368adf946544bf0341cda8338ef" name="acfeb3368adf946544bf0341cda8338ef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acfeb3368adf946544bf0341cda8338ef">&#9670;&#160;</a></span>decrypt() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Cryptor::decrypt </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classAsyncFw_1_1DataArrayView.html">DataArrayView</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>key</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classAsyncFw_1_1DataArrayView.html">DataArrayView</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>ctext</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>text</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Type-safely decrypts ciphertext back into the original raw data layout. </p>
+<p>Accepts input parameters via lightweight <a class="el" href="classAsyncFw_1_1DataArrayView.html" title="A lightweight, non-allocating string-like descriptor pointing to a contiguous block of binary data.">DataArrayView</a> to maximize performance during block parsing and secure package unpacking. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td>The symmetric decryption key view matching the one used for encryption.</td></tr>
+    <tr><td class="paramname">ctext</td><td>The input encrypted ciphertext byte buffer sequence view.</td></tr>
+    <tr><td class="paramname">text</td><td>Out-parameter array container where the original decrypted data will be recovered and appended. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if decryption and block padding validation succeeded without corruption. </dd></dl>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="Cryptor_2main_8cpp-example.html#a2">Cryptor/main.cpp</a>.</dd>
+</dl>
+<div id="dynsection-2" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-2-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-2-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-2-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1Cryptor_acfeb3368adf946544bf0341cda8338ef_cgraph.svg" width="190" height="62"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+<div id="dynsection-3" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-3-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-3-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1Cryptor_acfeb3368adf946544bf0341cda8338ef_icgraph.svg" width="190" height="62"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<a id="a09ad9b06d3963fc3519785bd9ac532be" name="a09ad9b06d3963fc3519785bd9ac532be"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a09ad9b06d3963fc3519785bd9ac532be">&#9670;&#160;</a></span>encrypt() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Cryptor::encrypt </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classAsyncFw_1_1DataArrayView.html">DataArrayView</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>key</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classAsyncFw_1_1DataArrayView.html">DataArrayView</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>iv</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classAsyncFw_1_1DataArrayView.html">DataArrayView</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>text</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>ctext</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Internal low-level block encryption engine accepting an explicit Initialization Vector (IV) token view. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td>Symmetric key buffer view reference.</td></tr>
+    <tr><td class="paramname">iv</td><td>Immutable light block view referencing the specific Initialization Vector bytes.</td></tr>
+    <tr><td class="paramname">text</td><td>Immutable light block view referencing the source unencrypted memory sequence.</td></tr>
+    <tr><td class="paramname">ctext</td><td>Pre-allocated data block array targeting the final cipher payload destination. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a554d294ea456a4eb8afc83261e8cdce5" name="a554d294ea456a4eb8afc83261e8cdce5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a554d294ea456a4eb8afc83261e8cdce5">&#9670;&#160;</a></span>decrypt() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Cryptor::decrypt </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classAsyncFw_1_1DataArrayView.html">DataArrayView</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>key</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classAsyncFw_1_1DataArrayView.html">DataArrayView</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>iv</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classAsyncFw_1_1DataArrayView.html">DataArrayView</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>ctext</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>text</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Internal low-level block decryption engine accepting an explicit Initialization Vector (IV) token view. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td>Symmetric key buffer view reference.</td></tr>
+    <tr><td class="paramname">iv</td><td>Immutable light block view referencing the specific Initialization Vector bytes.</td></tr>
+    <tr><td class="paramname">ctext</td><td>Immutable light block view referencing the input encrypted ciphertext sequence.</td></tr>
+    <tr><td class="paramname">text</td><td>Pre-allocated data block array targeting the final decrypted plaintext destination. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li>main/<a class="el" href="Cryptor_8h_source.html">Cryptor.h</a></li>
 <li>main/<b>Cryptor.cpp</b></li>
 </ul>

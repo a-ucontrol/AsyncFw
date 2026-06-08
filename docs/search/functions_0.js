@@ -7,12 +7,13 @@ var searchData=
   ['addpath_4',['addPath',['../classAsyncFw_1_1FileSystemWatcher.html#a54e1efecd58f2cbae2932eba716de6a9',1,'AsyncFw::FileSystemWatcher']]],
   ['addpaths_5',['addPaths',['../classAsyncFw_1_1FileSystemWatcher.html#aa4e37387e27aa1508584b7d0b199d165',1,'AsyncFw::FileSystemWatcher']]],
   ['address_6',['address',['../classAsyncFw_1_1AbstractSocket.html#a3dd69e137ca3cf50f90607c17bbdc312',1,'AsyncFw::AbstractSocket::address()'],['../classAsyncFw_1_1ListenSocket.html#a3dd69e137ca3cf50f90607c17bbdc312',1,'AsyncFw::ListenSocket::address()']]],
-  ['appendpolldescriptor_7',['appendPollDescriptor',['../classAsyncFw_1_1AbstractThread.html#a5d77136157f34e21722ee4ff7b10813e',1,'AsyncFw::AbstractThread']]],
-  ['appendpolltask_8',['appendPollTask',['../classAsyncFw_1_1AbstractThread.html#a7e5b6e93c0e2afca24874900b8aec919',1,'AsyncFw::AbstractThread']]],
-  ['appendthread_9',['appendThread',['../classAsyncFw_1_1AbstractThreadPool.html#a1b2d31f7db01a7cacec702eb7323e620',1,'AsyncFw::AbstractThreadPool']]],
-  ['appendtimer_10',['appendTimer',['../classAsyncFw_1_1AbstractThread.html#add1d493a7d6c9750c399ed37f700b6d6',1,'AsyncFw::AbstractThread']]],
-  ['appendtimertask_11',['appendTimerTask',['../classAsyncFw_1_1AbstractThread.html#a3daa02eadfc65c325c99a9488df1c286',1,'AsyncFw::AbstractThread']]],
-  ['appendtrusted_12',['appendTrusted',['../classAsyncFw_1_1TlsContext.html#a98271f22f48785585546a63f4e3f22af',1,'AsyncFw::TlsContext']]],
-  ['array_13',['array',['../classAsyncFw_1_1DataStream.html#ae64c4b08a3259146d4476c0385352479',1,'AsyncFw::DataStream']]],
-  ['async_14',['async',['../classAsyncFw_1_1ThreadPool.html#a0a35c4070964e69b187842b69b04d325',1,'AsyncFw::ThreadPool::async(AbstractThread *_t, F f)'],['../classAsyncFw_1_1ThreadPool.html#ad32cb5c2bd270bee821034f402c7b86b',1,'AsyncFw::ThreadPool::async(F f)'],['../classAsyncFw_1_1ThreadPool.html#a9919894e586310a7ea5b780845376e17',1,'AsyncFw::ThreadPool::async(AbstractThread *thread, F function, R result)'],['../classAsyncFw_1_1ThreadPool.html#af44552a3cac2283e594f35e697ce05c9',1,'AsyncFw::ThreadPool::async(AbstractThread *thread, F function, R result)'],['../classAsyncFw_1_1ThreadPool.html#a5af6a927b72eec19abb94ee2477d00b5',1,'AsyncFw::ThreadPool::async(F f, R r)']]]
+  ['anydata_7',['AnyData',['../structAsyncFw_1_1AnyData.html#a667ea182dec03e9ca81e86cdc7db8842',1,'AsyncFw::AnyData']]],
+  ['appendpolldescriptor_8',['appendPollDescriptor',['../classAsyncFw_1_1AbstractThread.html#a5d77136157f34e21722ee4ff7b10813e',1,'AsyncFw::AbstractThread']]],
+  ['appendpolltask_9',['appendPollTask',['../classAsyncFw_1_1AbstractThread.html#a7e5b6e93c0e2afca24874900b8aec919',1,'AsyncFw::AbstractThread']]],
+  ['appendthread_10',['appendThread',['../classAsyncFw_1_1AbstractThreadPool.html#a1b2d31f7db01a7cacec702eb7323e620',1,'AsyncFw::AbstractThreadPool']]],
+  ['appendtimer_11',['appendTimer',['../classAsyncFw_1_1AbstractThread.html#add1d493a7d6c9750c399ed37f700b6d6',1,'AsyncFw::AbstractThread']]],
+  ['appendtimertask_12',['appendTimerTask',['../classAsyncFw_1_1AbstractThread.html#a3daa02eadfc65c325c99a9488df1c286',1,'AsyncFw::AbstractThread']]],
+  ['appendtrusted_13',['appendTrusted',['../classAsyncFw_1_1TlsContext.html#a98271f22f48785585546a63f4e3f22af',1,'AsyncFw::TlsContext']]],
+  ['array_14',['array',['../classAsyncFw_1_1DataStream.html#ae64c4b08a3259146d4476c0385352479',1,'AsyncFw::DataStream']]],
+  ['async_15',['async',['../classAsyncFw_1_1ThreadPool.html#a0a35c4070964e69b187842b69b04d325',1,'AsyncFw::ThreadPool::async(AbstractThread *_t, F f)'],['../classAsyncFw_1_1ThreadPool.html#ad32cb5c2bd270bee821034f402c7b86b',1,'AsyncFw::ThreadPool::async(F f)'],['../classAsyncFw_1_1ThreadPool.html#a9919894e586310a7ea5b780845376e17',1,'AsyncFw::ThreadPool::async(AbstractThread *thread, F function, R result)'],['../classAsyncFw_1_1ThreadPool.html#af44552a3cac2283e594f35e697ce05c9',1,'AsyncFw::ThreadPool::async(AbstractThread *thread, F function, R result)'],['../classAsyncFw_1_1ThreadPool.html#a5af6a927b72eec19abb94ee2477d00b5',1,'AsyncFw::ThreadPool::async(F f, R r)']]]
 ];

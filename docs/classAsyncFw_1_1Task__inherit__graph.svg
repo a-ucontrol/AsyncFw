@@ -38,7 +38,7 @@
 <!-- Node3 -->
 <g id="Node000003" class="node">
 <title>Node3</title>
-<g id="a_Node000003"><a xlink:href="structAsyncFw_1_1AnyData.html" target="_top" xlink:title="The AnyData class.">
+<g id="a_Node000003"><a xlink:href="structAsyncFw_1_1AnyData.html" target="_top" xlink:title="A generic, type&#45;safe data container block wrapper utilizing std::any.">
 <polygon fill="white" stroke="#666666" points="111.25,-132 9.75,-132 9.75,-112 111.25,-112 111.25,-132"/>
 <text text-anchor="middle" x="60.5" y="-118.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AnyData</text>
 </a>

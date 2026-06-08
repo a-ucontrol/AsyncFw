@@ -2,7 +2,7 @@
 <area shape="rect" id="Node000001" title="Abstract base class providing Transport Layer Security (TLS/SSL) encryption layers on top of standard..." alt="" coords="5,311,198,337"/>
 <area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractSocket.html" title="Abstract base class providing core network socket functionality and OS descriptor abstraction." alt="" coords="14,235,189,261"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="104,276,104,310,99,310,99,276"/>
-<area shape="rect" id="Node000003" href="$structAsyncFw_1_1AnyData.html" title="The AnyData class." alt="" coords="12,144,148,171"/>
+<area shape="rect" id="Node000003" href="$structAsyncFw_1_1AnyData.html" title="A generic, type&#45;safe data container block wrapper utilizing std::any." alt="" coords="12,144,148,171"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="89,185,101,233,96,235,84,186"/>
 <area shape="rect" id="Node000004" href="$classAsyncFw_1_1Thread.html" title="AsyncFw::Thread thread with sockets." alt="" coords="171,144,296,171"/>
 <area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="203,182,122,236,119,232,200,177"/>

@@ -1,0 +1,7 @@
+<map id="AsyncFw::AnyData::data" name="AsyncFw::AnyData::data">
+<area shape="rect" id="Node000001" title="Type&#45;safely extracts and returns the stored data value." alt="" coords="248,31,416,57"/>
+<area shape="rect" id="Node000002" href="$structAsyncFw_1_1AnyData.html#a667ea182dec03e9ca81e86cdc7db8842" title="Constructs an AnyData storage shell with an optional initial type&#45;safe payload." alt="" coords="5,5,200,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="232,36,200,32,200,27,233,30"/>
+<area shape="rect" id="Node000003" href="$structAsyncFw_1_1AnyData.html#af4204174192d3b8c2f83dda18366a953" title="Overwrites or assigns a new type&#45;safe payload inside the storage box." alt="" coords="8,56,197,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="233,58,198,61,197,56,232,52"/>
+</map>

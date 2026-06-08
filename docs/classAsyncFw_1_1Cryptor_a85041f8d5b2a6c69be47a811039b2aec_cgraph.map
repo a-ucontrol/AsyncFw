@@ -1,0 +1,6 @@
+<map id="AsyncFw::Cryptor::encrypt" name="AsyncFw::Cryptor::encrypt">
+<area shape="rect" id="Node000001" title="Type&#45;safely encrypts raw data payload into a secure ciphertext buffer." alt="" coords="5,29,184,56"/>
+<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="59,30,53,21,57,11,71,5,95,3,119,5,133,12,130,16,118,10,94,8,73,10,61,15,58,20,64,27"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1DataArray.html#a5406261e5730adfa64e4d0bbd0083e31" title="Creates a lightweight, non&#45;allocating view slicing a sub&#45;region of this byte array." alt="" coords="232,21,375,64"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="184,40,216,40,216,45,184,45"/>
+</map>

@@ -4,7 +4,7 @@
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="1452,96,1486,110,1535,143,1571,177,1568,181,1532,147,1483,114,1450,101"/>
 <area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractSocket.html" title="Abstract base class providing core network socket functionality and OS descriptor abstraction." alt="" coords="829,64,1003,91"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="1019,75,1266,77,1266,82,1019,81"/>
-<area shape="rect" id="Node000004" href="$structAsyncFw_1_1AnyData.html" title="The AnyData class." alt="" coords="420,15,555,41"/>
+<area shape="rect" id="Node000004" href="$structAsyncFw_1_1AnyData.html" title="A generic, type&#45;safe data container block wrapper utilizing std::any." alt="" coords="420,15,555,41"/>
 <area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="571,30,683,39,805,53,849,61,848,66,805,59,682,45,571,36"/>
 <area shape="rect" id="Node000005" href="$classAsyncFw_1_1Thread.html" title="AsyncFw::Thread thread with sockets." alt="" coords="426,65,550,92"/>
 <area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="566,76,829,75,829,80,566,81"/>

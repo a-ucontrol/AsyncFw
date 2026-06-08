@@ -121,7 +121,7 @@ $(function(){initNavTree('Task_8h_source.html',''); initResizable(true); });
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="keyword">namespace </span>AsyncFw {</div>
 <div class="foldopen" id="foldopen00018" data-start="{" data-end="};">
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno"><a class="line" href="classAsyncFw_1_1AbstractTask.html">   18</a></span><span class="keyword">class </span>AbstractTask : <span class="keyword">public</span> <a class="code hl_typedef" href="classAsyncFw_1_1AbstractThread.html#af2a69c1875d42b8daa41a82f000e4c2a">AsyncFw::AbstractThread::AbstractTask</a>, <span class="keyword">public</span> AnyData {</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno"><a class="line" href="classAsyncFw_1_1AbstractTask.html">   18</a></span><span class="keyword">class </span>AbstractTask : <span class="keyword">public</span> <a class="code hl_typedef" href="classAsyncFw_1_1AbstractThread.html#af2a69c1875d42b8daa41a82f000e4c2a">AsyncFw::AbstractThread::AbstractTask</a>, <span class="keyword">public</span> <a class="code hl_function" href="structAsyncFw_1_1AnyData.html#a667ea182dec03e9ca81e86cdc7db8842">AnyData</a> {</div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="keyword">public</span>:</div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>  AbstractTask(<a class="code hl_class" href="classAsyncFw_1_1AbstractThread.html">AbstractThread</a> * = <span class="keyword">nullptr</span>);</div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>  <span class="keyword">virtual</span> ~AbstractTask();</div>
@@ -141,12 +141,12 @@ $(function(){initNavTree('Task_8h_source.html',''); initResizable(true); });
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>  <span class="keywordtype">void</span> operator()()<span class="keyword"> override </span>{</div>
 <div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    running_ = <span class="keyword">true</span>;</div>
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    <span class="keywordflow">if</span> (!thread_) {</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>      function(&amp;data_);</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>      function(&amp;<a class="code hl_variable" href="structAsyncFw_1_1AnyData.html#adc2b97818be013fcf912ca9c8e086fa3">data_</a>);</div>
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>      running_ = <span class="keyword">false</span>;</div>
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>      <span class="keywordflow">return</span>;</div>
 <div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    }</div>
 <div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    thread_-&gt;invoke([<span class="keyword">this</span>]() {</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>      function(&amp;data_);</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>      function(&amp;<a class="code hl_variable" href="structAsyncFw_1_1AnyData.html#adc2b97818be013fcf912ca9c8e086fa3">data_</a>);</div>
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>      running_ = <span class="keyword">false</span>;</div>
 <div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    });</div>
 <div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>  }</div>
@@ -160,6 +160,8 @@ $(function(){initNavTree('Task_8h_source.html',''); initResizable(true); });
 <div class="ttc" id="aAnyData_8h_html"><div class="ttname"><a href="AnyData_8h.html">AnyData.h</a></div><div class="ttdoc">The AnyData class.</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1AbstractThread_html"><div class="ttname"><a href="classAsyncFw_1_1AbstractThread.html">AsyncFw::AbstractThread</a></div><div class="ttdoc">The AbstractThread class provides the base functionality for thread management.</div><div class="ttdef"><b>Definition</b> AbstractThread.h:49</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1AbstractThread_html_af2a69c1875d42b8daa41a82f000e4c2a"><div class="ttname"><a href="classAsyncFw_1_1AbstractThread.html#af2a69c1875d42b8daa41a82f000e4c2a">AsyncFw::AbstractThread::AbstractTask</a></div><div class="ttdeci">Invocable&lt; void()&gt;::Abstract AbstractTask</div><div class="ttdoc">The AbstractTask type.</div><div class="ttdef"><b>Definition</b> AbstractThread.h:59</div></div>
+<div class="ttc" id="astructAsyncFw_1_1AnyData_html_a667ea182dec03e9ca81e86cdc7db8842"><div class="ttname"><a href="structAsyncFw_1_1AnyData.html#a667ea182dec03e9ca81e86cdc7db8842">AsyncFw::AnyData::AnyData</a></div><div class="ttdeci">AnyData(const std::any &amp;={})</div><div class="ttdoc">Constructs an AnyData storage shell with an optional initial type-safe payload.</div><div class="ttdef"><b>Definition</b> AnyData.cpp:11</div></div>
+<div class="ttc" id="astructAsyncFw_1_1AnyData_html_adc2b97818be013fcf912ca9c8e086fa3"><div class="ttname"><a href="structAsyncFw_1_1AnyData.html#adc2b97818be013fcf912ca9c8e086fa3">AsyncFw::AnyData::data_</a></div><div class="ttdeci">std::any data_</div><div class="ttdoc">Storage container for holding type-safe variables on the fly.</div><div class="ttdef"><b>Definition</b> AnyData.h:36</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

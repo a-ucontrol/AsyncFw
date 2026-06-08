@@ -111,7 +111,7 @@ $(function(){initNavTree('structAsyncFw_1_1AnyData.html',''); initResizable(true
 </div><!--header-->
 <div class="contents">
 
-<p>The <a class="el" href="structAsyncFw_1_1AnyData.html" title="The AnyData class.">AnyData</a> class.  
+<p>A generic, type-safe data container block wrapper utilizing std::any.  
  <a href="#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="AnyData_8h_source.html">AsyncFw/AnyData</a>&gt;</code></p>
@@ -125,32 +125,89 @@ $(function(){initNavTree('structAsyncFw_1_1AnyData.html',''); initResizable(true
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aa6d2c3488a44e34e25a0971b01a27b3c" id="r_aa6d2c3488a44e34e25a0971b01a27b3c"><td class="memTemplParams" colspan="2"><a id="aa6d2c3488a44e34e25a0971b01a27b3c" name="aa6d2c3488a44e34e25a0971b01a27b3c"></a>
-template&lt;typename T&gt; </td></tr>
-<tr class="memitem:aa6d2c3488a44e34e25a0971b01a27b3c"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><b>data</b> () const</td></tr>
+<tr class="memitem:aa6d2c3488a44e34e25a0971b01a27b3c" id="r_aa6d2c3488a44e34e25a0971b01a27b3c"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
+<tr class="memitem:aa6d2c3488a44e34e25a0971b01a27b3c"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#aa6d2c3488a44e34e25a0971b01a27b3c">data</a> () const</td></tr>
+<tr class="memdesc:aa6d2c3488a44e34e25a0971b01a27b3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type-safely extracts and returns the stored data value.  <br /></td></tr>
 <tr class="separator:aa6d2c3488a44e34e25a0971b01a27b3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a667ea182dec03e9ca81e86cdc7db8842" id="r_a667ea182dec03e9ca81e86cdc7db8842"><td class="memItemLeft" align="right" valign="top"><a id="a667ea182dec03e9ca81e86cdc7db8842" name="a667ea182dec03e9ca81e86cdc7db8842"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>AnyData</b> (const std::any &amp;={})</td></tr>
+<tr class="memdesc:a667ea182dec03e9ca81e86cdc7db8842"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an <a class="el" href="structAsyncFw_1_1AnyData.html" title="A generic, type-safe data container block wrapper utilizing std::any.">AnyData</a> storage shell with an optional initial type-safe payload. <br /></td></tr>
 <tr class="separator:a667ea182dec03e9ca81e86cdc7db8842"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d5534e474c91c9e0760eb80e8fdeda8" id="r_a6d5534e474c91c9e0760eb80e8fdeda8"><td class="memItemLeft" align="right" valign="top"><a id="a6d5534e474c91c9e0760eb80e8fdeda8" name="a6d5534e474c91c9e0760eb80e8fdeda8"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>~AnyData</b> ()</td></tr>
+<tr class="memdesc:a6d5534e474c91c9e0760eb80e8fdeda8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual-safe destructor allowing polymorphic cleanup of stored elements. <br /></td></tr>
+<tr class="separator:a6d5534e474c91c9e0760eb80e8fdeda8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9d604c8e053676ded700990eae9ff67f" id="r_a9d604c8e053676ded700990eae9ff67f"><td class="memItemLeft" align="right" valign="top"><a id="a9d604c8e053676ded700990eae9ff67f" name="a9d604c8e053676ded700990eae9ff67f"></a>
 std::any &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>data</b> () const</td></tr>
+<tr class="memdesc:a9d604c8e053676ded700990eae9ff67f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves a mutable reference to the underlying global raw container block. <br /></td></tr>
 <tr class="separator:a9d604c8e053676ded700990eae9ff67f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af4204174192d3b8c2f83dda18366a953" id="r_af4204174192d3b8c2f83dda18366a953"><td class="memItemLeft" align="right" valign="top"><a id="af4204174192d3b8c2f83dda18366a953" name="af4204174192d3b8c2f83dda18366a953"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setData</b> (const std::any &amp;data) const</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setData</b> (const std::any &amp;<a class="el" href="#aa6d2c3488a44e34e25a0971b01a27b3c">data</a>) const</td></tr>
+<tr class="memdesc:af4204174192d3b8c2f83dda18366a953"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overwrites or assigns a new type-safe payload inside the storage box. <br /></td></tr>
 <tr class="separator:af4204174192d3b8c2f83dda18366a953"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aebf00018fdebd3ad5e628f349f09f0e2" id="r_aebf00018fdebd3ad5e628f349f09f0e2"><td class="memItemLeft" align="right" valign="top"><a id="aebf00018fdebd3ad5e628f349f09f0e2" name="aebf00018fdebd3ad5e628f349f09f0e2"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>empty</b> () const</td></tr>
+<tr class="memdesc:aebf00018fdebd3ad5e628f349f09f0e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the container currently holds no data payload values. <br /></td></tr>
 <tr class="separator:aebf00018fdebd3ad5e628f349f09f0e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
 <tr class="memitem:adc2b97818be013fcf912ca9c8e086fa3" id="r_adc2b97818be013fcf912ca9c8e086fa3"><td class="memItemLeft" align="right" valign="top"><a id="adc2b97818be013fcf912ca9c8e086fa3" name="adc2b97818be013fcf912ca9c8e086fa3"></a>
 std::any&#160;</td><td class="memItemRight" valign="bottom"><b>data_</b></td></tr>
+<tr class="memdesc:adc2b97818be013fcf912ca9c8e086fa3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Storage container for holding type-safe variables on the fly. <br /></td></tr>
 <tr class="separator:adc2b97818be013fcf912ca9c8e086fa3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>The <a class="el" href="structAsyncFw_1_1AnyData.html" title="The AnyData class.">AnyData</a> class. </p>
-</div><hr/>The documentation for this class was generated from the following files:<ul>
+<div class="textblock"><p>A generic, type-safe data container block wrapper utilizing std::any. </p>
+<p>Serves as a lightweight polymorphic data attachment layer. It allows high-level framework components (such as asynchronous sockets or compiler-generated coroutine promises) to store, transport, and retrieve arbitrary user context or state data without modifying underlying class hierarchies. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="aa6d2c3488a44e34e25a0971b01a27b3c" name="aa6d2c3488a44e34e25a0971b01a27b3c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa6d2c3488a44e34e25a0971b01a27b3c">&#9670;&#160;</a></span>data()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">T AsyncFw::AnyData::data </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Type-safely extracts and returns the stored data value. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>The expected concrete type of the stored data payload. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A copy of the managed data object of type T. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Throws std::bad_any_cast if the requested type T does not match the actual stored type. </dd></dl>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="ApplicationNotifier_2main_8cpp-example.html#a5">ApplicationNotifier/main.cpp</a>.</dd>
+</dl>
+<div id="dynsection-1" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-1-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-1-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" frameborder="0" src="structAsyncFw_1_1AnyData_aa6d2c3488a44e34e25a0971b01a27b3c_icgraph.svg" width="422" height="88"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li>core/<a class="el" href="AnyData_8h_source.html">AnyData.h</a></li>
 <li>core/<b>AnyData.cpp</b></li>
 </ul>

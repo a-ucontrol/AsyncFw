@@ -1,5 +1,12 @@
 var NAVTREEINDEX2 =
 {
+"structAsyncFw_1_1CoroutineAwait.html":[2,0,0,11],
+"structAsyncFw_1_1CoroutineInvokeAwait.html":[2,0,0,12],
+"structAsyncFw_1_1CoroutineTask.html":[2,0,0,13],
+"structAsyncFw_1_1CoroutineTask.html#a2a9141689d60da24339465aa0d225a27":[2,0,0,13,1],
+"structAsyncFw_1_1CoroutineTask.html#a820a0a3410c4a14a71ad3599f46c1bb0":[2,0,0,13,2],
+"structAsyncFw_1_1CoroutineTask_1_1promise__type.html":[2,0,0,13,0],
+"structAsyncFw_1_1CoroutineTask_1_1promise__type.html#a6ef8c84c53068677172b21f5e08aa0b7":[2,0,0,13,0,0],
 "structAsyncFw_1_1FunctionConnector_1_1Policy.html":[2,0,0,27,0],
 "structAsyncFw_1_1LogStream_1_1Message.html":[2,0,0,33,0],
 "structAsyncFw_1_1LogStream_1_1Message.html#a4b2b2b0ff46ffb2a1f949f4953b34895":[2,0,0,33,0,1],

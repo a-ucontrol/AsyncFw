@@ -159,7 +159,7 @@ Public Attributes</h2></td></tr>
 <div class="line"> </div>
 <div class="line">  AsyncFw::ApplicationNotifier::instance()-&gt;notify.connect([&amp;_test](<span class="keyword">const</span> <a class="code hl_struct" href="structAsyncFw_1_1ApplicationNotifier_1_1Value.html">AsyncFw::ApplicationNotifier::Value</a> &amp;_val) {</div>
 <div class="line">    lsNotice() &lt;&lt; _val.type;</div>
-<div class="line">    <span class="keywordflow">if</span> (!_val.empty()) lsInfoMagenta() &lt;&lt; _val.data&lt;std::chrono::time_point&lt;std::chrono::system_clock&gt;&gt;();</div>
+<div class="line">    <span class="keywordflow">if</span> (!_val.<a class="code hl_function" href="structAsyncFw_1_1AnyData.html#aebf00018fdebd3ad5e628f349f09f0e2">empty</a>()) lsInfoMagenta() &lt;&lt; _val.<a class="code hl_function" href="structAsyncFw_1_1AnyData.html#aa6d2c3488a44e34e25a0971b01a27b3c">data</a>&lt;std::chrono::time_point&lt;std::chrono::system_clock&gt;&gt;();</div>
 <div class="line">    <span class="keywordflow">if</span> (_val.type == TestThreadStarted) _test.<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#af61572d4713347fcac3ce80f8be2eb20">quit</a>();</div>
 <div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (_val.type == TestThreadFinished) { <a class="code hl_function" href="classAsyncFw_1_1MainThread.html#a76fed3a2c1cfdbdb67f2b209e6457657">AsyncFw::MainThread::exit</a>(); }</div>
 <div class="line">  });</div>

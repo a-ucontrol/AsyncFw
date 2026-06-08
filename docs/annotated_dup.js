@@ -10,7 +10,7 @@ var annotated_dup =
       [ "AbstractThreadPool", "classAsyncFw_1_1AbstractThreadPool.html", "classAsyncFw_1_1AbstractThreadPool" ],
       [ "AbstractTlsSocket", "classAsyncFw_1_1AbstractTlsSocket.html", "classAsyncFw_1_1AbstractTlsSocket" ],
       [ "AddressResolver", "classAsyncFw_1_1AddressResolver.html", "classAsyncFw_1_1AddressResolver" ],
-      [ "AnyData", "structAsyncFw_1_1AnyData.html", null ],
+      [ "AnyData", "structAsyncFw_1_1AnyData.html", "structAsyncFw_1_1AnyData" ],
       [ "ApplicationNotifier", "classAsyncFw_1_1ApplicationNotifier.html", "classAsyncFw_1_1ApplicationNotifier" ],
       [ "CoroutineAwait", "structAsyncFw_1_1CoroutineAwait.html", null ],
       [ "CoroutineInvokeAwait", "structAsyncFw_1_1CoroutineInvokeAwait.html", null ],

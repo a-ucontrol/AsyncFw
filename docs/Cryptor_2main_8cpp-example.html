@@ -127,16 +127,18 @@ $(function(){initNavTree('Cryptor_2main_8cpp-example.html',''); initResizable(tr
 <div class="line"> </div>
 <div class="line">  <a id="_a0" name="_a0"></a><a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> _encrypted;</div>
 <div class="line">  <a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> _decrypted;</div>
-<div class="line">  <span class="keywordtype">bool</span> _r = AsyncFw::Cryptor::encrypt(_key, _str, _encrypted);</div>
+<div class="line">  <span class="keywordtype">bool</span> _r = <a id="a1" name="a1"></a><a class="code hl_function" href="classAsyncFw_1_1Cryptor.html#a85041f8d5b2a6c69be47a811039b2aec">AsyncFw::Cryptor::encrypt</a>(_key, _str, _encrypted);</div>
 <div class="line"> </div>
 <div class="line">  lsDebug() &lt;&lt; _r &lt;&lt; std::endl &lt;&lt; _encrypted;</div>
 <div class="line"> </div>
-<div class="line">  _r = AsyncFw::Cryptor::decrypt(_key, _encrypted, _decrypted);</div>
+<div class="line">  _r = <a id="a2" name="a2"></a><a class="code hl_function" href="classAsyncFw_1_1Cryptor.html#acfeb3368adf946544bf0341cda8338ef">AsyncFw::Cryptor::decrypt</a>(_key, _encrypted, _decrypted);</div>
 <div class="line"> </div>
 <div class="line">  lsInfoGreen() &lt;&lt; _r &lt;&lt; std::endl &lt;&lt; _decrypted;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
+<div class="ttc" id="aclassAsyncFw_1_1Cryptor_html_a85041f8d5b2a6c69be47a811039b2aec"><div class="ttname"><a href="classAsyncFw_1_1Cryptor.html#a85041f8d5b2a6c69be47a811039b2aec">AsyncFw::Cryptor::encrypt</a></div><div class="ttdeci">static bool encrypt(const DataArrayView &amp;, const DataArrayView &amp;, DataArray &amp;)</div><div class="ttdoc">Type-safely encrypts raw data payload into a secure ciphertext buffer.</div><div class="ttdef"><b>Definition</b> Cryptor.cpp:62</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1Cryptor_html_acfeb3368adf946544bf0341cda8338ef"><div class="ttname"><a href="classAsyncFw_1_1Cryptor.html#acfeb3368adf946544bf0341cda8338ef">AsyncFw::Cryptor::decrypt</a></div><div class="ttdeci">static bool decrypt(const DataArrayView &amp;, const DataArrayView &amp;, DataArray &amp;)</div><div class="ttdoc">Type-safely decrypts ciphertext back into the original raw data layout.</div><div class="ttdef"><b>Definition</b> Cryptor.cpp:80</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1DataArray_html"><div class="ttname"><a href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a></div><div class="ttdoc">The DataArray class, provides an array of bytes.</div><div class="ttdef"><b>Definition</b> DataArray.h:23</div></div>
 </div><!-- fragment --> </div><!-- contents -->
 </div><!-- doc-content -->
