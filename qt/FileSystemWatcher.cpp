@@ -52,11 +52,10 @@ struct FileSystemWatcher::Private {
 };
 
 FileSystemWatcher::Private::WatchPath::WatchPath(const std::string &path) {
-  size_t i = path.find_last_of("/\\");
+  size_t i = path.find_last_of('/');
   if (i == std::string::npos) return;
   directory = path.substr(0, i);
   name = path.substr(i + 1);
-  std::replace(directory.begin(), directory.end(), '\\', '/');
 }
 
 Instance<FileSystemWatcher> FileSystemWatcher::instance_ {"FileSystemWatcher"};
