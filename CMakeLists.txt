@@ -10,9 +10,9 @@ if(NOT FINAL_RELEASE AND EXISTS "${CMAKE_CURRENT_LIST_DIR}/defines.cmake")
   include("${CMAKE_CURRENT_LIST_DIR}/defines.cmake")
 endif()
 
-
 # defines.cmake
 #set(BUILD_SHARED_LIBS ON)
+#set(CMAKE_INTERPROCEDURAL_OPTIMIZATION ON)
 
 ### int main()
 ### {
@@ -23,8 +23,21 @@ endif()
 ### }
 ### gcc main.cpp -lstdc++ -g -fsanitize=thread,undefined
 ### -- int main() with -fsanitize=thread,undefined -> ThreadSanitizer: data race
-
 ### __tsan_on_report -> break point function for debugger
+
+#set(COMPILER_FLAGS "-g -fsanitize=thread")
+#set(COMPILER_FLAGS "-g -fsanitize=address,undefined")
+#set(CMAKE_C_FLAGS "${COMPILER_FLAGS}")
+#set(CMAKE_CXX_FLAGS "${COMPILER_FLAGS}")
+#set(CMAKE_C_COMPILER clang)
+#set(CMAKE_CXX_COMPILER clang++)
+
+#add_definitions(-DLS_NO_TRACE)
+#add_definitions(-DLS_NO_DEBUG)
+#add_definitions(-DLS_NO_INFO)
+#add_definitions(-DLS_NO_NOTICE)
+#add_definitions(-DLS_NO_WARNING)
+#add_definitions(-DLS_NO_ERROR)
 
 #add_definitions(-DEXTEND_LOGSTREAM_TRACE)
 #add_definitions(-DEXTEND_RRD_TRACE)
