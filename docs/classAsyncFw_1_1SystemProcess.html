@@ -113,8 +113,10 @@ $(function(){initNavTree('classAsyncFw_1_1SystemProcess.html',''); initResizable
 </div><!--header-->
 <div class="contents">
 
-<p>Example:  
+<p>Manages spawning and asynchronous communication with external processes.  
  <a href="#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="SystemProcess_8h_source.html">AsyncFw/SystemProcess</a>&gt;</code></p>
 <div id="dynsection-0" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Collaboration diagram for AsyncFw::SystemProcess:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
@@ -140,7 +142,7 @@ Public Types</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:acf60a585a89304fdb3580e9add06d155" id="r_acf60a585a89304fdb3580e9add06d155"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acf60a585a89304fdb3580e9add06d155">SystemProcess</a> (bool=false)</td></tr>
-<tr class="memdesc:acf60a585a89304fdb3580e9add06d155"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new <a class="el" href="classAsyncFw_1_1SystemProcess.html" title="Example:">SystemProcess</a> manager.  <br /></td></tr>
+<tr class="memdesc:acf60a585a89304fdb3580e9add06d155"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new <a class="el" href="classAsyncFw_1_1SystemProcess.html" title="Manages spawning and asynchronous communication with external processes.">SystemProcess</a> manager.  <br /></td></tr>
 <tr class="separator:acf60a585a89304fdb3580e9add06d155"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae280edaf59815e2e4cbac2ba71382d21" id="r_ae280edaf59815e2e4cbac2ba71382d21"><td class="memItemLeft" align="right" valign="top"><a id="ae280edaf59815e2e4cbac2ba71382d21" name="ae280edaf59815e2e4cbac2ba71382d21"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>~SystemProcess</b> ()</td></tr>
@@ -197,9 +199,10 @@ Public Attributes</h2></td></tr>
 <tr class="separator:abbb594e48966f013c2efaf50e26b5e36"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Example: </p>
-<p>spawning and asynchronous communication with external processes. </p><dl class="section warning"><dt>Warning</dt><dd>Optimized for Unix-like systems. Maintains cross-platform behavior when compiled with Qt. </dd></dl>
-<dl class="section note"><dt>Note</dt><dd>Life cycle events are driven by <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector.html#ab248bd16cbfcac609f58d401abec4368a5d08e36148e4f87ea06266376ac65da9" title="Default is Queued. Any explicit connection types are allowed.">AbstractFunctionConnector::Queued</a> policy. <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;AsyncFw/MainThread&gt;</span></div>
+<div class="textblock"><p>Manages spawning and asynchronous communication with external processes. </p>
+<dl class="section warning"><dt>Warning</dt><dd>Optimized for Unix-like systems. Maintains cross-platform behavior when compiled with Qt. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Life cycle events are driven by <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector.html#ab248bd16cbfcac609f58d401abec4368a5d08e36148e4f87ea06266376ac65da9" title="Default is Queued. Any explicit connection types are allowed.">AbstractFunctionConnector::Queued</a> policy.</dd></dl>
+<p>Example: </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;AsyncFw/MainThread&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;AsyncFw/SystemProcess&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;AsyncFw/Timer&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;AsyncFw/LogStream&gt;</span></div>
@@ -243,8 +246,7 @@ Public Attributes</h2></td></tr>
 <div class="line">  <span class="keywordtype">int</span> ret = <a class="code hl_function" href="classAsyncFw_1_1MainThread.html#ad12e620772820ad751868c7b49fa4190">AsyncFw::MainThread::exec</a>();</div>
 <div class="line">  <span class="keywordflow">return</span> ret;</div>
 <div class="line">}</div>
-</div><!-- fragment --> </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="SystemProcess_2main_8cpp-example.html#_a0">SystemProcess/main.cpp</a>.</dd>
+</div><!-- fragment --> <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="SystemProcess_2main_8cpp-example.html#_a0">SystemProcess/main.cpp</a>.</dd>
 </dl>
 </div><h2 class="groupheader">Member Enumeration Documentation</h2>
 <a id="afad39352d4d8376d1304bc340a0cf32f" name="afad39352d4d8376d1304bc340a0cf32f"></a>
@@ -291,7 +293,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Constructs a new <a class="el" href="classAsyncFw_1_1SystemProcess.html" title="Example:">SystemProcess</a> manager. </p>
+<p>Constructs a new <a class="el" href="classAsyncFw_1_1SystemProcess.html" title="Manages spawning and asynchronous communication with external processes.">SystemProcess</a> manager. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">redirect_stdin</td><td><b>False (Default):</b> Input is written manually via <a class="el" href="#a2474831568ca17479f4b7b4350cb13c8" title="Writes data string to standard input (stdin) of the child process.">input()</a> method. <b>True:</b> Child process shares the standard input (stdin) with the parent process. </td></tr>

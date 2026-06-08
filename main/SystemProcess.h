@@ -13,7 +13,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include "../core/FunctionConnector.h"
 
 namespace AsyncFw {
-/** @class SystemProcess @brief Manages spawning and asynchronous communication with external processes.
+/** @class SystemProcess SystemProcess.h <AsyncFw/SystemProcess> @brief Manages spawning and asynchronous communication with external processes.
 @warning Optimized for Unix-like systems. Maintains cross-platform behavior when compiled with Qt.
 @note Life cycle events are driven by AbstractFunctionConnector::Queued policy.
 @brief Example: @snippet SystemProcess/main.cpp snippet */

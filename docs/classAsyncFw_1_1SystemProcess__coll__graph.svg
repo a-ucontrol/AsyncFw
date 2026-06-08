@@ -11,7 +11,7 @@
 <!-- Node1 -->
 <g id="Node000001" class="node">
 <title>Node1</title>
-<g id="a_Node000001"><a xlink:title="Example:">
+<g id="a_Node000001"><a xlink:title="Manages spawning and asynchronous communication with external processes.">
 <polygon fill="#999999" stroke="#666666" points="642.75,-52 509.75,-52 509.75,-32 642.75,-32 642.75,-52"/>
 <text text-anchor="middle" x="576.25" y="-38.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::SystemProcess</text>
 </a>

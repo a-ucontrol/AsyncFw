@@ -50,7 +50,7 @@ public:
   /** @brief Obtains a list of all currently registered file paths. @return A vector of strings representing the fully normalized monitored paths. */
   std::vector<std::string> paths() const;
   /** @brief The FunctionConnector for notification of file-related events.
-  @details Send the normalized full path to the file that triggered the event, and specify the event type: **(Deleted)**, **(Modified)**, or **(Created)**. */
+  @details Sends the normalized full path to the file that triggered the event, and specify the event type: **(Deleted)**, **(Modified)**, or **(Created)**. */
   FunctionConnector<const std::string &, int>::Protected<FileSystemWatcher> notify;
 
 private:
