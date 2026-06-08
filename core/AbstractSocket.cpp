@@ -418,7 +418,7 @@ int AbstractSocket::write_fd(const void *_p, int _s) {
 #ifndef _WIN32
   return ::write(fd_, _p, _s);
 #else
-  return ::sendto(fd_, static_cast<const char *>(_p), _s, 0, reinterpret_cast<struct sockaddr *>(&private_.la_), sizeof(private_.la_));
+  return ::send(fd_, static_cast<const char *>(_p), _s, 0);
 #endif
 }
 
