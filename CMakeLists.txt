@@ -6,10 +6,6 @@ endif()
 
 include(cmake/version.cmake)
 
-if(NOT FINAL_RELEASE AND EXISTS "${CMAKE_CURRENT_LIST_DIR}/defines.cmake")
-  include("${CMAKE_CURRENT_LIST_DIR}/defines.cmake")
-endif()
-
 # defines.cmake
 #set(BUILD_SHARED_LIBS ON)
 #set(CMAKE_INTERPROCEDURAL_OPTIMIZATION ON)
@@ -50,6 +46,10 @@ endif()
 #add_definitions(-DEXTEND_HTTP_TRACE)
 #add_definitions(-DEXTEND_MDNS_TRACE)
 # -- defines.cmake
+
+if(NOT FINAL_RELEASE AND EXISTS "${CMAKE_CURRENT_LIST_DIR}/defines.cmake")
+  include("${CMAKE_CURRENT_LIST_DIR}/defines.cmake")
+endif()
 
 project(${AsyncFw_PROJECT_NAME} VERSION ${VERSION_STRING} LANGUAGES C CXX)
 
