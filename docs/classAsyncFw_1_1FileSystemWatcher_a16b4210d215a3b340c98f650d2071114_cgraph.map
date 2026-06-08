@@ -1,0 +1,12 @@
+<map id="AsyncFw::FileSystemWatcher::instance" name="AsyncFw::FileSystemWatcher::instance">
+<area shape="rect" id="Node000001" title="Retrieves the global instance pointer of the active FileSystemWatcher." alt="" coords="5,63,204,105"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1FileSystemWatcher.html#acd061a60fbaea1bb3c7d020e0da99039" title="Constructs a FileSystemWatcher and optionally starts monitoring given paths." alt="" coords="252,63,450,105"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="204,81,236,81,236,87,204,87"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractThread.html#a09cdd1972b9416a7ddb2a1921f36938c" title="Returns a pointer to the AsyncFw::AbstractThread that manages the currently executing thread." alt="" coords="510,29,684,72"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="450,68,495,62,495,67,451,73"/>
+<area shape="rect" id="Node000005" href="$classAsyncFw_1_1FileSystemWatcher.html#ab174c18c8399c50a7818c456e2a51551" title="Obtains a list of all currently registered file paths." alt="" coords="498,96,696,139"/>
+<area shape="poly" id="edge5_Node000002_Node000005" title=" " alt="" coords="451,95,483,99,482,104,450,100"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1AbstractThread.html#ac8be1c406c4235ff1dabc1cdb4ac04ba" title="Constructs a thread." alt="" coords="744,29,918,72"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="684,48,728,48,728,53,684,53"/>
+<area shape="poly" id="edge4_Node000004_Node000004" title=" " alt="" coords="787,29,785,19,792,10,808,5,831,3,856,5,871,11,869,16,855,10,831,8,809,10,795,15,790,21,792,28"/>
+</map>

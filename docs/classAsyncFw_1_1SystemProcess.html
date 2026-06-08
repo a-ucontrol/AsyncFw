@@ -113,10 +113,8 @@ $(function(){initNavTree('classAsyncFw_1_1SystemProcess.html',''); initResizable
 </div><!--header-->
 <div class="contents">
 
-<p>The <a class="el" href="classAsyncFw_1_1SystemProcess.html" title="The SystemProcess class.">SystemProcess</a> class.  
+<p>Example:  
  <a href="#details">More...</a></p>
-
-<p><code>#include &lt;<a class="el" href="SystemProcess_8h_source.html">AsyncFw/SystemProcess</a>&gt;</code></p>
 <div id="dynsection-0" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Collaboration diagram for AsyncFw::SystemProcess:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
@@ -127,73 +125,81 @@ $(function(){initNavTree('classAsyncFw_1_1SystemProcess.html',''); initResizable
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:afad39352d4d8376d1304bc340a0cf32f" id="r_afad39352d4d8376d1304bc340a0cf32f"><td class="memItemLeft" align="right" valign="top"><a id="afad39352d4d8376d1304bc340a0cf32f" name="afad39352d4d8376d1304bc340a0cf32f"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>State</b> : uint8_t { <br />
-&#160;&#160;<b>None</b>
-, <b>Running</b>
-, <b>Finished</b>
-, <b>Crashed</b>
+<tr class="memitem:afad39352d4d8376d1304bc340a0cf32f" id="r_afad39352d4d8376d1304bc340a0cf32f"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afad39352d4d8376d1304bc340a0cf32f">State</a> : uint8_t { <br />
+&#160;&#160;<a class="el" href="#afad39352d4d8376d1304bc340a0cf32fae6056f73a5ee0f2e5e9a810511d30121">None</a>
+, <a class="el" href="#afad39352d4d8376d1304bc340a0cf32fad676c3df6d4070608540d7160f773e1b">Running</a>
+, <a class="el" href="#afad39352d4d8376d1304bc340a0cf32fafbad76ce6453263110ca967474dfa1a7">Finished</a>
+, <a class="el" href="#afad39352d4d8376d1304bc340a0cf32fa71589da9ec6d6bf72db63b0706ecfb60">Crashed</a>
 , <br />
-&#160;&#160;<b>Error</b>
+&#160;&#160;<a class="el" href="#afad39352d4d8376d1304bc340a0cf32fa49cb88a476197da70de9c7ea73b5d089">Error</a>
 <br />
  }</td></tr>
+<tr class="memdesc:afad39352d4d8376d1304bc340a0cf32f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Process lifecycle states.  <a href="#afad39352d4d8376d1304bc340a0cf32f">More...</a><br /></td></tr>
 <tr class="separator:afad39352d4d8376d1304bc340a0cf32f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:acf60a585a89304fdb3580e9add06d155" id="r_acf60a585a89304fdb3580e9add06d155"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acf60a585a89304fdb3580e9add06d155">SystemProcess</a> (bool=false)</td></tr>
-<tr class="memdesc:acf60a585a89304fdb3580e9add06d155"><td class="mdescLeft">&#160;</td><td class="mdescRight">False Управляет вводом данных в запущенный процесс. Это режим ввода по умолчанию для канала ввода  <br /></td></tr>
+<tr class="memdesc:acf60a585a89304fdb3580e9add06d155"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new <a class="el" href="classAsyncFw_1_1SystemProcess.html" title="Example:">SystemProcess</a> manager.  <br /></td></tr>
 <tr class="separator:acf60a585a89304fdb3580e9add06d155"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a07450fc564490581360f8ff9244291c8" id="r_a07450fc564490581360f8ff9244291c8"><td class="memItemLeft" align="right" valign="top"><a id="a07450fc564490581360f8ff9244291c8" name="a07450fc564490581360f8ff9244291c8"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>start</b> (const std::string &amp;, const std::vector&lt; std::string &gt; &amp;={})</td></tr>
+<tr class="memitem:ae280edaf59815e2e4cbac2ba71382d21" id="r_ae280edaf59815e2e4cbac2ba71382d21"><td class="memItemLeft" align="right" valign="top"><a id="ae280edaf59815e2e4cbac2ba71382d21" name="ae280edaf59815e2e4cbac2ba71382d21"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>~SystemProcess</b> ()</td></tr>
+<tr class="memdesc:ae280edaf59815e2e4cbac2ba71382d21"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. Synchronously releases internal data structures. <br /></td></tr>
+<tr class="separator:ae280edaf59815e2e4cbac2ba71382d21"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a07450fc564490581360f8ff9244291c8" id="r_a07450fc564490581360f8ff9244291c8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a07450fc564490581360f8ff9244291c8">start</a> (const std::string &amp;, const std::vector&lt; std::string &gt; &amp;={})</td></tr>
+<tr class="memdesc:a07450fc564490581360f8ff9244291c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts the process with the specified command and arguments.  <br /></td></tr>
 <tr class="separator:a07450fc564490581360f8ff9244291c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9bed6483038544317152552027178459" id="r_a9bed6483038544317152552027178459"><td class="memItemLeft" align="right" valign="top"><a id="a9bed6483038544317152552027178459" name="a9bed6483038544317152552027178459"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>start</b> ()</td></tr>
+<tr class="memitem:a9bed6483038544317152552027178459" id="r_a9bed6483038544317152552027178459"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9bed6483038544317152552027178459">start</a> ()</td></tr>
+<tr class="memdesc:a9bed6483038544317152552027178459"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts the process using stored command and arguments.  <br /></td></tr>
 <tr class="separator:a9bed6483038544317152552027178459"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab0bbc948a5d59acc1bfc2327cb74f4c1" id="r_ab0bbc948a5d59acc1bfc2327cb74f4c1"><td class="memItemLeft" align="right" valign="top"><a id="ab0bbc948a5d59acc1bfc2327cb74f4c1" name="ab0bbc948a5d59acc1bfc2327cb74f4c1"></a>
-State&#160;</td><td class="memItemRight" valign="bottom"><b>state</b> ()</td></tr>
+<tr class="memitem:ab0bbc948a5d59acc1bfc2327cb74f4c1" id="r_ab0bbc948a5d59acc1bfc2327cb74f4c1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#afad39352d4d8376d1304bc340a0cf32f">State</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab0bbc948a5d59acc1bfc2327cb74f4c1">state</a> ()</td></tr>
+<tr class="memdesc:ab0bbc948a5d59acc1bfc2327cb74f4c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets current process lifecycle state.  <br /></td></tr>
 <tr class="separator:ab0bbc948a5d59acc1bfc2327cb74f4c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aacaa74369b6cc27a9f0cd29f6dd6fa18" id="r_aacaa74369b6cc27a9f0cd29f6dd6fa18"><td class="memItemLeft" align="right" valign="top"><a id="aacaa74369b6cc27a9f0cd29f6dd6fa18" name="aacaa74369b6cc27a9f0cd29f6dd6fa18"></a>
-pid_t&#160;</td><td class="memItemRight" valign="bottom"><b>pid</b> ()</td></tr>
+<tr class="memitem:aacaa74369b6cc27a9f0cd29f6dd6fa18" id="r_aacaa74369b6cc27a9f0cd29f6dd6fa18"><td class="memItemLeft" align="right" valign="top">pid_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aacaa74369b6cc27a9f0cd29f6dd6fa18">pid</a> ()</td></tr>
+<tr class="memdesc:aacaa74369b6cc27a9f0cd29f6dd6fa18"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets system process identifier (PID).  <br /></td></tr>
 <tr class="separator:aacaa74369b6cc27a9f0cd29f6dd6fa18"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a98555529994f67d993e103999604f1ed" id="r_a98555529994f67d993e103999604f1ed"><td class="memItemLeft" align="right" valign="top"><a id="a98555529994f67d993e103999604f1ed" name="a98555529994f67d993e103999604f1ed"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>wait</b> ()</td></tr>
+<tr class="memdesc:a98555529994f67d993e103999604f1ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Blocks current execution frame until process finishes. Spins a nested Event Loop, allowing other thread tasks to execute in parallel. <br /></td></tr>
 <tr class="separator:a98555529994f67d993e103999604f1ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3916d3f3c7f90b7a6e099258daee8762" id="r_a3916d3f3c7f90b7a6e099258daee8762"><td class="memItemLeft" align="right" valign="top"><a id="a3916d3f3c7f90b7a6e099258daee8762" name="a3916d3f3c7f90b7a6e099258daee8762"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>exitCode</b> ()</td></tr>
+<tr class="memitem:a3916d3f3c7f90b7a6e099258daee8762" id="r_a3916d3f3c7f90b7a6e099258daee8762"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3916d3f3c7f90b7a6e099258daee8762">exitCode</a> ()</td></tr>
+<tr class="memdesc:a3916d3f3c7f90b7a6e099258daee8762"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets operating system exit status code.  <br /></td></tr>
 <tr class="separator:a3916d3f3c7f90b7a6e099258daee8762"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2474831568ca17479f4b7b4350cb13c8" id="r_a2474831568ca17479f4b7b4350cb13c8"><td class="memItemLeft" align="right" valign="top"><a id="a2474831568ca17479f4b7b4350cb13c8" name="a2474831568ca17479f4b7b4350cb13c8"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>input</b> (const std::string &amp;) const</td></tr>
+<tr class="memitem:a2474831568ca17479f4b7b4350cb13c8" id="r_a2474831568ca17479f4b7b4350cb13c8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2474831568ca17479f4b7b4350cb13c8">input</a> (const std::string &amp;) const</td></tr>
+<tr class="memdesc:a2474831568ca17479f4b7b4350cb13c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes data string to standard input (stdin) of the child process.  <br /></td></tr>
 <tr class="separator:a2474831568ca17479f4b7b4350cb13c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a60b511b96334e37888a4504d7cd9058d" id="r_a60b511b96334e37888a4504d7cd9058d"><td class="memTemplParams" colspan="2"><a id="a60b511b96334e37888a4504d7cd9058d" name="a60b511b96334e37888a4504d7cd9058d"></a>
-template&lt;typename T&gt; </td></tr>
-<tr class="memitem:a60b511b96334e37888a4504d7cd9058d"><td class="memTemplItemLeft" align="right" valign="top">static bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>exec</b> (const std::string &amp;cmd, const std::vector&lt; std::string &gt; &amp;args, T f)</td></tr>
+<tr class="memitem:a60b511b96334e37888a4504d7cd9058d" id="r_a60b511b96334e37888a4504d7cd9058d"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
+<tr class="memitem:a60b511b96334e37888a4504d7cd9058d"><td class="memTemplItemLeft" align="right" valign="top">static bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a60b511b96334e37888a4504d7cd9058d">exec</a> (const std::string &amp;cmd, const std::vector&lt; std::string &gt; &amp;args, T f)</td></tr>
+<tr class="memdesc:a60b511b96334e37888a4504d7cd9058d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Static helper to spawn a managed process inside heap (fire-and-forget) with custom callback.  <br /></td></tr>
 <tr class="separator:a60b511b96334e37888a4504d7cd9058d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a92eabb2559b3f3ade0311f9624ae1eb0" id="r_a92eabb2559b3f3ade0311f9624ae1eb0"><td class="memTemplParams" colspan="2"><a id="a92eabb2559b3f3ade0311f9624ae1eb0" name="a92eabb2559b3f3ade0311f9624ae1eb0"></a>
 template&lt;typename T&gt; </td></tr>
 <tr class="memitem:a92eabb2559b3f3ade0311f9624ae1eb0"><td class="memTemplItemLeft" align="right" valign="top">static bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>exec</b> (const std::string &amp;cmd, T f)</td></tr>
+<tr class="memdesc:a92eabb2559b3f3ade0311f9624ae1eb0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Static helper to spawn a managed process without arguments. <br /></td></tr>
 <tr class="separator:a92eabb2559b3f3ade0311f9624ae1eb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5895c87c14c0e03dcb36bfd8f109c90a" id="r_a5895c87c14c0e03dcb36bfd8f109c90a"><td class="memItemLeft" align="right" valign="top"><a id="a5895c87c14c0e03dcb36bfd8f109c90a" name="a5895c87c14c0e03dcb36bfd8f109c90a"></a>
 static bool&#160;</td><td class="memItemRight" valign="bottom"><b>exec</b> (const std::string &amp;cmd, const std::vector&lt; std::string &gt; &amp;args={})</td></tr>
+<tr class="memdesc:a5895c87c14c0e03dcb36bfd8f109c90a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Static helper to spawn a background process with no tracking hooks. <br /></td></tr>
 <tr class="separator:a5895c87c14c0e03dcb36bfd8f109c90a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a15a6e0feb095b9ad2ea2bdfb7014ca2c" id="r_a15a6e0feb095b9ad2ea2bdfb7014ca2c"><td class="memItemLeft" align="right" valign="top"><a id="a15a6e0feb095b9ad2ea2bdfb7014ca2c" name="a15a6e0feb095b9ad2ea2bdfb7014ca2c"></a>
-<a class="el" href="classAsyncFw_1_1FunctionConnector.html">FunctionConnector</a>&lt; State &gt;::Policy&lt; <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector.html#ab248bd16cbfcac609f58d401abec4368a5d08e36148e4f87ea06266376ac65da9">AbstractFunctionConnector::Queued</a> &gt;::Protected&lt; <a class="el" href="classAsyncFw_1_1SystemProcess.html">SystemProcess</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>stateChanged</b></td></tr>
-<tr class="memdesc:a15a6e0feb095b9ad2ea2bdfb7014ca2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="classAsyncFw_1_1FunctionConnector.html" title="Provides a thread-safe, publisher-subscriber mechanism to establish sender-to-receivers connections.">FunctionConnector</a> for <a class="el" href="classAsyncFw_1_1SystemProcess.html" title="The SystemProcess class.">SystemProcess</a> stateChanged. <br /></td></tr>
+<a class="el" href="classAsyncFw_1_1FunctionConnector.html">FunctionConnector</a>&lt; <a class="el" href="#afad39352d4d8376d1304bc340a0cf32f">State</a> &gt;::Policy&lt; <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector.html#ab248bd16cbfcac609f58d401abec4368a5d08e36148e4f87ea06266376ac65da9">AbstractFunctionConnector::Queued</a> &gt;::Protected&lt; <a class="el" href="classAsyncFw_1_1SystemProcess.html">SystemProcess</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>stateChanged</b></td></tr>
+<tr class="memdesc:a15a6e0feb095b9ad2ea2bdfb7014ca2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted asynchronously when the process execution state changes. <br /></td></tr>
 <tr class="separator:a15a6e0feb095b9ad2ea2bdfb7014ca2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abbb594e48966f013c2efaf50e26b5e36" id="r_abbb594e48966f013c2efaf50e26b5e36"><td class="memItemLeft" align="right" valign="top"><a id="abbb594e48966f013c2efaf50e26b5e36" name="abbb594e48966f013c2efaf50e26b5e36"></a>
 <a class="el" href="classAsyncFw_1_1FunctionConnector.html">FunctionConnector</a>&lt; const std::string &amp;, bool &gt;::Policy&lt; <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector.html#ab248bd16cbfcac609f58d401abec4368a5d08e36148e4f87ea06266376ac65da9">AbstractFunctionConnector::Queued</a> &gt;::Protected&lt; <a class="el" href="classAsyncFw_1_1SystemProcess.html">SystemProcess</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>output</b></td></tr>
-<tr class="memdesc:abbb594e48966f013c2efaf50e26b5e36"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="classAsyncFw_1_1FunctionConnector.html" title="Provides a thread-safe, publisher-subscriber mechanism to establish sender-to-receivers connections.">FunctionConnector</a> for <a class="el" href="classAsyncFw_1_1SystemProcess.html" title="The SystemProcess class.">SystemProcess</a> output. <br /></td></tr>
+<tr class="memdesc:abbb594e48966f013c2efaf50e26b5e36"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when data arrives from stdout (false) or stderr (true). <br /></td></tr>
 <tr class="separator:abbb594e48966f013c2efaf50e26b5e36"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>The <a class="el" href="classAsyncFw_1_1SystemProcess.html" title="The SystemProcess class.">SystemProcess</a> class. </p>
-<dl class="section warning"><dt>Warning</dt><dd>Unix-like systems only</dd></dl>
-<p>Example: </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;AsyncFw/MainThread&gt;</span></div>
+<div class="textblock"><p>Example: </p>
+<p>spawning and asynchronous communication with external processes. </p><dl class="section warning"><dt>Warning</dt><dd>Optimized for Unix-like systems. Maintains cross-platform behavior when compiled with Qt. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Life cycle events are driven by <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector.html#ab248bd16cbfcac609f58d401abec4368a5d08e36148e4f87ea06266376ac65da9" title="Default is Queued. Any explicit connection types are allowed.">AbstractFunctionConnector::Queued</a> policy. <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;AsyncFw/MainThread&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;AsyncFw/SystemProcess&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;AsyncFw/Timer&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;AsyncFw/LogStream&gt;</span></div>
@@ -208,38 +214,68 @@ Public Attributes</h2></td></tr>
 <div class="line">    <span class="keywordflow">if</span> (!err) logInfo() &lt;&lt; <span class="stringliteral">&quot;OUT:&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span> + str;</div>
 <div class="line">    <span class="keywordflow">else</span> { logError() &lt;&lt; <span class="stringliteral">&quot;ERR:&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span> + str; }</div>
 <div class="line">  });</div>
-<div class="line">  process.<a class="code hl_variable" href="#a15a6e0feb095b9ad2ea2bdfb7014ca2c">stateChanged</a>.<a class="code hl_function" href="classAsyncFw_1_1FunctionConnector.html#ae1f65144956b3b1247d58614e4080f63">connect</a>([](AsyncFw::SystemProcess::State _s) {</div>
-<div class="line">    <span class="keywordflow">if</span> (_s == AsyncFw::SystemProcess::Running) <span class="keywordflow">return</span>;</div>
+<div class="line">  process.<a class="code hl_variable" href="#a15a6e0feb095b9ad2ea2bdfb7014ca2c">stateChanged</a>.<a class="code hl_function" href="classAsyncFw_1_1FunctionConnector.html#ae1f65144956b3b1247d58614e4080f63">connect</a>([](<a class="code hl_enumeration" href="#afad39352d4d8376d1304bc340a0cf32f">AsyncFw::SystemProcess::State</a> _s) {</div>
+<div class="line">    <span class="keywordflow">if</span> (_s == <a class="code hl_enumvalue" href="#afad39352d4d8376d1304bc340a0cf32fad676c3df6d4070608540d7160f773e1b">AsyncFw::SystemProcess::Running</a>) <span class="keywordflow">return</span>;</div>
 <div class="line">    <a class="code hl_function" href="classAsyncFw_1_1MainThread.html#a76fed3a2c1cfdbdb67f2b209e6457657">AsyncFw::MainThread::exit</a>(0);</div>
 <div class="line">  });</div>
 <div class="line"><span class="preprocessor">#ifndef _WIN32</span></div>
-<div class="line">  <span class="keywordtype">bool</span> _r = process.start(<span class="stringliteral">&quot;/bin/bash&quot;</span>);</div>
+<div class="line">  <span class="keywordtype">bool</span> _r = process.<a class="code hl_function" href="#a07450fc564490581360f8ff9244291c8">start</a>(<span class="stringliteral">&quot;/bin/bash&quot;</span>);</div>
 <div class="line">  <span class="keywordflow">if</span> (!_r) {</div>
 <div class="line">    logNotice() &lt;&lt; <span class="stringliteral">&quot;Start &#39;/bin/bash&#39; error&quot;</span>;</div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">  }</div>
-<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">AsyncFw::Timer::single</a>(10, [&amp;process]() { process.input(<span class="stringliteral">&quot;echo 1234567890\n&quot;</span>); });</div>
-<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">AsyncFw::Timer::single</a>(20, [&amp;process]() { process.input(<span class="stringliteral">&quot;_cmd_\n&quot;</span>); });  <span class="comment">//error: _cmd_ not found</span></div>
-<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">AsyncFw::Timer::single</a>(30, [&amp;process]() { process.input(<span class="stringliteral">&quot;ls\n&quot;</span>); });</div>
-<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">AsyncFw::Timer::single</a>(40, [&amp;process]() { process.input(<span class="stringliteral">&quot;exit\n&quot;</span>); });</div>
+<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">AsyncFw::Timer::single</a>(10, [&amp;process]() { process.<a class="code hl_function" href="#a2474831568ca17479f4b7b4350cb13c8">input</a>(<span class="stringliteral">&quot;echo 1234567890\n&quot;</span>); });</div>
+<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">AsyncFw::Timer::single</a>(20, [&amp;process]() { process.<a class="code hl_function" href="#a2474831568ca17479f4b7b4350cb13c8">input</a>(<span class="stringliteral">&quot;_cmd_\n&quot;</span>); });  <span class="comment">//error: _cmd_ not found</span></div>
+<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">AsyncFw::Timer::single</a>(30, [&amp;process]() { process.<a class="code hl_function" href="#a2474831568ca17479f4b7b4350cb13c8">input</a>(<span class="stringliteral">&quot;ls\n&quot;</span>); });</div>
+<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">AsyncFw::Timer::single</a>(40, [&amp;process]() { process.<a class="code hl_function" href="#a2474831568ca17479f4b7b4350cb13c8">input</a>(<span class="stringliteral">&quot;exit\n&quot;</span>); });</div>
 <div class="line"><span class="preprocessor">#else</span></div>
-<div class="line">  <span class="keywordtype">bool</span> _r = process.start(<span class="stringliteral">&quot;cmd.exe&quot;</span>);</div>
+<div class="line">  <span class="keywordtype">bool</span> _r = process.<a class="code hl_function" href="#a07450fc564490581360f8ff9244291c8">start</a>(<span class="stringliteral">&quot;cmd.exe&quot;</span>);</div>
 <div class="line">  <span class="keywordflow">if</span> (!_r) {</div>
 <div class="line">    logNotice() &lt;&lt; <span class="stringliteral">&quot;Start &#39;cmd.exe&#39; error&quot;</span>;</div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">  }</div>
-<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">AsyncFw::Timer::single</a>(10, [&amp;process]() { process.input(<span class="stringliteral">&quot;echo 1234567890\n&quot;</span>); });</div>
-<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">AsyncFw::Timer::single</a>(20, [&amp;process]() { process.input(<span class="stringliteral">&quot;_cmd_\n&quot;</span>); });  <span class="comment">//error: _cmd_ not found</span></div>
-<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">AsyncFw::Timer::single</a>(30, [&amp;process]() { process.input(<span class="stringliteral">&quot;dir\n&quot;</span>); });</div>
-<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">AsyncFw::Timer::single</a>(40, [&amp;process]() { process.input(<span class="stringliteral">&quot;exit\n&quot;</span>); });</div>
+<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">AsyncFw::Timer::single</a>(10, [&amp;process]() { process.<a class="code hl_function" href="#a2474831568ca17479f4b7b4350cb13c8">input</a>(<span class="stringliteral">&quot;echo 1234567890\n&quot;</span>); });</div>
+<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">AsyncFw::Timer::single</a>(20, [&amp;process]() { process.<a class="code hl_function" href="#a2474831568ca17479f4b7b4350cb13c8">input</a>(<span class="stringliteral">&quot;_cmd_\n&quot;</span>); });  <span class="comment">//error: _cmd_ not found</span></div>
+<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">AsyncFw::Timer::single</a>(30, [&amp;process]() { process.<a class="code hl_function" href="#a2474831568ca17479f4b7b4350cb13c8">input</a>(<span class="stringliteral">&quot;dir\n&quot;</span>); });</div>
+<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">AsyncFw::Timer::single</a>(40, [&amp;process]() { process.<a class="code hl_function" href="#a2474831568ca17479f4b7b4350cb13c8">input</a>(<span class="stringliteral">&quot;exit\n&quot;</span>); });</div>
 <div class="line"><span class="preprocessor">#endif</span></div>
 <div class="line">  logNotice() &lt;&lt; <span class="stringliteral">&quot;Start Application&quot;</span>;</div>
 <div class="line">  <span class="keywordtype">int</span> ret = <a class="code hl_function" href="classAsyncFw_1_1MainThread.html#ad12e620772820ad751868c7b49fa4190">AsyncFw::MainThread::exec</a>();</div>
 <div class="line">  <span class="keywordflow">return</span> ret;</div>
 <div class="line">}</div>
-</div><!-- fragment --> <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="SystemProcess_2main_8cpp-example.html#_a0">SystemProcess/main.cpp</a>.</dd>
+</div><!-- fragment --> </dd></dl>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="SystemProcess_2main_8cpp-example.html#_a0">SystemProcess/main.cpp</a>.</dd>
 </dl>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+</div><h2 class="groupheader">Member Enumeration Documentation</h2>
+<a id="afad39352d4d8376d1304bc340a0cf32f" name="afad39352d4d8376d1304bc340a0cf32f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afad39352d4d8376d1304bc340a0cf32f">&#9670;&#160;</a></span>State</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="#afad39352d4d8376d1304bc340a0cf32f">AsyncFw::SystemProcess::State</a> : uint8_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Process lifecycle states. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="afad39352d4d8376d1304bc340a0cf32fae6056f73a5ee0f2e5e9a810511d30121" name="afad39352d4d8376d1304bc340a0cf32fae6056f73a5ee0f2e5e9a810511d30121"></a>None&#160;</td><td class="fielddoc"><p>Process is not initialized or has been reset. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="afad39352d4d8376d1304bc340a0cf32fad676c3df6d4070608540d7160f773e1b" name="afad39352d4d8376d1304bc340a0cf32fad676c3df6d4070608540d7160f773e1b"></a>Running&#160;</td><td class="fielddoc"><p>Process is currently running. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="afad39352d4d8376d1304bc340a0cf32fafbad76ce6453263110ca967474dfa1a7" name="afad39352d4d8376d1304bc340a0cf32fafbad76ce6453263110ca967474dfa1a7"></a>Finished&#160;</td><td class="fielddoc"><p>Process finished normally with a valid exit code. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="afad39352d4d8376d1304bc340a0cf32fa71589da9ec6d6bf72db63b0706ecfb60" name="afad39352d4d8376d1304bc340a0cf32fa71589da9ec6d6bf72db63b0706ecfb60"></a>Crashed&#160;</td><td class="fielddoc"><p>Process terminated abnormally by OS or crash. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="afad39352d4d8376d1304bc340a0cf32fa49cb88a476197da70de9c7ea73b5d089" name="afad39352d4d8376d1304bc340a0cf32fa49cb88a476197da70de9c7ea73b5d089"></a>Error&#160;</td><td class="fielddoc"><p>Failed to fork, exec, or open I/O channels. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="acf60a585a89304fdb3580e9add06d155" name="acf60a585a89304fdb3580e9add06d155"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#acf60a585a89304fdb3580e9add06d155">&#9670;&#160;</a></span>SystemProcess()</h2>
 
@@ -255,14 +291,14 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>False Управляет вводом данных в запущенный процесс. Это режим ввода по умолчанию для канала ввода </p>
+<p>Constructs a new <a class="el" href="classAsyncFw_1_1SystemProcess.html" title="Example:">SystemProcess</a> manager. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">redirect_stdin</td><td></td></tr>
+    <tr><td class="paramname">redirect_stdin</td><td><b>False (Default):</b> Input is written manually via <a class="el" href="#a2474831568ca17479f4b7b4350cb13c8" title="Writes data string to standard input (stdin) of the child process.">input()</a> method. <b>True:</b> Child process shares the standard input (stdin) with the parent process. </td></tr>
   </table>
   </dd>
 </dl>
-<p>True Дочерний процесс перенаправляет ввод основного процесса на работающий процесс. Дочерний процесс считывает свой стандартный ввод из того же источника, что и основной процесс. Обратите внимание, что основной процесс не должен пытаться считывать свой стандартный ввод, пока работает дочерний процесс. </p>
+<dl class="section warning"><dt>Warning</dt><dd>When True, parent process must not read from stdin while child is active. </dd></dl>
 <div id="dynsection-1" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-1-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
 <div id="dynsection-1-summary" class="dynsummary" style="display:block;">
@@ -270,6 +306,220 @@ Public Attributes</h2></td></tr>
 <div id="dynsection-1-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1SystemProcess_acf60a585a89304fdb3580e9add06d155_cgraph.svg" width="631" height="78"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a07450fc564490581360f8ff9244291c8" name="a07450fc564490581360f8ff9244291c8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a07450fc564490581360f8ff9244291c8">&#9670;&#160;</a></span>start() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SystemProcess::start </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>_cmdline</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; std::string &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>_args</em></span><span class="paramdefsep"> = </span><span class="paramdefval">{}</span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Starts the process with the specified command and arguments. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cmd</td><td>Executable path or system command.</td></tr>
+    <tr><td class="paramname">args</td><td>Arguments vector passed to the process. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if successfully initiated. </dd></dl>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="SystemProcess_2main_8cpp-example.html#a6">SystemProcess/main.cpp</a>.</dd>
+</dl>
+<div id="dynsection-2" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-2-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-2-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-2-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1SystemProcess_a07450fc564490581360f8ff9244291c8_cgraph.svg" width="639" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<a id="a9bed6483038544317152552027178459" name="a9bed6483038544317152552027178459"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9bed6483038544317152552027178459">&#9670;&#160;</a></span>start() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SystemProcess::start </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Starts the process using stored command and arguments. </p>
+<dl class="section return"><dt>Returns</dt><dd>True if successfully initiated. </dd></dl>
+<div id="dynsection-3" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-3-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-3-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1SystemProcess_a9bed6483038544317152552027178459_cgraph.svg" width="414" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+<div id="dynsection-4" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-4-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-4-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-4-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1SystemProcess_a9bed6483038544317152552027178459_icgraph.svg" width="414" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<a id="ab0bbc948a5d59acc1bfc2327cb74f4c1" name="ab0bbc948a5d59acc1bfc2327cb74f4c1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab0bbc948a5d59acc1bfc2327cb74f4c1">&#9670;&#160;</a></span>state()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#afad39352d4d8376d1304bc340a0cf32f">SystemProcess::State</a> SystemProcess::state </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets current process lifecycle state. </p>
+<dl class="section return"><dt>Returns</dt><dd>Current state from <a class="el" href="#afad39352d4d8376d1304bc340a0cf32f" title="Process lifecycle states.">SystemProcess::State</a> enum. </dd></dl>
+
+</div>
+</div>
+<a id="aacaa74369b6cc27a9f0cd29f6dd6fa18" name="aacaa74369b6cc27a9f0cd29f6dd6fa18"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aacaa74369b6cc27a9f0cd29f6dd6fa18">&#9670;&#160;</a></span>pid()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">pid_t SystemProcess::pid </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets system process identifier (PID). </p>
+<dl class="section return"><dt>Returns</dt><dd>Operating system pid_t handle. </dd></dl>
+
+</div>
+</div>
+<a id="a3916d3f3c7f90b7a6e099258daee8762" name="a3916d3f3c7f90b7a6e099258daee8762"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3916d3f3c7f90b7a6e099258daee8762">&#9670;&#160;</a></span>exitCode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int SystemProcess::exitCode </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets operating system exit status code. </p>
+<dl class="section return"><dt>Returns</dt><dd>Integer exit code. Valid only when <a class="el" href="#ab0bbc948a5d59acc1bfc2327cb74f4c1" title="Gets current process lifecycle state.">state()</a> is Finished or Crashed. </dd></dl>
+
+</div>
+</div>
+<a id="a2474831568ca17479f4b7b4350cb13c8" name="a2474831568ca17479f4b7b4350cb13c8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2474831568ca17479f4b7b4350cb13c8">&#9670;&#160;</a></span>input()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SystemProcess::input </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>str</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Writes data string to standard input (stdin) of the child process. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">str</td><td>Raw string buffer. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if successfully written; false otherwise. </dd></dl>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="SystemProcess_2main_8cpp-example.html#a8">SystemProcess/main.cpp</a>.</dd>
+</dl>
+<div id="dynsection-5" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-5-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-5-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-5-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1SystemProcess_a2474831568ca17479f4b7b4350cb13c8_icgraph.svg" width="639" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<a id="a60b511b96334e37888a4504d7cd9058d" name="a60b511b96334e37888a4504d7cd9058d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a60b511b96334e37888a4504d7cd9058d">&#9670;&#160;</a></span>exec()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static bool AsyncFw::SystemProcess::exec </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>cmd</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; std::string &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>args</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">T</td>          <td class="paramname"><span class="paramname"><em>f</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Static helper to spawn a managed process inside heap (fire-and-forget) with custom callback. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">f</td><td>Callback signature: void(int exitCode, State state, const std::string&amp; out, const std::string&amp; err) </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

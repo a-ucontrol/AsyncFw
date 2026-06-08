@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['trace_0',['Trace',['../classAsyncFw_1_1LogStream.html#afa2f6c5311ced6b973d39d6e5ced5731ab9e4aeca51d007c66abb1ad6b93c3c37',1,'AsyncFw::LogStream']]]
+  ['running_0',['Running',['../classAsyncFw_1_1SystemProcess.html#afad39352d4d8376d1304bc340a0cf32fad676c3df6d4070608540d7160f773e1b',1,'AsyncFw::SystemProcess']]]
 ];

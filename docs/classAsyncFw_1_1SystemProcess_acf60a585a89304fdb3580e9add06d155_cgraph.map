@@ -1,5 +1,5 @@
 <map id="AsyncFw::SystemProcess::SystemProcess" name="AsyncFw::SystemProcess::SystemProcess">
-<area shape="rect" id="Node000001" title="False Управляет вводом данных в запущенный процесс. Это режим ввода по умолчанию для канала ввода" alt="" coords="5,29,183,72"/>
+<area shape="rect" id="Node000001" title="Constructs a new SystemProcess manager." alt="" coords="5,29,183,72"/>
 <area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractThread.html#a09cdd1972b9416a7ddb2a1921f36938c" title="Returns a pointer to the AsyncFw::AbstractThread that manages the currently executing thread." alt="" coords="231,29,404,72"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="183,48,215,48,215,53,183,53"/>
 <area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractThread.html#ac8be1c406c4235ff1dabc1cdb4ac04ba" title="Constructs a thread." alt="" coords="452,29,625,72"/>

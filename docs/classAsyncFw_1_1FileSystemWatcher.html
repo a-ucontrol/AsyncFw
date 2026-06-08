@@ -113,7 +113,7 @@ $(function(){initNavTree('classAsyncFw_1_1FileSystemWatcher.html',''); initResiz
 </div><!--header-->
 <div class="contents">
 
-<p>The <a class="el" href="classAsyncFw_1_1FileSystemWatcher.html" title="The FileSystemWatcher class.">FileSystemWatcher</a> class.  
+<p>Provides an asynchronous, cross-platform interface for monitoring specific files.  
  <a href="#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="FileSystemWatcher_8h_source.html">AsyncFw/FileSystemWatcher</a>&gt;</code></p>
@@ -127,36 +127,39 @@ $(function(){initNavTree('classAsyncFw_1_1FileSystemWatcher.html',''); initResiz
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:acd061a60fbaea1bb3c7d020e0da99039" id="r_acd061a60fbaea1bb3c7d020e0da99039"><td class="memItemLeft" align="right" valign="top"><a id="acd061a60fbaea1bb3c7d020e0da99039" name="acd061a60fbaea1bb3c7d020e0da99039"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>FileSystemWatcher</b> (const std::vector&lt; std::string &gt; &amp;={})</td></tr>
+<tr class="memitem:acd061a60fbaea1bb3c7d020e0da99039" id="r_acd061a60fbaea1bb3c7d020e0da99039"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acd061a60fbaea1bb3c7d020e0da99039">FileSystemWatcher</a> (const std::vector&lt; std::string &gt; &amp;={})</td></tr>
+<tr class="memdesc:acd061a60fbaea1bb3c7d020e0da99039"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="classAsyncFw_1_1FileSystemWatcher.html" title="Provides an asynchronous, cross-platform interface for monitoring specific files.">FileSystemWatcher</a> and optionally starts monitoring given paths.  <br /></td></tr>
 <tr class="separator:acd061a60fbaea1bb3c7d020e0da99039"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a54e1efecd58f2cbae2932eba716de6a9" id="r_a54e1efecd58f2cbae2932eba716de6a9"><td class="memItemLeft" align="right" valign="top"><a id="a54e1efecd58f2cbae2932eba716de6a9" name="a54e1efecd58f2cbae2932eba716de6a9"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>addPath</b> (const std::string &amp;path)</td></tr>
+<tr class="memitem:adfdbffe1e371260804159964e919b78b" id="r_adfdbffe1e371260804159964e919b78b"><td class="memItemLeft" align="right" valign="top"><a id="adfdbffe1e371260804159964e919b78b" name="adfdbffe1e371260804159964e919b78b"></a>
+virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~FileSystemWatcher</b> ()</td></tr>
+<tr class="memdesc:adfdbffe1e371260804159964e919b78b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destроys the watcher and cleans up all underlying platform-specific event filters. <br /></td></tr>
+<tr class="separator:adfdbffe1e371260804159964e919b78b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a54e1efecd58f2cbae2932eba716de6a9" id="r_a54e1efecd58f2cbae2932eba716de6a9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a54e1efecd58f2cbae2932eba716de6a9">addPath</a> (const std::string &amp;path)</td></tr>
+<tr class="memdesc:a54e1efecd58f2cbae2932eba716de6a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers a single explicit file path into the observation pool.  <br /></td></tr>
 <tr class="separator:a54e1efecd58f2cbae2932eba716de6a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa4e37387e27aa1508584b7d0b199d165" id="r_aa4e37387e27aa1508584b7d0b199d165"><td class="memItemLeft" align="right" valign="top"><a id="aa4e37387e27aa1508584b7d0b199d165" name="aa4e37387e27aa1508584b7d0b199d165"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>addPaths</b> (const std::vector&lt; std::string &gt; &amp;paths)</td></tr>
+<tr class="memitem:aa4e37387e27aa1508584b7d0b199d165" id="r_aa4e37387e27aa1508584b7d0b199d165"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa4e37387e27aa1508584b7d0b199d165">addPaths</a> (const std::vector&lt; std::string &gt; &amp;<a class="el" href="#ab174c18c8399c50a7818c456e2a51551">paths</a>)</td></tr>
+<tr class="memdesc:aa4e37387e27aa1508584b7d0b199d165"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers multiple file paths into the observation pool.  <br /></td></tr>
 <tr class="separator:aa4e37387e27aa1508584b7d0b199d165"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a233f7b546957d245122b1527b6605230" id="r_a233f7b546957d245122b1527b6605230"><td class="memItemLeft" align="right" valign="top"><a id="a233f7b546957d245122b1527b6605230" name="a233f7b546957d245122b1527b6605230"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>removePath</b> (const std::string &amp;path)</td></tr>
+<tr class="memitem:a233f7b546957d245122b1527b6605230" id="r_a233f7b546957d245122b1527b6605230"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a233f7b546957d245122b1527b6605230">removePath</a> (const std::string &amp;path)</td></tr>
+<tr class="memdesc:a233f7b546957d245122b1527b6605230"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unregisters a monitored file path, halting all associated event signals.  <br /></td></tr>
 <tr class="separator:a233f7b546957d245122b1527b6605230"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a437baed4f56fd823fa2ba42dc5be781c" id="r_a437baed4f56fd823fa2ba42dc5be781c"><td class="memItemLeft" align="right" valign="top"><a id="a437baed4f56fd823fa2ba42dc5be781c" name="a437baed4f56fd823fa2ba42dc5be781c"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>removePaths</b> (const std::vector&lt; std::string &gt; &amp;paths)</td></tr>
+<tr class="memitem:a437baed4f56fd823fa2ba42dc5be781c" id="r_a437baed4f56fd823fa2ba42dc5be781c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a437baed4f56fd823fa2ba42dc5be781c">removePaths</a> (const std::vector&lt; std::string &gt; &amp;<a class="el" href="#ab174c18c8399c50a7818c456e2a51551">paths</a>)</td></tr>
+<tr class="memdesc:a437baed4f56fd823fa2ba42dc5be781c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unregisters multiple file paths from the observation pool.  <br /></td></tr>
 <tr class="separator:a437baed4f56fd823fa2ba42dc5be781c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab174c18c8399c50a7818c456e2a51551" id="r_ab174c18c8399c50a7818c456e2a51551"><td class="memItemLeft" align="right" valign="top"><a id="ab174c18c8399c50a7818c456e2a51551" name="ab174c18c8399c50a7818c456e2a51551"></a>
-std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>paths</b> () const</td></tr>
+<tr class="memitem:ab174c18c8399c50a7818c456e2a51551" id="r_ab174c18c8399c50a7818c456e2a51551"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab174c18c8399c50a7818c456e2a51551">paths</a> () const</td></tr>
+<tr class="memdesc:ab174c18c8399c50a7818c456e2a51551"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtains a list of all currently registered file paths.  <br /></td></tr>
 <tr class="separator:ab174c18c8399c50a7818c456e2a51551"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a16b4210d215a3b340c98f650d2071114" id="r_a16b4210d215a3b340c98f650d2071114"><td class="memItemLeft" align="right" valign="top"><a id="a16b4210d215a3b340c98f650d2071114" name="a16b4210d215a3b340c98f650d2071114"></a>
-static <a class="el" href="classAsyncFw_1_1FileSystemWatcher.html">FileSystemWatcher</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>instance</b> ()</td></tr>
+<tr class="memitem:a16b4210d215a3b340c98f650d2071114" id="r_a16b4210d215a3b340c98f650d2071114"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classAsyncFw_1_1FileSystemWatcher.html">FileSystemWatcher</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a16b4210d215a3b340c98f650d2071114">instance</a> ()</td></tr>
+<tr class="memdesc:a16b4210d215a3b340c98f650d2071114"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the global instance pointer of the active <a class="el" href="classAsyncFw_1_1FileSystemWatcher.html" title="Provides an asynchronous, cross-platform interface for monitoring specific files.">FileSystemWatcher</a>.  <br /></td></tr>
 <tr class="separator:a16b4210d215a3b340c98f650d2071114"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a4c808b22785dbc3182a9e7fa600b0919" id="r_a4c808b22785dbc3182a9e7fa600b0919"><td class="memItemLeft" align="right" valign="top"><a id="a4c808b22785dbc3182a9e7fa600b0919" name="a4c808b22785dbc3182a9e7fa600b0919"></a>
-<a class="el" href="classAsyncFw_1_1FunctionConnector.html">FunctionConnector</a>&lt; const std::string &amp;, int &gt;::Protected&lt; <a class="el" href="classAsyncFw_1_1FileSystemWatcher.html">FileSystemWatcher</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>notify</b></td></tr>
-<tr class="memdesc:a4c808b22785dbc3182a9e7fa600b0919"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="classAsyncFw_1_1FunctionConnector.html" title="Provides a thread-safe, publisher-subscriber mechanism to establish sender-to-receivers connections.">FunctionConnector</a> for notification of file-related events. <br /></td></tr>
+<tr class="memitem:a4c808b22785dbc3182a9e7fa600b0919" id="r_a4c808b22785dbc3182a9e7fa600b0919"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classAsyncFw_1_1FunctionConnector.html">FunctionConnector</a>&lt; const std::string &amp;, int &gt;::Protected&lt; <a class="el" href="classAsyncFw_1_1FileSystemWatcher.html">FileSystemWatcher</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4c808b22785dbc3182a9e7fa600b0919">notify</a></td></tr>
+<tr class="memdesc:a4c808b22785dbc3182a9e7fa600b0919"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="classAsyncFw_1_1FunctionConnector.html" title="Provides a thread-safe, publisher-subscriber mechanism to establish sender-to-receivers connections.">FunctionConnector</a> for notification of file-related events.  <br /></td></tr>
 <tr class="separator:a4c808b22785dbc3182a9e7fa600b0919"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="friends" name="friends"></a>
@@ -166,7 +169,14 @@ Friends</h2></td></tr>
 <tr class="separator:a318edca92d23e60b71a852cf5df96179"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>The <a class="el" href="classAsyncFw_1_1FileSystemWatcher.html" title="The FileSystemWatcher class.">FileSystemWatcher</a> class. </p>
+<div class="textblock"><p>Provides an asynchronous, cross-platform interface for monitoring specific files. </p>
+<p>This class tracks file lifecycle events (creation, modifications, and deletion). <br  />
+ It wraps platform-specific mechanisms (inotify on Linux, QFileSystemWatcher on Windows) to guarantee identical, deterministic behavior across operating systems. </p><dl class="section note"><dt>Note</dt><dd><b>Important Design Constraints:</b><ul>
+<li><b>File-Centric Design:</b> This class is engineered primarily to monitor specific file paths.</li>
+<li><b>Windows Wildcard Limitation:</b> Broad directory masks or wildcard paths (e.g., /tmp/*) are <b>not supported on Windows + Qt6</b> and will cause addPath to fail. This usage is valid only under native Linux implementations.</li>
+<li><b>Debouncing Mechanism:</b> In-flight modifications (continuous bursts of write operations) are automatically aggregated. A single Changed notification is dispatched exactly 1 second after the file system activity settles down.</li>
+</ul>
+</dd></dl>
 <p>Example: </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;AsyncFw/FileSystemWatcher&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;AsyncFw/File&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;AsyncFw/MainThread&gt;</span></div>
@@ -199,7 +209,262 @@ Friends</h2></td></tr>
 <div class="line">}</div>
 </div><!-- fragment --> <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="FileSystemWatcher_2main_8cpp-example.html#_a0">FileSystemWatcher/main.cpp</a>.</dd>
 </dl>
-</div><hr/>The documentation for this class was generated from the following files:<ul>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="acd061a60fbaea1bb3c7d020e0da99039" name="acd061a60fbaea1bb3c7d020e0da99039"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acd061a60fbaea1bb3c7d020e0da99039">&#9670;&#160;</a></span>FileSystemWatcher()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">FileSystemWatcher::FileSystemWatcher </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; std::string &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>paths</em></span><span class="paramdefsep"> = </span><span class="paramdefval">{}</span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructs a <a class="el" href="classAsyncFw_1_1FileSystemWatcher.html" title="Provides an asynchronous, cross-platform interface for monitoring specific files.">FileSystemWatcher</a> and optionally starts monitoring given paths. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">paths</td><td>A collection of absolute or relative specific file paths to track. </td></tr>
+  </table>
+  </dd>
+</dl>
+<div id="dynsection-1" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-1-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-1-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1FileSystemWatcher_acd061a60fbaea1bb3c7d020e0da99039_cgraph.svg" width="678" height="144"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+<div id="dynsection-2" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-2-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-2-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-2-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1FileSystemWatcher_acd061a60fbaea1bb3c7d020e0da99039_icgraph.svg" width="456" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a16b4210d215a3b340c98f650d2071114" name="a16b4210d215a3b340c98f650d2071114"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a16b4210d215a3b340c98f650d2071114">&#9670;&#160;</a></span>instance()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="classAsyncFw_1_1FileSystemWatcher.html">FileSystemWatcher</a> * AsyncFw::FileSystemWatcher::instance </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Retrieves the global instance pointer of the active <a class="el" href="classAsyncFw_1_1FileSystemWatcher.html" title="Provides an asynchronous, cross-platform interface for monitoring specific files.">FileSystemWatcher</a>. </p>
+<dl class="section return"><dt>Returns</dt><dd>Pointer to the active <a class="el" href="classAsyncFw_1_1FileSystemWatcher.html" title="Provides an asynchronous, cross-platform interface for monitoring specific files.">FileSystemWatcher</a> instance, or nullptr if none exists. </dd></dl>
+<div id="dynsection-3" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-3-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-3-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1FileSystemWatcher_a16b4210d215a3b340c98f650d2071114_cgraph.svg" width="923" height="144"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<a id="a54e1efecd58f2cbae2932eba716de6a9" name="a54e1efecd58f2cbae2932eba716de6a9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a54e1efecd58f2cbae2932eba716de6a9">&#9670;&#160;</a></span>addPath()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool FileSystemWatcher::addPath </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>path</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Registers a single explicit file path into the observation pool. </p>
+<p>If the file does not exist at the time of calling, the watcher begins tracking its parent directory to catch the creation event asynchronously. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">path</td><td>The path of the specific file to monitor. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the path was successfully validated and scheduled for monitoring </dd></dl>
+<div id="dynsection-4" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-4-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-4-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-4-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1FileSystemWatcher_a54e1efecd58f2cbae2932eba716de6a9_icgraph.svg" width="456" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<a id="aa4e37387e27aa1508584b7d0b199d165" name="aa4e37387e27aa1508584b7d0b199d165"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa4e37387e27aa1508584b7d0b199d165">&#9670;&#160;</a></span>addPaths()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool FileSystemWatcher::addPaths </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; std::string &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>paths</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Registers multiple file paths into the observation pool. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">paths</td><td>A vector of specific file paths to add. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if all paths were added successfully. </dd></dl>
+<div id="dynsection-5" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-5-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-5-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-5-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1FileSystemWatcher_aa4e37387e27aa1508584b7d0b199d165_cgraph.svg" width="456" height="120"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<a id="a233f7b546957d245122b1527b6605230" name="a233f7b546957d245122b1527b6605230"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a233f7b546957d245122b1527b6605230">&#9670;&#160;</a></span>removePath()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool FileSystemWatcher::removePath </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>path</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Unregisters a monitored file path, halting all associated event signals. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">path</td><td>The exact monitored file path to remove. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the file was found and safely removed. </dd></dl>
+<div id="dynsection-6" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-6-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-6-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-6-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1FileSystemWatcher_a233f7b546957d245122b1527b6605230_icgraph.svg" width="456" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<a id="a437baed4f56fd823fa2ba42dc5be781c" name="a437baed4f56fd823fa2ba42dc5be781c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a437baed4f56fd823fa2ba42dc5be781c">&#9670;&#160;</a></span>removePaths()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool FileSystemWatcher::removePaths </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; std::string &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>paths</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Unregisters multiple file paths from the observation pool. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">paths</td><td>A vector of monitored file paths to remove. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if all requested paths was found and removed successfully. </dd></dl>
+<div id="dynsection-7" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-7-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-7-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-7-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1FileSystemWatcher_a437baed4f56fd823fa2ba42dc5be781c_cgraph.svg" width="456" height="120"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<a id="ab174c18c8399c50a7818c456e2a51551" name="ab174c18c8399c50a7818c456e2a51551"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab174c18c8399c50a7818c456e2a51551">&#9670;&#160;</a></span>paths()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; std::string &gt; FileSystemWatcher::paths </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Obtains a list of all currently registered file paths. </p>
+<dl class="section return"><dt>Returns</dt><dd>A vector of strings representing the fully normalized monitored paths. </dd></dl>
+<div id="dynsection-8" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-8-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-8-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-8-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1FileSystemWatcher_ab174c18c8399c50a7818c456e2a51551_icgraph.svg" width="702" height="187"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a4c808b22785dbc3182a9e7fa600b0919" name="a4c808b22785dbc3182a9e7fa600b0919"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4c808b22785dbc3182a9e7fa600b0919">&#9670;&#160;</a></span>notify</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classAsyncFw_1_1FunctionConnector.html">FunctionConnector</a>&lt;const std::string &amp;, int&gt;::Protected&lt;<a class="el" href="classAsyncFw_1_1FileSystemWatcher.html">FileSystemWatcher</a>&gt; AsyncFw::FileSystemWatcher::notify</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The <a class="el" href="classAsyncFw_1_1FunctionConnector.html" title="Provides a thread-safe, publisher-subscriber mechanism to establish sender-to-receivers connections.">FunctionConnector</a> for notification of file-related events. </p>
+<p>Send the normalized full path to the file that triggered the event, and specify the event type: <b>(Deleted)</b>, <b>(Modified)</b>, or <b>(Created)</b>. </p>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="FileSystemWatcher_2main_8cpp-example.html#a1">FileSystemWatcher/main.cpp</a>.</dd>
+</dl>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li>main/<a class="el" href="FileSystemWatcher_8h_source.html">FileSystemWatcher.h</a></li>
 <li>linux/<b>FileSystemWatcher.cpp</b></li>
 </ul>

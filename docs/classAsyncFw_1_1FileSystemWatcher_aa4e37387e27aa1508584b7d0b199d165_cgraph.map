@@ -1,0 +1,7 @@
+<map id="AsyncFw::FileSystemWatcher::addPaths" name="AsyncFw::FileSystemWatcher::addPaths">
+<area shape="rect" id="Node000001" title="Registers multiple file paths into the observation pool." alt="" coords="5,39,204,81"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1FileSystemWatcher.html#a54e1efecd58f2cbae2932eba716de6a9" title="Registers a single explicit file path into the observation pool." alt="" coords="252,5,450,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="204,44,236,40,237,45,205,49"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1FileSystemWatcher.html#ab174c18c8399c50a7818c456e2a51551" title="Obtains a list of all currently registered file paths." alt="" coords="252,72,450,115"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="205,71,237,75,236,80,204,76"/>
+</map>

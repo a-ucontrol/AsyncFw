@@ -1,5 +1,5 @@
 <map id="AsyncFw::SystemProcess" name="AsyncFw::SystemProcess">
-<area shape="rect" id="Node000001" title="The SystemProcess class." alt="" coords="685,45,862,72"/>
+<area shape="rect" id="Node000001" title="Example:" alt="" coords="685,45,862,72"/>
 <area shape="rect" id="Node000002" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="358,5,552,48"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="568,35,685,47,684,52,567,41"/>
 <area shape="rect" id="Node000003" href="$classAsyncFw_1_1FunctionConnector.html" title="Provides a thread&#45;safe, publisher&#45;subscriber mechanism to establish sender&#45;to&#45;receivers connections." alt="" coords="5,40,200,83"/>

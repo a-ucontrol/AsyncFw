@@ -1,0 +1,5 @@
+<map id="AsyncFw::FileSystemWatcher::FileSystemWatcher" name="AsyncFw::FileSystemWatcher::FileSystemWatcher">
+<area shape="rect" id="Node000001" title="Constructs a FileSystemWatcher and optionally starts monitoring given paths." alt="" coords="252,5,450,48"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1FileSystemWatcher.html#a16b4210d215a3b340c98f650d2071114" title="Retrieves the global instance pointer of the active FileSystemWatcher." alt="" coords="5,5,204,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="236,29,204,29,204,24,236,24"/>
+</map>

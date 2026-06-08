@@ -25,12 +25,13 @@ var searchData=
   ['coroutineinvokeawait_22',['CoroutineInvokeAwait',['../structAsyncFw_1_1CoroutineInvokeAwait.html',1,'AsyncFw']]],
   ['coroutinetask_23',['CoroutineTask',['../structAsyncFw_1_1CoroutineTask.html',1,'AsyncFw']]],
   ['cotimeout_24',['coTimeout',['../classAsyncFw_1_1Timer.html#aad1874fc8c5f41c278e4e4de81609e54',1,'AsyncFw::Timer::coTimeout()'],['../group__coroutine__api.html#ga37b3a970310b55e69ed1cb7aa9ab3646',1,'AsyncFw::coTimeout()']]],
-  ['create_25',['create',['../classAsyncFw_1_1Instance.html#a8000597f0e7ee4bd6669491a5b502beb',1,'AsyncFw::Instance::create(Args... args)'],['../classAsyncFw_1_1Instance.html#a158800905f9c1ce225fcabbfa5b1d053',1,'AsyncFw::Instance::create(Args... args)']]],
-  ['created_26',['created',['../classAsyncFw_1_1AbstractInstance.html#ad4ae1bfcd37c2450b85b35257f92360f',1,'AsyncFw::AbstractInstance']]],
-  ['createthread_27',['createThread',['../classAsyncFw_1_1ThreadPool.html#a02cf5b98df2bbd01b4757e09fceece49',1,'AsyncFw::ThreadPool']]],
-  ['cross_20thread_20signals_3a_20tt_20functionconnector_20tt_28',['2. Cross-Thread Signals: &lt;tt&gt;FunctionConnector&lt;/tt&gt;',['../index.html#autotoc_md4',1,'']]],
-  ['cryptographic_20state_20pki_3a_20tt_20tlscontext_20tt_29',['5. Cryptographic State &amp; PKI: &lt;tt&gt;TlsContext&lt;/tt&gt;',['../index.html#autotoc_md7',1,'']]],
-  ['cryptor_30',['Cryptor',['../classAsyncFw_1_1Cryptor.html',1,'AsyncFw']]],
-  ['cryptor_2eh_31',['Cryptor.h',['../Cryptor_8h.html',1,'']]],
-  ['current_32',['current',['../classAsyncFw_1_1AbstractThread.html#a09cdd1972b9416a7ddb2a1921f36938c',1,'AsyncFw::AbstractThread::current()'],['../classAsyncFw_1_1Thread.html#a0a3bd6a54db28f73ff59cfea6a40b07a',1,'AsyncFw::Thread::current()']]]
+  ['crashed_25',['Crashed',['../classAsyncFw_1_1SystemProcess.html#afad39352d4d8376d1304bc340a0cf32fa71589da9ec6d6bf72db63b0706ecfb60',1,'AsyncFw::SystemProcess']]],
+  ['create_26',['create',['../classAsyncFw_1_1Instance.html#a8000597f0e7ee4bd6669491a5b502beb',1,'AsyncFw::Instance::create(Args... args)'],['../classAsyncFw_1_1Instance.html#a158800905f9c1ce225fcabbfa5b1d053',1,'AsyncFw::Instance::create(Args... args)']]],
+  ['created_27',['created',['../classAsyncFw_1_1AbstractInstance.html#ad4ae1bfcd37c2450b85b35257f92360f',1,'AsyncFw::AbstractInstance']]],
+  ['createthread_28',['createThread',['../classAsyncFw_1_1ThreadPool.html#a02cf5b98df2bbd01b4757e09fceece49',1,'AsyncFw::ThreadPool']]],
+  ['cross_20thread_20signals_3a_20tt_20functionconnector_20tt_29',['2. Cross-Thread Signals: &lt;tt&gt;FunctionConnector&lt;/tt&gt;',['../index.html#autotoc_md4',1,'']]],
+  ['cryptographic_20state_20pki_3a_20tt_20tlscontext_20tt_30',['5. Cryptographic State &amp; PKI: &lt;tt&gt;TlsContext&lt;/tt&gt;',['../index.html#autotoc_md7',1,'']]],
+  ['cryptor_31',['Cryptor',['../classAsyncFw_1_1Cryptor.html',1,'AsyncFw']]],
+  ['cryptor_2eh_32',['Cryptor.h',['../Cryptor_8h.html',1,'']]],
+  ['current_33',['current',['../classAsyncFw_1_1AbstractThread.html#a09cdd1972b9416a7ddb2a1921f36938c',1,'AsyncFw::AbstractThread::current()'],['../classAsyncFw_1_1Thread.html#a0a3bd6a54db28f73ff59cfea6a40b07a',1,'AsyncFw::Thread::current()']]]
 ];
