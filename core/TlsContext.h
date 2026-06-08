@@ -58,7 +58,7 @@ public:
 
   /** @brief Generate private key. @param bits Number of bits in the generate key @return True if generated */
   bool generateKey(int = 2048);
-  /** @brief Generate certificate. @param subject Subject. @param san Subject alternative name. @param ca CA certificate. @param days Days. @return True if generated */
+  /** @brief Generate certificate. @param subject Subject. @param san Subject alternative name. @param ca CA certificate. @param days Specify the days in which the validity period expires. @return True if generated */
   bool generateCertificate(const std::vector<std::pair<std::string, std::string>> & = {{"CN", "Root-CA"}}, const std::string & = {}, const std::string & = "CA:TRUE,pathlen:1", int = 365);
   DataArray generateRequest(const std::vector<std::pair<std::string, std::string>> &, const std::string & = {}, const std::string & = {} /*for ca: "CA:TRUE,pathlen:0"*/);
   DataArray signRequest(DataArray &, int = 365);
