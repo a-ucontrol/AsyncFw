@@ -1,5 +1,6 @@
 var NAVTREEINDEX2 =
 {
+"structAsyncFw_1_1ApplicationNotifier_1_1Value.html":[2,0,0,10,0],
 "structAsyncFw_1_1CoroutineAwait.html":[2,0,0,11],
 "structAsyncFw_1_1CoroutineInvokeAwait.html":[2,0,0,12],
 "structAsyncFw_1_1CoroutineTask.html":[2,0,0,13],

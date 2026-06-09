@@ -46,6 +46,7 @@ public:
       Direct = AbstractFunctionConnector::Direct,  ///< Invokes the receiver slot immediately inside the sender's thread. No context switching occurs.
       Queued = AbstractFunctionConnector::Queued,  ///< Posts a task containing a copy of the arguments into the receiver thread's event loop. Execution is asynchronous.
       Sync = AbstractFunctionConnector::Sync,      ///< Dispatches the invocation to the receiver's thread loop, but blocks the sender's thread until execution completes.
+      Default = 0x80                               ///< Use the default ConnectionPolicy configuration defined by the connector.
     };
     AbstractThread *thread_;
     Type type_;
@@ -83,19 +84,19 @@ template <AbstractFunctionConnector::ConnectionPolicy P = AbstractFunctionConnec
 class FunctionConnector : public AbstractFunctionConnector {
 public:
   FunctionConnector() : AbstractFunctionConnector(P) {}
-  template <Connection::Type T = static_cast<Connection::Type>(0x80), typename F>
+  template <Connection::Type T = Connection::Default, typename F>
   Connection &connect(F f) const {
-    if constexpr ((P & 0x10) != 0) { static_assert(T == static_cast<Connection::Type>(0x80), "Error: Connection type mismatch!"); }
-    constexpr typename Connection::Type type = (T != static_cast<Connection::Type>(0x80)) ? T : static_cast<Connection::Type>(P & ~0x10);
+    if constexpr ((P & 0x10) != 0) { static_assert(T == Connection::Default, "Error: Connection type mismatch!"); }
+    constexpr typename Connection::Type type = (T != Connection::Default) ? T : static_cast<Connection::Type>(P & ~0x10);
     std::lock_guard<std::mutex> lock(mutex);
 #ifndef __clang_analyzer__
     return *new Connection(f, this, type);
 #endif
   }
-  template <Connection::Type T = static_cast<Connection::Type>(0x80), typename M, typename O>
+  template <Connection::Type T = Connection::Default, typename M, typename O>
   Connection &connect(M m, O *o) const {
-    if constexpr ((P & 0x10) != 0) { static_assert(T == static_cast<Connection::Type>(0x80), "Error: Connection type mismatch!"); }
-    constexpr typename Connection::Type type = (T != static_cast<Connection::Type>(0x80)) ? T : static_cast<Connection::Type>(P & ~0x10);
+    if constexpr ((P & 0x10) != 0) { static_assert(T == Connection::Default, "Error: Connection type mismatch!"); }
+    constexpr typename Connection::Type type = (T != Connection::Default) ? T : static_cast<Connection::Type>(P & ~0x10);
     std::lock_guard<std::mutex> lock(mutex);
 #ifndef __clang_analyzer__
     return *new Connection(m, o, this, type);
