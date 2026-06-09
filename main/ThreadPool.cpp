@@ -133,8 +133,10 @@ ThreadPool::Thread *ThreadPool::createThread(const std::string &_name) {
 }
 
 void ThreadPool::removeThread(AbstractThreadPool::Thread *thread) {
-  std::vector<AbstractThreadPool::Thread *>::iterator it = std::find(workThreads_.begin(), workThreads_.end(), thread);
-  if (it != workThreads_.end()) workThreads_.erase(it);
+  thread_->invoke([this, thread]() {
+    std::vector<AbstractThreadPool::Thread *>::iterator it = std::find(workThreads_.begin(), workThreads_.end(), thread);
+    if (it != workThreads_.end()) { workThreads_.erase(it); }
+  }, true);
   AbstractThreadPool::removeThread(thread);
   lsTrace();
 }
@@ -145,22 +147,28 @@ void ThreadPool::quit() {
 }
 
 AbstractThreadPool::Thread *ThreadPool::getThread() {
-  int _s = workThreads_.size();
-  if (_s < workThreadsSize_) {
-    for (int i = 0; i != _s; ++i)
-      if (workThreads_[i]->workLoad() == 0) return workThreads_[i];
-
-    workThreads_.emplace_back(createThread("Work-" + std::to_string(_s)));
-    return workThreads_.back();
-  }
   ThreadPool::Thread *_t = nullptr;
-  int _load = std::numeric_limits<int>::max();
-  for (int i = 0; i != _s; ++i) {
-    int _l = static_cast<ThreadPool::Thread *>(workThreads_[i])->workLoad();
-    if (_l < _load) {
-      _load = _l;
-      _t = static_cast<ThreadPool::Thread *>(workThreads_[i]);
+  thread_->invoke([this, &_t]() {
+    int _s = workThreads_.size();
+    if (_s < workThreadsSize_) {
+      for (int i = 0; i != _s; ++i)
+        if (workThreads_[i]->workLoad() == 0) {
+          _t = workThreads_[i];
+          return;
+        }
+
+      workThreads_.emplace_back(createThread("Work-" + std::to_string(_s)));
+      _t = workThreads_.back();
+      return;
     }
-  }
+    int _load = std::numeric_limits<int>::max();
+    for (int i = 0; i != _s; ++i) {
+      int _l = workThreads_[i]->workLoad();
+      if (_l < _load) {
+        _load = _l;
+        _t = workThreads_[i];
+      }
+    }
+  }, true);
   return _t;
 }
