@@ -20,10 +20,11 @@ class Rrd {
 public:
   using Item = DataArray;
   using ItemList = DataArrayList;
-  /** @brief Sets up an automated callback to compute averaged metrics inside a specified interval fraction. */
-  template <typename T>
-  void setAverage(int interval, T f, int offset = 0) {
-    average = new Invocable<void(const ItemList &)>::Function(std::forward<T>(f));
+  /** @brief Sets up an automated callback to compute averaged metrics inside a specified interval fraction.
+  @warning This is a strict configuration method. It must be called only once during initialization. */
+  template <typename F>
+  void setAverage(int interval, F f, int offset = 0) {
+    average = new Invocable<void(const ItemList &)>::Function(std::forward<F>(f));
     aInterval = interval / interval_;
     aOffset = offset;
   }

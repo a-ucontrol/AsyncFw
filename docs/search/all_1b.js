@@ -9,7 +9,7 @@ var searchData=
   ['servicetype_6',['serviceType',['../classAsyncFw_1_1MulticastDns.html#a23e336e5c39f79f847b12014558e8dda',1,'AsyncFw::MulticastDns']]],
   ['set_7',['set',['../classAsyncFw_1_1Instance.html#ac288330eee2512b0f87ce1013697abff',1,'AsyncFw::Instance']]],
   ['setautosave_8',['setAutoSave',['../classAsyncFw_1_1Log.html#aa915e380895b72e2d636c73930b3f0e5',1,'AsyncFw::Log']]],
-  ['setaverage_9',['setAverage',['../classAsyncFw_1_1Rrd.html#a1ddec15ee073263e7403d69f87e599fa',1,'AsyncFw::Rrd']]],
+  ['setaverage_9',['setAverage',['../classAsyncFw_1_1Rrd.html#ac1e21d6150414b6d7632aff22f8f13c7',1,'AsyncFw::Rrd']]],
   ['setcertificate_10',['setCertificate',['../classAsyncFw_1_1TlsContext.html#afb5237df49026bf53948efaafaa2f0f9',1,'AsyncFw::TlsContext']]],
   ['setcolorout_11',['setColorOut',['../classAsyncFw_1_1AbstractLog.html#ad3d69f8e4e65e11f777961ff199cc305',1,'AsyncFw::AbstractLog']]],
   ['setcompleted_12',['setCompleted',['../classAsyncFw_1_1LogStream.html#a2b004052ecdfc044a5369b90db412d40',1,'AsyncFw::LogStream']]],
