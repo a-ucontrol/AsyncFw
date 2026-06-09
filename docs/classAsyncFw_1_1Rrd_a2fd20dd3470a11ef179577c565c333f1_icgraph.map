@@ -1,0 +1,13 @@
+<map id="AsyncFw::Rrd::Rrd" name="AsyncFw::Rrd::Rrd">
+<area shape="rect" id="Node000001" title="Constructs a persistent circular archive database with physical disk backing." alt="" coords="398,81,532,108"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1Log.html#a832d13f4e9231eee37d8decb5b9b96d7" title="Constructs a persistent log system with a specific circular database size and file name context." alt="" coords="216,5,350,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="419,77,349,46,320,35,322,30,351,42,421,72"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1Rrd.html#aa54ae298c96e9efe88b644931b12f734" title="Constructs a minimal in&#45;memory anonymous circular database with default system tracking intervals." alt="" coords="216,56,350,83"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="382,86,350,81,351,76,383,81"/>
+<area shape="rect" id="Node000005" href="$classAsyncFw_1_1Rrd.html#aaea6a63444ab427f801be34f26d930d5" title="Constructs a persistent circular archive database using default system tracking intervals." alt="" coords="216,107,350,133"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="383,109,351,113,350,108,382,104"/>
+<area shape="rect" id="Node000006" href="$classAsyncFw_1_1Rrd.html#a98c7829cc6177c80245cf95095deb3ba" title="Constructs an in&#45;memory anonymous circular database without file serialization." alt="" coords="216,157,350,184"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="421,117,351,148,322,159,320,154,349,143,419,112"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1Log.html#a00e9a20e7303e9a24403046af176b6b2" title="Global service locator shortcut to fetch the current engine&#45;wide default log pointer." alt="" coords="5,5,168,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="200,21,168,21,168,16,200,16"/>
+</map>

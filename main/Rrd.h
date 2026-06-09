@@ -28,13 +28,13 @@ public:
     aInterval = interval / interval_;
     aOffset = offset;
   }
-  /** @brief Constructs a persistent circular archive database bounded by a specific array size, collection interval, and file backing context. */
+  /** @brief Constructs a persistent circular archive database with physical disk backing. @param size Total number of data allocation slots (capacity) in the ring buffer. @param interval Data collection rate and timeline step resolution in milliseconds. @param fillInterval Maximum allowed time window in milliseconds to auto-fill missed historical data gaps. @param name Path to a file in the local file system used to save data. */
   Rrd(int, int, int, const std::string &);
-  /** @brief Constructs an in-memory anonymous circular database with a specific collection interval. */
+  /** @brief Constructs an in-memory anonymous circular database without file serialization. @param size Total number of data allocation slots (capacity) in the ring buffer. @param interval Data collection rate and timeline step resolution in milliseconds. @param fillInterval Maximum allowed time window in milliseconds to auto-fill missed historical data gaps. */
   Rrd(int, int, int);
-  /** @brief Constructs a persistent circular archive database with a default tracking interval. */
+  /** @brief Constructs a persistent circular archive database using default system tracking intervals. @param size Total number of data allocation slots (capacity) in the ring buffer. @param name Path to a file in the local file system used to save data. */
   Rrd(int, const std::string &);
-  /** @brief Constructs an in-memory anonymous circular database with a default tracking interval. */
+  /** @brief Constructs a minimal in-memory anonymous circular database with default system tracking intervals. @param size Total number of data allocation slots (capacity) in the ring buffer. */
   Rrd(int);
   /** @brief Destructor. Synchronizes outstanding dirty data buffers to disk and frees internal evaluation assets. */
   ~Rrd();

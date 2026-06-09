@@ -66,7 +66,7 @@
 <!-- Node5 -->
 <g id="Node000005" class="node">
 <title>Node5</title>
-<g id="a_Node000005"><a xlink:href="classAsyncFw_1_1Rrd.html#a2fd20dd3470a11ef179577c565c333f1" target="_top" xlink:title="Constructs a persistent circular archive database bounded by a specific array size,...">
+<g id="a_Node000005"><a xlink:href="classAsyncFw_1_1Rrd.html#a2fd20dd3470a11ef179577c565c333f1" target="_top" xlink:title="Constructs a persistent circular archive database with physical disk backing.">
 <polygon fill="white" stroke="#666666" points="422.25,-96 321.5,-96 321.5,-76 422.25,-76 422.25,-96"/>
 <text text-anchor="middle" x="371.88" y="-82.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::Rrd::Rrd</text>
 </a>
@@ -121,7 +121,7 @@
 <!-- Node8 -->
 <g id="Node000008" class="node">
 <title>Node8</title>
-<g id="a_Node000008"><a xlink:href="classAsyncFw_1_1Rrd.html#aa54ae298c96e9efe88b644931b12f734" target="_top" xlink:title="Constructs an in&#45;memory anonymous circular database with a default tracking interval.">
+<g id="a_Node000008"><a xlink:href="classAsyncFw_1_1Rrd.html#aa54ae298c96e9efe88b644931b12f734" target="_top" xlink:title="Constructs a minimal in&#45;memory anonymous circular database with default system tracking intervals.">
 <polygon fill="white" stroke="#666666" points="264.5,-96 163.75,-96 163.75,-76 264.5,-76 264.5,-96"/>
 <text text-anchor="middle" x="214.12" y="-82.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::Rrd::Rrd</text>
 </a>
@@ -139,7 +139,7 @@
 <!-- Node9 -->
 <g id="Node000009" class="node">
 <title>Node9</title>
-<g id="a_Node000009"><a xlink:href="classAsyncFw_1_1Rrd.html#aaea6a63444ab427f801be34f26d930d5" target="_top" xlink:title="Constructs a persistent circular archive database with a default tracking interval.">
+<g id="a_Node000009"><a xlink:href="classAsyncFw_1_1Rrd.html#aaea6a63444ab427f801be34f26d930d5" target="_top" xlink:title="Constructs a persistent circular archive database using default system tracking intervals.">
 <polygon fill="white" stroke="#666666" points="264.5,-58 163.75,-58 163.75,-38 264.5,-38 264.5,-58"/>
 <text text-anchor="middle" x="214.12" y="-44.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::Rrd::Rrd</text>
 </a>
@@ -157,7 +157,7 @@
 <!-- Node10 -->
 <g id="Node000010" class="node">
 <title>Node10</title>
-<g id="a_Node000010"><a xlink:href="classAsyncFw_1_1Rrd.html#a98c7829cc6177c80245cf95095deb3ba" target="_top" xlink:title="Constructs an in&#45;memory anonymous circular database with a specific collection interval.">
+<g id="a_Node000010"><a xlink:href="classAsyncFw_1_1Rrd.html#a98c7829cc6177c80245cf95095deb3ba" target="_top" xlink:title="Constructs an in&#45;memory anonymous circular database without file serialization.">
 <polygon fill="white" stroke="#666666" points="264.5,-20 163.75,-20 163.75,0 264.5,0 264.5,-20"/>
 <text text-anchor="middle" x="214.12" y="-6.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::Rrd::Rrd</text>
 </a>
