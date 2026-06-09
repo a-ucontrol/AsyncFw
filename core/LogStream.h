@@ -90,7 +90,7 @@ public:
     Message(uint8_t, const std::string &, const std::string &, const std::string &);
     Message(uint64_t time, uint8_t type, const std::string &name, const std::string &string, const std::string &note) : time(time), type(type), name(name), string(string), note(note) {}
     uint64_t time;       ///< Unix timestamp in milliseconds.
-    uint8_t type;        ///< The log message severity level (MessageType).
+    uint8_t type;        ///< The log message Type (MessageType|Output|Color).
     std::string name;    ///< Extracted signature/sender identification context.
     std::string string;  ///< Main log message body payload text.
     std::string note;    ///< Debug context notes (source file code trace location).

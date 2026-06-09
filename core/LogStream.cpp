@@ -6,7 +6,6 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 */
 
 #include <iostream>
-#include <regex>
 #include <syncstream>
 #include <chrono>
 #include "core/AbstractThread.h"
@@ -34,7 +33,13 @@ void LogStream::console_output(const Message &message, uint8_t flags) {
       if (message.string.find('\n') == std::string::npos) str += " -> ";
       else {
         str += "\n ";
-        _message = regex_replace(_message, std::regex("\n"), "\n ");
+        // Calculate how much memory we need for str to avoid realloc
+        size_t _nl = std::count(_message.begin(), _message.end(), '\n');
+        str.reserve(str.size() + _message.size() + _nl);
+        for (char _c : _message) {
+          str.push_back(_c);
+          if (_c == '\n') { str.push_back(' '); }
+        }
       }
     }
   } else {
@@ -75,23 +80,21 @@ void LogStream::setTimeOffset(int seconds) { data.timeOffset = seconds * 1000; }
 
 std::string LogStream::sender(const char *function) {
   if (!function) return "Unknown";
-  std::string str(function);
-  if (str.find("{anonymous}") != std::string::npos) return "Anonymous";
-  std::size_t i;
-  str = str.substr(0, str.find_first_of('<'));
-  str = str.substr(0, str.find_first_of('('));
-  i = str.find_last_of(' ');
-  if (i != std::string::npos) str = str.substr(i + 1);
+  std::string_view str(function);
+  if (str.find("{anonymous}") != std::string_view::npos) return "Anonymous";
+  if (size_t pos = str.find_first_of('<'); pos != std::string_view::npos) { str = str.substr(0, pos); }
+  if (size_t pos = str.find_first_of('('); pos != std::string_view::npos) { str = str.substr(0, pos); }
+  if (size_t pos = str.find_last_of(' '); pos != std::string_view::npos) { str = str.substr(pos + 1); }
   for (const std::string &_str : data.functionPrefixIgnoreList_) {
     if (str.starts_with(_str)) {
-      str.erase(0, _str.size());
+      str.remove_prefix(_str.size());
       break;
     }
   }
-  i = str.find_first_of("::");
-  if (i == std::string::npos) return "Application";
-  str = str.substr(0, i);
-  return str;
+  if (size_t pos = str.find_first_of("::"); pos != std::string_view::npos) {
+    str = str.substr(0, pos);
+  } else return "Application";
+  return std::string(str);
 }
 
 std::string LogStream::timeString(const uint64_t _time, const TimeFormat &_format) {
@@ -116,53 +119,32 @@ std::string LogStream::currentTimeString(const TimeFormat &format) { return time
 
 std::string LogStream::levelName(uint8_t l) {
   if (l == Trace) return "trace";
-  else if (l == Debug)
-    return "debug";
-  else if (l == Info)
-    return "info";
-  else if (l == Notice)
-    return "notice";
-  else if (l == Warning)
-    return "warning";
-  else if (l == Error)
-    return "error";
-  else if (l == Alert)
-    return "alert";
-  else if (l == Emergency)
-    return "emergency";
+  else if (l == Debug) return "debug";
+  else if (l == Info) return "info";
+  else if (l == Notice) return "notice";
+  else if (l == Warning) return "warning";
+  else if (l == Error) return "error";
+  else if (l == Alert) return "alert";
+  else if (l == Emergency) return "emergency";
   return "unknown";
 }
 
 std::string LogStream::colorString(Color c) {
   if (c == White) return "\x1b[1;37m";
-  else if (c == Gray)
-    return "\x1b[0;37m";
-  else if (c == Black)
-    return "\x1b[1;30m";
-  else if (c == Red)
-    return "\x1b[1;31m";
-  else if (c == Green)
-    return "\x1b[1;32m";
-  else if (c == Blue)
-    return "\x1b[1;34m";
-  else if (c == Cyan)
-    return "\x1b[1;36m";
-  else if (c == Magenta)
-    return "\x1b[1;35m";
-  else if (c == Yellow)
-    return "\x1b[1;33m";
-  else if (c == DarkRed)
-    return "\x1b[0;31m";
-  else if (c == DarkGreen)
-    return "\x1b[0;32m";
-  else if (c == DarkBlue)
-    return "\x1b[0;34m";
-  else if (c == DarkCyan)
-    return "\x1b[0;36m";
-  else if (c == DarkMagenta)
-    return "\x1b[0;35m";
-  else if (c == DarkYellow)
-    return "\x1b[0;33m";
+  else if (c == Gray) return "\x1b[0;37m";
+  else if (c == Black) return "\x1b[1;30m";
+  else if (c == Red) return "\x1b[1;31m";
+  else if (c == Green) return "\x1b[1;32m";
+  else if (c == Blue) return "\x1b[1;34m";
+  else if (c == Cyan) return "\x1b[1;36m";
+  else if (c == Magenta) return "\x1b[1;35m";
+  else if (c == Yellow) return "\x1b[1;33m";
+  else if (c == DarkRed) return "\x1b[0;31m";
+  else if (c == DarkGreen) return "\x1b[0;32m";
+  else if (c == DarkBlue) return "\x1b[0;34m";
+  else if (c == DarkCyan) return "\x1b[0;36m";
+  else if (c == DarkMagenta) return "\x1b[0;35m";
+  else if (c == DarkYellow) return "\x1b[0;33m";
   return {};
 }
 
@@ -217,10 +199,8 @@ LogStream &LogStream::operator<<(uint8_t val) {
 LogStream &LogStream::operator<<(const char *val) {
   before();
   if (!val) stream << "nullptr";
-  else if (*val == 0)
-    stream << "\"\"";
-  else
-    stream << val;
+  else if (*val == 0) stream << "\"\"";
+  else stream << val;
   after();
   return *this;
 }
@@ -228,10 +208,8 @@ LogStream &LogStream::operator<<(const char *val) {
 LogStream &LogStream::operator<<(char *val) {
   before();
   if (!val) stream << "nullptr";
-  else if (*val == 0)
-    stream << "\"\"";
-  else
-    stream << val;
+  else if (*val == 0) stream << "\"\"";
+  else stream << val;
   after();
   return *this;
 }
