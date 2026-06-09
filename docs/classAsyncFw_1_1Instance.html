@@ -146,7 +146,7 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~Instance</b> () o
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a8000597f0e7ee4bd6669491a5b502beb" id="r_a8000597f0e7ee4bd6669491a5b502beb"><td class="memTemplParams" colspan="2">template&lt;typename CT, typename... Args&gt; </td></tr>
 <tr class="memitem:a8000597f0e7ee4bd6669491a5b502beb"><td class="memTemplItemLeft" align="right" valign="top">static CT *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a8000597f0e7ee4bd6669491a5b502beb">create</a> (Args... args)</td></tr>
-<tr class="memdesc:a8000597f0e7ee4bd6669491a5b502beb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a custom polymorphically derived object inside this instance container as the global default.  <br /></td></tr>
+<tr class="memdesc:a8000597f0e7ee4bd6669491a5b502beb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers a custom derived class instance as the engine-wide global default.  <br /></td></tr>
 <tr class="separator:a8000597f0e7ee4bd6669491a5b502beb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a158800905f9c1ce225fcabbfa5b1d053" id="r_a158800905f9c1ce225fcabbfa5b1d053"><td class="memTemplParams" colspan="2">template&lt;typename... Args&gt; </td></tr>
 <tr class="memitem:a158800905f9c1ce225fcabbfa5b1d053"><td class="memTemplItemLeft" align="right" valign="top">static T *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a158800905f9c1ce225fcabbfa5b1d053">create</a> (Args... args)</td></tr>
@@ -254,7 +254,7 @@ template&lt;typename CT, typename... Args&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Creates a custom polymorphically derived object inside this instance container as the global default. </p>
+<p>Registers a custom derived class instance as the engine-wide global default. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">CT</td><td>The concrete target type to instantiate (must derive from or be type T).</td></tr>

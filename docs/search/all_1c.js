@@ -8,7 +8,7 @@ var searchData=
   ['the_20application_20master_3a_20tt_20mainthread_20tt_5',['8. The Application Master: &lt;tt&gt;MainThread&lt;/tt&gt;',['../index.html#autotoc_md10',1,'']]],
   ['the_20core_20backbone_3a_20tt_20abstractthread_20tt_6',['1. The Core Backbone: &lt;tt&gt;AbstractThread&lt;/tt&gt;',['../index.html#autotoc_md3',1,'']]],
   ['thread_7',['Thread',['../classAsyncFw_1_1AbstractThreadPool_1_1Thread.html',1,'AsyncFw::AbstractThreadPool::Thread'],['../classAsyncFw_1_1Thread.html',1,'AsyncFw::Thread'],['../classAsyncFw_1_1Thread.html#afc5e422090767dd84020381fb9a4d490',1,'AsyncFw::Thread::Thread()'],['../classAsyncFw_1_1AbstractThreadPool_1_1Thread.html#a787b048ddebfd8b5d5d6c3988d0d90d3',1,'AsyncFw::AbstractThreadPool::Thread::Thread()']]],
-  ['thread_8',['thread',['../classAsyncFw_1_1AbstractSocket.html#ac1b9b68ae7fe6c9312d9d713a7b444a9',1,'AsyncFw::AbstractSocket']]],
+  ['thread_8',['thread',['../classAsyncFw_1_1AbstractSocket.html#ac1b9b68ae7fe6c9312d9d713a7b444a9',1,'AsyncFw::AbstractSocket::thread()'],['../classAsyncFw_1_1Rrd.html#a0e1fdab32966afe235c8a3cbb9c3c528',1,'AsyncFw::Rrd::thread()']]],
   ['thread_20safe_20diagnostic_20stream_3a_20tt_20logstream_20tt_9',['7. Thread-Safe Diagnostic Stream: &lt;tt&gt;LogStream&lt;/tt&gt;',['../index.html#autotoc_md9',1,'']]],
   ['thread_20signals_3a_20tt_20functionconnector_20tt_10',['2. Cross-Thread Signals: &lt;tt&gt;FunctionConnector&lt;/tt&gt;',['../index.html#autotoc_md4',1,'']]],
   ['thread_20tt_20secure_20sockets_11',['4. Network Worker Thread: &lt;tt&gt;Thread&lt;/tt&gt; &amp; Secure Sockets',['../index.html#autotoc_md6',1,'']]],

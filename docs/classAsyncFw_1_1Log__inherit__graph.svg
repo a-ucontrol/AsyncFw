@@ -11,7 +11,7 @@
 <!-- Node1 -->
 <g id="Node000001" class="node">
 <title>Node1</title>
-<g id="a_Node000001"><a xlink:title="The Log class.">
+<g id="a_Node000001"><a xlink:title="Asynchronous log manager with circular database (Rrd) backend and duplicate сompression.">
 <polygon fill="#999999" stroke="#666666" points="136,-20 57,-20 57,0 136,0 136,-20"/>
 <text text-anchor="middle" x="96.5" y="-6.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::Log</text>
 </a>
@@ -20,7 +20,7 @@
 <!-- Node2 -->
 <g id="Node000002" class="node">
 <title>Node2</title>
-<g id="a_Node000002"><a xlink:href="classAsyncFw_1_1Rrd.html" target="_top" xlink:title="The Rrd class.">
+<g id="a_Node000002"><a xlink:href="classAsyncFw_1_1Rrd.html" target="_top" xlink:title="A high&#45;performance circular database engine (Round&#45;Robin Database) for time&#45;series and structural dat...">
 <polygon fill="white" stroke="#666666" points="79,-76 0,-76 0,-56 79,-56 79,-76"/>
 <text text-anchor="middle" x="39.5" y="-62.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::Rrd</text>
 </a>
@@ -38,7 +38,7 @@
 <!-- Node3 -->
 <g id="Node000003" class="node">
 <title>Node3</title>
-<g id="a_Node000003"><a xlink:href="classAsyncFw_1_1AbstractLog.html" target="_top" xlink:title="The AbstractLog class provides the base functionality for logger.">
+<g id="a_Node000003"><a xlink:href="classAsyncFw_1_1AbstractLog.html" target="_top" xlink:title="The AbstractLog class provides the core thread&#45;safe infrastructure for log management and duplicate r...">
 <polygon fill="white" stroke="#666666" points="212.38,-76 96.62,-76 96.62,-56 212.38,-56 212.38,-76"/>
 <text text-anchor="middle" x="154.5" y="-62.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AbstractLog</text>
 </a>

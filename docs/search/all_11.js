@@ -9,7 +9,7 @@ var searchData=
   ['infotrusted_6',['infoTrusted',['../classAsyncFw_1_1TlsContext.html#ae71ae4d15772edd1b68914cdc2e6e3b1',1,'AsyncFw::TlsContext']]],
   ['input_7',['input',['../classAsyncFw_1_1SystemProcess.html#a2474831568ca17479f4b7b4350cb13c8',1,'AsyncFw::SystemProcess']]],
   ['instance_8',['Instance',['../classAsyncFw_1_1Instance.html',1,'AsyncFw::Instance&lt; T &gt;'],['../classAsyncFw_1_1Instance.html#aec767689656fb7dbb79dd7a130caa4ab',1,'AsyncFw::Instance::Instance()']]],
-  ['instance_9',['instance',['../classAsyncFw_1_1FileSystemWatcher.html#a16b4210d215a3b340c98f650d2071114',1,'AsyncFw::FileSystemWatcher::instance()'],['../classAsyncFw_1_1MulticastDns.html#a61341fa78536e7a787bbbce75116ef3e',1,'AsyncFw::MulticastDns::instance()'],['../classAsyncFw_1_1ThreadPool.html#a086c0271dcb7c4be416705d622145f83',1,'AsyncFw::ThreadPool::instance()']]],
+  ['instance_9',['instance',['../classAsyncFw_1_1FileSystemWatcher.html#a16b4210d215a3b340c98f650d2071114',1,'AsyncFw::FileSystemWatcher::instance()'],['../classAsyncFw_1_1Log.html#a00e9a20e7303e9a24403046af176b6b2',1,'AsyncFw::Log::instance()'],['../classAsyncFw_1_1MulticastDns.html#a61341fa78536e7a787bbbce75116ef3e',1,'AsyncFw::MulticastDns::instance()'],['../classAsyncFw_1_1ThreadPool.html#a086c0271dcb7c4be416705d622145f83',1,'AsyncFw::ThreadPool::instance()']]],
   ['instance_2eh_10',['Instance.h',['../Instance_8h.html',1,'']]],
   ['instance_3c_20asyncfw_3a_3aapplicationnotifier_20_3e_11',['Instance&lt; AsyncFw::ApplicationNotifier &gt;',['../classAsyncFw_1_1Instance.html',1,'AsyncFw']]],
   ['instance_3c_20asyncfw_3a_3afilesystemwatcher_20_3e_12',['Instance&lt; AsyncFw::FileSystemWatcher &gt;',['../classAsyncFw_1_1Instance.html',1,'AsyncFw']]],

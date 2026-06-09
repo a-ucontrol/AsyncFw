@@ -171,10 +171,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a7e5b6e93c0e2afca24874900b8aec919"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a7e5b6e93c0e2afca24874900b8aec919">appendPollTask</a> (int fd, <a class="el" href="#a654efa5f41b38ff679e48211e8904a59">PollEvents</a> events, F function)</td></tr>
 <tr class="memdesc:a7e5b6e93c0e2afca24874900b8aec919"><td class="mdescLeft">&#160;</td><td class="mdescRight">Append poll task.  <br /></td></tr>
 <tr class="separator:a7e5b6e93c0e2afca24874900b8aec919"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3daa02eadfc65c325c99a9488df1c286" id="r_a3daa02eadfc65c325c99a9488df1c286"><td class="memTemplParams" colspan="2">template&lt;typename F&gt; </td></tr>
-<tr class="memitem:a3daa02eadfc65c325c99a9488df1c286"><td class="memTemplItemLeft" align="right" valign="top">int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a3daa02eadfc65c325c99a9488df1c286">appendTimerTask</a> (int timeout, F function)</td></tr>
-<tr class="memdesc:a3daa02eadfc65c325c99a9488df1c286"><td class="mdescLeft">&#160;</td><td class="mdescRight">Append timer task.  <br /></td></tr>
-<tr class="separator:a3daa02eadfc65c325c99a9488df1c286"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca9b6529df5d0faa3bd33174ba643aa1" id="r_aca9b6529df5d0faa3bd33174ba643aa1"><td class="memTemplParams" colspan="2">template&lt;typename F&gt; </td></tr>
+<tr class="memitem:aca9b6529df5d0faa3bd33174ba643aa1"><td class="memTemplItemLeft" align="right" valign="top">int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#aca9b6529df5d0faa3bd33174ba643aa1">appendTimerTask</a> (int ms, F function)</td></tr>
+<tr class="memdesc:aca9b6529df5d0faa3bd33174ba643aa1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Append timer task.  <br /></td></tr>
+<tr class="separator:aca9b6529df5d0faa3bd33174ba643aa1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7382428ae20b315b9b55fa68b700603d" id="r_a7382428ae20b315b9b55fa68b700603d"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7382428ae20b315b9b55fa68b700603d">startedEvent</a> ()</td></tr>
 <tr class="memdesc:a7382428ae20b315b9b55fa68b700603d"><td class="mdescLeft">&#160;</td><td class="mdescRight">This call from thread when it starts executing.  <br /></td></tr>
 <tr class="separator:a7382428ae20b315b9b55fa68b700603d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -330,7 +330,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>Thread</b></td></tr>
 <div id="dynsection-2-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-2-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1AbstractThread_ac8be1c406c4235ff1dabc1cdb4ac04ba_icgraph.svg" width="1096" height="412"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1AbstractThread_ac8be1c406c4235ff1dabc1cdb4ac04ba_icgraph.svg" width="1307" height="539"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -374,7 +374,7 @@ template&lt;typename F&gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if the function is added to the queue. </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="Log_2main_8cpp-example.html#a4">Log/main.cpp</a>, <a class="el" href="ThreadInvoke_2main_8cpp-example.html#a5">ThreadInvoke/main.cpp</a>, and <a class="el" href="ThreadPool_2main_8cpp-example.html#a6">ThreadPool/main.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="Log_2main_8cpp-example.html#a6">Log/main.cpp</a>, <a class="el" href="ThreadInvoke_2main_8cpp-example.html#a5">ThreadInvoke/main.cpp</a>, and <a class="el" href="ThreadPool_2main_8cpp-example.html#a6">ThreadPool/main.cpp</a>.</dd>
 </dl>
 <div id="dynsection-3" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-3-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
@@ -447,8 +447,8 @@ template&lt;typename F&gt; </div>
 
 </div>
 </div>
-<a id="a3daa02eadfc65c325c99a9488df1c286" name="a3daa02eadfc65c325c99a9488df1c286"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3daa02eadfc65c325c99a9488df1c286">&#9670;&#160;</a></span>appendTimerTask()</h2>
+<a id="aca9b6529df5d0faa3bd33174ba643aa1" name="aca9b6529df5d0faa3bd33174ba643aa1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aca9b6529df5d0faa3bd33174ba643aa1">&#9670;&#160;</a></span>appendTimerTask()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -461,7 +461,7 @@ template&lt;typename F&gt; </div>
         <tr>
           <td class="memname">int AsyncFw::AbstractThread::appendTimerTask </td>
           <td>(</td>
-          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>timeout</em></span>, </td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>ms</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -490,7 +490,7 @@ template&lt;typename F&gt; </div>
 <div id="dynsection-6-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-6-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1AbstractThread_a3daa02eadfc65c325c99a9488df1c286_cgraph.svg" width="406" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1AbstractThread_aca9b6529df5d0faa3bd33174ba643aa1_cgraph.svg" width="406" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -627,7 +627,7 @@ template&lt;typename F&gt; </div>
 <p>Runs a task in a managed thread. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">task</td><td>Poiner to <a class="el" href="classAsyncFw_1_1AbstractTask.html" title="The AbstractTask class.">AbstractTask</a>. </td></tr>
+    <tr><td class="paramname">task</td><td>Pointer to <a class="el" href="classAsyncFw_1_1AbstractTask.html" title="The AbstractTask class.">AbstractTask</a>. </td></tr>
   </table>
   </dd>
 </dl>

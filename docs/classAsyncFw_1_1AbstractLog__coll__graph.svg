@@ -11,7 +11,7 @@
 <!-- Node1 -->
 <g id="Node000001" class="node">
 <title>Node1</title>
-<g id="a_Node000001"><a xlink:title="The AbstractLog class provides the base functionality for logger.">
+<g id="a_Node000001"><a xlink:title="The AbstractLog class provides the core thread&#45;safe infrastructure for log management and duplicate r...">
 <polygon fill="#999999" stroke="#666666" points="200.88,-20 85.12,-20 85.12,0 200.88,0 200.88,-20"/>
 <text text-anchor="middle" x="143" y="-6.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AbstractLog</text>
 </a>

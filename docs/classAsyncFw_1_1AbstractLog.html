@@ -113,7 +113,7 @@ $(function(){initNavTree('classAsyncFw_1_1AbstractLog.html',''); initResizable(t
 </div><!--header-->
 <div class="contents">
 
-<p>The <a class="el" href="classAsyncFw_1_1AbstractLog.html" title="The AbstractLog class provides the base functionality for logger.">AbstractLog</a> class provides the base functionality for logger.  
+<p>The <a class="el" href="classAsyncFw_1_1AbstractLog.html" title="The AbstractLog class provides the core thread-safe infrastructure for log management and duplicate r...">AbstractLog</a> class provides the core thread-safe infrastructure for log management and duplicate reduction.  
  <a href="#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="Log_8h_source.html">AsyncFw/Log</a>&gt;</code></p>
@@ -140,47 +140,62 @@ using&#160;</td><td class="memItemRight" valign="bottom"><b>Message</b> = <a cla
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a036a273ebd60a9ee365bae1d8ecb83ea" id="r_a036a273ebd60a9ee365bae1d8ecb83ea"><td class="memItemLeft" align="right" valign="top"><a id="a036a273ebd60a9ee365bae1d8ecb83ea" name="a036a273ebd60a9ee365bae1d8ecb83ea"></a>
+virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~AbstractLog</b> ()=0</td></tr>
+<tr class="memdesc:a036a273ebd60a9ee365bae1d8ecb83ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual destructor ensuring safe resource cleanup in derived logging implementations. <br /></td></tr>
+<tr class="separator:a036a273ebd60a9ee365bae1d8ecb83ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a851f59ea9d9019403e3adffc04ddd07a" id="r_a851f59ea9d9019403e3adffc04ddd07a"><td class="memItemLeft" align="right" valign="top"><a id="a851f59ea9d9019403e3adffc04ddd07a" name="a851f59ea9d9019403e3adffc04ddd07a"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>append</b> (uint8_t, const std::string &amp;, const std::string &amp;, const std::string &amp;={})</td></tr>
+<tr class="memdesc:a851f59ea9d9019403e3adffc04ddd07a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Appends a structured log entry by explicitly passing discrete string components. <br /></td></tr>
 <tr class="separator:a851f59ea9d9019403e3adffc04ddd07a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7e3f17c4c8069f79fe143da589ecc87c" id="r_a7e3f17c4c8069f79fe143da589ecc87c"><td class="memItemLeft" align="right" valign="top"><a id="a7e3f17c4c8069f79fe143da589ecc87c" name="a7e3f17c4c8069f79fe143da589ecc87c"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setExtendOut</b> (bool b)</td></tr>
+<tr class="memdesc:a7e3f17c4c8069f79fe143da589ecc87c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Toggles extended console output mode containing timestamps and level names. <br /></td></tr>
 <tr class="separator:a7e3f17c4c8069f79fe143da589ecc87c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad3d69f8e4e65e11f777961ff199cc305" id="r_ad3d69f8e4e65e11f777961ff199cc305"><td class="memItemLeft" align="right" valign="top"><a id="ad3d69f8e4e65e11f777961ff199cc305" name="ad3d69f8e4e65e11f777961ff199cc305"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setColorOut</b> (bool b)</td></tr>
+<tr class="memdesc:ad3d69f8e4e65e11f777961ff199cc305"><td class="mdescLeft">&#160;</td><td class="mdescRight">Toggles ANSI terminal color highlights for outgoing console log sequences. <br /></td></tr>
 <tr class="separator:ad3d69f8e4e65e11f777961ff199cc305"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4e3e81544937c12613ad37b12d7f14b0" id="r_a4e3e81544937c12613ad37b12d7f14b0"><td class="memItemLeft" align="right" valign="top"><a id="a4e3e81544937c12613ad37b12d7f14b0" name="a4e3e81544937c12613ad37b12d7f14b0"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setNotesOut</b> (bool b)</td></tr>
+<tr class="memdesc:a4e3e81544937c12613ad37b12d7f14b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Toggles the display of notes , such as source code lines (<a href="file:line">file:line</a>), at the end of console entries. <br /></td></tr>
 <tr class="separator:a4e3e81544937c12613ad37b12d7f14b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6cb17ac08086ff708d7b3d9ac07a7680" id="r_a6cb17ac08086ff708d7b3d9ac07a7680"><td class="memItemLeft" align="right" valign="top"><a id="a6cb17ac08086ff708d7b3d9ac07a7680" name="a6cb17ac08086ff708d7b3d9ac07a7680"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setHideDuplicates</b> (bool b)</td></tr>
+<tr class="memdesc:a6cb17ac08086ff708d7b3d9ac07a7680"><td class="mdescLeft">&#160;</td><td class="mdescRight">Toggles automated runtime aggregation to compress high-frequency duplicate log messages. <br /></td></tr>
 <tr class="separator:a6cb17ac08086ff708d7b3d9ac07a7680"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9356538116eb8df414110f0dfa29777a" id="r_a9356538116eb8df414110f0dfa29777a"><td class="memItemLeft" align="right" valign="top"><a id="a9356538116eb8df414110f0dfa29777a" name="a9356538116eb8df414110f0dfa29777a"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setLevel</b> (int i)</td></tr>
+<tr class="memdesc:a9356538116eb8df414110f0dfa29777a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the global log severity threshold for file/database recording destinations. <br /></td></tr>
 <tr class="separator:a9356538116eb8df414110f0dfa29777a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aca18be3a6c0f1c681fffc475f2eba5ac" id="r_aca18be3a6c0f1c681fffc475f2eba5ac"><td class="memItemLeft" align="right" valign="top"><a id="aca18be3a6c0f1c681fffc475f2eba5ac" name="aca18be3a6c0f1c681fffc475f2eba5ac"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setConsoleLevel</b> (int i)</td></tr>
+<tr class="memdesc:aca18be3a6c0f1c681fffc475f2eba5ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the visibility threshold level exclusively for live stdout/stderr console streaming. <br /></td></tr>
 <tr class="separator:aca18be3a6c0f1c681fffc475f2eba5ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab0cce5578235f60f5687f5ac352c0c5c" id="r_ab0cce5578235f60f5687f5ac352c0c5c"><td class="memItemLeft" align="right" valign="top"><a id="ab0cce5578235f60f5687f5ac352c0c5c" name="ab0cce5578235f60f5687f5ac352c0c5c"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setFilter</b> (const std::vector&lt; std::string &gt; &amp;f)</td></tr>
+<tr class="memdesc:ab0cce5578235f60f5687f5ac352c0c5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enforces an inclusion string filter matching against target sender identification names. <br /></td></tr>
 <tr class="separator:ab0cce5578235f60f5687f5ac352c0c5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:af5285b3d69b6af192fb2656d44b2e122" id="r_af5285b3d69b6af192fb2656d44b2e122"><td class="memItemLeft" align="right" valign="top"><a id="af5285b3d69b6af192fb2656d44b2e122" name="af5285b3d69b6af192fb2656d44b2e122"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>output</b> (const <a class="el" href="structAsyncFw_1_1LogStream_1_1Message.html">Message</a> &amp;message)</td></tr>
+<tr class="memitem:af5285b3d69b6af192fb2656d44b2e122" id="r_af5285b3d69b6af192fb2656d44b2e122"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af5285b3d69b6af192fb2656d44b2e122">output</a> (const <a class="el" href="structAsyncFw_1_1LogStream_1_1Message.html">Message</a> &amp;message)</td></tr>
+<tr class="memdesc:af5285b3d69b6af192fb2656d44b2e122"><td class="mdescLeft">&#160;</td><td class="mdescRight">Routes an individual message directly to active outputs (like LogStream::console_output).  <br /></td></tr>
 <tr class="separator:af5285b3d69b6af192fb2656d44b2e122"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaef591fb02d12add61602ad826a2b016" id="r_aaef591fb02d12add61602ad826a2b016"><td class="memItemLeft" align="right" valign="top"><a id="aaef591fb02d12add61602ad826a2b016" name="aaef591fb02d12add61602ad826a2b016"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>save</b> ()=0</td></tr>
+<tr class="memitem:aaef591fb02d12add61602ad826a2b016" id="r_aaef591fb02d12add61602ad826a2b016"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aaef591fb02d12add61602ad826a2b016">save</a> ()=0</td></tr>
+<tr class="memdesc:aaef591fb02d12add61602ad826a2b016"><td class="mdescLeft">&#160;</td><td class="mdescRight">Abstract interface to persist buffered logs into a specific backend storage.  <br /></td></tr>
 <tr class="separator:aaef591fb02d12add61602ad826a2b016"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9d4074dfb0cd3d2f54bc1301f6dcdfb8" id="r_a9d4074dfb0cd3d2f54bc1301f6dcdfb8"><td class="memItemLeft" align="right" valign="top"><a id="a9d4074dfb0cd3d2f54bc1301f6dcdfb8" name="a9d4074dfb0cd3d2f54bc1301f6dcdfb8"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>append</b> (const <a class="el" href="structAsyncFw_1_1LogStream_1_1Message.html">Message</a> &amp;m)</td></tr>
+<tr class="memdesc:a9d4074dfb0cd3d2f54bc1301f6dcdfb8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Main thread-safe ingestion entry point that pushes a Message structure into the log queue. <br /></td></tr>
 <tr class="separator:a9d4074dfb0cd3d2f54bc1301f6dcdfb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a872f1ea526aea7e961ce1eba43a15303" id="r_a872f1ea526aea7e961ce1eba43a15303"><td class="memItemLeft" align="right" valign="top"><a id="a872f1ea526aea7e961ce1eba43a15303" name="a872f1ea526aea7e961ce1eba43a15303"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>flush</b> ()</td></tr>
+<tr class="memdesc:a872f1ea526aea7e961ce1eba43a15303"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flushes all accumulated messages from the thread-safe queue into the processor loop. <br /></td></tr>
 <tr class="separator:a872f1ea526aea7e961ce1eba43a15303"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8dd93228e8424dccdd74adbb6422bd78" id="r_a8dd93228e8424dccdd74adbb6422bd78"><td class="memItemLeft" align="right" valign="top"><a id="a8dd93228e8424dccdd74adbb6422bd78" name="a8dd93228e8424dccdd74adbb6422bd78"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>finality</b> ()</td></tr>
+<tr class="memdesc:a8dd93228e8424dccdd74adbb6422bd78"><td class="mdescLeft">&#160;</td><td class="mdescRight">Synchronously flushes outstanding queues and tears down internal tracking structures. <br /></td></tr>
 <tr class="separator:a8dd93228e8424dccdd74adbb6422bd78"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa93762d956c27e9cfe41320788e42134" id="r_aa93762d956c27e9cfe41320788e42134"><td class="memItemLeft" align="right" valign="top"><a id="aa93762d956c27e9cfe41320788e42134" name="aa93762d956c27e9cfe41320788e42134"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>startTimer</b> (int *, int)</td></tr>
@@ -205,8 +220,74 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>queueLimit</b> = 128</
 <tr class="separator:a07957c52a66bc15571aa080571da9aa3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>The <a class="el" href="classAsyncFw_1_1AbstractLog.html" title="The AbstractLog class provides the base functionality for logger.">AbstractLog</a> class provides the base functionality for logger. </p>
-</div><hr/>The documentation for this class was generated from the following files:<ul>
+<div class="textblock"><p>The <a class="el" href="classAsyncFw_1_1AbstractLog.html" title="The AbstractLog class provides the core thread-safe infrastructure for log management and duplicate r...">AbstractLog</a> class provides the core thread-safe infrastructure for log management and duplicate reduction. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="af5285b3d69b6af192fb2656d44b2e122" name="af5285b3d69b6af192fb2656d44b2e122"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af5285b3d69b6af192fb2656d44b2e122">&#9670;&#160;</a></span>output()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AbstractLog::output </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structAsyncFw_1_1LogStream_1_1Message.html">Message</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>message</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span><span class="mlabel virtual">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Routes an individual message directly to active outputs (like LogStream::console_output). </p>
+
+<p>Reimplemented in <a class="el" href="classAsyncFw_1_1Log.html#a6b0ce40bc2e34f4b435894701194dc26">AsyncFw::Log</a>.</p>
+<div id="dynsection-2" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-2-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-2-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-2-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1AbstractLog_af5285b3d69b6af192fb2656d44b2e122_icgraph.svg" width="968" height="122"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<a id="aaef591fb02d12add61602ad826a2b016" name="aaef591fb02d12add61602ad826a2b016"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaef591fb02d12add61602ad826a2b016">&#9670;&#160;</a></span>save()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void AsyncFw::AbstractLog::save </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span><span class="mlabel pure-virtual">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Abstract interface to persist buffered logs into a specific backend storage. </p>
+
+<p>Implemented in <a class="el" href="classAsyncFw_1_1Log.html#af7b8fc20bdbe3dbf6f8e5b4fee3ada85">AsyncFw::Log</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li>main/<a class="el" href="Log_8h_source.html">Log.h</a></li>
 <li>main/<b>Log.cpp</b></li>
 </ul>

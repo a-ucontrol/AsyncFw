@@ -264,14 +264,14 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><b>setSenderPrefi
 <div class="textblock"><p>A high-performance, thread-safe logging stream utility utilizing RAII execution semantics. </p>
 <p><a class="el" href="classAsyncFw_1_1LogStream.html" title="A high-performance, thread-safe logging stream utility utilizing RAII execution semantics.">LogStream</a> provides dynamic string and data formatting using standard C++ stream insertion operators (operator&lt;&lt;). The logged content is accumulated in an internal buffer and is guaranteed to flush automatically to the configured outputs when the temporary <a class="el" href="classAsyncFw_1_1LogStream.html" title="A high-performance, thread-safe logging stream utility utilizing RAII execution semantics.">LogStream</a> instance is destroyed at the end of the statement (RAII). </p><dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">std::runtime_error</td><td>If log level emergency the exception std::runtime_error("log level emergency") will be raised. </td></tr>
+    <tr><td class="paramname">std::runtime_error</td><td>Thrown automatically if the log level is Emergency. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>Throwing a log with Emergency level will automatically raise a std::runtime_error. </dd>
 <dd>
 Please refer to the <b>example</b> for compile-time log optimizations (like LS_NO_TRACE) and standard inline vs formatting syntax usage styles.</dd></dl>
-<p>Examlpe: </p><div class="fragment"><div class="line">  <span class="comment">// 1. Inline streaming macros (ls*): Print FULL function signatures (__PRETTY_FUNCTION__)</span></div>
+<p>Example: </p><div class="fragment"><div class="line">  <span class="comment">// 1. Inline streaming macros (ls*): Print FULL function signatures (__PRETTY_FUNCTION__)</span></div>
 <div class="line">  <span class="comment">// These macros can be completely stripped out at compile-time (e.g. via #define LS_NO_TRACE)</span></div>
 <div class="line">  lsTrace() &lt;&lt; <span class="stringliteral">&quot;Trace&quot;</span>;</div>
 <div class="line">  lsDebug() &lt;&lt; <span class="stringliteral">&quot;Debug&quot;</span>;</div>

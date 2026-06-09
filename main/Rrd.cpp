@@ -26,7 +26,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 using namespace AsyncFw;
 
-Rrd::Rrd(int size, int interval, int fillInterval, const std::string &name) : dbSize(size), interval(interval), fill(interval ? fillInterval / interval : 0) {
+Rrd::Rrd(int size, int interval, int fillInterval, const std::string &name) : dbSize(size), interval_(interval), fill(interval ? fillInterval / interval : 0) {
   lsTrace();
   thread_ = Thread::current();
   if (size == 0) {
@@ -69,11 +69,11 @@ bool Rrd::createFile() {
 
 void Rrd::append(const Item &data, uint64_t index) {
   if (!dbSize) return;
-  uint64_t pos = index ? index : interval ? Rrd_CURRENT_TIME / interval : 1;
+  uint64_t pos = index ? index : interval_ ? Rrd_CURRENT_TIME / interval_ : 1;
   bool _average;
   {  //lock scope
     AbstractThread::LockGuard lock = thread_->lockGuard();
-    if (!index && !interval) pos += last_;
+    if (!index && !interval_) pos += last_;
 
     uint32_t empty;
     if (pos > last_) {

@@ -121,8 +121,9 @@ Public Member Functions</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><b>FunctionConnectionGuard</b> ()</td></tr>
 <tr class="memdesc:ac48d8cd651992f0587eaa4fce726edaf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an empty, uninitialized connection guard. <br /></td></tr>
 <tr class="separator:ac48d8cd651992f0587eaa4fce726edaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adcf72c33d343877b8bfa41036cb2e710" id="r_adcf72c33d343877b8bfa41036cb2e710"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adcf72c33d343877b8bfa41036cb2e710">FunctionConnectionGuard</a> (<a class="el" href="classAsyncFw_1_1FunctionConnectionGuard.html">FunctionConnectionGuard</a> &amp;&amp;)</td></tr>
-<tr class="memdesc:adcf72c33d343877b8bfa41036cb2e710"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move constructor. Transfers connection ownership from another guard.  <br /></td></tr>
+<tr class="memitem:adcf72c33d343877b8bfa41036cb2e710" id="r_adcf72c33d343877b8bfa41036cb2e710"><td class="memItemLeft" align="right" valign="top"><a id="adcf72c33d343877b8bfa41036cb2e710" name="adcf72c33d343877b8bfa41036cb2e710"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>FunctionConnectionGuard</b> (<a class="el" href="classAsyncFw_1_1FunctionConnectionGuard.html">FunctionConnectionGuard</a> &amp;&amp;)</td></tr>
+<tr class="memdesc:adcf72c33d343877b8bfa41036cb2e710"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move constructor. Transfers connection ownership from another guard. <br /></td></tr>
 <tr class="separator:adcf72c33d343877b8bfa41036cb2e710"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad81a16802c1e93b812c25fa1545da727" id="r_ad81a16802c1e93b812c25fa1545da727"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad81a16802c1e93b812c25fa1545da727">FunctionConnectionGuard</a> (<a class="el" href="classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html">AbstractFunctionConnector::Connection</a> &amp;)</td></tr>
 <tr class="memdesc:ad81a16802c1e93b812c25fa1545da727"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a guard and binds it to an active connection.  <br /></td></tr>
@@ -144,7 +145,7 @@ Public Member Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>An RAII guard that automatically manages the lifecycle of a <a class="el" href="classAsyncFw_1_1FunctionConnector.html" title="Provides a thread-safe, publisher-subscriber mechanism to establish sender-to-receivers connections.">FunctionConnector</a> connection. </p>
 <p>This class provides automated connection management using the Resource Acquisition Is Initialization (RAII) idiom. When a <a class="el" href="classAsyncFw_1_1FunctionConnectionGuard.html" title="An RAII guard that automatically manages the lifecycle of a FunctionConnector connection.">FunctionConnectionGuard</a> goes out of scope or is destroyed, it automatically disconnects and cleans up its associated connection. It supports move semantics, allowing the guard to be transferred between scopes or stored inside containers. It explicitly disables copying. </p><dl class="section note"><dt>Note</dt><dd>The destruction of the connection is thread-safe. If the connection type is asynchronous and managed by another thread, the actual deletion of the connection object is safely dispatched to that specific thread event loop.</dd></dl>
-<p>Examlpe: </p><div class="fragment"><div class="line">  <span class="keyword">class </span>Downloader {</div>
+<p>Example: </p><div class="fragment"><div class="line">  <span class="keyword">class </span>Downloader {</div>
 <div class="line">  <span class="keyword">public</span>:</div>
 <div class="line">    AsyncFw::FunctionConnector&lt;int&gt; progressChanged;</div>
 <div class="line">    <span class="keywordtype">void</span> start() { <span class="comment">/* ... */</span> }</div>
@@ -159,43 +160,11 @@ Public Member Functions</h2></td></tr>
 <div class="line">    <span class="comment">// The connection is automatically severed, preventing further lambda invocations.</span></div>
 <div class="line">  }</div>
 <div class="line"> </div>
-</div><!-- fragment --> <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="LogTcp_2main_8cpp-example.html#_a12">LogTcp/main.cpp</a>.</dd>
+</div><!-- fragment --> <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="LogTcp_2main_8cpp-example.html#_a13">LogTcp/main.cpp</a>.</dd>
 </dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="adcf72c33d343877b8bfa41036cb2e710" name="adcf72c33d343877b8bfa41036cb2e710"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adcf72c33d343877b8bfa41036cb2e710">&#9670;&#160;</a></span>FunctionConnectionGuard() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">FunctionConnectionGuard::FunctionConnectionGuard </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classAsyncFw_1_1FunctionConnectionGuard.html">FunctionConnectionGuard</a> &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>guarg</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Move constructor. Transfers connection ownership from another guard. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">guard</td><td>Explicit rvalue reference to the source guard. </td></tr>
-  </table>
-  </dd>
-</dl>
-<div id="dynsection-0" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-0-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1FunctionConnectionGuard_adcf72c33d343877b8bfa41036cb2e710_cgraph.svg" width="490" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-
-</div>
-</div>
 <a id="ad81a16802c1e93b812c25fa1545da727" name="ad81a16802c1e93b812c25fa1545da727"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad81a16802c1e93b812c25fa1545da727">&#9670;&#160;</a></span>FunctionConnectionGuard() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad81a16802c1e93b812c25fa1545da727">&#9670;&#160;</a></span>FunctionConnectionGuard()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -254,7 +223,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">void FunctionConnectionGuard::operator= </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classAsyncFw_1_1FunctionConnectionGuard.html">FunctionConnectionGuard</a> &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>guarg</em></span></td><td>)</td>
+          <td class="paramtype"><a class="el" href="classAsyncFw_1_1FunctionConnectionGuard.html">FunctionConnectionGuard</a> &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>guard</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -267,11 +236,11 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<div id="dynsection-1" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-1-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-0" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-1-content" class="dyncontent" style="display:none;">
+<div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1FunctionConnectionGuard_aa887547d9a0d2889e172893ae9421a8d_cgraph.svg" width="475" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 

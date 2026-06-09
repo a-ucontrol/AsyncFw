@@ -11,7 +11,7 @@
 <!-- Node1 -->
 <g id="Node000001" class="node">
 <title>Node1</title>
-<g id="a_Node000001"><a xlink:title="The Rrd class.">
+<g id="a_Node000001"><a xlink:title="A high&#45;performance circular database engine (Round&#45;Robin Database) for time&#45;series and structural dat...">
 <polygon fill="#999999" stroke="#666666" points="79,-76 0,-76 0,-56 79,-56 79,-76"/>
 <text text-anchor="middle" x="39.5" y="-62.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::Rrd</text>
 </a>
@@ -20,7 +20,7 @@
 <!-- Node2 -->
 <g id="Node000002" class="node">
 <title>Node2</title>
-<g id="a_Node000002"><a xlink:href="classAsyncFw_1_1Log.html" target="_top" xlink:title="The Log class.">
+<g id="a_Node000002"><a xlink:href="classAsyncFw_1_1Log.html" target="_top" xlink:title="Asynchronous log manager with circular database (Rrd) backend and duplicate сompression.">
 <polygon fill="white" stroke="#666666" points="79,-20 0,-20 0,0 79,0 79,-20"/>
 <text text-anchor="middle" x="39.5" y="-6.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::Log</text>
 </a>

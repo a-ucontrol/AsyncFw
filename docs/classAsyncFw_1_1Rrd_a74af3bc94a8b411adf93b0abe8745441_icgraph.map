@@ -1,0 +1,5 @@
+<map id="AsyncFw::Rrd::readFromArray" name="AsyncFw::Rrd::readFromArray">
+<area shape="rect" id="Node000001" title="Directly extracts a raw binary data array chunk element from the specified ring buffer index allocati..." alt="" coords="245,5,444,32"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1Log.html#af85aba564a162221f53e80f010d7fbf3" title="Fetches and decodes an archive log message from the circular history database at a given index." alt="" coords="5,5,197,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="229,21,197,21,197,16,229,16"/>
+</map>

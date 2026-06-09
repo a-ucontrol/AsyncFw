@@ -113,7 +113,7 @@ $(function(){initNavTree('classAsyncFw_1_1Log.html',''); initResizable(true); })
 </div><!--header-->
 <div class="contents">
 
-<p>The <a class="el" href="classAsyncFw_1_1Log.html" title="The Log class.">Log</a> class.  
+<p>Asynchronous log manager with circular database (<a class="el" href="classAsyncFw_1_1Rrd.html" title="A high-performance circular database engine (Round-Robin Database) for time-series and structural dat...">Rrd</a>) backend and duplicate сompression.  
  <a href="#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="Log_8h_source.html">AsyncFw/Log</a>&gt;</code></p>
@@ -159,115 +159,156 @@ using&#160;</td><td class="memItemRight" valign="bottom"><b>Message</b> = <a cla
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a832d13f4e9231eee37d8decb5b9b96d7" id="r_a832d13f4e9231eee37d8decb5b9b96d7"><td class="memItemLeft" align="right" valign="top"><a id="a832d13f4e9231eee37d8decb5b9b96d7" name="a832d13f4e9231eee37d8decb5b9b96d7"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>Log</b> (int=0, const std::string &amp;={})</td></tr>
+<tr class="memdesc:a832d13f4e9231eee37d8decb5b9b96d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a persistent log system with a specific circular database size and file name context. <br /></td></tr>
 <tr class="separator:a832d13f4e9231eee37d8decb5b9b96d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f9618da213c4789bb158d337c819e22" id="r_a7f9618da213c4789bb158d337c819e22"><td class="memItemLeft" align="right" valign="top"><a id="a7f9618da213c4789bb158d337c819e22" name="a7f9618da213c4789bb158d337c819e22"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>~Log</b> () override</td></tr>
+<tr class="memdesc:a7f9618da213c4789bb158d337c819e22"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. Atomically unbinds global log routing hooks and finalizes all active background buffers. <br /></td></tr>
+<tr class="separator:a7f9618da213c4789bb158d337c819e22"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a27bf2284363cc365c8af12e923b95db5" id="r_a27bf2284363cc365c8af12e923b95db5"><td class="memItemLeft" align="right" valign="top"><a id="a27bf2284363cc365c8af12e923b95db5" name="a27bf2284363cc365c8af12e923b95db5"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>finality</b> ()</td></tr>
+<tr class="memdesc:a27bf2284363cc365c8af12e923b95db5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs early shutdown, restoring original console routing. <br /></td></tr>
 <tr class="separator:a27bf2284363cc365c8af12e923b95db5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6b0ce40bc2e34f4b435894701194dc26" id="r_a6b0ce40bc2e34f4b435894701194dc26"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6b0ce40bc2e34f4b435894701194dc26">output</a> (const <a class="el" href="structAsyncFw_1_1LogStream_1_1Message.html">Message</a> &amp;m) override</td></tr>
+<tr class="memdesc:a6b0ce40bc2e34f4b435894701194dc26"><td class="mdescLeft">&#160;</td><td class="mdescRight">Persists log entries into the underlying <a class="el" href="classAsyncFw_1_1Rrd.html" title="A high-performance circular database engine (Round-Robin Database) for time-series and structural dat...">Rrd</a> buffer and manages automated disk flushing.  <br /></td></tr>
 <tr class="separator:a6b0ce40bc2e34f4b435894701194dc26"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa915e380895b72e2d636c73930b3f0e5" id="r_aa915e380895b72e2d636c73930b3f0e5"><td class="memItemLeft" align="right" valign="top"><a id="aa915e380895b72e2d636c73930b3f0e5" name="aa915e380895b72e2d636c73930b3f0e5"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setAutoSave</b> (bool b)</td></tr>
+<tr class="memdesc:aa915e380895b72e2d636c73930b3f0e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Controls whether modifications to the log buffer automatically trigger scheduled disk synchronizations. <br /></td></tr>
 <tr class="separator:aa915e380895b72e2d636c73930b3f0e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a36128876c58bc05a4b8ec59144abdaa1" id="r_a36128876c58bc05a4b8ec59144abdaa1"><td class="memItemLeft" align="right" valign="top"><a id="a36128876c58bc05a4b8ec59144abdaa1" name="a36128876c58bc05a4b8ec59144abdaa1"></a>
 <a class="el" href="classAsyncFw_1_1DataArray.html">Rrd::Item</a>&#160;</td><td class="memItemRight" valign="bottom"><b>rrdItemFromMessage</b> (const <a class="el" href="structAsyncFw_1_1LogStream_1_1Message.html">Message</a> &amp;m) const</td></tr>
+<tr class="memdesc:a36128876c58bc05a4b8ec59144abdaa1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unrolls a Message structure into a flat serialized <a class="el" href="classAsyncFw_1_1DataArray.html" title="The DataArray class, provides an array of bytes.">DataArray</a> binary block suitable for <a class="el" href="classAsyncFw_1_1Rrd.html" title="A high-performance circular database engine (Round-Robin Database) for time-series and structural dat...">Rrd</a> storage. <br /></td></tr>
 <tr class="separator:a36128876c58bc05a4b8ec59144abdaa1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9cca0424e45994e01dc6257a07b1246b" id="r_a9cca0424e45994e01dc6257a07b1246b"><td class="memItemLeft" align="right" valign="top"><a id="a9cca0424e45994e01dc6257a07b1246b" name="a9cca0424e45994e01dc6257a07b1246b"></a>
 <a class="el" href="structAsyncFw_1_1LogStream_1_1Message.html">Message</a>&#160;</td><td class="memItemRight" valign="bottom"><b>messageFromRrdItem</b> (const <a class="el" href="classAsyncFw_1_1DataArray.html">Rrd::Item</a> &amp;_v) const</td></tr>
+<tr class="memdesc:a9cca0424e45994e01dc6257a07b1246b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parses a serialized <a class="el" href="classAsyncFw_1_1Rrd.html" title="A high-performance circular database engine (Round-Robin Database) for time-series and structural dat...">Rrd</a> binary <a class="el" href="classAsyncFw_1_1DataArray.html" title="The DataArray class, provides an array of bytes.">DataArray</a> record back into a structured Message instance. <br /></td></tr>
 <tr class="separator:a9cca0424e45994e01dc6257a07b1246b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af85aba564a162221f53e80f010d7fbf3" id="r_af85aba564a162221f53e80f010d7fbf3"><td class="memItemLeft" align="right" valign="top"><a id="af85aba564a162221f53e80f010d7fbf3" name="af85aba564a162221f53e80f010d7fbf3"></a>
 <a class="el" href="structAsyncFw_1_1LogStream_1_1Message.html">Message</a>&#160;</td><td class="memItemRight" valign="bottom"><b>readMessage</b> (uint32_t index)</td></tr>
+<tr class="memdesc:af85aba564a162221f53e80f010d7fbf3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fetches and decodes an archive log message from the circular history database at a given index. <br /></td></tr>
 <tr class="separator:af85aba564a162221f53e80f010d7fbf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab990350e0de8b9a9c6153f7c67b7a527" id="r_ab990350e0de8b9a9c6153f7c67b7a527"><td class="memItemLeft" align="right" valign="top"><a id="ab990350e0de8b9a9c6153f7c67b7a527" name="ab990350e0de8b9a9c6153f7c67b7a527"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>writeMessage</b> (uint32_t index, const <a class="el" href="structAsyncFw_1_1LogStream_1_1Message.html">Message</a> &amp;message)</td></tr>
+<tr class="memdesc:ab990350e0de8b9a9c6153f7c67b7a527"><td class="mdescLeft">&#160;</td><td class="mdescRight">Directly overwrites a circular log archive slot with a freshly serialized log entry structure. <br /></td></tr>
 <tr class="separator:ab990350e0de8b9a9c6153f7c67b7a527"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af7b8fc20bdbe3dbf6f8e5b4fee3ada85" id="r_af7b8fc20bdbe3dbf6f8e5b4fee3ada85"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af7b8fc20bdbe3dbf6f8e5b4fee3ada85">save</a> () override</td></tr>
+<tr class="memdesc:af7b8fc20bdbe3dbf6f8e5b4fee3ada85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Safe write transaction proxy that bypasses filesystem synchronization if the database is in read-only mode.  <br /></td></tr>
 <tr class="separator:af7b8fc20bdbe3dbf6f8e5b4fee3ada85"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a851f59ea9d9019403e3adffc04ddd07a" id="r_a851f59ea9d9019403e3adffc04ddd07a"><td class="memItemLeft" align="right" valign="top"><a id="a851f59ea9d9019403e3adffc04ddd07a" name="a851f59ea9d9019403e3adffc04ddd07a"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>append</b> (uint8_t, const std::string &amp;, const std::string &amp;, const std::string &amp;={})</td></tr>
+<tr class="memdesc:a851f59ea9d9019403e3adffc04ddd07a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Appends a structured log entry by explicitly passing discrete string components. <br /></td></tr>
 <tr class="separator:a851f59ea9d9019403e3adffc04ddd07a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9d4074dfb0cd3d2f54bc1301f6dcdfb8" id="r_a9d4074dfb0cd3d2f54bc1301f6dcdfb8"><td class="memItemLeft" align="right" valign="top"><a id="a9d4074dfb0cd3d2f54bc1301f6dcdfb8" name="a9d4074dfb0cd3d2f54bc1301f6dcdfb8"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>append</b> (const <a class="el" href="structAsyncFw_1_1LogStream_1_1Message.html">Message</a> &amp;m)</td></tr>
+<tr class="memdesc:a9d4074dfb0cd3d2f54bc1301f6dcdfb8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Main thread-safe ingestion entry point that pushes a Message structure into the log queue. <br /></td></tr>
 <tr class="separator:a9d4074dfb0cd3d2f54bc1301f6dcdfb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classAsyncFw_1_1Rrd"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_classAsyncFw_1_1Rrd')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classAsyncFw_1_1Rrd.html">AsyncFw::Rrd</a></td></tr>
-<tr class="memitem:aec3308d35dbefa309daeb707bc1f4150 inherit pub_methods_classAsyncFw_1_1Rrd" id="r_aec3308d35dbefa309daeb707bc1f4150"><td class="memTemplParams" colspan="2">
+<tr class="memitem:a1ddec15ee073263e7403d69f87e599fa inherit pub_methods_classAsyncFw_1_1Rrd" id="r_a1ddec15ee073263e7403d69f87e599fa"><td class="memTemplParams" colspan="2">
 template&lt;typename T&gt; </td></tr>
-<tr class="memitem:aec3308d35dbefa309daeb707bc1f4150 inherit pub_methods_classAsyncFw_1_1Rrd"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>setAverage</b> (int _interval, T f, int _offset=0)</td></tr>
-<tr class="separator:aec3308d35dbefa309daeb707bc1f4150 inherit pub_methods_classAsyncFw_1_1Rrd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5c5dad9544c89d7392dfdc12b185978b inherit pub_methods_classAsyncFw_1_1Rrd" id="r_a5c5dad9544c89d7392dfdc12b185978b"><td class="memItemLeft" align="right" valign="top">
-&#160;</td><td class="memItemRight" valign="bottom"><b>Rrd</b> (int size, int interval, int fillInterval, const std::string &amp;name)</td></tr>
-<tr class="separator:a5c5dad9544c89d7392dfdc12b185978b inherit pub_methods_classAsyncFw_1_1Rrd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac24f7843b7e58431a4f4d6bb40bd7fa5 inherit pub_methods_classAsyncFw_1_1Rrd" id="r_ac24f7843b7e58431a4f4d6bb40bd7fa5"><td class="memItemLeft" align="right" valign="top">
-&#160;</td><td class="memItemRight" valign="bottom"><b>Rrd</b> (int size, int interval, int fillInterval)</td></tr>
-<tr class="separator:ac24f7843b7e58431a4f4d6bb40bd7fa5 inherit pub_methods_classAsyncFw_1_1Rrd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab625f1078e87837a8693d38717757733 inherit pub_methods_classAsyncFw_1_1Rrd" id="r_ab625f1078e87837a8693d38717757733"><td class="memItemLeft" align="right" valign="top">
-&#160;</td><td class="memItemRight" valign="bottom"><b>Rrd</b> (int size, const std::string &amp;name)</td></tr>
-<tr class="separator:ab625f1078e87837a8693d38717757733 inherit pub_methods_classAsyncFw_1_1Rrd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae2c0f8cfd446b9fc21914eb81d4ea199 inherit pub_methods_classAsyncFw_1_1Rrd" id="r_ae2c0f8cfd446b9fc21914eb81d4ea199"><td class="memItemLeft" align="right" valign="top">
-&#160;</td><td class="memItemRight" valign="bottom"><b>Rrd</b> (int size)</td></tr>
-<tr class="separator:ae2c0f8cfd446b9fc21914eb81d4ea199 inherit pub_methods_classAsyncFw_1_1Rrd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a341cb61ac96731de56a7a9ce2bd5813c inherit pub_methods_classAsyncFw_1_1Rrd" id="r_a341cb61ac96731de56a7a9ce2bd5813c"><td class="memItemLeft" align="right" valign="top">
-uint64_t&#160;</td><td class="memItemRight" valign="bottom"><b>read</b> (<a class="el" href="classAsyncFw_1_1DataArrayList.html">DataArrayList</a> *list, uint64_t from=0, uint32_t size=0, uint64_t *lastIndex=nullptr)</td></tr>
-<tr class="separator:a341cb61ac96731de56a7a9ce2bd5813c inherit pub_methods_classAsyncFw_1_1Rrd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a99a77ff44b10adad70fa94e50c7b4f83 inherit pub_methods_classAsyncFw_1_1Rrd" id="r_a99a77ff44b10adad70fa94e50c7b4f83"><td class="memItemLeft" align="right" valign="top">
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setFillInterval</b> (int interval)</td></tr>
-<tr class="separator:a99a77ff44b10adad70fa94e50c7b4f83 inherit pub_methods_classAsyncFw_1_1Rrd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1ddec15ee073263e7403d69f87e599fa inherit pub_methods_classAsyncFw_1_1Rrd"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>setAverage</b> (int interval, T f, int offset=0)</td></tr>
+<tr class="memdesc:a1ddec15ee073263e7403d69f87e599fa inherit pub_methods_classAsyncFw_1_1Rrd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets up an automated callback to compute averaged metrics inside a specified interval fraction. <br /></td></tr>
+<tr class="separator:a1ddec15ee073263e7403d69f87e599fa inherit pub_methods_classAsyncFw_1_1Rrd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2fd20dd3470a11ef179577c565c333f1 inherit pub_methods_classAsyncFw_1_1Rrd" id="r_a2fd20dd3470a11ef179577c565c333f1"><td class="memItemLeft" align="right" valign="top">
+&#160;</td><td class="memItemRight" valign="bottom"><b>Rrd</b> (int, int, int, const std::string &amp;)</td></tr>
+<tr class="memdesc:a2fd20dd3470a11ef179577c565c333f1 inherit pub_methods_classAsyncFw_1_1Rrd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a persistent circular archive database bounded by a specific array size, collection interval, and file backing context. <br /></td></tr>
+<tr class="separator:a2fd20dd3470a11ef179577c565c333f1 inherit pub_methods_classAsyncFw_1_1Rrd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98c7829cc6177c80245cf95095deb3ba inherit pub_methods_classAsyncFw_1_1Rrd" id="r_a98c7829cc6177c80245cf95095deb3ba"><td class="memItemLeft" align="right" valign="top">
+&#160;</td><td class="memItemRight" valign="bottom"><b>Rrd</b> (int, int, int)</td></tr>
+<tr class="memdesc:a98c7829cc6177c80245cf95095deb3ba inherit pub_methods_classAsyncFw_1_1Rrd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an in-memory anonymous circular database with a specific collection interval. <br /></td></tr>
+<tr class="separator:a98c7829cc6177c80245cf95095deb3ba inherit pub_methods_classAsyncFw_1_1Rrd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaea6a63444ab427f801be34f26d930d5 inherit pub_methods_classAsyncFw_1_1Rrd" id="r_aaea6a63444ab427f801be34f26d930d5"><td class="memItemLeft" align="right" valign="top">
+&#160;</td><td class="memItemRight" valign="bottom"><b>Rrd</b> (int, const std::string &amp;)</td></tr>
+<tr class="memdesc:aaea6a63444ab427f801be34f26d930d5 inherit pub_methods_classAsyncFw_1_1Rrd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a persistent circular archive database with a default tracking interval. <br /></td></tr>
+<tr class="separator:aaea6a63444ab427f801be34f26d930d5 inherit pub_methods_classAsyncFw_1_1Rrd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa54ae298c96e9efe88b644931b12f734 inherit pub_methods_classAsyncFw_1_1Rrd" id="r_aa54ae298c96e9efe88b644931b12f734"><td class="memItemLeft" align="right" valign="top">
+&#160;</td><td class="memItemRight" valign="bottom"><b>Rrd</b> (int)</td></tr>
+<tr class="memdesc:aa54ae298c96e9efe88b644931b12f734 inherit pub_methods_classAsyncFw_1_1Rrd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an in-memory anonymous circular database with a default tracking interval. <br /></td></tr>
+<tr class="separator:aa54ae298c96e9efe88b644931b12f734 inherit pub_methods_classAsyncFw_1_1Rrd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a56d6e047fa884528c91286f552f8a239 inherit pub_methods_classAsyncFw_1_1Rrd" id="r_a56d6e047fa884528c91286f552f8a239"><td class="memItemLeft" align="right" valign="top">
+&#160;</td><td class="memItemRight" valign="bottom"><b>~Rrd</b> ()</td></tr>
+<tr class="memdesc:a56d6e047fa884528c91286f552f8a239 inherit pub_methods_classAsyncFw_1_1Rrd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. Synchronizes outstanding dirty data buffers to disk and frees internal evaluation assets. <br /></td></tr>
+<tr class="separator:a56d6e047fa884528c91286f552f8a239 inherit pub_methods_classAsyncFw_1_1Rrd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a171ca62295eb74da3e222bb14e14dea8 inherit pub_methods_classAsyncFw_1_1Rrd" id="r_a171ca62295eb74da3e222bb14e14dea8"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAsyncFw_1_1Rrd.html#a171ca62295eb74da3e222bb14e14dea8">read</a> (<a class="el" href="classAsyncFw_1_1DataArrayList.html">DataArrayList</a> *, uint64_t=0, uint32_t=0, uint64_t *=nullptr)</td></tr>
+<tr class="memdesc:a171ca62295eb74da3e222bb14e14dea8 inherit pub_methods_classAsyncFw_1_1Rrd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Slices historical time-series data records from a given timestamp and extracts them into a provided destination list container.  <br /></td></tr>
+<tr class="separator:a171ca62295eb74da3e222bb14e14dea8 inherit pub_methods_classAsyncFw_1_1Rrd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a330145de892c6f5e916d7dda15aeedfc inherit pub_methods_classAsyncFw_1_1Rrd" id="r_a330145de892c6f5e916d7dda15aeedfc"><td class="memItemLeft" align="right" valign="top">
 uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>size</b> ()</td></tr>
+<tr class="memdesc:a330145de892c6f5e916d7dda15aeedfc inherit pub_methods_classAsyncFw_1_1Rrd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the absolute maximum capability size (total slots) configured for this circular ring buffer layout. <br /></td></tr>
 <tr class="separator:a330145de892c6f5e916d7dda15aeedfc inherit pub_methods_classAsyncFw_1_1Rrd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2da84a54164e2273cb4183d9f2a72dec inherit pub_methods_classAsyncFw_1_1Rrd" id="r_a2da84a54164e2273cb4183d9f2a72dec"><td class="memItemLeft" align="right" valign="top">
 uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>count</b> ()</td></tr>
+<tr class="memdesc:a2da84a54164e2273cb4183d9f2a72dec inherit pub_methods_classAsyncFw_1_1Rrd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the total number of valid data items currently populated inside the database allocation framework. <br /></td></tr>
 <tr class="separator:a2da84a54164e2273cb4183d9f2a72dec inherit pub_methods_classAsyncFw_1_1Rrd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a74af3bc94a8b411adf93b0abe8745441 inherit pub_methods_classAsyncFw_1_1Rrd" id="r_a74af3bc94a8b411adf93b0abe8745441"><td class="memItemLeft" align="right" valign="top">
-<a class="el" href="classAsyncFw_1_1DataArray.html">Item</a>&#160;</td><td class="memItemRight" valign="bottom"><b>readFromArray</b> (uint32_t)</td></tr>
+<tr class="memitem:a74af3bc94a8b411adf93b0abe8745441 inherit pub_methods_classAsyncFw_1_1Rrd" id="r_a74af3bc94a8b411adf93b0abe8745441"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classAsyncFw_1_1DataArray.html">Item</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAsyncFw_1_1Rrd.html#a74af3bc94a8b411adf93b0abe8745441">readFromArray</a> (uint32_t)</td></tr>
+<tr class="memdesc:a74af3bc94a8b411adf93b0abe8745441 inherit pub_methods_classAsyncFw_1_1Rrd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Directly extracts a raw binary data array chunk element from the specified ring buffer index allocation slot.  <br /></td></tr>
 <tr class="separator:a74af3bc94a8b411adf93b0abe8745441 inherit pub_methods_classAsyncFw_1_1Rrd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4aa5bc0099565061c0fc1c72cf99d8c6 inherit pub_methods_classAsyncFw_1_1Rrd" id="r_a4aa5bc0099565061c0fc1c72cf99d8c6"><td class="memItemLeft" align="right" valign="top">
-void&#160;</td><td class="memItemRight" valign="bottom"><b>writeToArray</b> (uint32_t, const <a class="el" href="classAsyncFw_1_1DataArray.html">Item</a> &amp;)</td></tr>
+<tr class="memitem:a4aa5bc0099565061c0fc1c72cf99d8c6 inherit pub_methods_classAsyncFw_1_1Rrd" id="r_a4aa5bc0099565061c0fc1c72cf99d8c6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAsyncFw_1_1Rrd.html#a4aa5bc0099565061c0fc1c72cf99d8c6">writeToArray</a> (uint32_t, const <a class="el" href="classAsyncFw_1_1DataArray.html">Item</a> &amp;)</td></tr>
+<tr class="memdesc:a4aa5bc0099565061c0fc1c72cf99d8c6 inherit pub_methods_classAsyncFw_1_1Rrd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Directly overwrites a raw binary data array chunk element at the specified ring buffer index allocation slot.  <br /></td></tr>
 <tr class="separator:a4aa5bc0099565061c0fc1c72cf99d8c6 inherit pub_methods_classAsyncFw_1_1Rrd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4c33c8721d57d0b3666549a52bf2a696 inherit pub_methods_classAsyncFw_1_1Rrd" id="r_a4c33c8721d57d0b3666549a52bf2a696"><td class="memItemLeft" align="right" valign="top">
 void&#160;</td><td class="memItemRight" valign="bottom"><b>append</b> (const <a class="el" href="classAsyncFw_1_1DataArray.html">Item</a> &amp;data, uint64_t index=0)</td></tr>
+<tr class="memdesc:a4c33c8721d57d0b3666549a52bf2a696 inherit pub_methods_classAsyncFw_1_1Rrd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ingests and commits a new item layout entry directly into the tail of the circular timeline framework tracking stack. <br /></td></tr>
 <tr class="separator:a4c33c8721d57d0b3666549a52bf2a696 inherit pub_methods_classAsyncFw_1_1Rrd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7f2590f1a87af46970c6e54eefb4c6f6 inherit pub_methods_classAsyncFw_1_1Rrd" id="r_a7f2590f1a87af46970c6e54eefb4c6f6"><td class="memItemLeft" align="right" valign="top">
 void&#160;</td><td class="memItemRight" valign="bottom"><b>save</b> (const std::string &amp;fn={})</td></tr>
+<tr class="memdesc:a7f2590f1a87af46970c6e54eefb4c6f6 inherit pub_methods_classAsyncFw_1_1Rrd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Forces a synchronous flushing execution write path to save memory tables down to an explicit local filesystem file path. <br /></td></tr>
 <tr class="separator:a7f2590f1a87af46970c6e54eefb4c6f6 inherit pub_methods_classAsyncFw_1_1Rrd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6d232ea0ea88fcfcd7ad84e9129f84e3 inherit pub_methods_classAsyncFw_1_1Rrd" id="r_a6d232ea0ea88fcfcd7ad84e9129f84e3"><td class="memItemLeft" align="right" valign="top">
 void&#160;</td><td class="memItemRight" valign="bottom"><b>clear</b> ()</td></tr>
+<tr class="memdesc:a6d232ea0ea88fcfcd7ad84e9129f84e3 inherit pub_methods_classAsyncFw_1_1Rrd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wipes out all active records in memory and resets internal buffer ring tracker structures to zero initialization state. <br /></td></tr>
 <tr class="separator:a6d232ea0ea88fcfcd7ad84e9129f84e3 inherit pub_methods_classAsyncFw_1_1Rrd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a113f3548987e7b830295e91bc74e2b89 inherit pub_methods_classAsyncFw_1_1Rrd" id="r_a113f3548987e7b830295e91bc74e2b89"><td class="memItemLeft" align="right" valign="top">
 uint64_t&#160;</td><td class="memItemRight" valign="bottom"><b>lastIndex</b> ()</td></tr>
+<tr class="memdesc:a113f3548987e7b830295e91bc74e2b89 inherit pub_methods_classAsyncFw_1_1Rrd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the absolute unique incremental primary master timeline database record tracking index offset identifier. <br /></td></tr>
 <tr class="separator:a113f3548987e7b830295e91bc74e2b89 inherit pub_methods_classAsyncFw_1_1Rrd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0e1fdab32966afe235c8a3cbb9c3c528 inherit pub_methods_classAsyncFw_1_1Rrd" id="r_a0e1fdab32966afe235c8a3cbb9c3c528"><td class="memItemLeft" align="right" valign="top">
 <a class="el" href="classAsyncFw_1_1Thread.html">Thread</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>thread</b> ()</td></tr>
+<tr class="memdesc:a0e1fdab32966afe235c8a3cbb9c3c528 inherit pub_methods_classAsyncFw_1_1Rrd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fetches a raw tracking pointer leading back to the dedicated background thread context managing this execution scope. <br /></td></tr>
 <tr class="separator:a0e1fdab32966afe235c8a3cbb9c3c528 inherit pub_methods_classAsyncFw_1_1Rrd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classAsyncFw_1_1AbstractLog"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_classAsyncFw_1_1AbstractLog')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classAsyncFw_1_1AbstractLog.html">AsyncFw::AbstractLog</a></td></tr>
+<tr class="memitem:a036a273ebd60a9ee365bae1d8ecb83ea inherit pub_methods_classAsyncFw_1_1AbstractLog" id="r_a036a273ebd60a9ee365bae1d8ecb83ea"><td class="memItemLeft" align="right" valign="top">
+virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~AbstractLog</b> ()=0</td></tr>
+<tr class="memdesc:a036a273ebd60a9ee365bae1d8ecb83ea inherit pub_methods_classAsyncFw_1_1AbstractLog"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual destructor ensuring safe resource cleanup in derived logging implementations. <br /></td></tr>
+<tr class="separator:a036a273ebd60a9ee365bae1d8ecb83ea inherit pub_methods_classAsyncFw_1_1AbstractLog"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a851f59ea9d9019403e3adffc04ddd07a inherit pub_methods_classAsyncFw_1_1AbstractLog" id="r_a851f59ea9d9019403e3adffc04ddd07a"><td class="memItemLeft" align="right" valign="top">
 void&#160;</td><td class="memItemRight" valign="bottom"><b>append</b> (uint8_t, const std::string &amp;, const std::string &amp;, const std::string &amp;={})</td></tr>
+<tr class="memdesc:a851f59ea9d9019403e3adffc04ddd07a inherit pub_methods_classAsyncFw_1_1AbstractLog"><td class="mdescLeft">&#160;</td><td class="mdescRight">Appends a structured log entry by explicitly passing discrete string components. <br /></td></tr>
 <tr class="separator:a851f59ea9d9019403e3adffc04ddd07a inherit pub_methods_classAsyncFw_1_1AbstractLog"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7e3f17c4c8069f79fe143da589ecc87c inherit pub_methods_classAsyncFw_1_1AbstractLog" id="r_a7e3f17c4c8069f79fe143da589ecc87c"><td class="memItemLeft" align="right" valign="top">
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setExtendOut</b> (bool b)</td></tr>
+<tr class="memdesc:a7e3f17c4c8069f79fe143da589ecc87c inherit pub_methods_classAsyncFw_1_1AbstractLog"><td class="mdescLeft">&#160;</td><td class="mdescRight">Toggles extended console output mode containing timestamps and level names. <br /></td></tr>
 <tr class="separator:a7e3f17c4c8069f79fe143da589ecc87c inherit pub_methods_classAsyncFw_1_1AbstractLog"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad3d69f8e4e65e11f777961ff199cc305 inherit pub_methods_classAsyncFw_1_1AbstractLog" id="r_ad3d69f8e4e65e11f777961ff199cc305"><td class="memItemLeft" align="right" valign="top">
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setColorOut</b> (bool b)</td></tr>
+<tr class="memdesc:ad3d69f8e4e65e11f777961ff199cc305 inherit pub_methods_classAsyncFw_1_1AbstractLog"><td class="mdescLeft">&#160;</td><td class="mdescRight">Toggles ANSI terminal color highlights for outgoing console log sequences. <br /></td></tr>
 <tr class="separator:ad3d69f8e4e65e11f777961ff199cc305 inherit pub_methods_classAsyncFw_1_1AbstractLog"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4e3e81544937c12613ad37b12d7f14b0 inherit pub_methods_classAsyncFw_1_1AbstractLog" id="r_a4e3e81544937c12613ad37b12d7f14b0"><td class="memItemLeft" align="right" valign="top">
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setNotesOut</b> (bool b)</td></tr>
+<tr class="memdesc:a4e3e81544937c12613ad37b12d7f14b0 inherit pub_methods_classAsyncFw_1_1AbstractLog"><td class="mdescLeft">&#160;</td><td class="mdescRight">Toggles the display of notes , such as source code lines (<a href="file:line">file:line</a>), at the end of console entries. <br /></td></tr>
 <tr class="separator:a4e3e81544937c12613ad37b12d7f14b0 inherit pub_methods_classAsyncFw_1_1AbstractLog"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6cb17ac08086ff708d7b3d9ac07a7680 inherit pub_methods_classAsyncFw_1_1AbstractLog" id="r_a6cb17ac08086ff708d7b3d9ac07a7680"><td class="memItemLeft" align="right" valign="top">
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setHideDuplicates</b> (bool b)</td></tr>
+<tr class="memdesc:a6cb17ac08086ff708d7b3d9ac07a7680 inherit pub_methods_classAsyncFw_1_1AbstractLog"><td class="mdescLeft">&#160;</td><td class="mdescRight">Toggles automated runtime aggregation to compress high-frequency duplicate log messages. <br /></td></tr>
 <tr class="separator:a6cb17ac08086ff708d7b3d9ac07a7680 inherit pub_methods_classAsyncFw_1_1AbstractLog"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9356538116eb8df414110f0dfa29777a inherit pub_methods_classAsyncFw_1_1AbstractLog" id="r_a9356538116eb8df414110f0dfa29777a"><td class="memItemLeft" align="right" valign="top">
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setLevel</b> (int i)</td></tr>
+<tr class="memdesc:a9356538116eb8df414110f0dfa29777a inherit pub_methods_classAsyncFw_1_1AbstractLog"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the global log severity threshold for file/database recording destinations. <br /></td></tr>
 <tr class="separator:a9356538116eb8df414110f0dfa29777a inherit pub_methods_classAsyncFw_1_1AbstractLog"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aca18be3a6c0f1c681fffc475f2eba5ac inherit pub_methods_classAsyncFw_1_1AbstractLog" id="r_aca18be3a6c0f1c681fffc475f2eba5ac"><td class="memItemLeft" align="right" valign="top">
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setConsoleLevel</b> (int i)</td></tr>
+<tr class="memdesc:aca18be3a6c0f1c681fffc475f2eba5ac inherit pub_methods_classAsyncFw_1_1AbstractLog"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the visibility threshold level exclusively for live stdout/stderr console streaming. <br /></td></tr>
 <tr class="separator:aca18be3a6c0f1c681fffc475f2eba5ac inherit pub_methods_classAsyncFw_1_1AbstractLog"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab0cce5578235f60f5687f5ac352c0c5c inherit pub_methods_classAsyncFw_1_1AbstractLog" id="r_ab0cce5578235f60f5687f5ac352c0c5c"><td class="memItemLeft" align="right" valign="top">
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setFilter</b> (const std::vector&lt; std::string &gt; &amp;f)</td></tr>
+<tr class="memdesc:ab0cce5578235f60f5687f5ac352c0c5c inherit pub_methods_classAsyncFw_1_1AbstractLog"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enforces an inclusion string filter matching against target sender identification names. <br /></td></tr>
 <tr class="separator:ab0cce5578235f60f5687f5ac352c0c5c inherit pub_methods_classAsyncFw_1_1AbstractLog"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a00e9a20e7303e9a24403046af176b6b2" id="r_a00e9a20e7303e9a24403046af176b6b2"><td class="memItemLeft" align="right" valign="top"><a id="a00e9a20e7303e9a24403046af176b6b2" name="a00e9a20e7303e9a24403046af176b6b2"></a>
 static <a class="el" href="classAsyncFw_1_1Log.html">Log</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>instance</b> ()</td></tr>
+<tr class="memdesc:a00e9a20e7303e9a24403046af176b6b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Global service locator shortcut to fetch the current engine-wide default log pointer. <br /></td></tr>
 <tr class="separator:a00e9a20e7303e9a24403046af176b6b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
@@ -319,16 +360,20 @@ Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pub_attribs_classAsyncFw_1_1Rrd"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_attribs_classAsyncFw_1_1Rrd')"><img src="closed.png" alt="-"/>&#160;Public Attributes inherited from <a class="el" href="classAsyncFw_1_1Rrd.html">AsyncFw::Rrd</a></td></tr>
 <tr class="memitem:a7ff19310fbae9fbf6b6a2b26bceb7cec inherit pub_attribs_classAsyncFw_1_1Rrd" id="r_a7ff19310fbae9fbf6b6a2b26bceb7cec"><td class="memItemLeft" align="right" valign="top">
 <a class="el" href="classAsyncFw_1_1FunctionConnector.html">FunctionConnector</a> ::Protected&lt; <a class="el" href="classAsyncFw_1_1Rrd.html">Rrd</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>updated</b></td></tr>
+<tr class="memdesc:a7ff19310fbae9fbf6b6a2b26bceb7cec inherit pub_attribs_classAsyncFw_1_1Rrd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Protected notification event connector emitted instantly after a data append or modifying transaction successfully updates the data layout. <br /></td></tr>
 <tr class="separator:a7ff19310fbae9fbf6b6a2b26bceb7cec inherit pub_attribs_classAsyncFw_1_1Rrd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_classAsyncFw_1_1AbstractLog"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_methods_classAsyncFw_1_1AbstractLog')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classAsyncFw_1_1AbstractLog.html">AsyncFw::AbstractLog</a></td></tr>
 <tr class="memitem:a9d4074dfb0cd3d2f54bc1301f6dcdfb8 inherit pro_methods_classAsyncFw_1_1AbstractLog" id="r_a9d4074dfb0cd3d2f54bc1301f6dcdfb8"><td class="memItemLeft" align="right" valign="top">
 void&#160;</td><td class="memItemRight" valign="bottom"><b>append</b> (const <a class="el" href="structAsyncFw_1_1LogStream_1_1Message.html">Message</a> &amp;m)</td></tr>
+<tr class="memdesc:a9d4074dfb0cd3d2f54bc1301f6dcdfb8 inherit pro_methods_classAsyncFw_1_1AbstractLog"><td class="mdescLeft">&#160;</td><td class="mdescRight">Main thread-safe ingestion entry point that pushes a Message structure into the log queue. <br /></td></tr>
 <tr class="separator:a9d4074dfb0cd3d2f54bc1301f6dcdfb8 inherit pro_methods_classAsyncFw_1_1AbstractLog"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a872f1ea526aea7e961ce1eba43a15303 inherit pro_methods_classAsyncFw_1_1AbstractLog" id="r_a872f1ea526aea7e961ce1eba43a15303"><td class="memItemLeft" align="right" valign="top">
 void&#160;</td><td class="memItemRight" valign="bottom"><b>flush</b> ()</td></tr>
+<tr class="memdesc:a872f1ea526aea7e961ce1eba43a15303 inherit pro_methods_classAsyncFw_1_1AbstractLog"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flushes all accumulated messages from the thread-safe queue into the processor loop. <br /></td></tr>
 <tr class="separator:a872f1ea526aea7e961ce1eba43a15303 inherit pro_methods_classAsyncFw_1_1AbstractLog"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8dd93228e8424dccdd74adbb6422bd78 inherit pro_methods_classAsyncFw_1_1AbstractLog" id="r_a8dd93228e8424dccdd74adbb6422bd78"><td class="memItemLeft" align="right" valign="top">
 void&#160;</td><td class="memItemRight" valign="bottom"><b>finality</b> ()</td></tr>
+<tr class="memdesc:a8dd93228e8424dccdd74adbb6422bd78 inherit pro_methods_classAsyncFw_1_1AbstractLog"><td class="mdescLeft">&#160;</td><td class="mdescRight">Synchronously flushes outstanding queues and tears down internal tracking structures. <br /></td></tr>
 <tr class="separator:a8dd93228e8424dccdd74adbb6422bd78 inherit pro_methods_classAsyncFw_1_1AbstractLog"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa93762d956c27e9cfe41320788e42134 inherit pro_methods_classAsyncFw_1_1AbstractLog" id="r_aa93762d956c27e9cfe41320788e42134"><td class="memItemLeft" align="right" valign="top">
 void&#160;</td><td class="memItemRight" valign="bottom"><b>startTimer</b> (int *, int)</td></tr>
@@ -338,7 +383,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>stopTimer</b> (int *)
 <tr class="separator:a1694074689bff002b9668c86ef8c7859 inherit pro_methods_classAsyncFw_1_1AbstractLog"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>The <a class="el" href="classAsyncFw_1_1Log.html" title="The Log class.">Log</a> class. </p>
+<div class="textblock"><p>Asynchronous log manager with circular database (<a class="el" href="classAsyncFw_1_1Rrd.html" title="A high-performance circular database engine (Round-Robin Database) for time-series and structural dat...">Rrd</a>) backend and duplicate сompression. </p>
+<p>Intercepts engine-wide <a class="el" href="classAsyncFw_1_1LogStream.html" title="A high-performance, thread-safe logging stream utility utilizing RAII execution semantics.">LogStream</a> invocations, queues them thread-safely, and dispatches writing tasks to a dedicated backend thread.</p>
 <p>Example: </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;AsyncFw/Version&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;AsyncFw/MainThread&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;AsyncFw/Log&gt;</span></div>
@@ -352,7 +398,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>stopTimer</b> (int *)
 <div class="line">  logThread.invoke([]() { <a class="code hl_function" href="classAsyncFw_1_1Instance.html#a8000597f0e7ee4bd6669491a5b502beb">AsyncFw::Instance&lt;AsyncFw::Log&gt;::create</a>(1000, <span class="stringliteral">&quot;log-file-name&quot;</span>); }, <span class="keyword">true</span>);</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// 3. Force colorized terminal outputs for better log readability</span></div>
-<div class="line">  AsyncFw::Log::instance()-&gt;setColorOut(<span class="keyword">true</span>);</div>
+<div class="line">  <a class="code hl_function" href="#a00e9a20e7303e9a24403046af176b6b2">AsyncFw::Log::instance</a>()-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractLog.html#ad3d69f8e4e65e11f777961ff199cc305">setColorOut</a>(<span class="keyword">true</span>);</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// 4. Log application metadata</span></div>
 <div class="line">  logNotice() &lt;&lt; <span class="stringliteral">&quot;Version:&quot;</span> &lt;&lt; AsyncFw::Version::str();</div>
@@ -390,11 +436,11 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>stopTimer</b> (int *)
 <div class="line">  <span class="keywordtype">int</span> ret = <a class="code hl_function" href="classAsyncFw_1_1MainThread.html#ad12e620772820ad751868c7b49fa4190">AsyncFw::MainThread::exec</a>();</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// 9. Directly push a raw, structured record into the file logging pipe after loop termination</span></div>
-<div class="line">  AsyncFw::Log::instance()-&gt;append({<a class="code hl_enumvalue" href="classAsyncFw_1_1LogStream.html#afa2f6c5311ced6b973d39d6e5ced5731a55700379cc50408c01860c3a700d20a0">AsyncFw::LogStream::Info</a>, <span class="stringliteral">&quot;Log&quot;</span>, <span class="stringliteral">&quot;Application finished&quot;</span>, <span class="stringliteral">&quot;&quot;</span>});</div>
+<div class="line">  <a class="code hl_function" href="#a00e9a20e7303e9a24403046af176b6b2">AsyncFw::Log::instance</a>()-&gt;<a class="code hl_function" href="#a851f59ea9d9019403e3adffc04ddd07a">append</a>({<a class="code hl_enumvalue" href="classAsyncFw_1_1LogStream.html#afa2f6c5311ced6b973d39d6e5ced5731a55700379cc50408c01860c3a700d20a0">AsyncFw::LogStream::Info</a>, <span class="stringliteral">&quot;Log&quot;</span>, <span class="stringliteral">&quot;Application finished&quot;</span>, <span class="stringliteral">&quot;&quot;</span>});</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">return</span> ret;</div>
 <div class="line">}</div>
-</div><!-- fragment --> <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="LogTcp_2main_8cpp-example.html#_a6">LogTcp/main.cpp</a>.</dd>
+</div><!-- fragment --> <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="LogTcp_2main_8cpp-example.html#_a7">LogTcp/main.cpp</a>.</dd>
 </dl>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a6b0ce40bc2e34f4b435894701194dc26" name="a6b0ce40bc2e34f4b435894701194dc26"></a>
@@ -420,7 +466,16 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>stopTimer</b> (int *)
 </table>
 </div><div class="memdoc">
 
-<p>Reimplemented from <a class="el" href="classAsyncFw_1_1AbstractLog.html">AsyncFw::AbstractLog</a>.</p>
+<p>Persists log entries into the underlying <a class="el" href="classAsyncFw_1_1Rrd.html" title="A high-performance circular database engine (Round-Robin Database) for time-series and structural dat...">Rrd</a> buffer and manages automated disk flushing. </p>
+
+<p>Reimplemented from <a class="el" href="classAsyncFw_1_1AbstractLog.html#af5285b3d69b6af192fb2656d44b2e122">AsyncFw::AbstractLog</a>.</p>
+<div id="dynsection-2" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-2-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-2-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-2-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1Log_a6b0ce40bc2e34f4b435894701194dc26_cgraph.svg" width="828" height="338"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
 
 </div>
 </div>
@@ -447,7 +502,23 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>stopTimer</b> (int *)
 </table>
 </div><div class="memdoc">
 
-<p>Implements <a class="el" href="classAsyncFw_1_1AbstractLog.html">AsyncFw::AbstractLog</a>.</p>
+<p>Safe write transaction proxy that bypasses filesystem synchronization if the database is in read-only mode. </p>
+
+<p>Implements <a class="el" href="classAsyncFw_1_1AbstractLog.html#aaef591fb02d12add61602ad826a2b016">AsyncFw::AbstractLog</a>.</p>
+<div id="dynsection-3" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-3-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-3-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1Log_af7b8fc20bdbe3dbf6f8e5b4fee3ada85_cgraph.svg" width="342" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+<div id="dynsection-4" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-4-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-4-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-4-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1Log_af7b8fc20bdbe3dbf6f8e5b4fee3ada85_icgraph.svg" width="350" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
 
 </div>
 </div>

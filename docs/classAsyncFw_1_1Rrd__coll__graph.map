@@ -1,5 +1,5 @@
 <map id="AsyncFw::Rrd" name="AsyncFw::Rrd">
-<area shape="rect" id="Node000001" title="The Rrd class." alt="" coords="186,235,291,261"/>
+<area shape="rect" id="Node000001" title="A high&#45;performance circular database engine (Round&#45;Robin Database) for time&#45;series and structural dat..." alt="" coords="186,235,291,261"/>
 <area shape="rect" id="Node000002" href="$classAsyncFw_1_1FunctionConnector.html" title="Provides a thread&#45;safe, publisher&#45;subscriber mechanism to establish sender&#45;to&#45;receivers connections." alt="" coords="5,5,200,48"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="99,63,99,116,105,144,116,169,133,190,155,208,201,232,199,236,152,212,130,194,112,172,100,145,94,117,94,63"/>
 <area shape="rect" id="Node000003" href="$classAsyncFw_1_1Thread.html" title="AsyncFw::Thread thread with sockets." alt="" coords="176,144,301,171"/>

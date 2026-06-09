@@ -14,39 +14,57 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 namespace AsyncFw {
 class Thread;
-/** @class Rrd Rrd.h <AsyncFw/Rrd> @brief The Rrd class. */
+/** @class Rrd Rrd.h <AsyncFw/Rrd> @brief A high-performance circular database engine (Round-Robin Database) for time-series and structural data metrics logging.
+@details Manages a fixed-size ring buffer array in memory and handles automated filesystem persistence. Supports calculation of averaged metrics and data slicing via historical indexes. */
 class Rrd {
 public:
   using Item = DataArray;
   using ItemList = DataArrayList;
+  /** @brief Sets up an automated callback to compute averaged metrics inside a specified interval fraction. */
   template <typename T>
-  void setAverage(int _interval, T f, int _offset = 0) {
+  void setAverage(int interval, T f, int offset = 0) {
     average = new Invocable<void(const ItemList &)>::Function(std::forward<T>(f));
-    aInterval = _interval / interval;
-    aOffset = _offset;
+    aInterval = interval / interval_;
+    aOffset = offset;
   }
-  Rrd(int size, int interval, int fillInterval, const std::string &name);
-  Rrd(int size, int interval, int fillInterval);
-  Rrd(int size, const std::string &name);
-  Rrd(int size);
+  /** @brief Constructs a persistent circular archive database bounded by a specific array size, collection interval, and file backing context. */
+  Rrd(int, int, int, const std::string &);
+  /** @brief Constructs an in-memory anonymous circular database with a specific collection interval. */
+  Rrd(int, int, int);
+  /** @brief Constructs a persistent circular archive database with a default tracking interval. */
+  Rrd(int, const std::string &);
+  /** @brief Constructs an in-memory anonymous circular database with a default tracking interval. */
+  Rrd(int);
+  /** @brief Destructor. Synchronizes outstanding dirty data buffers to disk and frees internal evaluation assets. */
   ~Rrd();
-  uint64_t read(DataArrayList *list, uint64_t from = 0, uint32_t size = 0, uint64_t *lastIndex = nullptr);
-  void setFillInterval(int interval);
+
+  /** @brief Slices historical time-series data records from a given timestamp and extracts them into a provided destination list container. @return The unique timestamp boundary configuration of the last successfully extracted record item. */
+  uint64_t read(DataArrayList *, uint64_t = 0, uint32_t = 0, uint64_t * = nullptr);
+  /** @brief Returns the absolute maximum capability size (total slots) configured for this circular ring buffer layout. */
   uint32_t size() { return dbSize; }
+  /** @brief Returns the total number of valid data items currently populated inside the database allocation framework. */
   uint32_t count();
 
-  //Must lock the thread before calling this method
+  /** @brief Directly extracts a raw binary data array chunk element from the specified ring buffer index allocation slot.
+  @warning Must lock the target processing background thread before executing this method context. */
   Item readFromArray(uint32_t);
-  //Must lock the thread before calling this method
+  /** @brief Directly overwrites a raw binary data array chunk element at the specified ring buffer index allocation slot.
+  @warning Must lock the target processing background thread before executing this method context. */
   void writeToArray(uint32_t, const Item &);
 
+  /** @brief Ingests and commits a new item layout entry directly into the tail of the circular timeline framework tracking stack. */
   void append(const Item &data, uint64_t index = 0);
+  /** @brief Forces a synchronous flushing execution write path to save memory tables down to an explicit local filesystem file path. */
   void save(const std::string &fn = {});
+  /** @brief Wipes out all active records in memory and resets internal buffer ring tracker structures to zero initialization state. */
   void clear();
+  /** @brief Returns the absolute unique incremental primary master timeline database record tracking index offset identifier. */
   uint64_t lastIndex();
 
+  /** @brief Protected notification event connector emitted instantly after a data append or modifying transaction successfully updates the data layout. */
   FunctionConnector<>::Protected<Rrd> updated;
 
+  /** @brief Fetches a raw tracking pointer leading back to the dedicated background thread context managing this execution scope. */
   Thread *thread() { return thread_; }
 
 protected:
@@ -61,7 +79,7 @@ private:
   Invocable<void(const ItemList &)>::Abstract *average = nullptr;
   int aInterval = 0;
   int aOffset = 0;
-  int interval;
+  int interval_;
   uint32_t fill;
   std::string file;
   bool createFile();

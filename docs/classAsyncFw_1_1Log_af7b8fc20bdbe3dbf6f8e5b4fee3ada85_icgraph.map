@@ -1,0 +1,5 @@
+<map id="AsyncFw::Log::save" name="AsyncFw::Log::save">
+<area shape="rect" id="Node000001" title="Safe write transaction proxy that bypasses filesystem synchronization if the database is in read&#45;only..." alt="" coords="203,5,344,32"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1Log.html#a6b0ce40bc2e34f4b435894701194dc26" title="Persists log entries into the underlying Rrd buffer and manages automated disk flushing." alt="" coords="5,5,155,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="187,21,155,21,155,16,187,16"/>
+</map>

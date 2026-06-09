@@ -1,5 +1,0 @@
-<map id="AsyncFw::FunctionConnectionGuard::FunctionConnectionGuard" name="AsyncFw::FunctionConnectionGuard::FunctionConnectionGuard">
-<area shape="rect" id="Node000001" title="Move constructor. Transfers connection ownership from another guard." alt="" coords="5,5,221,48"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1FunctionConnectionGuard.html#ac48d8cd651992f0587eaa4fce726edaf" title="Constructs an empty, uninitialized connection guard." alt="" coords="269,5,484,48"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="221,24,253,24,253,29,221,29"/>
-</map>
