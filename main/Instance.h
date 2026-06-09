@@ -44,7 +44,7 @@ class Instance : public AbstractInstance {
   friend T;
 
 public:
-  /** @brief Creates a custom polymorphically derived object inside this instance container as the global default. @tparam CT The concrete target type to instantiate (must derive from or be type T). @param args Variadic arguments forwarded to the constructor of type CT. @return A pointer to the newly created object, or nullptr if an instance already exists. */
+  /** @brief Registers a custom derived class instance as the engine-wide global default. @tparam CT The concrete target type to instantiate (must derive from or be type T). @param args Variadic arguments forwarded to the constructor of type CT. @return A pointer to the newly created object, or nullptr if an instance already exists. */
   template <typename CT, typename... Args>
   static CT *create(Args... args) {
     if (!i_->value) {

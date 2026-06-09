@@ -111,8 +111,8 @@ public:
   }
   /** @brief Append timer task. @param ms Timeout in milliseconds. @param function Task function. @return timer id if the task added or value less than zero. */
   template <typename F>
-  int appendTimerTask(int timeout, F function) {
-    return appendTimer(timeout, new Invocable<void()>::Function(std::forward<F>(function)));
+  int appendTimerTask(int ms, F function) {
+    return appendTimer(ms, new Invocable<void()>::Function(std::forward<F>(function)));
   }
 
   /** @brief Returns a pointer to the AsyncFw::AbstractThread that manages the currently executing thread. */
@@ -127,7 +127,7 @@ public:
 
   /** @brief Returns true if the managed thread is running. */
   virtual bool running() const;
-  /** @brief Runs a task in a managed thread. @param task Poiner to AbstractTask. @return True if the task is added to the queue. */
+  /** @brief Runs a task in a managed thread. @param task Pointer to AbstractTask. @return True if the task is added to the queue. */
   virtual bool invokeTask(AbstractTask *) const;
   /** @brief Append timer. @param ms timeout in milliseconds @param task Pointer to AbstractTask. @return timer Id if timer added or value less than zero. */
   virtual int appendTimer(int, AbstractTask *);

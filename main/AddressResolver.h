@@ -26,7 +26,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 namespace AsyncFw {
 /** @class AddressResolver AddressResolver.h <AsyncFw/AddressResolver> @brief Provides asynchronous DNS resolution using c-ares.
 @details AddressResolver encapsulates low-level POSIX address resolution abstractions. It handles asynchronous domain name resolution (DNS lookups) with support for protocol family selection (IPv4 vs IPv6) and custom per-request timeouts.
-@brief Examlpe with FunctionConnector: @snippet snippet.dox AddressResolver @brief Examlpe with CoroutineAwait: @snippet snippet.dox AddressResolver coro */
+@brief Example with FunctionConnector: @snippet snippet.dox AddressResolver @brief Example with CoroutineAwait: @snippet snippet.dox AddressResolver coro */
 class AddressResolver {
 public:
   using Result = std::vector<std::string>;

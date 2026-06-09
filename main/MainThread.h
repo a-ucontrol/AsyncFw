@@ -31,7 +31,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 namespace AsyncFw {
 /** @class MainThread MainThread.h <AsyncFw/MainThread>. @brief A static control interface managing the application's primary execution thread (Main Thread).
 @brief MainThread initializes the master Event Loop on the application's boot thread (typically main()). It handles core process-wide shutdown interceptors and manages the primary event loop execution frame.
-@brief Examlpe: @snippet snippet.dox MainThread */
+@brief Example: @snippet snippet.dox MainThread */
 
 class MainThread : private Thread
 #ifdef USE_QAPPLICATION

@@ -198,7 +198,7 @@ public:
   // Style 2: Explicitly enforce connection behavior via template argument
   sender->connector.connect<AsyncFw::AbstractFunctionConnector::Connection::Queued>(lambda);
   @endcode
-  @tparam T The thread execution context strategy. @param f The callable target object representing the receiver slot. @return Reference to the newly allocated Connection. */
+  @tparam T The thread execution context strategy. @param f The callable target object representing the receiver slot. @return Reference to the managed Connection. */
   template <AbstractFunctionConnector::Connection::Type T = static_cast<AbstractFunctionConnector::Connection::Type>(0x80), typename F>
   AbstractFunctionConnector::Connection &connect(F f) const;
 
@@ -210,7 +210,7 @@ public:
   // Style 2: Explicitly enforce connection behavior via template argument
   sender->connector.connect<Connection::Direct>(&MethodConnectionExample::method, &object);
   @endcode
-  @tparam T The thread execution context strategy. @param m The pointer to the member function of the target object. @param o The pointer to the specific instance of the object containing the member function. @return Reference to the newly allocated Connection. */
+  @tparam T The thread execution context strategy. @param m The pointer to the member function of the target object. @param o The pointer to the specific instance of the object containing the member function. @return Reference to the managed Connection. */
   template <AbstractFunctionConnector::Connection::Type T = static_cast<AbstractFunctionConnector::Connection::Type>(0x80), typename M, typename O>
   AbstractFunctionConnector::Connection &connect(M m, O *o) const;
 
@@ -236,14 +236,14 @@ public:
 /** @class FunctionConnectionGuard FunctionConnector.h <AsyncFw/FunctionConnector> @brief An RAII guard that automatically manages the lifecycle of a FunctionConnector connection.
 @details This class provides automated connection management using the Resource Acquisition Is Initialization (RAII) idiom. When a FunctionConnectionGuard goes out of scope or is destroyed, it automatically disconnects and cleans up its associated connection. It supports move semantics, allowing the guard to be transferred between scopes or stored inside containers. It explicitly disables copying.
 @note The destruction of the connection is thread-safe. If the connection type is asynchronous and managed by another thread, the actual deletion of the connection object is safely dispatched to that specific thread event loop.
-@brief Examlpe: @snippet snippet.dox FunctionConnectorGuard */
+@brief Example: @snippet snippet.dox FunctionConnectorGuard */
 class FunctionConnectionGuard {
   friend AbstractFunctionConnector::Connection;
 
 public:
   /** @brief Constructs an empty, uninitialized connection guard. */
   FunctionConnectionGuard();
-  /** @brief Move constructor. Transfers connection ownership from another guard. @param guard Explicit rvalue reference to the source guard. */
+  /** @brief Move constructor. Transfers connection ownership from another guard */
   FunctionConnectionGuard(FunctionConnectionGuard &&);
   /** @brief Constructs a guard and binds it to an active connection. @param connection Reference to the connection to be managed. */
   FunctionConnectionGuard(AbstractFunctionConnector::Connection &);
@@ -263,10 +263,10 @@ private:
 
 /** @class FunctionConnectionGuardList FunctionConnector.h <AsyncFw/FunctionConnector> @brief A helper container designed to manage multiple FunctionConnectionGuard lifecycles at once.
 @details Inherits from std::vector<FunctionConnectionGuard>. It provides a convenient way to aggregate multiple connection guards within a single scope (e.g., inside a controller or view class). When the list goes out of scope, all registered connections are safely and automatically disconnected.
-@brief Examlpe: @snippet snippet.dox FunctionConnectorGuardList */
+@brief Example: @snippet snippet.dox FunctionConnectorGuardList */
 class FunctionConnectionGuardList : public std::vector<FunctionConnectionGuard> {
 public:
-  /** @brief Appends a moving connection guard to the management list. @param guard Explicit rvalue reference to the source guard. */
+  /** @brief Appends a moving connection guard to the management list. */
   void operator+=(FunctionConnectionGuard &&);
 };
 }  // namespace AsyncFw

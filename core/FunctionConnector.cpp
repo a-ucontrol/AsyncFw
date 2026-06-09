@@ -50,9 +50,9 @@ AbstractFunctionConnector::Connection::~Connection() {
 
 FunctionConnectionGuard::FunctionConnectionGuard() : connection_(nullptr) {}
 
-FunctionConnectionGuard::FunctionConnectionGuard(FunctionConnectionGuard &&guarg) {
-  connection_ = guarg.connection_;
-  guarg.connection_ = nullptr;
+FunctionConnectionGuard::FunctionConnectionGuard(FunctionConnectionGuard &&guard) {
+  connection_ = guard.connection_;
+  guard.connection_ = nullptr;
   if (connection_) connection_->guard_ = this;
 }
 
@@ -79,11 +79,11 @@ void FunctionConnectionGuard::operator=(AbstractFunctionConnector::Connection &c
   connection_->guard_ = this;
 }
 
-void FunctionConnectionGuard::operator=(FunctionConnectionGuard &&guarg) {
+void FunctionConnectionGuard::operator=(FunctionConnectionGuard &&guard) {
   if (connection_) destroyConnection();
-  connection_ = guarg.connection_;
-  guarg.connection_ = nullptr;
+  connection_ = guard.connection_;
+  guard.connection_ = nullptr;
   if (connection_) connection_->guard_ = this;
 }
 
-void FunctionConnectionGuardList::operator+=(FunctionConnectionGuard &&guarg) { push_back(std::move(guarg)); }
+void FunctionConnectionGuardList::operator+=(FunctionConnectionGuard &&guard) { push_back(std::move(guard)); }

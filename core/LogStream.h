@@ -43,10 +43,10 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 namespace AsyncFw {
 /** @class LogStream LogStream.h <AsyncFw/LogStream> @brief A high-performance, thread-safe logging stream utility utilizing RAII execution semantics.
 @details LogStream provides dynamic string and data formatting using standard C++ stream insertion operators (operator<<). The logged content is accumulated in an internal buffer and is guaranteed to flush automatically to the configured outputs when the temporary LogStream instance is destroyed at the end of the statement (RAII).
-@exception std::runtime_error If log level emergency the exception std::runtime_error("log level emergency") will be raised.
+@exception std::runtime_error Thrown automatically if the log level is Emergency.
 @note Throwing a log with Emergency level will automatically raise a std::runtime_error.
 @note Please refer to the **example** for compile-time log optimizations (like LS_NO_TRACE) and standard inline vs formatting syntax usage styles.
-@brief Examlpe: @snippet snippet.dox LogStream */
+@brief Example: @snippet snippet.dox LogStream */
 class LogStream {
 public:
   enum MessageType : uint8_t {
@@ -90,7 +90,7 @@ public:
     Message(uint8_t, const std::string &, const std::string &, const std::string &);
     Message(uint64_t time, uint8_t type, const std::string &name, const std::string &string, const std::string &note) : time(time), type(type), name(name), string(string), note(note) {}
     uint64_t time;       ///< Unix timestamp in milliseconds.
-    uint8_t type;        ///< Тип сообщения (MessageType).
+    uint8_t type;        ///< The log message severity level (MessageType).
     std::string name;    ///< Extracted signature/sender identification context.
     std::string string;  ///< Main log message body payload text.
     std::string note;    ///< Debug context notes (source file code trace location).

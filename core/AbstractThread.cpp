@@ -315,7 +315,7 @@ AbstractThread::~AbstractThread() {
     lsDebug() << LogStream::Color::DarkRed << "timer list not empty" << private_.timers.size();
     while (!private_.timers.empty()) {
       Private::Timer _timer = private_.timers.back();
-      private_.timers.erase(private_.timers.end());
+      private_.timers.pop_back();
       delete _timer.task;
     }
   }
@@ -856,7 +856,7 @@ void AbstractThread::removePollDescriptor(int fd) {
   {  //lock scope
     LockGuard lock(private_.mutex);
     std::vector<Private::PollTask *>::iterator it = std::lower_bound(private_.poll_tasks.begin(), private_.poll_tasks.end(), fd, Private::Compare());
-    if (it != private_.poll_tasks.end() && (*it)->fd != fd) {
+    if (it == private_.poll_tasks.end() || (*it)->fd != fd) {
       console_msg("AbstractThread " + LOG_THREAD_NAME, "poll descriptor: " + std::to_string(fd) + " not found");
       return;
     }
