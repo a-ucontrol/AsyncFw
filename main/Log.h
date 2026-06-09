@@ -54,8 +54,8 @@ protected:
   /** @brief Synchronously flushes outstanding queues and tears down internal tracking structures. */
   void finality();
 
-  void startTimer(int, int);
-  void stopTimer(int);
+  void startTimer(int *, int);
+  void stopTimer(int *);
   uint8_t level = LogStream::Trace;
   uint8_t consoleLevel = LogStream::Trace;
   int queueLimit = 128;

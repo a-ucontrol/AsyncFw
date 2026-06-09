@@ -41,7 +41,7 @@ void AbstractLog::finality() {
   AbstractLog::flush();
   if (hideDuplicates) {
     for (int i = 0; i != _messages_; ++i) {
-      stopTimer(lastMessages[i].timerId);
+      stopTimer(&lastMessages[i].timerId);
       if (lastMessages[i].count > 1 && lastMessages[i].count != 10000) { output({lastMessages[i].message.type, lastMessages[i].message.name, "Repeated message " + std::to_string(lastMessages[i].count) + " times (last: " + std::to_string(LOG_CURRENT_TIME - lastMessages[i].message.time) + "ms ago): " + (lastMessages[i].message.string.empty() ? "Empty message" : lastMessages[i].message.string), lastMessages[i].message.note}); }
     }
   }
@@ -112,7 +112,7 @@ void AbstractLog::append(const Message &m) {
         for (int i = 0; i != _messages_; ++i) {
           if (!lastMessages[i].marked) continue;
           lastMessages[i].marked = false;
-          startTimer(lastMessages[i].timerId, 1500);
+          startTimer(&lastMessages[i].timerId, 1500);
         }
       }
     });
@@ -126,7 +126,7 @@ void AbstractLog::process(const Message &m) {
         if (++l->count % 1000 == 0 || l->count == 100 || l->count == 10) {
           if (l->count == 10000) {
             l->marked = false;
-            startTimer(l->timerId, 30000);
+            startTimer(&l->timerId, 30000);
             output({m.time, l->message.type, l->message.name, "Repeated message " + std::to_string(l->count) + " or more times: " + (l->message.string.empty() ? "Empty message" : l->message.string), l->message.note});
             return;
           }
@@ -138,7 +138,7 @@ void AbstractLog::process(const Message &m) {
       return;
     }
     if (l->count > 1 && l->count <= 10000 && l->count % 1000 != 0 && l->count != 100 && l->count != 10) output({m.time, l->message.type, l->message.name, "Repeated message " + std::to_string(l->count) + " times: " + (l->message.string.empty() ? "Empty message" : l->message.string), l->message.note});
-    stopTimer(l->timerId);
+    stopTimer(&l->timerId);
     output(m);
     l->message = m;
     l->count = 1;
@@ -156,7 +156,7 @@ void AbstractLog::timerTask(int timerId) {
   if (hideDuplicates) {
     for (int i = 0; i != _messages_; ++i) {
       if (lastMessages[i].timerId != timerId) continue;
-      stopTimer(lastMessages[i].timerId);
+      stopTimer(&lastMessages[i].timerId);
       int count = lastMessages[i].count;
       if (count > 1 && count % 1000 && count != 100 && count != 10) output({lastMessages[i].message.type, lastMessages[i].message.name, "Repeated message " + std::to_string(lastMessages[i].count) + " times (last: " + std::to_string(LOG_CURRENT_TIME - lastMessages[i].message.time) + "ms ago): " + (lastMessages[i].message.string.empty() ? "Empty message" : lastMessages[i].message.string), lastMessages[i].message.note});
       lastMessages[i].message = {};
@@ -166,15 +166,15 @@ void AbstractLog::timerTask(int timerId) {
   }
 }
 
-void AbstractLog::startTimer(int timerId, int msec) {
-  if (timerId >= 0) thread_->removeTimer(timerId);
-  timerId = thread_->appendTimerTask(msec, [this, timerId]() { timerTask(timerId); });
+void AbstractLog::startTimer(int *timerId, int msec) {
+  if (*timerId >= 0) thread_->removeTimer(*timerId);
+  *timerId = thread_->appendTimerTask(msec, [this, timerId]() { timerTask(*timerId); });
 }
 
-void AbstractLog::stopTimer(int timerId) {
-  if (timerId >= 0) {
-    thread_->removeTimer(timerId);
-    timerId = -1;
+void AbstractLog::stopTimer(int *timerId) {
+  if (*timerId >= 0) {
+    thread_->removeTimer(*timerId);
+    *timerId = -1;
   }
 }
 
@@ -208,13 +208,15 @@ Log::~Log() {
 void Log::finality() {
   if (instance_.value == this) LogStream::setCompleted(&LogStream::console_output);
   if (!thread_) return;
-  if (!thread_->invoke([this]() {
-    stopTimer(timerIdAutosave);
-    autoSave = -1;
-    AbstractLog::finality();
-  }, true)) {
+  if (!thread_->invoke(
+          [this]() {
+            stopTimer(&timerIdAutosave);
+            autoSave = -1;
+            AbstractLog::finality();
+          },
+          true)) {
     console_msg("Log", "thread not running");
-    stopTimer(timerIdAutosave);
+    stopTimer(&timerIdAutosave);
     autoSave = -1;
     AbstractLog::finality();
   }
@@ -234,7 +236,7 @@ void Log::output(const Message &m) {
       if (timerIdAutosave >= 0) thread_->modifyTimer(timerIdAutosave, 15000);
       else {
         timerIdAutosave = thread_->appendTimerTask(15000, [this]() {
-          stopTimer(timerIdAutosave);
+          stopTimer(&timerIdAutosave);
           if (autoSave < 0) return;
           save();
           autoSave = 100;
@@ -264,10 +266,12 @@ void Log::lsAppend(const Message &m, uint8_t f) {
   if (!(f & LOG_STREAM_CONSOLE_ONLY)) {
     _log->append(m);
     if (f & 0x80) {
-      if (!_log->thread_->invoke([_log]() {
-        _log->flush();
-        _log->save();
-      }, true)) {
+      if (!_log->thread_->invoke(
+              [_log]() {
+                _log->flush();
+                _log->save();
+              },
+              true)) {
         _log->flush();
         _log->save();
       }
