@@ -210,22 +210,29 @@ void AbstractThread::Private::process_timers() {
   }
 }
 
-void AbstractThread::Holder::complete() {
-  waiting = false;
-  thread->quit();
+void AbstractThread::Waiter::complete() {
+  if (!thread_) {
+    lsError() << "not waiting";
+    return;
+  }
+  AbstractThread *_t = thread_;
+  _t->quit();
+  thread_ = nullptr;
 }
 
-void AbstractThread::Holder::wait() {
-  waiting = true;
-  thread = AbstractThread::current();
+void AbstractThread::Waiter::wait() {
+  thread_ = AbstractThread::current();
+  AbstractThread *_t = thread_;
   int _q = 0;
   for (;;) {
-    thread->exec();
-    if (!waiting) break;
+    _t->exec();
+    if (!thread_) break;
     _q++;
   }
-  while (_q--) thread->quit();
+  while (_q--) _t->quit();
 }
+
+bool AbstractThread::Waiter::waiting() { return thread_; }
 
 AbstractThread::Private::List::~List() {
   if (!empty()) lsError() << "thread list not empty:" << size();

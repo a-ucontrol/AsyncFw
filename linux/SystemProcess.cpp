@@ -25,7 +25,7 @@ struct SystemProcess::Private {
 
   int in = -1;
   bool redirect_stdin = true;
-  AbstractThread::Holder *holder_ = nullptr;
+  AbstractThread::Waiter waiter_;
   State state_ = None;
 
   int out;
@@ -137,9 +137,7 @@ void SystemProcess::wait() {
     lsWarning("process not running");
     return;
   }
-  AbstractThread::Holder _h;
-  private_.holder_ = &_h;
-  _h.wait();
+  private_.waiter_.wait();
 }
 
 int SystemProcess::exitCode() { return private_.code_; }
@@ -166,10 +164,7 @@ void SystemProcess::finality() {
     lsError() << "error waitpid";
   }
 
-  if (private_.holder_) {
-    private_.holder_->complete();
-    private_.holder_ = nullptr;
-  }
+  if (private_.waiter_.waiting()) private_.waiter_.complete();
 
   stateChanged(private_.state_);
   lsTrace() << LogStream::Color::Red << "End: " + private_.cmdline_ << r << (int)private_.state_;

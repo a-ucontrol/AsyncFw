@@ -99,6 +99,6 @@ private:
   void removeTimer();
   void timerEvent();
   int tid_ = -1;
-  AsyncFw::AbstractThread::Holder *wait_holder_ = nullptr;
+  AsyncFw::AbstractThread::Waiter waiter_;
 };
 }  // namespace AsyncFw

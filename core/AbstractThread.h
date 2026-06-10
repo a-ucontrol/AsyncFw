@@ -60,16 +60,20 @@ public:
   /** @brief The AbstractPollTask type. */
   using AbstractPollTask = Invocable<void(AbstractThread::PollEvents)>::Abstract;
 
-  /** @brief The Holder class. */
-  class Holder {
+  /** @class Waiter @brief Synchronization primitive for nested event loop.
+  @details Spawns a sub-event loop via exec() within the current thread to achieve pseudo-synchronous blocking waits (e.g., inside CoroutineTask::wait()). This keeps the thread processing active events and prevents context deadlocks.
+  @warning Cascade Effect (Stack Invariant): Due to the nature of execution nesting, any prior nested exec loop will terminate only after all subsequent (deeper) nested loops are fully completed. */
+  class Waiter {
   public:
+    /** @brief Signals task completion and initiates a safe exit sequence from the sub-loop. */
     void complete();
-    /** @brief Runs nested exec() and wait for it completed. */
+    /** @brief Suspends the caller by running a controlled nested exec() loop until completed. */
     void wait();
+    /** @brief Returns true if the waiter is currently spinning inside a nested block. */
+    bool waiting();
 
   private:
-    AbstractThread *thread;
-    bool waiting;
+    AbstractThread *thread_ = nullptr;
   };
 
   /** @brief Runs a function in a managed thread. @param function Runs function. @param sync Blocking wait if true. @return True if the function is added to the queue. */

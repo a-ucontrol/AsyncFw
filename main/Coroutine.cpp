@@ -15,7 +15,7 @@ using namespace AsyncFw;
 struct CoroutineTask::promise_type::Private {
   CoroutineTask *task;
   AbstractThread *thread;
-  AbstractThread::Holder *holder = nullptr;
+  AbstractThread::Waiter waiter;
   bool finished = false;
 };
 
@@ -30,12 +30,7 @@ CoroutineTask::~CoroutineTask() {
 
 void CoroutineTask::wait() {
   if (promise->private_.finished) return;
-
-  AbstractThread::Holder h;
-  promise->private_.holder = &h;
-  h.wait();
-
-  promise->private_.holder = nullptr;
+  promise->private_.waiter.wait();
 }
 
 bool CoroutineTask::finished() { return promise->private_.finished; }
@@ -65,7 +60,7 @@ std::suspend_always CoroutineTask::promise_type::final_suspend() noexcept {
 }
 
 void CoroutineTask::promise_type::return_void() {
-  if (private_.holder) private_.holder->complete();
+  if (private_.waiter.waiting()) private_.waiter.complete();
   private_.finished = true;
 }
 

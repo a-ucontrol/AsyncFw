@@ -77,7 +77,7 @@ void DataArraySocket::stateEvent() {
     return;
   }
 
-  if (wait_holder_) wait_holder_->complete();
+  if (waiter_.waiting()) waiter_.complete();
 
   if (state_ == AbstractSocket::State::Active) {
     if (sslConnection) sslConnection = 4;
@@ -131,7 +131,7 @@ void DataArraySocket::timerEvent() {
       lsError("unknown timeout (" + peerString() + ')');
     }
 
-    if (wait_holder_) wait_holder_->complete();
+    if (waiter_.waiting()) waiter_.complete();
 
     waitTimerType |= 0x01;
     disconnect();
@@ -360,7 +360,7 @@ bool DataArraySocket::connectToHost() {
 }
 
 bool DataArraySocket::connectToHost(int timeout) {
-  if (wait_holder_) {
+  if (waiter_.waiting()) {
     lsError() << "connect in process";
     return false;
   }
@@ -376,10 +376,7 @@ bool DataArraySocket::connectToHost(int timeout) {
     connectToHost();
   }, true);
 
-  AbstractThread::Holder h;
-  wait_holder_ = &h;
-  h.wait();
-  wait_holder_ = nullptr;
+  waiter_.wait();
 
   lsTrace();
   return true;
