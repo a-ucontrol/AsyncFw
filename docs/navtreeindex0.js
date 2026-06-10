@@ -210,8 +210,10 @@ var NAVTREEINDEX0 =
 "classAsyncFw_1_1AbstractThreadPool_1_1Thread.html#a3f4c0689143ffada4c4569f43f93c5a9":[2,0,0,6,0,2],
 "classAsyncFw_1_1AbstractThreadPool_1_1Thread.html#a787b048ddebfd8b5d5d6c3988d0d90d3":[2,0,0,6,0,0],
 "classAsyncFw_1_1AbstractThreadPool_1_1Thread.html#aa4a8873e426f02286f1082de4083cb01":[2,0,0,6,0,1],
-"classAsyncFw_1_1AbstractThread_1_1Holder.html":[2,0,0,5,0],
-"classAsyncFw_1_1AbstractThread_1_1Holder.html#a795fc5bb1d23123fc892b8d414c56083":[2,0,0,5,0,0],
+"classAsyncFw_1_1AbstractThread_1_1Waiter.html":[2,0,0,5,0],
+"classAsyncFw_1_1AbstractThread_1_1Waiter.html#aaebe8ac927c9bd707aee2dd85b60eb22":[2,0,0,5,0,2],
+"classAsyncFw_1_1AbstractThread_1_1Waiter.html#ad2a62fc1276d8be1986a7e77f6dfb437":[2,0,0,5,0,1],
+"classAsyncFw_1_1AbstractThread_1_1Waiter.html#af91079f02392dbcccd1ef5f99acb53f7":[2,0,0,5,0,0],
 "classAsyncFw_1_1AbstractTlsSocket.html":[2,0,0,7],
 "classAsyncFw_1_1AbstractTlsSocket.html#a2d9c3d5d540b82fb516f5c56def48a02":[2,0,0,7,0],
 "classAsyncFw_1_1AbstractTlsSocket.html#a46dbd8e4895445214a4f46ee46433d6c":[2,0,0,7,1],
@@ -247,7 +249,5 @@ var NAVTREEINDEX0 =
 "classAsyncFw_1_1DataArrayView.html#a5037f9b6a55397a1a999e22198bb54ea":[2,0,0,21,3],
 "classAsyncFw_1_1DataArrayView.html#a5a35bb0c7c6c44781b883a789520128c":[2,0,0,21,2],
 "classAsyncFw_1_1DataArrayView.html#ad04f46e3d78a878d98603a6820e6039d":[2,0,0,21,0],
-"classAsyncFw_1_1DataArrayView.html#af0409dfe7cdeea6df5d33174abb0e464":[2,0,0,21,4],
-"classAsyncFw_1_1DataStream.html":[2,0,0,22],
-"classAsyncFw_1_1DataStream.html#a5483f91b758e0383fec1fd3c540425ef":[2,0,0,22,1]
+"classAsyncFw_1_1DataArrayView.html#af0409dfe7cdeea6df5d33174abb0e464":[2,0,0,21,4]
 };

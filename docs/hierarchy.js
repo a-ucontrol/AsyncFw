@@ -55,7 +55,6 @@ var hierarchy =
     [ "AsyncFw::FileSystemWatcher", "classAsyncFw_1_1FileSystemWatcher.html", null ],
     [ "AsyncFw::FunctionConnectionGuard", "classAsyncFw_1_1FunctionConnectionGuard.html", null ],
     [ "AsyncFw::FunctionConnectionGuardList", "classAsyncFw_1_1FunctionConnectionGuardList.html", null ],
-    [ "AsyncFw::AbstractThread::Holder", "classAsyncFw_1_1AbstractThread_1_1Holder.html", null ],
     [ "AsyncFw::MulticastDns::Host", "structAsyncFw_1_1MulticastDns_1_1Host.html", null ],
     [ "AsyncFw::HttpServer", "classAsyncFw_1_1HttpServer.html", null ],
     [ "AsyncFw::LogStream", "classAsyncFw_1_1LogStream.html", null ],
@@ -70,5 +69,6 @@ var hierarchy =
     [ "AsyncFw::SystemProcess", "classAsyncFw_1_1SystemProcess.html", null ],
     [ "AsyncFw::Timer", "classAsyncFw_1_1Timer.html", null ],
     [ "AsyncFw::TlsContext", "classAsyncFw_1_1TlsContext.html", null ],
-    [ "AsyncFw::Version", "structAsyncFw_1_1Version.html", null ]
+    [ "AsyncFw::Version", "structAsyncFw_1_1Version.html", null ],
+    [ "AsyncFw::AbstractThread::Waiter", "classAsyncFw_1_1AbstractThread_1_1Waiter.html", null ]
 ];

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.13.2"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>AsyncFw: AsyncFw::AbstractThread::Holder Class Reference</title>
+<title>AsyncFw: AsyncFw::AbstractThread::Waiter Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -77,7 +77,7 @@ $(function() { codefold.init(0); });
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(function(){initNavTree('classAsyncFw_1_1AbstractThread_1_1Holder.html',''); initResizable(true); });
+$(function(){initNavTree('classAsyncFw_1_1AbstractThread_1_1Waiter.html',''); initResizable(true); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -105,28 +105,29 @@ $(function(){initNavTree('classAsyncFw_1_1AbstractThread_1_1Holder.html',''); in
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="classAsyncFw_1_1AbstractThread_1_1Holder-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">AsyncFw::AbstractThread::Holder Class Reference</div></div>
+<a href="classAsyncFw_1_1AbstractThread_1_1Waiter-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">AsyncFw::AbstractThread::Waiter Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
-
-<p>The <a class="el" href="classAsyncFw_1_1AbstractThread_1_1Holder.html" title="The Holder class.">Holder</a> class.  
- <a href="#details">More...</a></p>
-
-<p><code>#include &lt;<a class="el" href="AbstractThread_8h_source.html">AbstractThread.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:addf88772962d55a395d02632c63897bb" id="r_addf88772962d55a395d02632c63897bb"><td class="memItemLeft" align="right" valign="top"><a id="addf88772962d55a395d02632c63897bb" name="addf88772962d55a395d02632c63897bb"></a>
+<tr class="memitem:af91079f02392dbcccd1ef5f99acb53f7" id="r_af91079f02392dbcccd1ef5f99acb53f7"><td class="memItemLeft" align="right" valign="top"><a id="af91079f02392dbcccd1ef5f99acb53f7" name="af91079f02392dbcccd1ef5f99acb53f7"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>complete</b> ()</td></tr>
-<tr class="separator:addf88772962d55a395d02632c63897bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a795fc5bb1d23123fc892b8d414c56083" id="r_a795fc5bb1d23123fc892b8d414c56083"><td class="memItemLeft" align="right" valign="top"><a id="a795fc5bb1d23123fc892b8d414c56083" name="a795fc5bb1d23123fc892b8d414c56083"></a>
+<tr class="memdesc:af91079f02392dbcccd1ef5f99acb53f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Signals task completion and initiates a safe exit sequence from the sub-loop. <br /></td></tr>
+<tr class="separator:af91079f02392dbcccd1ef5f99acb53f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad2a62fc1276d8be1986a7e77f6dfb437" id="r_ad2a62fc1276d8be1986a7e77f6dfb437"><td class="memItemLeft" align="right" valign="top"><a id="ad2a62fc1276d8be1986a7e77f6dfb437" name="ad2a62fc1276d8be1986a7e77f6dfb437"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>wait</b> ()</td></tr>
-<tr class="memdesc:a795fc5bb1d23123fc892b8d414c56083"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runs nested <a class="el" href="classAsyncFw_1_1AbstractThread.html#a9182c0b4b442300a64b8536f65ffe417" title="Run manage loop.">exec()</a> and wait for it completed. <br /></td></tr>
-<tr class="separator:a795fc5bb1d23123fc892b8d414c56083"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:ad2a62fc1276d8be1986a7e77f6dfb437"><td class="mdescLeft">&#160;</td><td class="mdescRight">Suspends the caller by running a controlled nested <a class="el" href="classAsyncFw_1_1AbstractThread.html#a9182c0b4b442300a64b8536f65ffe417" title="Run manage loop.">exec()</a> loop until completed. <br /></td></tr>
+<tr class="separator:ad2a62fc1276d8be1986a7e77f6dfb437"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaebe8ac927c9bd707aee2dd85b60eb22" id="r_aaebe8ac927c9bd707aee2dd85b60eb22"><td class="memItemLeft" align="right" valign="top"><a id="aaebe8ac927c9bd707aee2dd85b60eb22" name="aaebe8ac927c9bd707aee2dd85b60eb22"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>waiting</b> ()</td></tr>
+<tr class="memdesc:aaebe8ac927c9bd707aee2dd85b60eb22"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the waiter is currently spinning inside a nested block. <br /></td></tr>
+<tr class="separator:aaebe8ac927c9bd707aee2dd85b60eb22"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>The <a class="el" href="classAsyncFw_1_1AbstractThread_1_1Holder.html" title="The Holder class.">Holder</a> class. </p>
+<div class="textblock"><p>primitive for nested event loop.</p>
+<p>Spawns a sub-event loop via <a class="el" href="classAsyncFw_1_1AbstractThread.html#a9182c0b4b442300a64b8536f65ffe417" title="Run manage loop.">exec()</a> within the current thread to achieve pseudo-synchronous blocking waits (e.g., inside <a class="el" href="structAsyncFw_1_1CoroutineTask.html#a820a0a3410c4a14a71ad3599f46c1bb0" title="Runs nested Thread::exec() and wait for task finished.">CoroutineTask::wait()</a>). This keeps the thread processing active events and prevents context deadlocks. </p><dl class="section warning"><dt>Warning</dt><dd>Cascade Effect (Stack Invariant): Due to the nature of execution nesting, any prior nested exec loop will terminate only after all subsequent (deeper) nested loops are fully completed. </dd></dl>
 </div><hr/>The documentation for this class was generated from the following files:<ul>
 <li>core/<a class="el" href="AbstractThread_8h_source.html">AbstractThread.h</a></li>
 <li>core/<b>AbstractThread.cpp</b></li>
@@ -136,7 +137,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>wait</b> ()</td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><b>AsyncFw</b></li><li class="navelem"><a class="el" href="classAsyncFw_1_1AbstractThread.html">AbstractThread</a></li><li class="navelem"><a class="el" href="classAsyncFw_1_1AbstractThread_1_1Holder.html">Holder</a></li>
+    <li class="navelem"><b>AsyncFw</b></li><li class="navelem"><a class="el" href="classAsyncFw_1_1AbstractThread.html">AbstractThread</a></li><li class="navelem"><a class="el" href="classAsyncFw_1_1AbstractThread_1_1Waiter.html">Waiter</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
   </ul>
 </div>

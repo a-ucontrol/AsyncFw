@@ -1,6 +1,6 @@
 var classAsyncFw_1_1AbstractThread =
 [
-    [ "Holder", "classAsyncFw_1_1AbstractThread_1_1Holder.html", "classAsyncFw_1_1AbstractThread_1_1Holder" ],
+    [ "Waiter", "classAsyncFw_1_1AbstractThread_1_1Waiter.html", "classAsyncFw_1_1AbstractThread_1_1Waiter" ],
     [ "LockGuard", "classAsyncFw_1_1AbstractThread.html#a4e97803ef650d36ba80ef1471c4b643c", null ],
     [ "AbstractTask", "classAsyncFw_1_1AbstractThread.html#af2a69c1875d42b8daa41a82f000e4c2a", null ],
     [ "AbstractPollTask", "classAsyncFw_1_1AbstractThread.html#ad3dad9f7e0852a4c24c2bae48c701802", null ],
