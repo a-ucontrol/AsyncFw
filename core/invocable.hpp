@@ -20,7 +20,7 @@ struct Invocable<R(Args...)> {
     Function(F &&f) : f_(std::forward<F>(f)) {}
     R operator()(Args... args) override { return f_(std::forward<Args>(args)...); }
 
-  private:
+  protected:
     F f_;
   };
   template <typename M, typename O>
@@ -28,10 +28,9 @@ struct Invocable<R(Args...)> {
     MemberFunction(M m, O *o) : m_(m), o_(o) {}
     R operator()(Args... args) override { return (o_->*m_)(std::forward<Args>(args)...); }
 
-  private:
+  protected:
     M m_;
     O *o_;
   };
 };
-
 }  // namespace AsyncFw

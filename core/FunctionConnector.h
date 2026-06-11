@@ -62,13 +62,13 @@ public:
   AbstractFunctionConnector(ConnectionPolicy = Auto);
 
 protected:
-  template <typename F, typename... Args>
+  template <typename... Args>
   class QueuedTask : public AbstractThread::AbstractTask {
   public:
-    QueuedTask(F *f, Args &...args) : f_(f), args_(args...) {}
+    QueuedTask(AsyncFw::Invocable<void(Args &...)>::Abstract *f, Args &...args) : f_(f), args_(args...) {}
     ~QueuedTask() { delete f_; }
     void operator()() override { std::apply(*f_, args_); }
-    F *f_;
+    AsyncFw::Invocable<void(Args &...)>::Abstract *f_;
     std::tuple<Args...> args_;
   };
   virtual ~AbstractFunctionConnector() = 0;
@@ -125,12 +125,12 @@ protected:
 
   public:
     template <typename F>
-    Connection(F &f, const AbstractFunctionConnector *c, Type t) : AbstractFunctionConnector::Connection(c, t), f_(new Function(std::forward<F>(f))) {}
+    Connection(F &f, const AbstractFunctionConnector *c, Type t) : AbstractFunctionConnector::Connection(c, t), f_(new Function<F>(std::forward<F>(f))) {}
     template <typename M, typename O>
-    Connection(M m, O *o, const AbstractFunctionConnector *c, Type t) : AbstractFunctionConnector::Connection(c, t), f_(new MemberFunction(m, o)) {}
+    Connection(M m, O *o, const AbstractFunctionConnector *c, Type t) : AbstractFunctionConnector::Connection(c, t), f_(new MemberFunction<M, O>(m, o)) {}
 
   private:
-    struct AbstractFunction : public AsyncFw::Invocable<void(Args &...)>::Abstract {
+    struct AbstractFunction {
       /*
       Invokes the target callable, guaranteeing COPY semantics for arguments.
       This method is explicitly used during immediate signal dispatching (Direct/Sync) within the loop.
@@ -138,27 +138,23 @@ protected:
       The default operator() cannot be used for this purpose because it uses std::forward, which casts lvalues to rvalues (triggering move semantics).
       If operator() were called in a loop, the very first receiver would empty out (steal resources from) the arguments, leaving subsequent subscribers with moved-from, empty objects.
       */
+
+      void operator()(Args &...args) {}
       virtual void invoke(Args &...args) = 0;
-      virtual AbstractFunction *copy() const = 0;
+      virtual AsyncFw::Invocable<void(Args &...)>::Abstract *copy() const = 0;
+      virtual ~AbstractFunction() = default;
     };
     template <typename F>
-    struct Function : AbstractFunction {
-      Function(F &&f) : f_(std::forward<F>(f)) {}
-      Function(const Function *f) : f_(f->f_) {}
-      void operator()(Args &...args) override { f_(std::forward<Args>(args)...); }
-      void invoke(Args &...args) override { f_(args...); }
-      AbstractFunction *copy() const override { return new Function(this); }
-      F f_;
+    struct Function : AbstractFunction, public AsyncFw::Invocable<void(Args &...)>::template Function<F> {
+      using AsyncFw::Invocable<void(Args &...)>::template Function<F>::Function;
+      void invoke(Args &...args) override { this->f_(args...); }
+      AsyncFw::Invocable<void(Args &...)>::Abstract *copy() const override { return new AsyncFw::Invocable<void(Args & ...)>::template Function<F>(*this); }
     };
     template <typename M, typename O>
-    struct MemberFunction : AbstractFunction {
-      MemberFunction(M m, O *o) : m_(m), o_(o) {}
-      MemberFunction(const MemberFunction *f) : m_(f->m_), o_(f->o_) {}
-      void operator()(Args &...args) override { (o_->*m_)(std::forward<Args>(args)...); }
-      void invoke(Args &...args) override { (o_->*m_)(args...); }
-      AbstractFunction *copy() const override { return new MemberFunction(this); }
-      M m_;
-      O *o_;
+    struct MemberFunction : AbstractFunction, public AsyncFw::Invocable<void(Args &...)>::template MemberFunction<M, O> {
+      using AsyncFw::Invocable<void(Args &...)>::template MemberFunction<M, O>::MemberFunction;
+      void invoke(Args &...args) override { (this->o_->*this->m_)(args...); }
+      AsyncFw::Invocable<void(Args &...)>::Abstract *copy() const override { return new AsyncFw::Invocable<void(Args & ...)>::template MemberFunction<M, O>(*this); }
     };
     ~Connection() override { delete f_; }
     AbstractFunction *f_;
