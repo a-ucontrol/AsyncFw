@@ -62,10 +62,10 @@ public:
   AbstractFunctionConnector(ConnectionPolicy = Auto);
 
 protected:
-  template <typename... Args>
+  template <typename F, typename... Args>
   class QueuedTask : public AbstractThread::AbstractTask {
   public:
-    QueuedTask(AsyncFw::Invocable<void(Args &...)>::Abstract *f, Args &...args) : f_(f), args_(args...) {}
+    QueuedTask(F *f, Args &...args) : f_(f->copy()), args_(args...) {}
     ~QueuedTask() { delete f_; }
     void operator()() override { std::apply(*f_, args_); }
     AsyncFw::Invocable<void(Args &...)>::Abstract *f_;
@@ -111,7 +111,7 @@ public:
         continue;
       }
       if (c->type_ != Connection::Sync) {
-        AbstractThread::AbstractTask *_t = new QueuedTask(static_cast<const Connection *>(c)->f_->copy(), args...);
+        AbstractThread::AbstractTask *_t = new QueuedTask(static_cast<const Connection *>(c)->f_, args...);
         if (!c->thread_->invokeTask(_t)) delete _t;
       } else {
         c->thread_->invoke([c, &args...]() { (static_cast<const Connection *>(c)->f_)->invoke(args...); }, true);
