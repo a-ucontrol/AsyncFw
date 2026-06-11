@@ -212,7 +212,7 @@ void AbstractThread::Private::process_timers() {
 
 void AbstractThread::Waiter::complete() {
   if (!thread_) {
-    lsError() << "not waiting";
+    lsWarning() << "not waiting";
     return;
   }
   AbstractThread *_t = thread_;
