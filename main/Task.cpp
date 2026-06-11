@@ -9,13 +9,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include "core/LogStream.h"
 
 AsyncFw::AbstractTask::AbstractTask(AbstractThread *thread) : thread_(thread) { lsTrace(); }
-AsyncFw::AbstractTask::~AbstractTask() {
-  if (thread_) {
-    thread_->requestInterrupt();
-    thread_->waitInterrupted();
-  }
-  lsTrace();
-}
+AsyncFw::AbstractTask::~AbstractTask() { lsTrace(); }
 
 bool AsyncFw::AbstractTask::running() {
   lsDebug() << static_cast<bool>(running_);
