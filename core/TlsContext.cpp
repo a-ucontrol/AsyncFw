@@ -36,7 +36,7 @@ struct TlsContext::Private {
   std::string verifyName_;
 
   int serial_ = 0;
-  int ref_ = 0;
+  int ref_ = 1;
   uint8_t ignoreErrors_ = 0;
 
   static inline std::vector<Private *> verify_;
@@ -101,14 +101,12 @@ TlsContext::TlsContext(const DataArray &k, const DataArray &c, const DataArrayLi
 }
 
 TlsContext::~TlsContext() {
-  if (private_->ref_) private_->ref_--;
-  else { delete private_; }
+  if (!--private_->ref_) delete private_;
 }
 
 TlsContext &TlsContext::operator=(const TlsContext &_d) {
   _d.private_->ref_++;
-  if (private_->ref_) private_->ref_--;
-  else { delete private_; }
+  if (!--private_->ref_) delete private_;
   private_ = _d.private_;
   return *this;
 }
