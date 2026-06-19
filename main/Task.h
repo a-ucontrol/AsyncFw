@@ -49,7 +49,7 @@ public:
     }
     thread_->invoke([_p = shared_from_this()]() {
       Task<F> *_task = static_cast<Task<F> *>(_p.get());
-      (*_task->function)(&_task->data_);
+      (_task->function)(&_task->data_);
       _task->running_ = false;
     });
   }
