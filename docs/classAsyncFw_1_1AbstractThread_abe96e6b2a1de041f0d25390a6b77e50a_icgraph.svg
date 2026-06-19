@@ -12,9 +12,9 @@
 <g id="Node000001" class="node">
 <title>Node1</title>
 <g id="a_Node000001"><a xlink:title="Runs a task in a managed thread.">
-<polygon fill="#999999" stroke="#666666" points="611.5,-132 481.5,-132 481.5,-100 611.5,-100 611.5,-132"/>
-<text text-anchor="start" x="489.5" y="-118.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AbstractThread</text>
-<text text-anchor="middle" x="546.5" y="-106.5" font-family="Helvetica,sans-Serif" font-size="10.00">::invokeTask</text>
+<polygon fill="#999999" stroke="#666666" points="611.5,-82 481.5,-82 481.5,-50 611.5,-50 611.5,-82"/>
+<text text-anchor="start" x="489.5" y="-68.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AbstractThread</text>
+<text text-anchor="middle" x="546.5" y="-56.5" font-family="Helvetica,sans-Serif" font-size="10.00">::invokeTask</text>
 </a>
 </g>
 </g>
@@ -32,8 +32,46 @@
 <g id="edge1_Node000001_Node000002" class="edge">
 <title>Node1&#45;&gt;Node2</title>
 <g id="a_edge1_Node000001_Node000002"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M469.91,-116C461.9,-116 453.8,-116 445.93,-116"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="469.64,-119.5 479.64,-116 469.64,-112.5 469.64,-119.5"/>
+<path fill="none" stroke="#63b8ff" d="M481.03,-85.66C465.99,-90.24 450.13,-95.08 435.6,-99.51"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="481.81,-89.08 490.35,-82.81 479.77,-82.38 481.81,-89.08"/>
+</a>
+</g>
+</g>
+<!-- Node10 -->
+<g id="Node000010" class="node">
+<title>Node10</title>
+<g id="a_Node000010"><a xlink:href="classAsyncFw_1_1AbstractThread.html#a499a70b1d68a82fcded917a331f4cdef" target="_top" xlink:title="Remove poll descriptor.">
+<polygon fill="white" stroke="#666666" points="445.5,-82 315.5,-82 315.5,-50 445.5,-50 445.5,-82"/>
+<text text-anchor="start" x="323.5" y="-68.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AbstractThread</text>
+<text text-anchor="middle" x="380.5" y="-56.5" font-family="Helvetica,sans-Serif" font-size="10.00">::removePollDescriptor</text>
+</a>
+</g>
+</g>
+<!-- Node1&#45;&gt;Node10 -->
+<g id="edge9_Node000001_Node000010" class="edge">
+<title>Node1&#45;&gt;Node10</title>
+<g id="a_edge9_Node000001_Node000010"><a xlink:title=" ">
+<path fill="none" stroke="#63b8ff" d="M469.91,-66C461.9,-66 453.8,-66 445.93,-66"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="469.64,-69.5 479.64,-66 469.64,-62.5 469.64,-69.5"/>
+</a>
+</g>
+</g>
+<!-- Node11 -->
+<g id="Node000011" class="node">
+<title>Node11</title>
+<g id="a_Node000011"><a xlink:href="classAsyncFw_1_1AbstractThread.html#ae8fc0b3f68faed69e7f0b4e940ef12c0" target="_top" xlink:title="Remove timer.">
+<polygon fill="white" stroke="#666666" points="445.5,-32 315.5,-32 315.5,0 445.5,0 445.5,-32"/>
+<text text-anchor="start" x="323.5" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AbstractThread</text>
+<text text-anchor="middle" x="380.5" y="-6.5" font-family="Helvetica,sans-Serif" font-size="10.00">::removeTimer</text>
+</a>
+</g>
+</g>
+<!-- Node1&#45;&gt;Node11 -->
+<g id="edge10_Node000001_Node000011" class="edge">
+<title>Node1&#45;&gt;Node11</title>
+<g id="a_edge10_Node000001_Node000011"><a xlink:title=" ">
+<path fill="none" stroke="#63b8ff" d="M481.03,-46.34C465.99,-41.76 450.13,-36.92 435.6,-32.49"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="479.77,-49.62 490.35,-49.19 481.81,-42.92 479.77,-49.62"/>
 </a>
 </g>
 </g>
@@ -127,8 +165,8 @@
 <g id="edge8_Node000002_Node000009" class="edge">
 <title>Node2&#45;&gt;Node9</title>
 <g id="a_edge8_Node000002_Node000009"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M352.45,-92.5C333.08,-76.49 305.87,-55.64 279.5,-41 273.94,-37.91 267.93,-35.04 261.89,-32.41"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="349.96,-94.97 359.87,-98.72 354.45,-89.61 349.96,-94.97"/>
+<path fill="none" stroke="#63b8ff" d="M319.52,-93.91C318.14,-92.97 316.8,-92.01 315.5,-91 293.86,-74.22 301.16,-57.76 279.5,-41 275.33,-37.77 270.69,-34.91 265.87,-32.4"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="317.37,-96.7 327.75,-98.81 320.95,-90.69 317.37,-96.7"/>
 </a>
 </g>
 </g>

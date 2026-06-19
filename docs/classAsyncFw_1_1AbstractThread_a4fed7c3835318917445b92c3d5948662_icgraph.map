@@ -1,5 +1,0 @@
-<map id="AsyncFw::AbstractThread::finishedEvent" name="AsyncFw::AbstractThread::finishedEvent">
-<area shape="rect" id="Node000001" title="This call from the thread when it finishing execution." alt="" coords="231,5,404,48"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1Thread.html#ae9fc9cf8baddcc8dfa0e14784918c4a5" title="Runs finished()" alt="" coords="5,5,183,48"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="215,29,183,29,183,24,215,24"/>
-</map>

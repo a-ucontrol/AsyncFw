@@ -10,10 +10,10 @@ var searchData=
   ['removefromthread_7',['removeFromThread',['../classAsyncFw_1_1AbstractSocket.html#aa0f81593deeb67fe6a3031e9d57738d4',1,'AsyncFw::AbstractSocket']]],
   ['removepath_8',['removePath',['../classAsyncFw_1_1FileSystemWatcher.html#a233f7b546957d245122b1527b6605230',1,'AsyncFw::FileSystemWatcher']]],
   ['removepaths_9',['removePaths',['../classAsyncFw_1_1FileSystemWatcher.html#a437baed4f56fd823fa2ba42dc5be781c',1,'AsyncFw::FileSystemWatcher']]],
-  ['removepolldescriptor_10',['removePollDescriptor',['../classAsyncFw_1_1AbstractThread.html#acbfc67a3648c22a2567435daaba427d7',1,'AsyncFw::AbstractThread']]],
+  ['removepolldescriptor_10',['removePollDescriptor',['../classAsyncFw_1_1AbstractThread.html#a499a70b1d68a82fcded917a331f4cdef',1,'AsyncFw::AbstractThread']]],
   ['removethread_11',['removeThread',['../classAsyncFw_1_1AbstractThreadPool.html#a8dd6e5afe3b1c8f0fac9176568909c54',1,'AsyncFw::AbstractThreadPool::removeThread()'],['../classAsyncFw_1_1ThreadPool.html#ad7f14a964e683f021a4d6c1c0a8bbf5d',1,'AsyncFw::ThreadPool::removeThread()']]],
-  ['removetimer_12',['removeTimer',['../classAsyncFw_1_1AbstractThread.html#a8a7d3f95b3f993ad814bc15cd2568e30',1,'AsyncFw::AbstractThread']]],
-  ['requestinterrupt_13',['requestInterrupt',['../classAsyncFw_1_1AbstractThread.html#a7081163fdedb69e372c9f5356d9a7c7b',1,'AsyncFw::AbstractThread']]],
+  ['removetimer_12',['removeTimer',['../classAsyncFw_1_1AbstractThread.html#ae8fc0b3f68faed69e7f0b4e940ef12c0',1,'AsyncFw::AbstractThread']]],
+  ['requestinterrupt_13',['requestInterrupt',['../classAsyncFw_1_1AbstractThread.html#a16affc1626e26d18cc2d9eab21315591',1,'AsyncFw::AbstractThread']]],
   ['resolve_14',['resolve',['../classAsyncFw_1_1AddressResolver.html#a9a5b78be91762ae5adc7f19aede8a662',1,'AsyncFw::AddressResolver']]],
   ['resume_5fqueued_15',['resume_queued',['../structAsyncFw_1_1CoroutineTask_1_1promise__type.html#a6ef8c84c53068677172b21f5e08aa0b7',1,'AsyncFw::CoroutineTask::promise_type']]],
   ['rpc_3a_20tt_20coinvoke_20tt_16',['3. Deep Coroutine Orchestration &amp; RPC: &lt;tt&gt;coInvoke&lt;/tt&gt;',['../index.html#autotoc_md5',1,'']]],
@@ -25,5 +25,5 @@ var searchData=
   ['rrdserver_22',['RrdServer',['../classAsyncFw_1_1RrdServer.html',1,'AsyncFw']]],
   ['rrdserver_2eh_23',['RrdServer.h',['../RrdServer_8h.html',1,'']]],
   ['running_24',['Running',['../classAsyncFw_1_1SystemProcess.html#afad39352d4d8376d1304bc340a0cf32fad676c3df6d4070608540d7160f773e1b',1,'AsyncFw::SystemProcess']]],
-  ['running_25',['running',['../classAsyncFw_1_1AbstractThread.html#a899bcebf342e5770f6a2ace877d49981',1,'AsyncFw::AbstractThread']]]
+  ['running_25',['running',['../classAsyncFw_1_1AbstractThread.html#aa317731738402e37a8a05d5a5ec9d7c4',1,'AsyncFw::AbstractThread::running()'],['../classAsyncFw_1_1AbstractTask.html#ab5c6c7ec53a111afcbd485f8c13b81f0',1,'AsyncFw::AbstractTask::running()']]]
 ];

@@ -1,7 +1,11 @@
 <map id="AsyncFw::AbstractThread::invokeTask" name="AsyncFw::AbstractThread::invokeTask">
-<area shape="rect" id="Node000001" title="Runs a task in a managed thread." alt="" coords="647,139,821,181"/>
+<area shape="rect" id="Node000001" title="Runs a task in a managed thread." alt="" coords="647,205,821,248"/>
 <area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractThread.html#a786474d037b50053f1a97af7b67e6069" title="Runs a function in a managed thread." alt="" coords="426,139,599,181"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="632,163,600,163,600,157,632,157"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="646,203,585,185,587,179,647,198"/>
+<area shape="rect" id="Node000010" href="$classAsyncFw_1_1AbstractThread.html#a499a70b1d68a82fcded917a331f4cdef" title="Remove poll descriptor." alt="" coords="426,205,599,248"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="632,229,600,229,600,224,632,224"/>
+<area shape="rect" id="Node000011" href="$classAsyncFw_1_1AbstractThread.html#ae8fc0b3f68faed69e7f0b4e940ef12c0" title="Remove timer." alt="" coords="426,272,599,315"/>
+<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="647,255,587,274,585,269,646,250"/>
 <area shape="rect" id="Node000003" href="$classAsyncFw_1_1ThreadPool.html#a0a35c4070964e69b187842b69b04d325" title="Asynchronously invokes a function in the given thread&#39;s event loop." alt="" coords="216,5,366,48"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="474,131,429,96,377,62,353,51,356,46,379,58,432,91,477,127"/>
 <area shape="rect" id="Node000005" href="$classAsyncFw_1_1ThreadPool.html#a9919894e586310a7ea5b780845376e17" title="Asynchronously invokes a void function in the target thread, and executes a result callback in the ca..." alt="" coords="216,72,366,115"/>
@@ -11,7 +15,7 @@
 <area shape="rect" id="Node000008" href="$classAsyncFw_1_1ThreadPool.html#a4e73e16c0af130d6311c29952b11f720" title="Selects and returns the least loaded thread from the pool for task distribution." alt="" coords="216,205,366,248"/>
 <area shape="poly" id="edge7_Node000002_Node000008" title=" " alt="" coords="426,189,365,207,364,202,424,184"/>
 <area shape="rect" id="Node000009" href="$classAsyncFw_1_1ThreadPool.html#add8ee85dd7581acb117a805ff5a8c18a" title="Synchronously invokes a function in the given thread&#39;s event loop (blocks the caller)." alt="" coords="216,272,366,315"/>
-<area shape="poly" id="edge8_Node000002_Node000009" title=" " alt="" coords="477,193,432,229,379,262,356,274,353,269,377,258,429,224,474,189"/>
+<area shape="poly" id="edge8_Node000002_Node000009" title=" " alt="" coords="433,192,428,195,413,212,404,228,396,245,380,262,361,274,358,269,376,258,391,242,400,225,408,209,424,191,430,187"/>
 <area shape="rect" id="Node000004" href="$classAsyncFw_1_1ThreadPool.html#a5af6a927b72eec19abb94ee2477d00b5" title="Asynchronously invokes a function in the global pool, returning the result to a callback in the calle..." alt="" coords="5,5,156,48"/>
 <area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="200,29,156,29,156,24,200,24"/>
 <area shape="rect" id="Node000007" href="$classAsyncFw_1_1HttpSocket.html#a8268467d3581a4d393e9ccd288de32ff" title="Schedules the socket for deferred asynchronous destruction." alt="" coords="5,139,156,181"/>

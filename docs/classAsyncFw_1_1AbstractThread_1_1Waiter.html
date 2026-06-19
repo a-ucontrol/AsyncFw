@@ -118,7 +118,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>complete</b> ()</td><
 <tr class="separator:af91079f02392dbcccd1ef5f99acb53f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad2a62fc1276d8be1986a7e77f6dfb437" id="r_ad2a62fc1276d8be1986a7e77f6dfb437"><td class="memItemLeft" align="right" valign="top"><a id="ad2a62fc1276d8be1986a7e77f6dfb437" name="ad2a62fc1276d8be1986a7e77f6dfb437"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>wait</b> ()</td></tr>
-<tr class="memdesc:ad2a62fc1276d8be1986a7e77f6dfb437"><td class="mdescLeft">&#160;</td><td class="mdescRight">Suspends the caller by running a controlled nested <a class="el" href="classAsyncFw_1_1AbstractThread.html#a9182c0b4b442300a64b8536f65ffe417" title="Run manage loop.">exec()</a> loop until completed. <br /></td></tr>
+<tr class="memdesc:ad2a62fc1276d8be1986a7e77f6dfb437"><td class="mdescLeft">&#160;</td><td class="mdescRight">Suspends the caller by running a controlled nested <a class="el" href="classAsyncFw_1_1AbstractThread.html#a1abe0f5c637dcc6af5aff00c5291bd4f" title="Run manage loop.">exec()</a> loop until completed. <br /></td></tr>
 <tr class="separator:ad2a62fc1276d8be1986a7e77f6dfb437"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaebe8ac927c9bd707aee2dd85b60eb22" id="r_aaebe8ac927c9bd707aee2dd85b60eb22"><td class="memItemLeft" align="right" valign="top"><a id="aaebe8ac927c9bd707aee2dd85b60eb22" name="aaebe8ac927c9bd707aee2dd85b60eb22"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>waiting</b> ()</td></tr>
@@ -127,7 +127,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>waiting</b> ()</td></
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>primitive for nested event loop.</p>
-<p>Spawns a sub-event loop via <a class="el" href="classAsyncFw_1_1AbstractThread.html#a9182c0b4b442300a64b8536f65ffe417" title="Run manage loop.">exec()</a> within the current thread to achieve pseudo-synchronous blocking waits (e.g., inside <a class="el" href="structAsyncFw_1_1CoroutineTask.html#a820a0a3410c4a14a71ad3599f46c1bb0" title="Runs nested Thread::exec() and wait for task finished.">CoroutineTask::wait()</a>). This keeps the thread processing active events and prevents context deadlocks. </p><dl class="section warning"><dt>Warning</dt><dd>Cascade Effect (Stack Invariant): Due to the nature of execution nesting, any prior nested exec loop will terminate only after all subsequent (deeper) nested loops are fully completed. </dd></dl>
+<p>Spawns a sub-event loop via <a class="el" href="classAsyncFw_1_1AbstractThread.html#a1abe0f5c637dcc6af5aff00c5291bd4f" title="Run manage loop.">exec()</a> within the current thread to achieve pseudo-synchronous blocking waits (e.g., inside <a class="el" href="structAsyncFw_1_1CoroutineTask.html#a820a0a3410c4a14a71ad3599f46c1bb0" title="Runs nested Thread::exec() and wait for task finished.">CoroutineTask::wait()</a>). This keeps the thread processing active events and prevents context deadlocks. </p><dl class="section warning"><dt>Warning</dt><dd>Cascade Effect (Stack Invariant): Due to the nature of execution nesting, any prior nested exec loop will terminate only after all subsequent (deeper) nested loops are fully completed. </dd></dl>
 </div><hr/>The documentation for this class was generated from the following files:<ul>
 <li>core/<a class="el" href="AbstractThread_8h_source.html">AbstractThread.h</a></li>
 <li>core/<b>AbstractThread.cpp</b></li>

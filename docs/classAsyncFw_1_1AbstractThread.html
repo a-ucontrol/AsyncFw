@@ -153,7 +153,7 @@ using&#160;</td><td class="memItemRight" valign="bottom"><b>LockGuard</b> = std:
 <tr class="separator:a4e97803ef650d36ba80ef1471c4b643c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af2a69c1875d42b8daa41a82f000e4c2a" id="r_af2a69c1875d42b8daa41a82f000e4c2a"><td class="memItemLeft" align="right" valign="top"><a id="af2a69c1875d42b8daa41a82f000e4c2a" name="af2a69c1875d42b8daa41a82f000e4c2a"></a>
 using&#160;</td><td class="memItemRight" valign="bottom"><b>AbstractTask</b> = Invocable&lt;void()&gt;::Abstract</td></tr>
-<tr class="memdesc:af2a69c1875d42b8daa41a82f000e4c2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="classAsyncFw_1_1AbstractTask.html" title="The AbstractTask class.">AbstractTask</a> type. <br /></td></tr>
+<tr class="memdesc:af2a69c1875d42b8daa41a82f000e4c2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="classAsyncFw_1_1AbstractTask.html" title="Base polymorphic class for tasks with dynamic runtime data encapsulation.">AbstractTask</a> type. <br /></td></tr>
 <tr class="separator:af2a69c1875d42b8daa41a82f000e4c2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad3dad9f7e0852a4c24c2bae48c701802" id="r_ad3dad9f7e0852a4c24c2bae48c701802"><td class="memItemLeft" align="right" valign="top"><a id="ad3dad9f7e0852a4c24c2bae48c701802" name="ad3dad9f7e0852a4c24c2bae48c701802"></a>
 using&#160;</td><td class="memItemRight" valign="bottom"><b>AbstractPollTask</b> = Invocable&lt;void(<a class="el" href="#a654efa5f41b38ff679e48211e8904a59">AbstractThread::PollEvents</a>)&gt;::Abstract</td></tr>
@@ -174,103 +174,103 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aca9b6529df5d0faa3bd33174ba643aa1"><td class="memTemplItemLeft" align="right" valign="top">int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#aca9b6529df5d0faa3bd33174ba643aa1">appendTimerTask</a> (int ms, F function)</td></tr>
 <tr class="memdesc:aca9b6529df5d0faa3bd33174ba643aa1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Append timer task.  <br /></td></tr>
 <tr class="separator:aca9b6529df5d0faa3bd33174ba643aa1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7382428ae20b315b9b55fa68b700603d" id="r_a7382428ae20b315b9b55fa68b700603d"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7382428ae20b315b9b55fa68b700603d">startedEvent</a> ()</td></tr>
-<tr class="memdesc:a7382428ae20b315b9b55fa68b700603d"><td class="mdescLeft">&#160;</td><td class="mdescRight">This call from thread when it starts executing.  <br /></td></tr>
-<tr class="separator:a7382428ae20b315b9b55fa68b700603d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4fed7c3835318917445b92c3d5948662" id="r_a4fed7c3835318917445b92c3d5948662"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4fed7c3835318917445b92c3d5948662">finishedEvent</a> ()</td></tr>
-<tr class="memdesc:a4fed7c3835318917445b92c3d5948662"><td class="mdescLeft">&#160;</td><td class="mdescRight">This call from the thread when it finishing execution.  <br /></td></tr>
-<tr class="separator:a4fed7c3835318917445b92c3d5948662"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a899bcebf342e5770f6a2ace877d49981" id="r_a899bcebf342e5770f6a2ace877d49981"><td class="memItemLeft" align="right" valign="top"><a id="a899bcebf342e5770f6a2ace877d49981" name="a899bcebf342e5770f6a2ace877d49981"></a>
+<tr class="memitem:a9b9db94ad8c90eafe1ef34a076af8498" id="r_a9b9db94ad8c90eafe1ef34a076af8498"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9b9db94ad8c90eafe1ef34a076af8498">startedEvent</a> ()</td></tr>
+<tr class="memdesc:a9b9db94ad8c90eafe1ef34a076af8498"><td class="mdescLeft">&#160;</td><td class="mdescRight">This call from thread when it starts executing.  <br /></td></tr>
+<tr class="separator:a9b9db94ad8c90eafe1ef34a076af8498"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad43b7b79e541bd1d6cce20f0231cc64d" id="r_ad43b7b79e541bd1d6cce20f0231cc64d"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad43b7b79e541bd1d6cce20f0231cc64d">finishedEvent</a> ()</td></tr>
+<tr class="memdesc:ad43b7b79e541bd1d6cce20f0231cc64d"><td class="mdescLeft">&#160;</td><td class="mdescRight">This call from the thread when it finishing execution.  <br /></td></tr>
+<tr class="separator:ad43b7b79e541bd1d6cce20f0231cc64d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa317731738402e37a8a05d5a5ec9d7c4" id="r_aa317731738402e37a8a05d5a5ec9d7c4"><td class="memItemLeft" align="right" valign="top"><a id="aa317731738402e37a8a05d5a5ec9d7c4" name="aa317731738402e37a8a05d5a5ec9d7c4"></a>
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>running</b> () const</td></tr>
-<tr class="memdesc:a899bcebf342e5770f6a2ace877d49981"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the managed thread is running. <br /></td></tr>
-<tr class="separator:a899bcebf342e5770f6a2ace877d49981"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a84745a4ab129e734d273fa8a5e358a2b" id="r_a84745a4ab129e734d273fa8a5e358a2b"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a84745a4ab129e734d273fa8a5e358a2b">invokeTask</a> (<a class="el" href="#af2a69c1875d42b8daa41a82f000e4c2a">AbstractTask</a> *) const</td></tr>
-<tr class="memdesc:a84745a4ab129e734d273fa8a5e358a2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runs a task in a managed thread.  <br /></td></tr>
-<tr class="separator:a84745a4ab129e734d273fa8a5e358a2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:add1d493a7d6c9750c399ed37f700b6d6" id="r_add1d493a7d6c9750c399ed37f700b6d6"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#add1d493a7d6c9750c399ed37f700b6d6">appendTimer</a> (int, <a class="el" href="#af2a69c1875d42b8daa41a82f000e4c2a">AbstractTask</a> *)</td></tr>
-<tr class="memdesc:add1d493a7d6c9750c399ed37f700b6d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Append timer.  <br /></td></tr>
-<tr class="separator:add1d493a7d6c9750c399ed37f700b6d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a215d591f056ad7bdf5a30bff56f06508" id="r_a215d591f056ad7bdf5a30bff56f06508"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a215d591f056ad7bdf5a30bff56f06508">modifyTimer</a> (int, int)</td></tr>
-<tr class="memdesc:a215d591f056ad7bdf5a30bff56f06508"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modify timer.  <br /></td></tr>
-<tr class="separator:a215d591f056ad7bdf5a30bff56f06508"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8a7d3f95b3f993ad814bc15cd2568e30" id="r_a8a7d3f95b3f993ad814bc15cd2568e30"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8a7d3f95b3f993ad814bc15cd2568e30">removeTimer</a> (int)</td></tr>
-<tr class="memdesc:a8a7d3f95b3f993ad814bc15cd2568e30"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove timer.  <br /></td></tr>
-<tr class="separator:a8a7d3f95b3f993ad814bc15cd2568e30"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5d77136157f34e21722ee4ff7b10813e" id="r_a5d77136157f34e21722ee4ff7b10813e"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5d77136157f34e21722ee4ff7b10813e">appendPollDescriptor</a> (int, <a class="el" href="#a654efa5f41b38ff679e48211e8904a59">PollEvents</a>, <a class="el" href="#ad3dad9f7e0852a4c24c2bae48c701802">AbstractPollTask</a> *)</td></tr>
-<tr class="memdesc:a5d77136157f34e21722ee4ff7b10813e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Append poll descriptor.  <br /></td></tr>
-<tr class="separator:a5d77136157f34e21722ee4ff7b10813e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a04d4f3fbcd28474e8834329fdb290ea8" id="r_a04d4f3fbcd28474e8834329fdb290ea8"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a04d4f3fbcd28474e8834329fdb290ea8">modifyPollDescriptor</a> (int, <a class="el" href="#a654efa5f41b38ff679e48211e8904a59">PollEvents</a>)</td></tr>
-<tr class="memdesc:a04d4f3fbcd28474e8834329fdb290ea8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modify poll descriptor.  <br /></td></tr>
-<tr class="separator:a04d4f3fbcd28474e8834329fdb290ea8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acbfc67a3648c22a2567435daaba427d7" id="r_acbfc67a3648c22a2567435daaba427d7"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acbfc67a3648c22a2567435daaba427d7">removePollDescriptor</a> (int)</td></tr>
-<tr class="memdesc:acbfc67a3648c22a2567435daaba427d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove poll descriptor.  <br /></td></tr>
-<tr class="separator:acbfc67a3648c22a2567435daaba427d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a933858c9506f67f17c5ada5caeaa8508" id="r_a933858c9506f67f17c5ada5caeaa8508"><td class="memItemLeft" align="right" valign="top"><a id="a933858c9506f67f17c5ada5caeaa8508" name="a933858c9506f67f17c5ada5caeaa8508"></a>
+<tr class="memdesc:aa317731738402e37a8a05d5a5ec9d7c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the managed thread is running. <br /></td></tr>
+<tr class="separator:aa317731738402e37a8a05d5a5ec9d7c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe96e6b2a1de041f0d25390a6b77e50a" id="r_abe96e6b2a1de041f0d25390a6b77e50a"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abe96e6b2a1de041f0d25390a6b77e50a">invokeTask</a> (<a class="el" href="#af2a69c1875d42b8daa41a82f000e4c2a">AbstractTask</a> *) const</td></tr>
+<tr class="memdesc:abe96e6b2a1de041f0d25390a6b77e50a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runs a task in a managed thread.  <br /></td></tr>
+<tr class="separator:abe96e6b2a1de041f0d25390a6b77e50a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1fa8bc43151797cbcfb2013ee1fce2ce" id="r_a1fa8bc43151797cbcfb2013ee1fce2ce"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1fa8bc43151797cbcfb2013ee1fce2ce">appendTimer</a> (int, <a class="el" href="#af2a69c1875d42b8daa41a82f000e4c2a">AbstractTask</a> *)</td></tr>
+<tr class="memdesc:a1fa8bc43151797cbcfb2013ee1fce2ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Append timer.  <br /></td></tr>
+<tr class="separator:a1fa8bc43151797cbcfb2013ee1fce2ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e367b49b300c1b93d2275b5840bb20b" id="r_a4e367b49b300c1b93d2275b5840bb20b"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4e367b49b300c1b93d2275b5840bb20b">modifyTimer</a> (int, int)</td></tr>
+<tr class="memdesc:a4e367b49b300c1b93d2275b5840bb20b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modify timer.  <br /></td></tr>
+<tr class="separator:a4e367b49b300c1b93d2275b5840bb20b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae8fc0b3f68faed69e7f0b4e940ef12c0" id="r_ae8fc0b3f68faed69e7f0b4e940ef12c0"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae8fc0b3f68faed69e7f0b4e940ef12c0">removeTimer</a> (int)</td></tr>
+<tr class="memdesc:ae8fc0b3f68faed69e7f0b4e940ef12c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove timer.  <br /></td></tr>
+<tr class="separator:ae8fc0b3f68faed69e7f0b4e940ef12c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9a4001da757d31945c4e6be4e20c31ed" id="r_a9a4001da757d31945c4e6be4e20c31ed"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9a4001da757d31945c4e6be4e20c31ed">appendPollDescriptor</a> (int, <a class="el" href="#a654efa5f41b38ff679e48211e8904a59">PollEvents</a>, <a class="el" href="#ad3dad9f7e0852a4c24c2bae48c701802">AbstractPollTask</a> *)</td></tr>
+<tr class="memdesc:a9a4001da757d31945c4e6be4e20c31ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Append poll descriptor.  <br /></td></tr>
+<tr class="separator:a9a4001da757d31945c4e6be4e20c31ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af295f768757d3c7d6cf32e5248cbc2e0" id="r_af295f768757d3c7d6cf32e5248cbc2e0"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af295f768757d3c7d6cf32e5248cbc2e0">modifyPollDescriptor</a> (int, <a class="el" href="#a654efa5f41b38ff679e48211e8904a59">PollEvents</a>)</td></tr>
+<tr class="memdesc:af295f768757d3c7d6cf32e5248cbc2e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modify poll descriptor.  <br /></td></tr>
+<tr class="separator:af295f768757d3c7d6cf32e5248cbc2e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a499a70b1d68a82fcded917a331f4cdef" id="r_a499a70b1d68a82fcded917a331f4cdef"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a499a70b1d68a82fcded917a331f4cdef">removePollDescriptor</a> (int)</td></tr>
+<tr class="memdesc:a499a70b1d68a82fcded917a331f4cdef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove poll descriptor.  <br /></td></tr>
+<tr class="separator:a499a70b1d68a82fcded917a331f4cdef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afdaccb5da7d4bee5e9ff687f761bd21f" id="r_afdaccb5da7d4bee5e9ff687f761bd21f"><td class="memItemLeft" align="right" valign="top"><a id="afdaccb5da7d4bee5e9ff687f761bd21f" name="afdaccb5da7d4bee5e9ff687f761bd21f"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>start</b> ()</td></tr>
-<tr class="memdesc:a933858c9506f67f17c5ada5caeaa8508"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a managed thread and run <a class="el" href="#a9182c0b4b442300a64b8536f65ffe417" title="Run manage loop.">exec()</a>. <br /></td></tr>
-<tr class="separator:a933858c9506f67f17c5ada5caeaa8508"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7081163fdedb69e372c9f5356d9a7c7b" id="r_a7081163fdedb69e372c9f5356d9a7c7b"><td class="memItemLeft" align="right" valign="top"><a id="a7081163fdedb69e372c9f5356d9a7c7b" name="a7081163fdedb69e372c9f5356d9a7c7b"></a>
+<tr class="memdesc:afdaccb5da7d4bee5e9ff687f761bd21f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a managed thread and run <a class="el" href="#a1abe0f5c637dcc6af5aff00c5291bd4f" title="Run manage loop.">exec()</a>. <br /></td></tr>
+<tr class="separator:afdaccb5da7d4bee5e9ff687f761bd21f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a16affc1626e26d18cc2d9eab21315591" id="r_a16affc1626e26d18cc2d9eab21315591"><td class="memItemLeft" align="right" valign="top"><a id="a16affc1626e26d18cc2d9eab21315591" name="a16affc1626e26d18cc2d9eab21315591"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>requestInterrupt</b> ()</td></tr>
-<tr class="memdesc:a7081163fdedb69e372c9f5356d9a7c7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Request the interruption of the thread. <br /></td></tr>
-<tr class="separator:a7081163fdedb69e372c9f5356d9a7c7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a213b2eff5c0d6b670e31dbfe3f1199e8" id="r_a213b2eff5c0d6b670e31dbfe3f1199e8"><td class="memItemLeft" align="right" valign="top"><a id="a213b2eff5c0d6b670e31dbfe3f1199e8" name="a213b2eff5c0d6b670e31dbfe3f1199e8"></a>
+<tr class="memdesc:a16affc1626e26d18cc2d9eab21315591"><td class="mdescLeft">&#160;</td><td class="mdescRight">Request the interruption of the thread. <br /></td></tr>
+<tr class="separator:a16affc1626e26d18cc2d9eab21315591"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab614c8e9a266d924e86c3c49c1a6ff36" id="r_ab614c8e9a266d924e86c3c49c1a6ff36"><td class="memItemLeft" align="right" valign="top"><a id="ab614c8e9a266d924e86c3c49c1a6ff36" name="ab614c8e9a266d924e86c3c49c1a6ff36"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>interruptRequested</b> () const</td></tr>
-<tr class="memdesc:a213b2eff5c0d6b670e31dbfe3f1199e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if an interrupt is requested. <br /></td></tr>
-<tr class="separator:a213b2eff5c0d6b670e31dbfe3f1199e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3b5605a008bf64620fac9d28717d98fb" id="r_a3b5605a008bf64620fac9d28717d98fb"><td class="memItemLeft" align="right" valign="top"><a id="a3b5605a008bf64620fac9d28717d98fb" name="a3b5605a008bf64620fac9d28717d98fb"></a>
+<tr class="memdesc:ab614c8e9a266d924e86c3c49c1a6ff36"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if an interrupt is requested. <br /></td></tr>
+<tr class="separator:ab614c8e9a266d924e86c3c49c1a6ff36"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d7785eb8b21e956a6b7ff880d3ae4c3" id="r_a5d7785eb8b21e956a6b7ff880d3ae4c3"><td class="memItemLeft" align="right" valign="top"><a id="a5d7785eb8b21e956a6b7ff880d3ae4c3" name="a5d7785eb8b21e956a6b7ff880d3ae4c3"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>waitInterrupted</b> () const</td></tr>
-<tr class="memdesc:a3b5605a008bf64620fac9d28717d98fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait for thread interrupted. This means that <a class="el" href="#a7081163fdedb69e372c9f5356d9a7c7b" title="Request the interruption of the thread.">requestInterrupt()</a> has been called and all queue tasks have completed. <br /></td></tr>
-<tr class="separator:a3b5605a008bf64620fac9d28717d98fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af61572d4713347fcac3ce80f8be2eb20" id="r_af61572d4713347fcac3ce80f8be2eb20"><td class="memItemLeft" align="right" valign="top"><a id="af61572d4713347fcac3ce80f8be2eb20" name="af61572d4713347fcac3ce80f8be2eb20"></a>
+<tr class="memdesc:a5d7785eb8b21e956a6b7ff880d3ae4c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait for thread interrupted. This means that <a class="el" href="#a16affc1626e26d18cc2d9eab21315591" title="Request the interruption of the thread.">requestInterrupt()</a> has been called and all queue tasks have completed. <br /></td></tr>
+<tr class="separator:a5d7785eb8b21e956a6b7ff880d3ae4c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afef57401f138e8de37eb8d817772d9ff" id="r_afef57401f138e8de37eb8d817772d9ff"><td class="memItemLeft" align="right" valign="top"><a id="afef57401f138e8de37eb8d817772d9ff" name="afef57401f138e8de37eb8d817772d9ff"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>quit</b> ()</td></tr>
-<tr class="memdesc:af61572d4713347fcac3ce80f8be2eb20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tells the thread's <a class="el" href="#a9182c0b4b442300a64b8536f65ffe417" title="Run manage loop.">exec()</a> to exit. <br /></td></tr>
-<tr class="separator:af61572d4713347fcac3ce80f8be2eb20"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2c37d275a098bbcb92912646d773186a" id="r_a2c37d275a098bbcb92912646d773186a"><td class="memItemLeft" align="right" valign="top"><a id="a2c37d275a098bbcb92912646d773186a" name="a2c37d275a098bbcb92912646d773186a"></a>
+<tr class="memdesc:afef57401f138e8de37eb8d817772d9ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tells the thread's <a class="el" href="#a1abe0f5c637dcc6af5aff00c5291bd4f" title="Run manage loop.">exec()</a> to exit. <br /></td></tr>
+<tr class="separator:afef57401f138e8de37eb8d817772d9ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d12fe08b7d84311eaa56a9704b7c2ba" id="r_a4d12fe08b7d84311eaa56a9704b7c2ba"><td class="memItemLeft" align="right" valign="top"><a id="a4d12fe08b7d84311eaa56a9704b7c2ba" name="a4d12fe08b7d84311eaa56a9704b7c2ba"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>waitFinished</b> () const</td></tr>
-<tr class="memdesc:a2c37d275a098bbcb92912646d773186a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait for the thread's <a class="el" href="#a9182c0b4b442300a64b8536f65ffe417" title="Run manage loop.">exec()</a> function finished. <br /></td></tr>
-<tr class="separator:a2c37d275a098bbcb92912646d773186a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1c4c7bde4ac10ed166139be4eafb04e3" id="r_a1c4c7bde4ac10ed166139be4eafb04e3"><td class="memItemLeft" align="right" valign="top"><a id="a1c4c7bde4ac10ed166139be4eafb04e3" name="a1c4c7bde4ac10ed166139be4eafb04e3"></a>
+<tr class="memdesc:a4d12fe08b7d84311eaa56a9704b7c2ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait for the thread's <a class="el" href="#a1abe0f5c637dcc6af5aff00c5291bd4f" title="Run manage loop.">exec()</a> function finished. <br /></td></tr>
+<tr class="separator:a4d12fe08b7d84311eaa56a9704b7c2ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a474577d15fa4b52abee863b44a0b7f89" id="r_a474577d15fa4b52abee863b44a0b7f89"><td class="memItemLeft" align="right" valign="top"><a id="a474577d15fa4b52abee863b44a0b7f89" name="a474577d15fa4b52abee863b44a0b7f89"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>workLoad</b> () const</td></tr>
-<tr class="memdesc:a1c4c7bde4ac10ed166139be4eafb04e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the number of tasks in the queue, plus one if there are running task. <br /></td></tr>
-<tr class="separator:a1c4c7bde4ac10ed166139be4eafb04e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a110a64706041760010cd3f83b783e265" id="r_a110a64706041760010cd3f83b783e265"><td class="memItemLeft" align="right" valign="top"><a id="a110a64706041760010cd3f83b783e265" name="a110a64706041760010cd3f83b783e265"></a>
+<tr class="memdesc:a474577d15fa4b52abee863b44a0b7f89"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the number of tasks in the queue, plus one if there are running task. <br /></td></tr>
+<tr class="separator:a474577d15fa4b52abee863b44a0b7f89"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a41d1cf92e033bcc11e2394cb949e031a" id="r_a41d1cf92e033bcc11e2394cb949e031a"><td class="memItemLeft" align="right" valign="top"><a id="a41d1cf92e033bcc11e2394cb949e031a" name="a41d1cf92e033bcc11e2394cb949e031a"></a>
 std::thread::id&#160;</td><td class="memItemRight" valign="bottom"><b>id</b> () const</td></tr>
-<tr class="memdesc:a110a64706041760010cd3f83b783e265"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns unique identifier of managed thread. <br /></td></tr>
-<tr class="separator:a110a64706041760010cd3f83b783e265"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8ebcc00d7ecbc1f9a2cc0c44d52ee071" id="r_a8ebcc00d7ecbc1f9a2cc0c44d52ee071"><td class="memItemLeft" align="right" valign="top"><a id="a8ebcc00d7ecbc1f9a2cc0c44d52ee071" name="a8ebcc00d7ecbc1f9a2cc0c44d52ee071"></a>
+<tr class="memdesc:a41d1cf92e033bcc11e2394cb949e031a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns unique identifier of managed thread. <br /></td></tr>
+<tr class="separator:a41d1cf92e033bcc11e2394cb949e031a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0cd916251e061aaf3d456575ef052edd" id="r_a0cd916251e061aaf3d456575ef052edd"><td class="memItemLeft" align="right" valign="top"><a id="a0cd916251e061aaf3d456575ef052edd" name="a0cd916251e061aaf3d456575ef052edd"></a>
 std::string&#160;</td><td class="memItemRight" valign="bottom"><b>name</b> () const</td></tr>
-<tr class="memdesc:a8ebcc00d7ecbc1f9a2cc0c44d52ee071"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns name of managed thread. <br /></td></tr>
-<tr class="separator:a8ebcc00d7ecbc1f9a2cc0c44d52ee071"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4a8cbb3fec33a81a2de43e7f5217acfb" id="r_a4a8cbb3fec33a81a2de43e7f5217acfb"><td class="memItemLeft" align="right" valign="top"><a id="a4a8cbb3fec33a81a2de43e7f5217acfb" name="a4a8cbb3fec33a81a2de43e7f5217acfb"></a>
+<tr class="memdesc:a0cd916251e061aaf3d456575ef052edd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns name of managed thread. <br /></td></tr>
+<tr class="separator:a0cd916251e061aaf3d456575ef052edd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e17293ccd9683f5bd8ca9a3dcd52e7d" id="r_a6e17293ccd9683f5bd8ca9a3dcd52e7d"><td class="memItemLeft" align="right" valign="top"><a id="a6e17293ccd9683f5bd8ca9a3dcd52e7d" name="a6e17293ccd9683f5bd8ca9a3dcd52e7d"></a>
 <a class="el" href="#a4e97803ef650d36ba80ef1471c4b643c">LockGuard</a>&#160;</td><td class="memItemRight" valign="bottom"><b>lockGuard</b> () const</td></tr>
-<tr class="memdesc:a4a8cbb3fec33a81a2de43e7f5217acfb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Locks the managed thread and returns a <a class="el" href="#a4e97803ef650d36ba80ef1471c4b643c" title="The LockGuard type.">LockGuard</a> variable. The thread is unblocked after this variable is destroyed. <br /></td></tr>
-<tr class="separator:a4a8cbb3fec33a81a2de43e7f5217acfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:a6e17293ccd9683f5bd8ca9a3dcd52e7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Locks the managed thread and returns a <a class="el" href="#a4e97803ef650d36ba80ef1471c4b643c" title="The LockGuard type.">LockGuard</a> variable. The thread is unblocked after this variable is destroyed. <br /></td></tr>
+<tr class="separator:a6e17293ccd9683f5bd8ca9a3dcd52e7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a09cdd1972b9416a7ddb2a1921f36938c" id="r_a09cdd1972b9416a7ddb2a1921f36938c"><td class="memItemLeft" align="right" valign="top"><a id="a09cdd1972b9416a7ddb2a1921f36938c" name="a09cdd1972b9416a7ddb2a1921f36938c"></a>
+<tr class="memitem:af33c5949edb374d673a7a9ac0c81ec32" id="r_af33c5949edb374d673a7a9ac0c81ec32"><td class="memItemLeft" align="right" valign="top"><a id="af33c5949edb374d673a7a9ac0c81ec32" name="af33c5949edb374d673a7a9ac0c81ec32"></a>
 static <a class="el" href="classAsyncFw_1_1AbstractThread.html">AbstractThread</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>current</b> ()</td></tr>
-<tr class="memdesc:a09cdd1972b9416a7ddb2a1921f36938c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a pointer to the <a class="el" href="classAsyncFw_1_1AbstractThread.html" title="The AbstractThread class provides the base functionality for thread management.">AsyncFw::AbstractThread</a> that manages the currently executing thread. <br /></td></tr>
-<tr class="separator:a09cdd1972b9416a7ddb2a1921f36938c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af4faa2d900f06dd3b4716b9a24c9099e" id="r_af4faa2d900f06dd3b4716b9a24c9099e"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="#a4e97803ef650d36ba80ef1471c4b643c">AbstractThread::LockGuard</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af4faa2d900f06dd3b4716b9a24c9099e">threads</a> (std::vector&lt; <a class="el" href="classAsyncFw_1_1AbstractThread.html">AbstractThread</a> * &gt; **)</td></tr>
-<tr class="memdesc:af4faa2d900f06dd3b4716b9a24c9099e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assigns a pointer to the list of all threads.  <br /></td></tr>
-<tr class="separator:af4faa2d900f06dd3b4716b9a24c9099e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:af33c5949edb374d673a7a9ac0c81ec32"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a pointer to the <a class="el" href="classAsyncFw_1_1AbstractThread.html" title="The AbstractThread class provides the base functionality for thread management.">AsyncFw::AbstractThread</a> that manages the currently executing thread. <br /></td></tr>
+<tr class="separator:af33c5949edb374d673a7a9ac0c81ec32"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43ef467a5f4dcc46d152a06cc20bf41c" id="r_a43ef467a5f4dcc46d152a06cc20bf41c"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="#a4e97803ef650d36ba80ef1471c4b643c">AbstractThread::LockGuard</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a43ef467a5f4dcc46d152a06cc20bf41c">threads</a> (std::vector&lt; <a class="el" href="classAsyncFw_1_1AbstractThread.html">AbstractThread</a> * &gt; **)</td></tr>
+<tr class="memdesc:a43ef467a5f4dcc46d152a06cc20bf41c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assigns a pointer to the list of all threads.  <br /></td></tr>
+<tr class="separator:a43ef467a5f4dcc46d152a06cc20bf41c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:ac8be1c406c4235ff1dabc1cdb4ac04ba" id="r_ac8be1c406c4235ff1dabc1cdb4ac04ba"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac8be1c406c4235ff1dabc1cdb4ac04ba">AbstractThread</a> (const std::string &amp;)</td></tr>
-<tr class="memdesc:ac8be1c406c4235ff1dabc1cdb4ac04ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a thread.  <br /></td></tr>
-<tr class="separator:ac8be1c406c4235ff1dabc1cdb4ac04ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a998565e4323e1ad6e021e24a4892bd55" id="r_a998565e4323e1ad6e021e24a4892bd55"><td class="memItemLeft" align="right" valign="top"><a id="a998565e4323e1ad6e021e24a4892bd55" name="a998565e4323e1ad6e021e24a4892bd55"></a>
+<tr class="memitem:a8c9202c90ac101522f26c4260cb01b59" id="r_a8c9202c90ac101522f26c4260cb01b59"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8c9202c90ac101522f26c4260cb01b59">AbstractThread</a> (const std::string &amp;)</td></tr>
+<tr class="memdesc:a8c9202c90ac101522f26c4260cb01b59"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a thread.  <br /></td></tr>
+<tr class="separator:a8c9202c90ac101522f26c4260cb01b59"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab61c0a69425ecd8a83d8825050c2f077" id="r_ab61c0a69425ecd8a83d8825050c2f077"><td class="memItemLeft" align="right" valign="top"><a id="ab61c0a69425ecd8a83d8825050c2f077" name="ab61c0a69425ecd8a83d8825050c2f077"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setId</b> ()</td></tr>
-<tr class="separator:a998565e4323e1ad6e021e24a4892bd55"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a097030a12001ef4496008a5d7a5222e8" id="r_a097030a12001ef4496008a5d7a5222e8"><td class="memItemLeft" align="right" valign="top"><a id="a097030a12001ef4496008a5d7a5222e8" name="a097030a12001ef4496008a5d7a5222e8"></a>
+<tr class="separator:ab61c0a69425ecd8a83d8825050c2f077"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a70d927fa19d4005ebaaef2584d9e1869" id="r_a70d927fa19d4005ebaaef2584d9e1869"><td class="memItemLeft" align="right" valign="top"><a id="a70d927fa19d4005ebaaef2584d9e1869" name="a70d927fa19d4005ebaaef2584d9e1869"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>clearId</b> ()</td></tr>
-<tr class="separator:a097030a12001ef4496008a5d7a5222e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9182c0b4b442300a64b8536f65ffe417" id="r_a9182c0b4b442300a64b8536f65ffe417"><td class="memItemLeft" align="right" valign="top"><a id="a9182c0b4b442300a64b8536f65ffe417" name="a9182c0b4b442300a64b8536f65ffe417"></a>
+<tr class="separator:a70d927fa19d4005ebaaef2584d9e1869"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1abe0f5c637dcc6af5aff00c5291bd4f" id="r_a1abe0f5c637dcc6af5aff00c5291bd4f"><td class="memItemLeft" align="right" valign="top"><a id="a1abe0f5c637dcc6af5aff00c5291bd4f" name="a1abe0f5c637dcc6af5aff00c5291bd4f"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>exec</b> ()</td></tr>
-<tr class="memdesc:a9182c0b4b442300a64b8536f65ffe417"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run manage loop. <br /></td></tr>
-<tr class="separator:a9182c0b4b442300a64b8536f65ffe417"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:a1abe0f5c637dcc6af5aff00c5291bd4f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run manage loop. <br /></td></tr>
+<tr class="separator:a1abe0f5c637dcc6af5aff00c5291bd4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="friends" name="friends"></a>
 Friends</h2></td></tr>
@@ -287,8 +287,8 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>Thread</b></td></tr>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="Coroutine_2main_8cpp-example.html#_a3">Coroutine/main.cpp</a>, <a class="el" href="FunctionConnector_2main_8cpp-example.html#_a0">FunctionConnector/main.cpp</a>, <a class="el" href="ThreadInvoke_2main_8cpp-example.html#_a0">ThreadInvoke/main.cpp</a>, and <a class="el" href="ThreadPool_2main_8cpp-example.html#_a3">ThreadPool/main.cpp</a>.</dd>
 </dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="ac8be1c406c4235ff1dabc1cdb4ac04ba" name="ac8be1c406c4235ff1dabc1cdb4ac04ba"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac8be1c406c4235ff1dabc1cdb4ac04ba">&#9670;&#160;</a></span>AbstractThread()</h2>
+<a id="a8c9202c90ac101522f26c4260cb01b59" name="a8c9202c90ac101522f26c4260cb01b59"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8c9202c90ac101522f26c4260cb01b59">&#9670;&#160;</a></span>AbstractThread()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -297,9 +297,9 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>Thread</b></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">AsyncFw::AbstractThread::AbstractThread </td>
+          <td class="memname">AbstractThread::AbstractThread </td>
           <td>(</td>
-          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>name</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -322,14 +322,14 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>Thread</b></td></tr>
 <div id="dynsection-1-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-1-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1AbstractThread_ac8be1c406c4235ff1dabc1cdb4ac04ba_cgraph.svg" width="184" height="78"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1AbstractThread_a8c9202c90ac101522f26c4260cb01b59_cgraph.svg" width="406" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 <div id="dynsection-2" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-2-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
 <div id="dynsection-2-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-2-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1AbstractThread_ac8be1c406c4235ff1dabc1cdb4ac04ba_icgraph.svg" width="1307" height="507"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1AbstractThread_a8c9202c90ac101522f26c4260cb01b59_icgraph.svg" width="1307" height="507"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -431,7 +431,7 @@ template&lt;typename F&gt; </div>
   <table class="params">
     <tr><td class="paramname">fd</td><td><a class="el" href="classAsyncFw_1_1File.html" title="Provides basic file I/O operations.">File</a> descriptor.</td></tr>
     <tr><td class="paramname">events</td><td>Watch events.</td></tr>
-    <tr><td class="paramname">function</td><td><a class="el" href="classAsyncFw_1_1Task.html" title="The Task class.">Task</a> function. </td></tr>
+    <tr><td class="paramname">function</td><td><a class="el" href="classAsyncFw_1_1Task.html" title="A template container to execute custom callable payloads with dynamic data binding.">Task</a> function. </td></tr>
   </table>
   </dd>
 </dl>
@@ -479,7 +479,7 @@ template&lt;typename F&gt; </div>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">ms</td><td>Timeout in milliseconds.</td></tr>
-    <tr><td class="paramname">function</td><td><a class="el" href="classAsyncFw_1_1Task.html" title="The Task class.">Task</a> function. </td></tr>
+    <tr><td class="paramname">function</td><td><a class="el" href="classAsyncFw_1_1Task.html" title="A template container to execute custom callable payloads with dynamic data binding.">Task</a> function. </td></tr>
   </table>
   </dd>
 </dl>
@@ -489,13 +489,13 @@ template&lt;typename F&gt; </div>
 <div id="dynsection-6-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-6-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1AbstractThread_aca9b6529df5d0faa3bd33174ba643aa1_cgraph.svg" width="406" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1AbstractThread_aca9b6529df5d0faa3bd33174ba643aa1_cgraph.svg" width="646" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
 </div>
-<a id="af4faa2d900f06dd3b4716b9a24c9099e" name="af4faa2d900f06dd3b4716b9a24c9099e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af4faa2d900f06dd3b4716b9a24c9099e">&#9670;&#160;</a></span>threads()</h2>
+<a id="a43ef467a5f4dcc46d152a06cc20bf41c" name="a43ef467a5f4dcc46d152a06cc20bf41c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a43ef467a5f4dcc46d152a06cc20bf41c">&#9670;&#160;</a></span>threads()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -504,9 +504,9 @@ template&lt;typename F&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="#a4e97803ef650d36ba80ef1471c4b643c">AbstractThread::LockGuard</a> AsyncFw::AbstractThread::threads </td>
+          <td class="memname"><a class="el" href="#a4e97803ef650d36ba80ef1471c4b643c">AbstractThread::LockGuard</a> AbstractThread::threads </td>
           <td>(</td>
-          <td class="paramtype">std::vector&lt; <a class="el" href="classAsyncFw_1_1AbstractThread.html">AbstractThread</a> * &gt; **</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td class="paramtype">std::vector&lt; <a class="el" href="classAsyncFw_1_1AbstractThread.html">AbstractThread</a> * &gt; **</td>          <td class="paramname"><span class="paramname"><em>list</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -528,8 +528,8 @@ template&lt;typename F&gt; </div>
 
 </div>
 </div>
-<a id="a7382428ae20b315b9b55fa68b700603d" name="a7382428ae20b315b9b55fa68b700603d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7382428ae20b315b9b55fa68b700603d">&#9670;&#160;</a></span>startedEvent()</h2>
+<a id="a9b9db94ad8c90eafe1ef34a076af8498" name="a9b9db94ad8c90eafe1ef34a076af8498"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9b9db94ad8c90eafe1ef34a076af8498">&#9670;&#160;</a></span>startedEvent()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -538,7 +538,7 @@ template&lt;typename F&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void AsyncFw::AbstractThread::startedEvent </td>
+          <td class="memname">void AbstractThread::startedEvent </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
@@ -559,13 +559,13 @@ template&lt;typename F&gt; </div>
 <div id="dynsection-7-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-7-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1AbstractThread_a7382428ae20b315b9b55fa68b700603d_icgraph.svg" width="404" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1AbstractThread_a9b9db94ad8c90eafe1ef34a076af8498_icgraph.svg" width="627" height="154"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
 </div>
-<a id="a4fed7c3835318917445b92c3d5948662" name="a4fed7c3835318917445b92c3d5948662"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4fed7c3835318917445b92c3d5948662">&#9670;&#160;</a></span>finishedEvent()</h2>
+<a id="ad43b7b79e541bd1d6cce20f0231cc64d" name="ad43b7b79e541bd1d6cce20f0231cc64d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad43b7b79e541bd1d6cce20f0231cc64d">&#9670;&#160;</a></span>finishedEvent()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -574,7 +574,7 @@ template&lt;typename F&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void AsyncFw::AbstractThread::finishedEvent </td>
+          <td class="memname">void AbstractThread::finishedEvent </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
@@ -595,13 +595,13 @@ template&lt;typename F&gt; </div>
 <div id="dynsection-8-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-8-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1AbstractThread_a4fed7c3835318917445b92c3d5948662_icgraph.svg" width="410" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1AbstractThread_ad43b7b79e541bd1d6cce20f0231cc64d_icgraph.svg" width="631" height="154"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
 </div>
-<a id="a84745a4ab129e734d273fa8a5e358a2b" name="a84745a4ab129e734d273fa8a5e358a2b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a84745a4ab129e734d273fa8a5e358a2b">&#9670;&#160;</a></span>invokeTask()</h2>
+<a id="abe96e6b2a1de041f0d25390a6b77e50a" name="abe96e6b2a1de041f0d25390a6b77e50a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abe96e6b2a1de041f0d25390a6b77e50a">&#9670;&#160;</a></span>invokeTask()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -610,9 +610,9 @@ template&lt;typename F&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual bool AsyncFw::AbstractThread::invokeTask </td>
+          <td class="memname">bool AbstractThread::invokeTask </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="#af2a69c1875d42b8daa41a82f000e4c2a">AbstractTask</a> *</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td class="paramtype"><a class="el" href="#af2a69c1875d42b8daa41a82f000e4c2a">AbstractTask</a> *</td>          <td class="paramname"><span class="paramname"><em>task</em></span></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
@@ -626,7 +626,7 @@ template&lt;typename F&gt; </div>
 <p>Runs a task in a managed thread. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">task</td><td>Pointer to <a class="el" href="classAsyncFw_1_1AbstractTask.html" title="The AbstractTask class.">AbstractTask</a>. </td></tr>
+    <tr><td class="paramname">task</td><td>Pointer to <a class="el" href="classAsyncFw_1_1AbstractTask.html" title="Base polymorphic class for tasks with dynamic runtime data encapsulation.">AbstractTask</a>. </td></tr>
   </table>
   </dd>
 </dl>
@@ -636,13 +636,13 @@ template&lt;typename F&gt; </div>
 <div id="dynsection-9-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-9-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1AbstractThread_a84745a4ab129e734d273fa8a5e358a2b_icgraph.svg" width="827" height="320"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1AbstractThread_abe96e6b2a1de041f0d25390a6b77e50a_icgraph.svg" width="827" height="320"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
 </div>
-<a id="add1d493a7d6c9750c399ed37f700b6d6" name="add1d493a7d6c9750c399ed37f700b6d6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#add1d493a7d6c9750c399ed37f700b6d6">&#9670;&#160;</a></span>appendTimer()</h2>
+<a id="a1fa8bc43151797cbcfb2013ee1fce2ce" name="a1fa8bc43151797cbcfb2013ee1fce2ce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1fa8bc43151797cbcfb2013ee1fce2ce">&#9670;&#160;</a></span>appendTimer()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -651,14 +651,14 @@ template&lt;typename F&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual int AsyncFw::AbstractThread::appendTimer </td>
+          <td class="memname">int AbstractThread::appendTimer </td>
           <td>(</td>
-          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>ms</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="#af2a69c1875d42b8daa41a82f000e4c2a">AbstractTask</a> *</td>          <td class="paramname"><span class="paramname"><em></em></span>&#160;)</td>
+          <td class="paramtype"><a class="el" href="#af2a69c1875d42b8daa41a82f000e4c2a">AbstractTask</a> *</td>          <td class="paramname"><span class="paramname"><em>task</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -672,23 +672,30 @@ template&lt;typename F&gt; </div>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">ms</td><td>timeout in milliseconds</td></tr>
-    <tr><td class="paramname">task</td><td>Pointer to <a class="el" href="classAsyncFw_1_1AbstractTask.html" title="The AbstractTask class.">AbstractTask</a>. </td></tr>
+    <tr><td class="paramname">task</td><td>Pointer to <a class="el" href="classAsyncFw_1_1AbstractTask.html" title="Base polymorphic class for tasks with dynamic runtime data encapsulation.">AbstractTask</a>. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>timer Id if timer added or value less than zero. </dd></dl>
 <div id="dynsection-10" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-10-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+  <img id="dynsection-10-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
 <div id="dynsection-10-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-10-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1AbstractThread_add1d493a7d6c9750c399ed37f700b6d6_icgraph.svg" width="406" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1AbstractThread_a1fa8bc43151797cbcfb2013ee1fce2ce_cgraph.svg" width="424" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+<div id="dynsection-11" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-11-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-11-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-11-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1AbstractThread_a1fa8bc43151797cbcfb2013ee1fce2ce_icgraph.svg" width="406" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
 </div>
-<a id="a215d591f056ad7bdf5a30bff56f06508" name="a215d591f056ad7bdf5a30bff56f06508"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a215d591f056ad7bdf5a30bff56f06508">&#9670;&#160;</a></span>modifyTimer()</h2>
+<a id="a4e367b49b300c1b93d2275b5840bb20b" name="a4e367b49b300c1b93d2275b5840bb20b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4e367b49b300c1b93d2275b5840bb20b">&#9670;&#160;</a></span>modifyTimer()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -697,14 +704,14 @@ template&lt;typename F&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual bool AsyncFw::AbstractThread::modifyTimer </td>
+          <td class="memname">bool AbstractThread::modifyTimer </td>
           <td>(</td>
-          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>id</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em></em></span>&#160;)</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>ms</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -726,8 +733,8 @@ template&lt;typename F&gt; </div>
 
 </div>
 </div>
-<a id="a8a7d3f95b3f993ad814bc15cd2568e30" name="a8a7d3f95b3f993ad814bc15cd2568e30"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8a7d3f95b3f993ad814bc15cd2568e30">&#9670;&#160;</a></span>removeTimer()</h2>
+<a id="ae8fc0b3f68faed69e7f0b4e940ef12c0" name="ae8fc0b3f68faed69e7f0b4e940ef12c0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae8fc0b3f68faed69e7f0b4e940ef12c0">&#9670;&#160;</a></span>removeTimer()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -736,9 +743,9 @@ template&lt;typename F&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void AsyncFw::AbstractThread::removeTimer </td>
+          <td class="memname">void AbstractThread::removeTimer </td>
           <td>(</td>
-          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>id</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -756,11 +763,18 @@ template&lt;typename F&gt; </div>
   </table>
   </dd>
 </dl>
+<div id="dynsection-12" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-12-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-12-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-12-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1AbstractThread_ae8fc0b3f68faed69e7f0b4e940ef12c0_cgraph.svg" width="406" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
 
 </div>
 </div>
-<a id="a5d77136157f34e21722ee4ff7b10813e" name="a5d77136157f34e21722ee4ff7b10813e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5d77136157f34e21722ee4ff7b10813e">&#9670;&#160;</a></span>appendPollDescriptor()</h2>
+<a id="a9a4001da757d31945c4e6be4e20c31ed" name="a9a4001da757d31945c4e6be4e20c31ed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9a4001da757d31945c4e6be4e20c31ed">&#9670;&#160;</a></span>appendPollDescriptor()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -769,19 +783,19 @@ template&lt;typename F&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual bool AsyncFw::AbstractThread::appendPollDescriptor </td>
+          <td class="memname">bool AbstractThread::appendPollDescriptor </td>
           <td>(</td>
-          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>fd</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="#a654efa5f41b38ff679e48211e8904a59">PollEvents</a></td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
+          <td class="paramtype"><a class="el" href="#a654efa5f41b38ff679e48211e8904a59">PollEvents</a></td>          <td class="paramname"><span class="paramname"><em>events</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="#ad3dad9f7e0852a4c24c2bae48c701802">AbstractPollTask</a> *</td>          <td class="paramname"><span class="paramname"><em></em></span>&#160;)</td>
+          <td class="paramtype"><a class="el" href="#ad3dad9f7e0852a4c24c2bae48c701802">AbstractPollTask</a> *</td>          <td class="paramname"><span class="paramname"><em>task</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -801,18 +815,18 @@ template&lt;typename F&gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if the poll descriptor added. </dd></dl>
-<div id="dynsection-11" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-11-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-11-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-13" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-13-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-13-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-11-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1AbstractThread_a5d77136157f34e21722ee4ff7b10813e_icgraph.svg" width="406" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div id="dynsection-13-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1AbstractThread_a9a4001da757d31945c4e6be4e20c31ed_icgraph.svg" width="406" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
 </div>
-<a id="a04d4f3fbcd28474e8834329fdb290ea8" name="a04d4f3fbcd28474e8834329fdb290ea8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a04d4f3fbcd28474e8834329fdb290ea8">&#9670;&#160;</a></span>modifyPollDescriptor()</h2>
+<a id="af295f768757d3c7d6cf32e5248cbc2e0" name="af295f768757d3c7d6cf32e5248cbc2e0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af295f768757d3c7d6cf32e5248cbc2e0">&#9670;&#160;</a></span>modifyPollDescriptor()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -821,14 +835,14 @@ template&lt;typename F&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual bool AsyncFw::AbstractThread::modifyPollDescriptor </td>
+          <td class="memname">bool AbstractThread::modifyPollDescriptor </td>
           <td>(</td>
-          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>fd</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="#a654efa5f41b38ff679e48211e8904a59">PollEvents</a></td>          <td class="paramname"><span class="paramname"><em></em></span>&#160;)</td>
+          <td class="paramtype"><a class="el" href="#a654efa5f41b38ff679e48211e8904a59">PollEvents</a></td>          <td class="paramname"><span class="paramname"><em>events</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -850,8 +864,8 @@ template&lt;typename F&gt; </div>
 
 </div>
 </div>
-<a id="acbfc67a3648c22a2567435daaba427d7" name="acbfc67a3648c22a2567435daaba427d7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acbfc67a3648c22a2567435daaba427d7">&#9670;&#160;</a></span>removePollDescriptor()</h2>
+<a id="a499a70b1d68a82fcded917a331f4cdef" name="a499a70b1d68a82fcded917a331f4cdef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a499a70b1d68a82fcded917a331f4cdef">&#9670;&#160;</a></span>removePollDescriptor()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -860,9 +874,9 @@ template&lt;typename F&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void AsyncFw::AbstractThread::removePollDescriptor </td>
+          <td class="memname">void AbstractThread::removePollDescriptor </td>
           <td>(</td>
-          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>fd</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -880,11 +894,19 @@ template&lt;typename F&gt; </div>
   </table>
   </dd>
 </dl>
+<div id="dynsection-14" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-14-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-14-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-14-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1AbstractThread_a499a70b1d68a82fcded917a331f4cdef_cgraph.svg" width="406" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
 
 </div>
 </div>
-<hr/>The documentation for this class was generated from the following file:<ul>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li>core/<a class="el" href="AbstractThread_8h_source.html">AbstractThread.h</a></li>
+<li>core/<b>AbstractThread.cpp</b></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

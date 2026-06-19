@@ -11,7 +11,7 @@
 <!-- Node1 -->
 <g id="Node000001" class="node">
 <title>Node1</title>
-<g id="a_Node000001"><a xlink:title="The Task class.">
+<g id="a_Node000001"><a xlink:title="A template container to execute custom callable payloads with dynamic data binding.">
 <polygon fill="#999999" stroke="#666666" points="114.62,-20 6.38,-20 6.38,0 114.62,0 114.62,-20"/>
 <text text-anchor="middle" x="60.5" y="-6.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::Task&lt; F &gt;</text>
 </a>
@@ -20,7 +20,7 @@
 <!-- Node2 -->
 <g id="Node000002" class="node">
 <title>Node2</title>
-<g id="a_Node000002"><a xlink:href="classAsyncFw_1_1AbstractTask.html" target="_top" xlink:title="The AbstractTask class.">
+<g id="a_Node000002"><a xlink:href="classAsyncFw_1_1AbstractTask.html" target="_top" xlink:title="Base polymorphic class for tasks with dynamic runtime data encapsulation.">
 <polygon fill="white" stroke="#666666" points="121,-76 0,-76 0,-56 121,-56 121,-76"/>
 <text text-anchor="middle" x="60.5" y="-62.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AbstractTask</text>
 </a>

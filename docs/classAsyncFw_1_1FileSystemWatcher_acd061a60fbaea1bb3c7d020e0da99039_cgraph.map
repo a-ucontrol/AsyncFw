@@ -1,10 +1,11 @@
 <map id="AsyncFw::FileSystemWatcher::FileSystemWatcher" name="AsyncFw::FileSystemWatcher::FileSystemWatcher">
-<area shape="rect" id="Node000001" title="Constructs a FileSystemWatcher and optionally starts monitoring given paths." alt="" coords="5,63,204,105"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractThread.html#a09cdd1972b9416a7ddb2a1921f36938c" title="Returns a pointer to the AsyncFw::AbstractThread that manages the currently executing thread." alt="" coords="264,29,438,72"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="204,68,248,62,249,67,205,73"/>
-<area shape="rect" id="Node000004" href="$classAsyncFw_1_1FileSystemWatcher.html#ab174c18c8399c50a7818c456e2a51551" title="Obtains a list of all currently registered file paths." alt="" coords="252,96,450,139"/>
-<area shape="poly" id="edge4_Node000001_Node000004" title=" " alt="" coords="205,95,237,99,236,104,204,100"/>
-<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractThread.html#ac8be1c406c4235ff1dabc1cdb4ac04ba" title="Constructs a thread." alt="" coords="498,29,671,72"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="438,48,482,48,482,53,438,53"/>
-<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="540,29,539,19,546,10,561,5,585,3,610,5,625,11,623,16,608,10,585,8,563,10,549,15,544,21,546,28"/>
+<area shape="rect" id="Node000001" title="Constructs a FileSystemWatcher and optionally starts monitoring given paths." alt="" coords="5,39,204,81"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractThread.html#af33c5949edb374d673a7a9ac0c81ec32" title="Returns a pointer to the AsyncFw::AbstractThread that manages the currently executing thread." alt="" coords="264,5,438,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="204,44,248,38,249,43,205,49"/>
+<area shape="rect" id="Node000005" href="$classAsyncFw_1_1FileSystemWatcher.html#ab174c18c8399c50a7818c456e2a51551" title="Obtains a list of all currently registered file paths." alt="" coords="252,72,450,115"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="205,71,237,75,236,80,204,76"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractThread.html#a8c9202c90ac101522f26c4260cb01b59" title="Constructs a thread." alt="" coords="498,5,671,48"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="438,24,482,24,482,29,438,29"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd" title="Returns name of managed thread." alt="" coords="719,5,893,48"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="672,24,704,24,704,29,672,29"/>
 </map>

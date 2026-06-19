@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['task_0',['Task',['../classAsyncFw_1_1Task.html',1,'AsyncFw']]],
+  ['task_0',['Task',['../classAsyncFw_1_1Task.html',1,'AsyncFw::Task&lt; F &gt;'],['../classAsyncFw_1_1Task.html#a66a8f9dd8f4f46945a073aef2d62a368',1,'AsyncFw::Task::Task()']]],
   ['task_20distribution_3a_20tt_20threadpool_20tt_1',['6. Smart Task Distribution: &lt;tt&gt;ThreadPool&lt;/tt&gt;',['../index.html#autotoc_md8',1,'']]],
   ['task_2eh_2',['Task.h',['../Task_8h.html',1,'']]],
   ['tellg_3',['tellg',['../classAsyncFw_1_1File.html#aaec950aa1cced82715667e8d0bd9664b',1,'AsyncFw::File']]],
@@ -18,7 +18,7 @@ var searchData=
   ['threadpool_15',['ThreadPool',['../classAsyncFw_1_1ThreadPool.html',1,'AsyncFw']]],
   ['threadpool_20tt_16',['6. Smart Task Distribution: &lt;tt&gt;ThreadPool&lt;/tt&gt;',['../index.html#autotoc_md8',1,'']]],
   ['threadpool_2eh_17',['ThreadPool.h',['../ThreadPool_8h.html',1,'']]],
-  ['threads_18',['threads',['../classAsyncFw_1_1AbstractThread.html#af4faa2d900f06dd3b4716b9a24c9099e',1,'AsyncFw::AbstractThread::threads()'],['../classAsyncFw_1_1AbstractThreadPool.html#a15294f7912a633e62e26fe0f7848eb68',1,'AsyncFw::AbstractThreadPool::threads()']]],
+  ['threads_18',['threads',['../classAsyncFw_1_1AbstractThread.html#a43ef467a5f4dcc46d152a06cc20bf41c',1,'AsyncFw::AbstractThread::threads()'],['../classAsyncFw_1_1AbstractThreadPool.html#a15294f7912a633e62e26fe0f7848eb68',1,'AsyncFw::AbstractThreadPool::threads()']]],
   ['time_19',['time',['../structAsyncFw_1_1LogStream_1_1Message.html#afbf65018f5c11d8d8204a0b47cee4207',1,'AsyncFw::LogStream::Message']]],
   ['timeout_20',['timeout',['../classAsyncFw_1_1Timer.html#acf307d575a38d2b3bb852202d0126fcd',1,'AsyncFw::Timer']]],
   ['timer_21',['Timer',['../classAsyncFw_1_1Timer.html',1,'AsyncFw']]],
