@@ -149,7 +149,7 @@ $(function(){initNavTree('Task_8h_source.html',''); initResizable(true); });
 <div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    }</div>
 <div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    thread_-&gt;invoke([_p = shared_from_this()]() {</div>
 <div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>      <a class="code hl_function" href="classAsyncFw_1_1Task.html#a66a8f9dd8f4f46945a073aef2d62a368">Task&lt;F&gt;</a> *_task = <span class="keyword">static_cast&lt;</span><a class="code hl_function" href="classAsyncFw_1_1Task.html#a66a8f9dd8f4f46945a073aef2d62a368">Task&lt;F&gt;</a> *<span class="keyword">&gt;</span>(_p.get());</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>      (*_task-&gt;function)(&amp;_task-&gt;<a class="code hl_variable" href="structAsyncFw_1_1AnyData.html#adc2b97818be013fcf912ca9c8e086fa3">data_</a>);</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>      (_task-&gt;function)(&amp;_task-&gt;<a class="code hl_variable" href="structAsyncFw_1_1AnyData.html#adc2b97818be013fcf912ca9c8e086fa3">data_</a>);</div>
 <div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>      _task-&gt;running_ = <span class="keyword">false</span>;</div>
 <div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    });</div>
 <div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>  }</div>
