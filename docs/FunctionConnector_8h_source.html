@@ -228,13 +228,13 @@ $(function(){initNavTree('FunctionConnector_8h_source.html',''); initResizable(t
 <div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> invoke(Args &amp;...args) = 0;</div>
 <div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>    std::atomic_int ref_ = 1;</div>
 <div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>  };</div>
-<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>  <span class="keyword">class </span>QueuedTask : <span class="keyword">public</span> <a class="code hl_typedef" href="classAsyncFw_1_1AbstractThread.html#af2a69c1875d42b8daa41a82f000e4c2a">AbstractThread::AbstractTask</a> {</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>  <span class="keyword">struct </span>QueuedTask : <span class="keyword">public</span> <a class="code hl_typedef" href="classAsyncFw_1_1AbstractThread.html#af2a69c1875d42b8daa41a82f000e4c2a">AbstractThread::AbstractTask</a> {</div>
 <div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>  <span class="keyword">public</span>:</div>
 <div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>    QueuedTask(AbstractFunction *f, Args &amp;...args) : f_(f), args_(args...) { f_-&gt;ref_++; }</div>
 <div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>    ~QueuedTask() {</div>
-<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>      <span class="keywordflow">if</span> (--f_-&gt;ref_ == 0) { <span class="keyword">delete</span> f_; }</div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>      <span class="keywordflow">if</span> (--f_-&gt;ref_ == 0) <span class="keyword">delete</span> f_;</div>
 <div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>    }</div>
-<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>    <span class="keywordtype">void</span> operator()()<span class="keyword"> override </span>{ std::apply(*<span class="keyword">reinterpret_cast&lt;</span>AsyncFw::Invocable&lt;<span class="keywordtype">void</span>(Args &amp; ...)<span class="keyword">&gt;</span>::Abstract *&gt;(f_), args_); }</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>    <span class="keywordtype">void</span> operator()()<span class="keyword"> override </span>{ std::apply(*f_, args_); }</div>
 <div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>    AbstractFunction *f_;</div>
 <div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>    std::tuple&lt;std::decay_t&lt;Args&gt;...&gt; args_;</div>
 <div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>  };</div>
@@ -265,7 +265,7 @@ $(function(){initNavTree('FunctionConnector_8h_source.html',''); initResizable(t
 <div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>      O *o_;</div>
 <div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>    };</div>
 <div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>    ~Connection()<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>      <span class="keywordflow">if</span> (--f_-&gt;ref_ == 0) { <span class="keyword">delete</span> f_; }</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>      <span class="keywordflow">if</span> (--f_-&gt;ref_ == 0) <span class="keyword">delete</span> f_;</div>
 <div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>    }</div>
 <div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>    AbstractFunction *f_;</div>
 <div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>  };</div>

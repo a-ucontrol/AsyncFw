@@ -122,13 +122,13 @@ protected:
     virtual void invoke(Args &...args) = 0;
     std::atomic_int ref_ = 1;
   };
-  class QueuedTask : public AbstractThread::AbstractTask {
+  struct QueuedTask : public AbstractThread::AbstractTask {
   public:
     QueuedTask(AbstractFunction *f, Args &...args) : f_(f), args_(args...) { f_->ref_++; }
     ~QueuedTask() {
-      if (--f_->ref_ == 0) { delete f_; }
+      if (--f_->ref_ == 0) delete f_;
     }
-    void operator()() override { std::apply(*reinterpret_cast<AsyncFw::Invocable<void(Args & ...)>::Abstract *>(f_), args_); }
+    void operator()() override { std::apply(*f_, args_); }
     AbstractFunction *f_;
     std::tuple<std::decay_t<Args>...> args_;
   };
@@ -159,7 +159,7 @@ protected:
       O *o_;
     };
     ~Connection() override {
-      if (--f_->ref_ == 0) { delete f_; }
+      if (--f_->ref_ == 0) delete f_;
     }
     AbstractFunction *f_;
   };
