@@ -30,10 +30,10 @@ void LogStream::console_output(const Message &message, uint8_t flags) {
     str += timeString(message.time) + " " + levelName(i) + ": ";
     if (!message.name.empty()) { str += message.name; }
     if (!message.string.empty() && !message.name.empty()) {
-      if (message.string.find('\n') == std::string::npos) str += " -> ";
-      else {
+      if (message.string.find('\n') == std::string::npos) {
+        str += " -> " + _message;
+      } else {
         str += "\n ";
-        // Calculate how much memory we need for str to avoid realloc
         size_t _nl = std::count(_message.begin(), _message.end(), '\n');
         str.reserve(str.size() + _message.size() + _nl);
         for (char _c : _message) {
@@ -45,7 +45,6 @@ void LogStream::console_output(const Message &message, uint8_t flags) {
   } else {
     if (message.string.empty() && message.note.empty()) return;
   }
-  if (!message.string.empty()) str += _message;
   if (flags & LOG_STREAM_CONSOLE_LINE && !message.note.empty()) {
     if (flags & LOG_STREAM_CONSOLE_COLOR) str += "\x1b[3;90m";
     str += "\n" + message.note;
