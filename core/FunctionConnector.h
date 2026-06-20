@@ -111,7 +111,7 @@ public:
   }
 
 protected:
-  struct AbstractFunction {
+  struct AbstractFunction : Invocable<void(Args &...)>::Abstract {
     /*
     Invokes the target callable, guaranteeing COPY semantics for arguments.
     This method is explicitly used during immediate signal dispatching (Direct/Sync) within the loop.
@@ -120,7 +120,6 @@ protected:
     If operator() were called in a loop, the very first receiver would empty out (steal resources from) the arguments, leaving subsequent subscribers with moved-from, empty objects.
     */
     virtual void invoke(Args &...args) = 0;
-    virtual ~AbstractFunction() = default;
     std::atomic_int ref_ = 1;
   };
   class QueuedTask : public AbstractThread::AbstractTask {
@@ -145,14 +144,19 @@ protected:
 
   private:
     template <typename F>
-    struct Function : AbstractFunction, public Invocable<void(Args &...)>::template Function<F> {
-      using Invocable<void(Args &...)>::template Function<F>::Function;
+    struct Function : AbstractFunction {
+      Function(F &&f) : f_(std::forward<F>(f)) {}
+      void operator()(Args &...args) override { return f_(std::forward<Args>(args)...); }
       void invoke(Args &...args) override { this->f_(args...); }
+      F f_;
     };
     template <typename M, typename O>
-    struct MemberFunction : AbstractFunction, public Invocable<void(Args &...)>::template MemberFunction<M, O> {
-      using Invocable<void(Args &...)>::template MemberFunction<M, O>::MemberFunction;
+    struct MemberFunction : AbstractFunction {
+      MemberFunction(M m, O *o) : m_(m), o_(o) {}
+      void operator()(Args &...args) override { return (o_->*m_)(std::forward<Args>(args)...); }
       void invoke(Args &...args) override { (this->o_->*this->m_)(args...); }
+      M m_;
+      O *o_;
     };
     ~Connection() override {
       if (--f_->ref_ == 0) { delete f_; }

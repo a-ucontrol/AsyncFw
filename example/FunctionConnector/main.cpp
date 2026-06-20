@@ -11,9 +11,19 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include <AsyncFw/Timer>
 #include <AsyncFw/LogStream>
 
-class MethodConnectionExample {
-public:
-  void method(int val, const std::string &str) { lsNotice() << val << str; }
+struct TST {
+  TST(int i) : val(i) { lsInfoGreen() << val; }
+  ~TST() { lsInfoRed() << val; }
+  TST(const TST &v) {
+    val = v.val;
+    lsInfoMagenta() << "copy" << val;
+  }
+  TST(TST &&v) {
+    val = v.val;
+    v.val = -1;
+    lsInfoCyan() << "move" << val;
+  }
+  int val = 0;
 };
 
 class Sender {
@@ -22,29 +32,20 @@ public:
     timer.timeout.connect([this]() {
       AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::current();
       logInfo() << cnt << "send from thread:" << ct->name() << ct->id();
-      connector(cnt++, "");
+      connector(cnt++, _tst);
       if (cnt == 1) AsyncFw::MainThread::exit(0);
     });
-    timer.start(10);
+    timer.start(10, true);
   }
 
-  AsyncFw::FunctionConnector<int, const std::string &>::Protected<Sender> connector;
+  AsyncFw::FunctionConnector<int, TST>::Protected<Sender> connector;
 
 private:
+  TST _tst{1010};
   int cnt = 0;
   AsyncFw::Timer timer;
 };
 
-class Receiver {
-public:
-  Receiver(const std::string &name, const Sender &sender) {
-    fcg = sender.connector.connect([name_ = name](int val, const std::string &) {
-      AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::current();
-      logInfo() << name_ << "received" << val << "run in thread" << ct->name() << ct->id();
-    });
-  }
-  AsyncFw::FunctionConnectionGuard fcg;
-};
 
 int main(int argc, char *argv[]) {
   Sender *sender;
@@ -55,16 +56,12 @@ int main(int argc, char *argv[]) {
     sender = new Sender;  // created in thread SenderThread
   }, true);
 
-  Receiver receiver1("R1", *sender);
-  Receiver receiver2("R2", *sender);
-
-  MethodConnectionExample _e;
-  sender->connector.connect(&MethodConnectionExample::method, &_e);
-
-  auto lambda = [](int val, const std::string &) { lsNotice() << "sender->connector (lambda)" << val; };
-  sender->connector.connect(lambda);
-
-
+  auto lambda = [](int val, TST tst) {
+    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+    lsNotice() << "sender->connector (lambda)" << val << tst.val;
+  };
+  sender->connector.connect<AsyncFw::AbstractFunctionConnector::Connection::Queued>(lambda);
+  sender->connector.connect<AsyncFw::AbstractFunctionConnector::Connection::Queued>(lambda);
 
   logNotice() << "Start Application";
 
