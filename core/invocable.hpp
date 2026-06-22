@@ -15,8 +15,12 @@ struct Invocable<R(Args...)> {
     virtual R operator()(Args...) = 0;
     virtual ~Abstract() = default;
   };
+  /* NOTE ON REFERENCE COLLAPSING & DEVIRTUALIZATION:
+  - With value signatures (void(T)), std::forward triggers move semantics.
+  - With reference signatures (void(T&)), it preserves lvalues, causing a COPY if the target callable accepts parameters by value.
+  - The final keyword on implementations enables devirtualization optimizations. Override custom dispatchers if you need strict move/copy control. */
   template <typename F>
-  struct Function : public Abstract {
+  struct Function final : public Abstract {
     Function(F &&f) : f_(std::forward<F>(f)) {}
     R operator()(Args... args) override { return f_(std::forward<Args>(args)...); }
 
@@ -24,7 +28,7 @@ struct Invocable<R(Args...)> {
     F f_;
   };
   template <typename M, typename O>
-  struct MemberFunction : public Abstract {
+  struct MemberFunction final : public Abstract {
     MemberFunction(M m, O *o) : m_(m), o_(o) {}
     R operator()(Args... args) override { return (o_->*m_)(std::forward<Args>(args)...); }
 
