@@ -144,14 +144,14 @@ protected:
 
   private:
     template <typename F>
-    struct Function : AbstractFunction {
+    struct Function final : AbstractFunction {
       Function(F &&f) : f_(std::forward<F>(f)) {}
       void operator()(Args &...args) override { return f_(std::forward<Args>(args)...); }
       void invoke(Args &...args) override { this->f_(args...); }
       F f_;
     };
     template <typename M, typename O>
-    struct MemberFunction : AbstractFunction {
+    struct MemberFunction final : AbstractFunction {
       MemberFunction(M m, O *o) : m_(m), o_(o) {}
       void operator()(Args &...args) override { return (o_->*m_)(std::forward<Args>(args)...); }
       void invoke(Args &...args) override { (this->o_->*this->m_)(args...); }
