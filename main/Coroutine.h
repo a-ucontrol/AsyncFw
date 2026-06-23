@@ -75,25 +75,51 @@ private:
   Invocable<void(const CoroutineHandle)>::Abstract *f_ = nullptr;
 };
 
-/** @struct CoroutineInvokeAwait Coroutine.h <AsyncFw/Coroutine> @brief Internal awaiter that moves a specific function call to an event loop or ThreadPool thread. @tparam Signature Signature matching R(Args...). */
+/** @struct CoroutineInvokeAwait Coroutine.h <AsyncFw/Coroutine> @brief Internal awaiter that moves a specific function call to an event loop or ThreadPool thread. @tparam T Signature matching R(Args...). */
 template <typename T>
 struct CoroutineInvokeAwait;
+
 template <typename R, typename... Args>
 struct CoroutineInvokeAwait<R(Args...)> {
+protected:
+  template <typename F>
+  struct Function final : public Invocable<R(Args...)>::Abstract {
+    Function(F &&f) : f_(std::forward<F>(f)) {}
+    R operator()(Args... args) override { return f_(std::forward<Args>(args)...); }
+
+  protected:
+    F f_;
+  };
+
+  template <typename M, typename O>
+  struct MemberFunction final : public Invocable<R(Args...)>::Abstract {
+    MemberFunction(M m, O *o) : m_(m), o_(o) {}
+    R operator()(Args... args) override { return (o_->*m_)(std::forward<Args>(args)...); }
+
+  protected:
+    M m_;
+    O *o_;
+  };
+
+public:
   template <typename F, typename... A>
-  CoroutineInvokeAwait(AbstractThread *thread, F &&f, A &&...a) : t_(thread), f_(new Invocable<R(Args...)>::template Function<F>(std::forward<F>(f))), a_(std::forward_as_tuple(std::forward<A>(a)...)) {}
+  CoroutineInvokeAwait(AbstractThread *thread, F &&f, A &&...a) : t_(thread), f_(new Function<F>(std::forward<F>(f))), a_(std::forward<A>(a)...) {}
   template <typename M, typename O, typename... A>
-  CoroutineInvokeAwait(AbstractThread *thread, M m, O *o, A &&...a) : t_(thread), f_(new Invocable<R(Args...)>::template MemberFunction<M, O>(m, o)), a_(std::forward_as_tuple(std::forward<A>(a)...)) {}
+  CoroutineInvokeAwait(AbstractThread *thread, M m, O *o, A &&...a) : t_(thread), f_(new MemberFunction<M, O>(m, o)), a_(std::forward<A>(a)...) {}
   ~CoroutineInvokeAwait() { delete f_; }
 
   void await_suspend(CoroutineHandle h) const noexcept {
     h_ = h;
     ThreadPool::async(t_ ? t_ : ThreadPool::instance()->getThread(), [this]() {
-      if constexpr (std::is_void_v<R>) std::apply(*f_, a_);
-      else { h_.promise().setData(std::apply(*f_, a_)); }
+      if constexpr (std::is_void_v<R>) {
+        std::apply(*f_, std::move(a_));
+      } else {
+        h_.promise().setData(std::apply(*f_, std::move(a_)));
+      }
       h_.promise().resume_queued();
     });
   }
+
   bool await_ready() const noexcept { return false; }
   R await_resume() const noexcept {
     if constexpr (!std::is_void_v<R>) return h_.promise().data<R>();
@@ -112,22 +138,22 @@ private:
 /** @brief Offloads a callable function/lambda to the global ThreadPool and awaits its completion. @param f Free function, lambda, or functor. @param args Arguments to pass into the function. @return An awaitable object yielding the function's return type. */
 template <typename F, typename... Args>
 auto coInvoke(F &&f, Args &&...args) {
-  return CoroutineInvokeAwait<std::invoke_result_t<F, Args &...>(Args & ...)>(nullptr, std::forward<F>(f), std::forward<Args>(args)...);
+  return CoroutineInvokeAwait<std::invoke_result_t<F, Args...>(Args && ...)>(nullptr, std::forward<F>(f), std::forward<Args>(args)...);
 }
 /** @brief Offloads a callable function/lambda to a specific Thread loop and awaits its completion. @param t Target AbstractThread pointer. @param f Free function, lambda, or functor. @param args Arguments to pass into the function. @return An awaitable object yielding the function's return type. */
 template <typename T = AbstractThread, typename F, typename... Args, typename = std::enable_if_t<std::is_base_of_v<AbstractThread, T>>>
 auto coInvoke(T *t, F &&f, Args &&...args) {
-  return CoroutineInvokeAwait<std::invoke_result_t<F, Args &...>(Args & ...)>(t, std::forward<F>(f), std::forward<Args>(args)...);
+  return CoroutineInvokeAwait<std::invoke_result_t<F, Args...>(Args && ...)>(t, std::forward<F>(f), std::forward<Args>(args)...);
 }
 /** @brief Offloads a class member function to the global ThreadPool and awaits its completion. @param m Member function pointer. @param o Target class object instance. @param args Arguments to pass into the member function. @return An awaitable object yielding the member function's return type. */
 template <typename M, typename O, typename... Args>
 auto coInvoke(M m, O *o, Args &&...args) {
-  return CoroutineInvokeAwait<std::invoke_result_t<M, O, Args &...>(Args & ...)>(nullptr, m, o, std::forward<Args>(args)...);
+  return CoroutineInvokeAwait<std::invoke_result_t<M, O, Args...>(Args && ...)>(nullptr, m, o, std::forward<Args>(args)...);
 }
 /** @brief Offloads a class member function to a specific Thread loop and awaits its completion. @param t Target AbstractThread pointer. @param m Member function pointer. @param o Target class object instance. @param args Arguments to pass into the member function. @return An awaitable object yielding the member function's return type. */
 template <typename T = AbstractThread, typename M, typename O, typename... Args>
 auto coInvoke(T *t, M m, O *o, Args &&...args) {
-  return CoroutineInvokeAwait<std::invoke_result_t<M, O, Args &...>(Args & ...)>(t, m, o, std::forward<Args>(args)...);
+  return CoroutineInvokeAwait<std::invoke_result_t<M, O, Args...>(Args && ...)>(t, m, o, std::forward<Args>(args)...);
 }
 /** @} */
 }  // namespace AsyncFw

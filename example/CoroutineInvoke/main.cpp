@@ -11,6 +11,21 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 using namespace AsyncFw;
 
+struct TST {
+  TST(int i) : val(i) { lsInfoGreen() << val; }
+  ~TST() { lsInfoRed() << val; }
+  TST(const TST &v) {
+    val = v.val;
+    lsInfoMagenta() << "copy" << val;
+  }
+  TST(TST &&v) {
+    val = v.val;
+    v.val = -1;
+    lsInfoCyan() << "move" << val;
+  }
+  int val = 0;
+};
+
 class Example {
 public:
   double tst_double(int v1, double v2) const {
@@ -18,7 +33,7 @@ public:
     lsDebug() << v1 << v2 << Thread::current()->name();
     return v1 + v2 + 10000.0;
   }
-  void tst_void(std::string &s) const {
+  void tst_void(const std::string &s) const {
     std::chrono::milliseconds(10);
     lsDebug() << s << Thread::current()->name();
   }
@@ -58,12 +73,15 @@ CoroutineTask task() {
       100.5, 15.5);
 
   double j3;
+  TST _tst{1001};
   {  //lambda scope
-    auto lambda = [](double v1, double v2) {
+    auto lambda = [](double v1, double v2, TST) {
       std::this_thread::sleep_for(std::chrono::milliseconds(10));
+      lsNotice() << "lambda" << AsyncFw::Thread::current()->name();
       return v1 + v2 + 30.5;
     };
-    j3 = co_await coInvoke(&_thread, lambda, 100.5, 15.5);
+    j3 = co_await coInvoke(&_thread, lambda, 100.5, 15.5, _tst);
+    j3 += co_await coInvoke(&_thread, lambda, 100.5, 15.5, std::move(_tst));
   }
 
   lsNotice() << i1 << i2 << j1 << j2 << j3 << s << _s << AsyncFw::Thread::current()->name();
