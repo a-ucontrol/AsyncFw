@@ -120,6 +120,21 @@ $(function(){initNavTree('CoroutineInvoke_2main_8cpp-example.html',''); initResi
 <div class="line"> </div>
 <div class="line"><span class="keyword">using namespace </span>AsyncFw;</div>
 <div class="line"> </div>
+<div class="line"><span class="keyword">struct </span>TST {</div>
+<div class="line">  TST(<span class="keywordtype">int</span> i) : val(i) { lsInfoGreen() &lt;&lt; val; }</div>
+<div class="line">  ~TST() { lsInfoRed() &lt;&lt; val; }</div>
+<div class="line">  TST(<span class="keyword">const</span> TST &amp;v) {</div>
+<div class="line">    val = v.val;</div>
+<div class="line">    lsInfoMagenta() &lt;&lt; <span class="stringliteral">&quot;copy&quot;</span> &lt;&lt; val;</div>
+<div class="line">  }</div>
+<div class="line">  TST(TST &amp;&amp;v) {</div>
+<div class="line">    val = v.val;</div>
+<div class="line">    v.val = -1;</div>
+<div class="line">    lsInfoCyan() &lt;&lt; <span class="stringliteral">&quot;move&quot;</span> &lt;&lt; val;</div>
+<div class="line">  }</div>
+<div class="line">  <span class="keywordtype">int</span> val = 0;</div>
+<div class="line">};</div>
+<div class="line"> </div>
 <div class="line"><span class="keyword">class </span>Example {</div>
 <div class="line"><span class="keyword">public</span>:</div>
 <div class="line">  <span class="keywordtype">double</span> tst_double(<span class="keywordtype">int</span> v1, <span class="keywordtype">double</span> v2)<span class="keyword"> const </span>{</div>
@@ -127,13 +142,13 @@ $(function(){initNavTree('CoroutineInvoke_2main_8cpp-example.html',''); initResi
 <div class="line">    lsDebug() &lt;&lt; v1 &lt;&lt; v2 &lt;&lt; <a class="code hl_function" href="classAsyncFw_1_1Thread.html#a0a3bd6a54db28f73ff59cfea6a40b07a">Thread::current</a>()-&gt;name();</div>
 <div class="line">    <span class="keywordflow">return</span> v1 + v2 + 10000.0;</div>
 <div class="line">  }</div>
-<div class="line">  <span class="keywordtype">void</span> tst_void(std::string &amp;s)<span class="keyword"> const </span>{</div>
+<div class="line">  <span class="keywordtype">void</span> tst_void(<span class="keyword">const</span> std::string &amp;s)<span class="keyword"> const </span>{</div>
 <div class="line">    std::chrono::milliseconds(10);</div>
-<div class="line">    lsDebug() &lt;&lt; s &lt;&lt; <a class="code hl_function" href="classAsyncFw_1_1Thread.html#a0a3bd6a54db28f73ff59cfea6a40b07a">Thread::current</a>()-&gt;name();</div>
+<div class="line">    lsDebug() &lt;&lt; s &lt;&lt; Thread::current()-&gt;name();</div>
 <div class="line">  }</div>
 <div class="line">  std::string tst_string(std::string &amp;s)<span class="keyword"> const </span>{</div>
 <div class="line">    std::chrono::milliseconds(10);</div>
-<div class="line">    lsDebug() &lt;&lt; s &lt;&lt; <a class="code hl_function" href="classAsyncFw_1_1Thread.html#a0a3bd6a54db28f73ff59cfea6a40b07a">Thread::current</a>()-&gt;name();</div>
+<div class="line">    lsDebug() &lt;&lt; s &lt;&lt; Thread::current()-&gt;name();</div>
 <div class="line">    s = <span class="stringliteral">&quot;-&quot;</span> + s + <span class="stringliteral">&quot;-&quot;</span>;</div>
 <div class="line">    <span class="keywordflow">return</span> <span class="stringliteral">&quot;***&quot;</span>;</div>
 <div class="line">  }</div>
@@ -167,15 +182,18 @@ $(function(){initNavTree('CoroutineInvoke_2main_8cpp-example.html',''); initResi
 <div class="line">      100.5, 15.5);</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordtype">double</span> j3;</div>
+<div class="line">  TST _tst{1001};</div>
 <div class="line">  {  <span class="comment">//lambda scope</span></div>
-<div class="line">    <span class="keyword">auto</span> lambda = [](<span class="keywordtype">double</span> v1, <span class="keywordtype">double</span> v2) {</div>
+<div class="line">    <span class="keyword">auto</span> lambda = [](<span class="keywordtype">double</span> v1, <span class="keywordtype">double</span> v2, TST) {</div>
 <div class="line">      std::this_thread::sleep_for(std::chrono::milliseconds(10));</div>
+<div class="line">      lsNotice() &lt;&lt; <span class="stringliteral">&quot;lambda&quot;</span> &lt;&lt; <a id="a3" name="a3"></a><a class="code hl_function" href="classAsyncFw_1_1Thread.html#a0a3bd6a54db28f73ff59cfea6a40b07a">AsyncFw::Thread::current</a>()-&gt;<a id="a4" name="a4"></a><a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd">name</a>();</div>
 <div class="line">      <span class="keywordflow">return</span> v1 + v2 + 30.5;</div>
 <div class="line">    };</div>
-<div class="line">    j3 = <span class="keyword">co_await</span> <a class="code hl_function" href="group__coroutine__api.html#ga0005f3892c4f008098e0ee2634481d5a">coInvoke</a>(&amp;_thread, lambda, 100.5, 15.5);</div>
+<div class="line">    j3 = <span class="keyword">co_await</span> <a class="code hl_function" href="group__coroutine__api.html#ga0005f3892c4f008098e0ee2634481d5a">coInvoke</a>(&amp;_thread, lambda, 100.5, 15.5, _tst);</div>
+<div class="line">    j3 += <span class="keyword">co_await</span> <a class="code hl_function" href="group__coroutine__api.html#ga0005f3892c4f008098e0ee2634481d5a">coInvoke</a>(&amp;_thread, lambda, 100.5, 15.5, std::move(_tst));</div>
 <div class="line">  }</div>
 <div class="line"> </div>
-<div class="line">  lsNotice() &lt;&lt; i1 &lt;&lt; i2 &lt;&lt; j1 &lt;&lt; j2 &lt;&lt; j3 &lt;&lt; s &lt;&lt; _s &lt;&lt; <a id="a3" name="a3"></a><a class="code hl_function" href="classAsyncFw_1_1Thread.html#a0a3bd6a54db28f73ff59cfea6a40b07a">AsyncFw::Thread::current</a>()-&gt;<a id="a4" name="a4"></a><a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd">name</a>();</div>
+<div class="line">  lsNotice() &lt;&lt; i1 &lt;&lt; i2 &lt;&lt; j1 &lt;&lt; j2 &lt;&lt; j3 &lt;&lt; s &lt;&lt; _s &lt;&lt; <a class="code hl_function" href="classAsyncFw_1_1Thread.html#a0a3bd6a54db28f73ff59cfea6a40b07a">AsyncFw::Thread::current</a>()-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd">name</a>();</div>
 <div class="line"> </div>
 <div class="line">  <a class="code hl_function" href="classAsyncFw_1_1MainThread.html#a76fed3a2c1cfdbdb67f2b209e6457657">MainThread::exit</a>();</div>
 <div class="line">}</div>
@@ -197,7 +215,7 @@ $(function(){initNavTree('CoroutineInvoke_2main_8cpp-example.html',''); initResi
 <div class="ttc" id="aclassAsyncFw_1_1MainThread_html_ad12e620772820ad751868c7b49fa4190"><div class="ttname"><a href="classAsyncFw_1_1MainThread.html#ad12e620772820ad751868c7b49fa4190">AsyncFw::MainThread::exec</a></div><div class="ttdeci">static int exec()</div><div class="ttdoc">Starts the master application event loop on the current thread. This call is blocking....</div><div class="ttdef"><b>Definition</b> MainThread.h:49</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1Thread_html"><div class="ttname"><a href="classAsyncFw_1_1Thread.html">AsyncFw::Thread</a></div><div class="ttdoc">AsyncFw::Thread thread with sockets.</div><div class="ttdef"><b>Definition</b> Thread.h:18</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1Thread_html_a0a3bd6a54db28f73ff59cfea6a40b07a"><div class="ttname"><a href="classAsyncFw_1_1Thread.html#a0a3bd6a54db28f73ff59cfea6a40b07a">AsyncFw::Thread::current</a></div><div class="ttdeci">static Thread * current()</div><div class="ttdoc">Returns a pointer to the AsyncFw::Thread that manages the currently executing thread.</div><div class="ttdef"><b>Definition</b> Thread.cpp:31</div></div>
-<div class="ttc" id="agroup__coroutine__api_html_ga0005f3892c4f008098e0ee2634481d5a"><div class="ttname"><a href="group__coroutine__api.html#ga0005f3892c4f008098e0ee2634481d5a">AsyncFw::coInvoke</a></div><div class="ttdeci">auto coInvoke(F &amp;&amp;f, Args &amp;&amp;...args)</div><div class="ttdoc">Offloads a callable function/lambda to the global ThreadPool and awaits its completion.</div><div class="ttdef"><b>Definition</b> Coroutine.h:114</div></div>
+<div class="ttc" id="agroup__coroutine__api_html_ga0005f3892c4f008098e0ee2634481d5a"><div class="ttname"><a href="group__coroutine__api.html#ga0005f3892c4f008098e0ee2634481d5a">AsyncFw::coInvoke</a></div><div class="ttdeci">auto coInvoke(F &amp;&amp;f, Args &amp;&amp;...args)</div><div class="ttdoc">Offloads a callable function/lambda to the global ThreadPool and awaits its completion.</div><div class="ttdef"><b>Definition</b> Coroutine.h:140</div></div>
 <div class="ttc" id="astructAsyncFw_1_1CoroutineTask_html"><div class="ttname"><a href="structAsyncFw_1_1CoroutineTask.html">AsyncFw::CoroutineTask</a></div><div class="ttdoc">A class representing a coroutine task that can be suspended and resumed.</div><div class="ttdef"><b>Definition</b> Coroutine.h:20</div></div>
 </div><!-- fragment --> </div><!-- contents -->
 </div><!-- doc-content -->
