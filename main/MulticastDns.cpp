@@ -100,7 +100,7 @@ int query_callback(int, const struct sockaddr *from, size_t addrlen, mdns_entry_
     std::string name = std::regex_replace(MDNS_STRING_FORMAT(entrystr), std::regex(".local."), "");
     std::vector<MulticastDns::Host>::iterator it = std::lower_bound(currentHostList.begin(), currentHostList.end(), name, Compare());
     if (it != currentHostList.end() && (*it).name == name) {
-      lsTrace() << LogStream::Color::Green << name;
+      lsTrace() << LogStream::Color::DarkGreen << name << address << (*it).llipv4 << (*it).misc;
       (*it).ipv4 = address;
       ctx->resultHost = &(*it);
     }
