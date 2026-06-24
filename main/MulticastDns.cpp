@@ -100,6 +100,7 @@ int query_callback(int, const struct sockaddr *from, size_t addrlen, mdns_entry_
     std::string name = std::regex_replace(MDNS_STRING_FORMAT(entrystr), std::regex(".local."), "");
     std::vector<MulticastDns::Host>::iterator it = std::lower_bound(currentHostList.begin(), currentHostList.end(), name, Compare());
     if (it != currentHostList.end() && (*it).name == name) {
+      lsTrace() << LogStream::Color::Green << name;
       (*it).ipv4 = address;
       ctx->resultHost = &(*it);
     }
@@ -283,6 +284,7 @@ void MulticastDns::stopQuerier() {
 bool MulticastDns::querierRunning() const { return private_.qd_.num_sockets > 0; }
 
 void MulticastDns::update() {
+  lsTrace() << LogStream::Color::Magenta << "update";
   std::lock_guard<std::mutex> lock(mutex);
   for (std::vector<MulticastDns::Host>::iterator host = hosts_.begin(); host != hosts_.end();) {
     std::vector<MulticastDns::Host>::iterator it = std::lower_bound(private_.hostList_.begin(), private_.hostList_.end(), host->name, Compare());
