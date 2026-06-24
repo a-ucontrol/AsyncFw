@@ -44,7 +44,7 @@ struct MulticastDns::Private {
 };
 
 struct Compare {
-  bool operator()(const MulticastDns::Host &h, const std::string &n) const { return h.name.compare(n); }
+  bool operator()(const MulticastDns::Host &h, const std::string &n) const { return h.name.compare(n) < 0; }
 };
 
 // Callback handling parsing answers to queries sent
