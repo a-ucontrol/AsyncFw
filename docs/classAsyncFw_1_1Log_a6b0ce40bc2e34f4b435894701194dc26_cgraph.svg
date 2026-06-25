@@ -95,7 +95,7 @@
 <!-- Node13 -->
 <g id="Node000013" class="node">
 <title>Node13</title>
-<g id="a_Node000013"><a xlink:href="classAsyncFw_1_1Log.html#af7b8fc20bdbe3dbf6f8e5b4fee3ada85" target="_top" xlink:title="Safe write transaction proxy that bypasses filesystem synchronization if the database is in read&#45;only...">
+<g id="a_Node000013"><a xlink:href="classAsyncFw_1_1Log.html#aa245705a619748ab41ad9b0a43b81767" target="_top" xlink:title="Safe write transaction proxy that bypasses filesystem synchronization if the database is in read&#45;only...">
 <polygon fill="white" stroke="#666666" points="270.12,-20 164.12,-20 164.12,0 270.12,0 270.12,-20"/>
 <text text-anchor="middle" x="217.12" y="-6.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::Log::save</text>
 </a>
@@ -206,9 +206,9 @@
 <g id="Node000011" class="node">
 <title>Node11</title>
 <g id="a_Node000011"><a xlink:href="classAsyncFw_1_1DataStream.html#ae64c4b08a3259146d4476c0385352479" target="_top" xlink:title="Retrieves a reference to the active cumulative raw byte array built by the stream.">
-<polygon fill="white" stroke="#666666" points="445.12,-120 329.38,-120 329.38,-88 445.12,-88 445.12,-120"/>
-<text text-anchor="start" x="337.38" y="-106.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::DataStream</text>
-<text text-anchor="middle" x="387.25" y="-94.5" font-family="Helvetica,sans-Serif" font-size="10.00">::array</text>
+<polygon fill="white" stroke="#666666" points="445.12,-95 329.38,-95 329.38,-63 445.12,-63 445.12,-95"/>
+<text text-anchor="start" x="337.38" y="-81.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::DataStream</text>
+<text text-anchor="middle" x="387.25" y="-69.5" font-family="Helvetica,sans-Serif" font-size="10.00">::array</text>
 </a>
 </g>
 </g>
@@ -216,8 +216,8 @@
 <g id="edge10_Node000010_Node000011" class="edge">
 <title>Node10&#45;&gt;Node11</title>
 <g id="a_edge10_Node000010_Node000011"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M273.18,-70.37C288.19,-74.84 304.62,-79.72 320.18,-84.35"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="318.75,-87.58 329.34,-87.07 320.75,-80.87 318.75,-87.58"/>
+<path fill="none" stroke="#63b8ff" d="M286.51,-64.17C296.86,-65.71 307.53,-67.29 317.88,-68.83"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="317.05,-72.25 327.45,-70.26 318.08,-65.32 317.05,-72.25"/>
 </a>
 </g>
 </g>
@@ -225,9 +225,9 @@
 <g id="Node000012" class="node">
 <title>Node12</title>
 <g id="a_Node000012"><a xlink:href="classAsyncFw_1_1DataStream.html#a58e67062bf6cd3f77a8203758b01eaf8" target="_top" xlink:title="Checks if the stream pipeline encountered a boundary check failure, bad memory, or malformed data pac...">
-<polygon fill="white" stroke="#666666" points="445.12,-70 329.38,-70 329.38,-38 445.12,-38 445.12,-70"/>
-<text text-anchor="start" x="337.38" y="-56.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::DataStream</text>
-<text text-anchor="middle" x="387.25" y="-44.5" font-family="Helvetica,sans-Serif" font-size="10.00">::fail</text>
+<polygon fill="white" stroke="#666666" points="445.12,-45 329.38,-45 329.38,-13 445.12,-13 445.12,-45"/>
+<text text-anchor="start" x="337.38" y="-31.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::DataStream</text>
+<text text-anchor="middle" x="387.25" y="-19.5" font-family="Helvetica,sans-Serif" font-size="10.00">::fail</text>
 </a>
 </g>
 </g>
@@ -235,26 +235,8 @@
 <g id="edge11_Node000010_Node000012" class="edge">
 <title>Node10&#45;&gt;Node12</title>
 <g id="a_edge11_Node000010_Node000012"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M286.51,-54C296.75,-54 307.31,-54 317.55,-54"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="317.44,-57.5 327.44,-54 317.44,-50.5 317.44,-57.5"/>
-</a>
-</g>
-</g>
-<!-- Node14 -->
-<g id="Node000014" class="node">
-<title>Node14</title>
-<g id="a_Node000014"><a xlink:href="classAsyncFw_1_1Rrd.html#a7f2590f1a87af46970c6e54eefb4c6f6" target="_top" xlink:title="Forces a synchronous flushing execution write path to save memory tables down to an explicit local fi...">
-<polygon fill="white" stroke="#666666" points="440.25,-20 334.25,-20 334.25,0 440.25,0 440.25,-20"/>
-<text text-anchor="middle" x="387.25" y="-6.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::Rrd::save</text>
-</a>
-</g>
-</g>
-<!-- Node13&#45;&gt;Node14 -->
-<g id="edge13_Node000013_Node000014" class="edge">
-<title>Node13&#45;&gt;Node14</title>
-<g id="a_edge13_Node000013_Node000014"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M270.4,-10C287,-10 305.55,-10 322.85,-10"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="322.49,-13.5 332.49,-10 322.49,-6.5 322.49,-13.5"/>
+<path fill="none" stroke="#63b8ff" d="M286.51,-43.83C296.86,-42.29 307.53,-40.71 317.88,-39.17"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="318.08,-42.68 327.45,-37.74 317.05,-35.75 318.08,-42.68"/>
 </a>
 </g>
 </g>

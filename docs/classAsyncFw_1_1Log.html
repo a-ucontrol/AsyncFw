@@ -192,9 +192,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>setAutoSave</b> (bool
 void&#160;</td><td class="memItemRight" valign="bottom"><b>writeMessage</b> (uint32_t index, const <a class="el" href="structAsyncFw_1_1LogStream_1_1Message.html">Message</a> &amp;message)</td></tr>
 <tr class="memdesc:ab990350e0de8b9a9c6153f7c67b7a527"><td class="mdescLeft">&#160;</td><td class="mdescRight">Directly overwrites a circular log archive slot with a freshly serialized log entry structure. <br /></td></tr>
 <tr class="separator:ab990350e0de8b9a9c6153f7c67b7a527"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af7b8fc20bdbe3dbf6f8e5b4fee3ada85" id="r_af7b8fc20bdbe3dbf6f8e5b4fee3ada85"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af7b8fc20bdbe3dbf6f8e5b4fee3ada85">save</a> () override</td></tr>
-<tr class="memdesc:af7b8fc20bdbe3dbf6f8e5b4fee3ada85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Safe write transaction proxy that bypasses filesystem synchronization if the database is in read-only mode.  <br /></td></tr>
-<tr class="separator:af7b8fc20bdbe3dbf6f8e5b4fee3ada85"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa245705a619748ab41ad9b0a43b81767" id="r_aa245705a619748ab41ad9b0a43b81767"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa245705a619748ab41ad9b0a43b81767">save</a> (const std::string &amp;fn={}) override</td></tr>
+<tr class="memdesc:aa245705a619748ab41ad9b0a43b81767"><td class="mdescLeft">&#160;</td><td class="mdescRight">Safe write transaction proxy that bypasses filesystem synchronization if the database is in read-only mode.  <br /></td></tr>
+<tr class="separator:aa245705a619748ab41ad9b0a43b81767"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a851f59ea9d9019403e3adffc04ddd07a" id="r_a851f59ea9d9019403e3adffc04ddd07a"><td class="memItemLeft" align="right" valign="top"><a id="a851f59ea9d9019403e3adffc04ddd07a" name="a851f59ea9d9019403e3adffc04ddd07a"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>append</b> (uint8_t, const std::string &amp;, const std::string &amp;, const std::string &amp;={})</td></tr>
 <tr class="memdesc:a851f59ea9d9019403e3adffc04ddd07a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Appends a structured log entry by explicitly passing discrete string components. <br /></td></tr>
@@ -474,8 +474,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>stopTimer</b> (int *)
 
 </div>
 </div>
-<a id="af7b8fc20bdbe3dbf6f8e5b4fee3ada85" name="af7b8fc20bdbe3dbf6f8e5b4fee3ada85"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af7b8fc20bdbe3dbf6f8e5b4fee3ada85">&#9670;&#160;</a></span>save()</h2>
+<a id="aa245705a619748ab41ad9b0a43b81767" name="aa245705a619748ab41ad9b0a43b81767"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa245705a619748ab41ad9b0a43b81767">&#9670;&#160;</a></span>save()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -486,7 +486,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>stopTimer</b> (int *)
         <tr>
           <td class="memname">void AsyncFw::Log::save </td>
           <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>fn</em></span><span class="paramdefsep"> = </span><span class="paramdefval">{}</span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -499,20 +499,13 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>stopTimer</b> (int *)
 
 <p>Safe write transaction proxy that bypasses filesystem synchronization if the database is in read-only mode. </p>
 
-<p>Implements <a class="el" href="classAsyncFw_1_1AbstractLog.html#aaef591fb02d12add61602ad826a2b016">AsyncFw::AbstractLog</a>.</p>
+<p>Implements <a class="el" href="classAsyncFw_1_1AbstractLog.html#a0637ac2a3c482fd9c0d059c62d718a12">AsyncFw::AbstractLog</a>.</p>
 <div id="dynsection-3" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-3-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+  <img id="dynsection-3-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
 <div id="dynsection-3-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-3-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1Log_af7b8fc20bdbe3dbf6f8e5b4fee3ada85_cgraph.svg" width="342" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-<div id="dynsection-4" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-4-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-4-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-4-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1Log_af7b8fc20bdbe3dbf6f8e5b4fee3ada85_icgraph.svg" width="350" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1Log_aa245705a619748ab41ad9b0a43b81767_icgraph.svg" width="350" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>

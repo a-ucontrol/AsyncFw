@@ -10,7 +10,7 @@ var classAsyncFw_1_1AbstractLog =
     [ "setConsoleLevel", "classAsyncFw_1_1AbstractLog.html#aca18be3a6c0f1c681fffc475f2eba5ac", null ],
     [ "setFilter", "classAsyncFw_1_1AbstractLog.html#ab0cce5578235f60f5687f5ac352c0c5c", null ],
     [ "output", "classAsyncFw_1_1AbstractLog.html#af5285b3d69b6af192fb2656d44b2e122", null ],
-    [ "save", "classAsyncFw_1_1AbstractLog.html#aaef591fb02d12add61602ad826a2b016", null ],
+    [ "save", "classAsyncFw_1_1AbstractLog.html#a0637ac2a3c482fd9c0d059c62d718a12", null ],
     [ "append", "classAsyncFw_1_1AbstractLog.html#a9d4074dfb0cd3d2f54bc1301f6dcdfb8", null ],
     [ "flush", "classAsyncFw_1_1AbstractLog.html#a872f1ea526aea7e961ce1eba43a15303", null ],
     [ "finality", "classAsyncFw_1_1AbstractLog.html#a8dd93228e8424dccdd74adbb6422bd78", null ]

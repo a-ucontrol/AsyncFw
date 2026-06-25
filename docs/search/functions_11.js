@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['save_0',['save',['../classAsyncFw_1_1AbstractLog.html#aaef591fb02d12add61602ad826a2b016',1,'AsyncFw::AbstractLog::save()'],['../classAsyncFw_1_1Log.html#af7b8fc20bdbe3dbf6f8e5b4fee3ada85',1,'AsyncFw::Log::save()'],['../classAsyncFw_1_1Rrd.html#a7f2590f1a87af46970c6e54eefb4c6f6',1,'AsyncFw::Rrd::save()']]],
+  ['save_0',['save',['../classAsyncFw_1_1AbstractLog.html#a0637ac2a3c482fd9c0d059c62d718a12',1,'AsyncFw::AbstractLog::save()'],['../classAsyncFw_1_1Log.html#aa245705a619748ab41ad9b0a43b81767',1,'AsyncFw::Log::save()'],['../classAsyncFw_1_1Rrd.html#a7f2590f1a87af46970c6e54eefb4c6f6',1,'AsyncFw::Rrd::save()']]],
   ['sendquery_1',['sendQuery',['../classAsyncFw_1_1MulticastDns.html#a091b0f3d62c8f78f33a396f4cbf140b0',1,'AsyncFw::MulticastDns']]],
   ['servicerunning_2',['serviceRunning',['../classAsyncFw_1_1MulticastDns.html#acfe6df81240db7979782c2df5a117c91',1,'AsyncFw::MulticastDns']]],
   ['servicetype_3',['serviceType',['../classAsyncFw_1_1MulticastDns.html#a23e336e5c39f79f847b12014558e8dda',1,'AsyncFw::MulticastDns']]],

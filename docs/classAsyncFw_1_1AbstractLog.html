@@ -182,9 +182,9 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:af5285b3d69b6af192fb2656d44b2e122" id="r_af5285b3d69b6af192fb2656d44b2e122"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af5285b3d69b6af192fb2656d44b2e122">output</a> (const <a class="el" href="structAsyncFw_1_1LogStream_1_1Message.html">Message</a> &amp;message)</td></tr>
 <tr class="memdesc:af5285b3d69b6af192fb2656d44b2e122"><td class="mdescLeft">&#160;</td><td class="mdescRight">Routes an individual message directly to active outputs (like LogStream::console_output).  <br /></td></tr>
 <tr class="separator:af5285b3d69b6af192fb2656d44b2e122"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaef591fb02d12add61602ad826a2b016" id="r_aaef591fb02d12add61602ad826a2b016"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aaef591fb02d12add61602ad826a2b016">save</a> ()=0</td></tr>
-<tr class="memdesc:aaef591fb02d12add61602ad826a2b016"><td class="mdescLeft">&#160;</td><td class="mdescRight">Abstract interface to persist buffered logs into a specific backend storage.  <br /></td></tr>
-<tr class="separator:aaef591fb02d12add61602ad826a2b016"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0637ac2a3c482fd9c0d059c62d718a12" id="r_a0637ac2a3c482fd9c0d059c62d718a12"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0637ac2a3c482fd9c0d059c62d718a12">save</a> (const std::string &amp;={})=0</td></tr>
+<tr class="memdesc:a0637ac2a3c482fd9c0d059c62d718a12"><td class="mdescLeft">&#160;</td><td class="mdescRight">Abstract interface to persist buffered logs into a specific backend storage.  <br /></td></tr>
+<tr class="separator:a0637ac2a3c482fd9c0d059c62d718a12"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9d4074dfb0cd3d2f54bc1301f6dcdfb8" id="r_a9d4074dfb0cd3d2f54bc1301f6dcdfb8"><td class="memItemLeft" align="right" valign="top"><a id="a9d4074dfb0cd3d2f54bc1301f6dcdfb8" name="a9d4074dfb0cd3d2f54bc1301f6dcdfb8"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>append</b> (const <a class="el" href="structAsyncFw_1_1LogStream_1_1Message.html">Message</a> &amp;m)</td></tr>
 <tr class="memdesc:a9d4074dfb0cd3d2f54bc1301f6dcdfb8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Main thread-safe ingestion entry point that pushes a Message structure into the log queue. <br /></td></tr>
@@ -258,8 +258,8 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>queueLimit</b> = 128</
 
 </div>
 </div>
-<a id="aaef591fb02d12add61602ad826a2b016" name="aaef591fb02d12add61602ad826a2b016"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaef591fb02d12add61602ad826a2b016">&#9670;&#160;</a></span>save()</h2>
+<a id="a0637ac2a3c482fd9c0d059c62d718a12" name="a0637ac2a3c482fd9c0d059c62d718a12"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0637ac2a3c482fd9c0d059c62d718a12">&#9670;&#160;</a></span>save()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -270,7 +270,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>queueLimit</b> = 128</
         <tr>
           <td class="memname">virtual void AsyncFw::AbstractLog::save </td>
           <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span><span class="paramdefsep"> = </span><span class="paramdefval">{}</span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -283,7 +283,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>queueLimit</b> = 128</
 
 <p>Abstract interface to persist buffered logs into a specific backend storage. </p>
 
-<p>Implemented in <a class="el" href="classAsyncFw_1_1Log.html#af7b8fc20bdbe3dbf6f8e5b4fee3ada85">AsyncFw::Log</a>.</p>
+<p>Implemented in <a class="el" href="classAsyncFw_1_1Log.html#aa245705a619748ab41ad9b0a43b81767">AsyncFw::Log</a>.</p>
 
 </div>
 </div>

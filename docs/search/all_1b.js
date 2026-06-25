@@ -1,7 +1,7 @@
 var searchData=
 [
   ['safe_20diagnostic_20stream_3a_20tt_20logstream_20tt_0',['7. Thread-Safe Diagnostic Stream: &lt;tt&gt;LogStream&lt;/tt&gt;',['../index.html#autotoc_md9',1,'']]],
-  ['save_1',['save',['../classAsyncFw_1_1AbstractLog.html#aaef591fb02d12add61602ad826a2b016',1,'AsyncFw::AbstractLog::save()'],['../classAsyncFw_1_1Log.html#af7b8fc20bdbe3dbf6f8e5b4fee3ada85',1,'AsyncFw::Log::save()'],['../classAsyncFw_1_1Rrd.html#a7f2590f1a87af46970c6e54eefb4c6f6',1,'AsyncFw::Rrd::save()']]],
+  ['save_1',['save',['../classAsyncFw_1_1AbstractLog.html#a0637ac2a3c482fd9c0d059c62d718a12',1,'AsyncFw::AbstractLog::save()'],['../classAsyncFw_1_1Log.html#aa245705a619748ab41ad9b0a43b81767',1,'AsyncFw::Log::save()'],['../classAsyncFw_1_1Rrd.html#a7f2590f1a87af46970c6e54eefb4c6f6',1,'AsyncFw::Rrd::save()']]],
   ['secure_20sockets_2',['4. Network Worker Thread: &lt;tt&gt;Thread&lt;/tt&gt; &amp; Secure Sockets',['../index.html#autotoc_md6',1,'']]],
   ['sendquery_3',['sendQuery',['../classAsyncFw_1_1MulticastDns.html#a091b0f3d62c8f78f33a396f4cbf140b0',1,'AsyncFw::MulticastDns']]],
   ['service_20discovery_3a_20tt_20multicastdns_20tt_4',['9. Asynchronous Service Discovery: &lt;tt&gt;MulticastDns&lt;/tt&gt;',['../index.html#autotoc_md11',1,'']]],
