@@ -46,7 +46,7 @@ protected:
   /** @brief Routes an individual message directly to active outputs (like LogStream::console_output). */
   virtual void output(const Message &message);
   /** @brief Abstract interface to persist buffered logs into a specific backend storage. */
-  virtual void save() = 0;
+  virtual void save(const std::string & = {}) = 0;
   /** @brief Main thread-safe ingestion entry point that pushes a Message structure into the log queue. */
   void append(const Message &m);
   /** @brief Flushes all accumulated messages from the thread-safe queue into the processor loop. */
@@ -116,8 +116,8 @@ public:
   void writeMessage(uint32_t index, const Message &message) { writeToArray(index, rrdItemFromMessage(message)); }
 
   /** @brief Safe write transaction proxy that bypasses filesystem synchronization if the database is in read-only mode. */
-  void save() override {
-    if (!Rrd::readOnly) Rrd::save();
+  void save(const std::string &fn = {}) override {
+    if (!Rrd::readOnly) Rrd::save(fn);
   }
 
 protected:
