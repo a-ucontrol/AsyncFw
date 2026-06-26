@@ -40,7 +40,7 @@ var NAVTREEINDEX2 =
 "index.html#autotoc_md9":[0,6],
 "invocable_8hpp_source.html":[3,0,0,7],
 "log-types_8hpp_source.html":[3,0,1,14],
-"mdns__data__types_8h_source.html":[3,0,1,17],
+"mdns-types_8h_source.html":[3,0,1,17],
 "pages.html":[],
 "structAsyncFw_1_1AnyData.html":[2,0,0,9],
 "structAsyncFw_1_1AnyData.html#a667ea182dec03e9ca81e86cdc7db8842":[2,0,0,9,0],
