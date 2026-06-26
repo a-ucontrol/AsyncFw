@@ -1006,7 +1006,8 @@ start_mdns_service(const char* _hostname, const char* _service_name, int service
 int
 mdns_service_event(int fd, void* sd_void_ptr) {
 	service_data_t* sd = (service_data_t*)sd_void_ptr;
-	if (!sd) return -1;
+	if (!sd)
+		return -1;
 	return mdns_socket_listen(fd, sd->buffer, sd->capacity, service_callback, sd);
 }
 
