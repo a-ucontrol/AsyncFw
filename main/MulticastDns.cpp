@@ -10,7 +10,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include "core/LogStream.h"
 #include "Timer.h"
 #include "MulticastDns.h"
-#include "main/mdns_data_types.h"
+#include "main/mdns-types.h"
 
 #ifdef EXTEND_MDNS_TRACE
   #define trace lsTrace

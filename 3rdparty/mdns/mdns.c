@@ -29,7 +29,7 @@ const IN_ADDR in4addr_any = {0};
 #include <errno.h>
 #endif
 
-#include "../main/mdns_data_types.h"
+#include "../main/mdns-types.h"
 
 extern int
 query_callback(int sock, const struct sockaddr* from, size_t addrlen, mdns_entry_type_t entry,
