@@ -80,6 +80,7 @@ private:
   void update();
   mutable std::mutex mutex;
   AbstractThread *thread_;
+  int servicePollEventTimeout();
 
 public:
   Private &private_;

@@ -8,6 +8,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include <regex>
 #include "core/AbstractThread.h"
 #include "core/LogStream.h"
+#include "Timer.h"
 #include "MulticastDns.h"
 #include "main/mdns_data_types.h"
 
@@ -30,7 +31,7 @@ extern mdns_string_t ipv6_address_to_string(char *buffer, size_t capacity, const
 extern mdns_string_t ip_address_to_string(char *buffer, size_t capacity, const struct sockaddr *addr, size_t addrlen);
 extern int start_mdns_service(const char *hostname, const char *service_name, int service_port, void *sd_void_ptr);
 extern void stop_mdns_service(void *sd_void_ptr, int send_goodbye);
-extern void mdns_service_event(int fd, void *sd_void_ptr);
+extern int mdns_service_event(int fd, void *sd_void_ptr);
 extern int start_mdns_querier(void *qd_void_ptr);
 extern void stop_mdns_querier(void *qd_void_ptr);
 extern void mdns_querier_event(int fd, void *qd_void_ptr, void *ctx_void_ptr);
@@ -97,11 +98,13 @@ int query_callback(int, const struct sockaddr *from, size_t addrlen, mdns_entry_
     mdns_record_parse_a(data, size, record_offset, record_length, &addr);
     mdns_string_t addrstr = ipv4_address_to_string(namebuffer, sizeof(namebuffer), &addr, sizeof(addr));
     std::string address = MDNS_STRING_FORMAT(addrstr);
+    lsError() << LogStream::Color::DarkGreen << address;
     std::string name = std::regex_replace(MDNS_STRING_FORMAT(entrystr), std::regex(".local."), "");
     std::vector<MulticastDns::Host>::iterator it = std::lower_bound(currentHostList.begin(), currentHostList.end(), name, Compare());
     if (it != currentHostList.end() && (*it).name == name) {
-      lsTrace() << LogStream::Color::DarkGreen << name << address << (*it).llipv4 << (*it).misc;
-      (*it).ipv4 = address;
+      if ((ntohl(addr.sin_addr.s_addr) & 0xFFFF0000) == 0xA9FE0000) (*it).llipv4 = address;
+      else (*it).ipv4 = address;
+      lsTrace() << LogStream::Color::DarkGreen << name << (*it).ipv4 << (*it).llipv4 << (*it).misc;
       ctx->resultHost = &(*it);
     }
     trace() << "A" << std::endl << MDNS_STRING_FORMAT(fromaddrstr) << entrytype << MDNS_STRING_FORMAT(entrystr) << MDNS_STRING_FORMAT(addrstr);
@@ -190,6 +193,12 @@ int MulticastDns::sendQuery(const std::vector<std::pair<std::string, std::string
 
 bool MulticastDns::serviceRunning() const { return private_.sd_.num_sockets > 0; }
 
+int MulticastDns::servicePollEventTimeout() {
+  uint32_t ip_host = ntohl(private_.sd_.service_address_llipv4.sin_addr.s_addr);
+  uint16_t ip_seed = ip_host & 0xFFFF;
+  return 20 + (ip_seed % 101);
+}
+
 bool MulticastDns::startService(const std::string &hostname, const std::string &misc, uint16_t port) {
   if (private_.sd_.num_sockets > 0) return false;
   std::snprintf(private_.sd_.txt_misc_buffer, sizeof(private_.sd_.txt_misc_buffer), "%s", misc.c_str());
@@ -199,13 +208,25 @@ bool MulticastDns::startService(const std::string &hostname, const std::string &
   if (r || !private_.sd_.num_sockets) return false;
   for (int i = 0; i != private_.sd_.num_sockets; ++i) {
     int fd = private_.sd_.sockets[i];
-    thread_->appendPollTask(fd, AbstractThread::PollIn, [this, fd](AbstractThread::PollEvents) { servicePollEvent(fd); });
+    thread_->appendPollTask(fd, AbstractThread::PollIn, [this, fd](AbstractThread::PollEvents e) {
+      if (!(e & AbstractThread::PollIn)) {
+        thread_->removePollDescriptor(fd);
+        close(fd);
+        lsError() << "poll descriptor error:" << e;
+        return;
+      }
+      thread_->modifyPollDescriptor(fd, AbstractThread::PollNo);  //Убираем fd из epoll
+      Timer::single(servicePollEventTimeout(), [this, fd]() {
+        thread_->modifyPollDescriptor(fd, AbstractThread::PollIn);  //Возвращаем fd в epoll
+        servicePollEvent(fd);
+      });
+    });
   }
   return true;
 }
 
 void MulticastDns::servicePollEvent(int fd) {
-  mdns_service_event(fd, &private_.sd_);
+  while (mdns_service_event(fd, &private_.sd_) > 0);
   trace() << LogStream::Color::Magenta << fd;
 }
 
