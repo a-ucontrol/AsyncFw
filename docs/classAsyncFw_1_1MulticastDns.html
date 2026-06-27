@@ -165,10 +165,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>stopService</b> (bool
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>serviceRunning</b> () const</td></tr>
 <tr class="memdesc:acfe6df81240db7979782c2df5a117c91"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the mDNS local responder is running. <br /></td></tr>
 <tr class="separator:acfe6df81240db7979782c2df5a117c91"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1aaa9222fa44159da442b8ce403152ab" id="r_a1aaa9222fa44159da442b8ce403152ab"><td class="memItemLeft" align="right" valign="top"><a id="a1aaa9222fa44159da442b8ce403152ab" name="a1aaa9222fa44159da442b8ce403152ab"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>startQuerier</b> (int=60)</td></tr>
-<tr class="memdesc:a1aaa9222fa44159da442b8ce403152ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts the background cyclic network polling task for host discovery. <br /></td></tr>
-<tr class="separator:a1aaa9222fa44159da442b8ce403152ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf05a554326e36e3a956d72ea96d32e3" id="r_aaf05a554326e36e3a956d72ea96d32e3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aaf05a554326e36e3a956d72ea96d32e3">startQuerier</a> (int=60, bool=true)</td></tr>
+<tr class="memdesc:aaf05a554326e36e3a956d72ea96d32e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts the background cyclic network polling task for host discovery.  <br /></td></tr>
+<tr class="separator:aaf05a554326e36e3a956d72ea96d32e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a03b1bd87ba47f61a0443e42cec2a78cb" id="r_a03b1bd87ba47f61a0443e42cec2a78cb"><td class="memItemLeft" align="right" valign="top"><a id="a03b1bd87ba47f61a0443e42cec2a78cb" name="a03b1bd87ba47f61a0443e42cec2a78cb"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>stopQuerier</b> ()</td></tr>
 <tr class="memdesc:a03b1bd87ba47f61a0443e42cec2a78cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Terminates the active host search routine. <br /></td></tr>
@@ -208,7 +207,45 @@ Private &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>private_</b>
 <p>Multiple instances can run independently with different service types. </p>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="MulticastDns_2main_8cpp-example.html#_a0">MulticastDns/main.cpp</a>.</dd>
 </dl>
-</div><hr/>The documentation for this class was generated from the following files:<ul>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="aaf05a554326e36e3a956d72ea96d32e3" name="aaf05a554326e36e3a956d72ea96d32e3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaf05a554326e36e3a956d72ea96d32e3">&#9670;&#160;</a></span>startQuerier()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool MulticastDns::startQuerier </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>seconds</em></span><span class="paramdefsep"> = </span><span class="paramdefval">60</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>unicast</em></span><span class="paramdefsep"> = </span><span class="paramdefval">true</span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Starts the background cyclic network polling task for host discovery. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">seconds</td><td>Seconds between cyclic search queries.</td></tr>
+    <tr><td class="paramname">unicast</td><td>If true, queries from ephemeral ports to enforce Unicast responses and suppress network multicast storms. </td></tr>
+  </table>
+  </dd>
+</dl>
+<div id="dynsection-1" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-1-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-1-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1MulticastDns_aaf05a554326e36e3a956d72ea96d32e3_cgraph.svg" width="382" height="78"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li>main/<a class="el" href="MulticastDns_8h_source.html">MulticastDns.h</a></li>
 <li>main/<b>MulticastDns.cpp</b></li>
 </ul>
