@@ -5,6 +5,7 @@ This file is part of the AsyncFw project. Licensed under the MIT License.
 See {Link: LICENSE file https://mit-license.org} in the project root for full license information.
 */
 
+#include <random>
 #include <regex>
 #include "core/AbstractThread.h"
 #include "core/LogStream.h"
@@ -193,8 +194,12 @@ int MulticastDns::sendQuery(const std::vector<std::pair<std::string, std::string
 bool MulticastDns::serviceRunning() const { return private_.sd_.num_sockets > 0; }
 
 int MulticastDns::servicePollEventTimeout() {
-  uint32_t ip_host = ntohl(private_.sd_.service_address_llipv4.sin_addr.s_addr);
-  uint16_t ip_seed = ip_host & 0xFFFF;
+  uint16_t ip_seed = ntohl(private_.sd_.service_address_llipv4.sin_addr.s_addr) & 0xFFFF;
+  if (ip_seed == 0) {
+    static thread_local std::mt19937 generator(std::random_device {}());
+    static thread_local std::uniform_int_distribution<int> distribution(0, 100);
+    return 20 + distribution(generator);
+  }
   return 20 + (ip_seed % 101);
 }
 
