@@ -193,16 +193,6 @@ int MulticastDns::sendQuery(const std::vector<std::pair<std::string, std::string
 
 bool MulticastDns::serviceRunning() const { return private_.sd_.num_sockets > 0; }
 
-int MulticastDns::servicePollEventTimeout() {
-  uint16_t ip_seed = ntohl(private_.sd_.service_address_llipv4.sin_addr.s_addr) & 0xFFFF;
-  if (ip_seed == 0) {
-    static thread_local std::mt19937 generator(std::random_device {}());
-    static thread_local std::uniform_int_distribution<int> distribution(0, 100);
-    return 20 + distribution(generator);
-  }
-  return 20 + (ip_seed % 101);
-}
-
 bool MulticastDns::startService(const std::string &hostname, const std::string &misc, uint16_t port) {
   if (private_.sd_.num_sockets > 0) return false;
   std::snprintf(private_.sd_.txt_misc_buffer, sizeof(private_.sd_.txt_misc_buffer), "%s", misc.c_str());
@@ -215,12 +205,17 @@ bool MulticastDns::startService(const std::string &hostname, const std::string &
     thread_->appendPollTask(fd, AbstractThread::PollIn, [this, fd](AbstractThread::PollEvents e) {
       if (!(e & AbstractThread::PollIn)) {
         thread_->removePollDescriptor(fd);
-        close(fd);
         lsError() << "poll descriptor error:" << e;
         return;
       }
       thread_->modifyPollDescriptor(fd, AbstractThread::PollNo);  //Убираем fd из epoll
-      Timer::single(servicePollEventTimeout(), [this, fd]() {
+      uint16_t _val = ntohl(private_.sd_.service_address_llipv4.sin_addr.s_addr) & 0xFFFF;
+      if (_val == 0) {
+        static thread_local std::mt19937 generator(std::random_device {}());
+        static thread_local std::uniform_int_distribution<int> distribution(0, 100);
+        _val = 20 + distribution(generator);
+      } else _val = 20 + (_val % 101);
+      Timer::single(_val, [this, fd]() {
         thread_->modifyPollDescriptor(fd, AbstractThread::PollIn);  //Возвращаем fd в epoll
         servicePollEvent(fd);
       });
