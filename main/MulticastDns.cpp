@@ -256,6 +256,7 @@ bool MulticastDns::startQuerier(int seconds, bool unicast) {
 }
 
 void MulticastDns::querierPollEvent(int fd) {
+  lsNotice() << "AAAAAAAAAAAAAAAAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"; //for debug, need remove
   QueryContext ctx = {};
   ctx.privData = &private_;
   ctx.resultHost = nullptr;
