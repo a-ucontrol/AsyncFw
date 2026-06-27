@@ -98,7 +98,6 @@ int query_callback(int, const struct sockaddr *from, size_t addrlen, mdns_entry_
     mdns_record_parse_a(data, size, record_offset, record_length, &addr);
     mdns_string_t addrstr = ipv4_address_to_string(namebuffer, sizeof(namebuffer), &addr, sizeof(addr));
     std::string address = MDNS_STRING_FORMAT(addrstr);
-    lsError() << LogStream::Color::DarkGreen << address;
     std::string name = std::regex_replace(MDNS_STRING_FORMAT(entrystr), std::regex(".local."), "");
     std::vector<MulticastDns::Host>::iterator it = std::lower_bound(currentHostList.begin(), currentHostList.end(), name, Compare());
     if (it != currentHostList.end() && (*it).name == name) {
