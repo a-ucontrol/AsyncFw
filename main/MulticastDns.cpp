@@ -240,8 +240,9 @@ void MulticastDns::stopService(bool goodbye) {
   private_.sd_.num_sockets = 0;
 }
 
-bool MulticastDns::startQuerier(int seconds) {
+bool MulticastDns::startQuerier(int seconds, bool unicast) {
   if (private_.qd_.num_sockets > 0) return false;
+  private_.qd_.unicast = unicast;
   int r = start_mdns_querier(&private_.qd_);
   lsTrace() << r << private_.qd_.num_sockets;
   if (r || !private_.qd_.num_sockets) return false;

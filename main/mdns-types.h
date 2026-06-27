@@ -48,6 +48,7 @@ typedef struct querier_data_t {
   int query_id[256];
   int num_sockets;
   size_t capacity;
+  uint8_t unicast;
   void *buffer;
 } querier_data_t;
 

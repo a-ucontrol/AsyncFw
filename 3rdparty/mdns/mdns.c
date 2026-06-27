@@ -1,8 +1,5 @@
 #ifndef __clang_analyzer__
 
-// #define MDNS_REQUEST_PORT 0
-#define MDNS_REQUEST_PORT 5353
-
 #ifdef _WIN32
 #define _CRT_SECURE_NO_WARNINGS 1
 #endif
@@ -783,7 +780,7 @@ start_mdns_querier(void* qd_void_ptr) {
 	struct sockaddr_in6 dummy_ipv6;
 	char dummy_llip_str[16] = {0};
 
-	qd->num_sockets = open_client_sockets(qd->sockets, 256, MDNS_REQUEST_PORT, &dummy_llipv4,
+	qd->num_sockets = open_client_sockets(qd->sockets, 256, qd->unicast ? 0 : 5353, &dummy_llipv4,
 										  &dummy_ipv4, &dummy_ipv6, dummy_llip_str);
 
 	if (qd->num_sockets <= 0) {
