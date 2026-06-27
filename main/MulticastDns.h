@@ -58,7 +58,7 @@ public:
   bool serviceRunning() const;
 
   /** @brief Starts the background cyclic network polling task for host discovery. @param seconds Seconds between cyclic search queries. @param unicast If true, queries from ephemeral ports to enforce Unicast responses and suppress network multicast storms. */
-  bool startQuerier(int = 60, bool = true);
+  bool startQuerier(int = 60, bool = false);
   /** @brief Terminates the active host search routine. */
   void stopQuerier();
   /** @brief Checks if the network query browser is actively polling. */
