@@ -29,7 +29,19 @@ public:
     bool operator==(const Host &h) const { return name == h.name && ipv4 == h.ipv4 && llipv4 == h.llipv4 && misc == h.misc && port == h.port; }
     bool operator!=(const Host &h) const { return !operator==(h); }
   };
-
+  /** @enum QuerierMode @brief Operation modes for the network query browser.
+  @details Defines how the discovery queries are broadcasted, which local ports are utilized, and how remote nodes are expected to respond. */
+  enum QuerierMode : uint8_t {
+    /** @brief Standard mDNS multicast mode.
+    @details Binds to the standard mDNS port (5353). Queries are sent via multicast, and responses from remote nodes are also broadcasted via multicast to the entire network. Allows full caching by all peers but increases network traffic. */
+    Multicast = 0,
+    /** @brief Hybrid unicast mode via the standard port.
+    @details Binds to the standard mDNS port (5353). Queries are sent via multicast, but remote nodes are strictly requested to send their responses via Unicast directly to this node. This minimizes network noise while still allowing the socket to passively capture unsolicited background @c Announce and @c Goodbye events from peers. */
+    Unicast5353 = 1,
+    /** @brief Legacy Unicast mode via an ephemeral port.
+    @details Binds to a random, OS-assigned ephemeral port (0). Queries are sent via multicast, and responses are returned directly via Unicast. Useful as a failover when port 5353 is locked by another system daemon, but cannot capture unsolicited background multicast announcements or goodbyes. */
+    Unicast = 2
+  };
   /** @brief Returns the global default instance pointer. */
   static inline MulticastDns *instance() { return instance_.value; }
   /** @brief Initializes the mDNS node with a specific target service type (e.g., "_http._tcp"). */
@@ -58,7 +70,7 @@ public:
   bool serviceRunning() const;
 
   /** @brief Starts the background cyclic network polling task for host discovery. @param seconds Seconds between cyclic search queries. @param unicast If true, queries from ephemeral ports to enforce Unicast responses and suppress network multicast storms. */
-  bool startQuerier(int = 60, bool = false);
+  bool startQuerier(int = 60, QuerierMode = Unicast5353);
   /** @brief Terminates the active host search routine. */
   void stopQuerier();
   /** @brief Checks if the network query browser is actively polling. */

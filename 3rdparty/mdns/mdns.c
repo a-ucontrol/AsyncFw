@@ -780,7 +780,7 @@ start_mdns_querier(void* qd_void_ptr) {
 	struct sockaddr_in6 dummy_ipv6;
 	char dummy_llip_str[16] = {0};
 
-	qd->num_sockets = open_client_sockets(qd->sockets, 256, qd->unicast ? 0 : 5353, &dummy_llipv4,
+	qd->num_sockets = open_client_sockets(qd->sockets, 256, qd->mode == 2 ? 0 : 5353, &dummy_llipv4,
 										  &dummy_ipv4, &dummy_ipv6, dummy_llip_str);
 
 	if (qd->num_sockets <= 0) {
@@ -792,6 +792,49 @@ start_mdns_querier(void* qd_void_ptr) {
 	qd->capacity = 2048;
 	qd->buffer = malloc(qd->capacity);
 	return 0;
+}
+static int
+mdns_multiquery_send_(int sock, const mdns_query_t* query, size_t count, void* buffer,
+					  size_t capacity, uint16_t query_id, uint8_t unicast) {
+	if (!count || (capacity < (sizeof(struct mdns_header_t) + (6 * count))))
+		return -1;
+
+	// Ask for a unicast response since it's a one-shot query
+	uint16_t rclass = MDNS_CLASS_IN;
+	if (unicast)
+		rclass |= MDNS_UNICAST_RESPONSE;
+
+	struct mdns_header_t* header = (struct mdns_header_t*)buffer;
+	// Query ID
+	header->query_id = htons((unsigned short)query_id);
+	// Flags
+	header->flags = 0;
+	// Questions
+	header->questions = htons((unsigned short)count);
+	// No answer, authority or additional RRs
+	header->answer_rrs = 0;
+	header->authority_rrs = 0;
+	header->additional_rrs = 0;
+	// Fill in questions
+	void* data = MDNS_POINTER_OFFSET(buffer, sizeof(struct mdns_header_t));
+	for (size_t iq = 0; iq < count; ++iq) {
+		// Name string
+		data = mdns_string_make(buffer, capacity, data, query[iq].name, query[iq].length, 0);
+		if (!data)
+			return -1;
+		size_t remain = capacity - MDNS_POINTER_DIFF(data, buffer);
+		if (remain < 4)
+			return -1;
+		// Record type
+		data = mdns_htons(data, query[iq].type);
+		//! Optional unicast response based on local port, class IN
+		data = mdns_htons(data, rclass);
+	}
+
+	size_t tosend = MDNS_POINTER_DIFF(data, buffer);
+	if (mdns_multicast_send(sock, buffer, (size_t)tosend))
+		return -1;
+	return query_id;
 }
 int
 send_mdns_query(void* qd_void_ptr, mdns_query_t* query, size_t count) {
@@ -824,8 +867,8 @@ send_mdns_query(void* qd_void_ptr, mdns_query_t* query, size_t count) {
 		int* query_ids = qd->query_id;
 		int* sockets = qd->sockets;
 
-		query_ids[isock] =
-			mdns_multiquery_send(sockets[isock], query, count, qd->buffer, qd->capacity, 0);
+		query_ids[isock] = mdns_multiquery_send_(sockets[isock], query, count, qd->buffer,
+												 qd->capacity, 0, qd->mode);
 		if (query_ids[isock] < 0) {
 			printf("Failed to send mDNS query: %s\n", strerror(errno));
 		} else
