@@ -11,7 +11,8 @@ var searchData=
   ['misc_8',['misc',['../structAsyncFw_1_1MulticastDns_1_1Host.html#a987597239d178d34f2bea34880e11cd8',1,'AsyncFw::MulticastDns::Host']]],
   ['modifypolldescriptor_9',['modifyPollDescriptor',['../classAsyncFw_1_1AbstractThread.html#af295f768757d3c7d6cf32e5248cbc2e0',1,'AsyncFw::AbstractThread']]],
   ['modifytimer_10',['modifyTimer',['../classAsyncFw_1_1AbstractThread.html#a4e367b49b300c1b93d2275b5840bb20b',1,'AsyncFw::AbstractThread']]],
-  ['multicastdns_11',['MulticastDns',['../classAsyncFw_1_1MulticastDns.html',1,'AsyncFw::MulticastDns'],['../classAsyncFw_1_1MulticastDns.html#ab9bfb41e98cd4ecf1cc63f8acd023afd',1,'AsyncFw::MulticastDns::MulticastDns()']]],
-  ['multicastdns_20tt_12',['9. Asynchronous Service Discovery: &lt;tt&gt;MulticastDns&lt;/tt&gt;',['../index.html#autotoc_md11',1,'']]],
-  ['multicastdns_2eh_13',['MulticastDns.h',['../MulticastDns_8h.html',1,'']]]
+  ['multicast_11',['Multicast',['../classAsyncFw_1_1MulticastDns.html#a4db656bae572e9b28e1ebef4b6f05465a846f46532ca6212d12ee0d1024f6de98',1,'AsyncFw::MulticastDns']]],
+  ['multicastdns_12',['MulticastDns',['../classAsyncFw_1_1MulticastDns.html',1,'AsyncFw::MulticastDns'],['../classAsyncFw_1_1MulticastDns.html#ab9bfb41e98cd4ecf1cc63f8acd023afd',1,'AsyncFw::MulticastDns::MulticastDns()']]],
+  ['multicastdns_20tt_13',['9. Asynchronous Service Discovery: &lt;tt&gt;MulticastDns&lt;/tt&gt;',['../index.html#autotoc_md11',1,'']]],
+  ['multicastdns_2eh_14',['MulticastDns.h',['../MulticastDns_8h.html',1,'']]]
 ];

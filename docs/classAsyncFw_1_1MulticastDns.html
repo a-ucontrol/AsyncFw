@@ -105,6 +105,7 @@ $(function(){initNavTree('classAsyncFw_1_1MulticastDns.html',''); initResizable(
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
@@ -130,6 +131,15 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structAsyncFw_1_1MulticastDns_1_1Host.html">Host</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents a discovered network node or service instance.  <a href="structAsyncFw_1_1MulticastDns_1_1Host.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:a4db656bae572e9b28e1ebef4b6f05465" id="r_a4db656bae572e9b28e1ebef4b6f05465"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4db656bae572e9b28e1ebef4b6f05465">QuerierMode</a> : uint8_t { <a class="el" href="#a4db656bae572e9b28e1ebef4b6f05465a846f46532ca6212d12ee0d1024f6de98">Multicast</a> = 0
+, <a class="el" href="#a4db656bae572e9b28e1ebef4b6f05465ae8dd56aab86b4ccd4ebc37409458d36c">Unicast5353</a> = 1
+, <a class="el" href="#a4db656bae572e9b28e1ebef4b6f05465a1951dca893badeb1f1992fa9805ebb91">Unicast</a> = 2
+ }</td></tr>
+<tr class="memdesc:a4db656bae572e9b28e1ebef4b6f05465"><td class="mdescLeft">&#160;</td><td class="mdescRight">Operation modes for the network query browser.  <a href="#a4db656bae572e9b28e1ebef4b6f05465">More...</a><br /></td></tr>
+<tr class="separator:a4db656bae572e9b28e1ebef4b6f05465"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -165,9 +175,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>stopService</b> (bool
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>serviceRunning</b> () const</td></tr>
 <tr class="memdesc:acfe6df81240db7979782c2df5a117c91"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the mDNS local responder is running. <br /></td></tr>
 <tr class="separator:acfe6df81240db7979782c2df5a117c91"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaf05a554326e36e3a956d72ea96d32e3" id="r_aaf05a554326e36e3a956d72ea96d32e3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aaf05a554326e36e3a956d72ea96d32e3">startQuerier</a> (int=60, bool=true)</td></tr>
-<tr class="memdesc:aaf05a554326e36e3a956d72ea96d32e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts the background cyclic network polling task for host discovery.  <br /></td></tr>
-<tr class="separator:aaf05a554326e36e3a956d72ea96d32e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25e8fbeb40f247abb9a34d2af3c7c716" id="r_a25e8fbeb40f247abb9a34d2af3c7c716"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a25e8fbeb40f247abb9a34d2af3c7c716">startQuerier</a> (int=60, <a class="el" href="#a4db656bae572e9b28e1ebef4b6f05465">QuerierMode</a>=<a class="el" href="#a4db656bae572e9b28e1ebef4b6f05465ae8dd56aab86b4ccd4ebc37409458d36c">Unicast5353</a>)</td></tr>
+<tr class="memdesc:a25e8fbeb40f247abb9a34d2af3c7c716"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts the background cyclic network polling task for host discovery.  <br /></td></tr>
+<tr class="separator:a25e8fbeb40f247abb9a34d2af3c7c716"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a03b1bd87ba47f61a0443e42cec2a78cb" id="r_a03b1bd87ba47f61a0443e42cec2a78cb"><td class="memItemLeft" align="right" valign="top"><a id="a03b1bd87ba47f61a0443e42cec2a78cb" name="a03b1bd87ba47f61a0443e42cec2a78cb"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>stopQuerier</b> ()</td></tr>
 <tr class="memdesc:a03b1bd87ba47f61a0443e42cec2a78cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Terminates the active host search routine. <br /></td></tr>
@@ -207,9 +217,38 @@ Private &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>private_</b>
 <p>Multiple instances can run independently with different service types. </p>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="MulticastDns_2main_8cpp-example.html#_a0">MulticastDns/main.cpp</a>.</dd>
 </dl>
-</div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="aaf05a554326e36e3a956d72ea96d32e3" name="aaf05a554326e36e3a956d72ea96d32e3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaf05a554326e36e3a956d72ea96d32e3">&#9670;&#160;</a></span>startQuerier()</h2>
+</div><h2 class="groupheader">Member Enumeration Documentation</h2>
+<a id="a4db656bae572e9b28e1ebef4b6f05465" name="a4db656bae572e9b28e1ebef4b6f05465"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4db656bae572e9b28e1ebef4b6f05465">&#9670;&#160;</a></span>QuerierMode</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="#a4db656bae572e9b28e1ebef4b6f05465">AsyncFw::MulticastDns::QuerierMode</a> : uint8_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Operation modes for the network query browser. </p>
+<p>Defines how the discovery queries are broadcasted, which local ports are utilized, and how remote nodes are expected to respond. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a4db656bae572e9b28e1ebef4b6f05465a846f46532ca6212d12ee0d1024f6de98" name="a4db656bae572e9b28e1ebef4b6f05465a846f46532ca6212d12ee0d1024f6de98"></a>Multicast&#160;</td><td class="fielddoc"><p>Standard mDNS multicast mode. </p>
+<p>Binds to the standard mDNS port (5353). Queries are sent via multicast, and responses from remote nodes are also broadcasted via multicast to the entire network. Allows full caching by all peers but increases network traffic. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a4db656bae572e9b28e1ebef4b6f05465ae8dd56aab86b4ccd4ebc37409458d36c" name="a4db656bae572e9b28e1ebef4b6f05465ae8dd56aab86b4ccd4ebc37409458d36c"></a>Unicast5353&#160;</td><td class="fielddoc"><p>Hybrid unicast mode via the standard port. </p>
+<p>Binds to the standard mDNS port (5353). Queries are sent via multicast, but remote nodes are strictly requested to send their responses via Unicast directly to this node. This minimizes network noise while still allowing the socket to passively capture unsolicited background <code>Announce</code> and <code>Goodbye</code> events from peers. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a4db656bae572e9b28e1ebef4b6f05465a1951dca893badeb1f1992fa9805ebb91" name="a4db656bae572e9b28e1ebef4b6f05465a1951dca893badeb1f1992fa9805ebb91"></a>Unicast&#160;</td><td class="fielddoc"><p>Legacy Unicast mode via an ephemeral port. </p>
+<p>Binds to a random, OS-assigned ephemeral port (0). Queries are sent via multicast, and responses are returned directly via Unicast. Useful as a failover when port 5353 is locked by another system daemon, but cannot capture unsolicited background multicast announcements or goodbyes. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a25e8fbeb40f247abb9a34d2af3c7c716" name="a25e8fbeb40f247abb9a34d2af3c7c716"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a25e8fbeb40f247abb9a34d2af3c7c716">&#9670;&#160;</a></span>startQuerier()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -222,7 +261,7 @@ Private &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>private_</b>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>unicast</em></span><span class="paramdefsep"> = </span><span class="paramdefval">true</span>&#160;)</td>
+          <td class="paramtype"><a class="el" href="#a4db656bae572e9b28e1ebef4b6f05465">QuerierMode</a></td>          <td class="paramname"><span class="paramname"><em>mode</em></span><span class="paramdefsep"> = </span><span class="paramdefval"><a class="el" href="#a4db656bae572e9b28e1ebef4b6f05465ae8dd56aab86b4ccd4ebc37409458d36c">Unicast5353</a></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -240,7 +279,7 @@ Private &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>private_</b>
 <div id="dynsection-1-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-1-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1MulticastDns_aaf05a554326e36e3a956d72ea96d32e3_cgraph.svg" width="382" height="78"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1MulticastDns_a25e8fbeb40f247abb9a34d2af3c7c716_cgraph.svg" width="382" height="78"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
