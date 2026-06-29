@@ -6,7 +6,6 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 */
 
 #include <random>
-#include <regex>
 #include "core/AbstractThread.h"
 #include "core/LogStream.h"
 #include "Timer.h"
@@ -22,6 +21,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #undef MDNS_STRING_FORMAT
 #define MDNS_STRING_FORMAT(s) std::string(s.str, s.length)
+#define MDNS_STRING_VIEW_FORMAT(s) std::string_view(s.str, s.length)
 
 using namespace AsyncFw;
 
@@ -49,6 +49,12 @@ struct Compare {
   bool operator()(const MulticastDns::Host &h, const std::string &n) const { return h.name.compare(n) < 0; }
 };
 
+static std::string hostName(const std::string &raw) {
+  size_t _p = raw.find('.');
+  if (_p != std::string::npos) { return raw.substr(0, _p); }
+  return raw;
+}
+
 // Callback handling parsing answers to queries sent
 int query_callback(int, const struct sockaddr *from, size_t addrlen, mdns_entry_type_t entry, uint16_t, uint16_t rtype, uint16_t rclass, uint32_t ttl, const void *data, size_t size, size_t name_offset, size_t, size_t record_offset, size_t record_length, void *user_data) {
   QueryContext *ctx = static_cast<QueryContext *>(user_data);
@@ -69,20 +75,19 @@ int query_callback(int, const struct sockaddr *from, size_t addrlen, mdns_entry_
 #endif
   mdns_string_t entrystr = mdns_string_extract(data, size, &name_offset, entrybuffer, sizeof(entrybuffer));
   if (rtype == MDNS_RECORDTYPE_PTR) {
-    if (MDNS_STRING_FORMAT(entrystr) == priv->serviceType_) {
+    if (MDNS_STRING_VIEW_FORMAT(entrystr) == priv->serviceType_) {
       mdns_string_t namestr = mdns_record_parse_ptr(data, size, record_offset, record_length, namebuffer, sizeof(namebuffer));
-      std::string name = std::regex_replace(MDNS_STRING_FORMAT(namestr), std::regex("\\..*"), "");
+      std::string name = hostName(MDNS_STRING_FORMAT(namestr));
       std::vector<MulticastDns::Host>::iterator it = std::lower_bound(currentHostList.begin(), currentHostList.end(), name, Compare());
       if (it != currentHostList.end() && (*it).name == name) (*it).ipv4.clear();
       else { currentHostList.insert(it, {name, {}, {}, {}, 0}); }
       trace() << "PTR" << std::endl << MDNS_STRING_FORMAT(fromaddrstr) << entrytype << MDNS_STRING_FORMAT(entrystr) << name;
     } else trace() << "PTR" << std::endl << MDNS_STRING_FORMAT(fromaddrstr) << entrytype << MDNS_STRING_FORMAT(entrystr);
   } else if (rtype == MDNS_RECORDTYPE_SRV) {
-    if (std::regex_replace(MDNS_STRING_FORMAT(entrystr), std::regex("^[^\\.]*\\."), "") == priv->serviceType_) {
+    if (MDNS_STRING_VIEW_FORMAT(entrystr).find(priv->serviceType_) != std::string::npos) {
       mdns_record_srv_t srv = mdns_record_parse_srv(data, size, record_offset, record_length, namebuffer, sizeof(namebuffer));
       uint16_t port = (ttl) ? srv.port : 0;
-      std::string name = std::regex_replace(MDNS_STRING_FORMAT(srv.name), std::regex(".local."), "");
-
+      std::string name = hostName(MDNS_STRING_FORMAT(srv.name));
       std::vector<MulticastDns::Host>::iterator it = std::lower_bound(currentHostList.begin(), currentHostList.end(), name, Compare());
       if (it != currentHostList.end() && (*it).name == name) {
         (*it).port = port;
@@ -99,7 +104,7 @@ int query_callback(int, const struct sockaddr *from, size_t addrlen, mdns_entry_
     mdns_record_parse_a(data, size, record_offset, record_length, &addr);
     mdns_string_t addrstr = ipv4_address_to_string(namebuffer, sizeof(namebuffer), &addr, sizeof(addr));
     std::string address = MDNS_STRING_FORMAT(addrstr);
-    std::string name = std::regex_replace(MDNS_STRING_FORMAT(entrystr), std::regex(".local."), "");
+    std::string name = hostName(MDNS_STRING_FORMAT(entrystr));
     std::vector<MulticastDns::Host>::iterator it = std::lower_bound(currentHostList.begin(), currentHostList.end(), name, Compare());
     if (it != currentHostList.end() && (*it).name == name) {
       if ((ntohl(addr.sin_addr.s_addr) & 0xFFFF0000) == 0xA9FE0000) (*it).llipv4 = address;
@@ -109,13 +114,13 @@ int query_callback(int, const struct sockaddr *from, size_t addrlen, mdns_entry_
     }
     trace() << "A" << std::endl << MDNS_STRING_FORMAT(fromaddrstr) << entrytype << MDNS_STRING_FORMAT(entrystr) << MDNS_STRING_FORMAT(addrstr);
   } else if (rtype == MDNS_RECORDTYPE_TXT) {
-    if (std::regex_replace(MDNS_STRING_FORMAT(entrystr), std::regex("^[^\\.]*\\."), "") == priv->serviceType_) {
+    if (MDNS_STRING_VIEW_FORMAT(entrystr).find(priv->serviceType_) != std::string::npos) {
       mdns_record_txt_t txtbuffer[128];
       size_t parsed = mdns_record_parse_txt(data, size, record_offset, record_length, txtbuffer, sizeof(txtbuffer) / sizeof(mdns_record_txt_t));
+      std::string name = hostName(MDNS_STRING_FORMAT(entrystr));
       for (size_t itxt = 0; itxt < parsed; ++itxt) {
         std::string key = MDNS_STRING_FORMAT(txtbuffer[itxt].key);
         if (key != "llip" && key != "misc") continue;
-        std::string name = std::regex_replace(MDNS_STRING_FORMAT(entrystr), std::regex("[.].*"), "");
         std::string val = MDNS_STRING_FORMAT(txtbuffer[itxt].value);
         std::vector<MulticastDns::Host>::iterator it = std::lower_bound(currentHostList.begin(), currentHostList.end(), name, Compare());
         if (it != currentHostList.end() && (*it).name == name) {
