@@ -220,8 +220,9 @@ bool MulticastDns::startService(const std::string &hostname, const std::string &
         static thread_local std::uniform_int_distribution<int> distribution(0, 100);
         _val = 20 + distribution(generator);
       } else _val = 20 + (_val % 101);
+
       Timer::single(_val, [this, fd]() {
-        thread_->modifyPollDescriptor(fd, AbstractThread::PollIn);  //Возвращаем fd в epoll
+        if (serviceRunning()) thread_->modifyPollDescriptor(fd, AbstractThread::PollIn);  //Возвращаем fd в epoll
         servicePollEvent(fd);
       });
     });
@@ -230,8 +231,14 @@ bool MulticastDns::startService(const std::string &hostname, const std::string &
 }
 
 void MulticastDns::servicePollEvent(int fd) {
-  while (mdns_service_event(fd, &private_.sd_) > 0);
-  trace() << LogStream::Color::Magenta << fd;
+  for (int r;;) {
+    r = mdns_service_event(fd, &private_.sd_);
+    if (r == -2) {
+      querierPollEvent(fd);
+      continue;
+    }
+    if (r <= 0) break;
+  }
 }
 
 void MulticastDns::stopService(bool goodbye) {
