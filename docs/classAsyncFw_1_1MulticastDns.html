@@ -147,10 +147,6 @@ Public Member Functions</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><b>MulticastDns</b> (const std::string &amp;={})</td></tr>
 <tr class="memdesc:ab9bfb41e98cd4ecf1cc63f8acd023afd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the mDNS node with a specific target service type (e.g., "_http._tcp"). <br /></td></tr>
 <tr class="separator:ab9bfb41e98cd4ecf1cc63f8acd023afd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a091b0f3d62c8f78f33a396f4cbf140b0" id="r_a091b0f3d62c8f78f33a396f4cbf140b0"><td class="memItemLeft" align="right" valign="top"><a id="a091b0f3d62c8f78f33a396f4cbf140b0" name="a091b0f3d62c8f78f33a396f4cbf140b0"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>sendQuery</b> (int=0)</td></tr>
-<tr class="memdesc:a091b0f3d62c8f78f33a396f4cbf140b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Broadcasts an immediate multicast query to discover hosts. <br /></td></tr>
-<tr class="separator:a091b0f3d62c8f78f33a396f4cbf140b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7b39185ec1eface6f9fa23432b74d8e2" id="r_a7b39185ec1eface6f9fa23432b74d8e2"><td class="memItemLeft" align="right" valign="top"><a id="a7b39185ec1eface6f9fa23432b74d8e2" name="a7b39185ec1eface6f9fa23432b74d8e2"></a>
 const std::vector&lt; <a class="el" href="structAsyncFw_1_1MulticastDns_1_1Host.html">Host</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>hosts</b> () const</td></tr>
 <tr class="memdesc:a7b39185ec1eface6f9fa23432b74d8e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thread-safe getter returning a snapshot of all discovered network hosts. <br /></td></tr>
@@ -169,7 +165,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>startService</b> (con
 <tr class="separator:a010507720899efd7b653d3e33bc64f0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9740e59f3a6a0f48dba3381c0324eee1" id="r_a9740e59f3a6a0f48dba3381c0324eee1"><td class="memItemLeft" align="right" valign="top"><a id="a9740e59f3a6a0f48dba3381c0324eee1" name="a9740e59f3a6a0f48dba3381c0324eee1"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>stopService</b> (bool=true)</td></tr>
-<tr class="memdesc:a9740e59f3a6a0f48dba3381c0324eee1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unregisters the published service and optionally sends a goodbye notify pack. <br /></td></tr>
+<tr class="memdesc:a9740e59f3a6a0f48dba3381c0324eee1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unregisters the published service and optionally sends a goodbye packet. <br /></td></tr>
 <tr class="separator:a9740e59f3a6a0f48dba3381c0324eee1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acfe6df81240db7979782c2df5a117c91" id="r_acfe6df81240db7979782c2df5a117c91"><td class="memItemLeft" align="right" valign="top"><a id="acfe6df81240db7979782c2df5a117c91" name="acfe6df81240db7979782c2df5a117c91"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>serviceRunning</b> () const</td></tr>
@@ -186,6 +182,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>stopQuerier</b> ()</t
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>querierRunning</b> () const</td></tr>
 <tr class="memdesc:a9afe98db8817d4d9c6b6eb1ba07f5e60"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the network query browser is actively polling. <br /></td></tr>
 <tr class="separator:a9afe98db8817d4d9c6b6eb1ba07f5e60"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a091b0f3d62c8f78f33a396f4cbf140b0" id="r_a091b0f3d62c8f78f33a396f4cbf140b0"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a091b0f3d62c8f78f33a396f4cbf140b0">sendQuery</a> (int=0)</td></tr>
+<tr class="memdesc:a091b0f3d62c8f78f33a396f4cbf140b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Broadcasts an immediate multicast query to discover hosts.  <br /></td></tr>
+<tr class="separator:a091b0f3d62c8f78f33a396f4cbf140b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -237,7 +236,7 @@ Private &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>private_</b>
 <p>Binds to the standard mDNS port (5353). Queries are sent via multicast, and responses from remote nodes are also broadcasted via multicast to the entire network. Allows full caching by all peers but increases network traffic. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="a4db656bae572e9b28e1ebef4b6f05465ae8dd56aab86b4ccd4ebc37409458d36c" name="a4db656bae572e9b28e1ebef4b6f05465ae8dd56aab86b4ccd4ebc37409458d36c"></a>Unicast5353&#160;</td><td class="fielddoc"><p>Hybrid unicast mode via the standard port. </p>
-<p>Binds to the standard mDNS port (5353). Queries are sent via multicast, but remote nodes are strictly requested to send their responses via Unicast directly to this node. This minimizes network noise while still allowing the socket to passively capture unsolicited background <code>Announce</code> and <code>Goodbye</code> events from peers. </p>
+<p>Binds to the standard mDNS port (5353). Queries are sent via multicast, but remote nodes are requested to send their responses via Unicast directly to this node. This minimizes network noise while still allowing the socket to passively capture unsolicited background Announce and Goodbye events from peers. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="a4db656bae572e9b28e1ebef4b6f05465a1951dca893badeb1f1992fa9805ebb91" name="a4db656bae572e9b28e1ebef4b6f05465a1951dca893badeb1f1992fa9805ebb91"></a>Unicast&#160;</td><td class="fielddoc"><p>Legacy Unicast mode via an ephemeral port. </p>
 <p>Binds to a random, OS-assigned ephemeral port (0). Queries are sent via multicast, and responses are returned directly via Unicast. Useful as a failover when port 5353 is locked by another system daemon, but cannot capture unsolicited background multicast announcements or goodbyes. </p>
@@ -270,7 +269,7 @@ Private &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>private_</b>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">seconds</td><td>Seconds between cyclic search queries.</td></tr>
-    <tr><td class="paramname">unicast</td><td>If true, queries from ephemeral ports to enforce Unicast responses and suppress network multicast storms. </td></tr>
+    <tr><td class="paramname">mode</td><td>Querier mode. </td></tr>
   </table>
   </dd>
 </dl>
@@ -280,6 +279,46 @@ Private &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>private_</b>
 </div>
 <div id="dynsection-1-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1MulticastDns_a25e8fbeb40f247abb9a34d2af3c7c716_cgraph.svg" width="382" height="78"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<a id="a091b0f3d62c8f78f33a396f4cbf140b0" name="a091b0f3d62c8f78f33a396f4cbf140b0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a091b0f3d62c8f78f33a396f4cbf140b0">&#9670;&#160;</a></span>sendQuery()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int MulticastDns::sendQuery </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>seconds</em></span><span class="paramdefsep"> = </span><span class="paramdefval">0</span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Broadcasts an immediate multicast query to discover hosts. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">seconds</td><td>Optional timeout in seconds to arm or reset the cyclic discovery timer (0 uses default query timeout). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The number of network sockets through which the query was successfully transmitted, or a negative error code on failure. </dd></dl>
+<div id="dynsection-2" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-2-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-2-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-2-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1MulticastDns_a091b0f3d62c8f78f33a396f4cbf140b0_cgraph.svg" width="172" height="78"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+<div id="dynsection-3" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-3-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-3-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1MulticastDns_a091b0f3d62c8f78f33a396f4cbf140b0_icgraph.svg" width="382" height="78"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>

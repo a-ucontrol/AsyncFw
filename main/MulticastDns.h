@@ -36,7 +36,7 @@ public:
     @details Binds to the standard mDNS port (5353). Queries are sent via multicast, and responses from remote nodes are also broadcasted via multicast to the entire network. Allows full caching by all peers but increases network traffic. */
     Multicast = 0,
     /** @brief Hybrid unicast mode via the standard port.
-    @details Binds to the standard mDNS port (5353). Queries are sent via multicast, but remote nodes are strictly requested to send their responses via Unicast directly to this node. This minimizes network noise while still allowing the socket to passively capture unsolicited background @c Announce and @c Goodbye events from peers. */
+    @details Binds to the standard mDNS port (5353). Queries are sent via multicast, but remote nodes are requested to send their responses via Unicast directly to this node. This minimizes network noise while still allowing the socket to passively capture unsolicited background Announce and Goodbye events from peers. */
     Unicast5353 = 1,
     /** @brief Legacy Unicast mode via an ephemeral port.
     @details Binds to a random, OS-assigned ephemeral port (0). Queries are sent via multicast, and responses are returned directly via Unicast. Useful as a failover when port 5353 is locked by another system daemon, but cannot capture unsolicited background multicast announcements or goodbyes. */
@@ -47,9 +47,6 @@ public:
   /** @brief Initializes the mDNS node with a specific target service type (e.g., "_http._tcp"). */
   MulticastDns(const std::string & = {});
   virtual ~MulticastDns();
-
-  /** @brief Broadcasts an immediate multicast query to discover hosts. */
-  int sendQuery(int = 0);
 
   /** @brief Thread-safe getter returning a snapshot of all discovered network hosts. */
   const std::vector<Host> hosts() const {
@@ -64,17 +61,19 @@ public:
 
   /** @brief Registers and publishes a new local service to the network loop. */
   bool startService(const std::string &, const std::string &, uint16_t);
-  /** @brief Unregisters the published service and optionally sends a goodbye notify pack. */
+  /** @brief Unregisters the published service and optionally sends a goodbye packet. */
   void stopService(bool = true);
   /** @brief Checks if the mDNS local responder is running. */
   bool serviceRunning() const;
 
-  /** @brief Starts the background cyclic network polling task for host discovery. @param seconds Seconds between cyclic search queries. @param unicast If true, queries from ephemeral ports to enforce Unicast responses and suppress network multicast storms. */
+  /** @brief Starts the background cyclic network polling task for host discovery. @param seconds Seconds between cyclic search queries. @param mode Querier mode. */
   bool startQuerier(int = 60, QuerierMode = Unicast5353);
   /** @brief Terminates the active host search routine. */
   void stopQuerier();
   /** @brief Checks if the network query browser is actively polling. */
   bool querierRunning() const;
+  /** @brief Broadcasts an immediate multicast query to discover hosts. @param seconds Optional timeout in seconds to arm or reset the cyclic discovery timer (0 uses default query timeout). @return The number of network sockets through which the query was successfully transmitted, or a negative error code on failure. */
+  int sendQuery(int = 0);
 
   FunctionConnector<const Host &>::Protected<MulticastDns> hostAdded;    ///< Triggered when a new device is found.
   FunctionConnector<const Host &>::Protected<MulticastDns> hostChanged;  ///< Triggered when a device alters parameters.
