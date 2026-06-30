@@ -7,7 +7,7 @@ var classAsyncFw_1_1MulticastDns =
       [ "Unicast", "classAsyncFw_1_1MulticastDns.html#a4db656bae572e9b28e1ebef4b6f05465a1951dca893badeb1f1992fa9805ebb91", null ]
     ] ],
     [ "MulticastDns", "classAsyncFw_1_1MulticastDns.html#ab9bfb41e98cd4ecf1cc63f8acd023afd", null ],
-    [ "hosts", "classAsyncFw_1_1MulticastDns.html#a7b39185ec1eface6f9fa23432b74d8e2", null ],
+    [ "hosts", "classAsyncFw_1_1MulticastDns.html#a1aae9d9612ba077da938bb80a8c3330d", null ],
     [ "setServiceType", "classAsyncFw_1_1MulticastDns.html#a6604b92ff217e3502a3eca746efe9403", null ],
     [ "serviceType", "classAsyncFw_1_1MulticastDns.html#a23e336e5c39f79f847b12014558e8dda", null ],
     [ "startService", "classAsyncFw_1_1MulticastDns.html#a010507720899efd7b653d3e33bc64f0a", null ],

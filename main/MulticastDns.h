@@ -50,10 +50,7 @@ public:
   virtual ~MulticastDns();
 
   /** @brief Thread-safe getter returning a snapshot of all discovered network hosts. */
-  const std::vector<Host> hosts() const {
-    std::lock_guard<std::mutex> lock(mutex);
-    return hosts_;
-  }
+  const std::vector<Host> hosts() const;
 
   /** @brief Sets the target mDNS/DNS-SD service descriptor pattern for the browser. */
   void setServiceType(const std::string &);
@@ -88,15 +85,8 @@ private:
   void servicePollEvent(int);
   void querierPollEvent(int);
   void querierTimerEvent();
-  int queryTimeout_;
-  int qtid;
-  std::vector<Host> hosts_;
   int sendQuery(const std::vector<std::pair<std::string, std::string>> &, int = 0);
   void update();
-  mutable std::mutex mutex;
-  AbstractThread *thread_;
-
-public:
   Private &private_;
 };
 }  // namespace AsyncFw
