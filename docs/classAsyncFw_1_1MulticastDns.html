@@ -171,9 +171,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>stopService</b> (bool
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>serviceRunning</b> () const</td></tr>
 <tr class="memdesc:acfe6df81240db7979782c2df5a117c91"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the mDNS local responder is running. <br /></td></tr>
 <tr class="separator:acfe6df81240db7979782c2df5a117c91"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a25e8fbeb40f247abb9a34d2af3c7c716" id="r_a25e8fbeb40f247abb9a34d2af3c7c716"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a25e8fbeb40f247abb9a34d2af3c7c716">startQuerier</a> (int=60, <a class="el" href="#a4db656bae572e9b28e1ebef4b6f05465">QuerierMode</a>=<a class="el" href="#a4db656bae572e9b28e1ebef4b6f05465ae8dd56aab86b4ccd4ebc37409458d36c">Unicast5353</a>)</td></tr>
-<tr class="memdesc:a25e8fbeb40f247abb9a34d2af3c7c716"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts the background cyclic network polling task for host discovery.  <br /></td></tr>
-<tr class="separator:a25e8fbeb40f247abb9a34d2af3c7c716"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a99f55a2e095da0b02e7e29b1cc0f47eb" id="r_a99f55a2e095da0b02e7e29b1cc0f47eb"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a99f55a2e095da0b02e7e29b1cc0f47eb">startQuerier</a> (<a class="el" href="#a4db656bae572e9b28e1ebef4b6f05465">QuerierMode</a>, int=60)</td></tr>
+<tr class="memdesc:a99f55a2e095da0b02e7e29b1cc0f47eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts the background cyclic network polling task for host discovery.  <br /></td></tr>
+<tr class="separator:a99f55a2e095da0b02e7e29b1cc0f47eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1aaa9222fa44159da442b8ce403152ab" id="r_a1aaa9222fa44159da442b8ce403152ab"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1aaa9222fa44159da442b8ce403152ab">startQuerier</a> (int=60)</td></tr>
+<tr class="memdesc:a1aaa9222fa44159da442b8ce403152ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts the background cyclic network polling task for host discovery, Querier mode is Multicast.  <br /></td></tr>
+<tr class="separator:a1aaa9222fa44159da442b8ce403152ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a03b1bd87ba47f61a0443e42cec2a78cb" id="r_a03b1bd87ba47f61a0443e42cec2a78cb"><td class="memItemLeft" align="right" valign="top"><a id="a03b1bd87ba47f61a0443e42cec2a78cb" name="a03b1bd87ba47f61a0443e42cec2a78cb"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>stopQuerier</b> ()</td></tr>
 <tr class="memdesc:a03b1bd87ba47f61a0443e42cec2a78cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Terminates the active host search routine. <br /></td></tr>
@@ -246,8 +249,8 @@ Private &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>private_</b>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a25e8fbeb40f247abb9a34d2af3c7c716" name="a25e8fbeb40f247abb9a34d2af3c7c716"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a25e8fbeb40f247abb9a34d2af3c7c716">&#9670;&#160;</a></span>startQuerier()</h2>
+<a id="a99f55a2e095da0b02e7e29b1cc0f47eb" name="a99f55a2e095da0b02e7e29b1cc0f47eb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a99f55a2e095da0b02e7e29b1cc0f47eb">&#9670;&#160;</a></span>startQuerier() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -255,12 +258,12 @@ Private &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>private_</b>
         <tr>
           <td class="memname">bool MulticastDns::startQuerier </td>
           <td>(</td>
-          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>seconds</em></span><span class="paramdefsep"> = </span><span class="paramdefval">60</span>, </td>
+          <td class="paramtype"><a class="el" href="#a4db656bae572e9b28e1ebef4b6f05465">QuerierMode</a></td>          <td class="paramname"><span class="paramname"><em>mode</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="#a4db656bae572e9b28e1ebef4b6f05465">QuerierMode</a></td>          <td class="paramname"><span class="paramname"><em>mode</em></span><span class="paramdefsep"> = </span><span class="paramdefval"><a class="el" href="#a4db656bae572e9b28e1ebef4b6f05465ae8dd56aab86b4ccd4ebc37409458d36c">Unicast5353</a></span>&#160;)</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>seconds</em></span><span class="paramdefsep"> = </span><span class="paramdefval">60</span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -268,8 +271,8 @@ Private &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>private_</b>
 <p>Starts the background cyclic network polling task for host discovery. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">seconds</td><td>Seconds between cyclic search queries.</td></tr>
-    <tr><td class="paramname">mode</td><td>Querier mode. </td></tr>
+    <tr><td class="paramname">mode</td><td>Querier mode.</td></tr>
+    <tr><td class="paramname">seconds</td><td>Seconds between cyclic search queries. </td></tr>
   </table>
   </dd>
 </dl>
@@ -279,7 +282,46 @@ Private &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>private_</b>
 <div id="dynsection-1-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-1-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1MulticastDns_a25e8fbeb40f247abb9a34d2af3c7c716_cgraph.svg" width="382" height="78"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1MulticastDns_a99f55a2e095da0b02e7e29b1cc0f47eb_cgraph.svg" width="382" height="78"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+<div id="dynsection-2" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-2-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-2-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-2-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1MulticastDns_a99f55a2e095da0b02e7e29b1cc0f47eb_icgraph.svg" width="382" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<a id="a1aaa9222fa44159da442b8ce403152ab" name="a1aaa9222fa44159da442b8ce403152ab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1aaa9222fa44159da442b8ce403152ab">&#9670;&#160;</a></span>startQuerier() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool MulticastDns::startQuerier </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>seconds</em></span><span class="paramdefsep"> = </span><span class="paramdefval">60</span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Starts the background cyclic network polling task for host discovery, Querier mode is Multicast. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">seconds</td><td>Seconds between cyclic search queries. </td></tr>
+  </table>
+  </dd>
+</dl>
+<div id="dynsection-3" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-3-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-3-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1MulticastDns_a1aaa9222fa44159da442b8ce403152ab_cgraph.svg" width="591" height="78"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -307,19 +349,19 @@ Private &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>private_</b>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The number of network sockets through which the query was successfully transmitted, or a negative error code on failure. </dd></dl>
-<div id="dynsection-2" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-2-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-2-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-4" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-4-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-4-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-2-content" class="dyncontent" style="display:none;">
+<div id="dynsection-4-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1MulticastDns_a091b0f3d62c8f78f33a396f4cbf140b0_cgraph.svg" width="172" height="78"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
-<div id="dynsection-3" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-3-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-5" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-5-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-5-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-3-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1MulticastDns_a091b0f3d62c8f78f33a396f4cbf140b0_icgraph.svg" width="382" height="78"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div id="dynsection-5-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classAsyncFw_1_1MulticastDns_a091b0f3d62c8f78f33a396f4cbf140b0_icgraph.svg" width="591" height="78"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>

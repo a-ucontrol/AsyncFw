@@ -28,7 +28,7 @@ int main(int argc, char *argv[]) {
   _mdns.hostRemoved.connect([](const MulticastDns::Host &host) { lsInfoRed() << "Removed" << host.name << host.ipv4 << host.llipv4 << host.misc << host.port; });
 
   _mdns.startService("AsyncFw_host", "AsyncFw_misc_string", 18080);
-  _mdns.startQuerier(60, AsyncFw::MulticastDns::Multicast);
+  _mdns.startQuerier();
 
   lsNotice() << "Start Application";
   int ret = MainThread::exec();

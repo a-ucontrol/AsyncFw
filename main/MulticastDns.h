@@ -67,9 +67,11 @@ public:
   /** @brief Checks if the mDNS local responder is running. */
   bool serviceRunning() const;
 
-  /** @brief Starts the background cyclic network polling task for host discovery. @param seconds Seconds between cyclic search queries. @param mode Querier mode.
+  /** @brief Starts the background cyclic network polling task for host discovery. @param mode Querier mode. @param seconds Seconds between cyclic search queries.
   @warning If using Unicast5353 mode while multiple mDNS processes, services, or daemon instances are active on the SAME local device, the OS will load-balance unicast traffic on port 5353 across their sockets. This breaks unicast response delivery, causing broken host discovery and missing ports. Use Multicast or Unicast mode if other mDNS services are running on the machine. */
-  bool startQuerier(int = 60, QuerierMode = Unicast5353);
+  bool startQuerier(QuerierMode, int = 60);
+  /**  @brief Starts the background cyclic network polling task for host discovery, Querier mode is Multicast. @param seconds Seconds between cyclic search queries. */
+  bool startQuerier(int = 60);
   /** @brief Terminates the active host search routine. */
   void stopQuerier();
   /** @brief Checks if the network query browser is actively polling. */

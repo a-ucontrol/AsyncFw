@@ -252,7 +252,10 @@ void MulticastDns::stopService(bool goodbye) {
   private_.sd_.num_sockets = 0;
 }
 
-bool MulticastDns::startQuerier(int seconds, QuerierMode mode) {
+bool MulticastDns::startQuerier(QuerierMode mode, int seconds) {
+  if (mode == Unicast5353) {
+    lsNotice() << "using Unicast5353 mode. Ensure port 5353 is not shared with other mDNS daemons (Avahi/Bonjour/...)";
+  }
   if (private_.qd_.num_sockets > 0) return false;
   private_.qd_.mode = mode;
   int r = start_mdns_querier(&private_.qd_);
@@ -267,6 +270,8 @@ bool MulticastDns::startQuerier(int seconds, QuerierMode mode) {
   sendQuery();
   return true;
 }
+
+bool MulticastDns::startQuerier(int seconds) { return startQuerier(Multicast, seconds); }
 
 void MulticastDns::querierPollEvent(int fd) {
   QueryContext ctx = {};

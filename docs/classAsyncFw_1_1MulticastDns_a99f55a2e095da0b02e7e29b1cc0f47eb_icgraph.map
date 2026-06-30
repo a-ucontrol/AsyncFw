@@ -1,0 +1,5 @@
+<map id="AsyncFw::MulticastDns::startQuerier" name="AsyncFw::MulticastDns::startQuerier">
+<area shape="rect" id="Node000001" title="Starts the background cyclic network polling task for host discovery." alt="" coords="215,5,376,48"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1MulticastDns.html#a1aaa9222fa44159da442b8ce403152ab" title="Starts the background cyclic network polling task for host discovery, Querier mode is Multicast." alt="" coords="5,5,167,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="199,29,167,29,167,24,199,24"/>
+</map>
