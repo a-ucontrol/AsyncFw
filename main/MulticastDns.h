@@ -36,7 +36,8 @@ public:
     @details Binds to the standard mDNS port (5353). Queries are sent via multicast, and responses from remote nodes are also broadcasted via multicast to the entire network. Allows full caching by all peers but increases network traffic. */
     Multicast = 0,
     /** @brief Hybrid unicast mode via the standard port.
-    @details Binds to the standard mDNS port (5353). Queries are sent via multicast, but remote nodes are requested to send their responses via Unicast directly to this node. This minimizes network noise while still allowing the socket to passively capture unsolicited background Announce and Goodbye events from peers. */
+    @details Binds to the standard mDNS port (5353). Queries are sent via multicast, but remote nodes are requested to send their responses via Unicast directly to this node. This minimizes network noise while still allowing the socket to passively capture unsolicited background Announce and Goodbye events from peers.
+    @warning If multiple mDNS processes, services, or daemon instances run on the SAME local device, the OS will load-balance unicast traffic on port 5353 across their sockets. This breaks unicast response delivery, resulting in broken host discovery. Use Multicast or ephemeral Unicast mode for local loopback testing if other mDNS services are active on the machine. */
     Unicast5353 = 1,
     /** @brief Legacy Unicast mode via an ephemeral port.
     @details Binds to a random, OS-assigned ephemeral port (0). Queries are sent via multicast, and responses are returned directly via Unicast. Useful as a failover when port 5353 is locked by another system daemon, but cannot capture unsolicited background multicast announcements or goodbyes. */
@@ -66,7 +67,8 @@ public:
   /** @brief Checks if the mDNS local responder is running. */
   bool serviceRunning() const;
 
-  /** @brief Starts the background cyclic network polling task for host discovery. @param seconds Seconds between cyclic search queries. @param mode Querier mode. */
+  /** @brief Starts the background cyclic network polling task for host discovery. @param seconds Seconds between cyclic search queries. @param mode Querier mode.
+  @warning If using Unicast5353 mode while multiple mDNS processes, services, or daemon instances are active on the SAME local device, the OS will load-balance unicast traffic on port 5353 across their sockets. This breaks unicast response delivery, causing broken host discovery and missing ports. Use Multicast or Unicast mode if other mDNS services are running on the machine. */
   bool startQuerier(int = 60, QuerierMode = Unicast5353);
   /** @brief Terminates the active host search routine. */
   void stopQuerier();

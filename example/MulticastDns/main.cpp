@@ -21,14 +21,14 @@ int main(int argc, char *argv[]) {
     lsInfoGreen() << "Added" << host.name << host.ipv4 << host.llipv4 << host.misc << host.port;
     _mdns.stopService();
   });
-  _mdns.hostChanged.connect([](const MulticastDns::Host &host) { lsInfoMagenta() << "Changed" << host.name << host.ipv4 << host.llipv4 << host.misc << host.port; });
-  _mdns.hostRemoved.connect([&_mdns](const MulticastDns::Host &host) {
-    lsInfoRed() << "Removed" << host.name << host.ipv4 << host.llipv4 << host.misc << host.port;
+  _mdns.hostChanged.connect([](const MulticastDns::Host &host) {
+    lsInfoMagenta() << "Changed" << host.name << host.ipv4 << host.llipv4 << host.misc << host.port;
     MainThread::exit();
   });
+  _mdns.hostRemoved.connect([](const MulticastDns::Host &host) { lsInfoRed() << "Removed" << host.name << host.ipv4 << host.llipv4 << host.misc << host.port; });
 
   _mdns.startService("AsyncFw_host", "AsyncFw_misc_string", 18080);
-  _mdns.startQuerier(1, AsyncFw::MulticastDns::Unicast5353);
+  _mdns.startQuerier(60, AsyncFw::MulticastDns::Multicast);
 
   lsNotice() << "Start Application";
   int ret = MainThread::exec();

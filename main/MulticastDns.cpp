@@ -234,6 +234,7 @@ void MulticastDns::servicePollEvent(int fd) {
   for (int r;;) {
     r = mdns_service_event(fd, &private_.sd_);
     if (r == -2) {
+      lsDebug() << LogStream::Color::Blue << "redirect to querier" << fd;
       querierPollEvent(fd);
       continue;
     }
