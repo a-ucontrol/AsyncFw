@@ -431,6 +431,7 @@ Instance<HttpServer> HttpServer::instance_ {"HttpServer"};
 
 HttpServer::HttpServer(const std::string &_httpPath) : private_(*new Private()) {
   private_.httpPath = _httpPath;
+  if(!private_.httpPath.ends_with('/')) private_.httpPath.push_back('/');
   addRule("/<arg>", Request::Method::Get, [this](const Request &request) {
     if (private_.httpPath.empty()) {
       lsError("application home not set");
@@ -440,6 +441,16 @@ HttpServer::HttpServer(const std::string &_httpPath) : private_(*new Private()) 
     }
     std::string path = private_.httpPath + ((request.path() == "/") ? "/index.html" : request.path());
     trace("request file: " + path);
+
+    path = std::filesystem::weakly_canonical(path).string();
+
+    if (path.size() < private_.httpPath.size() || path.compare(0, private_.httpPath.size(), private_.httpPath) != 0) {
+      lsError() << "Path traversal attempt blocked: " << path;
+      request.response()->setStatusCode(Response::StatusCode::Forbidden);
+      request.response()->send();
+      return;
+    }
+
     if (std::filesystem::exists(path)) {
       trace(("return: " + path).c_str());
       request.response()->setStatusCode(Response::StatusCode::Ok);
