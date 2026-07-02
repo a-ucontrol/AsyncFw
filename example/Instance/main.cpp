@@ -37,7 +37,7 @@ int main(int argc, char *argv[]) {
   lsInfoMagenta() << _e.name();
   lsInfoMagenta() << ExampleClass::instance()->name();
 
-  lsNotice() << "Start Application" << std::endl;
+  lsNotice() << "Start Application";
   int ret = AsyncFw::MainThread::exec();
   lsNotice() << "End Application " << ret;
   return ret;

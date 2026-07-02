@@ -31,7 +31,7 @@ int main(int argc, char *argv[]) {
 
   task(&timer2);
 
-  lsNotice() << "Start Application" << std::endl;
+  lsNotice() << "Start Application";
   int ret = AsyncFw::MainThread::exec();
   lsNotice() << "End Application " << ret;
   return ret;
