@@ -278,11 +278,11 @@ public:
 
 protected:
   virtual void fileUploadProgress(TcpSocket *, int);
+  int makeWebSocketFrame(const AsyncFw::DataArray &, AsyncFw::DataArray *);
   RulesMap rules;
 
 private:
   void received(TcpSocket *, const std::string_view &);
-  int makeWebSocketFrame(const AsyncFw::DataArray &, AsyncFw::DataArray *);
   RulesMap::iterator findRule(const std::string &, const Request::Method);
   std::vector<TcpSocket *> sockets;
   bool cors_request_enabled = true;

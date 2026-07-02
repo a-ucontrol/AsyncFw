@@ -44,6 +44,7 @@ public:
 protected:
   HttpSocket();
   ~HttpSocket();
+  void sendReceived(const DataArray &da) { received(da); }
   void clearReceived();
   bool connectionClose = false;
 

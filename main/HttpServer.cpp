@@ -404,12 +404,15 @@ HttpServer::TcpSocket::~TcpSocket() {
 void HttpServer::TcpSocket::readEvent() {
   if (ws_) {
     DataArray _da = read();
-    //DataArray _in;
-    //_in.resize(_da.size());
-    //int _s;
-    //int r = ws_->getFrame(_da.data(), _da.size(), _in.data(), _in.size(), &_s);
-    lsError() << "websocket protocol read not implemented";
-    disconnect();
+    if (_da.empty()) return;
+    DataArray _out;
+    _out.resize(_da.size());
+    int out_length = 0;
+    WebSocketFrameType ft = ws_->getFrame((unsigned char *)_da.data(), _da.size(), (unsigned char *)_out.data(), _out.size(), &out_length);
+    if (ft == TEXT_FRAME || ft == BINARY_FRAME) {
+      _out.resize(out_length);
+      sendReceived(_out);
+    } else if (ft == CLOSING_FRAME || ft == ERROR_FRAME) disconnect();
     return;
   }
   HttpSocket::readEvent();
@@ -666,24 +669,15 @@ HttpServer::Request::Request(const std::string_view &str) : private_(*new Privat
   }
 
   if (private_.request.method == "GET") method_ = Method::Get;
-  else if (private_.request.method == "PUT")
-    method_ = Method::Put;
-  else if (private_.request.method == "DELETE")
-    method_ = Method::Delete;
-  else if (private_.request.method == "POST")
-    method_ = Method::Post;
-  else if (private_.request.method == "HEAD")
-    method_ = Method::Head;
-  else if (private_.request.method == "OPTIONS")
-    method_ = Method::Options;
-  else if (private_.request.method == "PATCH")
-    method_ = Method::Patch;
-  else if (private_.request.method == "CONNECT")
-    method_ = Method::Connect;
-  else if (private_.request.method == "TRACE")
-    method_ = Method::Trace;
-  else
-    method_ = Method::Unknown;
+  else if (private_.request.method == "PUT") method_ = Method::Put;
+  else if (private_.request.method == "DELETE") method_ = Method::Delete;
+  else if (private_.request.method == "POST") method_ = Method::Post;
+  else if (private_.request.method == "HEAD") method_ = Method::Head;
+  else if (private_.request.method == "OPTIONS") method_ = Method::Options;
+  else if (private_.request.method == "PATCH") method_ = Method::Patch;
+  else if (private_.request.method == "CONNECT") method_ = Method::Connect;
+  else if (private_.request.method == "TRACE") method_ = Method::Trace;
+  else method_ = Method::Unknown;
 }
 
 HttpServer::Request::~Request() { delete &private_; }
