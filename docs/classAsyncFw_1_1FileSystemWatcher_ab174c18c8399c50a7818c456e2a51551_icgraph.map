@@ -1,11 +1,11 @@
 <map id="AsyncFw::FileSystemWatcher::paths" name="AsyncFw::FileSystemWatcher::paths">
 <area shape="rect" id="Node000001" title="Obtains a list of all currently registered file paths." alt="" coords="498,72,696,115"/>
 <area shape="rect" id="Node000002" href="$classAsyncFw_1_1FileSystemWatcher.html#aa4e37387e27aa1508584b7d0b199d165" title="Registers multiple file paths into the observation pool." alt="" coords="252,5,450,48"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="500,70,432,51,433,46,502,65"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="498,68,432,51,432,46,504,67"/>
 <area shape="rect" id="Node000003" href="$classAsyncFw_1_1FileSystemWatcher.html#acd061a60fbaea1bb3c7d020e0da99039" title="Constructs a FileSystemWatcher and optionally starts monitoring given paths." alt="" coords="252,72,450,115"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="482,96,451,96,451,91,482,91"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="479,94,451,96,450,91,485,93"/>
 <area shape="rect" id="Node000005" href="$classAsyncFw_1_1FileSystemWatcher.html#a437baed4f56fd823fa2ba42dc5be781c" title="Unregisters multiple file paths from the observation pool." alt="" coords="252,139,450,181"/>
-<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="502,122,433,141,432,135,500,117"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="504,119,433,141,432,135,498,120"/>
 <area shape="rect" id="Node000004" href="$classAsyncFw_1_1FileSystemWatcher.html#a16b4210d215a3b340c98f650d2071114" title="Retrieves the global instance pointer of the active FileSystemWatcher." alt="" coords="5,72,204,115"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="236,96,204,96,204,91,236,91"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="233,94,205,96,204,91,238,93"/>
 </map>

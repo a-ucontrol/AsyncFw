@@ -1,7 +1,7 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
 <area shape="rect" id="Node000000" href="$classAsyncFw_1_1AbstractLog.html" title="The AbstractLog class provides the core thread&#45;safe infrastructure for log management and duplicate r..." alt="" coords="5,5,160,32"/>
 <area shape="rect" id="Node000001" href="$classAsyncFw_1_1Log.html" title="Asynchronous log manager with circular database (Rrd) backend and duplicate сompression." alt="" coords="208,31,313,57"/>
-<area shape="poly" id="edge8_Node000000_Node000001" title=" " alt="" coords="175,29,207,34,207,39,175,35"/>
+<area shape="poly" id="edge8_Node000000_Node000001" title=" " alt="" coords="175,29,210,36,204,37,175,35"/>
 <area shape="rect" id="Node000002" href="$classAsyncFw_1_1Rrd.html" title="A high&#45;performance circular database engine (Round&#45;Robin Database) for time&#45;series and structural dat..." alt="" coords="30,56,135,83"/>
-<area shape="poly" id="edge9_Node000002_Node000001" title=" " alt="" coords="150,57,207,49,208,54,151,62"/>
+<area shape="poly" id="edge9_Node000002_Node000001" title=" " alt="" coords="150,57,210,51,205,52,151,62"/>
 </map>

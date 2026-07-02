@@ -1,16 +1,16 @@
 <map id="AsyncFw::ListenSocket" name="AsyncFw::ListenSocket">
-<area shape="rect" id="Node000001" title="Server&#45;side socket wrapper specialized for listening and accepting incoming network connections." alt="" coords="981,108,1141,135"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractSocket.html" title="Abstract base class providing core network socket functionality and OS descriptor abstraction." alt="" coords="757,73,932,100"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="947,100,981,106,980,111,946,106"/>
-<area shape="rect" id="Node000003" href="$structAsyncFw_1_1AnyData.html" title="A generic, type&#45;safe data container block wrapper utilizing std::any." alt="" coords="380,23,515,49"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="531,40,734,63,777,70,776,75,733,68,530,45"/>
-<area shape="rect" id="Node000004" href="$classAsyncFw_1_1Thread.html" title="AsyncFw::Thread thread with sockets." alt="" coords="385,73,510,100"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="525,84,757,84,757,89,525,89"/>
+<area shape="rect" id="Node000001" title="Server&#45;side socket wrapper specialized for listening and accepting incoming network connections." alt="" coords="985,133,1145,160"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractSocket.html" title="Abstract base class providing core network socket functionality and OS descriptor abstraction." alt="" coords="761,92,936,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="937,120,994,133,989,133,937,125"/>
+<area shape="rect" id="Node000003" href="$structAsyncFw_1_1AnyData.html" title="A generic, type&#45;safe data container block wrapper utilizing std::any." alt="" coords="384,41,519,68"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="534,54,632,60,738,73,805,91,800,91,737,79,632,66,535,59"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1Thread.html" title="AsyncFw::Thread thread with sockets." alt="" coords="389,92,514,119"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="529,103,764,105,758,106,529,108"/>
 <area shape="rect" id="Node000005" href="$classAsyncFw_1_1AbstractThread.html" title="The AbstractThread class provides the base functionality for thread management." alt="" coords="16,5,189,32"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="205,11,281,18,320,26,357,39,370,49,381,59,404,70,402,75,378,64,366,53,354,44,318,32,280,23,204,17"/>
-<area shape="rect" id="Node000006" href="$classAsyncFw_1_1FunctionConnector.html" title="Provides a thread&#45;safe, publisher&#45;subscriber mechanism to establish sender&#45;to&#45;receivers connections." alt="" coords="5,96,200,139"/>
-<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="215,105,385,89,385,95,216,110"/>
-<area shape="rect" id="Node000007" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="539,119,733,177"/>
-<area shape="poly" id="edge7_Node000007_Node000006" title=" " alt="" coords="208,139,224,141,307,148,390,151,539,150,539,155,390,157,306,154,223,147,207,144"/>
-<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="749,138,980,124,981,129,749,144"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="204,7,244,8,284,14,324,24,361,42,370,51,375,60,378,69,385,78,405,92,400,91,382,82,374,72,370,62,366,54,358,46,322,29,283,19,243,13,205,12"/>
+<area shape="rect" id="Node000006" href="$classAsyncFw_1_1FunctionConnector.html" title="Provides a thread&#45;safe, publisher&#45;subscriber mechanism to establish sender&#45;to&#45;receivers connections." alt="" coords="5,121,200,164"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="215,128,391,111,387,113,216,133"/>
+<area shape="rect" id="Node000007" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="543,145,737,204"/>
+<area shape="poly" id="edge7_Node000007_Node000006" title=" " alt="" coords="176,166,224,177,307,186,392,188,540,185,545,185,392,194,307,191,223,183,176,172"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="753,165,982,152,987,152,753,170"/>
 </map>

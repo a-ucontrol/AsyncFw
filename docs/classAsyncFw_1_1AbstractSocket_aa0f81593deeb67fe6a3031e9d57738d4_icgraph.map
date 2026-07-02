@@ -1,5 +1,5 @@
 <map id="AsyncFw::AbstractSocket::removeFromThread" name="AsyncFw::AbstractSocket::removeFromThread">
 <area shape="rect" id="Node000001" title="Synchronously detaches the socket from its execution thread." alt="" coords="228,5,402,48"/>
 <area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractSocket.html#ad5fb89c73a0f4bcca190d3a4cab15a97" title="Virtual destructor. Automatically detaches socket from thread if still attached." alt="" coords="5,5,180,48"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="212,29,180,29,180,24,212,24"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="210,27,180,29,180,24,215,26"/>
 </map>

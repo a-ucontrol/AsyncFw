@@ -1,7 +1,7 @@
 <map id="AsyncFw::Thread" name="AsyncFw::Thread">
-<area shape="rect" id="Node000001" title="AsyncFw::Thread thread with sockets." alt="" coords="134,144,258,171"/>
+<area shape="rect" id="Node000001" title="AsyncFw::Thread thread with sockets." alt="" coords="134,163,258,189"/>
 <area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractThread.html" title="The AbstractThread class provides the base functionality for thread management." alt="" coords="5,13,179,40"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="114,50,188,142,184,145,110,54"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="111,51,190,162,185,163,108,55"/>
 <area shape="rect" id="Node000003" href="$classAsyncFw_1_1FunctionConnector.html" title="Provides a thread&#45;safe, publisher&#45;subscriber mechanism to establish sender&#45;to&#45;receivers connections." alt="" coords="203,5,397,48"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="276,62,208,145,204,142,272,59"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="279,60,207,164,203,160,274,61"/>
 </map>

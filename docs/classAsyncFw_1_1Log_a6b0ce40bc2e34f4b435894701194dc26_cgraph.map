@@ -1,27 +1,27 @@
 <map id="AsyncFw::Log::output" name="AsyncFw::Log::output">
 <area shape="rect" id="Node000001" title="Persists log entries into the underlying Rrd buffer and manages automated disk flushing." alt="" coords="5,181,155,208"/>
 <area shape="rect" id="Node000002" href="$classAsyncFw_1_1Rrd.html#a4c33c8721d57d0b3666549a52bf2a696" title="Ingests and commits a new item layout entry directly into the tail of the circular timeline framework..." alt="" coords="217,56,372,83"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="92,179,138,136,168,113,201,92,215,86,217,91,204,97,171,117,141,140,96,183"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="92,179,138,136,168,113,201,92,218,87,214,90,204,97,171,117,141,140,96,183"/>
 <area shape="rect" id="Node000006" href="$classAsyncFw_1_1AbstractThread.html#af33c5949edb374d673a7a9ac0c81ec32" title="Returns a pointer to the AsyncFw::AbstractThread that manages the currently executing thread." alt="" coords="208,107,382,149"/>
-<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="125,178,208,152,210,157,127,183"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="125,178,211,153,207,156,127,183"/>
 <area shape="rect" id="Node000009" href="$classAsyncFw_1_1AbstractLog.html#af5285b3d69b6af192fb2656d44b2e122" title="Routes an individual message directly to active outputs (like LogStream::console_output)." alt="" coords="218,173,372,216"/>
-<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="155,192,202,192,202,197,155,197"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="154,192,205,193,200,196,156,197"/>
 <area shape="rect" id="Node000010" href="$classAsyncFw_1_1Log.html#a36128876c58bc05a4b8ec59144abdaa1" title="Unrolls a Message structure into a flat serialized DataArray binary block suitable for Rrd storage." alt="" coords="203,240,387,283"/>
-<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="127,206,210,232,208,237,125,211"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="126,206,211,233,207,236,126,211"/>
 <area shape="rect" id="Node000013" href="$classAsyncFw_1_1Log.html#aa245705a619748ab41ad9b0a43b81767" title="Safe write transaction proxy that bypasses filesystem synchronization if the database is in read&#45;only..." alt="" coords="224,307,366,333"/>
-<area shape="poly" id="edge12_Node000001_Node000013" title=" " alt="" coords="96,206,141,249,171,272,204,292,217,298,215,303,201,297,168,277,138,253,92,210"/>
+<area shape="poly" id="edge12_Node000001_Node000013" title=" " alt="" coords="95,206,141,249,171,272,204,292,219,301,213,301,201,297,168,277,138,253,93,211"/>
 <area shape="rect" id="Node000003" href="$classAsyncFw_1_1Rrd.html#a171ca62295eb74da3e222bb14e14dea8" title="Slices historical time&#45;series data records from a given timestamp and extracts them into a provided d..." alt="" coords="452,56,591,83"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="373,67,437,67,437,72,373,72"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="372,67,440,68,435,70,373,72"/>
 <area shape="rect" id="Node000004" href="$classAsyncFw_1_1Rrd.html#a113f3548987e7b830295e91bc74e2b89" title="Returns the absolute unique incremental primary master timeline database record tracking index offset..." alt="" coords="660,5,826,32"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="583,53,666,33,667,39,584,58"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="583,53,669,35,664,37,584,58"/>
 <area shape="rect" id="Node000005" href="$classAsyncFw_1_1Rrd.html#a330145de892c6f5e916d7dda15aeedfc" title="Returns the absolute maximum capability size (total slots) configured for this circular ring buffer l..." alt="" coords="674,56,812,83"/>
-<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="591,67,659,67,659,72,591,72"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="591,67,661,69,656,70,591,72"/>
 <area shape="rect" id="Node000007" href="$classAsyncFw_1_1AbstractThread.html#a8c9202c90ac101522f26c4260cb01b59" title="Constructs a thread." alt="" coords="435,107,608,149"/>
-<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="382,125,419,125,419,131,382,131"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="381,125,422,127,417,129,382,131"/>
 <area shape="rect" id="Node000008" href="$classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd" title="Returns name of managed thread." alt="" coords="656,107,830,149"/>
-<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="609,125,641,125,641,131,609,131"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="608,125,643,128,638,128,609,131"/>
 <area shape="rect" id="Node000011" href="$classAsyncFw_1_1DataStream.html#ae64c4b08a3259146d4476c0385352479" title="Retrieves a reference to the active cumulative raw byte array built by the stream." alt="" coords="444,207,599,249"/>
-<area shape="poly" id="edge10_Node000010_Node000011" title=" " alt="" coords="387,245,429,239,430,244,388,250"/>
+<area shape="poly" id="edge10_Node000010_Node000011" title=" " alt="" coords="387,245,432,241,427,242,388,250"/>
 <area shape="rect" id="Node000012" href="$classAsyncFw_1_1DataStream.html#a58e67062bf6cd3f77a8203758b01eaf8" title="Checks if the stream pipeline encountered a boundary check failure, bad memory, or malformed data pac..." alt="" coords="444,273,599,316"/>
-<area shape="poly" id="edge11_Node000010_Node000012" title=" " alt="" coords="388,272,430,278,429,284,387,278"/>
+<area shape="poly" id="edge11_Node000010_Node000012" title=" " alt="" coords="387,272,432,281,427,281,387,278"/>
 </map>

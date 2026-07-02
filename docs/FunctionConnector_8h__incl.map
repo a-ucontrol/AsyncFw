@@ -1,13 +1,13 @@
 <map id="core/FunctionConnector.h" name="core/FunctionConnector.h">
 <area shape="rect" id="Node000001" title="The AbstractFunctionConnector, FunctionConnector, FunctionConnectorProtected, FunctionConnectionGuard..." alt="" coords="70,5,240,32"/>
 <area shape="rect" id="Node000002" href="$AbstractThread_8h.html" title="The AbstractThread class." alt="" coords="95,80,216,107"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="158,33,158,64,153,64,153,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="157,30,158,65,153,63,154,35"/>
 <area shape="rect" id="Node000003" title=" " alt="" coords="5,155,63,181"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="136,110,70,149,67,144,133,105"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="136,109,70,149,67,144,132,105"/>
 <area shape="rect" id="Node000004" title=" " alt="" coords="87,155,144,181"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="151,109,132,142,127,140,146,106"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="151,106,132,143,128,139,146,109"/>
 <area shape="rect" id="Node000005" title=" " alt="" coords="168,155,225,181"/>
-<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="165,106,184,140,180,143,160,109"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="164,105,185,142,180,141,161,110"/>
 <area shape="rect" id="Node000006" href="$invocable_8hpp_source.html" title=" " alt="" coords="250,155,351,181"/>
-<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="182,105,263,145,261,150,179,110"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="181,105,264,147,259,148,180,110"/>
 </map>

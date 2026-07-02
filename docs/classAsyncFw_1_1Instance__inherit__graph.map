@@ -1,17 +1,17 @@
 <map id="AsyncFw::Instance&lt; T &gt;" name="AsyncFw::Instance&lt; T &gt;">
-<area shape="rect" id="Node000001" title="A template&#45;based global registry wrapper for managing application&#45;wide default objects (Global Defaul..." alt="" coords="238,180,404,207"/>
-<area shape="rect" id="Node000003" href="$classAsyncFw_1_1Instance.html" title=" " alt="" coords="692,5,834,48"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="339,166,376,123,400,102,427,84,494,57,564,39,632,29,691,25,692,30,633,34,565,44,496,62,430,89,403,106,380,127,343,169"/>
-<area shape="rect" id="Node000004" href="$classAsyncFw_1_1Instance.html" title=" " alt="" coords="660,72,866,115"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="363,171,428,145,547,118,660,101,660,106,548,123,429,151,364,176"/>
-<area shape="rect" id="Node000005" href="$classAsyncFw_1_1Instance.html" title=" " alt="" coords="656,139,870,181"/>
-<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="419,183,656,165,656,171,420,189"/>
-<area shape="rect" id="Node000006" href="$classAsyncFw_1_1Instance.html" title=" " alt="" coords="682,205,844,248"/>
-<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="420,203,429,204,682,221,681,226,428,209,419,208"/>
-<area shape="rect" id="Node000007" href="$classAsyncFw_1_1Instance.html" title=" " alt="" coords="675,272,851,315"/>
-<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="362,211,429,239,492,255,557,268,675,284,674,289,556,273,491,260,427,244,360,216"/>
-<area shape="rect" id="Node000008" href="$classAsyncFw_1_1Instance.html" title=" " alt="" coords="680,339,846,381"/>
-<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="343,218,380,261,403,282,430,299,492,325,558,342,622,352,680,357,680,362,622,357,557,347,490,330,427,304,400,286,376,264,339,221"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractInstance.html" title="Abstract base class for global default service providers and managed instances." alt="" coords="5,180,189,207"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="204,191,237,191,237,196,204,196"/>
+<area shape="rect" id="Node000001" title="A template&#45;based global registry wrapper for managing application&#45;wide default objects (Global Defaul..." alt="" coords="238,186,404,213"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1Instance.html" title=" " alt="" coords="696,11,838,54"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="336,171,372,121,398,96,427,76,495,49,566,33,635,26,698,28,693,29,635,32,567,38,496,54,430,80,401,100,376,125,340,175"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1Instance.html" title=" " alt="" coords="664,78,870,121"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="356,176,390,158,428,144,487,128,549,116,666,104,661,106,550,121,489,133,429,149,392,163,359,180"/>
+<area shape="rect" id="Node000005" href="$classAsyncFw_1_1Instance.html" title=" " alt="" coords="660,145,874,187"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="420,189,662,173,657,175,420,195"/>
+<area shape="rect" id="Node000006" href="$classAsyncFw_1_1Instance.html" title=" " alt="" coords="686,211,848,254"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="397,214,429,218,564,228,688,233,683,234,564,234,428,223,398,219"/>
+<area shape="rect" id="Node000007" href="$classAsyncFw_1_1Instance.html" title=" " alt="" coords="679,278,855,321"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="353,219,389,242,429,260,493,277,558,288,681,300,676,300,558,293,492,282,427,265,387,246,352,225"/>
+<area shape="rect" id="Node000008" href="$classAsyncFw_1_1Instance.html" title=" " alt="" coords="684,345,850,387"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="338,224,375,278,400,304,430,325,492,351,559,365,625,371,687,373,681,373,625,376,559,370,491,356,427,330,397,308,371,281,335,229"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractInstance.html" title="Abstract base class for global default service providers and managed instances." alt="" coords="5,186,189,213"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="203,197,240,198,235,201,205,202"/>
 </map>

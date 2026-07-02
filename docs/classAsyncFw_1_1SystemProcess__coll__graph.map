@@ -1,10 +1,10 @@
 <map id="AsyncFw::SystemProcess" name="AsyncFw::SystemProcess">
-<area shape="rect" id="Node000001" title="Manages spawning and asynchronous communication with external processes." alt="" coords="685,45,862,72"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="358,5,552,48"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="568,35,685,47,684,52,567,41"/>
-<area shape="rect" id="Node000003" href="$classAsyncFw_1_1FunctionConnector.html" title="Provides a thread&#45;safe, publisher&#45;subscriber mechanism to establish sender&#45;to&#45;receivers connections." alt="" coords="5,40,200,83"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="215,48,357,34,358,39,216,53"/>
-<area shape="rect" id="Node000004" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="358,72,552,115"/>
-<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="203,83,224,87,291,92,357,94,357,99,291,97,223,92,202,89"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="567,78,684,66,685,71,568,84"/>
+<area shape="rect" id="Node000001" title="Manages spawning and asynchronous communication with external processes." alt="" coords="693,48,870,75"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="362,5,556,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="572,36,695,52,690,52,572,41"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1FunctionConnector.html" title="Provides a thread&#45;safe, publisher&#45;subscriber mechanism to establish sender&#45;to&#45;receivers connections." alt="" coords="5,41,200,84"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="215,49,364,35,359,37,215,54"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="362,75,556,117"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="179,86,224,96,294,102,364,104,359,104,293,107,223,101,178,91"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="571,86,669,76,692,76,697,75,669,81,572,91"/>
 </map>

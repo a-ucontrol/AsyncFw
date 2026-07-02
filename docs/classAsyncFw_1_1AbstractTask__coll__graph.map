@@ -1,7 +1,7 @@
 <map id="AsyncFw::AbstractTask" name="AsyncFw::AbstractTask">
-<area shape="rect" id="Node000001" title="Base polymorphic class for tasks with dynamic runtime data encapsulation." alt="" coords="82,96,243,123"/>
+<area shape="rect" id="Node000001" title="Base polymorphic class for tasks with dynamic runtime data encapsulation." alt="" coords="82,104,243,131"/>
 <area shape="rect" id="Node000002" href="$structAsyncFw_1_1AnyData.html" title="A generic, type&#45;safe data container block wrapper utilizing std::any." alt="" coords="5,5,141,32"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="98,41,151,94,148,97,95,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="96,41,154,103,148,104,93,46"/>
 <area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractThread.html" title="The AbstractThread class provides the base functionality for thread management." alt="" coords="165,5,338,32"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="230,45,177,97,173,94,226,41"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="233,43,175,106,172,102,227,44"/>
 </map>

@@ -1,18 +1,17 @@
 <map id="AsyncFw::Rrd::Rrd" name="AsyncFw::Rrd::Rrd">
-<area shape="rect" id="Node000001" title="Constructs a persistent circular archive database with physical disk backing." alt="" coords="5,80,140,107"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1Thread.html#a0a3bd6a54db28f73ff59cfea6a40b07a" title="Returns a pointer to the AsyncFw::Thread that manages the currently executing thread." alt="" coords="188,55,360,81"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="140,82,172,78,173,83,140,88"/>
-<area shape="rect" id="Node000007" href="$classAsyncFw_1_1Rrd.html#a330145de892c6f5e916d7dda15aeedfc" title="Returns the absolute maximum capability size (total slots) configured for this circular ring buffer l..." alt="" coords="205,105,342,132"/>
-<area shape="poly" id="edge9_Node000001_Node000007" title=" " alt="" coords="140,99,190,105,189,111,140,104"/>
+<area shape="rect" id="Node000001" title="Constructs a persistent circular archive database with physical disk backing." alt="" coords="5,68,140,95"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1Thread.html#a0a3bd6a54db28f73ff59cfea6a40b07a" title="Returns a pointer to the AsyncFw::Thread that manages the currently executing thread." alt="" coords="188,43,360,69"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="139,70,175,68,170,69,141,76"/>
+<area shape="rect" id="Node000007" href="$classAsyncFw_1_1Rrd.html#a330145de892c6f5e916d7dda15aeedfc" title="Returns the absolute maximum capability size (total slots) configured for this circular ring buffer l..." alt="" coords="205,93,342,120"/>
+<area shape="poly" id="edge8_Node000001_Node000007" title=" " alt="" coords="140,87,192,96,187,96,140,92"/>
 <area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractThread.html#af33c5949edb374d673a7a9ac0c81ec32" title="Returns a pointer to the AsyncFw::AbstractThread that manages the currently executing thread." alt="" coords="408,5,581,48"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="349,51,392,43,393,48,350,57"/>
-<area shape="rect" id="Node000006" href="$classAsyncFw_1_1Thread.html#afc5e422090767dd84020381fb9a4d490" title="Constructs a thread." alt="" coords="408,96,581,123"/>
-<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="350,79,405,90,404,95,349,85"/>
-<area shape="rect" id="Node000004" href="$classAsyncFw_1_1AbstractThread.html#a8c9202c90ac101522f26c4260cb01b59" title="Constructs a thread." alt="" coords="629,29,803,72"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="582,33,614,37,613,42,582,39"/>
-<area shape="rect" id="Node000005" href="$classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd" title="Returns name of managed thread." alt="" coords="851,59,1024,101"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="803,60,835,64,835,69,803,65"/>
-<area shape="poly" id="edge6_Node000006_Node000004" title=" " alt="" coords="547,93,618,74,619,79,549,98"/>
-<area shape="poly" id="edge7_Node000006_Node000005" title=" " alt="" coords="581,101,835,84,835,89,582,106"/>
-<area shape="poly" id="edge8_Node000006_Node000006" title=" " alt="" coords="457,97,451,87,455,77,470,71,495,69,521,72,535,78,533,83,519,77,495,75,471,77,459,81,456,87,462,94"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="360,42,395,40,390,41,361,47"/>
+<area shape="rect" id="Node000006" href="$classAsyncFw_1_1Thread.html#afc5e422090767dd84020381fb9a4d490" title="Constructs a thread." alt="" coords="408,72,581,99"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="360,65,396,72,390,72,360,70"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1AbstractThread.html#a8c9202c90ac101522f26c4260cb01b59" title="Constructs a thread." alt="" coords="629,5,803,48"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="582,24,616,26,611,27,582,29"/>
+<area shape="rect" id="Node000005" href="$classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd" title="Returns name of managed thread." alt="" coords="851,35,1024,77"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="803,36,838,42,832,42,803,41"/>
+<area shape="poly" id="edge6_Node000006_Node000004" title=" " alt="" coords="547,69,616,53,621,52,548,74"/>
+<area shape="poly" id="edge7_Node000006_Node000005" title=" " alt="" coords="581,77,838,63,833,63,582,82"/>
 </map>

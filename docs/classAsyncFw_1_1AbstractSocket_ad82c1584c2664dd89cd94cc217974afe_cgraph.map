@@ -1,5 +1,5 @@
 <map id="AsyncFw::AbstractSocket::AbstractSocket" name="AsyncFw::AbstractSocket::AbstractSocket">
 <area shape="rect" id="Node000001" title="Constructs an AbstractSocket and binds it to the current thread context." alt="" coords="5,5,180,48"/>
 <area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractSocket.html#a94ae146fe8047af98d2dcfd14d20e261" title="Constructs an AbstractSocket with default parameters (AF_INET, SOCK_STREAM, IPPROTO_TCP) and binds it..." alt="" coords="228,5,402,48"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="180,24,212,24,212,29,180,29"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="180,24,215,26,209,27,180,29"/>
 </map>

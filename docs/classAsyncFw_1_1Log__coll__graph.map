@@ -1,17 +1,17 @@
 <map id="AsyncFw::Log" name="AsyncFw::Log">
-<area shape="rect" id="Node000001" title="Asynchronous log manager with circular database (Rrd) backend and duplicate сompression." alt="" coords="199,311,304,337"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1Rrd.html" title="A high&#45;performance circular database engine (Round&#45;Robin Database) for time&#45;series and structural dat..." alt="" coords="262,235,367,261"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="296,275,264,312,260,309,292,271"/>
+<area shape="rect" id="Node000001" title="Asynchronous log manager with circular database (Rrd) backend and duplicate сompression." alt="" coords="202,337,307,364"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1Rrd.html" title="A high&#45;performance circular database engine (Round&#45;Robin Database) for time&#45;series and structural dat..." alt="" coords="264,261,370,288"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="300,298,267,339,264,335,295,301"/>
 <area shape="rect" id="Node000003" href="$classAsyncFw_1_1FunctionConnector.html" title="Provides a thread&#45;safe, publisher&#45;subscriber mechanism to establish sender&#45;to&#45;receivers connections." alt="" coords="5,5,200,48"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="99,64,99,116,104,144,116,169,138,187,175,204,262,232,261,237,173,209,135,192,112,172,99,146,93,117,94,63"/>
-<area shape="rect" id="Node000004" href="$classAsyncFw_1_1Thread.html" title="AsyncFw::Thread thread with sockets." alt="" coords="176,144,301,171"/>
-<area shape="poly" id="edge5_Node000004_Node000003" title=" " alt="" coords="135,57,199,118,226,142,222,146,196,122,132,61"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="261,181,306,232,302,236,257,185"/>
-<area shape="rect" id="Node000007" href="$classAsyncFw_1_1AbstractLog.html" title="The AbstractLog class provides the core thread&#45;safe infrastructure for log management and duplicate r..." alt="" coords="84,235,238,261"/>
-<area shape="poly" id="edge8_Node000007_Node000004" title=" " alt="" coords="220,184,174,236,170,232,216,181"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="97,61,98,125,104,158,116,188,131,207,146,218,189,235,227,249,267,262,262,263,225,254,187,240,144,222,127,211,112,191,98,159,92,125,96,66"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1Thread.html" title="AsyncFw::Thread thread with sockets." alt="" coords="180,163,305,189"/>
+<area shape="poly" id="edge5_Node000004_Node000003" title=" " alt="" coords="126,58,160,97,197,137,227,162,221,163,193,141,156,101,126,63"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="263,199,310,261,305,261,260,204"/>
+<area shape="rect" id="Node000007" href="$classAsyncFw_1_1AbstractLog.html" title="The AbstractLog class provides the core thread&#45;safe infrastructure for log management and duplicate r..." alt="" coords="87,261,241,288"/>
+<area shape="poly" id="edge8_Node000007_Node000004" title=" " alt="" coords="225,200,176,263,172,259,220,203"/>
 <area shape="rect" id="Node000005" href="$classAsyncFw_1_1AbstractThread.html" title="The AbstractThread class provides the base functionality for thread management." alt="" coords="224,13,397,40"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="299,55,248,145,243,142,294,52"/>
-<area shape="rect" id="Node000006" href="$classAsyncFw_1_1DataArrayList.html" title="A specialized container aggregating multiple DataArray instances." alt="" coords="324,144,489,171"/>
-<area shape="poly" id="edge6_Node000002_Node000006" title=" " alt="" coords="384,184,330,236,326,232,380,180"/>
-<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="190,269,238,308,235,312,187,273"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="300,52,251,164,246,161,296,56"/>
+<area shape="rect" id="Node000006" href="$classAsyncFw_1_1DataArrayList.html" title="A specialized container aggregating multiple DataArray instances." alt="" coords="328,163,493,189"/>
+<area shape="poly" id="edge6_Node000002_Node000006" title=" " alt="" coords="390,199,331,263,327,259,385,202"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="192,295,242,337,237,337,190,300"/>
 </map>

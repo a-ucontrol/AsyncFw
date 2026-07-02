@@ -1,7 +1,7 @@
 <map id="AsyncFw::PollNotifier" name="AsyncFw::PollNotifier">
-<area shape="rect" id="Node000001" title="The PollNotifier class Example:" alt="" coords="33,219,182,245"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="5,112,210,155"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="110,170,110,218,105,218,105,170"/>
+<area shape="rect" id="Node000001" title="The PollNotifier class Example:" alt="" coords="33,235,182,261"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="5,120,210,163"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="110,177,110,235,105,233,105,180"/>
 <area shape="rect" id="Node000003" href="$classAsyncFw_1_1FunctionConnector.html" title="Provides a thread&#45;safe, publisher&#45;subscriber mechanism to establish sender&#45;to&#45;receivers connections." alt="" coords="10,5,205,48"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="110,64,110,111,105,111,105,64"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="109,61,110,120,105,119,106,66"/>
 </map>

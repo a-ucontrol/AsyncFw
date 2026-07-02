@@ -1,8 +1,8 @@
 <map id="AsyncFw::DataArray::view" name="AsyncFw::DataArray::view">
 <area shape="rect" id="Node000001" title="Creates a lightweight, non&#45;allocating view slicing a sub&#45;region of this byte array." alt="" coords="232,51,375,93"/>
 <area shape="rect" id="Node000002" href="$classAsyncFw_1_1Cryptor.html#a85041f8d5b2a6c69be47a811039b2aec" title="Type&#45;safely encrypts raw data payload into a secure ciphertext buffer." alt="" coords="5,29,184,56"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="215,62,184,58,184,53,216,57"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="213,60,184,58,184,53,218,59"/>
 <area shape="rect" id="Node000003" href="$classAsyncFw_1_1HttpSocket.html#a7163448458d68f433dbdb214a6175be3" title="Called when there is data to read." alt="" coords="19,80,170,123"/>
-<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="216,87,170,93,170,88,216,82"/>
-<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="130,16,118,10,94,8,73,10,61,15,58,20,64,27,59,30,53,21,57,11,71,5,95,3,119,5,133,12"/>
+<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="213,85,170,93,170,88,219,84"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="129,15,118,10,94,8,73,10,61,15,58,20,64,29,59,29,53,21,57,11,71,5,95,3,119,5,134,14"/>
 </map>

@@ -1,6 +1,6 @@
 <map id="AsyncFw::File::read" name="AsyncFw::File::read">
 <area shape="rect" id="Node000001" title="Reads data from the file into a DataArray container." alt="" coords="5,29,144,56"/>
-<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="43,30,37,21,41,11,54,5,75,3,97,5,109,12,106,16,95,10,74,8,55,10,45,15,42,20,47,27"/>
+<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="42,29,37,21,41,11,54,5,75,3,97,5,110,14,105,14,95,10,74,8,55,10,45,15,42,20,48,29"/>
 <area shape="rect" id="Node000002" href="$classAsyncFw_1_1File.html#aaec950aa1cced82715667e8d0bd9664b" title="Returns the current read position in the file (stream get)." alt="" coords="192,29,329,56"/>
-<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="144,40,176,40,176,45,144,45"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="144,40,179,43,174,43,144,45"/>
 </map>

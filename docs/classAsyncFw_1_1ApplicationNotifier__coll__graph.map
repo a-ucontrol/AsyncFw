@@ -1,7 +1,7 @@
 <map id="AsyncFw::ApplicationNotifier" name="AsyncFw::ApplicationNotifier">
-<area shape="rect" id="Node000001" title="The ApplicationNotifier class." alt="" coords="29,251,219,277"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="5,128,243,187"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="127,202,127,250,121,250,121,202"/>
+<area shape="rect" id="Node000001" title="The ApplicationNotifier class." alt="" coords="29,272,219,299"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="5,141,243,200"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="126,214,127,273,121,271,122,217"/>
 <area shape="rect" id="Node000003" href="$classAsyncFw_1_1FunctionConnector.html" title="Provides a thread&#45;safe, publisher&#45;subscriber mechanism to establish sender&#45;to&#45;receivers connections." alt="" coords="27,5,221,48"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="127,63,127,127,121,127,121,63"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="125,61,127,141,121,140,123,66"/>
 </map>

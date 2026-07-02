@@ -16,7 +16,7 @@ var searchData=
   ['requestinterrupt_13',['requestInterrupt',['../classAsyncFw_1_1AbstractThread.html#a16affc1626e26d18cc2d9eab21315591',1,'AsyncFw::AbstractThread']]],
   ['resolve_14',['resolve',['../classAsyncFw_1_1AddressResolver.html#a9a5b78be91762ae5adc7f19aede8a662',1,'AsyncFw::AddressResolver']]],
   ['resume_5fqueued_15',['resume_queued',['../structAsyncFw_1_1CoroutineTask_1_1promise__type.html#a6ef8c84c53068677172b21f5e08aa0b7',1,'AsyncFw::CoroutineTask::promise_type']]],
-  ['rpc_3a_20tt_20coinvoke_20tt_16',['3. Deep Coroutine Orchestration &amp; RPC: &lt;tt&gt;coInvoke&lt;/tt&gt;',['../index.html#autotoc_md5',1,'']]],
+  ['rpc_3a_20coinvoke_16',['3. Deep Coroutine Orchestration &amp;amp; RPC: &lt;span class=&quot;tt&quot;&gt;coInvoke&lt;/span&gt;',['../index.html#autotoc_md5',1,'']]],
   ['rrd_17',['Rrd',['../classAsyncFw_1_1Rrd.html',1,'AsyncFw::Rrd'],['../classAsyncFw_1_1Rrd.html#a2fd20dd3470a11ef179577c565c333f1',1,'AsyncFw::Rrd::Rrd(int, int, int, const std::string &amp;)'],['../classAsyncFw_1_1Rrd.html#a98c7829cc6177c80245cf95095deb3ba',1,'AsyncFw::Rrd::Rrd(int, int, int)'],['../classAsyncFw_1_1Rrd.html#aaea6a63444ab427f801be34f26d930d5',1,'AsyncFw::Rrd::Rrd(int, const std::string &amp;)'],['../classAsyncFw_1_1Rrd.html#aa54ae298c96e9efe88b644931b12f734',1,'AsyncFw::Rrd::Rrd(int)']]],
   ['rrd_2eh_18',['Rrd.h',['../Rrd_8h.html',1,'']]],
   ['rrdclient_19',['RrdClient',['../classAsyncFw_1_1RrdClient.html',1,'AsyncFw']]],

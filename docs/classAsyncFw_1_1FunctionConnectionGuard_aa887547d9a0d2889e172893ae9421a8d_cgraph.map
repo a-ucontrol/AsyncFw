@@ -1,5 +1,5 @@
 <map id="AsyncFw::FunctionConnectionGuard::operator=" name="AsyncFw::FunctionConnectionGuard::operator=">
 <area shape="rect" id="Node000001" title="Move assignment operator. Safely releases current connection and takes ownership of another." alt="" coords="5,5,206,48"/>
 <area shape="rect" id="Node000002" href="$classAsyncFw_1_1FunctionConnectionGuard.html#ac48d8cd651992f0587eaa4fce726edaf" title="Constructs an empty, uninitialized connection guard." alt="" coords="254,5,469,48"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="206,24,238,24,238,29,206,29"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="206,24,241,26,235,27,206,29"/>
 </map>

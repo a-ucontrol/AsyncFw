@@ -4,15 +4,7 @@ var classAsyncFw_1_1AbstractThread =
     [ "LockGuard", "classAsyncFw_1_1AbstractThread.html#a4e97803ef650d36ba80ef1471c4b643c", null ],
     [ "AbstractTask", "classAsyncFw_1_1AbstractThread.html#af2a69c1875d42b8daa41a82f000e4c2a", null ],
     [ "AbstractPollTask", "classAsyncFw_1_1AbstractThread.html#ad3dad9f7e0852a4c24c2bae48c701802", null ],
-    [ "PollEvents", "classAsyncFw_1_1AbstractThread.html#a654efa5f41b38ff679e48211e8904a59", [
-      [ "PollNo", "classAsyncFw_1_1AbstractThread.html#a654efa5f41b38ff679e48211e8904a59a08cf3698b5edca2e3085660599e2eafd", null ],
-      [ "PollIn", "classAsyncFw_1_1AbstractThread.html#a654efa5f41b38ff679e48211e8904a59adff91c63c8363a1cf91673f9c419d509", null ],
-      [ "PollPri", "classAsyncFw_1_1AbstractThread.html#a654efa5f41b38ff679e48211e8904a59ac56f8439ce90b3154e2cb7781a7990d5", null ],
-      [ "PollOut", "classAsyncFw_1_1AbstractThread.html#a654efa5f41b38ff679e48211e8904a59a4881e0c7e80c2c3ffc0b5c0e3620d538", null ],
-      [ "PollErr", "classAsyncFw_1_1AbstractThread.html#a654efa5f41b38ff679e48211e8904a59a36b9b9a3d5a7c1481ea12f51a414d6d1", null ],
-      [ "PollHup", "classAsyncFw_1_1AbstractThread.html#a654efa5f41b38ff679e48211e8904a59a467a5cd88f81d404f8ba42a64639ded4", null ],
-      [ "PollNval", "classAsyncFw_1_1AbstractThread.html#a654efa5f41b38ff679e48211e8904a59a057abc37909152f1bf4f3d5b80beef39", null ]
-    ] ],
+    [ "PollEvents", "classAsyncFw_1_1AbstractThread.html#a654efa5f41b38ff679e48211e8904a59", null ],
     [ "AbstractThread", "classAsyncFw_1_1AbstractThread.html#a8c9202c90ac101522f26c4260cb01b59", null ],
     [ "invoke", "classAsyncFw_1_1AbstractThread.html#a786474d037b50053f1a97af7b67e6069", null ],
     [ "appendPollTask", "classAsyncFw_1_1AbstractThread.html#a7e5b6e93c0e2afca24874900b8aec919", null ],

@@ -1,27 +1,27 @@
 <map id="core/AnyData.h" name="core/AnyData.h">
 <area shape="rect" id="Node000001" title="The AnyData class." alt="" coords="605,5,717,32"/>
 <area shape="rect" id="Node000002" href="$AbstractSocket_8h.html" title="The AbstractSocket class." alt="" coords="317,80,468,107"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="600,39,441,82,439,77,599,34"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="597,38,441,82,439,77,602,35"/>
 <area shape="rect" id="Node000009" href="$ApplicationNotifier_8h.html" title="The ApplicationNotifier class." alt="" coords="492,80,662,107"/>
-<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="636,45,593,82,590,78,633,40"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="637,41,593,82,590,77,632,44"/>
 <area shape="rect" id="Node000010" href="$Coroutine_8h.html" title="The CoroutineTask, CoroutineAwait, CoroutineInvokeAwait structs." alt="" coords="686,80,806,107"/>
-<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="689,40,733,78,730,82,685,44"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="688,40,734,80,729,79,686,45"/>
 <area shape="rect" id="Node000013" href="$Task_8h.html" title="The AbstractTask and Task classes." alt="" coords="831,80,923,107"/>
-<area shape="poly" id="edge12_Node000001_Node000013" title=" " alt="" coords="713,35,840,77,838,82,712,40"/>
+<area shape="poly" id="edge12_Node000001_Node000013" title=" " alt="" coords="713,35,842,79,836,80,712,40"/>
 <area shape="rect" id="Node000003" href="$AbstractTlsSocket_8h.html" title="The AbstractTlsSocket class." alt="" coords="175,155,344,181"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="358,117,284,156,282,152,355,112"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="354,116,284,156,282,152,359,113"/>
 <area shape="rect" id="Node000007" href="$ListenSocket_8h.html" title="The ListenSocket class." alt="" coords="368,155,508,181"/>
-<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="411,119,433,153,428,156,407,122"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="410,118,433,155,428,154,408,123"/>
 <area shape="rect" id="Node000004" href="$DataArraySocket_8h.html" title="The DataArraySocket class." alt="" coords="5,229,170,256"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="217,190,119,231,117,226,215,185"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="214,190,119,231,116,226,217,186"/>
 <area shape="rect" id="Node000005" href="$HttpSocket_8h.html" title="The HttpSocket class." alt="" coords="194,229,325,256"/>
-<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="262,197,262,229,257,229,257,197"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="261,195,262,230,257,228,258,199"/>
 <area shape="rect" id="Node000006" href="$HttpServer_8h.html" title="The HttpServer class." alt="" coords="196,304,323,331"/>
-<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="262,272,262,304,257,304,257,272"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="261,270,262,305,257,302,258,274"/>
 <area shape="rect" id="Node000008" href="$DataArrayTcpServer_8h.html" title="The DataArrayTcpServer class." alt="" coords="349,229,530,256"/>
-<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="441,197,442,229,437,229,436,197"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="440,195,441,230,437,227,437,199"/>
 <area shape="rect" id="Node000011" href="$AddressResolver_8h.html" title="The AddressResolver class." alt="" coords="620,155,784,181"/>
-<area shape="poly" id="edge10_Node000010_Node000011" title=" " alt="" coords="733,122,712,156,707,153,728,119"/>
+<area shape="poly" id="edge10_Node000010_Node000011" title=" " alt="" coords="733,119,711,156,708,152,728,122"/>
 <area shape="rect" id="Node000012" href="$Timer_8h.html" title="The Timer class." alt="" coords="807,155,904,181"/>
-<area shape="poly" id="edge11_Node000010_Node000012" title=" " alt="" coords="779,113,838,152,835,156,777,118"/>
+<area shape="poly" id="edge11_Node000010_Node000012" title=" " alt="" coords="779,113,839,154,834,154,777,118"/>
 </map>

@@ -1,8 +1,8 @@
 <map id="AsyncFw::MulticastDns::sendQuery" name="AsyncFw::MulticastDns::sendQuery">
 <area shape="rect" id="Node000001" title="Broadcasts an immediate multicast query to discover hosts." alt="" coords="424,29,585,72"/>
-<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="538,16,526,10,505,8,485,10,473,15,468,21,470,28,465,29,463,19,470,10,484,5,505,3,527,5,541,11"/>
+<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="537,13,526,10,505,8,485,10,473,15,468,21,469,30,465,27,463,19,470,10,484,5,505,3,527,5,542,14"/>
 <area shape="rect" id="Node000002" href="$classAsyncFw_1_1MulticastDns.html#a99f55a2e095da0b02e7e29b1cc0f47eb" title="Starts the background cyclic network polling task for host discovery." alt="" coords="215,29,376,72"/>
-<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="408,53,376,53,376,48,408,48"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="406,51,376,53,376,48,411,51"/>
 <area shape="rect" id="Node000003" href="$classAsyncFw_1_1MulticastDns.html#a1aaa9222fa44159da442b8ce403152ab" title="Starts the background cyclic network polling task for host discovery, Querier mode is Multicast." alt="" coords="5,29,167,72"/>
-<area shape="poly" id="edge3_Node000002_Node000003" title=" " alt="" coords="199,53,167,53,167,48,199,48"/>
+<area shape="poly" id="edge3_Node000002_Node000003" title=" " alt="" coords="196,51,167,53,167,48,202,50"/>
 </map>

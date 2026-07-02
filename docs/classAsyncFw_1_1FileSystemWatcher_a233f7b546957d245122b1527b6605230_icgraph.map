@@ -1,5 +1,5 @@
 <map id="AsyncFw::FileSystemWatcher::removePath" name="AsyncFw::FileSystemWatcher::removePath">
 <area shape="rect" id="Node000001" title="Unregisters a monitored file path, halting all associated event signals." alt="" coords="252,5,450,48"/>
 <area shape="rect" id="Node000002" href="$classAsyncFw_1_1FileSystemWatcher.html#a437baed4f56fd823fa2ba42dc5be781c" title="Unregisters multiple file paths from the observation pool." alt="" coords="5,5,204,48"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="236,29,204,29,204,24,236,24"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="233,27,204,29,204,24,238,26"/>
 </map>

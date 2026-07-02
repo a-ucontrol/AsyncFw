@@ -10,7 +10,6 @@ var searchData=
   ['lockguard_7',['lockGuard',['../classAsyncFw_1_1AbstractThread.html#a6e17293ccd9683f5bd8ca9a3dcd52e7d',1,'AsyncFw::AbstractThread']]],
   ['log_8',['Log',['../classAsyncFw_1_1Log.html',1,'AsyncFw::Log'],['../classAsyncFw_1_1Log.html#a832d13f4e9231eee37d8decb5b9b96d7',1,'AsyncFw::Log::Log()']]],
   ['log_2eh_9',['Log.h',['../Log_8h.html',1,'']]],
-  ['logstream_10',['LogStream',['../classAsyncFw_1_1LogStream.html',1,'AsyncFw']]],
-  ['logstream_20tt_11',['7. Thread-Safe Diagnostic Stream: &lt;tt&gt;LogStream&lt;/tt&gt;',['../index.html#autotoc_md9',1,'']]],
-  ['logstream_2eh_12',['LogStream.h',['../LogStream_8h.html',1,'']]]
+  ['logstream_10',['LogStream',['../index.html#autotoc_md9',1,'7. Thread-Safe Diagnostic Stream: &lt;span class=&quot;tt&quot;&gt;LogStream&lt;/span&gt;'],['../classAsyncFw_1_1LogStream.html',1,'AsyncFw::LogStream']]],
+  ['logstream_2eh_11',['LogStream.h',['../LogStream_8h.html',1,'']]]
 ];

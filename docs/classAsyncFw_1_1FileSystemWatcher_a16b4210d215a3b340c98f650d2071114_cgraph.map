@@ -1,13 +1,13 @@
 <map id="AsyncFw::FileSystemWatcher::instance" name="AsyncFw::FileSystemWatcher::instance">
 <area shape="rect" id="Node000001" title="Retrieves the global instance pointer of the active FileSystemWatcher." alt="" coords="5,39,204,81"/>
 <area shape="rect" id="Node000002" href="$classAsyncFw_1_1FileSystemWatcher.html#acd061a60fbaea1bb3c7d020e0da99039" title="Constructs a FileSystemWatcher and optionally starts monitoring given paths." alt="" coords="252,39,450,81"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="204,57,236,57,236,63,204,63"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="204,57,238,60,233,60,205,63"/>
 <area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractThread.html#af33c5949edb374d673a7a9ac0c81ec32" title="Returns a pointer to the AsyncFw::AbstractThread that manages the currently executing thread." alt="" coords="510,5,684,48"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="450,44,495,38,495,43,451,49"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="450,44,498,40,492,41,451,49"/>
 <area shape="rect" id="Node000006" href="$classAsyncFw_1_1FileSystemWatcher.html#ab174c18c8399c50a7818c456e2a51551" title="Obtains a list of all currently registered file paths." alt="" coords="498,72,696,115"/>
-<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="451,71,483,75,482,80,450,76"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="451,71,485,78,480,78,450,76"/>
 <area shape="rect" id="Node000004" href="$classAsyncFw_1_1AbstractThread.html#a8c9202c90ac101522f26c4260cb01b59" title="Constructs a thread." alt="" coords="744,5,918,48"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="684,24,728,24,728,29,684,29"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="684,24,731,26,726,27,684,29"/>
 <area shape="rect" id="Node000005" href="$classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd" title="Returns name of managed thread." alt="" coords="966,5,1139,48"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="918,24,950,24,950,29,918,29"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="918,24,953,27,947,27,918,29"/>
 </map>

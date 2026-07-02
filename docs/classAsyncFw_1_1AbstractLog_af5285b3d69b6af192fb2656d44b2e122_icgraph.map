@@ -1,15 +1,15 @@
 <map id="AsyncFw::AbstractLog::output" name="AsyncFw::AbstractLog::output">
 <area shape="rect" id="Node000001" title="Routes an individual message directly to active outputs (like LogStream::console_output)." alt="" coords="808,52,962,95"/>
 <area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractLog.html#a8dd93228e8424dccdd74adbb6422bd78" title="Synchronously flushes outstanding queues and tears down internal tracking structures." alt="" coords="605,23,760,65"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="792,63,759,58,760,53,793,57"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="790,60,760,58,760,52,795,60"/>
 <area shape="rect" id="Node000007" href="$classAsyncFw_1_1Log.html#a6b0ce40bc2e34f4b435894701194dc26" title="Persists log entries into the underlying Rrd buffer and manages automated disk flushing." alt="" coords="608,89,757,116"/>
-<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="793,89,758,94,757,89,792,84"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="795,86,758,94,757,89,790,87"/>
 <area shape="rect" id="Node000003" href="$classAsyncFw_1_1Log.html#a27bf2284363cc365c8af12e923b95db5" title="Performs early shutdown, restoring original console routing." alt="" coords="406,31,557,57"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="590,47,558,47,558,41,590,41"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="587,44,558,47,558,41,593,44"/>
 <area shape="rect" id="Node000004" href="$classAsyncFw_1_1Log.html#a832d13f4e9231eee37d8decb5b9b96d7" title="Constructs a persistent log system with a specific circular database size and file name context." alt="" coords="220,5,354,32"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="390,35,354,30,355,25,391,29"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="388,32,354,30,354,25,393,32"/>
 <area shape="rect" id="Node000006" href="$classAsyncFw_1_1Log.html#a7f9618da213c4789bb158d337c819e22" title="Destructor. Atomically unbinds global log routing hooks and finalizes all active background buffers." alt="" coords="216,56,358,83"/>
-<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="391,59,358,63,358,57,390,53"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="388,56,358,63,358,57,393,55"/>
 <area shape="rect" id="Node000005" href="$classAsyncFw_1_1Log.html#a00e9a20e7303e9a24403046af176b6b2" title="Global service locator shortcut to fetch the current engine&#45;wide default log pointer." alt="" coords="5,5,168,32"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="204,21,168,21,168,16,204,16"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="201,20,169,21,168,16,206,18"/>
 </map>

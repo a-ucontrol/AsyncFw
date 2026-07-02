@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['1_20the_20core_20backbone_3a_20tt_20abstractthread_20tt_0',['1. The Core Backbone: &lt;tt&gt;AbstractThread&lt;/tt&gt;',['../index.html#autotoc_md3',1,'']]]
+  ['1_20the_20core_20backbone_3a_20abstractthread_0',['1. The Core Backbone: &lt;span class=&quot;tt&quot;&gt;AbstractThread&lt;/span&gt;',['../index.html#autotoc_md3',1,'']]]
 ];

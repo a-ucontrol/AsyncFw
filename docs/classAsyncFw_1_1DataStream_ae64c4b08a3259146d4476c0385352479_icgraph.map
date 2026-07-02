@@ -1,9 +1,9 @@
 <map id="AsyncFw::DataStream::array" name="AsyncFw::DataStream::array">
 <area shape="rect" id="Node000001" title="Retrieves a reference to the active cumulative raw byte array built by the stream." alt="" coords="480,23,634,65"/>
 <area shape="rect" id="Node000002" href="$classAsyncFw_1_1Log.html#a36128876c58bc05a4b8ec59144abdaa1" title="Unrolls a Message structure into a flat serialized DataArray binary block suitable for Rrd storage." alt="" coords="248,23,432,65"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="464,47,433,47,433,41,464,41"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="462,44,433,47,433,41,467,44"/>
 <area shape="rect" id="Node000003" href="$classAsyncFw_1_1Log.html#a6b0ce40bc2e34f4b435894701194dc26" title="Persists log entries into the underlying Rrd buffer and manages automated disk flushing." alt="" coords="28,5,177,32"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="232,35,177,29,178,24,233,30"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="230,33,178,29,178,24,235,32"/>
 <area shape="rect" id="Node000004" href="$classAsyncFw_1_1Log.html#ab990350e0de8b9a9c6153f7c67b7a527" title="Directly overwrites a circular log archive slot with a freshly serialized log entry structure." alt="" coords="5,56,200,83"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="232,58,200,62,200,56,232,53"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="229,56,200,62,200,56,235,55"/>
 </map>

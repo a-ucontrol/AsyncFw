@@ -1,5 +1,5 @@
 <map id="AsyncFw::ThreadPool::removeThread" name="AsyncFw::ThreadPool::removeThread">
 <area shape="rect" id="Node000001" title="Unregisters a thread from the pool." alt="" coords="5,5,156,48"/>
 <area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractThreadPool.html#a8dd6e5afe3b1c8f0fac9176568909c54" title="Unregisters a thread from the pool." alt="" coords="204,5,403,48"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="156,24,188,24,188,29,156,29"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="156,24,191,26,186,27,156,29"/>
 </map>
