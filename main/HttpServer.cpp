@@ -356,7 +356,7 @@ struct HttpServer::Private {
       {"zip", "application/zip"},
   };
 
-  std::string httpPath = "/www";
+  std::string httpPath;
   AsyncFw::TlsContext tlsContext_;
   AsyncFw::ListenSocket listener;
   FunctionConnectionGuard listenerGuard;
@@ -430,7 +430,10 @@ HttpServer::HttpRule::HttpRule(HttpRule &&r) : method(r.method) {
 Instance<HttpServer> HttpServer::instance_ {"HttpServer"};
 
 HttpServer::HttpServer(const std::string &_httpPath) : private_(*new Private()) {
-  private_.httpPath = std::filesystem::weakly_canonical(_httpPath).string() + '/';
+  if (!_httpPath.empty()) {
+    private_.httpPath = std::filesystem::weakly_canonical(_httpPath).string();
+    private_.httpPath.push_back(std::filesystem::path::preferred_separator);
+  }
   addRule("/<arg>", Request::Method::Get, [this](const Request &request) {
     if (private_.httpPath.empty()) {
       lsError("application home not set");
@@ -438,13 +441,14 @@ HttpServer::HttpServer(const std::string &_httpPath) : private_(*new Private()) 
       request.response()->send();
       return;
     }
+
     std::string path = private_.httpPath + ((request.path() == "/") ? "/index.html" : request.path());
     trace("request file: " + path);
 
     path = std::filesystem::weakly_canonical(path).string();
 
     if (path.size() < private_.httpPath.size() || path.compare(0, private_.httpPath.size(), private_.httpPath) != 0) {
-      lsError() << "Path traversal attempt blocked: " << path;
+      lsError() << "path traversal attempt blocked: " << path;
       request.response()->setStatusCode(Response::StatusCode::Forbidden);
       request.response()->send();
       return;
