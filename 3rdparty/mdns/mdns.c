@@ -793,49 +793,6 @@ start_mdns_querier(void* qd_void_ptr) {
 	qd->buffer = malloc(qd->capacity);
 	return 0;
 }
-static int
-mdns_multiquery_send_(int sock, const mdns_query_t* query, size_t count, void* buffer,
-					  size_t capacity, uint16_t query_id, uint8_t unicast) {
-	if (!count || (capacity < (sizeof(struct mdns_header_t) + (6 * count))))
-		return -1;
-
-	// Ask for a unicast response since it's a one-shot query
-	uint16_t rclass = MDNS_CLASS_IN;
-	if (unicast)
-		rclass |= MDNS_UNICAST_RESPONSE;
-
-	struct mdns_header_t* header = (struct mdns_header_t*)buffer;
-	// Query ID
-	header->query_id = htons((unsigned short)query_id);
-	// Flags
-	header->flags = 0;
-	// Questions
-	header->questions = htons((unsigned short)count);
-	// No answer, authority or additional RRs
-	header->answer_rrs = 0;
-	header->authority_rrs = 0;
-	header->additional_rrs = 0;
-	// Fill in questions
-	void* data = MDNS_POINTER_OFFSET(buffer, sizeof(struct mdns_header_t));
-	for (size_t iq = 0; iq < count; ++iq) {
-		// Name string
-		data = mdns_string_make(buffer, capacity, data, query[iq].name, query[iq].length, 0);
-		if (!data)
-			return -1;
-		size_t remain = capacity - MDNS_POINTER_DIFF(data, buffer);
-		if (remain < 4)
-			return -1;
-		// Record type
-		data = mdns_htons(data, query[iq].type);
-		//! Optional unicast response based on local port, class IN
-		data = mdns_htons(data, rclass);
-	}
-
-	size_t tosend = MDNS_POINTER_DIFF(data, buffer);
-	if (mdns_multicast_send(sock, buffer, (size_t)tosend))
-		return -1;
-	return query_id;
-}
 int
 send_mdns_query(void* qd_void_ptr, mdns_query_t* query, size_t count) {
 #if 0
@@ -867,8 +824,8 @@ send_mdns_query(void* qd_void_ptr, mdns_query_t* query, size_t count) {
 		int* query_ids = qd->query_id;
 		int* sockets = qd->sockets;
 
-		query_ids[isock] = mdns_multiquery_send_(sockets[isock], query, count, qd->buffer,
-												 qd->capacity, 0, qd->mode);
+		query_ids[isock] =
+			mdns_multiquery_send(sockets[isock], query, count, qd->buffer, qd->capacity, 0);
 		if (query_ids[isock] < 0) {
 			printf("Failed to send mDNS query: %s\n", strerror(errno));
 		} else
@@ -1042,104 +999,13 @@ start_mdns_service(const char* _hostname, const char* _service_name, int service
 	}
 	return 0;
 }
-#define MDNS_HEADER_FLAG_RESPONSE 0x8000U
-static inline size_t
-mdns_socket_listen_(int sock, void* buffer, size_t capacity, mdns_record_callback_fn callback,
-					void* user_data) {
-	struct sockaddr_in6 addr;
-	struct sockaddr* saddr = (struct sockaddr*)&addr;
-	socklen_t addrlen = sizeof(addr);
-	memset(&addr, 0, sizeof(addr));
-#ifdef __APPLE__
-	saddr->sa_len = sizeof(addr);
-#endif
-
-	uint16_t peek_header[2];
-	mdns_ssize_t peek_ret =
-		recvfrom(sock, (char*)peek_header, sizeof(peek_header), MSG_PEEK, saddr, &addrlen);
-	if (peek_ret >= 4) {
-		uint16_t flags = mdns_ntohs(&peek_header[1]);
-		if (flags & MDNS_HEADER_FLAG_RESPONSE)
-			return (size_t)-2;  // Возвращаем специальный маркер для C++ слоя
-	} else
-		return -1;
-
-	mdns_ssize_t ret = recvfrom(sock, (char*)buffer, (mdns_size_t)capacity, 0, saddr, &addrlen);
-
-	size_t data_size = (size_t)ret;
-	const uint16_t* data = (const uint16_t*)buffer;
-
-	uint16_t query_id = mdns_ntohs(data++);
-	uint16_t flags = mdns_ntohs(data++);
-	uint16_t questions = mdns_ntohs(data++);
-	uint16_t answer_rrs = mdns_ntohs(data++);
-	uint16_t authority_rrs = mdns_ntohs(data++);
-	uint16_t additional_rrs = mdns_ntohs(data++);
-
-	size_t records;
-	size_t total_records = 0;
-	for (int iquestion = 0; iquestion < questions; ++iquestion) {
-		size_t question_offset = MDNS_POINTER_DIFF(data, buffer);
-		size_t offset = question_offset;
-		size_t verify_offset = 12;
-		int dns_sd = 0;
-		if (mdns_string_equal(buffer, data_size, &offset, mdns_services_query,
-							  sizeof(mdns_services_query), &verify_offset)) {
-			dns_sd = 1;
-		} else if (!mdns_string_skip(buffer, data_size, &offset)) {
-			break;
-		}
-		size_t length = offset - question_offset;
-		data = (const uint16_t*)MDNS_POINTER_OFFSET_CONST(buffer, offset);
-
-		uint16_t rtype = mdns_ntohs(data++);
-		uint16_t rclass = mdns_ntohs(data++);
-		uint16_t class_without_flushbit = rclass & ~MDNS_CACHE_FLUSH;
-
-		// Make sure we get a question of class IN or ANY
-		if (!((class_without_flushbit == MDNS_CLASS_IN) ||
-			  (class_without_flushbit == MDNS_CLASS_ANY))) {
-			break;
-		}
-
-		if (dns_sd && flags)
-			continue;
-
-		++total_records;
-		if (callback && callback(sock, saddr, addrlen, MDNS_ENTRYTYPE_QUESTION, query_id, rtype,
-								 rclass, 0, buffer, data_size, question_offset, length,
-								 question_offset, length, user_data))
-			return total_records;
-	}
-
-	size_t offset = MDNS_POINTER_DIFF(data, buffer);
-	records = mdns_records_parse(sock, saddr, addrlen, buffer, data_size, &offset,
-								 MDNS_ENTRYTYPE_ANSWER, query_id, answer_rrs, callback, user_data);
-	total_records += records;
-	if (records != answer_rrs)
-		return total_records;
-
-	records =
-		mdns_records_parse(sock, saddr, addrlen, buffer, data_size, &offset,
-						   MDNS_ENTRYTYPE_AUTHORITY, query_id, authority_rrs, callback, user_data);
-	total_records += records;
-	if (records != authority_rrs)
-		return total_records;
-
-	records = mdns_records_parse(sock, saddr, addrlen, buffer, data_size, &offset,
-								 MDNS_ENTRYTYPE_ADDITIONAL, query_id, additional_rrs, callback,
-								 user_data);
-
-	return total_records;
-}
 int
 mdns_service_event(int fd, void* sd_void_ptr) {
 	service_data_t* sd = (service_data_t*)sd_void_ptr;
 	if (!sd)
 		return -1;
-	return mdns_socket_listen_(fd, sd->buffer, sd->capacity, service_callback, sd);
+	return mdns_socket_listen(fd, sd->buffer, sd->capacity, service_callback, sd);
 }
-
 void
 stop_mdns_service(void* sd_void_ptr, int send_goodbye) {
 	service_data_t* sd = (service_data_t*)sd_void_ptr;
