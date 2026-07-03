@@ -411,6 +411,7 @@ void HttpServer::TcpSocket::readEvent() {
     WebSocketFrameType ft = ws_->getFrame((unsigned char *)_da.data(), _da.size(), (unsigned char *)_out.data(), _out.size(), &out_length);
     if (ft == TEXT_FRAME || ft == BINARY_FRAME) {
       _out.resize(out_length);
+      lsNotice() << _out;
       sendReceived(_out);
     } else if (ft == CLOSING_FRAME || ft == ERROR_FRAME) disconnect();
     return;
@@ -430,8 +431,7 @@ HttpServer::HttpRule::HttpRule(HttpRule &&r) : method(r.method) {
 Instance<HttpServer> HttpServer::instance_ {"HttpServer"};
 
 HttpServer::HttpServer(const std::string &_httpPath) : private_(*new Private()) {
-  private_.httpPath = _httpPath;
-  if(!private_.httpPath.ends_with('/')) private_.httpPath.push_back('/');
+  private_.httpPath = std::filesystem::weakly_canonical(_httpPath).string() + '/';
   addRule("/<arg>", Request::Method::Get, [this](const Request &request) {
     if (private_.httpPath.empty()) {
       lsError("application home not set");
