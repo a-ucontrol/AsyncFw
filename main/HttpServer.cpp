@@ -408,11 +408,10 @@ void HttpServer::TcpSocket::readEvent() {
     DataArray _out;
     _out.resize(_da.size());
     int out_length = 0;
-    WebSocketFrameType ft = ws_->getFrame((unsigned char *)_da.data(), _da.size(), (unsigned char *)_out.data(), _out.size(), &out_length);
+    WebSocketFrameType ft = ws_->getFrame(_da.data(), _da.size(), _out.data(), _out.size(), &out_length);
     if (ft == TEXT_FRAME || ft == BINARY_FRAME) {
       _out.resize(out_length);
-      lsNotice() << _out;
-      sendReceived(_out);
+      if (server_) server_->webSocketReceived(this, _out);
     } else if (ft == CLOSING_FRAME || ft == ERROR_FRAME) disconnect();
     return;
   }
@@ -477,6 +476,13 @@ void HttpServer::fileUploadProgress(TcpSocket *, int progress) { trace() << prog
 void HttpServer::disconnectFromHost(TcpSocket *socket) {
   lsTrace();
   AbstractThread::current()->invoke([socket]() { socket->disconnect(); });
+}
+
+bool HttpServer::webSocketSend(const HttpSocket *socket, const DataArray &data) {
+  if (!static_cast<const TcpSocket *>(socket)->ws_) return false;
+  DataArray _out;
+  if (makeWebSocketFrame(data, &_out) <= 0) return false;
+  return const_cast<HttpSocket *>(socket)->write(_out) > 0;
 }
 
 void HttpServer::sendToWebSockets(const std::string &data) {  //Дичь, для отладки, надо убрать
@@ -576,9 +582,9 @@ void HttpServer::received(TcpSocket *socket, const std::string_view &ba) {
   }
 }
 
-int HttpServer::makeWebSocketFrame(const DataArray &_da, DataArray *_f) {
-  _f->resize(_da.size() + 1 + 8);
-  int size = WebSocket::makeFrame(WebSocketFrameType::TEXT_FRAME, _da.data(), _da.size(), _f->data(), _f->size());
+int HttpServer::makeWebSocketFrame(const DataArray &_da, DataArray *_f, bool bin) {
+  _f->resize(_da.size() + 2 + 8);
+  int size = WebSocket::makeFrame((bin) ? WebSocketFrameType::BINARY_FRAME : WebSocketFrameType::TEXT_FRAME, _da.data(), _da.size(), _f->data(), _f->size());
   _f->resize(size);
   return size;
 }

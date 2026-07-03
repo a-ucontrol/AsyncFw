@@ -259,6 +259,7 @@ public:
     for (TcpSocket *socket : sockets) disconnectFromHost(socket);
   }
 
+  bool webSocketSend(const HttpSocket *, const DataArray &);
   void sendToWebSockets(const std::string &);
 
   void disconnectFromHost(TcpSocket *socket);
@@ -275,10 +276,11 @@ public:
 
   static inline HttpServer *instance() { return instance_.value; }
   AsyncFw::FunctionConnector<int, const std::string &, bool *>::Policy<AsyncFw::AbstractFunctionConnector::SyncOnly>::Protected<HttpServer> incoming;
+  AsyncFw::FunctionConnector<const HttpSocket *, const DataArray &>::Protected<HttpServer> webSocketReceived;
 
 protected:
   virtual void fileUploadProgress(TcpSocket *, int);
-  int makeWebSocketFrame(const AsyncFw::DataArray &, AsyncFw::DataArray *);
+  int makeWebSocketFrame(const AsyncFw::DataArray &, AsyncFw::DataArray *, bool = false);
   RulesMap rules;
 
 private:
