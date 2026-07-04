@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['fail_0',['fail',['../classAsyncFw_1_1DataStream.html#a58e67062bf6cd3f77a8203758b01eaf8',1,'AsyncFw::DataStream::fail()'],['../classAsyncFw_1_1File.html#ad16ba208a1a58d6c8fda79766fe42aaa',1,'AsyncFw::File::fail()'],['../classAsyncFw_1_1PollNotifier.html#a52d96002ff262ab846331324c64882e0',1,'AsyncFw::PollNotifier::fail()']]],
+  ['fail_0',['fail',['../classAsyncFw_1_1DataStream.html#a58e67062bf6cd3f77a8203758b01eaf8',1,'AsyncFw::DataStream::fail()'],['../classAsyncFw_1_1File.html#ad16ba208a1a58d6c8fda79766fe42aaa',1,'AsyncFw::File::fail()'],['../classAsyncFw_1_1HttpServer_1_1Response.html#a23e3482fe2491dfa068dfda528087700',1,'AsyncFw::HttpServer::Response::fail()'],['../classAsyncFw_1_1HttpServer_1_1Request.html#a3ca24aa59e822e625aa5c75b85e0d70b',1,'AsyncFw::HttpServer::Request::fail()'],['../classAsyncFw_1_1PollNotifier.html#a52d96002ff262ab846331324c64882e0',1,'AsyncFw::PollNotifier::fail()']]],
   ['fd_5f_1',['fd_',['../classAsyncFw_1_1AbstractSocket.html#a1380ccdb23066b7084eca638b4232761',1,'AsyncFw::AbstractSocket']]],
   ['file_2',['File',['../classAsyncFw_1_1File.html',1,'AsyncFw::File'],['../classAsyncFw_1_1File.html#aac258c3ca8290c71ed3f6118caa3652e',1,'AsyncFw::File::File()']]],
   ['file_2eh_3',['File.h',['../File_8h.html',1,'']]],

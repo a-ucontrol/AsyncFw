@@ -54,19 +54,19 @@
 </a>
 </g>
 </g>
-<!-- Node5 -->
-<g id="Node000005" class="node">
-<title>Node5</title>
-<g id="a_Node000005"><a xlink:href="classAsyncFw_1_1Rrd.html#a2fd20dd3470a11ef179577c565c333f1" target="_top" xlink:title="Constructs a persistent circular archive database with physical disk backing.">
+<!-- Node6 -->
+<g id="Node000006" class="node">
+<title>Node6</title>
+<g id="a_Node000006"><a xlink:href="classAsyncFw_1_1Rrd.html#a2fd20dd3470a11ef179577c565c333f1" target="_top" xlink:title="Constructs a persistent circular archive database with physical disk backing.">
 <polygon fill="white" stroke="#666666" points="422.25,-96 321.5,-96 321.5,-76 422.25,-76 422.25,-96"/>
 <text xml:space="preserve" text-anchor="middle" x="371.88" y="-82.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::Rrd::Rrd</text>
 </a>
 </g>
 </g>
-<!-- Node2&#45;&gt;Node5 -->
-<g id="edge4_Node000002_Node000005" class="edge">
-<title>Node2&#45;&gt;Node5</title>
-<g id="a_edge4_Node000002_Node000005"><a xlink:title=" ">
+<!-- Node2&#45;&gt;Node6 -->
+<g id="edge5_Node000002_Node000006" class="edge">
+<title>Node2&#45;&gt;Node6</title>
+<g id="a_edge5_Node000002_Node000006"><a xlink:title=" ">
 <path fill="none" stroke="#63b8ff" d="M461.9,-97.94C448.58,-96.16 435.01,-94.34 422.61,-92.67"/>
 <polygon fill="#63b8ff" stroke="#63b8ff" points="461.12,-101.37 471.5,-99.23 462.05,-94.43 461.12,-101.37"/>
 </a>
@@ -91,84 +91,31 @@
 </a>
 </g>
 </g>
-<!-- Node6 -->
-<g id="Node000006" class="node">
-<title>Node6</title>
-<g id="a_Node000006"><a xlink:href="classAsyncFw_1_1Log.html#a832d13f4e9231eee37d8decb5b9b96d7" target="_top" xlink:title="Constructs a persistent log system with a specific circular database size and file name context.">
-<polygon fill="white" stroke="#666666" points="264.5,-134 163.75,-134 163.75,-114 264.5,-114 264.5,-134"/>
-<text xml:space="preserve" text-anchor="middle" x="214.12" y="-120.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::Log::Log</text>
+<!-- Node5 -->
+<g id="Node000005" class="node">
+<title>Node5</title>
+<g id="a_Node000005"><a xlink:href="classAsyncFw_1_1HttpServer_1_1TcpSocket.html#a41557b69e30e25b97cbdda210afb7657" target="_top" xlink:title="Constructs a new TcpSocket associated with the parent server.">
+<polygon fill="white" stroke="#666666" points="120.62,-184 1.12,-184 1.12,-152 120.62,-152 120.62,-184"/>
+<text xml:space="preserve" text-anchor="start" x="9.12" y="-170.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::HttpServer</text>
+<text xml:space="preserve" text-anchor="middle" x="60.88" y="-158.5" font-family="Helvetica,sans-Serif" font-size="10.00">::TcpSocket::TcpSocket</text>
 </a>
 </g>
 </g>
-<!-- Node5&#45;&gt;Node6 -->
-<g id="edge5_Node000005_Node000006" class="edge">
-<title>Node5&#45;&gt;Node6</title>
-<g id="a_edge5_Node000005_Node000006"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M316.85,-99.18C297.58,-103.88 276.15,-109.11 257.96,-113.55"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="317.55,-102.61 326.43,-96.84 315.89,-95.81 317.55,-102.61"/>
-</a>
-</g>
-</g>
-<!-- Node8 -->
-<g id="Node000008" class="node">
-<title>Node8</title>
-<g id="a_Node000008"><a xlink:href="classAsyncFw_1_1Rrd.html#aa54ae298c96e9efe88b644931b12f734" target="_top" xlink:title="Constructs a minimal in&#45;memory anonymous circular database with default system tracking intervals.">
-<polygon fill="white" stroke="#666666" points="264.5,-96 163.75,-96 163.75,-76 264.5,-76 264.5,-96"/>
-<text xml:space="preserve" text-anchor="middle" x="214.12" y="-82.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::Rrd::Rrd</text>
-</a>
-</g>
-</g>
-<!-- Node5&#45;&gt;Node8 -->
-<g id="edge7_Node000005_Node000008" class="edge">
-<title>Node5&#45;&gt;Node8</title>
-<g id="a_edge7_Node000005_Node000008"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M309.96,-86C295.03,-86 279.23,-86 264.9,-86"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="309.65,-89.5 319.65,-86 309.65,-82.5 309.65,-89.5"/>
-</a>
-</g>
-</g>
-<!-- Node9 -->
-<g id="Node000009" class="node">
-<title>Node9</title>
-<g id="a_Node000009"><a xlink:href="classAsyncFw_1_1Rrd.html#aaea6a63444ab427f801be34f26d930d5" target="_top" xlink:title="Constructs a persistent circular archive database using default system tracking intervals.">
-<polygon fill="white" stroke="#666666" points="264.5,-58 163.75,-58 163.75,-38 264.5,-38 264.5,-58"/>
-<text xml:space="preserve" text-anchor="middle" x="214.12" y="-44.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::Rrd::Rrd</text>
-</a>
-</g>
-</g>
-<!-- Node5&#45;&gt;Node9 -->
-<g id="edge8_Node000005_Node000009" class="edge">
-<title>Node5&#45;&gt;Node9</title>
-<g id="a_edge8_Node000005_Node000009"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M316.85,-72.82C297.58,-68.12 276.15,-62.89 257.96,-58.45"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="315.89,-76.19 326.43,-75.16 317.55,-69.39 315.89,-76.19"/>
-</a>
-</g>
-</g>
-<!-- Node10 -->
-<g id="Node000010" class="node">
-<title>Node10</title>
-<g id="a_Node000010"><a xlink:href="classAsyncFw_1_1Rrd.html#a98c7829cc6177c80245cf95095deb3ba" target="_top" xlink:title="Constructs an in&#45;memory anonymous circular database without file serialization.">
-<polygon fill="white" stroke="#666666" points="264.5,-20 163.75,-20 163.75,0 264.5,0 264.5,-20"/>
-<text xml:space="preserve" text-anchor="middle" x="214.12" y="-6.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::Rrd::Rrd</text>
-</a>
-</g>
-</g>
-<!-- Node5&#45;&gt;Node10 -->
-<g id="edge9_Node000005_Node000010" class="edge">
-<title>Node5&#45;&gt;Node10</title>
-<g id="a_edge9_Node000005_Node000010"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M345.12,-69.6C325.25,-57.39 296.79,-40.85 270.5,-29 263.64,-25.91 256.12,-23.02 248.9,-20.47"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="343.05,-72.44 353.39,-74.75 346.75,-66.49 343.05,-72.44"/>
+<!-- Node4&#45;&gt;Node5 -->
+<g id="edge4_Node000004_Node000005" class="edge">
+<title>Node4&#45;&gt;Node5</title>
+<g id="a_edge4_Node000004_Node000005"><a xlink:title=" ">
+<path fill="none" stroke="#63b8ff" d="M146.27,-168C137.81,-168 129.21,-168 120.89,-168"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="146.15,-171.5 156.15,-168 146.15,-164.5 146.15,-171.5"/>
 </a>
 </g>
 </g>
 <!-- Node7 -->
 <g id="Node000007" class="node">
 <title>Node7</title>
-<g id="a_Node000007"><a xlink:href="classAsyncFw_1_1Log.html#a00e9a20e7303e9a24403046af176b6b2" target="_top" xlink:title="Global service locator shortcut to fetch the current engine&#45;wide default log pointer.">
-<polygon fill="white" stroke="#666666" points="121.75,-134 0,-134 0,-114 121.75,-114 121.75,-134"/>
-<text xml:space="preserve" text-anchor="middle" x="60.88" y="-120.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::Log::instance</text>
+<g id="a_Node000007"><a xlink:href="classAsyncFw_1_1Log.html#a832d13f4e9231eee37d8decb5b9b96d7" target="_top" xlink:title="Constructs a persistent log system with a specific circular database size and file name context.">
+<polygon fill="white" stroke="#666666" points="264.5,-134 163.75,-134 163.75,-114 264.5,-114 264.5,-134"/>
+<text xml:space="preserve" text-anchor="middle" x="214.12" y="-120.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::Log::Log</text>
 </a>
 </g>
 </g>
@@ -176,6 +123,78 @@
 <g id="edge6_Node000006_Node000007" class="edge">
 <title>Node6&#45;&gt;Node7</title>
 <g id="a_edge6_Node000006_Node000007"><a xlink:title=" ">
+<path fill="none" stroke="#63b8ff" d="M316.85,-99.18C297.58,-103.88 276.15,-109.11 257.96,-113.55"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="317.55,-102.61 326.43,-96.84 315.89,-95.81 317.55,-102.61"/>
+</a>
+</g>
+</g>
+<!-- Node9 -->
+<g id="Node000009" class="node">
+<title>Node9</title>
+<g id="a_Node000009"><a xlink:href="classAsyncFw_1_1Rrd.html#aa54ae298c96e9efe88b644931b12f734" target="_top" xlink:title="Constructs a minimal in&#45;memory anonymous circular database with default system tracking intervals.">
+<polygon fill="white" stroke="#666666" points="264.5,-96 163.75,-96 163.75,-76 264.5,-76 264.5,-96"/>
+<text xml:space="preserve" text-anchor="middle" x="214.12" y="-82.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::Rrd::Rrd</text>
+</a>
+</g>
+</g>
+<!-- Node6&#45;&gt;Node9 -->
+<g id="edge8_Node000006_Node000009" class="edge">
+<title>Node6&#45;&gt;Node9</title>
+<g id="a_edge8_Node000006_Node000009"><a xlink:title=" ">
+<path fill="none" stroke="#63b8ff" d="M309.96,-86C295.03,-86 279.23,-86 264.9,-86"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="309.65,-89.5 319.65,-86 309.65,-82.5 309.65,-89.5"/>
+</a>
+</g>
+</g>
+<!-- Node10 -->
+<g id="Node000010" class="node">
+<title>Node10</title>
+<g id="a_Node000010"><a xlink:href="classAsyncFw_1_1Rrd.html#aaea6a63444ab427f801be34f26d930d5" target="_top" xlink:title="Constructs a persistent circular archive database using default system tracking intervals.">
+<polygon fill="white" stroke="#666666" points="264.5,-58 163.75,-58 163.75,-38 264.5,-38 264.5,-58"/>
+<text xml:space="preserve" text-anchor="middle" x="214.12" y="-44.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::Rrd::Rrd</text>
+</a>
+</g>
+</g>
+<!-- Node6&#45;&gt;Node10 -->
+<g id="edge9_Node000006_Node000010" class="edge">
+<title>Node6&#45;&gt;Node10</title>
+<g id="a_edge9_Node000006_Node000010"><a xlink:title=" ">
+<path fill="none" stroke="#63b8ff" d="M316.85,-72.82C297.58,-68.12 276.15,-62.89 257.96,-58.45"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="315.89,-76.19 326.43,-75.16 317.55,-69.39 315.89,-76.19"/>
+</a>
+</g>
+</g>
+<!-- Node11 -->
+<g id="Node000011" class="node">
+<title>Node11</title>
+<g id="a_Node000011"><a xlink:href="classAsyncFw_1_1Rrd.html#a98c7829cc6177c80245cf95095deb3ba" target="_top" xlink:title="Constructs an in&#45;memory anonymous circular database without file serialization.">
+<polygon fill="white" stroke="#666666" points="264.5,-20 163.75,-20 163.75,0 264.5,0 264.5,-20"/>
+<text xml:space="preserve" text-anchor="middle" x="214.12" y="-6.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::Rrd::Rrd</text>
+</a>
+</g>
+</g>
+<!-- Node6&#45;&gt;Node11 -->
+<g id="edge10_Node000006_Node000011" class="edge">
+<title>Node6&#45;&gt;Node11</title>
+<g id="a_edge10_Node000006_Node000011"><a xlink:title=" ">
+<path fill="none" stroke="#63b8ff" d="M345.12,-69.6C325.25,-57.39 296.79,-40.85 270.5,-29 263.64,-25.91 256.12,-23.02 248.9,-20.47"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="343.05,-72.44 353.39,-74.75 346.75,-66.49 343.05,-72.44"/>
+</a>
+</g>
+</g>
+<!-- Node8 -->
+<g id="Node000008" class="node">
+<title>Node8</title>
+<g id="a_Node000008"><a xlink:href="classAsyncFw_1_1Log.html#a00e9a20e7303e9a24403046af176b6b2" target="_top" xlink:title="Global service locator shortcut to fetch the current engine&#45;wide default log pointer.">
+<polygon fill="white" stroke="#666666" points="121.75,-134 0,-134 0,-114 121.75,-114 121.75,-134"/>
+<text xml:space="preserve" text-anchor="middle" x="60.88" y="-120.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::Log::instance</text>
+</a>
+</g>
+</g>
+<!-- Node7&#45;&gt;Node8 -->
+<g id="edge7_Node000007_Node000008" class="edge">
+<title>Node7&#45;&gt;Node8</title>
+<g id="a_edge7_Node000007_Node000008"><a xlink:title=" ">
 <path fill="none" stroke="#63b8ff" d="M152.16,-124C142.24,-124 131.97,-124 122.07,-124"/>
 <polygon fill="#63b8ff" stroke="#63b8ff" points="152.09,-127.5 162.09,-124 152.09,-120.5 152.09,-127.5"/>
 </a>

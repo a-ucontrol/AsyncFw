@@ -1,5 +1,5 @@
 <map id="AsyncFw::HttpServer" name="AsyncFw::HttpServer">
-<area shape="rect" id="Node000001" title="The HttpServer class." alt="" coords="859,63,1006,90"/>
+<area shape="rect" id="Node000001" title="Asynchronous HTTP and WebSocket server." alt="" coords="859,63,1006,90"/>
 <area shape="rect" id="Node000002" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="476,9,670,67"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="686,47,861,69,856,69,686,53"/>
 <area shape="rect" id="Node000003" href="$classAsyncFw_1_1FunctionConnector.html" title="Provides a thread&#45;safe, publisher&#45;subscriber mechanism to establish sender&#45;to&#45;receivers connections." alt="" coords="5,59,200,102"/>

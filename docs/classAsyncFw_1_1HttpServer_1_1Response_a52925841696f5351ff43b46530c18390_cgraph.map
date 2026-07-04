@@ -1,0 +1,17 @@
+<map id="AsyncFw::HttpServer::Response::send" name="AsyncFw::HttpServer::Response::send">
+<area shape="rect" id="Node000001" title="Finalizes and sends the response over the network via the associated socket." alt="" coords="5,72,153,115"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1HttpServer_1_1Response.html#afa24643371f00fe11d7df0f9caae4134" title="Destroys the response object and cleans up its allocated resources." alt="" coords="201,39,348,81"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="152,78,188,74,183,76,154,83"/>
+<area shape="rect" id="Node000008" href="$classAsyncFw_1_1HttpServer_1_1Response.html#a5dd46db3eac7d1a07948d072e71c11f2" title="Generates and returns the complete serialized HTTP header section." alt="" coords="201,105,348,148"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="153,103,188,111,182,112,153,109"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractThread.html#af33c5949edb374d673a7a9ac0c81ec32" title="Returns a pointer to the AsyncFw::AbstractThread that manages the currently executing thread." alt="" coords="396,5,569,48"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="348,46,383,42,378,44,349,51"/>
+<area shape="rect" id="Node000006" href="$classAsyncFw_1_1AbstractThread.html#a786474d037b50053f1a97af7b67e6069" title="Runs a function in a managed thread." alt="" coords="396,72,569,115"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="348,69,383,77,378,77,348,74"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1AbstractThread.html#a8c9202c90ac101522f26c4260cb01b59" title="Constructs a thread." alt="" coords="617,5,791,48"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="570,24,604,26,599,27,570,29"/>
+<area shape="rect" id="Node000005" href="$classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd" title="Returns name of managed thread." alt="" coords="839,5,1012,48"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="791,24,826,26,820,27,791,29"/>
+<area shape="rect" id="Node000007" href="$classAsyncFw_1_1AbstractThread.html#abe96e6b2a1de041f0d25390a6b77e50a" title="Runs a task in a managed thread." alt="" coords="617,72,791,115"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="570,91,604,93,599,93,570,96"/>
+</map>

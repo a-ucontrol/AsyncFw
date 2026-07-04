@@ -429,9 +429,9 @@ HttpServer::HttpRule::HttpRule(HttpRule &&r) : method(r.method) {
 
 Instance<HttpServer> HttpServer::instance_ {"HttpServer"};
 
-HttpServer::HttpServer(const std::string &_httpPath) : private_(*new Private()) {
-  if (!_httpPath.empty()) {
-    private_.httpPath = std::filesystem::weakly_canonical(_httpPath).string();
+HttpServer::HttpServer(const std::string &httpPath) : private_(*new Private()) {
+  if (!httpPath.empty()) {
+    private_.httpPath = std::filesystem::weakly_canonical(httpPath).string();
     private_.httpPath.push_back(std::filesystem::path::preferred_separator);
   }
   addRule("/<arg>", Request::Method::Get, [this](const Request &request) {
@@ -473,6 +473,10 @@ HttpServer::~HttpServer() {
   clearConnections();
   delete &private_;
   lsTrace();
+}
+
+void HttpServer::clearConnections() {
+  for (TcpSocket *socket : sockets) disconnectFromHost(socket);
 }
 
 void HttpServer::fileUploadProgress(TcpSocket *, int progress) { trace() << progress; }

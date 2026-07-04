@@ -1,13 +1,15 @@
 <map id="AsyncFw::AbstractSocket" name="AsyncFw::AbstractSocket">
 <area shape="rect" id="Node000001" title="Abstract base class providing core network socket functionality and OS descriptor abstraction." alt="" coords="206,80,381,107"/>
 <area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractTlsSocket.html" title="Abstract base class providing Transport Layer Security (TLS/SSL) encryption layers on top of standard..." alt="" coords="97,155,290,181"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="266,115,212,156,210,152,262,117"/>
-<area shape="rect" id="Node000006" href="$classAsyncFw_1_1ListenSocket.html" title="Server&#45;side socket wrapper specialized for listening and accepting incoming network connections." alt="" coords="313,155,474,181"/>
-<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="324,113,379,154,373,154,323,119"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="262,118,213,156,209,152,266,114"/>
+<area shape="rect" id="Node000007" href="$classAsyncFw_1_1ListenSocket.html" title="Server&#45;side socket wrapper specialized for listening and accepting incoming network connections." alt="" coords="313,155,474,181"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="323,113,379,154,373,154,323,119"/>
 <area shape="rect" id="Node000002" href="$structAsyncFw_1_1AnyData.html" title="A generic, type&#45;safe data container block wrapper utilizing std::any." alt="" coords="226,5,361,32"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="295,46,296,81,291,78,292,50"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="295,45,296,81,291,79,292,50"/>
 <area shape="rect" id="Node000004" href="$classAsyncFw_1_1DataArraySocket.html" title="The DataArraySocket class." alt="" coords="5,229,190,256"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="168,190,115,231,113,227,162,191"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="163,193,116,231,112,227,167,189"/>
 <area shape="rect" id="Node000005" href="$classAsyncFw_1_1HttpSocket.html" title="The HttpSocket class." alt="" coords="214,229,365,256"/>
 <area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="223,188,276,229,270,229,221,193"/>
+<area shape="rect" id="Node000006" href="$classAsyncFw_1_1HttpServer_1_1TcpSocket.html" title=" " alt="" coords="216,304,363,347"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="291,270,292,305,287,302,288,274"/>
 </map>

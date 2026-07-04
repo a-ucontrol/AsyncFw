@@ -1,13 +1,16 @@
 var searchData=
 [
-  ['helpers_0',['Coroutine API Helpers',['../group__coroutine__api.html',1,'']]],
-  ['host_1',['Host',['../structAsyncFw_1_1MulticastDns_1_1Host.html',1,'AsyncFw::MulticastDns']]],
-  ['hostadded_2',['hostAdded',['../classAsyncFw_1_1MulticastDns.html#a973574ac5d99e8b3ef2455ded3e90407',1,'AsyncFw::MulticastDns']]],
-  ['hostchanged_3',['hostChanged',['../classAsyncFw_1_1MulticastDns.html#a00da8b82983f3da4d37809761b04df10',1,'AsyncFw::MulticastDns']]],
-  ['hostremoved_4',['hostRemoved',['../classAsyncFw_1_1MulticastDns.html#a97cbf66dbddc356f45aad429e118d287',1,'AsyncFw::MulticastDns']]],
-  ['hosts_5',['hosts',['../classAsyncFw_1_1MulticastDns.html#a1aae9d9612ba077da938bb80a8c3330d',1,'AsyncFw::MulticastDns']]],
-  ['httpserver_6',['HttpServer',['../classAsyncFw_1_1HttpServer.html',1,'AsyncFw']]],
-  ['httpserver_2eh_7',['HttpServer.h',['../HttpServer_8h.html',1,'']]],
-  ['httpsocket_8',['HttpSocket',['../classAsyncFw_1_1HttpSocket.html',1,'AsyncFw']]],
-  ['httpsocket_2eh_9',['HttpSocket.h',['../HttpSocket_8h.html',1,'']]]
+  ['hastls_0',['hasTls',['../classAsyncFw_1_1HttpServer.html#a1e3e419d07c51b25f0f4910db1e21b1f',1,'AsyncFw::HttpServer']]],
+  ['heaaderitemvalue_1',['heaaderItemValue',['../classAsyncFw_1_1HttpServer_1_1Request.html#a52389751ddf9659da47c8a98ec71cf03',1,'AsyncFw::HttpServer::Request']]],
+  ['header_2',['header',['../classAsyncFw_1_1HttpServer_1_1Response.html#a5dd46db3eac7d1a07948d072e71c11f2',1,'AsyncFw::HttpServer::Response']]],
+  ['helpers_3',['Coroutine API Helpers',['../group__coroutine__api.html',1,'']]],
+  ['host_4',['Host',['../structAsyncFw_1_1MulticastDns_1_1Host.html',1,'AsyncFw::MulticastDns']]],
+  ['hostadded_5',['hostAdded',['../classAsyncFw_1_1MulticastDns.html#a973574ac5d99e8b3ef2455ded3e90407',1,'AsyncFw::MulticastDns']]],
+  ['hostchanged_6',['hostChanged',['../classAsyncFw_1_1MulticastDns.html#a00da8b82983f3da4d37809761b04df10',1,'AsyncFw::MulticastDns']]],
+  ['hostremoved_7',['hostRemoved',['../classAsyncFw_1_1MulticastDns.html#a97cbf66dbddc356f45aad429e118d287',1,'AsyncFw::MulticastDns']]],
+  ['hosts_8',['hosts',['../classAsyncFw_1_1MulticastDns.html#a1aae9d9612ba077da938bb80a8c3330d',1,'AsyncFw::MulticastDns']]],
+  ['httpserver_9',['HttpServer',['../classAsyncFw_1_1HttpServer.html',1,'AsyncFw::HttpServer'],['../classAsyncFw_1_1HttpServer.html#a522928fa8bf3b13b706ac997d4f100dd',1,'AsyncFw::HttpServer::HttpServer()']]],
+  ['httpserver_2eh_10',['HttpServer.h',['../HttpServer_8h.html',1,'']]],
+  ['httpsocket_11',['HttpSocket',['../classAsyncFw_1_1HttpSocket.html',1,'AsyncFw']]],
+  ['httpsocket_2eh_12',['HttpSocket.h',['../HttpSocket_8h.html',1,'']]]
 ];

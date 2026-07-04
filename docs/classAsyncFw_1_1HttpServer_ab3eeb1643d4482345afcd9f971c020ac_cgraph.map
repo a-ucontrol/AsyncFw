@@ -1,0 +1,15 @@
+<map id="AsyncFw::HttpServer::clearConnections" name="AsyncFw::HttpServer::clearConnections">
+<area shape="rect" id="Node000001" title="Explicitly severs connections with active sockets holding custom user metadata matching data." alt="" coords="5,39,153,81"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1HttpServer.html#ad7dae50cc3787112980fa7075a60f811" title="Disconnects a specific client socket and clears it from the internally managed pool." alt="" coords="201,39,351,81"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="153,57,188,59,183,61,154,63"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractThread.html#af33c5949edb374d673a7a9ac0c81ec32" title="Returns a pointer to the AsyncFw::AbstractThread that manages the currently executing thread." alt="" coords="399,5,572,48"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="351,45,386,42,381,43,352,51"/>
+<area shape="rect" id="Node000006" href="$classAsyncFw_1_1AbstractThread.html#a786474d037b50053f1a97af7b67e6069" title="Runs a function in a managed thread." alt="" coords="399,72,572,115"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="351,69,386,77,381,77,351,75"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1AbstractThread.html#a8c9202c90ac101522f26c4260cb01b59" title="Constructs a thread." alt="" coords="620,5,794,48"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="573,24,607,26,602,27,573,29"/>
+<area shape="rect" id="Node000005" href="$classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd" title="Returns name of managed thread." alt="" coords="842,5,1015,48"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="794,24,829,27,823,27,794,29"/>
+<area shape="rect" id="Node000007" href="$classAsyncFw_1_1AbstractThread.html#abe96e6b2a1de041f0d25390a6b77e50a" title="Runs a task in a managed thread." alt="" coords="620,72,794,115"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="573,91,607,93,602,93,573,96"/>
+</map>

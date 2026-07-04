@@ -1,0 +1,7 @@
+<map id="AsyncFw::HttpServer::TcpSocket::readEvent" name="AsyncFw::HttpServer::TcpSocket::readEvent">
+<area shape="rect" id="Node000001" title="Triggered when new raw data is available in the socket for reading. &#160;&#160;Overrides the base behavior to ..." alt="" coords="5,5,163,48"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1HttpSocket.html#a7163448458d68f433dbdb214a6175be3" title="Called when there is data to read." alt="" coords="211,5,361,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="163,24,198,26,192,27,163,29"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1DataArray.html#a5406261e5730adfa64e4d0bbd0083e31" title="Creates a lightweight, non&#45;allocating view slicing a sub&#45;region of this byte array." alt="" coords="409,5,552,48"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="361,24,396,27,390,27,362,29"/>
+</map>

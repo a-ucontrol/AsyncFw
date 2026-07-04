@@ -28,7 +28,7 @@ var annotated_dup =
       [ "DataArrayTcpServer", "classAsyncFw_1_1DataArrayTcpServer.html", null ],
       [ "File", "classAsyncFw_1_1File.html", "classAsyncFw_1_1File" ],
       [ "FileSystemWatcher", "classAsyncFw_1_1FileSystemWatcher.html", "classAsyncFw_1_1FileSystemWatcher" ],
-      [ "HttpServer", "classAsyncFw_1_1HttpServer.html", null ],
+      [ "HttpServer", "classAsyncFw_1_1HttpServer.html", "classAsyncFw_1_1HttpServer" ],
       [ "HttpSocket", "classAsyncFw_1_1HttpSocket.html", "classAsyncFw_1_1HttpSocket" ],
       [ "AbstractInstance", "classAsyncFw_1_1AbstractInstance.html", "classAsyncFw_1_1AbstractInstance" ],
       [ "Instance", "classAsyncFw_1_1Instance.html", "classAsyncFw_1_1Instance" ],

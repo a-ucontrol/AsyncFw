@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['fail_0',['fail',['../classAsyncFw_1_1DataStream.html#a58e67062bf6cd3f77a8203758b01eaf8',1,'AsyncFw::DataStream::fail()'],['../classAsyncFw_1_1File.html#ad16ba208a1a58d6c8fda79766fe42aaa',1,'AsyncFw::File::fail()'],['../classAsyncFw_1_1PollNotifier.html#a52d96002ff262ab846331324c64882e0',1,'AsyncFw::PollNotifier::fail()']]],
+  ['fail_0',['fail',['../classAsyncFw_1_1DataStream.html#a58e67062bf6cd3f77a8203758b01eaf8',1,'AsyncFw::DataStream::fail()'],['../classAsyncFw_1_1File.html#ad16ba208a1a58d6c8fda79766fe42aaa',1,'AsyncFw::File::fail()'],['../classAsyncFw_1_1HttpServer_1_1Response.html#a23e3482fe2491dfa068dfda528087700',1,'AsyncFw::HttpServer::Response::fail()'],['../classAsyncFw_1_1HttpServer_1_1Request.html#a3ca24aa59e822e625aa5c75b85e0d70b',1,'AsyncFw::HttpServer::Request::fail()'],['../classAsyncFw_1_1PollNotifier.html#a52d96002ff262ab846331324c64882e0',1,'AsyncFw::PollNotifier::fail()']]],
   ['file_1',['File',['../classAsyncFw_1_1File.html#aac258c3ca8290c71ed3f6118caa3652e',1,'AsyncFw::File']]],
   ['filesystemwatcher_2',['FileSystemWatcher',['../classAsyncFw_1_1FileSystemWatcher.html#acd061a60fbaea1bb3c7d020e0da99039',1,'AsyncFw::FileSystemWatcher']]],
   ['finality_3',['finality',['../classAsyncFw_1_1AbstractLog.html#a8dd93228e8424dccdd74adbb6422bd78',1,'AsyncFw::AbstractLog::finality()'],['../classAsyncFw_1_1Log.html#a27bf2284363cc365c8af12e923b95db5',1,'AsyncFw::Log::finality()']]],

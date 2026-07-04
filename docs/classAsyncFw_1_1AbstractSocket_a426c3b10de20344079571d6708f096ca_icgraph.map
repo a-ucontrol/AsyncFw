@@ -1,4 +1,6 @@
 <map id="AsyncFw::AbstractSocket::listen" name="AsyncFw::AbstractSocket::listen">
-<area shape="rect" id="Node000001" title="Listen for incoming connections on address and port." alt="" coords="5,29,180,72"/>
-<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="119,14,110,10,92,8,76,10,67,14,63,20,64,29,59,28,57,19,63,10,75,5,93,3,111,5,124,14"/>
+<area shape="rect" id="Node000001" title="Listen for incoming connections on address and port." alt="" coords="201,29,375,72"/>
+<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="320,13,309,10,288,8,268,10,256,15,252,21,253,30,248,27,246,19,253,10,267,5,288,3,310,5,325,14"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1HttpServer.html#aa1ce738d4f20186506c1c4f4290a8a3d" title="Binds to all available interfaces (0.0.0.0) and starts listening for incoming traffic on a specific T..." alt="" coords="5,29,153,72"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="182,51,153,53,153,48,188,50"/>
 </map>

@@ -1,0 +1,27 @@
+<map id="AsyncFw::HttpServer::HttpServer" name="AsyncFw::HttpServer::HttpServer">
+<area shape="rect" id="Node000001" title="Constructs the HTTP server instance." alt="" coords="5,139,153,181"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1HttpServer_1_1Request.html#afa488a05d879b6cbdca0853401352d19" title="Returns the absolute path requested by the client (e.g., &quot;/index.html&quot;)." alt="" coords="219,5,366,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="100,137,144,97,199,58,212,53,208,57,202,62,147,101,104,140"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1HttpServer_1_1Request.html#a6183c383629786f1f45cc58a7cdba48c" title="Links back to the responsive companion structure paired with this request." alt="" coords="219,72,366,115"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="148,136,209,118,205,122,151,141"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1HttpServer_1_1Response.html#a52925841696f5351ff43b46530c18390" title="Finalizes and sends the response over the network via the associated socket." alt="" coords="219,139,366,181"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="152,157,205,159,201,161,154,163"/>
+<area shape="rect" id="Node000012" href="$classAsyncFw_1_1HttpServer_1_1Response.html#a1e25071dfc003a6530edf35e0249e4b9" title="Sets the payload content from a raw DataArray." alt="" coords="212,205,372,248"/>
+<area shape="poly" id="edge11_Node000001_Node000012" title=" " alt="" coords="149,179,210,199,205,201,149,184"/>
+<area shape="rect" id="Node000013" href="$classAsyncFw_1_1HttpServer_1_1Response.html#a3bd5303884754553c8dcf33c3b98da3c" title="Assigns the HTTP status code for this response." alt="" coords="201,272,384,315"/>
+<area shape="poly" id="edge12_Node000001_Node000013" title=" " alt="" coords="102,179,147,219,202,258,213,265,207,265,199,262,144,223,101,184"/>
+<area shape="rect" id="Node000005" href="$classAsyncFw_1_1HttpServer_1_1Response.html#afa24643371f00fe11d7df0f9caae4134" title="Destroys the response object and cleans up its allocated resources." alt="" coords="432,105,579,148"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="365,146,419,140,414,141,367,151"/>
+<area shape="rect" id="Node000011" href="$classAsyncFw_1_1HttpServer_1_1Response.html#a5dd46db3eac7d1a07948d072e71c11f2" title="Generates and returns the complete serialized HTTP header section." alt="" coords="432,172,579,215"/>
+<area shape="poly" id="edge10_Node000004_Node000011" title=" " alt="" coords="366,169,419,179,414,180,366,174"/>
+<area shape="rect" id="Node000006" href="$classAsyncFw_1_1AbstractThread.html#af33c5949edb374d673a7a9ac0c81ec32" title="Returns a pointer to the AsyncFw::AbstractThread that manages the currently executing thread." alt="" coords="627,72,801,115"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="579,112,614,109,609,110,580,118"/>
+<area shape="rect" id="Node000009" href="$classAsyncFw_1_1AbstractThread.html#a786474d037b50053f1a97af7b67e6069" title="Runs a function in a managed thread." alt="" coords="627,139,801,181"/>
+<area shape="poly" id="edge8_Node000005_Node000009" title=" " alt="" coords="579,136,615,143,609,144,580,141"/>
+<area shape="rect" id="Node000007" href="$classAsyncFw_1_1AbstractThread.html#a8c9202c90ac101522f26c4260cb01b59" title="Constructs a thread." alt="" coords="849,72,1022,115"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="801,91,836,93,830,94,801,96"/>
+<area shape="rect" id="Node000008" href="$classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd" title="Returns name of managed thread." alt="" coords="1070,72,1243,115"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="1022,91,1057,93,1052,94,1023,96"/>
+<area shape="rect" id="Node000010" href="$classAsyncFw_1_1AbstractThread.html#abe96e6b2a1de041f0d25390a6b77e50a" title="Runs a task in a managed thread." alt="" coords="849,139,1022,181"/>
+<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="801,157,836,160,830,160,801,163"/>
+</map>

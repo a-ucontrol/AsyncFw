@@ -31,7 +31,9 @@ var hierarchy =
       [ "AsyncFw::AbstractSocket", "classAsyncFw_1_1AbstractSocket.html", [
         [ "AsyncFw::AbstractTlsSocket", "classAsyncFw_1_1AbstractTlsSocket.html", [
           [ "AsyncFw::DataArraySocket", "classAsyncFw_1_1DataArraySocket.html", null ],
-          [ "AsyncFw::HttpSocket", "classAsyncFw_1_1HttpSocket.html", null ]
+          [ "AsyncFw::HttpSocket", "classAsyncFw_1_1HttpSocket.html", [
+            [ "AsyncFw::HttpServer::TcpSocket", "classAsyncFw_1_1HttpServer_1_1TcpSocket.html", null ]
+          ] ]
         ] ],
         [ "AsyncFw::ListenSocket", "classAsyncFw_1_1ListenSocket.html", null ]
       ] ],
@@ -61,6 +63,8 @@ var hierarchy =
     [ "AsyncFw::LogStream::Message", "structAsyncFw_1_1LogStream_1_1Message.html", null ],
     [ "AsyncFw::MulticastDns", "classAsyncFw_1_1MulticastDns.html", null ],
     [ "AsyncFw::PollNotifier", "classAsyncFw_1_1PollNotifier.html", null ],
+    [ "AsyncFw::HttpServer::Request", "classAsyncFw_1_1HttpServer_1_1Request.html", null ],
+    [ "AsyncFw::HttpServer::Response", "classAsyncFw_1_1HttpServer_1_1Response.html", null ],
     [ "AsyncFw::Rrd", "classAsyncFw_1_1Rrd.html", [
       [ "AsyncFw::Log", "classAsyncFw_1_1Log.html", null ]
     ] ],

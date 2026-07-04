@@ -1,8 +1,12 @@
 <map id="AsyncFw::DataArray::view" name="AsyncFw::DataArray::view">
-<area shape="rect" id="Node000001" title="Creates a lightweight, non&#45;allocating view slicing a sub&#45;region of this byte array." alt="" coords="232,51,375,93"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1Cryptor.html#a85041f8d5b2a6c69be47a811039b2aec" title="Type&#45;safely encrypts raw data payload into a secure ciphertext buffer." alt="" coords="5,29,184,56"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="213,60,184,58,184,53,218,59"/>
-<area shape="rect" id="Node000003" href="$classAsyncFw_1_1HttpSocket.html#a7163448458d68f433dbdb214a6175be3" title="Called when there is data to read." alt="" coords="19,80,170,123"/>
-<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="213,85,170,93,170,88,219,84"/>
-<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="129,15,118,10,94,8,73,10,61,15,58,20,64,29,59,29,53,21,57,11,71,5,95,3,119,5,134,14"/>
+<area shape="rect" id="Node000001" title="Creates a lightweight, non&#45;allocating view slicing a sub&#45;region of this byte array." alt="" coords="437,80,580,123"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1Cryptor.html#a85041f8d5b2a6c69be47a811039b2aec" title="Type&#45;safely encrypts raw data payload into a secure ciphertext buffer." alt="" coords="211,29,389,56"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="419,77,350,59,350,54,424,77"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1HttpSocket.html#a7163448458d68f433dbdb214a6175be3" title="Called when there is data to read." alt="" coords="225,80,375,123"/>
+<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="419,102,376,104,375,99,424,101"/>
+<area shape="rect" id="Node000005" href="$classAsyncFw_1_1HttpServer_1_1TcpSocket.html#a41557b69e30e25b97cbdda210afb7657" title="Constructs a new TcpSocket associated with the parent server." alt="" coords="220,147,380,189"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="428,127,370,149,369,143,423,128"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="334,14,323,10,300,8,278,10,266,15,263,20,269,29,264,28,258,21,262,11,277,5,300,3,325,5,339,14"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1HttpServer_1_1TcpSocket.html#abb44001861ba7b24633b54ae90c2896c" title="Triggered when new raw data is available in the socket for reading. &#160;&#160;Overrides the base behavior to ..." alt="" coords="5,80,163,123"/>
+<area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="207,102,164,104,163,99,212,100"/>
 </map>

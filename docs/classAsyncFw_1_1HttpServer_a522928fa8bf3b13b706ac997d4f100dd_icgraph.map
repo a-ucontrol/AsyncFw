@@ -1,0 +1,5 @@
+<map id="AsyncFw::HttpServer::HttpServer" name="AsyncFw::HttpServer::HttpServer">
+<area shape="rect" id="Node000001" title="Constructs the HTTP server instance." alt="" coords="201,5,348,48"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1HttpServer.html#ad52f34791fe5848d9ba891b209fcdbe0" title="Accessor to fetch the globally managed singleton instance reference of the active HttpServer." alt="" coords="5,5,153,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="182,27,153,29,153,24,187,26"/>
+</map>

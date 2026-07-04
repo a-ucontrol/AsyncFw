@@ -1,9 +1,11 @@
 <map id="AsyncFw::HttpSocket" name="AsyncFw::HttpSocket">
 <area shape="rect" id="Node000001" title="The HttpSocket class." alt="" coords="26,229,177,256"/>
+<area shape="rect" id="Node000005" href="$classAsyncFw_1_1HttpServer_1_1TcpSocket.html" title=" " alt="" coords="28,304,175,347"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="103,270,104,305,99,303,100,274"/>
 <area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractTlsSocket.html" title="Abstract base class providing Transport Layer Security (TLS/SSL) encryption layers on top of standard..." alt="" coords="5,155,198,181"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="103,195,104,230,99,228,100,199"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="103,195,104,230,99,228,100,200"/>
 <area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractSocket.html" title="Abstract base class providing core network socket functionality and OS descriptor abstraction." alt="" coords="14,80,189,107"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="103,120,104,155,99,154,100,125"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="102,120,104,155,99,154,101,125"/>
 <area shape="rect" id="Node000004" href="$structAsyncFw_1_1AnyData.html" title="A generic, type&#45;safe data container block wrapper utilizing std::any." alt="" coords="34,5,169,32"/>
 <area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="102,45,104,80,99,79,101,50"/>
 </map>

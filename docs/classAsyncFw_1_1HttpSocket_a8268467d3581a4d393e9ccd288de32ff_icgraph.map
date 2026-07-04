@@ -1,0 +1,5 @@
+<map id="AsyncFw::HttpSocket::destroy" name="AsyncFw::HttpSocket::destroy">
+<area shape="rect" id="Node000001" title="Schedules the socket for deferred asynchronous destruction." alt="" coords="213,5,363,48"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1HttpServer_1_1TcpSocket.html#a41557b69e30e25b97cbdda210afb7657" title="Constructs a new TcpSocket associated with the parent server." alt="" coords="5,5,165,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="195,27,165,29,165,24,200,26"/>
+</map>

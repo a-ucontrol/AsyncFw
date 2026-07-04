@@ -118,294 +118,358 @@ $(function(){initNavTree('HttpServer_8h_source.html','',''); });
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="keyword">class </span>WebSocket;</div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="keyword">namespace </span>AsyncFw {</div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="keyword">using namespace </span>AsyncFw;</div>
-<div class="foldopen" id="foldopen00024" data-start="{" data-end="};">
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="classAsyncFw_1_1HttpServer.html">   24</a></span><span class="keyword">class </span>HttpServer {</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>  <span class="keyword">friend</span> <a class="code hl_class" href="classAsyncFw_1_1LogStream.html">LogStream</a> &amp;operator&lt;&lt;(<a class="code hl_class" href="classAsyncFw_1_1LogStream.html">LogStream</a> &amp;, <span class="keyword">const</span> HttpServer &amp;);</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>  <span class="keyword">class </span>Response;</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="keyword">protected</span>:</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>  <span class="keyword">class </span>TcpSocket : <span class="keyword">public</span> <a class="code hl_class" href="classAsyncFw_1_1HttpSocket.html">AsyncFw::HttpSocket</a> {</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    <span class="keyword">friend</span> <span class="keyword">class </span>HttpServer;</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>  <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    TcpSocket(HttpServer *);</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    ~TcpSocket();</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>  <span class="keyword">protected</span>:</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classAsyncFw_1_1HttpSocket.html#a7163448458d68f433dbdb214a6175be3">readEvent</a>() <span class="keyword">override</span>;</div>
+<div class="foldopen" id="foldopen00025" data-start="{" data-end="};">
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="classAsyncFw_1_1HttpServer.html">   25</a></span><span class="keyword">class </span><a class="code hl_function" href="classAsyncFw_1_1HttpServer.html#a522928fa8bf3b13b706ac997d4f100dd">HttpServer</a> {</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>  <span class="keyword">friend</span> <a class="code hl_class" href="classAsyncFw_1_1LogStream.html">LogStream</a> &amp;operator&lt;&lt;(<a class="code hl_class" href="classAsyncFw_1_1LogStream.html">LogStream</a> &amp;, <span class="keyword">const</span> <a class="code hl_function" href="classAsyncFw_1_1HttpServer.html#a522928fa8bf3b13b706ac997d4f100dd">HttpServer</a> &amp;);</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>  <span class="keyword">class </span><a class="code hl_class" href="classAsyncFw_1_1HttpServer_1_1Response.html">Response</a>;</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="keyword">protected</span>:</div>
+<div class="foldopen" id="foldopen00033" data-start="{" data-end="};">
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno"><a class="line" href="classAsyncFw_1_1HttpServer_1_1TcpSocket.html">   33</a></span>  <span class="keyword">class </span><a class="code hl_function" href="classAsyncFw_1_1HttpServer_1_1TcpSocket.html#a41557b69e30e25b97cbdda210afb7657">TcpSocket</a> : <span class="keyword">public</span> <a class="code hl_class" href="classAsyncFw_1_1HttpSocket.html">AsyncFw::HttpSocket</a> {</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    <span class="keyword">friend</span> <span class="keyword">class </span>HttpServer;</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>  <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    <a class="code hl_function" href="classAsyncFw_1_1HttpServer_1_1TcpSocket.html#a41557b69e30e25b97cbdda210afb7657">TcpSocket</a>(HttpServer *);</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    <a class="code hl_function" href="classAsyncFw_1_1HttpServer_1_1TcpSocket.html#a41557b69e30e25b97cbdda210afb7657">~TcpSocket</a>();</div>
 <div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>  <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    Response *response = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    WebSocket *ws_ = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    HttpServer *server_;</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>  };</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>  <span class="keyword">class </span>Response {</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    <span class="keyword">friend</span> <span class="keyword">class </span>HttpServer;</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>  <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    <span class="keyword">enum class</span> StatusCode {</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>      Continue = 100,</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>      SwitchingProtocols = 101,</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>      Processing = 102,</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>      Ok = 200,</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>      Created = 201,</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>      Accepted = 202,</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>      NonAuthoritativeInformation = 203,</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>      NoContent = 204,</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>      ResetContent = 205,</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>      PartialContent = 206,</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>      MultiStatus = 207,</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>      AlreadyReported = 208,</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>      IMUsed = 226,</div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>      MultipleChoices = 300,</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>      MovedPermanently = 301,</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>      Found = 302,</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>      SeeOther = 303,</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>      NotModified = 304,</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>      UseProxy = 305,</div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>      TemporaryRedirect = 307,</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>      PermanentRedirect = 308,</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>      BadRequest = 400,</div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>      Unauthorized = 401,</div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>      PaymentRequired = 402,</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>      Forbidden = 403,</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>      NotFound = 404,</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>      MethodNotAllowed = 405,</div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>      NotAcceptable = 406,</div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>      ProxyAuthenticationRequired = 407,</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>      RequestTimeout = 408,</div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>      Conflict = 409,</div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>      Gone = 410,</div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>      LengthRequired = 411,</div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>      PreconditionFailed = 412,</div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>      PayloadTooLarge = 413,</div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>      UriTooLong = 414,</div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>      UnsupportedMediaType = 415,</div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>      RequestRangeNotSatisfiable = 416,</div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>      ExpectationFailed = 417,</div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>      ImATeapot = 418,</div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>      MisdirectedRequest = 421,</div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>      UnprocessableEntity = 422,</div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>      Locked = 423,</div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>      FailedDependency = 424,</div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>      UpgradeRequired = 426,</div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>      PreconditionRequired = 428,</div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>      TooManyRequests = 429,</div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>      RequestHeaderFieldsTooLarge = 431,</div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>      LoginTimeOut = 440,</div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>      UnavailableForLegalReasons = 451,</div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>      InternalServerError = 500,</div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>      NotImplemented = 501,</div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>      BadGateway = 502,</div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>      ServiceUnavailable = 503,</div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>      GatewayTimeout = 504,</div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>      HttpVersionNotSupported = 505,</div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>      VariantAlsoNegotiates = 506,</div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>      InsufficientStorage = 507,</div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>      LoopDetected = 508,</div>
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>      NotExtended = 510,</div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>      NetworkAuthenticationRequired = 511,</div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>      NetworkConnectTimeoutError = 599</div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>    };</div>
-<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span> </div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>    <span class="keywordtype">void</span> setMimeType(<span class="keyword">const</span> std::string &amp;mime) { mimeType_ = mime; }</div>
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>    std::string mimeType()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> mimeType_; }</div>
-<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>    <span class="keywordtype">void</span> addHeader(<span class="keyword">const</span> std::string &amp;ba) { additionalHeaders.push_back(ba); }</div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>    std::string header() <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span> </div>
-<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>    <span class="keywordtype">void</span> destroy();</div>
-<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>    <span class="keywordtype">bool</span> send();</div>
-<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>    <span class="keywordtype">void</span> setContent(<span class="keyword">const</span> <a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> &amp;);</div>
-<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>    <span class="keywordtype">void</span> setContent(<span class="keyword">const</span> std::vector&lt;uint8_t&gt; &amp;);</div>
-<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>    <span class="keywordtype">void</span> setStatusCode(<span class="keyword">const</span> StatusCode &amp;_statusCode) { statusCode_ = _statusCode; }</div>
-<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>    <span class="keywordtype">bool</span> fail() { <span class="keywordflow">return</span> socket_ == <span class="keyword">nullptr</span>; }</div>
-<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span> </div>
-<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>    Response::StatusCode statusCode() { <span class="keywordflow">return</span> statusCode_; }</div>
-<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>    <a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> content() { <span class="keywordflow">return</span> content_; }</div>
-<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>    TcpSocket *socket() { <span class="keywordflow">return</span> socket_; }</div>
-<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span> </div>
-<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>  <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>    std::vector&lt;std::string&gt; additionalHeaders;</div>
-<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>    <span class="keyword">mutable</span> StatusCode statusCode_ = Response::StatusCode::Ok;</div>
-<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>    <span class="keyword">mutable</span> <span class="keywordtype">int</span> contentLength = 0;</div>
-<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>    <span class="keyword">mutable</span> std::string mimeType_;</div>
-<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>    <a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> content_;</div>
-<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span> </div>
-<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>    std::string version = <span class="stringliteral">&quot;1.1&quot;</span>;</div>
-<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>    <span class="keywordtype">bool</span> cors_headers_enabled = <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>    <span class="keyword">mutable</span> TcpSocket *socket_ = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>  };</div>
-<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span> </div>
-<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>  <span class="keyword">class </span>Request {</div>
-<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>    <span class="keyword">friend</span> <span class="keyword">class </span>HttpServer;</div>
-<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span> </div>
-<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>  <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>    <span class="keyword">enum class</span> Method {</div>
-<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>      Unknown = 0x0000,</div>
-<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>      Get = 0x0001,</div>
-<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>      Put = 0x0002,</div>
-<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>      Delete = 0x0004,</div>
-<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>      Post = 0x0008,</div>
-<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>      Head = 0x0010,</div>
-<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>      Options = 0x0020,</div>
-<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>      Patch = 0x0040,</div>
-<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>      Connect = 0x0080,</div>
-<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>      Trace = 0x0100,</div>
-<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>      <span class="comment">//AnyKnown = Get | Put | Delete | Post | Head | Options | Patch | Connect | Trace,</span></div>
-<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>    };</div>
-<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span> </div>
-<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>    Request(<span class="keyword">const</span> std::string_view &amp;);</div>
-<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>    <span class="keyword">virtual</span> ~Request();</div>
-<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span> </div>
-<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>    Method method()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> method_; }</div>
-<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>    std::string methodName() <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>    std::string path() <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>    std::string heaaderItemValue(<span class="keyword">const</span> std::string &amp;) <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>    std::string queryItemValue(<span class="keyword">const</span> std::string &amp;) <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span> </div>
-<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>    <a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> content() <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>    std::string peerAddress()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> response_-&gt;socket_-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractSocket.html#ab05320fcb1c111e06a56587b4abbb639">peerAddress</a>(); }</div>
-<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span> </div>
-<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>    <span class="keywordtype">void</span> setSocketData(<span class="keyword">const</span> std::any &amp;data)<span class="keyword"> const </span>{ response_-&gt;socket_-&gt;<a class="code hl_variable" href="structAsyncFw_1_1AnyData.html#adc2b97818be013fcf912ca9c8e086fa3">data_</a> = data; }</div>
-<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>    std::any &amp;socketData()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> response_-&gt;socket_-&gt;<a class="code hl_variable" href="structAsyncFw_1_1AnyData.html#adc2b97818be013fcf912ca9c8e086fa3">data_</a>; }</div>
-<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>    Response *response()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> response_; }</div>
-<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>    <span class="keywordtype">bool</span> switchingProtocols() <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span> </div>
-<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>    <span class="keywordtype">bool</span> fail() <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span> </div>
-<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>  <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>    Method method_;</div>
-<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>    Response *response_ = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>    <span class="keyword">struct </span>Private;</div>
-<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>    Private &amp;private_;</div>
-<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>  };</div>
-<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span> </div>
-<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>  <span class="keyword">class </span>HttpRule {</div>
-<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>    <span class="keyword">friend</span> <span class="keyword">class </span>HttpServer;</div>
-<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span> </div>
-<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>  <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>    <span class="keyword">const</span> Request::Method method;</div>
-<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>    ~HttpRule();</div>
-<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>    HttpRule(HttpRule &amp;&amp;);</div>
-<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span> </div>
-<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>  <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>    HttpRule(<span class="keyword">const</span> Request::Method method, T &amp;f) : method(method), exec(<span class="keyword">new</span> Invocable&lt;<span class="keywordtype">void</span>(<span class="keyword">const</span> Request &amp;)&gt;::Function(std::forward&lt;T&gt;(f))) {}</div>
-<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>    HttpRule(HttpRule &amp;) = <span class="keyword">delete</span>;</div>
-<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>    Invocable&lt;void(<span class="keyword">const</span> Request &amp;)&gt;::Abstract *exec = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>  };</div>
-<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span> </div>
-<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>  <span class="keyword">using </span>RulesMap = std::multimap&lt;std::string, std::unique_ptr&lt;HttpRule&gt;&gt;;</div>
-<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span> </div>
-<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>  HttpServer(<span class="keyword">const</span> std::string &amp; = {});</div>
-<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>  <span class="keyword">virtual</span> ~HttpServer();</div>
-<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span> </div>
-<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>  <span class="keyword">template</span> &lt;<span class="keyword">typename</span> A&gt;</div>
-<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>  <span class="keywordtype">void</span> addRoute(<span class="keyword">const</span> std::string &amp;url, Request::Method method, A action, <span class="keyword">const</span> std::any &amp;data = {}) {</div>
-<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>    addRule(url, method, [<span class="keyword">this</span>, action, data](<span class="keyword">const</span> Request &amp;request) {</div>
-<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>      <span class="keywordflow">if</span> (!peek || (*peek)(request, data)) action(request);</div>
-<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>    });</div>
-<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>    <span class="keywordflow">if</span> (findRule(url, Request::Method::Options) != rules.end()) <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>    addRule(url, Request::Method::Options, [<span class="keyword">this</span>, action, data](<span class="keyword">const</span> Request &amp;request) {</div>
-<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>      <span class="keywordflow">if</span> (cors_request_enabled) request.response()-&gt;setStatusCode(Response::StatusCode::Ok);</div>
-<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>      <span class="keywordflow">else</span> { request.response()-&gt;setStatusCode(Response::StatusCode::Forbidden); }</div>
-<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>    });</div>
-<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>  }</div>
-<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>  <span class="keyword">template</span> &lt;<span class="keyword">typename</span> O, <span class="keyword">typename</span> A&gt;</div>
-<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>  <span class="keywordtype">void</span> addRoute(<span class="keyword">const</span> O <span class="keywordtype">object</span>, <span class="keyword">const</span> std::string &amp;url, Request::Method method, A action, <span class="keyword">const</span> std::any &amp;data = {}) {</div>
-<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>    addRoute(url, method, [<span class="keywordtype">object</span>, action](<span class="keyword">const</span> Request &amp;request) { <span class="keywordflow">return</span> (object-&gt;*action)(request); }, data);</div>
-<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>  }</div>
-<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>  <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>  <span class="keywordtype">int</span> sendToWebSockets(<span class="keyword">const</span> T &amp;_data, <span class="keyword">const</span> <a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> &amp;_da) {</div>
-<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>    <a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> _f;</div>
-<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>    <span class="keywordtype">int</span> _r = 0;</div>
-<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>    <span class="keywordflow">for</span> (TcpSocket *socket : sockets) {</div>
-<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>      <span class="keywordflow">if</span> (!socket-&gt;ws_) <span class="keywordflow">continue</span>;</div>
-<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>      <span class="keywordflow">if</span> (socket-&gt;data_.has_value() &amp;&amp; _data == std::any_cast&lt;T&gt;(socket-&gt;data_)) {</div>
-<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>        <span class="keywordflow">if</span> (_f.empty()) {</div>
-<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>          <span class="keywordtype">int</span> _s = makeWebSocketFrame(_da, &amp;_f);</div>
-<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span>          <span class="keywordflow">if</span> (_s &lt;= 0) <span class="keywordflow">return</span> -1;</div>
-<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>        }</div>
-<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>        socket-&gt;write(_f);</div>
-<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>        ++_r;</div>
-<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>      }</div>
-<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>    }</div>
-<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>    <span class="keywordflow">return</span> _r;</div>
-<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>  }</div>
-<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>  <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>  <span class="keywordtype">void</span> addRule(<span class="keyword">const</span> std::string &amp;url, <span class="keyword">const</span> Request::Method method, T exec) {</div>
-<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>    <span class="keywordflow">if</span> (findRule(url, method) != rules.end()) <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>    HttpServer::rules.emplace(url, std::make_unique&lt;HttpRule&gt;(HttpServer::HttpRule(method, exec)));</div>
-<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>  }</div>
-<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>  <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>  <span class="keywordtype">void</span> setPeek(T f) {</div>
-<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>    peek = <span class="keyword">new</span> Invocable&lt;bool(<span class="keyword">const</span> Request &amp;, std::any)&gt;::Function(std::forward&lt;T&gt;(f));</div>
-<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>  }</div>
-<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>  <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>  <span class="keywordtype">void</span> clearConnections(<span class="keyword">const</span> T &amp;_data) {</div>
-<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span>    <span class="keywordflow">for</span> (TcpSocket *socket : sockets) {</div>
-<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>      <span class="keywordflow">if</span> (socket-&gt;data_.has_value() &amp;&amp; _data == std::any_cast&lt;T&gt;(socket-&gt;data_)) disconnectFromHost(socket);</div>
-<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>    }</div>
-<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>  }</div>
-<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>  <span class="keywordtype">void</span> clearConnections() {</div>
-<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>    <span class="keywordflow">for</span> (TcpSocket *socket : sockets) disconnectFromHost(socket);</div>
-<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>  }</div>
-<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span> </div>
-<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>  <span class="keywordtype">bool</span> webSocketSend(<span class="keyword">const</span> <a class="code hl_class" href="classAsyncFw_1_1HttpSocket.html">HttpSocket</a> *, <span class="keyword">const</span> <a class="code hl_class" href="classAsyncFw_1_1DataArray.html">DataArray</a> &amp;);</div>
-<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>  <span class="keywordtype">void</span> sendToWebSockets(<span class="keyword">const</span> std::string &amp;);</div>
-<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span> </div>
-<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>  <span class="keywordtype">void</span> disconnectFromHost(TcpSocket *socket);</div>
-<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>  <span class="keywordtype">bool</span> listen(uint16_t port);</div>
-<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>  <span class="keywordtype">void</span> close();</div>
-<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span> </div>
-<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>  uint16_t port();</div>
-<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>  <span class="keywordtype">bool</span> hasTls();</div>
-<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span> </div>
-<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>  <span class="keywordtype">bool</span> execRule(<span class="keyword">const</span> Request &amp;);</div>
-<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span> </div>
-<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>  <span class="keywordtype">void</span> setTlsContext(<span class="keyword">const</span> <a class="code hl_class" href="classAsyncFw_1_1TlsContext.html">AsyncFw::TlsContext</a> &amp;);</div>
-<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>  <span class="keywordtype">void</span> setEnableCorsRequests(<span class="keywordtype">bool</span>);</div>
-<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span> </div>
-<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>  <span class="keyword">static</span> <span class="keyword">inline</span> HttpServer *instance() { <span class="keywordflow">return</span> instance_.value; }</div>
-<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>  <a class="code hl_struct" href="structAsyncFw_1_1FunctionConnector_1_1Policy.html">AsyncFw::FunctionConnector&lt;int, const std::string &amp;, bool *&gt;::Policy</a>&lt;<a class="code hl_enumvalue" href="classAsyncFw_1_1AbstractFunctionConnector.html#ab248bd16cbfcac609f58d401abec4368a067289a8bc60cc7b0be0e021db9ce81d">AsyncFw::AbstractFunctionConnector::SyncOnly</a>&gt;::Protected&lt;HttpServer&gt; incoming;</div>
-<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>  <a class="code hl_typedef" href="classAsyncFw_1_1FunctionConnector.html#a9fb8f282c88da90aeaab52a3c174d82b">AsyncFw::FunctionConnector&lt;const HttpSocket *, const DataArray &amp;&gt;::Protected</a>&lt;HttpServer&gt; webSocketReceived;</div>
-<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span> </div>
-<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span><span class="keyword">protected</span>:</div>
-<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>  <span class="keyword">virtual</span> <span class="keywordtype">void</span> fileUploadProgress(TcpSocket *, <span class="keywordtype">int</span>);</div>
-<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>  <span class="keywordtype">int</span> makeWebSocketFrame(<span class="keyword">const</span> <a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> &amp;, <a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> *, <span class="keywordtype">bool</span> = <span class="keyword">false</span>);</div>
-<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span>  RulesMap rules;</div>
-<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span> </div>
-<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>  <span class="keywordtype">void</span> received(TcpSocket *, <span class="keyword">const</span> std::string_view &amp;);</div>
-<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>  RulesMap::iterator findRule(<span class="keyword">const</span> std::string &amp;, <span class="keyword">const</span> Request::Method);</div>
-<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>  std::vector&lt;TcpSocket *&gt; sockets;</div>
-<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>  <span class="keywordtype">bool</span> cors_request_enabled = <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>  <span class="keyword">static</span> <a class="code hl_class" href="classAsyncFw_1_1Instance.html">Instance&lt;HttpServer&gt;</a> instance_;</div>
-<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>  Invocable&lt;bool(<span class="keyword">const</span> Request &amp;, std::any)&gt;::Abstract *peek = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span>  <span class="keyword">struct </span>Private;</div>
-<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>  Private &amp;private_;</div>
-<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>};</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>  <span class="keyword">protected</span>:</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classAsyncFw_1_1HttpServer_1_1TcpSocket.html#abb44001861ba7b24633b54ae90c2896c">readEvent</a>() <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>  <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    <a class="code hl_class" href="classAsyncFw_1_1HttpServer_1_1Response.html">Response</a> *response = <span class="keyword">nullptr</span>;  </div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    WebSocket *ws_ = <span class="keyword">nullptr</span>;      </div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    HttpServer *server_;           </div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>  };</div>
 </div>
-<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span>}  <span class="comment">// namespace AsyncFw</span></div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span><span class="keyword">public</span>:</div>
+<div class="foldopen" id="foldopen00053" data-start="{" data-end="};">
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno"><a class="line" href="classAsyncFw_1_1HttpServer_1_1Response.html">   53</a></span>  <span class="keyword">class </span><a class="code hl_class" href="classAsyncFw_1_1HttpServer_1_1Response.html">Response</a> {</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    <span class="keyword">friend</span> <span class="keyword">class </span>HttpServer;</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>  <span class="keyword">public</span>:</div>
+<div class="foldopen" id="foldopen00058" data-start="{" data-end="};">
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno"><a class="line" href="classAsyncFw_1_1HttpServer_1_1Response.html#ade630649387805688da86e8d0adaeb67">   58</a></span>    <span class="keyword">enum class</span> <a class="code hl_enumeration" href="classAsyncFw_1_1HttpServer_1_1Response.html#ade630649387805688da86e8d0adaeb67">StatusCode</a> {</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>      Continue = 100,</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>      SwitchingProtocols = 101,</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>      Processing = 102,</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>      Ok = 200,</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>      Created = 201,</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>      Accepted = 202,</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>      NonAuthoritativeInformation = 203,</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>      NoContent = 204,</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>      ResetContent = 205,</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>      PartialContent = 206,</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>      MultiStatus = 207,</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>      AlreadyReported = 208,</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>      IMUsed = 226,</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>      MultipleChoices = 300,</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>      MovedPermanently = 301,</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>      Found = 302,</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>      SeeOther = 303,</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>      NotModified = 304,</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>      UseProxy = 305,</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>      TemporaryRedirect = 307,</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>      PermanentRedirect = 308,</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>      BadRequest = 400,</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>      Unauthorized = 401,</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>      PaymentRequired = 402,</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>      Forbidden = 403,</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>      NotFound = 404,</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>      MethodNotAllowed = 405,</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>      NotAcceptable = 406,</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>      ProxyAuthenticationRequired = 407,</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>      RequestTimeout = 408,</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>      Conflict = 409,</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>      Gone = 410,</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>      LengthRequired = 411,</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>      PreconditionFailed = 412,</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>      PayloadTooLarge = 413,</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>      UriTooLong = 414,</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>      UnsupportedMediaType = 415,</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>      RequestRangeNotSatisfiable = 416,</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>      ExpectationFailed = 417,</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>      ImATeapot = 418,</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>      MisdirectedRequest = 421,</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>      UnprocessableEntity = 422,</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>      Locked = 423,</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>      FailedDependency = 424,</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>      UpgradeRequired = 426,</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>      PreconditionRequired = 428,</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>      TooManyRequests = 429,</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>      RequestHeaderFieldsTooLarge = 431,</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>      LoginTimeOut = 440,</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>      UnavailableForLegalReasons = 451,</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>      InternalServerError = 500,</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>      NotImplemented = 501,</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>      BadGateway = 502,</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>      ServiceUnavailable = 503,</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>      GatewayTimeout = 504,</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>      HttpVersionNotSupported = 505,</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>      VariantAlsoNegotiates = 506,</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>      InsufficientStorage = 507,</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>      LoopDetected = 508,</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>      NotExtended = 510,</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>      NetworkAuthenticationRequired = 511,</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>      NetworkConnectTimeoutError = 599</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>    };</div>
+</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span></div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno"><a class="line" href="classAsyncFw_1_1HttpServer_1_1Response.html#a6a20c4899ac30402f9135573b44975f8">  124</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classAsyncFw_1_1HttpServer_1_1Response.html#a6a20c4899ac30402f9135573b44975f8">setMimeType</a>(<span class="keyword">const</span> std::string &amp;mime) { mimeType_ = mime; }</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno"><a class="line" href="classAsyncFw_1_1HttpServer_1_1Response.html#a773fc6cae4a86db031eba409412ca40f">  126</a></span>    std::string <a class="code hl_function" href="classAsyncFw_1_1HttpServer_1_1Response.html#a773fc6cae4a86db031eba409412ca40f">mimeType</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> mimeType_; }</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno"><a class="line" href="classAsyncFw_1_1HttpServer_1_1Response.html#a49cefe2de7569c227d2282f9a832beab">  128</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classAsyncFw_1_1HttpServer_1_1Response.html#a49cefe2de7569c227d2282f9a832beab">addHeader</a>(<span class="keyword">const</span> std::string &amp;ba) { additionalHeaders.push_back(ba); }</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>    std::string <a class="code hl_function" href="classAsyncFw_1_1HttpServer_1_1Response.html#a5dd46db3eac7d1a07948d072e71c11f2">header</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="classAsyncFw_1_1HttpServer_1_1Response.html#a52925841696f5351ff43b46530c18390">send</a>();</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classAsyncFw_1_1HttpServer_1_1Response.html#a1e25071dfc003a6530edf35e0249e4b9">setContent</a>(<span class="keyword">const</span> <a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> &amp;);</div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classAsyncFw_1_1HttpServer_1_1Response.html#a1e25071dfc003a6530edf35e0249e4b9">setContent</a>(<span class="keyword">const</span> std::vector&lt;uint8_t&gt; &amp;);</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno"><a class="line" href="classAsyncFw_1_1HttpServer_1_1Response.html#a3bd5303884754553c8dcf33c3b98da3c">  139</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classAsyncFw_1_1HttpServer_1_1Response.html#a3bd5303884754553c8dcf33c3b98da3c">setStatusCode</a>(<span class="keyword">const</span> <a class="code hl_enumeration" href="classAsyncFw_1_1HttpServer_1_1Response.html#ade630649387805688da86e8d0adaeb67">StatusCode</a> &amp;_statusCode) { statusCode_ = _statusCode; }</div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno"><a class="line" href="classAsyncFw_1_1HttpServer_1_1Response.html#a23e3482fe2491dfa068dfda528087700">  141</a></span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="classAsyncFw_1_1HttpServer_1_1Response.html#a23e3482fe2491dfa068dfda528087700">fail</a>() { <span class="keywordflow">return</span> socket_ == <span class="keyword">nullptr</span>; }</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classAsyncFw_1_1HttpServer_1_1Response.html#afa24643371f00fe11d7df0f9caae4134">destroy</a>();</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span></div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno"><a class="line" href="classAsyncFw_1_1HttpServer_1_1Response.html#a763ad72776c70e9e6eb1aed082adbbed">  146</a></span>    <a class="code hl_enumeration" href="classAsyncFw_1_1HttpServer_1_1Response.html#ade630649387805688da86e8d0adaeb67">Response::StatusCode</a> <a class="code hl_function" href="classAsyncFw_1_1HttpServer_1_1Response.html#a763ad72776c70e9e6eb1aed082adbbed">statusCode</a>() { <span class="keywordflow">return</span> statusCode_; }</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno"><a class="line" href="classAsyncFw_1_1HttpServer_1_1Response.html#a1846436563e8710e368eefb4d6f9f726">  148</a></span>    <a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> <a class="code hl_function" href="classAsyncFw_1_1HttpServer_1_1Response.html#a1846436563e8710e368eefb4d6f9f726">content</a>() { <span class="keywordflow">return</span> content_; }</div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno"><a class="line" href="classAsyncFw_1_1HttpServer_1_1Response.html#ad33ca9292a0e375b907458eed9e70a67">  150</a></span>    <a class="code hl_class" href="classAsyncFw_1_1HttpServer_1_1TcpSocket.html">TcpSocket</a> *<a class="code hl_function" href="classAsyncFw_1_1HttpServer_1_1Response.html#ad33ca9292a0e375b907458eed9e70a67">socket</a>() { <span class="keywordflow">return</span> socket_; }</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span> </div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>  <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>    std::vector&lt;std::string&gt; additionalHeaders;</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>    <span class="keyword">mutable</span> <a class="code hl_enumeration" href="classAsyncFw_1_1HttpServer_1_1Response.html#ade630649387805688da86e8d0adaeb67">StatusCode</a> statusCode_ = Response::StatusCode::Ok;</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>    <span class="keyword">mutable</span> <span class="keywordtype">int</span> contentLength = 0;</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>    <span class="keyword">mutable</span> std::string mimeType_;</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>    <a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> content_;</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span> </div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>    std::string version = <span class="stringliteral">&quot;1.1&quot;</span>;</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>    <span class="keywordtype">bool</span> cors_headers_enabled = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>    <span class="keyword">mutable</span> <a class="code hl_class" href="classAsyncFw_1_1HttpServer_1_1TcpSocket.html">TcpSocket</a> *socket_ = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>  };</div>
+</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span></div>
+<div class="foldopen" id="foldopen00165" data-start="{" data-end="};">
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno"><a class="line" href="classAsyncFw_1_1HttpServer_1_1Request.html">  165</a></span>  <span class="keyword">class </span><a class="code hl_function" href="classAsyncFw_1_1HttpServer_1_1Request.html#adb47352909f6cc86597a33950b5f19a6">Request</a> {</div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>    <span class="keyword">friend</span> <span class="keyword">class </span>HttpServer;</div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span> </div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>  <span class="keyword">public</span>:</div>
+<div class="foldopen" id="foldopen00170" data-start="{" data-end="};">
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno"><a class="line" href="classAsyncFw_1_1HttpServer_1_1Request.html#a41d6c54e0fbca4f6d6bc65abb6a97827">  170</a></span>    <span class="keyword">enum class</span> <a class="code hl_enumeration" href="classAsyncFw_1_1HttpServer_1_1Request.html#a41d6c54e0fbca4f6d6bc65abb6a97827">Method</a> {</div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>      Unknown = 0x0000,</div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>      Get = 0x0001,</div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>      Put = 0x0002,</div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>      Delete = 0x0004,</div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>      Post = 0x0008,</div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>      Head = 0x0010,</div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>      Options = 0x0020,</div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>      Patch = 0x0040,</div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>      Connect = 0x0080,</div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>      Trace = 0x0100,</div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>      <span class="comment">//AnyKnown = Get | Put | Delete | Post | Head | Options | Patch | Connect | Trace,</span></div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>    };</div>
+</div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span></div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>    <a class="code hl_function" href="classAsyncFw_1_1HttpServer_1_1Request.html#adb47352909f6cc86597a33950b5f19a6">Request</a>(<span class="keyword">const</span> std::string_view &amp;);</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>    <span class="keyword">virtual</span> <a class="code hl_class" href="classAsyncFw_1_1HttpServer_1_1Request.html">~Request</a>();</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span></div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno"><a class="line" href="classAsyncFw_1_1HttpServer_1_1Request.html#a4f2b12b853417562150d8af0a5622ef0">  189</a></span>    <a class="code hl_enumeration" href="classAsyncFw_1_1HttpServer_1_1Request.html#a41d6c54e0fbca4f6d6bc65abb6a97827">Method</a> <a class="code hl_function" href="classAsyncFw_1_1HttpServer_1_1Request.html#a4f2b12b853417562150d8af0a5622ef0">method</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> method_; }</div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>    std::string <a class="code hl_function" href="classAsyncFw_1_1HttpServer_1_1Request.html#a86b3acbb445c3fde881a1fe31441a9c8">methodName</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>    std::string <a class="code hl_function" href="classAsyncFw_1_1HttpServer_1_1Request.html#afa488a05d879b6cbdca0853401352d19">path</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>    std::string <a class="code hl_function" href="classAsyncFw_1_1HttpServer_1_1Request.html#a52389751ddf9659da47c8a98ec71cf03">heaaderItemValue</a>(<span class="keyword">const</span> std::string &amp;) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>    std::string <a class="code hl_function" href="classAsyncFw_1_1HttpServer_1_1Request.html#a425bab4718cc7b8958b3db159335f471">queryItemValue</a>(<span class="keyword">const</span> std::string &amp;) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span></div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>    <a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> <a class="code hl_function" href="classAsyncFw_1_1HttpServer_1_1Request.html#ae9ef372f9c20c4500ac2c4a44ac3d5ec">content</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno"><a class="line" href="classAsyncFw_1_1HttpServer_1_1Request.html#ae6dd1000936e0237652c11a2845b3f7d">  202</a></span>    std::string <a class="code hl_function" href="classAsyncFw_1_1HttpServer_1_1Request.html#ae6dd1000936e0237652c11a2845b3f7d">peerAddress</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> response_-&gt;socket_-&gt;peerAddress(); }</div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span></div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno"><a class="line" href="classAsyncFw_1_1HttpServer_1_1Request.html#ae6490e010a9dc63eda1c86296bd5e7ed">  205</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classAsyncFw_1_1HttpServer_1_1Request.html#ae6490e010a9dc63eda1c86296bd5e7ed">setSocketData</a>(<span class="keyword">const</span> std::any &amp;data)<span class="keyword"> const </span>{ response_-&gt;socket_-&gt;data_ = data; }</div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno"><a class="line" href="classAsyncFw_1_1HttpServer_1_1Request.html#a80a8403dbddf8e7b6bd5f9f687f5e543">  207</a></span>    std::any &amp;<a class="code hl_function" href="classAsyncFw_1_1HttpServer_1_1Request.html#a80a8403dbddf8e7b6bd5f9f687f5e543">socketData</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> response_-&gt;socket_-&gt;data_; }</div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno"><a class="line" href="classAsyncFw_1_1HttpServer_1_1Request.html#a6183c383629786f1f45cc58a7cdba48c">  209</a></span>    <a class="code hl_class" href="classAsyncFw_1_1HttpServer_1_1Response.html">Response</a> *<a class="code hl_function" href="classAsyncFw_1_1HttpServer_1_1Request.html#a6183c383629786f1f45cc58a7cdba48c">response</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> response_; }</div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="classAsyncFw_1_1HttpServer_1_1Request.html#a2af52a5e15a5072bc2ae2561eb631a96">switchingProtocols</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span></div>
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="classAsyncFw_1_1HttpServer_1_1Request.html#a3ca24aa59e822e625aa5c75b85e0d70b">fail</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span> </div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>  <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>    <a class="code hl_enumeration" href="classAsyncFw_1_1HttpServer_1_1Request.html#a41d6c54e0fbca4f6d6bc65abb6a97827">Method</a> method_;</div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>    <a class="code hl_class" href="classAsyncFw_1_1HttpServer_1_1Response.html">Response</a> *response_ = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>    <span class="keyword">struct </span>Private;</div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>    Private &amp;private_;</div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>  };</div>
+</div>
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span> </div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>  <span class="keyword">class </span>HttpRule {</div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>    <span class="keyword">friend</span> <span class="keyword">class </span><a class="code hl_class" href="classAsyncFw_1_1HttpServer.html">HttpServer</a>;</div>
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span> </div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>  <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>    <span class="keyword">const</span> <a class="code hl_enumeration" href="classAsyncFw_1_1HttpServer_1_1Request.html#a41d6c54e0fbca4f6d6bc65abb6a97827">Request::Method</a> method;</div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>    ~HttpRule();</div>
+<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>    HttpRule(HttpRule &amp;&amp;);</div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span> </div>
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>  <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>    HttpRule(<span class="keyword">const</span> <a class="code hl_enumeration" href="classAsyncFw_1_1HttpServer_1_1Request.html#a41d6c54e0fbca4f6d6bc65abb6a97827">Request::Method</a> method, T &amp;f) : method(method), exec(new Invocable&lt;void(const Request &amp;)&gt;::Function(std::forward&lt;T&gt;(f))) {}</div>
+<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span>    HttpRule(HttpRule &amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>    Invocable&lt;void(<span class="keyword">const</span> Request &amp;)&gt;::Abstract *exec = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>  };</div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span> </div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>  <span class="keyword">using </span>RulesMap = std::multimap&lt;std::string, std::unique_ptr&lt;HttpRule&gt;&gt;;</div>
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>  <a class="code hl_function" href="classAsyncFw_1_1HttpServer.html#a522928fa8bf3b13b706ac997d4f100dd">HttpServer</a>(<span class="keyword">const</span> std::string &amp; = {});</div>
+<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>  <span class="keyword">virtual</span> <a class="code hl_function" href="classAsyncFw_1_1HttpServer.html#a522928fa8bf3b13b706ac997d4f100dd">~HttpServer</a>();</div>
+<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>  <span class="keyword">template</span> &lt;<span class="keyword">typename</span> A&gt;</div>
+<div class="foldopen" id="foldopen00247" data-start="{" data-end="}">
+<div class="line"><a id="l00247" name="l00247"></a><span class="lineno"><a class="line" href="classAsyncFw_1_1HttpServer.html#a5c32aee1be945562ee7c5601ecdc187b">  247</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classAsyncFw_1_1HttpServer.html#a5c32aee1be945562ee7c5601ecdc187b">addRoute</a>(<span class="keyword">const</span> std::string &amp;url, <a class="code hl_enumeration" href="classAsyncFw_1_1HttpServer_1_1Request.html#a41d6c54e0fbca4f6d6bc65abb6a97827">Request::Method</a> method, A action, <span class="keyword">const</span> std::any &amp;data = {}) {</div>
+<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>    addRule(url, method, [<span class="keyword">this</span>, action, data](<span class="keyword">const</span> Request &amp;request) {</div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>      <span class="keywordflow">if</span> (!peek || (*peek)(request, data)) action(request);</div>
+<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>    });</div>
+<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>    <span class="keywordflow">if</span> (findRule(url, Request::Method::Options) != rules.end()) <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>    addRule(url, Request::Method::Options, [<span class="keyword">this</span>, action, data](<span class="keyword">const</span> Request &amp;request) {</div>
+<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>      <span class="keywordflow">if</span> (cors_request_enabled) request.response()-&gt;setStatusCode(Response::StatusCode::Ok);</div>
+<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span>      <span class="keywordflow">else</span> { request.response()-&gt;setStatusCode(Response::StatusCode::Forbidden); }</div>
+<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>    });</div>
+<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>  }</div>
+</div>
+<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span></div>
+<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>  <span class="keyword">template</span> &lt;<span class="keyword">typename</span> O, <span class="keyword">typename</span> A&gt;</div>
+<div class="foldopen" id="foldopen00259" data-start="{" data-end="}">
+<div class="line"><a id="l00259" name="l00259"></a><span class="lineno"><a class="line" href="classAsyncFw_1_1HttpServer.html#a64e42967cdef1254142bcba26f246f07">  259</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classAsyncFw_1_1HttpServer.html#a64e42967cdef1254142bcba26f246f07">addRoute</a>(<span class="keyword">const</span> O <span class="keywordtype">object</span>, <span class="keyword">const</span> std::string &amp;url, <a class="code hl_enumeration" href="classAsyncFw_1_1HttpServer_1_1Request.html#a41d6c54e0fbca4f6d6bc65abb6a97827">Request::Method</a> method, A action, <span class="keyword">const</span> std::any &amp;data = {}) {</div>
+<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>    <a class="code hl_function" href="classAsyncFw_1_1HttpServer.html#a5c32aee1be945562ee7c5601ecdc187b">addRoute</a>(url, method, [<span class="keywordtype">object</span>, action](<span class="keyword">const</span> Request &amp;request) { <span class="keywordflow">return</span> (object-&gt;*action)(request); }, data);</div>
+<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>  }</div>
+</div>
+<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span></div>
+<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>  <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="foldopen" id="foldopen00264" data-start="{" data-end="}">
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno"><a class="line" href="classAsyncFw_1_1HttpServer.html#a414198c976b0e4fa621127ec7146b264">  264</a></span>  <span class="keywordtype">int</span> <a class="code hl_function" href="classAsyncFw_1_1HttpServer.html#a414198c976b0e4fa621127ec7146b264">sendToWebSockets</a>(<span class="keyword">const</span> T &amp;_data, <span class="keyword">const</span> <a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> &amp;_da) {</div>
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>    <a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> _f;</div>
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>    <span class="keywordtype">int</span> _r = 0;</div>
+<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>    <span class="keywordflow">for</span> (<a class="code hl_class" href="classAsyncFw_1_1HttpServer_1_1TcpSocket.html">TcpSocket</a> *socket : sockets) {</div>
+<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>      <span class="keywordflow">if</span> (!socket-&gt;ws_) <span class="keywordflow">continue</span>;</div>
+<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>      <span class="keywordflow">if</span> (socket-&gt;data_.has_value() &amp;&amp; _data == std::any_cast&lt;T&gt;(socket-&gt;data_)) {</div>
+<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>        <span class="keywordflow">if</span> (_f.empty()) {</div>
+<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>          <span class="keywordtype">int</span> _s = makeWebSocketFrame(_da, &amp;_f);</div>
+<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>          <span class="keywordflow">if</span> (_s &lt;= 0) <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>        }</div>
+<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>        socket-&gt;write(_f);</div>
+<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>        ++_r;</div>
+<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>      }</div>
+<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>    }</div>
+<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>    <span class="keywordflow">return</span> _r;</div>
+<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>  }</div>
+</div>
+<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span> </div>
+<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>  <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="foldopen" id="foldopen00284" data-start="{" data-end="}">
+<div class="line"><a id="l00284" name="l00284"></a><span class="lineno"><a class="line" href="classAsyncFw_1_1HttpServer.html#ad0bb08fb4a0ef0fd28961e29a8275bd0">  284</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classAsyncFw_1_1HttpServer.html#ad0bb08fb4a0ef0fd28961e29a8275bd0">setPeek</a>(T f) {</div>
+<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>    peek = <span class="keyword">new</span> Invocable&lt;bool(<span class="keyword">const</span> <a class="code hl_class" href="classAsyncFw_1_1HttpServer_1_1Request.html">Request</a> &amp;, std::any)&gt;::Function(std::forward&lt;T&gt;(f));</div>
+<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>  }</div>
+</div>
+<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span></div>
+<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>  <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="foldopen" id="foldopen00289" data-start="{" data-end="}">
+<div class="line"><a id="l00289" name="l00289"></a><span class="lineno"><a class="line" href="classAsyncFw_1_1HttpServer.html#ab3eeb1643d4482345afcd9f971c020ac">  289</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classAsyncFw_1_1HttpServer.html#ab3eeb1643d4482345afcd9f971c020ac">clearConnections</a>(<span class="keyword">const</span> T &amp;data) {</div>
+<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>    <span class="keywordflow">for</span> (<a class="code hl_class" href="classAsyncFw_1_1HttpServer_1_1TcpSocket.html">TcpSocket</a> *socket : sockets) {</div>
+<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>      <span class="keywordflow">if</span> (socket-&gt;data_.has_value() &amp;&amp; data == std::any_cast&lt;T&gt;(socket-&gt;data_)) <a class="code hl_function" href="classAsyncFw_1_1HttpServer.html#ad7dae50cc3787112980fa7075a60f811">disconnectFromHost</a>(socket);</div>
+<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>    }</div>
+<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span>  }</div>
+</div>
+<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span></div>
+<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classAsyncFw_1_1HttpServer.html#ad3761260dfd18899afc22c6f4bc0c556">clearConnections</a>();</div>
+<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span>  <span class="keywordtype">bool</span> <a class="code hl_function" href="classAsyncFw_1_1HttpServer.html#adbe9b1d1649b32cb126ae37fcd37914f">webSocketSend</a>(<span class="keyword">const</span> <a class="code hl_class" href="classAsyncFw_1_1HttpSocket.html">HttpSocket</a> *, <span class="keyword">const</span> <a class="code hl_class" href="classAsyncFw_1_1DataArray.html">DataArray</a> &amp;);</div>
+<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classAsyncFw_1_1HttpServer.html#a414198c976b0e4fa621127ec7146b264">sendToWebSockets</a>(<span class="keyword">const</span> std::string &amp;);</div>
+<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classAsyncFw_1_1HttpServer.html#ad7dae50cc3787112980fa7075a60f811">disconnectFromHost</a>(TcpSocket *socket);</div>
+<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span>  <span class="keywordtype">bool</span> <a class="code hl_function" href="classAsyncFw_1_1HttpServer.html#aa1ce738d4f20186506c1c4f4290a8a3d">listen</a>(uint16_t <a class="code hl_function" href="classAsyncFw_1_1HttpServer.html#ae1ea4f1df23f9d51820cd75d0adb7cac">port</a>);</div>
+<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classAsyncFw_1_1HttpServer.html#a8f4f0809de66b8631a9134fd823772f3">close</a>();</div>
+<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span>  uint16_t <a class="code hl_function" href="classAsyncFw_1_1HttpServer.html#ae1ea4f1df23f9d51820cd75d0adb7cac">port</a>();</div>
+<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span>  <span class="keywordtype">bool</span> <a class="code hl_function" href="classAsyncFw_1_1HttpServer.html#a1e3e419d07c51b25f0f4910db1e21b1f">hasTls</a>();</div>
+<div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classAsyncFw_1_1HttpServer.html#a313be3a920c19f58526ee184744699c1">setTlsContext</a>(<span class="keyword">const</span> <a class="code hl_class" href="classAsyncFw_1_1TlsContext.html">AsyncFw::TlsContext</a> &amp;);</div>
+<div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classAsyncFw_1_1HttpServer.html#a6806aba6259233c939f9c44f577314ce">setEnableCorsRequests</a>(<span class="keywordtype">bool</span>);</div>
+<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span></div>
+<div class="line"><a id="l00316" name="l00316"></a><span class="lineno"><a class="line" href="classAsyncFw_1_1HttpServer.html#ad52f34791fe5848d9ba891b209fcdbe0">  316</a></span>  <span class="keyword">static</span> <span class="keyword">inline</span> <a class="code hl_function" href="classAsyncFw_1_1HttpServer.html#a522928fa8bf3b13b706ac997d4f100dd">HttpServer</a> *<a class="code hl_function" href="classAsyncFw_1_1HttpServer.html#ad52f34791fe5848d9ba891b209fcdbe0">instance</a>() { <span class="keywordflow">return</span> instance_.value; }</div>
+<div class="line"><a id="l00318" name="l00318"></a><span class="lineno"><a class="line" href="classAsyncFw_1_1HttpServer.html#ab0370ceb3eec1973e97a19d65552845b">  318</a></span>  <a class="code hl_struct" href="structAsyncFw_1_1FunctionConnector_1_1Policy.html">AsyncFw::FunctionConnector&lt;int, const std::string &amp;, bool *&gt;::Policy</a>&lt;<a class="code hl_enumvalue" href="classAsyncFw_1_1AbstractFunctionConnector.html#ab248bd16cbfcac609f58d401abec4368a067289a8bc60cc7b0be0e021db9ce81d">AsyncFw::AbstractFunctionConnector::SyncOnly</a>&gt;::Protected&lt;HttpServer&gt; <a class="code hl_variable" href="classAsyncFw_1_1HttpServer.html#ab0370ceb3eec1973e97a19d65552845b">incoming</a>;</div>
+<div class="line"><a id="l00320" name="l00320"></a><span class="lineno"><a class="line" href="classAsyncFw_1_1HttpServer.html#abc4ca40dd30bf85e0328a65360e2038f">  320</a></span>  <a class="code hl_typedef" href="classAsyncFw_1_1FunctionConnector.html#a9fb8f282c88da90aeaab52a3c174d82b">AsyncFw::FunctionConnector&lt;const HttpSocket *, const DataArray &amp;&gt;::Protected</a>&lt;<a class="code hl_function" href="classAsyncFw_1_1HttpServer.html#a522928fa8bf3b13b706ac997d4f100dd">HttpServer</a>&gt; <a class="code hl_variable" href="classAsyncFw_1_1HttpServer.html#abc4ca40dd30bf85e0328a65360e2038f">webSocketReceived</a>;</div>
+<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span> </div>
+<div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span><span class="keyword">protected</span>:</div>
+<div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span>  <span class="keyword">virtual</span> <span class="keywordtype">void</span> fileUploadProgress(<a class="code hl_class" href="classAsyncFw_1_1HttpServer_1_1TcpSocket.html">TcpSocket</a> *, <span class="keywordtype">int</span>);</div>
+<div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span>  <span class="keywordtype">int</span> makeWebSocketFrame(<span class="keyword">const</span> <a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> &amp;, <a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> *, <span class="keywordtype">bool</span> = <span class="keyword">false</span>);</div>
+<div class="line"><a id="l00325" name="l00325"></a><span class="lineno">  325</span>  RulesMap rules;</div>
+<div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span> </div>
+<div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00328" name="l00328"></a><span class="lineno">  328</span>  <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a id="l00329" name="l00329"></a><span class="lineno">  329</span>  <span class="keywordtype">void</span> addRule(<span class="keyword">const</span> std::string &amp;url, <span class="keyword">const</span> <a class="code hl_enumeration" href="classAsyncFw_1_1HttpServer_1_1Request.html#a41d6c54e0fbca4f6d6bc65abb6a97827">Request::Method</a> method, T exec) {</div>
+<div class="line"><a id="l00330" name="l00330"></a><span class="lineno">  330</span>    <span class="keywordflow">if</span> (findRule(url, method) != rules.end()) <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00331" name="l00331"></a><span class="lineno">  331</span>    HttpServer::rules.emplace(url, std::make_unique&lt;HttpRule&gt;(HttpServer::HttpRule(method, exec)));</div>
+<div class="line"><a id="l00332" name="l00332"></a><span class="lineno">  332</span>  }</div>
+<div class="line"><a id="l00333" name="l00333"></a><span class="lineno">  333</span>  <span class="keywordtype">void</span> received(TcpSocket *, <span class="keyword">const</span> std::string_view &amp;);</div>
+<div class="line"><a id="l00334" name="l00334"></a><span class="lineno">  334</span>  <span class="keywordtype">bool</span> execRule(<span class="keyword">const</span> Request &amp;);</div>
+<div class="line"><a id="l00335" name="l00335"></a><span class="lineno">  335</span>  RulesMap::iterator findRule(<span class="keyword">const</span> std::string &amp;, <span class="keyword">const</span> <a class="code hl_enumeration" href="classAsyncFw_1_1HttpServer_1_1Request.html#a41d6c54e0fbca4f6d6bc65abb6a97827">Request::Method</a>);</div>
+<div class="line"><a id="l00336" name="l00336"></a><span class="lineno">  336</span>  std::vector&lt;TcpSocket *&gt; sockets;</div>
+<div class="line"><a id="l00337" name="l00337"></a><span class="lineno">  337</span>  <span class="keywordtype">bool</span> cors_request_enabled = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00338" name="l00338"></a><span class="lineno">  338</span>  <span class="keyword">static</span> <a class="code hl_class" href="classAsyncFw_1_1Instance.html">Instance&lt;HttpServer&gt;</a> instance_;</div>
+<div class="line"><a id="l00339" name="l00339"></a><span class="lineno">  339</span>  Invocable&lt;bool(<span class="keyword">const</span> Request &amp;, std::any)&gt;::Abstract *peek = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00340" name="l00340"></a><span class="lineno">  340</span>  <span class="keyword">struct </span>Private;</div>
+<div class="line"><a id="l00341" name="l00341"></a><span class="lineno">  341</span>  Private &amp;private_;</div>
+<div class="line"><a id="l00342" name="l00342"></a><span class="lineno">  342</span>};</div>
+</div>
+<div class="line"><a id="l00343" name="l00343"></a><span class="lineno">  343</span>}  <span class="comment">// namespace AsyncFw</span></div>
 <div class="ttc" id="aHttpSocket_8h_html"><div class="ttname"><a href="HttpSocket_8h.html">HttpSocket.h</a></div><div class="ttdoc">The HttpSocket class.</div></div>
 <div class="ttc" id="aInstance_8h_html"><div class="ttname"><a href="Instance_8h.html">Instance.h</a></div><div class="ttdoc">The AbstractInstance and Instance classes.</div></div>
 <div class="ttc" id="aTlsContext_8h_html"><div class="ttname"><a href="TlsContext_8h.html">TlsContext.h</a></div><div class="ttdoc">The TlsContext class.</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1AbstractFunctionConnector_html_ab248bd16cbfcac609f58d401abec4368a067289a8bc60cc7b0be0e021db9ce81d"><div class="ttname"><a href="classAsyncFw_1_1AbstractFunctionConnector.html#ab248bd16cbfcac609f58d401abec4368a067289a8bc60cc7b0be0e021db9ce81d">AsyncFw::AbstractFunctionConnector::SyncOnly</a></div><div class="ttdeci">@ SyncOnly</div><div class="ttdoc">Enforces Sync mode. Error if a subscriber explicitly requests type.</div><div class="ttdef"><b>Definition</b> FunctionConnector.h:33</div></div>
-<div class="ttc" id="aclassAsyncFw_1_1AbstractSocket_html_ab05320fcb1c111e06a56587b4abbb639"><div class="ttname"><a href="classAsyncFw_1_1AbstractSocket.html#ab05320fcb1c111e06a56587b4abbb639">AsyncFw::AbstractSocket::peerAddress</a></div><div class="ttdeci">std::string peerAddress() const</div><div class="ttdoc">Return peer address.</div><div class="ttdef"><b>Definition</b> AbstractSocket.cpp:393</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1DataArray_html"><div class="ttname"><a href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a></div><div class="ttdoc">The DataArray class, provides an array of bytes.</div><div class="ttdef"><b>Definition</b> DataArray.h:23</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1FunctionConnector_html_a9fb8f282c88da90aeaab52a3c174d82b"><div class="ttname"><a href="classAsyncFw_1_1FunctionConnector.html#a9fb8f282c88da90aeaab52a3c174d82b">AsyncFw::FunctionConnector::Protected</a></div><div class="ttdeci">internal::FunctionConnectorProtected&lt; AbstractFunctionConnector::Auto, T, Args... &gt; Protected</div><div class="ttdoc">A protected connector variant where only a single designated owner class can emit messages.</div><div class="ttdef"><b>Definition</b> FunctionConnector.h:226</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1HttpServer_1_1Request_html"><div class="ttname"><a href="classAsyncFw_1_1HttpServer_1_1Request.html">AsyncFw::HttpServer::Request</a></div><div class="ttdef"><b>Definition</b> HttpServer.h:165</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1HttpServer_1_1Request_html_a2af52a5e15a5072bc2ae2561eb631a96"><div class="ttname"><a href="classAsyncFw_1_1HttpServer_1_1Request.html#a2af52a5e15a5072bc2ae2561eb631a96">AsyncFw::HttpServer::Request::switchingProtocols</a></div><div class="ttdeci">bool switchingProtocols() const</div><div class="ttdoc">Checks if the client headers request a protocol switch (e.g., WebSocket upgrade).</div><div class="ttdef"><b>Definition</b> HttpServer.cpp:736</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1HttpServer_1_1Request_html_a3ca24aa59e822e625aa5c75b85e0d70b"><div class="ttname"><a href="classAsyncFw_1_1HttpServer_1_1Request.html#a3ca24aa59e822e625aa5c75b85e0d70b">AsyncFw::HttpServer::Request::fail</a></div><div class="ttdeci">bool fail() const</div><div class="ttdoc">Evaluates whether the request parser flagged any structural formatting errors.</div><div class="ttdef"><b>Definition</b> HttpServer.cpp:747</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1HttpServer_1_1Request_html_a41d6c54e0fbca4f6d6bc65abb6a97827"><div class="ttname"><a href="classAsyncFw_1_1HttpServer_1_1Request.html#a41d6c54e0fbca4f6d6bc65abb6a97827">AsyncFw::HttpServer::Request::Method</a></div><div class="ttdeci">Method</div><div class="ttdoc">Enumeration of supported HTTP request methods.</div><div class="ttdef"><b>Definition</b> HttpServer.h:170</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1HttpServer_1_1Request_html_a425bab4718cc7b8958b3db159335f471"><div class="ttname"><a href="classAsyncFw_1_1HttpServer_1_1Request.html#a425bab4718cc7b8958b3db159335f471">AsyncFw::HttpServer::Request::queryItemValue</a></div><div class="ttdeci">std::string queryItemValue(const std::string &amp;) const</div><div class="ttdoc">Extracts a specific key&#39;s value from the URL query string.</div><div class="ttdef"><b>Definition</b> HttpServer.cpp:728</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1HttpServer_1_1Request_html_a4f2b12b853417562150d8af0a5622ef0"><div class="ttname"><a href="classAsyncFw_1_1HttpServer_1_1Request.html#a4f2b12b853417562150d8af0a5622ef0">AsyncFw::HttpServer::Request::method</a></div><div class="ttdeci">Method method() const</div><div class="ttdoc">Returns the HTTP method of the request.</div><div class="ttdef"><b>Definition</b> HttpServer.h:189</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1HttpServer_1_1Request_html_a52389751ddf9659da47c8a98ec71cf03"><div class="ttname"><a href="classAsyncFw_1_1HttpServer_1_1Request.html#a52389751ddf9659da47c8a98ec71cf03">AsyncFw::HttpServer::Request::heaaderItemValue</a></div><div class="ttdeci">std::string heaaderItemValue(const std::string &amp;) const</div><div class="ttdoc">Extracts the value of a specific HTTP header.</div><div class="ttdef"><b>Definition</b> HttpServer.cpp:714</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1HttpServer_1_1Request_html_a6183c383629786f1f45cc58a7cdba48c"><div class="ttname"><a href="classAsyncFw_1_1HttpServer_1_1Request.html#a6183c383629786f1f45cc58a7cdba48c">AsyncFw::HttpServer::Request::response</a></div><div class="ttdeci">Response * response() const</div><div class="ttdoc">Links back to the responsive companion structure paired with this request.</div><div class="ttdef"><b>Definition</b> HttpServer.h:209</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1HttpServer_1_1Request_html_a80a8403dbddf8e7b6bd5f9f687f5e543"><div class="ttname"><a href="classAsyncFw_1_1HttpServer_1_1Request.html#a80a8403dbddf8e7b6bd5f9f687f5e543">AsyncFw::HttpServer::Request::socketData</a></div><div class="ttdeci">std::any &amp; socketData() const</div><div class="ttdoc">Retrieves the context state attached to the client socket.</div><div class="ttdef"><b>Definition</b> HttpServer.h:207</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1HttpServer_1_1Request_html_a86b3acbb445c3fde881a1fe31441a9c8"><div class="ttname"><a href="classAsyncFw_1_1HttpServer_1_1Request.html#a86b3acbb445c3fde881a1fe31441a9c8">AsyncFw::HttpServer::Request::methodName</a></div><div class="ttdeci">std::string methodName() const</div><div class="ttdoc">Returns the string representation of the HTTP method (e.g., &quot;GET&quot;, &quot;POST&quot;).</div><div class="ttdef"><b>Definition</b> HttpServer.cpp:710</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1HttpServer_1_1Request_html_adb47352909f6cc86597a33950b5f19a6"><div class="ttname"><a href="classAsyncFw_1_1HttpServer_1_1Request.html#adb47352909f6cc86597a33950b5f19a6">AsyncFw::HttpServer::Request::Request</a></div><div class="ttdeci">Request(const std::string_view &amp;)</div><div class="ttdoc">Parses and initializes a Request instance from a raw stream string view.</div><div class="ttdef"><b>Definition</b> HttpServer.cpp:689</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1HttpServer_1_1Request_html_ae6490e010a9dc63eda1c86296bd5e7ed"><div class="ttname"><a href="classAsyncFw_1_1HttpServer_1_1Request.html#ae6490e010a9dc63eda1c86296bd5e7ed">AsyncFw::HttpServer::Request::setSocketData</a></div><div class="ttdeci">void setSocketData(const std::any &amp;data) const</div><div class="ttdoc">Stores an arbitrary context/state object inside the current socket instance.</div><div class="ttdef"><b>Definition</b> HttpServer.h:205</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1HttpServer_1_1Request_html_ae6dd1000936e0237652c11a2845b3f7d"><div class="ttname"><a href="classAsyncFw_1_1HttpServer_1_1Request.html#ae6dd1000936e0237652c11a2845b3f7d">AsyncFw::HttpServer::Request::peerAddress</a></div><div class="ttdeci">std::string peerAddress() const</div><div class="ttdoc">Returns the client remote IP address.</div><div class="ttdef"><b>Definition</b> HttpServer.h:202</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1HttpServer_1_1Request_html_ae9ef372f9c20c4500ac2c4a44ac3d5ec"><div class="ttname"><a href="classAsyncFw_1_1HttpServer_1_1Request.html#ae9ef372f9c20c4500ac2c4a44ac3d5ec">AsyncFw::HttpServer::Request::content</a></div><div class="ttdeci">AsyncFw::DataArray content() const</div><div class="ttdoc">Extracts the body content payload from the incoming request.</div><div class="ttdef"><b>Definition</b> HttpServer.cpp:734</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1HttpServer_1_1Request_html_afa488a05d879b6cbdca0853401352d19"><div class="ttname"><a href="classAsyncFw_1_1HttpServer_1_1Request.html#afa488a05d879b6cbdca0853401352d19">AsyncFw::HttpServer::Request::path</a></div><div class="ttdeci">std::string path() const</div><div class="ttdoc">Returns the absolute path requested by the client (e.g., &quot;/index.html&quot;).</div><div class="ttdef"><b>Definition</b> HttpServer.cpp:712</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1HttpServer_1_1Response_html"><div class="ttname"><a href="classAsyncFw_1_1HttpServer_1_1Response.html">AsyncFw::HttpServer::Response</a></div><div class="ttdef"><b>Definition</b> HttpServer.h:53</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1HttpServer_1_1Response_html_a1846436563e8710e368eefb4d6f9f726"><div class="ttname"><a href="classAsyncFw_1_1HttpServer_1_1Response.html#a1846436563e8710e368eefb4d6f9f726">AsyncFw::HttpServer::Response::content</a></div><div class="ttdeci">AsyncFw::DataArray content()</div><div class="ttdoc">Retrieves the current response payload body.</div><div class="ttdef"><b>Definition</b> HttpServer.h:148</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1HttpServer_1_1Response_html_a1e25071dfc003a6530edf35e0249e4b9"><div class="ttname"><a href="classAsyncFw_1_1HttpServer_1_1Response.html#a1e25071dfc003a6530edf35e0249e4b9">AsyncFw::HttpServer::Response::setContent</a></div><div class="ttdeci">void setContent(const AsyncFw::DataArray &amp;)</div><div class="ttdoc">Sets the payload content from a raw DataArray.</div><div class="ttdef"><b>Definition</b> HttpServer.cpp:679</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1HttpServer_1_1Response_html_a23e3482fe2491dfa068dfda528087700"><div class="ttname"><a href="classAsyncFw_1_1HttpServer_1_1Response.html#a23e3482fe2491dfa068dfda528087700">AsyncFw::HttpServer::Response::fail</a></div><div class="ttdeci">bool fail()</div><div class="ttdoc">Checks if the response delivery is bound to fail due to a disconnected socket.</div><div class="ttdef"><b>Definition</b> HttpServer.h:141</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1HttpServer_1_1Response_html_a3bd5303884754553c8dcf33c3b98da3c"><div class="ttname"><a href="classAsyncFw_1_1HttpServer_1_1Response.html#a3bd5303884754553c8dcf33c3b98da3c">AsyncFw::HttpServer::Response::setStatusCode</a></div><div class="ttdeci">void setStatusCode(const StatusCode &amp;_statusCode)</div><div class="ttdoc">Assigns the HTTP status code for this response.</div><div class="ttdef"><b>Definition</b> HttpServer.h:139</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1HttpServer_1_1Response_html_a49cefe2de7569c227d2282f9a832beab"><div class="ttname"><a href="classAsyncFw_1_1HttpServer_1_1Response.html#a49cefe2de7569c227d2282f9a832beab">AsyncFw::HttpServer::Response::addHeader</a></div><div class="ttdeci">void addHeader(const std::string &amp;ba)</div><div class="ttdoc">Appends a custom HTTP header line to the response.</div><div class="ttdef"><b>Definition</b> HttpServer.h:128</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1HttpServer_1_1Response_html_a52925841696f5351ff43b46530c18390"><div class="ttname"><a href="classAsyncFw_1_1HttpServer_1_1Response.html#a52925841696f5351ff43b46530c18390">AsyncFw::HttpServer::Response::send</a></div><div class="ttdeci">bool send()</div><div class="ttdoc">Finalizes and sends the response over the network via the associated socket.</div><div class="ttdef"><b>Definition</b> HttpServer.cpp:644</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1HttpServer_1_1Response_html_a5dd46db3eac7d1a07948d072e71c11f2"><div class="ttname"><a href="classAsyncFw_1_1HttpServer_1_1Response.html#a5dd46db3eac7d1a07948d072e71c11f2">AsyncFw::HttpServer::Response::header</a></div><div class="ttdeci">std::string header() const</div><div class="ttdoc">Generates and returns the complete serialized HTTP header section.</div><div class="ttdef"><b>Definition</b> HttpServer.cpp:618</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1HttpServer_1_1Response_html_a6a20c4899ac30402f9135573b44975f8"><div class="ttname"><a href="classAsyncFw_1_1HttpServer_1_1Response.html#a6a20c4899ac30402f9135573b44975f8">AsyncFw::HttpServer::Response::setMimeType</a></div><div class="ttdeci">void setMimeType(const std::string &amp;mime)</div><div class="ttdoc">Sets the MIME content type of the response.</div><div class="ttdef"><b>Definition</b> HttpServer.h:124</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1HttpServer_1_1Response_html_a763ad72776c70e9e6eb1aed082adbbed"><div class="ttname"><a href="classAsyncFw_1_1HttpServer_1_1Response.html#a763ad72776c70e9e6eb1aed082adbbed">AsyncFw::HttpServer::Response::statusCode</a></div><div class="ttdeci">Response::StatusCode statusCode()</div><div class="ttdoc">Retrieves the currently assigned HTTP status code.</div><div class="ttdef"><b>Definition</b> HttpServer.h:146</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1HttpServer_1_1Response_html_a773fc6cae4a86db031eba409412ca40f"><div class="ttname"><a href="classAsyncFw_1_1HttpServer_1_1Response.html#a773fc6cae4a86db031eba409412ca40f">AsyncFw::HttpServer::Response::mimeType</a></div><div class="ttdeci">std::string mimeType() const</div><div class="ttdoc">Retrieves the current MIME type of the response.</div><div class="ttdef"><b>Definition</b> HttpServer.h:126</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1HttpServer_1_1Response_html_ad33ca9292a0e375b907458eed9e70a67"><div class="ttname"><a href="classAsyncFw_1_1HttpServer_1_1Response.html#ad33ca9292a0e375b907458eed9e70a67">AsyncFw::HttpServer::Response::socket</a></div><div class="ttdeci">TcpSocket * socket()</div><div class="ttdoc">Returns the underlying socket through which this response is transmitted.</div><div class="ttdef"><b>Definition</b> HttpServer.h:150</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1HttpServer_1_1Response_html_ade630649387805688da86e8d0adaeb67"><div class="ttname"><a href="classAsyncFw_1_1HttpServer_1_1Response.html#ade630649387805688da86e8d0adaeb67">AsyncFw::HttpServer::Response::StatusCode</a></div><div class="ttdeci">StatusCode</div><div class="ttdoc">Standard HTTP status codes (as per RFC 7231).</div><div class="ttdef"><b>Definition</b> HttpServer.h:58</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1HttpServer_1_1Response_html_afa24643371f00fe11d7df0f9caae4134"><div class="ttname"><a href="classAsyncFw_1_1HttpServer_1_1Response.html#afa24643371f00fe11d7df0f9caae4134">AsyncFw::HttpServer::Response::destroy</a></div><div class="ttdeci">void destroy()</div><div class="ttdoc">Destroys the response object and cleans up its allocated resources.</div><div class="ttdef"><b>Definition</b> HttpServer.cpp:639</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1HttpServer_1_1TcpSocket_html"><div class="ttname"><a href="classAsyncFw_1_1HttpServer_1_1TcpSocket.html">AsyncFw::HttpServer::TcpSocket</a></div><div class="ttdef"><b>Definition</b> HttpServer.h:33</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1HttpServer_1_1TcpSocket_html_a41557b69e30e25b97cbdda210afb7657"><div class="ttname"><a href="classAsyncFw_1_1HttpServer_1_1TcpSocket.html#a41557b69e30e25b97cbdda210afb7657">AsyncFw::HttpServer::TcpSocket::TcpSocket</a></div><div class="ttdeci">TcpSocket(HttpServer *)</div><div class="ttdoc">Constructs a new TcpSocket associated with the parent server.</div><div class="ttdef"><b>Definition</b> HttpServer.cpp:380</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1HttpServer_1_1TcpSocket_html_abb44001861ba7b24633b54ae90c2896c"><div class="ttname"><a href="classAsyncFw_1_1HttpServer_1_1TcpSocket.html#abb44001861ba7b24633b54ae90c2896c">AsyncFw::HttpServer::TcpSocket::readEvent</a></div><div class="ttdeci">void readEvent() override</div><div class="ttdoc">Triggered when new raw data is available in the socket for reading.   Overrides the base behavior to ...</div><div class="ttdef"><b>Definition</b> HttpServer.cpp:404</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1HttpServer_html"><div class="ttname"><a href="classAsyncFw_1_1HttpServer.html">AsyncFw::HttpServer</a></div><div class="ttdoc">Asynchronous HTTP and WebSocket server.</div><div class="ttdef"><b>Definition</b> HttpServer.h:25</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1HttpServer_html_a1e3e419d07c51b25f0f4910db1e21b1f"><div class="ttname"><a href="classAsyncFw_1_1HttpServer.html#a1e3e419d07c51b25f0f4910db1e21b1f">AsyncFw::HttpServer::hasTls</a></div><div class="ttdeci">bool hasTls()</div><div class="ttdoc">Returns true if a TLS cryptographic security context (HTTPS) is currently active.</div><div class="ttdef"><b>Definition</b> HttpServer.cpp:614</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1HttpServer_html_a313be3a920c19f58526ee184744699c1"><div class="ttname"><a href="classAsyncFw_1_1HttpServer.html#a313be3a920c19f58526ee184744699c1">AsyncFw::HttpServer::setTlsContext</a></div><div class="ttdeci">void setTlsContext(const AsyncFw::TlsContext &amp;)</div><div class="ttdoc">Sets up keypairs and root certificates to arm TLS operations (HTTPS mode).</div><div class="ttdef"><b>Definition</b> HttpServer.cpp:616</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1HttpServer_html_a414198c976b0e4fa621127ec7146b264"><div class="ttname"><a href="classAsyncFw_1_1HttpServer.html#a414198c976b0e4fa621127ec7146b264">AsyncFw::HttpServer::sendToWebSockets</a></div><div class="ttdeci">int sendToWebSockets(const T &amp;_data, const AsyncFw::DataArray &amp;_da)</div><div class="ttdoc">Broadcasts a binary array payload to active WebSocket connections matching a specific filter criteria...</div><div class="ttdef"><b>Definition</b> HttpServer.h:264</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1HttpServer_html_a522928fa8bf3b13b706ac997d4f100dd"><div class="ttname"><a href="classAsyncFw_1_1HttpServer.html#a522928fa8bf3b13b706ac997d4f100dd">AsyncFw::HttpServer::HttpServer</a></div><div class="ttdeci">HttpServer(const std::string &amp;={})</div><div class="ttdoc">Constructs the HTTP server instance.</div><div class="ttdef"><b>Definition</b> HttpServer.cpp:432</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1HttpServer_html_a5c32aee1be945562ee7c5601ecdc187b"><div class="ttname"><a href="classAsyncFw_1_1HttpServer.html#a5c32aee1be945562ee7c5601ecdc187b">AsyncFw::HttpServer::addRoute</a></div><div class="ttdeci">void addRoute(const std::string &amp;url, Request::Method method, A action, const std::any &amp;data={})</div><div class="ttdoc">Binds a free-standing function or a lambda expression as a route handler.   Automatically generates a...</div><div class="ttdef"><b>Definition</b> HttpServer.h:247</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1HttpServer_html_a64e42967cdef1254142bcba26f246f07"><div class="ttname"><a href="classAsyncFw_1_1HttpServer.html#a64e42967cdef1254142bcba26f246f07">AsyncFw::HttpServer::addRoute</a></div><div class="ttdeci">void addRoute(const O object, const std::string &amp;url, Request::Method method, A action, const std::any &amp;data={})</div><div class="ttdoc">Binds a specific class instance method as a route handler.</div><div class="ttdef"><b>Definition</b> HttpServer.h:259</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1HttpServer_html_a6806aba6259233c939f9c44f577314ce"><div class="ttname"><a href="classAsyncFw_1_1HttpServer.html#a6806aba6259233c939f9c44f577314ce">AsyncFw::HttpServer::setEnableCorsRequests</a></div><div class="ttdeci">void setEnableCorsRequests(bool)</div><div class="ttdoc">Toggles whether automatic default responses for CORS validation logic (OPTIONS requests) are enabled ...</div><div class="ttdef"><b>Definition</b> HttpServer.cpp:612</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1HttpServer_html_a8f4f0809de66b8631a9134fd823772f3"><div class="ttname"><a href="classAsyncFw_1_1HttpServer.html#a8f4f0809de66b8631a9134fd823772f3">AsyncFw::HttpServer::close</a></div><div class="ttdeci">void close()</div><div class="ttdoc">Stops the server listener immediately, preventing any new connections from being accepted.</div><div class="ttdef"><b>Definition</b> HttpServer.cpp:535</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1HttpServer_html_aa1ce738d4f20186506c1c4f4290a8a3d"><div class="ttname"><a href="classAsyncFw_1_1HttpServer.html#aa1ce738d4f20186506c1c4f4290a8a3d">AsyncFw::HttpServer::listen</a></div><div class="ttdeci">bool listen(uint16_t port)</div><div class="ttdoc">Binds to all available interfaces (0.0.0.0) and starts listening for incoming traffic on a specific T...</div><div class="ttdef"><b>Definition</b> HttpServer.cpp:510</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1HttpServer_html_ab0370ceb3eec1973e97a19d65552845b"><div class="ttname"><a href="classAsyncFw_1_1HttpServer.html#ab0370ceb3eec1973e97a19d65552845b">AsyncFw::HttpServer::incoming</a></div><div class="ttdeci">AsyncFw::FunctionConnector&lt; int, const std::string &amp;, bool * &gt;::Policy&lt; AsyncFw::AbstractFunctionConnector::SyncOnly &gt;::Protected&lt; HttpServer &gt; incoming</div><div class="ttdoc">Signal connector emitted whenever a fresh client socket establishes a network link.</div><div class="ttdef"><b>Definition</b> HttpServer.h:318</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1HttpServer_html_ab3eeb1643d4482345afcd9f971c020ac"><div class="ttname"><a href="classAsyncFw_1_1HttpServer.html#ab3eeb1643d4482345afcd9f971c020ac">AsyncFw::HttpServer::clearConnections</a></div><div class="ttdeci">void clearConnections(const T &amp;data)</div><div class="ttdoc">Explicitly severs connections with active sockets holding custom user metadata matching data.</div><div class="ttdef"><b>Definition</b> HttpServer.h:289</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1HttpServer_html_abc4ca40dd30bf85e0328a65360e2038f"><div class="ttname"><a href="classAsyncFw_1_1HttpServer.html#abc4ca40dd30bf85e0328a65360e2038f">AsyncFw::HttpServer::webSocketReceived</a></div><div class="ttdeci">AsyncFw::FunctionConnector&lt; const HttpSocket *, const DataArray &amp; &gt;::Protected&lt; HttpServer &gt; webSocketReceived</div><div class="ttdoc">Signal connector emitted when incoming validated WebSocket framed blocks are assembled for read opera...</div><div class="ttdef"><b>Definition</b> HttpServer.h:320</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1HttpServer_html_ad0bb08fb4a0ef0fd28961e29a8275bd0"><div class="ttname"><a href="classAsyncFw_1_1HttpServer.html#ad0bb08fb4a0ef0fd28961e29a8275bd0">AsyncFw::HttpServer::setPeek</a></div><div class="ttdeci">void setPeek(T f)</div><div class="ttdoc">Assigns a global interceptor/validation hook (Peek) evaluated prior to any route action execution....</div><div class="ttdef"><b>Definition</b> HttpServer.h:284</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1HttpServer_html_ad3761260dfd18899afc22c6f4bc0c556"><div class="ttname"><a href="classAsyncFw_1_1HttpServer.html#ad3761260dfd18899afc22c6f4bc0c556">AsyncFw::HttpServer::clearConnections</a></div><div class="ttdeci">void clearConnections()</div><div class="ttdoc">Forcefully terminates all active socket connections currently retained by the server.</div><div class="ttdef"><b>Definition</b> HttpServer.cpp:478</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1HttpServer_html_ad52f34791fe5848d9ba891b209fcdbe0"><div class="ttname"><a href="classAsyncFw_1_1HttpServer.html#ad52f34791fe5848d9ba891b209fcdbe0">AsyncFw::HttpServer::instance</a></div><div class="ttdeci">static HttpServer * instance()</div><div class="ttdoc">Accessor to fetch the globally managed singleton instance reference of the active HttpServer.</div><div class="ttdef"><b>Definition</b> HttpServer.h:316</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1HttpServer_html_ad7dae50cc3787112980fa7075a60f811"><div class="ttname"><a href="classAsyncFw_1_1HttpServer.html#ad7dae50cc3787112980fa7075a60f811">AsyncFw::HttpServer::disconnectFromHost</a></div><div class="ttdeci">void disconnectFromHost(TcpSocket *socket)</div><div class="ttdoc">Disconnects a specific client socket and clears it from the internally managed pool.</div><div class="ttdef"><b>Definition</b> HttpServer.cpp:484</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1HttpServer_html_adbe9b1d1649b32cb126ae37fcd37914f"><div class="ttname"><a href="classAsyncFw_1_1HttpServer.html#adbe9b1d1649b32cb126ae37fcd37914f">AsyncFw::HttpServer::webSocketSend</a></div><div class="ttdeci">bool webSocketSend(const HttpSocket *, const DataArray &amp;)</div><div class="ttdoc">Dispatches a pre-formatted frame envelope to an explicit WebSocket connection.</div><div class="ttdef"><b>Definition</b> HttpServer.cpp:489</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1HttpServer_html_ae1ea4f1df23f9d51820cd75d0adb7cac"><div class="ttname"><a href="classAsyncFw_1_1HttpServer.html#ae1ea4f1df23f9d51820cd75d0adb7cac">AsyncFw::HttpServer::port</a></div><div class="ttdeci">uint16_t port()</div><div class="ttdoc">Returns the local TCP port number the server listener is actively bound to.</div><div class="ttdef"><b>Definition</b> HttpServer.cpp:565</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1HttpSocket_html"><div class="ttname"><a href="classAsyncFw_1_1HttpSocket.html">AsyncFw::HttpSocket</a></div><div class="ttdoc">The HttpSocket class.</div><div class="ttdef"><b>Definition</b> HttpSocket.h:20</div></div>
-<div class="ttc" id="aclassAsyncFw_1_1HttpSocket_html_a7163448458d68f433dbdb214a6175be3"><div class="ttname"><a href="classAsyncFw_1_1HttpSocket.html#a7163448458d68f433dbdb214a6175be3">AsyncFw::HttpSocket::readEvent</a></div><div class="ttdeci">void readEvent() override</div><div class="ttdoc">Called when there is data to read.</div><div class="ttdef"><b>Definition</b> HttpSocket.cpp:54</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1Instance_html"><div class="ttname"><a href="classAsyncFw_1_1Instance.html">AsyncFw::Instance</a></div><div class="ttdoc">A template-based global registry wrapper for managing application-wide default objects (Global Defaul...</div><div class="ttdef"><b>Definition</b> Instance.h:43</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1LogStream_html"><div class="ttname"><a href="classAsyncFw_1_1LogStream.html">AsyncFw::LogStream</a></div><div class="ttdoc">A high-performance, thread-safe logging stream utility utilizing RAII execution semantics.</div><div class="ttdef"><b>Definition</b> LogStream.h:50</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1TlsContext_html"><div class="ttname"><a href="classAsyncFw_1_1TlsContext.html">AsyncFw::TlsContext</a></div><div class="ttdoc">Manages cryptographic configurations, security profiles, credentials, and certificates for TLS sessio...</div><div class="ttdef"><b>Definition</b> TlsContext.h:26</div></div>
-<div class="ttc" id="astructAsyncFw_1_1AnyData_html_adc2b97818be013fcf912ca9c8e086fa3"><div class="ttname"><a href="structAsyncFw_1_1AnyData.html#adc2b97818be013fcf912ca9c8e086fa3">AsyncFw::AnyData::data_</a></div><div class="ttdeci">std::any data_</div><div class="ttdoc">Storage container for holding type-safe variables on the fly.</div><div class="ttdef"><b>Definition</b> AnyData.h:36</div></div>
 <div class="ttc" id="astructAsyncFw_1_1FunctionConnector_1_1Policy_html"><div class="ttname"><a href="structAsyncFw_1_1FunctionConnector_1_1Policy.html">AsyncFw::FunctionConnector::Policy</a></div><div class="ttdef"><b>Definition</b> FunctionConnector.h:230</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
