@@ -3,7 +3,6 @@ var classAsyncFw_1_1MulticastDns =
     [ "Host", "structAsyncFw_1_1MulticastDns_1_1Host.html", "structAsyncFw_1_1MulticastDns_1_1Host" ],
     [ "QuerierMode", "classAsyncFw_1_1MulticastDns.html#a4db656bae572e9b28e1ebef4b6f05465", [
       [ "Multicast", "classAsyncFw_1_1MulticastDns.html#a4db656bae572e9b28e1ebef4b6f05465a846f46532ca6212d12ee0d1024f6de98", null ],
-      [ "Unicast5353", "classAsyncFw_1_1MulticastDns.html#a4db656bae572e9b28e1ebef4b6f05465ae8dd56aab86b4ccd4ebc37409458d36c", null ],
       [ "Unicast", "classAsyncFw_1_1MulticastDns.html#a4db656bae572e9b28e1ebef4b6f05465a1951dca893badeb1f1992fa9805ebb91", null ]
     ] ],
     [ "MulticastDns", "classAsyncFw_1_1MulticastDns.html#ab9bfb41e98cd4ecf1cc63f8acd023afd", null ],

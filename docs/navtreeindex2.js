@@ -1,6 +1,5 @@
 var NAVTREEINDEX2 =
 {
-"functions_w.html":[2,3,0,21],
 "functions_~.html":[2,3,0,22],
 "group__coroutine__api.html":[1,0],
 "group__coroutine__api.html#ga0005f3892c4f008098e0ee2634481d5a":[1,0,0],

@@ -1,33 +1,35 @@
 <map id="AsyncFw::FunctionConnector&lt; Args &gt;" name="AsyncFw::FunctionConnector&lt; Args &gt;">
-<area shape="rect" id="Node000001" title="Provides a thread&#45;safe, publisher&#45;subscriber mechanism to establish sender&#45;to&#45;receivers connections." alt="" coords="5,613,200,656"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="479,47,673,105"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="104,597,116,483,138,335,153,260,172,194,195,140,208,119,222,103,250,83,281,68,313,58,347,52,415,48,480,54,476,57,415,53,348,57,315,63,283,73,253,88,225,107,212,122,200,142,178,195,159,262,143,335,121,484,109,598"/>
-<area shape="rect" id="Node000003" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="457,129,694,188"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="106,597,120,500,144,376,160,315,178,260,199,216,222,186,239,176,262,168,320,158,388,153,459,153,454,156,388,158,320,163,263,173,241,181,225,190,203,218,183,262,165,316,149,377,125,501,111,598"/>
-<area shape="rect" id="Node000004" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="460,212,692,287"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="102,597,108,529,126,443,141,398,162,355,189,316,222,283,254,273,313,264,462,253,458,257,313,269,256,278,225,288,193,320,167,358,146,400,131,444,113,529,107,598"/>
-<area shape="rect" id="Node000005" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="479,311,673,353"/>
-<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="105,597,116,542,137,476,152,443,171,411,194,382,222,358,251,340,283,327,349,312,416,308,480,313,476,316,416,314,350,317,284,332,254,345,225,362,198,386,176,414,157,445,142,478,121,544,111,598"/>
-<area shape="rect" id="Node000006" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="479,377,673,436"/>
-<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="112,598,127,558,150,513,181,469,201,450,222,434,268,418,333,408,480,403,476,407,333,414,269,423,225,438,204,454,185,472,155,515,132,560,117,600"/>
-<area shape="rect" id="Node000007" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="450,461,702,504"/>
-<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="124,599,166,551,193,528,223,510,263,498,319,489,451,482,447,486,320,495,264,503,225,514,196,532,170,554,129,602"/>
-<area shape="rect" id="Node000008" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="479,529,673,572"/>
-<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="163,605,223,585,289,572,356,562,480,552,476,556,356,568,290,577,224,591,167,609"/>
-<area shape="rect" id="Node000009" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="479,596,673,655"/>
-<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="214,633,426,631,480,630,476,633,426,636,216,638"/>
-<area shape="rect" id="Node000010" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="479,679,673,737"/>
-<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="157,660,224,684,289,696,356,704,481,710,476,712,356,709,289,702,223,689,159,666"/>
-<area shape="rect" id="Node000011" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="468,761,684,804"/>
-<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="131,665,174,705,198,723,225,738,285,759,348,773,410,780,470,785,465,787,410,786,347,778,283,764,223,742,195,727,170,709,132,670"/>
-<area shape="rect" id="Node000012" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="479,828,673,871"/>
-<area shape="poly" id="edge11_Node000001_Node000012" title=" " alt="" coords="117,668,136,705,159,744,188,781,225,811,255,826,286,838,352,853,418,859,481,860,476,862,418,864,351,858,285,843,252,831,222,816,185,785,154,747,131,707,117,673"/>
-<area shape="rect" id="Node000013" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="472,895,680,953"/>
-<area shape="poly" id="edge12_Node000001_Node000013" title=" " alt="" coords="108,669,120,727,141,793,156,827,175,858,198,886,225,910,253,926,283,937,346,950,411,951,474,947,469,949,411,957,346,955,281,942,251,930,222,914,194,890,170,861,151,829,136,795,115,728,107,674"/>
-<area shape="rect" id="Node000014" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="474,977,678,1020"/>
-<area shape="poly" id="edge13_Node000001_Node000014" title=" " alt="" coords="104,669,112,741,130,827,145,871,165,913,192,950,225,982,254,1000,286,1013,320,1021,354,1026,423,1026,488,1020,483,1021,423,1031,354,1031,319,1026,284,1018,252,1005,222,986,188,954,161,915,140,873,125,828,107,741,104,674"/>
-<area shape="rect" id="Node000015" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="479,1044,673,1087"/>
-<area shape="poly" id="edge14_Node000001_Node000015" title=" " alt="" coords="109,669,126,764,150,882,166,939,184,990,204,1031,225,1057,243,1066,267,1072,332,1079,406,1078,481,1076,475,1076,406,1083,331,1084,266,1078,241,1071,222,1061,199,1034,179,992,161,941,145,883,121,765,108,674"/>
-<area shape="rect" id="Node000016" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="479,1115,673,1157"/>
-<area shape="poly" id="edge15_Node000001_Node000016" title=" " alt="" coords="107,669,122,780,144,919,160,988,179,1050,200,1099,225,1130,257,1150,291,1163,328,1171,365,1174,439,1169,503,1158,508,1158,440,1174,365,1179,327,1176,290,1168,254,1155,222,1134,196,1101,174,1051,155,989,139,920,117,780,107,674"/>
+<area shape="rect" id="Node000001" title="Provides a thread&#45;safe, publisher&#45;subscriber mechanism to establish sender&#45;to&#45;receivers connections." alt="" coords="5,654,200,697"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="492,49,686,107"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="103,638,114,517,135,356,150,276,170,203,193,145,207,122,222,105,251,84,283,69,318,58,354,51,425,48,493,55,489,58,425,54,354,57,319,63,285,74,254,89,225,109,211,125,198,147,175,205,156,277,140,357,119,518,109,639"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="470,131,708,190"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="105,638,118,534,141,399,157,332,176,272,197,223,222,191,240,180,264,171,325,160,397,155,472,155,468,158,398,160,326,166,265,177,242,185,225,195,202,226,181,274,162,333,147,400,123,535,110,639"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="473,214,704,289"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="101,638,106,565,123,473,138,425,159,378,187,335,222,298,256,286,318,275,474,259,471,263,318,281,257,292,225,303,191,339,164,380,143,426,128,474,111,566,106,639"/>
+<area shape="rect" id="Node000005" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="492,313,686,355"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="103,638,112,576,131,500,146,461,166,424,191,390,222,361,242,351,269,342,337,332,416,328,493,329,489,332,416,333,338,338,270,348,244,356,225,365,195,393,171,426,151,463,136,502,117,577,108,639"/>
+<area shape="rect" id="Node000006" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="492,379,686,438"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="108,638,121,590,143,534,176,480,197,456,222,436,260,426,328,418,493,410,489,413,328,423,261,431,225,440,201,460,181,483,148,537,126,592,113,639"/>
+<area shape="rect" id="Node000007" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="463,463,715,506"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="117,639,134,607,157,571,187,538,222,512,265,498,324,489,464,482,460,486,325,494,266,503,225,516,190,542,162,575,138,609,122,641"/>
+<area shape="rect" id="Node000008" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="492,530,686,573"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="136,642,176,613,223,589,272,577,341,567,493,555,489,558,341,572,273,582,225,594,179,617,141,645"/>
+<area shape="rect" id="Node000009" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="492,597,686,655"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="214,661,493,634,489,638,216,666"/>
+<area shape="rect" id="Node000010" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="479,679,699,738"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="177,699,224,709,289,716,356,718,480,717,476,720,356,724,289,721,223,714,180,704"/>
+<area shape="rect" id="Node000011" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="492,762,686,821"/>
+<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="132,705,175,741,199,756,225,769,292,788,362,798,430,801,493,800,489,803,430,806,361,803,291,793,223,774,196,761,172,745,134,710"/>
+<area shape="rect" id="Node000012" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="481,845,696,887"/>
+<area shape="poly" id="edge11_Node000001_Node000012" title=" " alt="" coords="120,708,140,740,163,774,191,805,225,830,287,856,353,870,419,876,483,877,478,879,419,881,352,876,285,861,222,835,188,809,158,777,135,743,120,714"/>
+<area shape="rect" id="Node000013" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="492,911,686,954"/>
+<area shape="poly" id="edge12_Node000001_Node000013" title=" " alt="" coords="111,709,127,758,148,812,181,865,201,887,225,906,256,923,288,936,358,950,427,953,494,950,489,952,427,958,357,955,287,941,253,928,222,911,198,891,177,868,144,814,122,760,111,714"/>
+<area shape="rect" id="Node000014" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="485,978,693,1037"/>
+<area shape="poly" id="edge13_Node000001_Node000014" title=" " alt="" coords="105,710,114,778,132,859,147,901,167,940,193,975,225,1004,254,1021,286,1033,319,1040,353,1044,421,1043,487,1036,482,1037,421,1048,353,1050,318,1046,284,1038,252,1025,222,1008,189,978,162,943,142,903,127,861,108,779,104,715"/>
+<area shape="rect" id="Node000015" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="487,1061,691,1103"/>
+<area shape="poly" id="edge14_Node000001_Node000015" title=" " alt="" coords="109,709,127,800,152,911,168,964,185,1012,204,1050,225,1075,244,1084,269,1091,335,1097,411,1096,489,1093,484,1094,412,1101,335,1102,268,1096,242,1089,222,1079,200,1053,180,1014,163,966,147,912,122,801,109,714"/>
+<area shape="rect" id="Node000016" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="492,1127,686,1170"/>
+<area shape="poly" id="edge15_Node000001_Node000016" title=" " alt="" coords="108,709,125,810,148,936,164,998,182,1054,203,1098,225,1127,244,1137,270,1144,337,1153,415,1155,494,1155,488,1156,415,1161,337,1159,268,1150,242,1142,222,1131,198,1101,177,1056,159,1000,143,937,119,811,108,714"/>
+<area shape="rect" id="Node000017" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="492,1198,686,1241"/>
+<area shape="poly" id="edge16_Node000001_Node000017" title=" " alt="" coords="107,709,120,827,142,977,157,1052,176,1119,199,1172,212,1192,225,1207,257,1228,292,1242,330,1250,368,1254,445,1251,510,1241,516,1241,445,1256,368,1260,329,1256,291,1247,255,1232,222,1211,208,1195,194,1175,171,1120,152,1053,137,978,115,827,106,715"/>
 </map>

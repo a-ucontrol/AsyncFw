@@ -118,8 +118,7 @@ Classes</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 id="header-pub-types" class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
 <tr class="memitem:a4db656bae572e9b28e1ebef4b6f05465" id="r_a4db656bae572e9b28e1ebef4b6f05465"><td class="memItemLeft">enum &#160;</td><td class="memItemRight"><a class="el" href="#a4db656bae572e9b28e1ebef4b6f05465">QuerierMode</a> : uint8_t { <a class="el" href="#a4db656bae572e9b28e1ebef4b6f05465a846f46532ca6212d12ee0d1024f6de98">Multicast</a> = 0
-, <a class="el" href="#a4db656bae572e9b28e1ebef4b6f05465ae8dd56aab86b4ccd4ebc37409458d36c">Unicast5353</a> = 1
-, <a class="el" href="#a4db656bae572e9b28e1ebef4b6f05465a1951dca893badeb1f1992fa9805ebb91">Unicast</a> = 2
+, <a class="el" href="#a4db656bae572e9b28e1ebef4b6f05465a1951dca893badeb1f1992fa9805ebb91">Unicast</a> = 1
  }</td></tr>
 <tr class="memdesc:a4db656bae572e9b28e1ebef4b6f05465"><td class="mdescLeft">&#160;</td><td class="mdescRight">Operation modes for the network query browser.  <a href="#a4db656bae572e9b28e1ebef4b6f05465">More...</a><br /></td></tr>
 </table><table class="memberdecls">
@@ -201,9 +200,6 @@ Public Attributes</h2></td></tr>
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a4db656bae572e9b28e1ebef4b6f05465a846f46532ca6212d12ee0d1024f6de98" name="a4db656bae572e9b28e1ebef4b6f05465a846f46532ca6212d12ee0d1024f6de98"></a>Multicast&#160;</td><td class="fielddoc"><p>Standard mDNS multicast mode. </p>
 <p>Binds to the standard mDNS port (5353). Queries are sent via multicast, and responses from remote nodes are also broadcasted via multicast to the entire network. Allows full caching by all peers but increases network traffic. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a4db656bae572e9b28e1ebef4b6f05465ae8dd56aab86b4ccd4ebc37409458d36c" name="a4db656bae572e9b28e1ebef4b6f05465ae8dd56aab86b4ccd4ebc37409458d36c"></a>Unicast5353&#160;</td><td class="fielddoc"><p>Hybrid unicast mode via the standard port. </p>
-<p>Binds to the standard mDNS port (5353). Queries are sent via multicast, but remote nodes are requested to send their responses via Unicast directly to this node. This minimizes network noise while still allowing the socket to passively capture unsolicited background Announce and Goodbye events from peers. </p><dl class="section warning"><dt>Warning</dt><dd>If multiple mDNS processes, services, or daemon instances run on the SAME local device, the OS will load-balance unicast traffic on port 5353 across their sockets. This breaks unicast response delivery, resulting in broken host discovery. Use Multicast or ephemeral Unicast mode for local loopback testing if other mDNS services are active on the machine. </dd></dl>
-</td></tr>
 <tr><td class="fieldname"><a id="a4db656bae572e9b28e1ebef4b6f05465a1951dca893badeb1f1992fa9805ebb91" name="a4db656bae572e9b28e1ebef4b6f05465a1951dca893badeb1f1992fa9805ebb91"></a>Unicast&#160;</td><td class="fielddoc"><p>Legacy Unicast mode via an ephemeral port. </p>
 <p>Binds to a random, OS-assigned ephemeral port (0). Queries are sent via multicast, and responses are returned directly via Unicast. Useful as a failover when port 5353 is locked by another system daemon, but cannot capture unsolicited background multicast announcements or goodbyes. </p>
 </td></tr>
@@ -239,7 +235,6 @@ Public Attributes</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section warning"><dt>Warning</dt><dd>If using Unicast5353 mode while multiple mDNS processes, services, or daemon instances are active on the SAME local device, the OS will load-balance unicast traffic on port 5353 across their sockets. This breaks unicast response delivery, causing broken host discovery and missing ports. Use Multicast or Unicast mode if other mDNS services are running on the machine. </dd></dl>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="MulticastDns_2main_8cpp-example.html#a14">MulticastDns/main.cpp</a>.</dd>
 </dl>
 <div id="dynsection-1" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>

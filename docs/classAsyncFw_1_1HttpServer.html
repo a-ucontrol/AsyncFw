@@ -107,7 +107,7 @@ $(function(){initNavTree('classAsyncFw_1_1HttpServer.html','','classAsyncFw_1_1H
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1HttpServer__coll__graph.svg" width="244" height="304"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1HttpServer__coll__graph.svg" width="1012" height="156"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-types" class="groupheader"><a id="pub-types" name="pub-types"></a>
@@ -139,6 +139,8 @@ template&lt;typename T&gt; </td></tr>
 <tr class="memitem:a2d9f5dda4b025b9885180808c488503e template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><b>clearConnections</b> (const T &amp;_data)</td></tr>
 <tr class="memitem:a614589d105eadadf6e125eaccbb9d3b1" id="r_a614589d105eadadf6e125eaccbb9d3b1"><td class="memItemLeft"><a id="a614589d105eadadf6e125eaccbb9d3b1" name="a614589d105eadadf6e125eaccbb9d3b1"></a>
 void&#160;</td><td class="memItemRight"><b>clearConnections</b> ()</td></tr>
+<tr class="memitem:adbe9b1d1649b32cb126ae37fcd37914f" id="r_adbe9b1d1649b32cb126ae37fcd37914f"><td class="memItemLeft"><a id="adbe9b1d1649b32cb126ae37fcd37914f" name="adbe9b1d1649b32cb126ae37fcd37914f"></a>
+bool&#160;</td><td class="memItemRight"><b>webSocketSend</b> (const <a class="el" href="classAsyncFw_1_1HttpSocket.html">HttpSocket</a> *, const <a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> &amp;)</td></tr>
 <tr class="memitem:ac1225b4e5fe3b38d5c6ef4c664d0a59b" id="r_ac1225b4e5fe3b38d5c6ef4c664d0a59b"><td class="memItemLeft"><a id="ac1225b4e5fe3b38d5c6ef4c664d0a59b" name="ac1225b4e5fe3b38d5c6ef4c664d0a59b"></a>
 void&#160;</td><td class="memItemRight"><b>sendToWebSockets</b> (const std::string &amp;)</td></tr>
 <tr class="memitem:ad7dae50cc3787112980fa7075a60f811" id="r_ad7dae50cc3787112980fa7075a60f811"><td class="memItemLeft"><a id="ad7dae50cc3787112980fa7075a60f811" name="ad7dae50cc3787112980fa7075a60f811"></a>
@@ -167,13 +169,15 @@ static HttpServer *&#160;</td><td class="memItemRight"><b>instance</b> ()</td></
 Public Attributes</h2></td></tr>
 <tr class="memitem:ab0370ceb3eec1973e97a19d65552845b" id="r_ab0370ceb3eec1973e97a19d65552845b"><td class="memItemLeft"><a id="ab0370ceb3eec1973e97a19d65552845b" name="ab0370ceb3eec1973e97a19d65552845b"></a>
 <a class="el" href="classAsyncFw_1_1FunctionConnector.html">AsyncFw::FunctionConnector</a>&lt; int, const std::string &amp;, bool * &gt;::Policy&lt; <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector.html#ab248bd16cbfcac609f58d401abec4368a067289a8bc60cc7b0be0e021db9ce81d">AsyncFw::AbstractFunctionConnector::SyncOnly</a> &gt;::Protected&lt; HttpServer &gt;&#160;</td><td class="memItemRight"><b>incoming</b></td></tr>
+<tr class="memitem:abc4ca40dd30bf85e0328a65360e2038f" id="r_abc4ca40dd30bf85e0328a65360e2038f"><td class="memItemLeft"><a id="abc4ca40dd30bf85e0328a65360e2038f" name="abc4ca40dd30bf85e0328a65360e2038f"></a>
+<a class="el" href="classAsyncFw_1_1FunctionConnector.html">AsyncFw::FunctionConnector</a>&lt; const <a class="el" href="classAsyncFw_1_1HttpSocket.html">HttpSocket</a> *, const <a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> &amp; &gt;::Protected&lt; HttpServer &gt;&#160;</td><td class="memItemRight"><b>webSocketReceived</b></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pro-methods" class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:abdfe4d8339781230ced6d74e866c2082" id="r_abdfe4d8339781230ced6d74e866c2082"><td class="memItemLeft"><a id="abdfe4d8339781230ced6d74e866c2082" name="abdfe4d8339781230ced6d74e866c2082"></a>
 virtual void&#160;</td><td class="memItemRight"><b>fileUploadProgress</b> (TcpSocket *, int)</td></tr>
-<tr class="memitem:a1372efdbbb018fce609b29ed07c5a269" id="r_a1372efdbbb018fce609b29ed07c5a269"><td class="memItemLeft"><a id="a1372efdbbb018fce609b29ed07c5a269" name="a1372efdbbb018fce609b29ed07c5a269"></a>
-int&#160;</td><td class="memItemRight"><b>makeWebSocketFrame</b> (const <a class="el" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> &amp;, <a class="el" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> *)</td></tr>
+<tr class="memitem:a007828a478672cc8d094aafee083359b" id="r_a007828a478672cc8d094aafee083359b"><td class="memItemLeft"><a id="a007828a478672cc8d094aafee083359b" name="a007828a478672cc8d094aafee083359b"></a>
+int&#160;</td><td class="memItemRight"><b>makeWebSocketFrame</b> (const <a class="el" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> &amp;, <a class="el" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> *, bool=false)</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pro-attribs" class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
