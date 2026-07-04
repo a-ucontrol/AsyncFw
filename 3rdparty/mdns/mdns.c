@@ -385,11 +385,11 @@ dump_callback(int sock, const struct sockaddr* from, size_t addrlen, mdns_entry_
 // Open sockets for sending one-shot multicast queries from an ephemeral port
 static int
 open_client_sockets(int* sockets, int max_sockets, int port, struct sockaddr_in* out_llipv4,
-					struct sockaddr_in* out_ipv4, struct sockaddr_in6* out_ipv6,
-					char* out_llip_str) {
+					struct sockaddr_in* out_ipv4, struct sockaddr_in6* out_ipv6, char* out_llip_str,
+					int num_sockets) {
 	// When sending, each socket can only send to one network interface
 	// Thus we need to open one socket for each interface and address family
-	int num_sockets = 0;
+	// int num_sockets = 0;
 
 #ifdef _WIN32
 
@@ -670,7 +670,7 @@ open_service_sockets(int* sockets, int max_sockets, service_data_t* sd) {
 	// but not open the actual sockets
 	num_sockets = open_client_sockets(sockets, max_sockets, 5353, &(sd->service_address_llipv4),
 									  &(sd->service_address_ipv4), &(sd->service_address_ipv6),
-									  sd->txt_llip_buffer);
+									  sd->txt_llip_buffer, 0);
 
 	if (num_sockets < max_sockets) {
 		struct sockaddr_in sock_addr;
@@ -780,8 +780,16 @@ start_mdns_querier(void* qd_void_ptr) {
 	struct sockaddr_in6 dummy_ipv6;
 	char dummy_llip_str[16] = {0};
 
-	qd->num_sockets = open_client_sockets(qd->sockets, 256, qd->mode == 2 ? 0 : 5353, &dummy_llipv4,
-										  &dummy_ipv4, &dummy_ipv6, dummy_llip_str);
+	qd->num_sockets = open_client_sockets(qd->sockets, 256, MDNS_PORT, &dummy_llipv4, &dummy_ipv4,
+										  &dummy_ipv6, dummy_llip_str, 0);
+	if (qd->num_sockets <= 0) {
+		printf("Failed to open any multicast client sockets\n");
+		return -1;
+	}
+	if (qd->mode == 1) {
+		qd->num_sockets = open_client_sockets(qd->sockets, 256, 0, &dummy_llipv4, &dummy_ipv4,
+											  &dummy_ipv6, dummy_llip_str, qd->num_sockets);
+	}
 
 	if (qd->num_sockets <= 0) {
 		printf("Failed to open any client sockets\n");
@@ -795,14 +803,26 @@ start_mdns_querier(void* qd_void_ptr) {
 }
 static int
 mdns_multiquery_send_(int sock, const mdns_query_t* query, size_t count, void* buffer,
-					  size_t capacity, uint16_t query_id, uint8_t unicast) {
+					  size_t capacity, uint16_t query_id, uint8_t mode) {
 	if (!count || (capacity < (sizeof(struct mdns_header_t) + (6 * count))))
 		return -1;
 
-	// Ask for a unicast response since it's a one-shot query
 	uint16_t rclass = MDNS_CLASS_IN;
-	if (unicast)
+	if (mode == 1) {
+		// Ask for a unicast response since it's a one-shot query
+		struct sockaddr_storage addr_storage;
+		struct sockaddr* saddr = (struct sockaddr*)&addr_storage;
+		socklen_t saddrlen = sizeof(addr_storage);
+		if (getsockname(sock, saddr, &saddrlen) == 0) {
+			if ((saddr->sa_family == AF_INET) &&
+				(ntohs(((struct sockaddr_in*)saddr)->sin_port) == MDNS_PORT))
+				return 0;
+			else if ((saddr->sa_family == AF_INET6) &&
+					 (ntohs(((struct sockaddr_in6*)saddr)->sin6_port) == MDNS_PORT))
+				return 0;
+		}
 		rclass |= MDNS_UNICAST_RESPONSE;
+	}
 
 	struct mdns_header_t* header = (struct mdns_header_t*)buffer;
 	// Query ID
@@ -1042,6 +1062,7 @@ start_mdns_service(const char* _hostname, const char* _service_name, int service
 	}
 	return 0;
 }
+/*
 #define MDNS_HEADER_FLAG_RESPONSE 0x8000U
 static inline size_t
 mdns_socket_listen_(int sock, void* buffer, size_t capacity, mdns_record_callback_fn callback,
@@ -1054,6 +1075,7 @@ mdns_socket_listen_(int sock, void* buffer, size_t capacity, mdns_record_callbac
 	saddr->sa_len = sizeof(addr);
 #endif
 
+	// This need for Unicast5353 mode
 	uint16_t peek_header[2];
 	mdns_ssize_t peek_ret =
 		recvfrom(sock, (char*)peek_header, sizeof(peek_header), MSG_PEEK, saddr, &addrlen);
@@ -1131,13 +1153,13 @@ mdns_socket_listen_(int sock, void* buffer, size_t capacity, mdns_record_callbac
 								 user_data);
 
 	return total_records;
-}
+} */
 int
 mdns_service_event(int fd, void* sd_void_ptr) {
 	service_data_t* sd = (service_data_t*)sd_void_ptr;
 	if (!sd)
 		return -1;
-	return mdns_socket_listen_(fd, sd->buffer, sd->capacity, service_callback, sd);
+	return mdns_socket_listen(fd, sd->buffer, sd->capacity, service_callback, sd);
 }
 
 void
