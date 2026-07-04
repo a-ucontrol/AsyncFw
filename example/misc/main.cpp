@@ -2,7 +2,7 @@
 #include <AsyncFw/LogStream>
 
 int main(int argc, char *argv[]) {
-  AsyncFw::Thread::current()->invoke([]() { AsyncFw::MainThread::exit(1); });
+  AsyncFw::Thread::current()->invoke([]() { AsyncFw::MainThread::exit(); });
 
   lsNotice() << "Start Application";
   int ret = AsyncFw::MainThread::exec();
