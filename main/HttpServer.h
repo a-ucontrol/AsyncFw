@@ -321,6 +321,7 @@ public:
 
 protected:
   virtual void fileUploadProgress(TcpSocket *, int);
+  bool execRule(const Request &);
   int makeWebSocketFrame(const AsyncFw::DataArray &, AsyncFw::DataArray *, bool = false);
   RulesMap rules;
 
@@ -331,7 +332,6 @@ private:
     HttpServer::rules.emplace(url, std::make_unique<HttpRule>(HttpServer::HttpRule(method, exec)));
   }
   void received(TcpSocket *, const std::string_view &);
-  bool execRule(const Request &);
   RulesMap::iterator findRule(const std::string &, const Request::Method);
   std::vector<TcpSocket *> sockets;
   bool cors_request_enabled = true;
