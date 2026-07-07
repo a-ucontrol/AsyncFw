@@ -31,6 +31,10 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
   #define close_fd ::closesocket
   #define setsockopt_ptr reinterpret_cast<const char *>
   #define SHUT_RDWR SD_BOTH
+  #undef errno
+  #define errno WSAGetLastError()
+  #undef EAGAIN
+  #define EAGAIN WSAEWOULDBLOCK
 #endif
 
 #include "AbstractSocket.h"
@@ -523,9 +527,13 @@ void AbstractSocket::pollEvent(int _e) {
       private_.w_ = 1;
     }
     if (r < 0) {
+      if (errno == EAGAIN) {
+        lsWarning() << LogStream::Color::Red << "try again";
+        return;
+      }
       private_.errorString_ = "Write error";
       private_.error_ = Write;
-      lsDebug() << LogStream::Color::Red << private_.errorString_ << r << errno;
+      lsWarning() << LogStream::Color::Red << private_.errorString_ << r << errno;
       close();
     }
   }
