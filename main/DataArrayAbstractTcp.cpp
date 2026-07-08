@@ -46,12 +46,12 @@ void DataArrayAbstractTcp::disconnectFromHost(const DataArraySocket *socket) {
   socket->thread()->invoke([socket]() { const_cast<DataArraySocket *>(socket)->disconnect(); });
 }
 
-void DataArrayAbstractTcp::setEncryptDisabled(const std::string &address, bool disable) {
-  std::vector<std::string>::iterator it = std::find(disabledEncrypt_.begin(), disabledEncrypt_.end(), address);
+void DataArrayAbstractTcp::setEncryptionDisabled(const std::string &address, bool disable) {
+  std::vector<std::string>::iterator it = std::find(disabledEncryptionHosts_.begin(), disabledEncryptionHosts_.end(), address);
   if (!disable) {
-    if (it != disabledEncrypt_.end()) disabledEncrypt_.erase(it);
-  } else if (it == disabledEncrypt_.end()) {
-    disabledEncrypt_.emplace_back(address);
+    if (it != disabledEncryptionHosts_.end()) disabledEncryptionHosts_.erase(it);
+  } else if (it == disabledEncryptionHosts_.end()) {
+    disabledEncryptionHosts_.emplace_back(address);
   }
 }
 
@@ -69,17 +69,17 @@ int DataArrayAbstractTcp::sockets(std::vector<DataArraySocket *> *list) {
   return count;
 }
 
-void DataArrayAbstractTcp::Thread::socketInit(DataArraySocket *socket) {
+void DataArrayAbstractTcp::Thread::initSocket(DataArraySocket *socket) {
   DataArrayAbstractTcp *tcp = static_cast<DataArrayAbstractTcp *>(pool);
   socket->setReadTimeout(tcp->readTimeout);
-  socket->setWaitKeepAliveAnswerTimeout(tcp->waitKeepAliveAnswerTimeout);
-  socket->setWaitForEncryptedTimeout(tcp->waitForEncryptedTimeout);
+  socket->setWaitKeepAliveResponseTimeout(tcp->waitKeepAliveAnswerTimeout);
+  socket->setWaitForEncryptionTimeout(tcp->waitForEncryptionTimeout);
   socket->setReadBuffers(tcp->maxReadBuffers, tcp->maxReadSize);
   socket->setWriteBuffers(tcp->maxWriteBuffers, tcp->maxWriteSize);
   socket->received.connect([tcp, socket](const DataArray *da, uint32_t pi) {
     tcp->thread_->invoke([tcp, socket, da, pi]() {
       tcp->received(socket, da, pi);
-      socket->clearBuffer(da);
+      socket->releaseBuffer(da);
     });
   });
   lsTrace() << LogStream::Color::Green << this << LogStream::Color::Magenta << sockets_.size();

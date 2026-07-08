@@ -34,7 +34,7 @@ void DataArrayTcpServer::setAlwaysConnect(const std::vector<std::string> &list) 
 bool DataArrayTcpServer::listening() { return listener->port() != 0; }
 
 bool DataArrayTcpServer::incomingConnection(int socketDescriptor, const std::string &address) {
-  lsTrace("readTimeout: {}, waitKeepAliveAnswerTimeout: {}, waitForEncryptedTimeout: {}, maxThreads: {}, maxSockets: {}, maxReadBuffers = {}, maxReadSize = {}, maxWriteBuffers = {}, maxWriteSize = {}", readTimeout, waitKeepAliveAnswerTimeout, waitForEncryptedTimeout, maxThreads, maxSockets, maxReadBuffers, maxReadSize, maxWriteBuffers, maxWriteSize);
+  lsTrace("readTimeout: {}, waitKeepAliveAnswerTimeout: {}, waitForEncryptionTimeout: {}, maxThreads: {}, maxSockets: {}, maxReadBuffers = {}, maxReadSize = {}, maxWriteBuffers = {}, maxWriteSize = {}", readTimeout, waitKeepAliveAnswerTimeout, waitForEncryptionTimeout, maxThreads, maxSockets, maxReadBuffers, maxReadSize, maxWriteBuffers, maxWriteSize);
   Thread *serverThread;
   mutex.lock();
   bool b = (threads_.size() < maxThreads);
@@ -54,7 +54,7 @@ bool DataArrayTcpServer::incomingConnection(int socketDescriptor, const std::str
     if (b) return false;
   }
 
-  bool encrypt = std::find(disabledEncrypt_.begin(), disabledEncrypt_.end(), address) == disabledEncrypt_.end() && !tlsData.empty();
+  bool encrypt = std::find(disabledEncryptionHosts_.begin(), disabledEncryptionHosts_.end(), address) == disabledEncryptionHosts_.end() && !tlsData.empty();
 
   serverThread->invoke([serverThread, socketDescriptor, encrypt]() { serverThread->createSocket(socketDescriptor, encrypt); }, true);
   return true;
@@ -68,7 +68,7 @@ void DataArrayTcpServer::Thread::createSocket(int socketDescriptor, bool encrypt
   checkCurrentThread();
   DataArraySocket *tcpSocket = new DataArraySocket();
   std::string address = tcpSocket->peerAddress();
-  socketInit(tcpSocket);
+  initSocket(tcpSocket);
   tcpSocket->initServerConnection();
 
   tcpSocket->stateChanged.connect([this, tcpSocket](AbstractSocket::State state) {

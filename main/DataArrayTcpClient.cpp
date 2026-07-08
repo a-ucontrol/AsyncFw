@@ -102,13 +102,13 @@ void DataArrayTcpClient::connectToHost(DataArraySocket *socket, const std::strin
 }
 
 void DataArrayTcpClient::connectToHost(const DataArraySocket *socket, int timeout) {
-  lsTrace("readTimeout: {}, waitKeepAliveAnswerTimeout: {}, waitForEncryptedTimeout: {}, maxThreads: {}, maxSockets: {}, maxReadBuffers = {}, maxReadSize = {}, maxWriteBuffers = {}, maxWriteSize = {}", readTimeout, waitKeepAliveAnswerTimeout, waitForEncryptedTimeout, maxThreads, maxSockets, maxReadBuffers, maxReadSize, maxWriteBuffers, maxWriteSize);
+  lsTrace("readTimeout: {}, waitKeepAliveAnswerTimeout: {}, waitForEncryptionTimeout: {}, maxThreads: {}, maxSockets: {}, maxReadBuffers = {}, maxReadSize = {}, maxWriteBuffers = {}, maxWriteSize = {}", readTimeout, waitKeepAliveAnswerTimeout, waitForEncryptionTimeout, maxThreads, maxSockets, maxReadBuffers, maxReadSize, maxWriteBuffers, maxWriteSize);
   Thread *clientThread = static_cast<Thread *>(socket->thread());
   if (!clientThread) {
     lsWarning("unknown socket");
     return;
   }
-  if (std::find(disabledEncrypt_.begin(), disabledEncrypt_.end(), socket->hostAddress()) != disabledEncrypt_.end()) const_cast<DataArraySocket *>(socket)->disableTls();
+  if (std::find(disabledEncryptionHosts_.begin(), disabledEncryptionHosts_.end(), socket->hostAddress()) != disabledEncryptionHosts_.end()) const_cast<DataArraySocket *>(socket)->disableTls();
   clientThread->invoke([&socket, &timeout]() { const_cast<DataArraySocket *>(socket)->connectToHost(timeout); }, true);
   lsTrace();
 }
@@ -128,9 +128,9 @@ DataArrayTcpClient::Thread::~Thread() { lsTrace(); }
 DataArraySocket *DataArrayTcpClient::Thread::createSocket() {
   checkCurrentThread();
   DataArraySocket *tcpSocket = new DataArraySocket();
-  tcpSocket->setConnectTimeout(client()->waitForConnectTimeoutInterval);
-  tcpSocket->setReconnectTimeout(client()->reconnectTimeoutInterval);
-  socketInit(const_cast<DataArraySocket *>(tcpSocket));
+  tcpSocket->setConnectTimeout(client()->waitForConnectTimeout_);
+  tcpSocket->setReconnectTimeout(client()->reconnectTimeout_);
+  initSocket(const_cast<DataArraySocket *>(tcpSocket));
   tcpSocket->stateChanged.connect([this, tcpSocket](AbstractSocket::State state) {
     if (state != AbstractSocket::State::Connected && state != AbstractSocket::State::Active && state != AbstractSocket::State::Unconnected) return;
     client()->socketStateChanged(tcpSocket);

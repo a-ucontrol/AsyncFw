@@ -30,10 +30,10 @@ public:
 
   /** @brief Constructs a new DataArrayAbstractTcp instance. @param name Name identifier for the underlying thread pool. */
   DataArrayAbstractTcp(const std::string &);
-  void init(int readTimeout = 30000, int waitKeepAliveAnswerTimeout = 0, int waitForEncryptedTimeout = 10000, int maxThreads = 4, int maxSockets = 8, int maxReadBuffers = 16, int maxReadSize = 16 * 1024 * 1024, int maxWriteBuffers = 16, int maxWriteSize = 16 * 1024 * 1024, int socketReadBufferSize = 1024 * 512) {
+  void init(int readTimeout = 30000, int waitKeepAliveAnswerTimeout = 0, int waitForEncryptionTimeout = 10000, int maxThreads = 4, int maxSockets = 8, int maxReadBuffers = 16, int maxReadSize = 16 * 1024 * 1024, int maxWriteBuffers = 16, int maxWriteSize = 16 * 1024 * 1024, int socketReadBufferSize = 1024 * 512) {
     this->readTimeout = readTimeout;
     this->waitKeepAliveAnswerTimeout = waitKeepAliveAnswerTimeout;
-    this->waitForEncryptedTimeout = waitForEncryptedTimeout;
+    this->waitForEncryptionTimeout = waitForEncryptionTimeout;
     this->maxThreads = maxThreads;
     this->maxSockets = maxSockets;
     this->maxReadBuffers = maxReadBuffers;
@@ -49,9 +49,9 @@ public:
   /** @brief Gathers a list of all active managed sockets and counts them. @param list Optional destination vector to populate with socket pointers. @return The total count of active sockets running in the framework. */
   int sockets(std::vector<DataArraySocket *> * = nullptr);
   /** @brief Sets a strict list of remote IP addresses where TLS encryption must be bypassed. @param list Vector of IP addresses as strings. */
-  void setEncryptDisabled(const std::vector<std::string> &list) { disabledEncrypt_ = list; }
+  void setEncryptionDisabled(const std::vector<std::string> &list) { disabledEncryptionHosts_ = list; }
   /** @brief Configures or overrides the TLS encryption toggle for a specific target address. @param address Remote host IP address string. @param disable If true, encryption is bypassed. */
-  void setEncryptDisabled(const std::string &, bool = true);
+  void setEncryptionDisabled(const std::string &, bool = true);
   /** @brief Assigns and initializes TLS security parameters on a specific socket. @param socket Pointer to the target DataArraySocket. @param context TLS certificates, keys, and security parameters. */
   void initTls(DataArraySocket *, const TlsContext &);
 
@@ -71,7 +71,7 @@ protected:
 
   protected:
     /** @brief Configures timeouts, buffer sizes, and signal bounds for a new socket context. @param socket Pointer to the DataArraySocket being introduced to this thread. */
-    void socketInit(DataArraySocket *);
+    void initSocket(DataArraySocket *);
     /** @brief Performs cleanup routines and safely removes a socket from the thread loop. @param socket Pointer to the target DataArraySocket. */
     void destroySocket(DataArraySocket *);
     AbstractThreadPool *pool; /**< Backward reference pointer to the base thread pool interface. */
@@ -80,7 +80,7 @@ protected:
   Thread *findMinimalSocketsThread();
   int readTimeout;                /**< Data absence timeout in milliseconds. */
   int waitKeepAliveAnswerTimeout; /**< Ping response timeout window in milliseconds. */
-  int waitForEncryptedTimeout;    /**< TLS handshake maximum window in milliseconds. */
+  int waitForEncryptionTimeout;    /**< TLS handshake maximum window in milliseconds. */
   std::size_t maxThreads;         /**< Allowed thread capacity configuration limit. */
   std::size_t maxSockets;         /**< Absolute global count threshold for sockets. */
   int socketReadBufferSize;       /**< System level network chunk buffer capability size. */
@@ -89,6 +89,6 @@ protected:
   int maxWriteBuffers;            /**< Maximum outbound frame descriptors allocated per socket. */
   int maxWriteSize;               /**< Absolute maximum byte bounds for outbound transmission queue data. */
   /** @brief Internal array of remote endpoints exempted from TLS handshake logic. */
-  std::vector<std::string> disabledEncrypt_ = {"127.0.0.1"};
+  std::vector<std::string> disabledEncryptionHosts_ = {"127.0.0.1"};
 };
 }  // namespace AsyncFw

@@ -31,11 +31,11 @@ DataArraySocket::DataArraySocket() : AbstractTlsSocket() {
   sslConnection = 0;
   receiveByteArray = nullptr;
   waitTimerType = 0;
-  waitForConnectTimeoutInterval = 0;
-  reconnectTimeoutInterval = 0;
-  readTimeoutInterval = 0;
-  waitKeepAliveAnswerTimeoutInterval = 0;
-  waitForEncryptedTimeoutInterval = 10000;
+  waitForConnectTimeout_ = 0;
+  reconnectTimeout_ = 0;
+  readTimeout_ = 0;
+  waitKeepAliveResponseTimeout_ = 0;
+  waitForEncryptionTimeout_ = 10000;
   timerId = 0;
   port = 0;
   hostPort_ = 0;
@@ -48,7 +48,7 @@ DataArraySocket::DataArraySocket() : AbstractTlsSocket() {
 
 DataArraySocket::~DataArraySocket() {
   if (thread_) removeTimer();
-  while (!receiveList.empty()) clearBuffer_(receiveList.back());
+  while (!receiveList.empty()) releaseBuffer_(receiveList.back());
   trace();
 }
 
@@ -69,7 +69,7 @@ void DataArraySocket::stateEvent() {
     if (waitTimerType & 0x04) {
       waitTimerType &= ~0x04;
       if (sslConnection) {
-        startTimer(waitForEncryptedTimeoutInterval);
+        startTimer(waitForEncryptionTimeout_);
         lsDebug("client wait for encrypted");
         return;
       }
@@ -82,12 +82,12 @@ void DataArraySocket::stateEvent() {
   if (state_ == AbstractSocket::State::Active) {
     if (sslConnection) sslConnection = 4;
     waitTimerType &= ~0x08;
-    if (readTimeoutInterval > 0) startTimer(readTimeoutInterval);
-    else if (reconnectTimeoutInterval > 0) { removeTimer(); }
+    if (readTimeout_ > 0) startTimer(readTimeout_);
+    else if (reconnectTimeout_ > 0) { removeTimer(); }
   } else if (state_ == AbstractSocket::State::Unconnected) {
     if (!(waitTimerType & 0x08)) {
-      if (reconnectTimeoutInterval > 0) startTimer(reconnectTimeoutInterval);
-      else if (readTimeoutInterval > 0) { removeTimer(); }
+      if (reconnectTimeout_ > 0) startTimer(reconnectTimeout_);
+      else if (readTimeout_ > 0) { removeTimer(); }
     }
     readSize = 0;
     std::vector<DataArray *>::iterator it = std::find(receiveList.begin(), receiveList.end(), receiveByteArray);
@@ -107,8 +107,8 @@ void DataArraySocket::stateEvent() {
 void DataArraySocket::timerEvent() {
   removeTimer();
   if (state_ == AbstractSocket::State::Active) {
-    if (sslConnection != 3 && waitTimerType == 0x80 && readTimeoutInterval > 0) {
-      transmitKeepAlive(true);
+    if (sslConnection != 3 && waitTimerType == 0x80 && readTimeout_ > 0) {
+      sendKeepAlive(true);
     } else {
       std::string e;
       if (sslConnection == 3) e = "Error wait encryption";
@@ -119,7 +119,7 @@ void DataArraySocket::timerEvent() {
       disconnect();
     }
   } else if (state_ == AbstractSocket::State::Unconnected) {
-    if (reconnectTimeoutInterval > 0) connectToHost();
+    if (reconnectTimeout_ > 0) connectToHost();
   } else {
     std::string e;
     if (state_ == State::Connecting) {
@@ -140,7 +140,7 @@ void DataArraySocket::timerEvent() {
   }
 }
 
-void DataArraySocket::transmitKeepAlive(bool request) {
+void DataArraySocket::sendKeepAlive(bool request) {
   if (state_ != AbstractSocket::State::Active) {
     lsWarning("tried transmit keep alive to inactive socket");
     return;
@@ -149,7 +149,7 @@ void DataArraySocket::transmitKeepAlive(bool request) {
   write(reinterpret_cast<const uint8_t *>(&ka), sizeof(ka));
   if (request) {
     waitTimerType |= 0x02;
-    startTimer(waitKeepAliveAnswerTimeoutInterval);
+    startTimer(waitKeepAliveResponseTimeout_);
   }
   trace("transmit keep alive " + std::string(request ? "request" : "answer") + " (" + peerString() + ')');
 }
@@ -171,7 +171,7 @@ void DataArraySocket::readEvent() {
       if (readSize == 0) {
         if (readId == 0xffffffff) {
           trace("receive keep alive (" + peerString() + ')');
-          if (!(waitTimerType & 0x02)) transmitKeepAlive(false);
+          if (!(waitTimerType & 0x02)) sendKeepAlive(false);
           else waitTimerType &= ~0x02;
           continue;
         }
@@ -214,7 +214,7 @@ void DataArraySocket::readEvent() {
       receiveByteArray = nullptr;
     }
   }
-  if (readTimeoutInterval > 0) startTimer(readTimeoutInterval);
+  if (readTimeout_ > 0) startTimer(readTimeout_);
 }
 
 void DataArraySocket::disconnect() {
@@ -301,11 +301,11 @@ bool DataArraySocket::transmit(const DataArray &ba, uint32_t pi, bool wait) cons
   return _r;
 }
 
-void DataArraySocket::clearBuffer(const DataArray *da) const {
-  if (thread_) thread_->invoke([this, da]() { clearBuffer_(da); });
+void DataArraySocket::releaseBuffer(const DataArray *da) const {
+  if (thread_) thread_->invoke([this, da]() { releaseBuffer_(da); });
 }
 
-void DataArraySocket::clearBuffer_(const DataArray *da) const {
+void DataArraySocket::releaseBuffer_(const DataArray *da) const {
   for (std::size_t i = 0; i != receiveList.size(); ++i) {
     if (receiveList[i] == da) {
       receiveList.erase(receiveList.begin() + i);
@@ -321,7 +321,7 @@ void DataArraySocket::initServerConnection() {
   port = peerPort();
   if (sslConnection) {
     sslConnection = 3;
-    startTimer(waitForEncryptedTimeoutInterval);
+    startTimer(waitForEncryptionTimeout_);
     lsTrace("server wait for encrypted");
   }
 }
@@ -340,7 +340,7 @@ bool DataArraySocket::connectToHost() {
 
   if (!(waitTimerType & 0x04)) {
     waitTimerType |= 0x04;
-    if (waitForConnectTimeoutInterval > 0) startTimer(waitForConnectTimeoutInterval);
+    if (waitForConnectTimeout_ > 0) startTimer(waitForConnectTimeout_);
     else { removeTimer(); }
   }
 
@@ -402,5 +402,5 @@ bool DataArraySocket::initTls(const TlsContext &data) {
 }
 
 namespace AsyncFw {
-LogStream &operator<<(LogStream &log, const DataArraySocket &s) { return (log << *static_cast<const AbstractTlsSocket *>(&s)) << '-' << s.readTimeoutInterval << s.waitKeepAliveAnswerTimeoutInterval; }
+LogStream &operator<<(LogStream &log, const DataArraySocket &s) { return (log << *static_cast<const AbstractTlsSocket *>(&s)) << '-' << s.readTimeout_ << s.waitKeepAliveResponseTimeout_; }
 }  // namespace AsyncFw
