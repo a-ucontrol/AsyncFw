@@ -1,0 +1,5 @@
+<map id="AsyncFw::RrdServer::transmit" name="AsyncFw::RrdServer::transmit">
+<area shape="rect" id="Node000001" title="Extracts a specific historical data slice from an Rrd archive and transmits it to a client socket." alt="" coords="197,5,340,48"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1RrdServer.html#a80621329e326c77a65c5e4e65efa511d" title="Constructs an RrdServer instance." alt="" coords="5,5,149,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="178,27,149,29,149,24,184,26"/>
+</map>

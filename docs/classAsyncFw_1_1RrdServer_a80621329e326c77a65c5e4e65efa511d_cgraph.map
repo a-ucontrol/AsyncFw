@@ -1,0 +1,12 @@
+<map id="AsyncFw::RrdServer::RrdServer" name="AsyncFw::RrdServer::RrdServer">
+<area shape="rect" id="Node000001" title="Constructs an RrdServer instance." alt="" coords="5,51,149,93"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1RrdServer.html#a518ff8e41bae78f1b1c0e099514e56eb" title="Extracts a specific historical data slice from an Rrd archive and transmits it to a client socket." alt="" coords="197,51,340,93"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="149,69,184,71,179,73,150,75"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1DataStream.html#ae64c4b08a3259146d4476c0385352479" title="Retrieves a reference to the active cumulative raw byte array built by the stream." alt="" coords="388,5,542,48"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="340,53,375,47,370,49,341,58"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1DataArray.html#a10279d86624995c981d2786aa43e6803" title="Compresses the provided data view using the framework&#39;s default compression algorithm." alt="" coords="394,96,537,139"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="341,86,381,97,376,97,340,91"/>
+<area shape="poly" id="edge4_Node000004_Node000004" title=" " alt="" coords="428,94,426,86,432,77,445,71,465,69,486,72,501,81,495,80,485,77,465,75,447,77,436,81,431,87,432,97"/>
+<area shape="rect" id="Node000005" href="$classAsyncFw_1_1DataArray.html#ab3ca8135417a38c8438a82f226b792ec" title="Constructs a byte array from a standard string instance." alt="" coords="590,96,734,139"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="537,115,577,117,572,117,537,120"/>
+</map>
