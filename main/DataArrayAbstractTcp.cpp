@@ -46,9 +46,9 @@ void DataArrayAbstractTcp::disconnectFromHost(const DataArraySocket *socket) {
   socket->thread()->invoke([socket]() { const_cast<DataArraySocket *>(socket)->disconnect(); });
 }
 
-void DataArrayAbstractTcp::setEncryptDisabled(const std::string &address, bool disabled) {
+void DataArrayAbstractTcp::setEncryptDisabled(const std::string &address, bool disable) {
   std::vector<std::string>::iterator it = std::find(disabledEncrypt_.begin(), disabledEncrypt_.end(), address);
-  if (!disabled) {
+  if (!disable) {
     if (it != disabledEncrypt_.end()) disabledEncrypt_.erase(it);
   } else if (it == disabledEncrypt_.end()) {
     disabledEncrypt_.emplace_back(address);
