@@ -38,7 +38,7 @@ DataArraySocket::DataArraySocket() : AbstractTlsSocket() {
   waitForEncryptedTimeoutInterval = 10000;
   timerId = 0;
   port = 0;
-  hostPort_v = 0;
+  hostPort_ = 0;
   readSize = 0;
   readId = 0;
   setReadBuffers(16, 1024 * 1024);
@@ -262,7 +262,7 @@ bool DataArraySocket::transmit(const DataArray &ba, uint32_t pi, bool wait) cons
   warning_if(ba.empty()) << "transmit array empty (" + peerString() + ')';
   if (static_cast<int>(ba.size()) > maxWriteSize) {
     setErrorString("Big transmit size: " + std::to_string(ba.size()) + " (" + peerString() + ')');
-    if (!hostPort_v) const_cast<DataArraySocket *>(this)->disconnect();
+    if (!hostPort_) const_cast<DataArraySocket *>(this)->disconnect();
     return false;
   }
   bool _r = false;
@@ -270,7 +270,7 @@ bool DataArraySocket::transmit(const DataArray &ba, uint32_t pi, bool wait) cons
     int buffers = transmitList.size();
     if (buffers >= maxWriteBuffers) {
       setErrorString("Many transmit buffers (" + peerString() + ')');
-      if (!hostPort_v) const_cast<DataArraySocket *>(this)->disconnect();
+      if (!hostPort_) const_cast<DataArraySocket *>(this)->disconnect();
       return;
     }
     int size = 0;
@@ -278,7 +278,7 @@ bool DataArraySocket::transmit(const DataArray &ba, uint32_t pi, bool wait) cons
       size += t.size() - 8;
       if (size > maxWriteSize) {
         setErrorString("Transmit overflow (" + peerString() + ')');
-        if (!hostPort_v) const_cast<DataArraySocket *>(this)->disconnect();
+        if (!hostPort_) const_cast<DataArraySocket *>(this)->disconnect();
         return;
       }
     }
@@ -328,7 +328,7 @@ void DataArraySocket::initServerConnection() {
 
 bool DataArraySocket::connectToHost() {
   checkCurrentThread();
-  if (hostAddress_v.empty() || !hostPort_v) {
+  if (hostAddress_.empty() || !hostPort_) {
     lsWarning("empty host address or port");
     return false;
   }
@@ -344,8 +344,8 @@ bool DataArraySocket::connectToHost() {
     else { removeTimer(); }
   }
 
-  address = hostAddress_v;
-  port = hostPort_v;
+  address = hostAddress_;
+  port = hostPort_;
   if (sslConnection == 1) {
     setErrorString("TLS configuration error");
     return false;
