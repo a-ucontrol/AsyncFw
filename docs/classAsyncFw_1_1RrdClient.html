@@ -99,35 +99,173 @@ $(function(){initNavTree('classAsyncFw_1_1RrdClient.html','','classAsyncFw_1_1Rr
 </div><!--header-->
 <div class="contents">
 
-<p>The <a class="el" href="classAsyncFw_1_1RrdClient.html" title="The RrdClient class.">RrdClient</a> class.  
+<p>A specialized network client class for synchronizing remote Round-Robin Databases (<a class="el" href="classAsyncFw_1_1Rrd.html" title="A high-performance circular database engine (Round-Robin Database) for time-series and structural dat...">Rrd</a>).  
  <a href="#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="RrdClient_8h_source.html">AsyncFw/RrdClient</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a99c8606f7788c0ab1d468b61b4de9adf" id="r_a99c8606f7788c0ab1d468b61b4de9adf"><td class="memItemLeft"><a id="a99c8606f7788c0ab1d468b61b4de9adf" name="a99c8606f7788c0ab1d468b61b4de9adf"></a>
-&#160;</td><td class="memItemRight"><b>RrdClient</b> (<a class="el" href="classAsyncFw_1_1DataArraySocket.html">DataArraySocket</a> *, const std::vector&lt; <a class="el" href="classAsyncFw_1_1Rrd.html">Rrd</a> * &gt; &amp;)</td></tr>
-<tr class="memitem:a6310624d9ecad9a796a0dea4e93d4930" id="r_a6310624d9ecad9a796a0dea4e93d4930"><td class="memItemLeft"><a id="a6310624d9ecad9a796a0dea4e93d4930" name="a6310624d9ecad9a796a0dea4e93d4930"></a>
-void&#160;</td><td class="memItemRight"><b>clear</b> (int)</td></tr>
-<tr class="memitem:ab598862c2fcddef6f476db9d1ed9faf6" id="r_ab598862c2fcddef6f476db9d1ed9faf6"><td class="memItemLeft"><a id="ab598862c2fcddef6f476db9d1ed9faf6" name="ab598862c2fcddef6f476db9d1ed9faf6"></a>
-void&#160;</td><td class="memItemRight"><b>connectToHost</b> (const std::string &amp;, uint16_t)</td></tr>
+<tr class="memitem:a99c8606f7788c0ab1d468b61b4de9adf" id="r_a99c8606f7788c0ab1d468b61b4de9adf"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a99c8606f7788c0ab1d468b61b4de9adf">RrdClient</a> (<a class="el" href="classAsyncFw_1_1DataArraySocket.html">DataArraySocket</a> *, const std::vector&lt; <a class="el" href="classAsyncFw_1_1Rrd.html">Rrd</a> * &gt; &amp;)</td></tr>
+<tr class="memdesc:a99c8606f7788c0ab1d468b61b4de9adf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an <a class="el" href="classAsyncFw_1_1RrdClient.html" title="A specialized network client class for synchronizing remote Round-Robin Databases (Rrd).">RrdClient</a> instance.  <br /></td></tr>
+<tr class="memitem:a9db5f1a5ddaa3c083851d557764937c0" id="r_a9db5f1a5ddaa3c083851d557764937c0"><td class="memItemLeft"><a id="a9db5f1a5ddaa3c083851d557764937c0" name="a9db5f1a5ddaa3c083851d557764937c0"></a>
+&#160;</td><td class="memItemRight"><b>~RrdClient</b> ()</td></tr>
+<tr class="memdesc:a9db5f1a5ddaa3c083851d557764937c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. Cleans up internal signal connection guards and pending synchronization timers. <br /></td></tr>
+<tr class="memitem:ab598862c2fcddef6f476db9d1ed9faf6" id="r_ab598862c2fcddef6f476db9d1ed9faf6"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ab598862c2fcddef6f476db9d1ed9faf6">connectToHost</a> (const std::string &amp;, uint16_t)</td></tr>
+<tr class="memdesc:ab598862c2fcddef6f476db9d1ed9faf6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initiates a connection to an <a class="el" href="classAsyncFw_1_1RrdServer.html" title="A specialized network server component that exposes Round-Robin Databases (Rrd) via TCP.">RrdServer</a> at the specified remote address and port.  <br /></td></tr>
 <tr class="memitem:ad8724d7772f037925d9694c1afc20d8e" id="r_ad8724d7772f037925d9694c1afc20d8e"><td class="memItemLeft"><a id="ad8724d7772f037925d9694c1afc20d8e" name="ad8724d7772f037925d9694c1afc20d8e"></a>
 void&#160;</td><td class="memItemRight"><b>connectToHost</b> ()</td></tr>
+<tr class="memdesc:ad8724d7772f037925d9694c1afc20d8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Connects to the host using pre-configured remote endpoints stored in the underlying socket. <br /></td></tr>
 <tr class="memitem:a7437419c70ea6d55a6a701211b4582a2" id="r_a7437419c70ea6d55a6a701211b4582a2"><td class="memItemLeft"><a id="a7437419c70ea6d55a6a701211b4582a2" name="a7437419c70ea6d55a6a701211b4582a2"></a>
 void&#160;</td><td class="memItemRight"><b>disconnectFromHost</b> ()</td></tr>
-<tr class="memitem:a337e012aeb234c090cb916009aef5196" id="r_a337e012aeb234c090cb916009aef5196"><td class="memItemLeft"><a id="a337e012aeb234c090cb916009aef5196" name="a337e012aeb234c090cb916009aef5196"></a>
-int&#160;</td><td class="memItemRight"><b>transmit</b> (const <a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> &amp;, uint32_t, bool=false)</td></tr>
-<tr class="memitem:ae7e51edcf279e6ecbfce7b4ca67dfe45" id="r_ae7e51edcf279e6ecbfce7b4ca67dfe45"><td class="memItemLeft"><a id="ae7e51edcf279e6ecbfce7b4ca67dfe45" name="ae7e51edcf279e6ecbfce7b4ca67dfe45"></a>
-void&#160;</td><td class="memItemRight"><b>tlsSetup</b> (const <a class="el" href="classAsyncFw_1_1TlsContext.html">TlsContext</a> &amp;)</td></tr>
+<tr class="memdesc:a7437419c70ea6d55a6a701211b4582a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Explicitly disconnects the underlying client socket from the remote <a class="el" href="classAsyncFw_1_1RrdServer.html" title="A specialized network server component that exposes Round-Robin Databases (Rrd) via TCP.">RrdServer</a>. <br /></td></tr>
+<tr class="memitem:a4d6d253c85c993ed6906efe3ced940a7" id="r_a4d6d253c85c993ed6906efe3ced940a7"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a4d6d253c85c993ed6906efe3ced940a7">transmit</a> (const <a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> &amp;, uint32_t, bool=false)</td></tr>
+<tr class="memdesc:a4d6d253c85c993ed6906efe3ced940a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transmits a raw data frame or a custom query command to the remote server.  <br /></td></tr>
+<tr class="memitem:ae7e51edcf279e6ecbfce7b4ca67dfe45" id="r_ae7e51edcf279e6ecbfce7b4ca67dfe45"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ae7e51edcf279e6ecbfce7b4ca67dfe45">tlsSetup</a> (const <a class="el" href="classAsyncFw_1_1TlsContext.html">TlsContext</a> &amp;)</td></tr>
+<tr class="memdesc:ae7e51edcf279e6ecbfce7b4ca67dfe45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets up TLS security context and credentials for private communications.  <br /></td></tr>
 <tr class="memitem:a70b7a42567a8b3fde089967a4f892541" id="r_a70b7a42567a8b3fde089967a4f892541"><td class="memItemLeft"><a id="a70b7a42567a8b3fde089967a4f892541" name="a70b7a42567a8b3fde089967a4f892541"></a>
 void&#160;</td><td class="memItemRight"><b>disableTls</b> ()</td></tr>
+<tr class="memdesc:a70b7a42567a8b3fde089967a4f892541"><td class="mdescLeft">&#160;</td><td class="mdescRight">Completely disables TLS encryption for outbound communication streams. <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>The <a class="el" href="classAsyncFw_1_1RrdClient.html" title="The RrdClient class.">RrdClient</a> class. </p>
+<div class="textblock"><p>A specialized network client class for synchronizing remote Round-Robin Databases (<a class="el" href="classAsyncFw_1_1Rrd.html" title="A high-performance circular database engine (Round-Robin Database) for time-series and structural dat...">Rrd</a>). </p>
+<p>Manages an underlying <a class="el" href="classAsyncFw_1_1DataArraySocket.html" title="An asynchronous socket class for transmitting data arrays (DataArray) with TLS support....">DataArraySocket</a> to establish communication with an <a class="el" href="classAsyncFw_1_1RrdServer.html" title="A specialized network server component that exposes Round-Robin Databases (Rrd) via TCP.">RrdServer</a>. It coordinates a group of local <a class="el" href="classAsyncFw_1_1Rrd.html" title="A high-performance circular database engine (Round-Robin Database) for time-series and structural dat...">Rrd</a> circular databases, tracks their latest record indexes, and handles secure data ingestion over TCP with optional TLS support. </p>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="LogTcp_2main_8cpp-example.html#_a12">LogTcp/main.cpp</a>.</dd>
 </dl>
-</div><hr/>The documentation for this class was generated from the following files:<ul>
+</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a99c8606f7788c0ab1d468b61b4de9adf" name="a99c8606f7788c0ab1d468b61b4de9adf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a99c8606f7788c0ab1d468b61b4de9adf">&#9670;&#160;</a></span>RrdClient()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">RrdClient::RrdClient </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classAsyncFw_1_1DataArraySocket.html">DataArraySocket</a> *</td>          <td class="paramname"><span class="paramname"><em>socket</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; <a class="el" href="classAsyncFw_1_1Rrd.html">Rrd</a> * &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>rrd</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructs an <a class="el" href="classAsyncFw_1_1RrdClient.html" title="A specialized network client class for synchronizing remote Round-Robin Databases (Rrd).">RrdClient</a> instance. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">socket</td><td>Pointer to the managed socket used for the network connection.</td></tr>
+    <tr><td class="paramname">rrd</td><td>Vector of local <a class="el" href="classAsyncFw_1_1Rrd.html" title="A high-performance circular database engine (Round-Robin Database) for time-series and structural dat...">Rrd</a> circular databases to be populated/synchronized. </td></tr>
+  </table>
+  </dd>
+</dl>
+<div id="dynsection-0" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
+<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-0-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1RrdClient_a99c8606f7788c0ab1d468b61b4de9adf_cgraph.svg" width="392" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="ab598862c2fcddef6f476db9d1ed9faf6" name="ab598862c2fcddef6f476db9d1ed9faf6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab598862c2fcddef6f476db9d1ed9faf6">&#9670;&#160;</a></span>connectToHost()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void RrdClient::connectToHost </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>address</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>port</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initiates a connection to an <a class="el" href="classAsyncFw_1_1RrdServer.html" title="A specialized network server component that exposes Round-Robin Databases (Rrd) via TCP.">RrdServer</a> at the specified remote address and port. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">address</td><td>IP address or domain name of the remote host server.</td></tr>
+    <tr><td class="paramname">port</td><td>Network port of the remote host server. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="LogTcp_2main_8cpp-example.html#a13">LogTcp/main.cpp</a>.</dd>
+</dl>
+
+</div>
+</div>
+<a id="a4d6d253c85c993ed6906efe3ced940a7" name="a4d6d253c85c993ed6906efe3ced940a7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4d6d253c85c993ed6906efe3ced940a7">&#9670;&#160;</a></span>transmit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool RrdClient::transmit </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>da</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>pi</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>wait</em></span><span class="paramdefsep"> = </span><span class="paramdefval">false</span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Transmits a raw data frame or a custom query command to the remote server. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">data</td><td>The <a class="el" href="classAsyncFw_1_1DataArray.html" title="The DataArray class, provides an array of bytes.">DataArray</a> payload containing the request or command.</td></tr>
+    <tr><td class="paramname">id</td><td>Network packet transaction identifier.</td></tr>
+    <tr><td class="paramname">wait</td><td>If true, blocks the calling thread until the data is successfully queued or sent. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 or a positive tracking code on success, or a negative error status on failure. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>The packetId (pi) corresponds to the target <a class="el" href="classAsyncFw_1_1Rrd.html" title="A high-performance circular database engine (Round-Robin Database) for time-series and structural dat...">Rrd</a> database index and must not exceed 0x0F. </dd></dl>
+
+</div>
+</div>
+<a id="ae7e51edcf279e6ecbfce7b4ca67dfe45" name="ae7e51edcf279e6ecbfce7b4ca67dfe45"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae7e51edcf279e6ecbfce7b4ca67dfe45">&#9670;&#160;</a></span>tlsSetup()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void RrdClient::tlsSetup </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classAsyncFw_1_1TlsContext.html">TlsContext</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>context</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets up TLS security context and credentials for private communications. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">context</td><td>TLS certificates, keys, and security parameters. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li>main/<a class="el" href="RrdClient_8h_source.html">RrdClient.h</a></li>
 <li>main/<b>RrdClient.cpp</b></li>
 </ul>

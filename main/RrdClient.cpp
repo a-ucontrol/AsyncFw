@@ -29,7 +29,7 @@ RrdClient::RrdClient(DataArraySocket *socket, const std::vector<Rrd *> &rrd) : r
       lsError() << "(pi > 0x0F)" << pi;
       return;
     }
-    tcpReadWrite(da, pi);
+    tcpRead(da, pi);
   });
 
   gl_ += socket->stateChanged.connect([this](AbstractSocket::State _state) {
@@ -56,11 +56,6 @@ RrdClient::~RrdClient() {
   lsTrace();
 }
 
-void RrdClient::clear(int n) {
-  lastTime[n] = 0;
-  rrd_[n]->clear();
-}
-
 void RrdClient::connectToHost(const std::string &address, uint16_t port) {
   tcpSocket->thread()->invoke([this, address, port]() { tcpSocket->connect(address, port); });
 }
@@ -73,14 +68,14 @@ void RrdClient::disconnectFromHost() {
   tcpSocket->thread()->invoke([this]() { tcpSocket->disconnect(); });
 }
 
-int RrdClient::transmit(const DataArray &ba, uint32_t pi, bool wait) { return tcpSocket->transmit(ba, pi, wait); }
+bool RrdClient::transmit(const DataArray &da, uint32_t pi, bool wait) { return tcpSocket->transmit(da, pi, wait); }
 
-void RrdClient::tlsSetup(const TlsContext &data) { tcpSocket->initTls(data); }
+void RrdClient::tlsSetup(const TlsContext &context) { tcpSocket->initTls(context); }
 
 void RrdClient::disableTls() { tcpSocket->disableTls(); }
 
-void RrdClient::tcpReadWrite(const DataArray *rba, uint32_t n) {
-  DataArray _da = DataArray::uncompress(*rba);
+void RrdClient::tcpRead(const DataArray *rda, uint32_t n) {
+  DataArray _da = DataArray::uncompress(*rda);
   if (_da.empty()) {
     lsError() << "error read log";
     return;
@@ -106,7 +101,7 @@ void RrdClient::tcpReadWrite(const DataArray *rba, uint32_t n) {
     return;
   }
   if (list.size() > 0) {
-    for (std::size_t i = 0; i != list.size(); ++i) rrd_[n]->Rrd::append(list[i], val - list.size() + i + 1);
+    for (std::size_t i = 0; i != list.size(); ++i) rrd_[n]->append(list[i], val - list.size() + i + 1);
 
     lastTime[n] = val;
     if (val != dbLastTime) {

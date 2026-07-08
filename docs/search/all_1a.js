@@ -26,10 +26,10 @@ var searchData=
   ['rpc_3a_20coinvoke_23',['3. Deep Coroutine Orchestration &amp;amp; RPC: &lt;span class=&quot;tt&quot;&gt;coInvoke&lt;/span&gt;',['../index.html#autotoc_md5',1,'']]],
   ['rrd_24',['Rrd',['../classAsyncFw_1_1Rrd.html',1,'AsyncFw::Rrd'],['../classAsyncFw_1_1Rrd.html#a2fd20dd3470a11ef179577c565c333f1',1,'AsyncFw::Rrd::Rrd(int, int, int, const std::string &amp;)'],['../classAsyncFw_1_1Rrd.html#a98c7829cc6177c80245cf95095deb3ba',1,'AsyncFw::Rrd::Rrd(int, int, int)'],['../classAsyncFw_1_1Rrd.html#aaea6a63444ab427f801be34f26d930d5',1,'AsyncFw::Rrd::Rrd(int, const std::string &amp;)'],['../classAsyncFw_1_1Rrd.html#aa54ae298c96e9efe88b644931b12f734',1,'AsyncFw::Rrd::Rrd(int)']]],
   ['rrd_2eh_25',['Rrd.h',['../Rrd_8h.html',1,'']]],
-  ['rrdclient_26',['RrdClient',['../classAsyncFw_1_1RrdClient.html',1,'AsyncFw']]],
+  ['rrdclient_26',['RrdClient',['../classAsyncFw_1_1RrdClient.html',1,'AsyncFw::RrdClient'],['../classAsyncFw_1_1RrdClient.html#a99c8606f7788c0ab1d468b61b4de9adf',1,'AsyncFw::RrdClient::RrdClient()']]],
   ['rrdclient_2eh_27',['RrdClient.h',['../RrdClient_8h.html',1,'']]],
   ['rrditemfrommessage_28',['rrdItemFromMessage',['../classAsyncFw_1_1Log.html#a36128876c58bc05a4b8ec59144abdaa1',1,'AsyncFw::Log']]],
-  ['rrdserver_29',['RrdServer',['../classAsyncFw_1_1RrdServer.html',1,'AsyncFw']]],
+  ['rrdserver_29',['RrdServer',['../classAsyncFw_1_1RrdServer.html',1,'AsyncFw::RrdServer'],['../classAsyncFw_1_1RrdServer.html#a80621329e326c77a65c5e4e65efa511d',1,'AsyncFw::RrdServer::RrdServer()']]],
   ['rrdserver_2eh_30',['RrdServer.h',['../RrdServer_8h.html',1,'']]],
   ['running_31',['Running',['../classAsyncFw_1_1SystemProcess.html#afad39352d4d8376d1304bc340a0cf32fad676c3df6d4070608540d7160f773e1b',1,'AsyncFw::SystemProcess']]],
   ['running_32',['running',['../classAsyncFw_1_1AbstractThread.html#aa317731738402e37a8a05d5a5ec9d7c4',1,'AsyncFw::AbstractThread::running()'],['../classAsyncFw_1_1AbstractTask.html#ab5c6c7ec53a111afcbd485f8c13b81f0',1,'AsyncFw::AbstractTask::running()']]]

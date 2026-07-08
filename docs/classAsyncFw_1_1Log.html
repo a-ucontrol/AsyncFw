@@ -317,8 +317,8 @@ void&#160;</td><td class="memItemRight"><b>stopTimer</b> (int *)</td></tr>
 <div class="line">  <a class="code hl_function" href="#a00e9a20e7303e9a24403046af176b6b2">AsyncFw::Log::instance</a>()-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractLog.html#ad3d69f8e4e65e11f777961ff199cc305">setColorOut</a>(<span class="keyword">true</span>);</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// 4. Log application metadata</span></div>
-<div class="line">  logNotice() &lt;&lt; <span class="stringliteral">&quot;Version:&quot;</span> &lt;&lt; AsyncFw::Version::str();</div>
-<div class="line">  logNotice() &lt;&lt; <span class="stringliteral">&quot;Git:&quot;</span> &lt;&lt; AsyncFw::Version::git();</div>
+<div class="line">  logNotice() &lt;&lt; <span class="stringliteral">&quot;Version:&quot;</span> &lt;&lt; <a class="code hl_function" href="structAsyncFw_1_1Version.html#a51085d376b8a991727c7c1d2921be595">AsyncFw::Version::str</a>();</div>
+<div class="line">  logNotice() &lt;&lt; <span class="stringliteral">&quot;Git:&quot;</span> &lt;&lt; <a class="code hl_function" href="structAsyncFw_1_1Version.html#a3b87fb162827d918b13a634ceb17dae4">AsyncFw::Version::git</a>();</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// 5. Inline streaming style macros (ls*): Print FULL function signatures (__PRETTY_FUNCTION__)</span></div>
 <div class="line">  <span class="comment">// These macros can be completely stripped out at compile-time (e.g. via #define LS_NO_TRACE)</span></div>

@@ -99,7 +99,7 @@ $(function(){initNavTree('classAsyncFw_1_1RrdServer.html','','classAsyncFw_1_1Rr
 </div><!--header-->
 <div class="contents">
 
-<p>The <a class="el" href="classAsyncFw_1_1RrdServer.html" title="The RrdServer class.">RrdServer</a> class.  
+<p>A specialized network server component that exposes Round-Robin Databases (<a class="el" href="classAsyncFw_1_1Rrd.html" title="A high-performance circular database engine (Round-Robin Database) for time-series and structural dat...">Rrd</a>) via TCP.  
  <a href="#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="RrdServer_8h_source.html">AsyncFw/RrdServer</a>&gt;</code></p>
@@ -107,35 +107,159 @@ $(function(){initNavTree('classAsyncFw_1_1RrdServer.html','','classAsyncFw_1_1Rr
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1RrdServer__coll__graph.svg" width="1486" height="164"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1RrdServer__coll__graph.svg" width="1486" height="158"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a774c2c618d9742561bd41d74a18f70ff" id="r_a774c2c618d9742561bd41d74a18f70ff"><td class="memItemLeft"><a id="a774c2c618d9742561bd41d74a18f70ff" name="a774c2c618d9742561bd41d74a18f70ff"></a>
-&#160;</td><td class="memItemRight"><b>RrdServer</b> (<a class="el" href="classAsyncFw_1_1DataArrayTcpServer.html">DataArrayTcpServer</a> *, const std::vector&lt; <a class="el" href="classAsyncFw_1_1Rrd.html">Rrd</a> * &gt; &amp;<a class="el" href="classAsyncFw_1_1Rrd.html">Rrd</a>)</td></tr>
+<tr class="memitem:a80621329e326c77a65c5e4e65efa511d" id="r_a80621329e326c77a65c5e4e65efa511d"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a80621329e326c77a65c5e4e65efa511d">RrdServer</a> (<a class="el" href="classAsyncFw_1_1DataArrayTcpServer.html">DataArrayTcpServer</a> *, const std::vector&lt; <a class="el" href="classAsyncFw_1_1Rrd.html">Rrd</a> * &gt; &amp;)</td></tr>
+<tr class="memdesc:a80621329e326c77a65c5e4e65efa511d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an <a class="el" href="classAsyncFw_1_1RrdServer.html" title="A specialized network server component that exposes Round-Robin Databases (Rrd) via TCP.">RrdServer</a> instance.  <br /></td></tr>
+<tr class="memitem:ad57e2c435b5730d56efe5615e31b0075" id="r_ad57e2c435b5730d56efe5615e31b0075"><td class="memItemLeft"><a id="ad57e2c435b5730d56efe5615e31b0075" name="ad57e2c435b5730d56efe5615e31b0075"></a>
+virtual&#160;</td><td class="memItemRight"><b>~RrdServer</b> ()</td></tr>
+<tr class="memdesc:ad57e2c435b5730d56efe5615e31b0075"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual destructor. Cleans up internal operational connection guards and network bindings. <br /></td></tr>
 <tr class="memitem:a36cdc4d3eb393265d357c727d31f18d5" id="r_a36cdc4d3eb393265d357c727d31f18d5"><td class="memItemLeft"><a id="a36cdc4d3eb393265d357c727d31f18d5" name="a36cdc4d3eb393265d357c727d31f18d5"></a>
 void&#160;</td><td class="memItemRight"><b>quit</b> ()</td></tr>
+<tr class="memdesc:a36cdc4d3eb393265d357c727d31f18d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Explicitly stops the server component and disconnects from the underlying TCP server events. <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pro-methods" class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:ac5e80a125a753c394e4377c316babf1e" id="r_ac5e80a125a753c394e4377c316babf1e"><td class="memItemLeft"><a id="ac5e80a125a753c394e4377c316babf1e" name="ac5e80a125a753c394e4377c316babf1e"></a>
-void&#160;</td><td class="memItemRight"><b>transmit</b> (const <a class="el" href="classAsyncFw_1_1DataArraySocket.html">DataArraySocket</a> *socket, uint64_t index, uint32_t size, uint32_t pi)</td></tr>
+<tr class="memitem:a518ff8e41bae78f1b1c0e099514e56eb" id="r_a518ff8e41bae78f1b1c0e099514e56eb"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a518ff8e41bae78f1b1c0e099514e56eb">transmit</a> (const <a class="el" href="classAsyncFw_1_1DataArraySocket.html">DataArraySocket</a> *, uint64_t, uint32_t, uint32_t)</td></tr>
+<tr class="memdesc:a518ff8e41bae78f1b1c0e099514e56eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extracts a specific historical data slice from an <a class="el" href="classAsyncFw_1_1Rrd.html" title="A high-performance circular database engine (Round-Robin Database) for time-series and structural dat...">Rrd</a> archive and transmits it to a client socket.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pro-attribs" class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:a1d88715a189ea36663ca192b64886700" id="r_a1d88715a189ea36663ca192b64886700"><td class="memItemLeft"><a id="a1d88715a189ea36663ca192b64886700" name="a1d88715a189ea36663ca192b64886700"></a>
-<a class="el" href="classAsyncFw_1_1DataArrayTcpServer.html">DataArrayTcpServer</a> *&#160;</td><td class="memItemRight"><b>tcpServer</b></td></tr>
-<tr class="memitem:a77ecea107ed16e7d5f0840609f4491a0" id="r_a77ecea107ed16e7d5f0840609f4491a0"><td class="memItemLeft"><a id="a77ecea107ed16e7d5f0840609f4491a0" name="a77ecea107ed16e7d5f0840609f4491a0"></a>
-std::vector&lt; <a class="el" href="classAsyncFw_1_1Rrd.html">Rrd</a> * &gt;&#160;</td><td class="memItemRight"><b>rrd</b></td></tr>
-<tr class="memitem:aa9a193248c9734fed9c6fe266736ba18" id="r_aa9a193248c9734fed9c6fe266736ba18"><td class="memItemLeft"><a id="aa9a193248c9734fed9c6fe266736ba18" name="aa9a193248c9734fed9c6fe266736ba18"></a>
-<a class="el" href="classAsyncFw_1_1FunctionConnectionGuard.html">FunctionConnectionGuard</a>&#160;</td><td class="memItemRight"><b>rf_</b></td></tr>
+<tr class="memitem:a1d88715a189ea36663ca192b64886700" id="r_a1d88715a189ea36663ca192b64886700"><td class="memItemLeft"><a class="el" href="classAsyncFw_1_1DataArrayTcpServer.html">DataArrayTcpServer</a> *&#160;</td><td class="memItemRight"><a class="el" href="#a1d88715a189ea36663ca192b64886700">tcpServer</a></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>The <a class="el" href="classAsyncFw_1_1RrdServer.html" title="The RrdServer class.">RrdServer</a> class. </p>
+<div class="textblock"><p>A specialized network server component that exposes Round-Robin Databases (<a class="el" href="classAsyncFw_1_1Rrd.html" title="A high-performance circular database engine (Round-Robin Database) for time-series and structural dat...">Rrd</a>) via TCP. </p>
+<p>Binds an instance of <a class="el" href="classAsyncFw_1_1DataArrayTcpServer.html" title="An asynchronous TCP server class managing client connections and TLS security. Inherits from DataArra...">DataArrayTcpServer</a> to a collection of <a class="el" href="classAsyncFw_1_1Rrd.html" title="A high-performance circular database engine (Round-Robin Database) for time-series and structural dat...">Rrd</a> database tracks (metrics, logs, etc.). It automatically listens for incoming client data synchronization queries, extracts historical slices from the ring buffers, and transmits them back to the connected sockets. </p>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="LogTcp_2main_8cpp-example.html#_a5">LogTcp/main.cpp</a>.</dd>
 </dl>
-</div><hr/>The documentation for this class was generated from the following files:<ul>
+</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a80621329e326c77a65c5e4e65efa511d" name="a80621329e326c77a65c5e4e65efa511d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a80621329e326c77a65c5e4e65efa511d">&#9670;&#160;</a></span>RrdServer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">RrdServer::RrdServer </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classAsyncFw_1_1DataArrayTcpServer.html">DataArrayTcpServer</a> *</td>          <td class="paramname"><span class="paramname"><em>tcpServer</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; <a class="el" href="classAsyncFw_1_1Rrd.html">Rrd</a> * &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>rrd</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructs an <a class="el" href="classAsyncFw_1_1RrdServer.html" title="A specialized network server component that exposes Round-Robin Databases (Rrd) via TCP.">RrdServer</a> instance. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">server</td><td>Pointer to the pre-configured TCP server that will handle socket connections.</td></tr>
+    <tr><td class="paramname">rrd</td><td>Vector of pointers to the managed <a class="el" href="classAsyncFw_1_1Rrd.html" title="A high-performance circular database engine (Round-Robin Database) for time-series and structural dat...">Rrd</a> circular databases exposed for synchronization. </td></tr>
+  </table>
+  </dd>
+</dl>
+<div id="dynsection-1" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
+<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-1-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1RrdServer_a80621329e326c77a65c5e4e65efa511d_cgraph.svg" width="739" height="144"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="a518ff8e41bae78f1b1c0e099514e56eb" name="a518ff8e41bae78f1b1c0e099514e56eb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a518ff8e41bae78f1b1c0e099514e56eb">&#9670;&#160;</a></span>transmit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void RrdServer::transmit </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classAsyncFw_1_1DataArraySocket.html">DataArraySocket</a> *</td>          <td class="paramname"><span class="paramname"><em>socket</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>size</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>pi</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Extracts a specific historical data slice from an <a class="el" href="classAsyncFw_1_1Rrd.html" title="A high-performance circular database engine (Round-Robin Database) for time-series and structural dat...">Rrd</a> archive and transmits it to a client socket. </p>
+<p>This method acts as the core response handler. When a client requests telemetry or logs, this method reads records starting from a specific timeline index/timestamp up to the requested size, pack into a <a class="el" href="classAsyncFw_1_1DataArray.html" title="The DataArray class, provides an array of bytes.">DataArray</a> frame, and sends it asynchronously. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">socket</td><td>Pointer to the destination client socket context.</td></tr>
+    <tr><td class="paramname">index</td><td>The starting timeline primary index or timestamp boundary to slice from.</td></tr>
+    <tr><td class="paramname">size</td><td>Maximum number of data items or chunk size bounds to extract from the target <a class="el" href="classAsyncFw_1_1Rrd.html" title="A high-performance circular database engine (Round-Robin Database) for time-series and structural dat...">Rrd</a>.</td></tr>
+    <tr><td class="paramname">pi</td><td>The network packet transaction identifier to match the response with the request. </td></tr>
+  </table>
+  </dd>
+</dl>
+<div id="dynsection-2" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
+<div id="dynsection-2-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-2-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1RrdServer_a518ff8e41bae78f1b1c0e099514e56eb_cgraph.svg" width="548" height="144"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+<div id="dynsection-3" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-3-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1RrdServer_a518ff8e41bae78f1b1c0e099514e56eb_icgraph.svg" width="346" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
+<a id="a1d88715a189ea36663ca192b64886700" name="a1d88715a189ea36663ca192b64886700"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1d88715a189ea36663ca192b64886700">&#9670;&#160;</a></span>tcpServer</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classAsyncFw_1_1DataArrayTcpServer.html">DataArrayTcpServer</a>* AsyncFw::RrdServer::tcpServer</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Pointer to the underlying network TCP server listener pipeline. </p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li>main/<a class="el" href="RrdServer_8h_source.html">RrdServer.h</a></li>
 <li>main/<b>RrdServer.cpp</b></li>
 </ul>

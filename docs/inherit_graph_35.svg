@@ -11,7 +11,7 @@
 <!-- Node0 -->
 <g id="Node000000" class="node">
 <title>Node0</title>
-<g id="a_Node000000"><a xlink:href="structAsyncFw_1_1Version.html" target="_top" xlink:title="The Version struct.">
+<g id="a_Node000000"><a xlink:href="structAsyncFw_1_1Version.html" target="_top" xlink:title="Provides access to compile&#45;time software versioning metrics and Git repository metadata.">
 <polygon fill="white" stroke="#666666" points="96.25,-20 0,-20 0,0 96.25,0 96.25,-20"/>
 <text xml:space="preserve" text-anchor="middle" x="48.12" y="-6.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::Version</text>
 </a>

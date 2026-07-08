@@ -11,5 +11,7 @@ var searchData=
   ['_7einstance_8',['~Instance',['../classAsyncFw_1_1Instance.html#a6f25472f8b38f5cd6fa3d681919bf50a',1,'AsyncFw::Instance']]],
   ['_7elog_9',['~Log',['../classAsyncFw_1_1Log.html#a7f9618da213c4789bb158d337c819e22',1,'AsyncFw::Log']]],
   ['_7errd_10',['~Rrd',['../classAsyncFw_1_1Rrd.html#a56d6e047fa884528c91286f552f8a239',1,'AsyncFw::Rrd']]],
-  ['_7esystemprocess_11',['~SystemProcess',['../classAsyncFw_1_1SystemProcess.html#ae280edaf59815e2e4cbac2ba71382d21',1,'AsyncFw::SystemProcess']]]
+  ['_7errdclient_11',['~RrdClient',['../classAsyncFw_1_1RrdClient.html#a9db5f1a5ddaa3c083851d557764937c0',1,'AsyncFw::RrdClient']]],
+  ['_7errdserver_12',['~RrdServer',['../classAsyncFw_1_1RrdServer.html#ad57e2c435b5730d56efe5615e31b0075',1,'AsyncFw::RrdServer']]],
+  ['_7esystemprocess_13',['~SystemProcess',['../classAsyncFw_1_1SystemProcess.html#ae280edaf59815e2e4cbac2ba71382d21',1,'AsyncFw::SystemProcess']]]
 ];

@@ -20,6 +20,8 @@ var searchData=
   ['response_17',['response',['../classAsyncFw_1_1HttpServer_1_1Request.html#a6183c383629786f1f45cc58a7cdba48c',1,'AsyncFw::HttpServer::Request']]],
   ['resume_5fqueued_18',['resume_queued',['../structAsyncFw_1_1CoroutineTask_1_1promise__type.html#a6ef8c84c53068677172b21f5e08aa0b7',1,'AsyncFw::CoroutineTask::promise_type']]],
   ['rrd_19',['Rrd',['../classAsyncFw_1_1Rrd.html#a2fd20dd3470a11ef179577c565c333f1',1,'AsyncFw::Rrd::Rrd(int, int, int, const std::string &amp;)'],['../classAsyncFw_1_1Rrd.html#a98c7829cc6177c80245cf95095deb3ba',1,'AsyncFw::Rrd::Rrd(int, int, int)'],['../classAsyncFw_1_1Rrd.html#aaea6a63444ab427f801be34f26d930d5',1,'AsyncFw::Rrd::Rrd(int, const std::string &amp;)'],['../classAsyncFw_1_1Rrd.html#aa54ae298c96e9efe88b644931b12f734',1,'AsyncFw::Rrd::Rrd(int)']]],
-  ['rrditemfrommessage_20',['rrdItemFromMessage',['../classAsyncFw_1_1Log.html#a36128876c58bc05a4b8ec59144abdaa1',1,'AsyncFw::Log']]],
-  ['running_21',['running',['../classAsyncFw_1_1AbstractThread.html#aa317731738402e37a8a05d5a5ec9d7c4',1,'AsyncFw::AbstractThread::running()'],['../classAsyncFw_1_1AbstractTask.html#ab5c6c7ec53a111afcbd485f8c13b81f0',1,'AsyncFw::AbstractTask::running()']]]
+  ['rrdclient_20',['RrdClient',['../classAsyncFw_1_1RrdClient.html#a99c8606f7788c0ab1d468b61b4de9adf',1,'AsyncFw::RrdClient']]],
+  ['rrditemfrommessage_21',['rrdItemFromMessage',['../classAsyncFw_1_1Log.html#a36128876c58bc05a4b8ec59144abdaa1',1,'AsyncFw::Log']]],
+  ['rrdserver_22',['RrdServer',['../classAsyncFw_1_1RrdServer.html#a80621329e326c77a65c5e4e65efa511d',1,'AsyncFw::RrdServer']]],
+  ['running_23',['running',['../classAsyncFw_1_1AbstractThread.html#aa317731738402e37a8a05d5a5ec9d7c4',1,'AsyncFw::AbstractThread::running()'],['../classAsyncFw_1_1AbstractTask.html#ab5c6c7ec53a111afcbd485f8c13b81f0',1,'AsyncFw::AbstractTask::running()']]]
 ];
