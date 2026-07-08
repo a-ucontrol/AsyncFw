@@ -20,7 +20,7 @@
 <!-- Node4 -->
 <g id="Node000004" class="node">
 <title>Node4</title>
-<g id="a_Node000004"><a xlink:href="classAsyncFw_1_1DataArraySocket.html" target="_top" xlink:title="The DataArraySocket class.">
+<g id="a_Node000004"><a xlink:href="classAsyncFw_1_1DataArraySocket.html" target="_top" xlink:title="An asynchronous socket class for transmitting data arrays (DataArray) with TLS support....">
 <polygon fill="white" stroke="#666666" points="138.25,-88 0,-88 0,-68 138.25,-68 138.25,-88"/>
 <text xml:space="preserve" text-anchor="middle" x="69.12" y="-74.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::DataArraySocket</text>
 </a>

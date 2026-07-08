@@ -12,7 +12,7 @@
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="364,75,459,57,454,59,366,80"/>
 <area shape="rect" id="Node000007" href="$classAsyncFw_1_1ListenSocket.html" title="Server&#45;side socket wrapper specialized for listening and accepting incoming network connections." alt="" coords="443,81,603,108"/>
 <area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="386,92,445,94,440,95,387,97"/>
-<area shape="rect" id="Node000004" href="$classAsyncFw_1_1DataArraySocket.html" title="The DataArraySocket class." alt="" coords="667,5,852,32"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1DataArraySocket.html" title="An asynchronous socket class for transmitting data arrays (DataArray) with TLS support...." alt="" coords="667,5,852,32"/>
 <area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="634,29,669,28,664,29,636,35"/>
 <area shape="rect" id="Node000005" href="$classAsyncFw_1_1HttpSocket.html" title="The HttpSocket class." alt="" coords="684,56,835,83"/>
 <area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="635,53,686,61,681,62,635,59"/>

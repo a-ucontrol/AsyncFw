@@ -20,7 +20,7 @@
 <!-- Node2 -->
 <g id="Node000002" class="node">
 <title>Node2</title>
-<g id="a_Node000002"><a xlink:href="classAsyncFw_1_1DataArrayTcpServer.html" target="_top" xlink:title="The DataArrayTcpServer class.">
+<g id="a_Node000002"><a xlink:href="classAsyncFw_1_1DataArrayTcpServer.html" target="_top" xlink:title="An asynchronous TCP server class managing client connections and TLS security. Inherits from DataArra...">
 <polygon fill="white" stroke="#666666" points="914,-70 763,-70 763,-50 914,-50 914,-70"/>
 <text xml:space="preserve" text-anchor="middle" x="838.5" y="-56.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::DataArrayTcpServer</text>
 </a>
@@ -39,7 +39,7 @@
 <!-- Node3 -->
 <g id="Node000003" class="node">
 <title>Node3</title>
-<g id="a_Node000003"><a xlink:href="classAsyncFw_1_1DataArrayAbstractTcp.html" target="_top" xlink:title="The DataArrayAbstractTcp class.">
+<g id="a_Node000003"><a xlink:href="classAsyncFw_1_1DataArrayAbstractTcp.html" target="_top" xlink:title="Abstract base class implementing a multi&#45;threaded TCP pool for socket and packet management.">
 <polygon fill="white" stroke="#666666" points="726,-70 566.75,-70 566.75,-50 726,-50 726,-70"/>
 <text xml:space="preserve" text-anchor="middle" x="646.38" y="-56.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::DataArrayAbstractTcp</text>
 </a>

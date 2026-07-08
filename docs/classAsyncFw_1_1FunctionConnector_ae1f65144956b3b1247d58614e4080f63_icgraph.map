@@ -1,0 +1,5 @@
+<map id="AsyncFw::FunctionConnector::connect" name="AsyncFw::FunctionConnector::connect">
+<area shape="rect" id="Node000001" title="Establishes a connection to a callable target." alt="" coords="251,5,445,48"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1DataArrayTcpClient.html#a380c907a396d306611fe7dc21f35f74f" title="Executes a synchronous request&#45;response data exchange over a specific socket." alt="" coords="5,5,203,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="232,27,203,29,203,24,238,26"/>
+</map>

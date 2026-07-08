@@ -1,5 +1,7 @@
 <map id="AsyncFw::Timer::start" name="AsyncFw::Timer::start">
-<area shape="rect" id="Node000001" title="Starts or restarts a timer with the specified timeout. If the timer is already running,..." alt="" coords="240,5,391,32"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1Timer.html#aad1874fc8c5f41c278e4e4de81609e54" title="Asynchronously waits for the specified timeout interval." alt="" coords="5,5,192,32"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="221,19,192,21,192,16,227,19"/>
+<area shape="rect" id="Node000001" title="Starts or restarts a timer with the specified timeout. If the timer is already running,..." alt="" coords="251,35,402,61"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1Timer.html#aad1874fc8c5f41c278e4e4de81609e54" title="Asynchronously waits for the specified timeout interval." alt="" coords="11,5,197,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="232,36,198,34,197,28,238,36"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1DataArrayTcpClient.html#a380c907a396d306611fe7dc21f35f74f" title="Executes a synchronous request&#45;response data exchange over a specific socket." alt="" coords="5,56,203,99"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="232,60,204,67,203,62,238,60"/>
 </map>

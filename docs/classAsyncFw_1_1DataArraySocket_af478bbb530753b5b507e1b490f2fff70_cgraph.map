@@ -1,0 +1,5 @@
+<map id="AsyncFw::DataArraySocket::initTls" name="AsyncFw::DataArraySocket::initTls">
+<area shape="rect" id="Node000001" title="Initializes the TLS context for the socket." alt="" coords="5,5,190,48"/>
+<area shape="rect" id="Node000002" href="$structAsyncFw_1_1AnyData.html#aa6d2c3488a44e34e25a0971b01a27b3c" title="Type&#45;safely extracts and returns the stored data value." alt="" coords="238,13,406,40"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="190,24,225,26,219,27,190,29"/>
+</map>

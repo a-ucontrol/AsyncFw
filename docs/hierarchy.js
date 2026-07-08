@@ -15,7 +15,11 @@ var hierarchy =
     ] ],
     [ "AsyncFw::AbstractThread", "classAsyncFw_1_1AbstractThread.html", [
       [ "AsyncFw::Thread", "classAsyncFw_1_1Thread.html", [
-        [ "AsyncFw::AbstractThreadPool::Thread", "classAsyncFw_1_1AbstractThreadPool_1_1Thread.html", null ],
+        [ "AsyncFw::AbstractThreadPool::Thread", "classAsyncFw_1_1AbstractThreadPool_1_1Thread.html", [
+          [ "AsyncFw::DataArrayAbstractTcp::Thread", "classAsyncFw_1_1DataArrayAbstractTcp_1_1Thread.html", [
+            [ "AsyncFw::DataArrayTcpClient::Thread", "classAsyncFw_1_1DataArrayTcpClient_1_1Thread.html", null ]
+          ] ]
+        ] ],
         [ "AsyncFw::MainThread", "classAsyncFw_1_1MainThread.html", null ]
       ] ]
     ] ],

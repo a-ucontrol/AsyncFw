@@ -4,6 +4,10 @@
 <area shape="poly" id="edge10_Node000000_Node000001" title=" " alt="" coords="194,53,229,56,223,56,195,59"/>
 <area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractThreadPool_1_1Thread.html" title=" " alt="" coords="399,5,598,48"/>
 <area shape="poly" id="edge11_Node000001_Node000002" title=" " alt="" coords="366,43,401,40,396,41,367,48"/>
-<area shape="rect" id="Node000003" href="$classAsyncFw_1_1MainThread.html" title="A static control interface managing the application&#39;s primary execution thread (Main Thread)." alt="" coords="422,72,575,99"/>
-<area shape="poly" id="edge12_Node000001_Node000003" title=" " alt="" coords="366,64,425,75,419,75,366,69"/>
+<area shape="rect" id="Node000005" href="$classAsyncFw_1_1MainThread.html" title="A static control interface managing the application&#39;s primary execution thread (Main Thread)." alt="" coords="422,72,575,99"/>
+<area shape="poly" id="edge14_Node000001_Node000005" title=" " alt="" coords="366,64,425,75,419,75,366,69"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1DataArrayAbstractTcp_1_1Thread.html" title=" " alt="" coords="646,5,839,48"/>
+<area shape="poly" id="edge12_Node000002_Node000003" title=" " alt="" coords="614,24,649,27,643,27,614,29"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1DataArrayTcpClient_1_1Thread.html" title=" " alt="" coords="887,5,1084,48"/>
+<area shape="poly" id="edge13_Node000003_Node000004" title=" " alt="" coords="854,24,889,27,883,27,854,29"/>
 </map>

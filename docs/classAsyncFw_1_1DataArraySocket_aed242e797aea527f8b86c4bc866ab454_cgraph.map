@@ -1,0 +1,5 @@
+<map id="AsyncFw::DataArraySocket::connect" name="AsyncFw::DataArraySocket::connect">
+<area shape="rect" id="Node000001" title="Initiates a connection to the specified remote host and port." alt="" coords="5,5,190,48"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1DataArraySocket.html#ad3f44b667eb9f7b721e5216635ff67ee" title="Configures the remote host address and port for subsequent connection attempts." alt="" coords="238,5,422,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="190,24,224,26,219,27,190,29"/>
+</map>

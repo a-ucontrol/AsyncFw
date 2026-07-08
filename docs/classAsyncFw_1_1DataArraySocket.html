@@ -99,7 +99,7 @@ $(function(){initNavTree('classAsyncFw_1_1DataArraySocket.html','','classAsyncFw
 </div><!--header-->
 <div class="contents">
 
-<p>The <a class="el" href="classAsyncFw_1_1DataArraySocket.html" title="The DataArraySocket class.">DataArraySocket</a> class.  
+<p>An asynchronous socket class for transmitting data arrays (<a class="el" href="classAsyncFw_1_1DataArray.html" title="The DataArray class, provides an array of bytes.">DataArray</a>) with TLS support. Manages high-level data packet processing, read/write buffer boundaries, timeout intervals, keep-alive monitoring, and integration with TLS layers.  
  <a href="#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="DataArraySocket_8h_source.html">AsyncFw/DataArraySocket</a>&gt;</code></p>
@@ -118,47 +118,47 @@ $(function(){initNavTree('classAsyncFw_1_1DataArraySocket.html','','classAsyncFw
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:af478bbb530753b5b507e1b490f2fff70" id="r_af478bbb530753b5b507e1b490f2fff70"><td class="memItemLeft"><a id="af478bbb530753b5b507e1b490f2fff70" name="af478bbb530753b5b507e1b490f2fff70"></a>
-bool&#160;</td><td class="memItemRight"><b>initTls</b> (const <a class="el" href="classAsyncFw_1_1TlsContext.html">TlsContext</a> &amp;<a class="el" href="structAsyncFw_1_1AnyData.html#aa6d2c3488a44e34e25a0971b01a27b3c">data</a>)</td></tr>
+<tr class="memitem:af478bbb530753b5b507e1b490f2fff70" id="r_af478bbb530753b5b507e1b490f2fff70"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#af478bbb530753b5b507e1b490f2fff70">initTls</a> (const <a class="el" href="classAsyncFw_1_1TlsContext.html">TlsContext</a> &amp;<a class="el" href="structAsyncFw_1_1AnyData.html#aa6d2c3488a44e34e25a0971b01a27b3c">data</a>)</td></tr>
+<tr class="memdesc:af478bbb530753b5b507e1b490f2fff70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the TLS context for the socket.  <br /></td></tr>
 <tr class="memitem:a99f9dde81f2f9b5c453bf95dfa38eb45" id="r_a99f9dde81f2f9b5c453bf95dfa38eb45"><td class="memItemLeft"><a id="a99f9dde81f2f9b5c453bf95dfa38eb45" name="a99f9dde81f2f9b5c453bf95dfa38eb45"></a>
 void&#160;</td><td class="memItemRight"><b>disableTls</b> ()</td></tr>
-<tr class="memitem:ac7366a53ca9c5c43bc3c6bb88b539d53" id="r_ac7366a53ca9c5c43bc3c6bb88b539d53"><td class="memItemLeft"><a id="ac7366a53ca9c5c43bc3c6bb88b539d53" name="ac7366a53ca9c5c43bc3c6bb88b539d53"></a>
-bool&#160;</td><td class="memItemRight"><b>transmit</b> (const <a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> &amp;, uint32_t, bool=false) const</td></tr>
-<tr class="memitem:a836535a2d2e556964cc432fa75dc17fd" id="r_a836535a2d2e556964cc432fa75dc17fd"><td class="memItemLeft"><a id="a836535a2d2e556964cc432fa75dc17fd" name="a836535a2d2e556964cc432fa75dc17fd"></a>
-void&#160;</td><td class="memItemRight"><b>clearBuffer</b> (const <a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> *) const</td></tr>
-<tr class="memitem:a8b24a4b3df09474a2b1437580cb6b17a" id="r_a8b24a4b3df09474a2b1437580cb6b17a"><td class="memItemLeft"><a id="a8b24a4b3df09474a2b1437580cb6b17a" name="a8b24a4b3df09474a2b1437580cb6b17a"></a>
-int&#160;</td><td class="memItemRight"><b>connectTimeout</b> () const</td></tr>
-<tr class="memitem:acfed3fa1bd56968ddee2f262e39845cc" id="r_acfed3fa1bd56968ddee2f262e39845cc"><td class="memItemLeft"><a id="acfed3fa1bd56968ddee2f262e39845cc" name="acfed3fa1bd56968ddee2f262e39845cc"></a>
-void&#160;</td><td class="memItemRight"><b>setConnectTimeout</b> (int timeout)</td></tr>
-<tr class="memitem:ac7a4bbc1e1f584806d76aae7c7d67bac" id="r_ac7a4bbc1e1f584806d76aae7c7d67bac"><td class="memItemLeft"><a id="ac7a4bbc1e1f584806d76aae7c7d67bac" name="ac7a4bbc1e1f584806d76aae7c7d67bac"></a>
-int&#160;</td><td class="memItemRight"><b>reconnectTimeout</b> () const</td></tr>
-<tr class="memitem:a7721329f36196a96f1e7b76dfeb8cbe7" id="r_a7721329f36196a96f1e7b76dfeb8cbe7"><td class="memItemLeft"><a id="a7721329f36196a96f1e7b76dfeb8cbe7" name="a7721329f36196a96f1e7b76dfeb8cbe7"></a>
-void&#160;</td><td class="memItemRight"><b>setReconnectTimeout</b> (int timeout)</td></tr>
-<tr class="memitem:a740f58c6fb06a731c59f7b3e9dace41e" id="r_a740f58c6fb06a731c59f7b3e9dace41e"><td class="memItemLeft"><a id="a740f58c6fb06a731c59f7b3e9dace41e" name="a740f58c6fb06a731c59f7b3e9dace41e"></a>
-void&#160;</td><td class="memItemRight"><b>setReadTimeout</b> (int timeout)</td></tr>
-<tr class="memitem:a7d570d4363c5ce211c50a58e2fd8aa76" id="r_a7d570d4363c5ce211c50a58e2fd8aa76"><td class="memItemLeft"><a id="a7d570d4363c5ce211c50a58e2fd8aa76" name="a7d570d4363c5ce211c50a58e2fd8aa76"></a>
-void&#160;</td><td class="memItemRight"><b>setWaitForEncryptedTimeout</b> (int timeout)</td></tr>
-<tr class="memitem:a5f2df3db47cd318cdb904d054bc7a3c5" id="r_a5f2df3db47cd318cdb904d054bc7a3c5"><td class="memItemLeft"><a id="a5f2df3db47cd318cdb904d054bc7a3c5" name="a5f2df3db47cd318cdb904d054bc7a3c5"></a>
-void&#160;</td><td class="memItemRight"><b>setWaitKeepAliveAnswerTimeout</b> (int timeout)</td></tr>
-<tr class="memitem:a3f856b69e149a98d06ca62582fea708d" id="r_a3f856b69e149a98d06ca62582fea708d"><td class="memItemLeft"><a id="a3f856b69e149a98d06ca62582fea708d" name="a3f856b69e149a98d06ca62582fea708d"></a>
-void&#160;</td><td class="memItemRight"><b>setReadBuffers</b> (int buffers, int size)</td></tr>
-<tr class="memitem:a63f570b3f48c75df1a306573e643b7f8" id="r_a63f570b3f48c75df1a306573e643b7f8"><td class="memItemLeft"><a id="a63f570b3f48c75df1a306573e643b7f8" name="a63f570b3f48c75df1a306573e643b7f8"></a>
-void&#160;</td><td class="memItemRight"><b>setWriteBuffers</b> (int buffers, int size)</td></tr>
+<tr class="memdesc:a99f9dde81f2f9b5c453bf95dfa38eb45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Completely disables TLS encryption for the socket. <br /></td></tr>
+<tr class="memitem:ac7366a53ca9c5c43bc3c6bb88b539d53" id="r_ac7366a53ca9c5c43bc3c6bb88b539d53"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#ac7366a53ca9c5c43bc3c6bb88b539d53">transmit</a> (const <a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> &amp;, uint32_t, bool=false) const</td></tr>
+<tr class="memdesc:ac7366a53ca9c5c43bc3c6bb88b539d53"><td class="mdescLeft">&#160;</td><td class="mdescRight">Asynchronously transmits a data array through the socket.  <br /></td></tr>
+<tr class="memitem:acfed3fa1bd56968ddee2f262e39845cc" id="r_acfed3fa1bd56968ddee2f262e39845cc"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#acfed3fa1bd56968ddee2f262e39845cc">setConnectTimeout</a> (int timeout)</td></tr>
+<tr class="memdesc:acfed3fa1bd56968ddee2f262e39845cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the timeout interval for connection establishment.  <br /></td></tr>
+<tr class="memitem:a7721329f36196a96f1e7b76dfeb8cbe7" id="r_a7721329f36196a96f1e7b76dfeb8cbe7"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a7721329f36196a96f1e7b76dfeb8cbe7">setReconnectTimeout</a> (int timeout)</td></tr>
+<tr class="memdesc:a7721329f36196a96f1e7b76dfeb8cbe7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the timeout interval for automatic reconnection upon disconnection.  <br /></td></tr>
+<tr class="memitem:a740f58c6fb06a731c59f7b3e9dace41e" id="r_a740f58c6fb06a731c59f7b3e9dace41e"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a740f58c6fb06a731c59f7b3e9dace41e">setReadTimeout</a> (int timeout)</td></tr>
+<tr class="memdesc:a740f58c6fb06a731c59f7b3e9dace41e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the data read operation timeout interval.  <br /></td></tr>
+<tr class="memitem:a7492a485097b835031af94924030e612" id="r_a7492a485097b835031af94924030e612"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a7492a485097b835031af94924030e612">setWaitForEncryptionTimeout</a> (int timeout)</td></tr>
+<tr class="memdesc:a7492a485097b835031af94924030e612"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the timeout interval for establishing a TLS handshake.  <br /></td></tr>
+<tr class="memitem:a020287f09c337a869e9a6b52b15ea0f4" id="r_a020287f09c337a869e9a6b52b15ea0f4"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a020287f09c337a869e9a6b52b15ea0f4">setWaitKeepAliveResponseTimeout</a> (int timeout)</td></tr>
+<tr class="memdesc:a020287f09c337a869e9a6b52b15ea0f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the timeout interval for receiving a keep-alive response.  <br /></td></tr>
+<tr class="memitem:a3f856b69e149a98d06ca62582fea708d" id="r_a3f856b69e149a98d06ca62582fea708d"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a3f856b69e149a98d06ca62582fea708d">setReadBuffers</a> (int buffers, int size)</td></tr>
+<tr class="memdesc:a3f856b69e149a98d06ca62582fea708d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures limits for incoming (read) data buffers.  <br /></td></tr>
+<tr class="memitem:a63f570b3f48c75df1a306573e643b7f8" id="r_a63f570b3f48c75df1a306573e643b7f8"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a63f570b3f48c75df1a306573e643b7f8">setWriteBuffers</a> (int buffers, int size)</td></tr>
+<tr class="memdesc:a63f570b3f48c75df1a306573e643b7f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures limits for outgoing (write) data buffers.  <br /></td></tr>
 <tr class="memitem:a02696f976d1d5724c250b68d4fc5a0c5" id="r_a02696f976d1d5724c250b68d4fc5a0c5"><td class="memItemLeft"><a id="a02696f976d1d5724c250b68d4fc5a0c5" name="a02696f976d1d5724c250b68d4fc5a0c5"></a>
 void&#160;</td><td class="memItemRight"><b>initServerConnection</b> ()</td></tr>
-<tr class="memitem:ad3f44b667eb9f7b721e5216635ff67ee" id="r_ad3f44b667eb9f7b721e5216635ff67ee"><td class="memItemLeft"><a id="ad3f44b667eb9f7b721e5216635ff67ee" name="ad3f44b667eb9f7b721e5216635ff67ee"></a>
-void&#160;</td><td class="memItemRight"><b>setHost</b> (const std::string &amp;address, uint16_t port) const</td></tr>
-<tr class="memitem:a5d5d666ae1842125adb08acc2f749926" id="r_a5d5d666ae1842125adb08acc2f749926"><td class="memItemLeft"><a id="a5d5d666ae1842125adb08acc2f749926" name="a5d5d666ae1842125adb08acc2f749926"></a>
-const std::string&#160;</td><td class="memItemRight"><b>hostAddress</b> () const</td></tr>
-<tr class="memitem:a17068a1f7c567cf272189033d04e371b" id="r_a17068a1f7c567cf272189033d04e371b"><td class="memItemLeft"><a id="a17068a1f7c567cf272189033d04e371b" name="a17068a1f7c567cf272189033d04e371b"></a>
-uint16_t&#160;</td><td class="memItemRight"><b>hostPort</b> () const</td></tr>
-<tr class="memitem:a81a34e5e5732a0d3b30c213af45bc57a" id="r_a81a34e5e5732a0d3b30c213af45bc57a"><td class="memItemLeft"><a id="a81a34e5e5732a0d3b30c213af45bc57a" name="a81a34e5e5732a0d3b30c213af45bc57a"></a>
-void&#160;</td><td class="memItemRight"><b>transmitKeepAlive</b> ()</td></tr>
-<tr class="memitem:ae20bbfbd7138f5a6e0003ed6b117a7f7" id="r_ae20bbfbd7138f5a6e0003ed6b117a7f7"><td class="memItemLeft"><a id="ae20bbfbd7138f5a6e0003ed6b117a7f7" name="ae20bbfbd7138f5a6e0003ed6b117a7f7"></a>
-<a class="el" href="classAsyncFw_1_1AbstractSocket.html#a6fc3dae51b6b38d67f1c3861dcbb23bd">AbstractSocket::State</a>&#160;</td><td class="memItemRight"><b>state</b> () const</td></tr>
+<tr class="memdesc:a02696f976d1d5724c250b68d4fc5a0c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the socket for a server-side connection (handling an accepted client). <br /></td></tr>
+<tr class="memitem:ad3f44b667eb9f7b721e5216635ff67ee" id="r_ad3f44b667eb9f7b721e5216635ff67ee"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ad3f44b667eb9f7b721e5216635ff67ee">setHost</a> (const std::string &amp;address, uint16_t port) const</td></tr>
+<tr class="memdesc:ad3f44b667eb9f7b721e5216635ff67ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the remote host address and port for subsequent connection attempts.  <br /></td></tr>
+<tr class="memitem:a5d5d666ae1842125adb08acc2f749926" id="r_a5d5d666ae1842125adb08acc2f749926"><td class="memItemLeft">const std::string&#160;</td><td class="memItemRight"><a class="el" href="#a5d5d666ae1842125adb08acc2f749926">hostAddress</a> () const</td></tr>
+<tr class="memdesc:a5d5d666ae1842125adb08acc2f749926"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the remote host address previously assigned via setHost.  <br /></td></tr>
+<tr class="memitem:a17068a1f7c567cf272189033d04e371b" id="r_a17068a1f7c567cf272189033d04e371b"><td class="memItemLeft">uint16_t&#160;</td><td class="memItemRight"><a class="el" href="#a17068a1f7c567cf272189033d04e371b">hostPort</a> () const</td></tr>
+<tr class="memdesc:a17068a1f7c567cf272189033d04e371b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the remote host port previously assigned via setHost.  <br /></td></tr>
+<tr class="memitem:a60d24e73561b9ffc720deefca7a6f720" id="r_a60d24e73561b9ffc720deefca7a6f720"><td class="memItemLeft"><a id="a60d24e73561b9ffc720deefca7a6f720" name="a60d24e73561b9ffc720deefca7a6f720"></a>
+void&#160;</td><td class="memItemRight"><b>sendKeepAlive</b> ()</td></tr>
+<tr class="memdesc:a60d24e73561b9ffc720deefca7a6f720"><td class="mdescLeft">&#160;</td><td class="mdescRight">Forces the transmission of a keep-alive request (ping) to the remote peer. <br /></td></tr>
+<tr class="memitem:ae20bbfbd7138f5a6e0003ed6b117a7f7" id="r_ae20bbfbd7138f5a6e0003ed6b117a7f7"><td class="memItemLeft"><a class="el" href="classAsyncFw_1_1AbstractSocket.html#a6fc3dae51b6b38d67f1c3861dcbb23bd">AbstractSocket::State</a>&#160;</td><td class="memItemRight"><a class="el" href="#ae20bbfbd7138f5a6e0003ed6b117a7f7">state</a> () const</td></tr>
+<tr class="memdesc:ae20bbfbd7138f5a6e0003ed6b117a7f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the current internal state of the socket.  <br /></td></tr>
 <tr class="memitem:aed242e797aea527f8b86c4bc866ab454" id="r_aed242e797aea527f8b86c4bc866ab454"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#aed242e797aea527f8b86c4bc866ab454">connect</a> (const std::string &amp;, uint16_t) override</td></tr>
-<tr class="memdesc:aed242e797aea527f8b86c4bc866ab454"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initiates an asynchronous connection to a remote host.  <br /></td></tr>
+<tr class="memdesc:aed242e797aea527f8b86c4bc866ab454"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initiates a connection to the specified remote host and port.  <br /></td></tr>
 <tr class="memitem:a9942cbf100e7898ba95c8fb92e059ae8" id="r_a9942cbf100e7898ba95c8fb92e059ae8"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a9942cbf100e7898ba95c8fb92e059ae8">disconnect</a> () override</td></tr>
+<tr class="memdesc:a9942cbf100e7898ba95c8fb92e059ae8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disconnects the socket from the remote peer.  <br /></td></tr>
+<tr class="memitem:af6faaf80328db0a1644cd6b89ffae7eb" id="r_af6faaf80328db0a1644cd6b89ffae7eb"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#af6faaf80328db0a1644cd6b89ffae7eb">releaseBuffer</a> (const <a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> *) const</td></tr>
+<tr class="memdesc:af6faaf80328db0a1644cd6b89ffae7eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Frees the memory allocated for the read buffer associated with the given pointer.  <br /></td></tr>
 <tr class="inherit_header pub_methods_classAsyncFw_1_1AbstractTlsSocket"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_classAsyncFw_1_1AbstractTlsSocket')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Public Member Functions inherited from <a class="el" href="classAsyncFw_1_1AbstractTlsSocket.html">AsyncFw::AbstractTlsSocket</a></td></tr>
 <tr class="memitem:a89721fd68ed3de138aa6167dd98ec5fa inherit pub_methods_classAsyncFw_1_1AbstractTlsSocket" id="r_a89721fd68ed3de138aa6167dd98ec5fa"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="classAsyncFw_1_1AbstractTlsSocket.html#a89721fd68ed3de138aa6167dd98ec5fa">setDescriptor</a> (int) override</td></tr>
 <tr class="memitem:a46dbd8e4895445214a4f46ee46433d6c inherit pub_methods_classAsyncFw_1_1AbstractTlsSocket" id="r_a46dbd8e4895445214a4f46ee46433d6c"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="classAsyncFw_1_1AbstractTlsSocket.html#a46dbd8e4895445214a4f46ee46433d6c">close</a> () override</td></tr>
@@ -225,8 +225,9 @@ bool&#160;</td><td class="memItemRight"><b>empty</b> () const</td></tr>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a02dbcce97207d018e0ab0ab3ce78b7be" id="r_a02dbcce97207d018e0ab0ab3ce78b7be"><td class="memItemLeft"><a id="a02dbcce97207d018e0ab0ab3ce78b7be" name="a02dbcce97207d018e0ab0ab3ce78b7be"></a>
 <a class="el" href="classAsyncFw_1_1FunctionConnector.html">FunctionConnector</a>&lt; <a class="el" href="classAsyncFw_1_1AbstractSocket.html#a6fc3dae51b6b38d67f1c3861dcbb23bd">AbstractSocket::State</a> &gt;::Policy&lt; <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector.html#ab248bd16cbfcac609f58d401abec4368a3b1695a20470728ef441d8ccdd549b78">AbstractFunctionConnector::DirectOnly</a> &gt;::Protected&lt; DataArraySocket &gt;&#160;</td><td class="memItemRight"><b>stateChanged</b></td></tr>
-<tr class="memitem:ab0c23db25054ae85a92b6fb57f7da125" id="r_ab0c23db25054ae85a92b6fb57f7da125"><td class="memItemLeft"><a id="ab0c23db25054ae85a92b6fb57f7da125" name="ab0c23db25054ae85a92b6fb57f7da125"></a>
-<a class="el" href="classAsyncFw_1_1FunctionConnector.html">FunctionConnector</a>&lt; const <a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> *, uint32_t &gt;::Policy&lt; <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector.html#ab248bd16cbfcac609f58d401abec4368a3b1695a20470728ef441d8ccdd549b78">AbstractFunctionConnector::DirectOnly</a> &gt;::Protected&lt; DataArraySocket &gt;&#160;</td><td class="memItemRight"><b>received</b></td></tr>
+<tr class="memdesc:a02dbcce97207d018e0ab0ab3ce78b7be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Signal / Connector triggered when the socket state changes. <br /></td></tr>
+<tr class="memitem:ab0c23db25054ae85a92b6fb57f7da125" id="r_ab0c23db25054ae85a92b6fb57f7da125"><td class="memItemLeft"><a class="el" href="classAsyncFw_1_1FunctionConnector.html">FunctionConnector</a>&lt; const <a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> *, uint32_t &gt;::Policy&lt; <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector.html#ab248bd16cbfcac609f58d401abec4368a3b1695a20470728ef441d8ccdd549b78">AbstractFunctionConnector::DirectOnly</a> &gt;::Protected&lt; DataArraySocket &gt;&#160;</td><td class="memItemRight"><a class="el" href="#ab0c23db25054ae85a92b6fb57f7da125">received</a></td></tr>
+<tr class="memdesc:ab0c23db25054ae85a92b6fb57f7da125"><td class="mdescLeft">&#160;</td><td class="mdescRight">Signal / Connector triggered when a complete data array is successfully received and parsed.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pro-methods" class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -321,10 +322,500 @@ std::any&#160;</td><td class="memItemRight"><b>data_</b></td></tr>
 <tr class="memdesc:adc2b97818be013fcf912ca9c8e086fa3 inherit pro_attribs_structAsyncFw_1_1AnyData"><td class="mdescLeft">&#160;</td><td class="mdescRight">Storage container for holding type-safe variables on the fly. <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>The <a class="el" href="classAsyncFw_1_1DataArraySocket.html" title="The DataArraySocket class.">DataArraySocket</a> class. </p>
+<div class="textblock"><p>An asynchronous socket class for transmitting data arrays (<a class="el" href="classAsyncFw_1_1DataArray.html" title="The DataArray class, provides an array of bytes.">DataArray</a>) with TLS support. Manages high-level data packet processing, read/write buffer boundaries, timeout intervals, keep-alive monitoring, and integration with TLS layers. </p>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="DataArrayTcp_2main_8cpp-example.html#_a2">DataArrayTcp/main.cpp</a>, and <a class="el" href="LogTcp_2main_8cpp-example.html#_a10">LogTcp/main.cpp</a>.</dd>
 </dl>
 </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="af478bbb530753b5b507e1b490f2fff70" name="af478bbb530753b5b507e1b490f2fff70"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af478bbb530753b5b507e1b490f2fff70">&#9670;&#160;</a></span>initTls()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool DataArraySocket::initTls </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classAsyncFw_1_1TlsContext.html">TlsContext</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>data</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initializes the TLS context for the socket. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname"><a class="el" href="structAsyncFw_1_1AnyData.html#aa6d2c3488a44e34e25a0971b01a27b3c" title="Type-safely extracts and returns the stored data value.">data</a></td><td>The TLS context object containing certificates and keys. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if initialization was successful, otherwise false. </dd></dl>
+<div id="dynsection-2" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
+<div id="dynsection-2-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-2-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1DataArraySocket_af478bbb530753b5b507e1b490f2fff70_cgraph.svg" width="412" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+<div id="dynsection-3" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-3-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1DataArraySocket_af478bbb530753b5b507e1b490f2fff70_icgraph.svg" width="436" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<a id="ac7366a53ca9c5c43bc3c6bb88b539d53" name="ac7366a53ca9c5c43bc3c6bb88b539d53"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac7366a53ca9c5c43bc3c6bb88b539d53">&#9670;&#160;</a></span>transmit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool DataArraySocket::transmit </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>ba</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>pi</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>wait</em></span><span class="paramdefsep"> = </span><span class="paramdefval">false</span>&#160;) const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Asynchronously transmits a data array through the socket. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">da</td><td>Reference to the <a class="el" href="classAsyncFw_1_1DataArray.html" title="The DataArray class, provides an array of bytes.">DataArray</a> being sent.</td></tr>
+    <tr><td class="paramname">id</td><td>The packet identifier.</td></tr>
+    <tr><td class="paramname">wait</td><td>If true and called from outside the socket thread, blocks the thread until completion. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if the data was successfully queued for transmission, otherwise false. </dd></dl>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="DataArrayTcp_2main_8cpp-example.html#a5">DataArrayTcp/main.cpp</a>.</dd>
+</dl>
+<div id="dynsection-4" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
+<div id="dynsection-4-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-4-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1DataArraySocket_ac7366a53ca9c5c43bc3c6bb88b539d53_cgraph.svg" width="428" height="120"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<a id="acfed3fa1bd56968ddee2f262e39845cc" name="acfed3fa1bd56968ddee2f262e39845cc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acfed3fa1bd56968ddee2f262e39845cc">&#9670;&#160;</a></span>setConnectTimeout()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AsyncFw::DataArraySocket::setConnectTimeout </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>timeout</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets the timeout interval for connection establishment. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">timeout</td><td>Timeout interval in milliseconds. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a7721329f36196a96f1e7b76dfeb8cbe7" name="a7721329f36196a96f1e7b76dfeb8cbe7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7721329f36196a96f1e7b76dfeb8cbe7">&#9670;&#160;</a></span>setReconnectTimeout()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AsyncFw::DataArraySocket::setReconnectTimeout </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>timeout</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets the timeout interval for automatic reconnection upon disconnection. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">timeout</td><td>Timeout interval in milliseconds. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a740f58c6fb06a731c59f7b3e9dace41e" name="a740f58c6fb06a731c59f7b3e9dace41e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a740f58c6fb06a731c59f7b3e9dace41e">&#9670;&#160;</a></span>setReadTimeout()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AsyncFw::DataArraySocket::setReadTimeout </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>timeout</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets the data read operation timeout interval. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">timeout</td><td>Maximum allowed data absence in milliseconds before dropping the connection. </td></tr>
+  </table>
+  </dd>
+</dl>
+<div id="dynsection-5" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-5-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-5-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1DataArraySocket_a740f58c6fb06a731c59f7b3e9dace41e_icgraph.svg" width="436" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<a id="a7492a485097b835031af94924030e612" name="a7492a485097b835031af94924030e612"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7492a485097b835031af94924030e612">&#9670;&#160;</a></span>setWaitForEncryptionTimeout()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AsyncFw::DataArraySocket::setWaitForEncryptionTimeout </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>timeout</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets the timeout interval for establishing a TLS handshake. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">timeout</td><td>Timeout interval in milliseconds. </td></tr>
+  </table>
+  </dd>
+</dl>
+<div id="dynsection-6" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-6-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-6-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1DataArraySocket_a7492a485097b835031af94924030e612_icgraph.svg" width="452" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<a id="a020287f09c337a869e9a6b52b15ea0f4" name="a020287f09c337a869e9a6b52b15ea0f4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a020287f09c337a869e9a6b52b15ea0f4">&#9670;&#160;</a></span>setWaitKeepAliveResponseTimeout()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AsyncFw::DataArraySocket::setWaitKeepAliveResponseTimeout </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>timeout</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets the timeout interval for receiving a keep-alive response. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">timeout</td><td>Timeout in milliseconds. Setting to 0 disables keep-alive monitoring. </td></tr>
+  </table>
+  </dd>
+</dl>
+<div id="dynsection-7" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-7-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-7-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1DataArraySocket_a020287f09c337a869e9a6b52b15ea0f4_icgraph.svg" width="490" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<a id="a3f856b69e149a98d06ca62582fea708d" name="a3f856b69e149a98d06ca62582fea708d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3f856b69e149a98d06ca62582fea708d">&#9670;&#160;</a></span>setReadBuffers()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AsyncFw::DataArraySocket::setReadBuffers </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>buffers</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>size</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Configures limits for incoming (read) data buffers. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">buffers</td><td>Maximum number of simultaneously stored read buffers.</td></tr>
+    <tr><td class="paramname">size</td><td>Maximum size of a single read buffer in bytes. </td></tr>
+  </table>
+  </dd>
+</dl>
+<div id="dynsection-8" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-8-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-8-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1DataArraySocket_a3f856b69e149a98d06ca62582fea708d_icgraph.svg" width="436" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<a id="a63f570b3f48c75df1a306573e643b7f8" name="a63f570b3f48c75df1a306573e643b7f8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a63f570b3f48c75df1a306573e643b7f8">&#9670;&#160;</a></span>setWriteBuffers()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AsyncFw::DataArraySocket::setWriteBuffers </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>buffers</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>size</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Configures limits for outgoing (write) data buffers. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">buffers</td><td>Maximum number of packet chunks allowed in the transmit queue.</td></tr>
+    <tr><td class="paramname">size</td><td>Maximum cumulative size of the transmission data in bytes. </td></tr>
+  </table>
+  </dd>
+</dl>
+<div id="dynsection-9" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-9-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-9-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1DataArraySocket_a63f570b3f48c75df1a306573e643b7f8_icgraph.svg" width="436" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<a id="ad3f44b667eb9f7b721e5216635ff67ee" name="ad3f44b667eb9f7b721e5216635ff67ee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad3f44b667eb9f7b721e5216635ff67ee">&#9670;&#160;</a></span>setHost()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AsyncFw::DataArraySocket::setHost </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>address</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>port</em></span>&#160;) const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Configures the remote host address and port for subsequent connection attempts. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">address</td><td>IP address or domain name of the remote host.</td></tr>
+    <tr><td class="paramname">port</td><td>Network port of the remote host. </td></tr>
+  </table>
+  </dd>
+</dl>
+<div id="dynsection-10" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-10-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-10-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1DataArraySocket_ad3f44b667eb9f7b721e5216635ff67ee_icgraph.svg" width="686" height="144"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<a id="a5d5d666ae1842125adb08acc2f749926" name="a5d5d666ae1842125adb08acc2f749926"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5d5d666ae1842125adb08acc2f749926">&#9670;&#160;</a></span>hostAddress()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string AsyncFw::DataArraySocket::hostAddress </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets the remote host address previously assigned via setHost. </p>
+<dl class="section return"><dt>Returns</dt><dd>The host address string. </dd></dl>
+<div id="dynsection-11" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-11-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-11-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1DataArraySocket_a5d5d666ae1842125adb08acc2f749926_icgraph.svg" width="440" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<a id="a17068a1f7c567cf272189033d04e371b" name="a17068a1f7c567cf272189033d04e371b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a17068a1f7c567cf272189033d04e371b">&#9670;&#160;</a></span>hostPort()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t AsyncFw::DataArraySocket::hostPort </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets the remote host port previously assigned via setHost. </p>
+<dl class="section return"><dt>Returns</dt><dd>The host network port. </dd></dl>
+
+</div>
+</div>
+<a id="ae20bbfbd7138f5a6e0003ed6b117a7f7" name="ae20bbfbd7138f5a6e0003ed6b117a7f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae20bbfbd7138f5a6e0003ed6b117a7f7">&#9670;&#160;</a></span>state()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classAsyncFw_1_1AbstractSocket.html#a6fc3dae51b6b38d67f1c3861dcbb23bd">AbstractSocket::State</a> AsyncFw::DataArraySocket::state </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets the current internal state of the socket. </p>
+<dl class="section return"><dt>Returns</dt><dd>An <a class="el" href="classAsyncFw_1_1AbstractSocket.html#a6fc3dae51b6b38d67f1c3861dcbb23bd" title="Execution and lifecycle states of the socket.">AbstractSocket::State</a> enum value. </dd></dl>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="DataArrayTcp_2main_8cpp-example.html#a8">DataArrayTcp/main.cpp</a>.</dd>
+</dl>
+
+</div>
+</div>
 <a id="aed242e797aea527f8b86c4bc866ab454" name="aed242e797aea527f8b86c4bc866ab454"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aed242e797aea527f8b86c4bc866ab454">&#9670;&#160;</a></span>connect()</h2>
 
@@ -337,12 +828,12 @@ std::any&#160;</td><td class="memItemRight"><b>data_</b></td></tr>
         <tr>
           <td class="memname">bool DataArraySocket::connect </td>
           <td>(</td>
-          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>_address</em></span>, </td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>address</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>_port</em></span>&#160;)</td>
+          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>port</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -352,17 +843,23 @@ std::any&#160;</td><td class="memItemRight"><b>data_</b></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Initiates an asynchronous connection to a remote host. </p>
+<p>Initiates a connection to the specified remote host and port. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">ip</td><td>Remote target IPv4 or IPv6 address string.</td></tr>
-    <tr><td class="paramname">port</td><td>Remote target port number. </td></tr>
+    <tr><td class="paramname">address</td><td>Destination IP address.</td></tr>
+    <tr><td class="paramname">port</td><td>Destination network port. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>True if connection initiation succeeded. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>true if the connection process was successfully started, otherwise false. </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classAsyncFw_1_1AbstractTlsSocket.html#a2d9c3d5d540b82fb516f5c56def48a02">AsyncFw::AbstractTlsSocket</a>.</p>
+<div id="dynsection-12" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
+<div id="dynsection-12-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-12-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1DataArraySocket_aed242e797aea527f8b86c4bc866ab454_cgraph.svg" width="428" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
 
 </div>
 </div>
@@ -389,7 +886,46 @@ std::any&#160;</td><td class="memItemRight"><b>data_</b></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Disconnects the socket from the remote peer. </p>
+
 <p>Reimplemented from <a class="el" href="classAsyncFw_1_1AbstractTlsSocket.html">AsyncFw::AbstractTlsSocket</a>.</p>
+<div id="dynsection-13" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-13-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-13-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1DataArraySocket_a9942cbf100e7898ba95c8fb92e059ae8_icgraph.svg" width="428" height="120"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<a id="af6faaf80328db0a1644cd6b89ffae7eb" name="af6faaf80328db0a1644cd6b89ffae7eb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af6faaf80328db0a1644cd6b89ffae7eb">&#9670;&#160;</a></span>releaseBuffer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DataArraySocket::releaseBuffer </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> *</td>          <td class="paramname"><span class="paramname"><em>da</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Frees the memory allocated for the read buffer associated with the given pointer. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">da</td><td>Pointer to the data array that is no longer needed. </td></tr>
+  </table>
+  </dd>
+</dl>
+<div id="dynsection-14" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-14-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-14-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1DataArraySocket_af6faaf80328db0a1644cd6b89ffae7eb_icgraph.svg" width="436" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
 
 </div>
 </div>
@@ -449,12 +985,32 @@ std::any&#160;</td><td class="memItemRight"><b>data_</b></td></tr>
 <p>Called when there is data to read. </p>
 
 <p>Reimplemented from <a class="el" href="classAsyncFw_1_1AbstractSocket.html#a609ec54ec8aed39769d60319c4c15833">AsyncFw::AbstractSocket</a>.</p>
-<div id="dynsection-2" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
-<div id="dynsection-2-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-15" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
+<div id="dynsection-15-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-2-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1DataArraySocket_a1a1f3404abcb93af27de1d7bc0a958b1_cgraph.svg" width="418" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div id="dynsection-15-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1DataArraySocket_a1a1f3404abcb93af27de1d7bc0a958b1_cgraph.svg" width="428" height="211"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
+<a id="ab0c23db25054ae85a92b6fb57f7da125" name="ab0c23db25054ae85a92b6fb57f7da125"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab0c23db25054ae85a92b6fb57f7da125">&#9670;&#160;</a></span>received</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classAsyncFw_1_1FunctionConnector.html">FunctionConnector</a>&lt;const <a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> *, uint32_t&gt;::Policy&lt;<a class="el" href="classAsyncFw_1_1AbstractFunctionConnector.html#ab248bd16cbfcac609f58d401abec4368a3b1695a20470728ef441d8ccdd549b78">AbstractFunctionConnector::DirectOnly</a>&gt;::Protected&lt;DataArraySocket&gt; AsyncFw::DataArraySocket::received</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Signal / Connector triggered when a complete data array is successfully received and parsed. </p>
+<dl class="section note"><dt>Note</dt><dd></dd>
+<dd>
+Passes a pointer to the <a class="el" href="classAsyncFw_1_1DataArray.html" title="The DataArray class, provides an array of bytes.">DataArray</a> and its ID. The receiver is responsible for freeing the buffer by calling <a class="el" href="#af6faaf80328db0a1644cd6b89ffae7eb" title="Frees the memory allocated for the read buffer associated with the given pointer.">releaseBuffer()</a>. </dd></dl>
 
 </div>
 </div>

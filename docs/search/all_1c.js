@@ -8,7 +8,7 @@ var searchData=
   ['tellp_5',['tellp',['../classAsyncFw_1_1File.html#a5d34b6e9d6a397e82a6f7bec62ea2f4d',1,'AsyncFw::File']]],
   ['the_20application_20master_3a_20mainthread_6',['8. The Application Master: &lt;span class=&quot;tt&quot;&gt;MainThread&lt;/span&gt;',['../index.html#autotoc_md10',1,'']]],
   ['the_20core_20backbone_3a_20abstractthread_7',['1. The Core Backbone: &lt;span class=&quot;tt&quot;&gt;AbstractThread&lt;/span&gt;',['../index.html#autotoc_md3',1,'']]],
-  ['thread_8',['Thread',['../classAsyncFw_1_1AbstractThreadPool_1_1Thread.html',1,'AsyncFw::AbstractThreadPool::Thread'],['../classAsyncFw_1_1Thread.html',1,'AsyncFw::Thread'],['../classAsyncFw_1_1Thread.html#afc5e422090767dd84020381fb9a4d490',1,'AsyncFw::Thread::Thread()'],['../classAsyncFw_1_1AbstractThreadPool_1_1Thread.html#a787b048ddebfd8b5d5d6c3988d0d90d3',1,'AsyncFw::AbstractThreadPool::Thread::Thread()']]],
+  ['thread_8',['Thread',['../classAsyncFw_1_1AbstractThreadPool_1_1Thread.html',1,'AsyncFw::AbstractThreadPool::Thread'],['../classAsyncFw_1_1DataArrayAbstractTcp_1_1Thread.html',1,'AsyncFw::DataArrayAbstractTcp::Thread'],['../classAsyncFw_1_1DataArrayTcpClient_1_1Thread.html',1,'AsyncFw::DataArrayTcpClient::Thread'],['../classAsyncFw_1_1Thread.html',1,'AsyncFw::Thread'],['../classAsyncFw_1_1Thread.html#afc5e422090767dd84020381fb9a4d490',1,'AsyncFw::Thread::Thread()'],['../classAsyncFw_1_1DataArrayAbstractTcp_1_1Thread.html#a09bd1e72ed2f3b30a12fede45bb98d86',1,'AsyncFw::DataArrayAbstractTcp::Thread::Thread()'],['../classAsyncFw_1_1AbstractThreadPool_1_1Thread.html#a787b048ddebfd8b5d5d6c3988d0d90d3',1,'AsyncFw::AbstractThreadPool::Thread::Thread()']]],
   ['thread_9',['thread',['../classAsyncFw_1_1AbstractSocket.html#ac1b9b68ae7fe6c9312d9d713a7b444a9',1,'AsyncFw::AbstractSocket::thread()'],['../classAsyncFw_1_1Rrd.html#a0e1fdab32966afe235c8a3cbb9c3c528',1,'AsyncFw::Rrd::thread()']]],
   ['thread_20safe_20diagnostic_20stream_3a_20logstream_10',['7. Thread-Safe Diagnostic Stream: &lt;span class=&quot;tt&quot;&gt;LogStream&lt;/span&gt;',['../index.html#autotoc_md9',1,'']]],
   ['thread_20secure_20sockets_11',['4. Network Worker Thread: &lt;span class=&quot;tt&quot;&gt;Thread&lt;/span&gt; &amp;amp; Secure Sockets',['../index.html#autotoc_md6',1,'']]],
@@ -25,8 +25,10 @@ var searchData=
   ['timer_2eh_22',['Timer.h',['../Timer_8h.html',1,'']]],
   ['tlscontext_23',['TlsContext',['../index.html#autotoc_md7',1,'5. Cryptographic State &amp;amp; PKI: &lt;span class=&quot;tt&quot;&gt;TlsContext&lt;/span&gt;'],['../classAsyncFw_1_1TlsContext.html',1,'AsyncFw::TlsContext']]],
   ['tlscontext_2eh_24',['TlsContext.h',['../TlsContext_8h.html',1,'']]],
-  ['trace_25',['Trace',['../classAsyncFw_1_1LogStream.html#afa2f6c5311ced6b973d39d6e5ced5731ab9e4aeca51d007c66abb1ad6b93c3c37',1,'AsyncFw::LogStream']]],
-  ['trusted_26',['trusted',['../classAsyncFw_1_1TlsContext.html#a0c268a29a857a658f0ed1254cbff746b',1,'AsyncFw::TlsContext']]],
-  ['type_27',['Type',['../classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html#a860b83046c90e62d768e0acde74626c6',1,'AsyncFw::AbstractFunctionConnector::Connection']]],
-  ['type_28',['type',['../structAsyncFw_1_1LogStream_1_1Message.html#a4b2b2b0ff46ffb2a1f949f4953b34895',1,'AsyncFw::LogStream::Message']]]
+  ['tlssetup_25',['tlsSetup',['../classAsyncFw_1_1DataArrayTcpServer.html#a88b0f0b851c9a6988c13d4c546c472f1',1,'AsyncFw::DataArrayTcpServer']]],
+  ['trace_26',['Trace',['../classAsyncFw_1_1LogStream.html#afa2f6c5311ced6b973d39d6e5ced5731ab9e4aeca51d007c66abb1ad6b93c3c37',1,'AsyncFw::LogStream']]],
+  ['transmit_27',['transmit',['../classAsyncFw_1_1DataArrayAbstractTcp.html#a45af100bb7d2133f28884c278b8ec298',1,'AsyncFw::DataArrayAbstractTcp::transmit()'],['../classAsyncFw_1_1DataArraySocket.html#ac7366a53ca9c5c43bc3c6bb88b539d53',1,'AsyncFw::DataArraySocket::transmit()']]],
+  ['trusted_28',['trusted',['../classAsyncFw_1_1TlsContext.html#a0c268a29a857a658f0ed1254cbff746b',1,'AsyncFw::TlsContext']]],
+  ['type_29',['Type',['../classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html#a860b83046c90e62d768e0acde74626c6',1,'AsyncFw::AbstractFunctionConnector::Connection']]],
+  ['type_30',['type',['../structAsyncFw_1_1LogStream_1_1Message.html#a4b2b2b0ff46ffb2a1f949f4953b34895',1,'AsyncFw::LogStream::Message']]]
 ];

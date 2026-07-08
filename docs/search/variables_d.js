@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['websocketreceived_0',['webSocketReceived',['../classAsyncFw_1_1HttpServer.html#abc4ca40dd30bf85e0328a65360e2038f',1,'AsyncFw::HttpServer']]]
+  ['updated_0',['updated',['../classAsyncFw_1_1Rrd.html#a7ff19310fbae9fbf6b6a2b26bceb7cec',1,'AsyncFw::Rrd']]]
 ];

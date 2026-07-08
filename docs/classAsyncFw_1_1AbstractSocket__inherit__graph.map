@@ -6,7 +6,7 @@
 <area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="323,113,379,154,373,154,323,119"/>
 <area shape="rect" id="Node000002" href="$structAsyncFw_1_1AnyData.html" title="A generic, type&#45;safe data container block wrapper utilizing std::any." alt="" coords="226,5,361,32"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="295,45,296,81,291,79,292,50"/>
-<area shape="rect" id="Node000004" href="$classAsyncFw_1_1DataArraySocket.html" title="The DataArraySocket class." alt="" coords="5,229,190,256"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1DataArraySocket.html" title="An asynchronous socket class for transmitting data arrays (DataArray) with TLS support...." alt="" coords="5,229,190,256"/>
 <area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="163,193,116,231,112,227,167,189"/>
 <area shape="rect" id="Node000005" href="$classAsyncFw_1_1HttpSocket.html" title="The HttpSocket class." alt="" coords="214,229,365,256"/>
 <area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="223,188,276,229,270,229,221,193"/>

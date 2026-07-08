@@ -1,0 +1,5 @@
+<map id="AsyncFw::DataArrayAbstractTcp::findMinimalSocketsThread" name="AsyncFw::DataArrayAbstractTcp::findMinimalSocketsThread">
+<area shape="rect" id="Node000001" title="Locates the worker thread currently hosting the lowest number of socket contexts." alt="" coords="251,5,454,48"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1DataArrayTcpClient.html#aa005c8c643454bd1ae4ae0c7fe4c1068" title="Allocates a new socket instance and associates it with a specific worker thread." alt="" coords="5,5,203,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="232,27,203,29,203,24,238,26"/>
+</map>

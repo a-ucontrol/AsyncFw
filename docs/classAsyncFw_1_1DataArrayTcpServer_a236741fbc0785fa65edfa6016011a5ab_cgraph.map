@@ -1,0 +1,5 @@
+<map id="AsyncFw::DataArrayTcpServer::quit" name="AsyncFw::DataArrayTcpServer::quit">
+<area shape="rect" id="Node000001" title="Stops the server and terminates all active worker threads and connections." alt="" coords="5,5,207,48"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1DataArrayTcpServer.html#a322e0207f5e60a9d6567e1098f5dbece" title="Closes the listening socket, preventing new connections while keeping current ones active." alt="" coords="255,5,456,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="207,24,242,27,237,27,207,29"/>
+</map>

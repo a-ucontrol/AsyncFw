@@ -1,0 +1,5 @@
+<map id="AsyncFw::DataArrayAbstractTcp::DataArrayAbstractTcp" name="AsyncFw::DataArrayAbstractTcp::DataArrayAbstractTcp">
+<area shape="rect" id="Node000001" title="Constructs a new DataArrayAbstractTcp instance." alt="" coords="5,5,198,48"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractThreadPool.html#ac312e723c2e0fa3e4cc18e518853bdf2" title="Returns the identifier name of the thread pool." alt="" coords="246,5,445,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="198,24,233,26,227,27,198,29"/>
+</map>

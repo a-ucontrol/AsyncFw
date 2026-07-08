@@ -20,16 +20,16 @@
 <!-- Node1 -->
 <g id="Node000001" class="node">
 <title>Node1</title>
-<g id="a_Node000001"><a xlink:href="classAsyncFw_1_1DataArrayAbstractTcp.html" target="_top" xlink:title="The DataArrayAbstractTcp class.">
+<g id="a_Node000001"><a xlink:href="classAsyncFw_1_1DataArrayAbstractTcp.html" target="_top" xlink:title="Abstract base class implementing a multi&#45;threaded TCP pool for socket and packet management.">
 <polygon fill="white" stroke="#666666" points="344.75,-58 185.5,-58 185.5,-38 344.75,-38 344.75,-58"/>
 <text xml:space="preserve" text-anchor="middle" x="265.12" y="-44.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::DataArrayAbstractTcp</text>
 </a>
 </g>
 </g>
 <!-- Node0&#45;&gt;Node1 -->
-<g id="edge13_Node000000_Node000001" class="edge">
+<g id="edge15_Node000000_Node000001" class="edge">
 <title>Node0&#45;&gt;Node1</title>
-<g id="a_edge13_Node000000_Node000001"><a xlink:title=" ">
+<g id="a_edge15_Node000000_Node000001"><a xlink:title=" ">
 <path fill="none" stroke="#63b8ff" d="M161.12,-37.61C169.09,-38.41 177.14,-39.23 185.05,-40.02"/>
 <polygon fill="#63b8ff" stroke="#63b8ff" points="161.74,-34.16 151.44,-36.63 161.03,-41.12 161.74,-34.16"/>
 </a>
@@ -45,9 +45,9 @@
 </g>
 </g>
 <!-- Node0&#45;&gt;Node4 -->
-<g id="edge16_Node000000_Node000004" class="edge">
+<g id="edge18_Node000000_Node000004" class="edge">
 <title>Node0&#45;&gt;Node4</title>
-<g id="a_edge16_Node000000_Node000004"><a xlink:title=" ">
+<g id="a_edge18_Node000000_Node000004"><a xlink:title=" ">
 <path fill="none" stroke="#63b8ff" d="M160.98,-20.4C177.05,-18.78 193.48,-17.13 208.36,-15.62"/>
 <polygon fill="#63b8ff" stroke="#63b8ff" points="161.03,-16.88 151.44,-21.37 161.74,-23.84 161.03,-16.88"/>
 </a>
@@ -56,16 +56,16 @@
 <!-- Node2 -->
 <g id="Node000002" class="node">
 <title>Node2</title>
-<g id="a_Node000002"><a xlink:href="classAsyncFw_1_1DataArrayTcpClient.html" target="_top" xlink:title="The DataArrayTcpClient class.">
+<g id="a_Node000002"><a xlink:href="classAsyncFw_1_1DataArrayTcpClient.html" target="_top" xlink:title="An asynchronous TCP client class managing outgoing server connections and synchronous exchanges....">
 <polygon fill="white" stroke="#666666" points="530.25,-77 382.25,-77 382.25,-57 530.25,-57 530.25,-77"/>
 <text xml:space="preserve" text-anchor="middle" x="456.25" y="-63.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::DataArrayTcpClient</text>
 </a>
 </g>
 </g>
 <!-- Node1&#45;&gt;Node2 -->
-<g id="edge14_Node000001_Node000002" class="edge">
+<g id="edge16_Node000001_Node000002" class="edge">
 <title>Node1&#45;&gt;Node2</title>
-<g id="a_edge14_Node000001_Node000002"><a xlink:title=" ">
+<g id="a_edge16_Node000001_Node000002"><a xlink:title=" ">
 <path fill="none" stroke="#63b8ff" d="M356.41,-57.07C364.95,-57.93 373.54,-58.79 381.89,-59.63"/>
 <polygon fill="#63b8ff" stroke="#63b8ff" points="357.04,-53.62 346.74,-56.1 356.34,-60.58 357.04,-53.62"/>
 </a>
@@ -74,16 +74,16 @@
 <!-- Node3 -->
 <g id="Node000003" class="node">
 <title>Node3</title>
-<g id="a_Node000003"><a xlink:href="classAsyncFw_1_1DataArrayTcpServer.html" target="_top" xlink:title="The DataArrayTcpServer class.">
+<g id="a_Node000003"><a xlink:href="classAsyncFw_1_1DataArrayTcpServer.html" target="_top" xlink:title="An asynchronous TCP server class managing client connections and TLS security. Inherits from DataArra...">
 <polygon fill="white" stroke="#666666" points="531.75,-39 380.75,-39 380.75,-19 531.75,-19 531.75,-39"/>
 <text xml:space="preserve" text-anchor="middle" x="456.25" y="-25.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::DataArrayTcpServer</text>
 </a>
 </g>
 </g>
 <!-- Node1&#45;&gt;Node3 -->
-<g id="edge15_Node000001_Node000003" class="edge">
+<g id="edge17_Node000001_Node000003" class="edge">
 <title>Node1&#45;&gt;Node3</title>
-<g id="a_edge15_Node000001_Node000003"><a xlink:title=" ">
+<g id="a_edge17_Node000001_Node000003"><a xlink:title=" ">
 <path fill="none" stroke="#63b8ff" d="M356.5,-38.92C364.5,-38.12 372.54,-37.31 380.39,-36.52"/>
 <polygon fill="#63b8ff" stroke="#63b8ff" points="356.34,-35.42 346.74,-39.9 357.04,-42.38 356.34,-35.42"/>
 </a>

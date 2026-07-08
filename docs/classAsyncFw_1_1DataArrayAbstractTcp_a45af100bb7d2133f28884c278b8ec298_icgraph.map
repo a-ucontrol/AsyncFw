@@ -1,0 +1,6 @@
+<map id="AsyncFw::DataArrayAbstractTcp::transmit" name="AsyncFw::DataArrayAbstractTcp::transmit">
+<area shape="rect" id="Node000001" title="Asynchronously transmits a DataArray packet through a given socket context." alt="" coords="251,29,443,72"/>
+<area shape="poly" id="edge2_Node000001_Node000001" title=" " alt="" coords="385,13,371,10,347,8,324,10,310,15,304,21,306,30,301,27,299,19,307,10,323,5,347,3,373,5,390,14"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1DataArrayTcpClient.html#a380c907a396d306611fe7dc21f35f74f" title="Executes a synchronous request&#45;response data exchange over a specific socket." alt="" coords="5,29,203,72"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="233,51,203,53,203,48,238,50"/>
+</map>

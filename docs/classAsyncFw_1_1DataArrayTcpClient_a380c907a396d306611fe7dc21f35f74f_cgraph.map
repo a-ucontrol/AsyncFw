@@ -1,0 +1,20 @@
+<map id="AsyncFw::DataArrayTcpClient::exchange" name="AsyncFw::DataArrayTcpClient::exchange">
+<area shape="rect" id="Node000001" title="Executes a synchronous request&#45;response data exchange over a specific socket." alt="" coords="5,101,203,144"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1FunctionConnector.html#ae1f65144956b3b1247d58614e4080f63" title="Establishes a connection to a callable target." alt="" coords="251,5,445,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="152,99,250,58,270,52,265,55,252,62,155,103"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractThread.html#af33c5949edb374d673a7a9ac0c81ec32" title="Returns a pointer to the AsyncFw::AbstractThread that manages the currently executing thread." alt="" coords="261,72,434,115"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="202,108,248,105,243,107,204,113"/>
+<area shape="rect" id="Node000006" href="$classAsyncFw_1_1Timer.html#a14d02d88bd3682afd7c8fd72cc670e46" title="Starts or restarts a timer with the specified timeout. If the timer is already running,..." alt="" coords="272,139,424,165"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="203,132,259,140,254,142,203,137"/>
+<area shape="rect" id="Node000008" href="$classAsyncFw_1_1DataArrayAbstractTcp.html#a45af100bb7d2133f28884c278b8ec298" title="Asynchronously transmits a DataArray packet through a given socket context." alt="" coords="252,213,444,256"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="153,142,288,205,283,208,152,147"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1AbstractThread.html#a8c9202c90ac101522f26c4260cb01b59" title="Constructs a thread." alt="" coords="494,72,667,115"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="434,91,481,93,475,94,435,96"/>
+<area shape="rect" id="Node000005" href="$classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd" title="Returns name of managed thread." alt="" coords="715,72,889,115"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="667,91,702,93,697,94,668,96"/>
+<area shape="rect" id="Node000007" href="$classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9" title="Starts a single shot timer with the specified timeout." alt="" coords="500,139,660,165"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="423,149,487,152,482,152,424,155"/>
+<area shape="poly" id="edge9_Node000008_Node000008" title=" " alt="" coords="304,211,302,203,309,194,325,189,348,187,373,189,389,198,384,197,371,194,348,192,326,194,312,199,307,205,309,214"/>
+<area shape="rect" id="Node000009" href="$classAsyncFw_1_1AbstractSocket.html#ac1b9b68ae7fe6c9312d9d713a7b444a9" title="Return Thread that manages the socket." alt="" coords="493,213,667,256"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="445,232,480,235,475,235,445,237"/>
+</map>

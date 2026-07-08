@@ -1,6 +1,6 @@
 <map id="AsyncFw::DataArrayTcpClient" name="AsyncFw::DataArrayTcpClient">
-<area shape="rect" id="Node000001" title="The DataArrayTcpClient class." alt="" coords="1218,151,1415,178"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1DataArrayAbstractTcp.html" title="The DataArrayAbstractTcp class." alt="" coords="956,110,1169,136"/>
+<area shape="rect" id="Node000001" title="An asynchronous TCP client class managing outgoing server connections and synchronous exchanges...." alt="" coords="1218,151,1415,178"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1DataArrayAbstractTcp.html" title="Abstract base class implementing a multi&#45;threaded TCP pool for socket and packet management." alt="" coords="956,110,1169,136"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="1164,137,1233,151,1228,150,1164,142"/>
 <area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractThreadPool.html" title="Abstract base class for creating and managing thread pools." alt="" coords="441,24,640,51"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="655,49,789,67,933,91,1007,109,1002,109,932,96,788,73,655,54"/>

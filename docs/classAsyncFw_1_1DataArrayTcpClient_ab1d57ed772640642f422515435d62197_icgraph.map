@@ -1,0 +1,6 @@
+<map id="AsyncFw::DataArrayTcpClient::connectToHost" name="AsyncFw::DataArrayTcpClient::connectToHost">
+<area shape="rect" id="Node000001" title="Explicitly connects a specific socket to a target host and port." alt="" coords="251,29,448,72"/>
+<area shape="poly" id="edge2_Node000001_Node000001" title=" " alt="" coords="388,13,374,10,349,8,326,10,312,15,306,21,308,30,303,27,301,19,309,10,325,5,349,3,376,5,393,14"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1DataArrayTcpClient.html#a39e5b88e09a327955fb47b64dc60f568" title="Initiates a connection using a pre&#45;configured socket&#39;s internal host settings." alt="" coords="5,29,203,72"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="233,51,203,53,203,48,238,50"/>
+</map>

@@ -1,7 +1,8 @@
 var searchData=
 [
-  ['thread_5f_0',['thread_',['../classAsyncFw_1_1AbstractSocket.html#a49a607ef9c268469124164ab86971787',1,'AsyncFw::AbstractSocket']]],
-  ['time_1',['time',['../structAsyncFw_1_1LogStream_1_1Message.html#afbf65018f5c11d8d8204a0b47cee4207',1,'AsyncFw::LogStream::Message']]],
-  ['timeout_2',['timeout',['../classAsyncFw_1_1Timer.html#acf307d575a38d2b3bb852202d0126fcd',1,'AsyncFw::Timer']]],
-  ['type_3',['type',['../structAsyncFw_1_1LogStream_1_1Message.html#a4b2b2b0ff46ffb2a1f949f4953b34895',1,'AsyncFw::LogStream::Message']]]
+  ['socketreadbuffersize_0',['socketReadBufferSize',['../classAsyncFw_1_1DataArrayAbstractTcp.html#ab52e14dcbac67ced6f4f009cb2d44396',1,'AsyncFw::DataArrayAbstractTcp']]],
+  ['started_1',['started',['../classAsyncFw_1_1Thread.html#abac958eae1def0e3c0e32a7ebebc45eb',1,'AsyncFw::Thread']]],
+  ['state_5f_2',['state_',['../classAsyncFw_1_1AbstractSocket.html#aa4b74ce0259d4424ef41b2d10290351c',1,'AsyncFw::AbstractSocket']]],
+  ['statechanged_3',['stateChanged',['../classAsyncFw_1_1DataArraySocket.html#a02dbcce97207d018e0ab0ab3ce78b7be',1,'AsyncFw::DataArraySocket::stateChanged'],['../classAsyncFw_1_1SystemProcess.html#a15a6e0feb095b9ad2ea2bdfb7014ca2c',1,'AsyncFw::SystemProcess::stateChanged']]],
+  ['string_4',['string',['../structAsyncFw_1_1LogStream_1_1Message.html#a7d55dbc7e3fd3c5b106977df3ca2bbbb',1,'AsyncFw::LogStream::Message']]]
 ];

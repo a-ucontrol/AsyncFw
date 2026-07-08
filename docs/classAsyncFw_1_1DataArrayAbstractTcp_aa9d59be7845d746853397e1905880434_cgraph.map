@@ -1,0 +1,9 @@
+<map id="AsyncFw::DataArrayAbstractTcp::disconnectFromHost" name="AsyncFw::DataArrayAbstractTcp::disconnectFromHost">
+<area shape="rect" id="Node000001" title="Signals a specific managed socket to disconnect from its remote peer." alt="" coords="5,39,198,81"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractThread.html#a786474d037b50053f1a97af7b67e6069" title="Runs a function in a managed thread." alt="" coords="246,5,420,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="197,44,233,41,228,42,198,49"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1AbstractSocket.html#ac1b9b68ae7fe6c9312d9d713a7b444a9" title="Return Thread that manages the socket." alt="" coords="246,72,420,115"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="198,71,233,78,227,79,198,77"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractThread.html#abe96e6b2a1de041f0d25390a6b77e50a" title="Runs a task in a managed thread." alt="" coords="468,5,641,48"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="420,24,455,26,450,27,420,29"/>
+</map>

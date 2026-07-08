@@ -1,9 +1,13 @@
 <map id="AsyncFw::Thread" name="AsyncFw::Thread">
 <area shape="rect" id="Node000001" title="AsyncFw::Thread thread with sockets." alt="" coords="143,80,267,107"/>
 <area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractThreadPool_1_1Thread.html" title=" " alt="" coords="5,155,205,197"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="180,116,132,156,129,152,175,118"/>
-<area shape="rect" id="Node000004" href="$classAsyncFw_1_1MainThread.html" title="A static control interface managing the application&#39;s primary execution thread (Main Thread)." alt="" coords="229,163,381,189"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="233,114,292,163,287,162,232,119"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="176,119,133,156,129,152,179,115"/>
+<area shape="rect" id="Node000006" href="$classAsyncFw_1_1MainThread.html" title="A static control interface managing the application&#39;s primary execution thread (Main Thread)." alt="" coords="229,163,381,189"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="233,114,292,162,287,163,232,119"/>
 <area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractThread.html" title="The AbstractThread class provides the base functionality for thread management." alt="" coords="118,5,292,32"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="206,46,207,81,203,79,204,50"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="206,45,208,80,202,79,204,50"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1DataArrayAbstractTcp_1_1Thread.html" title=" " alt="" coords="9,245,201,288"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="106,210,108,246,102,244,104,215"/>
+<area shape="rect" id="Node000005" href="$classAsyncFw_1_1DataArrayTcpClient_1_1Thread.html" title=" " alt="" coords="6,336,204,379"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="107,302,107,337,103,335,103,306"/>
 </map>

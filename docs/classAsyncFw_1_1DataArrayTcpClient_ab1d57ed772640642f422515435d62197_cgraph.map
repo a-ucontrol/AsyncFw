@@ -1,0 +1,6 @@
+<map id="AsyncFw::DataArrayTcpClient::connectToHost" name="AsyncFw::DataArrayTcpClient::connectToHost">
+<area shape="rect" id="Node000001" title="Explicitly connects a specific socket to a target host and port." alt="" coords="5,29,203,72"/>
+<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="59,28,57,19,65,10,80,5,104,3,130,5,146,13,141,14,128,10,104,8,81,10,68,15,62,21,64,29"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1DataArraySocket.html#ad3f44b667eb9f7b721e5216635ff67ee" title="Configures the remote host address and port for subsequent connection attempts." alt="" coords="251,29,435,72"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="203,48,238,50,233,51,203,53"/>
+</map>

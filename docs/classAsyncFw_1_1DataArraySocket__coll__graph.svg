@@ -11,7 +11,7 @@
 <!-- Node1 -->
 <g id="Node000001" class="node">
 <title>Node1</title>
-<g id="a_Node000001"><a xlink:title="The DataArraySocket class.">
+<g id="a_Node000001"><a xlink:title="An asynchronous socket class for transmitting data arrays (DataArray) with TLS support....">
 <polygon fill="#999999" stroke="#666666" points="1248.25,-86 1110,-86 1110,-66 1248.25,-66 1248.25,-86"/>
 <text xml:space="preserve" text-anchor="middle" x="1179.12" y="-72.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::DataArraySocket</text>
 </a>

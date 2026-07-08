@@ -1,6 +1,26 @@
 var classAsyncFw_1_1DataArraySocket =
 [
+    [ "initTls", "classAsyncFw_1_1DataArraySocket.html#af478bbb530753b5b507e1b490f2fff70", null ],
+    [ "disableTls", "classAsyncFw_1_1DataArraySocket.html#a99f9dde81f2f9b5c453bf95dfa38eb45", null ],
+    [ "transmit", "classAsyncFw_1_1DataArraySocket.html#ac7366a53ca9c5c43bc3c6bb88b539d53", null ],
+    [ "setConnectTimeout", "classAsyncFw_1_1DataArraySocket.html#acfed3fa1bd56968ddee2f262e39845cc", null ],
+    [ "setReconnectTimeout", "classAsyncFw_1_1DataArraySocket.html#a7721329f36196a96f1e7b76dfeb8cbe7", null ],
+    [ "setReadTimeout", "classAsyncFw_1_1DataArraySocket.html#a740f58c6fb06a731c59f7b3e9dace41e", null ],
+    [ "setWaitForEncryptionTimeout", "classAsyncFw_1_1DataArraySocket.html#a7492a485097b835031af94924030e612", null ],
+    [ "setWaitKeepAliveResponseTimeout", "classAsyncFw_1_1DataArraySocket.html#a020287f09c337a869e9a6b52b15ea0f4", null ],
+    [ "setReadBuffers", "classAsyncFw_1_1DataArraySocket.html#a3f856b69e149a98d06ca62582fea708d", null ],
+    [ "setWriteBuffers", "classAsyncFw_1_1DataArraySocket.html#a63f570b3f48c75df1a306573e643b7f8", null ],
+    [ "initServerConnection", "classAsyncFw_1_1DataArraySocket.html#a02696f976d1d5724c250b68d4fc5a0c5", null ],
+    [ "setHost", "classAsyncFw_1_1DataArraySocket.html#ad3f44b667eb9f7b721e5216635ff67ee", null ],
+    [ "hostAddress", "classAsyncFw_1_1DataArraySocket.html#a5d5d666ae1842125adb08acc2f749926", null ],
+    [ "hostPort", "classAsyncFw_1_1DataArraySocket.html#a17068a1f7c567cf272189033d04e371b", null ],
+    [ "sendKeepAlive", "classAsyncFw_1_1DataArraySocket.html#a60d24e73561b9ffc720deefca7a6f720", null ],
+    [ "state", "classAsyncFw_1_1DataArraySocket.html#ae20bbfbd7138f5a6e0003ed6b117a7f7", null ],
     [ "connect", "classAsyncFw_1_1DataArraySocket.html#aed242e797aea527f8b86c4bc866ab454", null ],
+    [ "disconnect", "classAsyncFw_1_1DataArraySocket.html#a9942cbf100e7898ba95c8fb92e059ae8", null ],
+    [ "releaseBuffer", "classAsyncFw_1_1DataArraySocket.html#af6faaf80328db0a1644cd6b89ffae7eb", null ],
     [ "stateEvent", "classAsyncFw_1_1DataArraySocket.html#afae26d6d937eddd4b7c64f48933c0984", null ],
-    [ "readEvent", "classAsyncFw_1_1DataArraySocket.html#a1a1f3404abcb93af27de1d7bc0a958b1", null ]
+    [ "readEvent", "classAsyncFw_1_1DataArraySocket.html#a1a1f3404abcb93af27de1d7bc0a958b1", null ],
+    [ "stateChanged", "classAsyncFw_1_1DataArraySocket.html#a02dbcce97207d018e0ab0ab3ce78b7be", null ],
+    [ "received", "classAsyncFw_1_1DataArraySocket.html#ab0c23db25054ae85a92b6fb57f7da125", null ]
 ];

@@ -1,0 +1,5 @@
+<map id="AsyncFw::DataArraySocket::hostAddress" name="AsyncFw::DataArraySocket::hostAddress">
+<area shape="rect" id="Node000001" title="Gets the remote host address previously assigned via setHost." alt="" coords="251,5,435,48"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1DataArrayTcpClient.html#a39e5b88e09a327955fb47b64dc60f568" title="Initiates a connection using a pre&#45;configured socket&#39;s internal host settings." alt="" coords="5,5,203,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="233,27,203,29,203,24,238,26"/>
+</map>

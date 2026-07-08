@@ -6,11 +6,13 @@ var searchData=
   ['helpers_3',['Coroutine API Helpers',['../group__coroutine__api.html',1,'']]],
   ['host_4',['Host',['../structAsyncFw_1_1MulticastDns_1_1Host.html',1,'AsyncFw::MulticastDns']]],
   ['hostadded_5',['hostAdded',['../classAsyncFw_1_1MulticastDns.html#a973574ac5d99e8b3ef2455ded3e90407',1,'AsyncFw::MulticastDns']]],
-  ['hostchanged_6',['hostChanged',['../classAsyncFw_1_1MulticastDns.html#a00da8b82983f3da4d37809761b04df10',1,'AsyncFw::MulticastDns']]],
-  ['hostremoved_7',['hostRemoved',['../classAsyncFw_1_1MulticastDns.html#a97cbf66dbddc356f45aad429e118d287',1,'AsyncFw::MulticastDns']]],
-  ['hosts_8',['hosts',['../classAsyncFw_1_1MulticastDns.html#a1aae9d9612ba077da938bb80a8c3330d',1,'AsyncFw::MulticastDns']]],
-  ['httpserver_9',['HttpServer',['../classAsyncFw_1_1HttpServer.html',1,'AsyncFw::HttpServer'],['../classAsyncFw_1_1HttpServer.html#a522928fa8bf3b13b706ac997d4f100dd',1,'AsyncFw::HttpServer::HttpServer()']]],
-  ['httpserver_2eh_10',['HttpServer.h',['../HttpServer_8h.html',1,'']]],
-  ['httpsocket_11',['HttpSocket',['../classAsyncFw_1_1HttpSocket.html',1,'AsyncFw']]],
-  ['httpsocket_2eh_12',['HttpSocket.h',['../HttpSocket_8h.html',1,'']]]
+  ['hostaddress_6',['hostAddress',['../classAsyncFw_1_1DataArraySocket.html#a5d5d666ae1842125adb08acc2f749926',1,'AsyncFw::DataArraySocket']]],
+  ['hostchanged_7',['hostChanged',['../classAsyncFw_1_1MulticastDns.html#a00da8b82983f3da4d37809761b04df10',1,'AsyncFw::MulticastDns']]],
+  ['hostport_8',['hostPort',['../classAsyncFw_1_1DataArraySocket.html#a17068a1f7c567cf272189033d04e371b',1,'AsyncFw::DataArraySocket']]],
+  ['hostremoved_9',['hostRemoved',['../classAsyncFw_1_1MulticastDns.html#a97cbf66dbddc356f45aad429e118d287',1,'AsyncFw::MulticastDns']]],
+  ['hosts_10',['hosts',['../classAsyncFw_1_1MulticastDns.html#a1aae9d9612ba077da938bb80a8c3330d',1,'AsyncFw::MulticastDns']]],
+  ['httpserver_11',['HttpServer',['../classAsyncFw_1_1HttpServer.html',1,'AsyncFw::HttpServer'],['../classAsyncFw_1_1HttpServer.html#a522928fa8bf3b13b706ac997d4f100dd',1,'AsyncFw::HttpServer::HttpServer()']]],
+  ['httpserver_2eh_12',['HttpServer.h',['../HttpServer_8h.html',1,'']]],
+  ['httpsocket_13',['HttpSocket',['../classAsyncFw_1_1HttpSocket.html',1,'AsyncFw']]],
+  ['httpsocket_2eh_14',['HttpSocket.h',['../HttpSocket_8h.html',1,'']]]
 ];

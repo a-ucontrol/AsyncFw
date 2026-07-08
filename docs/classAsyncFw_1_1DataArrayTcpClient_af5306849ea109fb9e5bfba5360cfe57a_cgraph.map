@@ -1,0 +1,15 @@
+<map id="AsyncFw::DataArrayTcpClient::createThread" name="AsyncFw::DataArrayTcpClient::createThread">
+<area shape="rect" id="Node000001" title="Allocates and spawns a new worker thread within the client pool context." alt="" coords="5,39,203,81"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractThreadPool.html#ac312e723c2e0fa3e4cc18e518853bdf2" title="Returns the identifier name of the thread pool." alt="" coords="251,5,450,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="202,44,237,41,233,43,204,49"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractThread.html#afdaccb5da7d4bee5e9ff687f761bd21f" title="Create a managed thread and run exec()." alt="" coords="264,72,437,115"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="203,71,251,79,246,80,203,76"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1AbstractThread.html#a1abe0f5c637dcc6af5aff00c5291bd4f" title="Run manage loop." alt="" coords="498,72,671,115"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="437,91,485,93,480,94,437,96"/>
+<area shape="rect" id="Node000005" href="$classAsyncFw_1_1AbstractThread.html#ad43b7b79e541bd1d6cce20f0231cc64d" title="This call from the thread when it finishing execution." alt="" coords="719,5,893,48"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="657,69,716,54,721,52,658,74"/>
+<area shape="rect" id="Node000006" href="$classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd" title="Returns name of managed thread." alt="" coords="719,72,893,115"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="672,91,706,93,701,94,672,96"/>
+<area shape="rect" id="Node000007" href="$classAsyncFw_1_1AbstractThread.html#a9b9db94ad8c90eafe1ef34a076af8498" title="This call from thread when it starts executing." alt="" coords="719,139,893,181"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="658,113,721,134,715,133,657,118"/>
+</map>

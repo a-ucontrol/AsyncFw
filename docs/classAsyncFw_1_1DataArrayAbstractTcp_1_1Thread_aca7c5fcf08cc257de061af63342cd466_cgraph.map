@@ -1,0 +1,19 @@
+<map id="AsyncFw::DataArrayAbstractTcp::Thread::initSocket" name="AsyncFw::DataArrayAbstractTcp::Thread::initSocket">
+<area shape="rect" id="Node000001" title="Configures timeouts, buffer sizes, and signal bounds for a new socket context." alt="" coords="5,205,198,248"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractThread.html#a786474d037b50053f1a97af7b67e6069" title="Runs a function in a managed thread." alt="" coords="278,5,452,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="113,204,164,132,201,92,244,58,266,48,262,52,247,62,205,96,168,135,118,207"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1DataArraySocket.html#af6faaf80328db0a1644cd6b89ffae7eb" title="Frees the memory allocated for the read buffer associated with the given pointer." alt="" coords="273,72,457,115"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="126,203,179,163,244,124,262,119,258,122,247,129,182,168,130,207"/>
+<area shape="rect" id="Node000005" href="$classAsyncFw_1_1DataArraySocket.html#a3f856b69e149a98d06ca62582fea708d" title="Configures limits for incoming (read) data buffers." alt="" coords="273,139,457,181"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="187,202,265,184,261,187,190,207"/>
+<area shape="rect" id="Node000006" href="$classAsyncFw_1_1DataArraySocket.html#a740f58c6fb06a731c59f7b3e9dace41e" title="Sets the data read operation timeout interval." alt="" coords="273,205,457,248"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="197,224,260,225,255,228,199,229"/>
+<area shape="rect" id="Node000007" href="$classAsyncFw_1_1DataArraySocket.html#a7492a485097b835031af94924030e612" title="Sets the timeout interval for establishing a TLS handshake." alt="" coords="264,272,466,315"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="188,246,265,267,261,269,189,251"/>
+<area shape="rect" id="Node000008" href="$classAsyncFw_1_1DataArraySocket.html#a020287f09c337a869e9a6b52b15ea0f4" title="Sets the timeout interval for receiving a keep&#45;alive response." alt="" coords="246,339,484,381"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="128,246,182,286,247,324,263,333,257,333,244,329,179,290,128,251"/>
+<area shape="rect" id="Node000009" href="$classAsyncFw_1_1DataArraySocket.html#a63f570b3f48c75df1a306573e643b7f8" title="Configures limits for outgoing (write) data buffers." alt="" coords="273,405,457,448"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="116,246,168,318,205,357,247,391,261,401,256,400,244,396,201,361,164,321,114,251"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractThread.html#abe96e6b2a1de041f0d25390a6b77e50a" title="Runs a task in a managed thread." alt="" coords="532,5,705,48"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="451,24,519,26,514,28,453,29"/>
+</map>

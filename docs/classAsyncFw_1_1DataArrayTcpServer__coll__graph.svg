@@ -11,7 +11,7 @@
 <!-- Node1 -->
 <g id="Node000001" class="node">
 <title>Node1</title>
-<g id="a_Node000001"><a xlink:title="The DataArrayTcpServer class.">
+<g id="a_Node000001"><a xlink:title="An asynchronous TCP server class managing client connections and TLS security. Inherits from DataArra...">
 <polygon fill="#999999" stroke="#666666" points="914,-65 763,-65 763,-45 914,-45 914,-65"/>
 <text xml:space="preserve" text-anchor="middle" x="838.5" y="-51.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::DataArrayTcpServer</text>
 </a>
@@ -20,7 +20,7 @@
 <!-- Node2 -->
 <g id="Node000002" class="node">
 <title>Node2</title>
-<g id="a_Node000002"><a xlink:href="classAsyncFw_1_1DataArrayAbstractTcp.html" target="_top" xlink:title="The DataArrayAbstractTcp class.">
+<g id="a_Node000002"><a xlink:href="classAsyncFw_1_1DataArrayAbstractTcp.html" target="_top" xlink:title="Abstract base class implementing a multi&#45;threaded TCP pool for socket and packet management.">
 <polygon fill="white" stroke="#666666" points="726,-65 566.75,-65 566.75,-45 726,-45 726,-65"/>
 <text xml:space="preserve" text-anchor="middle" x="646.38" y="-51.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::DataArrayAbstractTcp</text>
 </a>

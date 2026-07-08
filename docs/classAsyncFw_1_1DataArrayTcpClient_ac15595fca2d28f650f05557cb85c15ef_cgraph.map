@@ -1,0 +1,8 @@
+<map id="AsyncFw::DataArrayTcpClient::DataArrayTcpClient" name="AsyncFw::DataArrayTcpClient::DataArrayTcpClient">
+<area shape="rect" id="Node000001" title="Constructs a new DataArrayTcpClient object." alt="" coords="5,35,203,77"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1DataArrayAbstractTcp.html#adbdfede75d80d1c6c76800415d51b35c" title="Constructs a new DataArrayAbstractTcp instance." alt="" coords="251,5,443,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="203,41,238,40,233,41,203,47"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractThreadPool.html#ac312e723c2e0fa3e4cc18e518853bdf2" title="Returns the identifier name of the thread pool." alt="" coords="491,35,690,77"/>
+<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="203,56,251,57,443,57,478,59,473,59,443,63,251,63,203,62"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="444,36,478,42,473,42,443,41"/>
+</map>
