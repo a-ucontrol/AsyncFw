@@ -16,7 +16,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #ifdef EXTEND_MDNS_TRACE
   #define trace lsTrace
 #else
-  #define trace(x) \
+  #define trace() \
     if constexpr (0) LogStream()
 #endif
 

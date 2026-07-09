@@ -18,12 +18,12 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #ifdef EXTEND_HTTP_TRACE
   #define trace LogStream(+LogStream::Trace | LogStream::Gray, __PRETTY_FUNCTION__, __FILE__, __LINE__, LS_DEFAULT_FLAGS | LOG_STREAM_CONSOLE_ONLY).output
-  #define trace_if(x) \
+  #define warning_if(x) \
     if (x) LogStream(+LogStream::Warning | LogStream::DarkBlue, __PRETTY_FUNCTION__, __FILE__, __LINE__, LS_DEFAULT_FLAGS | LOG_STREAM_CONSOLE_ONLY).output()
 #else
-  #define trace(x) \
+  #define trace() \
     if constexpr (0) LogStream()
-  #define trace_if(x) \
+  #define warning_if(x) \
     if constexpr (0) LogStream()
 #endif
 
@@ -443,19 +443,19 @@ HttpServer::HttpServer(const std::string &httpPath) : private_(*new Private()) {
     }
 
     std::string path = private_.httpPath + ((request.path() == "/") ? "/index.html" : request.path());
-    trace("request file: " + path);
+    trace() << "request file:" << path;
 
     path = std::filesystem::weakly_canonical(path).string();
 
     if (path.size() < private_.httpPath.size() || path.compare(0, private_.httpPath.size(), private_.httpPath) != 0) {
-      lsError() << "path traversal attempt blocked: " << path;
+      lsError() << "path traversal attempt blocked:" << path;
       request.response()->setStatusCode(Response::StatusCode::Forbidden);
       request.response()->send();
       return;
     }
 
     if (std::filesystem::exists(path)) {
-      trace(("return: " + path).c_str());
+      trace() << "return:" + path;
       request.response()->setStatusCode(Response::StatusCode::Ok);
       request.response()->setContent("file://" + path);
       request.response()->send();
@@ -508,7 +508,7 @@ void HttpServer::sendToWebSockets(const std::string &data) {  //Дичь, для
 }
 
 bool HttpServer::listen(uint16_t port) {
-  trace_if(!private_.tlsContext_.empty()) << private_.tlsContext_.infoCertificate();
+  warning_if(!private_.tlsContext_.empty()) << private_.tlsContext_.infoCertificate();
   bool b = private_.listener.listen("0.0.0.0", port);
   if (b) {
     private_.listenerGuard = private_.listener.incoming.connect([this](int descriptor, const std::string &address, bool *accept) {
@@ -598,7 +598,7 @@ int HttpServer::makeWebSocketFrame(const DataArray &_da, DataArray *_f, bool bin
 }
 
 HttpServer::RulesMap::iterator HttpServer::findRule(const std::string &path, const Request::Method method) {
-  trace(path + " " + std::to_string(static_cast<int>(method)));
+  trace() << path + " " + std::to_string(static_cast<int>(method));
   std::pair<std::map<std::string, std::unique_ptr<HttpRule>>::iterator, std::map<std::string, std::unique_ptr<HttpRule>>::iterator> p = rules.equal_range(path);
   if ((p.first == rules.end() || p.first->first != path) && (p.second == rules.end() || p.second->first != path)) { return rules.end(); }
   for (std::map<std::string, std::unique_ptr<HttpRule>>::iterator &it = p.first; it != p.second; ++it) {

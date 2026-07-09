@@ -14,7 +14,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
   #define warning_if(x) \
     if (x) LogStream(+LogStream::Warning | LogStream::Blue, __PRETTY_FUNCTION__, __FILE__, __LINE__, LS_DEFAULT_FLAGS | LOG_STREAM_CONSOLE_ONLY).output()
 #else
-  #define trace(x) \
+  #define trace() \
     if constexpr (0) LogStream()
   #define warning_if(x) \
     if constexpr (0) LogStream()

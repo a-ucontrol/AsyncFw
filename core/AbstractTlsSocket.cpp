@@ -19,7 +19,7 @@ using namespace AsyncFw;
 #ifdef EXTEND_SOCKET_TRACE
   #define trace LogStream(+LogStream::Trace | LogStream::Black, __PRETTY_FUNCTION__, __FILE__, __LINE__, LS_DEFAULT_FLAGS | LOG_STREAM_CONSOLE_ONLY).output
 #else
-  #define trace(x) \
+  #define trace() \
     if constexpr (0) LogStream()
 #endif
 
@@ -68,10 +68,6 @@ void AbstractTlsSocket::close() {
 void AbstractTlsSocket::setContext(const TlsContext &ctx) const { private_.ctx_ = ctx; }
 
 bool AbstractTlsSocket::contextEmpty() const { return !private_.ctx_.opensslCtx(); }
-
-struct ie {
-  int operator()(int, X509_STORE_CTX *) const { return 1; }
-};
 
 void AbstractTlsSocket::activateReady() { AbstractSocket::activateEvent(); }
 

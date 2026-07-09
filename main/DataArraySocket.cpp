@@ -17,7 +17,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
   #define warning_if(x) \
     if (x) LogStream(+LogStream::Warning | LogStream::Blue, __PRETTY_FUNCTION__, __FILE__, __LINE__, LS_DEFAULT_FLAGS | LOG_STREAM_CONSOLE_ONLY).output()
 #else
-  #define trace(x) \
+  #define trace() \
     if constexpr (0) LogStream()
   #define warning_if(x) \
     if constexpr (0) LogStream()
@@ -152,7 +152,7 @@ void DataArraySocket::sendKeepAlive(bool request) {
     waitTimerType |= 0x02;
     startTimer(waitKeepAliveResponseTimeout_);
   }
-  trace("transmit keep alive " + std::string(request ? "request" : "answer") + " (" + peerString() + ')');
+  trace() << "transmit keep alive " + std::string(request ? "request" : "answer") + " (" + peerString() + ')';
 }
 
 std::string DataArraySocket::peerString() const { return AbstractSocket::peerAddress() + ':' + std::to_string(AbstractSocket::peerPort()); }
@@ -171,7 +171,7 @@ void DataArraySocket::readEvent() {
       read(reinterpret_cast<uint8_t *>(&readId), sizeof(uint32_t));
       if (readSize == 0) {
         if (readId == 0xffffffff) {
-          trace("receive keep alive (" + peerString() + ')');
+          trace() << "receive keep alive (" + peerString() + ')';
           if (!(waitTimerType & 0x02)) sendKeepAlive(false);
           else waitTimerType &= ~0x02;
           continue;
