@@ -319,7 +319,7 @@ void DataArraySocket::releaseBuffer_(const DataArray *da) const {
 void DataArraySocket::initServerConnection() {
   address = peerAddress();
   port = peerPort();
-  if (sslConnection) {
+  if (!contextEmpty()) {
     sslConnection = 3;
     startTimer(waitForEncryptionTimeout_);
     lsTrace("server wait for encrypted");
@@ -346,14 +346,10 @@ bool DataArraySocket::connectToHost() {
 
   address = hostAddress_;
   port = hostPort_;
-  if (sslConnection == 1) {
-    setErrorString("TLS configuration error");
-    return false;
-  }
 
   lsTrace() << address << port;
 
-  if (sslConnection) sslConnection = 3;
+  if (!contextEmpty()) sslConnection = 3;
   return AbstractTlsSocket::connect(address, port);
 }
 
@@ -383,24 +379,6 @@ bool DataArraySocket::connectToHost(int timeout) {
 bool DataArraySocket::connect(const std::string &address, uint16_t port) {
   setHost(address, port);
   return connectToHost();
-}
-
-bool DataArraySocket::initTls(const TlsContext &data) {
-  if (data.empty()) {
-    lsDebug() << LogStream::Color::Magenta << "tls disabled";
-    setContext(data);
-    sslConnection = 0;
-    return true;
-  }
-  if (!data.verifyCertificate()) {
-    sslConnection = 1;
-    lsError("certificate error");
-    return false;
-  }
-  setContext(data);
-  sslConnection = 2;
-  trace();
-  return true;
 }
 
 namespace AsyncFw {

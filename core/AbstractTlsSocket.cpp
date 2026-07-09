@@ -66,6 +66,8 @@ void AbstractTlsSocket::close() {
 
 void AbstractTlsSocket::setContext(const TlsContext &ctx) const { private_.ctx_ = ctx; }
 
+bool AbstractTlsSocket::contextEmpty() const { return !private_.ctx_.opensslCtx(); }
+
 struct ie {
   int operator()(int, X509_STORE_CTX *) const { return 1; }
 };

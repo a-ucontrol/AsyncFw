@@ -70,7 +70,7 @@ void RrdClient::disconnectFromHost() {
 
 bool RrdClient::transmit(const DataArray &da, uint32_t pi, bool wait) { return tcpSocket->transmit(da, pi, wait); }
 
-void RrdClient::tlsSetup(const TlsContext &context) { tcpSocket->initTls(context); }
+void RrdClient::tlsSetup(const TlsContext &context) { tcpSocket->setContext(context); }
 
 void RrdClient::tcpRead(const DataArray *rda, uint32_t n) {
   DataArray _da = DataArray::uncompress(*rda);

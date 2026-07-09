@@ -29,6 +29,7 @@ public:
   void close() override;
 
   void setContext(const TlsContext &) const;
+  bool contextEmpty() const;
 
 protected:
   AbstractTlsSocket();

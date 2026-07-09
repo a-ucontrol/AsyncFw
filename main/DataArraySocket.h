@@ -23,8 +23,6 @@ class DataArraySocket : public AbstractTlsSocket {
   friend LogStream &operator<<(LogStream &, const DataArraySocket &);
 
 public:
-  /** @brief Initializes the TLS context for the socket. @param data The TLS context object containing certificates and keys. @return true if initialization was successful, otherwise false. */
-  bool initTls(const TlsContext &data);
   /** @brief Asynchronously transmits a data array through the socket. @param da Reference to the DataArray being sent. @param id The packet identifier. @param wait If true and called from outside the socket thread, blocks the thread until completion. @return true if the data was successfully queued for transmission, otherwise false. */
   bool transmit(const DataArray &, uint32_t, bool = false) const;
   /** @brief Sets the timeout interval for connection establishment. @param timeout Timeout interval in milliseconds. */

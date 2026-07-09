@@ -55,7 +55,7 @@ void DataArrayAbstractTcp::setEncryptionDisabled(const std::string &address, boo
   }
 }
 
-void DataArrayAbstractTcp::initTls(DataArraySocket *socket, const TlsContext &data) { socket->initTls(data); }
+void DataArrayAbstractTcp::initTls(DataArraySocket *socket, const TlsContext &data) { socket->setContext(data); }
 
 int DataArrayAbstractTcp::sockets(std::vector<DataArraySocket *> *list) {
   int count = 0;

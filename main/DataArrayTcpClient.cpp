@@ -109,7 +109,7 @@ void DataArrayTcpClient::connectToHost(const DataArraySocket *socket, int timeou
     lsWarning("unknown socket");
     return;
   }
-  if (std::find(disabledEncryptionHosts_.begin(), disabledEncryptionHosts_.end(), socket->hostAddress()) != disabledEncryptionHosts_.end()) const_cast<DataArraySocket *>(socket)->initTls(TlsContext());
+  if (std::find(disabledEncryptionHosts_.begin(), disabledEncryptionHosts_.end(), socket->hostAddress()) != disabledEncryptionHosts_.end()) const_cast<DataArraySocket *>(socket)->setContext(TlsContext());
   clientThread->invoke([&socket, &timeout]() { const_cast<DataArraySocket *>(socket)->connectToHost(timeout); }, true);
   lsTrace();
 }
