@@ -10,7 +10,6 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include "Timer.h"
 #include "Coroutine.h"
 #include "DataArraySocket.h"
-#include "core/TlsContext.h"
 
 #include "DataArrayTcpClient.h"
 
@@ -131,6 +130,7 @@ DataArraySocket *DataArrayTcpClient::Thread::createSocket() {
   DataArraySocket *tcpSocket = new DataArraySocket();
   tcpSocket->setConnectTimeout(client()->waitForConnectTimeout_);
   tcpSocket->setReconnectTimeout(client()->reconnectTimeout_);
+  tcpSocket->setContext(client()->tlsContext);
   initSocket(const_cast<DataArraySocket *>(tcpSocket));
   tcpSocket->stateChanged.connect([this, tcpSocket](AbstractSocket::State state) {
     if (state != AbstractSocket::State::Connected && state != AbstractSocket::State::Active && state != AbstractSocket::State::Unconnected) return;

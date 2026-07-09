@@ -9,7 +9,6 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 /** @file DataArrayTcpServer.h @brief The DataArrayTcpServer class. */
 
-#include "../core/TlsContext.h"
 #include "ListenSocket.h"
 #include "DataArrayAbstractTcp.h"
 
@@ -31,8 +30,6 @@ public:
   void setAlwaysConnect(const std::vector<std::string> &list);
   /** @brief Checks whether the server is currently actively listening for incoming connections. @return true if listening, otherwise false. */
   bool listening();
-  /** @brief Sets up the TLS credentials and configuration for secure client connections. @param context The TLS context object containing certificates and keys. */
-  void setTlsContext(const TlsContext &context) { tlsData = context; }
 
 private:
   class Thread : public DataArrayAbstractTcp::Thread {
@@ -49,6 +46,5 @@ private:
 
   bool incomingConnection(int, const std::string &);
   std::vector<std::string> alwaysConnect_;
-  TlsContext tlsData;
 };
 }  // namespace AsyncFw

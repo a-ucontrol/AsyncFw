@@ -42,6 +42,7 @@ AbstractTlsSocket::~AbstractTlsSocket() {
 
 void AbstractTlsSocket::setDescriptor(int _fd) {
   if (private_.ctx_.opensslCtx()) private_.encrypt_ = 1;  //server
+  else private_.encrypt_ = 0;
   AbstractSocket::setDescriptor(_fd);
 }
 

@@ -54,7 +54,7 @@ bool DataArrayTcpServer::incomingConnection(int socketDescriptor, const std::str
     if (b) return false;
   }
 
-  bool encrypt = std::find(disabledEncryptionHosts_.begin(), disabledEncryptionHosts_.end(), address) == disabledEncryptionHosts_.end() && !tlsData.empty();
+  bool encrypt = std::find(disabledEncryptionHosts_.begin(), disabledEncryptionHosts_.end(), address) == disabledEncryptionHosts_.end() && !tlsContext.empty();
 
   serverThread->invoke([serverThread, socketDescriptor, encrypt]() { serverThread->createSocket(socketDescriptor, encrypt); }, true);
   return true;
@@ -76,10 +76,8 @@ void DataArrayTcpServer::Thread::createSocket(int socketDescriptor, bool encrypt
     destroySocket(tcpSocket);
   });
 
-  if (encrypt) {
-    server()->setTlsContext(tcpSocket, server()->tlsData);
-    tcpSocket->setDescriptor(socketDescriptor);
-  } else tcpSocket->AbstractSocket::setDescriptor(socketDescriptor);
+  if (encrypt) server()->setTlsContext(tcpSocket, server()->tlsContext);
+  tcpSocket->setDescriptor(socketDescriptor);
 
   lsTrace("new connection: " + tcpSocket->peerAddress() + ":" + std::to_string(tcpSocket->peerPort()));
 }

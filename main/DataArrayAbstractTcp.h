@@ -10,6 +10,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 /** @file DataArrayAbstractTcp.h @brief The DataArrayAbstractTcp class. */
 
 #include "../core/FunctionConnector.h"
+#include "../core/TlsContext.h"
 #include "ThreadPool.h"
 
 namespace AsyncFw {
@@ -54,6 +55,8 @@ public:
   void setEncryptionDisabled(const std::string &, bool = true);
   /** @brief Assigns and initializes TLS security parameters on a specific socket. @param socket Pointer to the target DataArraySocket. @param context TLS certificates, keys, and security parameters. */
   void setTlsContext(DataArraySocket *, const TlsContext &);
+  /** @brief Sets up the TLS credentials and configuration for secure client connections. @param context The TLS context object containing certificates and keys. */
+  void setTlsContext(const TlsContext &context) { tlsContext = context; }
 
   /** @brief Signal / Connector emitted when a complete DataArray packet is received by any pool socket.
   @note Emits the specific socket pointer, the received DataArray pointer, and its packet ID.
@@ -90,5 +93,6 @@ protected:
   int maxWriteSize;               /**< Absolute maximum byte bounds for outbound transmission queue data. */
   /** @brief Internal array of remote endpoints exempted from TLS handshake logic. */
   std::vector<std::string> disabledEncryptionHosts_ = {"127.0.0.1"};
+  TlsContext tlsContext;
 };
 }  // namespace AsyncFw
