@@ -16,9 +16,9 @@
 /** @example LogTcp/main.cpp Remote log example */
 /** @example MulticastDns/main.cpp MulticastDns example */
 /** @example Socket/main.cpp Socket example */
-/** @example Stdin/main.cpp Stdin example \warning Unix-like systems only */
+/** @example Stdin/main.cpp Stdin example @warning Unix-like systems only */
 /** @example SystemProcess/main.cpp SystemProcess example */
 /** @example ThreadPool/main.cpp ThreadPool example */
 /** @example Timer/main.cpp Timer example */
 /** @example TlsContext/main.cpp TlsContext example */
-/** @example Uart/main.cpp PollNotifier example \warning Unix-like systems only */
+/** @example Uart/main.cpp PollNotifier example @warning Unix-like systems only */

@@ -88,7 +88,7 @@ protected:
   /** @brief Called when established connection. */
   virtual void activateEvent();
   /** @brief Called when the connection state changes.
-  \warning When state is State::Destroy, the socket thread pointer is guaranteed to be nullptr. */
+  @warning When state is State::Destroy, the socket thread pointer is guaranteed to be nullptr. */
   virtual void stateEvent() {}
   /** @brief Called when there is data to read. */
   virtual void readEvent() {}

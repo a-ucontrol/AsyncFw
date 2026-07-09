@@ -40,10 +40,10 @@ AbstractTlsSocket::~AbstractTlsSocket() {
   trace() << fd_;
 }
 
-void AbstractTlsSocket::setDescriptor(int _fd) {
+void AbstractTlsSocket::setDescriptor(int fd) {
   if (private_.ctx_.opensslCtx()) private_.encrypt_ = 1;  //server
   else private_.encrypt_ = 0;
-  AbstractSocket::setDescriptor(_fd);
+  AbstractSocket::setDescriptor(fd);
 }
 
 bool AbstractTlsSocket::connect(const std::string &address, uint16_t port) {
