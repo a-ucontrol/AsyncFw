@@ -28,8 +28,13 @@ class TlsContext {
   struct Private;
 
 public:
+  /** @enum IgnoreErrors @brief Bitmask definitions for bypassing specific validation errors during the TLS handshake. */
+  enum IgnoreErrors : uint8_t {
+    None = 0x00,
+    TimeValidity = 0x01 /**< Ignore certificate expiration boundaries or invalid systemic timestamp validation. */
+  };
   TlsContext();
-  TlsContext(const DataArray &k, const DataArray &c, const DataArrayList &t, const std::string & = {}, uint8_t = 0);
+  TlsContext(const DataArray &, const DataArray &, const DataArrayList &, const std::string & = {}, IgnoreErrors = None);
   TlsContext(const TlsContext &);
   TlsContext(const TlsContext &&) = delete;
   ~TlsContext();
@@ -84,7 +89,7 @@ public:
   void setVerifyPeer(bool);
   std::string &verifyName() const;
   void setVerifyName(const std::string &) const;
-  void setIgnoreErrors(uint8_t) const;
+  void setIgnoreErrors(IgnoreErrors) const;
 
 protected:
   static int verify(int ok, x509_store_ctx_st *ctx);

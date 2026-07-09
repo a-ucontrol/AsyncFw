@@ -92,12 +92,12 @@ TlsContext::TlsContext(const TlsContext &_d) {
   private_->ref_++;
 }
 
-TlsContext::TlsContext(const DataArray &k, const DataArray &c, const DataArrayList &t, const std::string &n, uint8_t e) : TlsContext() {
+TlsContext::TlsContext(const DataArray &k, const DataArray &c, const DataArrayList &t, const std::string &n, IgnoreErrors ie) : TlsContext() {
   setKey(k);
   setCertificate(c);
   for (const DataArray &_c : t) appendTrusted(_c);
   if (!n.empty()) setVerifyName(n);
-  if (e) setIgnoreErrors(e);
+  if (ie) setIgnoreErrors(ie);
 }
 
 TlsContext::~TlsContext() {
@@ -464,7 +464,7 @@ std::string &TlsContext::verifyName() const { return private_->verifyName_; }
 
 void TlsContext::setVerifyName(const std::string &name) const { private_->verifyName_ = name; }
 
-void TlsContext::setIgnoreErrors(uint8_t errors) const {
+void TlsContext::setIgnoreErrors(IgnoreErrors errors) const {
   private_->ignoreErrors_ = errors;
   if (!private_->ctx_) private_->ctx_ = SSL_CTX_new(TLS_method());
   std::vector<Private *>::iterator it = lower_bound(private_->verify_.begin(), private_->verify_.end(), private_, [](const Private *p1, const Private *p2) { return p1->ctx_ < p2->ctx_; });

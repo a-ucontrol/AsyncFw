@@ -21,10 +21,6 @@ class AbstractTlsSocket : public AbstractSocket {
   friend LogStream &operator<<(LogStream &, const AbstractTlsSocket &);
 
 public:
-  /** @enum IgnoreErrors @brief Bitmask definitions for bypassing specific validation errors during the TLS handshake. */
-  enum IgnoreErrors : uint8_t {
-    TimeValidity = 0x01 /**< Ignore certificate expiration boundaries or invalid systemic timestamp validation. */
-  };
   /** @brief Binds a raw native operating system socket descriptor to this managed context.
   @note Automatically configures the socket to act as a TLS server if a valid OpenSSL context is present.
   @param fd Native socket descriptor integer. */
