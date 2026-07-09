@@ -18,6 +18,7 @@ class ListenSocket;
 /** @class DataArrayTcpServer DataArrayTcpServer.h <AsyncFw/DataArrayTcpServer> @brief An asynchronous TCP server class managing client connections and TLS security. Inherits from DataArrayAbstractTcp to utilize a thread pool model. It listens for incoming connections, assigns them to worker threads, and configures TLS context for secure communications. */
 class DataArrayTcpServer : public DataArrayAbstractTcp {
 public:
+  using DataArrayAbstractTcp::setTlsContext;
   /** @brief Constructs a new DataArrayTcpServer object. @param name Optional name identifier for the server thread/instance (defaults to "TcpServer"). */
   DataArrayTcpServer(const std::string & = "TcpServer");
   /** @brief Stops the server and terminates all active worker threads and connections. */
@@ -30,8 +31,8 @@ public:
   void setAlwaysConnect(const std::vector<std::string> &list);
   /** @brief Checks whether the server is currently actively listening for incoming connections. @return true if listening, otherwise false. */
   bool listening();
-  /** @brief Sets up the TLS credentials and configuration for secure client connections. @param data The TLS context object containing certificates and keys. */
-  void tlsSetup(const TlsContext &data) { tlsData = data; }
+  /** @brief Sets up the TLS credentials and configuration for secure client connections. @param context The TLS context object containing certificates and keys. */
+  void setTlsContext(const TlsContext &context) { tlsData = context; }
 
 private:
   class Thread : public DataArrayAbstractTcp::Thread {

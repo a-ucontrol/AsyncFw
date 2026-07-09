@@ -35,7 +35,7 @@ public:
   @note The packetId (pi) corresponds to the target Rrd database index and must not exceed 0x0F.*/
   bool transmit(const DataArray &, uint32_t, bool = false);
   /** @brief Sets up TLS security context and credentials for private communications. @param context TLS certificates, keys, and security parameters. */
-  void tlsSetup(const TlsContext &);
+  void setTlsContext(const TlsContext &);
 
 private:
   std::vector<Rrd *> rrd_;

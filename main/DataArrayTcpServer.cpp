@@ -77,7 +77,7 @@ void DataArrayTcpServer::Thread::createSocket(int socketDescriptor, bool encrypt
   });
 
   if (encrypt) {
-    server()->initTls(tcpSocket, server()->tlsData);
+    server()->setTlsContext(tcpSocket, server()->tlsData);
     tcpSocket->setDescriptor(socketDescriptor);
   } else tcpSocket->AbstractSocket::setDescriptor(socketDescriptor);
 

@@ -53,7 +53,7 @@ public:
   /** @brief Configures or overrides the TLS encryption toggle for a specific target address. @param address Remote host IP address string. @param disable If true, encryption is bypassed. */
   void setEncryptionDisabled(const std::string &, bool = true);
   /** @brief Assigns and initializes TLS security parameters on a specific socket. @param socket Pointer to the target DataArraySocket. @param context TLS certificates, keys, and security parameters. */
-  void initTls(DataArraySocket *, const TlsContext &);
+  void setTlsContext(DataArraySocket *, const TlsContext &);
 
   /** @brief Signal / Connector emitted when a complete DataArray packet is received by any pool socket.
   @note Emits the specific socket pointer, the received DataArray pointer, and its packet ID.
@@ -80,7 +80,7 @@ protected:
   Thread *findMinimalSocketsThread();
   int readTimeout;                /**< Data absence timeout in milliseconds. */
   int waitKeepAliveAnswerTimeout; /**< Ping response timeout window in milliseconds. */
-  int waitForEncryptionTimeout;    /**< TLS handshake maximum window in milliseconds. */
+  int waitForEncryptionTimeout;   /**< TLS handshake maximum window in milliseconds. */
   std::size_t maxThreads;         /**< Allowed thread capacity configuration limit. */
   std::size_t maxSockets;         /**< Absolute global count threshold for sockets. */
   int socketReadBufferSize;       /**< System level network chunk buffer capability size. */
