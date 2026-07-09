@@ -36,8 +36,6 @@ public:
   bool transmit(const DataArray &, uint32_t, bool = false);
   /** @brief Sets up TLS security context and credentials for private communications. @param context TLS certificates, keys, and security parameters. */
   void tlsSetup(const TlsContext &);
-  /** @brief Completely disables TLS encryption for outbound communication streams. */
-  void disableTls();
 
 private:
   std::vector<Rrd *> rrd_;

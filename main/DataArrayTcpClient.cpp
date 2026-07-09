@@ -10,6 +10,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include "Timer.h"
 #include "Coroutine.h"
 #include "DataArraySocket.h"
+#include "core/TlsContext.h"
 
 #include "DataArrayTcpClient.h"
 
@@ -108,7 +109,7 @@ void DataArrayTcpClient::connectToHost(const DataArraySocket *socket, int timeou
     lsWarning("unknown socket");
     return;
   }
-  if (std::find(disabledEncryptionHosts_.begin(), disabledEncryptionHosts_.end(), socket->hostAddress()) != disabledEncryptionHosts_.end()) const_cast<DataArraySocket *>(socket)->disableTls();
+  if (std::find(disabledEncryptionHosts_.begin(), disabledEncryptionHosts_.end(), socket->hostAddress()) != disabledEncryptionHosts_.end()) const_cast<DataArraySocket *>(socket)->initTls(TlsContext());
   clientThread->invoke([&socket, &timeout]() { const_cast<DataArraySocket *>(socket)->connectToHost(timeout); }, true);
   lsTrace();
 }

@@ -72,8 +72,6 @@ bool RrdClient::transmit(const DataArray &da, uint32_t pi, bool wait) { return t
 
 void RrdClient::tlsSetup(const TlsContext &context) { tcpSocket->initTls(context); }
 
-void RrdClient::disableTls() { tcpSocket->disableTls(); }
-
 void RrdClient::tcpRead(const DataArray *rda, uint32_t n) {
   DataArray _da = DataArray::uncompress(*rda);
   if (_da.empty()) {

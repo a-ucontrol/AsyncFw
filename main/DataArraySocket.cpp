@@ -353,10 +353,8 @@ bool DataArraySocket::connectToHost() {
 
   lsTrace() << address << port;
 
-  if (sslConnection) {
-    sslConnection = 3;
-    return AbstractTlsSocket::connect(address, port);
-  } else return AbstractSocket::connect(address, port);
+  if (sslConnection) sslConnection = 3;
+  return AbstractTlsSocket::connect(address, port);
 }
 
 bool DataArraySocket::connectToHost(int timeout) {
@@ -387,10 +385,14 @@ bool DataArraySocket::connect(const std::string &address, uint16_t port) {
   return connectToHost();
 }
 
-void DataArraySocket::disableTls() { sslConnection = 0; }
-
 bool DataArraySocket::initTls(const TlsContext &data) {
   if (data.empty()) {
+    lsDebug() << LogStream::Color::Magenta << "tls disabled";
+    setContext(data);
+    sslConnection = 0;
+    return true;
+  }
+  if (!data.verifyCertificate()) {
     sslConnection = 1;
     lsError("certificate error");
     return false;

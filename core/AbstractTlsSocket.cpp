@@ -47,6 +47,7 @@ void AbstractTlsSocket::setDescriptor(int _fd) {
 
 bool AbstractTlsSocket::connect(const std::string &address, uint16_t port) {
   if (private_.ctx_.opensslCtx()) private_.encrypt_ = 2;  //client
+  else private_.encrypt_ = 0;
   return AbstractSocket::connect(address, port);
 }
 
