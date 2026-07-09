@@ -44,8 +44,7 @@ DataArraySocket *DataArrayTcpClient::createSocket(Thread *thread) {
         return nullptr;
       }
     }
-  } else
-    clientThread = thread;
+  } else clientThread = thread;
 
   DataArraySocket *socket;
   clientThread->invoke([clientThread, &socket]() { socket = clientThread->createSocket(); }, true);

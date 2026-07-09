@@ -69,7 +69,6 @@ void DataArrayTcpServer::Thread::createSocket(int socketDescriptor, bool encrypt
   DataArraySocket *tcpSocket = new DataArraySocket();
   std::string address = tcpSocket->peerAddress();
   initSocket(tcpSocket);
-  tcpSocket->initServerConnection();
 
   tcpSocket->stateChanged.connect([this, tcpSocket](AbstractSocket::State state) {
     if (state != AbstractSocket::State::Unconnected) return;
@@ -77,6 +76,8 @@ void DataArrayTcpServer::Thread::createSocket(int socketDescriptor, bool encrypt
   });
 
   if (encrypt) server()->setTlsContext(tcpSocket, server()->tlsContext);
+
+  tcpSocket->initServerConnection();
   tcpSocket->setDescriptor(socketDescriptor);
 
   lsTrace("new connection: " + tcpSocket->peerAddress() + ":" + std::to_string(tcpSocket->peerPort()));

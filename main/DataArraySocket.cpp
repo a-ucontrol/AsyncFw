@@ -65,12 +65,13 @@ void DataArraySocket::removeTimer() {
 }
 
 void DataArraySocket::stateEvent() {
+  trace() << static_cast<int>(state_);
   if (state_ == State::Connected) {
     if (waitTimerType & 0x04) {
       waitTimerType &= ~0x04;
       if (sslConnection) {
         startTimer(waitForEncryptionTimeout_);
-        lsDebug("client wait for encrypted");
+        lsDebug() << "client wait for encrypted" << waitForEncryptionTimeout_;
         return;
       }
     }
@@ -319,10 +320,11 @@ void DataArraySocket::releaseBuffer_(const DataArray *da) const {
 void DataArraySocket::initServerConnection() {
   address = peerAddress();
   port = peerPort();
+  lsTrace();
   if (!contextEmpty()) {
     sslConnection = 3;
     startTimer(waitForEncryptionTimeout_);
-    lsTrace("server wait for encrypted");
+    lsDebug() << "server wait for encrypted:" << waitForEncryptionTimeout_;
   }
 }
 

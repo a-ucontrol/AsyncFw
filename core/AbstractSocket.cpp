@@ -486,7 +486,16 @@ void AbstractSocket::pollEvent(int _e) {
       }
     }
     activateEvent();
-    if (state_ != State::Active || AbstractSocket::read_available_fd() <= 0) return;
+    if (state_ != State::Active) {
+      if (AbstractSocket::read_available_fd() > 0) {
+        private_.errorString_ = "Activate error";
+        private_.error_ = Activate;
+        lsDebug() << LogStream::Color::Red << private_.errorString_ << errno;
+        close();
+      }
+      return;
+    }
+    if (read_available_fd() <= 0) return;
   }
   if (_e & AbstractThread::PollIn) {
     private_.rs_ = read_available_fd();
