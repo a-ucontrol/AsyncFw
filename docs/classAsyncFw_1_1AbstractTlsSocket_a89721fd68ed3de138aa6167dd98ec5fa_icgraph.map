@@ -1,0 +1,5 @@
+<map id="AsyncFw::AbstractTlsSocket::setDescriptor" name="AsyncFw::AbstractTlsSocket::setDescriptor">
+<area shape="rect" id="Node000001" title="Binds a raw native operating system socket descriptor to this managed context." alt="" coords="201,5,393,48"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1HttpServer.html#aa1ce738d4f20186506c1c4f4290a8a3d" title="Binds to all available interfaces (0.0.0.0) and starts listening for incoming traffic on a specific T..." alt="" coords="5,5,153,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="183,27,153,29,153,24,188,26"/>
+</map>

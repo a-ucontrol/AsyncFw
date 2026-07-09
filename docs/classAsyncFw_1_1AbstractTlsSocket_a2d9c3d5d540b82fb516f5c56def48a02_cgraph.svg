@@ -11,7 +11,7 @@
 <!-- Node1 -->
 <g id="Node000001" class="node">
 <title>Node1</title>
-<g id="a_Node000001"><a xlink:title="Initiates an asynchronous connection to a remote host.">
+<g id="a_Node000001"><a xlink:title="Initiates an outbound client TCP connection, automatically determining the TLS role.">
 <polygon fill="#999999" stroke="#666666" points="144.25,-101 0,-101 0,-69 144.25,-69 144.25,-101"/>
 <text xml:space="preserve" text-anchor="start" x="8" y="-87.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AbstractTlsSocket</text>
 <text xml:space="preserve" text-anchor="middle" x="72.12" y="-75.5" font-family="Helvetica,sans-Serif" font-size="10.00">::connect</text>

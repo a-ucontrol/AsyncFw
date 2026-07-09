@@ -4,6 +4,7 @@ var classAsyncFw_1_1HttpSocket =
     [ "activateEvent", "classAsyncFw_1_1HttpSocket.html#ad51bb1bf5880c3037c7ad70231c0767d", null ],
     [ "readEvent", "classAsyncFw_1_1HttpSocket.html#a7163448458d68f433dbdb214a6175be3", null ],
     [ "writeEvent", "classAsyncFw_1_1HttpSocket.html#ac276bcd3a5e86289eb37ea7fd062559b", null ],
+    [ "disconnect", "classAsyncFw_1_1HttpSocket.html#a33dadd18584b3b2b76a02dffa0a831fb", null ],
     [ "close", "classAsyncFw_1_1HttpSocket.html#a96932e5f6b5f84c4f204b0e6e4ef8472", null ],
     [ "destroy", "classAsyncFw_1_1HttpSocket.html#a8268467d3581a4d393e9ccd288de32ff", null ]
 ];

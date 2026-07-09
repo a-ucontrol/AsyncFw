@@ -1,5 +1,9 @@
 <map id="AsyncFw::HttpSocket::readEvent" name="AsyncFw::HttpSocket::readEvent">
-<area shape="rect" id="Node000001" title="Called when there is data to read." alt="" coords="5,5,156,48"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1DataArray.html#a5406261e5730adfa64e4d0bbd0083e31" title="Creates a lightweight, non&#45;allocating view slicing a sub&#45;region of this byte array." alt="" coords="204,5,347,48"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="156,24,190,26,185,27,156,29"/>
+<area shape="rect" id="Node000001" title="Called when there is data to read." alt="" coords="5,39,156,81"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1HttpSocket.html#a33dadd18584b3b2b76a02dffa0a831fb" title="Shuts down the active TLS session gracefully via SSL_shutdown() before terminating the network pipe." alt="" coords="204,5,354,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="155,45,191,41,186,43,156,50"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1DataArray.html#a5406261e5730adfa64e4d0bbd0083e31" title="Creates a lightweight, non&#45;allocating view slicing a sub&#45;region of this byte array." alt="" coords="207,72,350,115"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="156,70,194,78,189,79,156,75"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractTlsSocket.html#af52f94f709ab74eace61da79cbd8af7d" title="Shuts down the active TLS session gracefully via SSL_shutdown() before terminating the network pipe." alt="" coords="402,5,594,48"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="354,24,389,26,383,27,354,29"/>
 </map>

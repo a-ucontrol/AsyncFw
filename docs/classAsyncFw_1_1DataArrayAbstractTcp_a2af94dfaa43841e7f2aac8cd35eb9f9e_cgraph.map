@@ -1,0 +1,5 @@
+<map id="AsyncFw::DataArrayAbstractTcp::setTlsContext" name="AsyncFw::DataArrayAbstractTcp::setTlsContext">
+<area shape="rect" id="Node000001" title="Assigns and initializes TLS security parameters on a specific socket." alt="" coords="5,5,198,48"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractTlsSocket.html#af2e1d08071a0c8472fa1e8fd98f8f48d" title="Assigns a copy of the security credentials context containing certificates, keys, and rules." alt="" coords="246,5,438,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="198,24,233,26,227,27,198,29"/>
+</map>

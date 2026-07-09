@@ -21,7 +21,7 @@
 <!-- Node2 -->
 <g id="Node000002" class="node">
 <title>Node2</title>
-<g id="a_Node000002"><a xlink:href="classAsyncFw_1_1AbstractTlsSocket.html#a46dbd8e4895445214a4f46ee46433d6c" target="_top" xlink:title="Closes the network connection and unsubscribes from thread polling events.">
+<g id="a_Node000002"><a xlink:href="classAsyncFw_1_1AbstractTlsSocket.html#a46dbd8e4895445214a4f46ee46433d6c" target="_top" xlink:title="Immediately releases OpenSSL session pointers and forcefully closes the system&#45;level descriptor.">
 <polygon fill="white" stroke="#666666" points="327.12,-182 182.88,-182 182.88,-150 327.12,-150 327.12,-182"/>
 <text xml:space="preserve" text-anchor="start" x="190.88" y="-168.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AbstractTlsSocket</text>
 <text xml:space="preserve" text-anchor="middle" x="255" y="-156.5" font-family="Helvetica,sans-Serif" font-size="10.00">::close</text>

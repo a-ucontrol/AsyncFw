@@ -1,16 +1,16 @@
 <map id="AsyncFw::AbstractSocket::close" name="AsyncFw::AbstractSocket::close">
 <area shape="rect" id="Node000001" title="Closes the network connection and unsubscribes from thread polling events." alt="" coords="693,105,868,148"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractTlsSocket.html#a46dbd8e4895445214a4f46ee46433d6c" title="Closes the network connection and unsubscribes from thread polling events." alt="" coords="453,72,645,115"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractTlsSocket.html#a46dbd8e4895445214a4f46ee46433d6c" title="Immediately releases OpenSSL session pointers and forcefully closes the system&#45;level descriptor." alt="" coords="453,72,645,115"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="675,112,646,110,646,105,680,112"/>
 <area shape="rect" id="Node000007" href="$classAsyncFw_1_1AbstractSocket.html#a73a200f0008dbf9f820bdb2b8a0054cf" title="Schedules the socket for deferred asynchronous destruction." alt="" coords="462,139,636,181"/>
 <area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="675,142,637,150,636,145,681,141"/>
-<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractTlsSocket.html#a57ac6daff9926cf631abcd1e19073cc8" title="Called when established connection." alt="" coords="213,5,405,48"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractTlsSocket.html#a57ac6daff9926cf631abcd1e19073cc8" title="Core internal event handler reacting to raw descriptor readiness signals." alt="" coords="213,5,405,48"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="453,68,389,51,389,46,458,67"/>
-<area shape="rect" id="Node000005" href="$classAsyncFw_1_1HttpSocket.html#a96932e5f6b5f84c4f204b0e6e4ef8472" title="Closes the network connection and unsubscribes from thread polling events." alt="" coords="234,72,384,115"/>
+<area shape="rect" id="Node000005" href="$classAsyncFw_1_1HttpSocket.html#a96932e5f6b5f84c4f204b0e6e4ef8472" title="Immediately releases OpenSSL session pointers and forcefully closes the system&#45;level descriptor." alt="" coords="234,72,384,115"/>
 <area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="435,94,385,96,384,91,440,93"/>
 <area shape="rect" id="Node000006" href="$classAsyncFw_1_1DataArrayAbstractTcp_1_1Thread.html#ab6df6de1f9828a772e5968477ce5dffa" title="Performs cleanup routines and safely removes a socket from the thread loop." alt="" coords="213,139,405,181"/>
 <area shape="poly" id="edge6_Node000002_Node000006" title=" " alt="" coords="453,120,389,141,388,135,458,118"/>
-<area shape="rect" id="Node000004" href="$classAsyncFw_1_1HttpSocket.html#ad51bb1bf5880c3037c7ad70231c0767d" title="Called when established connection." alt="" coords="10,39,160,81"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1HttpSocket.html#ad51bb1bf5880c3037c7ad70231c0767d" title="Core internal event handler reacting to raw descriptor readiness signals." alt="" coords="10,39,160,81"/>
 <area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="195,45,162,51,159,46,200,42"/>
 <area shape="poly" id="edge5_Node000005_Node000004" title=" " alt="" coords="216,81,161,74,160,69,221,79"/>
 <area shape="poly" id="edge10_Node000007_Node000006" title=" " alt="" coords="444,160,406,163,405,157,449,160"/>

@@ -1,0 +1,16 @@
+<map id="AsyncFw::HttpSocket::disconnect" name="AsyncFw::HttpSocket::disconnect">
+<area shape="rect" id="Node000001" title="Shuts down the active TLS session gracefully via SSL_shutdown() before terminating the network pipe." alt="" coords="409,147,559,189"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1HttpServer.html#ad7dae50cc3787112980fa7075a60f811" title="Disconnects a specific client socket and clears it from the internally managed pool." alt="" coords="211,59,361,101"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="417,140,335,105,336,99,423,139"/>
+<area shape="rect" id="Node000005" href="$classAsyncFw_1_1HttpServer_1_1TcpSocket.html#abb44001861ba7b24633b54ae90c2896c" title="Triggered when new raw data is available in the socket for reading. &#160;&#160;Overrides the base behavior to ..." alt="" coords="5,151,163,193"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="391,165,361,167,211,167,164,169,163,164,211,161,361,161,396,164"/>
+<area shape="rect" id="Node000006" href="$classAsyncFw_1_1HttpSocket.html#a7163448458d68f433dbdb214a6175be3" title="Called when there is data to read." alt="" coords="211,176,361,219"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="391,182,362,189,361,184,397,181"/>
+<area shape="rect" id="Node000007" href="$classAsyncFw_1_1HttpSocket.html#ac276bcd3a5e86289eb37ea7fd062559b" title="Called when writing to the socket is possible." alt="" coords="211,243,361,285"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="431,196,362,233,337,245,336,240,360,228,426,198"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1HttpServer.html#ad3761260dfd18899afc22c6f4bc0c556" title="Forcefully terminates all active socket connections currently retained by the server." alt="" coords="10,5,158,48"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="193,57,159,49,158,44,198,55"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1HttpServer.html#ab3eeb1643d4482345afcd9f971c020ac" title="Explicitly severs connections with active sockets holding custom user metadata matching data." alt="" coords="10,72,158,115"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="193,87,159,91,157,86,198,85"/>
+<area shape="poly" id="edge6_Node000006_Node000005" title=" " alt="" coords="193,187,164,185,163,179,198,185"/>
+</map>

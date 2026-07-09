@@ -104,10 +104,17 @@ $(function(){initNavTree('classAsyncFw_1_1TlsContext.html','','classAsyncFw_1_1T
 
 <p><code>#include &lt;<a class="el" href="TlsContext_8h_source.html">AsyncFw/TlsContext</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-types" class="groupheader"><a id="pub-types" name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:a34b8c61895eaf10b54060df0feb54de8" id="r_a34b8c61895eaf10b54060df0feb54de8"><td class="memItemLeft">enum &#160;</td><td class="memItemRight"><a class="el" href="#a34b8c61895eaf10b54060df0feb54de8">IgnoreErrors</a> : uint8_t { <b>None</b> = 0x00
+, <a class="el" href="#a34b8c61895eaf10b54060df0feb54de8a09006eb216323640dc70de9a126e31f5">TimeValidity</a> = 0x01
+ }</td></tr>
+<tr class="memdesc:a34b8c61895eaf10b54060df0feb54de8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bitmask definitions for bypassing specific validation errors during the TLS handshake.  <a href="#a34b8c61895eaf10b54060df0feb54de8">More...</a><br /></td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a0942de17ebb2115eaacc8c9816302d51" id="r_a0942de17ebb2115eaacc8c9816302d51"><td class="memItemLeft"><a id="a0942de17ebb2115eaacc8c9816302d51" name="a0942de17ebb2115eaacc8c9816302d51"></a>
-&#160;</td><td class="memItemRight"><b>TlsContext</b> (const <a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> &amp;k, const <a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> &amp;c, const <a class="el" href="classAsyncFw_1_1DataArrayList.html">DataArrayList</a> &amp;t, const std::string &amp;={}, uint8_t=0)</td></tr>
+<tr class="memitem:afbb1b3410161777f5e67e5ed14a44dc5" id="r_afbb1b3410161777f5e67e5ed14a44dc5"><td class="memItemLeft"><a id="afbb1b3410161777f5e67e5ed14a44dc5" name="afbb1b3410161777f5e67e5ed14a44dc5"></a>
+&#160;</td><td class="memItemRight"><b>TlsContext</b> (const <a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> &amp;, const <a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> &amp;, const <a class="el" href="classAsyncFw_1_1DataArrayList.html">DataArrayList</a> &amp;, const std::string &amp;={}, <a class="el" href="#a34b8c61895eaf10b54060df0feb54de8">IgnoreErrors</a>=None)</td></tr>
 <tr class="memitem:a598925cf28e91ac25d110b10f8c28e42" id="r_a598925cf28e91ac25d110b10f8c28e42"><td class="memItemLeft"><a id="a598925cf28e91ac25d110b10f8c28e42" name="a598925cf28e91ac25d110b10f8c28e42"></a>
 &#160;</td><td class="memItemRight"><b>TlsContext</b> (const TlsContext &amp;)</td></tr>
 <tr class="memitem:a51ec0e09ce3b9313fb5d8e28cc4b91af" id="r_a51ec0e09ce3b9313fb5d8e28cc4b91af"><td class="memItemLeft"><a id="a51ec0e09ce3b9313fb5d8e28cc4b91af" name="a51ec0e09ce3b9313fb5d8e28cc4b91af"></a>
@@ -168,8 +175,8 @@ void&#160;</td><td class="memItemRight"><b>setVerifyPeer</b> (bool)</td></tr>
 std::string &amp;&#160;</td><td class="memItemRight"><b>verifyName</b> () const</td></tr>
 <tr class="memitem:af91659fea6356bbfb141951ad725b4b2" id="r_af91659fea6356bbfb141951ad725b4b2"><td class="memItemLeft"><a id="af91659fea6356bbfb141951ad725b4b2" name="af91659fea6356bbfb141951ad725b4b2"></a>
 void&#160;</td><td class="memItemRight"><b>setVerifyName</b> (const std::string &amp;) const</td></tr>
-<tr class="memitem:ab8e340e08096e6e42c1874c13d8439f8" id="r_ab8e340e08096e6e42c1874c13d8439f8"><td class="memItemLeft"><a id="ab8e340e08096e6e42c1874c13d8439f8" name="ab8e340e08096e6e42c1874c13d8439f8"></a>
-void&#160;</td><td class="memItemRight"><b>setIgnoreErrors</b> (uint8_t) const</td></tr>
+<tr class="memitem:a8ff0baee1fbf9337ea367d1da7c5e475" id="r_a8ff0baee1fbf9337ea367d1da7c5e475"><td class="memItemLeft"><a id="a8ff0baee1fbf9337ea367d1da7c5e475" name="a8ff0baee1fbf9337ea367d1da7c5e475"></a>
+void&#160;</td><td class="memItemRight"><b>setIgnoreErrors</b> (<a class="el" href="#a34b8c61895eaf10b54060df0feb54de8">IgnoreErrors</a>) const</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-static-methods" class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -242,7 +249,28 @@ class&#160;</td><td class="memItemRight"><b>AbstractTlsSocket</b></td></tr>
 <div class="line">}</div>
 </div><!-- fragment --> <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="HttpSocket_2main_8cpp-example.html#_a0">HttpSocket/main.cpp</a>, <a class="el" href="Socket_2main_8cpp-example.html#_a8">Socket/main.cpp</a>, and <a class="el" href="TlsContext_2main_8cpp-example.html#_a0">TlsContext/main.cpp</a>.</dd>
 </dl>
-</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+</div><a name="doc-enum-members" id="doc-enum-members"></a><h2 id="header-doc-enum-members" class="groupheader">Member Enumeration Documentation</h2>
+<a id="a34b8c61895eaf10b54060df0feb54de8" name="a34b8c61895eaf10b54060df0feb54de8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a34b8c61895eaf10b54060df0feb54de8">&#9670;&#160;</a></span>IgnoreErrors</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="#a34b8c61895eaf10b54060df0feb54de8">AsyncFw::TlsContext::IgnoreErrors</a> : uint8_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Bitmask definitions for bypassing specific validation errors during the TLS handshake. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a34b8c61895eaf10b54060df0feb54de8a09006eb216323640dc70de9a126e31f5" name="a34b8c61895eaf10b54060df0feb54de8a09006eb216323640dc70de9a126e31f5"></a>TimeValidity&#160;</td><td class="fielddoc"><p>Ignore certificate expiration boundaries or invalid systemic timestamp validation. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
 <a id="a10b3110e2d30a54d84c276716fb7d10a" name="a10b3110e2d30a54d84c276716fb7d10a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a10b3110e2d30a54d84c276716fb7d10a">&#9670;&#160;</a></span>generateKey()</h2>
 

@@ -1,6 +1,6 @@
 <map id="AsyncFw::HttpSocket::close" name="AsyncFw::HttpSocket::close">
-<area shape="rect" id="Node000001" title="Closes the network connection and unsubscribes from thread polling events." alt="" coords="5,5,156,48"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractTlsSocket.html#a46dbd8e4895445214a4f46ee46433d6c" title="Closes the network connection and unsubscribes from thread polling events." alt="" coords="204,5,396,48"/>
+<area shape="rect" id="Node000001" title="Immediately releases OpenSSL session pointers and forcefully closes the system&#45;level descriptor." alt="" coords="5,5,156,48"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractTlsSocket.html#a46dbd8e4895445214a4f46ee46433d6c" title="Immediately releases OpenSSL session pointers and forcefully closes the system&#45;level descriptor." alt="" coords="204,5,396,48"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="156,24,190,26,185,27,156,29"/>
 <area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractSocket.html#a77c0a9ea7c5061c406673bbe8b18d60d" title="Closes the network connection and unsubscribes from thread polling events." alt="" coords="444,5,618,48"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="396,24,431,27,426,27,396,29"/>

@@ -118,11 +118,6 @@ $(function(){initNavTree('classAsyncFw_1_1DataArraySocket.html','','classAsyncFw
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:af478bbb530753b5b507e1b490f2fff70" id="r_af478bbb530753b5b507e1b490f2fff70"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#af478bbb530753b5b507e1b490f2fff70">initTls</a> (const <a class="el" href="classAsyncFw_1_1TlsContext.html">TlsContext</a> &amp;<a class="el" href="structAsyncFw_1_1AnyData.html#aa6d2c3488a44e34e25a0971b01a27b3c">data</a>)</td></tr>
-<tr class="memdesc:af478bbb530753b5b507e1b490f2fff70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the TLS context for the socket.  <br /></td></tr>
-<tr class="memitem:a99f9dde81f2f9b5c453bf95dfa38eb45" id="r_a99f9dde81f2f9b5c453bf95dfa38eb45"><td class="memItemLeft"><a id="a99f9dde81f2f9b5c453bf95dfa38eb45" name="a99f9dde81f2f9b5c453bf95dfa38eb45"></a>
-void&#160;</td><td class="memItemRight"><b>disableTls</b> ()</td></tr>
-<tr class="memdesc:a99f9dde81f2f9b5c453bf95dfa38eb45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Completely disables TLS encryption for the socket. <br /></td></tr>
 <tr class="memitem:ac7366a53ca9c5c43bc3c6bb88b539d53" id="r_ac7366a53ca9c5c43bc3c6bb88b539d53"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#ac7366a53ca9c5c43bc3c6bb88b539d53">transmit</a> (const <a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> &amp;, uint32_t, bool=false) const</td></tr>
 <tr class="memdesc:ac7366a53ca9c5c43bc3c6bb88b539d53"><td class="mdescLeft">&#160;</td><td class="mdescRight">Asynchronously transmits a data array through the socket.  <br /></td></tr>
 <tr class="memitem:acfed3fa1bd56968ddee2f262e39845cc" id="r_acfed3fa1bd56968ddee2f262e39845cc"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#acfed3fa1bd56968ddee2f262e39845cc">setConnectTimeout</a> (int timeout)</td></tr>
@@ -161,10 +156,13 @@ void&#160;</td><td class="memItemRight"><b>sendKeepAlive</b> ()</td></tr>
 <tr class="memdesc:af6faaf80328db0a1644cd6b89ffae7eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Frees the memory allocated for the read buffer associated with the given pointer.  <br /></td></tr>
 <tr class="inherit_header pub_methods_classAsyncFw_1_1AbstractTlsSocket"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_classAsyncFw_1_1AbstractTlsSocket')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Public Member Functions inherited from <a class="el" href="classAsyncFw_1_1AbstractTlsSocket.html">AsyncFw::AbstractTlsSocket</a></td></tr>
 <tr class="memitem:a89721fd68ed3de138aa6167dd98ec5fa inherit pub_methods_classAsyncFw_1_1AbstractTlsSocket" id="r_a89721fd68ed3de138aa6167dd98ec5fa"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="classAsyncFw_1_1AbstractTlsSocket.html#a89721fd68ed3de138aa6167dd98ec5fa">setDescriptor</a> (int) override</td></tr>
+<tr class="memdesc:a89721fd68ed3de138aa6167dd98ec5fa inherit pub_methods_classAsyncFw_1_1AbstractTlsSocket"><td class="mdescLeft">&#160;</td><td class="mdescRight">Binds a raw native operating system socket descriptor to this managed context.  <br /></td></tr>
 <tr class="memitem:a46dbd8e4895445214a4f46ee46433d6c inherit pub_methods_classAsyncFw_1_1AbstractTlsSocket" id="r_a46dbd8e4895445214a4f46ee46433d6c"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="classAsyncFw_1_1AbstractTlsSocket.html#a46dbd8e4895445214a4f46ee46433d6c">close</a> () override</td></tr>
-<tr class="memdesc:a46dbd8e4895445214a4f46ee46433d6c inherit pub_methods_classAsyncFw_1_1AbstractTlsSocket"><td class="mdescLeft">&#160;</td><td class="mdescRight">Closes the network connection and unsubscribes from thread polling events.  <br /></td></tr>
-<tr class="memitem:af2e1d08071a0c8472fa1e8fd98f8f48d inherit pub_methods_classAsyncFw_1_1AbstractTlsSocket" id="r_af2e1d08071a0c8472fa1e8fd98f8f48d"><td class="memItemLeft">
-void&#160;</td><td class="memItemRight"><b>setContext</b> (const <a class="el" href="classAsyncFw_1_1TlsContext.html">TlsContext</a> &amp;) const</td></tr>
+<tr class="memdesc:a46dbd8e4895445214a4f46ee46433d6c inherit pub_methods_classAsyncFw_1_1AbstractTlsSocket"><td class="mdescLeft">&#160;</td><td class="mdescRight">Immediately releases OpenSSL session pointers and forcefully closes the system-level descriptor.  <br /></td></tr>
+<tr class="memitem:af2e1d08071a0c8472fa1e8fd98f8f48d inherit pub_methods_classAsyncFw_1_1AbstractTlsSocket" id="r_af2e1d08071a0c8472fa1e8fd98f8f48d"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="classAsyncFw_1_1AbstractTlsSocket.html#af2e1d08071a0c8472fa1e8fd98f8f48d">setContext</a> (const <a class="el" href="classAsyncFw_1_1TlsContext.html">TlsContext</a> &amp;) const</td></tr>
+<tr class="memdesc:af2e1d08071a0c8472fa1e8fd98f8f48d inherit pub_methods_classAsyncFw_1_1AbstractTlsSocket"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assigns a copy of the security credentials context containing certificates, keys, and rules.  <br /></td></tr>
+<tr class="memitem:a9043562cf451851003009adedb277d7b inherit pub_methods_classAsyncFw_1_1AbstractTlsSocket" id="r_a9043562cf451851003009adedb277d7b"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="classAsyncFw_1_1AbstractTlsSocket.html#a9043562cf451851003009adedb277d7b">contextEmpty</a> () const</td></tr>
+<tr class="memdesc:a9043562cf451851003009adedb277d7b inherit pub_methods_classAsyncFw_1_1AbstractTlsSocket"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks whether the underlying OpenSSL context structure has not been initialized or assigned.  <br /></td></tr>
 <tr class="inherit_header pub_methods_classAsyncFw_1_1AbstractSocket"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_classAsyncFw_1_1AbstractSocket')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Public Member Functions inherited from <a class="el" href="classAsyncFw_1_1AbstractSocket.html">AsyncFw::AbstractSocket</a></td></tr>
 <tr class="memitem:a73a200f0008dbf9f820bdb2b8a0054cf inherit pub_methods_classAsyncFw_1_1AbstractSocket" id="r_a73a200f0008dbf9f820bdb2b8a0054cf"><td class="memItemLeft">virtual void&#160;</td><td class="memItemRight"><a class="el" href="classAsyncFw_1_1AbstractSocket.html#a73a200f0008dbf9f820bdb2b8a0054cf">destroy</a> ()</td></tr>
 <tr class="memdesc:a73a200f0008dbf9f820bdb2b8a0054cf inherit pub_methods_classAsyncFw_1_1AbstractSocket"><td class="mdescLeft">&#160;</td><td class="mdescRight">Schedules the socket for deferred asynchronous destruction.  <br /></td></tr>
@@ -236,13 +234,22 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:a1a1f3404abcb93af27de1d7bc0a958b1" id="r_a1a1f3404abcb93af27de1d7bc0a958b1"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a1a1f3404abcb93af27de1d7bc0a958b1">readEvent</a> () override</td></tr>
 <tr class="memdesc:a1a1f3404abcb93af27de1d7bc0a958b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when there is data to read.  <br /></td></tr>
 <tr class="inherit_header pro_methods_classAsyncFw_1_1AbstractTlsSocket"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_methods_classAsyncFw_1_1AbstractTlsSocket')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Protected Member Functions inherited from <a class="el" href="classAsyncFw_1_1AbstractTlsSocket.html">AsyncFw::AbstractTlsSocket</a></td></tr>
-<tr class="memitem:ad26bb910e65bb758bfed6448e1af7186 inherit pro_methods_classAsyncFw_1_1AbstractTlsSocket" id="r_ad26bb910e65bb758bfed6448e1af7186"><td class="memItemLeft">
-virtual void&#160;</td><td class="memItemRight"><b>activateReady</b> ()</td></tr>
+<tr class="memitem:a7800254e24419820e105e863c0266ac4 inherit pro_methods_classAsyncFw_1_1AbstractTlsSocket" id="r_a7800254e24419820e105e863c0266ac4"><td class="memItemLeft">
+&#160;</td><td class="memItemRight"><b>AbstractTlsSocket</b> ()</td></tr>
+<tr class="memdesc:a7800254e24419820e105e863c0266ac4 inherit pro_methods_classAsyncFw_1_1AbstractTlsSocket"><td class="mdescLeft">&#160;</td><td class="mdescRight">Protected default constructor. Allocates the internal private structure and setups context pointers. <br /></td></tr>
+<tr class="memitem:a75c2ff2d05c2d228ee92a33d755ca42f inherit pro_methods_classAsyncFw_1_1AbstractTlsSocket" id="r_a75c2ff2d05c2d228ee92a33d755ca42f"><td class="memItemLeft">
+&#160;</td><td class="memItemRight"><b>~AbstractTlsSocket</b> () override</td></tr>
+<tr class="memdesc:a75c2ff2d05c2d228ee92a33d755ca42f inherit pro_methods_classAsyncFw_1_1AbstractTlsSocket"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual destructor. Disposes of allocated OpenSSL instances and clean private data maps. <br /></td></tr>
+<tr class="memitem:ad26bb910e65bb758bfed6448e1af7186 inherit pro_methods_classAsyncFw_1_1AbstractTlsSocket" id="r_ad26bb910e65bb758bfed6448e1af7186"><td class="memItemLeft">virtual void&#160;</td><td class="memItemRight"><a class="el" href="classAsyncFw_1_1AbstractTlsSocket.html#ad26bb910e65bb758bfed6448e1af7186">activateReady</a> ()</td></tr>
+<tr class="memdesc:ad26bb910e65bb758bfed6448e1af7186 inherit pro_methods_classAsyncFw_1_1AbstractTlsSocket"><td class="mdescLeft">&#160;</td><td class="mdescRight">Intermediate signal hub executed immediately when a secure cryptographic tunnel has been fully established.  <br /></td></tr>
 <tr class="memitem:a57ac6daff9926cf631abcd1e19073cc8 inherit pro_methods_classAsyncFw_1_1AbstractTlsSocket" id="r_a57ac6daff9926cf631abcd1e19073cc8"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="classAsyncFw_1_1AbstractTlsSocket.html#a57ac6daff9926cf631abcd1e19073cc8">activateEvent</a> () override</td></tr>
-<tr class="memdesc:a57ac6daff9926cf631abcd1e19073cc8 inherit pro_methods_classAsyncFw_1_1AbstractTlsSocket"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when established connection.  <br /></td></tr>
+<tr class="memdesc:a57ac6daff9926cf631abcd1e19073cc8 inherit pro_methods_classAsyncFw_1_1AbstractTlsSocket"><td class="mdescLeft">&#160;</td><td class="mdescRight">Core internal event handler reacting to raw descriptor readiness signals.  <br /></td></tr>
 <tr class="memitem:a7244e3b461e0012dab1d9c3b1c0db78e inherit pro_methods_classAsyncFw_1_1AbstractTlsSocket" id="r_a7244e3b461e0012dab1d9c3b1c0db78e"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="classAsyncFw_1_1AbstractTlsSocket.html#a7244e3b461e0012dab1d9c3b1c0db78e">read_available_fd</a> () const override final</td></tr>
-<tr class="memitem:abbe1d87076f377f0ca3aff501497e27b inherit pro_methods_classAsyncFw_1_1AbstractTlsSocket" id="r_abbe1d87076f377f0ca3aff501497e27b"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="classAsyncFw_1_1AbstractTlsSocket.html#abbe1d87076f377f0ca3aff501497e27b">read_fd</a> (void *_p, int _s) override final</td></tr>
-<tr class="memitem:a1ea3bd7f62cbfefcb4e983ce176fb0b7 inherit pro_methods_classAsyncFw_1_1AbstractTlsSocket" id="r_a1ea3bd7f62cbfefcb4e983ce176fb0b7"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="classAsyncFw_1_1AbstractTlsSocket.html#a1ea3bd7f62cbfefcb4e983ce176fb0b7">write_fd</a> (const void *_p, int _s) override final</td></tr>
+<tr class="memdesc:a7244e3b461e0012dab1d9c3b1c0db78e inherit pro_methods_classAsyncFw_1_1AbstractTlsSocket"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates how many unread bytes are currently waiting within the active OpenSSL decrypted layer buffer.  <br /></td></tr>
+<tr class="memitem:a8c0f2e296d83c3004bd02dd6c2925bf1 inherit pro_methods_classAsyncFw_1_1AbstractTlsSocket" id="r_a8c0f2e296d83c3004bd02dd6c2925bf1"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="classAsyncFw_1_1AbstractTlsSocket.html#a8c0f2e296d83c3004bd02dd6c2925bf1">read_fd</a> (void *, int) override final</td></tr>
+<tr class="memdesc:a8c0f2e296d83c3004bd02dd6c2925bf1 inherit pro_methods_classAsyncFw_1_1AbstractTlsSocket"><td class="mdescLeft">&#160;</td><td class="mdescRight">Low-level decryption routing path proxying requests down to SSL_read().  <br /></td></tr>
+<tr class="memitem:a84a79c1f921e96efd6b4f47cd7cd91e0 inherit pro_methods_classAsyncFw_1_1AbstractTlsSocket" id="r_a84a79c1f921e96efd6b4f47cd7cd91e0"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="classAsyncFw_1_1AbstractTlsSocket.html#a84a79c1f921e96efd6b4f47cd7cd91e0">write_fd</a> (const void *, int) override final</td></tr>
+<tr class="memdesc:a84a79c1f921e96efd6b4f47cd7cd91e0 inherit pro_methods_classAsyncFw_1_1AbstractTlsSocket"><td class="mdescLeft">&#160;</td><td class="mdescRight">Low-level encryption routing path proxying outgoing payload directly up to SSL_write().  <br /></td></tr>
 <tr class="inherit_header pro_methods_classAsyncFw_1_1AbstractSocket"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_methods_classAsyncFw_1_1AbstractSocket')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Protected Member Functions inherited from <a class="el" href="classAsyncFw_1_1AbstractSocket.html">AsyncFw::AbstractSocket</a></td></tr>
 <tr class="memitem:a94ae146fe8047af98d2dcfd14d20e261 inherit pro_methods_classAsyncFw_1_1AbstractSocket" id="r_a94ae146fe8047af98d2dcfd14d20e261"><td class="memItemLeft">
 &#160;</td><td class="memItemRight"><b>AbstractSocket</b> ()</td></tr>
@@ -280,9 +287,6 @@ class&#160;</td><td class="memItemRight"><b>DataArrayTcpClient</b></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-inherited" class="groupheader"><a id="inherited" name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
-<tr class="inherit_header pub_types_classAsyncFw_1_1AbstractTlsSocket"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_types_classAsyncFw_1_1AbstractTlsSocket')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Public Types inherited from <a class="el" href="classAsyncFw_1_1AbstractTlsSocket.html">AsyncFw::AbstractTlsSocket</a></td></tr>
-<tr class="memitem:a72b5f0483160605cfc150b3167fb4f2a inherit pub_types_classAsyncFw_1_1AbstractTlsSocket" id="r_a72b5f0483160605cfc150b3167fb4f2a"><td class="memItemLeft"><a id="a72b5f0483160605cfc150b3167fb4f2a" name="a72b5f0483160605cfc150b3167fb4f2a"></a>enum &#160;</td><td class="memItemRight"><b>IgnoreErrors</b> : uint8_t { <b>TimeValidity</b> = 0x01
- }</td></tr>
 <tr class="inherit_header pub_types_classAsyncFw_1_1AbstractSocket"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_types_classAsyncFw_1_1AbstractSocket')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Public Types inherited from <a class="el" href="classAsyncFw_1_1AbstractSocket.html">AsyncFw::AbstractSocket</a></td></tr>
 <tr class="memitem:a6fc3dae51b6b38d67f1c3861dcbb23bd inherit pub_types_classAsyncFw_1_1AbstractSocket" id="r_a6fc3dae51b6b38d67f1c3861dcbb23bd"><td class="memItemLeft">enum &#160;</td><td class="memItemRight"><a class="el" href="classAsyncFw_1_1AbstractSocket.html#a6fc3dae51b6b38d67f1c3861dcbb23bd">State</a> : uint8_t { <br />
 &#160;&#160;<a class="el" href="classAsyncFw_1_1AbstractSocket.html#a6fc3dae51b6b38d67f1c3861dcbb23bda65e37b7a6b547c0da9a63972db5dfd49">Unconnected</a>
@@ -326,44 +330,6 @@ std::any&#160;</td><td class="memItemRight"><b>data_</b></td></tr>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="DataArrayTcp_2main_8cpp-example.html#_a2">DataArrayTcp/main.cpp</a>, and <a class="el" href="LogTcp_2main_8cpp-example.html#_a10">LogTcp/main.cpp</a>.</dd>
 </dl>
 </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
-<a id="af478bbb530753b5b507e1b490f2fff70" name="af478bbb530753b5b507e1b490f2fff70"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af478bbb530753b5b507e1b490f2fff70">&#9670;&#160;</a></span>initTls()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool DataArraySocket::initTls </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="classAsyncFw_1_1TlsContext.html">TlsContext</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>data</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Initializes the TLS context for the socket. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname"><a class="el" href="structAsyncFw_1_1AnyData.html#aa6d2c3488a44e34e25a0971b01a27b3c" title="Type-safely extracts and returns the stored data value.">data</a></td><td>The TLS context object containing certificates and keys. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>true if initialization was successful, otherwise false. </dd></dl>
-<div id="dynsection-2" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
-<div id="dynsection-2-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-2-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1DataArraySocket_af478bbb530753b5b507e1b490f2fff70_cgraph.svg" width="412" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-<div id="dynsection-3" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
-<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-3-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1DataArraySocket_af478bbb530753b5b507e1b490f2fff70_icgraph.svg" width="436" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-
-</div>
-</div>
 <a id="ac7366a53ca9c5c43bc3c6bb88b539d53" name="ac7366a53ca9c5c43bc3c6bb88b539d53"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac7366a53ca9c5c43bc3c6bb88b539d53">&#9670;&#160;</a></span>transmit()</h2>
 
@@ -400,11 +366,11 @@ std::any&#160;</td><td class="memItemRight"><b>data_</b></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>true if the data was successfully queued for transmission, otherwise false. </dd></dl>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="DataArrayTcp_2main_8cpp-example.html#a5">DataArrayTcp/main.cpp</a>.</dd>
 </dl>
-<div id="dynsection-4" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
-<div id="dynsection-4-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-2" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
+<div id="dynsection-2-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-4-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1DataArraySocket_ac7366a53ca9c5c43bc3c6bb88b539d53_cgraph.svg" width="428" height="120"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div id="dynsection-2-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1DataArraySocket_ac7366a53ca9c5c43bc3c6bb88b539d53_cgraph.svg" width="668" height="120"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -505,10 +471,10 @@ std::any&#160;</td><td class="memItemRight"><b>data_</b></td></tr>
   </table>
   </dd>
 </dl>
-<div id="dynsection-5" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
-<div id="dynsection-5-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-3" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-5-content" class="dyncontent" style="display:none;">
+<div id="dynsection-3-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1DataArraySocket_a740f58c6fb06a731c59f7b3e9dace41e_icgraph.svg" width="436" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
@@ -544,10 +510,10 @@ std::any&#160;</td><td class="memItemRight"><b>data_</b></td></tr>
   </table>
   </dd>
 </dl>
-<div id="dynsection-6" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
-<div id="dynsection-6-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-4" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-4-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-6-content" class="dyncontent" style="display:none;">
+<div id="dynsection-4-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1DataArraySocket_a7492a485097b835031af94924030e612_icgraph.svg" width="452" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
@@ -583,10 +549,10 @@ std::any&#160;</td><td class="memItemRight"><b>data_</b></td></tr>
   </table>
   </dd>
 </dl>
-<div id="dynsection-7" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
-<div id="dynsection-7-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-5" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-5-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-7-content" class="dyncontent" style="display:none;">
+<div id="dynsection-5-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1DataArraySocket_a020287f09c337a869e9a6b52b15ea0f4_icgraph.svg" width="490" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
@@ -627,10 +593,10 @@ std::any&#160;</td><td class="memItemRight"><b>data_</b></td></tr>
   </table>
   </dd>
 </dl>
-<div id="dynsection-8" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
-<div id="dynsection-8-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-6" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-6-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-8-content" class="dyncontent" style="display:none;">
+<div id="dynsection-6-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1DataArraySocket_a3f856b69e149a98d06ca62582fea708d_icgraph.svg" width="436" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
@@ -671,10 +637,10 @@ std::any&#160;</td><td class="memItemRight"><b>data_</b></td></tr>
   </table>
   </dd>
 </dl>
-<div id="dynsection-9" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
-<div id="dynsection-9-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-7" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-7-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-9-content" class="dyncontent" style="display:none;">
+<div id="dynsection-7-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1DataArraySocket_a63f570b3f48c75df1a306573e643b7f8_icgraph.svg" width="436" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
@@ -715,10 +681,10 @@ std::any&#160;</td><td class="memItemRight"><b>data_</b></td></tr>
   </table>
   </dd>
 </dl>
-<div id="dynsection-10" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
-<div id="dynsection-10-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-8" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-8-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-10-content" class="dyncontent" style="display:none;">
+<div id="dynsection-8-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1DataArraySocket_ad3f44b667eb9f7b721e5216635ff67ee_icgraph.svg" width="686" height="144"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
@@ -749,10 +715,10 @@ std::any&#160;</td><td class="memItemRight"><b>data_</b></td></tr>
 
 <p>Gets the remote host address previously assigned via setHost. </p>
 <dl class="section return"><dt>Returns</dt><dd>The host address string. </dd></dl>
-<div id="dynsection-11" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
-<div id="dynsection-11-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-9" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-9-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-11-content" class="dyncontent" style="display:none;">
+<div id="dynsection-9-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1DataArraySocket_a5d5d666ae1842125adb08acc2f749926_icgraph.svg" width="440" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
@@ -854,10 +820,10 @@ std::any&#160;</td><td class="memItemRight"><b>data_</b></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>true if the connection process was successfully started, otherwise false. </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classAsyncFw_1_1AbstractTlsSocket.html#a2d9c3d5d540b82fb516f5c56def48a02">AsyncFw::AbstractTlsSocket</a>.</p>
-<div id="dynsection-12" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
-<div id="dynsection-12-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-10" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
+<div id="dynsection-10-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-12-content" class="dyncontent" style="display:none;">
+<div id="dynsection-10-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1DataArraySocket_aed242e797aea527f8b86c4bc866ab454_cgraph.svg" width="428" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
@@ -888,11 +854,17 @@ std::any&#160;</td><td class="memItemRight"><b>data_</b></td></tr>
 
 <p>Disconnects the socket from the remote peer. </p>
 
-<p>Reimplemented from <a class="el" href="classAsyncFw_1_1AbstractTlsSocket.html">AsyncFw::AbstractTlsSocket</a>.</p>
-<div id="dynsection-13" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
-<div id="dynsection-13-summary" class="dynsummary" style="display:block;">
+<p>Reimplemented from <a class="el" href="classAsyncFw_1_1AbstractTlsSocket.html#af52f94f709ab74eace61da79cbd8af7d">AsyncFw::AbstractTlsSocket</a>.</p>
+<div id="dynsection-11" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
+<div id="dynsection-11-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-13-content" class="dyncontent" style="display:none;">
+<div id="dynsection-11-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1DataArraySocket_a9942cbf100e7898ba95c8fb92e059ae8_cgraph.svg" width="436" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+<div id="dynsection-12" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-12-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-12-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1DataArraySocket_a9942cbf100e7898ba95c8fb92e059ae8_icgraph.svg" width="428" height="120"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
@@ -920,10 +892,10 @@ std::any&#160;</td><td class="memItemRight"><b>data_</b></td></tr>
   </table>
   </dd>
 </dl>
-<div id="dynsection-14" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
-<div id="dynsection-14-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-13" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-13-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-14-content" class="dyncontent" style="display:none;">
+<div id="dynsection-13-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1DataArraySocket_af6faaf80328db0a1644cd6b89ffae7eb_icgraph.svg" width="436" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
@@ -985,11 +957,11 @@ std::any&#160;</td><td class="memItemRight"><b>data_</b></td></tr>
 <p>Called when there is data to read. </p>
 
 <p>Reimplemented from <a class="el" href="classAsyncFw_1_1AbstractSocket.html#a609ec54ec8aed39769d60319c4c15833">AsyncFw::AbstractSocket</a>.</p>
-<div id="dynsection-15" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
-<div id="dynsection-15-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-14" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
+<div id="dynsection-14-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-15-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1DataArraySocket_a1a1f3404abcb93af27de1d7bc0a958b1_cgraph.svg" width="428" height="211"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div id="dynsection-14-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1DataArraySocket_a1a1f3404abcb93af27de1d7bc0a958b1_cgraph.svg" width="668" height="211"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>

@@ -1,7 +1,10 @@
 <map id="AsyncFw::AbstractSocket::activateEvent" name="AsyncFw::AbstractSocket::activateEvent">
-<area shape="rect" id="Node000001" title="Called when established connection." alt="" coords="444,5,618,48"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractTlsSocket.html#a57ac6daff9926cf631abcd1e19073cc8" title="Called when established connection." alt="" coords="204,5,396,48"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="425,27,397,29,396,24,431,27"/>
-<area shape="rect" id="Node000003" href="$classAsyncFw_1_1HttpSocket.html#ad51bb1bf5880c3037c7ad70231c0767d" title="Called when established connection." alt="" coords="5,5,156,48"/>
+<area shape="rect" id="Node000001" title="Called when established connection." alt="" coords="684,5,859,48"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractTlsSocket.html#a57ac6daff9926cf631abcd1e19073cc8" title="Core internal event handler reacting to raw descriptor readiness signals." alt="" coords="204,5,396,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="666,23,636,25,444,25,397,26,396,21,444,20,636,20,671,23"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1AbstractTlsSocket.html#ad26bb910e65bb758bfed6448e1af7186" title="Intermediate signal hub executed immediately when a secure cryptographic tunnel has been fully establ..." alt="" coords="444,35,636,77"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="671,39,637,46,637,41,666,40"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1HttpSocket.html#ad51bb1bf5880c3037c7ad70231c0767d" title="Core internal event handler reacting to raw descriptor readiness signals." alt="" coords="5,5,156,48"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="186,27,156,29,156,24,191,26"/>
+<area shape="poly" id="edge4_Node000004_Node000002" title=" " alt="" coords="426,42,396,41,397,36,431,42"/>
 </map>

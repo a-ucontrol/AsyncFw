@@ -1,13 +1,15 @@
 <map id="AsyncFw::DataArrayTcpServer" name="AsyncFw::DataArrayTcpServer">
-<area shape="rect" id="Node000001" title="An asynchronous TCP server class managing client connections and TLS security. Inherits from DataArra..." alt="" coords="1023,65,1224,91"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1DataArrayAbstractTcp.html" title="Abstract base class implementing a multi&#45;threaded TCP pool for socket and packet management." alt="" coords="761,65,973,91"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="989,75,1025,78,1020,78,989,81"/>
-<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractThreadPool.html" title="Abstract base class for creating and managing thread pools." alt="" coords="441,21,640,47"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="655,47,766,64,761,64,655,52"/>
+<area shape="rect" id="Node000001" title="An asynchronous TCP server class managing client connections and TLS security. Inherits from DataArra..." alt="" coords="1034,105,1235,132"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1DataArrayAbstractTcp.html" title="Abstract base class implementing a multi&#45;threaded TCP pool for socket and packet management." alt="" coords="772,105,984,132"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="1000,116,1036,118,1031,119,1000,121"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractThreadPool.html" title="Abstract base class for creating and managing thread pools." alt="" coords="441,20,640,46"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="611,48,825,104,820,105,611,53"/>
 <area shape="rect" id="Node000004" href="$classAsyncFw_1_1AbstractThread.html" title="The AbstractThread class provides the base functionality for thread management." alt="" coords="16,14,189,41"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="205,26,442,30,439,35,205,32"/>
-<area shape="rect" id="Node000005" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="425,77,656,151"/>
-<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="671,97,758,90,763,89,672,102"/>
-<area shape="rect" id="Node000006" href="$classAsyncFw_1_1FunctionConnector.html" title="Provides a thread&#45;safe, publisher&#45;subscriber mechanism to establish sender&#45;to&#45;receivers connections." alt="" coords="5,103,200,146"/>
-<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="215,119,426,115,422,119,215,125"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="205,26,442,30,439,34,205,32"/>
+<area shape="rect" id="Node000005" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="425,81,656,156"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="671,116,774,118,769,119,672,121"/>
+<area shape="rect" id="Node000006" href="$classAsyncFw_1_1FunctionConnector.html" title="Provides a thread&#45;safe, publisher&#45;subscriber mechanism to establish sender&#45;to&#45;receivers connections." alt="" coords="5,104,200,146"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="215,121,426,118,422,122,215,126"/>
+<area shape="rect" id="Node000007" href="$classAsyncFw_1_1TlsContext.html" title="Manages cryptographic configurations, security profiles, credentials, and certificates for TLS sessio..." alt="" coords="466,180,614,206"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="620,173,747,145,813,133,819,132,749,150,621,179"/>
 </map>

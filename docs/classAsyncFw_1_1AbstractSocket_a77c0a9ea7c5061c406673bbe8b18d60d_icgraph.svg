@@ -21,7 +21,7 @@
 <!-- Node2 -->
 <g id="Node000002" class="node">
 <title>Node2</title>
-<g id="a_Node000002"><a xlink:href="classAsyncFw_1_1AbstractTlsSocket.html#a46dbd8e4895445214a4f46ee46433d6c" target="_top" xlink:title="Closes the network connection and unsubscribes from thread polling events.">
+<g id="a_Node000002"><a xlink:href="classAsyncFw_1_1AbstractTlsSocket.html#a46dbd8e4895445214a4f46ee46433d6c" target="_top" xlink:title="Immediately releases OpenSSL session pointers and forcefully closes the system&#45;level descriptor.">
 <polygon fill="white" stroke="#666666" points="480,-132 335.75,-132 335.75,-100 480,-100 480,-132"/>
 <text xml:space="preserve" text-anchor="start" x="343.75" y="-118.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AbstractTlsSocket</text>
 <text xml:space="preserve" text-anchor="middle" x="407.88" y="-106.5" font-family="Helvetica,sans-Serif" font-size="10.00">::close</text>
@@ -59,7 +59,7 @@
 <!-- Node3 -->
 <g id="Node000003" class="node">
 <title>Node3</title>
-<g id="a_Node000003"><a xlink:href="classAsyncFw_1_1AbstractTlsSocket.html#a57ac6daff9926cf631abcd1e19073cc8" target="_top" xlink:title="Called when established connection.">
+<g id="a_Node000003"><a xlink:href="classAsyncFw_1_1AbstractTlsSocket.html#a57ac6daff9926cf631abcd1e19073cc8" target="_top" xlink:title="Core internal event handler reacting to raw descriptor readiness signals.">
 <polygon fill="white" stroke="#666666" points="299.75,-182 155.5,-182 155.5,-150 299.75,-150 299.75,-182"/>
 <text xml:space="preserve" text-anchor="start" x="163.5" y="-168.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AbstractTlsSocket</text>
 <text xml:space="preserve" text-anchor="middle" x="227.62" y="-156.5" font-family="Helvetica,sans-Serif" font-size="10.00">::activateEvent</text>
@@ -78,7 +78,7 @@
 <!-- Node5 -->
 <g id="Node000005" class="node">
 <title>Node5</title>
-<g id="a_Node000005"><a xlink:href="classAsyncFw_1_1HttpSocket.html#a96932e5f6b5f84c4f204b0e6e4ef8472" target="_top" xlink:title="Closes the network connection and unsubscribes from thread polling events.">
+<g id="a_Node000005"><a xlink:href="classAsyncFw_1_1HttpSocket.html#a96932e5f6b5f84c4f204b0e6e4ef8472" target="_top" xlink:title="Immediately releases OpenSSL session pointers and forcefully closes the system&#45;level descriptor.">
 <polygon fill="white" stroke="#666666" points="284,-132 171.25,-132 171.25,-100 284,-100 284,-132"/>
 <text xml:space="preserve" text-anchor="start" x="179.25" y="-118.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::HttpSocket</text>
 <text xml:space="preserve" text-anchor="middle" x="227.62" y="-106.5" font-family="Helvetica,sans-Serif" font-size="10.00">::close</text>
@@ -116,7 +116,7 @@
 <!-- Node4 -->
 <g id="Node000004" class="node">
 <title>Node4</title>
-<g id="a_Node000004"><a xlink:href="classAsyncFw_1_1HttpSocket.html#ad51bb1bf5880c3037c7ad70231c0767d" target="_top" xlink:title="Called when established connection.">
+<g id="a_Node000004"><a xlink:href="classAsyncFw_1_1HttpSocket.html#ad51bb1bf5880c3037c7ad70231c0767d" target="_top" xlink:title="Core internal event handler reacting to raw descriptor readiness signals.">
 <polygon fill="white" stroke="#666666" points="116.12,-157 3.38,-157 3.38,-125 116.12,-125 116.12,-157"/>
 <text xml:space="preserve" text-anchor="start" x="11.38" y="-143.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::HttpSocket</text>
 <text xml:space="preserve" text-anchor="middle" x="59.75" y="-131.5" font-family="Helvetica,sans-Serif" font-size="10.00">::activateEvent</text>

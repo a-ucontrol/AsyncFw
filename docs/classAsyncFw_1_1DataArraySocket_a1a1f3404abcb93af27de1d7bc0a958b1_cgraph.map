@@ -2,9 +2,11 @@
 <area shape="rect" id="Node000001" title="Called when there is data to read." alt="" coords="5,72,190,115"/>
 <area shape="rect" id="Node000002" href="$classAsyncFw_1_1DataArraySocket.html#a9942cbf100e7898ba95c8fb92e059ae8" title="Disconnects the socket from the remote peer." alt="" coords="238,5,422,48"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="173,69,241,51,236,54,175,74"/>
-<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractSocket.html#a75415b9f0ecc82b703e49ad8abf1f3a8" title="Returns the number of bytes of data pending to be read." alt="" coords="243,72,417,115"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="190,91,229,92,224,94,191,96"/>
-<area shape="rect" id="Node000004" href="$classAsyncFw_1_1DataArraySocket.html#a60d24e73561b9ffc720deefca7a6f720" title="Forces the transmission of a keep&#45;alive request (ping) to the remote peer." alt="" coords="238,163,422,205"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="155,113,261,155,257,158,154,118"/>
-<area shape="poly" id="edge4_Node000004_Node000004" title=" " alt="" coords="286,161,284,153,291,144,307,138,330,136,355,138,371,147,366,147,353,144,330,141,308,143,294,148,289,154,291,164"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1AbstractSocket.html#a75415b9f0ecc82b703e49ad8abf1f3a8" title="Returns the number of bytes of data pending to be read." alt="" coords="243,72,417,115"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="190,91,229,92,224,94,191,96"/>
+<area shape="rect" id="Node000005" href="$classAsyncFw_1_1DataArraySocket.html#a60d24e73561b9ffc720deefca7a6f720" title="Forces the transmission of a keep&#45;alive request (ping) to the remote peer." alt="" coords="238,163,422,205"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="155,113,261,155,257,158,154,118"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractTlsSocket.html#af52f94f709ab74eace61da79cbd8af7d" title="Shuts down the active TLS session gracefully via SSL_shutdown() before terminating the network pipe." alt="" coords="470,5,662,48"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="422,24,457,26,452,27,423,29"/>
+<area shape="poly" id="edge5_Node000005_Node000005" title=" " alt="" coords="286,161,284,153,291,144,307,138,330,136,355,138,371,147,366,147,353,144,330,141,308,143,294,148,289,154,291,164"/>
 </map>

@@ -1,0 +1,5 @@
+<map id="AsyncFw::DataArraySocket::disconnect" name="AsyncFw::DataArraySocket::disconnect">
+<area shape="rect" id="Node000001" title="Disconnects the socket from the remote peer." alt="" coords="5,5,190,48"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractTlsSocket.html#af52f94f709ab74eace61da79cbd8af7d" title="Shuts down the active TLS session gracefully via SSL_shutdown() before terminating the network pipe." alt="" coords="238,5,430,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="190,24,225,26,220,27,190,29"/>
+</map>

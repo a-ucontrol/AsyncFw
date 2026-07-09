@@ -1,0 +1,5 @@
+<map id="AsyncFw::AbstractTlsSocket::write_fd" name="AsyncFw::AbstractTlsSocket::write_fd">
+<area shape="rect" id="Node000001" title="Low&#45;level encryption routing path proxying outgoing payload directly up to SSL_write()." alt="" coords="5,5,198,48"/>
+<area shape="rect" id="Node000002" href="$structAsyncFw_1_1AnyData.html#aa6d2c3488a44e34e25a0971b01a27b3c" title="Type&#45;safely extracts and returns the stored data value." alt="" coords="246,13,414,40"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="198,24,232,26,227,27,198,29"/>
+</map>

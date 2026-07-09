@@ -1,6 +1,6 @@
 <map id="AsyncFw::AbstractSocket::connect" name="AsyncFw::AbstractSocket::connect">
 <area shape="rect" id="Node000001" title="Initiates an asynchronous connection to a remote host." alt="" coords="246,29,420,72"/>
 <area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="369,13,356,10,333,8,311,10,298,15,292,21,294,30,289,27,287,19,295,10,310,5,333,3,358,5,374,14"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractTlsSocket.html#a2d9c3d5d540b82fb516f5c56def48a02" title="Initiates an asynchronous connection to a remote host." alt="" coords="5,29,198,72"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractTlsSocket.html#a2d9c3d5d540b82fb516f5c56def48a02" title="Initiates an outbound client TCP connection, automatically determining the TLS role." alt="" coords="5,29,198,72"/>
 <area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="227,51,198,53,198,48,232,50"/>
 </map>

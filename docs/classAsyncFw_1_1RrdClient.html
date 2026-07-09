@@ -121,11 +121,8 @@ void&#160;</td><td class="memItemRight"><b>disconnectFromHost</b> ()</td></tr>
 <tr class="memdesc:a7437419c70ea6d55a6a701211b4582a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Explicitly disconnects the underlying client socket from the remote <a class="el" href="classAsyncFw_1_1RrdServer.html" title="A specialized network server component that exposes Round-Robin Databases (Rrd) via TCP.">RrdServer</a>. <br /></td></tr>
 <tr class="memitem:a4d6d253c85c993ed6906efe3ced940a7" id="r_a4d6d253c85c993ed6906efe3ced940a7"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a4d6d253c85c993ed6906efe3ced940a7">transmit</a> (const <a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> &amp;, uint32_t, bool=false)</td></tr>
 <tr class="memdesc:a4d6d253c85c993ed6906efe3ced940a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transmits a raw data frame or a custom query command to the remote server.  <br /></td></tr>
-<tr class="memitem:ae7e51edcf279e6ecbfce7b4ca67dfe45" id="r_ae7e51edcf279e6ecbfce7b4ca67dfe45"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ae7e51edcf279e6ecbfce7b4ca67dfe45">tlsSetup</a> (const <a class="el" href="classAsyncFw_1_1TlsContext.html">TlsContext</a> &amp;)</td></tr>
-<tr class="memdesc:ae7e51edcf279e6ecbfce7b4ca67dfe45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets up TLS security context and credentials for private communications.  <br /></td></tr>
-<tr class="memitem:a70b7a42567a8b3fde089967a4f892541" id="r_a70b7a42567a8b3fde089967a4f892541"><td class="memItemLeft"><a id="a70b7a42567a8b3fde089967a4f892541" name="a70b7a42567a8b3fde089967a4f892541"></a>
-void&#160;</td><td class="memItemRight"><b>disableTls</b> ()</td></tr>
-<tr class="memdesc:a70b7a42567a8b3fde089967a4f892541"><td class="mdescLeft">&#160;</td><td class="mdescRight">Completely disables TLS encryption for outbound communication streams. <br /></td></tr>
+<tr class="memitem:af2fd0de2fbfbca76e20f85d2d572f83b" id="r_af2fd0de2fbfbca76e20f85d2d572f83b"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#af2fd0de2fbfbca76e20f85d2d572f83b">setTlsContext</a> (const <a class="el" href="classAsyncFw_1_1TlsContext.html">TlsContext</a> &amp;)</td></tr>
+<tr class="memdesc:af2fd0de2fbfbca76e20f85d2d572f83b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets up TLS security context and credentials for private communications.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A specialized network client class for synchronizing remote Round-Robin Databases (<a class="el" href="classAsyncFw_1_1Rrd.html" title="A high-performance circular database engine (Round-Robin Database) for time-series and structural dat...">Rrd</a>). </p>
@@ -240,14 +237,14 @@ void&#160;</td><td class="memItemRight"><b>disableTls</b> ()</td></tr>
 
 </div>
 </div>
-<a id="ae7e51edcf279e6ecbfce7b4ca67dfe45" name="ae7e51edcf279e6ecbfce7b4ca67dfe45"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae7e51edcf279e6ecbfce7b4ca67dfe45">&#9670;&#160;</a></span>tlsSetup()</h2>
+<a id="af2fd0de2fbfbca76e20f85d2d572f83b" name="af2fd0de2fbfbca76e20f85d2d572f83b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af2fd0de2fbfbca76e20f85d2d572f83b">&#9670;&#160;</a></span>setTlsContext()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void RrdClient::tlsSetup </td>
+          <td class="memname">void RrdClient::setTlsContext </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classAsyncFw_1_1TlsContext.html">TlsContext</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>context</em></span></td><td>)</td>
           <td></td>

@@ -2,6 +2,8 @@
 <area shape="rect" id="Node000001" title="Asynchronously transmits a data array through the socket." alt="" coords="5,39,190,81"/>
 <area shape="rect" id="Node000002" href="$classAsyncFw_1_1DataArraySocket.html#a9942cbf100e7898ba95c8fb92e059ae8" title="Disconnects the socket from the remote peer." alt="" coords="238,5,422,48"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="190,44,225,41,220,43,191,49"/>
-<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractSocket.html#ac1b9b68ae7fe6c9312d9d713a7b444a9" title="Return Thread that manages the socket." alt="" coords="243,72,417,115"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="190,71,230,78,225,79,190,76"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1AbstractSocket.html#ac1b9b68ae7fe6c9312d9d713a7b444a9" title="Return Thread that manages the socket." alt="" coords="243,72,417,115"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="190,71,230,78,225,79,190,76"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractTlsSocket.html#af52f94f709ab74eace61da79cbd8af7d" title="Shuts down the active TLS session gracefully via SSL_shutdown() before terminating the network pipe." alt="" coords="470,5,662,48"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="422,24,457,26,452,27,423,29"/>
 </map>

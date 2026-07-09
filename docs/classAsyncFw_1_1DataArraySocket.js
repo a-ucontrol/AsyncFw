@@ -1,7 +1,5 @@
 var classAsyncFw_1_1DataArraySocket =
 [
-    [ "initTls", "classAsyncFw_1_1DataArraySocket.html#af478bbb530753b5b507e1b490f2fff70", null ],
-    [ "disableTls", "classAsyncFw_1_1DataArraySocket.html#a99f9dde81f2f9b5c453bf95dfa38eb45", null ],
     [ "transmit", "classAsyncFw_1_1DataArraySocket.html#ac7366a53ca9c5c43bc3c6bb88b539d53", null ],
     [ "setConnectTimeout", "classAsyncFw_1_1DataArraySocket.html#acfed3fa1bd56968ddee2f262e39845cc", null ],
     [ "setReconnectTimeout", "classAsyncFw_1_1DataArraySocket.html#a7721329f36196a96f1e7b76dfeb8cbe7", null ],
