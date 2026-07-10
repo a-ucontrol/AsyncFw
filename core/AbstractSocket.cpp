@@ -158,10 +158,16 @@ void AbstractSocket::changeDescriptor(int _fd) {
 int AbstractSocket::read_available_fd() const {
 #ifdef _WIN32
   u_long r;
-  if (ioctlsocket(fd_, FIONREAD, &r) < 0) return -2;
+  if (ioctlsocket(fd_, FIONREAD, &r) < 0) {
+    lsError() << fd_;
+    return -2;
+  }
 #else
   int r;
-  if (ioctl(fd_, SIOCINQ, &r) < 0) return -2;
+  if (ioctl(fd_, SIOCINQ, &r) < 0) {
+    lsError() << fd_;
+    return -2;
+  }
 #endif
   return r > 0 ? r : -1;
 }
@@ -485,17 +491,10 @@ void AbstractSocket::pollEvent(int _e) {
         return;
       }
     }
+    if (_e & AbstractThread::PollOut) thread_->modifyPollDescriptor(fd_, AbstractThread::PollIn);
     activateEvent();
-    if (state_ != State::Active) {
-      if (AbstractSocket::read_available_fd() > 0) {
-        private_.errorString_ = "Activate error";
-        private_.error_ = Activate;
-        lsDebug() << LogStream::Color::Red << private_.errorString_ << errno;
-        close();
-      }
-      return;
-    }
-    if (AbstractSocket::read_available_fd() <= 0) return;
+    warning_if(state_ == State::Connected && AbstractSocket::read_available_fd() > 0) << LogStream::Color::Red << "socket not empty";
+    if (state_ != State::Active || AbstractSocket::read_available_fd() <= 0) return;
   }
   if (_e & AbstractThread::PollIn) {
     private_.rs_ = read_available_fd();

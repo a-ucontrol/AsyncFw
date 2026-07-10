@@ -10,6 +10,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include <openssl/x509v3.h>
 
 #include "TlsContext.h"
+#include "Thread.h"
 #include "LogStream.h"
 
 #include "AbstractTlsSocket.h"
@@ -100,9 +101,18 @@ void AbstractTlsSocket::activateEvent() {
   int r = (private_.encrypt_ == 1) ? SSL_accept(private_.ssl_) : SSL_connect(private_.ssl_);
   //SIGPIPE if (private_.encrypt_ == 1) ::close(fd_); void Thread::startedEvent() disabled it
   if (r <= 0) {
-    if (SSL_want_read(private_.ssl_)) return;
+    int _e = SSL_get_error(private_.ssl_, r);
+    if (_e == SSL_ERROR_WANT_READ) {
+      lsTrace() << LogStream::Color::Red << "want read";
+      return;
+    }
+    if (_e == SSL_ERROR_WANT_WRITE) {
+      thread_->modifyPollDescriptor(fd_, AbstractThread::PollIn | AbstractThread::PollOut);
+      lsDebug() << LogStream::Color::Red << "want write";
+      return;
+    }
     setError(AbstractSocket::Activate);
-    setErrorString("Accept TLS error");
+    setErrorString("Accept/Connect TLS error");
     close();
     return;
   }
