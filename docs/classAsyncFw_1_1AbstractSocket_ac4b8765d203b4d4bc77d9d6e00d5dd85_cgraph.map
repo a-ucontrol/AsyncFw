@@ -1,12 +1,12 @@
 <map id="AsyncFw::AbstractSocket::connect" name="AsyncFw::AbstractSocket::connect">
 <area shape="rect" id="Node000001" title="Initiates an asynchronous connection to a remote host." alt="" coords="5,105,180,148"/>
 <area shape="poly" id="edge2_Node000001_Node000001" title=" " alt="" coords="50,105,49,95,56,86,70,81,93,79,116,81,132,89,127,91,115,86,92,84,72,86,59,91,54,97,55,105"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractSocket.html#a3dd69e137ca3cf50f90607c17bbdc312" title="Return address." alt="" coords="228,5,402,48"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractSocket.html#a3dd69e137ca3cf50f90607c17bbdc312" title="Return local address bound to this socket interface." alt="" coords="228,5,402,48"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="134,103,227,58,243,53,239,56,229,62,136,107"/>
-<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractSocket.html#ab05320fcb1c111e06a56587b4abbb639" title="Return peer address." alt="" coords="228,72,402,115"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractSocket.html#ab05320fcb1c111e06a56587b4abbb639" title="Return remote peer destination IP address string." alt="" coords="228,72,402,115"/>
 <area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="179,111,215,108,210,110,181,116"/>
-<area shape="rect" id="Node000004" href="$classAsyncFw_1_1AbstractSocket.html#aa91adbe0ea3297083d63e26531daa266" title="Return peer port." alt="" coords="228,139,402,181"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1AbstractSocket.html#aa91adbe0ea3297083d63e26531daa266" title="Return local network port bound to this socket interface." alt="" coords="228,139,402,181"/>
 <area shape="poly" id="edge4_Node000001_Node000004" title=" " alt="" coords="180,137,215,144,210,145,180,142"/>
-<area shape="rect" id="Node000005" href="$classAsyncFw_1_1AbstractSocket.html#aa29d033332c09e341d159b2189c774e9" title="Return port." alt="" coords="228,205,402,248"/>
+<area shape="rect" id="Node000005" href="$classAsyncFw_1_1AbstractSocket.html#aa29d033332c09e341d159b2189c774e9" title="Return local network port bound to this socket interface." alt="" coords="228,205,402,248"/>
 <area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="136,146,229,191,244,199,239,199,227,196,134,151"/>
 </map>

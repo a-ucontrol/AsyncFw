@@ -364,9 +364,9 @@ void AbstractSocket::setError(Error code) { private_.error_ = code; }
 
 AbstractSocket::Error AbstractSocket::error() const { return private_.error_; }
 
-void AbstractSocket::setErrorString(const std::string &_string) const {
-  lsDebug() << LogStream::Color::DarkRed << _string;
-  private_.errorString_ = _string;
+void AbstractSocket::setErrorString(const std::string &string) const {
+  lsDebug() << LogStream::Color::DarkRed << string;
+  private_.errorString_ = string;
 }
 
 std::string AbstractSocket::errorString() const { return private_.errorString_; }
@@ -416,19 +416,19 @@ uint16_t AbstractSocket::peerPort() const {
   return ntohs(((struct sockaddr_in6 *)&private_.pa_)->sin6_port);
 }
 
-int AbstractSocket::read_fd(void *_p, int _s) {
+int AbstractSocket::read_fd(void *data, int size) {
 #ifndef _WIN32
-  return ::read(fd_, _p, _s);
+  return ::read(fd_, data, size);
 #else
-  return ::recv(fd_, static_cast<char *>(_p), _s, 0);
+  return ::recv(fd_, static_cast<char *>(data), size, 0);
 #endif
 }
 
-int AbstractSocket::write_fd(const void *_p, int _s) {
+int AbstractSocket::write_fd(const void *data, int size) {
 #ifndef _WIN32
-  return ::write(fd_, _p, _s);
+  return ::write(fd_, data, size);
 #else
-  return ::send(fd_, static_cast<const char *>(_p), _s, 0);
+  return ::send(fd_, static_cast<const char *>(data), size, 0);
 #endif
 }
 

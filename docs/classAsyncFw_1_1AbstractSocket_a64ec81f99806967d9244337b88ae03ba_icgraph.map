@@ -1,0 +1,9 @@
+<map id="AsyncFw::AbstractSocket::read_available_fd" name="AsyncFw::AbstractSocket::read_available_fd">
+<area shape="rect" id="Node000001" title="Low&#45;level system call that checks whether a file descriptor contains data." alt="" coords="478,39,652,81"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractSocket.html#a75415b9f0ecc82b703e49ad8abf1f3a8" title="Returns the number of bytes of data pending to be read." alt="" coords="247,5,421,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="460,45,421,42,421,37,465,45"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1AbstractTlsSocket.html#a7244e3b461e0012dab1d9c3b1c0db78e" title="Calculates how many unread bytes are currently waiting within the active OpenSSL decrypted layer buff..." alt="" coords="238,72,430,115"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="465,74,431,82,430,77,460,75"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1DataArraySocket.html#a1a1f3404abcb93af27de1d7bc0a958b1" title="Called when there is data to read." alt="" coords="5,5,190,48"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="228,27,191,29,190,24,234,26"/>
+</map>

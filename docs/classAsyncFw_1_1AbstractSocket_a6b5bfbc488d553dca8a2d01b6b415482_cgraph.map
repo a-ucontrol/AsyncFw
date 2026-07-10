@@ -1,0 +1,7 @@
+<map id="AsyncFw::AbstractSocket::write" name="AsyncFw::AbstractSocket::write">
+<area shape="rect" id="Node000001" title="Writes raw binary bytes out to the network socket layer." alt="" coords="5,5,180,48"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractSocket.html#a4659df5988d2af771d4feee9edec55d8" title="Low&#45;level native operating system write operation proxying requests directly up to the fd handle." alt="" coords="228,5,402,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="180,24,215,26,209,27,180,29"/>
+<area shape="rect" id="Node000003" href="$structAsyncFw_1_1AnyData.html#aa6d2c3488a44e34e25a0971b01a27b3c" title="Type&#45;safely extracts and returns the stored data value." alt="" coords="450,13,618,40"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="402,24,437,27,431,27,402,29"/>
+</map>

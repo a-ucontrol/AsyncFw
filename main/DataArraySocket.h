@@ -23,7 +23,7 @@ class DataArraySocket : public AbstractTlsSocket {
   friend LogStream &operator<<(LogStream &, const DataArraySocket &);
 
 public:
-  /** @brief Asynchronously transmits a data array through the socket. @param da Reference to the DataArray being sent. @param id The packet identifier. @param wait If true and called from outside the socket thread, blocks the thread until completion. @return true if the data was successfully queued for transmission, otherwise false. */
+  /** @brief Asynchronously transmits a data array through the socket. @param da Reference to the DataArray being sent. @param id The packet identifier. @param wait If true and called from outside the socket thread, blocks the thread until completion. @return True if the data was successfully queued for transmission. */
   bool transmit(const DataArray &, uint32_t, bool = false) const;
   /** @brief Sets the timeout interval for connection establishment. @param timeout Timeout interval in milliseconds. */
   void setConnectTimeout(int timeout) { waitForConnectTimeout_ = timeout; }
@@ -60,7 +60,7 @@ public:
   void sendKeepAlive() { sendKeepAlive(true); }
   /** @brief Gets the current internal state of the socket. @return An AbstractSocket::State enum value. */
   AbstractSocket::State state() const { return state_; }
-  /** @brief Initiates a connection to the specified remote host and port. @param address Destination IP address. @param port Destination network port. @return true if the connection process was successfully started, otherwise false. */
+  /** @brief Initiates a connection to the specified remote host and port. @param address Destination IP address. @param port Destination network port. @return True if the connection process was successfully started. */
   bool connect(const std::string &, uint16_t) override;
   /** @brief Disconnects the socket from the remote peer. */
   void disconnect() override;

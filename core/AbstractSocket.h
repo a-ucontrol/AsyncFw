@@ -36,12 +36,21 @@ public:
     Closing,      ///< Connection closing in progress.
     Destroy       ///< Final destruction phase. WARNING: socket thread is nullptr during stateEvent().
   };
+  /** @brief Runtime error categories for network and I/O operations. */
+  enum Error : uint8_t {
+    None,     ///< No error occurred.
+    Closed,   ///< Connection was closed by the remote peer.
+    Refused,  ///< Connection attempt was refused by the host.
+    Read,     ///< Low-level hardware or OS socket read error.
+    Write,    ///< Low-level hardware or OS socket write error.
+    Activate  ///< Protocol negotiation or handshake initialization error (e.g., TLS setup failure).
+  };
 
-  enum Error : uint8_t { None, Closed, Refused, Read, Write, Activate };
-
+  /** @brief Binds a raw native operating system socket file descriptor to this instance. @param fd Native socket descriptor integer. */
   virtual void setDescriptor(int);
   /** @brief Initiates an asynchronous connection to a remote host. @param ip Remote target IPv4 or IPv6 address string. @param port Remote target port number. @return True if connection initiation succeeded. */
   virtual bool connect(const std::string &, uint16_t);
+  /** @brief Disconnects the socket from the remote host gracefully. */
   virtual void disconnect();
   /** @brief Closes the network connection and unsubscribes from thread polling events. */
   virtual void close();
@@ -49,31 +58,33 @@ public:
   virtual void destroy();
 
   /** @brief Synchronously detaches the socket from its execution thread.
-  \note Sets socket thread to nullptr. Not thread-safe. */
+  @note Sets socket thread to nullptr. Not thread-safe. */
   void removeFromThread();
-
   /** @brief Listen for incoming connections on address and port. @param address Address. @param port Port @return True if success. */
   bool listen(const std::string &, uint16_t);
-
+  /** @brief Non-destructively glimpses at the internal unread data buffer without consuming it. @return Reference to a DataArray containing the currently buffered incoming data. */
   DataArray &peek();
+  /** @brief Reads incoming data into a raw byte buffer up to a specified maximum size. @param buffer Destination raw byte array pointer. @param maxSize Maximum number of bytes to read into the buffer. @return Number of bytes successfully read, or a negative value on error. */
   int read(uint8_t *, int);
+  /** @brief Reads a chunk of incoming data and extracts it into a returned DataArray object. @param size Exact or maximum chunk size to extract. If 0, extracts all available data. @return A DataArray containing the read payload. */
   DataArray read(int = 0);
+  /** @brief Writes raw binary bytes out to the network socket layer. @param data Source raw memory buffer pointer containing data to transmit. @param size Total byte size metrics to pull and transmit from the data pointer. @return Number of bytes successfully dispatched to the socket queue, or a negative value on error. */
   int write(const uint8_t *, int);
+  /** @brief Transmits a structural DataArray package out to the network layer. @param data Reference to the DataArray containing the payload to write. @return Number of bytes successfully dispatched to the socket queue, or a negative value on error. */
   int write(const DataArray &);
-
+  /** @brief Fetches the most recent runtime error category flag assigned to this socket. @return An Error enum value. */
   Error error() const;
+  /** @brief Returns a human-readable text string describing the last runtime socket error. @return Error message string. */
   std::string errorString() const;
-
   /** @brief Return Thread that manages the socket. */
   Thread *thread() const { return thread_; }
-
-  /** @brief Return address. */
+  /** @brief Return local address bound to this socket interface. */
   std::string address() const;
-  /** @brief Return port. */
+  /** @brief Return local network port bound to this socket interface. */
   uint16_t port() const;
-  /** @brief Return peer address. */
+  /** @brief Return remote peer destination IP address string. */
   std::string peerAddress() const;
-  /** @brief Return peer port. */
+  /** @brief Return local network port bound to this socket interface. */
   uint16_t peerPort() const;
 
 protected:
@@ -94,19 +105,25 @@ protected:
   virtual void readEvent() {}
   /** @brief Called when writing to the socket is possible. */
   virtual void writeEvent() {}
-  /** @brief Called upon incoming connection. */
+  /** @brief Called upon incoming connection. Executed on a server listening socket when a client connects. */
   virtual void incomingEvent() {}
 
+  /** @brief Low-level system call that checks whether a file descriptor contains data.
+  @return Number of raw bytes pending in the OS network buffer queue. */
   virtual int read_available_fd() const;
-  virtual int read_fd(void *_p, int _s);
-  virtual int write_fd(const void *_p, int _s);
+  /** @brief Low-level native operating system read operation proxying requests directly down to the fd handle. @param data Destination memory allocation chunk pointer. @param size Bounds metric tracking maximum allowed byte ingestion capability. @return Number of raw bytes read from the descriptor, or error status codes. */
+  virtual int read_fd(void *, int);
+  /** @brief Low-level native operating system write operation proxying requests directly up to the fd handle. @param data Source memory block holding raw serialization binary data. @param size Metric configuration identifying exactly how many bytes to transfer. @return Number of raw bytes written out to the descriptor, or error status codes. */
+  virtual int write_fd(const void *, int);
 
   /** @brief Returns the number of bytes of data pending to be read. */
   int pendingRead() const;
   /** @brief Returns the number of bytes of data pending to be write. */
   int pendingWrite() const;
 
+  /** @brief Configures or overrides the internal error code. @param code Target Error enum status representation to set. */
   void setError(Error);
+  /** @brief Updates the human-readable error description buffer string. @param string Immutable string containing the diagnostic message. */
   void setErrorString(const std::string &) const;
 
   Thread *thread_;                    ///< Pointer to the execution thread managing this socket.

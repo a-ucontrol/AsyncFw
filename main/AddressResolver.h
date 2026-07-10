@@ -34,7 +34,7 @@ public:
   AddressResolver();
   ~AddressResolver();
   /** @brief Starts an asynchronous DNS resolution for the specified hostname. @param name Hostname or domain name to resolve (e.g., "example.com"). @param family Protocol family filter (defaults to IPv4 / Inet). @param timeout Timeout interval for this request in milliseconds (default: 10000 ms).
-  \note Triggers the \ref completed connector upon finishing. */
+  @note Triggers the \ref completed connector upon finishing. */
   void resolve(const std::string &, Family = Inet, int timeout = 10000);
   /** @brief The AddressResolver::completed connector. @details Emitted when the DNS resolution completes or times out. @param status Status code of the operation (0 / ARES_SUCCESS on success). @param results Vector of resolved IP address strings. */
   FunctionConnector<int, const std::vector<std::string> &>::Protected<AddressResolver> completed;

@@ -1,0 +1,8 @@
+<map id="AsyncFw::AbstractSocket::disconnect" name="AsyncFw::AbstractSocket::disconnect">
+<area shape="rect" id="Node000001" title="Disconnects the socket from the remote host gracefully." alt="" coords="5,35,180,77"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractSocket.html#a77c0a9ea7c5061c406673bbe8b18d60d" title="Closes the network connection and unsubscribes from thread polling events." alt="" coords="228,5,402,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="180,42,215,40,210,41,180,47"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractSocket.html#a5db12267a6d2241e81f570463f2d7ef5" title="Called when the connection state changes." alt="" coords="450,35,624,77"/>
+<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="180,56,228,57,402,57,437,59,432,59,402,63,228,63,180,62"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="402,36,437,42,432,42,402,41"/>
+</map>

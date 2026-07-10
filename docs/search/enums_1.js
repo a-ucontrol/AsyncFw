@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['ignoreerrors_0',['IgnoreErrors',['../classAsyncFw_1_1TlsContext.html#a34b8c61895eaf10b54060df0feb54de8',1,'AsyncFw::TlsContext']]]
+  ['error_0',['Error',['../classAsyncFw_1_1AbstractSocket.html#a940a10b5f063e970cb7e46a61cab2415',1,'AsyncFw::AbstractSocket']]]
 ];

@@ -45,7 +45,7 @@ public:
   void wait();
   /** @brief Gets operating system exit status code. @return Integer exit code. Valid only when state() is Finished or Crashed. */
   int exitCode();
-  /** @brief Writes data string to standard input (stdin) of the child process. @param str Raw string buffer. @return true if successfully written; false otherwise. */
+  /** @brief Writes data string to standard input (stdin) of the child process. @param str Raw string buffer. @return True if successfully written. */
   bool input(const std::string &) const;
 
   /** @brief Emitted asynchronously when the process execution state changes. */

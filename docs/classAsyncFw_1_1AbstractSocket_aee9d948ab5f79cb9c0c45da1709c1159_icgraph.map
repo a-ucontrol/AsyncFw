@@ -1,0 +1,11 @@
+<map id="AsyncFw::AbstractSocket::setErrorString" name="AsyncFw::AbstractSocket::setErrorString">
+<area shape="rect" id="Node000001" title="Updates the human&#45;readable error description buffer string." alt="" coords="444,72,618,115"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractTlsSocket.html#a57ac6daff9926cf631abcd1e19073cc8" title="Core internal event handler reacting to raw descriptor readiness signals." alt="" coords="204,5,396,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="438,68,376,51,377,46,443,67"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1DataArraySocket.html#a1a1f3404abcb93af27de1d7bc0a958b1" title="Called when there is data to read." alt="" coords="208,72,392,115"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="426,94,393,96,392,91,431,93"/>
+<area shape="rect" id="Node000005" href="$classAsyncFw_1_1DataArraySocket.html#ac7366a53ca9c5c43bc3c6bb88b539d53" title="Asynchronously transmits a data array through the socket." alt="" coords="208,139,392,181"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="443,119,377,141,376,135,438,120"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1HttpSocket.html#ad51bb1bf5880c3037c7ad70231c0767d" title="Core internal event handler reacting to raw descriptor readiness signals." alt="" coords="5,5,156,48"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="186,28,157,29,155,24,191,25"/>
+</map>

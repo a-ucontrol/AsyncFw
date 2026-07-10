@@ -27,7 +27,7 @@ public:
   void setDescriptor(int) override;
   /** @brief Initiates an outbound client TCP connection, automatically determining the TLS role.
   @note Automatically activates client-side TLS mode if a valid OpenSSL context is assigned.
-  @param address Target host IP address or domain name. @param port Target remote network service port. @return true if the underlying socket successfully started the connection sequence, otherwise false. */
+  @param address Target host IP address or domain name. @param port Target remote network service port. @return True if the underlying socket successfully started the connection sequence. */
   bool connect(const std::string &, uint16_t) override;
   /** @brief Shuts down the active TLS session gracefully via SSL_shutdown() before terminating the network pipe. */
   void disconnect() override;
@@ -35,7 +35,7 @@ public:
   void close() override;
   /** @brief Assigns a copy of the security credentials context containing certificates, keys, and rules. @param context Immutable reference to the target TlsContext configuration. */
   void setContext(const TlsContext &) const;
-  /** @brief Checks whether the underlying OpenSSL context structure has not been initialized or assigned. @return true if the internal TlsContext is considered empty or invalid, otherwise false. */
+  /** @brief Checks whether the underlying OpenSSL context structure has not been initialized or assigned. @return True if the internal TlsContext is considered empty or invalid. */
   bool contextEmpty() const;
 
 protected:

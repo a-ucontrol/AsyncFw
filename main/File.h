@@ -26,7 +26,7 @@ public:
   bool open(const std::string &, std::ios::openmode = std::ios::binary | std::ios::in);
   /** @brief Opens the file using the previously specified name. @param m The file open mode flags (defaults to binary input). @return True if the file was opened successfully. */
   bool open(std::ios::openmode = std::ios::binary | std::ios::in);
-  /** @brief Checks if the file is currently open. @return true if the file stream is open, false otherwise. */
+  /** @brief Checks if the file is currently open. @return True if the file stream is open. */
   bool isOpen();
   /** @brief Closes the file and flushes outstanding buffers to disk. */
   void close();

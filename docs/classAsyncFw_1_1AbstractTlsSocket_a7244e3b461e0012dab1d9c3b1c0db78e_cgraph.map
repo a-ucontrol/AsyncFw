@@ -1,0 +1,5 @@
+<map id="AsyncFw::AbstractTlsSocket::read_available_fd" name="AsyncFw::AbstractTlsSocket::read_available_fd">
+<area shape="rect" id="Node000001" title="Calculates how many unread bytes are currently waiting within the active OpenSSL decrypted layer buff..." alt="" coords="5,5,198,48"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractSocket.html#a64ec81f99806967d9244337b88ae03ba" title="Low&#45;level system call that checks whether a file descriptor contains data." alt="" coords="246,5,420,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="198,24,233,26,227,27,198,29"/>
+</map>

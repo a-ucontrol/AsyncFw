@@ -21,7 +21,7 @@
 <!-- Node2 -->
 <g id="Node000002" class="node">
 <title>Node2</title>
-<g id="a_Node000002"><a xlink:href="classAsyncFw_1_1AbstractSocket.html#a3dd69e137ca3cf50f90607c17bbdc312" target="_top" xlink:title="Return address.">
+<g id="a_Node000002"><a xlink:href="classAsyncFw_1_1AbstractSocket.html#a3dd69e137ca3cf50f90607c17bbdc312" target="_top" xlink:title="Return local address bound to this socket interface.">
 <polygon fill="white" stroke="#666666" points="477.75,-182 347,-182 347,-150 477.75,-150 477.75,-182"/>
 <text xml:space="preserve" text-anchor="start" x="355" y="-168.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AbstractSocket</text>
 <text xml:space="preserve" text-anchor="middle" x="412.38" y="-156.5" font-family="Helvetica,sans-Serif" font-size="10.00">::address</text>
@@ -59,7 +59,7 @@
 <!-- Node6 -->
 <g id="Node000006" class="node">
 <title>Node6</title>
-<g id="a_Node000006"><a xlink:href="classAsyncFw_1_1AbstractSocket.html#aa29d033332c09e341d159b2189c774e9" target="_top" xlink:title="Return port.">
+<g id="a_Node000006"><a xlink:href="classAsyncFw_1_1AbstractSocket.html#aa29d033332c09e341d159b2189c774e9" target="_top" xlink:title="Return local network port bound to this socket interface.">
 <polygon fill="white" stroke="#666666" points="477.75,-32 347,-32 347,0 477.75,0 477.75,-32"/>
 <text xml:space="preserve" text-anchor="start" x="355" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AbstractSocket</text>
 <text xml:space="preserve" text-anchor="middle" x="412.38" y="-6.5" font-family="Helvetica,sans-Serif" font-size="10.00">::port</text>
@@ -96,7 +96,7 @@
 <!-- Node4 -->
 <g id="Node000004" class="node">
 <title>Node4</title>
-<g id="a_Node000004"><a xlink:href="classAsyncFw_1_1AbstractSocket.html#ab05320fcb1c111e06a56587b4abbb639" target="_top" xlink:title="Return peer address.">
+<g id="a_Node000004"><a xlink:href="classAsyncFw_1_1AbstractSocket.html#ab05320fcb1c111e06a56587b4abbb639" target="_top" xlink:title="Return remote peer destination IP address string.">
 <polygon fill="white" stroke="#666666" points="477.75,-132 347,-132 347,-100 477.75,-100 477.75,-132"/>
 <text xml:space="preserve" text-anchor="start" x="355" y="-118.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AbstractSocket</text>
 <text xml:space="preserve" text-anchor="middle" x="412.38" y="-106.5" font-family="Helvetica,sans-Serif" font-size="10.00">::peerAddress</text>
@@ -115,7 +115,7 @@
 <!-- Node5 -->
 <g id="Node000005" class="node">
 <title>Node5</title>
-<g id="a_Node000005"><a xlink:href="classAsyncFw_1_1AbstractSocket.html#aa91adbe0ea3297083d63e26531daa266" target="_top" xlink:title="Return peer port.">
+<g id="a_Node000005"><a xlink:href="classAsyncFw_1_1AbstractSocket.html#aa91adbe0ea3297083d63e26531daa266" target="_top" xlink:title="Return local network port bound to this socket interface.">
 <polygon fill="white" stroke="#666666" points="477.75,-82 347,-82 347,-50 477.75,-50 477.75,-82"/>
 <text xml:space="preserve" text-anchor="start" x="355" y="-68.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AbstractSocket</text>
 <text xml:space="preserve" text-anchor="middle" x="412.38" y="-56.5" font-family="Helvetica,sans-Serif" font-size="10.00">::peerPort</text>

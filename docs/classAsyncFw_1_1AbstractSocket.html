@@ -130,23 +130,26 @@ Public Types</h2></td></tr>
 <br />
  }</td></tr>
 <tr class="memdesc:a6fc3dae51b6b38d67f1c3861dcbb23bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execution and lifecycle states of the socket.  <a href="#a6fc3dae51b6b38d67f1c3861dcbb23bd">More...</a><br /></td></tr>
-<tr class="memitem:a940a10b5f063e970cb7e46a61cab2415" id="r_a940a10b5f063e970cb7e46a61cab2415"><td class="memItemLeft"><a id="a940a10b5f063e970cb7e46a61cab2415" name="a940a10b5f063e970cb7e46a61cab2415"></a>enum &#160;</td><td class="memItemRight"><b>Error</b> : uint8_t { <br />
-&#160;&#160;<b>None</b>
-, <b>Closed</b>
-, <b>Refused</b>
-, <b>Read</b>
+<tr class="memitem:a940a10b5f063e970cb7e46a61cab2415" id="r_a940a10b5f063e970cb7e46a61cab2415"><td class="memItemLeft">enum &#160;</td><td class="memItemRight"><a class="el" href="#a940a10b5f063e970cb7e46a61cab2415">Error</a> : uint8_t { <br />
+&#160;&#160;<a class="el" href="#a940a10b5f063e970cb7e46a61cab2415a906f37e70a41b6af3e5be5ca47662a45">None</a>
+, <a class="el" href="#a940a10b5f063e970cb7e46a61cab2415a18bbf4b02f65dbe6f74715ae7b4682a6">Closed</a>
+, <a class="el" href="#a940a10b5f063e970cb7e46a61cab2415a39ae7fa79f41ed464e63aee7b5918080">Refused</a>
+, <a class="el" href="#a940a10b5f063e970cb7e46a61cab2415ac89172e9f1ba9d2ab4230e50bc844739">Read</a>
 , <br />
-&#160;&#160;<b>Write</b>
-, <b>Activate</b>
+&#160;&#160;<a class="el" href="#a940a10b5f063e970cb7e46a61cab2415a6084632d3ad9ef3f0bce55a0751c817b">Write</a>
+, <a class="el" href="#a940a10b5f063e970cb7e46a61cab2415a650fdfa57cdb708fed90e3a8c3401d8f">Activate</a>
 <br />
  }</td></tr>
+<tr class="memdesc:a940a10b5f063e970cb7e46a61cab2415"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runtime error categories for network and I/O operations.  <a href="#a940a10b5f063e970cb7e46a61cab2415">More...</a><br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a0ffc2cb5dd293722a9336a528357f9c5" id="r_a0ffc2cb5dd293722a9336a528357f9c5"><td class="memItemLeft">virtual void&#160;</td><td class="memItemRight"><a class="el" href="#a0ffc2cb5dd293722a9336a528357f9c5">setDescriptor</a> (int)</td></tr>
+<tr class="memdesc:a0ffc2cb5dd293722a9336a528357f9c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Binds a raw native operating system socket file descriptor to this instance.  <br /></td></tr>
 <tr class="memitem:ac4b8765d203b4d4bc77d9d6e00d5dd85" id="r_ac4b8765d203b4d4bc77d9d6e00d5dd85"><td class="memItemLeft">virtual bool&#160;</td><td class="memItemRight"><a class="el" href="#ac4b8765d203b4d4bc77d9d6e00d5dd85">connect</a> (const std::string &amp;, uint16_t)</td></tr>
 <tr class="memdesc:ac4b8765d203b4d4bc77d9d6e00d5dd85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initiates an asynchronous connection to a remote host.  <br /></td></tr>
 <tr class="memitem:a96c331ff22db7a34923c34f575075e6a" id="r_a96c331ff22db7a34923c34f575075e6a"><td class="memItemLeft">virtual void&#160;</td><td class="memItemRight"><a class="el" href="#a96c331ff22db7a34923c34f575075e6a">disconnect</a> ()</td></tr>
+<tr class="memdesc:a96c331ff22db7a34923c34f575075e6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disconnects the socket from the remote host gracefully.  <br /></td></tr>
 <tr class="memitem:a77c0a9ea7c5061c406673bbe8b18d60d" id="r_a77c0a9ea7c5061c406673bbe8b18d60d"><td class="memItemLeft">virtual void&#160;</td><td class="memItemRight"><a class="el" href="#a77c0a9ea7c5061c406673bbe8b18d60d">close</a> ()</td></tr>
 <tr class="memdesc:a77c0a9ea7c5061c406673bbe8b18d60d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Closes the network connection and unsubscribes from thread polling events.  <br /></td></tr>
 <tr class="memitem:a73a200f0008dbf9f820bdb2b8a0054cf" id="r_a73a200f0008dbf9f820bdb2b8a0054cf"><td class="memItemLeft">virtual void&#160;</td><td class="memItemRight"><a class="el" href="#a73a200f0008dbf9f820bdb2b8a0054cf">destroy</a> ()</td></tr>
@@ -155,35 +158,35 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:aa0f81593deeb67fe6a3031e9d57738d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Synchronously detaches the socket from its execution thread.  <br /></td></tr>
 <tr class="memitem:a426c3b10de20344079571d6708f096ca" id="r_a426c3b10de20344079571d6708f096ca"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a426c3b10de20344079571d6708f096ca">listen</a> (const std::string &amp;, uint16_t)</td></tr>
 <tr class="memdesc:a426c3b10de20344079571d6708f096ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Listen for incoming connections on address and port.  <br /></td></tr>
-<tr class="memitem:a3f4a74f0ab83d096bd37118bb28d8654" id="r_a3f4a74f0ab83d096bd37118bb28d8654"><td class="memItemLeft"><a id="a3f4a74f0ab83d096bd37118bb28d8654" name="a3f4a74f0ab83d096bd37118bb28d8654"></a>
-<a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> &amp;&#160;</td><td class="memItemRight"><b>peek</b> ()</td></tr>
-<tr class="memitem:a374dd4ce66bfcc8a6dcf40b4ba552828" id="r_a374dd4ce66bfcc8a6dcf40b4ba552828"><td class="memItemLeft"><a id="a374dd4ce66bfcc8a6dcf40b4ba552828" name="a374dd4ce66bfcc8a6dcf40b4ba552828"></a>
-int&#160;</td><td class="memItemRight"><b>read</b> (uint8_t *, int)</td></tr>
-<tr class="memitem:a4eea287aa9c8a3cafc2ea92ca72d85bc" id="r_a4eea287aa9c8a3cafc2ea92ca72d85bc"><td class="memItemLeft"><a id="a4eea287aa9c8a3cafc2ea92ca72d85bc" name="a4eea287aa9c8a3cafc2ea92ca72d85bc"></a>
-<a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a>&#160;</td><td class="memItemRight"><b>read</b> (int=0)</td></tr>
-<tr class="memitem:a6b5bfbc488d553dca8a2d01b6b415482" id="r_a6b5bfbc488d553dca8a2d01b6b415482"><td class="memItemLeft"><a id="a6b5bfbc488d553dca8a2d01b6b415482" name="a6b5bfbc488d553dca8a2d01b6b415482"></a>
-int&#160;</td><td class="memItemRight"><b>write</b> (const uint8_t *, int)</td></tr>
-<tr class="memitem:a4ad7bcd91ec7a91270d83bf583d62be1" id="r_a4ad7bcd91ec7a91270d83bf583d62be1"><td class="memItemLeft"><a id="a4ad7bcd91ec7a91270d83bf583d62be1" name="a4ad7bcd91ec7a91270d83bf583d62be1"></a>
-int&#160;</td><td class="memItemRight"><b>write</b> (const <a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> &amp;)</td></tr>
-<tr class="memitem:ab10c09c1cadc705e99866b527fc6cc52" id="r_ab10c09c1cadc705e99866b527fc6cc52"><td class="memItemLeft"><a id="ab10c09c1cadc705e99866b527fc6cc52" name="ab10c09c1cadc705e99866b527fc6cc52"></a>
-Error&#160;</td><td class="memItemRight"><b>error</b> () const</td></tr>
-<tr class="memitem:a7dec1397dbd20b891e20aeb14a253779" id="r_a7dec1397dbd20b891e20aeb14a253779"><td class="memItemLeft"><a id="a7dec1397dbd20b891e20aeb14a253779" name="a7dec1397dbd20b891e20aeb14a253779"></a>
-std::string&#160;</td><td class="memItemRight"><b>errorString</b> () const</td></tr>
+<tr class="memitem:a3f4a74f0ab83d096bd37118bb28d8654" id="r_a3f4a74f0ab83d096bd37118bb28d8654"><td class="memItemLeft"><a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a3f4a74f0ab83d096bd37118bb28d8654">peek</a> ()</td></tr>
+<tr class="memdesc:a3f4a74f0ab83d096bd37118bb28d8654"><td class="mdescLeft">&#160;</td><td class="mdescRight">Non-destructively glimpses at the internal unread data buffer without consuming it.  <br /></td></tr>
+<tr class="memitem:a374dd4ce66bfcc8a6dcf40b4ba552828" id="r_a374dd4ce66bfcc8a6dcf40b4ba552828"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#a374dd4ce66bfcc8a6dcf40b4ba552828">read</a> (uint8_t *, int)</td></tr>
+<tr class="memdesc:a374dd4ce66bfcc8a6dcf40b4ba552828"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads incoming data into a raw byte buffer up to a specified maximum size.  <br /></td></tr>
+<tr class="memitem:a4eea287aa9c8a3cafc2ea92ca72d85bc" id="r_a4eea287aa9c8a3cafc2ea92ca72d85bc"><td class="memItemLeft"><a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a>&#160;</td><td class="memItemRight"><a class="el" href="#a4eea287aa9c8a3cafc2ea92ca72d85bc">read</a> (int=0)</td></tr>
+<tr class="memdesc:a4eea287aa9c8a3cafc2ea92ca72d85bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads a chunk of incoming data and extracts it into a returned <a class="el" href="classAsyncFw_1_1DataArray.html" title="The DataArray class, provides an array of bytes.">DataArray</a> object.  <br /></td></tr>
+<tr class="memitem:a6b5bfbc488d553dca8a2d01b6b415482" id="r_a6b5bfbc488d553dca8a2d01b6b415482"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#a6b5bfbc488d553dca8a2d01b6b415482">write</a> (const uint8_t *, int)</td></tr>
+<tr class="memdesc:a6b5bfbc488d553dca8a2d01b6b415482"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes raw binary bytes out to the network socket layer.  <br /></td></tr>
+<tr class="memitem:a4ad7bcd91ec7a91270d83bf583d62be1" id="r_a4ad7bcd91ec7a91270d83bf583d62be1"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#a4ad7bcd91ec7a91270d83bf583d62be1">write</a> (const <a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> &amp;)</td></tr>
+<tr class="memdesc:a4ad7bcd91ec7a91270d83bf583d62be1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transmits a structural <a class="el" href="classAsyncFw_1_1DataArray.html" title="The DataArray class, provides an array of bytes.">DataArray</a> package out to the network layer.  <br /></td></tr>
+<tr class="memitem:ab10c09c1cadc705e99866b527fc6cc52" id="r_ab10c09c1cadc705e99866b527fc6cc52"><td class="memItemLeft"><a class="el" href="#a940a10b5f063e970cb7e46a61cab2415">Error</a>&#160;</td><td class="memItemRight"><a class="el" href="#ab10c09c1cadc705e99866b527fc6cc52">error</a> () const</td></tr>
+<tr class="memdesc:ab10c09c1cadc705e99866b527fc6cc52"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fetches the most recent runtime error category flag assigned to this socket.  <br /></td></tr>
+<tr class="memitem:a7dec1397dbd20b891e20aeb14a253779" id="r_a7dec1397dbd20b891e20aeb14a253779"><td class="memItemLeft">std::string&#160;</td><td class="memItemRight"><a class="el" href="#a7dec1397dbd20b891e20aeb14a253779">errorString</a> () const</td></tr>
+<tr class="memdesc:a7dec1397dbd20b891e20aeb14a253779"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a human-readable text string describing the last runtime socket error.  <br /></td></tr>
 <tr class="memitem:ac1b9b68ae7fe6c9312d9d713a7b444a9" id="r_ac1b9b68ae7fe6c9312d9d713a7b444a9"><td class="memItemLeft"><a id="ac1b9b68ae7fe6c9312d9d713a7b444a9" name="ac1b9b68ae7fe6c9312d9d713a7b444a9"></a>
 Thread *&#160;</td><td class="memItemRight"><b>thread</b> () const</td></tr>
 <tr class="memdesc:ac1b9b68ae7fe6c9312d9d713a7b444a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return <a class="el" href="classAsyncFw_1_1Thread.html" title="AsyncFw::Thread thread with sockets.">Thread</a> that manages the socket. <br /></td></tr>
 <tr class="memitem:a3dd69e137ca3cf50f90607c17bbdc312" id="r_a3dd69e137ca3cf50f90607c17bbdc312"><td class="memItemLeft"><a id="a3dd69e137ca3cf50f90607c17bbdc312" name="a3dd69e137ca3cf50f90607c17bbdc312"></a>
 std::string&#160;</td><td class="memItemRight"><b>address</b> () const</td></tr>
-<tr class="memdesc:a3dd69e137ca3cf50f90607c17bbdc312"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return address. <br /></td></tr>
+<tr class="memdesc:a3dd69e137ca3cf50f90607c17bbdc312"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return local address bound to this socket interface. <br /></td></tr>
 <tr class="memitem:aa29d033332c09e341d159b2189c774e9" id="r_aa29d033332c09e341d159b2189c774e9"><td class="memItemLeft"><a id="aa29d033332c09e341d159b2189c774e9" name="aa29d033332c09e341d159b2189c774e9"></a>
 uint16_t&#160;</td><td class="memItemRight"><b>port</b> () const</td></tr>
-<tr class="memdesc:aa29d033332c09e341d159b2189c774e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return port. <br /></td></tr>
+<tr class="memdesc:aa29d033332c09e341d159b2189c774e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return local network port bound to this socket interface. <br /></td></tr>
 <tr class="memitem:ab05320fcb1c111e06a56587b4abbb639" id="r_ab05320fcb1c111e06a56587b4abbb639"><td class="memItemLeft"><a id="ab05320fcb1c111e06a56587b4abbb639" name="ab05320fcb1c111e06a56587b4abbb639"></a>
 std::string&#160;</td><td class="memItemRight"><b>peerAddress</b> () const</td></tr>
-<tr class="memdesc:ab05320fcb1c111e06a56587b4abbb639"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return peer address. <br /></td></tr>
+<tr class="memdesc:ab05320fcb1c111e06a56587b4abbb639"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return remote peer destination IP address string. <br /></td></tr>
 <tr class="memitem:aa91adbe0ea3297083d63e26531daa266" id="r_aa91adbe0ea3297083d63e26531daa266"><td class="memItemLeft"><a id="aa91adbe0ea3297083d63e26531daa266" name="aa91adbe0ea3297083d63e26531daa266"></a>
 uint16_t&#160;</td><td class="memItemRight"><b>peerPort</b> () const</td></tr>
-<tr class="memdesc:aa91adbe0ea3297083d63e26531daa266"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return peer port. <br /></td></tr>
+<tr class="memdesc:aa91adbe0ea3297083d63e26531daa266"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return local network port bound to this socket interface. <br /></td></tr>
 <tr class="inherit_header pub_methods_structAsyncFw_1_1AnyData"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_structAsyncFw_1_1AnyData')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Public Member Functions inherited from <a class="el" href="structAsyncFw_1_1AnyData.html">AsyncFw::AnyData</a></td></tr>
 <tr class="memitem:aa6d2c3488a44e34e25a0971b01a27b3c inherit pub_methods_structAsyncFw_1_1AnyData" id="r_aa6d2c3488a44e34e25a0971b01a27b3c"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
 <tr class="memitem:aa6d2c3488a44e34e25a0971b01a27b3c inherit pub_methods_structAsyncFw_1_1AnyData template"><td class="memItemLeft">T&#160;</td><td class="memItemRight"><a class="el" href="structAsyncFw_1_1AnyData.html#aa6d2c3488a44e34e25a0971b01a27b3c">data</a> () const</td></tr>
@@ -223,20 +226,23 @@ virtual&#160;</td><td class="memItemRight"><b>~AbstractSocket</b> ()</td></tr>
 <tr class="memitem:af8141e7714603e6c83c0640a2d74ec90" id="r_af8141e7714603e6c83c0640a2d74ec90"><td class="memItemLeft">virtual void&#160;</td><td class="memItemRight"><a class="el" href="#af8141e7714603e6c83c0640a2d74ec90">writeEvent</a> ()</td></tr>
 <tr class="memdesc:af8141e7714603e6c83c0640a2d74ec90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when writing to the socket is possible.  <br /></td></tr>
 <tr class="memitem:ad6d428c75ae5b7321a3838b22abcdf6b" id="r_ad6d428c75ae5b7321a3838b22abcdf6b"><td class="memItemLeft">virtual void&#160;</td><td class="memItemRight"><a class="el" href="#ad6d428c75ae5b7321a3838b22abcdf6b">incomingEvent</a> ()</td></tr>
-<tr class="memdesc:ad6d428c75ae5b7321a3838b22abcdf6b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called upon incoming connection.  <br /></td></tr>
+<tr class="memdesc:ad6d428c75ae5b7321a3838b22abcdf6b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called upon incoming connection. Executed on a server listening socket when a client connects.  <br /></td></tr>
 <tr class="memitem:a64ec81f99806967d9244337b88ae03ba" id="r_a64ec81f99806967d9244337b88ae03ba"><td class="memItemLeft">virtual int&#160;</td><td class="memItemRight"><a class="el" href="#a64ec81f99806967d9244337b88ae03ba">read_available_fd</a> () const</td></tr>
-<tr class="memitem:a4926f7542a6d46371c18ef2d404a6f0c" id="r_a4926f7542a6d46371c18ef2d404a6f0c"><td class="memItemLeft">virtual int&#160;</td><td class="memItemRight"><a class="el" href="#a4926f7542a6d46371c18ef2d404a6f0c">read_fd</a> (void *_p, int _s)</td></tr>
-<tr class="memitem:a6d4593d0f4aa0a0172237827c29c02c9" id="r_a6d4593d0f4aa0a0172237827c29c02c9"><td class="memItemLeft">virtual int&#160;</td><td class="memItemRight"><a class="el" href="#a6d4593d0f4aa0a0172237827c29c02c9">write_fd</a> (const void *_p, int _s)</td></tr>
+<tr class="memdesc:a64ec81f99806967d9244337b88ae03ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Low-level system call that checks whether a file descriptor contains data.  <br /></td></tr>
+<tr class="memitem:a25efdce1c4a0dedf15e57cb0af971d86" id="r_a25efdce1c4a0dedf15e57cb0af971d86"><td class="memItemLeft">virtual int&#160;</td><td class="memItemRight"><a class="el" href="#a25efdce1c4a0dedf15e57cb0af971d86">read_fd</a> (void *, int)</td></tr>
+<tr class="memdesc:a25efdce1c4a0dedf15e57cb0af971d86"><td class="mdescLeft">&#160;</td><td class="mdescRight">Low-level native operating system read operation proxying requests directly down to the fd handle.  <br /></td></tr>
+<tr class="memitem:a4659df5988d2af771d4feee9edec55d8" id="r_a4659df5988d2af771d4feee9edec55d8"><td class="memItemLeft">virtual int&#160;</td><td class="memItemRight"><a class="el" href="#a4659df5988d2af771d4feee9edec55d8">write_fd</a> (const void *, int)</td></tr>
+<tr class="memdesc:a4659df5988d2af771d4feee9edec55d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Low-level native operating system write operation proxying requests directly up to the fd handle.  <br /></td></tr>
 <tr class="memitem:a75415b9f0ecc82b703e49ad8abf1f3a8" id="r_a75415b9f0ecc82b703e49ad8abf1f3a8"><td class="memItemLeft"><a id="a75415b9f0ecc82b703e49ad8abf1f3a8" name="a75415b9f0ecc82b703e49ad8abf1f3a8"></a>
 int&#160;</td><td class="memItemRight"><b>pendingRead</b> () const</td></tr>
 <tr class="memdesc:a75415b9f0ecc82b703e49ad8abf1f3a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the number of bytes of data pending to be read. <br /></td></tr>
 <tr class="memitem:a5cc266f87cd4666f10b85a2c52b762bb" id="r_a5cc266f87cd4666f10b85a2c52b762bb"><td class="memItemLeft"><a id="a5cc266f87cd4666f10b85a2c52b762bb" name="a5cc266f87cd4666f10b85a2c52b762bb"></a>
 int&#160;</td><td class="memItemRight"><b>pendingWrite</b> () const</td></tr>
 <tr class="memdesc:a5cc266f87cd4666f10b85a2c52b762bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the number of bytes of data pending to be write. <br /></td></tr>
-<tr class="memitem:adf2d96f44c3abf205e637f3809bc614d" id="r_adf2d96f44c3abf205e637f3809bc614d"><td class="memItemLeft"><a id="adf2d96f44c3abf205e637f3809bc614d" name="adf2d96f44c3abf205e637f3809bc614d"></a>
-void&#160;</td><td class="memItemRight"><b>setError</b> (Error)</td></tr>
-<tr class="memitem:aee9d948ab5f79cb9c0c45da1709c1159" id="r_aee9d948ab5f79cb9c0c45da1709c1159"><td class="memItemLeft"><a id="aee9d948ab5f79cb9c0c45da1709c1159" name="aee9d948ab5f79cb9c0c45da1709c1159"></a>
-void&#160;</td><td class="memItemRight"><b>setErrorString</b> (const std::string &amp;) const</td></tr>
+<tr class="memitem:adf2d96f44c3abf205e637f3809bc614d" id="r_adf2d96f44c3abf205e637f3809bc614d"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#adf2d96f44c3abf205e637f3809bc614d">setError</a> (<a class="el" href="#a940a10b5f063e970cb7e46a61cab2415">Error</a>)</td></tr>
+<tr class="memdesc:adf2d96f44c3abf205e637f3809bc614d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures or overrides the internal error code.  <br /></td></tr>
+<tr class="memitem:aee9d948ab5f79cb9c0c45da1709c1159" id="r_aee9d948ab5f79cb9c0c45da1709c1159"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#aee9d948ab5f79cb9c0c45da1709c1159">setErrorString</a> (const std::string &amp;) const</td></tr>
+<tr class="memdesc:aee9d948ab5f79cb9c0c45da1709c1159"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the human-readable error description buffer string.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pro-attribs" class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -275,9 +281,9 @@ Friends</h2></td></tr>
 <div class="line">    logDebug() &lt;&lt; <span class="stringliteral">&quot;State event:&quot;</span> &lt;&lt; <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(state_);</div>
 <div class="line">    <span class="keywordflow">if</span> (state_ == Active) {</div>
 <div class="line">      logDebug() &lt;&lt; <span class="stringliteral">&quot;Send request&quot;</span>;</div>
-<div class="line">      write(<span class="stringliteral">&quot;GET /a-ucontrol/AsyncFw HTTP/1.1\r\nHost:github.com\r\nConnection:close\r\n\r\n&quot;</span>);</div>
-<div class="line">    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (error() &gt;= Closed) {</div>
-<div class="line">      <span class="keywordflow">if</span> (error() != Closed) logError() &lt;&lt; errorString();</div>
+<div class="line">      <a class="code hl_function" href="#a6b5bfbc488d553dca8a2d01b6b415482">write</a>(<span class="stringliteral">&quot;GET /a-ucontrol/AsyncFw HTTP/1.1\r\nHost:github.com\r\nConnection:close\r\n\r\n&quot;</span>);</div>
+<div class="line">    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code hl_function" href="#ab10c09c1cadc705e99866b527fc6cc52">error</a>() &gt;= Closed) {</div>
+<div class="line">      <span class="keywordflow">if</span> (<a class="code hl_function" href="#ab10c09c1cadc705e99866b527fc6cc52">error</a>() != Closed) logError() &lt;&lt; <a class="code hl_function" href="#a7dec1397dbd20b891e20aeb14a253779">errorString</a>();</div>
 <div class="line">      <span class="keywordflow">else</span> {</div>
 <div class="line">        logNotice() &lt;&lt; <span class="stringliteral">&quot;Received:&quot;</span> &lt;&lt; da;</div>
 <div class="line">        logDebug() &lt;&lt; da.view(0, 512) &lt;&lt; <span class="stringliteral">&quot;...&quot;</span>;</div>
@@ -291,7 +297,7 @@ Friends</h2></td></tr>
 <div class="line">    }</div>
 <div class="line">  }</div>
 <div class="line">  <span class="keywordtype">void</span> <a class="code hl_function" href="#a609ec54ec8aed39769d60319c4c15833">readEvent</a>() {</div>
-<div class="line">    AsyncFw::DataArray _da = read();</div>
+<div class="line">    AsyncFw::DataArray _da = <a class="code hl_function" href="#a374dd4ce66bfcc8a6dcf40b4ba552828">read</a>();</div>
 <div class="line">    logTrace() &lt;&lt; <span class="stringliteral">&quot;Read event:&quot;</span> &lt;&lt; _da.size() &lt;&lt; std::endl &lt;&lt; _da.<a class="code hl_function" href="classAsyncFw_1_1DataArray.html#a5406261e5730adfa64e4d0bbd0083e31">view</a>(0, 256);</div>
 <div class="line">    da += _da;</div>
 <div class="line">  }</div>
@@ -372,8 +378,38 @@ Friends</h2></td></tr>
 <tr><td class="fieldname"><a id="a6fc3dae51b6b38d67f1c3861dcbb23bda1bc468bc996ac9ce17018c3320ac5516" name="a6fc3dae51b6b38d67f1c3861dcbb23bda1bc468bc996ac9ce17018c3320ac5516"></a>Destroy&#160;</td><td class="fielddoc"><p>Final destruction phase. WARNING: socket thread is nullptr during <a class="el" href="#a5db12267a6d2241e81f570463f2d7ef5" title="Called when the connection state changes.">stateEvent()</a>. </p>
 </td></tr>
 </table>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="HttpServer_2main_8cpp-example.html#_a14">HttpServer/main.cpp</a>, <a class="el" href="HttpSocket_2main_8cpp-example.html#_a15">HttpSocket/main.cpp</a>, and <a class="el" href="ListenSocket_2main_8cpp-example.html#_a10">ListenSocket/main.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="HttpServer_2main_8cpp-example.html#_a14">HttpServer/main.cpp</a>, <a class="el" href="HttpSocket_2main_8cpp-example.html#_a15">HttpSocket/main.cpp</a>, and <a class="el" href="ListenSocket_2main_8cpp-example.html#_a11">ListenSocket/main.cpp</a>.</dd>
 </dl>
+
+</div>
+</div>
+<a id="a940a10b5f063e970cb7e46a61cab2415" name="a940a10b5f063e970cb7e46a61cab2415"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a940a10b5f063e970cb7e46a61cab2415">&#9670;&#160;</a></span>Error</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="#a940a10b5f063e970cb7e46a61cab2415">AsyncFw::AbstractSocket::Error</a> : uint8_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Runtime error categories for network and I/O operations. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a940a10b5f063e970cb7e46a61cab2415a906f37e70a41b6af3e5be5ca47662a45" name="a940a10b5f063e970cb7e46a61cab2415a906f37e70a41b6af3e5be5ca47662a45"></a>None&#160;</td><td class="fielddoc"><p>No error occurred. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a940a10b5f063e970cb7e46a61cab2415a18bbf4b02f65dbe6f74715ae7b4682a6" name="a940a10b5f063e970cb7e46a61cab2415a18bbf4b02f65dbe6f74715ae7b4682a6"></a>Closed&#160;</td><td class="fielddoc"><p>Connection was closed by the remote peer. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a940a10b5f063e970cb7e46a61cab2415a39ae7fa79f41ed464e63aee7b5918080" name="a940a10b5f063e970cb7e46a61cab2415a39ae7fa79f41ed464e63aee7b5918080"></a>Refused&#160;</td><td class="fielddoc"><p>Connection attempt was refused by the host. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a940a10b5f063e970cb7e46a61cab2415ac89172e9f1ba9d2ab4230e50bc844739" name="a940a10b5f063e970cb7e46a61cab2415ac89172e9f1ba9d2ab4230e50bc844739"></a>Read&#160;</td><td class="fielddoc"><p>Low-level hardware or OS socket read error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a940a10b5f063e970cb7e46a61cab2415a6084632d3ad9ef3f0bce55a0751c817b" name="a940a10b5f063e970cb7e46a61cab2415a6084632d3ad9ef3f0bce55a0751c817b"></a>Write&#160;</td><td class="fielddoc"><p>Low-level hardware or OS socket write error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a940a10b5f063e970cb7e46a61cab2415a650fdfa57cdb708fed90e3a8c3401d8f" name="a940a10b5f063e970cb7e46a61cab2415a650fdfa57cdb708fed90e3a8c3401d8f"></a>Activate&#160;</td><td class="fielddoc"><p>Protocol negotiation or handshake initialization error (e.g., TLS setup failure). </p>
+</td></tr>
+</table>
 
 </div>
 </div>
@@ -452,7 +488,27 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Binds a raw native operating system socket file descriptor to this instance. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fd</td><td>Native socket descriptor integer. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 <p>Reimplemented in <a class="el" href="classAsyncFw_1_1AbstractTlsSocket.html#a89721fd68ed3de138aa6167dd98ec5fa">AsyncFw::AbstractTlsSocket</a>.</p>
+<div id="dynsection-3" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
+<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-3-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a0ffc2cb5dd293722a9336a528357f9c5_cgraph.svg" width="408" height="320"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+<div id="dynsection-4" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-4-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-4-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a0ffc2cb5dd293722a9336a528357f9c5_icgraph.svg" width="622" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
 
 </div>
 </div>
@@ -487,23 +543,23 @@ Friends</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">ip</td><td>Remote target IPv4 or IPv6 address string.</td></tr>
-    <tr><td class="paramname"><a class="el" href="#aa29d033332c09e341d159b2189c774e9" title="Return port.">port</a></td><td>Remote target port number. </td></tr>
+    <tr><td class="paramname"><a class="el" href="#aa29d033332c09e341d159b2189c774e9" title="Return local network port bound to this socket interface.">port</a></td><td>Remote target port number. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if connection initiation succeeded. </dd></dl>
 
 <p>Reimplemented in <a class="el" href="classAsyncFw_1_1AbstractTlsSocket.html#a2d9c3d5d540b82fb516f5c56def48a02">AsyncFw::AbstractTlsSocket</a>, and <a class="el" href="classAsyncFw_1_1DataArraySocket.html#aed242e797aea527f8b86c4bc866ab454">AsyncFw::DataArraySocket</a>.</p>
-<div id="dynsection-3" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
-<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-5" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
+<div id="dynsection-5-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-3-content" class="dyncontent" style="display:none;">
+<div id="dynsection-5-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_ac4b8765d203b4d4bc77d9d6e00d5dd85_cgraph.svg" width="408" height="254"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
-<div id="dynsection-4" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
-<div id="dynsection-4-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-6" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-6-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-4-content" class="dyncontent" style="display:none;">
+<div id="dynsection-6-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_ac4b8765d203b4d4bc77d9d6e00d5dd85_icgraph.svg" width="426" height="78"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
@@ -532,7 +588,21 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Disconnects the socket from the remote host gracefully. </p>
+
 <p>Reimplemented in <a class="el" href="classAsyncFw_1_1AbstractTlsSocket.html#af52f94f709ab74eace61da79cbd8af7d">AsyncFw::AbstractTlsSocket</a>, <a class="el" href="classAsyncFw_1_1DataArraySocket.html#a9942cbf100e7898ba95c8fb92e059ae8">AsyncFw::DataArraySocket</a>, and <a class="el" href="classAsyncFw_1_1HttpSocket.html#a33dadd18584b3b2b76a02dffa0a831fb">AsyncFw::HttpSocket</a>.</p>
+<div id="dynsection-7" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
+<div id="dynsection-7-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-7-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a96c331ff22db7a34923c34f575075e6a_cgraph.svg" width="630" height="83"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+<div id="dynsection-8" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-8-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-8-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a96c331ff22db7a34923c34f575075e6a_icgraph.svg" width="1096" height="371"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
 
 </div>
 </div>
@@ -562,17 +632,17 @@ Friends</h2></td></tr>
 <p>Closes the network connection and unsubscribes from thread polling events. </p>
 
 <p>Reimplemented in <a class="el" href="classAsyncFw_1_1AbstractTlsSocket.html#a46dbd8e4895445214a4f46ee46433d6c">AsyncFw::AbstractTlsSocket</a>, <a class="el" href="classAsyncFw_1_1HttpSocket.html#a96932e5f6b5f84c4f204b0e6e4ef8472">AsyncFw::HttpSocket</a>, and <a class="el" href="classAsyncFw_1_1ListenSocket.html#a77c0a9ea7c5061c406673bbe8b18d60d">AsyncFw::ListenSocket</a>.</p>
-<div id="dynsection-5" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
-<div id="dynsection-5-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-9" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
+<div id="dynsection-9-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-5-content" class="dyncontent" style="display:none;">
+<div id="dynsection-9-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a77c0a9ea7c5061c406673bbe8b18d60d_cgraph.svg" width="408" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
-<div id="dynsection-6" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
-<div id="dynsection-6-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-10" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-10-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-6-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a77c0a9ea7c5061c406673bbe8b18d60d_icgraph.svg" width="874" height="254"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div id="dynsection-10-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a77c0a9ea7c5061c406673bbe8b18d60d_icgraph.svg" width="1336" height="571"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -603,16 +673,16 @@ Friends</h2></td></tr>
 <p>Schedules the socket for deferred asynchronous destruction. </p>
 
 <p>Reimplemented in <a class="el" href="classAsyncFw_1_1HttpSocket.html#a8268467d3581a4d393e9ccd288de32ff">AsyncFw::HttpSocket</a>, and <a class="el" href="classAsyncFw_1_1ListenSocket.html#a73a200f0008dbf9f820bdb2b8a0054cf">AsyncFw::ListenSocket</a>.</p>
-<div id="dynsection-7" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
-<div id="dynsection-7-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-11" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
+<div id="dynsection-11-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-7-content" class="dyncontent" style="display:none;">
+<div id="dynsection-11-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a73a200f0008dbf9f820bdb2b8a0054cf_cgraph.svg" width="1072" height="238"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
-<div id="dynsection-8" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
-<div id="dynsection-8-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-12" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-12-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-8-content" class="dyncontent" style="display:none;">
+<div id="dynsection-12-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a73a200f0008dbf9f820bdb2b8a0054cf_icgraph.svg" width="634" height="120"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
@@ -635,10 +705,10 @@ Friends</h2></td></tr>
 
 <p>Synchronously detaches the socket from its execution thread. </p>
 <dl class="section note"><dt>Note</dt><dd>Sets socket thread to nullptr. Not thread-safe. </dd></dl>
-<div id="dynsection-9" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
-<div id="dynsection-9-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-13" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-13-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-9-content" class="dyncontent" style="display:none;">
+<div id="dynsection-13-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_aa0f81593deeb67fe6a3031e9d57738d4_icgraph.svg" width="426" height="120"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
@@ -666,24 +736,254 @@ Friends</h2></td></tr>
 <p>Listen for incoming connections on address and port. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname"><a class="el" href="#a3dd69e137ca3cf50f90607c17bbdc312" title="Return address.">address</a></td><td>Address.</td></tr>
-    <tr><td class="paramname"><a class="el" href="#aa29d033332c09e341d159b2189c774e9" title="Return port.">port</a></td><td>Port </td></tr>
+    <tr><td class="paramname"><a class="el" href="#a3dd69e137ca3cf50f90607c17bbdc312" title="Return local address bound to this socket interface.">address</a></td><td>Address.</td></tr>
+    <tr><td class="paramname"><a class="el" href="#aa29d033332c09e341d159b2189c774e9" title="Return local network port bound to this socket interface.">port</a></td><td>Port </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if success. </dd></dl>
-<div id="dynsection-10" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
-<div id="dynsection-10-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-14" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
+<div id="dynsection-14-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-10-content" class="dyncontent" style="display:none;">
+<div id="dynsection-14-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a426c3b10de20344079571d6708f096ca_cgraph.svg" width="408" height="187"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
-<div id="dynsection-11" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
-<div id="dynsection-11-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-15" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-15-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-11-content" class="dyncontent" style="display:none;">
+<div id="dynsection-15-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a426c3b10de20344079571d6708f096ca_icgraph.svg" width="380" height="78"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
+
+</div>
+</div>
+<a id="a3f4a74f0ab83d096bd37118bb28d8654" name="a3f4a74f0ab83d096bd37118bb28d8654"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3f4a74f0ab83d096bd37118bb28d8654">&#9670;&#160;</a></span>peek()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> &amp; AbstractSocket::peek </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Non-destructively glimpses at the internal unread data buffer without consuming it. </p>
+<dl class="section return"><dt>Returns</dt><dd>Reference to a <a class="el" href="classAsyncFw_1_1DataArray.html" title="The DataArray class, provides an array of bytes.">DataArray</a> containing the currently buffered incoming data. </dd></dl>
+<div id="dynsection-16" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
+<div id="dynsection-16-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-16-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a3f4a74f0ab83d096bd37118bb28d8654_cgraph.svg" width="624" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+<div id="dynsection-17" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-17-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-17-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a3f4a74f0ab83d096bd37118bb28d8654_icgraph.svg" width="590" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<a id="a374dd4ce66bfcc8a6dcf40b4ba552828" name="a374dd4ce66bfcc8a6dcf40b4ba552828"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a374dd4ce66bfcc8a6dcf40b4ba552828">&#9670;&#160;</a></span>read() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int AbstractSocket::read </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t *</td>          <td class="paramname"><span class="paramname"><em>_p</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>_s</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Reads incoming data into a raw byte buffer up to a specified maximum size. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">buffer</td><td>Destination raw byte array pointer.</td></tr>
+    <tr><td class="paramname">maxSize</td><td>Maximum number of bytes to read into the buffer. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Number of bytes successfully read, or a negative value on error. </dd></dl>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="ListenSocket_2main_8cpp-example.html#a3">ListenSocket/main.cpp</a>, and <a class="el" href="Socket_2main_8cpp-example.html#a8">Socket/main.cpp</a>.</dd>
+</dl>
+<div id="dynsection-18" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
+<div id="dynsection-18-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-18-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a374dd4ce66bfcc8a6dcf40b4ba552828_cgraph.svg" width="624" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+<div id="dynsection-19" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-19-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-19-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a374dd4ce66bfcc8a6dcf40b4ba552828_icgraph.svg" width="623" height="238"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<a id="a4eea287aa9c8a3cafc2ea92ca72d85bc" name="a4eea287aa9c8a3cafc2ea92ca72d85bc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4eea287aa9c8a3cafc2ea92ca72d85bc">&#9670;&#160;</a></span>read() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> AbstractSocket::read </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>_s</em></span><span class="paramdefsep"> = </span><span class="paramdefval">0</span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Reads a chunk of incoming data and extracts it into a returned <a class="el" href="classAsyncFw_1_1DataArray.html" title="The DataArray class, provides an array of bytes.">DataArray</a> object. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">size</td><td>Exact or maximum chunk size to extract. If 0, extracts all available data. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="classAsyncFw_1_1DataArray.html" title="The DataArray class, provides an array of bytes.">DataArray</a> containing the read payload. </dd></dl>
+<div id="dynsection-20" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
+<div id="dynsection-20-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-20-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a4eea287aa9c8a3cafc2ea92ca72d85bc_cgraph.svg" width="847" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<a id="a6b5bfbc488d553dca8a2d01b6b415482" name="a6b5bfbc488d553dca8a2d01b6b415482"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6b5bfbc488d553dca8a2d01b6b415482">&#9670;&#160;</a></span>write() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int AbstractSocket::write </td>
+          <td>(</td>
+          <td class="paramtype">const uint8_t *</td>          <td class="paramname"><span class="paramname"><em>_p</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>_s</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Writes raw binary bytes out to the network socket layer. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname"><a class="el" href="structAsyncFw_1_1AnyData.html#aa6d2c3488a44e34e25a0971b01a27b3c" title="Type-safely extracts and returns the stored data value.">data</a></td><td>Source raw memory buffer pointer containing data to transmit.</td></tr>
+    <tr><td class="paramname">size</td><td>Total byte size metrics to pull and transmit from the data pointer. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Number of bytes successfully dispatched to the socket queue, or a negative value on error. </dd></dl>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="HttpServer_2main_8cpp-example.html#a16">HttpServer/main.cpp</a>, <a class="el" href="HttpSocket_2main_8cpp-example.html#a17">HttpSocket/main.cpp</a>, and <a class="el" href="Socket_2main_8cpp-example.html#a2">Socket/main.cpp</a>.</dd>
+</dl>
+<div id="dynsection-21" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
+<div id="dynsection-21-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-21-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a6b5bfbc488d553dca8a2d01b6b415482_cgraph.svg" width="624" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+<div id="dynsection-22" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-22-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-22-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a6b5bfbc488d553dca8a2d01b6b415482_icgraph.svg" width="408" height="120"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<a id="a4ad7bcd91ec7a91270d83bf583d62be1" name="a4ad7bcd91ec7a91270d83bf583d62be1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4ad7bcd91ec7a91270d83bf583d62be1">&#9670;&#160;</a></span>write() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int AbstractSocket::write </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>_da</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Transmits a structural <a class="el" href="classAsyncFw_1_1DataArray.html" title="The DataArray class, provides an array of bytes.">DataArray</a> package out to the network layer. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname"><a class="el" href="structAsyncFw_1_1AnyData.html#aa6d2c3488a44e34e25a0971b01a27b3c" title="Type-safely extracts and returns the stored data value.">data</a></td><td>Reference to the <a class="el" href="classAsyncFw_1_1DataArray.html" title="The DataArray class, provides an array of bytes.">DataArray</a> containing the payload to write. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Number of bytes successfully dispatched to the socket queue, or a negative value on error. </dd></dl>
+<div id="dynsection-23" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
+<div id="dynsection-23-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-23-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a4ad7bcd91ec7a91270d83bf583d62be1_cgraph.svg" width="847" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<a id="ab10c09c1cadc705e99866b527fc6cc52" name="ab10c09c1cadc705e99866b527fc6cc52"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab10c09c1cadc705e99866b527fc6cc52">&#9670;&#160;</a></span>error()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a940a10b5f063e970cb7e46a61cab2415">AbstractSocket::Error</a> AbstractSocket::error </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Fetches the most recent runtime error category flag assigned to this socket. </p>
+<dl class="section return"><dt>Returns</dt><dd>An <a class="el" href="#a940a10b5f063e970cb7e46a61cab2415" title="Runtime error categories for network and I/O operations.">Error</a> enum value. </dd></dl>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="Socket_2main_8cpp-example.html#a3">Socket/main.cpp</a>.</dd>
+</dl>
+
+</div>
+</div>
+<a id="a7dec1397dbd20b891e20aeb14a253779" name="a7dec1397dbd20b891e20aeb14a253779"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7dec1397dbd20b891e20aeb14a253779">&#9670;&#160;</a></span>errorString()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string AbstractSocket::errorString </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns a human-readable text string describing the last runtime socket error. </p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="#a940a10b5f063e970cb7e46a61cab2415" title="Runtime error categories for network and I/O operations.">Error</a> message string. </dd></dl>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="HttpSocket_2main_8cpp-example.html#a19">HttpSocket/main.cpp</a>, and <a class="el" href="Socket_2main_8cpp-example.html#a4">Socket/main.cpp</a>.</dd>
+</dl>
 
 </div>
 </div>
@@ -713,16 +1013,16 @@ Friends</h2></td></tr>
 <p>Called when established connection. </p>
 
 <p>Reimplemented in <a class="el" href="classAsyncFw_1_1AbstractTlsSocket.html#a57ac6daff9926cf631abcd1e19073cc8">AsyncFw::AbstractTlsSocket</a>, and <a class="el" href="classAsyncFw_1_1HttpSocket.html#ad51bb1bf5880c3037c7ad70231c0767d">AsyncFw::HttpSocket</a>.</p>
-<div id="dynsection-12" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
-<div id="dynsection-12-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-24" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
+<div id="dynsection-24-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-12-content" class="dyncontent" style="display:none;">
+<div id="dynsection-24-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_aac7ad6c4f9815d9b8b0817d38864d06d_cgraph.svg" width="408" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
-<div id="dynsection-13" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
-<div id="dynsection-13-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-25" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-25-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-13-content" class="dyncontent" style="display:none;">
+<div id="dynsection-25-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_aac7ad6c4f9815d9b8b0817d38864d06d_icgraph.svg" width="864" height="83"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
@@ -757,11 +1057,11 @@ Friends</h2></td></tr>
 <p>Reimplemented in <a class="el" href="classAsyncFw_1_1DataArraySocket.html#afae26d6d937eddd4b7c64f48933c0984">AsyncFw::DataArraySocket</a>, and <a class="el" href="classAsyncFw_1_1HttpSocket.html#ab3ee95c329a5f5c7ea659fe7809cc37e">AsyncFw::HttpSocket</a>.</p>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="ListenSocket_2main_8cpp-example.html#a1">ListenSocket/main.cpp</a>, and <a class="el" href="Socket_2main_8cpp-example.html#a1">Socket/main.cpp</a>.</dd>
 </dl>
-<div id="dynsection-14" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
-<div id="dynsection-14-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-26" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-26-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-14-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a5db12267a6d2241e81f570463f2d7ef5_icgraph.svg" width="1096" height="274"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div id="dynsection-26-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a5db12267a6d2241e81f570463f2d7ef5_icgraph.svg" width="1559" height="571"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -792,7 +1092,7 @@ Friends</h2></td></tr>
 <p>Called when there is data to read. </p>
 
 <p>Reimplemented in <a class="el" href="classAsyncFw_1_1DataArraySocket.html#a1a1f3404abcb93af27de1d7bc0a958b1">AsyncFw::DataArraySocket</a>, <a class="el" href="classAsyncFw_1_1HttpServer_1_1TcpSocket.html#abb44001861ba7b24633b54ae90c2896c">AsyncFw::HttpServer::TcpSocket</a>, and <a class="el" href="classAsyncFw_1_1HttpSocket.html#a7163448458d68f433dbdb214a6175be3">AsyncFw::HttpSocket</a>.</p>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="ListenSocket_2main_8cpp-example.html#a2">ListenSocket/main.cpp</a>, and <a class="el" href="Socket_2main_8cpp-example.html#a3">Socket/main.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="ListenSocket_2main_8cpp-example.html#a2">ListenSocket/main.cpp</a>, and <a class="el" href="Socket_2main_8cpp-example.html#a6">Socket/main.cpp</a>.</dd>
 </dl>
 
 </div>
@@ -849,7 +1149,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Called upon incoming connection. </p>
+<p>Called upon incoming connection. Executed on a server listening socket when a client connects. </p>
 
 <p>Reimplemented in <a class="el" href="classAsyncFw_1_1ListenSocket.html#ac1bc405f0f80094fd63f200f81977c57">AsyncFw::ListenSocket</a>.</p>
 
@@ -878,12 +1178,21 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Low-level system call that checks whether a file descriptor contains data. </p>
+<dl class="section return"><dt>Returns</dt><dd>Number of raw bytes pending in the OS network buffer queue. </dd></dl>
+
 <p>Reimplemented in <a class="el" href="classAsyncFw_1_1AbstractTlsSocket.html#a7244e3b461e0012dab1d9c3b1c0db78e">AsyncFw::AbstractTlsSocket</a>.</p>
+<div id="dynsection-27" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-27-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-27-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a64ec81f99806967d9244337b88ae03ba_icgraph.svg" width="658" height="120"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
 
 </div>
 </div>
-<a id="a4926f7542a6d46371c18ef2d404a6f0c" name="a4926f7542a6d46371c18ef2d404a6f0c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4926f7542a6d46371c18ef2d404a6f0c">&#9670;&#160;</a></span>read_fd()</h2>
+<a id="a25efdce1c4a0dedf15e57cb0af971d86" name="a25efdce1c4a0dedf15e57cb0af971d86"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a25efdce1c4a0dedf15e57cb0af971d86">&#9670;&#160;</a></span>read_fd()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -894,12 +1203,12 @@ Friends</h2></td></tr>
         <tr>
           <td class="memname">int AbstractSocket::read_fd </td>
           <td>(</td>
-          <td class="paramtype">void *</td>          <td class="paramname"><span class="paramname"><em>_p</em></span>, </td>
+          <td class="paramtype">void *</td>          <td class="paramname"><span class="paramname"><em>data</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>_s</em></span>&#160;)</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>size</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -909,12 +1218,34 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Low-level native operating system read operation proxying requests directly down to the fd handle. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname"><a class="el" href="structAsyncFw_1_1AnyData.html#aa6d2c3488a44e34e25a0971b01a27b3c" title="Type-safely extracts and returns the stored data value.">data</a></td><td>Destination memory allocation chunk pointer.</td></tr>
+    <tr><td class="paramname">size</td><td>Bounds metric tracking maximum allowed byte ingestion capability. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Number of raw bytes read from the descriptor, or error status codes. </dd></dl>
+
 <p>Reimplemented in <a class="el" href="classAsyncFw_1_1AbstractTlsSocket.html#a8c0f2e296d83c3004bd02dd6c2925bf1">AsyncFw::AbstractTlsSocket</a>.</p>
+<div id="dynsection-28" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
+<div id="dynsection-28-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-28-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a25efdce1c4a0dedf15e57cb0af971d86_cgraph.svg" width="402" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+<div id="dynsection-29" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-29-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-29-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a25efdce1c4a0dedf15e57cb0af971d86_icgraph.svg" width="863" height="238"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
 
 </div>
 </div>
-<a id="a6d4593d0f4aa0a0172237827c29c02c9" name="a6d4593d0f4aa0a0172237827c29c02c9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6d4593d0f4aa0a0172237827c29c02c9">&#9670;&#160;</a></span>write_fd()</h2>
+<a id="a4659df5988d2af771d4feee9edec55d8" name="a4659df5988d2af771d4feee9edec55d8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4659df5988d2af771d4feee9edec55d8">&#9670;&#160;</a></span>write_fd()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -925,12 +1256,12 @@ Friends</h2></td></tr>
         <tr>
           <td class="memname">int AbstractSocket::write_fd </td>
           <td>(</td>
-          <td class="paramtype">const void *</td>          <td class="paramname"><span class="paramname"><em>_p</em></span>, </td>
+          <td class="paramtype">const void *</td>          <td class="paramname"><span class="paramname"><em>data</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>_s</em></span>&#160;)</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>size</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -940,7 +1271,107 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Low-level native operating system write operation proxying requests directly up to the fd handle. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname"><a class="el" href="structAsyncFw_1_1AnyData.html#aa6d2c3488a44e34e25a0971b01a27b3c" title="Type-safely extracts and returns the stored data value.">data</a></td><td>Source memory block holding raw serialization binary data.</td></tr>
+    <tr><td class="paramname">size</td><td>Metric configuration identifying exactly how many bytes to transfer. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Number of raw bytes written out to the descriptor, or error status codes. </dd></dl>
+
 <p>Reimplemented in <a class="el" href="classAsyncFw_1_1AbstractTlsSocket.html#a84a79c1f921e96efd6b4f47cd7cd91e0">AsyncFw::AbstractTlsSocket</a>.</p>
+<div id="dynsection-30" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
+<div id="dynsection-30-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-30-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a4659df5988d2af771d4feee9edec55d8_cgraph.svg" width="402" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+<div id="dynsection-31" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-31-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-31-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a4659df5988d2af771d4feee9edec55d8_icgraph.svg" width="648" height="154"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<a id="adf2d96f44c3abf205e637f3809bc614d" name="adf2d96f44c3abf205e637f3809bc614d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adf2d96f44c3abf205e637f3809bc614d">&#9670;&#160;</a></span>setError()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AbstractSocket::setError </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="#a940a10b5f063e970cb7e46a61cab2415">Error</a></td>          <td class="paramname"><span class="paramname"><em>code</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Configures or overrides the internal error code. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">code</td><td>Target <a class="el" href="#a940a10b5f063e970cb7e46a61cab2415" title="Runtime error categories for network and I/O operations.">Error</a> enum status representation to set. </td></tr>
+  </table>
+  </dd>
+</dl>
+<div id="dynsection-32" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-32-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-32-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_adf2d96f44c3abf205e637f3809bc614d_icgraph.svg" width="624" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<a id="aee9d948ab5f79cb9c0c45da1709c1159" name="aee9d948ab5f79cb9c0c45da1709c1159"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aee9d948ab5f79cb9c0c45da1709c1159">&#9670;&#160;</a></span>setErrorString()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AbstractSocket::setErrorString </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>string</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Updates the human-readable error description buffer string. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">string</td><td>Immutable string containing the diagnostic message. </td></tr>
+  </table>
+  </dd>
+</dl>
+<div id="dynsection-33" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-33-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-33-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_aee9d948ab5f79cb9c0c45da1709c1159_icgraph.svg" width="624" height="187"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
 
 </div>
 </div>

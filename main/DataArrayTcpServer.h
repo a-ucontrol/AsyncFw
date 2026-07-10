@@ -22,13 +22,13 @@ public:
   DataArrayTcpServer(const std::string & = "TcpServer");
   /** @brief Stops the server and terminates all active worker threads and connections. */
   void quit() override;
-  /** @brief Starts listening for incoming connections on the specified address and port. @param address IP address to bind to (e.g., "0.0.0.0" or "127.0.0.1"). @param port Network port to listen on. @return true if the server successfully started listening, otherwise false. */
+  /** @brief Starts listening for incoming connections on the specified address and port. @param address IP address to bind to (e.g., "0.0.0.0" or "127.0.0.1"). @param port Network port to listen on. @return True if the server successfully started listening. */
   bool listen(const std::string &address, uint16_t port);
   /** @brief Closes the listening socket, preventing new connections while keeping current ones active. */
   void close();
   /** @brief Sets a list of remote addresses that are prioritized or persistently connected. @param list Vector of IP addresses. */
   void setAlwaysConnect(const std::vector<std::string> &list);
-  /** @brief Checks whether the server is currently actively listening for incoming connections. @return true if listening, otherwise false. */
+  /** @brief Checks whether the server is currently actively listening for incoming connections. @return True if listening. */
   bool listening();
 
 private:

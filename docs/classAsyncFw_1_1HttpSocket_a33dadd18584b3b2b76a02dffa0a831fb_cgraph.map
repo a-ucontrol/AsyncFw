@@ -1,5 +1,12 @@
 <map id="AsyncFw::HttpSocket::disconnect" name="AsyncFw::HttpSocket::disconnect">
-<area shape="rect" id="Node000001" title="Shuts down the active TLS session gracefully via SSL_shutdown() before terminating the network pipe." alt="" coords="5,5,156,48"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractTlsSocket.html#af52f94f709ab74eace61da79cbd8af7d" title="Shuts down the active TLS session gracefully via SSL_shutdown() before terminating the network pipe." alt="" coords="204,5,396,48"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="156,24,190,26,185,27,156,29"/>
+<area shape="rect" id="Node000001" title="Shuts down the active TLS session gracefully via SSL_shutdown() before terminating the network pipe." alt="" coords="5,35,156,77"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractTlsSocket.html#af52f94f709ab74eace61da79cbd8af7d" title="Shuts down the active TLS session gracefully via SSL_shutdown() before terminating the network pipe." alt="" coords="204,35,396,77"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="156,53,190,56,185,56,156,59"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractSocket.html#a96c331ff22db7a34923c34f575075e6a" title="Disconnects the socket from the remote host gracefully." alt="" coords="444,35,618,77"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="396,53,431,56,426,56,396,59"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1AbstractSocket.html#a77c0a9ea7c5061c406673bbe8b18d60d" title="Closes the network connection and unsubscribes from thread polling events." alt="" coords="666,5,841,48"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="618,42,648,40,653,40,619,47"/>
+<area shape="rect" id="Node000005" href="$classAsyncFw_1_1AbstractSocket.html#a5db12267a6d2241e81f570463f2d7ef5" title="Called when the connection state changes." alt="" coords="889,35,1063,77"/>
+<area shape="poly" id="edge5_Node000003_Node000005" title=" " alt="" coords="619,56,666,57,841,57,875,59,870,59,841,63,666,63,619,62"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="841,36,876,43,870,42,841,41"/>
 </map>

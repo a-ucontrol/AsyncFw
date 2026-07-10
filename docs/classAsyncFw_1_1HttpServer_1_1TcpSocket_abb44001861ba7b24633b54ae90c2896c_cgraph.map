@@ -1,12 +1,29 @@
 <map id="AsyncFw::HttpServer::TcpSocket::readEvent" name="AsyncFw::HttpServer::TcpSocket::readEvent">
-<area shape="rect" id="Node000001" title="Triggered when new raw data is available in the socket for reading. &#160;&#160;Overrides the base behavior to ..." alt="" coords="5,35,163,77"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1HttpSocket.html#a33dadd18584b3b2b76a02dffa0a831fb" title="Shuts down the active TLS session gracefully via SSL_shutdown() before terminating the network pipe." alt="" coords="409,5,559,48"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="163,48,394,31,393,36,163,53"/>
-<area shape="rect" id="Node000004" href="$classAsyncFw_1_1HttpSocket.html#a7163448458d68f433dbdb214a6175be3" title="Called when there is data to read." alt="" coords="211,64,361,107"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="163,65,198,72,192,72,163,70"/>
-<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractTlsSocket.html#af52f94f709ab74eace61da79cbd8af7d" title="Shuts down the active TLS session gracefully via SSL_shutdown() before terminating the network pipe." alt="" coords="607,5,800,48"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="559,24,594,26,589,27,560,29"/>
-<area shape="poly" id="edge4_Node000004_Node000002" title=" " alt="" coords="359,61,393,53,398,52,361,66"/>
-<area shape="rect" id="Node000005" href="$classAsyncFw_1_1DataArray.html#a5406261e5730adfa64e4d0bbd0083e31" title="Creates a lightweight, non&#45;allocating view slicing a sub&#45;region of this byte array." alt="" coords="412,72,556,115"/>
-<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="361,86,400,90,394,90,361,91"/>
+<area shape="rect" id="Node000001" title="Triggered when new raw data is available in the socket for reading. &#160;&#160;Overrides the base behavior to ..." alt="" coords="5,64,163,107"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1HttpSocket.html#a33dadd18584b3b2b76a02dffa0a831fb" title="Shuts down the active TLS session gracefully via SSL_shutdown() before terminating the network pipe." alt="" coords="421,5,571,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="163,72,407,37,404,42,164,77"/>
+<area shape="rect" id="Node000007" href="$classAsyncFw_1_1AbstractSocket.html#a374dd4ce66bfcc8a6dcf40b4ba552828" title="Reads incoming data into a raw byte buffer up to a specified maximum size." alt="" coords="409,72,583,115"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="163,84,395,89,392,94,164,90"/>
+<area shape="rect" id="Node000010" href="$classAsyncFw_1_1HttpSocket.html#a7163448458d68f433dbdb214a6175be3" title="Called when there is data to read." alt="" coords="211,123,361,165"/>
+<area shape="poly" id="edge10_Node000001_Node000010" title=" " alt="" coords="159,105,198,117,193,119,160,110"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractTlsSocket.html#af52f94f709ab74eace61da79cbd8af7d" title="Shuts down the active TLS session gracefully via SSL_shutdown() before terminating the network pipe." alt="" coords="631,5,824,48"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="571,24,619,26,613,27,572,29"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1AbstractSocket.html#a96c331ff22db7a34923c34f575075e6a" title="Disconnects the socket from the remote host gracefully." alt="" coords="872,5,1046,48"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="823,24,859,26,854,27,824,29"/>
+<area shape="rect" id="Node000005" href="$classAsyncFw_1_1AbstractSocket.html#a77c0a9ea7c5061c406673bbe8b18d60d" title="Closes the network connection and unsubscribes from thread polling events." alt="" coords="1094,35,1268,77"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="1046,36,1081,42,1076,43,1046,41"/>
+<area shape="rect" id="Node000006" href="$classAsyncFw_1_1AbstractSocket.html#a5db12267a6d2241e81f570463f2d7ef5" title="Called when the connection state changes." alt="" coords="1316,5,1491,48"/>
+<area shape="poly" id="edge6_Node000004_Node000006" title=" " alt="" coords="1046,21,1094,20,1268,20,1303,23,1298,24,1268,25,1094,25,1047,26"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="1268,42,1303,40,1298,41,1269,47"/>
+<area shape="rect" id="Node000008" href="$classAsyncFw_1_1AbstractSocket.html#a25efdce1c4a0dedf15e57cb0af971d86" title="Low&#45;level native operating system read operation proxying requests directly down to the fd handle." alt="" coords="640,105,815,148"/>
+<area shape="poly" id="edge8_Node000007_Node000008" title=" " alt="" coords="584,103,628,112,623,112,584,109"/>
+<area shape="rect" id="Node000009" href="$structAsyncFw_1_1AnyData.html#aa6d2c3488a44e34e25a0971b01a27b3c" title="Type&#45;safely extracts and returns the stored data value." alt="" coords="875,113,1043,140"/>
+<area shape="poly" id="edge9_Node000008_Node000009" title=" " alt="" coords="815,124,862,126,857,127,815,129"/>
+<area shape="poly" id="edge11_Node000010_Node000002" title=" " alt="" coords="313,120,356,89,408,58,417,56,422,54,410,62,359,93,316,125"/>
+<area shape="poly" id="edge14_Node000010_Node000007" title=" " alt="" coords="361,123,396,117,391,119,362,128"/>
+<area shape="rect" id="Node000011" href="$classAsyncFw_1_1AbstractSocket.html#a3f4a74f0ab83d096bd37118bb28d8654" title="Non&#45;destructively glimpses at the internal unread data buffer without consuming it." alt="" coords="409,139,583,181"/>
+<area shape="poly" id="edge12_Node000010_Node000011" title=" " alt="" coords="361,147,396,152,391,152,362,152"/>
+<area shape="rect" id="Node000012" href="$classAsyncFw_1_1DataArray.html#a5406261e5730adfa64e4d0bbd0083e31" title="Creates a lightweight, non&#45;allocating view slicing a sub&#45;region of this byte array." alt="" coords="424,205,568,248"/>
+<area shape="poly" id="edge15_Node000010_Node000012" title=" " alt="" coords="341,163,410,191,426,199,421,199,408,196,340,168"/>
+<area shape="poly" id="edge13_Node000011_Node000008" title=" " alt="" coords="584,145,628,141,623,142,584,150"/>
 </map>

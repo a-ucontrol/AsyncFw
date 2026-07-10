@@ -1,0 +1,26 @@
+<map id="AsyncFw::AbstractSocket::disconnect" name="AsyncFw::AbstractSocket::disconnect">
+<area shape="rect" id="Node000001" title="Disconnects the socket from the remote host gracefully." alt="" coords="916,135,1090,177"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractTlsSocket.html#af52f94f709ab74eace61da79cbd8af7d" title="Shuts down the active TLS session gracefully via SSL_shutdown() before terminating the network pipe." alt="" coords="675,135,868,177"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="897,156,868,159,868,153,902,156"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1DataArraySocket.html#a9942cbf100e7898ba95c8fb92e059ae8" title="Disconnects the socket from the remote peer." alt="" coords="443,72,627,115"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="671,130,618,118,618,113,676,130"/>
+<area shape="rect" id="Node000006" href="$classAsyncFw_1_1HttpSocket.html#a33dadd18584b3b2b76a02dffa0a831fb" title="Shuts down the active TLS session gracefully via SSL_shutdown() before terminating the network pipe." alt="" coords="460,197,610,240"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="671,182,611,201,610,196,677,181"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1DataArraySocket.html#a1a1f3404abcb93af27de1d7bc0a958b1" title="Called when there is data to read." alt="" coords="211,5,395,48"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="442,68,380,51,380,46,447,67"/>
+<area shape="rect" id="Node000005" href="$classAsyncFw_1_1DataArraySocket.html#ac7366a53ca9c5c43bc3c6bb88b539d53" title="Asynchronously transmits a data array through the socket." alt="" coords="211,72,395,115"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="425,94,396,96,395,91,430,92"/>
+<area shape="rect" id="Node000007" href="$classAsyncFw_1_1HttpServer.html#ad7dae50cc3787112980fa7075a60f811" title="Disconnects a specific client socket and clears it from the internally managed pool." alt="" coords="228,139,378,181"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="443,197,378,182,378,176,448,196"/>
+<area shape="rect" id="Node000010" href="$classAsyncFw_1_1HttpServer_1_1TcpSocket.html#abb44001861ba7b24633b54ae90c2896c" title="Triggered when new raw data is available in the socket for reading. &#160;&#160;Overrides the base behavior to ..." alt="" coords="5,231,163,273"/>
+<area shape="poly" id="edge9_Node000006_Node000010" title=" " alt="" coords="444,228,164,249,163,244,446,223"/>
+<area shape="rect" id="Node000011" href="$classAsyncFw_1_1HttpSocket.html#a7163448458d68f433dbdb214a6175be3" title="Called when there is data to read." alt="" coords="228,256,378,299"/>
+<area shape="poly" id="edge10_Node000006_Node000011" title=" " alt="" coords="443,242,379,261,378,256,448,241"/>
+<area shape="rect" id="Node000012" href="$classAsyncFw_1_1HttpSocket.html#ac276bcd3a5e86289eb37ea7fd062559b" title="Called when writing to the socket is possible." alt="" coords="228,323,378,365"/>
+<area shape="poly" id="edge12_Node000006_Node000012" title=" " alt="" coords="495,249,448,283,396,313,370,325,369,320,394,308,445,278,490,250"/>
+<area shape="rect" id="Node000008" href="$classAsyncFw_1_1HttpServer.html#ad3761260dfd18899afc22c6f4bc0c556" title="Forcefully terminates all active socket connections currently retained by the server." alt="" coords="10,85,158,128"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="210,139,159,127,157,122,215,137"/>
+<area shape="rect" id="Node000009" href="$classAsyncFw_1_1HttpServer.html#ab3eeb1643d4482345afcd9f971c020ac" title="Explicitly severs connections with active sockets holding custom user metadata matching data." alt="" coords="10,152,158,195"/>
+<area shape="poly" id="edge8_Node000007_Node000009" title=" " alt="" coords="210,167,159,171,157,166,214,164"/>
+<area shape="poly" id="edge11_Node000011_Node000010" title=" " alt="" coords="210,268,163,264,163,258,215,266"/>
+</map>

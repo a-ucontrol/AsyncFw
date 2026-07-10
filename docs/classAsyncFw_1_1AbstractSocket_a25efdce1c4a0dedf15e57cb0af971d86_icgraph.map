@@ -1,0 +1,19 @@
+<map id="AsyncFw::AbstractSocket::read_fd" name="AsyncFw::AbstractSocket::read_fd">
+<area shape="rect" id="Node000001" title="Low&#45;level native operating system read operation proxying requests directly down to the fd handle." alt="" coords="683,72,858,115"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractSocket.html#a3f4a74f0ab83d096bd37118bb28d8654" title="Non&#45;destructively glimpses at the internal unread data buffer without consuming it." alt="" coords="452,5,626,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="677,67,616,51,616,46,683,67"/>
+<area shape="rect" id="Node000005" href="$classAsyncFw_1_1AbstractSocket.html#a374dd4ce66bfcc8a6dcf40b4ba552828" title="Reads incoming data into a raw byte buffer up to a specified maximum size." alt="" coords="452,72,626,115"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="665,94,627,96,626,91,670,93"/>
+<area shape="rect" id="Node000008" href="$classAsyncFw_1_1AbstractTlsSocket.html#a8c0f2e296d83c3004bd02dd6c2925bf1" title="Low&#45;level decryption routing path proxying requests down to SSL_read()." alt="" coords="443,139,635,181"/>
+<area shape="poly" id="edge9_Node000001_Node000008" title=" " alt="" coords="682,119,617,141,615,135,677,120"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1HttpSocket.html#a7163448458d68f433dbdb214a6175be3" title="Called when there is data to read." alt="" coords="228,5,378,48"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="434,27,379,29,378,24,439,26"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1HttpServer_1_1TcpSocket.html#abb44001861ba7b24633b54ae90c2896c" title="Triggered when new raw data is available in the socket for reading. &#160;&#160;Overrides the base behavior to ..." alt="" coords="5,35,163,77"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="210,40,164,48,162,43,215,37"/>
+<area shape="poly" id="edge8_Node000005_Node000003" title=" " alt="" coords="444,68,378,51,378,45,449,67"/>
+<area shape="poly" id="edge7_Node000005_Node000004" title=" " alt="" coords="435,87,163,65,163,60,438,83"/>
+<area shape="rect" id="Node000006" href="$classAsyncFw_1_1AbstractSocket.html#a4eea287aa9c8a3cafc2ea92ca72d85bc" title="Reads a chunk of incoming data and extracts it into a returned DataArray object." alt="" coords="216,123,390,165"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="434,116,391,128,390,123,439,115"/>
+<area shape="rect" id="Node000007" href="$classAsyncFw_1_1DataArraySocket.html#a1a1f3404abcb93af27de1d7bc0a958b1" title="Called when there is data to read." alt="" coords="211,189,395,232"/>
+<area shape="poly" id="edge6_Node000005_Node000007" title=" " alt="" coords="453,121,445,129,430,141,421,154,412,166,397,180,375,191,373,186,393,175,408,163,417,150,426,137,441,125,448,123"/>
+</map>

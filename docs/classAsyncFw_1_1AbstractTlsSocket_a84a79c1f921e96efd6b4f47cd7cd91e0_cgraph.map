@@ -1,5 +1,8 @@
 <map id="AsyncFw::AbstractTlsSocket::write_fd" name="AsyncFw::AbstractTlsSocket::write_fd">
 <area shape="rect" id="Node000001" title="Low&#45;level encryption routing path proxying outgoing payload directly up to SSL_write()." alt="" coords="5,5,198,48"/>
-<area shape="rect" id="Node000002" href="$structAsyncFw_1_1AnyData.html#aa6d2c3488a44e34e25a0971b01a27b3c" title="Type&#45;safely extracts and returns the stored data value." alt="" coords="246,13,414,40"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="198,24,232,26,227,27,198,29"/>
+<area shape="rect" id="Node000002" href="$structAsyncFw_1_1AnyData.html#aa6d2c3488a44e34e25a0971b01a27b3c" title="Type&#45;safely extracts and returns the stored data value." alt="" coords="468,13,636,40"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="198,21,246,20,420,20,455,23,450,23,420,25,246,25,198,26"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractSocket.html#a4659df5988d2af771d4feee9edec55d8" title="Low&#45;level native operating system write operation proxying requests directly up to the fd handle." alt="" coords="246,35,420,77"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="198,36,233,43,227,43,198,42"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="420,42,450,40,455,40,421,47"/>
 </map>
