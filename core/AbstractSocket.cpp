@@ -495,7 +495,7 @@ void AbstractSocket::pollEvent(int _e) {
       }
       return;
     }
-    if (read_available_fd() <= 0) return;
+    if (AbstractSocket::read_available_fd() <= 0) return;
   }
   if (_e & AbstractThread::PollIn) {
     private_.rs_ = read_available_fd();
