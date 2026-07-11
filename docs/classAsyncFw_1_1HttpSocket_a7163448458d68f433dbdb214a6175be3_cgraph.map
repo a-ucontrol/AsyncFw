@@ -2,7 +2,7 @@
 <area shape="rect" id="Node000001" title="Called when there is data to read." alt="" coords="5,135,156,177"/>
 <area shape="rect" id="Node000002" href="$classAsyncFw_1_1HttpSocket.html#a33dadd18584b3b2b76a02dffa0a831fb" title="Shuts down the active TLS session gracefully via SSL_shutdown() before terminating the network pipe." alt="" coords="216,35,366,77"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="117,132,202,87,218,82,214,85,205,92,120,137"/>
-<area shape="rect" id="Node000007" href="$classAsyncFw_1_1AbstractSocket.html#a3f4a74f0ab83d096bd37118bb28d8654" title="Non&#45;destructively glimpses at the internal unread data buffer without consuming it." alt="" coords="204,101,378,144"/>
+<area shape="rect" id="Node000007" href="$classAsyncFw_1_1AbstractSocket.html#a3f4a74f0ab83d096bd37118bb28d8654" title="Non&#45;destructively inspects the internal unread data buffer without consuming it." alt="" coords="204,101,378,144"/>
 <area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="155,142,190,138,186,140,157,147"/>
 <area shape="rect" id="Node000010" href="$classAsyncFw_1_1AbstractSocket.html#a374dd4ce66bfcc8a6dcf40b4ba552828" title="Reads incoming data into a raw byte buffer up to a specified maximum size." alt="" coords="204,168,378,211"/>
 <area shape="poly" id="edge10_Node000001_Node000010" title=" " alt="" coords="156,165,191,172,186,174,157,171"/>

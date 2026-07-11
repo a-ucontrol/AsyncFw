@@ -1,0 +1,9 @@
+<map id="AsyncFw::TlsContext::infoKey" name="AsyncFw::TlsContext::infoKey">
+<area shape="rect" id="Node000001" title="Parses a raw PEM&#45;formatted private key buffer and extracts its diagnostic properties." alt="" coords="5,64,154,107"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1TlsContext.html#aac5676503ece10fccb60192d4cd573c5" title="Return info of private key." alt="" coords="216,5,364,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="153,62,203,50,199,53,155,67"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1TlsContext.html#adbefc1c150e7e2965f27e154fce622e4" title="Return private key in PEM format." alt="" coords="202,72,379,99"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="154,83,189,85,184,86,155,88"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1TlsContext.html#acbec0996184d7c2de72f7ea02344d849" title="Set private key." alt="" coords="216,123,364,165"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="154,103,203,119,198,120,154,109"/>
+</map>

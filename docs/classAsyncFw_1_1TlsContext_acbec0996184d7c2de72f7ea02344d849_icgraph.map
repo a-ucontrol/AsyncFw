@@ -1,0 +1,5 @@
+<map id="AsyncFw::TlsContext::setKey" name="AsyncFw::TlsContext::setKey">
+<area shape="rect" id="Node000001" title="Set private key." alt="" coords="202,5,350,48"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1TlsContext.html#a246efb00d5ea193fcd6f3b337be87933" title="Parses a raw PEM&#45;formatted private key buffer and extracts its diagnostic properties." alt="" coords="5,5,154,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="184,27,154,29,154,24,189,26"/>
+</map>

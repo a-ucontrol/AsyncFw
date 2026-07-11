@@ -105,9 +105,10 @@ var NAVTREEINDEX1 =
 "classAsyncFw_1_1DataArrayView.html#af0409dfe7cdeea6df5d33174abb0e464":[2,0,0,5,4],
 "classAsyncFw_1_1DataStream.html":[2,0,0,7],
 "classAsyncFw_1_1DataStream.html#a5483f91b758e0383fec1fd3c540425ef":[2,0,0,7,1],
-"classAsyncFw_1_1DataStream.html#a58e67062bf6cd3f77a8203758b01eaf8":[2,0,0,7,3],
+"classAsyncFw_1_1DataStream.html#a58e67062bf6cd3f77a8203758b01eaf8":[2,0,0,7,4],
 "classAsyncFw_1_1DataStream.html#aadb8f27fe18a349a25b2cd656d686f92":[2,0,0,7,0],
-"classAsyncFw_1_1DataStream.html#ae64c4b08a3259146d4476c0385352479":[2,0,0,7,2],
+"classAsyncFw_1_1DataStream.html#ac2fcf2fccb05fc820d943721eb827f20":[2,0,0,7,2],
+"classAsyncFw_1_1DataStream.html#ae64c4b08a3259146d4476c0385352479":[2,0,0,7,3],
 "classAsyncFw_1_1File.html":[2,0,0,25],
 "classAsyncFw_1_1File.html#a0cd5ad18548cd40cd34f2146a63bb147":[2,0,0,25,11],
 "classAsyncFw_1_1File.html#a212a2b7db1a9cffd87c78b0285671bea":[2,0,0,25,2],
@@ -248,6 +249,5 @@ var NAVTREEINDEX1 =
 "classAsyncFw_1_1LogStream.html#afa2f6c5311ced6b973d39d6e5ced5731a55700379cc50408c01860c3a700d20a0":[2,0,0,12,1,5],
 "classAsyncFw_1_1LogStream.html#afa2f6c5311ced6b973d39d6e5ced5731a66e8e44e1adfebd567c25c6611a5e418":[2,0,0,12,1,0],
 "classAsyncFw_1_1LogStream.html#afa2f6c5311ced6b973d39d6e5ced5731a735a344d42befe22f3f60ed4f1125351":[2,0,0,12,1,2],
-"classAsyncFw_1_1LogStream.html#afa2f6c5311ced6b973d39d6e5ced5731a8e7cdb29641eddbcac3012fe6eb3cd3d":[2,0,0,12,1,1],
-"classAsyncFw_1_1LogStream.html#afa2f6c5311ced6b973d39d6e5ced5731a96aad685f21a4a927c6c3a74274efd5a":[2,0,0,12,1,3]
+"classAsyncFw_1_1LogStream.html#afa2f6c5311ced6b973d39d6e5ced5731a8e7cdb29641eddbcac3012fe6eb3cd3d":[2,0,0,12,1,1]
 };

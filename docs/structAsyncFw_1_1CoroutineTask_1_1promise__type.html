@@ -182,7 +182,7 @@ std::any&#160;</td><td class="memItemRight"><b>data_</b></td></tr>
 </div><div class="memdoc">
 
 <p>Schedules the coroutine continuation on the thread where the <a class="el" href="structAsyncFw_1_1CoroutineTask_1_1promise__type.html" title="The promise type object required by the C++20 coroutine standard.">promise_type</a> was created. </p>
-<p>Postpones or queues coroutine_handle::resume via the thread event loop. </p>
+<p>Postpones or queues coroutine_handle::resume via the thread event loop. </p><dl class="section note"><dt>Note</dt><dd>This guarantees that all subsequent code execution following a co_await split point always resumes safely inside the caller's original thread context. </dd></dl>
 
 </div>
 </div>

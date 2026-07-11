@@ -116,9 +116,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:ae64c4b08a3259146d4476c0385352479"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves a reference to the active cumulative raw byte array built by the stream.  <br /></td></tr>
 <tr class="memitem:a58e67062bf6cd3f77a8203758b01eaf8" id="r_a58e67062bf6cd3f77a8203758b01eaf8"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a58e67062bf6cd3f77a8203758b01eaf8">fail</a> () const</td></tr>
 <tr class="memdesc:a58e67062bf6cd3f77a8203758b01eaf8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the stream pipeline encountered a boundary check failure, bad memory, or malformed data packets.  <br /></td></tr>
-<tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Serialization Operators</div></td></tr>
-<tr class="memitem:ac2fcf2fccb05fc820d943721eb827f20" id="r_ac2fcf2fccb05fc820d943721eb827f20"><td class="memItemLeft"><a id="ac2fcf2fccb05fc820d943721eb827f20" name="ac2fcf2fccb05fc820d943721eb827f20"></a>
-<a class="el" href="#aadb8f27fe18a349a25b2cd656d686f92">DataStream</a> &amp;&#160;</td><td class="memItemRight"><b>operator&lt;&lt;</b> (int8_t)</td></tr>
+<tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader"></div></td></tr>
+<tr class="memitem:ac2fcf2fccb05fc820d943721eb827f20" id="r_ac2fcf2fccb05fc820d943721eb827f20"><td class="memItemLeft"><a class="el" href="#aadb8f27fe18a349a25b2cd656d686f92">DataStream</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#ac2fcf2fccb05fc820d943721eb827f20">operator&lt;&lt;</a> (int8_t)</td></tr>
 <tr class="memitem:aaa92e1b719f679231a1453b4febbf916" id="r_aaa92e1b719f679231a1453b4febbf916"><td class="memItemLeft"><a id="aaa92e1b719f679231a1453b4febbf916" name="aaa92e1b719f679231a1453b4febbf916"></a>
 <a class="el" href="#aadb8f27fe18a349a25b2cd656d686f92">DataStream</a> &amp;&#160;</td><td class="memItemRight"><b>operator&gt;&gt;</b> (int8_t &amp;)</td></tr>
 <tr class="memitem:a2e9968ae3801033f92b5cbf736679628" id="r_a2e9968ae3801033f92b5cbf736679628"><td class="memItemLeft"><a id="a2e9968ae3801033f92b5cbf736679628" name="a2e9968ae3801033f92b5cbf736679628"></a>
@@ -174,7 +173,7 @@ Public Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A fast, compact binary serialization stream. </p>
-<p>Supports stream operators (&lt;&lt; and &gt;&gt;) to easily pack and unpack primitives, strings, and byte arrays into variable-length compressed blocks. </p><dl class="section note"><dt>Note</dt><dd>This class explicitly blocks copying and moving.</dd></dl>
+<p>Supports stream operators (&lt;&lt; and &gt;&gt;) to easily encode and decode primitives, strings, and byte arrays into packed, tightly structured binary payloads using optimized variable-length length prefixes. </p><dl class="section note"><dt>Note</dt><dd>This class explicitly blocks copying and moving.</dd></dl>
 <p>Example: </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;AsyncFw/MainThread&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;AsyncFw/DataArray&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;AsyncFw/LogStream&gt;</span></div>
@@ -217,6 +216,30 @@ Public Member Functions</h2></td></tr>
 </div><!-- fragment --> <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="DataArray_2main_8cpp-example.html#_a2">DataArray/main.cpp</a>.</dd>
 </dl>
 </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="ac2fcf2fccb05fc820d943721eb827f20" name="ac2fcf2fccb05fc820d943721eb827f20"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac2fcf2fccb05fc820d943721eb827f20">&#9670;&#160;</a></span>operator&lt;&lt;()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#aadb8f27fe18a349a25b2cd656d686f92">DataStream</a> &amp; DataStream::operator&lt;&lt; </td>
+          <td>(</td>
+          <td class="paramtype">int8_t</td>          <td class="paramname"><span class="paramname"><em>v</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>@Serialization &amp; Deserialization Operators </p>
+<div id="dynsection-0" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
+<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-0-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1DataStream_ac2fcf2fccb05fc820d943721eb827f20_cgraph.svg" width="368" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
 <a id="ae64c4b08a3259146d4476c0385352479" name="ae64c4b08a3259146d4476c0385352479"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae64c4b08a3259146d4476c0385352479">&#9670;&#160;</a></span>array()</h2>
 
@@ -236,10 +259,10 @@ Public Member Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>Immutable reference to the binary buffer. </dd></dl>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="DataArray_2main_8cpp-example.html#a4">DataArray/main.cpp</a>.</dd>
 </dl>
-<div id="dynsection-0" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
-<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-1" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-0-content" class="dyncontent" style="display:none;">
+<div id="dynsection-1-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1DataStream_ae64c4b08a3259146d4476c0385352479_icgraph.svg" width="640" height="159"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
@@ -262,10 +285,10 @@ Public Member Functions</h2></td></tr>
 
 <p>Checks if the stream pipeline encountered a boundary check failure, bad memory, or malformed data packets. </p>
 <dl class="section return"><dt>Returns</dt><dd>True if an operation failed or the stream is corrupted. </dd></dl>
-<div id="dynsection-1" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
-<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-2" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-2-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-1-content" class="dyncontent" style="display:none;">
+<div id="dynsection-2-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1DataStream_a58e67062bf6cd3f77a8203758b01eaf8_icgraph.svg" width="652" height="155"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 

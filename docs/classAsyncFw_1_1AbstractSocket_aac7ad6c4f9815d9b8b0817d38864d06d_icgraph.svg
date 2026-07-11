@@ -40,7 +40,7 @@
 <!-- Node4 -->
 <g id="Node000004" class="node">
 <title>Node4</title>
-<g id="a_Node000004"><a xlink:href="classAsyncFw_1_1AbstractTlsSocket.html#ad26bb910e65bb758bfed6448e1af7186" target="_top" xlink:title="Intermediate signal hub executed immediately when a secure cryptographic tunnel has been fully establ...">
+<g id="a_Node000004"><a xlink:href="classAsyncFw_1_1AbstractTlsSocket.html#ad26bb910e65bb758bfed6448e1af7186" target="_top" xlink:title="Intermediate signal hub executed immediately when a secure cryptographic tunnel is fully established.">
 <polygon fill="white" stroke="#666666" points="473.25,-32 329,-32 329,0 473.25,0 473.25,-32"/>
 <text xml:space="preserve" text-anchor="start" x="337" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AbstractTlsSocket</text>
 <text xml:space="preserve" text-anchor="middle" x="401.12" y="-6.5" font-family="Helvetica,sans-Serif" font-size="10.00">::activateReady</text>

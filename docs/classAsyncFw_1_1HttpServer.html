@@ -135,14 +135,14 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a414198c976b0e4fa621127ec7146b264" id="r_a414198c976b0e4fa621127ec7146b264"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
 <tr class="memitem:a414198c976b0e4fa621127ec7146b264 template"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#a414198c976b0e4fa621127ec7146b264">sendToWebSockets</a> (const T &amp;_data, const <a class="el" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> &amp;_da)</td></tr>
 <tr class="memdesc:a414198c976b0e4fa621127ec7146b264"><td class="mdescLeft">&#160;</td><td class="mdescRight">Broadcasts a binary array payload to active WebSocket connections matching a specific filter criteria. <br  />
- Iterates through connected channels, matching their internal <span class="tt">socketData</span> against the provided key.  <br /></td></tr>
+ Iterates through connected channels, matching their internal socketData against the provided key.  <br /></td></tr>
 <tr class="memitem:ad0bb08fb4a0ef0fd28961e29a8275bd0" id="r_ad0bb08fb4a0ef0fd28961e29a8275bd0"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
 <tr class="memitem:ad0bb08fb4a0ef0fd28961e29a8275bd0 template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ad0bb08fb4a0ef0fd28961e29a8275bd0">setPeek</a> (T f)</td></tr>
 <tr class="memdesc:ad0bb08fb4a0ef0fd28961e29a8275bd0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assigns a global interceptor/validation hook (Peek) evaluated prior to any route action execution. <br  />
- If this predicate hook evaluates to <span class="tt">false</span>, the underlying endpoint handler action execution is aborted.  <br /></td></tr>
+ If this predicate hook evaluates to false, the underlying endpoint handler action execution is aborted.  <br /></td></tr>
 <tr class="memitem:ab3eeb1643d4482345afcd9f971c020ac" id="r_ab3eeb1643d4482345afcd9f971c020ac"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
 <tr class="memitem:ab3eeb1643d4482345afcd9f971c020ac template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ab3eeb1643d4482345afcd9f971c020ac">clearConnections</a> (const T &amp;data)</td></tr>
-<tr class="memdesc:ab3eeb1643d4482345afcd9f971c020ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Explicitly severs connections with active sockets holding custom user metadata matching <span class="tt">data</span>.  <br /></td></tr>
+<tr class="memdesc:ab3eeb1643d4482345afcd9f971c020ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Explicitly severs connections with active sockets holding custom user metadata matching data.  <br /></td></tr>
 <tr class="memitem:ad3761260dfd18899afc22c6f4bc0c556" id="r_ad3761260dfd18899afc22c6f4bc0c556"><td class="memItemLeft"><a id="ad3761260dfd18899afc22c6f4bc0c556" name="ad3761260dfd18899afc22c6f4bc0c556"></a>
 void&#160;</td><td class="memItemRight"><b>clearConnections</b> ()</td></tr>
 <tr class="memdesc:ad3761260dfd18899afc22c6f4bc0c556"><td class="mdescLeft">&#160;</td><td class="mdescRight">Forcefully terminates all active socket connections currently retained by the server. <br /></td></tr>
@@ -337,7 +337,7 @@ template&lt;typename A&gt; </div>
  Automatically generates a fallback handler for OPTIONS requests (CORS handling) unless it has already been explicitly declared for the target path. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">A</td><td>Callable function wrapper type matching <span class="tt">void(const <a class="el" href="classAsyncFw_1_1HttpServer_1_1Request.html">Request</a>&amp;)</span>.</td></tr>
+    <tr><td class="paramname">A</td><td>Callable function wrapper type matching void(const Request&amp;).</td></tr>
   </table>
   </dd>
 </dl>
@@ -346,7 +346,7 @@ template&lt;typename A&gt; </div>
     <tr><td class="paramname">url</td><td>The endpoint URI pattern (e.g., "/api/v1/status").</td></tr>
     <tr><td class="paramname">method</td><td>The target HTTP execution method.</td></tr>
     <tr><td class="paramname">action</td><td>The user function invoked when the endpoint is matched.</td></tr>
-    <tr><td class="paramname">data</td><td>Optional context variable evaluated by the global <span class="tt">peek</span> filter. </td></tr>
+    <tr><td class="paramname">data</td><td>Optional context variable evaluated by the global peek filter. </td></tr>
   </table>
   </dd>
 </dl>
@@ -403,7 +403,7 @@ template&lt;typename O, typename A&gt; </div>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">O</td><td>Pointer type targeting the owning class instance. </td></tr>
-    <tr><td class="paramname">A</td><td>Pointer type matching a method signature of <span class="tt">void Object::Method(const <a class="el" href="classAsyncFw_1_1HttpServer_1_1Request.html">Request</a>&amp;)</span>.</td></tr>
+    <tr><td class="paramname">A</td><td>Pointer type matching a method signature of void Object::Method(const Request&amp;).</td></tr>
   </table>
   </dd>
 </dl>
@@ -413,7 +413,7 @@ template&lt;typename O, typename A&gt; </div>
     <tr><td class="paramname">url</td><td>The endpoint URI pattern.</td></tr>
     <tr><td class="paramname">method</td><td>The target HTTP execution method.</td></tr>
     <tr><td class="paramname">action</td><td>Pointer to the member method.</td></tr>
-    <tr><td class="paramname">data</td><td>Optional context variable evaluated by the global <span class="tt">peek</span> filter. </td></tr>
+    <tr><td class="paramname">data</td><td>Optional context variable evaluated by the global peek filter. </td></tr>
   </table>
   </dd>
 </dl>
@@ -450,7 +450,7 @@ template&lt;typename T&gt; </div>
 </div><div class="memdoc">
 
 <p>Broadcasts a binary array payload to active WebSocket connections matching a specific filter criteria. <br  />
- Iterates through connected channels, matching their internal <span class="tt">socketData</span> against the provided key. </p>
+ Iterates through connected channels, matching their internal socketData against the provided key. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">T</td><td>Type of the verification value stored inside the socket state.</td></tr>
@@ -494,10 +494,10 @@ template&lt;typename T&gt; </div>
 </div><div class="memdoc">
 
 <p>Assigns a global interceptor/validation hook (Peek) evaluated prior to any route action execution. <br  />
- If this predicate hook evaluates to <span class="tt">false</span>, the underlying endpoint handler action execution is aborted. </p>
+ If this predicate hook evaluates to false, the underlying endpoint handler action execution is aborted. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">T</td><td>Callable interceptor function wrapper type matching <span class="tt">bool(const <a class="el" href="classAsyncFw_1_1HttpServer_1_1Request.html">Request</a>&amp;, std::any)</span>.</td></tr>
+    <tr><td class="paramname">T</td><td>Callable interceptor function wrapper type matching bool(const Request&amp;, std::any).</td></tr>
   </table>
   </dd>
 </dl>
@@ -537,7 +537,7 @@ template&lt;typename T&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Explicitly severs connections with active sockets holding custom user metadata matching <span class="tt">data</span>. </p>
+<p>Explicitly severs connections with active sockets holding custom user metadata matching data. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">T</td><td>Type identifier matching the socket data context block.</td></tr>

@@ -6,7 +6,7 @@
 <area shape="poly" id="edge11_Node000001_Node000010" title=" " alt="" coords="156,197,212,207,207,208,156,202"/>
 <area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractSocket.html#aac7ad6c4f9815d9b8b0817d38864d06d" title="Called when established connection." alt="" coords="684,33,859,76"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="317,115,369,64,404,38,443,19,475,10,508,5,575,4,639,13,697,28,692,29,638,18,574,10,508,10,476,15,445,24,407,43,372,68,320,119"/>
-<area shape="rect" id="Node000005" href="$classAsyncFw_1_1AbstractTlsSocket.html#ad26bb910e65bb758bfed6448e1af7186" title="Intermediate signal hub executed immediately when a secure cryptographic tunnel has been fully establ..." alt="" coords="444,33,636,76"/>
+<area shape="rect" id="Node000005" href="$classAsyncFw_1_1AbstractTlsSocket.html#ad26bb910e65bb758bfed6448e1af7186" title="Intermediate signal hub executed immediately when a secure cryptographic tunnel is fully established." alt="" coords="444,33,636,76"/>
 <area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="362,114,443,86,465,81,460,83,445,91,364,119"/>
 <area shape="rect" id="Node000006" href="$classAsyncFw_1_1AbstractTlsSocket.html#a46dbd8e4895445214a4f46ee46433d6c" title="Immediately releases OpenSSL session pointers and forcefully closes the system&#45;level descriptor." alt="" coords="444,233,636,276"/>
 <area shape="poly" id="edge6_Node000002_Node000006" title=" " alt="" coords="347,158,397,186,421,203,445,219,458,227,453,227,443,224,418,208,395,190,346,163"/>

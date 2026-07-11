@@ -108,9 +108,9 @@
 <polygon fill="#9a32cd" stroke="#9a32cd" points="158.02,-51.55 147.7,-53.96 157.27,-58.51 158.02,-51.55"/>
 </a>
 </g>
-<text xml:space="preserve" text-anchor="start" x="194.88" y="-103.74" font-family="Helvetica,sans-Serif" font-size="10.00" fill="grey">destroing</text>
-<text xml:space="preserve" text-anchor="start" x="194.88" y="-87.74" font-family="Helvetica,sans-Serif" font-size="10.00" fill="grey">finished</text>
-<text xml:space="preserve" text-anchor="start" x="194.88" y="-71.74" font-family="Helvetica,sans-Serif" font-size="10.00" fill="grey">started</text>
+<text xml:space="preserve" text-anchor="start" x="192.25" y="-103.74" font-family="Helvetica,sans-Serif" font-size="10.00" fill="grey">destroying</text>
+<text xml:space="preserve" text-anchor="start" x="192.25" y="-87.74" font-family="Helvetica,sans-Serif" font-size="10.00" fill="grey">finished</text>
+<text xml:space="preserve" text-anchor="start" x="192.25" y="-71.74" font-family="Helvetica,sans-Serif" font-size="10.00" fill="grey">started</text>
 </g>
 <!-- Node7 -->
 <g id="Node000007" class="node">

@@ -218,7 +218,7 @@
 <!-- Node11 -->
 <g id="Node000011" class="node">
 <title>Node11</title>
-<g id="a_Node000011"><a xlink:href="classAsyncFw_1_1AbstractSocket.html#a3f4a74f0ab83d096bd37118bb28d8654" target="_top" xlink:title="Non&#45;destructively glimpses at the internal unread data buffer without consuming it.">
+<g id="a_Node000011"><a xlink:href="classAsyncFw_1_1AbstractSocket.html#a3f4a74f0ab83d096bd37118bb28d8654" target="_top" xlink:title="Non&#45;destructively inspects the internal unread data buffer without consuming it.">
 <polygon fill="white" stroke="#666666" points="433.5,-82 302.75,-82 302.75,-50 433.5,-50 433.5,-82"/>
 <text xml:space="preserve" text-anchor="start" x="310.75" y="-68.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AbstractSocket</text>
 <text xml:space="preserve" text-anchor="middle" x="368.12" y="-56.5" font-family="Helvetica,sans-Serif" font-size="10.00">::peek</text>

@@ -49,7 +49,7 @@ int main(int argc, char *argv[]) {
   logError() << "Error";
   logAlert() << "logAlert";
   // Un-commenting logEmergency will immediately call std::terminate() because of the Emergency log level
-  logEmergency() << "Emergency";
+  //logEmergency() << "Emergency";
 
   // 7. Request graceful application loop shutdown via the current thread context
   AsyncFw::Thread::current()->invoke([]() { AsyncFw::MainThread::exit(); });

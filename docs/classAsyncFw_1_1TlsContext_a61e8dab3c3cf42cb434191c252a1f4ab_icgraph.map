@@ -1,0 +1,7 @@
+<map id="AsyncFw::TlsContext::opensslCtx" name="AsyncFw::TlsContext::opensslCtx">
+<area shape="rect" id="Node000001" title="Returns a pointer to the underlying native OpenSSL context structure." alt="" coords="478,5,626,48"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractTlsSocket.html#a9043562cf451851003009adedb277d7b" title="Checks whether the underlying OpenSSL context structure has not been initialized or assigned." alt="" coords="238,5,430,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="460,27,431,29,431,24,465,27"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1DataArraySocket.html#a02696f976d1d5724c250b68d4fc5a0c5" title="Initializes the socket for a server&#45;side connection (handling an accepted client)." alt="" coords="5,5,190,48"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="219,27,190,29,190,24,225,26"/>
+</map>

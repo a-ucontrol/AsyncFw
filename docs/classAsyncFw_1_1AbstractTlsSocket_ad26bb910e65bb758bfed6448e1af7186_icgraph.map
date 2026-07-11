@@ -1,5 +1,5 @@
 <map id="AsyncFw::AbstractTlsSocket::activateReady" name="AsyncFw::AbstractTlsSocket::activateReady">
-<area shape="rect" id="Node000001" title="Intermediate signal hub executed immediately when a secure cryptographic tunnel has been fully establ..." alt="" coords="444,5,636,48"/>
+<area shape="rect" id="Node000001" title="Intermediate signal hub executed immediately when a secure cryptographic tunnel is fully established." alt="" coords="444,5,636,48"/>
 <area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractTlsSocket.html#a57ac6daff9926cf631abcd1e19073cc8" title="Core internal event handler reacting to raw descriptor readiness signals." alt="" coords="204,5,396,48"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="426,27,397,29,396,24,431,27"/>
 <area shape="rect" id="Node000003" href="$classAsyncFw_1_1HttpSocket.html#ad51bb1bf5880c3037c7ad70231c0767d" title="Core internal event handler reacting to raw descriptor readiness signals." alt="" coords="5,5,156,48"/>

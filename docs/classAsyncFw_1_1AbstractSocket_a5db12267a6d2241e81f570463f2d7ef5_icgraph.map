@@ -12,7 +12,7 @@
 <area shape="poly" id="edge33_Node000001_Node000027" title=" " alt="" coords="1436,290,1388,336,1332,377,1309,389,1307,384,1329,372,1385,332,1431,292"/>
 <area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractTlsSocket.html#a57ac6daff9926cf631abcd1e19073cc8" title="Core internal event handler reacting to raw descriptor readiness signals." alt="" coords="675,5,868,48"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="1149,42,1108,36,983,26,869,26,868,20,983,21,1108,31,1154,41"/>
-<area shape="rect" id="Node000005" href="$classAsyncFw_1_1AbstractTlsSocket.html#ad26bb910e65bb758bfed6448e1af7186" title="Intermediate signal hub executed immediately when a secure cryptographic tunnel has been fully establ..." alt="" coords="916,45,1108,88"/>
+<area shape="rect" id="Node000005" href="$classAsyncFw_1_1AbstractTlsSocket.html#ad26bb910e65bb758bfed6448e1af7186" title="Intermediate signal hub executed immediately when a secure cryptographic tunnel is fully established." alt="" coords="916,45,1108,88"/>
 <area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="1138,67,1109,69,1108,64,1143,66"/>
 <area shape="rect" id="Node000004" href="$classAsyncFw_1_1HttpSocket.html#ad51bb1bf5880c3037c7ad70231c0767d" title="Core internal event handler reacting to raw descriptor readiness signals." alt="" coords="460,39,610,81"/>
 <area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="657,44,612,52,610,47,662,41"/>

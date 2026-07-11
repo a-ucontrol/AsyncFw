@@ -5,5 +5,6 @@ var classAsyncFw_1_1Thread =
     [ "finishedEvent", "classAsyncFw_1_1Thread.html#ae9fc9cf8baddcc8dfa0e14784918c4a5", null ],
     [ "started", "classAsyncFw_1_1Thread.html#abac958eae1def0e3c0e32a7ebebc45eb", null ],
     [ "finished", "classAsyncFw_1_1Thread.html#ad4c31cb77c83c080affcd0cda66debe4", null ],
-    [ "destroing", "classAsyncFw_1_1Thread.html#a396bc155ef2b2c866a2dd4a145ef404e", null ]
+    [ "destroying", "classAsyncFw_1_1Thread.html#a2586807d64cba1eb6bd6af4e0cc4919a", null ],
+    [ "sockets_", "classAsyncFw_1_1Thread.html#a92780087225a95405529ddabbce2ae07", null ]
 ];

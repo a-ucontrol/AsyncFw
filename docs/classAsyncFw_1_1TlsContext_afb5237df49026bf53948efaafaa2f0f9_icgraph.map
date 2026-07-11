@@ -1,0 +1,5 @@
+<map id="AsyncFw::TlsContext::setCertificate" name="AsyncFw::TlsContext::setCertificate">
+<area shape="rect" id="Node000001" title="Set certificate." alt="" coords="202,5,350,48"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1TlsContext.html#a5a5b903dc3ed153720b6c50367c0c309" title="Parses a raw PEM&#45;formatted X509 certificate buffer and extracts its metadata header." alt="" coords="5,5,154,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="184,27,154,29,154,24,189,26"/>
+</map>

@@ -21,7 +21,7 @@
 <area shape="poly" id="edge9_Node000008_Node000009" title=" " alt="" coords="815,124,862,126,857,127,815,129"/>
 <area shape="poly" id="edge11_Node000010_Node000002" title=" " alt="" coords="313,120,356,89,408,58,417,56,422,54,410,62,359,93,316,125"/>
 <area shape="poly" id="edge14_Node000010_Node000007" title=" " alt="" coords="361,123,396,117,391,119,362,128"/>
-<area shape="rect" id="Node000011" href="$classAsyncFw_1_1AbstractSocket.html#a3f4a74f0ab83d096bd37118bb28d8654" title="Non&#45;destructively glimpses at the internal unread data buffer without consuming it." alt="" coords="409,139,583,181"/>
+<area shape="rect" id="Node000011" href="$classAsyncFw_1_1AbstractSocket.html#a3f4a74f0ab83d096bd37118bb28d8654" title="Non&#45;destructively inspects the internal unread data buffer without consuming it." alt="" coords="409,139,583,181"/>
 <area shape="poly" id="edge12_Node000010_Node000011" title=" " alt="" coords="361,147,396,152,391,152,362,152"/>
 <area shape="rect" id="Node000012" href="$classAsyncFw_1_1DataArray.html#a5406261e5730adfa64e4d0bbd0083e31" title="Creates a lightweight, non&#45;allocating view slicing a sub&#45;region of this byte array." alt="" coords="424,205,568,248"/>
 <area shape="poly" id="edge15_Node000010_Node000012" title=" " alt="" coords="341,163,410,191,426,199,421,199,408,196,340,168"/>

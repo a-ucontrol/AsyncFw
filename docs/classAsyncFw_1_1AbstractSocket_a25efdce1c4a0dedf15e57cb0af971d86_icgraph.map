@@ -1,6 +1,6 @@
 <map id="AsyncFw::AbstractSocket::read_fd" name="AsyncFw::AbstractSocket::read_fd">
 <area shape="rect" id="Node000001" title="Low&#45;level native operating system read operation proxying requests directly down to the fd handle." alt="" coords="683,72,858,115"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractSocket.html#a3f4a74f0ab83d096bd37118bb28d8654" title="Non&#45;destructively glimpses at the internal unread data buffer without consuming it." alt="" coords="452,5,626,48"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractSocket.html#a3f4a74f0ab83d096bd37118bb28d8654" title="Non&#45;destructively inspects the internal unread data buffer without consuming it." alt="" coords="452,5,626,48"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="677,67,616,51,616,46,683,67"/>
 <area shape="rect" id="Node000005" href="$classAsyncFw_1_1AbstractSocket.html#a374dd4ce66bfcc8a6dcf40b4ba552828" title="Reads incoming data into a raw byte buffer up to a specified maximum size." alt="" coords="452,72,626,115"/>
 <area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="665,94,627,96,626,91,670,93"/>

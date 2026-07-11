@@ -11,7 +11,7 @@
 <!-- Node1 -->
 <g id="Node000001" class="node">
 <title>Node1</title>
-<g id="a_Node000001"><a xlink:title="Intermediate signal hub executed immediately when a secure cryptographic tunnel has been fully establ...">
+<g id="a_Node000001"><a xlink:title="Intermediate signal hub executed immediately when a secure cryptographic tunnel is fully established.">
 <polygon fill="#999999" stroke="#666666" points="473.25,-32 329,-32 329,0 473.25,0 473.25,-32"/>
 <text xml:space="preserve" text-anchor="start" x="337" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AbstractTlsSocket</text>
 <text xml:space="preserve" text-anchor="middle" x="401.12" y="-6.5" font-family="Helvetica,sans-Serif" font-size="10.00">::activateReady</text>

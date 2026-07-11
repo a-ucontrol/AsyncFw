@@ -10,7 +10,7 @@ var searchData=
   ['errorexchangethread_7',['ErrorExchangeThread',['../classAsyncFw_1_1DataArrayTcpClient.html#ac9d422208fb30613d8eb7781f9241f7ba2ce8e07b6e0c64ad132c4252ab4d5d28',1,'AsyncFw::DataArrayTcpClient']]],
   ['errorexchangetimeout_8',['ErrorExchangeTimeout',['../classAsyncFw_1_1DataArrayTcpClient.html#ac9d422208fb30613d8eb7781f9241f7bad6409e4e73f5751be1f7765c9ca7b84e',1,'AsyncFw::DataArrayTcpClient']]],
   ['errorexchangetransmit_9',['ErrorExchangeTransmit',['../classAsyncFw_1_1DataArrayTcpClient.html#ac9d422208fb30613d8eb7781f9241f7baf4fd635887a0ada6dde08967253fa2d1',1,'AsyncFw::DataArrayTcpClient']]],
-  ['errorstring_10',['errorString',['../classAsyncFw_1_1AbstractSocket.html#a7dec1397dbd20b891e20aeb14a253779',1,'AsyncFw::AbstractSocket']]],
+  ['errorstring_10',['errorString',['../classAsyncFw_1_1AbstractSocket.html#a7dec1397dbd20b891e20aeb14a253779',1,'AsyncFw::AbstractSocket::errorString()'],['../classAsyncFw_1_1TlsContext.html#a712171aa534c1f982c8d449fe17a6e7d',1,'AsyncFw::TlsContext::errorString()']]],
   ['errortransmit_11',['ErrorTransmit',['../classAsyncFw_1_1DataArrayAbstractTcp.html#a0a77d6d5e166af850a5dfb588ccbc8fbab13d6924f9f052b5cd28a86872b6bf86',1,'AsyncFw::DataArrayAbstractTcp']]],
   ['errortransmitinvoke_12',['ErrorTransmitInvoke',['../classAsyncFw_1_1DataArrayAbstractTcp.html#a0a77d6d5e166af850a5dfb588ccbc8fba38dabc9c658f0b2bebeecf100ada6b0d',1,'AsyncFw::DataArrayAbstractTcp']]],
   ['errortransmitnotactive_13',['ErrorTransmitNotActive',['../classAsyncFw_1_1DataArrayAbstractTcp.html#a0a77d6d5e166af850a5dfb588ccbc8fbacdf8f0246690ec54521eb89db2e0676f',1,'AsyncFw::DataArrayAbstractTcp']]],

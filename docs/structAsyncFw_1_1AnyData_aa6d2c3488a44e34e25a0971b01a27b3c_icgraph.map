@@ -12,7 +12,7 @@
 <area shape="poly" id="edge14_Node000001_Node000012" title=" " alt="" coords="962,215,879,249,847,261,845,255,877,244,957,216"/>
 <area shape="rect" id="Node000016" href="$classAsyncFw_1_1AbstractTlsSocket.html#a84a79c1f921e96efd6b4f47cd7cd91e0" title="Low&#45;level encryption routing path proxying outgoing payload directly up to SSL_write()." alt="" coords="443,323,635,365"/>
 <area shape="poly" id="edge19_Node000001_Node000016" title=" " alt="" coords="991,220,944,272,913,297,879,316,818,336,754,348,692,353,636,354,636,348,692,348,754,343,817,331,877,311,910,292,940,268,986,223"/>
-<area shape="rect" id="Node000004" href="$classAsyncFw_1_1AbstractSocket.html#a3f4a74f0ab83d096bd37118bb28d8654" title="Non&#45;destructively glimpses at the internal unread data buffer without consuming it." alt="" coords="452,11,626,53"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1AbstractSocket.html#a3f4a74f0ab83d096bd37118bb28d8654" title="Non&#45;destructively inspects the internal unread data buffer without consuming it." alt="" coords="452,11,626,53"/>
 <area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="697,86,606,57,606,51,702,85"/>
 <area shape="rect" id="Node000007" href="$classAsyncFw_1_1AbstractSocket.html#a374dd4ce66bfcc8a6dcf40b4ba552828" title="Reads incoming data into a raw byte buffer up to a specified maximum size." alt="" coords="452,83,626,125"/>
 <area shape="poly" id="edge6_Node000003_Node000007" title=" " alt="" coords="675,109,627,110,627,104,680,108"/>
