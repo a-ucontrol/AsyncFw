@@ -76,7 +76,7 @@ public:
     AbstractThread *thread_ = nullptr;
   };
 
-  /** @brief Runs a function in a managed thread. @param function Runs function. @param sync Blocking wait if true. @return True if the function is added to the queue. */
+  /** @brief Runs a function in a managed thread. @param function The function to be executed. @param sync Blocking wait if true. @return True if the function is added to the queue. */
   template <typename F>
   typename std::enable_if<std::is_void<typename std::invoke_result<F>::type>::value, bool>::type invoke(F function, bool sync = false) const {
     if (!sync) {

@@ -550,7 +550,7 @@ void AbstractSocket::pollEvent(int _e) {
 namespace AsyncFw {
 LogStream &operator<<(LogStream &log, const AbstractSocket &s) {
   if (s.thread_) s.thread_->invoke([&log, &s]() { log << '(' + s.thread_->name() + ')' << s.fd_ << static_cast<int>(s.state_) << '-' << s.address() + ':' + std::to_string(s.port()) + '/' + s.peerAddress() + ':' + std::to_string(s.peerPort()); }, true);
-  else log << "destroing:" << s.address() + ':' + std::to_string(s.port()) + '/' + s.peerAddress() + ':' + std::to_string(s.peerPort());
+  else log << "destroying:" << s.address() + ':' + std::to_string(s.port()) + '/' + s.peerAddress() + ':' + std::to_string(s.peerPort());
   return log;
 }
 }  // namespace AsyncFw

@@ -152,11 +152,12 @@ LogStream::LogStream(uint8_t type, const char *function, const char *file, int l
   if (flags & 0x0001) name += sender(function);
   else { name += function; }
 }
-
-LogStream::~LogStream() noexcept(false) {
+void handle() {}
+LogStream::~LogStream() {
   if ((type & 0x07) == Emergency) {
     data.completed({type, name, ((flags & 0x8000) ? stream.str() : ""), std::string(file) + ":" + std::to_string(line)}, flags | LOG_STREAM_FLUSH);
-    throw std::runtime_error("log level emergency");
+    std::cerr << "\n[FATAL] Log Level Emergency: Runtime termination triggered at " << file << ":" << line << "\n";
+    std::terminate();
   }
   data.completed({type, name, ((flags & 0x8000) ? stream.str() : ""), std::string(file) + ":" + std::to_string(line)}, flags);
 }

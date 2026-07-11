@@ -43,7 +43,7 @@ protected:
   AbstractTlsSocket();
   /** @brief Virtual destructor. Disposes of allocated OpenSSL instances and clean private data maps. */
   ~AbstractTlsSocket() override;
-  /** @brief Intermediate signal hub executed immediately when a secure cryptographic tunnel has been fully established.
+  /** @brief Intermediate signal hub executed immediately when a secure cryptographic tunnel is fully established.
   @details Overrides should call this method to propagate ready events up to packet parser layers. */
   virtual void activateReady();
   /** @brief Core internal event handler reacting to raw descriptor readiness signals.

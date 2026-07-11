@@ -62,13 +62,13 @@ public:
   void removeFromThread();
   /** @brief Listen for incoming connections on address and port. @param address Address. @param port Port @return True if success. */
   bool listen(const std::string &, uint16_t);
-  /** @brief Non-destructively glimpses at the internal unread data buffer without consuming it. @return Reference to a DataArray containing the currently buffered incoming data. */
+  /** @brief Non-destructively inspects the internal unread data buffer without consuming it. @return Reference to a DataArray containing the currently buffered incoming data. */
   DataArray &peek();
   /** @brief Reads incoming data into a raw byte buffer up to a specified maximum size. @param buffer Destination raw byte array pointer. @param maxSize Maximum number of bytes to read into the buffer. @return Number of bytes successfully read, or a negative value on error. */
   int read(uint8_t *, int);
   /** @brief Reads a chunk of incoming data and extracts it into a returned DataArray object. @param size Exact or maximum chunk size to extract. If 0, extracts all available data. @return A DataArray containing the read payload. */
   DataArray read(int = 0);
-  /** @brief Writes raw binary bytes out to the network socket layer. @param data Source raw memory buffer pointer containing data to transmit. @param size Total byte size metrics to pull and transmit from the data pointer. @return Number of bytes successfully dispatched to the socket queue, or a negative value on error. */
+  /** @brief Writes raw binary bytes out to the network socket layer. @param data Source raw memory buffer pointer containing data to transmit. @param size The number of bytes to transmit from the data buffer. @return Number of bytes successfully dispatched to the socket queue, or a negative value on error. */
   int write(const uint8_t *, int);
   /** @brief Transmits a structural DataArray package out to the network layer. @param data Reference to the DataArray containing the payload to write. @return Number of bytes successfully dispatched to the socket queue, or a negative value on error. */
   int write(const DataArray &);
@@ -96,7 +96,8 @@ protected:
   /** @brief Virtual destructor. Automatically detaches socket from thread if still attached. */
   virtual ~AbstractSocket();
 
-  /** @brief Called when established connection. */
+  /** @brief Called when established connection.
+  @details This method handles the internal non-blocking state machinery, managing background handshake operations before data transfer begins. */
   virtual void activateEvent();
   /** @brief Called when the connection state changes.
   @warning When state is State::Destroy, the socket thread pointer is guaranteed to be nullptr. */

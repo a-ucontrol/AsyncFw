@@ -57,7 +57,7 @@ private:
 };
 
 /** @class ThreadPool ThreadPool.h <AsyncFw/ThreadPool> @brief Manages a set of reusable worker threads for concurrent task execution, eliminating the need to spawn a new thread for each individual task.
-@brief By queuing tasks and recycling existing threads, it improves system performance, constrains resource allocation, and significantly reduces the overhead associated with thread creation and destruction.
+@details By queuing tasks and recycling existing threads, it improves system performance, constrains resource allocation, and significantly reduces the overhead associated with thread creation and destruction.
 @snippet ThreadPool/main.cpp snippet */
 class ThreadPool : public AbstractThreadPool {
 public:

@@ -32,7 +32,8 @@ struct CoroutineTask {
     void unhandled_exception() {}
     void return_void();
     /** @brief Schedules the coroutine continuation on the thread where the promise_type was created.
-    @details Postpones or queues coroutine_handle::resume via the thread event loop. */
+    @details Postpones or queues coroutine_handle::resume via the thread event loop.
+    @note This guarantees that all subsequent code execution following a co_await split point always resumes safely inside the caller's original thread context. */
     void resume_queued();
 
   private:

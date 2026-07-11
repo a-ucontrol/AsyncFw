@@ -133,7 +133,7 @@ public:
 
   LogStream(uint8_t, const char *, const char *, int, uint8_t = 0);
   LogStream() = default;
-  ~LogStream() noexcept(false);
+  ~LogStream();
   /** @brief Generic stream insertion operator for appending variables and primitives. */
   template <typename T>
   inline LogStream &operator<<(T val) {

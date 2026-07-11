@@ -33,7 +33,7 @@ Thread *Thread::current() { return static_cast<Thread *>(AbstractThread::current
 Thread::Thread(const std::string &name) : AbstractThread(name) { trace(); }
 
 Thread::~Thread() {
-  destroing();
+  destroying();
   warning_if(!sockets_.empty()) << "socket list not empty" << sockets_.size();
   if (AbstractThread::running()) {
     lsWarning() << "destroy running thread" << '(' + name() + ')';

@@ -242,7 +242,7 @@ public:
   HttpServer(const std::string & = {});
   virtual ~HttpServer();
   /** @brief Binds a free-standing function or a lambda expression as a route handler.
-   @n Automatically generates a fallback handler for OPTIONS requests (CORS handling) unless it has already been explicitly declared for the target path. @tparam A Callable function wrapper type matching `void(const Request&)`. @param url The endpoint URI pattern (e.g., "/api/v1/status"). @param method The target HTTP execution method. @param action The user function invoked when the endpoint is matched. @param data Optional context variable evaluated by the global `peek` filter. */
+   @n Automatically generates a fallback handler for OPTIONS requests (CORS handling) unless it has already been explicitly declared for the target path. @tparam A Callable function wrapper type matching void(const Request&). @param url The endpoint URI pattern (e.g., "/api/v1/status"). @param method The target HTTP execution method. @param action The user function invoked when the endpoint is matched. @param data Optional context variable evaluated by the global peek filter. */
   template <typename A>
   void addRoute(const std::string &url, Request::Method method, A action, const std::any &data = {}) {
     addRule(url, method, [this, action, data](const Request &request) {
@@ -254,12 +254,12 @@ public:
       else { request.response()->setStatusCode(Response::StatusCode::Forbidden); }
     });
   }
-  /** @brief Binds a specific class instance method as a route handler. @tparam O Pointer type targeting the owning class instance. @tparam A Pointer type matching a method signature of `void Object::Method(const Request&)`. @param object Pointer to the instance executing the action. @param url The endpoint URI pattern. @param method The target HTTP execution method. @param action Pointer to the member method. @param data Optional context variable evaluated by the global `peek` filter. */
+  /** @brief Binds a specific class instance method as a route handler. @tparam O Pointer type targeting the owning class instance. @tparam A Pointer type matching a method signature of void Object::Method(const Request&). @param object Pointer to the instance executing the action. @param url The endpoint URI pattern. @param method The target HTTP execution method. @param action Pointer to the member method. @param data Optional context variable evaluated by the global peek filter. */
   template <typename O, typename A>
   void addRoute(const O object, const std::string &url, Request::Method method, A action, const std::any &data = {}) {
     addRoute(url, method, [object, action](const Request &request) { return (object->*action)(request); }, data);
   }
-  /** @brief Broadcasts a binary array payload to active WebSocket connections matching a specific filter criteria. @n Iterates through connected channels, matching their internal `socketData` against the provided key. @tparam T Type of the verification value stored inside the socket state. @param _data Reference value used to filter recipient sockets. @param _da Raw payload data to package inside the WebSocket framing layer. @return Count of successfully messaged channels, or -1 if framing layout serialization failed. */
+  /** @brief Broadcasts a binary array payload to active WebSocket connections matching a specific filter criteria. @n Iterates through connected channels, matching their internal socketData against the provided key. @tparam T Type of the verification value stored inside the socket state. @param _data Reference value used to filter recipient sockets. @param _da Raw payload data to package inside the WebSocket framing layer. @return Count of successfully messaged channels, or -1 if framing layout serialization failed. */
   template <typename T>
   int sendToWebSockets(const T &_data, const AsyncFw::DataArray &_da) {
     AsyncFw::DataArray _f;
@@ -279,12 +279,12 @@ public:
   }
 
 public:
-  /** @brief Assigns a global interceptor/validation hook (Peek) evaluated prior to any route action execution. @n If this predicate hook evaluates to `false`, the underlying endpoint handler action execution is aborted. @tparam T Callable interceptor function wrapper type matching `bool(const Request&, std::any)`. @param f Predicate logic function. */
+  /** @brief Assigns a global interceptor/validation hook (Peek) evaluated prior to any route action execution. @n If this predicate hook evaluates to false, the underlying endpoint handler action execution is aborted. @tparam T Callable interceptor function wrapper type matching bool(const Request&, std::any). @param f Predicate logic function. */
   template <typename T>
   void setPeek(T f) {
     peek = new Invocable<bool(const Request &, std::any)>::Function(std::forward<T>(f));
   }
-  /** @brief Explicitly severs connections with active sockets holding custom user metadata matching `data`. @tparam T Type identifier matching the socket data context block. @param _data Target match signature identifying channels to be dropped. */
+  /** @brief Explicitly severs connections with active sockets holding custom user metadata matching data. @tparam T Type identifier matching the socket data context block. @param _data Target match signature identifying channels to be dropped. */
   template <typename T>
   void clearConnections(const T &data) {
     for (TcpSocket *socket : sockets) {

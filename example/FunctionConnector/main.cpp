@@ -31,7 +31,7 @@ public:
   Sender() {
     timer.timeout.connect([this]() {
       AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::current();
-      logInfo() << cnt << "send from thread:" << ct->name() << ct->id();
+      lsInfoGreen() << cnt << "send from thread:" << ct->name() << ct->id();
       connector(cnt++, _tst);
       if (cnt == 1) AsyncFw::MainThread::exit(0);
     });
@@ -41,11 +41,19 @@ public:
   AsyncFw::FunctionConnector<int, TST>::Protected<Sender> connector;
 
 private:
-  TST _tst{1010};
+  TST _tst {1010};
   int cnt = 0;
   AsyncFw::Timer timer;
 };
 
+class Receiver {
+public:
+  void send(int _i, TST _t) {
+    lsInfoGreen();
+    connector(_i, _t);
+  }
+  AsyncFw::FunctionConnector<int, TST>::Protected<Receiver> connector;
+};
 
 int main(int argc, char *argv[]) {
   Sender *sender;
@@ -55,9 +63,13 @@ int main(int argc, char *argv[]) {
   thread.invoke([&sender]() {
     sender = new Sender;  // created in thread SenderThread
   }, true);
+  Receiver receiver;
+  AsyncFw::FunctionConnectionGuardList _gl;
+  _gl += sender->connector.connect<AsyncFw::AbstractFunctionConnector::Connection::Queued>(&Receiver::send, &receiver);
+  _gl += receiver.connector.connect([](int _i, TST _t) { lsInfoGreen() << "receiver" << _i << _t.val; });
 
   auto lambda = [](int val, TST tst) {
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
     lsNotice() << "sender->connector (lambda)" << val << tst.val;
   };
   sender->connector.connect<AsyncFw::AbstractFunctionConnector::Connection::Queued>(lambda);

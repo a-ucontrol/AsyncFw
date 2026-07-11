@@ -10,6 +10,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include <openssl/core_names.h>
 #include <openssl/x509v3.h>
 
+#include <atomic>
 #include <algorithm>
 #include "DataArray.h"
 #include "LogStream.h"
@@ -36,7 +37,7 @@ struct TlsContext::Private {
   std::string verifyName_;
 
   int serial_ = 0;
-  int ref_ = 1;
+  std::atomic_int ref_ = 1;
   uint8_t ignoreErrors_ = 0;
 
   static inline std::vector<Private *> verify_;
@@ -174,7 +175,7 @@ bool TlsContext::generateCertificate(const std::vector<std::pair<std::string, st
   return r == 1;
 }
 
-DataArray TlsContext::generateRequest(const std::vector<std::pair<std::string, std::string>> &subject, const std::string &san, const std::string &ca) {
+DataArray TlsContext::generateRequest(const std::vector<std::pair<std::string, std::string>> &subject, const std::string &san, const std::string &extensions) {
   EVP_PKEY *_k = SSL_CTX_get0_privatekey(private_->ctx_);
   if (!_k) {
     lsError() << "get key";
@@ -194,8 +195,8 @@ DataArray TlsContext::generateRequest(const std::vector<std::pair<std::string, s
     return {};
   }
   X509_EXTENSION *ext_ca = nullptr;
-  if (!ca.empty()) {
-    ext_ca = X509V3_EXT_conf(NULL, NULL, SN_basic_constraints, ca.c_str());
+  if (!extensions.empty()) {
+    ext_ca = X509V3_EXT_conf(NULL, NULL, SN_basic_constraints, extensions.c_str());
     if (!ext_ca) {
       sk_X509_EXTENSION_free(extlist);
       lsError() << "add ca ext";
@@ -417,20 +418,20 @@ int TlsContext::verify(int ok, X509_STORE_CTX *ctx) {
   return ok;
 }
 
-std::string TlsContext::infoKey(const DataArray &_da) {
+std::string TlsContext::infoKey(const DataArray &key) {
   TlsContext _c;
-  if (!_c.setKey(_da)) return {};
+  if (!_c.setKey(key)) return {};
   return _c.infoKey();
 }
 
-std::string TlsContext::infoCertificate(const DataArray &_da) {
+std::string TlsContext::infoCertificate(const DataArray &certificate) {
   TlsContext _c;
-  if (!_c.setCertificate(_da)) return {};
+  if (!_c.setCertificate(certificate)) return {};
   return _c.infoCertificate();
 }
 
-std::string TlsContext::infoRequest(const DataArray &req) {
-  BIO *_bio = BIO_new_mem_buf(req.data(), req.size());
+std::string TlsContext::infoRequest(const DataArray &request) {
+  BIO *_bio = BIO_new_mem_buf(request.data(), request.size());
   X509_REQ *_r = PEM_read_bio_X509_REQ(_bio, NULL, NULL, NULL);
   BIO_free(_bio);
   _bio = BIO_new(BIO_s_mem());

@@ -73,11 +73,11 @@ class DataArrayList : public std::vector<DataArray> {
 public:
   using std::vector<DataArray>::vector;
   /** @brief Flattens and concatenates all elements in this list into a single unified array, separated by a glue character.
-  @param c The spacer byte inserted between adjacent items. @return A newly allocation-merged DataArray. */
+  @param c The spacer byte inserted between adjacent items. @return A newly allocated, merged DataArray container. */
   DataArray join(const char) const;
 };
 /** @class DataStream DataArray.h <AsyncFw/DataArray> @brief A fast, compact binary serialization stream.
-@details Supports stream operators (<< and >>) to easily pack and unpack primitives, strings, and byte arrays into variable-length compressed blocks.
+@details Supports stream operators (<< and >>) to easily encode and decode primitives, strings, and byte arrays into packed, tightly structured binary payloads using optimized variable-length length prefixes.
 @note This class explicitly blocks copying and moving.
 @brief Example: @snippet DataArray/main.cpp snippet */
 class DataStream {
@@ -88,7 +88,7 @@ public:
   DataStream(const DataArray &);
   ~DataStream();
 
-  /** @name Serialization Operators
+  /** @Serialization & Deserialization Operators
   @{ */
   DataStream &operator<<(int8_t);
   DataStream &operator>>(int8_t &);
