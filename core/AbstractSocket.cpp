@@ -502,10 +502,6 @@ void AbstractSocket::pollEvent(int _e) {
       readEvent();
       if (private_.rs_ > 0) read_fd();
     } else if (private_.rs_ < 0) {
-      if (errno) {
-        lsWarning() << LogStream::Color::Yellow << "spurious POLLIN detected on fd:" << fd_ << "errno:" << errno;
-        return;
-      }
       if (private_.rs_ == -1) {
         private_.errorString_ = "Connection closed";
         private_.error_ = Closed;
