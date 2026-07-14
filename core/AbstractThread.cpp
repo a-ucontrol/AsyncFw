@@ -18,6 +18,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
   #define SOCKET_CLOSE_WAKE
   #define POLL_WAIT
   //#define EPOLL_WAIT
+  //#define IO_URING_WAIT
 #else
   #ifdef __linux
     #define EVENTFD_WAKE
@@ -58,6 +59,9 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
   #elif defined EPOLL_WAIT
     #include <sys/epoll.h>
     #define EPOLL_WAIT_EVENTS 32
+  #elif defined IO_URING_WAIT
+    #include <liburing.h>
+    #define IO_URING_QUEUE_SIZE 256
   #endif
   #include <unistd.h>
   #define close_fd ::close
@@ -75,7 +79,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #ifdef POLL_WAIT
   #define WAKE_FD fds_[0].fd
-#elif defined EPOLL_WAIT
+#elif defined EPOLL_WAIT || defined IO_URING_WAIT
   #define WAKE_FD wake_task.fd
 #endif
 
@@ -99,6 +103,10 @@ struct AbstractThread::Private {
     ~PollTask() { delete task; }
     int fd;
     AbstractPollTask *task;
+#ifdef IO_URING_WAIT
+    uint32_t events;
+    bool active;
+#endif
   };
 
   struct Compare {
@@ -146,6 +154,9 @@ struct AbstractThread::Private {
 #elif defined EPOLL_WAIT
   int epoll_fd;
   PollTask wake_task;
+#elif defined IO_URING_WAIT
+  struct io_uring ring;
+  PollTask wake_task;
 #endif
 
   struct ProcessTimerTask {
@@ -156,7 +167,7 @@ struct AbstractThread::Private {
     int fd;
 #ifdef POLL_WAIT
     short int events;
-#elif defined EPOLL_WAIT
+#elif defined EPOLL_WAIT || defined IO_URING_WAIT
     uint32_t events;
 #endif
     AbstractPollTask *task;
@@ -286,6 +297,16 @@ AbstractThread::AbstractThread(const std::string &name) : private_(*new Private)
   private_.wake_task.task = nullptr;
   event.data.ptr = &private_.wake_task;
   epoll_ctl(private_.epoll_fd, EPOLL_CTL_ADD, private_.WAKE_FD, &event);
+#elif defined IO_URING_WAIT
+  if (io_uring_queue_init(IO_URING_QUEUE_SIZE, &private_.ring, 0) < 0) lsError() << "io_uring init failed";
+  struct io_uring_sqe *sqe = io_uring_get_sqe(&private_.ring);
+  if (sqe) {
+    private_.wake_task.task = nullptr;
+    private_.wake_task.fd = private_.WAKE_FD;
+    io_uring_prep_poll_multishot(sqe, private_.WAKE_FD, POLLIN_);
+    io_uring_sqe_set_data(sqe, &private_.wake_task);
+    io_uring_submit(&private_.ring);
+  }
 #endif
   lsTrace() << LOG_THREAD_NAME;
 }
@@ -309,6 +330,9 @@ AbstractThread::~AbstractThread() {
   close_fd(private_.WAKE_FD);
 #if !defined EVENTFD_WAKE && !defined SOCKET_CLOSE_WAKE
   close_fd(private_.WAKE_FD_WRITE);
+#endif
+#ifdef IO_URING_WAIT
+  io_uring_queue_exit(&private_.ring);
 #endif
 
   lsTrace() << LOG_THREAD_NAME << LogStream::Color::Magenta << private_.id << LogStream::Color::Default << "-" << private_.tasks.size() << private_.timers.size() << private_.poll_tasks.size() << "-" << private_.process_tasks_.size() << private_.process_timer_tasks_.size() << private_.process_poll_tasks_.size();
@@ -592,54 +616,139 @@ void AbstractThread::exec() {
               Private::PollTask *_d = static_cast<Private::PollTask *>(event[i].data.ptr);
               private_.process_poll_tasks_.push({_d->fd, event[i].events, _d->task});
             }
+#elif defined IO_URING_WAIT
+          struct io_uring_cqe *cqe = nullptr;
+          int r = 0;
+          struct __kernel_timespec ts;
+          ts.tv_sec = ms / 1000;
+          ts.tv_nsec = (ms % 1000) * 1000000LL;
+
+          private_.mutex.unlock();
+          int wait_ret = io_uring_wait_cqe_timeout(&private_.ring, &cqe, &ts);
+          private_.mutex.lock();
+
+          if (wait_ret == 0 || wait_ret == -ETIME) {
+            unsigned head;
+            unsigned count = 0;
+
+            // Временный вектор для безопасного отслеживания дескрипторов, требующих перевзвода
+            std::vector<Private::PollTask *> tasks_to_rearm;
+
+            io_uring_for_each_cqe(&private_.ring, head, cqe) {
+              r++;
+              // 1. Обработка системного дескриптора пробуждения потока (WAKE_FD)
+              if ((Private::PollTask *)cqe->user_data == &private_.wake_task) {
+                trace() << LogStream::Color::Magenta << "waked" << LOG_THREAD_NAME << private_.WAKE_FD << private_.wake_;
+                eventfd_t _v;
+                eventfd_read(private_.WAKE_FD, &_v);
+
+                // Само пробуждение (WAKE_FD) мы можем оставить в персистентном multishot-режиме,
+                // так как здесь нет сложной логики чтения/записи бизнес-данных.
+                if (!(cqe->flags & IORING_CQE_F_MORE)) {
+                  struct io_uring_sqe *sqe = io_uring_get_sqe(&private_.ring);
+                  if (sqe) {
+                    io_uring_prep_poll_multishot(sqe, private_.WAKE_FD, POLLIN_);
+                    io_uring_sqe_set_data(sqe, &private_.wake_task);
+                    io_uring_submit(&private_.ring);
+                  }
+                }
+              } else {
+                // Обработка стандартных пользовательских дескрипторов и пайпов процессов
+                Private::PollTask *_d = (Private::PollTask *)(cqe->user_data);
+
+                if (_d && cqe->res > 0) {
+                  _d->active = false;  // Сбрасываем флаг активности в ядре
+
+                  // Системные события закрытия канала/ошибки ядра (POLLHUP, POLLERR, POLLNVAL)
+                  // Они всегда должны доставляться во фреймворк, как в классическом epoll!
+                  uint32_t sys_faults = cqe->res & (POLLERR_ | POLLHUP_ | POLLNVAL_);
+
+                  // Пользовательские события (пересечение того, что просил пользователь, с тем, что дало ядро)
+                  uint32_t user_triggered = cqe->res & _d->events;
+
+                  // Итоговая маска, которая уйдет в бизнес-логику фреймворка
+                  uint32_t triggered = user_triggered | sys_faults;
+
+                  if (triggered) {
+                    // Теперь POLLHUP (16) гарантированно попадет в process_poll_tasks_
+                    private_.process_poll_tasks_.push({_d->fd, triggered, _d->task});
+                  }
+
+                  tasks_to_rearm.push_back(_d);
+                }
+              }
+              count++;
+            }
+            if (count > 0) { io_uring_cq_advance(&private_.ring, count); }
+            if (r > 0) {
 #endif
             if (private_.process_poll_tasks_.empty()) goto CONTINUE;
             private_.wake_ = true;
             private_.mutex.unlock();
             private_.process_polls();
             private_.mutex.lock();
-            goto CONTINUE;
-          }
-        }
-      }
+#ifdef IO_URING_WAIT
+            // Финальный перевзвод дескрипторов в конце exec()
+            for (Private::PollTask *_d : tasks_to_rearm) {
+              auto it = std::lower_bound(private_.poll_tasks.begin(), private_.poll_tasks.end(), _d->fd, Private::Compare());
+              if (it != private_.poll_tasks.end() && *it == _d) {
+                // ЗАЩИТА: Если маска сброшена, или если в процессе обработки pollEvent()
+                // дескриптор уже закрылся/сгенерировал ошибку, не отправляем его обратно в io_uring.
+                if (_d->events == PollNo) continue;
 
-      private_.wakeup = std::chrono::time_point<std::chrono::steady_clock>::max();
-      if (!private_.timers.empty()) {
-        for (Private::Timer &t : private_.timers) {
-          if (t.timeout == std::chrono::milliseconds(0)) continue;
-          if (t.expire <= now) {
-            t.expire += t.timeout;
-            if (t.expire <= now) {
-              console_msg("AbstractThread " + LOG_THREAD_NAME, "timer overload, interval: " + std::to_string(t.timeout.count()) + ", expired: " + std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>((now - t.expire + t.timeout)).count()));
-              t.expire = now + t.timeout;
+                struct io_uring_sqe *sqe = io_uring_get_sqe(&private_.ring);
+                if (sqe) {
+                  _d->active = true;
+                  io_uring_prep_poll_add(sqe, _d->fd, _d->events);
+                  io_uring_sqe_set_data(sqe, _d);
+                  io_uring_submit(&private_.ring);
+                }
+              }
             }
-            private_.process_timer_tasks_.push({t.id, t.task});
           }
-          if (private_.wakeup > t.expire) private_.wakeup = t.expire;
+#endif
+          goto CONTINUE;
         }
-        if (private_.process_timer_tasks_.empty()) goto CONTINUE;
-        private_.wake_ = true;
-        private_.mutex.unlock();
-        private_.process_timers();
-        private_.mutex.lock();
-        goto CONTINUE;
       }
     }
+
+    private_.wakeup = std::chrono::time_point<std::chrono::steady_clock>::max();
+    if (!private_.timers.empty()) {
+      for (Private::Timer &t : private_.timers) {
+        if (t.timeout == std::chrono::milliseconds(0)) continue;
+        if (t.expire <= now) {
+          t.expire += t.timeout;
+          if (t.expire <= now) {
+            console_msg("AbstractThread " + LOG_THREAD_NAME, "timer overload, interval: " + std::to_string(t.timeout.count()) + ", expired: " + std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>((now - t.expire + t.timeout)).count()));
+            t.expire = now + t.timeout;
+          }
+          private_.process_timer_tasks_.push({t.id, t.task});
+        }
+        if (private_.wakeup > t.expire) private_.wakeup = t.expire;
+      }
+      if (private_.process_timer_tasks_.empty()) goto CONTINUE;
+      private_.wake_ = true;
+      private_.mutex.unlock();
+      private_.process_timers();
+      private_.mutex.lock();
+      goto CONTINUE;
+    }
   }
-  LockGuard lock(private_.mutex);
-  if (_nested--) {
-    lsTrace() << LOG_THREAD_NAME << LogStream::Color::Magenta << "end" << _nested << private_.nested_ << LogStream::Color::Red << (_nested <= private_.nested_);
-    if (_nested <= private_.nested_) private_.state &= ~Private::WaitFinished;
-    return;
-  }
-  private_.mutex.unlock();
-  finishedEvent();
-  private_.mutex.lock();
-  private_.state = Private::WaitFinished | Private::Finished;
-  std::swap(private_.process_tasks_, private_.tasks);
-  private_.mutex.unlock();
-  private_.process_tasks();
-  private_.mutex.lock();
+}
+LockGuard lock(private_.mutex);
+if (_nested--) {
+  lsTrace() << LOG_THREAD_NAME << LogStream::Color::Magenta << "end" << _nested << private_.nested_ << LogStream::Color::Red << (_nested <= private_.nested_);
+  if (_nested <= private_.nested_) private_.state &= ~Private::WaitFinished;
+  return;
+}
+private_.mutex.unlock();
+finishedEvent();
+private_.mutex.lock();
+private_.state = Private::WaitFinished | Private::Finished;
+std::swap(private_.process_tasks_, private_.tasks);
+private_.mutex.unlock();
+private_.process_tasks();
+private_.mutex.lock();
 }
 
 void AbstractThread::processTasks() const {
@@ -670,8 +779,8 @@ void AbstractThread::Private::wake() {
   ::shutdown(WAKE_FD_WRITE, SHUT_RDWR);
   #endif
 #else
-  char _c = '\x0';
-  write_fd(WAKE_FD_WRITE, &_c, 1);
+    char _c = '\x0';
+    write_fd(WAKE_FD_WRITE, &_c, 1);
 #endif
 }
 
@@ -820,6 +929,23 @@ bool AbstractThread::appendPollDescriptor(int fd, PollEvents events, AbstractPol
   if (it != private_.poll_tasks.end() && (*it)->fd == fd) goto ERR;
   if (private_.poll_tasks.empty()) private_.wake();
   private_.poll_tasks.insert(it, _d);
+#elif defined IO_URING_WAIT
+    Private::PollTask *_d = new Private::PollTask(fd, task, events, false);
+    struct io_uring_sqe *sqe = io_uring_get_sqe(&private_.ring);
+    if (!sqe) {
+    ERR:
+      delete _d;
+      console_msg("AbstractThread " + LOG_THREAD_NAME, "poll descriptor append error: " + std::to_string(fd));
+      return false;
+    }
+    io_uring_prep_poll_add(sqe, fd, events);
+    io_uring_sqe_set_data(sqe, _d);
+    io_uring_submit(&private_.ring);
+    LockGuard lock(private_.mutex);
+    std::vector<Private::PollTask *>::iterator it = std::lower_bound(private_.poll_tasks.begin(), private_.poll_tasks.end(), fd, Private::Compare());
+    if (it != private_.poll_tasks.end() && (*it)->fd == fd) goto ERR;
+    if (private_.poll_tasks.empty()) private_.wake();
+    private_.poll_tasks.insert(it, _d);
 #endif
   trace() << fd << static_cast<int>(events);
   return true;
@@ -852,6 +978,38 @@ bool AbstractThread::modifyPollDescriptor(int fd, PollEvents events) {
     event.data.ptr = *it;
   }
   epoll_ctl(private_.epoll_fd, EPOLL_CTL_MOD, fd, &event);
+#elif defined IO_URING_WAIT
+    trace() << LogStream::Color::Green << "modifyPollDescriptor" << fd;
+    Private::PollTask *_d = nullptr;
+    bool need_kernel_update = false;
+    {  // lock scope
+      LockGuard lock(private_.mutex);
+      std::vector<Private::PollTask *>::iterator it = std::lower_bound(private_.poll_tasks.begin(), private_.poll_tasks.end(), fd, Private::Compare());
+
+      if (it == private_.poll_tasks.end() || (*it)->fd != fd) {
+        console_msg("AbstractThread " + LOG_THREAD_NAME, "poll descriptor: " + std::to_string(fd) + " not found");
+        return false;
+      }
+      _d = *it;
+      _d->events = events;  // Обновляем маску в памяти таска
+
+      // Если таск активен в ядре, запоминаем, что его нужно обновить сисколлом
+      if (_d->active) { need_kernel_update = true; }
+    }
+
+    // Если Oneshot-запрос прямо сейчас висит в ядре (например, ленивый stdin),
+    // принудительно обновляем его маску событий в io_uring на лету!
+    if (need_kernel_update) {
+      struct io_uring_sqe *sqe = io_uring_get_sqe(&private_.ring);
+      if (sqe) {
+        uint64_t user_data_id = static_cast<uint64_t>(reinterpret_cast<uintptr_t>(_d));
+        io_uring_prep_poll_update(sqe, user_data_id, user_data_id, events, IORING_POLL_UPDATE_EVENTS);
+        io_uring_submit(&private_.ring);
+      } else {
+        lsError() << "[io_uring] SQE Ring full during modify for FD:" << fd;
+        return false;
+      }
+    }
 #endif
   trace() << fd << static_cast<int>(events);
   return true;
@@ -897,6 +1055,27 @@ void AbstractThread::removePollDescriptor(int fd) {
     (*_t)();
     delete _t;
   }
+#elif defined IO_URING_WAIT
+    trace() << LogStream::Color::Green << "removePollDescriptor" << fd;
+    AbstractTask *_t = nullptr;
+    Private::PollTask *_d = nullptr;
+    {  // lock scope
+      LockGuard lock(private_.mutex);
+      std::vector<Private::PollTask *>::iterator it = std::lower_bound(private_.poll_tasks.begin(), private_.poll_tasks.end(), fd, Private::Compare());
+      if (it == private_.poll_tasks.end() || (*it)->fd != fd) {
+        console_msg("AbstractThread " + LOG_THREAD_NAME, "poll descriptor: " + std::to_string(fd) + " not found");
+        return;
+      }
+      _d = *it;
+      if (private_.poll_tasks.size() == 1) private_.wake();
+
+      _t = new Invocable<void()>::Function([p = _d] { delete p; });
+      private_.poll_tasks.erase(it);
+    }
+    if (!invokeTask(_t)) {
+      (*_t)();
+      delete _t;
+    }
 #endif
   trace() << fd;
 }
