@@ -515,10 +515,12 @@ void AbstractSocket::pollEvent(int _e) {
     }
   }
   if (_e & AbstractThread::PollOut) {
+  WE:
     writeEvent();
     if (private_.wda_.empty()) {
       private_.w_--;
       if (!private_.w_) thread_->modifyPollDescriptor(fd_, AbstractThread::PollIn);
+      else goto WE;
       if (state_ == State::Closing) {
         shutdown(fd_, SHUT_RDWR);
         close();
@@ -533,6 +535,7 @@ void AbstractSocket::pollEvent(int _e) {
       }
       private_.wda_.clear();
       private_.w_ = 1;
+      goto WE;
     }
     if (r < 0) {
       if (errno == EAGAIN) {
