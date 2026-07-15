@@ -513,6 +513,7 @@ void AbstractSocket::pollEvent(int _e) {
       close();
       return;
     }
+    warning_if(AbstractSocket::read_available_fd() > 0) << LogStream::Color::Red << "socket not empty" << AbstractSocket::read_available_fd();
   }
   if (_e & AbstractThread::PollOut) {
   WE:
