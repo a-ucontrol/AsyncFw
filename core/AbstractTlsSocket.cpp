@@ -31,7 +31,6 @@ struct AbstractTlsSocket::Private {
   TlsContext ctx_;
   SSL *ssl_ = nullptr;
   uint8_t encrypt_ = 0;  // 0 - noencrypt, 1 - server, 2 - client
-  int dataIndex;
 };
 
 AbstractTlsSocket::AbstractTlsSocket() : AbstractSocket(), private_(*new Private) { trace() << fd_; }
