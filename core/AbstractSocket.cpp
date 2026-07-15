@@ -516,7 +516,7 @@ void AbstractSocket::pollEvent(int _e) {
   }
   if (_e & AbstractThread::PollOut) {
   WE:
-    writeEvent();
+    if (private_.w_ == 1) writeEvent();
     if (private_.wda_.empty()) {
       private_.w_--;
       if (!private_.w_) thread_->modifyPollDescriptor(fd_, AbstractThread::PollIn);
