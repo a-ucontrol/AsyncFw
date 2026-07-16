@@ -328,21 +328,9 @@ DataArray AbstractSocket::read(int _s) {
   return _da;
 }
 
-int AbstractSocket::write(const uint8_t *_p, int _s) {
-  warning_if(_s <= 0) << LogStream::Color::Red << "size for write is null";
-  if (!private_.wda_.empty()) {
-    private_.wda_.insert(private_.wda_.end(), _p, _p + _s);
-    return _s;
-  }
-  int r = write_fd(_p, _s);
-  bool out = !private_.w_;
-  if (r > 0) {
-    if (r < _s) private_.wda_.insert(private_.wda_.end(), _p + r, _p + _s);
-    private_.w_ = 2;
-    r = _s;
-  }
-  if (out) thread_->modifyPollDescriptor(fd_, AbstractThread::PollIn | AbstractThread::PollOut);
-  return r;
+int AbstractSocket::write(const uint8_t *data, int size) {
+  warning_if(size <= 0) << LogStream::Color::Red << "size for write is null";
+  return write_fd(data, size);
 }
 
 int AbstractSocket::write(const DataArray &_da) { return write(_da.data(), _da.size()); }
@@ -425,11 +413,23 @@ int AbstractSocket::read_fd(void *data, int size) {
 }
 
 int AbstractSocket::write_fd(const void *data, int size) {
+  if (!private_.wda_.empty()) {
+    private_.wda_.insert(private_.wda_.end(), static_cast<const char *>(data), static_cast<const char *>(data) + size);
+    return size;
+  }
+  bool out = !private_.w_;
 #ifndef _WIN32
-  return ::write(fd_, data, size);
+  int r = ::write(fd_, data, size);
 #else
-  return ::send(fd_, static_cast<const char *>(data), size, 0);
+  int r = ::send(fd_, static_cast<const char *>(data), size, 0);
 #endif
+  if (r > 0) {
+    if (r < size) private_.wda_.insert(private_.wda_.end(), static_cast<const char *>(data) + r, static_cast<const char *>(data) + size);
+    private_.w_ = 2;
+    r = size;
+  }
+  if (out) thread_->modifyPollDescriptor(fd_, AbstractThread::PollIn | AbstractThread::PollOut);
+  return r;
 }
 
 void AbstractSocket::destroy() {
@@ -528,7 +528,7 @@ void AbstractSocket::pollEvent(int _e) {
       }
       return;
     }
-    int r = write_fd(private_.wda_.data(), private_.wda_.size());
+    int r = ::write(fd_, private_.wda_.data(), private_.wda_.size());
     if (r > 0) {
       if (r < static_cast<int>(private_.wda_.size())) {
         private_.wda_.erase(private_.wda_.begin(), private_.wda_.begin() + r);
