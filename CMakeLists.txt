@@ -245,7 +245,7 @@ if(USE_QAPPLICATION)
   target_link_libraries(${AsyncFw_PROJECT_NAME} Qt6::Core)
 endif()
 
-target_link_libraries(${AsyncFw_PROJECT_NAME} z crypto ssl)
+target_link_libraries(${AsyncFw_PROJECT_NAME} z crypto ssl uring)
 if(NOT ${CMAKE_SYSTEM_PROCESSOR} STREQUAL "AMD64")
   target_link_libraries(${AsyncFw_PROJECT_NAME} cares)
 else()

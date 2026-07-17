@@ -428,7 +428,7 @@ int AbstractSocket::write_fd(const void *data, int size) {
     private_.w_ = 2;
     r = size;
   }
-  if (out) thread_->modifyPollDescriptor(fd_, AbstractThread::PollIn | AbstractThread::PollOut);
+  if (out) thread_->modifyPollDescriptor(fd_, AbstractThread::PollOut);
   return r;
 }
 
@@ -482,8 +482,13 @@ void AbstractSocket::pollEvent(int _e) {
     stateEvent();
   }
   if (state_ == State::Connected) {
+    if (_e & AbstractThread::PollOut) thread_->modifyPollDescriptor(fd_, AbstractThread::PollIn);  //!!! тут надо сделать подобно PollOut для writeEvent(), если данные попали в private_.wda (что очень маловероятно), то они должны уйти оттуда через ::write()
     if (_e & AbstractThread::PollIn) {
       if (AbstractSocket::read_available_fd() < 0) {
+        if (::recv(fd_, nullptr, 1, MSG_PEEK | MSG_DONTWAIT) != 0) {
+          trace() << "activate: check connection" << errno;
+          return;
+        }
         private_.errorString_ = "Connection closed";
         private_.error_ = Closed;
         lsDebug() << LogStream::Color::Red << private_.errorString_ << "(not active)" << errno;
@@ -491,18 +496,33 @@ void AbstractSocket::pollEvent(int _e) {
         return;
       }
     }
-    if (_e & AbstractThread::PollOut) thread_->modifyPollDescriptor(fd_, AbstractThread::PollIn);
+    warning_if(state_ == State::Connected && AbstractSocket::read_available_fd() < 0) << LogStream::Color::Red << "socket not empty before activate event";
     activateEvent();
-    warning_if(state_ == State::Connected && AbstractSocket::read_available_fd() > 0) << LogStream::Color::Red << "socket not empty";
+    warning_if(state_ == State::Connected && AbstractSocket::read_available_fd() > 0) << LogStream::Color::Yellow << "socket empty after activate event";
     if (state_ != State::Active || AbstractSocket::read_available_fd() <= 0) return;
   }
   if (_e & AbstractThread::PollIn) {
+    warning_if(AbstractSocket::read_available_fd() < 0) << LogStream::Color::Red << "socket empty before read";
     private_.rs_ = read_available_fd();
     if (private_.rs_ > 0) {
+    RE:
       readEvent();
-      if (private_.rs_ > 0) read_fd();
+      if (private_.rs_ > 0) {
+        read_fd();
+      } else {
+        private_.rs_ = read_available_fd();
+        if (private_.rs_ > 0) {
+          read_fd();
+          goto RE;
+        } else if (private_.rs_ < 0 && errno) goto E;
+      }
     } else if (private_.rs_ < 0) {
+    E:
       if (private_.rs_ == -1) {
+        if (::recv(fd_, nullptr, 1, MSG_PEEK | MSG_DONTWAIT) != 0) {
+          trace() << "read: check connection" << errno;
+          return;
+        }
         private_.errorString_ = "Connection closed";
         private_.error_ = Closed;
       } else {
@@ -513,7 +533,7 @@ void AbstractSocket::pollEvent(int _e) {
       close();
       return;
     }
-    warning_if(AbstractSocket::read_available_fd() > 0) << LogStream::Color::Red << "socket not empty" << AbstractSocket::read_available_fd();
+    warning_if(AbstractSocket::read_available_fd() > 0) << LogStream::Color::Yellow << "socket not empty after read";
   }
   if (_e & AbstractThread::PollOut) {
   WE:

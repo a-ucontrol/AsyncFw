@@ -163,6 +163,7 @@ int AbstractTlsSocket::read_available_fd() const {
 
   // 1. Проверяем, сколько байт готово в ОС
   int sys_available = AbstractSocket::read_available_fd();
+  if (sys_available == -2) return -2;
 
   // Если базовый класс вернул -1, значит TCP-соединение разорвано/ошибка
   if (sys_available < 0) {
