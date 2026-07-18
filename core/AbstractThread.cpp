@@ -23,11 +23,15 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
   //#define IO_URING_WAIT
 #else
   #ifdef __linux
-  //#define EVENTFD_WAKE
-    #define IO_URING_WAKE
-  //#define EPOLL_WAIT
-  //#define EPOLL_EDGE_TRIGGERED
-    #define IO_URING_WAIT
+    #ifndef IO_URING_WAIT
+      #define EVENTFD_WAKE
+      #define EPOLL_WAIT
+    //#define EPOLL_EDGE_TRIGGERED
+    #else
+      #ifndef IO_URING_WAKE
+        #define EVENTFD_WAKE
+      #endif
+    #endif
   #elif defined _WIN32
     #define SOCKET_PAIR_WAKE
     #define POLL_WAIT
@@ -632,7 +636,7 @@ void AbstractThread::exec() {
                 continue;
               }
               Private::PollTask *_d = static_cast<Private::PollTask *>(event[i].data.ptr);
-              private_.process_poll_tasks_.push({_d->fd, event[i].events, _d->task});
+              private_.process_poll_tasks_.push_back({_d->fd, event[i].events, _d->task});
             }
 #elif defined IO_URING_WAIT
           struct io_uring_cqe *cqe = nullptr;
@@ -680,14 +684,10 @@ void AbstractThread::exec() {
                   int32_t events = cqe->res & (_d->events | POLLERR_ | POLLHUP_ | POLLNVAL_);
                   if (events) {
                     trace() << "append poll task" << _d << _d->fd << _d->events << events;
-                    /*std::deque<Private::ProcessPollTask>::iterator it = std::lower_bound(private_.process_poll_tasks_.begin(), private_.process_poll_tasks_.end(), _d->fd, Private::Compare());
+                    std::deque<Private::ProcessPollTask>::iterator it = std::lower_bound(private_.process_poll_tasks_.begin(), private_.process_poll_tasks_.end(), _d->fd, Private::Compare());
                     if (it == private_.process_poll_tasks_.end() || it->fd != _d->fd) {
                       private_.process_poll_tasks_.insert(it, {_d->fd, events, _d->task});
-                    } else it->events |= events;*/
-
-                    private_.process_poll_tasks_.push_back({_d->fd, events, _d->task}); //!!!
-
-
+                    } else it->events |= events;
                   }
                 } else lsDebug() << LogStream::Yellow << "!(_d->events > 0 && cqe->res > 0)" << cqe->res << _d->events;  //!!! TMP
               }
@@ -789,10 +789,10 @@ bool AbstractThread::invokeTask(AbstractTask *task) const {
   {  //lock scope
     LockGuard lock(private_.mutex);
     warning_if(!private_.state) << LogStream::Color::Red << "thread not running" << LOG_THREAD_NAME << private_.id;
-    trace() << LogStream::Color::Gray << LOG_THREAD_NAME << "invoke tasks" << private_.tasks.size();
     if (private_.state < Private::Finished) {
       if (private_.state == Private::Interrupted) private_.state = Private::Running;
       private_.tasks.push(task);
+      trace() << LogStream::Color::Gray << LOG_THREAD_NAME << "invoke tasks" << private_.tasks.size();
       private_.wake();
       return true;
     }
