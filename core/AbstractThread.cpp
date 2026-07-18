@@ -117,16 +117,6 @@ struct AbstractThread::Private {
     AbstractPollTask *task;
   };
 
-  struct Compare {
-    bool operator()(const AbstractThread *, const AbstractThread *) const;
-    bool operator()(const AbstractThread *t, std::thread::id id) const { return t->private_.id < id; }
-    bool operator()(const Timer &t, int id) const { return t.id < id; }
-    bool operator()(const PollTask *d, int fd) const { return d->fd < fd; }
-#ifdef POLL_WAIT
-    bool operator()(const pollfd pfd, int fd) const { return static_cast<int>(pfd.fd) < fd; }
-#endif
-  };
-
   std::mutex mutex;
   std::condition_variable condition_variable;
 
@@ -192,8 +182,19 @@ struct AbstractThread::Private {
   std::string name;
   std::queue<AbstractTask *> process_tasks_;
   std::queue<ProcessTimerTask> process_timer_tasks_;
-  std::queue<ProcessPollTask> process_poll_tasks_;
+  std::deque<ProcessPollTask> process_poll_tasks_;
   int nested_ = 0;
+
+  struct Compare {
+    bool operator()(const AbstractThread *, const AbstractThread *) const;
+    bool operator()(const AbstractThread *t, std::thread::id id) const { return t->private_.id < id; }
+    bool operator()(const Timer &t, int id) const { return t.id < id; }
+    bool operator()(const PollTask *d, int fd) const { return d->fd < fd; }
+    bool operator()(const ProcessPollTask d, int fd) const { return d.fd < fd; }
+#ifdef POLL_WAIT
+    bool operator()(const pollfd pfd, int fd) const { return static_cast<int>(pfd.fd) < fd; }
+#endif
+  };
 
   static inline struct List : public std::vector<AbstractThread *> {
     ~List();
@@ -218,7 +219,7 @@ void AbstractThread::Private::process_tasks() {
 void AbstractThread::Private::process_polls() {
   for (; !process_poll_tasks_.empty();) {
     Private::ProcessPollTask _pt = process_poll_tasks_.front();
-    process_poll_tasks_.pop();
+    process_poll_tasks_.pop_front();
     (*_pt.task)(static_cast<AbstractThread::PollEvents>(_pt.events));
   }
 }
@@ -679,7 +680,14 @@ void AbstractThread::exec() {
                   int32_t events = cqe->res & (_d->events | POLLERR_ | POLLHUP_ | POLLNVAL_);
                   if (events) {
                     trace() << "append poll task" << _d << _d->fd << _d->events << events;
-                    private_.process_poll_tasks_.push({_d->fd, events, _d->task});
+                    /*std::deque<Private::ProcessPollTask>::iterator it = std::lower_bound(private_.process_poll_tasks_.begin(), private_.process_poll_tasks_.end(), _d->fd, Private::Compare());
+                    if (it == private_.process_poll_tasks_.end() || it->fd != _d->fd) {
+                      private_.process_poll_tasks_.insert(it, {_d->fd, events, _d->task});
+                    } else it->events |= events;*/
+
+                    private_.process_poll_tasks_.push_back({_d->fd, events, _d->task}); //!!!
+
+
                   }
                 } else lsDebug() << LogStream::Yellow << "!(_d->events > 0 && cqe->res > 0)" << cqe->res << _d->events;  //!!! TMP
               }
