@@ -219,6 +219,10 @@ bool MulticastDns::startService(const std::string &hostname, const std::string &
   for (int i = 0; i != private_.sd_.num_sockets; ++i) {
     int fd = private_.sd_.sockets[i];
     private_.thread_->appendPollTask(fd, AbstractThread::PollIn, [this, fd](AbstractThread::PollEvents e) {
+      if (!serviceRunning()) {
+        lsTrace() << "service not running";
+        return;
+      }
       if (!(e & AbstractThread::PollIn)) {
         private_.thread_->removePollDescriptor(fd);
         lsError() << "poll descriptor error:" << e;

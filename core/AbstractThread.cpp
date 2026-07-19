@@ -369,6 +369,7 @@ AbstractThread::~AbstractThread() {
     while (!private_.timers.empty()) {
       Private::Timer _timer = private_.timers.back();
       private_.timers.pop_back();
+      trace() << _timer.id;
       delete _timer.task;
     }
   }
@@ -636,6 +637,7 @@ void AbstractThread::exec() {
                 continue;
               }
               Private::PollTask *_d = static_cast<Private::PollTask *>(event[i].data.ptr);
+              trace() << "append poll task" << _d << _d->fd << event[i].events;
               private_.process_poll_tasks_.push_back({_d->fd, event[i].events, _d->task});
             }
 #elif defined IO_URING_WAIT
@@ -672,9 +674,9 @@ void AbstractThread::exec() {
 
                   if (_d->events == -125) {
                     _d->events = -1;
-                    trace() << LogStream::Green << "append delete task" << _d << _d->fd << private_.process_poll_tasks_.size();
+                    trace() << LogStream::Yellow << "append delete task" << _d << _d->fd;
                     private_.tasks.push(new Invocable<void()>::Function([p = _d] {
-                      trace() << LogStream::Green << "delete" << p << p->fd;
+                      trace() << LogStream::Yellow << "delete" << p << p->fd;
                       delete p;
                     }));
                   }
@@ -683,11 +685,14 @@ void AbstractThread::exec() {
                 if (cqe->res > 0 && _d->events > 0) {
                   int32_t events = cqe->res & (_d->events | POLLERR_ | POLLHUP_ | POLLNVAL_);
                   if (events) {
-                    trace() << "append poll task" << _d << _d->fd << _d->events << events;
                     std::deque<Private::ProcessPollTask>::iterator it = std::lower_bound(private_.process_poll_tasks_.begin(), private_.process_poll_tasks_.end(), _d->fd, Private::Compare());
                     if (it == private_.process_poll_tasks_.end() || it->fd != _d->fd) {
+                      trace() << "append poll task" << LogStream::Color::Gray << _d << _d->fd << _d->events << events;
                       private_.process_poll_tasks_.insert(it, {_d->fd, events, _d->task});
-                    } else it->events |= events;
+                    } else {
+                      trace() << "update poll task" << _d << _d->fd << _d->events << events;
+                      it->events |= events;
+                    }
                   }
                 } else lsDebug() << LogStream::Yellow << "!(_d->events > 0 && cqe->res > 0)" << cqe->res << _d->events;  //!!! TMP
               }
@@ -858,6 +863,7 @@ int AbstractThread::appendTimer(int ms, AbstractTask *task) {
     }
   }
   private_.timers.emplace(it, Private::Timer {id, _ms, _wakeup, task});
+  trace() << LogStream::Color::Gray << id << ms;
   return id;
 }
 
@@ -873,6 +879,7 @@ bool AbstractThread::modifyTimer(int id, int ms) {
         private_.wake();
       }
     }
+    trace() << LogStream::Color::DarkYellow << id << ms;
     return true;
   }
   console_msg("AbstractThread " + LOG_THREAD_NAME, "timer: " + std::to_string(id) + " not found");
@@ -889,13 +896,18 @@ void AbstractThread::removeTimer(int id) {
       console_msg("AbstractThread " + LOG_THREAD_NAME, "timer: " + std::to_string(id) + " not found");
       return;
     }
-    _t = new Invocable<void()>::Function([p = it->task] { delete p; });
+    trace() << LogStream::DarkYellow << LOG_THREAD_NAME << "append delete task" << id << it->task;
+    _t = new Invocable<void()>::Function([p = it->task] {
+      trace() << LogStream::DarkYellow << "delete" << p;
+      delete p;
+    });
     private_.timers.erase(it);
   }
   if (!invokeTask(_t)) {
     (*_t)();
     delete _t;
   }
+  trace() << LogStream::Color::Green << LOG_THREAD_NAME << id;
 }
 
 bool AbstractThread::appendPollDescriptor(int fd, PollEvents events, AbstractPollTask *task) {
@@ -957,7 +969,7 @@ bool AbstractThread::appendPollDescriptor(int fd, PollEvents events, AbstractPol
     io_uring_submit(&private_.ring);
   }
 #endif
-  trace() << fd << static_cast<int>(events);
+  trace() << _d << fd << static_cast<int>(events);
   return true;
 }
 
@@ -993,7 +1005,6 @@ bool AbstractThread::modifyPollDescriptor(int fd, PollEvents events) {
   }
   epoll_ctl(private_.epoll_fd, EPOLL_CTL_MOD, fd, &event);
 #elif defined IO_URING_WAIT
-  trace() << LogStream::Color::DarkGreen << "modifyPollDescriptor" << fd;
   Private::PollTask *_d = nullptr;
   {
     LockGuard lock(private_.mutex);
@@ -1035,7 +1046,11 @@ void AbstractThread::removePollDescriptor(int fd) {
       console_msg("AbstractThread " + LOG_THREAD_NAME, "remove poll descriptor: " + std::to_string(fd) + " not found");
       return;
     }
-    _t = new Invocable<void()>::Function([p = *it] { delete p; });
+    trace() << LogStream::Yellow << "append delete task" << *it << fd;
+    _t = new Invocable<void()>::Function([p = *it] {
+      trace() << LogStream::Yellow << "delete" << p << p->fd;
+      delete p;
+    });
     struct Private::update_pollfd v;
     v.fd = fd;
     v.action = -1;
@@ -1057,8 +1072,12 @@ void AbstractThread::removePollDescriptor(int fd) {
       console_msg("AbstractThread " + LOG_THREAD_NAME, "remove poll descriptor: " + std::to_string(fd) + " not found");
       return;
     }
+    trace() << LogStream::Yellow << "append delete task" << *it << fd;
+    _t = new Invocable<void()>::Function([p = *it] {
+      trace() << LogStream::Yellow << "delete" << p << p->fd;
+      delete p;
+    });
     if (private_.poll_tasks.size() == 1) private_.wake();
-    _t = new Invocable<void()>::Function([p = *it] { delete p; });
     private_.poll_tasks.erase(it);
   }
   if (!invokeTask(_t)) {
@@ -1066,7 +1085,6 @@ void AbstractThread::removePollDescriptor(int fd) {
     delete _t;
   }
 #elif defined IO_URING_WAIT
-  trace() << LogStream::Color::Green << "removePollDescriptor" << fd;
   Private::PollTask *_d = nullptr;
   {
     LockGuard lock(private_.mutex);
@@ -1077,6 +1095,8 @@ void AbstractThread::removePollDescriptor(int fd) {
     }
     _d = *it;
     _d->events = -125;
+    trace() << LogStream::Gray << _d << fd;
+    if (private_.poll_tasks.size() == 1) private_.wake();
     private_.poll_tasks.erase(it);
 
     struct io_uring_sqe *sqe;
@@ -1089,7 +1109,6 @@ void AbstractThread::removePollDescriptor(int fd) {
     io_uring_submit(&private_.ring);
   }
 #endif
-  trace() << fd;
 }
 
 namespace AsyncFw {
