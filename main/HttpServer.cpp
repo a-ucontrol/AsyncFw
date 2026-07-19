@@ -11,6 +11,8 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include "core/Thread.h"
 #include "ListenSocket.h"
 
+#include "HttpServer.h"
+
 #include "3rdparty/httpparser/src/httpparser/httprequestparser.h"
 #include "3rdparty/httpparser/src/httpparser/request.h"
 #include "3rdparty/simple-uri-parser/uri_parser.h"
@@ -26,8 +28,6 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
   #define warning_if(x) \
     if constexpr (0) LogStream()
 #endif
-
-#include "HttpServer.h"
 
 #define SOCKET_WRITE_SIZE 8192
 
