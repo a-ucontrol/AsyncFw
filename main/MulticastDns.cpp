@@ -286,7 +286,10 @@ void MulticastDns::querierPollEvent(int fd) {
   QueryContext ctx = {};
   ctx.privData = &private_;
   ctx.resultHost = nullptr;
-  mdns_querier_event(fd, &private_.qd_, &ctx);
+
+  char dummy;
+  do { mdns_querier_event(fd, &private_.qd_, &ctx); } while (::recv(fd, &dummy, 1, MSG_PEEK | MSG_DONTWAIT) > 0);
+
   if (ctx.resultHost) {
     auto *_host = static_cast<Host *>(ctx.resultHost);
     for (auto host = private_.hosts_.begin(); host != private_.hosts_.end();) {
