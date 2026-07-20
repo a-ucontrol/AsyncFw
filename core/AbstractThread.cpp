@@ -665,36 +665,37 @@ void AbstractThread::exec() {
   #endif
               } else {
                 Private::PollTask *_d = reinterpret_cast<Private::PollTask *>(cqe->user_data);
-                if (!cqe->res) {
-                  trace() << "(!cqe->res)" << cqe->res << _d;
-                  continue;
-                }
-                if (cqe->res == -ECANCELED) {
-                  trace_if(_d->events == -1) << LogStream::Color::Red << "(_d->events == -1)" << _d << _d->fd;
+                trace() << "cqe" << cqe->res << _d << _d->events;
+                if (!cqe->res) continue;
 
+                if (cqe->res < 0) {
                   if (_d->events == -125) {
                     _d->events = -1;
-                    trace() << LogStream::Yellow << "append delete task" << _d << _d->fd;
+                    trace() << LogStream::Color::Yellow << "append delete task" << _d << _d->fd;
                     private_.tasks.push(new Invocable<void()>::Function([p = _d] {
-                      trace() << LogStream::Yellow << "delete" << p << p->fd;
+                      trace() << LogStream::Color::Yellow << "delete" << p << p->fd;
                       delete p;
                     }));
                   }
                   continue;
                 }
-                if (cqe->res > 0 && _d->events > 0) {
-                  int32_t events = cqe->res & (_d->events | POLLERR_ | POLLHUP_ | POLLNVAL_);
-                  if (events) {
-                    std::deque<Private::ProcessPollTask>::iterator it = std::lower_bound(private_.process_poll_tasks_.begin(), private_.process_poll_tasks_.end(), _d->fd, Private::Compare());
-                    if (it == private_.process_poll_tasks_.end() || it->fd != _d->fd) {
-                      trace() << "append poll task" << LogStream::Color::Gray << _d << _d->fd << _d->events << events;
-                      private_.process_poll_tasks_.insert(it, {_d->fd, events, _d->task});
-                    } else {
-                      trace() << "update poll task" << _d << _d->fd << _d->events << events;
-                      it->events |= events;
-                    }
+
+                if (_d->events <= 0) {
+                  trace() << LogStream::Color::DarkRed << "(_d->events <= 0)" << _d->events;
+                  continue;
+                }
+
+                int32_t events = cqe->res & (_d->events | POLLERR_ | POLLHUP_ | POLLNVAL_);
+                if (events) {
+                  std::deque<Private::ProcessPollTask>::iterator it = std::lower_bound(private_.process_poll_tasks_.begin(), private_.process_poll_tasks_.end(), _d->fd, Private::Compare());
+                  if (it == private_.process_poll_tasks_.end() || it->fd != _d->fd) {
+                    trace() << "append poll task" << LogStream::Color::Gray << _d << _d->fd << _d->events << events;
+                    private_.process_poll_tasks_.insert(it, {_d->fd, events, _d->task});
+                  } else {
+                    trace() << "update poll task" << _d << _d->fd << _d->events << events;
+                    it->events |= events;
                   }
-                } else lsDebug() << LogStream::Yellow << "!(_d->events > 0 && cqe->res > 0)" << cqe->res << _d->events;  //!!! TMP
+                }
               }
             }
             if (r > 0) { io_uring_cq_advance(&private_.ring, r); }
