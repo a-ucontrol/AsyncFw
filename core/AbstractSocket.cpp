@@ -109,6 +109,13 @@ bool AbstractSocket::listen(const std::string &address, uint16_t port) {
     lsError() << "socket descriptor error" << _fd << errno;
     return false;
   }
+#ifndef _WIN32
+  const int _f = fcntl(_fd, F_GETFL, 0);
+  fcntl(_fd, F_SETFL, _f | O_NONBLOCK);
+#else
+  u_long _nb = 1;
+  ioctlsocket(_fd, FIONBIO, &_nb);
+#endif
   int _val = 1;
   if (setsockopt(_fd, SOL_SOCKET, SO_REUSEADDR, setsockopt_ptr(&_val), sizeof _val) < 0) lsError("set SO_REUSEADDR");
 #if defined(SOCKET_REUSEPORT) && !defined(_WIN32)
