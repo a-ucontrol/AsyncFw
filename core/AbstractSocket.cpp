@@ -521,7 +521,7 @@ void AbstractSocket::pollEvent(int _e) {
         if (private_.rs_ > 0) {
           read_fd();
           goto RE;
-        } else if (private_.rs_ < 0 && errno) goto E;
+        } else if (private_.rs_ < 0) goto E;
       }
     } else if (private_.rs_ < 0) {
     E:
