@@ -97,21 +97,25 @@ std::string LogStream::sender(const char *function) {
 }
 
 std::string LogStream::timeString(const uint64_t _time, const TimeFormat &_format) {
+  int _e = errno;
+  std::string _r;
   const TimeFormat &_f = (_format.empty()) ? data.timeFormat : _format;
   if (data.timeOffset == std::numeric_limits<int>::max()) {
     if (!_f.show_ms) {
       std::chrono::zoned_time _zt {std::chrono::current_zone(), std::chrono::sys_time<std::chrono::seconds> {std::chrono::seconds(_time / 1000)}};
-      return std::vformat("{:" + _f.str + '}', std::make_format_args(_zt));
+      _r = std::vformat("{:" + _f.str + '}', std::make_format_args(_zt));
     }
     std::chrono::zoned_time _zt {std::chrono::current_zone(), std::chrono::sys_time<std::chrono::milliseconds> {std::chrono::milliseconds(_time)}};
-    return std::vformat("{:" + _f.str + '}', std::make_format_args(_zt));
+    _r = std::vformat("{:" + _f.str + '}', std::make_format_args(_zt));
   }
   if (!_f.show_ms) {
     std::chrono::time_point tp = std::chrono::sys_time<std::chrono::seconds> {std::chrono::seconds((_time + data.timeOffset) / 1000)};
-    return std::vformat("{:" + _f.str + '}', std::make_format_args(tp));
+    _r = std::vformat("{:" + _f.str + '}', std::make_format_args(tp));
   }
   std::chrono::time_point tp = std::chrono::sys_time<std::chrono::milliseconds> {std::chrono::milliseconds(_time + data.timeOffset)};
-  return std::vformat("{:" + _f.str + '}', std::make_format_args(tp));
+  _r = std::vformat("{:" + _f.str + '}', std::make_format_args(tp));
+  errno = _e;
+  return _r;
 }
 
 std::string LogStream::currentTimeString(const TimeFormat &format) { return timeString(LOG_STREAM_CURRENT_TIME, format); }
