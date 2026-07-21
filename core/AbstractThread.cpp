@@ -158,7 +158,9 @@ struct AbstractThread::Private {
   PollTask wake_task;
 #elif defined IO_URING_WAIT
   struct io_uring ring;
+  #ifndef IO_URING_WAKE
   PollTask wake_task;
+  #endif
 #endif
 
   struct ProcessTimerTask {
@@ -1108,6 +1110,13 @@ void AbstractThread::removePollDescriptor(int fd) {
     io_uring_prep_cancel64(sqe, reinterpret_cast<uint64_t>(_d), 0);
     io_uring_sqe_set_data(sqe, _d);
     io_uring_submit(&private_.ring);
+
+    if (private_.state & Private::Finished) {
+      unsigned int _r = io_uring_cq_ready(&private_.ring);
+      trace() << LogStream::Red << "delete" << _d << fd << "cqe" << _r;
+      if (_r > 0) io_uring_cq_advance(&private_.ring, _r);
+      delete _d;
+    }
   }
 #endif
 }
