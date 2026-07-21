@@ -67,7 +67,6 @@ struct AbstractSocket::Private {
   int tid_ = -1;
   Error error_ = None;
   std::string errorString_;
-  int w_ = 0;
   int type_ = SOCK_STREAM;
   int protocol_ = IPPROTO_TCP;
   int rs_ = 0;
@@ -265,7 +264,6 @@ bool AbstractSocket::connect(const std::string &_address, uint16_t _port) {
   lsTrace() << _fd << LogStream::Color::DarkGreen << "local:" << address() + ':' + std::to_string(port()) << "peer:" << peerAddress() + ':' + std::to_string(peerPort());
 
   thread_->invoke([this, _fd]() { changeDescriptor(_fd); }, true);
-  private_.w_ = 0;
   private_.error_ = None;
   private_.errorString_.clear();
   state_ = State::Connecting;
@@ -424,18 +422,24 @@ int AbstractSocket::write_fd(const void *data, int size) {
     private_.wda_.insert(private_.wda_.end(), static_cast<const char *>(data), static_cast<const char *>(data) + size);
     return size;
   }
-  bool out = !private_.w_;
 #ifndef _WIN32
   int r = ::write(fd_, data, size);
 #else
   int r = ::send(fd_, static_cast<const char *>(data), size, 0);
 #endif
   if (r > 0) {
-    if (r < size) private_.wda_.insert(private_.wda_.end(), static_cast<const char *>(data) + r, static_cast<const char *>(data) + size);
-    private_.w_ = 2;
+    if (r < size) {
+      if (private_.wda_.empty()) thread_->modifyPollDescriptor(fd_, AbstractThread::PollIn | AbstractThread::PollOut);
+      private_.wda_.insert(private_.wda_.end(), static_cast<const char *>(data) + r, static_cast<const char *>(data) + size);
+    } else {
+      AbstractThread::AbstractTask *_t = new Invocable<void()>::Function([this] { writeEvent(); });
+      if (!thread_->invokeTask(_t)) {
+        lsError() << "thread not running";
+        delete _t;
+      }
+    }
     r = size;
   }
-  if (out) thread_->modifyPollDescriptor(fd_, AbstractThread::PollOut);
   return r;
 }
 
@@ -544,11 +548,9 @@ void AbstractSocket::pollEvent(int _e) {
   }
   if (_e & AbstractThread::PollOut) {
   WE:
-    if (private_.w_ == 1) writeEvent();
+    writeEvent();
     if (private_.wda_.empty()) {
-      private_.w_--;
-      if (!private_.w_) thread_->modifyPollDescriptor(fd_, AbstractThread::PollIn);
-      else goto WE;
+      thread_->modifyPollDescriptor(fd_, AbstractThread::PollIn);
       if (state_ == State::Closing) {
         shutdown(fd_, SHUT_RDWR);
         close();
@@ -562,7 +564,6 @@ void AbstractSocket::pollEvent(int _e) {
         return;
       }
       private_.wda_.clear();
-      private_.w_ = 1;
       goto WE;
     }
     if (r < 0) {
