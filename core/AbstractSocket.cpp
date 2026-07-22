@@ -335,7 +335,25 @@ DataArray AbstractSocket::read(int _s) {
 
 int AbstractSocket::write(const uint8_t *data, int size) {
   warning_if(size <= 0) << LogStream::Color::Red << "size for write is null";
-  return write_fd(data, size);
+  if (!private_.wda_.empty()) {
+    private_.wda_.insert(private_.wda_.end(), data, data + size);
+    return size;
+  }
+  int r = write_fd(data, size);
+  if (r > 0) {
+    if (r < size) {
+      if (private_.wda_.empty()) thread_->modifyPollDescriptor(fd_, AbstractThread::PollIn | AbstractThread::PollOut);
+      private_.wda_.insert(private_.wda_.end(), data + r, data + size);
+    } else {
+      AbstractThread::AbstractTask *_t = new Invocable<void()>::Function([this] { writeEvent(); });
+      if (!thread_->invokeTask(_t)) {
+        lsError() << "thread not running";
+        delete _t;
+      }
+    }
+    r = size;
+  }
+  return r;
 }
 
 int AbstractSocket::write(const DataArray &_da) { return write(_da.data(), _da.size()); }
@@ -418,29 +436,11 @@ int AbstractSocket::read_fd(void *data, int size) {
 }
 
 int AbstractSocket::write_fd(const void *data, int size) {
-  if (!private_.wda_.empty()) {
-    private_.wda_.insert(private_.wda_.end(), static_cast<const char *>(data), static_cast<const char *>(data) + size);
-    return size;
-  }
 #ifndef _WIN32
-  int r = ::write(fd_, data, size);
+  return ::write(fd_, data, size);
 #else
-  int r = ::send(fd_, static_cast<const char *>(data), size, 0);
+  return ::send(fd_, static_cast<const char *>(data), size, 0);
 #endif
-  if (r > 0) {
-    if (r < size) {
-      if (private_.wda_.empty()) thread_->modifyPollDescriptor(fd_, AbstractThread::PollIn | AbstractThread::PollOut);
-      private_.wda_.insert(private_.wda_.end(), static_cast<const char *>(data) + r, static_cast<const char *>(data) + size);
-    } else {
-      AbstractThread::AbstractTask *_t = new Invocable<void()>::Function([this] { writeEvent(); });
-      if (!thread_->invokeTask(_t)) {
-        lsError() << "thread not running";
-        delete _t;
-      }
-    }
-    r = size;
-  }
-  return r;
 }
 
 void AbstractSocket::destroy() {
