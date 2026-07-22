@@ -697,7 +697,10 @@ void AbstractThread::exec() {
                 if (!cqe->res) continue;
 
                 if (!(cqe->flags & IORING_CQE_F_MORE)) {
-                  if (_d->fd == -1) delete _d;
+                  if (_d->fd == -1) {
+                    _d->fd = -2;
+                    private_.tasks.push(new Invocable<void()>::Function([p = _d] { delete p; }));
+                  }
                   continue;
                 }
 
