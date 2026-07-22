@@ -113,11 +113,11 @@ struct AbstractThread::Private {
   };
 
   struct PollTask {
-    ~PollTask() { delete task; }
+    ~PollTask() {
+      trace() << LogStream::Color::Yellow << "destroy" << this << fd;
+      delete task;
+    }
     int fd;
-#ifdef IO_URING_WAIT
-    int32_t events;
-#endif
     AbstractPollTask *task;
   };
 
@@ -356,6 +356,23 @@ AbstractThread::~AbstractThread() {
   #endif
 #endif
 #ifdef IO_URING_WAIT
+  struct io_uring_sqe *sqe = io_uring_get_sqe(&private_.ring);
+  if (sqe) {
+    io_uring_prep_cancel64(sqe, 0, IORING_ASYNC_CANCEL_ANY);
+    sqe->flags |= IOSQE_CQE_SKIP_SUCCESS;
+    io_uring_submit(&private_.ring);
+    struct io_uring_cqe *cqe;
+    while (io_uring_sq_ready(&private_.ring) > 0 || io_uring_peek_cqe(&private_.ring, &cqe) == 0) { //!!! rm io_uring_sq_ready
+      if (io_uring_wait_cqe(&private_.ring, &cqe) < 0) break;
+      Private::PollTask *_d = reinterpret_cast<Private::PollTask *>(cqe->user_data);
+      warning_if(!_d || (cqe->flags & IORING_CQE_F_MORE)) << "(!_d || !(cqe->flags & IORING_CQE_F_MORE))" << _d << cqe->res << cqe->flags;
+      if (_d->fd == -1 && !(cqe->flags & IORING_CQE_F_MORE)) {
+        trace() << LOG_THREAD_NAME << "delete" << _d << cqe->res;
+        delete _d;
+      }
+      io_uring_cqe_seen(&private_.ring, cqe);
+    }
+  } else lsError() << "error get sqe";
   io_uring_queue_exit(&private_.ring);
 #endif
 
@@ -667,34 +684,31 @@ void AbstractThread::exec() {
   #endif
               } else {
                 Private::PollTask *_d = reinterpret_cast<Private::PollTask *>(cqe->user_data);
-                trace() << "cqe" << cqe->res << _d << _d->events;
-                if (!cqe->res) continue;
+                trace() << "cqe" << cqe->res << cqe->flags << _d;
+                if (!cqe->res || !_d) continue;
 
-                if (cqe->res < 0) {
-                  if (_d->events == -125) {
-                    _d->events = -1;
+                if (cqe->res < 0) {  //!!!
+                  if (_d->fd == -1) {
+                    _d->fd = -2;
                     trace() << LogStream::Color::Yellow << "append delete task" << _d << _d->fd;
-                    private_.tasks.push(new Invocable<void()>::Function([p = _d] {
-                      trace() << LogStream::Color::Yellow << "delete" << p << p->fd;
-                      delete p;
-                    }));
+                    private_.tasks.push(new Invocable<void()>::Function([p = _d] { delete p; }));
                   }
                   continue;
                 }
 
-                if (_d->events <= 0) {
-                  trace() << LogStream::Color::DarkRed << "(_d->events <= 0)" << _d->events;
+                if (_d->fd == -1) {
+                  trace() << LogStream::Color::DarkRed << "(_d->fd == -1)";
                   continue;
                 }
 
-                int32_t events = cqe->res & (_d->events | POLLERR_ | POLLHUP_ | POLLNVAL_);
+                int32_t events = cqe->res & (POLLIN_ | POLLOUT_ | POLLERR_ | POLLHUP_ | POLLNVAL_);
                 if (events) {
                   std::deque<Private::ProcessPollTask>::iterator it = std::lower_bound(private_.process_poll_tasks_.begin(), private_.process_poll_tasks_.end(), _d->fd, Private::Compare());
                   if (it == private_.process_poll_tasks_.end() || it->fd != _d->fd) {
-                    trace() << "append poll task" << LogStream::Color::Gray << _d << _d->fd << _d->events << events;
+                    trace() << "append poll task" << LogStream::Color::Gray << _d << _d->fd << events;
                     private_.process_poll_tasks_.insert(it, {_d->fd, events, _d->task});
                   } else {
-                    trace() << "update poll task" << _d << _d->fd << _d->events << events;
+                    trace() << "update poll task" << _d << _d->fd << events;
                     it->events |= events;
                   }
                 }
@@ -702,7 +716,7 @@ void AbstractThread::exec() {
             }
             if (r > 0) { io_uring_cq_advance(&private_.ring, r); }
 #endif
-            if (r > 0) {
+            if (r > 0) {  //!!!
               if (private_.process_poll_tasks_.empty()) goto CONTINUE;
               private_.wake_ = true;
               private_.mutex.unlock();
@@ -751,6 +765,21 @@ void AbstractThread::exec() {
   private_.mutex.unlock();
   private_.process_tasks();
   private_.mutex.lock();
+
+#ifdef IO_URING_WAIT
+  struct io_uring_cqe *cqe;
+  while (io_uring_peek_cqe(&private_.ring, &cqe) == 0) {
+    trace() << "io_uring_peek_cqe" << cqe;
+    if (!cqe) break;
+    Private::PollTask *_d = reinterpret_cast<Private::PollTask *>(cqe->user_data);
+    warning_if(!_d || (cqe->flags & IORING_CQE_F_MORE)) << "(!_d || !(cqe->flags & IORING_CQE_F_MORE))" << _d << cqe->res << cqe->flags;
+    if (_d->fd == -1 && !(cqe->flags & IORING_CQE_F_MORE)) {
+      trace() << LOG_THREAD_NAME << "delete" << _d << cqe->res;
+      delete _d;
+    }
+    io_uring_cqe_seen(&private_.ring, cqe);
+  }
+#endif
 }
 
 void AbstractThread::processTasks() const {
@@ -950,7 +979,7 @@ bool AbstractThread::appendPollDescriptor(int fd, PollEvents events, AbstractPol
   if (private_.poll_tasks.empty()) private_.wake();
   private_.poll_tasks.insert(it, _d);
 #elif defined IO_URING_WAIT
-  Private::PollTask *_d = new Private::PollTask(fd, events, task);
+  Private::PollTask *_d = new Private::PollTask(fd, task);
   LockGuard lock(private_.mutex);
   {  //lock scope
     struct io_uring_sqe *sqe = io_uring_get_sqe(&private_.ring);
@@ -1017,17 +1046,16 @@ bool AbstractThread::modifyPollDescriptor(int fd, PollEvents events) {
       return false;
     }
     _d = *it;
-    _d->events = events;
 
     struct io_uring_sqe *sqe;
     if (!(sqe = io_uring_get_sqe(&private_.ring))) {
-      console_msg("AbstractThread " + LOG_THREAD_NAME, "modify poll descriptor: " + std::to_string(fd) + " error get sqe");
+      lsError() << "error get sqe";
       return false;
     }
     io_uring_prep_cancel64(sqe, reinterpret_cast<uint64_t>(_d), 0);
-    io_uring_sqe_set_data(sqe, _d);
+    sqe->flags |= IOSQE_CQE_SKIP_SUCCESS;
     if (!(sqe = io_uring_get_sqe(&private_.ring))) {
-      console_msg("AbstractThread " + LOG_THREAD_NAME, "modify poll descriptor: " + std::to_string(fd) + " error get sqe");
+      lsError() << "error get sqe";
       return false;
     }
     io_uring_prep_poll_multishot(sqe, fd, events);
@@ -1097,26 +1125,20 @@ void AbstractThread::removePollDescriptor(int fd) {
       return;
     }
     _d = *it;
-    _d->events = -125;
     trace() << LogStream::Gray << _d << fd;
+    _d->fd = -1;
     if (private_.poll_tasks.size() == 1) private_.wake();
     private_.poll_tasks.erase(it);
 
     struct io_uring_sqe *sqe;
     if (!(sqe = io_uring_get_sqe(&private_.ring))) {
-      console_msg("AbstractThread " + LOG_THREAD_NAME, "remove poll descriptor: " + std::to_string(fd) + " error get sqe");
+      lsError() << "error get sqe";
       return;
     }
-    io_uring_prep_cancel64(sqe, reinterpret_cast<uint64_t>(_d), 0);
-    io_uring_sqe_set_data(sqe, _d);
-    io_uring_submit(&private_.ring);
 
-    if (private_.state & Private::Finished) {
-      unsigned int _r = io_uring_cq_ready(&private_.ring);
-      trace() << LogStream::Red << "delete" << _d << fd << "cqe" << _r;
-      if (_r > 0) io_uring_cq_advance(&private_.ring, _r);
-      delete _d;
-    }
+    io_uring_prep_cancel64(sqe, reinterpret_cast<uint64_t>(_d), 0);
+    sqe->flags |= IOSQE_CQE_SKIP_SUCCESS;
+    io_uring_submit(&private_.ring);
   }
 #endif
 }
