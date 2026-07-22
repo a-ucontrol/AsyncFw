@@ -694,19 +694,10 @@ void AbstractThread::exec() {
               } else {
                 Private::PollTask *_d = reinterpret_cast<Private::PollTask *>(cqe->user_data);
                 trace() << "cqe" << cqe->res << cqe->flags << _d;
-                if (!cqe->res || !_d) continue;
+                if (!cqe->res) continue;
 
-                if (cqe->res < 0) {  //!!!
-                  if (_d->fd == -1) {
-                    _d->fd = -2;
-                    trace() << LogStream::Color::Yellow << "append delete task" << _d << _d->fd;
-                    private_.tasks.push(new Invocable<void()>::Function([p = _d] { delete p; }));
-                  }
-                  continue;
-                }
-
-                if (_d->fd == -1) {
-                  trace() << LogStream::Color::DarkRed << "(_d->fd == -1)";
+                if (!(cqe->flags & IORING_CQE_F_MORE)) {
+                  if (_d->fd == -1) delete _d;
                   continue;
                 }
 
@@ -723,17 +714,15 @@ void AbstractThread::exec() {
                 }
               }
             }
-            if (r > 0) { io_uring_cq_advance(&private_.ring, r); }
+            if (r > 0) io_uring_cq_advance(&private_.ring, r);
 #endif
-            if (r > 0) {  //!!!
-              if (private_.process_poll_tasks_.empty()) goto CONTINUE;
-              private_.wake_ = true;
-              private_.mutex.unlock();
-              private_.process_polls();
-              private_.mutex.lock();
-            }
-            goto CONTINUE;
+            if (private_.process_poll_tasks_.empty()) goto CONTINUE;
+            private_.wake_ = true;
+            private_.mutex.unlock();
+            private_.process_polls();
+            private_.mutex.lock();
           }
+          goto CONTINUE;
         }
       }
 
