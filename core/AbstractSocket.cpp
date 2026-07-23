@@ -384,9 +384,9 @@ std::string AbstractSocket::errorString() const { return private_.errorString_; 
 
 int AbstractSocket::pendingRead() const {
   checkCurrentThread();
-  if (private_.rs_ > 0) return private_.rs_;
+  if (private_.rs_ > 0) return private_.rs_ + private_.rda_.size();
   int r = read_available_fd();
-  if (r < 0) return 0;
+  if (r < 0) r = 0;
   return (private_.rs_ = r) + private_.rda_.size();
 }
 
@@ -518,15 +518,11 @@ void AbstractSocket::pollEvent(int _e) {
     if (private_.rs_ > 0) {
     RE:
       readEvent();
+      private_.rs_ = read_available_fd();
       if (private_.rs_ > 0) {
         read_fd();
-      } else {
-        private_.rs_ = read_available_fd();
-        if (private_.rs_ > 0) {
-          read_fd();
-          goto RE;
-        } else if (private_.rs_ < 0) goto E;
-      }
+        goto RE;
+      } else if (private_.rs_ < 0) goto E;
     } else if (private_.rs_ < 0) {
     E:
       if (private_.rs_ == -1) {
