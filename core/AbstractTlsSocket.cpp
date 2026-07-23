@@ -91,6 +91,7 @@ void AbstractTlsSocket::activateEvent() {
     else { SSL_set_verify(private_.ssl_, SSL_VERIFY_NONE, nullptr); }
 
     SSL_set_fd(private_.ssl_, fd_);
+    // SSL_set_read_ahead(private_.ssl_, 1);
     if (!private_.ctx_.verifyName().empty()) {
       lsTrace() << fd_ << "verify name" << LogStream::Color::Green << private_.ctx_.verifyName();
       SSL_set_hostflags(private_.ssl_, X509_CHECK_FLAG_NO_PARTIAL_WILDCARDS);
@@ -128,10 +129,15 @@ void AbstractTlsSocket::activateEvent() {
 }
 
 int AbstractTlsSocket::read_available_fd() const {
-  int r = AbstractSocket::read_available_fd();
-  if (!private_.encrypt_ || r <= 0) return r;
-  if (SSL_peek(private_.ssl_, nullptr, 0) < 0) return 0;
-  return SSL_pending(private_.ssl_);
+  if (!private_.encrypt_) return AbstractSocket::read_available_fd();
+  if (!private_.ssl_) {
+    lsError() << "(!private_.ssl_)";
+    return -2;
+  }
+  int r = SSL_peek(private_.ssl_, nullptr, 0);
+  if (r < 0) return SSL_get_error(private_.ssl_, r) == SSL_ERROR_WANT_READ ? 0 : -1;
+  r = SSL_pending(private_.ssl_);
+  return r > 0 ? r : -1;
 }
 
 int AbstractTlsSocket::read_fd(void *data, int size) {
