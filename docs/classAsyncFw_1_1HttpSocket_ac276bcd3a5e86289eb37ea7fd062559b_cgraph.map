@@ -3,20 +3,23 @@
 <area shape="rect" id="Node000002" href="$classAsyncFw_1_1HttpSocket.html#a33dadd18584b3b2b76a02dffa0a831fb" title="Shuts down the active TLS session gracefully via SSL_shutdown() before terminating the network pipe." alt="" coords="216,35,366,77"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="149,98,209,81,205,84,151,103"/>
 <area shape="rect" id="Node000007" href="$classAsyncFw_1_1AbstractSocket.html#a5cc266f87cd4666f10b85a2c52b762bb" title="Returns the number of bytes of data pending to be write." alt="" coords="204,101,378,144"/>
-<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="156,120,191,122,186,124,157,125"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="155,120,191,121,186,124,157,125"/>
 <area shape="rect" id="Node000008" href="$classAsyncFw_1_1AbstractSocket.html#a6b5bfbc488d553dca8a2d01b6b415482" title="Writes raw binary bytes out to the network socket layer." alt="" coords="204,168,378,211"/>
-<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="150,142,209,162,204,163,150,147"/>
+<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="150,142,209,162,204,164,150,147"/>
 <area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractTlsSocket.html#af52f94f709ab74eace61da79cbd8af7d" title="Shuts down the active TLS session gracefully via SSL_shutdown() before terminating the network pipe." alt="" coords="426,35,618,77"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="366,53,413,55,408,57,367,59"/>
 <area shape="rect" id="Node000004" href="$classAsyncFw_1_1AbstractSocket.html#a96c331ff22db7a34923c34f575075e6a" title="Disconnects the socket from the remote host gracefully." alt="" coords="666,35,841,77"/>
 <area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="618,53,653,56,648,56,619,59"/>
 <area shape="rect" id="Node000005" href="$classAsyncFw_1_1AbstractSocket.html#a77c0a9ea7c5061c406673bbe8b18d60d" title="Closes the network connection and unsubscribes from thread polling events." alt="" coords="889,5,1063,48"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="841,42,876,40,871,41,841,47"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="840,42,876,40,871,41,842,47"/>
 <area shape="rect" id="Node000006" href="$classAsyncFw_1_1AbstractSocket.html#a5db12267a6d2241e81f570463f2d7ef5" title="Called when the connection state changes." alt="" coords="1111,35,1285,77"/>
 <area shape="poly" id="edge6_Node000004_Node000006" title=" " alt="" coords="841,56,889,57,1063,57,1098,59,1093,60,1063,63,889,63,841,62"/>
 <area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="1063,36,1098,42,1093,43,1063,41"/>
-<area shape="rect" id="Node000009" href="$classAsyncFw_1_1AbstractSocket.html#a4659df5988d2af771d4feee9edec55d8" title="Low&#45;level native operating system write operation proxying requests directly up to the fd handle." alt="" coords="435,168,609,211"/>
-<area shape="poly" id="edge9_Node000008_Node000009" title=" " alt="" coords="379,187,422,189,417,189,379,192"/>
-<area shape="rect" id="Node000010" href="$structAsyncFw_1_1AnyData.html#aa6d2c3488a44e34e25a0971b01a27b3c" title="Type&#45;safely extracts and returns the stored data value." alt="" coords="669,176,838,203"/>
-<area shape="poly" id="edge10_Node000009_Node000010" title=" " alt="" coords="610,187,657,189,651,189,610,192"/>
+<area shape="rect" id="Node000009" href="$structAsyncFw_1_1AnyData.html#aa6d2c3488a44e34e25a0971b01a27b3c" title="Type&#45;safely extracts and returns the stored data value." alt="" coords="669,147,838,173"/>
+<area shape="poly" id="edge9_Node000008_Node000009" title=" " alt="" coords="366,165,426,153,544,146,656,152,651,152,544,152,426,159,367,170"/>
+<area shape="rect" id="Node000010" href="$classAsyncFw_1_1AbstractSocket.html#a4659df5988d2af771d4feee9edec55d8" title="Low&#45;level native operating system write operation proxying requests directly up to the fd handle." alt="" coords="435,168,609,211"/>
+<area shape="poly" id="edge10_Node000008_Node000010" title=" " alt="" coords="378,187,422,189,417,190,379,192"/>
+<area shape="rect" id="Node000011" href="$classAsyncFw_1_1AbstractSocket.html#af8141e7714603e6c83c0640a2d74ec90" title="Called when writing to the socket is possible." alt="" coords="435,235,609,277"/>
+<area shape="poly" id="edge12_Node000008_Node000011" title=" " alt="" coords="367,209,434,230,428,230,367,214"/>
+<area shape="poly" id="edge11_Node000010_Node000009" title=" " alt="" coords="610,176,657,172,651,173,610,181"/>
 </map>

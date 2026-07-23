@@ -1,0 +1,9 @@
+<map id="AsyncFw::AbstractSocket::writeEvent" name="AsyncFw::AbstractSocket::writeEvent">
+<area shape="rect" id="Node000001" title="Called when writing to the socket is possible." alt="" coords="450,39,624,81"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractSocket.html#a6b5bfbc488d553dca8a2d01b6b415482" title="Writes raw binary bytes out to the network socket layer." alt="" coords="228,39,402,81"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="432,60,403,63,402,57,437,60"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractSocket.html#a4ad7bcd91ec7a91270d83bf583d62be1" title="Transmits a structural DataArray package out to the network layer." alt="" coords="5,5,180,48"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="210,45,180,42,180,37,215,44"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1HttpSocket.html#ac276bcd3a5e86289eb37ea7fd062559b" title="Called when writing to the socket is possible." alt="" coords="17,72,168,115"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="210,76,168,85,168,79,215,75"/>
+</map>
