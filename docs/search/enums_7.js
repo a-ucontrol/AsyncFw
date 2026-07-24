@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['state_0',['State',['../classAsyncFw_1_1AbstractSocket.html#a6fc3dae51b6b38d67f1c3861dcbb23bd',1,'AsyncFw::AbstractSocket::State'],['../classAsyncFw_1_1SystemProcess.html#afad39352d4d8376d1304bc340a0cf32f',1,'AsyncFw::SystemProcess::State']]],
-  ['statuscode_1',['StatusCode',['../classAsyncFw_1_1HttpServer_1_1Response.html#ade630649387805688da86e8d0adaeb67',1,'AsyncFw::HttpServer::Response']]]
+  ['result_0',['Result',['../classAsyncFw_1_1DataArrayAbstractTcp.html#a0a77d6d5e166af850a5dfb588ccbc8fb',1,'AsyncFw::DataArrayAbstractTcp::Result'],['../classAsyncFw_1_1DataArrayTcpClient.html#ac9d422208fb30613d8eb7781f9241f7b',1,'AsyncFw::DataArrayTcpClient::Result']]]
 ];

@@ -205,11 +205,10 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:a84a79c1f921e96efd6b4f47cd7cd91e0" id="r_a84a79c1f921e96efd6b4f47cd7cd91e0"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#a84a79c1f921e96efd6b4f47cd7cd91e0">write_fd</a> (const void *, int) override final</td></tr>
 <tr class="memdesc:a84a79c1f921e96efd6b4f47cd7cd91e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Low-level encryption routing path proxying outgoing payload directly up to SSL_write().  <br /></td></tr>
 <tr class="inherit_header pro_methods_classAsyncFw_1_1AbstractSocket"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_methods_classAsyncFw_1_1AbstractSocket')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Protected Member Functions inherited from <a class="el" href="classAsyncFw_1_1AbstractSocket.html">AsyncFw::AbstractSocket</a></td></tr>
-<tr class="memitem:a94ae146fe8047af98d2dcfd14d20e261 inherit pro_methods_classAsyncFw_1_1AbstractSocket" id="r_a94ae146fe8047af98d2dcfd14d20e261"><td class="memItemLeft">
-&#160;</td><td class="memItemRight"><b>AbstractSocket</b> ()</td></tr>
-<tr class="memdesc:a94ae146fe8047af98d2dcfd14d20e261 inherit pro_methods_classAsyncFw_1_1AbstractSocket"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an <a class="el" href="classAsyncFw_1_1AbstractSocket.html" title="Abstract base class providing core network socket functionality and OS descriptor abstraction.">AbstractSocket</a> with default parameters (AF_INET, SOCK_STREAM, IPPROTO_TCP) and binds it to the current thread context. <br /></td></tr>
-<tr class="memitem:ad82c1584c2664dd89cd94cc217974afe inherit pro_methods_classAsyncFw_1_1AbstractSocket" id="r_ad82c1584c2664dd89cd94cc217974afe"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="classAsyncFw_1_1AbstractSocket.html#ad82c1584c2664dd89cd94cc217974afe">AbstractSocket</a> (int, int, int)</td></tr>
-<tr class="memdesc:ad82c1584c2664dd89cd94cc217974afe inherit pro_methods_classAsyncFw_1_1AbstractSocket"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an <a class="el" href="classAsyncFw_1_1AbstractSocket.html" title="Abstract base class providing core network socket functionality and OS descriptor abstraction.">AbstractSocket</a> and binds it to the current thread context.  <br /></td></tr>
+<tr class="memitem:a2b3066513b7cf718a97fe6c9f3cc11e6 inherit pro_methods_classAsyncFw_1_1AbstractSocket" id="r_a2b3066513b7cf718a97fe6c9f3cc11e6"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="classAsyncFw_1_1AbstractSocket.html#a2b3066513b7cf718a97fe6c9f3cc11e6">AbstractSocket</a> (<a class="el" href="classAsyncFw_1_1AbstractSocket.html#a8720ba9755d46ce21efa6056e7cf5034">OutputBufferMode</a>=<a class="el" href="classAsyncFw_1_1AbstractSocket.html#a8720ba9755d46ce21efa6056e7cf5034ae5cae7a164a407735575fa1f4760c7de">Application</a>)</td></tr>
+<tr class="memdesc:a2b3066513b7cf718a97fe6c9f3cc11e6 inherit pro_methods_classAsyncFw_1_1AbstractSocket"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an <a class="el" href="classAsyncFw_1_1AbstractSocket.html" title="Abstract base class providing core network socket functionality and OS descriptor abstraction.">AbstractSocket</a> with default parameters (AF_INET, SOCK_STREAM, IPPROTO_TCP) and binds it to the current thread context.  <br /></td></tr>
+<tr class="memitem:aa66ea88eb21787155ef487b89da94f96 inherit pro_methods_classAsyncFw_1_1AbstractSocket" id="r_aa66ea88eb21787155ef487b89da94f96"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="classAsyncFw_1_1AbstractSocket.html#aa66ea88eb21787155ef487b89da94f96">AbstractSocket</a> (int, int, int, <a class="el" href="classAsyncFw_1_1AbstractSocket.html#a8720ba9755d46ce21efa6056e7cf5034">OutputBufferMode</a>=<a class="el" href="classAsyncFw_1_1AbstractSocket.html#a8720ba9755d46ce21efa6056e7cf5034ae5cae7a164a407735575fa1f4760c7de">Application</a>)</td></tr>
+<tr class="memdesc:aa66ea88eb21787155ef487b89da94f96 inherit pro_methods_classAsyncFw_1_1AbstractSocket"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an <a class="el" href="classAsyncFw_1_1AbstractSocket.html" title="Abstract base class providing core network socket functionality and OS descriptor abstraction.">AbstractSocket</a> and binds it to the current thread context.  <br /></td></tr>
 <tr class="memitem:ad5fb89c73a0f4bcca190d3a4cab15a97 inherit pro_methods_classAsyncFw_1_1AbstractSocket" id="r_ad5fb89c73a0f4bcca190d3a4cab15a97"><td class="memItemLeft">
 virtual&#160;</td><td class="memItemRight"><b>~AbstractSocket</b> ()</td></tr>
 <tr class="memdesc:ad5fb89c73a0f4bcca190d3a4cab15a97 inherit pro_methods_classAsyncFw_1_1AbstractSocket"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual destructor. Automatically detaches socket from thread if still attached. <br /></td></tr>
@@ -263,6 +262,10 @@ Additional Inherited Members</h2></td></tr>
 <br />
  }</td></tr>
 <tr class="memdesc:a940a10b5f063e970cb7e46a61cab2415"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runtime error categories for network and I/O operations.  <a href="classAsyncFw_1_1AbstractSocket.html#a940a10b5f063e970cb7e46a61cab2415">More...</a><br /></td></tr>
+<tr class="memitem:a8720ba9755d46ce21efa6056e7cf5034 inherit pub_types_classAsyncFw_1_1AbstractSocket" id="r_a8720ba9755d46ce21efa6056e7cf5034"><td class="memItemLeft">enum &#160;</td><td class="memItemRight"><a class="el" href="classAsyncFw_1_1AbstractSocket.html#a8720ba9755d46ce21efa6056e7cf5034">OutputBufferMode</a> : uint8_t { <a class="el" href="classAsyncFw_1_1AbstractSocket.html#a8720ba9755d46ce21efa6056e7cf5034ae5cae7a164a407735575fa1f4760c7de">Application</a> = 0x01
+, <a class="el" href="classAsyncFw_1_1AbstractSocket.html#a8720ba9755d46ce21efa6056e7cf5034a279f21d56f24884fee5325f2ecd8326e">Network</a> = 0x02
+ }</td></tr>
+<tr class="memdesc:a8720ba9755d46ce21efa6056e7cf5034"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mode for interpreting data within the output buffer.  <a href="classAsyncFw_1_1AbstractSocket.html#a8720ba9755d46ce21efa6056e7cf5034">More...</a><br /></td></tr>
 <tr class="inherit_header pro_attribs_classAsyncFw_1_1AbstractSocket"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_attribs_classAsyncFw_1_1AbstractSocket')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Protected Attributes inherited from <a class="el" href="classAsyncFw_1_1AbstractSocket.html">AsyncFw::AbstractSocket</a></td></tr>
 <tr class="memitem:a49a607ef9c268469124164ab86971787 inherit pro_attribs_classAsyncFw_1_1AbstractSocket" id="r_a49a607ef9c268469124164ab86971787"><td class="memItemLeft">
 Thread *&#160;</td><td class="memItemRight"><b>thread_</b></td></tr>
@@ -686,7 +689,7 @@ std::any&#160;</td><td class="memItemRight"><b>data_</b></td></tr>
 <div id="dynsection-14-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-14-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractTlsSocket_a57ac6daff9926cf631abcd1e19073cc8_cgraph.svg" width="888" height="279"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractTlsSocket_a57ac6daff9926cf631abcd1e19073cc8_cgraph.svg" width="888" height="539"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 <div id="dynsection-15" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
 <div id="dynsection-15-summary" class="dynsummary" style="display:block;">
@@ -822,7 +825,7 @@ std::any&#160;</td><td class="memItemRight"><b>data_</b></td></tr>
 <div id="dynsection-18-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-18-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractTlsSocket_a84a79c1f921e96efd6b4f47cd7cd91e0_cgraph.svg" width="642" height="83"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractTlsSocket_a84a79c1f921e96efd6b4f47cd7cd91e0_cgraph.svg" width="864" height="175"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>

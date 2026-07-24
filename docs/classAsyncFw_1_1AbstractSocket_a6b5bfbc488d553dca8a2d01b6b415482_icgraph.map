@@ -1,7 +1,16 @@
 <map id="AsyncFw::AbstractSocket::write" name="AsyncFw::AbstractSocket::write">
-<area shape="rect" id="Node000001" title="Writes raw binary bytes out to the network socket layer." alt="" coords="228,39,402,81"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractSocket.html#a4ad7bcd91ec7a91270d83bf583d62be1" title="Transmits a structural DataArray package out to the network layer." alt="" coords="5,5,180,48"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="210,45,180,42,180,37,215,44"/>
-<area shape="rect" id="Node000003" href="$classAsyncFw_1_1HttpSocket.html#ac276bcd3a5e86289eb37ea7fd062559b" title="Called when writing to the socket is possible." alt="" coords="17,72,168,115"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="210,76,168,85,168,79,215,75"/>
+<area shape="rect" id="Node000001" title="Writes raw binary bytes out to the network socket layer." alt="" coords="666,72,841,115"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractSocket.html#a4ad7bcd91ec7a91270d83bf583d62be1" title="Transmits a structural DataArray package out to the network layer." alt="" coords="444,5,618,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="663,67,605,51,605,46,668,67"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractSocket.html#a4659df5988d2af771d4feee9edec55d8" title="Low&#45;level native operating system write operation proxying requests directly up to the fd handle." alt="" coords="444,72,618,115"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="648,102,619,105,619,99,654,102"/>
+<area shape="rect" id="Node000007" href="$classAsyncFw_1_1HttpSocket.html#ac276bcd3a5e86289eb37ea7fd062559b" title="Called when writing to the socket is possible." alt="" coords="456,139,606,181"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="668,119,606,141,604,135,663,120"/>
+<area shape="poly" id="edge5_Node000003_Node000001" title=" " alt="" coords="634,82,669,84,663,85,634,87"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1AbstractTlsSocket.html#a57ac6daff9926cf631abcd1e19073cc8" title="Core internal event handler reacting to raw descriptor readiness signals." alt="" coords="204,39,396,81"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="426,79,397,77,396,71,431,78"/>
+<area shape="rect" id="Node000006" href="$classAsyncFw_1_1AbstractTlsSocket.html#a84a79c1f921e96efd6b4f47cd7cd91e0" title="Low&#45;level encryption routing path proxying outgoing payload directly up to SSL_write()." alt="" coords="204,105,396,148"/>
+<area shape="poly" id="edge6_Node000003_Node000006" title=" " alt="" coords="426,109,397,115,396,110,431,108"/>
+<area shape="rect" id="Node000005" href="$classAsyncFw_1_1HttpSocket.html#ad51bb1bf5880c3037c7ad70231c0767d" title="Core internal event handler reacting to raw descriptor readiness signals." alt="" coords="5,39,156,81"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="186,61,157,63,155,57,191,59"/>
 </map>

@@ -17,8 +17,12 @@ var classAsyncFw_1_1AbstractSocket =
       [ "Write", "classAsyncFw_1_1AbstractSocket.html#a940a10b5f063e970cb7e46a61cab2415a6084632d3ad9ef3f0bce55a0751c817b", null ],
       [ "Activate", "classAsyncFw_1_1AbstractSocket.html#a940a10b5f063e970cb7e46a61cab2415a650fdfa57cdb708fed90e3a8c3401d8f", null ]
     ] ],
-    [ "AbstractSocket", "classAsyncFw_1_1AbstractSocket.html#a94ae146fe8047af98d2dcfd14d20e261", null ],
-    [ "AbstractSocket", "classAsyncFw_1_1AbstractSocket.html#ad82c1584c2664dd89cd94cc217974afe", null ],
+    [ "OutputBufferMode", "classAsyncFw_1_1AbstractSocket.html#a8720ba9755d46ce21efa6056e7cf5034", [
+      [ "Application", "classAsyncFw_1_1AbstractSocket.html#a8720ba9755d46ce21efa6056e7cf5034ae5cae7a164a407735575fa1f4760c7de", null ],
+      [ "Network", "classAsyncFw_1_1AbstractSocket.html#a8720ba9755d46ce21efa6056e7cf5034a279f21d56f24884fee5325f2ecd8326e", null ]
+    ] ],
+    [ "AbstractSocket", "classAsyncFw_1_1AbstractSocket.html#a2b3066513b7cf718a97fe6c9f3cc11e6", null ],
+    [ "AbstractSocket", "classAsyncFw_1_1AbstractSocket.html#aa66ea88eb21787155ef487b89da94f96", null ],
     [ "~AbstractSocket", "classAsyncFw_1_1AbstractSocket.html#ad5fb89c73a0f4bcca190d3a4cab15a97", null ],
     [ "setDescriptor", "classAsyncFw_1_1AbstractSocket.html#a0ffc2cb5dd293722a9336a528357f9c5", null ],
     [ "connect", "classAsyncFw_1_1AbstractSocket.html#ac4b8765d203b4d4bc77d9d6e00d5dd85", null ],

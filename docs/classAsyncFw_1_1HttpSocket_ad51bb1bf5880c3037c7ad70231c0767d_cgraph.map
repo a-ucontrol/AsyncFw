@@ -1,24 +1,39 @@
 <map id="AsyncFw::HttpSocket::activateEvent" name="AsyncFw::HttpSocket::activateEvent">
-<area shape="rect" id="Node000001" title="Core internal event handler reacting to raw descriptor readiness signals." alt="" coords="5,167,156,209"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractTlsSocket.html#a57ac6daff9926cf631abcd1e19073cc8" title="Core internal event handler reacting to raw descriptor readiness signals." alt="" coords="204,117,396,160"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="155,169,191,163,186,165,157,174"/>
-<area shape="rect" id="Node000010" href="$classAsyncFw_1_1HttpSocket.html#a96932e5f6b5f84c4f204b0e6e4ef8472" title="Immediately releases OpenSSL session pointers and forcefully closes the system&#45;level descriptor." alt="" coords="225,200,375,243"/>
-<area shape="poly" id="edge11_Node000001_Node000010" title=" " alt="" coords="156,197,212,207,207,208,156,202"/>
-<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractSocket.html#aac7ad6c4f9815d9b8b0817d38864d06d" title="Called when established connection." alt="" coords="684,33,859,76"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="317,115,369,64,404,38,443,19,475,10,508,5,575,4,639,13,697,28,692,29,638,18,574,10,508,10,476,15,445,24,407,43,372,68,320,119"/>
-<area shape="rect" id="Node000005" href="$classAsyncFw_1_1AbstractTlsSocket.html#ad26bb910e65bb758bfed6448e1af7186" title="Intermediate signal hub executed immediately when a secure cryptographic tunnel is fully established." alt="" coords="444,33,636,76"/>
-<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="362,114,443,86,465,81,460,83,445,91,364,119"/>
-<area shape="rect" id="Node000006" href="$classAsyncFw_1_1AbstractTlsSocket.html#a46dbd8e4895445214a4f46ee46433d6c" title="Immediately releases OpenSSL session pointers and forcefully closes the system&#45;level descriptor." alt="" coords="444,233,636,276"/>
-<area shape="poly" id="edge6_Node000002_Node000006" title=" " alt="" coords="347,158,397,186,421,203,445,219,458,227,453,227,443,224,418,208,395,190,346,163"/>
-<area shape="rect" id="Node000008" href="$classAsyncFw_1_1AbstractSocket.html#adf2d96f44c3abf205e637f3809bc614d" title="Configures or overrides the internal error code." alt="" coords="453,100,627,143"/>
-<area shape="poly" id="edge9_Node000002_Node000008" title=" " alt="" coords="396,129,440,128,435,129,397,134"/>
-<area shape="rect" id="Node000009" href="$classAsyncFw_1_1AbstractSocket.html#aee9d948ab5f79cb9c0c45da1709c1159" title="Updates the human&#45;readable error description buffer string." alt="" coords="453,167,627,209"/>
-<area shape="poly" id="edge10_Node000002_Node000009" title=" " alt="" coords="396,156,440,167,435,167,396,161"/>
-<area shape="rect" id="Node000004" href="$classAsyncFw_1_1AbstractSocket.html#a5db12267a6d2241e81f570463f2d7ef5" title="Called when the connection state changes." alt="" coords="907,84,1081,127"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="859,72,894,82,889,82,859,77"/>
-<area shape="poly" id="edge5_Node000005_Node000003" title=" " alt="" coords="636,52,671,54,666,55,637,57"/>
-<area shape="rect" id="Node000007" href="$classAsyncFw_1_1AbstractSocket.html#a77c0a9ea7c5061c406673bbe8b18d60d" title="Closes the network connection and unsubscribes from thread polling events." alt="" coords="684,184,859,227"/>
-<area shape="poly" id="edge7_Node000006_Node000007" title=" " alt="" coords="636,232,667,228,672,227,637,237"/>
-<area shape="poly" id="edge8_Node000007_Node000004" title=" " alt="" coords="820,181,928,134,933,133,822,186"/>
-<area shape="poly" id="edge12_Node000010_Node000006" title=" " alt="" coords="375,229,431,239,426,239,375,234"/>
+<area shape="rect" id="Node000001" title="Core internal event handler reacting to raw descriptor readiness signals." alt="" coords="5,127,156,169"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractTlsSocket.html#a57ac6daff9926cf631abcd1e19073cc8" title="Core internal event handler reacting to raw descriptor readiness signals." alt="" coords="204,189,396,232"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="155,167,211,183,206,186,157,172"/>
+<area shape="rect" id="Node000016" href="$classAsyncFw_1_1HttpSocket.html#a96932e5f6b5f84c4f204b0e6e4ef8472" title="Immediately releases OpenSSL session pointers and forcefully closes the system&#45;level descriptor." alt="" coords="225,64,375,107"/>
+<area shape="poly" id="edge20_Node000001_Node000016" title=" " alt="" coords="154,124,212,109,208,113,157,129"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractSocket.html#aac7ad6c4f9815d9b8b0817d38864d06d" title="Called when established connection." alt="" coords="684,72,859,115"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="322,187,374,145,407,124,443,108,500,93,559,85,616,82,671,84,666,85,616,87,559,90,501,98,445,113,410,129,377,149,325,191"/>
+<area shape="rect" id="Node000005" href="$classAsyncFw_1_1AbstractTlsSocket.html#ad26bb910e65bb758bfed6448e1af7186" title="Intermediate signal hub executed immediately when a secure cryptographic tunnel is fully established." alt="" coords="444,123,636,165"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="378,186,448,169,444,171,380,191"/>
+<area shape="rect" id="Node000006" href="$classAsyncFw_1_1AbstractTlsSocket.html#a46dbd8e4895445214a4f46ee46433d6c" title="Immediately releases OpenSSL session pointers and forcefully closes the system&#45;level descriptor." alt="" coords="444,5,636,48"/>
+<area shape="poly" id="edge6_Node000002_Node000006" title=" " alt="" coords="323,187,394,117,417,89,442,65,465,54,460,57,446,69,421,93,398,120,326,191"/>
+<area shape="rect" id="Node000008" href="$classAsyncFw_1_1AbstractSocket.html#a64ec81f99806967d9244337b88ae03ba" title="Low&#45;level system call that checks whether a file descriptor contains data." alt="" coords="453,256,627,299"/>
+<area shape="poly" id="edge9_Node000002_Node000008" title=" " alt="" coords="379,230,449,251,443,252,379,235"/>
+<area shape="rect" id="Node000009" href="$classAsyncFw_1_1AbstractSocket.html#a25efdce1c4a0dedf15e57cb0af971d86" title="Low&#45;level native operating system read operation proxying requests directly down to the fd handle." alt="" coords="684,323,859,365"/>
+<area shape="poly" id="edge10_Node000002_Node000009" title=" " alt="" coords="325,230,378,272,410,292,445,308,501,325,559,336,671,346,666,347,558,341,500,330,443,313,408,297,375,276,324,235"/>
+<area shape="rect" id="Node000011" href="$classAsyncFw_1_1AbstractSocket.html#adf2d96f44c3abf205e637f3809bc614d" title="Configures or overrides the internal error code." alt="" coords="453,373,627,416"/>
+<area shape="poly" id="edge12_Node000002_Node000011" title=" " alt="" coords="319,230,373,290,407,323,445,352,467,367,461,366,443,357,404,327,369,294,317,235"/>
+<area shape="rect" id="Node000012" href="$classAsyncFw_1_1AbstractSocket.html#aee9d948ab5f79cb9c0c45da1709c1159" title="Updates the human&#45;readable error description buffer string." alt="" coords="453,440,627,483"/>
+<area shape="poly" id="edge13_Node000002_Node000012" title=" " alt="" coords="311,230,331,273,360,325,398,379,446,426,452,433,447,431,442,430,394,382,355,328,326,275,309,235"/>
+<area shape="rect" id="Node000013" href="$classAsyncFw_1_1AbstractSocket.html#a4659df5988d2af771d4feee9edec55d8" title="Low&#45;level native operating system write operation proxying requests directly up to the fd handle." alt="" coords="453,189,627,232"/>
+<area shape="poly" id="edge14_Node000002_Node000013" title=" " alt="" coords="396,208,440,210,435,212,397,213"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1AbstractSocket.html#a5db12267a6d2241e81f570463f2d7ef5" title="Called when the connection state changes." alt="" coords="907,39,1081,81"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="858,78,894,75,889,76,860,83"/>
+<area shape="poly" id="edge5_Node000005_Node000003" title=" " alt="" coords="636,120,672,115,667,117,637,125"/>
+<area shape="rect" id="Node000007" href="$classAsyncFw_1_1AbstractSocket.html#a77c0a9ea7c5061c406673bbe8b18d60d" title="Closes the network connection and unsubscribes from thread polling events." alt="" coords="684,5,859,48"/>
+<area shape="poly" id="edge7_Node000006_Node000007" title=" " alt="" coords="636,24,671,26,666,28,637,29"/>
+<area shape="poly" id="edge8_Node000007_Node000004" title=" " alt="" coords="859,37,894,44,889,45,859,42"/>
+<area shape="rect" id="Node000010" href="$structAsyncFw_1_1AnyData.html#aa6d2c3488a44e34e25a0971b01a27b3c" title="Type&#45;safely extracts and returns the stored data value." alt="" coords="910,197,1078,224"/>
+<area shape="poly" id="edge11_Node000009_Node000010" title=" " alt="" coords="834,320,857,308,916,270,963,235,968,233,919,275,860,313,836,325"/>
+<area shape="poly" id="edge15_Node000013_Node000010" title=" " alt="" coords="620,186,684,175,772,168,859,175,936,193,931,193,858,180,772,173,685,180,622,191"/>
+<area shape="rect" id="Node000014" href="$classAsyncFw_1_1AbstractSocket.html#a6b5bfbc488d553dca8a2d01b6b415482" title="Writes raw binary bytes out to the network socket layer." alt="" coords="684,189,859,232"/>
+<area shape="poly" id="edge16_Node000013_Node000014" title=" " alt="" coords="627,217,671,219,666,220,628,222"/>
+<area shape="rect" id="Node000015" href="$classAsyncFw_1_1AbstractSocket.html#af8141e7714603e6c83c0640a2d74ec90" title="Called when writing to the socket is possible." alt="" coords="684,256,859,299"/>
+<area shape="poly" id="edge19_Node000013_Node000015" title=" " alt="" coords="616,230,683,251,678,251,616,235"/>
+<area shape="poly" id="edge17_Node000014_Node000010" title=" " alt="" coords="859,208,897,210,891,211,859,213"/>
+<area shape="poly" id="edge18_Node000014_Node000013" title=" " alt="" coords="681,202,644,204,643,199,687,201"/>
+<area shape="poly" id="edge21_Node000016_Node000006" title=" " alt="" coords="374,65,438,51,433,54,376,69"/>
 </map>

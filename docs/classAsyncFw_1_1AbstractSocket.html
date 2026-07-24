@@ -141,6 +141,10 @@ Public Types</h2></td></tr>
 <br />
  }</td></tr>
 <tr class="memdesc:a940a10b5f063e970cb7e46a61cab2415"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runtime error categories for network and I/O operations.  <a href="#a940a10b5f063e970cb7e46a61cab2415">More...</a><br /></td></tr>
+<tr class="memitem:a8720ba9755d46ce21efa6056e7cf5034" id="r_a8720ba9755d46ce21efa6056e7cf5034"><td class="memItemLeft">enum &#160;</td><td class="memItemRight"><a class="el" href="#a8720ba9755d46ce21efa6056e7cf5034">OutputBufferMode</a> : uint8_t { <a class="el" href="#a8720ba9755d46ce21efa6056e7cf5034ae5cae7a164a407735575fa1f4760c7de">Application</a> = 0x01
+, <a class="el" href="#a8720ba9755d46ce21efa6056e7cf5034a279f21d56f24884fee5325f2ecd8326e">Network</a> = 0x02
+ }</td></tr>
+<tr class="memdesc:a8720ba9755d46ce21efa6056e7cf5034"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mode for interpreting data within the output buffer.  <a href="#a8720ba9755d46ce21efa6056e7cf5034">More...</a><br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -209,11 +213,10 @@ bool&#160;</td><td class="memItemRight"><b>empty</b> () const</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pro-methods" class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:a94ae146fe8047af98d2dcfd14d20e261" id="r_a94ae146fe8047af98d2dcfd14d20e261"><td class="memItemLeft"><a id="a94ae146fe8047af98d2dcfd14d20e261" name="a94ae146fe8047af98d2dcfd14d20e261"></a>
-&#160;</td><td class="memItemRight"><b>AbstractSocket</b> ()</td></tr>
-<tr class="memdesc:a94ae146fe8047af98d2dcfd14d20e261"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an <a class="el" href="classAsyncFw_1_1AbstractSocket.html" title="Abstract base class providing core network socket functionality and OS descriptor abstraction.">AbstractSocket</a> with default parameters (AF_INET, SOCK_STREAM, IPPROTO_TCP) and binds it to the current thread context. <br /></td></tr>
-<tr class="memitem:ad82c1584c2664dd89cd94cc217974afe" id="r_ad82c1584c2664dd89cd94cc217974afe"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#ad82c1584c2664dd89cd94cc217974afe">AbstractSocket</a> (int, int, int)</td></tr>
-<tr class="memdesc:ad82c1584c2664dd89cd94cc217974afe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an <a class="el" href="classAsyncFw_1_1AbstractSocket.html" title="Abstract base class providing core network socket functionality and OS descriptor abstraction.">AbstractSocket</a> and binds it to the current thread context.  <br /></td></tr>
+<tr class="memitem:a2b3066513b7cf718a97fe6c9f3cc11e6" id="r_a2b3066513b7cf718a97fe6c9f3cc11e6"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a2b3066513b7cf718a97fe6c9f3cc11e6">AbstractSocket</a> (<a class="el" href="#a8720ba9755d46ce21efa6056e7cf5034">OutputBufferMode</a>=<a class="el" href="#a8720ba9755d46ce21efa6056e7cf5034ae5cae7a164a407735575fa1f4760c7de">Application</a>)</td></tr>
+<tr class="memdesc:a2b3066513b7cf718a97fe6c9f3cc11e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an <a class="el" href="classAsyncFw_1_1AbstractSocket.html" title="Abstract base class providing core network socket functionality and OS descriptor abstraction.">AbstractSocket</a> with default parameters (AF_INET, SOCK_STREAM, IPPROTO_TCP) and binds it to the current thread context.  <br /></td></tr>
+<tr class="memitem:aa66ea88eb21787155ef487b89da94f96" id="r_aa66ea88eb21787155ef487b89da94f96"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#aa66ea88eb21787155ef487b89da94f96">AbstractSocket</a> (int, int, int, <a class="el" href="#a8720ba9755d46ce21efa6056e7cf5034">OutputBufferMode</a>=<a class="el" href="#a8720ba9755d46ce21efa6056e7cf5034ae5cae7a164a407735575fa1f4760c7de">Application</a>)</td></tr>
+<tr class="memdesc:aa66ea88eb21787155ef487b89da94f96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an <a class="el" href="classAsyncFw_1_1AbstractSocket.html" title="Abstract base class providing core network socket functionality and OS descriptor abstraction.">AbstractSocket</a> and binds it to the current thread context.  <br /></td></tr>
 <tr class="memitem:ad5fb89c73a0f4bcca190d3a4cab15a97" id="r_ad5fb89c73a0f4bcca190d3a4cab15a97"><td class="memItemLeft"><a id="ad5fb89c73a0f4bcca190d3a4cab15a97" name="ad5fb89c73a0f4bcca190d3a4cab15a97"></a>
 virtual&#160;</td><td class="memItemRight"><b>~AbstractSocket</b> ()</td></tr>
 <tr class="memdesc:ad5fb89c73a0f4bcca190d3a4cab15a97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual destructor. Automatically detaches socket from thread if still attached. <br /></td></tr>
@@ -263,7 +266,7 @@ std::any&#160;</td><td class="memItemRight"><b>data_</b></td></tr>
 <tr class="heading"><td colspan="2"><h2 id="header-friends" class="groupheader"><a id="friends" name="friends"></a>
 Friends</h2></td></tr>
 <tr class="memitem:ae425fcf0d1af4b1b2c6047e72ab4dc0a" id="r_ae425fcf0d1af4b1b2c6047e72ab4dc0a"><td class="memItemLeft"><a id="ae425fcf0d1af4b1b2c6047e72ab4dc0a" name="ae425fcf0d1af4b1b2c6047e72ab4dc0a"></a>
-<a class="el" href="classAsyncFw_1_1LogStream.html">LogStream</a> &amp;&#160;</td><td class="memItemRight"><b>operator&lt;&lt;</b> (<a class="el" href="classAsyncFw_1_1LogStream.html">LogStream</a> &amp;log, const <a class="el" href="#a94ae146fe8047af98d2dcfd14d20e261">AbstractSocket</a> &amp;s)</td></tr>
+<a class="el" href="classAsyncFw_1_1LogStream.html">LogStream</a> &amp;&#160;</td><td class="memItemRight"><b>operator&lt;&lt;</b> (<a class="el" href="classAsyncFw_1_1LogStream.html">LogStream</a> &amp;log, const <a class="el" href="#a2b3066513b7cf718a97fe6c9f3cc11e6">AbstractSocket</a> &amp;s)</td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Abstract base class providing core network socket functionality and OS descriptor abstraction. </p>
@@ -413,9 +416,77 @@ Friends</h2></td></tr>
 
 </div>
 </div>
+<a id="a8720ba9755d46ce21efa6056e7cf5034" name="a8720ba9755d46ce21efa6056e7cf5034"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8720ba9755d46ce21efa6056e7cf5034">&#9670;&#160;</a></span>OutputBufferMode</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="#a8720ba9755d46ce21efa6056e7cf5034">AsyncFw::AbstractSocket::OutputBufferMode</a> : uint8_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Mode for interpreting data within the output buffer. </p>
+<p>This only makes sense for derived classes whose application data is not equivalent to network data. For example, encryption. </p><dl class="section note"><dt>Note</dt><dd>Under normal conditions, this buffer is always empty. Data is accumulated here ONLY if it cannot be written to the socket immediately. </dd></dl>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a8720ba9755d46ce21efa6056e7cf5034ae5cae7a164a407735575fa1f4760c7de" name="a8720ba9755d46ce21efa6056e7cf5034ae5cae7a164a407735575fa1f4760c7de"></a>Application&#160;</td><td class="fielddoc"><p>Raw application data (requires encryption/processing before sending). </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a8720ba9755d46ce21efa6056e7cf5034a279f21d56f24884fee5325f2ecd8326e" name="a8720ba9755d46ce21efa6056e7cf5034a279f21d56f24884fee5325f2ecd8326e"></a>Network&#160;</td><td class="fielddoc"><p>Ready-to-send network bytes (transport layer, written directly to socket). </p>
+</td></tr>
+</table>
+
+</div>
+</div>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="ad82c1584c2664dd89cd94cc217974afe" name="ad82c1584c2664dd89cd94cc217974afe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad82c1584c2664dd89cd94cc217974afe">&#9670;&#160;</a></span>AbstractSocket()</h2>
+<a id="a2b3066513b7cf718a97fe6c9f3cc11e6" name="a2b3066513b7cf718a97fe6c9f3cc11e6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2b3066513b7cf718a97fe6c9f3cc11e6">&#9670;&#160;</a></span>AbstractSocket() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">AbstractSocket::AbstractSocket </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="#a8720ba9755d46ce21efa6056e7cf5034">OutputBufferMode</a></td>          <td class="paramname"><span class="paramname"><em>mode</em></span><span class="paramdefsep"> = </span><span class="paramdefval"><a class="el" href="#a8720ba9755d46ce21efa6056e7cf5034ae5cae7a164a407735575fa1f4760c7de">Application</a></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructs an <a class="el" href="classAsyncFw_1_1AbstractSocket.html" title="Abstract base class providing core network socket functionality and OS descriptor abstraction.">AbstractSocket</a> with default parameters (AF_INET, SOCK_STREAM, IPPROTO_TCP) and binds it to the current thread context. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mode</td><td>The new mode for interpreting the buffer content. </td></tr>
+  </table>
+  </dd>
+</dl>
+<div id="dynsection-2" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
+<div id="dynsection-2-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-2-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a2b3066513b7cf718a97fe6c9f3cc11e6_cgraph.svg" width="1070" height="104"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+<div id="dynsection-3" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-3-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a2b3066513b7cf718a97fe6c9f3cc11e6_icgraph.svg" width="426" height="120"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<a id="aa66ea88eb21787155ef487b89da94f96" name="aa66ea88eb21787155ef487b89da94f96"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa66ea88eb21787155ef487b89da94f96">&#9670;&#160;</a></span>AbstractSocket() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -436,7 +507,12 @@ Friends</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>protocol</em></span>&#160;)</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>protocol</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="#a8720ba9755d46ce21efa6056e7cf5034">OutputBufferMode</a></td>          <td class="paramname"><span class="paramname"><em>mode</em></span><span class="paramdefsep"> = </span><span class="paramdefval"><a class="el" href="#a8720ba9755d46ce21efa6056e7cf5034ae5cae7a164a407735575fa1f4760c7de">Application</a></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -449,17 +525,18 @@ Friends</h2></td></tr>
 <p>Constructs an <a class="el" href="classAsyncFw_1_1AbstractSocket.html" title="Abstract base class providing core network socket functionality and OS descriptor abstraction.">AbstractSocket</a> and binds it to the current thread context. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">family</td><td>Address family</td></tr>
-    <tr><td class="paramname">type</td><td>Socket type</td></tr>
-    <tr><td class="paramname">protocol</td><td>Internet protocol </td></tr>
+    <tr><td class="paramname">family</td><td>Address family.</td></tr>
+    <tr><td class="paramname">type</td><td>Socket type.</td></tr>
+    <tr><td class="paramname">protocol</td><td>Internet protocol.</td></tr>
+    <tr><td class="paramname">mode</td><td>The new mode for interpreting the buffer content. </td></tr>
   </table>
   </dd>
 </dl>
-<div id="dynsection-2" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
-<div id="dynsection-2-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-4" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
+<div id="dynsection-4-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-2-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_ad82c1584c2664dd89cd94cc217974afe_cgraph.svg" width="1292" height="104"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div id="dynsection-4-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_aa66ea88eb21787155ef487b89da94f96_cgraph.svg" width="1292" height="104"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -497,16 +574,16 @@ Friends</h2></td></tr>
 </dl>
 
 <p>Reimplemented in <a class="el" href="classAsyncFw_1_1AbstractTlsSocket.html#a89721fd68ed3de138aa6167dd98ec5fa">AsyncFw::AbstractTlsSocket</a>.</p>
-<div id="dynsection-3" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
-<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-5" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
+<div id="dynsection-5-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-3-content" class="dyncontent" style="display:none;">
+<div id="dynsection-5-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a0ffc2cb5dd293722a9336a528357f9c5_cgraph.svg" width="408" height="320"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
-<div id="dynsection-4" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
-<div id="dynsection-4-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-6" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-6-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-4-content" class="dyncontent" style="display:none;">
+<div id="dynsection-6-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a0ffc2cb5dd293722a9336a528357f9c5_icgraph.svg" width="622" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
@@ -550,16 +627,16 @@ Friends</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>True if connection initiation succeeded. </dd></dl>
 
 <p>Reimplemented in <a class="el" href="classAsyncFw_1_1AbstractTlsSocket.html#a2d9c3d5d540b82fb516f5c56def48a02">AsyncFw::AbstractTlsSocket</a>, and <a class="el" href="classAsyncFw_1_1DataArraySocket.html#aed242e797aea527f8b86c4bc866ab454">AsyncFw::DataArraySocket</a>.</p>
-<div id="dynsection-5" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
-<div id="dynsection-5-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-7" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
+<div id="dynsection-7-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-5-content" class="dyncontent" style="display:none;">
+<div id="dynsection-7-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_ac4b8765d203b4d4bc77d9d6e00d5dd85_cgraph.svg" width="408" height="254"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
-<div id="dynsection-6" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
-<div id="dynsection-6-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-8" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-8-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-6-content" class="dyncontent" style="display:none;">
+<div id="dynsection-8-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_ac4b8765d203b4d4bc77d9d6e00d5dd85_icgraph.svg" width="426" height="78"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
@@ -591,16 +668,16 @@ Friends</h2></td></tr>
 <p>Disconnects the socket from the remote host gracefully. </p>
 
 <p>Reimplemented in <a class="el" href="classAsyncFw_1_1AbstractTlsSocket.html#af52f94f709ab74eace61da79cbd8af7d">AsyncFw::AbstractTlsSocket</a>, <a class="el" href="classAsyncFw_1_1DataArraySocket.html#a9942cbf100e7898ba95c8fb92e059ae8">AsyncFw::DataArraySocket</a>, and <a class="el" href="classAsyncFw_1_1HttpSocket.html#a33dadd18584b3b2b76a02dffa0a831fb">AsyncFw::HttpSocket</a>.</p>
-<div id="dynsection-7" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
-<div id="dynsection-7-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-9" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
+<div id="dynsection-9-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-7-content" class="dyncontent" style="display:none;">
+<div id="dynsection-9-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a96c331ff22db7a34923c34f575075e6a_cgraph.svg" width="630" height="83"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
-<div id="dynsection-8" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
-<div id="dynsection-8-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-10" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-10-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-8-content" class="dyncontent" style="display:none;">
+<div id="dynsection-10-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a96c331ff22db7a34923c34f575075e6a_icgraph.svg" width="1096" height="371"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
@@ -632,16 +709,16 @@ Friends</h2></td></tr>
 <p>Closes the network connection and unsubscribes from thread polling events. </p>
 
 <p>Reimplemented in <a class="el" href="classAsyncFw_1_1AbstractTlsSocket.html#a46dbd8e4895445214a4f46ee46433d6c">AsyncFw::AbstractTlsSocket</a>, <a class="el" href="classAsyncFw_1_1HttpSocket.html#a96932e5f6b5f84c4f204b0e6e4ef8472">AsyncFw::HttpSocket</a>, and <a class="el" href="classAsyncFw_1_1ListenSocket.html#a77c0a9ea7c5061c406673bbe8b18d60d">AsyncFw::ListenSocket</a>.</p>
-<div id="dynsection-9" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
-<div id="dynsection-9-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-11" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
+<div id="dynsection-11-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-9-content" class="dyncontent" style="display:none;">
+<div id="dynsection-11-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a77c0a9ea7c5061c406673bbe8b18d60d_cgraph.svg" width="408" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
-<div id="dynsection-10" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
-<div id="dynsection-10-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-12" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-12-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-10-content" class="dyncontent" style="display:none;">
+<div id="dynsection-12-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a77c0a9ea7c5061c406673bbe8b18d60d_icgraph.svg" width="1336" height="571"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
@@ -673,16 +750,16 @@ Friends</h2></td></tr>
 <p>Schedules the socket for deferred asynchronous destruction. </p>
 
 <p>Reimplemented in <a class="el" href="classAsyncFw_1_1HttpSocket.html#a8268467d3581a4d393e9ccd288de32ff">AsyncFw::HttpSocket</a>, and <a class="el" href="classAsyncFw_1_1ListenSocket.html#a73a200f0008dbf9f820bdb2b8a0054cf">AsyncFw::ListenSocket</a>.</p>
-<div id="dynsection-11" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
-<div id="dynsection-11-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-13" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
+<div id="dynsection-13-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-11-content" class="dyncontent" style="display:none;">
+<div id="dynsection-13-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a73a200f0008dbf9f820bdb2b8a0054cf_cgraph.svg" width="1072" height="238"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
-<div id="dynsection-12" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
-<div id="dynsection-12-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-14" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-14-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-12-content" class="dyncontent" style="display:none;">
+<div id="dynsection-14-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a73a200f0008dbf9f820bdb2b8a0054cf_icgraph.svg" width="634" height="120"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
@@ -705,10 +782,10 @@ Friends</h2></td></tr>
 
 <p>Synchronously detaches the socket from its execution thread. </p>
 <dl class="section note"><dt>Note</dt><dd>Sets socket thread to nullptr. Not thread-safe. </dd></dl>
-<div id="dynsection-13" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
-<div id="dynsection-13-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-15" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-15-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-13-content" class="dyncontent" style="display:none;">
+<div id="dynsection-15-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_aa0f81593deeb67fe6a3031e9d57738d4_icgraph.svg" width="426" height="120"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
@@ -742,16 +819,16 @@ Friends</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if success. </dd></dl>
-<div id="dynsection-14" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
-<div id="dynsection-14-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-16" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
+<div id="dynsection-16-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-14-content" class="dyncontent" style="display:none;">
+<div id="dynsection-16-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a426c3b10de20344079571d6708f096ca_cgraph.svg" width="408" height="187"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
-<div id="dynsection-15" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
-<div id="dynsection-15-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-17" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-17-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-15-content" class="dyncontent" style="display:none;">
+<div id="dynsection-17-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a426c3b10de20344079571d6708f096ca_icgraph.svg" width="380" height="78"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
@@ -774,16 +851,16 @@ Friends</h2></td></tr>
 
 <p>Non-destructively inspects the internal unread data buffer without consuming it. </p>
 <dl class="section return"><dt>Returns</dt><dd>Reference to a <a class="el" href="classAsyncFw_1_1DataArray.html" title="The DataArray class, provides an array of bytes.">DataArray</a> containing the currently buffered incoming data. </dd></dl>
-<div id="dynsection-16" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
-<div id="dynsection-16-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-18" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
+<div id="dynsection-18-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-16-content" class="dyncontent" style="display:none;">
+<div id="dynsection-18-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a3f4a74f0ab83d096bd37118bb28d8654_cgraph.svg" width="624" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
-<div id="dynsection-17" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
-<div id="dynsection-17-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-19" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-19-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-17-content" class="dyncontent" style="display:none;">
+<div id="dynsection-19-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a3f4a74f0ab83d096bd37118bb28d8654_icgraph.svg" width="590" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
@@ -819,16 +896,16 @@ Friends</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>Number of bytes successfully read, or a negative value on error. </dd></dl>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="ListenSocket_2main_8cpp-example.html#a3">ListenSocket/main.cpp</a>, and <a class="el" href="Socket_2main_8cpp-example.html#a8">Socket/main.cpp</a>.</dd>
 </dl>
-<div id="dynsection-18" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
-<div id="dynsection-18-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-20" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
+<div id="dynsection-20-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-18-content" class="dyncontent" style="display:none;">
+<div id="dynsection-20-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a374dd4ce66bfcc8a6dcf40b4ba552828_cgraph.svg" width="624" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
-<div id="dynsection-19" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
-<div id="dynsection-19-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-21" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-21-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-19-content" class="dyncontent" style="display:none;">
+<div id="dynsection-21-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a374dd4ce66bfcc8a6dcf40b4ba552828_icgraph.svg" width="623" height="238"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
@@ -857,10 +934,10 @@ Friends</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="classAsyncFw_1_1DataArray.html" title="The DataArray class, provides an array of bytes.">DataArray</a> containing the read payload. </dd></dl>
-<div id="dynsection-20" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
-<div id="dynsection-20-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-22" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
+<div id="dynsection-22-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-20-content" class="dyncontent" style="display:none;">
+<div id="dynsection-22-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a4eea287aa9c8a3cafc2ea92ca72d85bc_cgraph.svg" width="847" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
@@ -896,17 +973,17 @@ Friends</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>Number of bytes successfully dispatched to the socket queue, or a negative value on error. </dd></dl>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="HttpServer_2main_8cpp-example.html#a16">HttpServer/main.cpp</a>, <a class="el" href="HttpSocket_2main_8cpp-example.html#a17">HttpSocket/main.cpp</a>, and <a class="el" href="Socket_2main_8cpp-example.html#a2">Socket/main.cpp</a>.</dd>
 </dl>
-<div id="dynsection-21" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
-<div id="dynsection-21-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-23" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
+<div id="dynsection-23-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-21-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a6b5bfbc488d553dca8a2d01b6b415482_cgraph.svg" width="624" height="142"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div id="dynsection-23-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a6b5bfbc488d553dca8a2d01b6b415482_cgraph.svg" width="630" height="104"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
-<div id="dynsection-22" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
-<div id="dynsection-22-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-24" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-24-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-22-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a6b5bfbc488d553dca8a2d01b6b415482_icgraph.svg" width="408" height="120"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div id="dynsection-24-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a6b5bfbc488d553dca8a2d01b6b415482_icgraph.svg" width="847" height="187"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -934,11 +1011,11 @@ Friends</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Number of bytes successfully dispatched to the socket queue, or a negative value on error. </dd></dl>
-<div id="dynsection-23" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
-<div id="dynsection-23-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-25" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
+<div id="dynsection-25-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-23-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a4ad7bcd91ec7a91270d83bf583d62be1_cgraph.svg" width="847" height="142"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div id="dynsection-25-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a4ad7bcd91ec7a91270d83bf583d62be1_cgraph.svg" width="852" height="104"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -1014,16 +1091,16 @@ Friends</h2></td></tr>
 <p>This method handles the internal non-blocking state machinery, managing background handshake operations before data transfer begins. </p>
 
 <p>Reimplemented in <a class="el" href="classAsyncFw_1_1AbstractTlsSocket.html#a57ac6daff9926cf631abcd1e19073cc8">AsyncFw::AbstractTlsSocket</a>, and <a class="el" href="classAsyncFw_1_1HttpSocket.html#ad51bb1bf5880c3037c7ad70231c0767d">AsyncFw::HttpSocket</a>.</p>
-<div id="dynsection-24" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
-<div id="dynsection-24-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-26" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
+<div id="dynsection-26-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-24-content" class="dyncontent" style="display:none;">
+<div id="dynsection-26-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_aac7ad6c4f9815d9b8b0817d38864d06d_cgraph.svg" width="408" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
-<div id="dynsection-25" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
-<div id="dynsection-25-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-27" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-27-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-25-content" class="dyncontent" style="display:none;">
+<div id="dynsection-27-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_aac7ad6c4f9815d9b8b0817d38864d06d_icgraph.svg" width="864" height="83"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
@@ -1058,10 +1135,10 @@ Friends</h2></td></tr>
 <p>Reimplemented in <a class="el" href="classAsyncFw_1_1DataArraySocket.html#afae26d6d937eddd4b7c64f48933c0984">AsyncFw::DataArraySocket</a>, and <a class="el" href="classAsyncFw_1_1HttpSocket.html#ab3ee95c329a5f5c7ea659fe7809cc37e">AsyncFw::HttpSocket</a>.</p>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="ListenSocket_2main_8cpp-example.html#a1">ListenSocket/main.cpp</a>, and <a class="el" href="Socket_2main_8cpp-example.html#a1">Socket/main.cpp</a>.</dd>
 </dl>
-<div id="dynsection-26" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
-<div id="dynsection-26-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-28" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-28-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-26-content" class="dyncontent" style="display:none;">
+<div id="dynsection-28-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a5db12267a6d2241e81f570463f2d7ef5_icgraph.svg" width="1559" height="571"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
@@ -1124,11 +1201,11 @@ Friends</h2></td></tr>
 <p>Called when writing to the socket is possible. </p>
 
 <p>Reimplemented in <a class="el" href="classAsyncFw_1_1HttpSocket.html#ac276bcd3a5e86289eb37ea7fd062559b">AsyncFw::HttpSocket</a>.</p>
-<div id="dynsection-27" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
-<div id="dynsection-27-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-29" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-29-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-27-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_af8141e7714603e6c83c0640a2d74ec90_icgraph.svg" width="630" height="120"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div id="dynsection-29-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_af8141e7714603e6c83c0640a2d74ec90_icgraph.svg" width="871" height="187"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -1189,11 +1266,11 @@ Friends</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>Number of raw bytes pending in the OS network buffer queue. </dd></dl>
 
 <p>Reimplemented in <a class="el" href="classAsyncFw_1_1AbstractTlsSocket.html#a7244e3b461e0012dab1d9c3b1c0db78e">AsyncFw::AbstractTlsSocket</a>.</p>
-<div id="dynsection-28" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
-<div id="dynsection-28-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-30" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-30-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-28-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a64ec81f99806967d9244337b88ae03ba_icgraph.svg" width="658" height="120"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div id="dynsection-30-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a64ec81f99806967d9244337b88ae03ba_icgraph.svg" width="658" height="187"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -1236,17 +1313,17 @@ Friends</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>Number of raw bytes read from the descriptor, or error status codes. </dd></dl>
 
 <p>Reimplemented in <a class="el" href="classAsyncFw_1_1AbstractTlsSocket.html#a8c0f2e296d83c3004bd02dd6c2925bf1">AsyncFw::AbstractTlsSocket</a>.</p>
-<div id="dynsection-29" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
-<div id="dynsection-29-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-31" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
+<div id="dynsection-31-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-29-content" class="dyncontent" style="display:none;">
+<div id="dynsection-31-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a25efdce1c4a0dedf15e57cb0af971d86_cgraph.svg" width="402" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
-<div id="dynsection-30" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
-<div id="dynsection-30-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-32" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-32-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-30-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a25efdce1c4a0dedf15e57cb0af971d86_icgraph.svg" width="863" height="238"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div id="dynsection-32-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a25efdce1c4a0dedf15e57cb0af971d86_icgraph.svg" width="863" height="304"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -1289,17 +1366,17 @@ Friends</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>Number of raw bytes written out to the descriptor, or error status codes. </dd></dl>
 
 <p>Reimplemented in <a class="el" href="classAsyncFw_1_1AbstractTlsSocket.html#a84a79c1f921e96efd6b4f47cd7cd91e0">AsyncFw::AbstractTlsSocket</a>.</p>
-<div id="dynsection-31" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
-<div id="dynsection-31-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-33" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
+<div id="dynsection-33-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-31-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a4659df5988d2af771d4feee9edec55d8_cgraph.svg" width="402" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div id="dynsection-33-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a4659df5988d2af771d4feee9edec55d8_cgraph.svg" width="624" height="142"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
-<div id="dynsection-32" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
-<div id="dynsection-32-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-34" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-34-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-32-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a4659df5988d2af771d4feee9edec55d8_icgraph.svg" width="648" height="154"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div id="dynsection-34-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a4659df5988d2af771d4feee9edec55d8_icgraph.svg" width="648" height="187"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -1334,10 +1411,10 @@ Friends</h2></td></tr>
   </table>
   </dd>
 </dl>
-<div id="dynsection-33" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
-<div id="dynsection-33-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-35" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-35-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-33-content" class="dyncontent" style="display:none;">
+<div id="dynsection-35-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_adf2d96f44c3abf205e637f3809bc614d_icgraph.svg" width="624" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
@@ -1373,10 +1450,10 @@ Friends</h2></td></tr>
   </table>
   </dd>
 </dl>
-<div id="dynsection-34" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
-<div id="dynsection-34-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-36" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-36-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-34-content" class="dyncontent" style="display:none;">
+<div id="dynsection-36-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_aee9d948ab5f79cb9c0c45da1709c1159_icgraph.svg" width="624" height="187"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 

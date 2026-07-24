@@ -1,0 +1,15 @@
+<map id="AsyncFw::AbstractSocket::AbstractSocket" name="AsyncFw::AbstractSocket::AbstractSocket">
+<area shape="rect" id="Node000001" title="Constructs an AbstractSocket with default parameters (AF_INET, SOCK_STREAM, IPPROTO_TCP) and binds it..." alt="" coords="5,35,180,77"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1Thread.html#a0a3bd6a54db28f73ff59cfea6a40b07a" title="Returns a pointer to the AsyncFw::Thread that manages the currently executing thread." alt="" coords="228,43,400,69"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="180,53,214,56,209,56,180,59"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractThread.html#af33c5949edb374d673a7a9ac0c81ec32" title="Returns a pointer to the AsyncFw::AbstractThread that manages the currently executing thread." alt="" coords="448,5,621,48"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="400,42,435,40,430,41,400,47"/>
+<area shape="rect" id="Node000006" href="$classAsyncFw_1_1Thread.html#afc5e422090767dd84020381fb9a4d490" title="Constructs a thread." alt="" coords="448,72,621,99"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="400,65,436,72,430,72,400,70"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1AbstractThread.html#a8c9202c90ac101522f26c4260cb01b59" title="Constructs a thread." alt="" coords="669,5,843,48"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="622,24,656,27,651,27,622,29"/>
+<area shape="rect" id="Node000005" href="$classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd" title="Returns name of managed thread." alt="" coords="891,35,1064,77"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="843,36,878,43,872,42,843,41"/>
+<area shape="poly" id="edge6_Node000006_Node000004" title=" " alt="" coords="587,69,656,53,661,52,588,74"/>
+<area shape="poly" id="edge7_Node000006_Node000005" title=" " alt="" coords="621,77,873,63,878,63,622,82"/>
+</map>

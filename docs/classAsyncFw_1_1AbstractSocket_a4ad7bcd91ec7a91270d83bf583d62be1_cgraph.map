@@ -1,12 +1,13 @@
 <map id="AsyncFw::AbstractSocket::write" name="AsyncFw::AbstractSocket::write">
-<area shape="rect" id="Node000001" title="Transmits a structural DataArray package out to the network layer." alt="" coords="5,27,180,69"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractSocket.html#a6b5bfbc488d553dca8a2d01b6b415482" title="Writes raw binary bytes out to the network socket layer." alt="" coords="228,27,402,69"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="180,45,215,47,210,49,180,51"/>
-<area shape="rect" id="Node000003" href="$structAsyncFw_1_1AnyData.html#aa6d2c3488a44e34e25a0971b01a27b3c" title="Type&#45;safely extracts and returns the stored data value." alt="" coords="672,5,841,32"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="390,23,450,12,557,6,659,10,654,11,557,11,450,17,391,29"/>
-<area shape="rect" id="Node000004" href="$classAsyncFw_1_1AbstractSocket.html#a4659df5988d2af771d4feee9edec55d8" title="Low&#45;level native operating system write operation proxying requests directly up to the fd handle." alt="" coords="450,27,624,69"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="402,45,437,48,432,48,403,51"/>
-<area shape="rect" id="Node000005" href="$classAsyncFw_1_1AbstractSocket.html#af8141e7714603e6c83c0640a2d74ec90" title="Called when writing to the socket is possible." alt="" coords="450,93,624,136"/>
-<area shape="poly" id="edge5_Node000002_Node000005" title=" " alt="" coords="388,67,452,88,446,88,388,72"/>
-<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="624,34,659,32,654,32,625,39"/>
+<area shape="rect" id="Node000001" title="Transmits a structural DataArray package out to the network layer." alt="" coords="5,56,180,99"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractSocket.html#a6b5bfbc488d553dca8a2d01b6b415482" title="Writes raw binary bytes out to the network socket layer." alt="" coords="228,56,402,99"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="180,75,215,77,209,78,180,80"/>
+<area shape="rect" id="Node000003" href="$structAsyncFw_1_1AnyData.html#aa6d2c3488a44e34e25a0971b01a27b3c" title="Type&#45;safely extracts and returns the stored data value." alt="" coords="675,5,844,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="395,53,450,41,558,28,663,22,658,23,559,33,450,47,396,58"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1AbstractSocket.html#a4659df5988d2af771d4feee9edec55d8" title="Low&#45;level native operating system write operation proxying requests directly up to the fd handle." alt="" coords="450,56,624,99"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="402,83,437,86,432,86,402,89"/>
+<area shape="poly" id="edge5_Node000004_Node000002" title=" " alt="" coords="447,69,417,71,417,66,452,68"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="620,53,689,37,695,36,621,58"/>
+<area shape="rect" id="Node000005" href="$classAsyncFw_1_1AbstractSocket.html#af8141e7714603e6c83c0640a2d74ec90" title="Called when writing to the socket is possible." alt="" coords="672,56,847,99"/>
+<area shape="poly" id="edge6_Node000004_Node000005" title=" " alt="" coords="625,75,659,77,654,77,625,80"/>
 </map>

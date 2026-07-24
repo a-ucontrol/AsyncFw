@@ -1,6 +1,6 @@
 <map id="AsyncFw::AbstractSocket::AbstractSocket" name="AsyncFw::AbstractSocket::AbstractSocket">
 <area shape="rect" id="Node000001" title="Constructs an AbstractSocket and binds it to the current thread context." alt="" coords="5,35,180,77"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractSocket.html#a94ae146fe8047af98d2dcfd14d20e261" title="Constructs an AbstractSocket with default parameters (AF_INET, SOCK_STREAM, IPPROTO_TCP) and binds it..." alt="" coords="228,35,402,77"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractSocket.html#a2b3066513b7cf718a97fe6c9f3cc11e6" title="Constructs an AbstractSocket with default parameters (AF_INET, SOCK_STREAM, IPPROTO_TCP) and binds it..." alt="" coords="228,35,402,77"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="180,53,215,56,210,56,180,59"/>
 <area shape="rect" id="Node000003" href="$classAsyncFw_1_1Thread.html#a0a3bd6a54db28f73ff59cfea6a40b07a" title="Returns a pointer to the AsyncFw::Thread that manages the currently executing thread." alt="" coords="450,43,622,69"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="402,53,437,56,431,56,403,59"/>
