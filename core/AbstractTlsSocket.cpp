@@ -15,6 +15,8 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #include "AbstractTlsSocket.h"
 
+//#define USE_SSL_BIO_PAIR
+
 using namespace AsyncFw;
 
 #ifdef EXTEND_SOCKET_TRACE
@@ -26,11 +28,20 @@ using namespace AsyncFw;
 
 struct AbstractTlsSocket::Private {
   ~Private() {
-    if (ssl_) { SSL_free(ssl_); }
+    if (ssl_) {
+      SSL_free(ssl_);
+#ifdef USE_SSL_BIO_PAIR
+      BIO_free(bio_);
+#endif
+    }
   }
   TlsContext ctx_;
   SSL *ssl_ = nullptr;
   uint8_t encrypt_ = 0;  // 0 - noencrypt, 1 - server, 2 - client
+#ifdef USE_SSL_BIO_PAIR
+  BIO *bio_ = nullptr;
+  std::vector<uint8_t> raw_input_buffer_;
+#endif
 };
 
 AbstractTlsSocket::AbstractTlsSocket() : AbstractSocket(), private_(*new Private) { trace() << fd_; }
@@ -60,6 +71,9 @@ void AbstractTlsSocket::disconnect() {
 void AbstractTlsSocket::close() {
   if (private_.ssl_) {
     SSL_free(private_.ssl_);
+#ifdef USE_SSL_BIO_PAIR
+    BIO_free(private_.bio_);
+#endif
     private_.ssl_ = nullptr;
   }
   AbstractSocket::close();
@@ -89,16 +103,45 @@ void AbstractTlsSocket::activateEvent() {
 
     if (private_.ctx_.verifyPeer()) SSL_set_verify(private_.ssl_, SSL_VERIFY_PEER, TlsContext::verify);
     else { SSL_set_verify(private_.ssl_, SSL_VERIFY_NONE, nullptr); }
-
+#ifndef USE_SSL_BIO_PAIR
     SSL_set_fd(private_.ssl_, fd_);
-    // SSL_set_read_ahead(private_.ssl_, 1);
+#else
+    BIO *_bio;
+    BIO_new_bio_pair(&private_.bio_, 0, &_bio, 0);
+    SSL_set_bio(private_.ssl_, _bio, _bio);
+#endif
+    SSL_set_read_ahead(private_.ssl_, 1);
     if (!private_.ctx_.verifyName().empty()) {
       lsTrace() << fd_ << "verify name" << LogStream::Color::Green << private_.ctx_.verifyName();
       SSL_set_hostflags(private_.ssl_, X509_CHECK_FLAG_NO_PARTIAL_WILDCARDS);
       if (!SSL_set1_host(private_.ssl_, private_.ctx_.verifyName().c_str())) lsError();
     }
   }
+#ifdef USE_SSL_BIO_PAIR
+  int sys_available = AbstractSocket::read_available_fd();
+  if (sys_available > 0) {
+    std::vector<uint8_t> handshake_buf(sys_available);  //!!! handshake_buf -> private_.raw_input_buffer_
+    int r_sys = AbstractSocket::read_fd(handshake_buf.data(), sys_available);
+    if (r_sys > 0) { BIO_write(private_.bio_, handshake_buf.data(), r_sys); }
+  }
+  // Также проталкиваем остатки из raw_input_buffer_, если они там были
+  if (!private_.raw_input_buffer_.empty()) {
+    int written = BIO_write(private_.bio_, private_.raw_input_buffer_.data(), private_.raw_input_buffer_.size());
+    if (written > 0) { private_.raw_input_buffer_.erase(private_.raw_input_buffer_.begin(), private_.raw_input_buffer_.begin() + written); }
+  }
+#endif
   int r = (private_.encrypt_ == 1) ? SSL_accept(private_.ssl_) : SSL_connect(private_.ssl_);
+#ifdef USE_SSL_BIO_PAIR
+  int pending = BIO_ctrl_pending(private_.bio_);
+  if (pending > 0) {
+    std::vector<uint8_t> enc_buf(pending);
+    int read_bytes = BIO_read(private_.bio_, enc_buf.data(), pending);
+    if (read_bytes > 0) {
+      // Базовый класс сам запишет недоотправленные байты хендшейка в wda_!
+      AbstractSocket::write_fd(enc_buf.data(), read_bytes);
+    }
+  }
+#endif
   //SIGPIPE if (private_.encrypt_ == 1) ::close(fd_); void Thread::startedEvent() disabled it
   if (r <= 0) {
     int _e = SSL_get_error(private_.ssl_, r);
@@ -107,7 +150,9 @@ void AbstractTlsSocket::activateEvent() {
       return;
     }
     if (_e == SSL_ERROR_WANT_WRITE) {
+#ifndef USE_SSL_BIO_PAIR
       thread_->modifyPollDescriptor(fd_, AbstractThread::PollIn | AbstractThread::PollOut);
+#endif
       lsDebug() << LogStream::Color::Red << "want write";
       return;
     }
@@ -128,6 +173,7 @@ void AbstractTlsSocket::activateEvent() {
   activateReady();
 }
 
+#ifndef USE_SSL_BIO_PAIR
 int AbstractTlsSocket::read_available_fd() const {
   if (!private_.encrypt_) return AbstractSocket::read_available_fd();
   if (!private_.ssl_) {
@@ -135,20 +181,142 @@ int AbstractTlsSocket::read_available_fd() const {
     return -2;
   }
   int r = SSL_peek(private_.ssl_, nullptr, 0);
-  if (r < 0) return SSL_get_error(private_.ssl_, r) == SSL_ERROR_WANT_READ ? 0 : -1;
+  if (r < 0) {
+    int e = SSL_get_error(private_.ssl_, r);
+    if (e == SSL_ERROR_WANT_READ) return 0;
+    if (e == SSL_ERROR_WANT_WRITE) {
+      thread_->modifyPollDescriptor(fd_, AbstractThread::PollIn | AbstractThread::PollOut);
+      return 0;
+    }
+    return -1;
+  }
   r = SSL_pending(private_.ssl_);
   return r > 0 ? r : -1;
 }
+#else
+int AbstractTlsSocket::read_available_fd() const {
+  if (!private_.encrypt_) { return AbstractSocket::read_available_fd(); }
+
+  int r = SSL_peek(private_.ssl_, nullptr, 0);
+  if (r < 0) goto L1;
+  r = SSL_pending(private_.ssl_);
+  if (r > 0) {
+    lsInfoMagenta() << r;
+    return r;
+  }
+
+L1:
+
+  bool sys_disconnected = false;
+
+  // 1. Проверяем, сколько байт готово в ОС
+  int sys_available = AbstractSocket::read_available_fd();
+  if (sys_available == -2) return -2;
+
+  // Если базовый класс вернул -1, значит TCP-соединение разорвано/ошибка
+  if (sys_available < 0) {
+    sys_disconnected = true;
+  } else if (sys_available > 0) {
+    size_t old_size = private_.raw_input_buffer_.size();
+    private_.raw_input_buffer_.resize(old_size + sys_available);
+
+    int r = const_cast<AbstractTlsSocket *>(this)->AbstractSocket::read_fd(private_.raw_input_buffer_.data() + old_size, sys_available);
+
+    if (r < 0) {
+      sys_disconnected = true;
+      private_.raw_input_buffer_.resize(old_size);  // Откатываем размер назад
+    } else if (r == 0) {
+      // Внезапный EOF (FIN пакет от удаленной стороны)
+      sys_disconnected = true;
+      private_.raw_input_buffer_.resize(old_size);
+    } else {
+      private_.raw_input_buffer_.resize(old_size + r);
+    }
+  }
+
+  // 2. Проталкиваем всё, что можем, в OpenSSL BIO
+  if (!private_.raw_input_buffer_.empty()) {
+    int written = BIO_write(private_.bio_, private_.raw_input_buffer_.data(), private_.raw_input_buffer_.size());
+    if (written > 0) { private_.raw_input_buffer_.erase(private_.raw_input_buffer_.begin(), private_.raw_input_buffer_.begin() + written); }
+    lsInfoGreen() << private_.raw_input_buffer_.size();
+  }
+
+  // 3. Заставляем OpenSSL распарсить то, что вошло в BIO
+  uint8_t dummy;
+  SSL_peek(private_.ssl_, &dummy, 0);
+
+  // 4. Считаем, сколько РАСШИФРОВАННЫХ байт у нас готово для верхнего уровня
+  int decrypted_available = SSL_pending(private_.ssl_);
+  // ЛОГИКА ВОЗВРАТА СОСТОЯНИЯ:
+  if (decrypted_available > 0) {
+    // Если есть расшифрованные данные — всегда отдаем их количество.
+    // Приложение должно их вычитать, даже если сокет уже умер.
+    return decrypted_available;
+  }
+  // Если расшифрованных данных нет БОЛЬШЕ НИГДЕ (ни в OpenSSL, ни в сыром буфере)
+  if (private_.raw_input_buffer_.empty() && BIO_ctrl_pending(private_.bio_) == 0) {
+    if (sys_disconnected) {
+      return -1;  // Сигнализируем базовому классу о честном закрытии сокета
+    }
+  }
+  // Данных пока нет, но сокет жив (ждем дальше)
+  return 0;
+}
+#endif
 
 int AbstractTlsSocket::read_fd(void *data, int size) {
   if (!private_.encrypt_) return AbstractSocket::read_fd(data, size);
   return SSL_read(private_.ssl_, data, size);
 }
 
+#ifndef USE_SSL_BIO_PAIR
 int AbstractTlsSocket::write_fd(const void *data, int size) {
   if (!private_.encrypt_) return AbstractSocket::write_fd(data, size);
-  return SSL_write(private_.ssl_, data, size);
+  int r = SSL_write(private_.ssl_, data, size);
+  if (r < 0) {
+    int e = SSL_get_error(private_.ssl_, r);
+    if (e == SSL_ERROR_WANT_READ) return 0;
+    if (e == SSL_ERROR_WANT_WRITE) {
+      thread_->modifyPollDescriptor(fd_, AbstractThread::PollIn | AbstractThread::PollOut);
+      return 0;
+    }
+    return -1;
+  }
+  return r;
 }
+#else
+int AbstractTlsSocket::write_fd(const void *data, int size) {
+  if (!private_.encrypt_) { return AbstractSocket::write_fd(data, size); }
+
+  // 1. Пропускаем данные приложения через OpenSSL.
+  // Ему всё равно, свободна ли сеть, у него свои внутренние буферы в паре BIO.
+  int r = SSL_write(private_.ssl_, data, size);
+  if (r <= 0) {
+    int err = SSL_get_error(private_.ssl_, r);
+    if (err == SSL_ERROR_WANT_READ || err == SSL_ERROR_WANT_WRITE) {
+      return 0;  // Нам нужно подождать (неблокирующий режим)
+    }
+    return r;  // Критическая ошибка TLS
+  }
+
+  // 2. Смотрим, сколько зашифрованного выхлопа нагенерировал OpenSSL
+  int pending = BIO_ctrl_pending(private_.bio_);
+  if (pending > 0) {
+    std::vector<uint8_t> enc_buf(pending);
+    int read_bytes = BIO_read(private_.bio_, enc_buf.data(), pending);
+
+    if (read_bytes > 0) {
+      // 3. Вызываем базовый класс!
+      // Если wda_ пуст — он пошлет в сеть и сохранит остаток при EAGAIN.
+      // Если wda_ НЕ пуст — он просто допишет новый шифр в хвост к старому шифру!
+      AbstractSocket::write_fd(enc_buf.data(), read_bytes);
+    }
+  }
+
+  // Возвращаем r (размер сырых данных, успешно обработанных SSL_write)
+  return r;
+}
+#endif
 
 namespace AsyncFw {
 LogStream &operator<<(LogStream &log, const AbstractTlsSocket &s) { return (log << *static_cast<const AbstractSocket *>(&s)) << (!s.private_.ctx_.empty() ? s.private_.ctx_.commonName() + '/' + (!s.private_.ctx_.verifyName().empty() ? s.private_.ctx_.verifyName() : "\"\"") : "empty"); }

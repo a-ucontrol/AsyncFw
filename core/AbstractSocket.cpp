@@ -54,6 +54,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
     if constexpr (0) LogStream()
 #endif
 
+#define WDA_RAW_DATA
 #define SOCKET_CONNECTION_QUEUED 16
 //#define SOCKET_REUSEPORT
 
@@ -70,6 +71,7 @@ struct AbstractSocket::Private {
   int type_ = SOCK_STREAM;
   int protocol_ = IPPROTO_TCP;
   int rs_ = 0;
+  bool out_ = false;
 };
 
 AbstractSocket::AbstractSocket() : private_(*new Private) {
@@ -333,6 +335,7 @@ DataArray AbstractSocket::read(int _s) {
   return _da;
 }
 
+#ifdef WDA_RAW_DATA
 int AbstractSocket::write(const uint8_t *data, int size) {
   warning_if(size <= 0) << LogStream::Color::Red << "size for write is null";
   if (!private_.wda_.empty()) {
@@ -342,7 +345,11 @@ int AbstractSocket::write(const uint8_t *data, int size) {
   int r = write_fd(data, size);
   if (r > 0) {
     if (r < size) {
-      if (private_.wda_.empty()) thread_->modifyPollDescriptor(fd_, AbstractThread::PollIn | AbstractThread::PollOut);
+      if (!private_.out_) {
+        thread_->modifyPollDescriptor(fd_, AbstractThread::PollIn | AbstractThread::PollOut);
+        private_.out_ = true;
+        trace() << LogStream::Color::Cyan << "(AbstractThread::PollIn | AbstractThread::PollOut)";
+      }
       private_.wda_.insert(private_.wda_.end(), data + r, data + size);
     } else {
       AbstractThread::AbstractTask *_t = new Invocable<void()>::Function([this] { writeEvent(); });
@@ -355,6 +362,12 @@ int AbstractSocket::write(const uint8_t *data, int size) {
   }
   return r;
 }
+#else
+int AbstractSocket::write(const uint8_t *data, int size) {
+  warning_if(size <= 0) << LogStream::Color::Red << "size for write is null";
+  return write_fd(data, size);
+}
+#endif
 
 int AbstractSocket::write(const DataArray &_da) { return write(_da.data(), _da.size()); }
 
@@ -368,6 +381,7 @@ void AbstractSocket::close() {
   private_.rs_ = 0;
   private_.rda_.clear();
   private_.wda_.clear();
+  private_.out_ = false;
   stateEvent();
 }
 
@@ -435,13 +449,45 @@ int AbstractSocket::read_fd(void *data, int size) {
 #endif
 }
 
+#ifdef WDA_RAW_DATA
 int AbstractSocket::write_fd(const void *data, int size) {
-#ifndef _WIN32
+  #ifndef _WIN32
   return ::write(fd_, data, size);
-#else
+  #else
   return ::send(fd_, static_cast<const char *>(data), size, 0);
-#endif
+  #endif
 }
+#else
+int AbstractSocket::write_fd(const void *data, int size) {
+  if (!private_.wda_.empty()) {
+    private_.wda_.insert(private_.wda_.end(), static_cast<const char *>(data), static_cast<const char *>(data) + size);
+    return size;
+  }
+  #ifndef _WIN32
+  int r = ::write(fd_, data, size);
+  #else
+  int r = ::send(fd_, static_cast<const char *>(data), size, 0);
+  #endif
+  if (r > 0) {
+    if (r < size) {
+      if (!private_.out_) {
+        thread_->modifyPollDescriptor(fd_, AbstractThread::PollIn | AbstractThread::PollOut);
+        private_.out_ = true;
+        trace() << LogStream::Color::Cyan << "(AbstractThread::PollIn | AbstractThread::PollOut)";
+      }
+      private_.wda_.insert(private_.wda_.end(), static_cast<const char *>(data) + r, static_cast<const char *>(data) + size);
+    } else {
+      AbstractThread::AbstractTask *_t = new Invocable<void()>::Function([this] { writeEvent(); });
+      if (!thread_->invokeTask(_t)) {
+        lsError() << "thread not running";
+        delete _t;
+      }
+    }
+    r = size;
+  }
+  return r;
+}
+#endif
 
 void AbstractSocket::destroy() {
   if (state_ == Destroy) {
@@ -522,9 +568,9 @@ void AbstractSocket::pollEvent(int _e) {
       if (private_.rs_ > 0) {
         read_fd();
         goto RE;
-      } else if (private_.rs_ < 0) goto E;
+      } else if (private_.rs_ < 0) goto REND;
     } else if (private_.rs_ < 0) {
-    E:
+    REND:
       if (private_.rs_ == -1) {
         if (::recv(fd_, nullptr, 1, MSG_PEEK | MSG_DONTWAIT) != 0) {
           trace() << "read: check connection" << errno;
@@ -543,24 +589,32 @@ void AbstractSocket::pollEvent(int _e) {
     warning_if(AbstractSocket::read_available_fd() > 0) << LogStream::Color::Yellow << "socket not empty after read";
   }
   if (_e & AbstractThread::PollOut) {
-  WE:
-    writeEvent();
     if (private_.wda_.empty()) {
+    WEND:
       thread_->modifyPollDescriptor(fd_, AbstractThread::PollIn);
+      private_.out_ = false;
+      trace() << LogStream::Color::Magenta << "(AbstractThread::PollIn)";
+      if ((private_.rs_ = read_available_fd()) > 0) goto RE;
       if (state_ == State::Closing) {
         shutdown(fd_, SHUT_RDWR);
         close();
       }
       return;
     }
+#ifndef WDA_RAW_DATA
     int r = ::write(fd_, private_.wda_.data(), private_.wda_.size());
+#else
+    int r = write_fd(private_.wda_.data(), private_.wda_.size());
+#endif
     if (r > 0) {
       if (r < static_cast<int>(private_.wda_.size())) {
         private_.wda_.erase(private_.wda_.begin(), private_.wda_.begin() + r);
         return;
       }
       private_.wda_.clear();
-      goto WE;
+      writeEvent();
+      if (!private_.wda_.empty()) return;
+      goto WEND;
     }
     if (r < 0) {
       if (errno == EAGAIN) {
