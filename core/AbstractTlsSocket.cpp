@@ -44,7 +44,11 @@ struct AbstractTlsSocket::Private {
 #endif
 };
 
+#ifndef USE_SSL_BIO_PAIR
 AbstractTlsSocket::AbstractTlsSocket() : AbstractSocket(), private_(*new Private) { trace() << fd_; }
+#else
+AbstractTlsSocket::AbstractTlsSocket() : AbstractSocket(Network), private_(*new Private) { trace() << fd_; }
+#endif
 
 AbstractTlsSocket::~AbstractTlsSocket() {
   delete &private_;
@@ -196,6 +200,10 @@ int AbstractTlsSocket::read_available_fd() const {
 #else
 int AbstractTlsSocket::read_available_fd() const {
   if (!private_.encrypt_) { return AbstractSocket::read_available_fd(); }
+  if (!private_.ssl_) {
+    lsError() << "(!private_.ssl_)";
+    return -2;
+  }
 
   int r = SSL_peek(private_.ssl_, nullptr, 0);
   if (r < 0) goto L1;

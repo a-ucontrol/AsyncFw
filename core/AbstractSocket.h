@@ -45,6 +45,13 @@ public:
     Write,    ///< Low-level hardware or OS socket write error.
     Activate  ///< Protocol negotiation or handshake initialization error (e.g., TLS setup failure).
   };
+  /** @brief Mode for interpreting data within the output buffer.
+  @details This only makes sense for derived classes whose application data is not equivalent to network data. For example, encryption.
+  @note Under normal conditions, this buffer is always empty. Data is accumulated here ONLY if it cannot be written to the socket immediately. */
+  enum OutputBufferMode : uint8_t {
+    Application = 0x01,  ///< Raw application data (requires encryption/processing before sending).
+    Network = 0x02       ///< Ready-to-send network bytes (transport layer, written directly to socket).
+  };
 
   /** @brief Binds a raw native operating system socket file descriptor to this instance. @param fd Native socket descriptor integer. */
   virtual void setDescriptor(int);
@@ -88,11 +95,11 @@ public:
   uint16_t peerPort() const;
 
 protected:
-  /** @brief Constructs an AbstractSocket with default parameters (AF_INET, SOCK_STREAM, IPPROTO_TCP) and binds it to the current thread context. */
-  AbstractSocket();
+  /** @brief Constructs an AbstractSocket with default parameters (AF_INET, SOCK_STREAM, IPPROTO_TCP) and binds it to the current thread context. @param mode The new mode for interpreting the buffer content. */
+  AbstractSocket(OutputBufferMode = Application);
   /** @brief Constructs an AbstractSocket and binds it to the current thread context.
-  @param family Address family @param type Socket type @param protocol Internet protocol */
-  AbstractSocket(int, int, int);
+  @param family Address family. @param type Socket type. @param protocol Internet protocol. @param mode The new mode for interpreting the buffer content. */
+  AbstractSocket(int, int, int, OutputBufferMode = Application);
   /** @brief Virtual destructor. Automatically detaches socket from thread if still attached. */
   virtual ~AbstractSocket();
 
