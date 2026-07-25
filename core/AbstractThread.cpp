@@ -954,7 +954,7 @@ bool AbstractThread::appendPollDescriptor(int fd, PollEvents mask, AbstractPollT
   struct epoll_event event;
   event.events = mask
   #ifdef EPOLL_EDGE_TRIGGERED
-                 | static_cast<uint32_t>(EPOLLET)
+                 | static_cast<uint32_t>(EPOLLET | EPOLLRDHUP)
   #endif
       ;
   Private::PollTask *_d = new Private::PollTask(fd, task);
@@ -1016,7 +1016,7 @@ bool AbstractThread::modifyPollDescriptor(int fd, PollEvents mask) {
   struct epoll_event event;
   event.events = mask
   #ifdef EPOLL_EDGE_TRIGGERED
-                 | static_cast<uint32_t>(EPOLLET)
+                 | static_cast<uint32_t>(EPOLLET | EPOLLRDHUP)
   #endif
       ;
   {  //lock scope

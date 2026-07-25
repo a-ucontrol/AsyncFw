@@ -529,7 +529,7 @@ void AbstractSocket::pollEvent(int _e) {
     if (state_ != State::Active || AbstractSocket::read_available_fd() <= 0) return;
   }
   if (_e & AbstractThread::PollIn) {
-    //    warning_if(AbstractSocket::read_available_fd() < 0) << LogStream::Color::Red << "socket empty before read";
+    warning_if(AbstractSocket::read_available_fd() < 0) << LogStream::Color::Red << "socket empty before read";
     private_.rs_ = read_available_fd();
     if (private_.rs_ > 0) {
     RE:
@@ -543,7 +543,7 @@ void AbstractSocket::pollEvent(int _e) {
       }
     } else if (private_.rs_ < 0) {
       if (private_.rs_ == -1) {
-#ifdef IO_URING_WAIT
+#if defined EPOLL_EDGE_TRIGGERED || defined IO_URING_WAIT
         if (!((int)_e & 0x2000)) return;
 #endif
         private_.errorString_ = "Connection closed";
@@ -556,9 +556,9 @@ void AbstractSocket::pollEvent(int _e) {
       close();
       return;
     }
-    //    warning_if(AbstractSocket::read_available_fd() > 0) << LogStream::Color::Yellow << "socket not empty after read";
+    warning_if(AbstractSocket::read_available_fd() > 0) << LogStream::Color::Yellow << "socket not empty after read";
   }
-#ifdef IO_URING_WAIT
+#if defined EPOLL_EDGE_TRIGGERED || defined IO_URING_WAIT
   if (_e & 0x2000) {
     private_.errorString_ = "Connection closed";
     private_.error_ = Closed;
