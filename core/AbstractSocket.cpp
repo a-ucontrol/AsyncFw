@@ -530,14 +530,12 @@ void AbstractSocket::pollEvent(int _e) {
       if (private_.rs_ > 0) {
         read_fd();
         goto RE;
-      } else if (private_.rs_ < 0) goto REND;
+      }
     } else if (private_.rs_ < 0) {
-    REND:
       if (private_.rs_ == -1) {
-        if (::recv(fd_, nullptr, 1, MSG_PEEK | MSG_DONTWAIT) != 0) {
-          trace() << "read: check connection" << errno;
-          return;
-        }
+#ifdef IO_URING_WAIT
+        if (!((int)_e & 0x2000)) return;
+#endif
         private_.errorString_ = "Connection closed";
         private_.error_ = Closed;
       } else {
@@ -550,6 +548,14 @@ void AbstractSocket::pollEvent(int _e) {
     }
     warning_if(AbstractSocket::read_available_fd() > 0) << LogStream::Color::Yellow << "socket not empty after read";
   }
+#ifdef IO_URING_WAIT
+  if (_e & 0x2000) {
+    private_.errorString_ = "Connection closed";
+    private_.error_ = Closed;
+    close();
+    return;
+  }
+#endif
   if (_e & AbstractThread::PollOut) {
     if (private_.wda_.empty()) {
     WEND:

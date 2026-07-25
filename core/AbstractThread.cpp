@@ -704,7 +704,7 @@ void AbstractThread::exec() {
                   continue;
                 }
 
-                int32_t events = cqe->res & (POLLIN_ | POLLOUT_ | POLLERR_ | POLLHUP_ | POLLNVAL_);
+                int32_t events = cqe->res & (POLLIN_ | POLLOUT_ | POLLERR_ | POLLHUP_ | POLLNVAL_ | 0x2000);
                 if (events) {
                   std::deque<Private::ProcessPollTask>::iterator it = std::lower_bound(private_.process_poll_tasks_.begin(), private_.process_poll_tasks_.end(), _d->fd, Private::Compare());
                   if (it == private_.process_poll_tasks_.end() || it->fd != _d->fd) {
