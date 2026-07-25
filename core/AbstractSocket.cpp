@@ -165,6 +165,7 @@ void AbstractSocket::changeDescriptor(int _fd) {
 }
 
 int AbstractSocket::read_available_fd() const {
+  if (private_.flags_ &= 0x20) return private_.rs_;
 #ifdef _WIN32
   u_long r;
   if (ioctlsocket(fd_, FIONREAD, &r) < 0) {
@@ -307,7 +308,9 @@ void AbstractSocket::read_fd() {
       private_.error_ = Read;
       lsDebug() << LogStream::Color::Red << private_.errorString_ << r << private_.rs_ << errno;
       close();
+      return;
     }
+    private_.rs_ -= r;
   } while ((private_.rs_ = read_available_fd()) > 0);
   private_.rs_ = 0;
 }
@@ -353,7 +356,7 @@ void AbstractSocket::close() {
   private_.rs_ = 0;
   private_.rda_.clear();
   private_.wda_.clear();
-  private_.flags_ &= 0x0F;
+  private_.flags_ &= ~0x80;
   stateEvent();
 }
 
@@ -433,16 +436,21 @@ int AbstractSocket::write_fd(const void *data, int size) {
 #endif
   if (r > 0) {
     if (r < size) {
-      if (!(private_.flags_ & 0xF0)) {
+      if (!(private_.flags_ & 0x80)) {
         thread_->modifyPollDescriptor(fd_, AbstractThread::PollIn | AbstractThread::PollOut);
         private_.flags_ |= 0x80;
         trace() << LogStream::Color::Cyan << "(AbstractThread::PollIn | AbstractThread::PollOut)";
       }
       private_.wda_.insert(private_.wda_.end(), static_cast<const char *>(data) + r, static_cast<const char *>(data) + size);
-    } else {
-      AbstractThread::AbstractTask *_t = new Invocable<void()>::Function([this] { writeEvent(); });
+    } else if (!(private_.flags_ & 0x40)) {
+      private_.flags_ |= 0x40;
+      AbstractThread::AbstractTask *_t = new Invocable<void()>::Function([this] {
+        private_.flags_ &= ~0x40;
+        writeEvent();
+      });
       if (!thread_->invokeTask(_t)) {
         lsError() << "thread not running";
+        private_.flags_ &= ~0x40;
         delete _t;
       }
     }
@@ -521,12 +529,14 @@ void AbstractSocket::pollEvent(int _e) {
     if (state_ != State::Active || AbstractSocket::read_available_fd() <= 0) return;
   }
   if (_e & AbstractThread::PollIn) {
-    warning_if(AbstractSocket::read_available_fd() < 0) << LogStream::Color::Red << "socket empty before read";
+    //    warning_if(AbstractSocket::read_available_fd() < 0) << LogStream::Color::Red << "socket empty before read";
     private_.rs_ = read_available_fd();
     if (private_.rs_ > 0) {
     RE:
       readEvent();
+      private_.flags_ |= 0x20;
       private_.rs_ = read_available_fd();
+      private_.flags_ &= ~0x20;
       if (private_.rs_ > 0) {
         read_fd();
         goto RE;
@@ -546,7 +556,7 @@ void AbstractSocket::pollEvent(int _e) {
       close();
       return;
     }
-    warning_if(AbstractSocket::read_available_fd() > 0) << LogStream::Color::Yellow << "socket not empty after read";
+    //    warning_if(AbstractSocket::read_available_fd() > 0) << LogStream::Color::Yellow << "socket not empty after read";
   }
 #ifdef IO_URING_WAIT
   if (_e & 0x2000) {
@@ -560,7 +570,7 @@ void AbstractSocket::pollEvent(int _e) {
     if (private_.wda_.empty()) {
     WEND:
       thread_->modifyPollDescriptor(fd_, AbstractThread::PollIn);
-      private_.flags_ &= 0x0F;
+      private_.flags_ &= ~0x80;
       trace() << LogStream::Color::Magenta << "(AbstractThread::PollIn)";
       if ((private_.rs_ = read_available_fd()) > 0) goto RE;
       if (state_ == State::Closing) {
