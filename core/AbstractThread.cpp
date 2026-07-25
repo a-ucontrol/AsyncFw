@@ -12,15 +12,15 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include "LogStream.h"
 
 #if 0  // 1 - for debug only
-  //#define PIPE_WAKE
-  //#define EVENTFD_WAKE
-  //#define SOCKET_PAIR_WAKE
+//#define PIPE_WAKE
+//#define EVENTFD_WAKE
+//#define SOCKET_PAIR_WAKE
   #define SOCKET_CLOSE_WAKE
-  //#define IO_URING_WAKE
+//#define IO_URING_WAKE
   #define POLL_WAIT
-  //#define EPOLL_WAIT
-  //#define EPOLL_EDGE_TRIGGERED
-  //#define IO_URING_WAIT
+//#define EPOLL_WAIT
+//#define EPOLL_EDGE_TRIGGERED
+//#define IO_URING_WAIT
 #else
   #ifdef __linux
     #ifndef IO_URING_WAIT
@@ -92,7 +92,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #ifdef POLL_WAIT
   #define WAKE_FD fds_[0].fd
-#elif defined EVENTFD_WAKE && (defined EPOLL_WAIT || defined IO_URING_WAIT)
+#elif !defined IO_URING_WAIT
   #define WAKE_FD wake_task.fd
 #endif
 
@@ -803,9 +803,9 @@ void AbstractThread::Private::wake() {
 #elif defined EVENTFD_WAKE
   eventfd_write(WAKE_FD_WRITE, 1);
 #elif defined SOCKET_CLOSE_WAKE
-  #ifdef POLL_WAIT
+  #ifdef _WIN32
   close_fd(WAKE_FD_WRITE);
-  #elif defined EPOLL_WAIT
+  #else
   ::shutdown(WAKE_FD_WRITE, SHUT_RDWR);
   #endif
 #else
