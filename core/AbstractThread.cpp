@@ -229,8 +229,12 @@ void AbstractThread::Private::process_polls() {
   for (; !process_poll_tasks_.empty();) {
     Private::ProcessPollTask _pt = process_poll_tasks_.front();
     process_poll_tasks_.pop();
+#ifndef IO_URING_WAIT
+    (*_pt.task)(static_cast<AbstractThread::PollEvents>(_pt.events));
+#else
     (*_pt.task)(static_cast<AbstractThread::PollEvents>(*_pt.events));
     *_pt.events = 0;
+#endif
   }
 }
 
@@ -635,7 +639,7 @@ void AbstractThread::exec() {
           if (r > 0) {
             for (std::vector<pollfd>::const_iterator it = private_.fds_.begin() + 1; i != r; ++it)
               if (it->revents) {
-                private_.process_poll_tasks_.push({static_cast<int>(it->fd), it->revents, *(private_.fdts_.begin() + (it - 1 - private_.fds_.begin()))});
+                private_.process_poll_tasks_.push({static_cast<int>(it->fd), static_cast<uint16_t>(it->revents), *(private_.fdts_.begin() + (it - 1 - private_.fds_.begin()))});
                 i++;
               }
 #elif defined EPOLL_WAIT
@@ -669,7 +673,7 @@ void AbstractThread::exec() {
               }
               Private::PollTask *_d = static_cast<Private::PollTask *>(event[i].data.ptr);
               trace() << "append poll task" << _d << _d->fd << event[i].events;
-              private_.process_poll_tasks_.push_back({_d->fd, event[i].events, _d->task});
+              private_.process_poll_tasks_.push({_d->fd, static_cast<uint16_t>(event[i].events), _d->task});
             }
 #elif defined IO_URING_WAIT
           struct io_uring_cqe *cqe = nullptr;
@@ -941,14 +945,14 @@ bool AbstractThread::appendPollDescriptor(int fd, PollEvents mask, AbstractPollT
   }
   struct pollfd pollfd;
   pollfd.fd = fd;
-  pollfd.events = events;
+  pollfd.events = mask;
   Private::PollTask *_d = new Private::PollTask(pollfd.fd, task);
   private_.update_pollfd.push_back({fd, pollfd.events, task, 1});
   private_.wake();
   private_.poll_tasks.insert(it, _d);
 #elif defined EPOLL_WAIT
   struct epoll_event event;
-  event.events = events
+  event.events = mask
   #ifdef EPOLL_EDGE_TRIGGERED
                  | static_cast<uint32_t>(EPOLLET)
   #endif
@@ -983,7 +987,7 @@ bool AbstractThread::appendPollDescriptor(int fd, PollEvents mask, AbstractPollT
       goto ERR;
     }
     if (private_.poll_tasks.empty()) private_.wake();
-    if(_d->events) throw std::runtime_error("_d->events != 0"); //!!! need remove
+    if (_d->events) throw std::runtime_error("_d->events != 0");  //!!! need remove
     private_.poll_tasks.insert(it, _d);
     io_uring_prep_poll_multishot(sqe, fd, POLLIN_ | POLLOUT_);
     io_uring_sqe_set_data(sqe, _d);
@@ -1004,13 +1008,13 @@ bool AbstractThread::modifyPollDescriptor(int fd, PollEvents mask) {
   }
   struct Private::update_pollfd v;
   v.fd = fd;
-  v.events = events;
+  v.events = mask;
   v.action = 0;
   private_.update_pollfd.push_back(v);
   private_.wake();
 #elif defined EPOLL_WAIT
   struct epoll_event event;
-  event.events = events
+  event.events = mask
   #ifdef EPOLL_EDGE_TRIGGERED
                  | static_cast<uint32_t>(EPOLLET)
   #endif
