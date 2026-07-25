@@ -92,8 +92,8 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #ifdef POLL_WAIT
   #define WAKE_FD fds_[0].fd
-#elif !defined IO_URING_WAIT
-  #define WAKE_FD wake_task.fd
+#elif !defined IO_URING_WAKE
+  #define WAKE_FD wake_fd
 #endif
 
 #define LOG_THREAD_NAME ('(' + private_.name + ')')
@@ -159,12 +159,12 @@ struct AbstractThread::Private {
   std::vector<AbstractPollTask *> fdts_;
 #elif defined EPOLL_WAIT
   int epoll_fd;
-  PollTask wake_task;
+  int wake_fd;
 #elif defined IO_URING_WAIT
   struct io_uring ring;
   void destroy_removed_polls();
   #ifndef IO_URING_WAKE
-  PollTask wake_task;
+  int wake_fd;
   #endif
 #endif
 
@@ -340,18 +340,16 @@ AbstractThread::AbstractThread(const std::string &name) : private_(*new Private)
                  | EPOLLET
   #endif
       ;
-  private_.wake_task.task = nullptr;
-  event.data.ptr = &private_.wake_task;
+  //private_.wake_task.task = nullptr;
+  event.data.ptr = &private_.wake_fd;
   epoll_ctl(private_.epoll_fd, EPOLL_CTL_ADD, private_.WAKE_FD, &event);
 #elif defined IO_URING_WAIT
   if (io_uring_queue_init(IO_URING_QUEUE_SIZE, &private_.ring, 0) < 0) lsError() << "io_uring init failed";
   #ifdef EVENTFD_WAKE
   struct io_uring_sqe *sqe = io_uring_get_sqe(&private_.ring);
   if (sqe) {
-    private_.wake_task.task = nullptr;
-    private_.wake_task.fd = private_.WAKE_FD;
     io_uring_prep_poll_multishot(sqe, private_.WAKE_FD, POLLIN_);
-    io_uring_sqe_set_data(sqe, &private_.wake_task);
+    io_uring_sqe_set_data(sqe, &private_.wake_fd);
     io_uring_submit(&private_.ring);
   }
   #endif
@@ -649,7 +647,7 @@ void AbstractThread::exec() {
           private_.mutex.lock();
           if (r > 0) {
             for (int i = 0; i != r; ++i) {
-              if (event[i].data.ptr == &private_.wake_task) {
+              if (event[i].data.ptr == &private_.wake_fd) {
                 trace() << LogStream::Color::Magenta << "waked" << LOG_THREAD_NAME << event[i].events << r << private_.WAKE_FD << private_.wake_;
   #ifdef EVENTFD_WAKE
                 eventfd_t _v;
@@ -693,7 +691,7 @@ void AbstractThread::exec() {
               if (cqe->user_data == static_cast<uint64_t>(-1)) {
                 trace() << LogStream::Color::Magenta << "waked" << LOG_THREAD_NAME << private_.wake_;
   #elif defined EVENTFD_WAKE
-              if ((Private::PollTask *)cqe->user_data == &private_.wake_task) {
+              if (reinterpret_cast<void*>(cqe->user_data) == &private_.wake_fd) {
                 trace() << LogStream::Color::Magenta << "waked" << LOG_THREAD_NAME << private_.WAKE_FD << private_.wake_;
                 eventfd_t _v;
                 eventfd_read(private_.WAKE_FD, &_v);
