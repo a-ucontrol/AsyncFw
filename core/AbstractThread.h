@@ -52,7 +52,7 @@ class AbstractThread {
 
 public:
   /** \enum PollEvents @brief Bitmask constants mirroring system poll definitions (POLLIN, POLLOUT, etc.) for I/O monitoring. */
-  enum PollEvents : uint16_t { PollNo = 0, PollIn = POLLIN_, PollPri = POLLPRI_, PollOut = POLLOUT_, PollErr = POLLERR_, PollHup = POLLHUP_, PollNval = POLLNVAL_ };
+  enum PollEvents : uint16_t { PollNo = 0, PollIn = POLLIN_, PollPri = POLLPRI_, PollOut = POLLOUT_, PollErr = POLLERR_, PollHup = POLLHUP_ };
   /** @brief The LockGuard type. */
   using LockGuard = std::lock_guard<std::mutex>;
   /** @brief The AbstractTask type. */
