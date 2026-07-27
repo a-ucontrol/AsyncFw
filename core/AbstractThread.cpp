@@ -948,7 +948,7 @@ void AbstractThread::removeTimer(int id) {
   trace() << LogStream::Color::Green << LOG_THREAD_NAME << id;
 }
 
-bool AbstractThread::appendPollDescriptor(int fd, PollEvents mask, AbstractPollTask *task) {
+bool AbstractThread::appendPollDescriptor(int fd, PollEvents events, AbstractPollTask *task) {
 #ifdef POLL_WAIT
   LockGuard lock(private_.mutex);
   std::vector<Private::PollTask *>::iterator it = std::lower_bound(private_.poll_tasks.begin(), private_.poll_tasks.end(), fd, Private::Compare());
@@ -987,7 +987,7 @@ bool AbstractThread::appendPollDescriptor(int fd, PollEvents mask, AbstractPollT
   if (private_.poll_tasks.empty()) private_.wake();
   private_.poll_tasks.insert(it, _d);
 #elif defined IO_URING_WAIT
-  Private::PollTask *_d = new Private::PollTask(fd, task, mask);
+  Private::PollTask *_d = new Private::PollTask(fd, task, events);
   LockGuard lock(private_.mutex);
   {  //lock scope
     struct io_uring_sqe *sqe = io_uring_get_sqe(&private_.ring);
@@ -1005,12 +1005,12 @@ bool AbstractThread::appendPollDescriptor(int fd, PollEvents mask, AbstractPollT
     if (private_.poll_tasks.empty()) private_.wake();
     private_.poll_tasks.insert(it, _d);
     io_uring_prep_poll_multishot(sqe, fd, POLLIN_ | POLLOUT_);
-    //io_uring_prep_poll_multishot(sqe, fd, mask); // this need if modyfyPollDescriptor() use sqe
+    //io_uring_prep_poll_multishot(sqe, fd, events); // this need if modyfyPollDescriptor() use sqe
     io_uring_sqe_set_data(sqe, _d);
     io_uring_submit(&private_.ring);
   }
 #endif
-  trace() << _d << fd << static_cast<int>(mask);
+  trace() << _d << fd << static_cast<int>(events);
   return true;
 }
 
