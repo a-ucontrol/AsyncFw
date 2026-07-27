@@ -248,8 +248,8 @@ void AbstractThread::Private::destroy_removed_polls() {
     if (!cqe) break;
     Private::PollTask *_d = reinterpret_cast<Private::PollTask *>(cqe->user_data);
     warning_if(!_d || (cqe->flags & IORING_CQE_F_MORE)) << "(!_d || !(cqe->flags & IORING_CQE_F_MORE))" << _d << cqe->res << cqe->flags;
-    if (_d && _d->fd == -1 && !(cqe->flags & IORING_CQE_F_MORE)) {
-      trace() << '(' + name + ") delete" << _d << cqe->res;
+    if (_d->fd == -1) {
+      lsDebug() << LogStream::Color::Yellow << '(' + name + ") delete" << _d << cqe->res;
       delete _d;
     }
     io_uring_cqe_seen(&ring, cqe);
@@ -698,16 +698,8 @@ void AbstractThread::exec() {
               } else {
                 Private::PollTask *_d = reinterpret_cast<Private::PollTask *>(cqe->user_data);
                 trace() << "cqe" << cqe->res << cqe->flags << _d;
-                if (cqe->res < 0 || !_d) {
-                  lsDebug() << LogStream::Color::Red << "(cqe->res < 0 || !_d)";
-                  continue;
-                }
-
-                if (_d->fd < 0) {
-                  if (_d->fd == -1 && !(cqe->flags & IORING_CQE_F_MORE)) {  // IORING_CQE_F_MORE need for multishot
-                    _d->fd = -2;
-                    private_.tasks.push(new Invocable<void()>::Function([p = _d] { delete p; }));
-                  }
+                if (cqe->res < 0 || !_d || _d->fd < 0) {  //!!! need remove after debug
+                  lsDebug() << LogStream::Color::Red << "(cqe->res < 0 || !_d || _d->fd < 0)";
                   continue;
                 }
 
@@ -741,7 +733,7 @@ void AbstractThread::exec() {
                   io_uring_sqe_set_data(sqe, _d);
                 } else {
                   trace() << LogStream::Color::Red << "poll ignore" << _d << _d->fd << _d->events;
-                  delete _d;
+                  if (_d->fd < 0) delete _d;
                 }
               } else lsError() << "error get sqe";
             }
