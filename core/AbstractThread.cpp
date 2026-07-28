@@ -552,6 +552,9 @@ void AbstractThread::exec() {
     }
     std::swap(private_.process_tasks_, private_.tasks);  //take exists tasks
   }
+#ifdef IO_URING_WAIT
+  std::queue<Private::PollTask *> update_polls;
+#endif
   for (;;) {
     private_.process_tasks();
     {  //lock scope, wait new tasks or wakeup
@@ -680,10 +683,26 @@ void AbstractThread::exec() {
             }
 #elif defined IO_URING_WAIT
           struct io_uring_cqe *cqe = nullptr;
-          std::queue<Private::PollTask *> polls;
           struct __kernel_timespec ts;
           ts.tv_sec = ms / 1000;
           ts.tv_nsec = (ms % 1000) * 1000000LL;
+
+          for (; !update_polls.empty();) {
+            Private::PollTask *_d = update_polls.front();
+            update_polls.pop();
+            if (_d->events != 0xFFFF && _d->fd >= 0) {
+              struct io_uring_sqe *sqe = io_uring_get_sqe(&private_.ring);
+              if (sqe) {
+                trace() << "poll add" << _d << _d->fd;
+                io_uring_prep_poll_add(sqe, _d->fd, _d->events);
+                io_uring_sqe_set_data(sqe, _d);
+              } else lsError() << "error get sqe";
+            } else {
+              trace() << LogStream::Color::Red << "poll ignore" << _d << _d->fd << _d->events;
+              if (_d->fd < 0) delete _d;
+            }
+          }
+          if (io_uring_sq_ready(&private_.ring)) io_uring_submit(&private_.ring);
 
           private_.mutex.unlock();
           int r = io_uring_wait_cqe_timeout(&private_.ring, &cqe, &ts);
@@ -704,7 +723,7 @@ void AbstractThread::exec() {
                 Private::PollTask *_d = reinterpret_cast<Private::PollTask *>(cqe->user_data);
                 trace() << "cqe" << cqe->res << cqe->flags << _d;
                 if (cqe->res < 0 || !_d || _d->fd < 0) {  //!!! need remove after debug
-                  lsDebug() << LogStream::Color::Red << "(cqe->res < 0 || !_d || _d->fd < 0)";
+                  lsError() << LogStream::Color::Red << "(cqe->res < 0 || !_d || _d->fd < 0)" << cqe->res << cqe->flags << _d;
                   continue;
                 }
 
@@ -713,42 +732,17 @@ void AbstractThread::exec() {
 
                 if (!(events & (POLLERR_ | POLLHUP_ | POLLNVAL_))) {
                   if (events & 0x2000) _d->events &= ~POLLIN_;
-                  polls.push(_d);
-
+                  update_polls.push(_d);
                 } else _d->events = 0xFFFF;
               }
             }
             if (r > 0) io_uring_cq_advance(&private_.ring, r);
 #endif
-            if (private_.process_poll_tasks_.empty())
-#ifdef IO_URING_WAIT
-              goto END_PROCESS_POLLS;
-#else
-              goto CONTINUE;
-#endif
+            if (private_.process_poll_tasks_.empty()) goto CONTINUE;
             private_.wake_ = true;
             private_.mutex.unlock();
             private_.process_polls();
             private_.mutex.lock();
-#ifdef IO_URING_WAIT
-          END_PROCESS_POLLS:
-            for (; !polls.empty();) {
-              Private::PollTask *_d = polls.front();
-              polls.pop();
-              if (_d->events != 0xFFFF && _d->fd >= 0) {
-                struct io_uring_sqe *sqe = io_uring_get_sqe(&private_.ring);
-                if (sqe) {
-                  trace() << "poll add" << _d << _d->fd;
-                  io_uring_prep_poll_add(sqe, _d->fd, _d->events);
-                  io_uring_sqe_set_data(sqe, _d);
-                } else lsError() << "error get sqe";
-              } else {
-                trace() << LogStream::Color::Red << "poll ignore" << _d << _d->fd << _d->events;
-                if (_d->fd < 0) delete _d;
-              }
-            }
-            if (io_uring_sq_ready(&private_.ring)) io_uring_submit(&private_.ring);
-#endif
           }
           goto CONTINUE;
         }
