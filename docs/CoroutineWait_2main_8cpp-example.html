@@ -128,7 +128,7 @@ $(function(){initNavTree('CoroutineWait_2main_8cpp-example.html','',''); });
 <div class="line">        [&amp;end, _h]() {</div>
 <div class="line">          logDebug() &lt;&lt; <span class="stringliteral">&quot;resume&quot;</span>;</div>
 <div class="line">          end = CURRENT_TIME_MS;</div>
-<div class="line">          _h.resume();</div>
+<div class="line">          _h.promise().resume_queued();</div>
 <div class="line">          logDebug() &lt;&lt; <span class="stringliteral">&quot;resume end&quot;</span>;</div>
 <div class="line">        });</div>
 <div class="line">  });</div>
