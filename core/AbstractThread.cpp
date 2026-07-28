@@ -246,13 +246,18 @@ void AbstractThread::Private::destroy_removed_polls() {
   while (io_uring_peek_cqe(&ring, &cqe) == 0) {
     trace() << "io_uring_peek_cqe" << cqe;
     if (!cqe) break;
+    io_uring_cqe_seen(&ring, cqe);
+  #ifdef IO_URING_WAKE
+    if (cqe->user_data == static_cast<uint64_t>(-1)) continue;
+  #elif defined EVENTFD_WAKE
+    if (cqe->user_data == reinterpret_cast<uint64_t>(&wake_fd)) continue;
+  #endif
     Private::PollTask *_d = reinterpret_cast<Private::PollTask *>(cqe->user_data);
-    warning_if(!_d || (cqe->flags & IORING_CQE_F_MORE)) << "(!_d || !(cqe->flags & IORING_CQE_F_MORE))" << _d << cqe->res << cqe->flags;
+    warning_if(!_d) << "(!_d)" << _d << cqe->res << cqe->flags;
     if (_d->fd == -1) {
       lsDebug() << LogStream::Color::Yellow << '(' + name + ") delete" << _d << cqe->res;
       delete _d;
     }
-    io_uring_cqe_seen(&ring, cqe);
   }
 }
 #endif
