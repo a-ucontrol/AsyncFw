@@ -569,6 +569,26 @@ void AbstractThread::exec() {
         private_.process_tasks();
         private_.mutex.lock();
       }
+
+#ifdef IO_URING_WAIT
+      for (; !update_polls.empty();) {
+        Private::PollTask *_d = update_polls.front();
+        update_polls.pop();
+        if (_d->events != 0xFFFF && _d->fd >= 0) {
+          struct io_uring_sqe *sqe = io_uring_get_sqe(&private_.ring);
+          if (sqe) {
+            trace() << "poll add" << _d << _d->fd;
+            io_uring_prep_poll_add(sqe, _d->fd, _d->events);
+            io_uring_sqe_set_data(sqe, _d);
+          } else lsError() << "error get sqe";
+        } else {
+          trace() << LogStream::Color::Red << "poll ignore" << _d << _d->fd << _d->events;
+          if (_d->fd < 0) delete _d;
+        }
+      }
+      if (io_uring_sq_ready(&private_.ring)) io_uring_submit(&private_.ring);
+#endif
+
       if (private_.state & Private::WaitFinished) break;
       if (private_.state == Private::WaitInterrupted) {
         private_.state = Private::Interrupted;
@@ -686,23 +706,6 @@ void AbstractThread::exec() {
           struct __kernel_timespec ts;
           ts.tv_sec = ms / 1000;
           ts.tv_nsec = (ms % 1000) * 1000000LL;
-
-          for (; !update_polls.empty();) {
-            Private::PollTask *_d = update_polls.front();
-            update_polls.pop();
-            if (_d->events != 0xFFFF && _d->fd >= 0) {
-              struct io_uring_sqe *sqe = io_uring_get_sqe(&private_.ring);
-              if (sqe) {
-                trace() << "poll add" << _d << _d->fd;
-                io_uring_prep_poll_add(sqe, _d->fd, _d->events);
-                io_uring_sqe_set_data(sqe, _d);
-              } else lsError() << "error get sqe";
-            } else {
-              trace() << LogStream::Color::Red << "poll ignore" << _d << _d->fd << _d->events;
-              if (_d->fd < 0) delete _d;
-            }
-          }
-          if (io_uring_sq_ready(&private_.ring)) io_uring_submit(&private_.ring);
 
           private_.mutex.unlock();
           int r = io_uring_wait_cqe_timeout(&private_.ring, &cqe, &ts);
