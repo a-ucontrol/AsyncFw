@@ -425,7 +425,7 @@ int AbstractSocket::read_fd(void *data, int size) {
 }
 
 int AbstractSocket::write_fd(const void *data, int size) {
-  if (!private_.wda_.empty()) {
+  if (data != private_.wda_.data() && !private_.wda_.empty()) {
     private_.wda_.insert(private_.wda_.end(), static_cast<const char *>(data), static_cast<const char *>(data) + size);
     return size;
   }
@@ -434,7 +434,7 @@ int AbstractSocket::write_fd(const void *data, int size) {
 #else
   int r = ::send(fd_, static_cast<const char *>(data), size, 0);
 #endif
-  if (r > 0) {
+  if (data != private_.wda_.data() && r > 0) {
     if (r < size) {
       if (!(private_.flags_ & 0x80)) {
         thread_->modifyPollDescriptor(fd_, AbstractThread::PollIn | AbstractThread::PollOut);
@@ -579,7 +579,7 @@ void AbstractSocket::pollEvent(int _e) {
       }
       return;
     }
-    int r = (private_.flags_ & Network) ? ::write(fd_, private_.wda_.data(), private_.wda_.size()) : write_fd(private_.wda_.data(), private_.wda_.size());
+    int r = (private_.flags_ & Network) ? AbstractSocket::write_fd(private_.wda_.data(), private_.wda_.size()) : write_fd(private_.wda_.data(), private_.wda_.size());
     if (r > 0) {
       if (r < static_cast<int>(private_.wda_.size())) {
         private_.wda_.erase(private_.wda_.begin(), private_.wda_.begin() + r);
