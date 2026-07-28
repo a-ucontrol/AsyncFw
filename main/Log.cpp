@@ -206,16 +206,15 @@ Log::~Log() {
 }
 
 void Log::finality() {
-  if (instance_.value == this) LogStream::setCompleted(&LogStream::console_output);
   if (!thread_) return;
-  if (!thread_->invoke(
-          [this]() {
-            stopTimer(&timerIdAutosave);
-            autoSave = -1;
-            AbstractLog::finality();
-          },
-          true)) {
+  if (!thread_->invoke([this]() {
+    if (instance_.value == this) LogStream::setCompleted(&LogStream::console_output);
+    stopTimer(&timerIdAutosave);
+    autoSave = -1;
+    AbstractLog::finality();
+  }, true)) {
     console_msg("Log", "thread not running");
+    if (instance_.value == this) LogStream::setCompleted(&LogStream::console_output);
     stopTimer(&timerIdAutosave);
     autoSave = -1;
     AbstractLog::finality();
@@ -266,12 +265,10 @@ void Log::lsAppend(const Message &m, uint8_t f) {
   if (!(f & LOG_STREAM_CONSOLE_ONLY)) {
     _log->append(m);
     if (f & 0x80) {
-      if (!_log->thread_->invoke(
-              [_log]() {
-                _log->flush();
-                _log->save();
-              },
-              true)) {
+      if (!_log->thread_->invoke([_log]() {
+        _log->flush();
+        _log->save();
+      }, true)) {
         _log->flush();
         _log->save();
       }
