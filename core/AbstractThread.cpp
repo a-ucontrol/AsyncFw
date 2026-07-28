@@ -980,7 +980,7 @@ bool AbstractThread::appendPollDescriptor(int fd, PollEvents events, AbstractPol
   Private::PollTask *_d = new Private::PollTask(fd, task);
   #else
   event.events = static_cast<uint32_t>(EPOLLET | EPOLLIN | EPOLLOUT | EPOLLRDHUP);
-  Private::PollTask *_d = new Private::PollTask(fd, task, mask);
+  Private::PollTask *_d = new Private::PollTask(fd, task, events);
   #endif
 
   event.data.ptr = _d;
