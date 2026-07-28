@@ -27,7 +27,7 @@ CoroutineTask task(uint64_t &end, int _ms) {
         [&end, _h]() {
           logDebug() << "resume";
           end = CURRENT_TIME_MS;
-          _h.resume();
+          _h.promise().resume_queued();
           logDebug() << "resume end";
         });
   });

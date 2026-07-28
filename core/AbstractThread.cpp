@@ -803,7 +803,7 @@ void AbstractThread::processTasks() const {
 
 void AbstractThread::Private::wake() {
   if (wake_) return;
-  warning_if(std::this_thread::get_id() == id) << LogStream::Color::Red << '(' + name + ')';
+  warning_if(state & Finished || std::this_thread::get_id() == id) << LogStream::Color::Red << '(' + name + ')' << static_cast<int>(state);
   wake_ = true;
   trace() << LogStream::Color::Cyan << poll_tasks.empty();
   if (poll_tasks.empty()) {
