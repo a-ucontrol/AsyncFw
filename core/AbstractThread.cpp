@@ -725,17 +725,17 @@ void AbstractThread::exec() {
             for (; !polls.empty();) {
               Private::PollTask *_d = polls.front();
               polls.pop();
-              struct io_uring_sqe *sqe = io_uring_get_sqe(&private_.ring);
-              if (sqe) {
-                if (_d->events != 0xFFFF && _d->fd >= 0) {
+              if (_d->events != 0xFFFF && _d->fd >= 0) {
+                struct io_uring_sqe *sqe = io_uring_get_sqe(&private_.ring);
+                if (sqe) {
                   trace() << "poll add" << _d << _d->fd;
                   io_uring_prep_poll_add(sqe, _d->fd, _d->events);
                   io_uring_sqe_set_data(sqe, _d);
-                } else {
-                  trace() << LogStream::Color::Red << "poll ignore" << _d << _d->fd << _d->events;
-                  if (_d->fd < 0) delete _d;
-                }
-              } else lsError() << "error get sqe";
+                } else lsError() << "error get sqe";
+              } else {
+                trace() << LogStream::Color::Red << "poll ignore" << _d << _d->fd << _d->events;
+                if (_d->fd < 0) delete _d;
+              }
             }
             if (io_uring_sq_ready(&private_.ring)) io_uring_submit(&private_.ring);
           }
