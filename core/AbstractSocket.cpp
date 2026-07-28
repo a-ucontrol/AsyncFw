@@ -512,7 +512,7 @@ void AbstractSocket::pollEvent(int _e) {
     if (_e & AbstractThread::PollOut) thread_->modifyPollDescriptor(fd_, AbstractThread::PollIn);  //!!! тут надо сделать подобно PollOut для writeEvent(), если данные попали в private_.wda (что очень маловероятно), то они должны уйти оттуда через ::write()
     if (_e & AbstractThread::PollIn) {
       if (AbstractSocket::read_available_fd() < 0) {
-        if (::recv(fd_, nullptr, 1, MSG_PEEK | MSG_DONTWAIT) != 0) {
+        if (::recv(fd_, nullptr, 1, MSG_PEEK) != 0) {  //!!! need remove
           trace() << "activate: check connection" << errno;
           return;
         }

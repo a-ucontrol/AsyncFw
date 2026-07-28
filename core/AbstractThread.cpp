@@ -720,12 +720,17 @@ void AbstractThread::exec() {
             }
             if (r > 0) io_uring_cq_advance(&private_.ring, r);
 #endif
-            if (private_.process_poll_tasks_.empty()) goto END_PROCESS_POLLS;
-
+            if (private_.process_poll_tasks_.empty())
+#ifdef IO_URING_WAIT
+              goto END_PROCESS_POLLS;
+#else
+              goto CONTINUE;
+#endif
             private_.wake_ = true;
             private_.mutex.unlock();
             private_.process_polls();
             private_.mutex.lock();
+#ifdef IO_URING_WAIT
           END_PROCESS_POLLS:
             for (; !polls.empty();) {
               Private::PollTask *_d = polls.front();
@@ -743,6 +748,7 @@ void AbstractThread::exec() {
               }
             }
             if (io_uring_sq_ready(&private_.ring)) io_uring_submit(&private_.ring);
+#endif
           }
           goto CONTINUE;
         }
@@ -962,7 +968,7 @@ bool AbstractThread::appendPollDescriptor(int fd, PollEvents events, AbstractPol
   }
   struct pollfd pollfd;
   pollfd.fd = fd;
-  pollfd.events = mask;
+  pollfd.events = events;
   Private::PollTask *_d = new Private::PollTask(pollfd.fd, task);
   private_.update_pollfd.push_back({fd, pollfd.events, task, 1});
   private_.wake();
@@ -970,7 +976,7 @@ bool AbstractThread::appendPollDescriptor(int fd, PollEvents events, AbstractPol
 #elif defined EPOLL_WAIT
   struct epoll_event event;
   #ifndef EPOLL_EDGE_TRIGGERED
-  event.events = mask;
+  event.events = events;
   Private::PollTask *_d = new Private::PollTask(fd, task);
   #else
   event.events = static_cast<uint32_t>(EPOLLET | EPOLLIN | EPOLLOUT | EPOLLRDHUP);
