@@ -648,8 +648,10 @@ void AbstractThread::exec() {
               if (event[i].data.ptr == &private_.wake_fd) {
                 trace() << LogStream::Color::Magenta << "waked" << LOG_THREAD_NAME << event[i].events << r << private_.WAKE_FD << private_.wake_;
   #ifdef EVENTFD_WAKE
+    #ifndef EPOLL_EDGE_TRIGGERED
                 eventfd_t _v;
                 eventfd_read(private_.WAKE_FD, &_v);
+    #endif
   #elif defined SOCKET_CLOSE_WAKE
                 if (!private_.wake_) {
                   trace() << LogStream::Color::Red << event[i].events;
@@ -697,8 +699,6 @@ void AbstractThread::exec() {
   #elif defined EVENTFD_WAKE
               if (reinterpret_cast<void *>(cqe->user_data) == &private_.wake_fd) {
                 trace() << LogStream::Color::Magenta << "waked" << LOG_THREAD_NAME << private_.WAKE_FD << private_.wake_;
-                eventfd_t _v;
-                eventfd_read(private_.WAKE_FD, &_v);
   #endif
               } else {
                 Private::PollTask *_d = reinterpret_cast<Private::PollTask *>(cqe->user_data);
@@ -824,7 +824,16 @@ void AbstractThread::Private::wake() {
     io_uring_submit(&ring);
   }
 #elif defined EVENTFD_WAKE
+  #if !defined EPOLL_EDGE_TRIGGERED && !defined IO_URING_WAIT
   eventfd_write(WAKE_FD_WRITE, 1);
+  #else
+  if (eventfd_write(WAKE_FD_WRITE, 1) < 0) {
+    eventfd_t _v;
+    eventfd_read(WAKE_FD, &_v);
+    lsDebug() << LogStream::Color::Red << "eventfd_write" << _v;
+    eventfd_write(WAKE_FD_WRITE, 1);
+  }
+  #endif
 #elif defined SOCKET_CLOSE_WAKE
   #ifdef _WIN32
   close_fd(WAKE_FD_WRITE);
