@@ -697,8 +697,11 @@ void AbstractThread::exec() {
               trace() << "append poll task" << _d << _d->fd << event[i].events;
               private_.process_poll_tasks_.push({_d->fd, static_cast<uint16_t>(event[i].events), _d->task});
   #else
-              trace() << "append poll task" << _d << _d->fd << event[i].events << LogStream::Color::DarkYellow << _d->events;
-              private_.process_poll_tasks_.push({_d->fd, static_cast<uint16_t>(event[i].events & (_d->events | EPOLLERR | EPOLLHUP | EPOLLRDHUP)), _d->task});
+              uint16_t events = event[i].events & (_d->events | EPOLLERR | EPOLLHUP | EPOLLRDHUP);
+              if (events) {
+                trace() << "append poll task" << _d << _d->fd << event[i].events << LogStream::Color::DarkYellow << _d->events;
+                private_.process_poll_tasks_.push({_d->fd, events, _d->task});
+              }
   #endif
             }
 #elif defined IO_URING_WAIT
