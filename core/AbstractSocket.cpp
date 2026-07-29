@@ -567,8 +567,9 @@ void AbstractSocket::pollEvent(int _e) {
   }
 #endif
   if (_e & AbstractThread::PollOut) {
+  WE:
+    writeEvent();
     if (private_.wda_.empty()) {
-    WEND:
       thread_->modifyPollDescriptor(fd_, AbstractThread::PollIn);
       private_.flags_ &= ~0x80;
       trace() << LogStream::Color::Magenta << "(AbstractThread::PollIn)";
@@ -586,13 +587,11 @@ void AbstractSocket::pollEvent(int _e) {
         return;
       }
       private_.wda_.clear();
-      writeEvent();
-      if (!private_.wda_.empty()) return;
-      goto WEND;
+      goto WE;
     }
     if (r < 0) {
       if (errno == EAGAIN) {
-        lsWarning() << LogStream::Color::Red << "try again";
+        lsDebug() << LogStream::Color::Red << "try again" << private_.wda_.size();
         return;
       }
       private_.errorString_ = "Write error";

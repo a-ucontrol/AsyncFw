@@ -601,6 +601,7 @@ void AbstractThread::exec() {
         private_.wake_ = false;
         if (private_.poll_tasks.empty()) {
           if (private_.condition_variable.wait_until(lock, private_.wakeup) == std::cv_status::no_timeout) {
+            trace_if(private_.wake_) << LogStream::Color::Magenta << "waked" << LOG_THREAD_NAME << "condition_variable";
             private_.wake_ = true;
             goto CONTINUE;
           }
