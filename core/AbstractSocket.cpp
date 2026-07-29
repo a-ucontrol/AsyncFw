@@ -35,6 +35,8 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
   #define errno WSAGetLastError()
   #undef EAGAIN
   #define EAGAIN WSAEWOULDBLOCK
+  #undef EINPROGRESS
+  #define EINPROGRESS WSAEWOULDBLOCK
 #endif
 
 #include "AbstractSocket.h"
@@ -165,13 +167,13 @@ int AbstractSocket::read_available_fd() const {
 #ifdef _WIN32
   u_long r;
   if (ioctlsocket(fd_, FIONREAD, &r) < 0) {
-    lsError() << fd_;
+    lsError() << fd_ << errno;
     return -2;
   }
 #else
   int r;
   if (ioctl(fd_, SIOCINQ, &r) < 0) {
-    lsError() << fd_;
+    lsError() << fd_ << errno;
     return -2;
   }
 #endif
@@ -245,15 +247,9 @@ bool AbstractSocket::connect(const std::string &_address, uint16_t _port) {
   reinterpret_cast<sockaddr_in *>(&private_.pa_)->sin_addr.s_addr = inet_addr(_address.c_str());
 
   if (::connect(_fd, reinterpret_cast<struct sockaddr *>(&private_.pa_), sizeof(private_.pa_)) < 0) {
-    int _error;
-#ifndef _WIN32
-    if ((_error = errno) != EINPROGRESS)
-#else
-    if ((_error = WSAGetLastError()) != WSAEWOULDBLOCK)
-#endif
-    {
+    if (errno != EINPROGRESS) {
+      lsError() << "connect error" << _address + ':' + std::to_string(_port) << _fd << errno;
       close_fd(_fd);
-      lsError() << "connect error" << _address + ':' + std::to_string(_port) << _fd << _error;
       return false;
     }
   }
@@ -495,7 +491,7 @@ void AbstractSocket::pollEvent(int _e) {
   if (_e & (AbstractThread::PollHup | AbstractThread::PollErr)) {
     private_.errorString_ = "Connection refused";
     private_.error_ = Refused;
-    lsDebug() << LogStream::Color::Red << private_.errorString_ << "(poll hup/error)" << static_cast<int>(_e) << errno;
+    lsDebug() << LogStream::Color::Red << private_.errorString_ << "(poll hup/error)" << static_cast<int>(_e);
     close();
     return;
   }
@@ -514,7 +510,7 @@ void AbstractSocket::pollEvent(int _e) {
         }
         private_.errorString_ = "Connection closed";
         private_.error_ = Closed;
-        lsDebug() << LogStream::Color::Red << private_.errorString_ << "(not active)" << errno;
+        lsDebug() << LogStream::Color::Red << private_.errorString_ << "(not active)";
         close();
         return;
       }
@@ -548,7 +544,7 @@ void AbstractSocket::pollEvent(int _e) {
         private_.errorString_ = "Read error";
         private_.error_ = Read;
       }
-      lsDebug() << LogStream::Color::Red << private_.errorString_ << "(check available)" << private_.rs_ << errno;
+      lsDebug() << LogStream::Color::Red << private_.errorString_ << "(check available)" << private_.rs_;
       close();
       return;
     }
@@ -592,7 +588,7 @@ void AbstractSocket::pollEvent(int _e) {
       }
       private_.errorString_ = "Write error";
       private_.error_ = Write;
-      lsWarning() << LogStream::Color::Red << private_.errorString_ << r << errno;
+      lsWarning() << LogStream::Color::Red << private_.errorString_ << r;
       close();
     }
   }
