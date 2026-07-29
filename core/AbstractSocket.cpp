@@ -340,11 +340,7 @@ DataArray AbstractSocket::read(int _s) {
 }
 
 int AbstractSocket::write(const uint8_t *data, int size) {
-  if (size > 0) private_.flags_ |= 0x10;
-  else {
-    lsDebug() << LogStream::Color::Red << "size for write is null";
-    return 0;
-  }
+  warning_if(size <= 0) << LogStream::Color::Red << "size for write is null";
   return write_fd(data, size);
 }
 
@@ -571,14 +567,11 @@ void AbstractSocket::pollEvent(int _e) {
   }
 #endif
   if (_e & AbstractThread::PollOut) {
-  WE:
-    if (!(private_.flags_ & 0x10)) writeEvent();
     if (private_.wda_.empty()) {
-      if (!(private_.flags_ & 0x10)) {
-        thread_->modifyPollDescriptor(fd_, AbstractThread::PollIn);
-        private_.flags_ &= ~0x80;
-        trace() << LogStream::Color::Magenta << "(AbstractThread::PollIn)";
-      } else private_.flags_ &= ~0x10;
+    WEND:
+      thread_->modifyPollDescriptor(fd_, AbstractThread::PollIn);
+      private_.flags_ &= ~0x80;
+      trace() << LogStream::Color::Magenta << "(AbstractThread::PollIn)";
       if ((private_.rs_ = read_available_fd()) > 0) goto RE;
       if (state_ == State::Closing) {
         shutdown(fd_, SHUT_RDWR);
@@ -593,8 +586,9 @@ void AbstractSocket::pollEvent(int _e) {
         return;
       }
       private_.wda_.clear();
-      private_.flags_ &= ~0x10;
-      goto WE;
+      writeEvent();
+      if (!private_.wda_.empty()) return;
+      goto WEND;
     }
     if (r < 0) {
       if (errno == EAGAIN) {
