@@ -1,71 +1,67 @@
 <map id="AsyncFw::AbstractThread::AbstractThread" name="AsyncFw::AbstractThread::AbstractThread">
-<area shape="rect" id="Node000001" title="Constructs a thread." alt="" coords="1170,544,1343,587"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractThread_1_1Waiter.html#af91079f02392dbcccd1ef5f99acb53f7" title="Signals task completion and initiates a safe exit sequence from the sub&#45;loop." alt="" coords="949,456,1122,499"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="1187,538,1121,513,1093,502,1093,497,1123,508,1192,538"/>
-<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractThread.html#af33c5949edb374d673a7a9ac0c81ec32" title="Returns a pointer to the AsyncFw::AbstractThread that manages the currently executing thread." alt="" coords="949,573,1122,616"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="1152,579,1123,586,1122,581,1157,578"/>
-<area shape="rect" id="Node000033" href="$classAsyncFw_1_1AbstractThread_1_1Waiter.html#ad2a62fc1276d8be1986a7e77f6dfb437" title="Suspends the caller by running a controlled nested exec() loop until completed." alt="" coords="715,857,888,900"/>
-<area shape="poly" id="edge35_Node000001_Node000033" title=" " alt="" coords="1225,596,1168,652,1090,718,999,787,902,848,877,859,875,854,899,843,996,782,1087,714,1164,648,1220,599"/>
-<area shape="rect" id="Node000034" href="$classAsyncFw_1_1Thread.html#afc5e422090767dd84020381fb9a4d490" title="Constructs a thread." alt="" coords="949,523,1122,549"/>
-<area shape="poly" id="edge33_Node000001_Node000034" title=" " alt="" coords="1152,552,1122,550,1122,545,1157,552"/>
-<area shape="rect" id="Node000004" href="$classAsyncFw_1_1ThreadPool.html#a9919894e586310a7ea5b780845376e17" title="Asynchronously invokes a void function in the target thread, and executes a result callback in the ca..." alt="" coords="726,340,877,383"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="948,563,947,563,931,541,924,520,922,478,921,437,914,417,899,397,877,380,877,375,903,393,918,414,926,436,928,477,929,519,936,539,951,560,953,564"/>
-<area shape="rect" id="Node000005" href="$classAsyncFw_1_1Thread.html#a0a3bd6a54db28f73ff59cfea6a40b07a" title="Returns a pointer to the AsyncFw::Thread that manages the currently executing thread." alt="" coords="715,289,888,316"/>
-<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="947,562,947,563,928,532,920,502,920,472,924,443,927,414,927,386,918,358,899,330,886,319,886,314,903,326,923,356,932,385,933,414,929,443,925,472,925,501,932,530,951,560,953,564"/>
-<area shape="rect" id="Node000019" href="$classAsyncFw_1_1HttpServer_1_1Response.html#afa24643371f00fe11d7df0f9caae4134" title="Destroys the response object and cleans up its allocated resources." alt="" coords="728,407,875,449"/>
-<area shape="poly" id="edge18_Node000003_Node000019" title=" " alt="" coords="949,564,947,563,929,537,922,512,916,487,899,463,875,448,876,443,902,459,921,485,928,510,934,535,951,560,954,565"/>
-<area shape="rect" id="Node000023" href="$classAsyncFw_1_1HttpServer.html#ad7dae50cc3787112980fa7075a60f811" title="Disconnects a specific client socket and clears it from the internally managed pool." alt="" coords="726,473,877,516"/>
-<area shape="poly" id="edge22_Node000003_Node000023" title=" " alt="" coords="956,566,947,564,923,547,899,530,875,519,875,514,902,526,926,542,950,559,962,567"/>
-<area shape="rect" id="Node000026" href="$classAsyncFw_1_1DataArrayTcpClient.html#a380c907a396d306611fe7dc21f35f74f" title="Executes a synchronous request&#45;response data exchange over a specific socket." alt="" coords="703,540,900,583"/>
-<area shape="poly" id="edge25_Node000003_Node000026" title=" " alt="" coords="931,580,901,578,901,573,936,580"/>
-<area shape="rect" id="Node000027" href="$classAsyncFw_1_1FileSystemWatcher.html#acd061a60fbaea1bb3c7d020e0da99039" title="Constructs a FileSystemWatcher and optionally starts monitoring given paths." alt="" coords="702,607,901,649"/>
-<area shape="poly" id="edge26_Node000003_Node000027" title=" " alt="" coords="931,610,902,616,901,611,936,609"/>
-<area shape="rect" id="Node000029" href="$classAsyncFw_1_1MulticastDns.html#ab9bfb41e98cd4ecf1cc63f8acd023afd" title="Initializes the mDNS node with a specific target service type (e.g., &quot;_http._tcp&quot;)." alt="" coords="721,673,882,716"/>
-<area shape="poly" id="edge28_Node000003_Node000029" title=" " alt="" coords="983,623,902,664,872,675,870,670,900,659,978,624"/>
-<area shape="rect" id="Node000031" href="$classAsyncFw_1_1Log.html#a6b0ce40bc2e34f4b435894701194dc26" title="Persists log entries into the underlying Rrd buffer and manages automated disk flushing." alt="" coords="727,740,876,767"/>
-<area shape="poly" id="edge30_Node000003_Node000031" title=" " alt="" coords="1012,627,964,682,935,708,902,730,876,742,874,737,899,726,931,704,961,678,1007,629"/>
-<area shape="rect" id="Node000032" href="$classAsyncFw_1_1SystemProcess.html#acf60a585a89304fdb3580e9add06d155" title="Constructs a new SystemProcess manager." alt="" coords="713,791,890,833"/>
-<area shape="poly" id="edge31_Node000003_Node000032" title=" " alt="" coords="1015,628,958,715,928,755,902,781,882,793,881,788,899,777,924,751,954,712,1010,631"/>
-<area shape="poly" id="edge32_Node000003_Node000033" title=" " alt="" coords="1012,628,951,732,939,765,933,793,924,820,903,847,886,859,884,854,899,843,919,817,928,792,934,763,946,730,1008,631"/>
-<area shape="rect" id="Node000006" href="$classAsyncFw_1_1AbstractSocket.html#a2b3066513b7cf718a97fe6c9f3cc11e6" title="Constructs an AbstractSocket with default parameters (AF_INET, SOCK_STREAM, IPPROTO_TCP) and binds it..." alt="" coords="468,72,642,115"/>
-<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="770,280,582,118,582,113,775,278"/>
-<area shape="rect" id="Node000009" href="$classAsyncFw_1_1AbstractSocket.html#a73a200f0008dbf9f820bdb2b8a0054cf" title="Schedules the socket for deferred asynchronous destruction." alt="" coords="468,205,642,248"/>
-<area shape="poly" id="edge8_Node000005_Node000009" title=" " alt="" coords="738,285,627,251,626,246,743,283"/>
-<area shape="rect" id="Node000013" href="$classAsyncFw_1_1Rrd.html#a2fd20dd3470a11ef179577c565c333f1" title="Constructs a persistent circular archive database with physical disk backing." alt="" coords="488,323,622,349"/>
-<area shape="poly" id="edge12_Node000005_Node000013" title=" " alt="" coords="697,318,624,329,622,324,702,315"/>
-<area shape="rect" id="Node000007" href="$classAsyncFw_1_1AbstractSocket.html#aa66ea88eb21787155ef487b89da94f96" title="Constructs an AbstractSocket and binds it to the current thread context." alt="" coords="225,5,399,48"/>
-<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="458,69,393,51,391,46,463,66"/>
-<area shape="rect" id="Node000008" href="$classAsyncFw_1_1AbstractTlsSocket.html#a7800254e24419820e105e863c0266ac4" title="Protected default constructor. Allocates the internal private structure and setups context pointers." alt="" coords="216,72,408,115"/>
-<area shape="poly" id="edge7_Node000006_Node000008" title=" " alt="" coords="450,95,410,96,407,91,455,92"/>
-<area shape="rect" id="Node000010" href="$classAsyncFw_1_1HttpSocket.html#a8268467d3581a4d393e9ccd288de32ff" title="Schedules the socket for deferred asynchronous destruction." alt="" coords="237,139,387,181"/>
-<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="458,202,388,183,387,178,462,199"/>
-<area shape="rect" id="Node000012" href="$classAsyncFw_1_1DataArrayAbstractTcp_1_1Thread.html#ab6df6de1f9828a772e5968477ce5dffa" title="Performs cleanup routines and safely removes a socket from the thread loop." alt="" coords="216,205,408,248"/>
-<area shape="poly" id="edge11_Node000009_Node000012" title=" " alt="" coords="450,228,410,229,407,224,455,225"/>
-<area shape="rect" id="Node000011" href="$classAsyncFw_1_1HttpServer_1_1TcpSocket.html#a41557b69e30e25b97cbdda210afb7657" title="Constructs a new TcpSocket associated with the parent server." alt="" coords="7,139,166,181"/>
-<area shape="poly" id="edge10_Node000010_Node000011" title=" " alt="" coords="219,162,168,162,165,158,223,158"/>
-<area shape="rect" id="Node000014" href="$classAsyncFw_1_1Log.html#a832d13f4e9231eee37d8decb5b9b96d7" title="Constructs a persistent log system with a specific circular database size and file name context." alt="" coords="245,272,379,299"/>
-<area shape="poly" id="edge13_Node000013_Node000014" title=" " alt="" coords="470,320,380,302,379,297,475,318"/>
-<area shape="rect" id="Node000016" href="$classAsyncFw_1_1Rrd.html#aa54ae298c96e9efe88b644931b12f734" title="Constructs a minimal in&#45;memory anonymous circular database with default system tracking intervals." alt="" coords="245,323,379,349"/>
-<area shape="poly" id="edge15_Node000013_Node000016" title=" " alt="" coords="470,337,380,338,378,334,475,335"/>
-<area shape="rect" id="Node000017" href="$classAsyncFw_1_1Rrd.html#aaea6a63444ab427f801be34f26d930d5" title="Constructs a persistent circular archive database using default system tracking intervals." alt="" coords="245,373,379,400"/>
-<area shape="poly" id="edge16_Node000013_Node000017" title=" " alt="" coords="470,355,381,375,378,370,475,352"/>
-<area shape="rect" id="Node000018" href="$classAsyncFw_1_1Rrd.html#a98c7829cc6177c80245cf95095deb3ba" title="Constructs an in&#45;memory anonymous circular database without file serialization." alt="" coords="245,424,379,451"/>
-<area shape="poly" id="edge17_Node000013_Node000018" title=" " alt="" coords="516,359,468,388,409,414,375,426,372,421,407,410,466,383,520,356"/>
-<area shape="rect" id="Node000015" href="$classAsyncFw_1_1Log.html#a00e9a20e7303e9a24403046af176b6b2" title="Global service locator shortcut to fetch the current engine&#45;wide default log pointer." alt="" coords="5,272,168,299"/>
-<area shape="poly" id="edge14_Node000014_Node000015" title=" " alt="" coords="227,287,169,288,167,283,231,284"/>
-<area shape="rect" id="Node000020" href="$classAsyncFw_1_1HttpServer_1_1Response.html#a52925841696f5351ff43b46530c18390" title="Finalizes and sends the response over the network via the associated socket." alt="" coords="482,407,629,449"/>
-<area shape="poly" id="edge19_Node000019_Node000020" title=" " alt="" coords="710,429,630,431,628,425,715,427"/>
-<area shape="rect" id="Node000021" href="$classAsyncFw_1_1HttpServer.html#a522928fa8bf3b13b706ac997d4f100dd" title="Constructs the HTTP server instance." alt="" coords="238,475,386,517"/>
-<area shape="poly" id="edge20_Node000020_Node000021" title=" " alt="" coords="464,454,387,478,385,473,469,451"/>
-<area shape="rect" id="Node000022" href="$classAsyncFw_1_1HttpServer.html#ad52f34791fe5848d9ba891b209fcdbe0" title="Accessor to fetch the globally managed singleton instance reference of the active HttpServer." alt="" coords="13,475,160,517"/>
-<area shape="poly" id="edge21_Node000021_Node000022" title=" " alt="" coords="221,498,162,498,159,494,225,494"/>
-<area shape="rect" id="Node000024" href="$classAsyncFw_1_1HttpServer.html#ad3761260dfd18899afc22c6f4bc0c556" title="Forcefully terminates all active socket connections currently retained by the server." alt="" coords="482,473,629,516"/>
-<area shape="poly" id="edge23_Node000023_Node000024" title=" " alt="" coords="708,496,630,497,629,492,713,494"/>
-<area shape="rect" id="Node000025" href="$classAsyncFw_1_1HttpServer.html#ab3eeb1643d4482345afcd9f971c020ac" title="Explicitly severs connections with active sockets holding custom user metadata matching data." alt="" coords="482,540,629,583"/>
-<area shape="poly" id="edge24_Node000023_Node000025" title=" " alt="" coords="709,520,630,544,628,539,714,518"/>
-<area shape="rect" id="Node000028" href="$classAsyncFw_1_1FileSystemWatcher.html#a16b4210d215a3b340c98f650d2071114" title="Retrieves the global instance pointer of the active FileSystemWatcher." alt="" coords="456,607,654,649"/>
-<area shape="poly" id="edge27_Node000027_Node000028" title=" " alt="" coords="684,629,655,631,654,625,689,627"/>
-<area shape="rect" id="Node000030" href="$classAsyncFw_1_1MulticastDns.html#a61341fa78536e7a787bbbce75116ef3e" title="Returns the global default instance pointer." alt="" coords="474,673,636,716"/>
-<area shape="poly" id="edge29_Node000029_Node000030" title=" " alt="" coords="703,695,637,697,636,692,708,694"/>
-<area shape="poly" id="edge34_Node000034_Node000005" title=" " alt="" coords="949,513,947,512,930,489,922,465,922,419,924,396,922,374,915,352,899,330,885,319,885,314,903,326,920,349,928,373,929,396,928,419,928,465,935,487,951,509,954,514"/>
+<area shape="rect" id="Node000001" title="Constructs a thread." alt="" coords="1170,411,1343,453"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractThread_1_1Waiter.html#af91079f02392dbcccd1ef5f99acb53f7" title="Signals task completion and initiates a safe exit sequence from the sub&#45;loop." alt="" coords="949,323,1122,365"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="1187,405,1121,380,1093,369,1093,363,1123,375,1192,405"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractThread.html#af33c5949edb374d673a7a9ac0c81ec32" title="Returns a pointer to the AsyncFw::AbstractThread that manages the currently executing thread." alt="" coords="949,440,1122,483"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="1152,446,1123,452,1122,447,1157,445"/>
+<area shape="rect" id="Node000031" href="$classAsyncFw_1_1AbstractThread_1_1Waiter.html#ad2a62fc1276d8be1986a7e77f6dfb437" title="Suspends the caller by running a controlled nested exec() loop until completed." alt="" coords="715,724,888,767"/>
+<area shape="poly" id="edge33_Node000001_Node000031" title=" " alt="" coords="1225,463,1168,519,1090,585,999,653,902,714,877,726,875,721,899,710,996,649,1087,581,1164,515,1220,465"/>
+<area shape="rect" id="Node000032" href="$classAsyncFw_1_1Thread.html#afc5e422090767dd84020381fb9a4d490" title="Constructs a thread." alt="" coords="949,389,1122,416"/>
+<area shape="poly" id="edge31_Node000001_Node000032" title=" " alt="" coords="1152,419,1122,417,1122,411,1157,418"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1ThreadPool.html#a9919894e586310a7ea5b780845376e17" title="Asynchronously invokes a void function in the target thread, and executes a result callback in the ca..." alt="" coords="726,207,877,249"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="948,429,947,430,931,408,924,386,922,344,921,303,914,283,899,263,877,247,877,242,903,259,918,281,926,302,928,344,929,385,936,406,951,426,953,431"/>
+<area shape="rect" id="Node000005" href="$classAsyncFw_1_1Thread.html#a0a3bd6a54db28f73ff59cfea6a40b07a" title="Returns a pointer to the AsyncFw::Thread that manages the currently executing thread." alt="" coords="715,156,888,183"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="947,429,947,430,928,399,920,369,920,339,924,309,927,281,927,253,918,225,899,197,886,186,886,180,903,193,923,222,932,252,933,281,929,310,925,339,925,368,932,397,951,426,953,430"/>
+<area shape="rect" id="Node000017" href="$classAsyncFw_1_1HttpServer_1_1Response.html#afa24643371f00fe11d7df0f9caae4134" title="Destroys the response object and cleans up its allocated resources." alt="" coords="728,273,875,316"/>
+<area shape="poly" id="edge16_Node000003_Node000017" title=" " alt="" coords="949,430,947,430,929,404,922,378,916,354,899,330,875,315,876,309,902,326,921,352,928,377,934,402,951,426,954,431"/>
+<area shape="rect" id="Node000021" href="$classAsyncFw_1_1HttpServer.html#ad7dae50cc3787112980fa7075a60f811" title="Disconnects a specific client socket and clears it from the internally managed pool." alt="" coords="726,340,877,383"/>
+<area shape="poly" id="edge20_Node000003_Node000021" title=" " alt="" coords="956,433,947,430,923,413,899,397,875,386,875,381,902,392,926,409,950,426,962,433"/>
+<area shape="rect" id="Node000024" href="$classAsyncFw_1_1DataArrayTcpClient.html#a380c907a396d306611fe7dc21f35f74f" title="Executes a synchronous request&#45;response data exchange over a specific socket." alt="" coords="703,407,900,449"/>
+<area shape="poly" id="edge23_Node000003_Node000024" title=" " alt="" coords="931,447,901,445,901,439,936,447"/>
+<area shape="rect" id="Node000025" href="$classAsyncFw_1_1FileSystemWatcher.html#acd061a60fbaea1bb3c7d020e0da99039" title="Constructs a FileSystemWatcher and optionally starts monitoring given paths." alt="" coords="702,473,901,516"/>
+<area shape="poly" id="edge24_Node000003_Node000025" title=" " alt="" coords="931,476,902,483,901,478,936,475"/>
+<area shape="rect" id="Node000027" href="$classAsyncFw_1_1MulticastDns.html#ab9bfb41e98cd4ecf1cc63f8acd023afd" title="Initializes the mDNS node with a specific target service type (e.g., &quot;_http._tcp&quot;)." alt="" coords="721,540,882,583"/>
+<area shape="poly" id="edge26_Node000003_Node000027" title=" " alt="" coords="983,489,902,530,872,542,870,537,900,526,978,491"/>
+<area shape="rect" id="Node000029" href="$classAsyncFw_1_1Log.html#a6b0ce40bc2e34f4b435894701194dc26" title="Persists log entries into the underlying Rrd buffer and manages automated disk flushing." alt="" coords="727,607,876,633"/>
+<area shape="poly" id="edge28_Node000003_Node000029" title=" " alt="" coords="1012,493,964,548,935,575,902,597,876,609,874,603,899,592,931,570,961,545,1007,496"/>
+<area shape="rect" id="Node000030" href="$classAsyncFw_1_1SystemProcess.html#acf60a585a89304fdb3580e9add06d155" title="Constructs a new SystemProcess manager." alt="" coords="713,657,890,700"/>
+<area shape="poly" id="edge29_Node000003_Node000030" title=" " alt="" coords="1015,495,958,582,928,622,902,647,882,659,881,654,899,643,924,618,954,579,1010,497"/>
+<area shape="poly" id="edge30_Node000003_Node000031" title=" " alt="" coords="1012,494,951,598,939,631,933,660,924,686,903,714,886,726,884,721,899,710,919,684,928,658,934,630,946,596,1008,497"/>
+<area shape="rect" id="Node000006" href="$classAsyncFw_1_1AbstractSocket.html#aa66ea88eb21787155ef487b89da94f96" title="Constructs an AbstractSocket and binds it to the current thread context." alt="" coords="468,31,642,73"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="764,148,713,119,653,88,627,76,626,71,655,83,716,114,769,147"/>
+<area shape="rect" id="Node000007" href="$classAsyncFw_1_1AbstractSocket.html#a73a200f0008dbf9f820bdb2b8a0054cf" title="Schedules the socket for deferred asynchronous destruction." alt="" coords="468,97,642,140"/>
+<area shape="poly" id="edge6_Node000005_Node000007" title=" " alt="" coords="716,153,643,139,642,134,721,151"/>
+<area shape="rect" id="Node000011" href="$classAsyncFw_1_1Rrd.html#a2fd20dd3470a11ef179577c565c333f1" title="Constructs a persistent circular archive database with physical disk backing." alt="" coords="488,189,622,216"/>
+<area shape="poly" id="edge10_Node000005_Node000011" title=" " alt="" coords="697,184,624,196,622,191,702,182"/>
+<area shape="rect" id="Node000008" href="$classAsyncFw_1_1HttpSocket.html#a8268467d3581a4d393e9ccd288de32ff" title="Schedules the socket for deferred asynchronous destruction." alt="" coords="237,5,387,48"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="468,92,455,88,407,62,380,51,379,46,409,58,457,83,473,91"/>
+<area shape="rect" id="Node000010" href="$classAsyncFw_1_1DataArrayAbstractTcp_1_1Thread.html#ab6df6de1f9828a772e5968477ce5dffa" title="Performs cleanup routines and safely removes a socket from the thread loop." alt="" coords="216,72,408,115"/>
+<area shape="poly" id="edge9_Node000007_Node000010" title=" " alt="" coords="450,109,410,106,408,101,455,107"/>
+<area shape="rect" id="Node000009" href="$classAsyncFw_1_1HttpServer_1_1TcpSocket.html#a41557b69e30e25b97cbdda210afb7657" title="Constructs a new TcpSocket associated with the parent server." alt="" coords="7,5,166,48"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="219,28,168,29,165,24,223,25"/>
+<area shape="rect" id="Node000012" href="$classAsyncFw_1_1Log.html#a832d13f4e9231eee37d8decb5b9b96d7" title="Constructs a persistent log system with a specific circular database size and file name context." alt="" coords="245,139,379,165"/>
+<area shape="poly" id="edge11_Node000011_Node000012" title=" " alt="" coords="470,187,380,168,379,163,475,184"/>
+<area shape="rect" id="Node000014" href="$classAsyncFw_1_1Rrd.html#aa54ae298c96e9efe88b644931b12f734" title="Constructs a minimal in&#45;memory anonymous circular database with default system tracking intervals." alt="" coords="245,189,379,216"/>
+<area shape="poly" id="edge13_Node000011_Node000014" title=" " alt="" coords="470,204,380,205,378,200,475,201"/>
+<area shape="rect" id="Node000015" href="$classAsyncFw_1_1Rrd.html#aaea6a63444ab427f801be34f26d930d5" title="Constructs a persistent circular archive database using default system tracking intervals." alt="" coords="245,240,379,267"/>
+<area shape="poly" id="edge14_Node000011_Node000015" title=" " alt="" coords="470,221,381,242,378,237,475,218"/>
+<area shape="rect" id="Node000016" href="$classAsyncFw_1_1Rrd.html#a98c7829cc6177c80245cf95095deb3ba" title="Constructs an in&#45;memory anonymous circular database without file serialization." alt="" coords="245,291,379,317"/>
+<area shape="poly" id="edge15_Node000011_Node000016" title=" " alt="" coords="516,226,468,254,409,281,375,292,372,288,407,276,466,250,520,222"/>
+<area shape="rect" id="Node000013" href="$classAsyncFw_1_1Log.html#a00e9a20e7303e9a24403046af176b6b2" title="Global service locator shortcut to fetch the current engine&#45;wide default log pointer." alt="" coords="5,139,168,165"/>
+<area shape="poly" id="edge12_Node000012_Node000013" title=" " alt="" coords="227,154,169,154,167,150,231,150"/>
+<area shape="rect" id="Node000018" href="$classAsyncFw_1_1HttpServer_1_1Response.html#a52925841696f5351ff43b46530c18390" title="Finalizes and sends the response over the network via the associated socket." alt="" coords="482,273,629,316"/>
+<area shape="poly" id="edge17_Node000017_Node000018" title=" " alt="" coords="710,296,630,297,628,292,715,294"/>
+<area shape="rect" id="Node000019" href="$classAsyncFw_1_1HttpServer.html#a522928fa8bf3b13b706ac997d4f100dd" title="Constructs the HTTP server instance." alt="" coords="238,341,386,384"/>
+<area shape="poly" id="edge18_Node000018_Node000019" title=" " alt="" coords="464,321,387,344,385,340,469,318"/>
+<area shape="rect" id="Node000020" href="$classAsyncFw_1_1HttpServer.html#ad52f34791fe5848d9ba891b209fcdbe0" title="Accessor to fetch the globally managed singleton instance reference of the active HttpServer." alt="" coords="13,341,160,384"/>
+<area shape="poly" id="edge19_Node000019_Node000020" title=" " alt="" coords="221,364,162,365,159,360,225,361"/>
+<area shape="rect" id="Node000022" href="$classAsyncFw_1_1HttpServer.html#ad3761260dfd18899afc22c6f4bc0c556" title="Forcefully terminates all active socket connections currently retained by the server." alt="" coords="482,340,629,383"/>
+<area shape="poly" id="edge21_Node000021_Node000022" title=" " alt="" coords="708,362,630,364,629,359,713,360"/>
+<area shape="rect" id="Node000023" href="$classAsyncFw_1_1HttpServer.html#ab3eeb1643d4482345afcd9f971c020ac" title="Explicitly severs connections with active sockets holding custom user metadata matching data." alt="" coords="482,407,629,449"/>
+<area shape="poly" id="edge22_Node000021_Node000023" title=" " alt="" coords="709,387,630,411,628,406,714,385"/>
+<area shape="rect" id="Node000026" href="$classAsyncFw_1_1FileSystemWatcher.html#a16b4210d215a3b340c98f650d2071114" title="Retrieves the global instance pointer of the active FileSystemWatcher." alt="" coords="456,473,654,516"/>
+<area shape="poly" id="edge25_Node000025_Node000026" title=" " alt="" coords="684,495,655,497,654,492,689,494"/>
+<area shape="rect" id="Node000028" href="$classAsyncFw_1_1MulticastDns.html#a61341fa78536e7a787bbbce75116ef3e" title="Returns the global default instance pointer." alt="" coords="474,540,636,583"/>
+<area shape="poly" id="edge27_Node000027_Node000028" title=" " alt="" coords="703,562,637,564,636,559,708,561"/>
+<area shape="poly" id="edge32_Node000032_Node000005" title=" " alt="" coords="949,380,947,379,930,356,922,332,922,286,924,263,922,240,915,218,899,197,885,186,885,181,903,193,920,216,928,239,929,263,928,286,928,331,935,353,951,376,954,381"/>
 </map>

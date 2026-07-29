@@ -1,7 +1,6 @@
 <map id="AsyncFw::AbstractSocket::AbstractSocket" name="AsyncFw::AbstractSocket::AbstractSocket">
-<area shape="rect" id="Node000001" title="Constructs an AbstractSocket with default parameters (AF_INET, SOCK_STREAM, IPPROTO_TCP) and binds it..." alt="" coords="246,39,420,81"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractSocket.html#aa66ea88eb21787155ef487b89da94f96" title="Constructs an AbstractSocket and binds it to the current thread context." alt="" coords="14,5,189,48"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="228,46,189,42,189,37,233,45"/>
-<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractTlsSocket.html#a7800254e24419820e105e863c0266ac4" title="Protected default constructor. Allocates the internal private structure and setups context pointers." alt="" coords="5,72,198,115"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="228,75,199,82,198,77,233,74"/>
+<area shape="rect" id="Node000001" title="Constructs an AbstractSocket with default parameters (AF_INET, SOCK_STREAM, IPPROTO_TCP) and binds it..." alt="" coords="246,29,420,72"/>
+<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="369,13,356,10,333,8,311,10,298,15,292,21,294,30,289,27,287,19,295,10,310,5,333,3,358,5,374,14"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractTlsSocket.html#a7800254e24419820e105e863c0266ac4" title="Protected default constructor. Allocates the internal private structure and setups context pointers." alt="" coords="5,29,198,72"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="227,51,198,53,198,48,232,50"/>
 </map>
