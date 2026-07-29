@@ -67,28 +67,24 @@ struct AbstractSocket::Private {
   int tid_ = -1;
   Error error_ = None;
   std::string errorString_;
-  int type_ = SOCK_STREAM;
-  int protocol_ = IPPROTO_TCP;
+  int type_;
+  int protocol_;
   int rs_ = 0;
   uint8_t flags_;
 };
 
-AbstractSocket::AbstractSocket(OutputBufferMode mode) : private_(*new Private) {
-  private_.la_.ss_family = AF_INET;
-  private_.pa_.ss_family = AF_INET;
-  private_.flags_ = mode;
-  thread_ = Thread::current();
-  std::vector<AbstractSocket *>::iterator it = std::lower_bound(thread_->sockets_.begin(), thread_->sockets_.end(), this, Thread::Compare());
-  thread_->sockets_.insert(it, this);
-  trace() << LogStream::Color::Green << fd_ << thread_->name();
-}
+AbstractSocket::AbstractSocket(OutputBufferMode mode) : AbstractSocket(AF_INET, SOCK_STREAM, IPPROTO_TCP, mode) {}
 
-AbstractSocket::AbstractSocket(int family, int type, int protocol, OutputBufferMode mode) : AbstractSocket() {
+AbstractSocket::AbstractSocket(int family, int type, int protocol, OutputBufferMode mode) : private_(*new Private) {
   private_.la_.ss_family = family;
   private_.pa_.ss_family = family;
   private_.type_ = type;
   private_.protocol_ = protocol;
   private_.flags_ = mode;
+  thread_ = Thread::current();
+  std::vector<AbstractSocket *>::iterator it = std::lower_bound(thread_->sockets_.begin(), thread_->sockets_.end(), this, Thread::Compare());
+  thread_->sockets_.insert(it, this);
+  trace() << LogStream::Color::Gray << '(' + thread_->name() + ')';
 }
 
 AbstractSocket::~AbstractSocket() {
