@@ -104,16 +104,19 @@ std::string LogStream::timeString(const uint64_t _time, const TimeFormat &_forma
     if (!_f.show_ms) {
       std::chrono::zoned_time _zt {std::chrono::current_zone(), std::chrono::sys_time<std::chrono::seconds> {std::chrono::seconds(_time / 1000)}};
       _r = std::vformat("{:" + _f.str + '}', std::make_format_args(_zt));
+    } else {
+      std::chrono::zoned_time _zt {std::chrono::current_zone(), std::chrono::sys_time<std::chrono::milliseconds> {std::chrono::milliseconds(_time)}};
+      _r = std::vformat("{:" + _f.str + '}', std::make_format_args(_zt));
     }
-    std::chrono::zoned_time _zt {std::chrono::current_zone(), std::chrono::sys_time<std::chrono::milliseconds> {std::chrono::milliseconds(_time)}};
-    _r = std::vformat("{:" + _f.str + '}', std::make_format_args(_zt));
+  } else {
+    if (!_f.show_ms) {
+      std::chrono::time_point tp = std::chrono::sys_time<std::chrono::seconds> {std::chrono::seconds((_time + data.timeOffset) / 1000)};
+      _r = std::vformat("{:" + _f.str + '}', std::make_format_args(tp));
+    } else {
+      std::chrono::time_point tp = std::chrono::sys_time<std::chrono::milliseconds> {std::chrono::milliseconds(_time + data.timeOffset)};
+      _r = std::vformat("{:" + _f.str + '}', std::make_format_args(tp));
+    }
   }
-  if (!_f.show_ms) {
-    std::chrono::time_point tp = std::chrono::sys_time<std::chrono::seconds> {std::chrono::seconds((_time + data.timeOffset) / 1000)};
-    _r = std::vformat("{:" + _f.str + '}', std::make_format_args(tp));
-  }
-  std::chrono::time_point tp = std::chrono::sys_time<std::chrono::milliseconds> {std::chrono::milliseconds(_time + data.timeOffset)};
-  _r = std::vformat("{:" + _f.str + '}', std::make_format_args(tp));
   errno = _e;
   return _r;
 }
