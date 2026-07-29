@@ -1062,7 +1062,7 @@ start_mdns_service(const char* _hostname, const char* _service_name, int service
 	}
 	return 0;
 }
-/*
+
 #define MDNS_HEADER_FLAG_RESPONSE 0x8000U
 static inline size_t
 mdns_socket_listen_(int sock, void* buffer, size_t capacity, mdns_record_callback_fn callback,
@@ -1153,13 +1153,14 @@ mdns_socket_listen_(int sock, void* buffer, size_t capacity, mdns_record_callbac
 								 user_data);
 
 	return total_records;
-} */
+}
+
 int
 mdns_service_event(int fd, void* sd_void_ptr) {
 	service_data_t* sd = (service_data_t*)sd_void_ptr;
 	if (!sd)
 		return -1;
-	return mdns_socket_listen(fd, sd->buffer, sd->capacity, service_callback, sd);
+	return mdns_socket_listen_(fd, sd->buffer, sd->capacity, service_callback, sd);
 }
 
 void

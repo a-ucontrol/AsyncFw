@@ -248,12 +248,11 @@ bool MulticastDns::startService(const std::string &hostname, const std::string &
 void MulticastDns::servicePollEvent(int fd) {
   for (int r;;) {
     r = mdns_service_event(fd, &private_.sd_);
-    /* if (r == -2) {
-    // This need for Unicast5353 mode
+    if (r == -2) {
       lsDebug() << LogStream::Color::Blue << "redirect to querier" << fd;
       querierPollEvent(fd);
       continue;
-    }*/
+    }
     if (r <= 0) break;
   }
 }
@@ -290,10 +289,7 @@ void MulticastDns::querierPollEvent(int fd) {
   QueryContext ctx = {};
   ctx.privData = &private_;
   ctx.resultHost = nullptr;
-
-  char dummy;
-  do { mdns_querier_event(fd, &private_.qd_, &ctx); } while (::recv(fd, &dummy, 1, MSG_PEEK) > 0);
-
+  mdns_querier_event(fd, &private_.qd_, &ctx);
   if (ctx.resultHost) {
     auto *_host = static_cast<Host *>(ctx.resultHost);
     for (auto host = private_.hosts_.begin(); host != private_.hosts_.end();) {
