@@ -250,7 +250,7 @@ bool FileSystemWatcher::removePath(const std::string &path) {
   if (itw == private_.files_.end() || (*itw)->name != wp.name || (*itw)->directory != wp.directory) return false;
   private_.remove_(*itw);
   std::vector<Private::Watch *>::iterator itd = std::lower_bound(private_.wds_.begin(), private_.wds_.end(), (*itw)->d, Private::CompareWatchDescriptor());
-  warning_if(itd == wds_.end() || (*itd)->d != (*itw)->d) << LogStream::Color::Red << "itd == wds_.end() || (*itd)->d != (*itw)->d";
+  warning_if(itd == private_.wds_.end() || (*itd)->d != (*itw)->d) << LogStream::Color::Red << "itd == wds_.end() || (*itd)->d != (*itw)->d";
   inotify_rm_watch(private_.notifyfd_, (*itd)->d);
   if (!(*itd)->name.empty()) private_.wds_.erase(itd);
   else {
