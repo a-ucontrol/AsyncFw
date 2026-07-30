@@ -408,7 +408,7 @@ uint16_t AbstractSocket::peerPort() const {
   return ntohs(((struct sockaddr_in6 *)&private_.pa_)->sin6_port);
 }
 
-int AbstractSocket::read_fd(void *data, int size) {
+int AbstractSocket::read_fd(void *data, int size) const {
 #ifndef _WIN32
   return ::read(fd_, data, size);
 #else
@@ -504,10 +504,9 @@ void AbstractSocket::pollEvent(int _e) {
     if (_e & AbstractThread::PollOut) thread_->modifyPollDescriptor(fd_, AbstractThread::PollIn);  //!!! тут надо сделать подобно PollOut для writeEvent(), если данные попали в private_.wda (что очень маловероятно), то они должны уйти оттуда через ::write()
     if (_e & AbstractThread::PollIn) {
       if (AbstractSocket::read_available_fd() < 0) {
-        if (::recv(fd_, nullptr, 1, MSG_PEEK) != 0) {  //!!! need remove
-          trace() << "activate: check connection" << errno;
-          return;
-        }
+#if defined EPOLL_EDGE_TRIGGERED || defined IO_URING_WAIT
+        if (!((int)_e & 0x2000)) return;
+#endif
         private_.errorString_ = "Connection closed";
         private_.error_ = Closed;
         lsDebug() << LogStream::Color::Red << private_.errorString_ << "(not active)";
@@ -518,7 +517,7 @@ void AbstractSocket::pollEvent(int _e) {
     warning_if(state_ == State::Connected && AbstractSocket::read_available_fd() < 0) << LogStream::Color::Red << "socket not empty before activate event";
     activateEvent();
     warning_if(state_ == State::Connected && AbstractSocket::read_available_fd() > 0) << LogStream::Color::Yellow << "socket empty after activate event";
-    if (state_ != State::Active || AbstractSocket::read_available_fd() <= 0) return;
+    if (state_ != State::Active || read_available_fd() <= 0) return;
   }
   if (_e & AbstractThread::PollIn) {
     warning_if(AbstractSocket::read_available_fd() < 0) << LogStream::Color::Red << "socket empty before read";

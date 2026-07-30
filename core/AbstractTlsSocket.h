@@ -52,7 +52,7 @@ protected:
   /** @brief Calculates how many unread bytes are currently waiting within the active OpenSSL decrypted layer buffer. @return Byte amount available for reading */
   int read_available_fd() const override final;
   /** @brief Low-level decryption routing path proxying requests down to SSL_read(). @param data Void pointer targeting the destination extraction memory chunk. @param size Maximum byte capacity boundaries allowed to extract. @return Number of successfully decrypted bytes ingested, or standard OpenSSL system error codes. */
-  int read_fd(void *, int) override final;
+  int read_fd(void *, int) const override final;
   /** @brief Low-level encryption routing path proxying outgoing payload directly up to SSL_write(). @param data Void pointer targeting the source serialization raw bytes memory buffer. @param size Exact byte amount metrics to push into the socket layer. @return Number of successfully encrypted and dispatched bytes, or standard OpenSSL system error codes. */
   int write_fd(const void *, int) override final;
 

@@ -208,73 +208,29 @@ int AbstractTlsSocket::read_available_fd() const {
   }
 
   int r = SSL_peek(private_.ssl_, nullptr, 0);
-  if (r < 0) goto L1;
+  if (r < 0) goto READ_FD;
   r = SSL_pending(private_.ssl_);
-  if (r > 0) {
-    lsInfoMagenta() << r;
-    return r;
-  }
+  if (r > 0) return r;
 
-L1:
+READ_FD:
+  int _size = AbstractSocket::read_available_fd();
+  if (_size < 0) return _size;
+  int _v = private_.input_buffer_.size();
+  private_.input_buffer_.resize(_v + _size);
+  r = AbstractSocket::read_fd(private_.input_buffer_.data() + _v, _size);
+  if (r != _size) return -2;
 
-  bool sys_disconnected = false;
+  r = BIO_write(private_.bio_, private_.input_buffer_.data(), private_.input_buffer_.size());
+  if (r > 0) private_.input_buffer_.erase(private_.input_buffer_.begin(), private_.input_buffer_.begin() + r);
+  else return 0;
 
-  // 1. Проверяем, сколько байт готово в ОС
-  int sys_available = AbstractSocket::read_available_fd();
-  if (sys_available == -2) return -2;
-
-  // Если базовый класс вернул -1, значит TCP-соединение разорвано/ошибка
-  if (sys_available < 0) {
-    sys_disconnected = true;
-  } else if (sys_available > 0) {
-    size_t old_size = private_.input_buffer_.size();
-    private_.input_buffer_.resize(old_size + sys_available);
-
-    int r = const_cast<AbstractTlsSocket *>(this)->AbstractSocket::read_fd(private_.input_buffer_.data() + old_size, sys_available);
-
-    if (r < 0) {
-      sys_disconnected = true;
-      private_.input_buffer_.resize(old_size);  // Откатываем размер назад
-    } else if (r == 0) {
-      // Внезапный EOF (FIN пакет от удаленной стороны)
-      sys_disconnected = true;
-      private_.input_buffer_.resize(old_size);
-    } else {
-      private_.input_buffer_.resize(old_size + r);
-    }
-  }
-
-  // 2. Проталкиваем всё, что можем, в OpenSSL BIO
-  if (!private_.input_buffer_.empty()) {
-    int written = BIO_write(private_.bio_, private_.input_buffer_.data(), private_.input_buffer_.size());
-    if (written > 0) { private_.input_buffer_.erase(private_.input_buffer_.begin(), private_.input_buffer_.begin() + written); }
-    lsInfoGreen() << private_.input_buffer_.size();
-  }
-
-  // 3. Заставляем OpenSSL распарсить то, что вошло в BIO
-  uint8_t dummy;
-  SSL_peek(private_.ssl_, &dummy, 0);
-
-  // 4. Считаем, сколько РАСШИФРОВАННЫХ байт у нас готово для верхнего уровня
-  int decrypted_available = SSL_pending(private_.ssl_);
-  // ЛОГИКА ВОЗВРАТА СОСТОЯНИЯ:
-  if (decrypted_available > 0) {
-    // Если есть расшифрованные данные — всегда отдаем их количество.
-    // Приложение должно их вычитать, даже если сокет уже умер.
-    return decrypted_available;
-  }
-  // Если расшифрованных данных нет БОЛЬШЕ НИГДЕ (ни в OpenSSL, ни в сыром буфере)
-  if (private_.input_buffer_.empty() && BIO_ctrl_pending(private_.bio_) == 0) {
-    if (sys_disconnected) {
-      return -1;  // Сигнализируем базовому классу о честном закрытии сокета
-    }
-  }
-  // Данных пока нет, но сокет жив (ждем дальше)
-  return -1;
+  SSL_peek(private_.ssl_, nullptr, 0);
+  r = SSL_pending(private_.ssl_);
+  return r > 0 ? r : -1;
 }
 #endif
 
-int AbstractTlsSocket::read_fd(void *data, int size) {
+int AbstractTlsSocket::read_fd(void *data, int size) const {
   if (!private_.encrypt_) return AbstractSocket::read_fd(data, size);
   return SSL_read(private_.ssl_, data, size);
 }

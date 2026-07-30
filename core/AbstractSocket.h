@@ -120,7 +120,7 @@ protected:
   @return Number of raw bytes pending in the OS network buffer queue. */
   virtual int read_available_fd() const;
   /** @brief Low-level native operating system read operation proxying requests directly down to the fd handle. @param data Destination memory allocation chunk pointer. @param size Bounds metric tracking maximum allowed byte ingestion capability. @return Number of raw bytes read from the descriptor, or error status codes. */
-  virtual int read_fd(void *, int);
+  virtual int read_fd(void *, int) const;
   /** @brief Low-level native operating system write operation proxying requests directly up to the fd handle. @param data Source memory block holding raw serialization binary data. @param size Metric configuration identifying exactly how many bytes to transfer. @return Number of raw bytes written out to the descriptor, or error status codes. */
   virtual int write_fd(const void *, int);
 
