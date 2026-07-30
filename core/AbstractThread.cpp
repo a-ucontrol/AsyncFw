@@ -162,6 +162,7 @@ struct AbstractThread::Private {
 #elif defined IO_URING_WAIT
   struct io_uring ring;
   void destroy_removed_polls();
+  std::deque<Private::PollTask *> update_polls;
   #ifndef IO_URING_WAKE
   int wake_fd;
   #endif
@@ -242,6 +243,14 @@ void AbstractThread::Private::process_timers() {
 
 #ifdef IO_URING_WAIT
 void AbstractThread::Private::destroy_removed_polls() {
+  for (std::deque<Private::PollTask *>::iterator it = update_polls.begin(); it != update_polls.end();) {
+    if ((*it)->fd < 0) {
+      lsTrace() << LogStream::Color::DarkYellow << '(' + name + ") delete" << *it;
+      delete *it;
+      it = update_polls.erase(it);
+    } else ++it;
+  }
+
   struct io_uring_cqe *cqe;
   while (io_uring_peek_cqe(&ring, &cqe) == 0) {
     trace() << "io_uring_peek_cqe" << cqe;
@@ -255,7 +264,7 @@ void AbstractThread::Private::destroy_removed_polls() {
     Private::PollTask *_d = reinterpret_cast<Private::PollTask *>(cqe->user_data);
     warning_if(!_d) << "(!_d)" << _d << cqe->res << cqe->flags;
     if (_d->fd == -1) {
-      lsDebug() << LogStream::Color::Yellow << '(' + name + ") delete" << _d << cqe->res;
+      lsTrace() << LogStream::Color::Yellow << '(' + name + ") delete" << _d << cqe->res;
       delete _d;
     }
   }
@@ -552,9 +561,6 @@ void AbstractThread::exec() {
     }
     std::swap(private_.process_tasks_, private_.tasks);  //take exists tasks
   }
-#ifdef IO_URING_WAIT
-  std::queue<Private::PollTask *> update_polls;
-#endif
   for (;;) {
     private_.process_tasks();
     {  //lock scope, wait new tasks or wakeup
@@ -570,10 +576,16 @@ void AbstractThread::exec() {
         private_.mutex.lock();
       }
 
+      if (private_.state & Private::WaitFinished) break;
+      if (private_.state == Private::WaitInterrupted) {
+        private_.state = Private::Interrupted;
+        private_.condition_variable.notify_all();
+      }
+
 #ifdef IO_URING_WAIT
-      for (; !update_polls.empty();) {
-        Private::PollTask *_d = update_polls.front();
-        update_polls.pop();
+      for (; !private_.update_polls.empty();) {
+        Private::PollTask *_d = private_.update_polls.front();
+        private_.update_polls.pop_front();
         if (_d->events != 0xFFFF && _d->fd >= 0) {
           struct io_uring_sqe *sqe = io_uring_get_sqe(&private_.ring);
           if (sqe) {
@@ -588,12 +600,6 @@ void AbstractThread::exec() {
       }
       if (io_uring_sq_ready(&private_.ring)) io_uring_submit(&private_.ring);
 #endif
-
-      if (private_.state & Private::WaitFinished) break;
-      if (private_.state == Private::WaitInterrupted) {
-        private_.state = Private::Interrupted;
-        private_.condition_variable.notify_all();
-      }
 
       std::chrono::time_point now = std::chrono::steady_clock::now();
 
@@ -739,7 +745,7 @@ void AbstractThread::exec() {
 
                 if (!(events & (POLLERR_ | POLLHUP_ | POLLNVAL_))) {
                   if (events & 0x2000) _d->events &= ~POLLIN_;
-                  update_polls.push(_d);
+                  private_.update_polls.push_back(_d);
                 } else _d->events = 0xFFFF;
               }
             }
@@ -791,11 +797,11 @@ void AbstractThread::exec() {
   std::swap(private_.process_tasks_, private_.tasks);
   private_.mutex.unlock();
   private_.process_tasks();
+  private_.mutex.lock();
 #ifdef IO_URING_WAIT
   trace() << "destroy removed polls";
   private_.destroy_removed_polls();
 #endif
-  private_.mutex.lock();
 }
 
 void AbstractThread::processTasks() const {
