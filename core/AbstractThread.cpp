@@ -734,11 +734,8 @@ void AbstractThread::exec() {
   #endif
               } else {
                 Private::PollTask *_d = reinterpret_cast<Private::PollTask *>(cqe->user_data);
-                trace() << "cqe" << cqe->res << cqe->flags << _d;
-                if (cqe->res < 0 || !_d || _d->fd < 0) {  //!!! need remove after debug
-                  lsError() << LogStream::Color::Red << "(cqe->res < 0 || !_d || _d->fd < 0)" << cqe->res << cqe->flags << _d;
-                  continue;
-                }
+                trace() << "cqe" << cqe->res << _d;
+                warning_if(cqe->res < 0 || !_d || _d->fd < 0) << LogStream::Color::Red << "(cqe->res < 0 || !_d || _d->fd < 0)" << cqe->flags;
 
                 int32_t events = cqe->res & (_d->events | POLLERR_ | POLLHUP_ | POLLNVAL_ | 0x2000);
                 if (events) private_.process_poll_tasks_.push({_d->fd, static_cast<uint16_t>(events), _d->task});
@@ -837,7 +834,7 @@ void AbstractThread::Private::wake() {
   if (eventfd_write(WAKE_FD_WRITE, 1) < 0) {
     eventfd_t _v;
     eventfd_read(WAKE_FD, &_v);
-    lsDebug() << LogStream::Color::Red << "eventfd_write" << _v;
+    lsDebug() << LogStream::Color::Red << "(eventfd_write(WAKE_FD_WRITE, 1) < 0)" << _v;
     eventfd_write(WAKE_FD_WRITE, 1);
   }
   #endif
