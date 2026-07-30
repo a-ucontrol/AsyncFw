@@ -82,7 +82,7 @@ void DataArrayAbstractTcp::Thread::initSocket(DataArraySocket *socket) {
       socket->releaseBuffer(da);
     });
   });
-  lsTrace() << LogStream::Color::Green << this << LogStream::Color::Magenta << sockets_.size();
+  lsTrace() << LogStream::Color::Green << name() << LogStream::Color::Magenta << sockets_.size();
 }
 
 void DataArrayAbstractTcp::Thread::destroySocket(DataArraySocket *socket) {
