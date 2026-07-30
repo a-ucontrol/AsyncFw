@@ -232,8 +232,8 @@ virtual&#160;</td><td class="memItemRight"><b>~AbstractSocket</b> ()</td></tr>
 <tr class="memdesc:ad6d428c75ae5b7321a3838b22abcdf6b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called upon incoming connection. Executed on a server listening socket when a client connects.  <br /></td></tr>
 <tr class="memitem:a64ec81f99806967d9244337b88ae03ba" id="r_a64ec81f99806967d9244337b88ae03ba"><td class="memItemLeft">virtual int&#160;</td><td class="memItemRight"><a class="el" href="#a64ec81f99806967d9244337b88ae03ba">read_available_fd</a> () const</td></tr>
 <tr class="memdesc:a64ec81f99806967d9244337b88ae03ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Low-level system call that checks whether a file descriptor contains data.  <br /></td></tr>
-<tr class="memitem:a25efdce1c4a0dedf15e57cb0af971d86" id="r_a25efdce1c4a0dedf15e57cb0af971d86"><td class="memItemLeft">virtual int&#160;</td><td class="memItemRight"><a class="el" href="#a25efdce1c4a0dedf15e57cb0af971d86">read_fd</a> (void *, int)</td></tr>
-<tr class="memdesc:a25efdce1c4a0dedf15e57cb0af971d86"><td class="mdescLeft">&#160;</td><td class="mdescRight">Low-level native operating system read operation proxying requests directly down to the fd handle.  <br /></td></tr>
+<tr class="memitem:acb6850773f2a617d9beb1bac6f0bf2f0" id="r_acb6850773f2a617d9beb1bac6f0bf2f0"><td class="memItemLeft">virtual int&#160;</td><td class="memItemRight"><a class="el" href="#acb6850773f2a617d9beb1bac6f0bf2f0">read_fd</a> (void *, int) const</td></tr>
+<tr class="memdesc:acb6850773f2a617d9beb1bac6f0bf2f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Low-level native operating system read operation proxying requests directly down to the fd handle.  <br /></td></tr>
 <tr class="memitem:a4659df5988d2af771d4feee9edec55d8" id="r_a4659df5988d2af771d4feee9edec55d8"><td class="memItemLeft">virtual int&#160;</td><td class="memItemRight"><a class="el" href="#a4659df5988d2af771d4feee9edec55d8">write_fd</a> (const void *, int)</td></tr>
 <tr class="memdesc:a4659df5988d2af771d4feee9edec55d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Low-level native operating system write operation proxying requests directly up to the fd handle.  <br /></td></tr>
 <tr class="memitem:a75415b9f0ecc82b703e49ad8abf1f3a8" id="r_a75415b9f0ecc82b703e49ad8abf1f3a8"><td class="memItemLeft"><a id="a75415b9f0ecc82b703e49ad8abf1f3a8" name="a75415b9f0ecc82b703e49ad8abf1f3a8"></a>
@@ -1275,8 +1275,8 @@ Friends</h2></td></tr>
 
 </div>
 </div>
-<a id="a25efdce1c4a0dedf15e57cb0af971d86" name="a25efdce1c4a0dedf15e57cb0af971d86"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a25efdce1c4a0dedf15e57cb0af971d86">&#9670;&#160;</a></span>read_fd()</h2>
+<a id="acb6850773f2a617d9beb1bac6f0bf2f0" name="acb6850773f2a617d9beb1bac6f0bf2f0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acb6850773f2a617d9beb1bac6f0bf2f0">&#9670;&#160;</a></span>read_fd()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1292,7 +1292,7 @@ Friends</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>size</em></span>&#160;)</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>size</em></span>&#160;) const</td>
         </tr>
       </table>
   </td>
@@ -1312,18 +1312,18 @@ Friends</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Number of raw bytes read from the descriptor, or error status codes. </dd></dl>
 
-<p>Reimplemented in <a class="el" href="classAsyncFw_1_1AbstractTlsSocket.html#a8c0f2e296d83c3004bd02dd6c2925bf1">AsyncFw::AbstractTlsSocket</a>.</p>
+<p>Reimplemented in <a class="el" href="classAsyncFw_1_1AbstractTlsSocket.html#a292ef97002bfefde576959435ed2ee25">AsyncFw::AbstractTlsSocket</a>.</p>
 <div id="dynsection-31" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
 <div id="dynsection-31-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-31-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a25efdce1c4a0dedf15e57cb0af971d86_cgraph.svg" width="402" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_acb6850773f2a617d9beb1bac6f0bf2f0_cgraph.svg" width="402" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 <div id="dynsection-32" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
 <div id="dynsection-32-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-32-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_a25efdce1c4a0dedf15e57cb0af971d86_icgraph.svg" width="863" height="304"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractSocket_acb6850773f2a617d9beb1bac6f0bf2f0_icgraph.svg" width="863" height="304"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>

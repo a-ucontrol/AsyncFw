@@ -2,9 +2,9 @@
 <area shape="rect" id="Node000001" title="Type&#45;safely extracts and returns the stored data value." alt="" coords="934,267,1102,293"/>
 <area shape="rect" id="Node000002" href="$structAsyncFw_1_1AnyData.html#a667ea182dec03e9ca81e86cdc7db8842" title="Constructs an AnyData storage shell with an optional initial type&#45;safe payload." alt="" coords="691,84,886,111"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="999,252,953,189,921,154,884,125,862,114,862,108,887,120,925,150,957,186,1004,254"/>
-<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractSocket.html#a25efdce1c4a0dedf15e57cb0af971d86" title="Low&#45;level native operating system read operation proxying requests directly down to the fd handle." alt="" coords="701,135,876,177"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractSocket.html#acb6850773f2a617d9beb1bac6f0bf2f0" title="Low&#45;level native operating system read operation proxying requests directly down to the fd handle." alt="" coords="701,135,876,177"/>
 <area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="981,258,884,201,842,181,843,175,887,196,986,258"/>
-<area shape="rect" id="Node000012" href="$classAsyncFw_1_1AbstractTlsSocket.html#a8c0f2e296d83c3004bd02dd6c2925bf1" title="Low&#45;level decryption routing path proxying requests down to SSL_read()." alt="" coords="451,189,643,232"/>
+<area shape="rect" id="Node000012" href="$classAsyncFw_1_1AbstractTlsSocket.html#a292ef97002bfefde576959435ed2ee25" title="Low&#45;level decryption routing path proxying requests down to SSL_read()." alt="" coords="451,189,643,232"/>
 <area shape="poly" id="edge14_Node000001_Node000012" title=" " alt="" coords="931,263,885,257,644,224,644,219,886,252,936,263"/>
 <area shape="rect" id="Node000013" href="$structAsyncFw_1_1AnyData.html#af4204174192d3b8c2f83dda18366a953" title="Overwrites or assigns a new type&#45;safe payload inside the storage box." alt="" coords="694,267,883,293"/>
 <area shape="poly" id="edge15_Node000001_Node000013" title=" " alt="" coords="916,280,884,283,883,277,921,280"/>

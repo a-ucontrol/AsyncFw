@@ -200,8 +200,8 @@ Protected Member Functions</h2></td></tr>
 <tr class="memdesc:a57ac6daff9926cf631abcd1e19073cc8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Core internal event handler reacting to raw descriptor readiness signals.  <br /></td></tr>
 <tr class="memitem:a7244e3b461e0012dab1d9c3b1c0db78e" id="r_a7244e3b461e0012dab1d9c3b1c0db78e"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#a7244e3b461e0012dab1d9c3b1c0db78e">read_available_fd</a> () const override final</td></tr>
 <tr class="memdesc:a7244e3b461e0012dab1d9c3b1c0db78e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates how many unread bytes are currently waiting within the active OpenSSL decrypted layer buffer.  <br /></td></tr>
-<tr class="memitem:a8c0f2e296d83c3004bd02dd6c2925bf1" id="r_a8c0f2e296d83c3004bd02dd6c2925bf1"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#a8c0f2e296d83c3004bd02dd6c2925bf1">read_fd</a> (void *, int) override final</td></tr>
-<tr class="memdesc:a8c0f2e296d83c3004bd02dd6c2925bf1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Low-level decryption routing path proxying requests down to SSL_read().  <br /></td></tr>
+<tr class="memitem:a292ef97002bfefde576959435ed2ee25" id="r_a292ef97002bfefde576959435ed2ee25"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#a292ef97002bfefde576959435ed2ee25">read_fd</a> (void *, int) const override final</td></tr>
+<tr class="memdesc:a292ef97002bfefde576959435ed2ee25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Low-level decryption routing path proxying requests down to SSL_read().  <br /></td></tr>
 <tr class="memitem:a84a79c1f921e96efd6b4f47cd7cd91e0" id="r_a84a79c1f921e96efd6b4f47cd7cd91e0"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#a84a79c1f921e96efd6b4f47cd7cd91e0">write_fd</a> (const void *, int) override final</td></tr>
 <tr class="memdesc:a84a79c1f921e96efd6b4f47cd7cd91e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Low-level encryption routing path proxying outgoing payload directly up to SSL_write().  <br /></td></tr>
 <tr class="inherit_header pro_methods_classAsyncFw_1_1AbstractSocket"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_methods_classAsyncFw_1_1AbstractSocket')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Protected Member Functions inherited from <a class="el" href="classAsyncFw_1_1AbstractSocket.html">AsyncFw::AbstractSocket</a></td></tr>
@@ -736,8 +736,8 @@ std::any&#160;</td><td class="memItemRight"><b>data_</b></td></tr>
 
 </div>
 </div>
-<a id="a8c0f2e296d83c3004bd02dd6c2925bf1" name="a8c0f2e296d83c3004bd02dd6c2925bf1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8c0f2e296d83c3004bd02dd6c2925bf1">&#9670;&#160;</a></span>read_fd()</h2>
+<a id="a292ef97002bfefde576959435ed2ee25" name="a292ef97002bfefde576959435ed2ee25"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a292ef97002bfefde576959435ed2ee25">&#9670;&#160;</a></span>read_fd()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -753,7 +753,7 @@ std::any&#160;</td><td class="memItemRight"><b>data_</b></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>size</em></span>&#160;)</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>size</em></span>&#160;) const</td>
         </tr>
       </table>
   </td>
@@ -773,12 +773,12 @@ std::any&#160;</td><td class="memItemRight"><b>data_</b></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Number of successfully decrypted bytes ingested, or standard OpenSSL system error codes. </dd></dl>
 
-<p>Reimplemented from <a class="el" href="classAsyncFw_1_1AbstractSocket.html#a25efdce1c4a0dedf15e57cb0af971d86">AsyncFw::AbstractSocket</a>.</p>
+<p>Reimplemented from <a class="el" href="classAsyncFw_1_1AbstractSocket.html#acb6850773f2a617d9beb1bac6f0bf2f0">AsyncFw::AbstractSocket</a>.</p>
 <div id="dynsection-17" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
 <div id="dynsection-17-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-17-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractTlsSocket_a8c0f2e296d83c3004bd02dd6c2925bf1_cgraph.svg" width="642" height="83"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractTlsSocket_a292ef97002bfefde576959435ed2ee25_cgraph.svg" width="642" height="83"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
