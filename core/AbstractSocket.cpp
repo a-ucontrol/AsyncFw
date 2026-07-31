@@ -525,14 +525,13 @@ void AbstractSocket::pollEvent(int _e) {
     warning_if(AbstractSocket::read_available_fd() < 0) << LogStream::Color::Red << "socket empty before read";
     private_.rs_ = read_available_fd();
     if (private_.rs_ > 0) {
-    RE:
       readEvent();
       private_.flags_ |= 0x20;
       private_.rs_ = read_available_fd();
       private_.flags_ &= ~0x20;
       if (private_.rs_ > 0) {
         read_fd();
-        goto RE;
+        if (!private_.rda_.empty()) readEvent();
       }
     } else if (private_.rs_ < 0) {
       if (private_.rs_ == -1) {
@@ -560,7 +559,6 @@ void AbstractSocket::pollEvent(int _e) {
   }
 #endif
   if (_e & AbstractThread::PollOut) {
-  WE:
     writeEvent();
     if (private_.wda_.empty()) {
       thread_->modifyPollDescriptor(fd_, AbstractThread::PollIn);
@@ -579,7 +577,6 @@ void AbstractSocket::pollEvent(int _e) {
         return;
       }
       private_.wda_.clear();
-      goto WE; //!!! надо ли в режиме LT?
     }
     if (r < 0) {
       if (errno == EAGAIN) {
