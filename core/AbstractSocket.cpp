@@ -426,19 +426,21 @@ int AbstractSocket::write_fd(const void *data, int size) {
 #else
   int r = ::send(fd_, static_cast<const char *>(data), size, 0);
 #endif
-  if (data != private_.wda_.data() && r > 0) {
+  if (data != private_.wda_.data()) {
     if (r < size) {
       if (!(private_.flags_ & 0x80)) {
         thread_->modifyPollDescriptor(fd_, AbstractThread::PollIn | AbstractThread::PollOut);
         private_.flags_ |= 0x80;
         trace() << LogStream::Color::Cyan << "(AbstractThread::PollIn | AbstractThread::PollOut)";
       }
-      private_.wda_.insert(private_.wda_.end(), static_cast<const char *>(data) + r, static_cast<const char *>(data) + size);
+      private_.wda_.insert(private_.wda_.end(), static_cast<const char *>(data) + ((r > 0) ? r : 0), static_cast<const char *>(data) + size);
     } else if (!(private_.flags_ & 0x40)) {
       private_.flags_ |= 0x40;
       AbstractThread::AbstractTask *_t = new Invocable<void()>::Function([this] {
+        trace() << LogStream::Color::DarkGreen << "write event task";
         private_.flags_ &= ~0x40;
-        writeEvent();
+        if (!(private_.flags_ & 0x80)) writeEvent();
+        else lsDebug() << LogStream::Color::Red << "(private_.flags_ & 0x80)";
       });
       if (!thread_->invokeTask(_t)) {
         lsError() << "thread not running";
@@ -564,7 +566,6 @@ void AbstractSocket::pollEvent(int _e) {
       thread_->modifyPollDescriptor(fd_, AbstractThread::PollIn);
       private_.flags_ &= ~0x80;
       trace() << LogStream::Color::Magenta << "(AbstractThread::PollIn)";
-      if ((private_.rs_ = read_available_fd()) > 0) goto RE;
       if (state_ == State::Closing) {
         shutdown(fd_, SHUT_RDWR);
         close();
@@ -578,7 +579,7 @@ void AbstractSocket::pollEvent(int _e) {
         return;
       }
       private_.wda_.clear();
-      goto WE;
+      goto WE; //!!! надо ли в режиме LT?
     }
     if (r < 0) {
       if (errno == EAGAIN) {
