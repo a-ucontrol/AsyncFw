@@ -122,6 +122,9 @@ struct AbstractThread::Private {
 #if defined EPOLL_EDGE_TRIGGERED || defined IO_URING_WAIT
     uint16_t events;
 #endif
+#ifdef IO_URING_WAIT
+    bool wait;
+#endif
   };
 
   std::mutex mutex;
@@ -590,9 +593,10 @@ void AbstractThread::exec() {
           struct io_uring_sqe *sqe = io_uring_get_sqe(&private_.ring);
           if (sqe) {
             trace() << "poll add" << _d << _d->fd;
+            _d->wait = true;
             io_uring_prep_poll_add(sqe, _d->fd, _d->events);
             io_uring_sqe_set_data(sqe, _d);
-          } else lsError() << "error get sqe";
+          } else console_msg("AbstractThread " + LOG_THREAD_NAME, "update polls: error get sqe");
         } else {
           trace() << LogStream::Color::Red << "poll ignore" << _d << _d->fd << _d->events;
           if (_d->fd < 0) delete _d;
@@ -735,13 +739,16 @@ void AbstractThread::exec() {
               } else {
                 Private::PollTask *_d = reinterpret_cast<Private::PollTask *>(cqe->user_data);
                 trace() << "cqe" << cqe->res << _d;
-                warning_if(cqe->res < 0 || !_d || _d->fd < 0) << LogStream::Color::Red << "(cqe->res < 0 || !_d || _d->fd < 0)" << cqe->flags;
+                warning_if((cqe->res < 0 && cqe->res != -ECANCELED) || !_d || _d->fd < 0) << LogStream::Color::Red << "((cqe->res < 0 && cqe->res != -ECANCELED) || !_d || _d->fd < 0)" << _d << cqe->res << cqe->flags;
+
+                if (cqe->res < 0 && cqe->res != -ECANCELED) { throw std::runtime_error("(cqe->res < 0 && cqe->res != -ECANCELED)"); }
 
                 int32_t events = cqe->res & (_d->events | POLLERR_ | POLLHUP_ | POLLNVAL_ | 0x2000);
                 if (events) private_.process_poll_tasks_.push({_d->fd, static_cast<uint16_t>(events), _d->task});
 
                 if (!(events & (POLLERR_ | POLLHUP_ | POLLNVAL_))) {
                   if (events & 0x2000) _d->events &= ~POLLIN_;
+                  _d->wait = false;
                   private_.update_polls.push_back(_d);
                 } else _d->events = 0xFFFF;
               }
@@ -1009,7 +1016,7 @@ bool AbstractThread::appendPollDescriptor(int fd, PollEvents events, AbstractPol
   if (private_.poll_tasks.empty()) private_.wake();
   private_.poll_tasks.insert(it, _d);
 #elif defined IO_URING_WAIT
-  Private::PollTask *_d = new Private::PollTask(fd, task, events);
+  Private::PollTask *_d = new Private::PollTask(fd, task, events, true);
   LockGuard lock(private_.mutex);
   {  //lock scope
     struct io_uring_sqe *sqe = io_uring_get_sqe(&private_.ring);
@@ -1079,14 +1086,14 @@ bool AbstractThread::modifyPollDescriptor(int fd, PollEvents events) {
       return false;
     }
     if ((*it)->events == 0xFFFF || (*it)->fd < 0) {
-      lsDebug() << LogStream::Color::Cyan << "((*it)->events == 0xFFFF || (*it)->fd < 0)" << (*it)->events << (*it)->fd;
+      trace() << LogStream::Color::Cyan << "((*it)->events == 0xFFFF || (*it)->fd < 0)" << (*it)->events << (*it)->fd;
       return false;
     }
     (*it)->events = events;
-    if (private_.wake_) return true;
+    if (!(*it)->wait) return true;
     struct io_uring_sqe *sqe;
     if (!(sqe = io_uring_get_sqe(&private_.ring))) {
-      lsError() << "error get sqe";
+      console_msg("AbstractThread " + LOG_THREAD_NAME, "modify poll descriptor: " + std::to_string(fd) + "  error get sqe");
       return false;
     }
     io_uring_prep_cancel64(sqe, reinterpret_cast<uint64_t>(*it), 0);
@@ -1155,13 +1162,13 @@ void AbstractThread::removePollDescriptor(int fd) {
     trace() << LogStream::Gray << _d << _d->fd << _d->events;
     _d->fd = -1;
     if (_d->events != 0xFFFF) {
-      if (private_.wake_) return;
+      if (!_d->wait) return;
       struct io_uring_sqe *sqe;
       if (!(sqe = io_uring_get_sqe(&private_.ring))) {
-        lsError() << "error get sqe";
+        console_msg("AbstractThread " + LOG_THREAD_NAME, "remove poll descriptor: " + std::to_string(fd) + "  error get sqe");
         return;
       }
-      lsDebug() << LogStream::Yellow << "append cancel sqe" << _d << fd;
+      trace() << LogStream::Yellow << "append cancel sqe" << _d << fd;
       io_uring_prep_cancel64(sqe, reinterpret_cast<uint64_t>(_d), 0);
       sqe->flags |= IOSQE_CQE_SKIP_SUCCESS;
       io_uring_submit(&private_.ring);
