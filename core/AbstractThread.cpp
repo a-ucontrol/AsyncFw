@@ -590,7 +590,7 @@ void AbstractThread::exec() {
           struct io_uring_sqe *sqe = io_uring_get_sqe(&private_.ring);
           if (sqe) {
             trace() << "poll add" << _d << _d->fd;
-            io_uring_prep_poll_add(sqe, _d->fd, PollIn | PollOut);
+            io_uring_prep_poll_add(sqe, _d->fd, _d->events);
             io_uring_sqe_set_data(sqe, _d);
           } else lsError() << "error get sqe";
         } else {
@@ -1026,7 +1026,7 @@ bool AbstractThread::appendPollDescriptor(int fd, PollEvents events, AbstractPol
     }
     if (private_.poll_tasks.empty()) private_.wake();
     private_.poll_tasks.insert(it, _d);
-    io_uring_prep_poll_add(sqe, fd, PollIn | PollOut);
+    io_uring_prep_poll_add(sqe, fd, events);
     io_uring_sqe_set_data(sqe, _d);
     io_uring_submit(&private_.ring);
   }
@@ -1083,6 +1083,15 @@ bool AbstractThread::modifyPollDescriptor(int fd, PollEvents events) {
       return false;
     }
     (*it)->events = events;
+    if (private_.wake_) return true;
+    struct io_uring_sqe *sqe;
+    if (!(sqe = io_uring_get_sqe(&private_.ring))) {
+      lsError() << "error get sqe";
+      return false;
+    }
+    io_uring_prep_cancel64(sqe, reinterpret_cast<uint64_t>(*it), 0);
+    sqe->flags |= IOSQE_CQE_SKIP_SUCCESS;
+    io_uring_submit(&private_.ring);
   }
 #endif
   trace() << fd << static_cast<int>(events);
