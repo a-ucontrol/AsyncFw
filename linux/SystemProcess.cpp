@@ -6,6 +6,8 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 */
 
 #include <cstdlib>
+#include <asm-generic/ioctls.h>
+#include <sys/ioctl.h>
 #include <sys/wait.h>
 #include "core/AbstractThread.h"
 #include "core/LogStream.h"
@@ -85,12 +87,19 @@ bool SystemProcess::start() {
 
   private_.thread_->appendPollTask(private_.out, AbstractThread::PollIn, [this](AbstractThread::PollEvents e) {
     if (e & AbstractThread::PollIn) {
-      char buf[BUFSIZ];
-      int r = read(private_.out, buf, BUFSIZ - 1);
-      if (r > 0) {
-        buf[r] = 0;
-        output(buf, false);
+      std::string buf;
+      int _s;
+      if (ioctl(private_.out, FIONREAD, &_s) < 0) {
+        lsError() << "error get out size" << errno;
+        return;
       }
+      buf.resize(_s);
+      int r = read(private_.out, buf.data(), buf.size());
+      if (r != _s) {
+        lsError() << "error read out" << r;
+        return;
+      }
+      output(buf, false);
       trace() << "out" << r << LogStream::Color::DarkGreen << buf;
     }
     if (e & ~AbstractThread::PollIn) {
@@ -104,12 +113,19 @@ bool SystemProcess::start() {
 
   private_.thread_->appendPollTask(private_.err, AbstractThread::PollIn, [this](AbstractThread::PollEvents e) {
     if (e & AbstractThread::PollIn) {
-      char buf[BUFSIZ];
-      int r = read(private_.err, buf, BUFSIZ - 1);
-      if (r > 0) {
-        buf[r] = 0;
-        output(buf, true);
+      std::string buf;
+      int _s;
+      if (ioctl(private_.err, FIONREAD, &_s) < 0) {
+        lsError() << "error get err size" << errno;
+        return;
       }
+      buf.resize(_s);
+      int r = read(private_.err, buf.data(), buf.size());
+      if (r != _s) {
+        lsError() << "error read err" << r;
+        return;
+      }
+      output(buf, true);
       trace() << "err" << r << LogStream::Color::DarkRed << buf;
     }
     if (e & ~AbstractThread::PollIn) {
