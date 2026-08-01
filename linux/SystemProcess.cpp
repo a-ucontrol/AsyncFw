@@ -24,6 +24,7 @@ using namespace AsyncFw;
 
 struct SystemProcess::Private {
   bool process();
+  bool read_fd(int, std::string *);
 
   int in = -1;
   bool redirect_stdin = true;
@@ -70,13 +71,9 @@ bool SystemProcess::start() {
   if (private_.redirect_stdin)
     private_.thread_->appendPollTask(STDIN_FILENO, AbstractThread::PollIn, [this](AbstractThread::PollEvents e) {
       if (e & AbstractThread::PollIn) {
-        char buf[BUFSIZ];
-        int r = read(STDIN_FILENO, buf, BUFSIZ - 1);
-        if (r > 0) {
-          buf[r] = 0;
-          input(buf);
-        }
-        trace() << "in" << r << LogStream::Color::Green << buf;
+        std::string buf;
+        if (private_.read_fd(STDIN_FILENO, &buf)) input(buf);
+        trace() << LogStream::Color::DarkRed << "pollin in" << buf.size();
       }
       if (e & ~AbstractThread::PollIn) {
         private_.thread_->removePollDescriptor(STDIN_FILENO);
@@ -88,19 +85,8 @@ bool SystemProcess::start() {
   private_.thread_->appendPollTask(private_.out, AbstractThread::PollIn, [this](AbstractThread::PollEvents e) {
     if (e & AbstractThread::PollIn) {
       std::string buf;
-      int _s;
-      if (ioctl(private_.out, FIONREAD, &_s) < 0) {
-        lsError() << "error get out size" << errno;
-        return;
-      }
-      buf.resize(_s);
-      int r = read(private_.out, buf.data(), buf.size());
-      if (r != _s) {
-        lsError() << "error read out" << r;
-        return;
-      }
-      output(buf, false);
-      trace() << "out" << r << LogStream::Color::DarkGreen << buf;
+      if (private_.read_fd(private_.out, &buf)) output(buf, false);
+      trace() << LogStream::Color::DarkRed << "pollin out" << buf.size();
     }
     if (e & ~AbstractThread::PollIn) {
       private_.thread_->removePollDescriptor(private_.out);
@@ -114,19 +100,8 @@ bool SystemProcess::start() {
   private_.thread_->appendPollTask(private_.err, AbstractThread::PollIn, [this](AbstractThread::PollEvents e) {
     if (e & AbstractThread::PollIn) {
       std::string buf;
-      int _s;
-      if (ioctl(private_.err, FIONREAD, &_s) < 0) {
-        lsError() << "error get err size" << errno;
-        return;
-      }
-      buf.resize(_s);
-      int r = read(private_.err, buf.data(), buf.size());
-      if (r != _s) {
-        lsError() << "error read err" << r;
-        return;
-      }
-      output(buf, true);
-      trace() << "err" << r << LogStream::Color::DarkRed << buf;
+      if (private_.read_fd(private_.err, &buf)) output(buf, true);
+      trace() << LogStream::Color::DarkRed << "pollin err" << buf.size();
     }
     if (e & ~AbstractThread::PollIn) {
       private_.thread_->removePollDescriptor(private_.err);
@@ -244,6 +219,25 @@ bool SystemProcess::Private::process() {
 
 FAIL:
   std::terminate();
+}
+
+bool SystemProcess::Private::read_fd(int fd, std::string *buf) {
+  int _s;
+  if (ioctl(fd, FIONREAD, &_s) < 0) {
+    lsError() << "get size" << errno;
+    return false;
+  }
+  if (_s == 0) {
+    lsError() << "null size";
+    return false;
+  }
+  buf->resize(_s);
+  int r = read(fd, buf->data(), buf->size());
+  if (r != _s) {
+    lsError() << "read" << r;
+    return false;
+  }
+  return true;
 }
 
 bool SystemProcess::exec_(const std::string &cmd, const std::vector<std::string> &args, Invocable<void(int, State, const std::string &, const std::string &)>::Abstract *f) {
