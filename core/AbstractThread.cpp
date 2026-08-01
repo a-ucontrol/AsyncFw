@@ -1017,18 +1017,18 @@ bool AbstractThread::appendPollDescriptor(int fd, PollEvents events, AbstractPol
   private_.poll_tasks.insert(it, _d);
 #elif defined IO_URING_WAIT
   Private::PollTask *_d = new Private::PollTask(fd, task, events, true);
+  struct io_uring_sqe *sqe;
   LockGuard lock(private_.mutex);
   {  //lock scope
-    struct io_uring_sqe *sqe = io_uring_get_sqe(&private_.ring);
-    if (!sqe) {
-      console_msg("AbstractThread " + LOG_THREAD_NAME, "append poll descriptor: " + std::to_string(fd) + "  error get sqe");
+    std::vector<Private::PollTask *>::iterator it = std::lower_bound(private_.poll_tasks.begin(), private_.poll_tasks.end(), fd, Private::Compare());
+    if (it != private_.poll_tasks.end() && (*it)->fd == fd) {
+      console_msg("AbstractThread " + LOG_THREAD_NAME, "append poll descriptor: " + std::to_string(fd) + " already exists");
     ERR:
       delete _d;
       return false;
     }
-    std::vector<Private::PollTask *>::iterator it = std::lower_bound(private_.poll_tasks.begin(), private_.poll_tasks.end(), fd, Private::Compare());
-    if (it != private_.poll_tasks.end() && (*it)->fd == fd) {
-      console_msg("AbstractThread " + LOG_THREAD_NAME, "append poll descriptor: " + std::to_string(fd) + " already exists");
+    if (!(sqe = io_uring_get_sqe(&private_.ring))) {
+      console_msg("AbstractThread " + LOG_THREAD_NAME, "append poll descriptor: " + std::to_string(fd) + "  error get sqe");
       goto ERR;
     }
     if (private_.poll_tasks.empty()) private_.wake();
