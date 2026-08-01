@@ -9,6 +9,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 /*
  * This exfample for Unix-like systems only
 */
+#include <unistd.h>
 #include <AsyncFw/MainThread>
 #include <AsyncFw/PollNotifier>
 #include <AsyncFw/LogStream>
