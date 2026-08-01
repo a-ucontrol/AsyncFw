@@ -219,6 +219,7 @@ bool MulticastDns::startService(const std::string &hostname, const std::string &
   for (int i = 0; i != private_.sd_.num_sockets; ++i) {
     int fd = private_.sd_.sockets[i];
     private_.thread_->appendPollTask(fd, AbstractThread::PollIn, [this, fd](AbstractThread::PollEvents e) {
+      trace() << "service poll task" << fd;
       if (!serviceRunning()) {
         lsTrace() << "service not running";
         return;
@@ -275,7 +276,14 @@ bool MulticastDns::startQuerier(QuerierMode mode, int seconds) {
   if (r || !private_.qd_.num_sockets) return false;
   for (int i = 0; i != private_.qd_.num_sockets; ++i) {
     int fd = (private_.qd_.sockets)[i];
-    private_.thread_->appendPollTask(fd, AbstractThread::PollIn, [this, fd](AbstractThread::PollEvents) { querierPollEvent(fd); });
+    private_.thread_->appendPollTask(fd, AbstractThread::PollIn, [this, fd](AbstractThread::PollEvents) {
+      trace() << "querier poll task" << fd;
+      int r;
+      do {
+        querierPollEvent(fd);
+        r = ::recv(fd, nullptr, 0, MSG_PEEK);
+      } while (r == 0);
+    });
   }
   private_.qtid = private_.thread_->appendTimerTask(0, [this]() { querierTimerEvent(); });
   private_.queryTimeout_ = seconds;
