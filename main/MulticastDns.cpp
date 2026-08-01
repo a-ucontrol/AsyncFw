@@ -14,7 +14,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include "main/mdns-types.h"
 
 #ifdef EXTEND_MDNS_TRACE
-  #define trace lsTrace
+  #define trace LogStream(+LogStream::Trace | LogStream::Black, __PRETTY_FUNCTION__, __FILE__, __LINE__, LS_DEFAULT_FLAGS | LOG_STREAM_CONSOLE_ONLY).output
 #else
   #define trace() \
     if constexpr (0) LogStream()
@@ -220,13 +220,9 @@ bool MulticastDns::startService(const std::string &hostname, const std::string &
     int fd = private_.sd_.sockets[i];
     private_.thread_->appendPollTask(fd, AbstractThread::PollIn, [this, fd](AbstractThread::PollEvents e) {
       trace() << "service poll task" << fd;
-      if (!serviceRunning()) {
-        lsTrace() << "service not running";
-        return;
-      }
       if (!(e & AbstractThread::PollIn)) {
         private_.thread_->removePollDescriptor(fd);
-        lsError() << "poll descriptor error:" << e;
+        lsError() << "service poll descriptor error:" << e;
         return;
       }
       private_.thread_->modifyPollDescriptor(fd, AbstractThread::PollNo);  //Убираем fd из epoll
@@ -238,8 +234,10 @@ bool MulticastDns::startService(const std::string &hostname, const std::string &
       } else _val = 20 + (_val % 101);
 
       Timer::single(_val, [this, fd]() {
-        if (serviceRunning()) private_.thread_->modifyPollDescriptor(fd, AbstractThread::PollIn);  //Возвращаем fd в epoll
-        servicePollEvent(fd);
+        if (serviceRunning()) {
+          private_.thread_->modifyPollDescriptor(fd, AbstractThread::PollIn);  //Возвращаем fd в epoll
+          servicePollEvent(fd);
+        }
       });
     });
   }
@@ -276,13 +274,19 @@ bool MulticastDns::startQuerier(QuerierMode mode, int seconds) {
   if (r || !private_.qd_.num_sockets) return false;
   for (int i = 0; i != private_.qd_.num_sockets; ++i) {
     int fd = (private_.qd_.sockets)[i];
-    private_.thread_->appendPollTask(fd, AbstractThread::PollIn, [this, fd](AbstractThread::PollEvents) {
+    private_.thread_->appendPollTask(fd, AbstractThread::PollIn, [this, fd](AbstractThread::PollEvents e) {
       trace() << "querier poll task" << fd;
+      if (!(e & AbstractThread::PollIn)) {
+        private_.thread_->removePollDescriptor(fd);
+        lsError() << "querier poll descriptor error:" << e;
+        return;
+      }
       int r;
+      char _c;
       do {
         querierPollEvent(fd);
-        r = ::recv(fd, nullptr, 0, MSG_PEEK);
-      } while (r == 0);
+        r = ::recv(fd, &_c, 1, MSG_PEEK);
+      } while (r > 0);
     });
   }
   private_.qtid = private_.thread_->appendTimerTask(0, [this]() { querierTimerEvent(); });
