@@ -235,8 +235,8 @@ bool MulticastDns::startService(const std::string &hostname, const std::string &
 
       Timer::single(_val, [this, fd]() {
         if (serviceRunning()) {
-          private_.thread_->modifyPollDescriptor(fd, AbstractThread::PollIn);  //Возвращаем fd в epoll
           servicePollEvent(fd);
+          private_.thread_->modifyPollDescriptor(fd, AbstractThread::PollIn);  //Возвращаем fd в epoll
         }
       });
     });
