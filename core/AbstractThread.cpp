@@ -267,7 +267,7 @@ void AbstractThread::Private::destroy_removed_polls() {
     Private::PollTask *_d = reinterpret_cast<Private::PollTask *>(cqe->user_data);
     warning_if(!_d) << "(!_d)" << _d << cqe->res << cqe->flags;
     if (_d->fd == -1) {
-      lsTrace() << LogStream::Color::Yellow << '(' + name + ") delete" << _d << cqe->res;
+      lsTrace() << LogStream::Color::DarkYellow << '(' + name + ") delete" << _d << cqe->res;
       delete _d;
     }
   }
