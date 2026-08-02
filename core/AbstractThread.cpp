@@ -1162,7 +1162,8 @@ void AbstractThread::removePollDescriptor(int fd) {
     if (_d->events != 0xFFFF) {
       if (!_d->wait) return;
       trace() << LogStream::Yellow << "sync cancel" << _d;
-      struct io_uring_sync_cancel_reg reg {reinterpret_cast<uint64_t>(_d)};
+      static thread_local struct io_uring_sync_cancel_reg reg {};
+      reg.addr = reinterpret_cast<uint64_t>(_d);
       int r = io_uring_register_sync_cancel(&private_.ring, &reg);
       if (r < 0) console_msg("AbstractThread " + LOG_THREAD_NAME, "remove poll descriptor: " + std::to_string(fd) + " sync cancel error " + std::to_string(r));
       return;
