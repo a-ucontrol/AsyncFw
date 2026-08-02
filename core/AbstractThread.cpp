@@ -739,16 +739,14 @@ void AbstractThread::exec() {
               } else {
                 Private::PollTask *_d = reinterpret_cast<Private::PollTask *>(cqe->user_data);
                 trace() << "cqe" << cqe->res << _d;
-                warning_if((cqe->res < 0 && cqe->res != -ECANCELED) || !_d || _d->fd < 0) << LogStream::Color::Red << "((cqe->res < 0 && cqe->res != -ECANCELED) || !_d || _d->fd < 0)" << _d << cqe->res << cqe->flags;
+                warning_if((cqe->res < 0 && cqe->res != -ECANCELED) || !_d) << LogStream::Color::Red << "((cqe->res < 0 && cqe->res != -ECANCELED) || !_d)" << _d << cqe->res << cqe->flags;
 
-                if (cqe->res < 0 && cqe->res != -ECANCELED) { throw std::runtime_error("(cqe->res < 0 && cqe->res != -ECANCELED)"); }
-
-                int32_t events = cqe->res & (_d->events | POLLERR_ | POLLHUP_ | POLLNVAL_ | 0x2000);
+                _d->wait = false;
+                int32_t events = (cqe->res > 0) ? cqe->res & (_d->events | POLLERR_ | POLLHUP_ | POLLNVAL_ | 0x2000) : 0;
                 if (events) private_.process_poll_tasks_.push({_d->fd, static_cast<uint16_t>(events), _d->task});
 
                 if (!(events & (POLLERR_ | POLLHUP_ | POLLNVAL_))) {
                   if (events & 0x2000) _d->events &= ~POLLIN_;
-                  _d->wait = false;
                   private_.update_polls.push_back(_d);
                 } else _d->events = 0xFFFF;
               }
@@ -1096,7 +1094,7 @@ bool AbstractThread::modifyPollDescriptor(int fd, PollEvents events) {
       console_msg("AbstractThread " + LOG_THREAD_NAME, "modify poll descriptor: " + std::to_string(fd) + "  error get sqe");
       return false;
     }
-    io_uring_prep_cancel64(sqe, reinterpret_cast<uint64_t>(*it), 0);
+    io_uring_prep_cancel(sqe, *it, 0);
     sqe->flags |= IOSQE_CQE_SKIP_SUCCESS;
     io_uring_submit(&private_.ring);
   }
@@ -1163,15 +1161,10 @@ void AbstractThread::removePollDescriptor(int fd) {
     _d->fd = -1;
     if (_d->events != 0xFFFF) {
       if (!_d->wait) return;
-      struct io_uring_sqe *sqe;
-      if (!(sqe = io_uring_get_sqe(&private_.ring))) {
-        console_msg("AbstractThread " + LOG_THREAD_NAME, "remove poll descriptor: " + std::to_string(fd) + "  error get sqe");
-        return;
-      }
-      trace() << LogStream::Yellow << "append cancel sqe" << _d << fd;
-      io_uring_prep_cancel64(sqe, reinterpret_cast<uint64_t>(_d), 0);
-      sqe->flags |= IOSQE_CQE_SKIP_SUCCESS;
-      io_uring_submit(&private_.ring);
+      trace() << LogStream::Yellow << "sync cancel" << _d;
+      struct io_uring_sync_cancel_reg reg {reinterpret_cast<uint64_t>(_d)};
+      int r = io_uring_register_sync_cancel(&private_.ring, &reg);
+      if (r < 0) console_msg("AbstractThread " + LOG_THREAD_NAME, "remove poll descriptor: " + std::to_string(fd) + " sync cancel error " + std::to_string(r));
       return;
     }
     trace() << LogStream::Yellow << "append delete task" << _d << fd;
