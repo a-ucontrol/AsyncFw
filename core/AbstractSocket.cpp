@@ -311,18 +311,27 @@ void AbstractSocket::read_fd(DataArray &da) {
 
 int AbstractSocket::read(uint8_t *data, int size) {
   warning_if(_s <= 0) << LogStream::Color::Red << "size for read is null";
+  int _s;
   if (!private_.rda_.empty()) {
+    _s = private_.rda_.size();
     bool b = size <= static_cast<int>(private_.rda_.size());
     memcpy(data, private_.rda_.data(), (b) ? size : private_.rda_.size());
     if (b) {
       private_.rda_.erase(private_.rda_.begin(), private_.rda_.begin() + size);
       return size;
     }
-  }
-  int r = read_fd(data + private_.rda_.size(), size - private_.rda_.size());  //!!! if (_s > private_.rs_ ) need while for tls?
-  if (r > 0) private_.rs_ -= r;
+  } else _s = 0;
+  do {
+    int r = read_fd(data + _s, size - _s);
+    if (r <= 0) break;
+    _s += r;
+    private_.rs_ -= r;
+    private_.flags_ |= 0x20;
+    private_.rs_ = read_available_fd();
+    private_.flags_ &= ~0x20;
+  } while (_s < size);
   private_.rda_.clear();
-  return r;
+  return _s;
 }
 
 DataArray AbstractSocket::read(int size) {
@@ -537,16 +546,9 @@ void AbstractSocket::pollEvent(int _e) {
     private_.rs_ = read_available_fd();
     if (private_.rs_ > 0) {
       readEvent();
-      private_.flags_ |= 0x20;
-      private_.rs_ = read_available_fd();
-      private_.flags_ &= ~0x20;
       if (private_.rs_ > 0) {
-        size_t _s = private_.rs_ + private_.rda_.size();
+        lsDebug() << LogStream::Color::Magenta << "read data to rda";
         read_fd(private_.rda_);
-        if (private_.rda_.size() > _s) {
-          lsTrace() << LogStream::Color::DarkMagenta << "AbstractThread::PollIn" << _s << private_.rda_.size();
-          readEvent();
-        }
       }
     } else if (private_.rs_ < 0) {
       if (private_.rs_ == -1) {
