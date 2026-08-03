@@ -302,7 +302,6 @@ void AbstractSocket::read_fd() {
       close();
       return;
     }
-    private_.rs_ -= r;
   } while ((private_.rs_ = read_available_fd()) > 0);
   private_.rs_ = 0;
 }
@@ -530,8 +529,9 @@ void AbstractSocket::pollEvent(int _e) {
       private_.rs_ = read_available_fd();
       private_.flags_ &= ~0x20;
       if (private_.rs_ > 0) {
+        size_t _s = private_.rs_ + private_.rda_.size();
         read_fd();
-        if (!private_.rda_.empty()) readEvent();
+        if (private_.rda_.size() > _s) readEvent();
       }
     } else if (private_.rs_ < 0) {
       if (private_.rs_ == -1) {
@@ -559,11 +559,9 @@ void AbstractSocket::pollEvent(int _e) {
   }
 #endif
   if (_e & AbstractThread::PollOut) {
-#if defined EPOLL_EDGE_TRIGGERED || defined IO_URING_WAIT
-  WE:
-#endif
     writeEvent();
     if (private_.wda_.empty()) {
+    WDA_EMPTY:
       thread_->modifyPollDescriptor(fd_, AbstractThread::PollIn);
       private_.flags_ &= ~0x80;
       trace() << LogStream::Color::Magenta << "(AbstractThread::PollIn)";
@@ -579,12 +577,10 @@ void AbstractSocket::pollEvent(int _e) {
         private_.wda_.erase(private_.wda_.begin(), private_.wda_.begin() + r);
         return;
       }
-#if defined EPOLL_EDGE_TRIGGERED || defined IO_URING_WAIT
       private_.wda_.clear();
-      goto WE;
-#else
+      writeEvent();
+      if (private_.wda_.empty()) goto WDA_EMPTY;
       return;
-#endif
     }
     if (r < 0) {
       if (errno == EAGAIN) {
