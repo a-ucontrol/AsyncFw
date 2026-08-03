@@ -559,6 +559,9 @@ void AbstractSocket::pollEvent(int _e) {
   }
 #endif
   if (_e & AbstractThread::PollOut) {
+#if defined EPOLL_EDGE_TRIGGERED || defined IO_URING_WAIT
+  WE:
+#endif
     writeEvent();
     if (private_.wda_.empty()) {
       thread_->modifyPollDescriptor(fd_, AbstractThread::PollIn);
@@ -576,7 +579,12 @@ void AbstractSocket::pollEvent(int _e) {
         private_.wda_.erase(private_.wda_.begin(), private_.wda_.begin() + r);
         return;
       }
+#if defined EPOLL_EDGE_TRIGGERED || defined IO_URING_WAIT
       private_.wda_.clear();
+      goto WE;
+#else
+      return;
+#endif
     }
     if (r < 0) {
       if (errno == EAGAIN) {
