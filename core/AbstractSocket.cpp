@@ -287,14 +287,14 @@ void AbstractSocket::disconnect() {
 }
 
 DataArray &AbstractSocket::peek() {
-  if (private_.rs_ > 0) read_fd();
+  if (private_.rs_ > 0) read_fd(private_.rda_);
   return private_.rda_;
 }
 
-void AbstractSocket::read_fd() {
+void AbstractSocket::read_fd(DataArray &da) {
   do {
-    private_.rda_.resize(private_.rda_.size() + private_.rs_);
-    int r = read_fd(private_.rda_.data() + private_.rda_.size() - private_.rs_, private_.rs_);
+    da.resize(da.size() + private_.rs_);
+    int r = read_fd(da.data() + da.size() - private_.rs_, private_.rs_);
     if (r != private_.rs_) {
       private_.errorString_ = "Read error";
       private_.error_ = Read;
@@ -302,8 +302,11 @@ void AbstractSocket::read_fd() {
       close();
       return;
     }
-  } while ((private_.rs_ = read_available_fd()) > 0);
-  private_.rs_ = 0;
+    private_.rs_ = 0;
+    private_.flags_ |= 0x20;
+    private_.rs_ = read_available_fd();
+    private_.flags_ &= ~0x20;
+  } while (private_.rs_ > 0);
 }
 
 int AbstractSocket::read(uint8_t *_p, int _s) {
@@ -316,16 +319,25 @@ int AbstractSocket::read(uint8_t *_p, int _s) {
       return _s;
     }
   }
-  int r = read_fd(_p + private_.rda_.size(), _s - private_.rda_.size());
+  int r = read_fd(_p + private_.rda_.size(), _s - private_.rda_.size());  //!!! if (_s > private_.rs_ ) need while for tls?
   if (r > 0) private_.rs_ -= r;
   private_.rda_.clear();
   return r;
 }
 
 DataArray AbstractSocket::read(int _s) {
+  warning_if(_s <= 0) << LogStream::Color::Red << "size for read is null";
   DataArray _da;
+  if (_s == std::numeric_limits<int>::max()) {
+    if (!private_.rda_.empty()) {
+      _da += private_.rda_;
+      private_.rda_.clear();
+    }
+    if (private_.rs_ > 0) read_fd(_da);
+    return _da;
+  }
   int _n = private_.rs_ + private_.rda_.size();
-  _da.resize((!_s || _n < _s) ? _n : _s);
+  _da.resize(_n < _s ? _n : _s);
   if (read(_da.data(), _da.size()) != static_cast<int>(_da.size())) return {};
   return _da;
 }
@@ -530,8 +542,11 @@ void AbstractSocket::pollEvent(int _e) {
       private_.flags_ &= ~0x20;
       if (private_.rs_ > 0) {
         size_t _s = private_.rs_ + private_.rda_.size();
-        read_fd();
-        if (private_.rda_.size() > _s) readEvent();
+        read_fd(private_.rda_);
+        if (private_.rda_.size() > _s) {
+          lsTrace() << LogStream::Color::DarkMagenta << "AbstractThread::PollIn" << _s << private_.rda_.size();
+          readEvent();
+        }
       }
     } else if (private_.rs_ < 0) {
       if (private_.rs_ == -1) {

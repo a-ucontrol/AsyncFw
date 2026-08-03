@@ -73,8 +73,8 @@ public:
   DataArray &peek();
   /** @brief Reads incoming data into a raw byte buffer up to a specified maximum size. @param buffer Destination raw byte array pointer. @param maxSize Maximum number of bytes to read into the buffer. @return Number of bytes successfully read, or a negative value on error. */
   int read(uint8_t *, int);
-  /** @brief Reads a chunk of incoming data and extracts it into a returned DataArray object. @param size Exact or maximum chunk size to extract. If 0, extracts all available data. @return A DataArray containing the read payload. */
-  DataArray read(int = 0);
+  /** @brief Reads a chunk of incoming data and extracts it into a returned DataArray object. @param size Exact or maximum chunk size to extract. @return A DataArray containing the read payload. */
+  DataArray read(int = std::numeric_limits<int>::max());
   /** @brief Writes raw binary bytes out to the network socket layer. @param data Source raw memory buffer pointer containing data to transmit. @param size The number of bytes to transmit from the data buffer. @return Number of bytes successfully dispatched to the socket queue, or a negative value on error. */
   int write(const uint8_t *, int);
   /** @brief Transmits a structural DataArray package out to the network layer. @param data Reference to the DataArray containing the payload to write. @return Number of bytes successfully dispatched to the socket queue, or a negative value on error. */
@@ -143,7 +143,7 @@ private:
   AbstractSocket &operator=(const AbstractSocket &) = delete;
   void pollEvent(int);
   void changeDescriptor(int);
-  void read_fd();
+  void read_fd(AsyncFw::DataArray &);
   struct Private;
   Private &private_;
 };
