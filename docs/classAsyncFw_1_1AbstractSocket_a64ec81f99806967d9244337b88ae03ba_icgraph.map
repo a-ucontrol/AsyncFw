@@ -1,13 +1,23 @@
 <map id="AsyncFw::AbstractSocket::read_available_fd" name="AsyncFw::AbstractSocket::read_available_fd">
-<area shape="rect" id="Node000001" title="Low&#45;level system call that checks whether a file descriptor contains data." alt="" coords="478,72,652,115"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractTlsSocket.html#a57ac6daff9926cf631abcd1e19073cc8" title="Core internal event handler reacting to raw descriptor readiness signals." alt="" coords="238,5,430,48"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="472,67,410,51,411,46,477,67"/>
-<area shape="rect" id="Node000004" href="$classAsyncFw_1_1AbstractSocket.html#a75415b9f0ecc82b703e49ad8abf1f3a8" title="Returns the number of bytes of data pending to be read." alt="" coords="247,72,421,115"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="460,94,422,96,421,91,465,93"/>
-<area shape="rect" id="Node000006" href="$classAsyncFw_1_1AbstractTlsSocket.html#a7244e3b461e0012dab1d9c3b1c0db78e" title="Calculates how many unread bytes are currently waiting within the active OpenSSL decrypted layer buff..." alt="" coords="238,139,430,181"/>
-<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="477,119,411,141,410,135,472,120"/>
-<area shape="rect" id="Node000003" href="$classAsyncFw_1_1HttpSocket.html#ad51bb1bf5880c3037c7ad70231c0767d" title="Core internal event handler reacting to raw descriptor readiness signals." alt="" coords="22,5,173,48"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="220,28,174,29,172,24,224,25"/>
-<area shape="rect" id="Node000005" href="$classAsyncFw_1_1DataArraySocket.html#a1a1f3404abcb93af27de1d7bc0a958b1" title="Called when there is data to read." alt="" coords="5,72,190,115"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="228,94,191,96,190,91,234,93"/>
+<area shape="rect" id="Node000001" title="Low&#45;level system call that checks whether a file descriptor contains data." alt="" coords="683,105,858,148"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractTlsSocket.html#a57ac6daff9926cf631abcd1e19073cc8" title="Core internal event handler reacting to raw descriptor readiness signals." alt="" coords="443,5,635,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="713,98,634,62,606,51,606,46,636,58,718,98"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1AbstractSocket.html#a75415b9f0ecc82b703e49ad8abf1f3a8" title="Returns the number of bytes of data pending to be read." alt="" coords="452,72,626,115"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="665,112,627,109,627,103,671,112"/>
+<area shape="rect" id="Node000006" href="$classAsyncFw_1_1AbstractSocket.html#a374dd4ce66bfcc8a6dcf40b4ba552828" title="Reads incoming data into a raw byte buffer up to a specified maximum size." alt="" coords="452,139,626,181"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="665,142,627,150,626,145,671,141"/>
+<area shape="rect" id="Node000010" href="$classAsyncFw_1_1AbstractTlsSocket.html#a7244e3b461e0012dab1d9c3b1c0db78e" title="Calculates how many unread bytes are currently waiting within the active OpenSSL decrypted layer buff..." alt="" coords="443,205,635,248"/>
+<area shape="poly" id="edge11_Node000001_Node000010" title=" " alt="" coords="718,155,636,196,607,207,605,202,634,191,713,156"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1HttpSocket.html#ad51bb1bf5880c3037c7ad70231c0767d" title="Core internal event handler reacting to raw descriptor readiness signals." alt="" coords="228,5,378,48"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="425,28,379,29,378,24,430,26"/>
+<area shape="rect" id="Node000005" href="$classAsyncFw_1_1DataArraySocket.html#a1a1f3404abcb93af27de1d7bc0a958b1" title="Called when there is data to read." alt="" coords="211,72,395,115"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="434,94,396,96,395,91,439,93"/>
+<area shape="poly" id="edge7_Node000006_Node000005" title=" " alt="" coords="444,134,381,118,381,113,449,134"/>
+<area shape="rect" id="Node000007" href="$classAsyncFw_1_1AbstractSocket.html#a1896d02632e8ad50648e81b19f06743c" title="Reads a chunk of incoming data and extracts it into a returned DataArray object." alt="" coords="216,139,390,181"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="434,161,391,163,390,157,439,159"/>
+<area shape="rect" id="Node000008" href="$classAsyncFw_1_1HttpServer_1_1TcpSocket.html#abb44001861ba7b24633b54ae90c2896c" title="Triggered when new raw data is available in the socket for reading. &#160;&#160;Overrides the base behavior to ..." alt="" coords="5,227,163,269"/>
+<area shape="poly" id="edge8_Node000006_Node000008" title=" " alt="" coords="434,185,396,196,164,238,163,233,394,191,440,184"/>
+<area shape="rect" id="Node000009" href="$classAsyncFw_1_1HttpSocket.html#a7163448458d68f433dbdb214a6175be3" title="Called when there is data to read." alt="" coords="228,256,378,299"/>
+<area shape="poly" id="edge9_Node000006_Node000009" title=" " alt="" coords="454,187,444,196,430,206,421,217,397,239,363,258,361,253,393,235,417,213,427,202,442,191,449,189"/>
+<area shape="poly" id="edge10_Node000009_Node000008" title=" " alt="" coords="210,266,163,261,163,256,215,265"/>
 </map>

@@ -86,9 +86,9 @@
 </g>
 </g>
 <!-- Node1&#45;&gt;Node12 -->
-<g id="edge12_Node000001_Node000012" class="edge">
+<g id="edge14_Node000001_Node000012" class="edge">
 <title>Node1&#45;&gt;Node12</title>
-<g id="a_edge12_Node000001_Node000012"><a xlink:title=" ">
+<g id="a_edge14_Node000001_Node000012"><a xlink:title=" ">
 <path fill="none" stroke="#63b8ff" d="M111.82,-117.54C135.43,-108.22 165.18,-96.48 190.31,-86.56"/>
 <polygon fill="#63b8ff" stroke="#63b8ff" points="191.34,-89.91 199.36,-82.98 188.77,-83.4 191.34,-89.91"/>
 </a>
@@ -105,9 +105,9 @@
 </g>
 </g>
 <!-- Node1&#45;&gt;Node13 -->
-<g id="edge14_Node000001_Node000013" class="edge">
+<g id="edge16_Node000001_Node000013" class="edge">
 <title>Node1&#45;&gt;Node13</title>
-<g id="a_edge14_Node000001_Node000013"><a xlink:title=" ">
+<g id="a_edge16_Node000001_Node000013"><a xlink:title=" ">
 <path fill="none" stroke="#63b8ff" d="M84.52,-117.81C103.38,-97.46 138.29,-62.57 174.25,-41 176.4,-39.71 178.63,-38.47 180.91,-37.28"/>
 <polygon fill="#63b8ff" stroke="#63b8ff" points="182.29,-40.5 189.8,-33.03 179.27,-34.18 182.29,-40.5"/>
 </a>
@@ -202,9 +202,9 @@
 <g id="Node000008" class="node">
 <title>Node8</title>
 <g id="a_Node000008"><a xlink:href="classAsyncFw_1_1AbstractSocket.html#a64ec81f99806967d9244337b88ae03ba" target="_top" xlink:title="Low&#45;level system call that checks whether a file descriptor contains data.">
-<polygon fill="white" stroke="#666666" points="486,-200 355.25,-200 355.25,-168 486,-168 486,-200"/>
-<text xml:space="preserve" text-anchor="start" x="363.25" y="-186.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AbstractSocket</text>
-<text xml:space="preserve" text-anchor="middle" x="420.62" y="-174.5" font-family="Helvetica,sans-Serif" font-size="10.00">::read_available_fd</text>
+<polygon fill="white" stroke="#666666" points="486,-197 355.25,-197 355.25,-165 486,-165 486,-197"/>
+<text xml:space="preserve" text-anchor="start" x="363.25" y="-183.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AbstractSocket</text>
+<text xml:space="preserve" text-anchor="middle" x="420.62" y="-171.5" font-family="Helvetica,sans-Serif" font-size="10.00">::read_available_fd</text>
 </a>
 </g>
 </g>
@@ -212,18 +212,26 @@
 <g id="edge8_Node000007_Node000008" class="edge">
 <title>Node7&#45;&gt;Node8</title>
 <g id="a_edge8_Node000007_Node000008"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M309.13,-184C320.32,-184 332.05,-184 343.5,-184"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="343.33,-187.5 353.33,-184 343.33,-180.5 343.33,-187.5"/>
+<path fill="none" stroke="#63b8ff" d="M309.13,-182.89C320.32,-182.7 332.05,-182.5 343.5,-182.3"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="343.39,-185.81 353.33,-182.13 343.27,-178.81 343.39,-185.81"/>
+</a>
+</g>
+</g>
+<!-- Node9&#45;&gt;Node8 -->
+<g id="edge11_Node000009_Node000008" class="edge">
+<title>Node9&#45;&gt;Node8</title>
+<g id="a_edge11_Node000009_Node000008"><a xlink:title=" ">
+<path fill="none" stroke="#63b8ff" d="M305.67,-150.44C319.14,-154.05 333.53,-157.91 347.39,-161.63"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="346.34,-164.97 356.9,-164.18 348.15,-158.21 346.34,-164.97"/>
 </a>
 </g>
 </g>
 <!-- Node10 -->
 <g id="Node000010" class="node">
 <title>Node10</title>
-<g id="a_Node000010"><a xlink:href="classAsyncFw_1_1AbstractSocket.html#acb6850773f2a617d9beb1bac6f0bf2f0" target="_top" xlink:title="Low&#45;level native operating system read operation proxying requests directly down to the fd handle.">
-<polygon fill="white" stroke="#666666" points="486,-150 355.25,-150 355.25,-118 486,-118 486,-150"/>
-<text xml:space="preserve" text-anchor="start" x="363.25" y="-136.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AbstractSocket</text>
-<text xml:space="preserve" text-anchor="middle" x="420.62" y="-124.5" font-family="Helvetica,sans-Serif" font-size="10.00">::read_fd</text>
+<g id="a_Node000010"><a xlink:href="structAsyncFw_1_1AnyData.html#aa6d2c3488a44e34e25a0971b01a27b3c" target="_top" xlink:title="Type&#45;safely extracts and returns the stored data value.">
+<polygon fill="white" stroke="#666666" points="657.25,-124 531,-124 531,-104 657.25,-104 657.25,-124"/>
+<text xml:space="preserve" text-anchor="middle" x="594.12" y="-110.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AnyData::data</text>
 </a>
 </g>
 </g>
@@ -231,33 +239,43 @@
 <g id="edge10_Node000009_Node000010" class="edge">
 <title>Node9&#45;&gt;Node10</title>
 <g id="a_edge10_Node000009_Node000010"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M309.13,-134C320.32,-134 332.05,-134 343.5,-134"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="343.33,-137.5 353.33,-134 343.33,-130.5 343.33,-137.5"/>
+<path fill="none" stroke="#63b8ff" d="M309.15,-130.29C368.77,-126.87 457.14,-121.8 519.43,-118.23"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="519.45,-121.73 529.23,-117.66 519.05,-114.74 519.45,-121.73"/>
 </a>
 </g>
 </g>
 <!-- Node11 -->
 <g id="Node000011" class="node">
 <title>Node11</title>
-<g id="a_Node000011"><a xlink:href="structAsyncFw_1_1AnyData.html#aa6d2c3488a44e34e25a0971b01a27b3c" target="_top" xlink:title="Type&#45;safely extracts and returns the stored data value.">
-<polygon fill="white" stroke="#666666" points="657.25,-144 531,-144 531,-124 657.25,-124 657.25,-144"/>
-<text xml:space="preserve" text-anchor="middle" x="594.12" y="-130.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AnyData::data</text>
+<g id="a_Node000011"><a xlink:href="classAsyncFw_1_1AbstractSocket.html#acb6850773f2a617d9beb1bac6f0bf2f0" target="_top" xlink:title="Low&#45;level native operating system read operation proxying requests directly down to the fd handle.">
+<polygon fill="white" stroke="#666666" points="486,-108 355.25,-108 355.25,-76 486,-76 486,-108"/>
+<text xml:space="preserve" text-anchor="start" x="363.25" y="-94.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AbstractSocket</text>
+<text xml:space="preserve" text-anchor="middle" x="420.62" y="-82.5" font-family="Helvetica,sans-Serif" font-size="10.00">::read_fd</text>
 </a>
 </g>
 </g>
-<!-- Node10&#45;&gt;Node11 -->
-<g id="edge11_Node000010_Node000011" class="edge">
-<title>Node10&#45;&gt;Node11</title>
-<g id="a_edge11_Node000010_Node000011"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M486.46,-134C497.23,-134 508.47,-134 519.44,-134"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="519.24,-137.5 529.24,-134 519.24,-130.5 519.24,-137.5"/>
+<!-- Node9&#45;&gt;Node11 -->
+<g id="edge12_Node000009_Node000011" class="edge">
+<title>Node9&#45;&gt;Node11</title>
+<g id="a_edge12_Node000009_Node000011"><a xlink:title=" ">
+<path fill="none" stroke="#63b8ff" d="M309.13,-118.48C320.44,-115.77 332.29,-112.93 343.86,-110.16"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="344.46,-113.61 353.37,-107.88 342.83,-106.81 344.46,-113.61"/>
+</a>
+</g>
+</g>
+<!-- Node11&#45;&gt;Node10 -->
+<g id="edge13_Node000011_Node000010" class="edge">
+<title>Node11&#45;&gt;Node10</title>
+<g id="a_edge13_Node000011_Node000010"><a xlink:title=" ">
+<path fill="none" stroke="#63b8ff" d="M486.46,-100.32C497.23,-101.7 508.47,-103.14 519.44,-104.55"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="518.88,-108 529.25,-105.81 519.77,-101.06 518.88,-108"/>
 </a>
 </g>
 </g>
 <!-- Node12&#45;&gt;Node12 -->
-<g id="edge13_Node000012_Node000012" class="edge">
+<g id="edge15_Node000012_Node000012" class="edge">
 <title>Node12&#45;&gt;Node12</title>
-<g id="a_edge13_Node000012_Node000012"><a xlink:title=" ">
+<g id="a_edge15_Node000012_Node000012"><a xlink:title=" ">
 <path fill="none" stroke="#63b8ff" d="M212.27,-82.44C206.46,-91.58 216.83,-100 243.38,-100 257.89,-100 267.57,-97.48 272.41,-93.71"/>
 <polygon fill="#63b8ff" stroke="#63b8ff" points="275.84,-94.4 274.21,-83.93 268.96,-93.13 275.84,-94.4"/>
 </a>

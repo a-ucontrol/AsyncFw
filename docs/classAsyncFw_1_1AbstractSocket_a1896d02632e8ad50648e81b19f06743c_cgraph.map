@@ -1,0 +1,13 @@
+<map id="AsyncFw::AbstractSocket::read" name="AsyncFw::AbstractSocket::read">
+<area shape="rect" id="Node000001" title="Reads a chunk of incoming data and extracts it into a returned DataArray object." alt="" coords="5,59,180,101"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractSocket.html#a374dd4ce66bfcc8a6dcf40b4ba552828" title="Reads incoming data into a raw byte buffer up to a specified maximum size." alt="" coords="228,28,402,71"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="179,65,215,63,210,64,181,70"/>
+<area shape="rect" id="Node000005" href="$classAsyncFw_1_1AbstractSocket.html#acb6850773f2a617d9beb1bac6f0bf2f0" title="Low&#45;level native operating system read operation proxying requests directly down to the fd handle." alt="" coords="450,92,624,135"/>
+<area shape="poly" id="edge6_Node000001_Node000005" title=" " alt="" coords="180,84,435,103,433,108,180,89"/>
+<area shape="rect" id="Node000003" href="$structAsyncFw_1_1AnyData.html#aa6d2c3488a44e34e25a0971b01a27b3c" title="Type&#45;safely extracts and returns the stored data value." alt="" coords="672,37,841,64"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="383,25,450,11,537,3,625,11,705,32,700,32,624,16,537,8,450,16,385,30"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1AbstractSocket.html#a64ec81f99806967d9244337b88ae03ba" title="Low&#45;level system call that checks whether a file descriptor contains data." alt="" coords="450,25,624,68"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="402,46,437,47,432,48,403,51"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="391,68,449,87,443,87,391,74"/>
+<area shape="poly" id="edge5_Node000005_Node000003" title=" " alt="" coords="614,89,690,69,695,68,615,94"/>
+</map>

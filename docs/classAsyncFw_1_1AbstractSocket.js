@@ -33,7 +33,7 @@ var classAsyncFw_1_1AbstractSocket =
     [ "listen", "classAsyncFw_1_1AbstractSocket.html#a426c3b10de20344079571d6708f096ca", null ],
     [ "peek", "classAsyncFw_1_1AbstractSocket.html#a3f4a74f0ab83d096bd37118bb28d8654", null ],
     [ "read", "classAsyncFw_1_1AbstractSocket.html#a374dd4ce66bfcc8a6dcf40b4ba552828", null ],
-    [ "read", "classAsyncFw_1_1AbstractSocket.html#a4eea287aa9c8a3cafc2ea92ca72d85bc", null ],
+    [ "read", "classAsyncFw_1_1AbstractSocket.html#a1896d02632e8ad50648e81b19f06743c", null ],
     [ "write", "classAsyncFw_1_1AbstractSocket.html#a6b5bfbc488d553dca8a2d01b6b415482", null ],
     [ "write", "classAsyncFw_1_1AbstractSocket.html#a4ad7bcd91ec7a91270d83bf583d62be1", null ],
     [ "error", "classAsyncFw_1_1AbstractSocket.html#ab10c09c1cadc705e99866b527fc6cc52", null ],
