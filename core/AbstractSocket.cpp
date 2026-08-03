@@ -309,26 +309,26 @@ void AbstractSocket::read_fd(DataArray &da) {
   } while (private_.rs_ > 0);
 }
 
-int AbstractSocket::read(uint8_t *_p, int _s) {
+int AbstractSocket::read(uint8_t *data, int size) {
   warning_if(_s <= 0) << LogStream::Color::Red << "size for read is null";
   if (!private_.rda_.empty()) {
-    bool b = _s <= static_cast<int>(private_.rda_.size());
-    memcpy(_p, private_.rda_.data(), (b) ? _s : private_.rda_.size());
+    bool b = size <= static_cast<int>(private_.rda_.size());
+    memcpy(data, private_.rda_.data(), (b) ? size : private_.rda_.size());
     if (b) {
-      private_.rda_.erase(private_.rda_.begin(), private_.rda_.begin() + _s);
-      return _s;
+      private_.rda_.erase(private_.rda_.begin(), private_.rda_.begin() + size);
+      return size;
     }
   }
-  int r = read_fd(_p + private_.rda_.size(), _s - private_.rda_.size());  //!!! if (_s > private_.rs_ ) need while for tls?
+  int r = read_fd(data + private_.rda_.size(), size - private_.rda_.size());  //!!! if (_s > private_.rs_ ) need while for tls?
   if (r > 0) private_.rs_ -= r;
   private_.rda_.clear();
   return r;
 }
 
-DataArray AbstractSocket::read(int _s) {
+DataArray AbstractSocket::read(int size) {
   warning_if(_s <= 0) << LogStream::Color::Red << "size for read is null";
   DataArray _da;
-  if (_s == std::numeric_limits<int>::max()) {
+  if (size == std::numeric_limits<int>::max()) {
     if (!private_.rda_.empty()) {
       _da += private_.rda_;
       private_.rda_.clear();
@@ -337,7 +337,7 @@ DataArray AbstractSocket::read(int _s) {
     return _da;
   }
   int _n = private_.rs_ + private_.rda_.size();
-  _da.resize(_n < _s ? _n : _s);
+  _da.resize(_n < size ? _n : size);
   if (read(_da.data(), _da.size()) != static_cast<int>(_da.size())) return {};
   return _da;
 }
