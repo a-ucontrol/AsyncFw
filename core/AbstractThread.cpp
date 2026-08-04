@@ -248,7 +248,7 @@ void AbstractThread::Private::process_timers() {
 void AbstractThread::Private::destroy_removed_polls() {
   for (std::deque<Private::PollTask *>::iterator it = update_polls.begin(); it != update_polls.end();) {
     if ((*it)->fd < 0) {
-      lsTrace() << LogStream::Color::DarkYellow << '(' + name + ") delete" << *it;
+      trace() << LogStream::Color::DarkYellow << '(' + name + ") delete" << *it;
       delete *it;
       it = update_polls.erase(it);
     } else ++it;
@@ -267,7 +267,7 @@ void AbstractThread::Private::destroy_removed_polls() {
     Private::PollTask *_d = reinterpret_cast<Private::PollTask *>(cqe->user_data);
     warning_if(!_d) << "(!_d)" << _d << cqe->res << cqe->flags;
     if (_d->fd == -1) {
-      lsTrace() << LogStream::Color::DarkYellow << '(' + name + ") delete" << _d << cqe->res;
+      trace() << LogStream::Color::DarkYellow << '(' + name + ") delete" << _d << cqe->res;
       delete _d;
     }
   }
@@ -788,7 +788,7 @@ void AbstractThread::exec() {
   }
   LockGuard lock(private_.mutex);
   if (_nested--) {
-    lsTrace() << LOG_THREAD_NAME << LogStream::Color::Magenta << "end" << _nested << private_.nested_ << LogStream::Color::Red << (_nested <= private_.nested_);
+    trace() << LOG_THREAD_NAME << LogStream::Color::Magenta << "end" << _nested << private_.nested_ << LogStream::Color::Red << (_nested <= private_.nested_);
     if (_nested <= private_.nested_) private_.state &= ~Private::WaitFinished;
     return;
   }
@@ -839,7 +839,7 @@ void AbstractThread::Private::wake() {
   if (eventfd_write(WAKE_FD_WRITE, 1) < 0) {
     eventfd_t _v;
     eventfd_read(WAKE_FD, &_v);
-    lsDebug() << LogStream::Color::Red << "(eventfd_write(WAKE_FD_WRITE, 1) < 0)" << _v;
+    trace() << LogStream::Color::Red << "(eventfd_write(WAKE_FD_WRITE, 1) < 0)" << _v;
     eventfd_write(WAKE_FD_WRITE, 1);
   }
   #endif
