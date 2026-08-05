@@ -40,10 +40,10 @@
 <!-- Node3 -->
 <g id="Node000003" class="node">
 <title>Node3</title>
-<g id="a_Node000003"><a xlink:href="classAsyncFw_1_1AbstractSocket.html#ad5fb89c73a0f4bcca190d3a4cab15a97" target="_top" xlink:title="Virtual destructor. Automatically detaches socket from thread if still attached.">
-<polygon fill="white" stroke="#666666" points="137.5,-32 6.75,-32 6.75,0 137.5,0 137.5,-32"/>
-<text xml:space="preserve" text-anchor="start" x="14.75" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AbstractSocket</text>
-<text xml:space="preserve" text-anchor="middle" x="72.12" y="-6.5" font-family="Helvetica,sans-Serif" font-size="10.00">::~AbstractSocket</text>
+<g id="a_Node000003"><a xlink:href="classAsyncFw_1_1ListenSocket.html#aa29d033332c09e341d159b2189c774e9" target="_top" xlink:title="Return local network port bound to this socket interface.">
+<polygon fill="white" stroke="#666666" points="132.25,-32 12,-32 12,0 132.25,0 132.25,-32"/>
+<text xml:space="preserve" text-anchor="start" x="20" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::ListenSocket</text>
+<text xml:space="preserve" text-anchor="middle" x="72.12" y="-6.5" font-family="Helvetica,sans-Serif" font-size="10.00">::port</text>
 </a>
 </g>
 </g>
@@ -51,7 +51,7 @@
 <g id="edge2_Node000001_Node000003" class="edge">
 <title>Node1&#45;&gt;Node3</title>
 <g id="a_edge2_Node000001_Node000003"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M168.69,-29.93C158.38,-28.43 147.86,-26.89 137.77,-25.42"/>
+<path fill="none" stroke="#63b8ff" d="M168.42,-29.89C156.44,-28.15 144.22,-26.36 132.69,-24.68"/>
 <polygon fill="#63b8ff" stroke="#63b8ff" points="167.89,-33.35 178.29,-31.33 168.9,-26.42 167.89,-33.35"/>
 </a>
 </g>
