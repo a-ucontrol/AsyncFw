@@ -31,15 +31,15 @@ public:
   void setExtendOut(bool b);
   /** @brief Toggles ANSI terminal color highlights for outgoing console log sequences. */
   void setColorOut(bool b);
-  /** @brief Toggles the display of notes , such as source code lines (file:line), at the end of console entries. */
+  /** @brief Toggles the display of notes, such as source code lines (file:line), at the end of console entries. */
   void setNotesOut(bool b);
   /** @brief Toggles automated runtime aggregation to compress high-frequency duplicate log messages. */
   void setHideDuplicates(bool b);
-  /** @brief Sets the global log severity threshold for file/database recording destinations. */
+  /** @brief Sets the global log severity threshold for database recording destinations. */
   void setLevel(int i);
   /** @brief Sets the visibility threshold level exclusively for live stdout/stderr console streaming. */
   void setConsoleLevel(int i);
-  /** @brief Enforces an inclusion string filter matching against target sender identification names. */
+  /** @brief Enforces an inclusion string filter matching against target sender names. */
   void setFilter(const std::vector<std::string> &f);
 
 protected:

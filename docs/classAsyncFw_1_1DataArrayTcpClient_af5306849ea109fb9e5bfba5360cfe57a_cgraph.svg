@@ -78,7 +78,7 @@
 <!-- Node5 -->
 <g id="Node000005" class="node">
 <title>Node5</title>
-<g id="a_Node000005"><a xlink:href="classAsyncFw_1_1AbstractThread.html#ad43b7b79e541bd1d6cce20f0231cc64d" target="_top" xlink:title="This call from the thread when it finishing execution.">
+<g id="a_Node000005"><a xlink:href="classAsyncFw_1_1AbstractThread.html#ad43b7b79e541bd1d6cce20f0231cc64d" target="_top" xlink:title="This call from the thread when it finishes execution.">
 <polygon fill="white" stroke="#666666" points="665.5,-82 535.5,-82 535.5,-50 665.5,-50 665.5,-82"/>
 <text xml:space="preserve" text-anchor="start" x="543.5" y="-68.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AbstractThread</text>
 <text xml:space="preserve" text-anchor="middle" x="600.5" y="-56.5" font-family="Helvetica,sans-Serif" font-size="10.00">::finishedEvent</text>
@@ -97,7 +97,7 @@
 <!-- Node6 -->
 <g id="Node000006" class="node">
 <title>Node6</title>
-<g id="a_Node000006"><a xlink:href="classAsyncFw_1_1AbstractThread.html#a9b9db94ad8c90eafe1ef34a076af8498" target="_top" xlink:title="This call from thread when it starts executing.">
+<g id="a_Node000006"><a xlink:href="classAsyncFw_1_1AbstractThread.html#a9b9db94ad8c90eafe1ef34a076af8498" target="_top" xlink:title="This is called from the thread when it starts executing.">
 <polygon fill="white" stroke="#666666" points="665.5,-32 535.5,-32 535.5,0 665.5,0 665.5,-32"/>
 <text xml:space="preserve" text-anchor="start" x="543.5" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AbstractThread</text>
 <text xml:space="preserve" text-anchor="middle" x="600.5" y="-6.5" font-family="Helvetica,sans-Serif" font-size="10.00">::startedEvent</text>

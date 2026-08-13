@@ -45,7 +45,7 @@ protected:
   void finishedEvent() override;
 
   /** @brief Internal collection of non-blocking network sockets assigned to this thread.
-  @warning This vector is strictly ordered by their native operating system descriptors to ensure binary-search lookup speeds. Never modify this array directly. */
+  @warning This vector is strictly ordered by their native operating system descriptors to ensure binary-search lookup speed. Never modify this array directly. */
   std::vector<AbstractSocket *> sockets_;
 
 private:

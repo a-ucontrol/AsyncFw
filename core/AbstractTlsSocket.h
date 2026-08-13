@@ -47,13 +47,13 @@ protected:
   @details Overrides should call this method to propagate ready events up to packet parser layers. */
   virtual void activateReady();
   /** @brief Core internal event handler reacting to raw descriptor readiness signals.
-  @details Orchestrates the non-blocking state machine for SSL_accept() and SSL_connect() loops. Automatically intercepts peer certificates and flags errors if handshakes time out or crash. */
+  @details Orchestrates the non-blocking state machine for SSL_accept() and SSL_connect() loops. Automatically intercepts peer certificates and flags errors if handshakes timeout or crash. */
   void activateEvent() override;
   /** @brief Calculates how many unread bytes are currently waiting within the active OpenSSL decrypted layer buffer. @return Byte amount available for reading */
   int read_available_fd() const override final;
   /** @brief Low-level decryption routing path proxying requests down to SSL_read(). @param data Void pointer targeting the destination extraction memory chunk. @param size Maximum byte capacity boundaries allowed to extract. @return Number of successfully decrypted bytes ingested, or standard OpenSSL system error codes. */
   int read_fd(void *, int) const override final;
-  /** @brief Low-level encryption routing path proxying outgoing payload directly up to SSL_write(). @param data Void pointer targeting the source serialization raw bytes memory buffer. @param size Exact byte amount metrics to push into the socket layer. @return Number of successfully encrypted and dispatched bytes, or standard OpenSSL system error codes. */
+  /** @brief Low-level encryption routing path proxying outgoing payload directly up to SSL_write(). @param data Void pointer targeting the source serialization raw bytes memory buffer. @param size Exact number of bytes to push into the socket layer. @return Number of successfully encrypted and dispatched bytes, or standard OpenSSL system error codes. */
   int write_fd(const void *, int) override final;
 
 private:

@@ -12,9 +12,9 @@
 <area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="451,71,502,79,497,80,452,76"/>
 <area shape="rect" id="Node000005" href="$classAsyncFw_1_1AbstractThread.html#a1abe0f5c637dcc6af5aff00c5291bd4f" title="Run manage loop." alt="" coords="749,72,923,115"/>
 <area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="688,91,737,93,731,94,689,96"/>
-<area shape="rect" id="Node000006" href="$classAsyncFw_1_1AbstractThread.html#ad43b7b79e541bd1d6cce20f0231cc64d" title="This call from the thread when it finishing execution." alt="" coords="971,39,1144,81"/>
+<area shape="rect" id="Node000006" href="$classAsyncFw_1_1AbstractThread.html#ad43b7b79e541bd1d6cce20f0231cc64d" title="This call from the thread when it finishes execution." alt="" coords="971,39,1144,81"/>
 <area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="923,78,952,76,958,75,924,83"/>
-<area shape="rect" id="Node000007" href="$classAsyncFw_1_1AbstractThread.html#a9b9db94ad8c90eafe1ef34a076af8498" title="This call from thread when it starts executing." alt="" coords="971,105,1144,148"/>
+<area shape="rect" id="Node000007" href="$classAsyncFw_1_1AbstractThread.html#a9b9db94ad8c90eafe1ef34a076af8498" title="This is called from the thread when it starts executing." alt="" coords="971,105,1144,148"/>
 <area shape="poly" id="edge6_Node000005_Node000007" title=" " alt="" coords="923,104,958,111,952,111,923,109"/>
 <area shape="rect" id="Node000010" href="$classAsyncFw_1_1AbstractThread.html#abe96e6b2a1de041f0d25390a6b77e50a" title="Runs a task in a managed thread." alt="" coords="515,172,688,215"/>
 <area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="440,191,502,193,497,193,440,196"/>

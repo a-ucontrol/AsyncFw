@@ -124,9 +124,9 @@ public:
   /** @brief Assigns a pointer to the list of all threads. @param list Pointer to the list of threads. @return AbstractThread::LockGuard. */
   static AbstractThread::LockGuard threads(std::vector<AbstractThread *> **);
 
-  /** @brief This call from thread when it starts executing. */
+  /** @brief This is called from the thread when it starts executing. */
   virtual void startedEvent();
-  /** @brief This call from the thread when it finishing execution. */
+  /** @brief This call from the thread when it finishes execution. */
   virtual void finishedEvent();
 
   /** @brief Returns true if the managed thread is running. */

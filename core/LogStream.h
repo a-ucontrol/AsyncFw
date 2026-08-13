@@ -84,7 +84,7 @@ public:
     DarkYellow = 0xf0,
   };
 
-  /** @brief Complete container representing an unrolled, processed log entry. */
+  /** @brief Complete container representing an processed log entry. */
   struct Message {
     Message() = default;
     Message(uint8_t, const std::string &, const std::string &, const std::string &);

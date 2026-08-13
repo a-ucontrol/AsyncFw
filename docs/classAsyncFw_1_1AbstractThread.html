@@ -149,9 +149,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aca9b6529df5d0faa3bd33174ba643aa1 template"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#aca9b6529df5d0faa3bd33174ba643aa1">appendTimerTask</a> (int ms, F function)</td></tr>
 <tr class="memdesc:aca9b6529df5d0faa3bd33174ba643aa1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Append timer task.  <br /></td></tr>
 <tr class="memitem:a9b9db94ad8c90eafe1ef34a076af8498" id="r_a9b9db94ad8c90eafe1ef34a076af8498"><td class="memItemLeft">virtual void&#160;</td><td class="memItemRight"><a class="el" href="#a9b9db94ad8c90eafe1ef34a076af8498">startedEvent</a> ()</td></tr>
-<tr class="memdesc:a9b9db94ad8c90eafe1ef34a076af8498"><td class="mdescLeft">&#160;</td><td class="mdescRight">This call from thread when it starts executing.  <br /></td></tr>
+<tr class="memdesc:a9b9db94ad8c90eafe1ef34a076af8498"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is called from the thread when it starts executing.  <br /></td></tr>
 <tr class="memitem:ad43b7b79e541bd1d6cce20f0231cc64d" id="r_ad43b7b79e541bd1d6cce20f0231cc64d"><td class="memItemLeft">virtual void&#160;</td><td class="memItemRight"><a class="el" href="#ad43b7b79e541bd1d6cce20f0231cc64d">finishedEvent</a> ()</td></tr>
-<tr class="memdesc:ad43b7b79e541bd1d6cce20f0231cc64d"><td class="mdescLeft">&#160;</td><td class="mdescRight">This call from the thread when it finishing execution.  <br /></td></tr>
+<tr class="memdesc:ad43b7b79e541bd1d6cce20f0231cc64d"><td class="mdescLeft">&#160;</td><td class="mdescRight">This call from the thread when it finishes execution.  <br /></td></tr>
 <tr class="memitem:aa317731738402e37a8a05d5a5ec9d7c4" id="r_aa317731738402e37a8a05d5a5ec9d7c4"><td class="memItemLeft"><a id="aa317731738402e37a8a05d5a5ec9d7c4" name="aa317731738402e37a8a05d5a5ec9d7c4"></a>
 virtual bool&#160;</td><td class="memItemRight"><b>running</b> () const</td></tr>
 <tr class="memdesc:aa317731738402e37a8a05d5a5ec9d7c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the managed thread is running. <br /></td></tr>
@@ -491,7 +491,7 @@ template&lt;typename F&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>This call from thread when it starts executing. </p>
+<p>This is called from the thread when it starts executing. </p>
 
 <p>Reimplemented in <a class="el" href="classAsyncFw_1_1Thread.html#ae03f85da53209734bdafe450f45e5d53">AsyncFw::Thread</a>.</p>
 <div id="dynsection-7" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
@@ -526,7 +526,7 @@ template&lt;typename F&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>This call from the thread when it finishing execution. </p>
+<p>This call from the thread when it finishes execution. </p>
 
 <p>Reimplemented in <a class="el" href="classAsyncFw_1_1Thread.html#ae9fc9cf8baddcc8dfa0e14784918c4a5">AsyncFw::Thread</a>.</p>
 <div id="dynsection-8" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>

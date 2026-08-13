@@ -11,7 +11,7 @@
 <!-- Node0 -->
 <g id="Node000000" class="node">
 <title>Node0</title>
-<g id="a_Node000000"><a xlink:href="structAsyncFw_1_1LogStream_1_1Message.html" target="_top" xlink:title="Complete container representing an unrolled, processed log entry.">
+<g id="a_Node000000"><a xlink:href="structAsyncFw_1_1LogStream_1_1Message.html" target="_top" xlink:title="Complete container representing an processed log entry.">
 <polygon fill="white" stroke="#666666" points="110.5,-32 0,-32 0,0 110.5,0 110.5,-32"/>
 <text xml:space="preserve" text-anchor="start" x="8" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::LogStream</text>
 <text xml:space="preserve" text-anchor="middle" x="55.25" y="-6.5" font-family="Helvetica,sans-Serif" font-size="10.00">::Message</text>

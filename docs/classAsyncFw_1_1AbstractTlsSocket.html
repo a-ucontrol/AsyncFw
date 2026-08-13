@@ -680,7 +680,7 @@ std::any&#160;</td><td class="memItemRight"><b>data_</b></td></tr>
 </div><div class="memdoc">
 
 <p>Core internal event handler reacting to raw descriptor readiness signals. </p>
-<p>Orchestrates the non-blocking state machine for SSL_accept() and SSL_connect() loops. Automatically intercepts peer certificates and flags errors if handshakes time out or crash. </p>
+<p>Orchestrates the non-blocking state machine for SSL_accept() and SSL_connect() loops. Automatically intercepts peer certificates and flags errors if handshakes timeout or crash. </p>
 
 <p>Reimplemented from <a class="el" href="classAsyncFw_1_1AbstractSocket.html#aac7ad6c4f9815d9b8b0817d38864d06d">AsyncFw::AbstractSocket</a>.</p>
 
@@ -814,7 +814,7 @@ std::any&#160;</td><td class="memItemRight"><b>data_</b></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname"><a class="el" href="structAsyncFw_1_1AnyData.html#aa6d2c3488a44e34e25a0971b01a27b3c" title="Type-safely extracts and returns the stored data value.">data</a></td><td>Void pointer targeting the source serialization raw bytes memory buffer.</td></tr>
-    <tr><td class="paramname">size</td><td>Exact byte amount metrics to push into the socket layer. </td></tr>
+    <tr><td class="paramname">size</td><td>Exact number of bytes to push into the socket layer. </td></tr>
   </table>
   </dd>
 </dl>

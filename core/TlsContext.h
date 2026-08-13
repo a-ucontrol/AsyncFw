@@ -116,7 +116,7 @@ public:
   @param hostname The exact domain name or host IP string expected from the remote peer. */
   void setVerifyName(const std::string &) const;
   /** @brief Configures specific handshake validation bypass flags.
-  @warning This method modifies the global internal verification registry. Calling it concurrently or post-initialization will corrupt the routing state. */
+  @warning This method modifies the global internal verification registry. Calling it concurrently or post-initialization will corrupt the verification state. */
   void setIgnoreErrors(IgnoreErrors) const;
 
 protected:
