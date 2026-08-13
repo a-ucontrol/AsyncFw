@@ -70,7 +70,7 @@ public:
   /** @brief Signal / Connector triggered when the socket state changes. */
   FunctionConnector<AbstractSocket::State>::Policy<AbstractFunctionConnector::DirectOnly>::Protected<DataArraySocket> stateChanged;
   /** @brief Signal / Connector triggered when a complete data array is successfully received and parsed.
-  @note @note Passes a pointer to the DataArray and its ID. The receiver is responsible for freeing the buffer by calling releaseBuffer(). */
+  @note Passes a pointer to the DataArray and its ID. The receiver is responsible for freeing the buffer by calling releaseBuffer(). */
   FunctionConnector<const DataArray *, uint32_t>::Policy<AbstractFunctionConnector::DirectOnly>::Protected<DataArraySocket> received;
 
 protected:
