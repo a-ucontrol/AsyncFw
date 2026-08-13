@@ -29,8 +29,8 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #endif
 
 namespace AsyncFw {
-/** @class MainThread MainThread.h <AsyncFw/MainThread>. @brief A static control interface managing the application's primary execution thread (Main Thread).
-@brief MainThread initializes the master Event Loop on the application's boot thread (typically main()). It handles core process-wide shutdown interceptors and manages the primary event loop execution frame.
+/** @class MainThread MainThread.h <AsyncFw/MainThread> @brief A static control interface managing the application's primary execution thread (Main Thread).
+@details MainThread initializes the master event loop on the application's boot thread (typically main()). It handles core process-wide shutdown interceptors and manages the primary event loop execution frame.
 @brief Example: @snippet snippet.dox MainThread */
 
 class MainThread : private Thread
@@ -40,12 +40,13 @@ class MainThread : private Thread
 #endif
 {
 public:
+  /** @brief Sets a custom task to be executed when the main event loop exits. */
   template <typename F>
   static void setExitTask(F function) {
     if (mt_.exitTask && !mt_.invoke([_p = mt_.exitTask]() { delete _p; })) delete mt_.exitTask;
     mt_.exitTask = new Invocable<void()>::Function(std::forward<F>(function));
   }
-  /** @brief Starts the master application event loop on the current thread. This call is blocking. It stalls the main() function execution and continuously dispatches incoming tasks, socket I/O interrupts, and timers until exit() or quit() is requested. @return The application exit status code (typically 0 on clean exit). */
+  /** @brief Starts the master application event loop on the current thread. This call is blocking. @return The application exit status code. */
   static int exec() {
 #ifndef USE_QAPPLICATION
     if (mt_.running()) return -1;
@@ -57,7 +58,7 @@ public:
     return qApp->exec();
 #endif
   }
-  /** @brief Signals the master event loop to terminate gracefully. */
+  /** @brief Signals the master event loop to terminate gracefully by executing the exit task. This call is safe to use from a UNIX signal handler. */
   static void exit() {
 #ifdef EXIT_ON_UNIX_SIGNAL
     if (mt_.eventfd_ >= 0) eventfd_write(mt_.eventfd_, 1);
@@ -65,12 +66,12 @@ public:
     (*mt_.exitTask)();
 #endif
   }
-  /** @brief Signals the master event loop to terminate gracefully with a specific exit code. @param code The exit code returned by exec() to the operating system shell. */
+  /** @brief Signals the master event loop to terminate gracefully with a specific exit code. @param code The exit code returned by exec(). */
   static void exit(int code) {
     mt_.code_ = code;
     exit();
   }
-  /** @brief Alias wrapper for exit(0). Initiates an immediate graceful shutdown of the primary event loop. */
+  /** @brief Initiates an immediate graceful shutdown without executing the exit task. This call is NOT safe to use from a UNIX signal handler. */
   static void quit() {
 #ifndef USE_QAPPLICATION
     mt_.Thread::quit();
@@ -199,13 +200,10 @@ private:
   bool invokeTask(AbstractTask *task) const override {
     LockGuard lock = lockGuard();
     if (state_ == 2) return false;
-    QMetaObject::invokeMethod(
-        const_cast<MainThread *>(this),
-        [task]() {
-          (*task)();
-          delete task;
-        },
-        Qt::QueuedConnection);
+    QMetaObject::invokeMethod(const_cast<MainThread *>(this), [task]() {
+      (*task)();
+      delete task;
+    }, Qt::QueuedConnection);
     return true;
   }
 

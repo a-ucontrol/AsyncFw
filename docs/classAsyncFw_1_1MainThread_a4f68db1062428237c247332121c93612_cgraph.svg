@@ -21,7 +21,7 @@
 <!-- Node2 -->
 <g id="Node000002" class="node">
 <title>Node2</title>
-<g id="a_Node000002"><a xlink:href="classAsyncFw_1_1MainThread.html#a76fed3a2c1cfdbdb67f2b209e6457657" target="_top" xlink:title="Signals the master event loop to terminate gracefully.">
+<g id="a_Node000002"><a xlink:href="classAsyncFw_1_1MainThread.html#a76fed3a2c1cfdbdb67f2b209e6457657" target="_top" xlink:title="Signals the master event loop to terminate gracefully by executing the exit task. This call is safe t...">
 <polygon fill="white" stroke="#666666" points="264.5,-32 150.25,-32 150.25,0 264.5,0 264.5,-32"/>
 <text xml:space="preserve" text-anchor="start" x="158.25" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::MainThread</text>
 <text xml:space="preserve" text-anchor="middle" x="207.38" y="-6.5" font-family="Helvetica,sans-Serif" font-size="10.00">::exit</text>
