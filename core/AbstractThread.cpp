@@ -808,12 +808,22 @@ void AbstractThread::exec() {
 
 void AbstractThread::processTasks() const {
   checkCurrentThread();
+#ifdef processTasks_USE_WAITER
+  Waiter _w;
+  AbstractTask *_t = new Invocable<void()>::Function([&_w]() { _w.complete(); });
+  {  //lock scope
+    LockGuard lock(private_.mutex);
+    private_.tasks.push(_t);
+  }
+  _w.wait();
+#else
   private_.process_tasks();
   {  //lock scope
     LockGuard lock(private_.mutex);
     std::swap(private_.process_tasks_, private_.tasks);
   }
   private_.process_tasks();
+#endif
 }
 
 void AbstractThread::Private::wake() {
