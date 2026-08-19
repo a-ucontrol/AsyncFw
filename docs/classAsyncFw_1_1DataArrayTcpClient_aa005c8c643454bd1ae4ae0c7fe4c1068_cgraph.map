@@ -1,21 +1,37 @@
 <map id="AsyncFw::DataArrayTcpClient::createSocket" name="AsyncFw::DataArrayTcpClient::createSocket">
-<area shape="rect" id="Node000001" title="Allocates a new socket instance and associates it with a specific worker thread." alt="" coords="5,105,203,148"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1DataArrayTcpClient.html#af5306849ea109fb9e5bfba5360cfe57a" title="Allocates and spawns a new worker thread within the client pool context." alt="" coords="254,39,451,81"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="185,102,258,85,253,87,187,107"/>
-<area shape="rect" id="Node000008" href="$classAsyncFw_1_1DataArrayAbstractTcp.html#a1d9557d91e39b12da701e6d371d71031" title="Locates the worker thread currently hosting the lowest number of socket contexts." alt="" coords="251,105,454,148"/>
-<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="203,124,238,126,233,127,204,129"/>
-<area shape="rect" id="Node000009" href="$classAsyncFw_1_1AbstractThread.html#a786474d037b50053f1a97af7b67e6069" title="Runs a function in a managed thread." alt="" coords="266,172,439,215"/>
-<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="186,146,258,167,253,168,186,151"/>
-<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractThreadPool.html#ac312e723c2e0fa3e4cc18e518853bdf2" title="Returns the identifier name of the thread pool." alt="" coords="502,5,701,48"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="451,44,489,41,484,43,452,49"/>
-<area shape="rect" id="Node000004" href="$classAsyncFw_1_1AbstractThread.html#afdaccb5da7d4bee5e9ff687f761bd21f" title="Create a managed thread and run exec()." alt="" coords="515,72,688,115"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="451,71,502,79,497,80,452,76"/>
-<area shape="rect" id="Node000005" href="$classAsyncFw_1_1AbstractThread.html#a1abe0f5c637dcc6af5aff00c5291bd4f" title="Run manage loop." alt="" coords="749,72,923,115"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="688,91,737,93,731,94,689,96"/>
-<area shape="rect" id="Node000006" href="$classAsyncFw_1_1AbstractThread.html#ad43b7b79e541bd1d6cce20f0231cc64d" title="This call from the thread when it finishes execution." alt="" coords="971,39,1144,81"/>
-<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="923,78,952,76,958,75,924,83"/>
-<area shape="rect" id="Node000007" href="$classAsyncFw_1_1AbstractThread.html#a9b9db94ad8c90eafe1ef34a076af8498" title="This is called from the thread when it starts executing." alt="" coords="971,105,1144,148"/>
-<area shape="poly" id="edge6_Node000005_Node000007" title=" " alt="" coords="923,104,958,111,952,111,923,109"/>
-<area shape="rect" id="Node000010" href="$classAsyncFw_1_1AbstractThread.html#abe96e6b2a1de041f0d25390a6b77e50a" title="Runs a task in a managed thread." alt="" coords="515,172,688,215"/>
-<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="440,191,502,193,497,193,440,196"/>
+<area shape="rect" id="Node000001" title="Allocates a new socket instance and associates it with a specific worker thread." alt="" coords="5,172,203,215"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1DataArrayTcpClient.html#af5306849ea109fb9e5bfba5360cfe57a" title="Allocates and spawns a new worker thread within the client pool context." alt="" coords="254,105,451,148"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="185,169,258,151,253,154,187,174"/>
+<area shape="rect" id="Node000014" href="$classAsyncFw_1_1DataArrayAbstractTcp.html#a1d9557d91e39b12da701e6d371d71031" title="Locates the worker thread currently hosting the lowest number of socket contexts." alt="" coords="251,172,454,215"/>
+<area shape="poly" id="edge17_Node000001_Node000014" title=" " alt="" coords="203,191,238,193,233,194,204,196"/>
+<area shape="rect" id="Node000015" href="$classAsyncFw_1_1AbstractThread.html#a786474d037b50053f1a97af7b67e6069" title="Runs a function in a managed thread." alt="" coords="266,239,439,281"/>
+<area shape="poly" id="edge18_Node000001_Node000015" title=" " alt="" coords="186,213,258,234,253,235,186,218"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractThreadPool.html#ac312e723c2e0fa3e4cc18e518853bdf2" title="Returns the identifier name of the thread pool." alt="" coords="502,72,701,115"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="451,111,489,108,484,109,452,116"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1AbstractThread.html#afdaccb5da7d4bee5e9ff687f761bd21f" title="Create a managed thread and run exec()." alt="" coords="515,139,688,181"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="451,137,502,146,497,147,452,143"/>
+<area shape="rect" id="Node000005" href="$classAsyncFw_1_1AbstractThread.html#a1abe0f5c637dcc6af5aff00c5291bd4f" title="Run manage loop." alt="" coords="749,139,923,181"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="688,157,737,160,731,160,689,163"/>
+<area shape="rect" id="Node000006" href="$classAsyncFw_1_1AbstractThread_1_1Waiter.html#af91079f02392dbcccd1ef5f99acb53f7" title="Signals task completion and initiates a safe exit sequence from the sub&#45;loop." alt="" coords="971,5,1144,48"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="861,136,909,97,969,58,978,56,983,54,972,62,912,102,863,141"/>
+<area shape="rect" id="Node000010" href="$classAsyncFw_1_1AbstractThread.html#ad43b7b79e541bd1d6cce20f0231cc64d" title="This call from the thread when it finishes execution." alt="" coords="971,72,1144,115"/>
+<area shape="poly" id="edge9_Node000005_Node000010" title=" " alt="" coords="908,136,967,120,972,119,910,141"/>
+<area shape="rect" id="Node000011" href="$classAsyncFw_1_1AbstractThread.html#a9b9db94ad8c90eafe1ef34a076af8498" title="This is called from the thread when it starts executing." alt="" coords="971,139,1144,181"/>
+<area shape="poly" id="edge10_Node000005_Node000011" title=" " alt="" coords="923,157,958,160,952,160,923,163"/>
+<area shape="rect" id="Node000012" href="$classAsyncFw_1_1AbstractThread_1_1Waiter.html#ad2a62fc1276d8be1986a7e77f6dfb437" title="Suspends the caller by running a controlled nested exec() loop until completed." alt="" coords="971,205,1144,248"/>
+<area shape="poly" id="edge11_Node000005_Node000012" title=" " alt="" coords="885,179,958,205,953,205,884,184"/>
+<area shape="rect" id="Node000007" href="$classAsyncFw_1_1AbstractThread.html#a8c9202c90ac101522f26c4260cb01b59" title="Constructs a thread." alt="" coords="1413,147,1587,189"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="1144,22,1252,31,1311,43,1366,62,1396,76,1424,95,1470,137,1465,135,1420,99,1393,81,1364,66,1309,48,1252,37,1145,28"/>
+<area shape="rect" id="Node000009" href="$classAsyncFw_1_1AbstractThread.html#afef57401f138e8de37eb8d817772d9ff" title="Tells the thread&#39;s exec() to exit." alt="" coords="1192,76,1365,119"/>
+<area shape="poly" id="edge8_Node000006_Node000009" title=" " alt="" coords="1127,46,1198,71,1192,71,1126,51"/>
+<area shape="rect" id="Node000008" href="$classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd" title="Returns name of managed thread." alt="" coords="1635,147,1808,189"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="1587,165,1622,168,1616,168,1587,171"/>
+<area shape="poly" id="edge15_Node000012_Node000005" title=" " alt="" coords="1006,205,937,184,938,179,1012,205"/>
+<area shape="poly" id="edge12_Node000012_Node000007" title=" " alt="" coords="1137,202,1192,191,1298,177,1400,172,1395,172,1298,183,1192,196,1138,207"/>
+<area shape="poly" id="edge16_Node000012_Node000009" title=" " alt="" coords="1122,202,1142,191,1167,170,1190,147,1223,128,1228,126,1194,151,1170,174,1146,196,1123,207"/>
+<area shape="rect" id="Node000013" href="$classAsyncFw_1_1AbstractThread.html#af33c5949edb374d673a7a9ac0c81ec32" title="Returns a pointer to the AsyncFw::AbstractThread that manages the currently executing thread." alt="" coords="1192,205,1365,248"/>
+<area shape="poly" id="edge13_Node000012_Node000013" title=" " alt="" coords="1144,224,1179,227,1174,227,1145,229"/>
+<area shape="poly" id="edge14_Node000013_Node000007" title=" " alt="" coords="1361,202,1400,194,1405,193,1362,207"/>
+<area shape="rect" id="Node000016" href="$classAsyncFw_1_1AbstractThread.html#abe96e6b2a1de041f0d25390a6b77e50a" title="Runs a task in a managed thread." alt="" coords="515,239,688,281"/>
+<area shape="poly" id="edge19_Node000015_Node000016" title=" " alt="" coords="440,257,502,260,497,260,440,263"/>
 </map>
