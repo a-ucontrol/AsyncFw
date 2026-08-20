@@ -221,14 +221,12 @@ private:
   #define lsTrace AsyncFw::LogStream(+AsyncFw::LogStream::Trace | AsyncFw::LogStream::Gray, __PRETTY_FUNCTION__, __FILE__, __LINE__, LS_DEFAULT_FLAGS).output
 #else
   #define lsTrace \
-    {}            \
     if constexpr (0) AsyncFw::LogStream().output
 #endif
 #ifndef LS_NO_DEBUG
   #define lsDebug AsyncFw::LogStream(+AsyncFw::LogStream::Debug | AsyncFw::LogStream::DarkYellow, __PRETTY_FUNCTION__, __FILE__, __LINE__, LS_DEFAULT_FLAGS).output
 #else
   #define lsDebug \
-    {}            \
     if constexpr (0) AsyncFw::LogStream().output
 #endif
 #ifndef LS_NO_INFO
@@ -240,42 +238,33 @@ private:
   #define lsInfoMagenta AsyncFw::LogStream(+AsyncFw::LogStream::Info | AsyncFw::LogStream::DarkMagenta, __PRETTY_FUNCTION__, __FILE__, __LINE__, LS_DEFAULT_FLAGS).output
 #else
   #define lsInfo \
-    {}           \
     if constexpr (0) AsyncFw::LogStream().output
   #define lsInfoRed \
-    {}              \
     if constexpr (0) AsyncFw::LogStream().output
   #define lsInfoGreen \
-    {}                \
     if constexpr (0) AsyncFw::LogStream().output
   #define lsInfoBlue \
-    {}               \
     if constexpr (0) AsyncFw::LogStream().output
   #define lsInfoCyan \
-    {}               \
     if constexpr (0) AsyncFw::LogStream().output
   #define lsInfoMagenta \
-    {}                  \
     if constexpr (0) AsyncFw::LogStream().output
 #endif
 #ifndef LS_NO_NOTICE
   #define lsNotice AsyncFw::LogStream(+AsyncFw::LogStream::Notice | AsyncFw::LogStream::Green, __PRETTY_FUNCTION__, __FILE__, __LINE__, LS_DEFAULT_FLAGS).output
 #else
   #define lsNotice \
-    {}             \
     if constexpr (0) AsyncFw::LogStream().output
 #endif
 #ifndef LS_NO_WARNING
   #define lsWarning AsyncFw::LogStream(+AsyncFw::LogStream::Warning | AsyncFw::LogStream::DarkBlue, __PRETTY_FUNCTION__, __FILE__, __LINE__, LS_DEFAULT_FLAGS).output
 #else
   #define lsWarning \
-    {}              \
     if constexpr (0) AsyncFw::LogStream().output
 #endif
 #ifndef LS_NO_ERROR
   #define lsError AsyncFw::LogStream(+AsyncFw::LogStream::Error | AsyncFw::LogStream::DarkRed, __PRETTY_FUNCTION__, __FILE__, __LINE__, LS_DEFAULT_FLAGS).output
 #else
   #define lsError \
-    {}            \
     if constexpr (0) AsyncFw::LogStream().output
 #endif
