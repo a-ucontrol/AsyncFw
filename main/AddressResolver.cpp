@@ -89,11 +89,9 @@ void AddressResolver::resolve(const std::string &name, Family family, int timeou
     static_cast<Private *>(data)->thread->removeTimer(static_cast<Private *>(data)->tid);
     static_cast<Private *>(data)->tid = -1;
     std::vector<std::string> _r;
-    if (!result) lsWarning("Result: {}", ares_strerror(status));
-    else {
+    if (result) {
       lsDebug("Result: {}, name: {}", ares_strerror(status), (result->name) ? result->name : "unknown");
-      struct ares_addrinfo_node *node;
-      for (node = result->nodes; node != nullptr; node = node->ai_next) {
+      for (struct ares_addrinfo_node *node = result->nodes; node != nullptr; node = node->ai_next) {
         std::string addr_buf;
         const void *ptr = nullptr;
         if (node->ai_family == AF_INET) {
@@ -111,7 +109,7 @@ void AddressResolver::resolve(const std::string &name, Family family, int timeou
         _r.push_back(addr_buf);
       }
       ares_freeaddrinfo(result);
-    }
+    } else lsWarning("Result: {}", ares_strerror(status));
     static_cast<Private *>(data)->ai->completed(status, _r);
   }, &private_);
 }
