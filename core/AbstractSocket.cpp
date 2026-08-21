@@ -46,15 +46,9 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #endif
 
 #ifdef EXTEND_SOCKET_TRACE
-  #define trace LogStream(+LogStream::Trace | LogStream::Black, __PRETTY_FUNCTION__, __FILE__, __LINE__, LS_DEFAULT_FLAGS | LOG_STREAM_CONSOLE_ONLY).output
-  #define warning_if(x) \
-    if (x) LogStream(+LogStream::Warning | LogStream::Blue, __PRETTY_FUNCTION__, __FILE__, __LINE__, LS_DEFAULT_FLAGS | LOG_STREAM_CONSOLE_ONLY).output()
-#else
-  #define trace() \
-    if constexpr (0) LogStream()
-  #define warning_if(x) \
-    if constexpr (0) LogStream()
+  #define ENABLE_EXTEND_TRACE
 #endif
+#include "extend_trace.hpp"
 
 #define SOCKET_CONNECTION_QUEUED 16
 //#define SOCKET_REUSEPORT
@@ -307,7 +301,7 @@ void AbstractSocket::read_fd(DataArray &da) {
 }
 
 int AbstractSocket::read(uint8_t *data, int size) {
-  warning_if(_s <= 0) << LogStream::Color::Red << "size for read is null";
+  warning_if(size <= 0) << LogStream::Color::Red << "size for read is null";
   int _s;
   if (!private_.rda_.empty()) {
     _s = private_.rda_.size();
@@ -332,7 +326,7 @@ int AbstractSocket::read(uint8_t *data, int size) {
 }
 
 DataArray AbstractSocket::read(int size) {
-  warning_if(_s <= 0) << LogStream::Color::Red << "size for read is null";
+  warning_if(size <= 0) << LogStream::Color::Red << "size for read is null";
   DataArray _da;
   if (size == std::numeric_limits<int>::max()) {
     if (!private_.rda_.empty()) {

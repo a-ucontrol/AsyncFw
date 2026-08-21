@@ -19,15 +19,9 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include "3rdparty/WebSocket/WebSocket/WebSocket.h"
 
 #ifdef EXTEND_HTTP_TRACE
-  #define trace LogStream(+LogStream::Trace | LogStream::Gray, __PRETTY_FUNCTION__, __FILE__, __LINE__, LS_DEFAULT_FLAGS | LOG_STREAM_CONSOLE_ONLY).output
-  #define warning_if(x) \
-    if (x) LogStream(+LogStream::Warning | LogStream::DarkBlue, __PRETTY_FUNCTION__, __FILE__, __LINE__, LS_DEFAULT_FLAGS | LOG_STREAM_CONSOLE_ONLY).output()
-#else
-  #define trace() \
-    if constexpr (0) LogStream()
-  #define warning_if(x) \
-    if constexpr (0) LogStream()
+  #define ENABLE_EXTEND_TRACE
 #endif
+#include "core/extend_trace.hpp"
 
 #define SOCKET_WRITE_SIZE 8192
 

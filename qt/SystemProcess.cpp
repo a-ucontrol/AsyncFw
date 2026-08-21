@@ -14,11 +14,9 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include "main/SystemProcess.h"
 
 #ifdef EXTEND_SYSTEMPROCESS_TRACE
-  #define trace lsTrace
-#else
-  #define trace(x) \
-    if constexpr (0) LogStream()
+  #define ENABLE_EXTEND_TRACE
 #endif
+#include "core/extend_trace.hpp"
 
 using namespace AsyncFw;
 

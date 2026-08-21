@@ -11,11 +11,9 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include "Log.h"
 
 #ifdef EXTEND_LOG_TRACE
-  #define trace LogStream(+LogStream::Trace | LogStream::Black, __PRETTY_FUNCTION__, __FILE__, __LINE__, LS_DEFAULT_FLAGS | LOG_STREAM_CONSOLE_ONLY).output
-#else
-  #define trace() \
-    if constexpr (0) LogStream()
+  #define ENABLE_EXTEND_TRACE
 #endif
+#include "core/extend_trace.hpp"
 
 #define LOG_CURRENT_TIME (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count())
 

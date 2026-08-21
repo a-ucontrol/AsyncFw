@@ -14,11 +14,9 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include "main/mdns-types.h"
 
 #ifdef EXTEND_MDNS_TRACE
-  #define trace LogStream(+LogStream::Trace | LogStream::Black, __PRETTY_FUNCTION__, __FILE__, __LINE__, LS_DEFAULT_FLAGS | LOG_STREAM_CONSOLE_ONLY).output
-#else
-  #define trace() \
-    if constexpr (0) LogStream()
+  #define ENABLE_EXTEND_TRACE
 #endif
+#include "core/extend_trace.hpp"
 
 #undef MDNS_STRING_FORMAT
 #define MDNS_STRING_FORMAT(s) std::string(s.str, s.length)

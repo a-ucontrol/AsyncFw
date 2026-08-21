@@ -16,15 +16,9 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 using namespace AsyncFw;
 
 #ifdef EXTEND_FILESYSTEMWATCHER_TRACE
-  #define trace LogStream(+LogStream::Trace | LogStream::Black, __PRETTY_FUNCTION__, __FILE__, __LINE__, LS_DEFAULT_FLAGS | LOG_STREAM_CONSOLE_ONLY).output
-  #define warning_if(x) \
-    if (x) LogStream(+LogStream::Warning | LogStream::Blue, __PRETTY_FUNCTION__, __FILE__, __LINE__, LS_DEFAULT_FLAGS | LOG_STREAM_CONSOLE_ONLY).output()
-#else
-  #define trace() \
-    if constexpr (0) LogStream()
-  #define warning_if(x) \
-    if constexpr (0) LogStream()
+  #define ENABLE_EXTEND_TRACE
 #endif
+#include "core/extend_trace.hpp"
 
 struct FileSystemWatcher::Private {
   struct WatchPath {
