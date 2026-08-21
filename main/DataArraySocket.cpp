@@ -38,8 +38,8 @@ struct DataArraySocket::Private {
   int timerId = 0;
   uint32_t readSize = 0;
   uint32_t readId = 0;
-  uint16_t hostPort_ = 0;
-  std::string hostAddress_;
+  uint16_t port = 0;
+  std::string address;
 
   mutable std::vector<DataArray *> receiveList;
   std::deque<DataArray> transmitList;
@@ -280,7 +280,7 @@ bool DataArraySocket::transmit(const DataArray &ba, uint32_t pi, bool wait) cons
   warning_if(ba.empty()) << "transmit array empty (" + peerString() + ')';
   if (static_cast<int>(ba.size()) > private_.maxWriteSize) {
     setErrorString("Big transmit size: " + std::to_string(ba.size()) + " (" + peerString() + ')');
-    if (!private_.hostPort_) const_cast<DataArraySocket *>(this)->disconnect();
+    if (!private_.port) const_cast<DataArraySocket *>(this)->disconnect();
     return false;
   }
   bool _r = false;
@@ -288,7 +288,7 @@ bool DataArraySocket::transmit(const DataArray &ba, uint32_t pi, bool wait) cons
     int buffers = private_.transmitList.size();
     if (buffers >= private_.maxWriteBuffers) {
       setErrorString("Many transmit buffers (" + peerString() + ')');
-      if (!private_.hostPort_) const_cast<DataArraySocket *>(this)->disconnect();
+      if (!private_.port) const_cast<DataArraySocket *>(this)->disconnect();
       return;
     }
     int size = 0;
@@ -296,7 +296,7 @@ bool DataArraySocket::transmit(const DataArray &ba, uint32_t pi, bool wait) cons
       size += t.size() - 8;
       if (size > private_.maxWriteSize) {
         setErrorString("Transmit overflow (" + peerString() + ')');
-        if (!private_.hostPort_) const_cast<DataArraySocket *>(this)->disconnect();
+        if (!private_.port) const_cast<DataArraySocket *>(this)->disconnect();
         return;
       }
     }
@@ -344,8 +344,8 @@ void DataArraySocket::releaseBuffer(const DataArray *da) const {
 }
 
 void DataArraySocket::initServerConnection() {
-  private_.hostAddress_ = peerAddress();
-  private_.hostPort_ = peerPort();
+  private_.address = peerAddress();
+  private_.port = peerPort();
   lsTrace();
   if (!contextEmpty()) {
     private_.sslConnection = 3;
@@ -355,17 +355,17 @@ void DataArraySocket::initServerConnection() {
 }
 
 void DataArraySocket::setHost(const std::string &address, uint16_t port) const {
-  private_.hostAddress_ = address;
-  private_.hostPort_ = port;
+  private_.address = address;
+  private_.port = port;
 }
 
-const std::string DataArraySocket::hostAddress() const { return private_.hostAddress_; }
+const std::string DataArraySocket::hostAddress() const { return private_.address; }
 
-uint16_t DataArraySocket::hostPort() const { return private_.hostPort_; }
+uint16_t DataArraySocket::hostPort() const { return private_.port; }
 
 bool DataArraySocket::connectToHost() {
   checkCurrentThread();
-  if (private_.hostAddress_.empty() || !private_.hostPort_) {
+  if (private_.address.empty() || !private_.port) {
     lsWarning("empty host address or port");
     return false;
   }
@@ -382,7 +382,7 @@ bool DataArraySocket::connectToHost() {
   }
 
   if (!contextEmpty()) private_.sslConnection = 3;
-  return AbstractTlsSocket::connect(private_.hostAddress_, private_.hostPort_);
+  return AbstractTlsSocket::connect(private_.address, private_.port);
 }
 
 bool DataArraySocket::connectToHost(int timeout) {
