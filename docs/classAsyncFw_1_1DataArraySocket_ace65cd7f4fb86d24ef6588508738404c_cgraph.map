@@ -1,0 +1,7 @@
+<map id="AsyncFw::DataArraySocket::setHost" name="AsyncFw::DataArraySocket::setHost">
+<area shape="rect" id="Node000001" title="Configures the remote host address and port for subsequent connection attempts." alt="" coords="5,39,190,81"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractSocket.html#a3dd69e137ca3cf50f90607c17bbdc312" title="Return local address bound to this socket interface." alt="" coords="238,5,412,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="190,44,225,41,220,42,191,49"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractSocket.html#aa29d033332c09e341d159b2189c774e9" title="Return local network port bound to this socket interface." alt="" coords="238,72,412,115"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="190,71,225,78,220,79,190,76"/>
+</map>

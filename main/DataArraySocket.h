@@ -9,7 +9,6 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 /** @file DataArraySocket.h @brief The DataArraySocket class. */
 
-#include <deque>
 #include "../core/AbstractTlsSocket.h"
 #include "../core/FunctionConnector.h"
 
@@ -26,36 +25,27 @@ public:
   /** @brief Asynchronously transmits a data array through the socket. @param da Reference to the DataArray being sent. @param id The packet identifier. @param wait If true and called from outside the socket thread, blocks the thread until completion. @return True if the data was successfully queued for transmission. */
   bool transmit(const DataArray &, uint32_t, bool = false) const;
   /** @brief Sets the timeout interval for connection establishment. @param timeout Timeout interval in milliseconds. */
-  void setConnectTimeout(int timeout) { waitForConnectTimeout_ = timeout; }
+  void setConnectTimeout(int timeout);
   /** @brief Sets the timeout interval for automatic reconnection upon disconnection. @param timeout Timeout interval in milliseconds. */
-  void setReconnectTimeout(int timeout) { reconnectTimeout_ = timeout; }
+  void setReconnectTimeout(int timeout);
   /** @brief Sets the data read operation timeout interval. @param timeout Maximum allowed data absence in milliseconds before dropping the connection. */
-  void setReadTimeout(int timeout) { readTimeout_ = timeout; }
+  void setReadTimeout(int timeout);
   /** @brief Sets the timeout interval for establishing a TLS handshake. @param timeout Timeout interval in milliseconds. */
-  void setWaitForEncryptionTimeout(int timeout) { waitForEncryptionTimeout_ = timeout; }
+  void setWaitForEncryptionTimeout(int timeout);
   /** @brief Sets the timeout interval for receiving a keep-alive response. @param timeout Timeout in milliseconds. Setting to 0 disables keep-alive monitoring. */
-  void setWaitKeepAliveResponseTimeout(int timeout) { ((waitKeepAliveResponseTimeout_ = timeout) > 0) ? waitTimerType |= 0x80 : waitTimerType &= ~0x80; }
+  void setWaitKeepAliveResponseTimeout(int timeout);
   /** @brief Configures limits for incoming (read) data buffers. @param buffers Maximum number of simultaneously stored read buffers. @param size Maximum size of a single read buffer in bytes. */
-  void setReadBuffers(int buffers, int size) {
-    maxReadBuffers = buffers;
-    maxReadSize = size;
-  }
+  void setReadBuffers(int buffers, int size);
   /** @brief Configures limits for outgoing (write) data buffers. @param buffers Maximum number of packet chunks allowed in the transmit queue. @param size Maximum cumulative size of the transmission data in bytes. */
-  void setWriteBuffers(int buffers, int size) {
-    maxWriteBuffers = buffers;
-    maxWriteSize = size;
-  }
+  void setWriteBuffers(int buffers, int size);
   /** @brief Initializes the socket for a server-side connection (handling an accepted client). */
   void initServerConnection();
   /** @brief Configures the remote host address and port for subsequent connection attempts. @param address IP address or domain name of the remote host. @param port Network port of the remote host. */
-  void setHost(const std::string &address, uint16_t port) const {
-    hostAddress_ = address;
-    hostPort_ = port;
-  }
+  void setHost(const std::string &address, uint16_t port) const;
   /** @brief Gets the remote host address previously assigned via setHost. @return The host address string. */
-  const std::string hostAddress() const { return hostAddress_; }
+  const std::string hostAddress() const;
   /** @brief Gets the remote host port previously assigned via setHost. @return The host network port. */
-  uint16_t hostPort() const { return hostPort_; }
+  uint16_t hostPort() const;
   /** @brief Forces the transmission of a keep-alive request (ping) to the remote peer. */
   void sendKeepAlive() { sendKeepAlive(true); }
   /** @brief Gets the current internal state of the socket. @return An AbstractSocket::State enum value. */
@@ -81,38 +71,15 @@ protected:
   using AbstractTlsSocket::connect;
 
 private:
-  int sslConnection;
-  DataArray *receiveByteArray;
-  uint8_t waitTimerType;
-  int maxReadBuffers;
-  int maxReadSize;
-  int maxWriteBuffers;
-  int maxWriteSize;
-  int waitForConnectTimeout_;
-  int reconnectTimeout_;
-  int readTimeout_;
-  int waitForEncryptionTimeout_;
-  int waitKeepAliveResponseTimeout_;
-  int timerId;
-  uint32_t readSize;
-  uint32_t readId;
-  mutable bool waitForTransmit;
-  mutable std::vector<DataArray *> receiveList;
-  mutable std::string address;
-  mutable uint16_t port;
-  mutable std::string hostAddress_;
-  mutable uint16_t hostPort_;
-  mutable std::deque<DataArray> transmitList;
   bool connectToHost();
-  bool connectToHost(int timeout);
-  void releaseBuffer_(const DataArray *) const;
-  void writeSocket();
+  bool connectToHost(int);
   void sendKeepAlive(bool);
-  std::string peerString() const;
-  void startTimer(int _ms);
+  void writeSocket();
+  void startTimer(int);
   void removeTimer();
   void timerEvent();
-  int tid_ = -1;
-  AsyncFw::AbstractThread::Waiter waiter_;
+  std::string peerString() const;
+  struct Private;
+  Private &private_;
 };
 }  // namespace AsyncFw

@@ -78,7 +78,7 @@
 <!-- Node6 -->
 <g id="Node000006" class="node">
 <title>Node6</title>
-<g id="a_Node000006"><a xlink:href="classAsyncFw_1_1DataArraySocket.html#a3f856b69e149a98d06ca62582fea708d" target="_top" xlink:title="Configures limits for incoming (read) data buffers.">
+<g id="a_Node000006"><a xlink:href="classAsyncFw_1_1DataArraySocket.html#a3778eda861efa9039c358a72c28b12d6" target="_top" xlink:title="Configures limits for incoming (read) data buffers.">
 <polygon fill="white" stroke="#666666" points="338.75,-232 200.5,-232 200.5,-200 338.75,-200 338.75,-232"/>
 <text xml:space="preserve" text-anchor="start" x="208.5" y="-218.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::DataArraySocket</text>
 <text xml:space="preserve" text-anchor="middle" x="269.62" y="-206.5" font-family="Helvetica,sans-Serif" font-size="10.00">::setReadBuffers</text>
@@ -97,7 +97,7 @@
 <!-- Node7 -->
 <g id="Node000007" class="node">
 <title>Node7</title>
-<g id="a_Node000007"><a xlink:href="classAsyncFw_1_1DataArraySocket.html#a740f58c6fb06a731c59f7b3e9dace41e" target="_top" xlink:title="Sets the data read operation timeout interval.">
+<g id="a_Node000007"><a xlink:href="classAsyncFw_1_1DataArraySocket.html#a72836b04feb74cca75bee3369d1970d7" target="_top" xlink:title="Sets the data read operation timeout interval.">
 <polygon fill="white" stroke="#666666" points="338.75,-182 200.5,-182 200.5,-150 338.75,-150 338.75,-182"/>
 <text xml:space="preserve" text-anchor="start" x="208.5" y="-168.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::DataArraySocket</text>
 <text xml:space="preserve" text-anchor="middle" x="269.62" y="-156.5" font-family="Helvetica,sans-Serif" font-size="10.00">::setReadTimeout</text>
@@ -116,7 +116,7 @@
 <!-- Node8 -->
 <g id="Node000008" class="node">
 <title>Node8</title>
-<g id="a_Node000008"><a xlink:href="classAsyncFw_1_1DataArraySocket.html#a7492a485097b835031af94924030e612" target="_top" xlink:title="Sets the timeout interval for establishing a TLS handshake.">
+<g id="a_Node000008"><a xlink:href="classAsyncFw_1_1DataArraySocket.html#acd4f5a119c8c2919bb1d3471f79c19bd" target="_top" xlink:title="Sets the timeout interval for establishing a TLS handshake.">
 <polygon fill="white" stroke="#666666" points="345.12,-132 194.12,-132 194.12,-100 345.12,-100 345.12,-132"/>
 <text xml:space="preserve" text-anchor="start" x="202.12" y="-118.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::DataArraySocket</text>
 <text xml:space="preserve" text-anchor="middle" x="269.62" y="-106.5" font-family="Helvetica,sans-Serif" font-size="10.00">::setWaitForEncryptionTimeout</text>
@@ -135,7 +135,7 @@
 <!-- Node9 -->
 <g id="Node000009" class="node">
 <title>Node9</title>
-<g id="a_Node000009"><a xlink:href="classAsyncFw_1_1DataArraySocket.html#a020287f09c337a869e9a6b52b15ea0f4" target="_top" xlink:title="Sets the timeout interval for receiving a keep&#45;alive response.">
+<g id="a_Node000009"><a xlink:href="classAsyncFw_1_1DataArraySocket.html#a69849ab5c5e5070d4352656897733618" target="_top" xlink:title="Sets the timeout interval for receiving a keep&#45;alive response.">
 <polygon fill="white" stroke="#666666" points="359,-82 180.25,-82 180.25,-50 359,-50 359,-82"/>
 <text xml:space="preserve" text-anchor="start" x="188.25" y="-68.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::DataArraySocket</text>
 <text xml:space="preserve" text-anchor="middle" x="269.62" y="-56.5" font-family="Helvetica,sans-Serif" font-size="10.00">::setWaitKeepAliveResponseTimeout</text>
@@ -154,7 +154,7 @@
 <!-- Node10 -->
 <g id="Node000010" class="node">
 <title>Node10</title>
-<g id="a_Node000010"><a xlink:href="classAsyncFw_1_1DataArraySocket.html#a63f570b3f48c75df1a306573e643b7f8" target="_top" xlink:title="Configures limits for outgoing (write) data buffers.">
+<g id="a_Node000010"><a xlink:href="classAsyncFw_1_1DataArraySocket.html#a6536b3ffa53f1461b8db3c0de6c4c5ba" target="_top" xlink:title="Configures limits for outgoing (write) data buffers.">
 <polygon fill="white" stroke="#666666" points="338.75,-32 200.5,-32 200.5,0 338.75,0 338.75,-32"/>
 <text xml:space="preserve" text-anchor="start" x="208.5" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::DataArraySocket</text>
 <text xml:space="preserve" text-anchor="middle" x="269.62" y="-6.5" font-family="Helvetica,sans-Serif" font-size="10.00">::setWriteBuffers</text>

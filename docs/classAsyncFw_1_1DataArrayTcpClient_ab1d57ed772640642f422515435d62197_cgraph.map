@@ -1,6 +1,10 @@
 <map id="AsyncFw::DataArrayTcpClient::connectToHost" name="AsyncFw::DataArrayTcpClient::connectToHost">
-<area shape="rect" id="Node000001" title="Explicitly connects a specific socket to a target host and port." alt="" coords="5,29,203,72"/>
-<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="59,28,57,19,65,10,80,5,104,3,130,5,146,13,141,14,128,10,104,8,81,10,68,15,62,21,64,29"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1DataArraySocket.html#ad3f44b667eb9f7b721e5216635ff67ee" title="Configures the remote host address and port for subsequent connection attempts." alt="" coords="251,29,435,72"/>
-<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="203,48,238,50,233,51,203,53"/>
+<area shape="rect" id="Node000001" title="Explicitly connects a specific socket to a target host and port." alt="" coords="5,39,203,81"/>
+<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="59,38,57,29,65,20,80,14,104,12,130,14,146,23,141,24,128,20,104,17,81,19,68,24,62,30,64,38"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1DataArraySocket.html#ace65cd7f4fb86d24ef6588508738404c" title="Configures the remote host address and port for subsequent connection attempts." alt="" coords="251,39,435,81"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="203,57,238,60,233,60,203,63"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractSocket.html#a3dd69e137ca3cf50f90607c17bbdc312" title="Return local address bound to this socket interface." alt="" coords="483,5,657,48"/>
+<area shape="poly" id="edge3_Node000002_Node000003" title=" " alt="" coords="435,44,470,41,465,42,436,49"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1AbstractSocket.html#aa29d033332c09e341d159b2189c774e9" title="Return local network port bound to this socket interface." alt="" coords="483,72,657,115"/>
+<area shape="poly" id="edge4_Node000002_Node000004" title=" " alt="" coords="436,71,470,78,465,78,435,76"/>
 </map>

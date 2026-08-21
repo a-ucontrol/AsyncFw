@@ -6,6 +6,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 */
 
 #include <algorithm>
+#include <deque>
 #include "core/DataArray.h"
 #include "core/TlsContext.h"
 #include "core/LogStream.h"
@@ -21,79 +22,101 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #define AsyncFw_THREAD this->thread()
 using namespace AsyncFw;
 
-DataArraySocket::DataArraySocket() : AbstractTlsSocket() {
-  sslConnection = 0;
-  receiveByteArray = nullptr;
-  waitTimerType = 0;
-  waitForConnectTimeout_ = 0;
-  reconnectTimeout_ = 0;
-  readTimeout_ = 0;
-  waitKeepAliveResponseTimeout_ = 0;
-  waitForEncryptionTimeout_ = 10000;
-  timerId = 0;
-  port = 0;
-  hostPort_ = 0;
-  readSize = 0;
-  readId = 0;
-  setReadBuffers(16, 1024 * 1024);
-  setWriteBuffers(16, 1024 * 1024);
-  trace();
+struct DataArraySocket::Private {
+  int sslConnection = 0;
+  DataArray *receiveByteArray = nullptr;
+  uint8_t waitTimerType = 0;
+  int maxReadBuffers = 16;
+  int maxReadSize = 1024 * 1024;
+  int maxWriteBuffers = 16;
+  int maxWriteSize = 1024 * 1024;
+  int waitForConnectTimeout = 0;
+  int reconnectTimeout = 0;
+  int readTimeout = 0;
+  int waitForEncryptionTimeout = 10000;
+  int waitKeepAliveResponseTimeout = 0;
+  int timerId = 0;
+  uint32_t readSize = 0;
+  uint32_t readId = 0;
+  uint16_t hostPort_ = 0;
+  std::string hostAddress_;
+
+  mutable std::vector<DataArray *> receiveList;
+  std::deque<DataArray> transmitList;
+  int tid_ = -1;
+  AsyncFw::AbstractThread::Waiter waiter;
+
+  void releaseBuffer(const DataArray *) const;
+};
+
+void DataArraySocket::Private::releaseBuffer(const DataArray *da) const {
+  for (std::size_t i = 0; i != receiveList.size(); ++i) {
+    if (receiveList[i] == da) {
+      receiveList.erase(receiveList.begin() + i);
+      delete da;
+      return;
+    }
+  }
+  lsWarning("tried clear missing buffer");
 }
+
+DataArraySocket::DataArraySocket() : AbstractTlsSocket(), private_(*new Private()) { trace(); }
 
 DataArraySocket::~DataArraySocket() {
   if (thread_) removeTimer();
-  while (!receiveList.empty()) releaseBuffer_(receiveList.back());
+  while (!private_.receiveList.empty()) private_.releaseBuffer(private_.receiveList.back());
+  delete &private_;
   trace();
 }
 
 void DataArraySocket::startTimer(int _ms) {
-  if (tid_ < 0) tid_ = thread_->appendTimerTask(_ms, [this]() { timerEvent(); });
-  else thread_->modifyTimer(tid_, _ms);
+  if (private_.tid_ < 0) private_.tid_ = thread_->appendTimerTask(_ms, [this]() { timerEvent(); });
+  else thread_->modifyTimer(private_.tid_, _ms);
 }
 
 void DataArraySocket::removeTimer() {
-  if (tid_ >= 0) {
-    thread_->removeTimer(tid_);
-    tid_ = -1;
+  if (private_.tid_ >= 0) {
+    thread_->removeTimer(private_.tid_);
+    private_.tid_ = -1;
   }
 }
 
 void DataArraySocket::stateEvent() {
   trace() << static_cast<int>(state_);
   if (state_ == State::Connected) {
-    if (waitTimerType & 0x04) {
-      waitTimerType &= ~0x04;
-      if (sslConnection) {
-        startTimer(waitForEncryptionTimeout_);
-        lsDebug() << "client wait for encrypted" << waitForEncryptionTimeout_;
+    if (private_.waitTimerType & 0x04) {
+      private_.waitTimerType &= ~0x04;
+      if (private_.sslConnection) {
+        startTimer(private_.waitForEncryptionTimeout);
+        lsDebug() << "client wait for encrypted" << private_.waitForEncryptionTimeout;
         return;
       }
     }
     return;
   }
 
-  if (waiter_.waiting()) waiter_.complete();
+  if (private_.waiter.waiting()) private_.waiter.complete();
 
   if (state_ == AbstractSocket::State::Active) {
-    if (sslConnection) sslConnection = 4;
-    waitTimerType &= ~0x08;
-    if (readTimeout_ > 0) startTimer(readTimeout_);
-    else if (reconnectTimeout_ > 0) { removeTimer(); }
+    if (private_.sslConnection) private_.sslConnection = 4;
+    private_.waitTimerType &= ~0x08;
+    if (private_.readTimeout > 0) startTimer(private_.readTimeout);
+    else if (private_.reconnectTimeout > 0) { removeTimer(); }
   } else if (state_ == AbstractSocket::State::Unconnected) {
-    if (!(waitTimerType & 0x08)) {
-      if (reconnectTimeout_ > 0) startTimer(reconnectTimeout_);
-      else if (readTimeout_ > 0) { removeTimer(); }
+    if (!(private_.waitTimerType & 0x08)) {
+      if (private_.reconnectTimeout > 0) startTimer(private_.reconnectTimeout);
+      else if (private_.readTimeout > 0) { removeTimer(); }
     }
-    readSize = 0;
-    std::vector<DataArray *>::iterator it = std::find(receiveList.begin(), receiveList.end(), receiveByteArray);
-    if (receiveByteArray && it != receiveList.end()) {
-      receiveList.erase(it);
-      receiveByteArray = nullptr;
+    private_.readSize = 0;
+    std::vector<DataArray *>::iterator it = std::find(private_.receiveList.begin(), private_.receiveList.end(), private_.receiveByteArray);
+    if (private_.receiveByteArray && it != private_.receiveList.end()) {
+      private_.receiveList.erase(it);
+      private_.receiveByteArray = nullptr;
       lsWarning("disconnected while receive");
     }
     lsTrace() << LogStream::Blue << "socket unconnected (" + peerString() + ')';
   } else if (state_ == AbstractSocket::State::Connecting) {
-    if (!receiveList.empty()) lsWarning("receive buffer not empty during connect");
+    if (!private_.receiveList.empty()) lsWarning("receive buffer not empty during connect");
   }
 
   stateChanged(state_);
@@ -102,19 +125,19 @@ void DataArraySocket::stateEvent() {
 void DataArraySocket::timerEvent() {
   removeTimer();
   if (state_ == AbstractSocket::State::Active) {
-    if (sslConnection != 3 && waitTimerType == 0x80 && readTimeout_ > 0) {
+    if (private_.sslConnection != 3 && private_.waitTimerType == 0x80 && private_.readTimeout > 0) {
       sendKeepAlive(true);
     } else {
       std::string e;
-      if (sslConnection == 3) e = "Error wait encryption";
-      else e = (waitTimerType & 0x02) ? "Connection lost" : "Read timeout";
+      if (private_.sslConnection == 3) e = "Error wait encryption";
+      else e = (private_.waitTimerType & 0x02) ? "Connection lost" : "Read timeout";
       e += " (" + peerString() + ')';
       setErrorString(e);
-      waitTimerType |= 0x01;
+      private_.waitTimerType |= 0x01;
       disconnect();
     }
   } else if (state_ == AbstractSocket::State::Unconnected) {
-    if (reconnectTimeout_ > 0) connectToHost();
+    if (private_.reconnectTimeout > 0) connectToHost();
   } else {
     std::string e;
     if (state_ == State::Connecting) {
@@ -126,9 +149,9 @@ void DataArraySocket::timerEvent() {
       lsError("unknown timeout (" + peerString() + ')');
     }
 
-    if (waiter_.waiting()) waiter_.complete();
+    if (private_.waiter.waiting()) private_.waiter.complete();
 
-    waitTimerType |= 0x01;
+    private_.waitTimerType |= 0x01;
     disconnect();
     e += " (" + peerString() + ')';
     setErrorString(e);
@@ -143,8 +166,8 @@ void DataArraySocket::sendKeepAlive(bool request) {
   uint64_t ka = 0xffffffff00000000;
   write(reinterpret_cast<const uint8_t *>(&ka), sizeof(ka));
   if (request) {
-    waitTimerType |= 0x02;
-    startTimer(waitKeepAliveResponseTimeout_);
+    private_.waitTimerType |= 0x02;
+    startTimer(private_.waitKeepAliveResponseTimeout);
   }
   trace() << "transmit keep alive " + std::string(request ? "request" : "answer") + " (" + peerString() + ')';
 }
@@ -158,32 +181,32 @@ void DataArraySocket::readEvent() {
   }
   for (;;) {
     if (!pendingRead()) break;
-    bool start = (readSize == 0);
+    bool start = (private_.readSize == 0);
     if (start) {
       if (pendingRead() < static_cast<int>(sizeof(uint64_t))) return;
-      read(reinterpret_cast<uint8_t *>(&readSize), sizeof(uint32_t));
-      read(reinterpret_cast<uint8_t *>(&readId), sizeof(uint32_t));
-      if (readSize == 0) {
-        if (readId == 0xffffffff) {
+      read(reinterpret_cast<uint8_t *>(&private_.readSize), sizeof(uint32_t));
+      read(reinterpret_cast<uint8_t *>(&private_.readId), sizeof(uint32_t));
+      if (private_.readSize == 0) {
+        if (private_.readId == 0xffffffff) {
           trace() << "receive keep alive (" + peerString() + ')';
-          if (!(waitTimerType & 0x02)) sendKeepAlive(false);
-          else waitTimerType &= ~0x02;
+          if (!(private_.waitTimerType & 0x02)) sendKeepAlive(false);
+          else private_.waitTimerType &= ~0x02;
           continue;
         }
-        warning_if(readId != 0xffffffff) << LogStream::Color::Red << "read array empty (" + peerString() + ')';
+        warning_if(private_.readId != 0xffffffff) << LogStream::Color::Red << "read array empty (" + peerString() + ')';
       }
       bool e = false;
-      if (readSize > static_cast<uint32_t>(maxReadSize)) {
-        setErrorString("Big received size: " + std::to_string(readSize) + "  (" + peerString() + ')');
+      if (private_.readSize > static_cast<uint32_t>(private_.maxReadSize)) {
+        setErrorString("Big received size: " + std::to_string(private_.readSize) + "  (" + peerString() + ')');
         e = true;
-      } else if (static_cast<int>(receiveList.size()) >= maxReadBuffers) {
+      } else if (static_cast<int>(private_.receiveList.size()) >= private_.maxReadBuffers) {
         setErrorString("Many receive buffers (" + peerString() + ')');
         e = true;
       } else {
-        uint32_t size = readSize;
-        for (const DataArray *ba : receiveList) {
+        uint32_t size = private_.readSize;
+        for (const DataArray *ba : private_.receiveList) {
           size += static_cast<uint32_t>(ba->size());
-          if (size > static_cast<uint32_t>(maxReadSize)) {
+          if (size > static_cast<uint32_t>(private_.maxReadSize)) {
             setErrorString("Receive overflow (" + peerString() + ')');
             e = true;
             break;
@@ -191,25 +214,25 @@ void DataArraySocket::readEvent() {
         }
       }
       if (e) {
-        readSize = 0;
+        private_.readSize = 0;
         disconnect();
         return;
       }
-      receiveByteArray = new DataArray;
-      receiveList.emplace_back(receiveByteArray);
+      private_.receiveByteArray = new DataArray;
+      private_.receiveList.emplace_back(private_.receiveByteArray);
     }
-    if (readSize > 0) {
+    if (private_.readSize > 0) {
       if (!pendingRead()) break;
-      DataArray ba = read(readSize - static_cast<uint32_t>(receiveByteArray->size()));
-      receiveByteArray->insert(receiveByteArray->end(), ba.begin(), ba.end());
+      DataArray ba = read(private_.readSize - static_cast<uint32_t>(private_.receiveByteArray->size()));
+      private_.receiveByteArray->insert(private_.receiveByteArray->end(), ba.begin(), ba.end());
     }
-    if (static_cast<uint32_t>(receiveByteArray->size()) == readSize) {
-      readSize = 0;
-      received(receiveByteArray, readId);
-      receiveByteArray = nullptr;
+    if (static_cast<uint32_t>(private_.receiveByteArray->size()) == private_.readSize) {
+      private_.readSize = 0;
+      received(private_.receiveByteArray, private_.readId);
+      private_.receiveByteArray = nullptr;
     }
   }
-  if (readTimeout_ > 0) startTimer(readTimeout_);
+  if (private_.readTimeout > 0) startTimer(private_.readTimeout);
 }
 
 void DataArraySocket::disconnect() {
@@ -217,25 +240,25 @@ void DataArraySocket::disconnect() {
     lsWarning("tried disconnect closing or unconnected socket");
     return;
   }
-  if (waitTimerType & 0x08) return;
-  waitTimerType |= 0x08;
-  if (!(waitTimerType & 0x01)) removeTimer();
-  else { waitTimerType &= ~0x01; }
+  if (private_.waitTimerType & 0x08) return;
+  private_.waitTimerType |= 0x08;
+  if (!(private_.waitTimerType & 0x01)) removeTimer();
+  else { private_.waitTimerType &= ~0x01; }
   AbstractTlsSocket::disconnect();
 }
 
 void DataArraySocket::writeSocket() {
   for (;;) {
     if (state_ != AbstractSocket::State::Active) {
-      transmitList = {};
+      private_.transmitList = {};
       lsWarning("tried write to unconnected socket");
       return;
     }
-    if (transmitList.empty()) { break; }
-    write(transmitList.front());
-    transmitList.pop_front();
+    if (private_.transmitList.empty()) { break; }
+    write(private_.transmitList.front());
+    private_.transmitList.pop_front();
   }
-  if (pendingWrite() > maxWriteSize) {
+  if (pendingWrite() > private_.maxWriteSize) {
     setErrorString("Write buffer overflow (" + peerString() + ')');
     disconnect();
   }
@@ -255,25 +278,25 @@ bool DataArraySocket::transmit(const DataArray &ba, uint32_t pi, bool wait) cons
     return false;
   }
   warning_if(ba.empty()) << "transmit array empty (" + peerString() + ')';
-  if (static_cast<int>(ba.size()) > maxWriteSize) {
+  if (static_cast<int>(ba.size()) > private_.maxWriteSize) {
     setErrorString("Big transmit size: " + std::to_string(ba.size()) + " (" + peerString() + ')');
-    if (!hostPort_) const_cast<DataArraySocket *>(this)->disconnect();
+    if (!private_.hostPort_) const_cast<DataArraySocket *>(this)->disconnect();
     return false;
   }
   bool _r = false;
   thread_->invoke([this, &_r, &ba, pi, wait]() {
-    int buffers = transmitList.size();
-    if (buffers >= maxWriteBuffers) {
+    int buffers = private_.transmitList.size();
+    if (buffers >= private_.maxWriteBuffers) {
       setErrorString("Many transmit buffers (" + peerString() + ')');
-      if (!hostPort_) const_cast<DataArraySocket *>(this)->disconnect();
+      if (!private_.hostPort_) const_cast<DataArraySocket *>(this)->disconnect();
       return;
     }
     int size = 0;
-    for (const DataArray &t : transmitList) {
+    for (const DataArray &t : private_.transmitList) {
       size += t.size() - 8;
-      if (size > maxWriteSize) {
+      if (size > private_.maxWriteSize) {
         setErrorString("Transmit overflow (" + peerString() + ')');
-        if (!hostPort_) const_cast<DataArraySocket *>(this)->disconnect();
+        if (!private_.hostPort_) const_cast<DataArraySocket *>(this)->disconnect();
         return;
       }
     }
@@ -283,7 +306,7 @@ bool DataArraySocket::transmit(const DataArray &ba, uint32_t pi, bool wait) cons
     _v |= static_cast<uint32_t>(ba.size());
     DataArray _da(((uint8_t *)&_v), ((uint8_t *)&_v) + 8);
     _da += ba;
-    transmitList.push_back(_da);
+    private_.transmitList.push_back(_da);
     if (buffers == 0) thread_->invoke([this]() { const_cast<DataArraySocket *>(this)->writeSocket(); }, wait);
     else {
       if (wait) {
@@ -296,35 +319,53 @@ bool DataArraySocket::transmit(const DataArray &ba, uint32_t pi, bool wait) cons
   return _r;
 }
 
-void DataArraySocket::releaseBuffer(const DataArray *da) const {
-  if (thread_) thread_->invoke([this, da]() { releaseBuffer_(da); });
+void DataArraySocket::setConnectTimeout(int timeout) { private_.waitForConnectTimeout = timeout; }
+
+void DataArraySocket::setReconnectTimeout(int timeout) { private_.reconnectTimeout = timeout; }
+
+void DataArraySocket::setReadTimeout(int timeout) { private_.readTimeout = timeout; }
+
+void DataArraySocket::setWaitForEncryptionTimeout(int timeout) { private_.waitForEncryptionTimeout = timeout; }
+
+void DataArraySocket::setWaitKeepAliveResponseTimeout(int timeout) { ((private_.waitKeepAliveResponseTimeout = timeout) > 0) ? private_.waitTimerType |= 0x80 : private_.waitTimerType &= ~0x80; }
+
+void DataArraySocket::setReadBuffers(int buffers, int size) {
+  private_.maxReadBuffers = buffers;
+  private_.maxReadSize = size;
 }
 
-void DataArraySocket::releaseBuffer_(const DataArray *da) const {
-  for (std::size_t i = 0; i != receiveList.size(); ++i) {
-    if (receiveList[i] == da) {
-      receiveList.erase(receiveList.begin() + i);
-      delete da;
-      return;
-    }
-  }
-  lsWarning("tried clear missing buffer");
+void DataArraySocket::setWriteBuffers(int buffers, int size) {
+  private_.maxWriteBuffers = buffers;
+  private_.maxWriteSize = size;
+}
+
+void DataArraySocket::releaseBuffer(const DataArray *da) const {
+  if (thread_) thread_->invoke([this, da]() { private_.releaseBuffer(da); });
 }
 
 void DataArraySocket::initServerConnection() {
-  address = peerAddress();
-  port = peerPort();
+  private_.hostAddress_ = peerAddress();
+  private_.hostPort_ = peerPort();
   lsTrace();
   if (!contextEmpty()) {
-    sslConnection = 3;
-    startTimer(waitForEncryptionTimeout_);
-    lsDebug() << "server wait for encrypted:" << waitForEncryptionTimeout_;
+    private_.sslConnection = 3;
+    startTimer(private_.waitForEncryptionTimeout);
+    lsDebug() << "server wait for encrypted:" << private_.waitForEncryptionTimeout;
   }
 }
 
+void DataArraySocket::setHost(const std::string &address, uint16_t port) const {
+  private_.hostAddress_ = address;
+  private_.hostPort_ = port;
+}
+
+const std::string DataArraySocket::hostAddress() const { return private_.hostAddress_; }
+
+uint16_t DataArraySocket::hostPort() const { return private_.hostPort_; }
+
 bool DataArraySocket::connectToHost() {
   checkCurrentThread();
-  if (hostAddress_.empty() || !hostPort_) {
+  if (private_.hostAddress_.empty() || !private_.hostPort_) {
     lsWarning("empty host address or port");
     return false;
   }
@@ -332,25 +373,20 @@ bool DataArraySocket::connectToHost() {
     lsWarning("trying connect while not unconnected state");
     return false;
   }
-  waitTimerType &= 0x84;
+  private_.waitTimerType &= 0x84;
 
-  if (!(waitTimerType & 0x04)) {
-    waitTimerType |= 0x04;
-    if (waitForConnectTimeout_ > 0) startTimer(waitForConnectTimeout_);
+  if (!(private_.waitTimerType & 0x04)) {
+    private_.waitTimerType |= 0x04;
+    if (private_.waitForConnectTimeout > 0) startTimer(private_.waitForConnectTimeout);
     else { removeTimer(); }
   }
 
-  address = hostAddress_;
-  port = hostPort_;
-
-  lsTrace() << address << port;
-
-  if (!contextEmpty()) sslConnection = 3;
-  return AbstractTlsSocket::connect(address, port);
+  if (!contextEmpty()) private_.sslConnection = 3;
+  return AbstractTlsSocket::connect(private_.hostAddress_, private_.hostPort_);
 }
 
 bool DataArraySocket::connectToHost(int timeout) {
-  if (waiter_.waiting()) {
+  if (private_.waiter.waiting()) {
     lsError() << "connect in process";
     return false;
   }
@@ -361,12 +397,12 @@ bool DataArraySocket::connectToHost(int timeout) {
   }
 
   thread_->invoke([this, timeout]() {
-    waitTimerType |= 0x04;
+    private_.waitTimerType |= 0x04;
     startTimer(timeout);
     connectToHost();
   }, true);
 
-  waiter_.wait();
+  private_.waiter.wait();
 
   lsTrace();
   return true;
@@ -378,5 +414,5 @@ bool DataArraySocket::connect(const std::string &address, uint16_t port) {
 }
 
 namespace AsyncFw {
-LogStream &operator<<(LogStream &log, const DataArraySocket &s) { return (log << *static_cast<const AbstractTlsSocket *>(&s)) << '-' << s.readTimeout_ << s.waitKeepAliveResponseTimeout_; }
+LogStream &operator<<(LogStream &log, const DataArraySocket &s) { return (log << *static_cast<const AbstractTlsSocket *>(&s)) << '-' << s.private_.readTimeout << s.private_.waitKeepAliveResponseTimeout; }
 }  // namespace AsyncFw

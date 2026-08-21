@@ -1,5 +1,11 @@
 <map id="AsyncFw::DataArraySocket::connect" name="AsyncFw::DataArraySocket::connect">
-<area shape="rect" id="Node000001" title="Initiates a connection to the specified remote host and port." alt="" coords="5,5,190,48"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1DataArraySocket.html#ad3f44b667eb9f7b721e5216635ff67ee" title="Configures the remote host address and port for subsequent connection attempts." alt="" coords="238,5,422,48"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="190,24,224,26,219,27,190,29"/>
+<area shape="rect" id="Node000001" title="Initiates a connection to the specified remote host and port." alt="" coords="5,51,190,93"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractSocket.html#a3dd69e137ca3cf50f90607c17bbdc312" title="Return local address bound to this socket interface." alt="" coords="470,5,644,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="178,47,237,36,349,26,457,25,452,26,350,31,238,41,179,53"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractSocket.html#aa29d033332c09e341d159b2189c774e9" title="Return local network port bound to this socket interface." alt="" coords="470,84,644,127"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="176,91,238,103,350,110,457,111,452,111,349,115,237,108,176,97"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1DataArraySocket.html#ace65cd7f4fb86d24ef6588508738404c" title="Configures the remote host address and port for subsequent connection attempts." alt="" coords="238,51,422,93"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="190,69,224,72,219,72,191,75"/>
+<area shape="poly" id="edge4_Node000004_Node000002" title=" " alt="" coords="422,51,452,48,457,47,423,56"/>
+<area shape="poly" id="edge5_Node000004_Node000003" title=" " alt="" coords="423,83,457,90,452,90,422,88"/>
 </map>
