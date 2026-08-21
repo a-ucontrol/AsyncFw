@@ -241,9 +241,12 @@ void DataArraySocket::disconnect() {
     return;
   }
   if (private_.waitTimerType & 0x08) return;
-  private_.waitTimerType |= 0x08;
-  if (!(private_.waitTimerType & 0x01)) removeTimer();
-  else { private_.waitTimerType &= ~0x01; }
+  if (!(private_.waitTimerType & 0x01)) {
+    private_.waitTimerType |= 0x08;
+    removeTimer();
+  } else {
+    private_.waitTimerType &= ~0x01;
+  }
   AbstractTlsSocket::disconnect();
 }
 
