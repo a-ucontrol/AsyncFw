@@ -154,7 +154,7 @@ void AbstractSocket::changeDescriptor(int _fd) {
 }
 
 int AbstractSocket::read_available_fd() const {
-  if (private_.flags_ &= 0x20) return private_.rs_;
+  if (private_.flags_ & 0x20) return private_.rs_;
 #ifdef _WIN32
   u_long r;
   if (ioctlsocket(fd_, FIONREAD, &r) < 0) {
