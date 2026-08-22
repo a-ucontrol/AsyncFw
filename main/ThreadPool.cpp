@@ -15,13 +15,13 @@ struct AbstractThreadPool::Private {
   static inline struct List : public std::vector<AbstractThreadPool *> {
     friend AbstractThreadPool;
     ~List();
-  } list_ __attribute__((init_priority(AsyncFw_STATIC_INIT_PRIORITY + 2)));
+  } list __attribute__((init_priority(AsyncFw_STATIC_INIT_PRIORITY + 2)));
 
   struct Compare {
     bool operator()(const AbstractThread *t1, const AbstractThread *t2) const { return t1 < t2; }
     bool operator()(const AbstractThreadPool *p1, const AbstractThreadPool *p2) const { return p1 < p2; }
   };
-  std::string name_;
+  std::string name;
 };
 
 AbstractThreadPool::Private::List::~List() {
@@ -35,14 +35,14 @@ AbstractThreadPool::Private::List::~List() {
   lsDebug() << LogStream::Color::DarkMagenta << size();
 }
 
-std::vector<AbstractThreadPool *> AbstractThreadPool::pools() { return Private::list_; }
+std::vector<AbstractThreadPool *> AbstractThreadPool::pools() { return Private::list; }
 
 AbstractThreadPool::AbstractThreadPool(const std::string &name) : private_(*new Private) {
   thread_ = AbstractThread::current();
-  private_.name_ = name;
-  std::vector<AbstractThreadPool *>::iterator it = std::lower_bound(Private::list_.begin(), Private::list_.end(), this, Private::Compare());
-  Private::list_.insert(it, this);
-  lsTrace("pools: " + std::to_string(Private::list_.size()));
+  private_.name = name;
+  std::vector<AbstractThreadPool *>::iterator it = std::lower_bound(Private::list.begin(), Private::list.end(), this, Private::Compare());
+  Private::list.insert(it, this);
+  lsTrace("pools: " + std::to_string(Private::list.size()));
 }
 
 AbstractThreadPool::~AbstractThreadPool() {
@@ -53,12 +53,12 @@ AbstractThreadPool::~AbstractThreadPool() {
     lsDebug() << LogStream::Color::Red << "destroyed with threads";
     AbstractThreadPool::quit();
   }
-  std::vector<AbstractThreadPool *>::iterator it = std::lower_bound(Private::list_.begin(), Private::list_.end(), this, Private::Compare());
-  if (it != Private::list_.end() && (*it) == this) Private::list_.erase(it);
+  std::vector<AbstractThreadPool *>::iterator it = std::lower_bound(Private::list.begin(), Private::list.end(), this, Private::Compare());
+  if (it != Private::list.end() && (*it) == this) Private::list.erase(it);
   else { lsError() << "pool not found in list"; }
 
   delete &private_;
-  lsTrace("pools: " + std::to_string(Private::list_.size()));
+  lsTrace("pools: " + std::to_string(Private::list.size()));
 }
 
 void AbstractThreadPool::quit() {
@@ -74,7 +74,7 @@ void AbstractThreadPool::quit() {
   lsTrace();
 }
 
-std::string AbstractThreadPool::name() const { return private_.name_; }
+std::string AbstractThreadPool::name() const { return private_.name; }
 
 AbstractThread::LockGuard AbstractThreadPool::threads(std::vector<AbstractThreadPool::Thread *> **_threads) {
   *_threads = &threads_;

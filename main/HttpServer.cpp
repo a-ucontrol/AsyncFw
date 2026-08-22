@@ -351,7 +351,7 @@ struct HttpServer::Private {
   };
 
   std::string httpPath;
-  AsyncFw::TlsContext tlsContext_;
+  AsyncFw::TlsContext tlsContext;
   AsyncFw::ListenSocket listener;
   FunctionConnectionGuard listenerGuard;
 };
@@ -502,7 +502,7 @@ void HttpServer::sendToWebSockets(const std::string &data) {  //Дичь, для
 }
 
 bool HttpServer::listen(uint16_t port) {
-  warning_if(!private_.tlsContext_.empty()) << private_.tlsContext_.infoCertificate();
+  warning_if(!private_.tlsContext.empty()) << private_.tlsContext.infoCertificate();
   bool b = private_.listener.listen("0.0.0.0", port);
   if (b) {
     private_.listenerGuard = private_.listener.incoming.connect([this](int descriptor, const std::string &address, bool *accept) {
@@ -510,10 +510,10 @@ bool HttpServer::listen(uint16_t port) {
       if (!*accept) {
         TcpSocket *socket = new TcpSocket(this);
         sockets.emplace_back(socket);
-        trace() << "(incoming) socket created, total:" << sockets.size() << "tls data" << !private_.tlsContext_.empty();
-        if (!private_.tlsContext_.empty()) socket->AbstractSocket::setDescriptor(descriptor);
+        trace() << "(incoming) socket created, total:" << sockets.size() << "tls data" << !private_.tlsContext.empty();
+        if (!private_.tlsContext.empty()) socket->AbstractSocket::setDescriptor(descriptor);
         else {
-          socket->setContext(private_.tlsContext_);
+          socket->setContext(private_.tlsContext);
           socket->setDescriptor(descriptor);
         }
         *accept = true;
@@ -605,9 +605,9 @@ HttpServer::RulesMap::iterator HttpServer::findRule(const std::string &path, con
 
 void HttpServer::setEnableCorsRequests(bool state) { cors_request_enabled = state; }
 
-bool HttpServer::hasTls() { return !private_.tlsContext_.empty(); }
+bool HttpServer::hasTls() { return !private_.tlsContext.empty(); }
 
-void HttpServer::setTlsContext(const TlsContext &ctx) { private_.tlsContext_ = ctx; }
+void HttpServer::setTlsContext(const TlsContext &ctx) { private_.tlsContext = ctx; }
 
 std::string HttpServer::Response::header() const {
   std::string ba = "HTTP/" + version + ' ' + std::to_string(static_cast<int>(statusCode_)) + "\r\n";
@@ -743,7 +743,7 @@ bool HttpServer::Request::fail() const { return private_.res != httpparser::Http
 namespace AsyncFw {
 LogStream &operator<<(LogStream &log, const HttpServer &s) {
   std::string str = "Listening: " + ((s.private_.listener.port()) ? s.private_.listener.address() + ':' + std::to_string(s.private_.listener.port()) : "no");
-  str += std::string("\nSSL: ") + ((!s.private_.tlsContext_.empty()) ? "enabled" : "disabled");
+  str += std::string("\nSSL: ") + ((!s.private_.tlsContext.empty()) ? "enabled" : "disabled");
   str += "\nWeb root: " + ((!s.private_.httpPath.empty()) ? s.private_.httpPath : "none");
 
   return log << str;
