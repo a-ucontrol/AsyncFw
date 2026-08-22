@@ -25,7 +25,14 @@ using namespace AsyncFw;
 struct DataArraySocket::Private {
   int sslConnection = 0;
   DataArray *receiveByteArray = nullptr;
-  uint8_t waitTimerType = 0;
+
+  // 0x01 — transient error marker: set before disconnect() on error, cleared inside disconnect() (prevents setting 0x08)
+  // 0x02 — waiting for keep-alive response
+  // 0x04 — connection attempt timer active (set when initiating connect)
+  // 0x08 — explicit user disconnect: persists until stateEvent(Unconnected) to suppress auto-reconnect; also guards against re-entry into disconnect()
+  // 0x80 — keep-alive response timeout enabled
+  uint8_t flags = 0;
+
   int maxReadBuffers = 16;
   int maxReadSize = 1024 * 1024;
   int maxWriteBuffers = 16;
@@ -43,7 +50,7 @@ struct DataArraySocket::Private {
 
   mutable std::vector<DataArray *> receiveList;
   std::deque<DataArray> transmitList;
-  int tid_ = -1;
+  int tid = -1;
   AsyncFw::AbstractThread::Waiter waiter;
 
   void releaseBuffer(const DataArray *) const;
@@ -70,22 +77,22 @@ DataArraySocket::~DataArraySocket() {
 }
 
 void DataArraySocket::startTimer(int _ms) {
-  if (private_.tid_ < 0) private_.tid_ = thread_->appendTimerTask(_ms, [this]() { timerEvent(); });
-  else thread_->modifyTimer(private_.tid_, _ms);
+  if (private_.tid < 0) private_.tid = thread_->appendTimerTask(_ms, [this]() { timerEvent(); });
+  else thread_->modifyTimer(private_.tid, _ms);
 }
 
 void DataArraySocket::removeTimer() {
-  if (private_.tid_ >= 0) {
-    thread_->removeTimer(private_.tid_);
-    private_.tid_ = -1;
+  if (private_.tid >= 0) {
+    thread_->removeTimer(private_.tid);
+    private_.tid = -1;
   }
 }
 
 void DataArraySocket::stateEvent() {
   trace() << static_cast<int>(state_);
   if (state_ == State::Connected) {
-    if (private_.waitTimerType & 0x04) {
-      private_.waitTimerType &= ~0x04;
+    if (private_.flags & 0x04) {
+      private_.flags &= ~0x04;
       if (private_.sslConnection) {
         startTimer(private_.waitForEncryptionTimeout);
         lsDebug() << "client wait for encrypted" << private_.waitForEncryptionTimeout;
@@ -99,11 +106,11 @@ void DataArraySocket::stateEvent() {
 
   if (state_ == AbstractSocket::State::Active) {
     if (private_.sslConnection) private_.sslConnection = 4;
-    private_.waitTimerType &= ~0x08;
+    private_.flags &= ~0x08;
     if (private_.readTimeout > 0) startTimer(private_.readTimeout);
     else if (private_.reconnectTimeout > 0) { removeTimer(); }
   } else if (state_ == AbstractSocket::State::Unconnected) {
-    if (!(private_.waitTimerType & 0x08)) {
+    if (!(private_.flags & 0x08)) {
       if (private_.reconnectTimeout > 0) startTimer(private_.reconnectTimeout);
       else if (private_.readTimeout > 0) { removeTimer(); }
     }
@@ -125,15 +132,15 @@ void DataArraySocket::stateEvent() {
 void DataArraySocket::timerEvent() {
   removeTimer();
   if (state_ == AbstractSocket::State::Active) {
-    if (private_.sslConnection != 3 && private_.waitTimerType == 0x80 && private_.readTimeout > 0) {
+    if (private_.sslConnection != 3 && private_.flags == 0x80 && private_.readTimeout > 0) {
       sendKeepAlive(true);
     } else {
       std::string e;
       if (private_.sslConnection == 3) e = "Error wait encryption";
-      else e = (private_.waitTimerType & 0x02) ? "Connection lost" : "Read timeout";
+      else e = (private_.flags & 0x02) ? "Connection lost" : "Read timeout";
       e += " (" + peerString() + ')';
       setErrorString(e);
-      private_.waitTimerType |= 0x01;
+      private_.flags |= 0x01;
       disconnect();
     }
   } else if (state_ == AbstractSocket::State::Unconnected) {
@@ -151,7 +158,7 @@ void DataArraySocket::timerEvent() {
 
     if (private_.waiter.waiting()) private_.waiter.complete();
 
-    private_.waitTimerType |= 0x01;
+    private_.flags |= 0x01;
     disconnect();
     e += " (" + peerString() + ')';
     setErrorString(e);
@@ -166,7 +173,7 @@ void DataArraySocket::sendKeepAlive(bool request) {
   uint64_t ka = 0xffffffff00000000;
   write(reinterpret_cast<const uint8_t *>(&ka), sizeof(ka));
   if (request) {
-    private_.waitTimerType |= 0x02;
+    private_.flags |= 0x02;
     startTimer(private_.waitKeepAliveResponseTimeout);
   }
   trace() << "transmit keep alive " + std::string(request ? "request" : "answer") + " (" + peerString() + ')';
@@ -189,8 +196,8 @@ void DataArraySocket::readEvent() {
       if (private_.readSize == 0) {
         if (private_.readId == 0xffffffff) {
           trace() << "receive keep alive (" + peerString() + ')';
-          if (!(private_.waitTimerType & 0x02)) sendKeepAlive(false);
-          else private_.waitTimerType &= ~0x02;
+          if (!(private_.flags & 0x02)) sendKeepAlive(false);
+          else private_.flags &= ~0x02;
           continue;
         }
         warning_if(private_.readId != 0xffffffff) << LogStream::Color::Red << "read array empty (" + peerString() + ')';
@@ -240,12 +247,12 @@ void DataArraySocket::disconnect() {
     lsWarning("tried disconnect closing or unconnected socket");
     return;
   }
-  if (private_.waitTimerType & 0x08) return;
-  if (!(private_.waitTimerType & 0x01)) {
-    private_.waitTimerType |= 0x08;
+  if (private_.flags & 0x08) return;
+  if (!(private_.flags & 0x01)) {
+    private_.flags |= 0x08;
     removeTimer();
   } else {
-    private_.waitTimerType &= ~0x01;
+    private_.flags &= ~0x01;
   }
   AbstractTlsSocket::disconnect();
 }
@@ -330,7 +337,7 @@ void DataArraySocket::setReadTimeout(int timeout) { private_.readTimeout = timeo
 
 void DataArraySocket::setWaitForEncryptionTimeout(int timeout) { private_.waitForEncryptionTimeout = timeout; }
 
-void DataArraySocket::setWaitKeepAliveResponseTimeout(int timeout) { ((private_.waitKeepAliveResponseTimeout = timeout) > 0) ? private_.waitTimerType |= 0x80 : private_.waitTimerType &= ~0x80; }
+void DataArraySocket::setWaitKeepAliveResponseTimeout(int timeout) { ((private_.waitKeepAliveResponseTimeout = timeout) > 0) ? private_.flags |= 0x80 : private_.flags &= ~0x80; }
 
 void DataArraySocket::setReadBuffers(int buffers, int size) {
   private_.maxReadBuffers = buffers;
@@ -376,10 +383,10 @@ bool DataArraySocket::connectToHost() {
     lsWarning("trying connect while not unconnected state");
     return false;
   }
-  private_.waitTimerType &= 0x84;
+  private_.flags &= 0x84;
 
-  if (!(private_.waitTimerType & 0x04)) {
-    private_.waitTimerType |= 0x04;
+  if (!(private_.flags & 0x04)) {
+    private_.flags |= 0x04;
     if (private_.waitForConnectTimeout > 0) startTimer(private_.waitForConnectTimeout);
     else { removeTimer(); }
   }
@@ -400,7 +407,7 @@ bool DataArraySocket::connectToHost(int timeout) {
   }
 
   thread_->invoke([this, timeout]() {
-    private_.waitTimerType |= 0x04;
+    private_.flags |= 0x04;
     startTimer(timeout);
     connectToHost();
   }, true);

@@ -60,12 +60,17 @@ struct AbstractSocket::Private {
   sockaddr_storage pa_ = {};
   DataArray rda_;
   DataArray wda_;
-  int tid_ = -1;
   Error error_ = None;
   std::string errorString_;
   int type_;
   int protocol_;
   int rs_ = 0;
+
+  // 0x01 — OutputBufferMode::Application (application-level data, requires processing before sending)
+  // 0x02 — OutputBufferMode::Network (network bytes ready to send)
+  // 0x20 — protection against repeated calls to AbstractSocket::read_available_fd() (cached rs_ is used)
+  // 0x40 — a writeEvent() task is already scheduled
+  // 0x80 — there is data in the write buffer wda_, waiting for PollOut event
   uint8_t flags_;
 };
 
