@@ -20,27 +20,27 @@ using namespace AsyncFw;
 
 struct TlsContext::Private {
   ~Private() {
-    if (ctx_) {
-      std::vector<Private *>::iterator it = lower_bound(verify_.begin(), verify_.end(), this, [](const Private *p1, const Private *p2) { return p1->ctx_ < p2->ctx_; });
-      if (it != verify_.end()) { verify_.erase(it); }
-      SSL_CTX_free(ctx_);
+    if (ctx) {
+      std::vector<Private *>::iterator it = lower_bound(verify.begin(), verify.end(), this, [](const Private *p1, const Private *p2) { return p1->ctx < p2->ctx; });
+      if (it != verify.end()) { verify.erase(it); }
+      SSL_CTX_free(ctx);
     }
   }
-  SSL_CTX *ctx_ = nullptr;
+  SSL_CTX *ctx = nullptr;
 
   DataArray key(EVP_PKEY *);
   DataArray certificate(X509 *);
   std::string info(EVP_PKEY *);
   std::string info(X509 *);
 
-  bool vefifyPeer_ = true;
-  std::string verifyName_;
+  bool vefifyPeer = true;
+  std::string verifyName;
 
-  int serial_ = 0;
-  std::atomic_int ref_ = 1;
-  uint8_t ignoreErrors_ = 0;
+  int serial = 0;
+  std::atomic_int ref = 1;
+  uint8_t ignoreErrors = 0;
 
-  static inline std::vector<Private *> verify_;
+  static inline std::vector<Private *> verify;
 };
 
 DataArray TlsContext::Private::key(EVP_PKEY *_k) {
@@ -90,7 +90,7 @@ TlsContext::TlsContext() { private_ = new Private; }
 
 TlsContext::TlsContext(const TlsContext &_d) {
   private_ = _d.private_;
-  private_->ref_++;
+  private_->ref++;
 }
 
 TlsContext::TlsContext(const DataArray &k, const DataArray &c, const DataArrayList &t, const std::string &n, IgnoreErrors ie) : TlsContext() {
@@ -102,17 +102,17 @@ TlsContext::TlsContext(const DataArray &k, const DataArray &c, const DataArrayLi
 }
 
 TlsContext::~TlsContext() {
-  if (!--private_->ref_) delete private_;
+  if (!--private_->ref) delete private_;
 }
 
 TlsContext &TlsContext::operator=(const TlsContext &_d) {
-  _d.private_->ref_++;
-  if (!--private_->ref_) delete private_;
+  _d.private_->ref++;
+  if (!--private_->ref) delete private_;
   private_ = _d.private_;
   return *this;
 }
 
-bool TlsContext::empty() const { return !private_->ctx_; }
+bool TlsContext::empty() const { return !private_->ctx; }
 
 bool TlsContext::generateKey(int bits) {
   EVP_PKEY *_k = EVP_RSA_gen(bits);
@@ -120,14 +120,14 @@ bool TlsContext::generateKey(int bits) {
     lsError() << "generate key";
     return false;
   }
-  if (!private_->ctx_) private_->ctx_ = SSL_CTX_new(TLS_method());
-  int r = SSL_CTX_use_PrivateKey(private_->ctx_, _k);
+  if (!private_->ctx) private_->ctx = SSL_CTX_new(TLS_method());
+  int r = SSL_CTX_use_PrivateKey(private_->ctx, _k);
   EVP_PKEY_free(_k);
   return r == 1;
 }
 
 bool TlsContext::generateCertificate(const std::vector<std::pair<std::string, std::string>> &subject, const std::string &san, const std::string &ca, int days) {
-  EVP_PKEY *_k = SSL_CTX_get0_privatekey(private_->ctx_);
+  EVP_PKEY *_k = SSL_CTX_get0_privatekey(private_->ctx);
   if (!_k) {
     lsError() << "get key";
     return false;
@@ -138,7 +138,7 @@ bool TlsContext::generateCertificate(const std::vector<std::pair<std::string, st
     return false;
   }
   X509_set_version(_c, 2);
-  ASN1_INTEGER_set(X509_get_serialNumber(_c), ++private_->serial_);
+  ASN1_INTEGER_set(X509_get_serialNumber(_c), ++private_->serial);
   X509_gmtime_adj(X509_get_notBefore(_c), 0);
   X509_gmtime_adj(X509_get_notAfter(_c), days * 24 * 3600L);
   X509_set_pubkey(_c, _k);
@@ -170,13 +170,13 @@ bool TlsContext::generateCertificate(const std::vector<std::pair<std::string, st
     X509_free(_c);
     return false;
   }
-  int r = SSL_CTX_use_certificate(private_->ctx_, _c);
+  int r = SSL_CTX_use_certificate(private_->ctx, _c);
   X509_free(_c);
   return r == 1;
 }
 
 DataArray TlsContext::generateRequest(const std::vector<std::pair<std::string, std::string>> &subject, const std::string &san, const std::string &extensions) {
-  EVP_PKEY *_k = SSL_CTX_get0_privatekey(private_->ctx_);
+  EVP_PKEY *_k = SSL_CTX_get0_privatekey(private_->ctx);
   if (!_k) {
     lsError() << "get key";
     return {};
@@ -241,12 +241,12 @@ DataArray TlsContext::generateRequest(const std::vector<std::pair<std::string, s
 }
 
 DataArray TlsContext::signRequest(DataArray &req, int days) {
-  EVP_PKEY *_k = SSL_CTX_get0_privatekey(private_->ctx_);
+  EVP_PKEY *_k = SSL_CTX_get0_privatekey(private_->ctx);
   if (!_k) {
     lsError() << "get key";
     return {};
   }
-  X509 *_c = SSL_CTX_get0_certificate(private_->ctx_);
+  X509 *_c = SSL_CTX_get0_certificate(private_->ctx);
   if (!_c) {
     lsError() << "get certificate";
     return {};
@@ -269,7 +269,7 @@ DataArray TlsContext::signRequest(DataArray &req, int days) {
     return {};
   }
   X509_set_version(_rc, 2);
-  ASN1_INTEGER_set(X509_get_serialNumber(_rc), ++private_->serial_);
+  ASN1_INTEGER_set(X509_get_serialNumber(_rc), ++private_->serial);
   X509_gmtime_adj(X509_get_notBefore(_rc), 0);
   X509_gmtime_adj(X509_get_notAfter(_rc), days * 24 * 3600L);
   X509_set_pubkey(_rc, _rk);
@@ -309,7 +309,7 @@ DataArray TlsContext::signRequest(DataArray &req, int days) {
 }
 
 std::string TlsContext::commonName() const {
-  X509 *_c = SSL_CTX_get0_certificate(private_->ctx_);
+  X509 *_c = SSL_CTX_get0_certificate(private_->ctx);
   if (!_c) {
     lsTrace() << LogStream::Color::DarkRed << "no certificate";
     return {};
@@ -320,7 +320,7 @@ std::string TlsContext::commonName() const {
 }
 
 DataArray TlsContext::key() const {
-  EVP_PKEY *_k = SSL_CTX_get0_privatekey(private_->ctx_);
+  EVP_PKEY *_k = SSL_CTX_get0_privatekey(private_->ctx);
   if (!_k) {
     lsError() << "get key";
     return {};
@@ -329,7 +329,7 @@ DataArray TlsContext::key() const {
 }
 
 DataArray TlsContext::certificate() const {
-  X509 *_c = SSL_CTX_get0_certificate(private_->ctx_);
+  X509 *_c = SSL_CTX_get0_certificate(private_->ctx);
   if (!_c) {
     lsError() << "get certificate";
     return {};
@@ -338,7 +338,7 @@ DataArray TlsContext::certificate() const {
 }
 
 DataArrayList TlsContext::trusted() const {
-  X509_STORE *_store = SSL_CTX_get_cert_store(private_->ctx_);
+  X509_STORE *_store = SSL_CTX_get_cert_store(private_->ctx);
   STACK_OF(X509) *_t = X509_STORE_get1_all_certs(_store);
   int _s = sk_X509_num(_t);
   DataArrayList _l;
@@ -352,11 +352,11 @@ DataArrayList TlsContext::trusted() const {
 }
 
 std::string TlsContext::infoKey() const {
-  if (!private_->ctx_) {
+  if (!private_->ctx) {
     lsWarning() << "empty";
     return {};
   }
-  EVP_PKEY *_k = SSL_CTX_get0_privatekey(private_->ctx_);
+  EVP_PKEY *_k = SSL_CTX_get0_privatekey(private_->ctx);
   if (!_k) {
     lsError() << "get key";
     return {};
@@ -365,11 +365,11 @@ std::string TlsContext::infoKey() const {
 }
 
 std::string TlsContext::infoCertificate() const {
-  if (!private_->ctx_) {
+  if (!private_->ctx) {
     lsWarning() << "empty";
     return {};
   }
-  X509 *_c = SSL_CTX_get0_certificate(private_->ctx_);
+  X509 *_c = SSL_CTX_get0_certificate(private_->ctx);
   if (!_c) {
     lsError() << "get certificate";
     return {};
@@ -378,11 +378,11 @@ std::string TlsContext::infoCertificate() const {
 }
 
 std::string TlsContext::infoTrusted() const {
-  if (!private_->ctx_) {
+  if (!private_->ctx) {
     lsWarning() << "empty";
     return {};
   }
-  X509_STORE *_store = SSL_CTX_get_cert_store(private_->ctx_);
+  X509_STORE *_store = SSL_CTX_get_cert_store(private_->ctx);
   STACK_OF(X509) *_t = X509_STORE_get1_all_certs(_store);
   std::string str;
   int _s = sk_X509_num(_t);
@@ -398,11 +398,11 @@ std::string TlsContext::infoTrusted() const {
 int TlsContext::verify(int ok, X509_STORE_CTX *ctx) {
   SSL *ssl = static_cast<SSL *>(X509_STORE_CTX_get_ex_data(ctx, SSL_get_ex_data_X509_STORE_CTX_idx()));
   SSL_CTX *ssl_ctx = SSL_get_SSL_CTX(ssl);
-  std::vector<Private *>::iterator it = lower_bound(Private::verify_.begin(), Private::verify_.end(), ssl_ctx, [](const Private *p, const SSL_CTX *ctx) { return p->ctx_ < ctx; });
-  if (it != Private::verify_.end()) {
+  std::vector<Private *>::iterator it = lower_bound(Private::verify.begin(), Private::verify.end(), ssl_ctx, [](const Private *p, const SSL_CTX *ctx) { return p->ctx < ctx; });
+  if (it != Private::verify.end()) {
     if (ok) return ok;
     int _e = X509_STORE_CTX_get_error(ctx);
-    if ((*it)->ignoreErrors_ & 0x01) {  // ignore time validity errors
+    if ((*it)->ignoreErrors & 0x01) {  // ignore time validity errors
       if (_e == X509_V_ERR_CERT_NOT_YET_VALID) {
         lsWarning("certificate not yet valid");
         return 1;
@@ -457,30 +457,30 @@ std::string TlsContext::allErrorStrings() {
   return str;
 }
 
-bool TlsContext::verifyPeer() { return private_->vefifyPeer_; }
+bool TlsContext::verifyPeer() { return private_->vefifyPeer; }
 
-void TlsContext::setVerifyPeer(bool enable) { private_->vefifyPeer_ = enable; }
+void TlsContext::setVerifyPeer(bool enable) { private_->vefifyPeer = enable; }
 
-std::string &TlsContext::verifyName() const { return private_->verifyName_; }
+std::string &TlsContext::verifyName() const { return private_->verifyName; }
 
-void TlsContext::setVerifyName(const std::string &name) const { private_->verifyName_ = name; }
+void TlsContext::setVerifyName(const std::string &name) const { private_->verifyName = name; }
 
 void TlsContext::setIgnoreErrors(IgnoreErrors errors) const {
-  private_->ignoreErrors_ = errors;
-  if (!private_->ctx_) private_->ctx_ = SSL_CTX_new(TLS_method());
-  std::vector<Private *>::iterator it = lower_bound(private_->verify_.begin(), private_->verify_.end(), private_, [](const Private *p1, const Private *p2) { return p1->ctx_ < p2->ctx_; });
-  if (it == private_->verify_.end() || *it != private_) private_->verify_.insert(it, private_);
+  private_->ignoreErrors = errors;
+  if (!private_->ctx) private_->ctx = SSL_CTX_new(TLS_method());
+  std::vector<Private *>::iterator it = lower_bound(private_->verify.begin(), private_->verify.end(), private_, [](const Private *p1, const Private *p2) { return p1->ctx < p2->ctx; });
+  if (it == private_->verify.end() || *it != private_) private_->verify.insert(it, private_);
 }
 
-ssl_ctx_st *TlsContext::opensslCtx() const { return private_->ctx_; }
+ssl_ctx_st *TlsContext::opensslCtx() const { return private_->ctx; }
 
 bool TlsContext::verifyCertificate() const {
-  EVP_PKEY *_k = SSL_CTX_get0_privatekey(private_->ctx_);
+  EVP_PKEY *_k = SSL_CTX_get0_privatekey(private_->ctx);
   if (!_k) {
     lsError() << "get key";
     return false;
   }
-  X509 *_c = SSL_CTX_get0_certificate(private_->ctx_);
+  X509 *_c = SSL_CTX_get0_certificate(private_->ctx);
   if (!_c) {
     lsError() << "get certificate";
     return false;
@@ -506,8 +506,8 @@ bool TlsContext::setKey(const DataArray &_da) {
   EVP_PKEY *_k = PEM_read_bio_PrivateKey(_bio, nullptr, nullptr, nullptr);
   BIO_free(_bio);
   if (!_k) return false;
-  if (!private_->ctx_) private_->ctx_ = SSL_CTX_new(TLS_method());
-  int r = SSL_CTX_use_PrivateKey(private_->ctx_, _k);
+  if (!private_->ctx) private_->ctx = SSL_CTX_new(TLS_method());
+  int r = SSL_CTX_use_PrivateKey(private_->ctx, _k);
   EVP_PKEY_free(_k);
   if (r == 1) return true;
   lsError() << LogStream::Color::Red << ERR_error_string(ERR_get_error(), nullptr);
@@ -522,8 +522,8 @@ bool TlsContext::setCertificate(const DataArray &_da) {
     lsError() << "read certificate";
     return false;
   }
-  if (!private_->ctx_) private_->ctx_ = SSL_CTX_new(TLS_method());
-  int r = SSL_CTX_use_certificate(private_->ctx_, _c);
+  if (!private_->ctx) private_->ctx = SSL_CTX_new(TLS_method());
+  int r = SSL_CTX_use_certificate(private_->ctx, _c);
   X509_free(_c);
   if (r == 1) return true;
   lsError() << "set certificate";
@@ -538,8 +538,8 @@ bool TlsContext::appendTrusted(const DataArray &_da) {
     lsError() << "read certificate";
     return false;
   }
-  if (!private_->ctx_) private_->ctx_ = SSL_CTX_new(TLS_method());
-  X509_STORE *_store = SSL_CTX_get_cert_store(private_->ctx_);
+  if (!private_->ctx) private_->ctx = SSL_CTX_new(TLS_method());
+  X509_STORE *_store = SSL_CTX_get_cert_store(private_->ctx);
   int r = X509_STORE_add_cert(_store, _c);
   X509_free(_c);
   if (r == 1) return true;
@@ -550,8 +550,8 @@ bool TlsContext::appendTrusted(const DataArray &_da) {
 
 bool TlsContext::setDefaultVerifyPaths() {
   lsDebug() << X509_get_default_cert_dir() << getenv(X509_get_default_cert_dir_env());
-  if (!private_->ctx_) private_->ctx_ = SSL_CTX_new(TLS_method());
-  return SSL_CTX_set_default_verify_paths(private_->ctx_);
+  if (!private_->ctx) private_->ctx = SSL_CTX_new(TLS_method());
+  return SSL_CTX_set_default_verify_paths(private_->ctx);
 }
 
 namespace AsyncFw {

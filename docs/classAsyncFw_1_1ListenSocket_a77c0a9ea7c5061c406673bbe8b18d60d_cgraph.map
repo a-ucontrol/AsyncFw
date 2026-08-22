@@ -1,0 +1,5 @@
+<map id="AsyncFw::ListenSocket::close" name="AsyncFw::ListenSocket::close">
+<area shape="rect" id="Node000001" title="Closes the network connection and unsubscribes from thread polling events." alt="" coords="5,5,166,48"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractSocket.html#a7dec1397dbd20b891e20aeb14a253779" title="Returns a human&#45;readable text string describing the last runtime socket error." alt="" coords="214,5,388,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="166,24,201,26,195,27,166,29"/>
+</map>

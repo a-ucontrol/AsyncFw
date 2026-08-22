@@ -56,32 +56,32 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 using namespace AsyncFw;
 
 struct AbstractSocket::Private {
-  sockaddr_storage la_ = {};
-  sockaddr_storage pa_ = {};
-  DataArray rda_;
-  DataArray wda_;
-  Error error_ = None;
-  std::string errorString_;
-  int type_;
-  int protocol_;
-  int rs_ = 0;
+  sockaddr_storage la = {};
+  sockaddr_storage pa = {};
+  DataArray rda;
+  DataArray wda;
+  Error error = None;
+  std::string errorString;
+  int type;
+  int protocol;
+  int rs = 0;
 
   // 0x01 — OutputBufferMode::Application (application-level data, requires processing before sending)
   // 0x02 — OutputBufferMode::Network (network bytes ready to send)
   // 0x20 — protection against repeated calls to AbstractSocket::read_available_fd() (cached rs_ is used)
   // 0x40 — a writeEvent() task is already scheduled
   // 0x80 — there is data in the write buffer wda_, waiting for PollOut event
-  uint8_t flags_;
+  uint8_t flags;
 };
 
 AbstractSocket::AbstractSocket(OutputBufferMode mode) : AbstractSocket(AF_INET, SOCK_STREAM, IPPROTO_TCP, mode) {}
 
 AbstractSocket::AbstractSocket(int family, int type, int protocol, OutputBufferMode mode) : private_(*new Private) {
-  private_.la_.ss_family = family;
-  private_.pa_.ss_family = family;
-  private_.type_ = type;
-  private_.protocol_ = protocol;
-  private_.flags_ = mode;
+  private_.la.ss_family = family;
+  private_.pa.ss_family = family;
+  private_.type = type;
+  private_.protocol = protocol;
+  private_.flags = mode;
   thread_ = Thread::current();
   std::vector<AbstractSocket *>::iterator it = std::lower_bound(thread_->sockets_.begin(), thread_->sockets_.end(), this, Thread::Compare());
   thread_->sockets_.insert(it, this);
@@ -103,7 +103,7 @@ AbstractSocket::~AbstractSocket() {
 }
 
 bool AbstractSocket::listen(const std::string &address, uint16_t port) {
-  int _fd = socket(private_.la_.ss_family, private_.type_, private_.protocol_);
+  int _fd = socket(private_.la.ss_family, private_.type, private_.protocol);
   if (_fd < 0) {
     lsError() << "socket descriptor error" << _fd << errno;
     return false;
@@ -120,17 +120,17 @@ bool AbstractSocket::listen(const std::string &address, uint16_t port) {
 #if defined(SOCKET_REUSEPORT) && !defined(_WIN32)
   if (setsockopt(_fd, SOL_SOCKET, SO_REUSEPORT, &_val, sizeof _val) < 0) lsError("set SO_REUSEPORT");
 #endif
-  reinterpret_cast<sockaddr_in *>(&private_.la_)->sin_port = htons(port);
-  reinterpret_cast<sockaddr_in *>(&private_.la_)->sin_addr.s_addr = inet_addr(address.c_str());
+  reinterpret_cast<sockaddr_in *>(&private_.la)->sin_port = htons(port);
+  reinterpret_cast<sockaddr_in *>(&private_.la)->sin_addr.s_addr = inet_addr(address.c_str());
 
-  if (::bind(_fd, reinterpret_cast<struct sockaddr *>(&private_.la_), sizeof(private_.la_)) || ::listen(_fd, SOCKET_CONNECTION_QUEUED)) {
+  if (::bind(_fd, reinterpret_cast<struct sockaddr *>(&private_.la), sizeof(private_.la)) || ::listen(_fd, SOCKET_CONNECTION_QUEUED)) {
     close_fd(_fd);
     lsError() << "listen error:" << port;
     return false;
   }
 
-  private_.error_ = None;
-  private_.errorString_.clear();
+  private_.error = None;
+  private_.errorString.clear();
   state_ = State::Listening;
   thread_->invoke([this, _fd]() { changeDescriptor(_fd); });
   thread_->appendPollTask(_fd, AbstractThread::PollIn, [this](AbstractThread::PollEvents _e) { pollEvent(_e); });
@@ -159,7 +159,7 @@ void AbstractSocket::changeDescriptor(int _fd) {
 }
 
 int AbstractSocket::read_available_fd() const {
-  if (private_.flags_ & 0x20) return private_.rs_;
+  if (private_.flags & 0x20) return private_.rs;
 #ifdef _WIN32
   u_long r;
   if (ioctlsocket(fd_, FIONREAD, &r) < 0) {
@@ -199,10 +199,10 @@ void AbstractSocket::setDescriptor(int _fd) {
   if (getsockopt(_fd, SOL_SOCKET, SO_RCVBUF, &_val, &_l) < 0) lsError("SO_RCVBUF");
   else { lsDebug() << "SO_RCVBUF" << LogStream::Color::Red << _val; }
 */
-  _l = sizeof(private_.la_);
-  if (getsockname(_fd, reinterpret_cast<struct sockaddr *>(&private_.la_), &_l) < 0) lsError() << "error socket address";
-  _l = sizeof(private_.pa_);
-  if (getpeername(_fd, reinterpret_cast<struct sockaddr *>(&private_.pa_), &_l) < 0) lsError() << "error peer address";
+  _l = sizeof(private_.la);
+  if (getsockname(_fd, reinterpret_cast<struct sockaddr *>(&private_.la), &_l) < 0) lsError() << "error socket address";
+  _l = sizeof(private_.pa);
+  if (getpeername(_fd, reinterpret_cast<struct sockaddr *>(&private_.pa), &_l) < 0) lsError() << "error peer address";
 
   lsTrace() << _fd << LogStream::Color::DarkGreen << "local:" << address() + ':' + std::to_string(port()) << "peer:" << peerAddress() + ':' + std::to_string(peerPort());
 
@@ -213,7 +213,7 @@ void AbstractSocket::setDescriptor(int _fd) {
 }
 
 bool AbstractSocket::connect(const std::string &_address, uint16_t _port) {
-  int _fd = socket(private_.pa_.ss_family, private_.type_, private_.protocol_);
+  int _fd = socket(private_.pa.ss_family, private_.type, private_.protocol);
   if (_fd < 0) {
     lsError() << "socket descriptor error";
     return false;
@@ -239,10 +239,10 @@ bool AbstractSocket::connect(const std::string &_address, uint16_t _port) {
   if (getsockopt(_fd, SOL_SOCKET, SO_RCVBUF, &_val, &_l) < 0) lsError("SO_RCVBUF");
   else { lsDebug() << "SO_RCVBUF" << LogStream::Color::Red << _val; }
 */
-  reinterpret_cast<sockaddr_in *>(&private_.pa_)->sin_port = htons(_port);
-  reinterpret_cast<sockaddr_in *>(&private_.pa_)->sin_addr.s_addr = inet_addr(_address.c_str());
+  reinterpret_cast<sockaddr_in *>(&private_.pa)->sin_port = htons(_port);
+  reinterpret_cast<sockaddr_in *>(&private_.pa)->sin_addr.s_addr = inet_addr(_address.c_str());
 
-  if (::connect(_fd, reinterpret_cast<struct sockaddr *>(&private_.pa_), sizeof(private_.pa_)) < 0) {
+  if (::connect(_fd, reinterpret_cast<struct sockaddr *>(&private_.pa), sizeof(private_.pa)) < 0) {
     if (errno != EINPROGRESS) {
       lsError() << "connect error" << _address + ':' + std::to_string(_port) << _fd << errno;
       close_fd(_fd);
@@ -250,13 +250,13 @@ bool AbstractSocket::connect(const std::string &_address, uint16_t _port) {
     }
   }
 
-  _l = sizeof(private_.la_);
-  if (getsockname(_fd, reinterpret_cast<struct sockaddr *>(&private_.la_), &_l) < 0) lsError() << "error socket address";
+  _l = sizeof(private_.la);
+  if (getsockname(_fd, reinterpret_cast<struct sockaddr *>(&private_.la), &_l) < 0) lsError() << "error socket address";
 
   lsTrace() << _fd << LogStream::Color::DarkGreen << "local:" << address() + ':' + std::to_string(port()) << "peer:" << peerAddress() + ':' + std::to_string(peerPort());
 
-  private_.error_ = None;
-  private_.errorString_.clear();
+  private_.error = None;
+  private_.errorString.clear();
   state_ = State::Connecting;
   thread_->invoke([this, _fd]() { changeDescriptor(_fd); });
   thread_->appendPollTask(_fd, AbstractThread::PollOut, [this](AbstractThread::PollEvents _e) { pollEvent(_e); });
@@ -276,44 +276,44 @@ void AbstractSocket::disconnect() {
   state_ = State::Closing;
   stateEvent();
   trace() << LogStream::Color::Red << fd_;
-  if (private_.wda_.empty()) {
+  if (private_.wda.empty()) {
     shutdown(fd_, SHUT_RDWR);
     close();
   }
 }
 
 DataArray &AbstractSocket::peek() {
-  if (private_.rs_ > 0) read_fd(private_.rda_);
-  return private_.rda_;
+  if (private_.rs > 0) read_fd(private_.rda);
+  return private_.rda;
 }
 
 void AbstractSocket::read_fd(DataArray &da) {
   do {
-    da.resize(da.size() + private_.rs_);
-    int r = read_fd(da.data() + da.size() - private_.rs_, private_.rs_);
-    if (r != private_.rs_) {
-      private_.errorString_ = "Read error";
-      private_.error_ = Read;
-      lsDebug() << LogStream::Color::Red << private_.errorString_ << r << private_.rs_ << errno;
+    da.resize(da.size() + private_.rs);
+    int r = read_fd(da.data() + da.size() - private_.rs, private_.rs);
+    if (r != private_.rs) {
+      private_.errorString = "Read error";
+      private_.error = Read;
+      lsDebug() << LogStream::Color::Red << private_.errorString << r << private_.rs << errno;
       close();
       return;
     }
-    private_.rs_ = 0;
-    private_.flags_ |= 0x20;
-    private_.rs_ = read_available_fd();
-    private_.flags_ &= ~0x20;
-  } while (private_.rs_ > 0);
+    private_.rs = 0;
+    private_.flags |= 0x20;
+    private_.rs = read_available_fd();
+    private_.flags &= ~0x20;
+  } while (private_.rs > 0);
 }
 
 int AbstractSocket::read(uint8_t *data, int size) {
   warning_if(size <= 0) << LogStream::Color::Red << "size for read is null";
   int _s;
-  if (!private_.rda_.empty()) {
-    _s = private_.rda_.size();
-    bool b = size <= static_cast<int>(private_.rda_.size());
-    memcpy(data, private_.rda_.data(), (b) ? size : private_.rda_.size());
+  if (!private_.rda.empty()) {
+    _s = private_.rda.size();
+    bool b = size <= static_cast<int>(private_.rda.size());
+    memcpy(data, private_.rda.data(), (b) ? size : private_.rda.size());
     if (b) {
-      private_.rda_.erase(private_.rda_.begin(), private_.rda_.begin() + size);
+      private_.rda.erase(private_.rda.begin(), private_.rda.begin() + size);
       return size;
     }
   } else _s = 0;
@@ -321,12 +321,12 @@ int AbstractSocket::read(uint8_t *data, int size) {
     int r = read_fd(data + _s, size - _s);
     if (r <= 0) break;
     _s += r;
-    private_.rs_ -= r;
-    private_.flags_ |= 0x20;
-    private_.rs_ = read_available_fd();
-    private_.flags_ &= ~0x20;
+    private_.rs -= r;
+    private_.flags |= 0x20;
+    private_.rs = read_available_fd();
+    private_.flags &= ~0x20;
   } while (_s < size);
-  private_.rda_.clear();
+  private_.rda.clear();
   return _s;
 }
 
@@ -334,14 +334,14 @@ DataArray AbstractSocket::read(int size) {
   warning_if(size <= 0) << LogStream::Color::Red << "size for read is null";
   DataArray _da;
   if (size == std::numeric_limits<int>::max()) {
-    if (!private_.rda_.empty()) {
-      _da += private_.rda_;
-      private_.rda_.clear();
+    if (!private_.rda.empty()) {
+      _da += private_.rda;
+      private_.rda.clear();
     }
-    if (private_.rs_ > 0) read_fd(_da);
+    if (private_.rs > 0) read_fd(_da);
     return _da;
   }
-  int _n = private_.rs_ + private_.rda_.size();
+  int _n = private_.rs + private_.rda.size();
   _da.resize(_n < size ? _n : size);
   if (read(_da.data(), _da.size()) != static_cast<int>(_da.size())) return {};
   return _da;
@@ -361,67 +361,67 @@ void AbstractSocket::close() {
   lsTrace() << LogStream::Color::Red << fd_;
   changeDescriptor(-1);
   state_ = State::Unconnected;
-  private_.rs_ = 0;
-  private_.rda_.clear();
-  private_.wda_.clear();
-  private_.flags_ &= ~0x80;
+  private_.rs = 0;
+  private_.rda.clear();
+  private_.wda.clear();
+  private_.flags &= ~0x80;
   stateEvent();
 }
 
-void AbstractSocket::setError(Error code) { private_.error_ = code; }
+void AbstractSocket::setError(Error code) { private_.error = code; }
 
-AbstractSocket::Error AbstractSocket::error() const { return private_.error_; }
+AbstractSocket::Error AbstractSocket::error() const { return private_.error; }
 
 void AbstractSocket::setErrorString(const std::string &string) const {
   lsDebug() << LogStream::Color::DarkRed << string;
-  private_.errorString_ = string;
+  private_.errorString = string;
 }
 
-std::string AbstractSocket::errorString() const { return private_.errorString_; }
+std::string AbstractSocket::errorString() const { return private_.errorString; }
 
 int AbstractSocket::pendingRead() const {
   checkCurrentThread();
-  if (private_.rs_ >= 0) return private_.rs_ + private_.rda_.size();
+  if (private_.rs >= 0) return private_.rs + private_.rda.size();
   int r = read_available_fd();
   if (r < 0) r = 0;
-  return (private_.rs_ = r) + private_.rda_.size();
+  return (private_.rs = r) + private_.rda.size();
 }
 
 int AbstractSocket::pendingWrite() const {
   checkCurrentThread();
-  return private_.wda_.size();
+  return private_.wda.size();
 }
 
 std::string AbstractSocket::address() const {
-  if (private_.la_.ss_family == AF_INET) {
+  if (private_.la.ss_family == AF_INET) {
     char _ip[INET_ADDRSTRLEN];
-    inet_ntop(AF_INET, &reinterpret_cast<const sockaddr_in *>(&private_.la_)->sin_addr, _ip, sizeof _ip);
+    inet_ntop(AF_INET, &reinterpret_cast<const sockaddr_in *>(&private_.la)->sin_addr, _ip, sizeof _ip);
     return _ip;
   }
   char _ip[INET6_ADDRSTRLEN];
-  inet_ntop(AF_INET, &reinterpret_cast<const sockaddr_in6 *>(&private_.la_)->sin6_addr, _ip, sizeof _ip);
+  inet_ntop(AF_INET, &reinterpret_cast<const sockaddr_in6 *>(&private_.la)->sin6_addr, _ip, sizeof _ip);
   return _ip;
 }
 
 uint16_t AbstractSocket::port() const {
-  if (private_.la_.ss_family == AF_INET) return ntohs(((struct sockaddr_in *)&private_.la_)->sin_port);
-  return ntohs(((struct sockaddr_in6 *)&private_.la_)->sin6_port);
+  if (private_.la.ss_family == AF_INET) return ntohs(((struct sockaddr_in *)&private_.la)->sin_port);
+  return ntohs(((struct sockaddr_in6 *)&private_.la)->sin6_port);
 }
 
 std::string AbstractSocket::peerAddress() const {
-  if (private_.pa_.ss_family == AF_INET) {
+  if (private_.pa.ss_family == AF_INET) {
     char _ip[INET_ADDRSTRLEN];
-    inet_ntop(AF_INET, &reinterpret_cast<const sockaddr_in *>(&private_.pa_)->sin_addr, _ip, sizeof _ip);
+    inet_ntop(AF_INET, &reinterpret_cast<const sockaddr_in *>(&private_.pa)->sin_addr, _ip, sizeof _ip);
     return _ip;
   }
   char _ip[INET6_ADDRSTRLEN];
-  inet_ntop(AF_INET, &reinterpret_cast<const sockaddr_in6 *>(&private_.pa_)->sin6_addr, _ip, sizeof _ip);
+  inet_ntop(AF_INET, &reinterpret_cast<const sockaddr_in6 *>(&private_.pa)->sin6_addr, _ip, sizeof _ip);
   return _ip;
 }
 
 uint16_t AbstractSocket::peerPort() const {
-  if (private_.pa_.ss_family == AF_INET) return ntohs(((struct sockaddr_in *)&private_.pa_)->sin_port);
-  return ntohs(((struct sockaddr_in6 *)&private_.pa_)->sin6_port);
+  if (private_.pa.ss_family == AF_INET) return ntohs(((struct sockaddr_in *)&private_.pa)->sin_port);
+  return ntohs(((struct sockaddr_in6 *)&private_.pa)->sin6_port);
 }
 
 int AbstractSocket::read_fd(void *data, int size) const {
@@ -433,8 +433,8 @@ int AbstractSocket::read_fd(void *data, int size) const {
 }
 
 int AbstractSocket::write_fd(const void *data, int size) {
-  if (data != private_.wda_.data() && !private_.wda_.empty()) {
-    private_.wda_.insert(private_.wda_.end(), static_cast<const char *>(data), static_cast<const char *>(data) + size);
+  if (data != private_.wda.data() && !private_.wda.empty()) {
+    private_.wda.insert(private_.wda.end(), static_cast<const char *>(data), static_cast<const char *>(data) + size);
     return size;
   }
 #ifndef _WIN32
@@ -442,25 +442,25 @@ int AbstractSocket::write_fd(const void *data, int size) {
 #else
   int r = ::send(fd_, static_cast<const char *>(data), size, 0);
 #endif
-  if (data != private_.wda_.data()) {
+  if (data != private_.wda.data()) {
     if (r < size) {
-      if (!(private_.flags_ & 0x80)) {
+      if (!(private_.flags & 0x80)) {
         thread_->modifyPollDescriptor(fd_, AbstractThread::PollIn | AbstractThread::PollOut);
-        private_.flags_ |= 0x80;
+        private_.flags |= 0x80;
         trace() << LogStream::Color::Cyan << "(AbstractThread::PollIn | AbstractThread::PollOut)";
       }
-      private_.wda_.insert(private_.wda_.end(), static_cast<const char *>(data) + ((r > 0) ? r : 0), static_cast<const char *>(data) + size);
-    } else if (!(private_.flags_ & 0x40)) {
-      private_.flags_ |= 0x40;
+      private_.wda.insert(private_.wda.end(), static_cast<const char *>(data) + ((r > 0) ? r : 0), static_cast<const char *>(data) + size);
+    } else if (!(private_.flags & 0x40)) {
+      private_.flags |= 0x40;
       AbstractThread::AbstractTask *_t = new Invocable<void()>::Function([this] {
         trace() << LogStream::Color::DarkGreen << "write event task";
-        private_.flags_ &= ~0x40;
-        if (!(private_.flags_ & 0x80)) writeEvent();
-        else lsDebug() << LogStream::Color::Red << "(private_.flags_ & 0x80)";
+        private_.flags &= ~0x40;
+        if (!(private_.flags & 0x80)) writeEvent();
+        else lsDebug() << LogStream::Color::Red << "(private_.flags & 0x80)";
       });
       if (!thread_->invokeTask(_t)) {
         lsError() << "thread not running";
-        private_.flags_ &= ~0x40;
+        private_.flags &= ~0x40;
         delete _t;
       }
     }
@@ -507,9 +507,9 @@ void AbstractSocket::pollEvent(int _e) {
     return;
   }
   if (_e & (AbstractThread::PollHup | AbstractThread::PollErr)) {
-    private_.errorString_ = "Connection refused";
-    private_.error_ = Refused;
-    lsDebug() << LogStream::Color::Red << private_.errorString_ << "(poll hup/error)" << static_cast<int>(_e);
+    private_.errorString = "Connection refused";
+    private_.error = Refused;
+    lsDebug() << LogStream::Color::Red << private_.errorString << "(poll hup/error)" << static_cast<int>(_e);
     close();
     return;
   }
@@ -525,9 +525,9 @@ void AbstractSocket::pollEvent(int _e) {
 #if defined EPOLL_EDGE_TRIGGERED || defined IO_URING_WAIT
         if (!((int)_e & 0x2000)) return;
 #endif
-        private_.errorString_ = "Connection closed";
-        private_.error_ = Closed;
-        lsDebug() << LogStream::Color::Red << private_.errorString_ << "(not active)";
+        private_.errorString = "Connection closed";
+        private_.error = Closed;
+        lsDebug() << LogStream::Color::Red << private_.errorString << "(not active)";
         close();
         return;
       }
@@ -539,25 +539,25 @@ void AbstractSocket::pollEvent(int _e) {
   }
   if (_e & AbstractThread::PollIn) {
     warning_if(AbstractSocket::read_available_fd() < 0) << LogStream::Color::Red << "socket empty before read";
-    private_.rs_ = read_available_fd();
-    if (private_.rs_ > 0) {
+    private_.rs = read_available_fd();
+    if (private_.rs > 0) {
       readEvent();
-      if (private_.rs_ > 0) {
+      if (private_.rs > 0) {
         lsDebug() << LogStream::Color::Magenta << "read data to rda";
-        read_fd(private_.rda_);
+        read_fd(private_.rda);
       }
-    } else if (private_.rs_ < 0) {
-      if (private_.rs_ == -1) {
+    } else if (private_.rs < 0) {
+      if (private_.rs == -1) {
 #if defined EPOLL_EDGE_TRIGGERED || defined IO_URING_WAIT
         if (!((int)_e & 0x2000)) return;
 #endif
-        private_.errorString_ = "Connection closed";
-        private_.error_ = Closed;
+        private_.errorString = "Connection closed";
+        private_.error = Closed;
       } else {
-        private_.errorString_ = "Read error";
-        private_.error_ = Read;
+        private_.errorString = "Read error";
+        private_.error = Read;
       }
-      lsDebug() << LogStream::Color::Red << private_.errorString_ << "(check available)" << private_.rs_;
+      lsDebug() << LogStream::Color::Red << private_.errorString << "(check available)" << private_.rs;
       close();
       return;
     }
@@ -565,18 +565,18 @@ void AbstractSocket::pollEvent(int _e) {
   }
 #if defined EPOLL_EDGE_TRIGGERED || defined IO_URING_WAIT
   if (_e & 0x2000) {
-    private_.errorString_ = "Connection closed";
-    private_.error_ = Closed;
+    private_.errorString = "Connection closed";
+    private_.error = Closed;
     close();
     return;
   }
 #endif
   if (_e & AbstractThread::PollOut) {
     writeEvent();
-    if (private_.wda_.empty()) {
+    if (private_.wda.empty()) {
     WDA_EMPTY:
       thread_->modifyPollDescriptor(fd_, AbstractThread::PollIn);
-      private_.flags_ &= ~0x80;
+      private_.flags &= ~0x80;
       trace() << LogStream::Color::Magenta << "(AbstractThread::PollIn)";
       if (state_ == State::Closing) {
         shutdown(fd_, SHUT_RDWR);
@@ -584,25 +584,25 @@ void AbstractSocket::pollEvent(int _e) {
       }
       return;
     }
-    int r = (private_.flags_ & Network) ? AbstractSocket::write_fd(private_.wda_.data(), private_.wda_.size()) : write_fd(private_.wda_.data(), private_.wda_.size());
+    int r = (private_.flags & Network) ? AbstractSocket::write_fd(private_.wda.data(), private_.wda.size()) : write_fd(private_.wda.data(), private_.wda.size());
     if (r > 0) {
-      if (r < static_cast<int>(private_.wda_.size())) {
-        private_.wda_.erase(private_.wda_.begin(), private_.wda_.begin() + r);
+      if (r < static_cast<int>(private_.wda.size())) {
+        private_.wda.erase(private_.wda.begin(), private_.wda.begin() + r);
         return;
       }
-      private_.wda_.clear();
+      private_.wda.clear();
       writeEvent();
-      if (private_.wda_.empty()) goto WDA_EMPTY;
+      if (private_.wda.empty()) goto WDA_EMPTY;
       return;
     }
     if (r < 0) {
       if (errno == EAGAIN) {
-        lsDebug() << LogStream::Color::Red << "try again" << private_.wda_.size();
+        lsDebug() << LogStream::Color::Red << "try again" << private_.wda.size();
         return;
       }
-      private_.errorString_ = "Write error";
-      private_.error_ = Write;
-      lsWarning() << LogStream::Color::Red << private_.errorString_ << r;
+      private_.errorString = "Write error";
+      private_.error = Write;
+      lsWarning() << LogStream::Color::Red << private_.errorString << r;
       close();
     }
   }
