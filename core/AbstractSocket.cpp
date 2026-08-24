@@ -276,10 +276,7 @@ void AbstractSocket::disconnect() {
   state_ = State::Closing;
   stateEvent();
   trace() << LogStream::Color::Red << fd_;
-  if (private_.wda.empty()) {
-    shutdown(fd_, SHUT_RDWR);
-    close();
-  }
+  if (private_.wda.empty()) shutdown(fd_, SHUT_RDWR);
 }
 
 DataArray &AbstractSocket::peek() {
@@ -506,7 +503,7 @@ void AbstractSocket::pollEvent(int _e) {
     incomingEvent();
     return;
   }
-  if (_e & (AbstractThread::PollHup | AbstractThread::PollErr)) {
+  if (state_ != State::Closing && (_e & (AbstractThread::PollHup | AbstractThread::PollErr))) {
     private_.errorString = "Connection refused";
     private_.error = Refused;
     lsDebug() << LogStream::Color::Red << private_.errorString << "(poll hup/error)" << static_cast<int>(_e);
