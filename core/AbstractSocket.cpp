@@ -277,6 +277,7 @@ void AbstractSocket::disconnect() {
   stateEvent();
   trace() << LogStream::Color::Red << fd_;
   if (private_.wda.empty()) {
+    thread_->removePollDescriptor(fd_);
     shutdown(fd_, SHUT_RDWR);
     close();
   }
@@ -356,7 +357,7 @@ int AbstractSocket::write(const DataArray &_da) { return write(_da.data(), _da.s
 
 void AbstractSocket::close() {
   if (fd_ == -1) return;
-  thread_->removePollDescriptor(fd_);
+  if (state_ != State::Closing) thread_->removePollDescriptor(fd_);
   close_fd(fd_);
   lsTrace() << LogStream::Color::Red << fd_;
   changeDescriptor(-1);
@@ -579,6 +580,7 @@ void AbstractSocket::pollEvent(int _e) {
       private_.flags &= ~0x80;
       trace() << LogStream::Color::Magenta << "(AbstractThread::PollIn)";
       if (state_ == State::Closing) {
+        thread_->removePollDescriptor(fd_);
         shutdown(fd_, SHUT_RDWR);
         close();
       }
