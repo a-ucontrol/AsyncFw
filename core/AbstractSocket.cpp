@@ -503,9 +503,15 @@ void AbstractSocket::pollEvent(int _e) {
     incomingEvent();
     return;
   }
-  if (state_ != State::Closing && (_e & (AbstractThread::PollHup | AbstractThread::PollErr))) {
-    private_.errorString = "Connection refused";
-    private_.error = Refused;
+  if (_e & (AbstractThread::PollHup | AbstractThread::PollErr)) {
+    if (state_ == State::Closing) {
+      warning_if(AbstractSocket::read_available_fd() > 0) << LogStream::Color::Red << "socket not empty in closing state";
+      private_.errorString = "Connection closed";
+      private_.error = Closed;
+    } else {
+      private_.errorString = "Connection refused";
+      private_.error = Refused;
+    }
     lsDebug() << LogStream::Color::Red << private_.errorString << "(poll hup/error)" << static_cast<int>(_e);
     close();
     return;
