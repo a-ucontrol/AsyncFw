@@ -1036,7 +1036,7 @@ bool AbstractThread::appendPollDescriptor(int fd, PollEvents events, AbstractPol
     private_.poll_tasks.insert(it, _d);
     io_uring_prep_poll_add(sqe, fd, events);
     io_uring_sqe_set_data(sqe, _d);
-    io_uring_submit(&private_.ring);
+    if (!private_.wake_) io_uring_submit(&private_.ring);
   }
 #endif
   trace() << _d << fd << static_cast<int>(events);
@@ -1100,7 +1100,7 @@ bool AbstractThread::modifyPollDescriptor(int fd, PollEvents events) {
     }
     io_uring_prep_cancel(sqe, *it, 0);
     sqe->flags |= IOSQE_CQE_SKIP_SUCCESS;
-    io_uring_submit(&private_.ring);
+    if (!private_.wake_) io_uring_submit(&private_.ring);
   }
 #endif
   trace() << fd << static_cast<int>(events);
