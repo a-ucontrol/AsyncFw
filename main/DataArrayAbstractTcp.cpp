@@ -86,6 +86,7 @@ void DataArrayAbstractTcp::Thread::initSocket(DataArraySocket *socket) {
 }
 
 void DataArrayAbstractTcp::Thread::destroySocket(DataArraySocket *socket) {
+  lsTrace() << LogStream::Color::Green << name() << LogStream::Color::Magenta << socket->fd_;
   socket->removeTimer();
   socket->close();
   socket->removeFromThread();
