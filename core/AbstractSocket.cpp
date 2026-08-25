@@ -558,7 +558,7 @@ void AbstractSocket::pollEvent(int _e) {
         private_.errorString = "Read error";
         private_.error = Read;
       }
-      lsDebug() << LogStream::Color::Red << private_.errorString << "(check available)" << private_.rs;
+      lsDebug() << LogStream::Color::Red << private_.errorString << "(check available)" << fd_ << private_.rs;
       close();
       return;
     }

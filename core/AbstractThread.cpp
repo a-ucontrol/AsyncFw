@@ -1110,6 +1110,7 @@ bool AbstractThread::modifyPollDescriptor(int fd, PollEvents events) {
 }
 
 void AbstractThread::removePollDescriptor(int fd) {
+  lsTrace() << fd;
 #ifdef POLL_WAIT
   AbstractTask *_t;
   {  //lock scope

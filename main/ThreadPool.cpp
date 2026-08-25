@@ -85,15 +85,15 @@ void AbstractThreadPool::appendThread(AbstractThreadPool::Thread *thread) {
   AbstractThread::LockGuard lock(mutex);
   std::vector<AbstractThreadPool::Thread *>::iterator it = std::lower_bound(threads_.begin(), threads_.end(), thread, Private::Compare());
   threads_.insert(it, thread);
-  lsTrace("threads: " + std::to_string(threads_.size()));
+  lsTrace() << '(' + thread->name() + ')' << "threads:" << threads_.size();
 }
 
 void AbstractThreadPool::removeThread(AbstractThreadPool::Thread *thread) {
   AbstractThread::LockGuard lock(mutex);
   std::vector<AbstractThreadPool::Thread *>::iterator it = std::lower_bound(threads_.begin(), threads_.end(), thread, Private::Compare());
   if (it != threads_.end() && (*it) == thread) threads_.erase(it);
-  else { lsDebug() << LogStream::Color::Red << "thread not found: (" + thread->name() + ')'; }
-  lsTrace("threads: " + std::to_string(threads_.size()));
+  else lsDebug() << LogStream::Color::Red << "thread not found: (" + thread->name() + ')';
+  lsTrace() << '(' + thread->name() + ')' << "threads:" << threads_.size();
 }
 
 AbstractThreadPool::Thread::Thread(const std::string &name, AbstractThreadPool *_pool) : AsyncFw::Thread(name), pool(_pool) {
@@ -113,7 +113,7 @@ void AbstractThreadPool::Thread::destroy() {
     (*_t)();
     delete _t;
   }
-  lsTrace();
+  lsTrace() << '(' + name() + ')';
 }
 
 Instance<ThreadPool> ThreadPool::instance_ {"ThreadPool"};
@@ -122,13 +122,13 @@ ThreadPool::ThreadPool(const std::string &name, int workThreads) : AbstractThrea
 
 ThreadPool::~ThreadPool() {
   if (instance_.value == this) instance_.value = nullptr;
-  lsTrace() << "destroyed" << name();
+  lsTrace() << '(' + name() + ')';
 }
 
 ThreadPool::Thread *ThreadPool::createThread(const std::string &_name) {
   Thread *thread = new Thread((!_name.empty()) ? _name : name() + " thread", this);
   thread->start();
-  lsTrace() << "created thread (" + thread->name() + ')';
+  lsTrace() << '(' + thread->name() + ')';
   return thread;
 }
 
@@ -138,7 +138,7 @@ void ThreadPool::removeThread(AbstractThreadPool::Thread *thread) {
     if (it != workThreads_.end()) { workThreads_.erase(it); }
   }, true);
   AbstractThreadPool::removeThread(thread);
-  lsTrace();
+  lsTrace() << '(' + thread->name() + ')';
 }
 
 void ThreadPool::quit() {
