@@ -304,10 +304,12 @@ AbstractThread::Private::List::~List() {
 
 AbstractThread::AbstractThread(const std::string &name) : private_(*new Private) {
   private_.name = name;
-  LockGuard lock(Private::list.mutex);
-  std::vector<AbstractThread *>::iterator it = std::lower_bound(Private::list.begin(), Private::list.end(), this, Private::Compare());
-  Private::list.insert(it, this);
-  trace() << "threads:" << std::to_string(Private::list.size());
+  {  //lock scope
+    LockGuard lock(Private::list.mutex);
+    std::vector<AbstractThread *>::iterator it = std::lower_bound(Private::list.begin(), Private::list.end(), this, Private::Compare());
+    Private::list.insert(it, this);
+    trace() << "threads:" << std::to_string(Private::list.size());
+  }
 #ifdef POLL_WAIT
   pollfd _w;
   _w.events = POLLIN;
@@ -497,6 +499,7 @@ void AbstractThread::waitFinished() const {
 }
 
 void AbstractThread::setId() {
+  LockGuard lock_list(Private::list.mutex);
   std::thread::id _id = std::this_thread::get_id();
   std::vector<AbstractThread *>::iterator it = std::lower_bound(Private::list.begin(), Private::list.end(), this, Private::Compare());
   if (it != Private::list.end() && (*it) == this) {
@@ -511,6 +514,7 @@ void AbstractThread::setId() {
 }
 
 void AbstractThread::clearId() {
+  LockGuard lock_list(Private::list.mutex);
   std::thread::id _id = std::this_thread::get_id();
   std::vector<AbstractThread *>::iterator it = std::lower_bound(Private::list.begin(), Private::list.end(), _id, Private::Compare());
   if (it != Private::list.end() && (*it) == this && private_.id == _id) {
@@ -883,14 +887,12 @@ void AbstractThread::start() {
   private_.state = Private::WaitStarted;
   std::thread t {[this]() {
     {  //lock scope
-      LockGuard lock_list(Private::list.mutex);
       LockGuard lock(private_.mutex);
       setId();
       private_.condition_variable.notify_all();
     }
     exec();
     {  //lock scope
-      LockGuard lock_list(Private::list.mutex);
       LockGuard lock(private_.mutex);
       clearId();
       private_.state = Private::Finished;
