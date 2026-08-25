@@ -89,9 +89,12 @@ void DataArrayAbstractTcp::Thread::destroySocket(DataArraySocket *socket) {
   socket->removeTimer();
   socket->close();
   socket->removeFromThread();
-  if (sockets_.empty()) {
-    OPENSSL_thread_stop();
-    destroy();
-  }
-  if (!pool->thread()->invoke([socket]() { socket->destroy(); })) socket->destroy();
+  if (!pool->thread()->invoke([this, socket]() {
+    socket->destroy();
+    if (sockets_.empty()) {
+      OPENSSL_thread_stop();
+      destroy();
+    }
+  }))
+    socket->destroy();
 }
