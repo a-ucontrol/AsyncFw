@@ -48,9 +48,9 @@
 </g>
 </g>
 <!-- Node1&#45;&gt;Node7 -->
-<g id="edge39_Node000001_Node000007" class="edge">
+<g id="edge38_Node000001_Node000007" class="edge">
 <title>Node1&#45;&gt;Node7</title>
-<g id="a_edge39_Node000001_Node000007"><a xlink:title=" ">
+<g id="a_edge38_Node000001_Node000007"><a xlink:title=" ">
 <path fill="none" stroke="#63b8ff" d="M891.96,-461.2C788.61,-469.68 604.92,-484.75 507.76,-492.72"/>
 <polygon fill="#63b8ff" stroke="#63b8ff" points="892.04,-464.7 901.72,-460.4 891.47,-457.73 892.04,-464.7"/>
 </a>
@@ -75,19 +75,19 @@
 </a>
 </g>
 </g>
-<!-- Node36 -->
-<g id="Node000036" class="node">
-<title>Node36</title>
-<g id="a_Node000036"><a xlink:href="classAsyncFw_1_1Thread.html#afc5e422090767dd84020381fb9a4d490" target="_top" xlink:title="Constructs a thread.">
+<!-- Node35 -->
+<g id="Node000035" class="node">
+<title>Node35</title>
+<g id="a_Node000035"><a xlink:href="classAsyncFw_1_1Thread.html#afc5e422090767dd84020381fb9a4d490" target="_top" xlink:title="Constructs a thread.">
 <polygon fill="white" stroke="#666666" points="867.12,-427 737.88,-427 737.88,-407 867.12,-407 867.12,-427"/>
 <text xml:space="preserve" text-anchor="middle" x="802.5" y="-413.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::Thread::Thread</text>
 </a>
 </g>
 </g>
-<!-- Node1&#45;&gt;Node36 -->
-<g id="edge37_Node000001_Node000036" class="edge">
-<title>Node1&#45;&gt;Node36</title>
-<g id="a_edge37_Node000001_Node000036"><a xlink:title=" ">
+<!-- Node1&#45;&gt;Node35 -->
+<g id="edge36_Node000001_Node000035" class="edge">
+<title>Node1&#45;&gt;Node35</title>
+<g id="a_edge36_Node000001_Node000035"><a xlink:title=" ">
 <path fill="none" stroke="#63b8ff" d="M892.32,-437.58C877.32,-434.1 862.01,-430.56 848.43,-427.41"/>
 <polygon fill="#63b8ff" stroke="#63b8ff" points="891.15,-440.9 901.68,-439.75 892.73,-434.08 891.15,-440.9"/>
 </a>
@@ -188,9 +188,9 @@
 </g>
 </g>
 <!-- Node8&#45;&gt;Node7 -->
-<g id="edge36_Node000008_Node000007" class="edge">
+<g id="edge35_Node000008_Node000007" class="edge">
 <title>Node8&#45;&gt;Node7</title>
-<g id="a_edge36_Node000008_Node000007"><a xlink:title=" ">
+<g id="a_edge35_Node000008_Node000007"><a xlink:title=" ">
 <path fill="none" stroke="#63b8ff" d="M792.02,-281.18C777.96,-317.53 748.09,-381.51 701.5,-417 646.76,-458.7 618.2,-438.75 552.75,-460 536.57,-465.25 532.8,-467.37 516.75,-473 508.75,-475.81 500.24,-478.75 491.96,-481.58"/>
 <polygon fill="#63b8ff" stroke="#63b8ff" points="795.29,-282.43 795.51,-271.84 788.73,-279.98 795.29,-282.43"/>
 </a>
@@ -233,51 +233,70 @@
 </a>
 </g>
 </g>
-<!-- Node22 -->
-<g id="Node000022" class="node">
-<title>Node22</title>
-<g id="a_Node000022"><a xlink:href="classAsyncFw_1_1HttpServer_1_1Response.html#afa24643371f00fe11d7df0f9caae4134" target="_top" xlink:title="Destroys the response object and cleans up its allocated resources.">
+<!-- Node21 -->
+<g id="Node000021" class="node">
+<title>Node21</title>
+<g id="a_Node000021"><a xlink:href="classAsyncFw_1_1HttpServer_1_1Response.html#afa24643371f00fe11d7df0f9caae4134" target="_top" xlink:title="Destroys the response object and cleans up its allocated resources.">
 <polygon fill="white" stroke="#666666" points="682.38,-270 571.88,-270 571.88,-238 682.38,-238 682.38,-270"/>
 <text xml:space="preserve" text-anchor="start" x="579.88" y="-256.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::HttpServer</text>
 <text xml:space="preserve" text-anchor="middle" x="627.12" y="-244.5" font-family="Helvetica,sans-Serif" font-size="10.00">::Response::destroy</text>
 </a>
 </g>
 </g>
-<!-- Node8&#45;&gt;Node22 -->
-<g id="edge22_Node000008_Node000022" class="edge">
-<title>Node8&#45;&gt;Node22</title>
-<g id="a_edge22_Node000008_Node000022"><a xlink:title=" ">
+<!-- Node8&#45;&gt;Node21 -->
+<g id="edge21_Node000008_Node000021" class="edge">
+<title>Node8&#45;&gt;Node21</title>
+<g id="a_edge21_Node000008_Node000021"><a xlink:title=" ">
 <path fill="none" stroke="#63b8ff" d="M725.93,-254C711.43,-254 696.5,-254 682.82,-254"/>
 <polygon fill="#63b8ff" stroke="#63b8ff" points="725.92,-257.5 735.92,-254 725.92,-250.5 725.92,-257.5"/>
 </a>
 </g>
 </g>
-<!-- Node26 -->
-<g id="Node000026" class="node">
-<title>Node26</title>
-<g id="a_Node000026"><a xlink:href="classAsyncFw_1_1HttpServer.html#ad7dae50cc3787112980fa7075a60f811" target="_top" xlink:title="Disconnects a specific client socket and clears it from the internally managed pool.">
+<!-- Node25 -->
+<g id="Node000025" class="node">
+<title>Node25</title>
+<g id="a_Node000025"><a xlink:href="classAsyncFw_1_1HttpServer.html#ad7dae50cc3787112980fa7075a60f811" target="_top" xlink:title="Disconnects a specific client socket and clears it from the internally managed pool.">
 <polygon fill="white" stroke="#666666" points="683.5,-170 570.75,-170 570.75,-138 683.5,-138 683.5,-170"/>
 <text xml:space="preserve" text-anchor="start" x="578.75" y="-156.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::HttpServer</text>
 <text xml:space="preserve" text-anchor="middle" x="627.12" y="-144.5" font-family="Helvetica,sans-Serif" font-size="10.00">::disconnectFromHost</text>
 </a>
 </g>
 </g>
-<!-- Node8&#45;&gt;Node26 -->
-<g id="edge26_Node000008_Node000026" class="edge">
-<title>Node8&#45;&gt;Node26</title>
-<g id="a_edge26_Node000008_Node000026"><a xlink:title=" ">
+<!-- Node8&#45;&gt;Node25 -->
+<g id="edge25_Node000008_Node000025" class="edge">
+<title>Node8&#45;&gt;Node25</title>
+<g id="a_edge25_Node000008_Node000025"><a xlink:title=" ">
 <path fill="none" stroke="#63b8ff" d="M775,-230.45C755.7,-214.24 728.34,-193.17 701.5,-179 695.55,-175.86 689.13,-172.99 682.64,-170.41"/>
 <polygon fill="#63b8ff" stroke="#63b8ff" points="772.5,-232.92 782.38,-236.75 777.04,-227.59 772.5,-232.92"/>
+</a>
+</g>
+</g>
+<!-- Node28 -->
+<g id="Node000028" class="node">
+<title>Node28</title>
+<g id="a_Node000028"><a xlink:href="classAsyncFw_1_1DataArrayTcpClient.html#a380c907a396d306611fe7dc21f35f74f" target="_top" xlink:title="Executes a synchronous request&#45;response data exchange over a specific socket.">
+<polygon fill="white" stroke="#666666" points="701.12,-220 553.12,-220 553.12,-188 701.12,-188 701.12,-220"/>
+<text xml:space="preserve" text-anchor="start" x="561.12" y="-206.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::DataArrayTcpClient</text>
+<text xml:space="preserve" text-anchor="middle" x="627.12" y="-194.5" font-family="Helvetica,sans-Serif" font-size="10.00">::exchange</text>
+</a>
+</g>
+</g>
+<!-- Node8&#45;&gt;Node28 -->
+<g id="edge28_Node000008_Node000028" class="edge">
+<title>Node8&#45;&gt;Node28</title>
+<g id="a_edge28_Node000008_Node000028"><a xlink:title=" ">
+<path fill="none" stroke="#63b8ff" d="M733.81,-234.48C717.77,-229.85 700.83,-224.97 685.32,-220.49"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="732.7,-237.8 743.28,-237.21 734.64,-231.07 732.7,-237.8"/>
 </a>
 </g>
 </g>
 <!-- Node29 -->
 <g id="Node000029" class="node">
 <title>Node29</title>
-<g id="a_Node000029"><a xlink:href="classAsyncFw_1_1DataArrayTcpClient.html#a380c907a396d306611fe7dc21f35f74f" target="_top" xlink:title="Executes a synchronous request&#45;response data exchange over a specific socket.">
-<polygon fill="white" stroke="#666666" points="701.12,-220 553.12,-220 553.12,-188 701.12,-188 701.12,-220"/>
-<text xml:space="preserve" text-anchor="start" x="561.12" y="-206.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::DataArrayTcpClient</text>
-<text xml:space="preserve" text-anchor="middle" x="627.12" y="-194.5" font-family="Helvetica,sans-Serif" font-size="10.00">::exchange</text>
+<g id="a_Node000029"><a xlink:href="classAsyncFw_1_1FileSystemWatcher.html#acd061a60fbaea1bb3c7d020e0da99039" target="_top" xlink:title="Constructs a FileSystemWatcher and optionally starts monitoring given paths.">
+<polygon fill="white" stroke="#666666" points="701.5,-120 552.75,-120 552.75,-88 701.5,-88 701.5,-120"/>
+<text xml:space="preserve" text-anchor="start" x="560.75" y="-106.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::FileSystemWatcher</text>
+<text xml:space="preserve" text-anchor="middle" x="627.12" y="-94.5" font-family="Helvetica,sans-Serif" font-size="10.00">::FileSystemWatcher</text>
 </a>
 </g>
 </g>
@@ -285,55 +304,55 @@
 <g id="edge29_Node000008_Node000029" class="edge">
 <title>Node8&#45;&gt;Node29</title>
 <g id="a_edge29_Node000008_Node000029"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M733.81,-234.48C717.77,-229.85 700.83,-224.97 685.32,-220.49"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="732.7,-237.8 743.28,-237.21 734.64,-231.07 732.7,-237.8"/>
-</a>
-</g>
-</g>
-<!-- Node30 -->
-<g id="Node000030" class="node">
-<title>Node30</title>
-<g id="a_Node000030"><a xlink:href="classAsyncFw_1_1FileSystemWatcher.html#acd061a60fbaea1bb3c7d020e0da99039" target="_top" xlink:title="Constructs a FileSystemWatcher and optionally starts monitoring given paths.">
-<polygon fill="white" stroke="#666666" points="701.5,-120 552.75,-120 552.75,-88 701.5,-88 701.5,-120"/>
-<text xml:space="preserve" text-anchor="start" x="560.75" y="-106.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::FileSystemWatcher</text>
-<text xml:space="preserve" text-anchor="middle" x="627.12" y="-94.5" font-family="Helvetica,sans-Serif" font-size="10.00">::FileSystemWatcher</text>
-</a>
-</g>
-</g>
-<!-- Node8&#45;&gt;Node30 -->
-<g id="edge30_Node000008_Node000030" class="edge">
-<title>Node8&#45;&gt;Node30</title>
-<g id="a_edge30_Node000008_Node000030"><a xlink:title=" ">
 <path fill="none" stroke="#63b8ff" d="M787,-228.17C769.97,-200.02 739.18,-155.46 701.5,-129 696.87,-125.75 691.79,-122.9 686.53,-120.39"/>
 <polygon fill="#63b8ff" stroke="#63b8ff" points="783.78,-229.6 791.88,-236.43 789.81,-226.04 783.78,-229.6"/>
 </a>
 </g>
 </g>
-<!-- Node32 -->
-<g id="Node000032" class="node">
-<title>Node32</title>
-<g id="a_Node000032"><a xlink:href="classAsyncFw_1_1MulticastDns.html#ab9bfb41e98cd4ecf1cc63f8acd023afd" target="_top" xlink:title="Initializes the mDNS node with a specific target service type (e.g., &quot;_http._tcp&quot;).">
+<!-- Node31 -->
+<g id="Node000031" class="node">
+<title>Node31</title>
+<g id="a_Node000031"><a xlink:href="classAsyncFw_1_1MulticastDns.html#ab9bfb41e98cd4ecf1cc63f8acd023afd" target="_top" xlink:title="Initializes the mDNS node with a specific target service type (e.g., &quot;_http._tcp&quot;).">
 <polygon fill="white" stroke="#666666" points="687.62,-32 566.62,-32 566.62,0 687.62,0 687.62,-32"/>
 <text xml:space="preserve" text-anchor="start" x="574.62" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::MulticastDns</text>
 <text xml:space="preserve" text-anchor="middle" x="627.12" y="-6.5" font-family="Helvetica,sans-Serif" font-size="10.00">::MulticastDns</text>
 </a>
 </g>
 </g>
-<!-- Node8&#45;&gt;Node32 -->
-<g id="edge32_Node000008_Node000032" class="edge">
-<title>Node8&#45;&gt;Node32</title>
-<g id="a_edge32_Node000008_Node000032"><a xlink:title=" ">
+<!-- Node8&#45;&gt;Node31 -->
+<g id="edge31_Node000008_Node000031" class="edge">
+<title>Node8&#45;&gt;Node31</title>
+<g id="a_edge31_Node000008_Node000031"><a xlink:title=" ">
 <path fill="none" stroke="#63b8ff" d="M795.92,-226.55C785.35,-181.49 758.22,-91.77 701.5,-41 697.49,-37.41 692.94,-34.33 688.12,-31.69"/>
 <polygon fill="#63b8ff" stroke="#63b8ff" points="792.44,-227.03 798.03,-236.03 799.27,-225.5 792.44,-227.03"/>
+</a>
+</g>
+</g>
+<!-- Node33 -->
+<g id="Node000033" class="node">
+<title>Node33</title>
+<g id="a_Node000033"><a xlink:href="classAsyncFw_1_1Log.html#a6b0ce40bc2e34f4b435894701194dc26" target="_top" xlink:title="Persists log entries into the underlying Rrd buffer and manages automated disk flushing.">
+<polygon fill="white" stroke="#666666" points="683.12,-70 571.12,-70 571.12,-50 683.12,-50 683.12,-70"/>
+<text xml:space="preserve" text-anchor="middle" x="627.12" y="-56.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::Log::output</text>
+</a>
+</g>
+</g>
+<!-- Node8&#45;&gt;Node33 -->
+<g id="edge33_Node000008_Node000033" class="edge">
+<title>Node8&#45;&gt;Node33</title>
+<g id="a_edge33_Node000008_Node000033"><a xlink:title=" ">
+<path fill="none" stroke="#63b8ff" d="M793.4,-226.63C780.47,-187.78 751.39,-117.12 701.5,-79 696.06,-74.85 689.81,-71.59 683.29,-69.05"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="790.07,-227.7 796.44,-236.16 796.74,-225.57 790.07,-227.7"/>
 </a>
 </g>
 </g>
 <!-- Node34 -->
 <g id="Node000034" class="node">
 <title>Node34</title>
-<g id="a_Node000034"><a xlink:href="classAsyncFw_1_1Log.html#a6b0ce40bc2e34f4b435894701194dc26" target="_top" xlink:title="Persists log entries into the underlying Rrd buffer and manages automated disk flushing.">
-<polygon fill="white" stroke="#666666" points="683.12,-70 571.12,-70 571.12,-50 683.12,-50 683.12,-70"/>
-<text xml:space="preserve" text-anchor="middle" x="627.12" y="-56.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::Log::output</text>
+<g id="a_Node000034"><a xlink:href="classAsyncFw_1_1SystemProcess.html#acf60a585a89304fdb3580e9add06d155" target="_top" xlink:title="Constructs a new SystemProcess manager.">
+<polygon fill="white" stroke="#666666" points="693.62,-370 560.62,-370 560.62,-338 693.62,-338 693.62,-370"/>
+<text xml:space="preserve" text-anchor="start" x="568.62" y="-356.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::SystemProcess</text>
+<text xml:space="preserve" text-anchor="middle" x="627.12" y="-344.5" font-family="Helvetica,sans-Serif" font-size="10.00">::SystemProcess</text>
 </a>
 </g>
 </g>
@@ -341,25 +360,6 @@
 <g id="edge34_Node000008_Node000034" class="edge">
 <title>Node8&#45;&gt;Node34</title>
 <g id="a_edge34_Node000008_Node000034"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M793.4,-226.63C780.47,-187.78 751.39,-117.12 701.5,-79 696.06,-74.85 689.81,-71.59 683.29,-69.05"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="790.07,-227.7 796.44,-236.16 796.74,-225.57 790.07,-227.7"/>
-</a>
-</g>
-</g>
-<!-- Node35 -->
-<g id="Node000035" class="node">
-<title>Node35</title>
-<g id="a_Node000035"><a xlink:href="classAsyncFw_1_1SystemProcess.html#acf60a585a89304fdb3580e9add06d155" target="_top" xlink:title="Constructs a new SystemProcess manager.">
-<polygon fill="white" stroke="#666666" points="693.62,-370 560.62,-370 560.62,-338 693.62,-338 693.62,-370"/>
-<text xml:space="preserve" text-anchor="start" x="568.62" y="-356.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::SystemProcess</text>
-<text xml:space="preserve" text-anchor="middle" x="627.12" y="-344.5" font-family="Helvetica,sans-Serif" font-size="10.00">::SystemProcess</text>
-</a>
-</g>
-</g>
-<!-- Node8&#45;&gt;Node35 -->
-<g id="edge35_Node000008_Node000035" class="edge">
-<title>Node8&#45;&gt;Node35</title>
-<g id="a_edge35_Node000008_Node000035"><a xlink:title=" ">
 <path fill="none" stroke="#63b8ff" d="M775,-277.55C755.7,-293.76 728.34,-314.83 701.5,-329 695.55,-332.14 689.13,-335.01 682.64,-337.59"/>
 <polygon fill="#63b8ff" stroke="#63b8ff" points="777.04,-280.41 782.38,-271.25 772.5,-275.08 777.04,-280.41"/>
 </a>
@@ -403,21 +403,21 @@
 </a>
 </g>
 </g>
-<!-- Node16 -->
-<g id="Node000016" class="node">
-<title>Node16</title>
-<g id="a_Node000016"><a xlink:href="classAsyncFw_1_1Rrd.html#a2fd20dd3470a11ef179577c565c333f1" target="_top" xlink:title="Constructs a persistent circular archive database with physical disk backing.">
-<polygon fill="white" stroke="#666666" points="492.75,-345 392,-345 392,-325 492.75,-325 492.75,-345"/>
-<text xml:space="preserve" text-anchor="middle" x="442.38" y="-331.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::Rrd::Rrd</text>
+<!-- Node15 -->
+<g id="Node000015" class="node">
+<title>Node15</title>
+<g id="a_Node000015"><a xlink:href="classAsyncFw_1_1Rrd.html#a2fd20dd3470a11ef179577c565c333f1" target="_top" xlink:title="Constructs a persistent circular archive database with physical disk backing.">
+<polygon fill="white" stroke="#666666" points="492.75,-364 392,-364 392,-344 492.75,-344 492.75,-364"/>
+<text xml:space="preserve" text-anchor="middle" x="442.38" y="-350.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::Rrd::Rrd</text>
 </a>
 </g>
 </g>
-<!-- Node10&#45;&gt;Node16 -->
-<g id="edge16_Node000010_Node000016" class="edge">
-<title>Node10&#45;&gt;Node16</title>
-<g id="a_edge16_Node000010_Node000016"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M570.96,-384.54C564.78,-382.79 558.61,-380.93 552.75,-379 522.42,-369.02 488.44,-354.86 466.52,-345.33"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="569.98,-387.9 580.55,-387.16 571.83,-381.15 569.98,-387.9"/>
+<!-- Node10&#45;&gt;Node15 -->
+<g id="edge15_Node000010_Node000015" class="edge">
+<title>Node10&#45;&gt;Node15</title>
+<g id="a_edge15_Node000010_Node000015"><a xlink:title=" ">
+<path fill="none" stroke="#63b8ff" d="M571.91,-384.95C544.7,-378.4 512.2,-370.57 486.69,-364.43"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="570.8,-388.28 581.34,-387.22 572.44,-381.47 570.8,-388.28"/>
 </a>
 </g>
 </g>
@@ -425,9 +425,9 @@
 <g id="Node000013" class="node">
 <title>Node13</title>
 <g id="a_Node000013"><a xlink:href="classAsyncFw_1_1HttpSocket.html#a8268467d3581a4d393e9ccd288de32ff" target="_top" xlink:title="Schedules the socket for deferred asynchronous destruction.">
-<polygon fill="white" stroke="#666666" points="314.38,-483 201.62,-483 201.62,-451 314.38,-451 314.38,-483"/>
-<text xml:space="preserve" text-anchor="start" x="209.62" y="-469.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::HttpSocket</text>
-<text xml:space="preserve" text-anchor="middle" x="258" y="-457.5" font-family="Helvetica,sans-Serif" font-size="10.00">::destroy</text>
+<polygon fill="white" stroke="#666666" points="314.38,-462 201.62,-462 201.62,-430 314.38,-430 314.38,-462"/>
+<text xml:space="preserve" text-anchor="start" x="209.62" y="-448.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::HttpSocket</text>
+<text xml:space="preserve" text-anchor="middle" x="258" y="-436.5" font-family="Helvetica,sans-Serif" font-size="10.00">::destroy</text>
 </a>
 </g>
 </g>
@@ -435,27 +435,8 @@
 <g id="edge13_Node000012_Node000013" class="edge">
 <title>Node12&#45;&gt;Node13</title>
 <g id="a_edge13_Node000012_Node000013"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M379.02,-418.49C375.27,-419.95 371.57,-421.46 368,-423 351.39,-430.16 348.61,-434.83 332,-442 325.11,-444.98 317.75,-447.84 310.44,-450.51"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="380.13,-421.81 388.25,-415.01 377.66,-415.26 380.13,-421.81"/>
-</a>
-</g>
-</g>
-<!-- Node15 -->
-<g id="Node000015" class="node">
-<title>Node15</title>
-<g id="a_Node000015"><a xlink:href="classAsyncFw_1_1DataArrayAbstractTcp_1_1Thread.html#ab6df6de1f9828a772e5968477ce5dffa" target="_top" xlink:title="Performs cleanup routines and safely removes a socket from the thread loop.">
-<polygon fill="white" stroke="#666666" points="330.12,-433 185.88,-433 185.88,-401 330.12,-401 330.12,-433"/>
-<text xml:space="preserve" text-anchor="start" x="193.88" y="-419.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::DataArrayAbstract</text>
-<text xml:space="preserve" text-anchor="middle" x="258" y="-407.5" font-family="Helvetica,sans-Serif" font-size="10.00">Tcp::Thread::destroySocket</text>
-</a>
-</g>
-</g>
-<!-- Node12&#45;&gt;Node15 -->
-<g id="edge15_Node000012_Node000015" class="edge">
-<title>Node12&#45;&gt;Node15</title>
-<g id="a_edge15_Node000012_Node000015"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M365.19,-405.94C353.67,-407.14 341.83,-408.37 330.42,-409.56"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="365.47,-409.43 375.06,-404.91 364.75,-402.46 365.47,-409.43"/>
+<path fill="none" stroke="#63b8ff" d="M367.96,-417.32C350.2,-422 331.5,-426.92 314.71,-431.34"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="368.62,-420.77 377.4,-414.84 366.84,-414 368.62,-420.77"/>
 </a>
 </g>
 </g>
@@ -463,9 +444,9 @@
 <g id="Node000014" class="node">
 <title>Node14</title>
 <g id="a_Node000014"><a xlink:href="classAsyncFw_1_1HttpServer_1_1TcpSocket.html#a41557b69e30e25b97cbdda210afb7657" target="_top" xlink:title="Constructs a new TcpSocket associated with the parent server.">
-<polygon fill="white" stroke="#666666" points="133.75,-483 14.25,-483 14.25,-451 133.75,-451 133.75,-483"/>
-<text xml:space="preserve" text-anchor="start" x="22.25" y="-469.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::HttpServer</text>
-<text xml:space="preserve" text-anchor="middle" x="74" y="-457.5" font-family="Helvetica,sans-Serif" font-size="10.00">::TcpSocket::TcpSocket</text>
+<polygon fill="white" stroke="#666666" points="133.75,-462 14.25,-462 14.25,-430 133.75,-430 133.75,-462"/>
+<text xml:space="preserve" text-anchor="start" x="22.25" y="-448.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::HttpServer</text>
+<text xml:space="preserve" text-anchor="middle" x="74" y="-436.5" font-family="Helvetica,sans-Serif" font-size="10.00">::TcpSocket::TcpSocket</text>
 </a>
 </g>
 </g>
@@ -473,17 +454,89 @@
 <g id="edge14_Node000013_Node000014" class="edge">
 <title>Node13&#45;&gt;Node14</title>
 <g id="a_edge14_Node000013_Node000014"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M189.91,-467C171.59,-467 151.88,-467 134.04,-467"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="189.89,-470.5 199.89,-467 189.89,-463.5 189.89,-470.5"/>
+<path fill="none" stroke="#63b8ff" d="M189.91,-446C171.59,-446 151.88,-446 134.04,-446"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="189.89,-449.5 199.89,-446 189.89,-442.5 189.89,-449.5"/>
+</a>
+</g>
+</g>
+<!-- Node16 -->
+<g id="Node000016" class="node">
+<title>Node16</title>
+<g id="a_Node000016"><a xlink:href="classAsyncFw_1_1Log.html#a832d13f4e9231eee37d8decb5b9b96d7" target="_top" xlink:title="Constructs a persistent log system with a specific circular database size and file name context.">
+<polygon fill="white" stroke="#666666" points="308.38,-412 207.62,-412 207.62,-392 308.38,-392 308.38,-412"/>
+<text xml:space="preserve" text-anchor="middle" x="258" y="-398.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::Log::Log</text>
+</a>
+</g>
+</g>
+<!-- Node15&#45;&gt;Node16 -->
+<g id="edge16_Node000015_Node000016" class="edge">
+<title>Node15&#45;&gt;Node16</title>
+<g id="a_edge16_Node000015_Node000016"><a xlink:title=" ">
+<path fill="none" stroke="#63b8ff" d="M389.68,-367.26C382.39,-369.17 375,-371.12 368,-373 351.96,-377.3 348.04,-378.69 332,-383 321.5,-385.82 310.14,-388.81 299.57,-391.57"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="390.33,-370.71 399.13,-364.81 388.57,-363.94 390.33,-370.71"/>
+</a>
+</g>
+</g>
+<!-- Node18 -->
+<g id="Node000018" class="node">
+<title>Node18</title>
+<g id="a_Node000018"><a xlink:href="classAsyncFw_1_1Rrd.html#aa54ae298c96e9efe88b644931b12f734" target="_top" xlink:title="Constructs a minimal in&#45;memory anonymous circular database with default system tracking intervals.">
+<polygon fill="white" stroke="#666666" points="308.38,-374 207.62,-374 207.62,-354 308.38,-354 308.38,-374"/>
+<text xml:space="preserve" text-anchor="middle" x="258" y="-360.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::Rrd::Rrd</text>
+</a>
+</g>
+</g>
+<!-- Node15&#45;&gt;Node18 -->
+<g id="edge18_Node000015_Node000018" class="edge">
+<title>Node15&#45;&gt;Node18</title>
+<g id="a_edge18_Node000015_Node000018"><a xlink:title=" ">
+<path fill="none" stroke="#63b8ff" d="M380.07,-357.36C356.87,-358.63 330.78,-360.06 308.77,-361.27"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="380.24,-360.86 390.03,-356.82 379.85,-353.87 380.24,-360.86"/>
+</a>
+</g>
+</g>
+<!-- Node19 -->
+<g id="Node000019" class="node">
+<title>Node19</title>
+<g id="a_Node000019"><a xlink:href="classAsyncFw_1_1Rrd.html#aaea6a63444ab427f801be34f26d930d5" target="_top" xlink:title="Constructs a persistent circular archive database using default system tracking intervals.">
+<polygon fill="white" stroke="#666666" points="308.38,-336 207.62,-336 207.62,-316 308.38,-316 308.38,-336"/>
+<text xml:space="preserve" text-anchor="middle" x="258" y="-322.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::Rrd::Rrd</text>
+</a>
+</g>
+</g>
+<!-- Node15&#45;&gt;Node19 -->
+<g id="edge19_Node000015_Node000019" class="edge">
+<title>Node15&#45;&gt;Node19</title>
+<g id="a_edge19_Node000015_Node000019"><a xlink:title=" ">
+<path fill="none" stroke="#63b8ff" d="M380.38,-344.64C357.11,-341.06 330.88,-337.04 308.77,-333.64"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="379.63,-348.06 390.04,-346.12 380.69,-341.14 379.63,-348.06"/>
+</a>
+</g>
+</g>
+<!-- Node20 -->
+<g id="Node000020" class="node">
+<title>Node20</title>
+<g id="a_Node000020"><a xlink:href="classAsyncFw_1_1Rrd.html#a98c7829cc6177c80245cf95095deb3ba" target="_top" xlink:title="Constructs an in&#45;memory anonymous circular database without file serialization.">
+<polygon fill="white" stroke="#666666" points="308.38,-298 207.62,-298 207.62,-278 308.38,-278 308.38,-298"/>
+<text xml:space="preserve" text-anchor="middle" x="258" y="-284.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::Rrd::Rrd</text>
+</a>
+</g>
+</g>
+<!-- Node15&#45;&gt;Node20 -->
+<g id="edge20_Node000015_Node000020" class="edge">
+<title>Node15&#45;&gt;Node20</title>
+<g id="a_edge20_Node000015_Node000020"><a xlink:title=" ">
+<path fill="none" stroke="#63b8ff" d="M409.75,-338.9C388.17,-328.97 358.76,-316.17 332,-307 322.96,-303.9 313.13,-301.02 303.71,-298.49"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="408.05,-341.97 418.59,-343.01 411,-335.62 408.05,-341.97"/>
 </a>
 </g>
 </g>
 <!-- Node17 -->
 <g id="Node000017" class="node">
 <title>Node17</title>
-<g id="a_Node000017"><a xlink:href="classAsyncFw_1_1Log.html#a832d13f4e9231eee37d8decb5b9b96d7" target="_top" xlink:title="Constructs a persistent log system with a specific circular database size and file name context.">
-<polygon fill="white" stroke="#666666" points="308.38,-307 207.62,-307 207.62,-287 308.38,-287 308.38,-307"/>
-<text xml:space="preserve" text-anchor="middle" x="258" y="-293.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::Log::Log</text>
+<g id="a_Node000017"><a xlink:href="classAsyncFw_1_1Log.html#a00e9a20e7303e9a24403046af176b6b2" target="_top" xlink:title="Global service locator shortcut to fetch the current engine&#45;wide default log pointer.">
+<polygon fill="white" stroke="#666666" points="134.88,-412 13.12,-412 13.12,-392 134.88,-392 134.88,-412"/>
+<text xml:space="preserve" text-anchor="middle" x="74" y="-398.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::Log::instance</text>
 </a>
 </g>
 </g>
@@ -491,90 +544,37 @@
 <g id="edge17_Node000016_Node000017" class="edge">
 <title>Node16&#45;&gt;Node17</title>
 <g id="a_edge17_Node000016_Node000017"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M380.38,-322.29C357.11,-317.44 330.88,-311.98 308.77,-307.37"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="379.55,-325.69 390.06,-324.31 380.98,-318.84 379.55,-325.69"/>
+<path fill="none" stroke="#63b8ff" d="M195.76,-402C176.29,-402 154.78,-402 135.37,-402"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="195.75,-405.5 205.75,-402 195.75,-398.5 195.75,-405.5"/>
 </a>
 </g>
 </g>
-<!-- Node19 -->
-<g id="Node000019" class="node">
-<title>Node19</title>
-<g id="a_Node000019"><a xlink:href="classAsyncFw_1_1Rrd.html#aa54ae298c96e9efe88b644931b12f734" target="_top" xlink:title="Constructs a minimal in&#45;memory anonymous circular database with default system tracking intervals.">
-<polygon fill="white" stroke="#666666" points="308.38,-269 207.62,-269 207.62,-249 308.38,-249 308.38,-269"/>
-<text xml:space="preserve" text-anchor="middle" x="258" y="-255.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::Rrd::Rrd</text>
+<!-- Node22 -->
+<g id="Node000022" class="node">
+<title>Node22</title>
+<g id="a_Node000022"><a xlink:href="classAsyncFw_1_1HttpServer_1_1Response.html#a52925841696f5351ff43b46530c18390" target="_top" xlink:title="Finalizes and sends the response over the network via the associated socket.">
+<polygon fill="white" stroke="#666666" points="497.62,-270 387.12,-270 387.12,-238 497.62,-238 497.62,-270"/>
+<text xml:space="preserve" text-anchor="start" x="395.12" y="-256.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::HttpServer</text>
+<text xml:space="preserve" text-anchor="middle" x="442.38" y="-244.5" font-family="Helvetica,sans-Serif" font-size="10.00">::Response::send</text>
 </a>
 </g>
 </g>
-<!-- Node16&#45;&gt;Node19 -->
-<g id="edge19_Node000016_Node000019" class="edge">
-<title>Node16&#45;&gt;Node19</title>
-<g id="a_edge19_Node000016_Node000019"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M414.73,-318.94C393.06,-306.41 361.37,-289.31 332,-278 323.57,-274.75 314.38,-271.88 305.45,-269.41"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="412.81,-321.87 423.2,-323.91 416.35,-315.83 412.81,-321.87"/>
-</a>
-</g>
-</g>
-<!-- Node20 -->
-<g id="Node000020" class="node">
-<title>Node20</title>
-<g id="a_Node000020"><a xlink:href="classAsyncFw_1_1Rrd.html#aaea6a63444ab427f801be34f26d930d5" target="_top" xlink:title="Constructs a persistent circular archive database using default system tracking intervals.">
-<polygon fill="white" stroke="#666666" points="308.38,-383 207.62,-383 207.62,-363 308.38,-363 308.38,-383"/>
-<text xml:space="preserve" text-anchor="middle" x="258" y="-369.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::Rrd::Rrd</text>
-</a>
-</g>
-</g>
-<!-- Node16&#45;&gt;Node20 -->
-<g id="edge20_Node000016_Node000020" class="edge">
-<title>Node16&#45;&gt;Node20</title>
-<g id="a_edge20_Node000016_Node000020"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M380.38,-347.71C357.11,-352.56 330.88,-358.02 308.77,-362.63"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="380.98,-351.16 390.06,-345.69 379.55,-344.31 380.98,-351.16"/>
-</a>
-</g>
-</g>
-<!-- Node21 -->
-<g id="Node000021" class="node">
-<title>Node21</title>
-<g id="a_Node000021"><a xlink:href="classAsyncFw_1_1Rrd.html#a98c7829cc6177c80245cf95095deb3ba" target="_top" xlink:title="Constructs an in&#45;memory anonymous circular database without file serialization.">
-<polygon fill="white" stroke="#666666" points="308.38,-345 207.62,-345 207.62,-325 308.38,-325 308.38,-345"/>
-<text xml:space="preserve" text-anchor="middle" x="258" y="-331.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::Rrd::Rrd</text>
-</a>
-</g>
-</g>
-<!-- Node16&#45;&gt;Node21 -->
-<g id="edge21_Node000016_Node000021" class="edge">
-<title>Node16&#45;&gt;Node21</title>
-<g id="a_edge21_Node000016_Node000021"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M380.07,-335C356.87,-335 330.78,-335 308.77,-335"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="380.03,-338.5 390.03,-335 380.03,-331.5 380.03,-338.5"/>
-</a>
-</g>
-</g>
-<!-- Node18 -->
-<g id="Node000018" class="node">
-<title>Node18</title>
-<g id="a_Node000018"><a xlink:href="classAsyncFw_1_1Log.html#a00e9a20e7303e9a24403046af176b6b2" target="_top" xlink:title="Global service locator shortcut to fetch the current engine&#45;wide default log pointer.">
-<polygon fill="white" stroke="#666666" points="134.88,-307 13.12,-307 13.12,-287 134.88,-287 134.88,-307"/>
-<text xml:space="preserve" text-anchor="middle" x="74" y="-293.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::Log::instance</text>
-</a>
-</g>
-</g>
-<!-- Node17&#45;&gt;Node18 -->
-<g id="edge18_Node000017_Node000018" class="edge">
-<title>Node17&#45;&gt;Node18</title>
-<g id="a_edge18_Node000017_Node000018"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M195.76,-297C176.29,-297 154.78,-297 135.37,-297"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="195.75,-300.5 205.75,-297 195.75,-293.5 195.75,-300.5"/>
+<!-- Node21&#45;&gt;Node22 -->
+<g id="edge22_Node000021_Node000022" class="edge">
+<title>Node21&#45;&gt;Node22</title>
+<g id="a_edge22_Node000021_Node000022"><a xlink:title=" ">
+<path fill="none" stroke="#63b8ff" d="M560.3,-254C539.8,-254 517.44,-254 497.82,-254"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="560.28,-257.5 570.28,-254 560.28,-250.5 560.28,-257.5"/>
 </a>
 </g>
 </g>
 <!-- Node23 -->
 <g id="Node000023" class="node">
 <title>Node23</title>
-<g id="a_Node000023"><a xlink:href="classAsyncFw_1_1HttpServer_1_1Response.html#a52925841696f5351ff43b46530c18390" target="_top" xlink:title="Finalizes and sends the response over the network via the associated socket.">
-<polygon fill="white" stroke="#666666" points="497.62,-270 387.12,-270 387.12,-238 497.62,-238 497.62,-270"/>
-<text xml:space="preserve" text-anchor="start" x="395.12" y="-256.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::HttpServer</text>
-<text xml:space="preserve" text-anchor="middle" x="442.38" y="-244.5" font-family="Helvetica,sans-Serif" font-size="10.00">::Response::send</text>
+<g id="a_Node000023"><a xlink:href="classAsyncFw_1_1HttpServer.html#a522928fa8bf3b13b706ac997d4f100dd" target="_top" xlink:title="Constructs the HTTP server instance.">
+<polygon fill="white" stroke="#666666" points="313.25,-260 202.75,-260 202.75,-228 313.25,-228 313.25,-260"/>
+<text xml:space="preserve" text-anchor="start" x="210.75" y="-246.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::HttpServer</text>
+<text xml:space="preserve" text-anchor="middle" x="258" y="-234.5" font-family="Helvetica,sans-Serif" font-size="10.00">::HttpServer</text>
 </a>
 </g>
 </g>
@@ -582,18 +582,18 @@
 <g id="edge23_Node000022_Node000023" class="edge">
 <title>Node22&#45;&gt;Node23</title>
 <g id="a_edge23_Node000022_Node000023"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M560.3,-254C539.8,-254 517.44,-254 497.82,-254"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="560.28,-257.5 570.28,-254 560.28,-250.5 560.28,-257.5"/>
+<path fill="none" stroke="#63b8ff" d="M375.31,-250.38C355.08,-249.27 333.06,-248.06 313.68,-247"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="374.97,-253.86 385.15,-250.92 375.35,-246.87 374.97,-253.86"/>
 </a>
 </g>
 </g>
 <!-- Node24 -->
 <g id="Node000024" class="node">
 <title>Node24</title>
-<g id="a_Node000024"><a xlink:href="classAsyncFw_1_1HttpServer.html#a522928fa8bf3b13b706ac997d4f100dd" target="_top" xlink:title="Constructs the HTTP server instance.">
-<polygon fill="white" stroke="#666666" points="313.25,-231 202.75,-231 202.75,-199 313.25,-199 313.25,-231"/>
-<text xml:space="preserve" text-anchor="start" x="210.75" y="-217.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::HttpServer</text>
-<text xml:space="preserve" text-anchor="middle" x="258" y="-205.5" font-family="Helvetica,sans-Serif" font-size="10.00">::HttpServer</text>
+<g id="a_Node000024"><a xlink:href="classAsyncFw_1_1HttpServer.html#ad52f34791fe5848d9ba891b209fcdbe0" target="_top" xlink:title="Accessor to fetch the globally managed singleton instance reference of the active HttpServer.">
+<polygon fill="white" stroke="#666666" points="129.25,-260 18.75,-260 18.75,-228 129.25,-228 129.25,-260"/>
+<text xml:space="preserve" text-anchor="start" x="26.75" y="-246.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::HttpServer</text>
+<text xml:space="preserve" text-anchor="middle" x="74" y="-234.5" font-family="Helvetica,sans-Serif" font-size="10.00">::instance</text>
 </a>
 </g>
 </g>
@@ -601,110 +601,91 @@
 <g id="edge24_Node000023_Node000024" class="edge">
 <title>Node23&#45;&gt;Node24</title>
 <g id="a_edge24_Node000023_Node000024"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M375.59,-239.93C355.29,-235.59 333.15,-230.86 313.68,-226.69"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="374.67,-243.31 385.18,-241.98 376.13,-236.47 374.67,-243.31"/>
+<path fill="none" stroke="#63b8ff" d="M191.07,-244C170.88,-244 148.91,-244 129.57,-244"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="190.88,-247.5 200.88,-244 190.88,-240.5 190.88,-247.5"/>
 </a>
 </g>
 </g>
-<!-- Node25 -->
-<g id="Node000025" class="node">
-<title>Node25</title>
-<g id="a_Node000025"><a xlink:href="classAsyncFw_1_1HttpServer.html#ad52f34791fe5848d9ba891b209fcdbe0" target="_top" xlink:title="Accessor to fetch the globally managed singleton instance reference of the active HttpServer.">
-<polygon fill="white" stroke="#666666" points="129.25,-231 18.75,-231 18.75,-199 129.25,-199 129.25,-231"/>
-<text xml:space="preserve" text-anchor="start" x="26.75" y="-217.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::HttpServer</text>
-<text xml:space="preserve" text-anchor="middle" x="74" y="-205.5" font-family="Helvetica,sans-Serif" font-size="10.00">::instance</text>
-</a>
-</g>
-</g>
-<!-- Node24&#45;&gt;Node25 -->
-<g id="edge25_Node000024_Node000025" class="edge">
-<title>Node24&#45;&gt;Node25</title>
-<g id="a_edge25_Node000024_Node000025"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M191.07,-215C170.88,-215 148.91,-215 129.57,-215"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="190.88,-218.5 200.88,-215 190.88,-211.5 190.88,-218.5"/>
-</a>
-</g>
-</g>
-<!-- Node27 -->
-<g id="Node000027" class="node">
-<title>Node27</title>
-<g id="a_Node000027"><a xlink:href="classAsyncFw_1_1HttpServer.html#ad3761260dfd18899afc22c6f4bc0c556" target="_top" xlink:title="Forcefully terminates all active socket connections currently retained by the server.">
+<!-- Node26 -->
+<g id="Node000026" class="node">
+<title>Node26</title>
+<g id="a_Node000026"><a xlink:href="classAsyncFw_1_1HttpServer.html#ad3761260dfd18899afc22c6f4bc0c556" target="_top" xlink:title="Forcefully terminates all active socket connections currently retained by the server.">
 <polygon fill="white" stroke="#666666" points="497.62,-220 387.12,-220 387.12,-188 497.62,-188 497.62,-220"/>
 <text xml:space="preserve" text-anchor="start" x="395.12" y="-206.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::HttpServer</text>
 <text xml:space="preserve" text-anchor="middle" x="442.38" y="-194.5" font-family="Helvetica,sans-Serif" font-size="10.00">::clearConnections</text>
 </a>
 </g>
 </g>
-<!-- Node26&#45;&gt;Node27 -->
-<g id="edge27_Node000026_Node000027" class="edge">
-<title>Node26&#45;&gt;Node27</title>
-<g id="a_edge27_Node000026_Node000027"><a xlink:title=" ">
+<!-- Node25&#45;&gt;Node26 -->
+<g id="edge26_Node000025_Node000026" class="edge">
+<title>Node25&#45;&gt;Node26</title>
+<g id="a_edge26_Node000025_Node000026"><a xlink:title=" ">
 <path fill="none" stroke="#63b8ff" d="M559.29,-172.29C539.11,-177.81 517.2,-183.8 497.92,-189.08"/>
 <polygon fill="#63b8ff" stroke="#63b8ff" points="560.12,-175.69 568.84,-169.67 558.27,-168.94 560.12,-175.69"/>
 </a>
 </g>
 </g>
-<!-- Node28 -->
-<g id="Node000028" class="node">
-<title>Node28</title>
-<g id="a_Node000028"><a xlink:href="classAsyncFw_1_1HttpServer.html#ab3eeb1643d4482345afcd9f971c020ac" target="_top" xlink:title="Explicitly severs connections with active sockets holding custom user metadata matching data.">
+<!-- Node27 -->
+<g id="Node000027" class="node">
+<title>Node27</title>
+<g id="a_Node000027"><a xlink:href="classAsyncFw_1_1HttpServer.html#ab3eeb1643d4482345afcd9f971c020ac" target="_top" xlink:title="Explicitly severs connections with active sockets holding custom user metadata matching data.">
 <polygon fill="white" stroke="#666666" points="497.62,-170 387.12,-170 387.12,-138 497.62,-138 497.62,-170"/>
 <text xml:space="preserve" text-anchor="start" x="395.12" y="-156.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::HttpServer</text>
 <text xml:space="preserve" text-anchor="middle" x="442.38" y="-144.5" font-family="Helvetica,sans-Serif" font-size="10.00">::clearConnections</text>
 </a>
 </g>
 </g>
-<!-- Node26&#45;&gt;Node28 -->
-<g id="edge28_Node000026_Node000028" class="edge">
-<title>Node26&#45;&gt;Node28</title>
-<g id="a_edge28_Node000026_Node000028"><a xlink:title=" ">
+<!-- Node25&#45;&gt;Node27 -->
+<g id="edge27_Node000025_Node000027" class="edge">
+<title>Node25&#45;&gt;Node27</title>
+<g id="a_edge27_Node000025_Node000027"><a xlink:title=" ">
 <path fill="none" stroke="#63b8ff" d="M559.01,-154C538.91,-154 517.11,-154 497.92,-154"/>
 <polygon fill="#63b8ff" stroke="#63b8ff" points="558.79,-157.5 568.79,-154 558.79,-150.5 558.79,-157.5"/>
 </a>
 </g>
 </g>
-<!-- Node31 -->
-<g id="Node000031" class="node">
-<title>Node31</title>
-<g id="a_Node000031"><a xlink:href="classAsyncFw_1_1FileSystemWatcher.html#a16b4210d215a3b340c98f650d2071114" target="_top" xlink:title="Retrieves the global instance pointer of the active FileSystemWatcher.">
+<!-- Node30 -->
+<g id="Node000030" class="node">
+<title>Node30</title>
+<g id="a_Node000030"><a xlink:href="classAsyncFw_1_1FileSystemWatcher.html#a16b4210d215a3b340c98f650d2071114" target="_top" xlink:title="Retrieves the global instance pointer of the active FileSystemWatcher.">
 <polygon fill="white" stroke="#666666" points="516.75,-120 368,-120 368,-88 516.75,-88 516.75,-120"/>
 <text xml:space="preserve" text-anchor="start" x="376" y="-106.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::FileSystemWatcher</text>
 <text xml:space="preserve" text-anchor="middle" x="442.38" y="-94.5" font-family="Helvetica,sans-Serif" font-size="10.00">::instance</text>
 </a>
 </g>
 </g>
-<!-- Node30&#45;&gt;Node31 -->
-<g id="edge31_Node000030_Node000031" class="edge">
-<title>Node30&#45;&gt;Node31</title>
-<g id="a_edge31_Node000030_Node000031"><a xlink:title=" ">
+<!-- Node29&#45;&gt;Node30 -->
+<g id="edge30_Node000029_Node000030" class="edge">
+<title>Node29&#45;&gt;Node30</title>
+<g id="a_edge30_Node000029_Node000030"><a xlink:title=" ">
 <path fill="none" stroke="#63b8ff" d="M540.81,-104C532.91,-104 524.94,-104 517.16,-104"/>
 <polygon fill="#63b8ff" stroke="#63b8ff" points="540.81,-107.5 550.81,-104 540.81,-100.5 540.81,-107.5"/>
 </a>
 </g>
 </g>
-<!-- Node33 -->
-<g id="Node000033" class="node">
-<title>Node33</title>
-<g id="a_Node000033"><a xlink:href="classAsyncFw_1_1MulticastDns.html#a61341fa78536e7a787bbbce75116ef3e" target="_top" xlink:title="Returns the global default instance pointer.">
+<!-- Node32 -->
+<g id="Node000032" class="node">
+<title>Node32</title>
+<g id="a_Node000032"><a xlink:href="classAsyncFw_1_1MulticastDns.html#a61341fa78536e7a787bbbce75116ef3e" target="_top" xlink:title="Returns the global default instance pointer.">
 <polygon fill="white" stroke="#666666" points="502.88,-32 381.88,-32 381.88,0 502.88,0 502.88,-32"/>
 <text xml:space="preserve" text-anchor="start" x="389.88" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::MulticastDns</text>
 <text xml:space="preserve" text-anchor="middle" x="442.38" y="-6.5" font-family="Helvetica,sans-Serif" font-size="10.00">::instance</text>
 </a>
 </g>
 </g>
-<!-- Node32&#45;&gt;Node33 -->
-<g id="edge33_Node000032_Node000033" class="edge">
-<title>Node32&#45;&gt;Node33</title>
-<g id="a_edge33_Node000032_Node000033"><a xlink:title=" ">
+<!-- Node31&#45;&gt;Node32 -->
+<g id="edge32_Node000031_Node000032" class="edge">
+<title>Node31&#45;&gt;Node32</title>
+<g id="a_edge32_Node000031_Node000032"><a xlink:title=" ">
 <path fill="none" stroke="#63b8ff" d="M555.2,-16C538.07,-16 519.92,-16 503.35,-16"/>
 <polygon fill="#63b8ff" stroke="#63b8ff" points="554.77,-19.5 564.77,-16 554.77,-12.5 554.77,-19.5"/>
 </a>
 </g>
 </g>
-<!-- Node36&#45;&gt;Node10 -->
-<g id="edge38_Node000036_Node000010" class="edge">
-<title>Node36&#45;&gt;Node10</title>
-<g id="a_edge38_Node000036_Node000010"><a xlink:title=" ">
+<!-- Node35&#45;&gt;Node10 -->
+<g id="edge37_Node000035_Node000010" class="edge">
+<title>Node35&#45;&gt;Node10</title>
+<g id="a_edge37_Node000035_Node000010"><a xlink:title=" ">
 <path fill="none" stroke="#63b8ff" d="M726.22,-408.75C714.88,-407.51 703.29,-406.24 692.22,-405.02"/>
 <polygon fill="#63b8ff" stroke="#63b8ff" points="725.61,-412.2 735.93,-409.81 726.37,-405.25 725.61,-412.2"/>
 </a>
