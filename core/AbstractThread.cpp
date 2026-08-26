@@ -295,8 +295,6 @@ AbstractThread::Private::List::~List() {
   if (!empty()) lsError() << "thread list not empty:" << size();
   while (!empty()) {
     AbstractThread *_t = back();
-    _t->quit();
-    _t->waitFinished();
     delete _t;
   }
   lsDebug() << LogStream::Color::Magenta << size();
