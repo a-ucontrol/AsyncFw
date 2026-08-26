@@ -361,19 +361,7 @@ AbstractThread::AbstractThread(const std::string &name) : private_(*new Private)
 }
 
 AbstractThread::~AbstractThread() {
-  warning_if(std::this_thread::get_id() == private_.id) << LogStream::Color::Red << "executed from own thread" << LOG_THREAD_NAME;
-  int _state = 0;
-  {  //lock scope
-    LockGuard lock(private_.mutex);
-    if (private_.id != std::thread::id {}) _state = private_.state;
-  }
-
-  if (_state && _state != Private::Finished) {
-    lsWarning() << LogStream::Color::Red << LOG_THREAD_NAME << "destroy running thread:" << private_.id << "from:" << std::this_thread::get_id() << _state;
-    if (!(_state & Private::WaitFinished)) quit();
-    waitFinished();
-  }
-
+  stop();
   {  //lock scope
     LockGuard lock(Private::list.mutex);
     std::vector<AbstractThread *>::iterator it = std::lower_bound(Private::list.begin(), Private::list.end(), this, Private::Compare());
@@ -805,6 +793,20 @@ void AbstractThread::exec() {
   trace() << "destroy removed polls";
   private_.destroy_removed_polls();
 #endif
+}
+
+void AbstractThread::stop() {
+  warning_if(std::this_thread::get_id() == private_.id) << LogStream::Color::Red << "executed from own thread" << LOG_THREAD_NAME;
+  int _state;
+  {  //lock scope
+    LockGuard lock(private_.mutex);
+    if (!private_.state || private_.state == Private::Finished || private_.id == std::thread::id {}) return;
+    _state = private_.state;
+  }
+
+  lsDebug() << LogStream::Color::Red << LOG_THREAD_NAME << "stopping running thread:" << private_.id << "from:" << std::this_thread::get_id();
+  if (!(_state & Private::WaitFinished)) quit();
+  waitFinished();
 }
 
 void AbstractThread::processTasks() const {

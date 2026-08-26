@@ -104,9 +104,8 @@ AbstractThreadPool::Thread::Thread(const std::string &name, AbstractThreadPool *
 void AbstractThreadPool::Thread::destroy() {
   lsTrace() << '(' + name() + ')';
   pool->removeThread(this);
-  AbstractThread::quit();
   AbstractTask *_t = new Invocable<void()>::Function([p = this]() {
-    p->waitFinished();
+    p->stop();
     delete p;
   });
   if (!pool->thread_->invokeTask(_t)) {

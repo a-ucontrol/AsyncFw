@@ -176,8 +176,10 @@ protected:
 
   void setId();
   void clearId();
-  /** @brief Run manage loop */
+  /** @brief Run manage loop. */
   void exec();
+  /** @brief Stop manage loop and wait for finished. */
+  void stop();
 
 private:
   void processTasks() const;

@@ -27,13 +27,9 @@ Thread *Thread::current() { return static_cast<Thread *>(AbstractThread::current
 Thread::Thread(const std::string &name) : AbstractThread(name) { trace(); }
 
 Thread::~Thread() {
+  stop();
   destroying();
   warning_if(!sockets_.empty()) << "socket list not empty" << sockets_.size();
-  if (AbstractThread::running()) {
-    lsWarning() << "destroy running thread" << '(' + name() + ')';
-    quit();
-    waitFinished();
-  }
   for (; !sockets_.empty();) {
     AbstractSocket *_s = sockets_.back();
     sockets_.pop_back();
