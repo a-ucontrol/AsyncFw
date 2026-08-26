@@ -82,20 +82,20 @@ void DataArrayAbstractTcp::Thread::initSocket(DataArraySocket *socket) {
       socket->releaseBuffer(da);
     });
   });
-  lsTrace() << LogStream::Color::Green << name() << LogStream::Color::Magenta << sockets_.size();
+  lsTrace() << LogStream::Color::Green << '(' + name() + ')' << LogStream::Color::Magenta << sockets_.size();
 }
 
 void DataArrayAbstractTcp::Thread::destroySocket(DataArraySocket *socket) {
-  lsTrace() << LogStream::Color::Green << name() << LogStream::Color::Magenta << socket->fd_;
   socket->removeTimer();
   socket->close();
   socket->removeFromThread();
-  if (!pool->thread()->invoke([this, socket]() {
+  if (!pool->thread()->invoke([this, socket, e = sockets_.empty()]() {
     socket->destroy();
-    if (sockets_.empty()) {
+    if (e) {
       OPENSSL_thread_stop();
       destroy();
     }
   }))
     socket->destroy();
+  lsTrace() << LogStream::Color::Green << '(' + name() + ')' << LogStream::Color::Magenta << sockets_.size();
 }
