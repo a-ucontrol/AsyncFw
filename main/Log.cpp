@@ -188,7 +188,7 @@ Log::Log(int size, const std::string &name) : Rrd(size, name), AbstractLog() {
   thread_ = Rrd::thread_;
 
   tdg = thread_->destroying.connect([this]() {
-    lsWarning() << "log thread finished, finalize logger";
+    lsWarning() << "log thread destroying, finalize logger";
     finality();
   });
 
