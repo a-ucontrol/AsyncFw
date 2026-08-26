@@ -29,5 +29,6 @@ var classAsyncFw_1_1AbstractThread =
     [ "id", "classAsyncFw_1_1AbstractThread.html#a41d1cf92e033bcc11e2394cb949e031a", null ],
     [ "name", "classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd", null ],
     [ "lockGuard", "classAsyncFw_1_1AbstractThread.html#a6e17293ccd9683f5bd8ca9a3dcd52e7d", null ],
-    [ "exec", "classAsyncFw_1_1AbstractThread.html#a1abe0f5c637dcc6af5aff00c5291bd4f", null ]
+    [ "exec", "classAsyncFw_1_1AbstractThread.html#a1abe0f5c637dcc6af5aff00c5291bd4f", null ],
+    [ "stop", "classAsyncFw_1_1AbstractThread.html#add1eb884a7235f687a3cfa96176f2b72", null ]
 ];

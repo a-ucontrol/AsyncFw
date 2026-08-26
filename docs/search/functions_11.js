@@ -67,7 +67,7 @@ var searchData=
   ['state_64',['state',['../classAsyncFw_1_1DataArraySocket.html#ae20bbfbd7138f5a6e0003ed6b117a7f7',1,'AsyncFw::DataArraySocket::state()'],['../classAsyncFw_1_1SystemProcess.html#ab0bbc948a5d59acc1bfc2327cb74f4c1',1,'AsyncFw::SystemProcess::state()']]],
   ['stateevent_65',['stateEvent',['../classAsyncFw_1_1AbstractSocket.html#a5db12267a6d2241e81f570463f2d7ef5',1,'AsyncFw::AbstractSocket::stateEvent()'],['../classAsyncFw_1_1DataArraySocket.html#afae26d6d937eddd4b7c64f48933c0984',1,'AsyncFw::DataArraySocket::stateEvent()'],['../classAsyncFw_1_1HttpSocket.html#ab3ee95c329a5f5c7ea659fe7809cc37e',1,'AsyncFw::HttpSocket::stateEvent()']]],
   ['statuscode_66',['statusCode',['../classAsyncFw_1_1HttpServer_1_1Response.html#a763ad72776c70e9e6eb1aed082adbbed',1,'AsyncFw::HttpServer::Response']]],
-  ['stop_67',['stop',['../classAsyncFw_1_1Timer.html#a63f0eb44b27402196590a03781515dba',1,'AsyncFw::Timer']]],
+  ['stop_67',['stop',['../classAsyncFw_1_1AbstractThread.html#add1eb884a7235f687a3cfa96176f2b72',1,'AsyncFw::AbstractThread::stop()'],['../classAsyncFw_1_1Timer.html#a63f0eb44b27402196590a03781515dba',1,'AsyncFw::Timer::stop()']]],
   ['stopquerier_68',['stopQuerier',['../classAsyncFw_1_1MulticastDns.html#a03b1bd87ba47f61a0443e42cec2a78cb',1,'AsyncFw::MulticastDns']]],
   ['stopservice_69',['stopService',['../classAsyncFw_1_1MulticastDns.html#a9740e59f3a6a0f48dba3381c0324eee1',1,'AsyncFw::MulticastDns']]],
   ['str_70',['str',['../structAsyncFw_1_1Version.html#a51085d376b8a991727c7c1d2921be595',1,'AsyncFw::Version']]],
