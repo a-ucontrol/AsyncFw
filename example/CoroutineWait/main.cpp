@@ -18,18 +18,16 @@ using namespace AsyncFw;
 CoroutineTask task(uint64_t &end, int _ms) {
   logDebug() << "task started";
   co_await CoroutineAwait<void>([&end, &_ms](CoroutineHandle _h) {
-    ThreadPool::async(
-        [&_ms]() {
-          logDebug() << "async" << _ms << Thread::current()->name();
-          std::this_thread::sleep_for(std::chrono::milliseconds(_ms));
-          logDebug() << "async end" << _ms << Thread::current()->name();
-        },
-        [&end, _h]() {
-          logDebug() << "resume";
-          end = CURRENT_TIME_MS;
-          _h.promise().resume_queued();
-          logDebug() << "resume end";
-        });
+    ThreadPool::async([&_ms]() {
+      logDebug() << "async" << _ms << Thread::current()->name();
+      std::this_thread::sleep_for(std::chrono::milliseconds(_ms));
+      logDebug() << "async end" << _ms << Thread::current()->name();
+    }, [&end, _h]() {
+      logDebug() << "resume";
+      end = CURRENT_TIME_MS;
+      _h.promise().resume_queued();
+      logDebug() << "resume end";
+    });
   });
   logDebug() << "task finished";
 }
@@ -56,9 +54,9 @@ int main(int argc, char *argv[]) {
   Timer::single(10, []() { tst(50); });
   Timer::single(10, []() { tst(10); });
 
-  Timer::single(100, []() {
+  Timer::single(10, []() {
     logNotice() << "MainThread::quit()";
-    MainThread::exit();
+    AbstractThread::current()->quit();
   });
 
   logNotice() << "MainThread::exec()";

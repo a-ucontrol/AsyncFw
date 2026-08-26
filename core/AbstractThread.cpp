@@ -188,7 +188,7 @@ struct AbstractThread::Private {
   std::queue<AbstractTask *> process_tasks_;
   std::queue<ProcessTimerTask> process_timer_tasks_;
   std::queue<ProcessPollTask> process_poll_tasks_;
-  int nested_ = 0;
+  int nested;
 
   struct Compare {
     bool operator()(const AbstractThread *, const AbstractThread *) const;
@@ -475,7 +475,8 @@ void AbstractThread::quit() {
     console_msg("AbstractThread " + LOG_THREAD_NAME, "thread already finished or not started");
     return;
   }
-  if (private_.nested_) private_.nested_--;
+  if (private_.nested >= 0) private_.nested--;  // -1 for quit thread if nested exec() running
+  trace() << "private_.nested" << private_.nested;
   private_.state |= Private::WaitFinished;
   private_.wake();
 }
@@ -526,10 +527,8 @@ void AbstractThread::exec() {
   {  //lock scope
     LockGuard lock(private_.mutex);
     warning_if(private_.process_tasks_.size() || private_.process_poll_tasks_.size() || private_.process_timer_tasks_.size()) << LogStream::Color::Red << "not empty" << private_.process_tasks_.size() << private_.process_poll_tasks_.size() << private_.process_timer_tasks_.size();
-    if (private_.state >= Private::Running && private_.state < Private::Finished) { private_.nested_++; }
-    _nested = private_.nested_;
-
-    if (_nested) {  //nested exec
+    if (private_.state >= Private::Running) {  //nested exec
+      _nested = ++private_.nested;
       trace() << LogStream::Color::Red << "nested" << LogStream::Color::Green << _nested << LOG_THREAD_NAME << private_.process_tasks_.size() << private_.process_poll_tasks_.size() << private_.process_timer_tasks_.size();
       if (!private_.process_tasks_.empty()) {
         private_.mutex.unlock();
@@ -544,8 +543,8 @@ void AbstractThread::exec() {
         private_.process_timers();
         private_.mutex.lock();
       }
-    }
-    if (!_nested) {
+    } else {
+      _nested = private_.nested = 0;
       private_.state = Private::Running;
       private_.mutex.unlock();
       startedEvent();
@@ -777,8 +776,8 @@ void AbstractThread::exec() {
   }
   LockGuard lock(private_.mutex);
   if (_nested--) {
-    trace() << LOG_THREAD_NAME << LogStream::Color::Magenta << "end" << _nested << private_.nested_ << LogStream::Color::Red << (_nested <= private_.nested_);
-    if (_nested <= private_.nested_) private_.state &= ~Private::WaitFinished;
+    trace() << LOG_THREAD_NAME << LogStream::Color::Magenta << "end" << _nested << private_.nested << LogStream::Color::Red << (_nested <= private_.nested);
+    if (_nested <= private_.nested) private_.state &= ~Private::WaitFinished;
     return;
   }
   private_.mutex.unlock();
