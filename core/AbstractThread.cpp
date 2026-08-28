@@ -475,8 +475,8 @@ void AbstractThread::quit() {
     console_msg("AbstractThread " + LOG_THREAD_NAME, "thread already finished or not started");
     return;
   }
-  if (private_.nested >= 0) private_.nested--;  // -1 for quit thread if multiple nested calls exec() complete in a single loop iteration
-  trace() << "private_.nested" << private_.nested;
+  if (private_.nested >= 0) private_.nested--;  // -1 for quit thread if multiple nested calls exec() complete in a single loop iteration after quit()
+  trace() << LogStream::Color::DarkMagenta << "nested" << private_.nested;
   private_.state |= Private::WaitFinished;
   private_.wake();
 }
@@ -529,7 +529,7 @@ void AbstractThread::exec() {
     warning_if(private_.process_tasks_.size() || private_.process_poll_tasks_.size() || private_.process_timer_tasks_.size()) << LogStream::Color::Red << "not empty" << private_.process_tasks_.size() << private_.process_poll_tasks_.size() << private_.process_timer_tasks_.size();
     if (private_.state >= Private::Running && private_.state < Private::Finished) {  //nested exec
       _nested = ++private_.nested;
-      trace() << LogStream::Color::Red << "nested" << LogStream::Color::Green << _nested << LOG_THREAD_NAME << private_.process_tasks_.size() << private_.process_poll_tasks_.size() << private_.process_timer_tasks_.size();
+      trace() << LOG_THREAD_NAME << LogStream::Color::Red << "nested" << _nested << LogStream::Color::Green << private_.process_tasks_.size() << private_.process_poll_tasks_.size() << private_.process_timer_tasks_.size();
       if (!private_.process_tasks_.empty()) {
         private_.mutex.unlock();
         private_.process_tasks();
@@ -776,7 +776,7 @@ void AbstractThread::exec() {
   }
   LockGuard lock(private_.mutex);
   if (_nested--) {
-    trace() << LOG_THREAD_NAME << LogStream::Color::Magenta << "end" << _nested << private_.nested << LogStream::Color::Red << (_nested <= private_.nested);
+    trace() << LOG_THREAD_NAME << LogStream::Color::Magenta << "nested" << private_.nested << _nested;
     if (_nested <= private_.nested) private_.state &= ~Private::WaitFinished;
     return;
   }
