@@ -268,16 +268,18 @@ void AbstractThread::Private::destroy_removed_polls() {
 #endif
 
 void AbstractThread::Waiter::complete() {
+  trace() << this;
   if (!thread_) {
     lsWarning() << "not waiting";
     return;
   }
   AbstractThread *_t = thread_;
-  _t->quit();
   thread_ = nullptr;
+  _t->quit();
 }
 
 void AbstractThread::Waiter::wait() {
+  trace() << this << "start";
   thread_ = AbstractThread::current();
   AbstractThread *_t = thread_;
   int _q = 0;
@@ -286,6 +288,7 @@ void AbstractThread::Waiter::wait() {
     if (!thread_) break;
     _q++;
   }
+  trace() << this << "end" << _q;
   while (_q--) _t->quit();
 }
 
