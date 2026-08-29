@@ -965,12 +965,7 @@ Friends</h2></td></tr>
 <p>Writes raw binary bytes out to the network socket layer. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname"></td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<p>p data Source raw memory buffer pointer containing data to transmit.</p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
+    <tr><td class="paramname">%data</td><td>Source raw memory buffer pointer containing data to transmit.</td></tr>
     <tr><td class="paramname">size</td><td>The number of bytes to transmit from the data buffer. </td></tr>
   </table>
   </dd>
@@ -1011,11 +1006,11 @@ Friends</h2></td></tr>
 <p>Transmits a structural <a class="el" href="classAsyncFw_1_1DataArray.html" title="The DataArray class, provides an array of bytes.">DataArray</a> package out to the network layer. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname"></td><td></td></tr>
+    <tr><td class="paramname">%data</td><td>Reference to the <a class="el" href="classAsyncFw_1_1DataArray.html" title="The DataArray class, provides an array of bytes.">DataArray</a> containing the payload to write. </td></tr>
   </table>
   </dd>
 </dl>
-<p>p data Reference to the <a class="el" href="classAsyncFw_1_1DataArray.html" title="The DataArray class, provides an array of bytes.">DataArray</a> containing the payload to write. </p><dl class="section return"><dt>Returns</dt><dd>Number of bytes successfully dispatched to the socket queue, or a negative value on error. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Number of bytes successfully dispatched to the socket queue, or a negative value on error. </dd></dl>
 <div id="dynsection-25" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
 <div id="dynsection-25-summary" class="dynsummary" style="display:block;">
 </div>
@@ -1316,12 +1311,7 @@ Friends</h2></td></tr>
 <p>Low-level native operating system read operation proxying requests directly down to the fd handle. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname"></td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<p>p data Destination memory allocation chunk pointer.</p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
+    <tr><td class="paramname">%data</td><td>Destination memory allocation chunk pointer.</td></tr>
     <tr><td class="paramname">size</td><td>Bounds metric tracking maximum allowed byte read capacity. </td></tr>
   </table>
   </dd>
@@ -1374,12 +1364,7 @@ Friends</h2></td></tr>
 <p>Low-level native operating system write operation proxying requests directly up to the fd handle. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname"></td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<p>p data Source memory block holding raw serialization binary data.</p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
+    <tr><td class="paramname">%data</td><td>Source memory block holding raw serialization binary data.</td></tr>
     <tr><td class="paramname">size</td><td>Size in bytes to write identifying exactly how many bytes to transfer. </td></tr>
   </table>
   </dd>
