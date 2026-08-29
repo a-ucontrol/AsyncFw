@@ -133,11 +133,11 @@ public:
   virtual bool running() const;
   /** @brief Runs a task in a managed thread. @param task Pointer to AbstractTask. @return True if the task is added to the queue. */
   virtual bool invokeTask(AbstractTask *) const;
-  /** @brief Append timer. @param ms timeout in milliseconds @param task Pointer to AbstractTask. @return timer Id if timer added or value less than zero. */
+  /** @brief Append timer. @param ms timeout in milliseconds. @param task Pointer to AbstractTask. @return timer Id if timer added or value less than zero. */
   virtual int appendTimer(int, AbstractTask *);
-  /** @brief Modify timer. @param id timer id @param ms Timeout in milliseconds. @return True if the timer modified. */
+  /** @brief Modify timer. @param index The timer index. @param ms Timeout in milliseconds. @return True if the timer modified. */
   virtual bool modifyTimer(int, int);
-  /** @brief Remove timer. @param id Timer id. */
+  /** @brief Remove timer. @param index The timer index. */
   virtual void removeTimer(int);
   /** @brief Append poll descriptor. @param fd The file descriptor to poll. @param events Watch events. @param task Pointer to AbstractPollTask. @return True if the poll descriptor added. */
   virtual bool appendPollDescriptor(int, PollEvents, AbstractPollTask *);

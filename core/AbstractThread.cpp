@@ -945,10 +945,10 @@ int AbstractThread::appendTimer(int ms, AbstractTask *task) {
   return id;
 }
 
-bool AbstractThread::modifyTimer(int id, int ms) {
+bool AbstractThread::modifyTimer(int index, int ms) {
   LockGuard lock(private_.mutex);
-  std::vector<Private::Timer>::iterator it = std::lower_bound(private_.timers.begin(), private_.timers.end(), id, Private::Compare());
-  if (it != private_.timers.end() && it->id == id) {
+  std::vector<Private::Timer>::iterator it = std::lower_bound(private_.timers.begin(), private_.timers.end(), index, Private::Compare());
+  if (it != private_.timers.end() && it->id == index) {
     it->timeout = std::chrono::milliseconds(ms);
     if (it->timeout > std::chrono::milliseconds(0)) {
       it->expire = std::chrono::steady_clock::now() + it->timeout;
@@ -957,24 +957,24 @@ bool AbstractThread::modifyTimer(int id, int ms) {
         private_.wake();
       }
     }
-    trace() << LogStream::Color::DarkYellow << id << ms;
+    trace() << LogStream::Color::DarkYellow << index << ms;
     return true;
   }
-  console_msg("AbstractThread " + LOG_THREAD_NAME, "timer: " + std::to_string(id) + " not found");
+  console_msg("AbstractThread " + LOG_THREAD_NAME, "timer: " + std::to_string(index) + " not found");
   return false;
 }
 
-void AbstractThread::removeTimer(int id) {
+void AbstractThread::removeTimer(int index) {
   std::vector<Private::Timer>::iterator it;
   AbstractTask *_t;
   {  //lock scope
     LockGuard lock(private_.mutex);
-    it = std::lower_bound(private_.timers.begin(), private_.timers.end(), id, Private::Compare());
-    if (it == private_.timers.end() || it->id != id) {
-      console_msg("AbstractThread " + LOG_THREAD_NAME, "timer: " + std::to_string(id) + " not found");
+    it = std::lower_bound(private_.timers.begin(), private_.timers.end(), index, Private::Compare());
+    if (it == private_.timers.end() || it->id != index) {
+      console_msg("AbstractThread " + LOG_THREAD_NAME, "timer: " + std::to_string(index) + " not found");
       return;
     }
-    trace() << LogStream::DarkYellow << LOG_THREAD_NAME << "append delete task" << id << it->task;
+    trace() << LogStream::DarkYellow << LOG_THREAD_NAME << "append delete task" << index << it->task;
     _t = new Invocable<void()>::Function([p = it->task] {
       trace() << LogStream::DarkYellow << "delete" << p;
       delete p;
@@ -985,7 +985,7 @@ void AbstractThread::removeTimer(int id) {
     (*_t)();
     delete _t;
   }
-  trace() << LogStream::Color::Green << LOG_THREAD_NAME << id;
+  trace() << LogStream::Color::Green << LOG_THREAD_NAME << index;
 }
 
 bool AbstractThread::appendPollDescriptor(int fd, PollEvents events, AbstractPollTask *task) {
