@@ -108,12 +108,12 @@ public:
     }
     return true;
   }
-  /** @brief Append poll task. @param fd The file descriptor to poll. @param events Watch events. @param function Task function. @return True if the task added. */
+  /** @brief Append poll task. @param fd The file descriptor to poll. @param events Watch events. @param function The poll task function. @return True if the task added. */
   template <typename F>
   bool appendPollTask(int fd, PollEvents events, F function) {
     return appendPollDescriptor(fd, events, new Invocable<void(PollEvents)>::Function(std::forward<F>(function)));
   }
-  /** @brief Append timer task. @param ms Timeout in milliseconds. @param function Task function. @return timer id if the task added or value less than zero. */
+  /** @brief Append timer task. @param ms Timeout in milliseconds. @param function The timer task function. @return timer id if the task added or value less than zero. */
   template <typename F>
   int appendTimerTask(int ms, F function) {
     return appendTimer(ms, new Invocable<void()>::Function(std::forward<F>(function)));
