@@ -108,7 +108,7 @@ public:
     }
     return true;
   }
-  /** @brief Append poll task. @param The file descriptor to poll. @param events Watch events. @param function Task function. @return True if the task added. */
+  /** @brief Append poll task. @param fd The file descriptor to poll. @param events Watch events. @param function Task function. @return True if the task added. */
   template <typename F>
   bool appendPollTask(int fd, PollEvents events, F function) {
     return appendPollDescriptor(fd, events, new Invocable<void(PollEvents)>::Function(std::forward<F>(function)));
@@ -139,11 +139,11 @@ public:
   virtual bool modifyTimer(int, int);
   /** @brief Remove timer. @param id Timer id. */
   virtual void removeTimer(int);
-  /** @brief Append poll descriptor. @param The file descriptor to poll. @param events Watch events. @param task Pointer to AbstractPollTask. @return True if the poll descriptor added. */
+  /** @brief Append poll descriptor. @param fd The file descriptor to poll. @param events Watch events. @param task Pointer to AbstractPollTask. @return True if the poll descriptor added. */
   virtual bool appendPollDescriptor(int, PollEvents, AbstractPollTask *);
-  /** @brief Modify poll descriptor. @param The file descriptor to poll. @param events Watch events. @return True if the poll descriptor modified. */
+  /** @brief Modify poll descriptor. @param fd The file descriptor to poll. @param events Watch events. @return True if the poll descriptor modified. */
   virtual bool modifyPollDescriptor(int, PollEvents);
-  /** @brief Remove poll descriptor. @param The file descriptor to poll. */
+  /** @brief Remove poll descriptor. @param fd The file descriptor to poll. */
   virtual void removePollDescriptor(int);
 
   /** @brief Create a managed thread and run exec(). */
