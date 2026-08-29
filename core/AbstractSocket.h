@@ -76,9 +76,9 @@ public:
   int read(uint8_t *, int);
   /** @brief Reads a chunk of incoming data and extracts it into a returned DataArray object. @param size Exact or maximum chunk size to extract. @return A DataArray containing the read payload. */
   DataArray read(int = std::numeric_limits<int>::max());
-  /** @brief Writes raw binary bytes out to the network socket layer. @param %data Source raw memory buffer pointer containing data to transmit. @param size The number of bytes to transmit from the data buffer. @return Number of bytes successfully dispatched to the socket queue, or a negative value on error. */
+  /** @brief Writes raw binary bytes out to the network socket layer. @param data Source raw memory buffer pointer containing data to transmit. @param size The number of bytes to transmit from the data buffer. @return Number of bytes successfully dispatched to the socket queue, or a negative value on error. */
   int write(const uint8_t *, int);
-  /** @brief Transmits a structural DataArray package out to the network layer. @param %data Reference to the DataArray containing the payload to write. @return Number of bytes successfully dispatched to the socket queue, or a negative value on error. */
+  /** @brief Transmits a structural DataArray package out to the network layer. @param data Reference to the DataArray containing the payload to write. @return Number of bytes successfully dispatched to the socket queue, or a negative value on error. */
   int write(const DataArray &);
   /** @brief Fetches the most recent runtime error category flag assigned to this socket. @return An Error enum value. */
   Error error() const;
@@ -120,9 +120,9 @@ protected:
   /** @brief Low-level system call that checks whether a file descriptor contains data.
   @return Number of raw bytes pending in the OS network buffer queue. */
   virtual int read_available_fd() const;
-  /** @brief Low-level native operating system read operation proxying requests directly down to the fd handle. @param %data Destination memory allocation chunk pointer. @param size Bounds metric tracking maximum allowed byte read capacity. @return Number of raw bytes read from the descriptor, or error status codes. */
+  /** @brief Low-level native operating system read operation proxying requests directly down to the fd handle. @param data Destination memory allocation chunk pointer. @param size Bounds metric tracking maximum allowed byte read capacity. @return Number of raw bytes read from the descriptor, or error status codes. */
   virtual int read_fd(void *, int) const;
-  /** @brief Low-level native operating system write operation proxying requests directly up to the fd handle. @param %data Source memory block holding raw serialization binary data. @param size Size in bytes to write identifying exactly how many bytes to transfer. @return Number of raw bytes written out to the descriptor, or error status codes. */
+  /** @brief Low-level native operating system write operation proxying requests directly up to the fd handle. @param data Source memory block holding raw serialization binary data. @param size Size in bytes to write identifying exactly how many bytes to transfer. @return Number of raw bytes written out to the descriptor, or error status codes. */
   virtual int write_fd(const void *, int);
 
   /** @brief Returns the number of bytes of data pending to be read. */
