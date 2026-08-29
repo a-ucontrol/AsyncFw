@@ -17,10 +17,10 @@ namespace AsyncFw {
 class PollNotifier {
 public:
   PollNotifier();
-  /** @brief Constructs a poll notifier. It assigns the file descriptor, and watches for events. @param fd file descriptor @param events watch events */
+  /** @brief Constructs a poll notifier. It assigns the file descriptor, and watches for events. @param The file descriptor to poll @param events watch events */
   PollNotifier(int, AbstractThread::PollEvents = AbstractThread::PollIn);
   ~PollNotifier();
-  /** @brief Assigns the file descriptor and watch events. @param fd file descriptor @param events watch events @return True if descriptor is set */
+  /** @brief Assigns the file descriptor and watch events. @param The file descriptor to poll @param events watch events @return True if descriptor is set */
   bool setDescriptor(int, AbstractThread::PollEvents = AbstractThread::PollIn);
   /** @brief Set watch events. @param events watch events @return True if events is set */
   bool setEvents(AbstractThread::PollEvents);
