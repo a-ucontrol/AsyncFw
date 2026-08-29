@@ -72,7 +72,7 @@ public:
   bool listen(const std::string &, uint16_t);
   /** @brief Non-destructively inspects the internal unread data buffer without consuming it. @return Reference to a DataArray containing the currently buffered incoming data. */
   DataArray &peek();
-  /** @brief Reads incoming data into a raw byte buffer up to a specified maximum size. @param buffer Destination raw byte array pointer. @param maxSize Maximum number of bytes to read into the buffer. @return Number of bytes successfully read, or a negative value on error. */
+  /** @brief Reads incoming data into a raw byte buffer up to a specified maximum size. @param data Destination raw byte array pointer. @param maxSize Maximum number of bytes to read into the buffer. @return Number of bytes successfully read, or a negative value on error. */
   int read(uint8_t *, int);
   /** @brief Reads a chunk of incoming data and extracts it into a returned DataArray object. @param size Exact or maximum chunk size to extract. @return A DataArray containing the read payload. */
   DataArray read(int = std::numeric_limits<int>::max());
