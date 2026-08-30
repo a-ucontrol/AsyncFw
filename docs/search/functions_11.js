@@ -4,7 +4,7 @@ var searchData=
   ['send_1',['send',['../classAsyncFw_1_1HttpServer_1_1Response.html#a52925841696f5351ff43b46530c18390',1,'AsyncFw::HttpServer::Response']]],
   ['sendkeepalive_2',['sendKeepAlive',['../classAsyncFw_1_1DataArraySocket.html#a60d24e73561b9ffc720deefca7a6f720',1,'AsyncFw::DataArraySocket']]],
   ['sendquery_3',['sendQuery',['../classAsyncFw_1_1MulticastDns.html#a091b0f3d62c8f78f33a396f4cbf140b0',1,'AsyncFw::MulticastDns']]],
-  ['sendtowebsockets_4',['sendToWebSockets',['../classAsyncFw_1_1HttpServer.html#a414198c976b0e4fa621127ec7146b264',1,'AsyncFw::HttpServer::sendToWebSockets(const T &amp;_data, const AsyncFw::DataArray &amp;_da)'],['../classAsyncFw_1_1HttpServer.html#ac1225b4e5fe3b38d5c6ef4c664d0a59b',1,'AsyncFw::HttpServer::sendToWebSockets(const std::string &amp;)']]],
+  ['sendtowebsockets_4',['sendToWebSockets',['../classAsyncFw_1_1HttpServer.html#a2d02e93cd01d45ecc792f75fe7c99caf',1,'AsyncFw::HttpServer::sendToWebSockets(const T &amp;data, const AsyncFw::DataArray &amp;da)'],['../classAsyncFw_1_1HttpServer.html#ac1225b4e5fe3b38d5c6ef4c664d0a59b',1,'AsyncFw::HttpServer::sendToWebSockets(const std::string &amp;)']]],
   ['servicerunning_5',['serviceRunning',['../classAsyncFw_1_1MulticastDns.html#acfe6df81240db7979782c2df5a117c91',1,'AsyncFw::MulticastDns']]],
   ['servicetype_6',['serviceType',['../classAsyncFw_1_1MulticastDns.html#a23e336e5c39f79f847b12014558e8dda',1,'AsyncFw::MulticastDns']]],
   ['set_7',['set',['../classAsyncFw_1_1Instance.html#ac288330eee2512b0f87ce1013697abff',1,'AsyncFw::Instance']]],

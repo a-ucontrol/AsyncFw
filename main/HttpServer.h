@@ -259,16 +259,16 @@ public:
   void addRoute(const O object, const std::string &url, Request::Method method, A action, const std::any &data = {}) {
     addRoute(url, method, [object, action](const Request &request) { return (object->*action)(request); }, data);
   }
-  /** @brief Broadcasts a binary array payload to active WebSocket connections matching a specific filter criteria. @n Iterates through connected channels, matching their internal socketData against the provided key. @tparam T Type of the verification value stored inside the socket state. @param _data Reference value used to filter recipient sockets. @param _da Raw payload data to package inside the WebSocket framing layer. @return Count of successfully messaged channels, or -1 if framing layout serialization failed. */
+  /** @brief Broadcasts a binary array payload to active WebSocket connections matching a specific filter criteria. @n Iterates through connected channels, matching their internal socketData against the provided key. @tparam T Type of the verification value stored inside the socket state. @param data Reference value used to filter recipient sockets. @param da Raw payload data to package inside the WebSocket framing layer. @return Count of successfully messaged channels, or -1 if framing layout serialization failed. */
   template <typename T>
-  int sendToWebSockets(const T &_data, const AsyncFw::DataArray &_da) {
+  int sendToWebSockets(const T &data, const AsyncFw::DataArray &da) {
     AsyncFw::DataArray _f;
     int _r = 0;
     for (TcpSocket *socket : sockets) {
       if (!socket->ws_) continue;
-      if (socket->data_.has_value() && _data == std::any_cast<T>(socket->data_)) {
+      if (socket->data_.has_value() && data == std::any_cast<T>(socket->data_)) {
         if (_f.empty()) {
-          int _s = makeWebSocketFrame(_da, &_f);
+          int _s = makeWebSocketFrame(da, &_f);
           if (_s <= 0) return -1;
         }
         socket->write(_f);
@@ -284,7 +284,7 @@ public:
   void setPeek(T f) {
     peek = new Invocable<bool(const Request &, std::any)>::Function(std::forward<T>(f));
   }
-  /** @brief Explicitly severs connections with active sockets holding custom user metadata matching data. @tparam T Type identifier matching the socket data context block. @param _data Target match signature identifying channels to be dropped. */
+  /** @brief Explicitly severs connections with active sockets holding custom user metadata matching data. @tparam T Type identifier matching the socket data context block. @param data Target match signature identifying channels to be dropped. */
   template <typename T>
   void clearConnections(const T &data) {
     for (TcpSocket *socket : sockets) {

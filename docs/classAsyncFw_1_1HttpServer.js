@@ -6,7 +6,7 @@ var classAsyncFw_1_1HttpServer =
     [ "HttpServer", "classAsyncFw_1_1HttpServer.html#a522928fa8bf3b13b706ac997d4f100dd", null ],
     [ "addRoute", "classAsyncFw_1_1HttpServer.html#a5c32aee1be945562ee7c5601ecdc187b", null ],
     [ "addRoute", "classAsyncFw_1_1HttpServer.html#a64e42967cdef1254142bcba26f246f07", null ],
-    [ "sendToWebSockets", "classAsyncFw_1_1HttpServer.html#a414198c976b0e4fa621127ec7146b264", null ],
+    [ "sendToWebSockets", "classAsyncFw_1_1HttpServer.html#a2d02e93cd01d45ecc792f75fe7c99caf", null ],
     [ "setPeek", "classAsyncFw_1_1HttpServer.html#ad0bb08fb4a0ef0fd28961e29a8275bd0", null ],
     [ "clearConnections", "classAsyncFw_1_1HttpServer.html#ab3eeb1643d4482345afcd9f971c020ac", null ],
     [ "clearConnections", "classAsyncFw_1_1HttpServer.html#ad3761260dfd18899afc22c6f4bc0c556", null ],

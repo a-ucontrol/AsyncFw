@@ -132,9 +132,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a64e42967cdef1254142bcba26f246f07" id="r_a64e42967cdef1254142bcba26f246f07"><td class="memTemplParams" colspan="2">template&lt;typename O, typename A&gt; </td></tr>
 <tr class="memitem:a64e42967cdef1254142bcba26f246f07 template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a64e42967cdef1254142bcba26f246f07">addRoute</a> (const O object, const std::string &amp;url, <a class="el" href="classAsyncFw_1_1HttpServer_1_1Request.html#a41d6c54e0fbca4f6d6bc65abb6a97827">Request::Method</a> method, A action, const std::any &amp;data={})</td></tr>
 <tr class="memdesc:a64e42967cdef1254142bcba26f246f07"><td class="mdescLeft">&#160;</td><td class="mdescRight">Binds a specific class instance method as a route handler.  <br /></td></tr>
-<tr class="memitem:a414198c976b0e4fa621127ec7146b264" id="r_a414198c976b0e4fa621127ec7146b264"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
-<tr class="memitem:a414198c976b0e4fa621127ec7146b264 template"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#a414198c976b0e4fa621127ec7146b264">sendToWebSockets</a> (const T &amp;_data, const <a class="el" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> &amp;_da)</td></tr>
-<tr class="memdesc:a414198c976b0e4fa621127ec7146b264"><td class="mdescLeft">&#160;</td><td class="mdescRight">Broadcasts a binary array payload to active WebSocket connections matching a specific filter criteria. <br  />
+<tr class="memitem:a2d02e93cd01d45ecc792f75fe7c99caf" id="r_a2d02e93cd01d45ecc792f75fe7c99caf"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
+<tr class="memitem:a2d02e93cd01d45ecc792f75fe7c99caf template"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#a2d02e93cd01d45ecc792f75fe7c99caf">sendToWebSockets</a> (const T &amp;data, const <a class="el" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> &amp;da)</td></tr>
+<tr class="memdesc:a2d02e93cd01d45ecc792f75fe7c99caf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Broadcasts a binary array payload to active WebSocket connections matching a specific filter criteria. <br  />
  Iterates through connected channels, matching their internal socketData against the provided key.  <br /></td></tr>
 <tr class="memitem:ad0bb08fb4a0ef0fd28961e29a8275bd0" id="r_ad0bb08fb4a0ef0fd28961e29a8275bd0"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
 <tr class="memitem:ad0bb08fb4a0ef0fd28961e29a8275bd0 template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ad0bb08fb4a0ef0fd28961e29a8275bd0">setPeek</a> (T f)</td></tr>
@@ -420,8 +420,8 @@ template&lt;typename O, typename A&gt; </div>
 
 </div>
 </div>
-<a id="a414198c976b0e4fa621127ec7146b264" name="a414198c976b0e4fa621127ec7146b264"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a414198c976b0e4fa621127ec7146b264">&#9670;&#160;</a></span>sendToWebSockets()</h2>
+<a id="a2d02e93cd01d45ecc792f75fe7c99caf" name="a2d02e93cd01d45ecc792f75fe7c99caf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2d02e93cd01d45ecc792f75fe7c99caf">&#9670;&#160;</a></span>sendToWebSockets()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -434,12 +434,12 @@ template&lt;typename T&gt; </div>
         <tr>
           <td class="memname">int AsyncFw::HttpServer::sendToWebSockets </td>
           <td>(</td>
-          <td class="paramtype">const T &amp;</td>          <td class="paramname"><span class="paramname"><em>_data</em></span>, </td>
+          <td class="paramtype">const T &amp;</td>          <td class="paramname"><span class="paramname"><em>data</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>_da</em></span>&#160;)</td>
+          <td class="paramtype">const <a class="el" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>da</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -459,8 +459,8 @@ template&lt;typename T&gt; </div>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">_data</td><td>Reference value used to filter recipient sockets.</td></tr>
-    <tr><td class="paramname">_da</td><td>Raw payload data to package inside the WebSocket framing layer. </td></tr>
+    <tr><td class="paramname">data</td><td>Reference value used to filter recipient sockets.</td></tr>
+    <tr><td class="paramname">da</td><td>Raw payload data to package inside the WebSocket framing layer. </td></tr>
   </table>
   </dd>
 </dl>
@@ -546,7 +546,7 @@ template&lt;typename T&gt; </div>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">_data</td><td>Target match signature identifying channels to be dropped. </td></tr>
+    <tr><td class="paramname">data</td><td>Target match signature identifying channels to be dropped. </td></tr>
   </table>
   </dd>
 </dl>

@@ -410,7 +410,7 @@ AUTOLINK_SUPPORT       = YES
 # or the \link or \ref commands.
 # This tag requires that the tag AUTOLINK_SUPPORT is set to YES.
 
-AUTOLINK_IGNORE_WORDS  = name data address port certificate key
+AUTOLINK_IGNORE_WORDS  = name data address port certificate key paths single
 
 # If you use STL classes (i.e. std::string, std::vector, etc.) but do not want
 # to include (a tag file for) the STL sources as input, then you should set this
