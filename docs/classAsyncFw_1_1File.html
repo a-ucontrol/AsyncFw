@@ -554,7 +554,7 @@ void&#160;</td><td class="memItemRight"><b>remove</b> ()</td></tr>
 </div><div class="memdoc">
 
 <p>Provides direct access to the underlying std::fstream object. </p>
-<dl class="section warning"><dt>Warning</dt><dd>If the file is opened in any write or modification mode (out or app), calling this method invalidates the internal file size cache (sets <a class="el" href="#a51e2de0b42a61ced3dff12675e78490e" title="Returns the cached size of the file determined when it was opened.">size()</a> to <b>std::numeric_limits&lt;std::size_t&gt;::max()</b>). <br  />
+<dl class="section warning"><dt>Warning</dt><dd>If the file is opened in any write or modification mode (out or app), calling this method invalidates the internal file size cache (sets size() to <b>std::numeric_limits&lt;std::size_t&gt;::max()</b>). <br  />
  For read-only modes, the cache remains valid and untouched. </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>Reference to the std::fstream instance. </dd></dl>
 
