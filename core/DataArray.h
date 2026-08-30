@@ -88,7 +88,7 @@ public:
   DataStream(const DataArray &);
   ~DataStream();
 
-  /** Serialization & Deserialization Operators
+  /** @brief Serialization & Deserialization Operators
   @{ */
   DataStream &operator<<(int8_t);
   DataStream &operator>>(int8_t &);

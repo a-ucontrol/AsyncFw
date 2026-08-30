@@ -133,7 +133,7 @@ private:
   Invocable<R(Args...)>::Abstract *f_;
 };
 
-/** \defgroup coroutine_api Coroutine API Helpers
+/** @defgroup coroutine_api Coroutine API Helpers
 @brief Global functions and utilities for seamless C++20 coroutine orchestration.
 @{ */
 /** @brief Offloads a callable function/lambda to the global ThreadPool and awaits its completion. @param f Free function, lambda, or functor. @param args Arguments to pass into the function. @return An awaitable object yielding the function's return type. */
