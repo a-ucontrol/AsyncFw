@@ -82,7 +82,7 @@ public:
   int write(const DataArray &);
   /** @brief Fetches the most recent runtime error category flag assigned to this socket. @return An Error enum value. */
   Error error() const;
-  /** @brief Returns a human-readable text string describing the last runtime socket error. @return Error message string. */
+  /** @brief Returns a human-readable text string describing the last runtime socket error. @return The error message string. */
   std::string errorString() const;
   /** @brief Return Thread that manages the socket. */
   Thread *thread() const { return thread_; }
