@@ -183,7 +183,7 @@ void AbstractSocket::setDescriptor(int fd) {
   fcntl(fd, F_SETFL, _f | O_NONBLOCK);
 #else
   u_long _nb = 1;
-  ioctlsocket(_fd, FIONBIO, &_nb);
+  ioctlsocket(fd, FIONBIO, &_nb);
 #endif
   socklen_t _l;
   /*
