@@ -176,11 +176,11 @@ int AbstractSocket::read_available_fd() const {
   return r > 0 ? r : -1;
 }
 
-void AbstractSocket::setDescriptor(int _fd) {
+void AbstractSocket::setDescriptor(int fd) {
   checkCurrentThread();
 #ifndef _WIN32
-  const int _f = fcntl(_fd, F_GETFL, 0);
-  fcntl(_fd, F_SETFL, _f | O_NONBLOCK);
+  const int _f = fcntl(fd, F_GETFL, 0);
+  fcntl(fd, F_SETFL, _f | O_NONBLOCK);
 #else
   u_long _nb = 1;
   ioctlsocket(_fd, FIONBIO, &_nb);
@@ -200,19 +200,19 @@ void AbstractSocket::setDescriptor(int _fd) {
   else { lsDebug() << "SO_RCVBUF" << LogStream::Color::Red << _val; }
 */
   _l = sizeof(private_.la);
-  if (getsockname(_fd, reinterpret_cast<struct sockaddr *>(&private_.la), &_l) < 0) lsError() << "error socket address";
+  if (getsockname(fd, reinterpret_cast<struct sockaddr *>(&private_.la), &_l) < 0) lsError() << "error socket address";
   _l = sizeof(private_.pa);
-  if (getpeername(_fd, reinterpret_cast<struct sockaddr *>(&private_.pa), &_l) < 0) lsError() << "error peer address";
+  if (getpeername(fd, reinterpret_cast<struct sockaddr *>(&private_.pa), &_l) < 0) lsError() << "error peer address";
 
-  lsTrace() << _fd << LogStream::Color::DarkGreen << "local:" << address() + ':' + std::to_string(port()) << "peer:" << peerAddress() + ':' + std::to_string(peerPort());
+  lsTrace() << fd << LogStream::Color::DarkGreen << "local:" << address() + ':' + std::to_string(port()) << "peer:" << peerAddress() + ':' + std::to_string(peerPort());
 
-  changeDescriptor(_fd);
+  changeDescriptor(fd);
   state_ = State::Connected;
   thread_->appendPollTask(fd_, AbstractThread::PollIn, [this](AbstractThread::PollEvents _e) { pollEvent(_e); });
   stateEvent();
 }
 
-bool AbstractSocket::connect(const std::string &_address, uint16_t _port) {
+bool AbstractSocket::connect(const std::string &address, uint16_t port) {
   int _fd = socket(private_.pa.ss_family, private_.type, private_.protocol);
   if (_fd < 0) {
     lsError() << "socket descriptor error";
@@ -239,12 +239,12 @@ bool AbstractSocket::connect(const std::string &_address, uint16_t _port) {
   if (getsockopt(_fd, SOL_SOCKET, SO_RCVBUF, &_val, &_l) < 0) lsError("SO_RCVBUF");
   else { lsDebug() << "SO_RCVBUF" << LogStream::Color::Red << _val; }
 */
-  reinterpret_cast<sockaddr_in *>(&private_.pa)->sin_port = htons(_port);
-  reinterpret_cast<sockaddr_in *>(&private_.pa)->sin_addr.s_addr = inet_addr(_address.c_str());
+  reinterpret_cast<sockaddr_in *>(&private_.pa)->sin_port = htons(port);
+  reinterpret_cast<sockaddr_in *>(&private_.pa)->sin_addr.s_addr = inet_addr(address.c_str());
 
   if (::connect(_fd, reinterpret_cast<struct sockaddr *>(&private_.pa), sizeof(private_.pa)) < 0) {
     if (errno != EINPROGRESS) {
-      lsError() << "connect error" << _address + ':' + std::to_string(_port) << _fd << errno;
+      lsError() << "connect error" << address + ':' + std::to_string(port) << _fd << errno;
       close_fd(_fd);
       return false;
     }
@@ -253,7 +253,7 @@ bool AbstractSocket::connect(const std::string &_address, uint16_t _port) {
   _l = sizeof(private_.la);
   if (getsockname(_fd, reinterpret_cast<struct sockaddr *>(&private_.la), &_l) < 0) lsError() << "error socket address";
 
-  lsTrace() << _fd << LogStream::Color::DarkGreen << "local:" << address() + ':' + std::to_string(port()) << "peer:" << peerAddress() + ':' + std::to_string(peerPort());
+  lsTrace() << _fd << LogStream::Color::DarkGreen << "local:" << this->address() + ':' + std::to_string(this->port()) << "peer:" << peerAddress() + ':' + std::to_string(peerPort());
 
   private_.error = None;
   private_.errorString.clear();
@@ -353,7 +353,7 @@ int AbstractSocket::write(const uint8_t *data, int size) {
   return write_fd(data, size);
 }
 
-int AbstractSocket::write(const DataArray &_da) { return write(_da.data(), _da.size()); }
+int AbstractSocket::write(const DataArray &da) { return write(da.data(), da.size()); }
 
 void AbstractSocket::close() {
   if (fd_ == -1) return;

@@ -56,7 +56,7 @@ public:
 
   /** @brief Binds a raw native operating system socket file descriptor to this instance. @param fd Native socket descriptor integer. */
   virtual void setDescriptor(int);
-  /** @brief Initiates an asynchronous connection to a remote host. @param ip Remote target IPv4 or IPv6 address string. @param port Remote target port number. @return True if connection initiation succeeded. */
+  /** @brief Initiates an asynchronous connection to a remote host. @param address Remote target IPv4 or IPv6 address string. @param port Remote target port number. @return True if connection initiation succeeded. */
   virtual bool connect(const std::string &, uint16_t);
   /** @brief Disconnects the socket from the remote host gracefully. */
   virtual void disconnect();
@@ -78,7 +78,7 @@ public:
   DataArray read(int = std::numeric_limits<int>::max());
   /** @brief Writes raw binary bytes out to the network socket layer. @param data Source raw memory buffer pointer containing data to transmit. @param size The number of bytes to transmit from the data buffer. @return Number of bytes successfully dispatched to the socket queue, or a negative value on error. */
   int write(const uint8_t *, int);
-  /** @brief Transmits a structural DataArray package out to the network layer. @param data Reference to the DataArray containing the payload to write. @return Number of bytes successfully dispatched to the socket queue, or a negative value on error. */
+  /** @brief Transmits a structural DataArray package out to the network layer. @param da Reference to the DataArray containing the payload to write. @return Number of bytes successfully dispatched to the socket queue, or a negative value on error. */
   int write(const DataArray &);
   /** @brief Fetches the most recent runtime error category flag assigned to this socket. @return An Error enum value. */
   Error error() const;
