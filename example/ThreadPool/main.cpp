@@ -39,34 +39,40 @@ int main(int argc, char *argv[]) {
     logInfo() << "async run in thread" << ct->name() << ct->id();
   });
 
-  AsyncFw::ThreadPool::async(
-      []() {
-        AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::current();
-        std::this_thread::sleep_for(std::chrono::milliseconds(10));
-        logInfo() << "async run in thread" << ct->name() << ct->id();
-      },
-      []() {
-        AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::current();
-        logNotice() << "result without value, run in thread" << ct->name() << ct->id();
-      });
+  AsyncFw::ThreadPool::async([]() {
+    AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::current();
+    std::this_thread::sleep_for(std::chrono::milliseconds(10));
+    logInfo() << "async run in thread" << ct->name() << ct->id();
+  }, []() {
+    AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::current();
+    logNotice() << "result without value, run in thread" << ct->name() << ct->id();
+  });
 
-  AsyncFw::ThreadPool::async(
-      []() {
-        AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::current();
-        std::this_thread::sleep_for(std::chrono::milliseconds(15));
-        logInfo() << "async run in thread" << ct->name() << ct->id();
-        return 1;
-      },
-      [](int r) {
-        AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::current();
-        logNotice() << "result:" << r << "run in thread" << ct->name() << ct->id();
-        AsyncFw::MainThread::exit(0);
-      });
+  AsyncFw::ThreadPool::async([]() {
+    AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::current();
+    std::this_thread::sleep_for(std::chrono::milliseconds(15));
+    logInfo() << "async run in thread" << ct->name() << ct->id();
+    return 1;
+  }, [](int r) {
+    AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::current();
+    logNotice() << "result:" << r << "run in thread" << ct->name() << ct->id();
+    AsyncFw::MainThread::exit(0);
+  });
 
   AsyncFw::AbstractThreadPool::Thread *_t1 = AsyncFw::ThreadPool::instance()->createThread("DestroyFromThreadExample");
   _t1->invoke([_t1]() { _t1->destroy(); });
 
   logNotice() << "Start Application";
+
+  AsyncFw::Thread::current()->started.connect([]() {
+    std::vector<AsyncFw::AbstractThreadPool *> pools = AsyncFw::ThreadPool::pools();
+    for (AsyncFw::AbstractThreadPool *pool : pools) {
+      lsNotice() << pool->name();
+      AsyncFw::Thread::Locked<const std::vector<AsyncFw::AbstractThreadPool::Thread *> &> threads = pool->threads();
+      for (const AsyncFw::AbstractThreadPool::Thread *thread : threads.data) { lsInfoGreen() << thread->name(); }
+    }
+    for (const AsyncFw::AbstractThread *thread : AsyncFw::AbstractThread::threads().data) { lsInfoMagenta() << thread->name(); }
+  });
 
   int ret = AsyncFw::MainThread::exec();
 

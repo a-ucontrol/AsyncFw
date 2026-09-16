@@ -59,7 +59,15 @@ public:
   using AbstractTask = Invocable<void()>::Abstract;
   /** @brief The AbstractPollTask type. */
   using AbstractPollTask = Invocable<void(AbstractThread::PollEvents)>::Abstract;
-
+  /** @struct Locked AbstractThread.h <AsyncFw/AbstractThread> @brief A zero-copy RAII carrier that couples a synchronized resource view with its active lock guard.
+  @details Enforces compile-time checks to ensure that the underlying type is strictly a reference or a pointer, effectively preventing accidental heavy memory allocations or copying during multi-threaded data sharing.
+  @tparam T The resource type declaration, which must be either a reference or a pointer. */
+  template <typename T>
+  struct Locked {
+    static_assert(std::is_reference_v<T> || std::is_pointer_v<T>, "Locked<T> error: T must be either a reference or a pointer to avoid copying!");
+    T data;         /**< Direct reference or pointer to the protected inner resource. */
+    LockGuard lock; /**< The active RAII lock instance preserving critical section isolation. */
+  };
   /** @class Waiter @brief Synchronization primitive for nested event loop.
   @details Spawns a sub-event loop via exec() within the current thread to achieve pseudo-synchronous blocking waits (e.g., inside CoroutineTask::wait()). This keeps the thread processing active events and prevents context deadlocks.
   @warning Cascade Effect (Stack Invariant): Due to the nature of execution nesting, any prior nested exec loop will terminate only after all subsequent (deeper) nested loops are fully completed. */
@@ -121,8 +129,8 @@ public:
 
   /** @brief Returns a pointer to the AsyncFw::AbstractThread that manages the currently executing thread. */
   static AbstractThread *current();
-  /** @brief Assigns a pointer to the list of all threads. @param list Pointer to the list of threads. @return AbstractThread::LockGuard. */
-  static AbstractThread::LockGuard threads(std::vector<AbstractThread *> **);
+  /** @brief Returns a synchronized view of all active threads. @return An AbstractThread::Locked structure bundling the thread list reference with its lifetime guard. */
+  static AbstractThread::Locked<const std::vector<AbstractThread *> &> threads();
 
   /** @brief This is called from the thread when it starts executing. */
   virtual void startedEvent();

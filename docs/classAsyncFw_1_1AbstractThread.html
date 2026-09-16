@@ -112,6 +112,8 @@ $(function(){initNavTree('classAsyncFw_1_1AbstractThread.html','','classAsyncFw_
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
+<tr class="memitem:Locked" id="r_Locked"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structAsyncFw_1_1AbstractThread_1_1Locked.html">Locked</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A zero-copy RAII carrier that couples a synchronized resource view with its active lock guard.  <a href="structAsyncFw_1_1AbstractThread_1_1Locked.html#details">More...</a><br /></td></tr>
 <tr class="memitem:Waiter" id="r_Waiter"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classAsyncFw_1_1AbstractThread_1_1Waiter.html">Waiter</a></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-types" class="groupheader"><a id="pub-types" name="pub-types"></a>
@@ -205,8 +207,8 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:af33c5949edb374d673a7a9ac0c81ec32" id="r_af33c5949edb374d673a7a9ac0c81ec32"><td class="memItemLeft"><a id="af33c5949edb374d673a7a9ac0c81ec32" name="af33c5949edb374d673a7a9ac0c81ec32"></a>
 static <a class="el" href="#a8c9202c90ac101522f26c4260cb01b59">AbstractThread</a> *&#160;</td><td class="memItemRight"><b>current</b> ()</td></tr>
 <tr class="memdesc:af33c5949edb374d673a7a9ac0c81ec32"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a pointer to the <a class="el" href="classAsyncFw_1_1AbstractThread.html" title="The AbstractThread class provides the base functionality for thread management.">AsyncFw::AbstractThread</a> that manages the currently executing thread. <br /></td></tr>
-<tr class="memitem:a43ef467a5f4dcc46d152a06cc20bf41c" id="r_a43ef467a5f4dcc46d152a06cc20bf41c"><td class="memItemLeft">static <a class="el" href="#a4e97803ef650d36ba80ef1471c4b643c">AbstractThread::LockGuard</a>&#160;</td><td class="memItemRight"><a class="el" href="#a43ef467a5f4dcc46d152a06cc20bf41c">threads</a> (std::vector&lt; <a class="el" href="#a8c9202c90ac101522f26c4260cb01b59">AbstractThread</a> * &gt; **)</td></tr>
-<tr class="memdesc:a43ef467a5f4dcc46d152a06cc20bf41c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assigns a pointer to the list of all threads.  <br /></td></tr>
+<tr class="memitem:af15068496e617634dd5affff31541c1b" id="r_af15068496e617634dd5affff31541c1b"><td class="memItemLeft">static <a class="el" href="structAsyncFw_1_1AbstractThread_1_1Locked.html">AbstractThread::Locked</a>&lt; const std::vector&lt; <a class="el" href="#a8c9202c90ac101522f26c4260cb01b59">AbstractThread</a> * &gt; &amp; &gt;&#160;</td><td class="memItemRight"><a class="el" href="#af15068496e617634dd5affff31541c1b">threads</a> ()</td></tr>
+<tr class="memdesc:af15068496e617634dd5affff31541c1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a synchronized view of all active threads.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pro-methods" class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -437,8 +439,8 @@ template&lt;typename F&gt; </div>
 
 </div>
 </div>
-<a id="a43ef467a5f4dcc46d152a06cc20bf41c" name="a43ef467a5f4dcc46d152a06cc20bf41c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a43ef467a5f4dcc46d152a06cc20bf41c">&#9670;&#160;</a></span>threads()</h2>
+<a id="af15068496e617634dd5affff31541c1b" name="af15068496e617634dd5affff31541c1b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af15068496e617634dd5affff31541c1b">&#9670;&#160;</a></span>threads()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -447,9 +449,9 @@ template&lt;typename F&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="#a4e97803ef650d36ba80ef1471c4b643c">AbstractThread::LockGuard</a> AbstractThread::threads </td>
+          <td class="memname"><a class="el" href="structAsyncFw_1_1AbstractThread_1_1Locked.html">AbstractThread::Locked</a>&lt; const std::vector&lt; <a class="el" href="#a8c9202c90ac101522f26c4260cb01b59">AbstractThread</a> * &gt; &amp; &gt; AbstractThread::threads </td>
           <td>(</td>
-          <td class="paramtype">std::vector&lt; <a class="el" href="#a8c9202c90ac101522f26c4260cb01b59">AbstractThread</a> * &gt; **</td>          <td class="paramname"><span class="paramname"><em>list</em></span></td><td>)</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -460,14 +462,10 @@ template&lt;typename F&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Assigns a pointer to the list of all threads. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">list</td><td>Pointer to the list of threads. </td></tr>
-  </table>
-  </dd>
+<p>Returns a synchronized view of all active threads. </p>
+<dl class="section return"><dt>Returns</dt><dd>An <a class="el" href="structAsyncFw_1_1AbstractThread_1_1Locked.html" title="A zero-copy RAII carrier that couples a synchronized resource view with its active lock guard.">AbstractThread::Locked</a> structure bundling the thread list reference with its lifetime guard. </dd></dl>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="ThreadPool_2main_8cpp-example.html#_a21">ThreadPool/main.cpp</a>.</dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd><a class="el" href="#a4e97803ef650d36ba80ef1471c4b643c" title="The LockGuard type.">AbstractThread::LockGuard</a>. </dd></dl>
 
 </div>
 </div>

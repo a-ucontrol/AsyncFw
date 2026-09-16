@@ -187,8 +187,8 @@ static <a class="el" href="#afc5e422090767dd84020381fb9a4d490">Thread</a> *&#160
 <tr class="memitem:af33c5949edb374d673a7a9ac0c81ec32 inherit pub_static_methods_classAsyncFw_1_1AbstractThread" id="r_af33c5949edb374d673a7a9ac0c81ec32"><td class="memItemLeft">
 static <a class="el" href="classAsyncFw_1_1AbstractThread.html#a8c9202c90ac101522f26c4260cb01b59">AbstractThread</a> *&#160;</td><td class="memItemRight"><b>current</b> ()</td></tr>
 <tr class="memdesc:af33c5949edb374d673a7a9ac0c81ec32 inherit pub_static_methods_classAsyncFw_1_1AbstractThread"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a pointer to the <a class="el" href="classAsyncFw_1_1AbstractThread.html" title="The AbstractThread class provides the base functionality for thread management.">AsyncFw::AbstractThread</a> that manages the currently executing thread. <br /></td></tr>
-<tr class="memitem:a43ef467a5f4dcc46d152a06cc20bf41c inherit pub_static_methods_classAsyncFw_1_1AbstractThread" id="r_a43ef467a5f4dcc46d152a06cc20bf41c"><td class="memItemLeft">static <a class="el" href="classAsyncFw_1_1AbstractThread.html#a4e97803ef650d36ba80ef1471c4b643c">AbstractThread::LockGuard</a>&#160;</td><td class="memItemRight"><a class="el" href="classAsyncFw_1_1AbstractThread.html#a43ef467a5f4dcc46d152a06cc20bf41c">threads</a> (std::vector&lt; <a class="el" href="classAsyncFw_1_1AbstractThread.html#a8c9202c90ac101522f26c4260cb01b59">AbstractThread</a> * &gt; **)</td></tr>
-<tr class="memdesc:a43ef467a5f4dcc46d152a06cc20bf41c inherit pub_static_methods_classAsyncFw_1_1AbstractThread"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assigns a pointer to the list of all threads.  <br /></td></tr>
+<tr class="memitem:af15068496e617634dd5affff31541c1b inherit pub_static_methods_classAsyncFw_1_1AbstractThread" id="r_af15068496e617634dd5affff31541c1b"><td class="memItemLeft">static <a class="el" href="structAsyncFw_1_1AbstractThread_1_1Locked.html">AbstractThread::Locked</a>&lt; const std::vector&lt; <a class="el" href="classAsyncFw_1_1AbstractThread.html#a8c9202c90ac101522f26c4260cb01b59">AbstractThread</a> * &gt; &amp; &gt;&#160;</td><td class="memItemRight"><a class="el" href="classAsyncFw_1_1AbstractThread.html#af15068496e617634dd5affff31541c1b">threads</a> ()</td></tr>
+<tr class="memdesc:af15068496e617634dd5affff31541c1b inherit pub_static_methods_classAsyncFw_1_1AbstractThread"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a synchronized view of all active threads.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -381,7 +381,7 @@ using&#160;</td><td class="memItemRight"><b>AbstractPollTask</b> = Invocable&lt;
 
 <p>Signal emitted within the newly spawned thread context immediately after its event loop starts. </p>
 <dl class="section note"><dt>Note</dt><dd>Defaults to a Direct connection policy. Subscribers execute instantly inside the target thread frame unless explicitly overridden. </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="ApplicationNotifier_2main_8cpp-example.html#a8">ApplicationNotifier/main.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="ApplicationNotifier_2main_8cpp-example.html#a8">ApplicationNotifier/main.cpp</a>, and <a class="el" href="ThreadPool_2main_8cpp-example.html#a15">ThreadPool/main.cpp</a>.</dd>
 </dl>
 
 </div>
