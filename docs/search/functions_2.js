@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['data_0',['data',['../structAsyncFw_1_1AnyData.html#aa6d2c3488a44e34e25a0971b01a27b3c',1,'AsyncFw::AnyData::data() const'],['../structAsyncFw_1_1AnyData.html#a9d604c8e053676ded700990eae9ff67f',1,'AsyncFw::AnyData::data() const']]],
+  ['data_0',['data',['../structAsyncFw_1_1AbstractThread_1_1Locked.html#a4d4da476cd06684b8b602b83ca1fddcf',1,'AsyncFw::AbstractThread::Locked::data()'],['../structAsyncFw_1_1AnyData.html#aa6d2c3488a44e34e25a0971b01a27b3c',1,'AsyncFw::AnyData::data() const'],['../structAsyncFw_1_1AnyData.html#a9d604c8e053676ded700990eae9ff67f',1,'AsyncFw::AnyData::data() const']]],
   ['dataarray_1',['DataArray',['../classAsyncFw_1_1DataArray.html#ab3ca8135417a38c8438a82f226b792ec',1,'AsyncFw::DataArray::DataArray(const std::string &amp;)'],['../classAsyncFw_1_1DataArray.html#a80e9cc4ecd584fae8211c51838db9ba1',1,'AsyncFw::DataArray::DataArray(const char *)'],['../classAsyncFw_1_1DataArray.html#adc24fdbdf9a018f646ac690cd7e2d52c',1,'AsyncFw::DataArray::DataArray(const char)'],['../classAsyncFw_1_1DataArray.html#ad3f202b6a0817e784de6018dcd2792c7',1,'AsyncFw::DataArray::DataArray(const std::vector&lt; char &gt; &amp;)']]],
   ['dataarrayabstracttcp_2',['DataArrayAbstractTcp',['../classAsyncFw_1_1DataArrayAbstractTcp.html#adbdfede75d80d1c6c76800415d51b35c',1,'AsyncFw::DataArrayAbstractTcp']]],
   ['dataarraytcpclient_3',['DataArrayTcpClient',['../classAsyncFw_1_1DataArrayTcpClient.html#ac15595fca2d28f650f05557cb85c15ef',1,'AsyncFw::DataArrayTcpClient']]],

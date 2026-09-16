@@ -104,10 +104,14 @@ $(function(){initNavTree('structAsyncFw_1_1AbstractThread_1_1Locked.html','','st
 
 <p><code>#include &lt;<a class="el" href="AbstractThread_8h_source.html">AsyncFw/AbstractThread</a>&gt;</code></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
-Public Attributes</h2></td></tr>
-<tr class="memitem:a9535fa409cd97b9e382a77d8b72fe349" id="r_a9535fa409cd97b9e382a77d8b72fe349"><td class="memItemLeft">T&#160;</td><td class="memItemRight"><a class="el" href="#a9535fa409cd97b9e382a77d8b72fe349">data</a></td></tr>
-<tr class="memitem:a548c2795b9c34956b8dcde9040f1a183" id="r_a548c2795b9c34956b8dcde9040f1a183"><td class="memItemLeft"><a class="el" href="classAsyncFw_1_1AbstractThread.html#a4e97803ef650d36ba80ef1471c4b643c">LockGuard</a>&#160;</td><td class="memItemRight"><a class="el" href="#a548c2795b9c34956b8dcde9040f1a183">lock</a></td></tr>
+<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a3f3bb95434321dbd48e38a6921fdfb20" id="r_a3f3bb95434321dbd48e38a6921fdfb20"><td class="memItemLeft"><a id="a3f3bb95434321dbd48e38a6921fdfb20" name="a3f3bb95434321dbd48e38a6921fdfb20"></a>
+&#160;</td><td class="memItemRight"><b>Locked</b> (T <a class="el" href="#a4d4da476cd06684b8b602b83ca1fddcf">data</a>, std::mutex &amp;m)</td></tr>
+<tr class="memdesc:a3f3bb95434321dbd48e38a6921fdfb20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs the <a class="el" href="structAsyncFw_1_1AbstractThread_1_1Locked.html" title="A zero-copy RAII carrier that couples a synchronized resource view with its active lock guard.">Locked</a> container by binding the data and acquiring the mutex lock. <br /></td></tr>
+<tr class="memitem:a4d4da476cd06684b8b602b83ca1fddcf" id="r_a4d4da476cd06684b8b602b83ca1fddcf"><td class="memItemLeft"><a id="a4d4da476cd06684b8b602b83ca1fddcf" name="a4d4da476cd06684b8b602b83ca1fddcf"></a>
+T&#160;</td><td class="memItemRight"><b>data</b> () const</td></tr>
+<tr class="memdesc:a4d4da476cd06684b8b602b83ca1fddcf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Accesses the underlying reference or pointer. <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename T&gt;<br />
@@ -120,44 +124,7 @@ struct AsyncFw::AbstractThread::Locked&lt; T &gt;</div><p>A zero-copy RAII carri
 </dl>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="ThreadPool_2main_8cpp-example.html#_a19">ThreadPool/main.cpp</a>.</dd>
 </dl>
-</div><a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
-<a id="a9535fa409cd97b9e382a77d8b72fe349" name="a9535fa409cd97b9e382a77d8b72fe349"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9535fa409cd97b9e382a77d8b72fe349">&#9670;&#160;</a></span>data</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">T <a class="el" href="structAsyncFw_1_1AbstractThread_1_1Locked.html">AsyncFw::AbstractThread::Locked</a>&lt; T &gt;::data</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Direct reference or pointer to the protected inner resource. </p>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="ThreadPool_2main_8cpp-example.html#a20">ThreadPool/main.cpp</a>.</dd>
-</dl>
-
-</div>
-</div>
-<a id="a548c2795b9c34956b8dcde9040f1a183" name="a548c2795b9c34956b8dcde9040f1a183"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a548c2795b9c34956b8dcde9040f1a183">&#9670;&#160;</a></span>lock</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classAsyncFw_1_1AbstractThread.html#a4e97803ef650d36ba80ef1471c4b643c">LockGuard</a> <a class="el" href="structAsyncFw_1_1AbstractThread_1_1Locked.html">AsyncFw::AbstractThread::Locked</a>&lt; T &gt;::lock</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>The active RAII lock instance preserving critical section isolation. </p>
-
-</div>
-</div>
-<hr/>The documentation for this struct was generated from the following file:<ul>
+</div><hr/>The documentation for this struct was generated from the following file:<ul>
 <li>core/<a class="el" href="AbstractThread_8h_source.html">AbstractThread.h</a></li>
 </ul>
 </div><!-- contents -->

@@ -63,10 +63,15 @@ public:
   @details Enforces compile-time checks to ensure that the underlying type is strictly a reference or a pointer, effectively preventing accidental heavy memory allocations or copying during multi-threaded data sharing.
   @tparam T The resource type declaration, which must be either a reference or a pointer. */
   template <typename T>
-  struct Locked {
+  struct Locked : LockGuard {
     static_assert(std::is_reference_v<T> || std::is_pointer_v<T>, "Locked<T> error: T must be either a reference or a pointer to avoid copying!");
-    T data;         /**< Direct reference or pointer to the protected inner resource. */
-    LockGuard lock; /**< The active RAII lock instance preserving critical section isolation. */
+    /** @brief Constructs the Locked container by binding the data and acquiring the mutex lock. */
+    Locked(T data, std::mutex &m) : LockGuard(m), data_(data) {}
+    /** @brief Accesses the underlying reference or pointer. */
+    T data() const { return data_; }
+
+  private:
+    T data_;
   };
   /** @class Waiter @brief Synchronization primitive for nested event loop.
   @details Spawns a sub-event loop via exec() within the current thread to achieve pseudo-synchronous blocking waits (e.g., inside CoroutineTask::wait()). This keeps the thread processing active events and prevents context deadlocks.
