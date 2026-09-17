@@ -2,6 +2,7 @@ var dir_5c982d53a68cdbcd421152b4020263a9 =
 [
     [ "AddressResolver.h", "AddressResolver_8h.html", "AddressResolver_8h" ],
     [ "ApplicationNotifier.h", "ApplicationNotifier_8h.html", "ApplicationNotifier_8h" ],
+    [ "Cache.h", "Cache_8h.html", "Cache_8h" ],
     [ "Coroutine.h", "Coroutine_8h.html", "Coroutine_8h" ],
     [ "Cryptor.h", "Cryptor_8h.html", "Cryptor_8h" ],
     [ "DataArrayAbstractTcp.h", "DataArrayAbstractTcp_8h.html", "DataArrayAbstractTcp_8h" ],

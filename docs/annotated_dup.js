@@ -18,6 +18,7 @@ var annotated_dup =
       [ "TlsContext", "classAsyncFw_1_1TlsContext.html", "classAsyncFw_1_1TlsContext" ],
       [ "AddressResolver", "classAsyncFw_1_1AddressResolver.html", "classAsyncFw_1_1AddressResolver" ],
       [ "ApplicationNotifier", "classAsyncFw_1_1ApplicationNotifier.html", "classAsyncFw_1_1ApplicationNotifier" ],
+      [ "Cache", "classAsyncFw_1_1Cache.html", "classAsyncFw_1_1Cache" ],
       [ "CoroutineTask", "structAsyncFw_1_1CoroutineTask.html", "structAsyncFw_1_1CoroutineTask" ],
       [ "CoroutineAwait", "structAsyncFw_1_1CoroutineAwait.html", null ],
       [ "CoroutineInvokeAwait", "structAsyncFw_1_1CoroutineInvokeAwait.html", null ],

@@ -84,13 +84,14 @@ var searchData=
   ['stop_81',['stop',['../classAsyncFw_1_1AbstractThread.html#add1eb884a7235f687a3cfa96176f2b72',1,'AsyncFw::AbstractThread::stop()'],['../classAsyncFw_1_1Timer.html#a63f0eb44b27402196590a03781515dba',1,'AsyncFw::Timer::stop()']]],
   ['stopquerier_82',['stopQuerier',['../classAsyncFw_1_1MulticastDns.html#a03b1bd87ba47f61a0443e42cec2a78cb',1,'AsyncFw::MulticastDns']]],
   ['stopservice_83',['stopService',['../classAsyncFw_1_1MulticastDns.html#a9740e59f3a6a0f48dba3381c0324eee1',1,'AsyncFw::MulticastDns']]],
-  ['str_84',['str',['../structAsyncFw_1_1Version.html#a51085d376b8a991727c7c1d2921be595',1,'AsyncFw::Version']]],
-  ['stream_3a_20logstream_85',['7. Thread-Safe Diagnostic Stream: &lt;span class=&quot;tt&quot;&gt;LogStream&lt;/span&gt;',['../index.html#autotoc_md9',1,'']]],
-  ['string_86',['string',['../structAsyncFw_1_1LogStream_1_1Message.html#a7d55dbc7e3fd3c5b106977df3ca2bbbb',1,'AsyncFw::LogStream::Message']]],
-  ['switchingprotocols_87',['switchingProtocols',['../classAsyncFw_1_1HttpServer_1_1Request.html#a2af52a5e15a5072bc2ae2561eb631a96',1,'AsyncFw::HttpServer::Request']]],
-  ['sync_88',['Sync',['../classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html#a860b83046c90e62d768e0acde74626c6a5c9e5da34d6f0f6d7d4f11cdbbac4f97',1,'AsyncFw::AbstractFunctionConnector::Connection::Sync'],['../classAsyncFw_1_1AbstractFunctionConnector.html#ab248bd16cbfcac609f58d401abec4368aa337dbe9151a9446d65ecebf21f57cc7',1,'AsyncFw::AbstractFunctionConnector::Sync']]],
-  ['sync_89',['sync',['../classAsyncFw_1_1ThreadPool.html#add8ee85dd7581acb117a805ff5a8c18a',1,'AsyncFw::ThreadPool']]],
-  ['synconly_90',['SyncOnly',['../classAsyncFw_1_1AbstractFunctionConnector.html#ab248bd16cbfcac609f58d401abec4368a067289a8bc60cc7b0be0e021db9ce81d',1,'AsyncFw::AbstractFunctionConnector']]],
-  ['systemprocess_91',['SystemProcess',['../classAsyncFw_1_1SystemProcess.html',1,'AsyncFw::SystemProcess'],['../classAsyncFw_1_1SystemProcess.html#acf60a585a89304fdb3580e9add06d155',1,'AsyncFw::SystemProcess::SystemProcess()']]],
-  ['systemprocess_2eh_92',['SystemProcess.h',['../SystemProcess_8h.html',1,'']]]
+  ['store_84',['store',['../classAsyncFw_1_1Cache.html#a1508969e5cbd6a7b8e7a6a8fc04aa901',1,'AsyncFw::Cache']]],
+  ['str_85',['str',['../structAsyncFw_1_1Version.html#a51085d376b8a991727c7c1d2921be595',1,'AsyncFw::Version']]],
+  ['stream_3a_20logstream_86',['7. Thread-Safe Diagnostic Stream: &lt;span class=&quot;tt&quot;&gt;LogStream&lt;/span&gt;',['../index.html#autotoc_md9',1,'']]],
+  ['string_87',['string',['../structAsyncFw_1_1LogStream_1_1Message.html#a7d55dbc7e3fd3c5b106977df3ca2bbbb',1,'AsyncFw::LogStream::Message']]],
+  ['switchingprotocols_88',['switchingProtocols',['../classAsyncFw_1_1HttpServer_1_1Request.html#a2af52a5e15a5072bc2ae2561eb631a96',1,'AsyncFw::HttpServer::Request']]],
+  ['sync_89',['Sync',['../classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html#a860b83046c90e62d768e0acde74626c6a5c9e5da34d6f0f6d7d4f11cdbbac4f97',1,'AsyncFw::AbstractFunctionConnector::Connection::Sync'],['../classAsyncFw_1_1AbstractFunctionConnector.html#ab248bd16cbfcac609f58d401abec4368aa337dbe9151a9446d65ecebf21f57cc7',1,'AsyncFw::AbstractFunctionConnector::Sync']]],
+  ['sync_90',['sync',['../classAsyncFw_1_1ThreadPool.html#add8ee85dd7581acb117a805ff5a8c18a',1,'AsyncFw::ThreadPool']]],
+  ['synconly_91',['SyncOnly',['../classAsyncFw_1_1AbstractFunctionConnector.html#ab248bd16cbfcac609f58d401abec4368a067289a8bc60cc7b0be0e021db9ce81d',1,'AsyncFw::AbstractFunctionConnector']]],
+  ['systemprocess_92',['SystemProcess',['../classAsyncFw_1_1SystemProcess.html',1,'AsyncFw::SystemProcess'],['../classAsyncFw_1_1SystemProcess.html#acf60a585a89304fdb3580e9add06d155',1,'AsyncFw::SystemProcess::SystemProcess()']]],
+  ['systemprocess_2eh_93',['SystemProcess.h',['../SystemProcess_8h.html',1,'']]]
 ];

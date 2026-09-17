@@ -70,8 +70,9 @@ var searchData=
   ['stop_67',['stop',['../classAsyncFw_1_1AbstractThread.html#add1eb884a7235f687a3cfa96176f2b72',1,'AsyncFw::AbstractThread::stop()'],['../classAsyncFw_1_1Timer.html#a63f0eb44b27402196590a03781515dba',1,'AsyncFw::Timer::stop()']]],
   ['stopquerier_68',['stopQuerier',['../classAsyncFw_1_1MulticastDns.html#a03b1bd87ba47f61a0443e42cec2a78cb',1,'AsyncFw::MulticastDns']]],
   ['stopservice_69',['stopService',['../classAsyncFw_1_1MulticastDns.html#a9740e59f3a6a0f48dba3381c0324eee1',1,'AsyncFw::MulticastDns']]],
-  ['str_70',['str',['../structAsyncFw_1_1Version.html#a51085d376b8a991727c7c1d2921be595',1,'AsyncFw::Version']]],
-  ['switchingprotocols_71',['switchingProtocols',['../classAsyncFw_1_1HttpServer_1_1Request.html#a2af52a5e15a5072bc2ae2561eb631a96',1,'AsyncFw::HttpServer::Request']]],
-  ['sync_72',['sync',['../classAsyncFw_1_1ThreadPool.html#add8ee85dd7581acb117a805ff5a8c18a',1,'AsyncFw::ThreadPool']]],
-  ['systemprocess_73',['SystemProcess',['../classAsyncFw_1_1SystemProcess.html#acf60a585a89304fdb3580e9add06d155',1,'AsyncFw::SystemProcess']]]
+  ['store_70',['store',['../classAsyncFw_1_1Cache.html#a1508969e5cbd6a7b8e7a6a8fc04aa901',1,'AsyncFw::Cache']]],
+  ['str_71',['str',['../structAsyncFw_1_1Version.html#a51085d376b8a991727c7c1d2921be595',1,'AsyncFw::Version']]],
+  ['switchingprotocols_72',['switchingProtocols',['../classAsyncFw_1_1HttpServer_1_1Request.html#a2af52a5e15a5072bc2ae2561eb631a96',1,'AsyncFw::HttpServer::Request']]],
+  ['sync_73',['sync',['../classAsyncFw_1_1ThreadPool.html#add8ee85dd7581acb117a805ff5a8c18a',1,'AsyncFw::ThreadPool']]],
+  ['systemprocess_74',['SystemProcess',['../classAsyncFw_1_1SystemProcess.html#acf60a585a89304fdb3580e9add06d155',1,'AsyncFw::SystemProcess']]]
 ];
