@@ -9,7 +9,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 /** @file Cache.h @brief The Cache class. */
 
-#include <../core/FunctionConnector.h>
+#include "../core/FunctionConnector.h"
 
 #define MILLISECONDS_SINCE_EPOCH (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now().time_since_epoch()).count())
 
