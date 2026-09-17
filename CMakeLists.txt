@@ -117,6 +117,7 @@ set(AsyncFw_CORE_SOURCES
 
 set(AsyncFw_MAIN_HEADERS
   "${CMAKE_CURRENT_LIST_DIR}/main/ListenSocket.h"
+  "${CMAKE_CURRENT_LIST_DIR}/main/Cache.h"
   "${CMAKE_CURRENT_LIST_DIR}/main/Coroutine.h"
   "${CMAKE_CURRENT_LIST_DIR}/main/Timer.h"
   "${CMAKE_CURRENT_LIST_DIR}/main/PollNotifier.h"
