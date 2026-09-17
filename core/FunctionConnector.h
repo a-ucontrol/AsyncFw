@@ -244,7 +244,7 @@ public:
   /** @brief Constructs an empty, uninitialized connection guard. */
   FunctionConnectionGuard();
   /** @brief Move constructor. Transfers connection ownership from another guard */
-  FunctionConnectionGuard(FunctionConnectionGuard &&);
+  FunctionConnectionGuard(const FunctionConnectionGuard &&);
   /** @brief Constructs a guard and binds it to an active connection. @param connection Reference to the connection to be managed. */
   FunctionConnectionGuard(AbstractFunctionConnector::Connection &);
   /** @brief Destructor. Automatically triggers disconnection and frees connection resources. */
@@ -252,12 +252,12 @@ public:
   /** @brief Assigns a new active connection to this guard. Disconnects  previously managed connection. @param connection Reference to the new connection. */
   void operator=(AbstractFunctionConnector::Connection &);
   /** @brief Move assignment operator. Safely releases current connection and takes ownership of another. @param guard Rvalue reference to the source guard. */
-  void operator=(FunctionConnectionGuard &&);
+  void operator=(const FunctionConnectionGuard &&);
   /** @brief Checks if the guard is currently managing an active connection. @return True If managing an active connection. */
   operator bool() const { return connection_; }
 
 private:
-  AbstractFunctionConnector::Connection *connection_;
+  mutable AbstractFunctionConnector::Connection *connection_;
   void destroyConnection();
 };
 

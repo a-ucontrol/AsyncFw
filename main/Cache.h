@@ -9,8 +9,9 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 /** @file Cache.h @brief The Cache class. */
 
-//#include <mutex>
 #include <../core/FunctionConnector.h>
+
+#define MILLISECONDS_SINCE_EPOCH (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now().time_since_epoch()).count())
 
 namespace AsyncFw {
 /** @class Cache @brief A thread-safe cache wrapper that automatically triggers an update signal when the value expires.
@@ -20,14 +21,14 @@ template <typename T>
 class Cache {
 public:
   /** @brief Constructs a new Cache object. @param timeout The Time-To-Live (TTL) duration for the cache in milliseconds. */
-  Cache(int timeout) : timeout_(timeout) { expire_ = milliseconds_since_epoch(); }
+  Cache(int timeout) : timeout_(timeout) { expire_ = MILLISECONDS_SINCE_EPOCH; }
 
   /** @brief Safely acquires the cached data view bound to its live thread lock.
   @details If the TTL has expired, it atomically drops the lock and dispatches the update() signal.
   @return An AbstractThread::Locked structure bundling the mutable reference to the data and its active lock. */
   AbstractThread::Locked<T &> acquire() {
     AbstractThread::Locked<T &> _locked {value_, mutex_};
-    if (expire_ == 0 || expire_ > milliseconds_since_epoch()) return _locked;
+    if (expire_ == 0 || expire_ > MILLISECONDS_SINCE_EPOCH) return _locked;
     expire_ = 0;
     mutex_.unlock();
     update();
@@ -38,7 +39,7 @@ public:
   /** @brief Securely stores a completely fresh object state inside the cache, extending its TTL. @param value The new value to store inside the cache. */
   void store(const T &value) {
     std::lock_guard<std::mutex> lock(mutex_);
-    expire_ = timeout_ + milliseconds_since_epoch();
+    expire_ = timeout_ + MILLISECONDS_SINCE_EPOCH;
     value_ = value;
   }
 
@@ -58,7 +59,6 @@ public:
 
 private:
   int timeout_;
-  uint64_t milliseconds_since_epoch() { return std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now().time_since_epoch()).count(); }
   T value_;
   uint64_t expire_;
   std::mutex mutex_;
