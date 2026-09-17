@@ -35,7 +35,7 @@ struct LockedData {
   _T &operator*() { return *data_; }
 
 protected:
-  _T *data_;
-  mutable std::mutex *mutex_;
+  _T *data_;                  /**< Uniform internal pointer to the protected inner resource. */
+  mutable std::mutex *mutex_; /**< Pointer to the synchronization primitive, cleared upon moving. */
 };
 }  // namespace AsyncFw

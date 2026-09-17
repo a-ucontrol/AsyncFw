@@ -9,7 +9,8 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 /** @file Cache.h @brief The Cache class. */
 
-#include "../core/FunctionConnector.h"
+#include "../core/LockedData.h"
+#include "../core/invocable.hpp"
 
 #define MILLISECONDS_SINCE_EPOCH (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now().time_since_epoch()).count())
 
@@ -20,18 +21,24 @@ namespace AsyncFw {
 template <typename T>
 class Cache {
 public:
-  /** @brief Constructs a new Cache object. @param timeout The Time-To-Live (TTL) duration for the cache in milliseconds. */
-  Cache(int timeout) : timeout_(timeout) { expire_ = MILLISECONDS_SINCE_EPOCH; }
+  /** @brief Constructs a new Cache object. @tparam F Any callable type matching the signature void(). @param timeout The Time-To-Live (TTL) duration for the cache in milliseconds. @param function The update function/lambda to be executed upon cache expiration. */
+  template <typename F>
+  Cache(int timeout, F function) : timeout_(timeout), update_(new Invocable<void()>::Function(std::forward<F>(function))) {
+    expire_ = MILLISECONDS_SINCE_EPOCH;
+  }
+
+  /** @brief Virtual-safe destructor ensuring polymorphically allocated callable cleanup. */
+  virtual ~Cache() { delete update_; }
 
   /** @brief Safely acquires the cached data view bound to its live thread lock.
   @details If the TTL has expired, it atomically drops the lock and dispatches the update() signal.
   @return An AbstractThread::Locked structure bundling the mutable reference to the data and its active lock. */
-  AbstractThread::Locked<T &> acquire() {
-    AbstractThread::Locked<T &> _locked {value_, mutex_};
+  LockedData<T &> acquire() {
+    LockedData<T &> _locked {value_, mutex_};
     if (expire_ == 0 || expire_ > MILLISECONDS_SINCE_EPOCH) return _locked;
     expire_ = 0;
     mutex_.unlock();
-    update();
+    (*update_)();
     mutex_.lock();
     return _locked;
   }
@@ -50,17 +57,14 @@ public:
       if (!expire_) return;
       expire_ = 0;
     }
-    update();
+    (*update_)();
   }
 
-  /** @brief Signal triggered when the cached value becomes stale and requires updating.
-  @note Enforces QueuedOnly delivery policy to guarantee that slot invokers never execute synchronously under the internal mutex, preventing any deadlocks. Protected access limits trigger capabilities exclusively to the owning Cache instance. */
-  AsyncFw::FunctionConnector<>::Policy<AsyncFw::AbstractFunctionConnector::QueuedOnly>::Protected<Cache<T>> update;
-
-private:
-  int timeout_;
-  T value_;
-  uint64_t expire_;
-  std::mutex mutex_;
+protected:
+  int timeout_;                         /**< Cache expiration timeout duration in milliseconds. */
+  T value_;                             /**< Real inner cached data storage instance. */
+  uint64_t expire_;                     /**< Timestamp in milliseconds denoting when the current cache frame expires. */
+  std::mutex mutex_;                    /**< Core synchronization primitive for state isolation. */
+  Invocable<void()>::Abstract *update_; /**< Encapsulated polymorphic callback executed to refresh data. */
 };
 }  // namespace AsyncFw
