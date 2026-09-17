@@ -66,19 +66,24 @@ public:
   template <typename T>
   struct Locked {
     static_assert(std::is_reference_v<T> || std::is_pointer_v<T>, "Locked<T> error: T must be either a reference or a pointer to avoid copying!");
-    /** @brief Constructs the Locked container by binding the data and acquiring the mutex lock. */
-    Locked(T data, std::mutex &mutex) : data_(data), mutex_(&mutex) { mutex_->lock(); }
+    using CT = std::remove_reference_t<T>;
+    /** @brief Constructs the Locked container by binding a raw pointer target directly and locking the mutex. */
+    Locked(CT *data, std::mutex &mutex) : data_(data), mutex_(&mutex) { mutex_->lock(); }
+    /** @brief Constructs the Locked container by taking the address of an lvalue reference and locking the mutex. */
+    Locked(CT &data, std::mutex &mutex) : Locked(&data, mutex) {}
     /** @brief Move constructor that transfers the critical section ownership from an rvalue Locked state. */
     Locked(const Locked &&locked) : data_(locked.data_), mutex_(locked.mutex_) { locked.mutex_ = nullptr; }
     /** @brief Destructor that safely releases the acquired mutex if this instance still retains its ownership. */
     ~Locked() {
       if (mutex_) mutex_->unlock();
     }
-    /** @brief Accesses the underlying reference or pointer to the protected resource. */
-    T data() const { return data_; }
+    /** @brief Indirection operator that returns a pointer to the protected inner resource. */
+    CT *operator->() { return data_; }
+    /** @brief Indirection operator that returns a reference to the protected inner resource. */
+    CT &operator*() { return *data_; }
 
   private:
-    T data_;
+    CT *data_;
     mutable std::mutex *mutex_;
   };
 

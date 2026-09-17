@@ -69,9 +69,9 @@ int main(int argc, char *argv[]) {
     for (AsyncFw::AbstractThreadPool *pool : pools) {
       lsNotice() << pool->name();
       AsyncFw::Thread::Locked<const std::vector<AsyncFw::AbstractThreadPool::Thread *> &> threads = pool->threads();
-      for (const AsyncFw::AbstractThreadPool::Thread *thread : threads.data()) { lsInfoGreen() << thread->name(); }
+      for (const AsyncFw::AbstractThreadPool::Thread *thread : *threads) { lsInfoGreen() << thread->name(); }
     }
-    for (const AsyncFw::AbstractThread *thread : AsyncFw::AbstractThread::threads().data()) { lsInfoMagenta() << thread->name(); }
+    for (const AsyncFw::AbstractThread *thread : *AsyncFw::AbstractThread::threads()) { lsInfoMagenta() << thread->name(); }
   });
 
   int ret = AsyncFw::MainThread::exec();

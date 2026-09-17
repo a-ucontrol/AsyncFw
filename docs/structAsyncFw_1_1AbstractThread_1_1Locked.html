@@ -104,20 +104,31 @@ $(function(){initNavTree('structAsyncFw_1_1AbstractThread_1_1Locked.html','','st
 
 <p><code>#include &lt;<a class="el" href="AbstractThread_8h_source.html">AsyncFw/AbstractThread</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-types" class="groupheader"><a id="pub-types" name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:a21a9a95c2ef1c322bb6da1acb9b7d16a" id="r_a21a9a95c2ef1c322bb6da1acb9b7d16a"><td class="memItemLeft"><a id="a21a9a95c2ef1c322bb6da1acb9b7d16a" name="a21a9a95c2ef1c322bb6da1acb9b7d16a"></a>
+using&#160;</td><td class="memItemRight"><b>CT</b> = std::remove_reference_t&lt;T&gt;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a1d76c5a5f7d6255a7cc6288cfced9a4c" id="r_a1d76c5a5f7d6255a7cc6288cfced9a4c"><td class="memItemLeft"><a id="a1d76c5a5f7d6255a7cc6288cfced9a4c" name="a1d76c5a5f7d6255a7cc6288cfced9a4c"></a>
-&#160;</td><td class="memItemRight"><b>Locked</b> (T <a class="el" href="#a4d4da476cd06684b8b602b83ca1fddcf">data</a>, std::mutex &amp;mutex)</td></tr>
-<tr class="memdesc:a1d76c5a5f7d6255a7cc6288cfced9a4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs the <a class="el" href="structAsyncFw_1_1AbstractThread_1_1Locked.html" title="A zero-copy RAII carrier that couples a synchronized resource view with its active lock guard.">Locked</a> container by binding the data and acquiring the mutex lock. <br /></td></tr>
+<tr class="memitem:a5566c301cf3395adfddb5f26814fcbe2" id="r_a5566c301cf3395adfddb5f26814fcbe2"><td class="memItemLeft"><a id="a5566c301cf3395adfddb5f26814fcbe2" name="a5566c301cf3395adfddb5f26814fcbe2"></a>
+&#160;</td><td class="memItemRight"><b>Locked</b> (CT *data, std::mutex &amp;mutex)</td></tr>
+<tr class="memdesc:a5566c301cf3395adfddb5f26814fcbe2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs the <a class="el" href="structAsyncFw_1_1AbstractThread_1_1Locked.html" title="A zero-copy RAII carrier that couples a synchronized resource view with its active lock guard.">Locked</a> container by binding a raw pointer target directly and locking the mutex. <br /></td></tr>
+<tr class="memitem:a6b8780bbc09958426da5e76eb2c1f135" id="r_a6b8780bbc09958426da5e76eb2c1f135"><td class="memItemLeft"><a id="a6b8780bbc09958426da5e76eb2c1f135" name="a6b8780bbc09958426da5e76eb2c1f135"></a>
+&#160;</td><td class="memItemRight"><b>Locked</b> (CT &amp;data, std::mutex &amp;mutex)</td></tr>
+<tr class="memdesc:a6b8780bbc09958426da5e76eb2c1f135"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs the <a class="el" href="structAsyncFw_1_1AbstractThread_1_1Locked.html" title="A zero-copy RAII carrier that couples a synchronized resource view with its active lock guard.">Locked</a> container by taking the address of an lvalue reference and locking the mutex. <br /></td></tr>
 <tr class="memitem:a376478e64952aa9fc0e5eaa93ed51b01" id="r_a376478e64952aa9fc0e5eaa93ed51b01"><td class="memItemLeft"><a id="a376478e64952aa9fc0e5eaa93ed51b01" name="a376478e64952aa9fc0e5eaa93ed51b01"></a>
 &#160;</td><td class="memItemRight"><b>Locked</b> (const Locked &amp;&amp;locked)</td></tr>
 <tr class="memdesc:a376478e64952aa9fc0e5eaa93ed51b01"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move constructor that transfers the critical section ownership from an rvalue <a class="el" href="structAsyncFw_1_1AbstractThread_1_1Locked.html" title="A zero-copy RAII carrier that couples a synchronized resource view with its active lock guard.">Locked</a> state. <br /></td></tr>
 <tr class="memitem:a6d11867b37b8ccf7013b67dceae310c7" id="r_a6d11867b37b8ccf7013b67dceae310c7"><td class="memItemLeft"><a id="a6d11867b37b8ccf7013b67dceae310c7" name="a6d11867b37b8ccf7013b67dceae310c7"></a>
 &#160;</td><td class="memItemRight"><b>~Locked</b> ()</td></tr>
 <tr class="memdesc:a6d11867b37b8ccf7013b67dceae310c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor that safely releases the acquired mutex if this instance still retains its ownership. <br /></td></tr>
-<tr class="memitem:a4d4da476cd06684b8b602b83ca1fddcf" id="r_a4d4da476cd06684b8b602b83ca1fddcf"><td class="memItemLeft"><a id="a4d4da476cd06684b8b602b83ca1fddcf" name="a4d4da476cd06684b8b602b83ca1fddcf"></a>
-T&#160;</td><td class="memItemRight"><b>data</b> () const</td></tr>
-<tr class="memdesc:a4d4da476cd06684b8b602b83ca1fddcf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Accesses the underlying reference or pointer to the protected resource. <br /></td></tr>
+<tr class="memitem:aa96d83d3514505460203b8b96a2983b5" id="r_aa96d83d3514505460203b8b96a2983b5"><td class="memItemLeft"><a id="aa96d83d3514505460203b8b96a2983b5" name="aa96d83d3514505460203b8b96a2983b5"></a>
+CT *&#160;</td><td class="memItemRight"><b>operator-&gt;</b> ()</td></tr>
+<tr class="memdesc:aa96d83d3514505460203b8b96a2983b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indirection operator that returns a pointer to the protected inner resource. <br /></td></tr>
+<tr class="memitem:a9f73b3cc751f9f3d84a37bc1ffc8c3bc" id="r_a9f73b3cc751f9f3d84a37bc1ffc8c3bc"><td class="memItemLeft"><a id="a9f73b3cc751f9f3d84a37bc1ffc8c3bc" name="a9f73b3cc751f9f3d84a37bc1ffc8c3bc"></a>
+CT &amp;&#160;</td><td class="memItemRight"><b>operator*</b> ()</td></tr>
+<tr class="memdesc:a9f73b3cc751f9f3d84a37bc1ffc8c3bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indirection operator that returns a reference to the protected inner resource. <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename T&gt;<br />
