@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['readtimeout_0',['readTimeout',['../classAsyncFw_1_1DataArrayAbstractTcp.html#ae58df4b570a50455f5f295513d7bdb52',1,'AsyncFw::DataArrayAbstractTcp']]],
-  ['received_1',['received',['../classAsyncFw_1_1DataArrayAbstractTcp.html#aa14fbf40d42b2d193009793538cf4cfc',1,'AsyncFw::DataArrayAbstractTcp::received'],['../classAsyncFw_1_1DataArraySocket.html#ab0c23db25054ae85a92b6fb57f7da125',1,'AsyncFw::DataArraySocket::received']]]
+  ['pool_0',['pool',['../classAsyncFw_1_1DataArrayAbstractTcp_1_1Thread.html#a658eb13fe8039a9a74f16e4dab9a1b20',1,'AsyncFw::DataArrayAbstractTcp::Thread::pool'],['../classAsyncFw_1_1AbstractThreadPool_1_1Thread.html#a3f4c0689143ffada4c4569f43f93c5a9',1,'AsyncFw::AbstractThreadPool::Thread::pool']]],
+  ['port_1',['port',['../structAsyncFw_1_1MulticastDns_1_1Host.html#a52a728b597d34fc89757944f97a002b8',1,'AsyncFw::MulticastDns::Host']]]
 ];

@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['hostadded_0',['hostAdded',['../classAsyncFw_1_1MulticastDns.html#a973574ac5d99e8b3ef2455ded3e90407',1,'AsyncFw::MulticastDns']]],
-  ['hostchanged_1',['hostChanged',['../classAsyncFw_1_1MulticastDns.html#a00da8b82983f3da4d37809761b04df10',1,'AsyncFw::MulticastDns']]],
-  ['hostremoved_2',['hostRemoved',['../classAsyncFw_1_1MulticastDns.html#a97cbf66dbddc356f45aad429e118d287',1,'AsyncFw::MulticastDns']]]
+  ['fd_5f_0',['fd_',['../classAsyncFw_1_1AbstractSocket.html#a1380ccdb23066b7084eca638b4232761',1,'AsyncFw::AbstractSocket']]],
+  ['finished_1',['finished',['../classAsyncFw_1_1Thread.html#ad4c31cb77c83c080affcd0cda66debe4',1,'AsyncFw::Thread']]]
 ];

@@ -1,18 +1,9 @@
 <map id="main/Cache.h" name="main/Cache.h">
-<area shape="rect" id="Node000001" title="The Cache class." alt="" coords="116,5,218,32"/>
-<area shape="rect" id="Node000002" href="$FunctionConnector_8h.html" title="The AbstractFunctionConnector, FunctionConnector, FunctionConnectorProtected, FunctionConnectionGuard..." alt="" coords="76,80,258,107"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="168,30,170,65,165,64,167,35"/>
-<area shape="rect" id="Node000003" href="$AbstractThread_8h.html" title="The AbstractThread class." alt="" coords="107,155,228,181"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="168,105,170,140,165,138,166,110"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="5,229,63,256"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="143,184,72,224,69,219,145,180"/>
-<area shape="rect" id="Node000005" title=" " alt="" coords="157,304,215,331"/>
-<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="157,180,134,216,127,236,130,255,142,275,159,295,154,294,138,278,125,257,122,235,129,214,153,183"/>
-<area shape="rect" id="Node000006" title=" " alt="" coords="139,229,196,256"/>
-<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="169,180,170,215,165,213,166,184"/>
-<area shape="rect" id="Node000007" href="$LockedData_8h.html" title="The LockedData class." alt="" coords="220,229,322,256"/>
-<area shape="poly" id="edge6_Node000003_Node000007" title=" " alt="" coords="186,179,243,220,238,221,185,184"/>
-<area shape="rect" id="Node000008" href="$invocable_8hpp_source.html" title=" " alt="" coords="346,229,447,256"/>
-<area shape="poly" id="edge8_Node000003_Node000008" title=" " alt="" coords="208,179,344,223,339,225,207,185"/>
-<area shape="poly" id="edge7_Node000007_Node000005" title=" " alt="" coords="259,256,213,296,211,292,254,257"/>
+<area shape="rect" id="Node000001" title="The Cache class." alt="" coords="108,5,211,32"/>
+<area shape="rect" id="Node000002" href="$LockedData_8h.html" title="The LockedData class." alt="" coords="5,80,149,107"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="143,35,104,72,101,68,147,31"/>
+<area shape="rect" id="Node000004" href="$invocable_8hpp_source.html" title=" " alt="" coords="172,80,315,107"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="175,30,220,69,215,70,174,35"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="48,155,106,181"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="79,105,80,140,74,138,75,109"/>
 </map>

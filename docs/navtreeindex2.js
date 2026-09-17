@@ -1,5 +1,10 @@
 var NAVTREEINDEX2 =
 {
+"classAsyncFw_1_1Log.html#a851f59ea9d9019403e3adffc04ddd07a":[2,0,0,35,10],
+"classAsyncFw_1_1Log.html#a9cca0424e45994e01dc6257a07b1246b":[2,0,0,35,6],
+"classAsyncFw_1_1Log.html#a9d4074dfb0cd3d2f54bc1301f6dcdfb8":[2,0,0,35,11],
+"classAsyncFw_1_1Log.html#aa245705a619748ab41ad9b0a43b81767":[2,0,0,35,9],
+"classAsyncFw_1_1Log.html#aa915e380895b72e2d636c73930b3f0e5":[2,0,0,35,4],
 "classAsyncFw_1_1Log.html#ab990350e0de8b9a9c6153f7c67b7a527":[2,0,0,35,8],
 "classAsyncFw_1_1Log.html#af85aba564a162221f53e80f010d7fbf3":[2,0,0,35,7],
 "classAsyncFw_1_1LogStream.html":[2,0,0,13],
@@ -239,15 +244,10 @@ var NAVTREEINDEX2 =
 "structAsyncFw_1_1CoroutineTask_1_1promise__type.html#a6ef8c84c53068677172b21f5e08aa0b7":[2,0,0,19,0,0],
 "structAsyncFw_1_1FunctionConnector_1_1Policy.html":[2,0,0,9,0],
 "structAsyncFw_1_1LockedData.html":[2,0,0,12],
+"structAsyncFw_1_1LockedData.html#a3588baebe7f315c02c41897a0516ff03":[2,0,0,12,6],
 "structAsyncFw_1_1LockedData.html#a475052ad1a34384dded2b03768309cc8":[2,0,0,12,5],
 "structAsyncFw_1_1LockedData.html#a49123baa7a4af23dd82fd0c72e0aa9eb":[2,0,0,12,3],
 "structAsyncFw_1_1LockedData.html#a614beded15cf481d85228d5857ef92c0":[2,0,0,12,2],
 "structAsyncFw_1_1LockedData.html#ab556ac768063627ea67df33d0bf9657c":[2,0,0,12,1],
-"structAsyncFw_1_1LockedData.html#ac1f322296dfdde83422def461d71872b":[2,0,0,12,4],
-"structAsyncFw_1_1LockedData.html#ada3e12bb01043235d1bc7c0c9fe0bb81":[2,0,0,12,0],
-"structAsyncFw_1_1LogStream_1_1Message.html":[2,0,0,13,0],
-"structAsyncFw_1_1LogStream_1_1Message.html#a4b2b2b0ff46ffb2a1f949f4953b34895":[2,0,0,13,0,1],
-"structAsyncFw_1_1LogStream_1_1Message.html#a7d55dbc7e3fd3c5b106977df3ca2bbbb":[2,0,0,13,0,3],
-"structAsyncFw_1_1LogStream_1_1Message.html#abac2923c4b2c7076a731b88df2420fa5":[2,0,0,13,0,4],
-"structAsyncFw_1_1LogStream_1_1Message.html#af6373a2f7362ff25d5341e5c373e1554":[2,0,0,13,0,2]
+"structAsyncFw_1_1LockedData.html#ac1dc1e67089868623ca1d8b5d9df57ea":[2,0,0,12,7]
 };
