@@ -59,20 +59,29 @@ public:
   using AbstractTask = Invocable<void()>::Abstract;
   /** @brief The AbstractPollTask type. */
   using AbstractPollTask = Invocable<void(AbstractThread::PollEvents)>::Abstract;
+
   /** @struct Locked AbstractThread.h <AsyncFw/AbstractThread> @brief A zero-copy RAII carrier that couples a synchronized resource view with its active lock guard.
   @details Enforces compile-time checks to ensure that the underlying type is strictly a reference or a pointer, effectively preventing accidental heavy memory allocations or copying during multi-threaded data sharing.
   @tparam T The resource type declaration, which must be either a reference or a pointer. */
   template <typename T>
-  struct Locked : LockGuard {
+  struct Locked {
     static_assert(std::is_reference_v<T> || std::is_pointer_v<T>, "Locked<T> error: T must be either a reference or a pointer to avoid copying!");
     /** @brief Constructs the Locked container by binding the data and acquiring the mutex lock. */
-    Locked(T data, std::mutex &m) : LockGuard(m), data_(data) {}
-    /** @brief Accesses the underlying reference or pointer. */
+    Locked(T data, std::mutex &mutex) : data_(data), mutex_(&mutex) { mutex_->lock(); }
+    /** @brief Move constructor that transfers the critical section ownership from an rvalue Locked state. */
+    Locked(const Locked &&locked) : data_(locked.data_), mutex_(locked.mutex_) { locked.mutex_ = nullptr; }
+    /** @brief Destructor that safely releases the acquired mutex if this instance still retains its ownership. */
+    ~Locked() {
+      if (mutex_) mutex_->unlock();
+    }
+    /** @brief Accesses the underlying reference or pointer to the protected resource. */
     T data() const { return data_; }
 
   private:
     T data_;
+    mutable std::mutex *mutex_;
   };
+
   /** @class Waiter @brief Synchronization primitive for nested event loop.
   @details Spawns a sub-event loop via exec() within the current thread to achieve pseudo-synchronous blocking waits (e.g., inside CoroutineTask::wait()). This keeps the thread processing active events and prevents context deadlocks.
   @warning Cascade Effect (Stack Invariant): Due to the nature of execution nesting, any prior nested exec loop will terminate only after all subsequent (deeper) nested loops are fully completed. */
