@@ -1,25 +1,28 @@
 <map id="main/MainThread.h" name="main/MainThread.h">
-<area shape="rect" id="Node000001" title="The MainThread class." alt="" coords="268,5,400,32"/>
-<area shape="rect" id="Node000002" href="$Thread_8h.html" title="The Thread class." alt="" coords="99,80,212,107"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="301,34,202,76,199,71,305,31"/>
-<area shape="rect" id="Node000009" href="$Instance_8h.html" title="The AbstractInstance and Instance classes." alt="" coords="236,80,318,107"/>
-<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="326,31,298,70,294,66,322,34"/>
-<area shape="rect" id="Node000011" title=" " alt="" coords="342,80,443,107"/>
-<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="345,30,376,68,370,68,344,35"/>
-<area shape="rect" id="Node000012" title=" " alt="" coords="467,80,534,107"/>
-<area shape="poly" id="edge11_Node000001_Node000012" title=" " alt="" coords="363,30,460,73,455,74,363,35"/>
-<area shape="rect" id="Node000003" href="$FunctionConnector_8h.html" title="The AbstractFunctionConnector, FunctionConnector, FunctionConnectorProtected, FunctionConnectionGuard..." alt="" coords="85,155,226,181"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="156,105,158,140,153,138,154,110"/>
-<area shape="rect" id="Node000004" href="$AbstractThread_8h.html" title="The AbstractThread class." alt="" coords="95,229,216,256"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="157,180,158,215,153,213,154,184"/>
+<area shape="rect" id="Node000001" title="The MainThread class." alt="" coords="280,5,412,32"/>
+<area shape="rect" id="Node000002" href="$Thread_8h.html" title="The Thread class." alt="" coords="111,80,224,107"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="313,34,214,76,211,72,317,31"/>
+<area shape="rect" id="Node000010" href="$Instance_8h.html" title="The AbstractInstance and Instance classes." alt="" coords="248,80,330,107"/>
+<area shape="poly" id="edge10_Node000001_Node000010" title=" " alt="" coords="338,31,310,70,306,66,334,35"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="354,80,455,107"/>
+<area shape="poly" id="edge12_Node000001_Node000012" title=" " alt="" coords="357,30,388,68,382,68,356,35"/>
+<area shape="rect" id="Node000013" title=" " alt="" coords="479,80,546,107"/>
+<area shape="poly" id="edge13_Node000001_Node000013" title=" " alt="" coords="375,30,472,73,467,74,375,35"/>
+<area shape="rect" id="Node000003" href="$FunctionConnector_8h.html" title="The AbstractFunctionConnector, FunctionConnector, FunctionConnectorProtected, FunctionConnectionGuard..." alt="" coords="97,155,238,181"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="168,105,170,140,165,138,167,110"/>
+<area shape="rect" id="Node000004" href="$AbstractThread_8h.html" title="The AbstractThread class." alt="" coords="107,229,228,256"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="168,179,170,214,165,213,166,184"/>
 <area shape="rect" id="Node000005" title=" " alt="" coords="5,304,63,331"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="136,259,70,298,67,293,132,255"/>
-<area shape="rect" id="Node000006" title=" " alt="" coords="87,304,144,331"/>
-<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="151,255,132,292,128,288,146,258"/>
-<area shape="rect" id="Node000007" title=" " alt="" coords="168,304,225,331"/>
-<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="164,254,185,291,180,290,161,259"/>
-<area shape="rect" id="Node000008" href="$invocable_8hpp_source.html" title=" " alt="" coords="250,304,351,331"/>
-<area shape="poly" id="edge7_Node000004_Node000008" title=" " alt="" coords="181,254,264,296,259,297,180,259"/>
-<area shape="rect" id="Node000010" title=" " alt="" coords="250,155,303,181"/>
-<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="278,105,279,140,274,138,275,110"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="143,259,72,299,69,294,145,254"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="157,379,215,405"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="156,254,132,291,126,310,129,330,141,350,158,369,153,369,137,353,123,332,121,310,128,288,153,258"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="139,304,196,331"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="169,254,170,289,165,287,166,259"/>
+<area shape="rect" id="Node000008" href="$LockedData_8h.html" title="The LockedData class." alt="" coords="220,304,322,331"/>
+<area shape="poly" id="edge7_Node000004_Node000008" title=" " alt="" coords="186,254,243,294,238,295,185,259"/>
+<area shape="rect" id="Node000009" href="$invocable_8hpp_source.html" title=" " alt="" coords="346,304,447,331"/>
+<area shape="poly" id="edge9_Node000004_Node000009" title=" " alt="" coords="208,254,344,298,339,300,207,259"/>
+<area shape="poly" id="edge8_Node000008_Node000006" title=" " alt="" coords="259,330,213,371,211,366,254,332"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="262,155,315,181"/>
+<area shape="poly" id="edge11_Node000010_Node000011" title=" " alt="" coords="290,105,291,140,286,138,288,110"/>
 </map>

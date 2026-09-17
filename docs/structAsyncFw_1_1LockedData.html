@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.16.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>AsyncFw: AsyncFw::AbstractThread::Locked&lt; T &gt; Struct Template Reference</title>
+<title>AsyncFw: AsyncFw::LockedData&lt; T &gt; Struct Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -69,7 +69,7 @@ $(function() { codefold.init(); });
   </div>
 </div>
 <script type="text/javascript">
-$(function(){initNavTree('structAsyncFw_1_1AbstractThread_1_1Locked.html','','structAsyncFw_1_1AbstractThread_1_1Locked-members'); });
+$(function(){initNavTree('structAsyncFw_1_1LockedData.html','','structAsyncFw_1_1LockedData-members'); });
 </script>
 <div id="container">
 <div id="doc-content">
@@ -95,44 +95,51 @@ $(function(){initNavTree('structAsyncFw_1_1AbstractThread_1_1Locked.html','','st
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">AsyncFw::AbstractThread::Locked&lt; T &gt; Struct Template Reference</div></div>
+  <div class="headertitle"><div class="title">AsyncFw::LockedData&lt; T &gt; Struct Template Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
 <p>A zero-copy RAII carrier that couples a synchronized resource view with its active lock guard.  
  <a href="#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="AbstractThread_8h_source.html">AsyncFw/AbstractThread</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="LockedData_8h_source.html">AsyncFw/LockedData</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-types" class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a21a9a95c2ef1c322bb6da1acb9b7d16a" id="r_a21a9a95c2ef1c322bb6da1acb9b7d16a"><td class="memItemLeft"><a id="a21a9a95c2ef1c322bb6da1acb9b7d16a" name="a21a9a95c2ef1c322bb6da1acb9b7d16a"></a>
-using&#160;</td><td class="memItemRight"><b>CT</b> = std::remove_reference_t&lt;T&gt;</td></tr>
+<tr class="memitem:ab402bc6dd74c26431b0bb3a59cf94e36" id="r_ab402bc6dd74c26431b0bb3a59cf94e36"><td class="memItemLeft"><a id="ab402bc6dd74c26431b0bb3a59cf94e36" name="ab402bc6dd74c26431b0bb3a59cf94e36"></a>
+using&#160;</td><td class="memItemRight"><b>_T</b> = std::remove_reference_t&lt;T&gt;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a5566c301cf3395adfddb5f26814fcbe2" id="r_a5566c301cf3395adfddb5f26814fcbe2"><td class="memItemLeft"><a id="a5566c301cf3395adfddb5f26814fcbe2" name="a5566c301cf3395adfddb5f26814fcbe2"></a>
-&#160;</td><td class="memItemRight"><b>Locked</b> (CT *data, std::mutex &amp;mutex)</td></tr>
-<tr class="memdesc:a5566c301cf3395adfddb5f26814fcbe2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs the <a class="el" href="structAsyncFw_1_1AbstractThread_1_1Locked.html" title="A zero-copy RAII carrier that couples a synchronized resource view with its active lock guard.">Locked</a> container by binding a raw pointer target directly and locking the mutex. <br /></td></tr>
-<tr class="memitem:a6b8780bbc09958426da5e76eb2c1f135" id="r_a6b8780bbc09958426da5e76eb2c1f135"><td class="memItemLeft"><a id="a6b8780bbc09958426da5e76eb2c1f135" name="a6b8780bbc09958426da5e76eb2c1f135"></a>
-&#160;</td><td class="memItemRight"><b>Locked</b> (CT &amp;data, std::mutex &amp;mutex)</td></tr>
-<tr class="memdesc:a6b8780bbc09958426da5e76eb2c1f135"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs the <a class="el" href="structAsyncFw_1_1AbstractThread_1_1Locked.html" title="A zero-copy RAII carrier that couples a synchronized resource view with its active lock guard.">Locked</a> container by taking the address of an lvalue reference and locking the mutex. <br /></td></tr>
-<tr class="memitem:a376478e64952aa9fc0e5eaa93ed51b01" id="r_a376478e64952aa9fc0e5eaa93ed51b01"><td class="memItemLeft"><a id="a376478e64952aa9fc0e5eaa93ed51b01" name="a376478e64952aa9fc0e5eaa93ed51b01"></a>
-&#160;</td><td class="memItemRight"><b>Locked</b> (const Locked &amp;&amp;locked)</td></tr>
-<tr class="memdesc:a376478e64952aa9fc0e5eaa93ed51b01"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move constructor that transfers the critical section ownership from an rvalue <a class="el" href="structAsyncFw_1_1AbstractThread_1_1Locked.html" title="A zero-copy RAII carrier that couples a synchronized resource view with its active lock guard.">Locked</a> state. <br /></td></tr>
-<tr class="memitem:a6d11867b37b8ccf7013b67dceae310c7" id="r_a6d11867b37b8ccf7013b67dceae310c7"><td class="memItemLeft"><a id="a6d11867b37b8ccf7013b67dceae310c7" name="a6d11867b37b8ccf7013b67dceae310c7"></a>
-&#160;</td><td class="memItemRight"><b>~Locked</b> ()</td></tr>
-<tr class="memdesc:a6d11867b37b8ccf7013b67dceae310c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor that safely releases the acquired mutex if this instance still retains its ownership. <br /></td></tr>
-<tr class="memitem:aa96d83d3514505460203b8b96a2983b5" id="r_aa96d83d3514505460203b8b96a2983b5"><td class="memItemLeft"><a id="aa96d83d3514505460203b8b96a2983b5" name="aa96d83d3514505460203b8b96a2983b5"></a>
-CT *&#160;</td><td class="memItemRight"><b>operator-&gt;</b> ()</td></tr>
-<tr class="memdesc:aa96d83d3514505460203b8b96a2983b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indirection operator that returns a pointer to the protected inner resource. <br /></td></tr>
-<tr class="memitem:a9f73b3cc751f9f3d84a37bc1ffc8c3bc" id="r_a9f73b3cc751f9f3d84a37bc1ffc8c3bc"><td class="memItemLeft"><a id="a9f73b3cc751f9f3d84a37bc1ffc8c3bc" name="a9f73b3cc751f9f3d84a37bc1ffc8c3bc"></a>
-CT &amp;&#160;</td><td class="memItemRight"><b>operator*</b> ()</td></tr>
-<tr class="memdesc:a9f73b3cc751f9f3d84a37bc1ffc8c3bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indirection operator that returns a reference to the protected inner resource. <br /></td></tr>
+<tr class="memitem:ada3e12bb01043235d1bc7c0c9fe0bb81" id="r_ada3e12bb01043235d1bc7c0c9fe0bb81"><td class="memItemLeft"><a id="ada3e12bb01043235d1bc7c0c9fe0bb81" name="ada3e12bb01043235d1bc7c0c9fe0bb81"></a>
+&#160;</td><td class="memItemRight"><b>LockedData</b> (_T *data, std::mutex &amp;mutex)</td></tr>
+<tr class="memdesc:ada3e12bb01043235d1bc7c0c9fe0bb81"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs the <a class="el" href="structAsyncFw_1_1LockedData.html" title="A zero-copy RAII carrier that couples a synchronized resource view with its active lock guard.">LockedData</a> container by binding a raw pointer target directly. <br /></td></tr>
+<tr class="memitem:ab556ac768063627ea67df33d0bf9657c" id="r_ab556ac768063627ea67df33d0bf9657c"><td class="memItemLeft"><a id="ab556ac768063627ea67df33d0bf9657c" name="ab556ac768063627ea67df33d0bf9657c"></a>
+&#160;</td><td class="memItemRight"><b>LockedData</b> (_T &amp;data, std::mutex &amp;mutex)</td></tr>
+<tr class="memdesc:ab556ac768063627ea67df33d0bf9657c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs the <a class="el" href="structAsyncFw_1_1LockedData.html" title="A zero-copy RAII carrier that couples a synchronized resource view with its active lock guard.">LockedData</a> container by taking the address of an lvalue reference. <br /></td></tr>
+<tr class="memitem:a614beded15cf481d85228d5857ef92c0" id="r_a614beded15cf481d85228d5857ef92c0"><td class="memItemLeft"><a id="a614beded15cf481d85228d5857ef92c0" name="a614beded15cf481d85228d5857ef92c0"></a>
+&#160;</td><td class="memItemRight"><b>LockedData</b> (const LockedData &amp;&amp;locked)</td></tr>
+<tr class="memdesc:a614beded15cf481d85228d5857ef92c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move constructor that transfers the critical section ownership from an rvalue <a class="el" href="structAsyncFw_1_1LockedData.html" title="A zero-copy RAII carrier that couples a synchronized resource view with its active lock guard.">LockedData</a> state. <br /></td></tr>
+<tr class="memitem:a49123baa7a4af23dd82fd0c72e0aa9eb" id="r_a49123baa7a4af23dd82fd0c72e0aa9eb"><td class="memItemLeft"><a id="a49123baa7a4af23dd82fd0c72e0aa9eb" name="a49123baa7a4af23dd82fd0c72e0aa9eb"></a>
+&#160;</td><td class="memItemRight"><b>~LockedData</b> ()</td></tr>
+<tr class="memdesc:a49123baa7a4af23dd82fd0c72e0aa9eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor that safely releases the acquired mutex if this instance still retains its ownership. <br /></td></tr>
+<tr class="memitem:ac1f322296dfdde83422def461d71872b" id="r_ac1f322296dfdde83422def461d71872b"><td class="memItemLeft"><a id="ac1f322296dfdde83422def461d71872b" name="ac1f322296dfdde83422def461d71872b"></a>
+_T *&#160;</td><td class="memItemRight"><b>operator-&gt;</b> ()</td></tr>
+<tr class="memdesc:ac1f322296dfdde83422def461d71872b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indirection operator that returns a pointer to the protected inner resource. <br /></td></tr>
+<tr class="memitem:a475052ad1a34384dded2b03768309cc8" id="r_a475052ad1a34384dded2b03768309cc8"><td class="memItemLeft"><a id="a475052ad1a34384dded2b03768309cc8" name="a475052ad1a34384dded2b03768309cc8"></a>
+_T &amp;&#160;</td><td class="memItemRight"><b>operator*</b> ()</td></tr>
+<tr class="memdesc:a475052ad1a34384dded2b03768309cc8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indirection operator that returns a reference to the protected inner resource. <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pro-attribs" class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:a3588baebe7f315c02c41897a0516ff03" id="r_a3588baebe7f315c02c41897a0516ff03"><td class="memItemLeft"><a id="a3588baebe7f315c02c41897a0516ff03" name="a3588baebe7f315c02c41897a0516ff03"></a>
+_T *&#160;</td><td class="memItemRight"><b>data_</b></td></tr>
+<tr class="memitem:ac1dc1e67089868623ca1d8b5d9df57ea" id="r_ac1dc1e67089868623ca1d8b5d9df57ea"><td class="memItemLeft"><a id="ac1dc1e67089868623ca1d8b5d9df57ea" name="ac1dc1e67089868623ca1d8b5d9df57ea"></a>
+std::mutex *&#160;</td><td class="memItemRight"><b>mutex_</b></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename T&gt;<br />
-struct AsyncFw::AbstractThread::Locked&lt; T &gt;</div><p>A zero-copy RAII carrier that couples a synchronized resource view with its active lock guard. </p>
+struct AsyncFw::LockedData&lt; T &gt;</div><p>A zero-copy RAII carrier that couples a synchronized resource view with its active lock guard. </p>
 <p>Enforces compile-time checks to ensure that the underlying type is strictly a reference or a pointer, effectively preventing accidental heavy memory allocations or copying during multi-threaded data sharing. </p><dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">T</td><td>The resource type declaration, which must be either a reference or a pointer. </td></tr>
@@ -142,7 +149,7 @@ struct AsyncFw::AbstractThread::Locked&lt; T &gt;</div><p>A zero-copy RAII carri
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="ThreadPool_2main_8cpp-example.html#_a19">ThreadPool/main.cpp</a>.</dd>
 </dl>
 </div><hr/>The documentation for this struct was generated from the following file:<ul>
-<li>core/<a class="el" href="AbstractThread_8h_source.html">AbstractThread.h</a></li>
+<li>core/<a class="el" href="LockedData_8h_source.html">LockedData.h</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
@@ -157,7 +164,7 @@ struct AsyncFw::AbstractThread::Locked&lt; T &gt;</div><p>A zero-copy RAII carri
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><b>AsyncFw</b></li><li class="navelem"><a href="classAsyncFw_1_1AbstractThread.html">AbstractThread</a></li><li class="navelem"><a href="structAsyncFw_1_1AbstractThread_1_1Locked.html">Locked</a></li>
+    <li class="navelem"><b>AsyncFw</b></li><li class="navelem"><a href="structAsyncFw_1_1LockedData.html">LockedData</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.16.1 </li>
   </ul>
 </div>

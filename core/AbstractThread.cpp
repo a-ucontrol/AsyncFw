@@ -429,7 +429,7 @@ AbstractThread *AbstractThread::current() {
   return nullptr;
 }
 
-AbstractThread::Locked<const std::vector<AbstractThread *> &> AbstractThread::threads() { return {Private::list, Private::list.mutex}; }
+LockedData<const std::vector<AbstractThread *> &> AbstractThread::threads() { return {Private::list, Private::list.mutex}; }
 
 void AbstractThread::startedEvent() { lsDebug() << LOG_THREAD_NAME; }
 

@@ -93,6 +93,7 @@ set(AsyncFw_CORE_HEADERS
   "${CMAKE_CURRENT_LIST_DIR}/core/AbstractThread.h"
   "${CMAKE_CURRENT_LIST_DIR}/core/Thread.h"
   "${CMAKE_CURRENT_LIST_DIR}/core/AnyData.h"
+  "${CMAKE_CURRENT_LIST_DIR}/core/LockedData.h"
   "${CMAKE_CURRENT_LIST_DIR}/core/AbstractSocket.h"
   "${CMAKE_CURRENT_LIST_DIR}/core/AbstractTlsSocket.h"
   "${CMAKE_CURRENT_LIST_DIR}/core/TlsContext.h"

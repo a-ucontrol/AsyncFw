@@ -12,6 +12,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include <thread>
 #include <mutex>
 #include <vector>
+#include "LockedData.h"
 #include "invocable.hpp"
 
 #define AsyncFw_STATIC_INIT_PRIORITY 65530
@@ -59,33 +60,6 @@ public:
   using AbstractTask = Invocable<void()>::Abstract;
   /** @brief The AbstractPollTask type. */
   using AbstractPollTask = Invocable<void(AbstractThread::PollEvents)>::Abstract;
-
-  /** @struct Locked AbstractThread.h <AsyncFw/AbstractThread> @brief A zero-copy RAII carrier that couples a synchronized resource view with its active lock guard.
-  @details Enforces compile-time checks to ensure that the underlying type is strictly a reference or a pointer, effectively preventing accidental heavy memory allocations or copying during multi-threaded data sharing.
-  @tparam T The resource type declaration, which must be either a reference or a pointer. */
-  template <typename T>
-  struct Locked {
-    static_assert(std::is_reference_v<T> || std::is_pointer_v<T>, "Locked<T> error: T must be either a reference or a pointer to avoid copying!");
-    using CT = std::remove_reference_t<T>;
-    /** @brief Constructs the Locked container by binding a raw pointer target directly and locking the mutex. */
-    Locked(CT *data, std::mutex &mutex) : data_(data), mutex_(&mutex) { mutex_->lock(); }
-    /** @brief Constructs the Locked container by taking the address of an lvalue reference and locking the mutex. */
-    Locked(CT &data, std::mutex &mutex) : Locked(&data, mutex) {}
-    /** @brief Move constructor that transfers the critical section ownership from an rvalue Locked state. */
-    Locked(const Locked &&locked) : data_(locked.data_), mutex_(locked.mutex_) { locked.mutex_ = nullptr; }
-    /** @brief Destructor that safely releases the acquired mutex if this instance still retains its ownership. */
-    ~Locked() {
-      if (mutex_) mutex_->unlock();
-    }
-    /** @brief Indirection operator that returns a pointer to the protected inner resource. */
-    CT *operator->() { return data_; }
-    /** @brief Indirection operator that returns a reference to the protected inner resource. */
-    CT &operator*() { return *data_; }
-
-  private:
-    CT *data_;
-    mutable std::mutex *mutex_;
-  };
 
   /** @class Waiter @brief Synchronization primitive for nested event loop.
   @details Spawns a sub-event loop via exec() within the current thread to achieve pseudo-synchronous blocking waits (e.g., inside CoroutineTask::wait()). This keeps the thread processing active events and prevents context deadlocks.
@@ -149,7 +123,7 @@ public:
   /** @brief Returns a pointer to the AsyncFw::AbstractThread that manages the currently executing thread. */
   static AbstractThread *current();
   /** @brief Returns a synchronized view of all active threads. @return An AbstractThread::Locked structure bundling the thread list reference with its lifetime guard. */
-  static AbstractThread::Locked<const std::vector<AbstractThread *> &> threads();
+  static LockedData<const std::vector<AbstractThread *> &> threads();
 
   /** @brief This is called from the thread when it starts executing. */
   virtual void startedEvent();

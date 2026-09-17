@@ -13,6 +13,7 @@ var annotated_dup =
       [ "FunctionConnector", "classAsyncFw_1_1FunctionConnector.html", "classAsyncFw_1_1FunctionConnector" ],
       [ "FunctionConnectionGuard", "classAsyncFw_1_1FunctionConnectionGuard.html", "classAsyncFw_1_1FunctionConnectionGuard" ],
       [ "FunctionConnectionGuardList", "classAsyncFw_1_1FunctionConnectionGuardList.html", "classAsyncFw_1_1FunctionConnectionGuardList" ],
+      [ "LockedData", "structAsyncFw_1_1LockedData.html", "structAsyncFw_1_1LockedData" ],
       [ "LogStream", "classAsyncFw_1_1LogStream.html", "classAsyncFw_1_1LogStream" ],
       [ "Thread", "classAsyncFw_1_1Thread.html", "classAsyncFw_1_1Thread" ],
       [ "TlsContext", "classAsyncFw_1_1TlsContext.html", "classAsyncFw_1_1TlsContext" ],

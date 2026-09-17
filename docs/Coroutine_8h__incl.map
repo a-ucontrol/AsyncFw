@@ -5,25 +5,28 @@
 <area shape="rect" id="Node000003" href="$AnyData_8h.html" title="The AnyData class." alt="" coords="104,80,229,107"/>
 <area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="167,30,169,65,164,64,166,35"/>
 <area shape="rect" id="Node000005" href="$ThreadPool_8h.html" title="The AbstractThreadPool and ThreadPool classes." alt="" coords="253,80,352,107"/>
-<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="190,30,268,71,263,73,190,35"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="190,30,268,71,263,73,191,35"/>
 <area shape="rect" id="Node000004" title=" " alt="" coords="145,155,188,181"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="167,105,169,140,164,138,166,110"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="167,105,169,140,164,139,166,110"/>
 <area shape="rect" id="Node000006" href="$Thread_8h.html" title="The Thread class." alt="" coords="228,155,342,181"/>
-<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="301,105,294,141,289,138,298,109"/>
-<area shape="rect" id="Node000013" href="$Instance_8h.html" title="The AbstractInstance and Instance classes." alt="" coords="365,155,448,181"/>
-<area shape="poly" id="edge12_Node000005_Node000013" title=" " alt="" coords="321,105,379,145,373,146,320,110"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="301,105,294,141,289,138,298,110"/>
+<area shape="rect" id="Node000014" href="$Instance_8h.html" title="The AbstractInstance and Instance classes." alt="" coords="365,155,448,181"/>
+<area shape="poly" id="edge14_Node000005_Node000014" title=" " alt="" coords="321,105,379,145,373,146,321,110"/>
 <area shape="rect" id="Node000007" href="$FunctionConnector_8h.html" title="The AbstractFunctionConnector, FunctionConnector, FunctionConnectorProtected, FunctionConnectionGuard..." alt="" coords="214,229,356,256"/>
-<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="287,180,288,215,283,213,284,184"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="286,179,288,215,283,213,284,184"/>
 <area shape="rect" id="Node000008" href="$AbstractThread_8h.html" title="The AbstractThread class." alt="" coords="224,304,346,331"/>
-<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="287,254,288,290,283,287,284,259"/>
-<area shape="rect" id="Node000009" title=" " alt="" coords="135,379,192,405"/>
-<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="267,331,199,373,197,368,261,332"/>
-<area shape="rect" id="Node000010" title=" " alt="" coords="216,379,274,405"/>
-<area shape="poly" id="edge9_Node000008_Node000010" title=" " alt="" coords="280,330,261,367,258,363,276,333"/>
-<area shape="rect" id="Node000011" title=" " alt="" coords="298,379,355,405"/>
-<area shape="poly" id="edge10_Node000008_Node000011" title=" " alt="" coords="294,329,314,366,309,364,291,334"/>
-<area shape="rect" id="Node000012" href="$invocable_8hpp_source.html" title=" " alt="" coords="380,379,481,405"/>
-<area shape="poly" id="edge11_Node000008_Node000012" title=" " alt="" coords="311,329,394,371,389,371,310,334"/>
-<area shape="rect" id="Node000014" title=" " alt="" coords="380,229,433,256"/>
-<area shape="poly" id="edge13_Node000013_Node000014" title=" " alt="" coords="408,180,409,215,404,212,405,184"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="287,254,288,289,283,287,284,259"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="123,379,180,405"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="260,333,190,373,187,369,264,330"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="275,453,332,480"/>
+<area shape="poly" id="edge9_Node000008_Node000010" title=" " alt="" coords="274,329,250,365,244,385,246,404,259,425,276,444,271,443,255,428,241,406,239,384,245,363,270,332"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="256,379,314,405"/>
+<area shape="poly" id="edge10_Node000008_Node000011" title=" " alt="" coords="287,329,288,364,283,362,284,333"/>
+<area shape="rect" id="Node000012" href="$LockedData_8h.html" title="The LockedData class." alt="" coords="338,379,440,405"/>
+<area shape="poly" id="edge11_Node000008_Node000012" title=" " alt="" coords="304,329,361,370,356,370,303,334"/>
+<area shape="rect" id="Node000013" href="$invocable_8hpp_source.html" title=" " alt="" coords="464,379,565,405"/>
+<area shape="poly" id="edge13_Node000008_Node000013" title=" " alt="" coords="325,329,462,373,457,374,325,334"/>
+<area shape="poly" id="edge12_Node000012_Node000010" title=" " alt="" coords="377,405,331,446,329,441,372,407"/>
+<area shape="rect" id="Node000015" title=" " alt="" coords="380,229,433,256"/>
+<area shape="poly" id="edge15_Node000014_Node000015" title=" " alt="" coords="408,180,409,215,404,213,405,184"/>
 </map>
