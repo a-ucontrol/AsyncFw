@@ -150,6 +150,7 @@ set(AsyncFw_MAIN_HEADERS
 )
 
 set(AsyncFw_MAIN_SOURCES
+  "main/Cache.cpp"
   "main/ListenSocket.cpp"
   "main/DataArraySocket.cpp"
   "main/DataArrayTcpServer.cpp"
@@ -309,6 +310,7 @@ if(NOT AsyncFw_DISABLE_BUILD_EXAMPLES)
   add_subdirectory(example/Instance)
   add_subdirectory(example/DataArray)
   add_subdirectory(example/TlsContext)
+  add_subdirectory(example/Cache)
   if(NOT ${CMAKE_SYSTEM_PROCESSOR} STREQUAL "AMD64" OR AMD64_USE_CARES)
     add_subdirectory(example/Socket)
     add_subdirectory(example/HttpSocket)

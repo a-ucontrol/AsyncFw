@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['cache_0',['Cache',['../classAsyncFw_1_1Cache.html#a7fed99bed94c0eeb5302b2acc8f06563',1,'AsyncFw::Cache']]],
+  ['cache_0',['Cache',['../classAsyncFw_1_1Cache.html#a1d9f24350bde97fff23f2dce1d28ed25',1,'AsyncFw::Cache']]],
   ['certificate_1',['certificate',['../classAsyncFw_1_1TlsContext.html#a1f84d5908bb3af689637ef250ddb1467',1,'AsyncFw::TlsContext']]],
   ['clear_2',['clear',['../classAsyncFw_1_1Rrd.html#a6d232ea0ea88fcfcd7ad84e9129f84e3',1,'AsyncFw::Rrd']]],
   ['clearconnections_3',['clearConnections',['../classAsyncFw_1_1HttpServer.html#ab3eeb1643d4482345afcd9f971c020ac',1,'AsyncFw::HttpServer::clearConnections(const T &amp;data)'],['../classAsyncFw_1_1HttpServer.html#ad3761260dfd18899afc22c6f4bc0c556',1,'AsyncFw::HttpServer::clearConnections()']]],

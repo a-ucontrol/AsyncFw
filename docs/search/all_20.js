@@ -6,7 +6,7 @@ var searchData=
   ['_7eabstracttask_3',['~AbstractTask',['../classAsyncFw_1_1AbstractTask.html#a711751422b8bf225f696f4a5c1cb3fcf',1,'AsyncFw::AbstractTask']]],
   ['_7eabstracttlssocket_4',['~AbstractTlsSocket',['../classAsyncFw_1_1AbstractTlsSocket.html#a75c2ff2d05c2d228ee92a33d755ca42f',1,'AsyncFw::AbstractTlsSocket']]],
   ['_7eanydata_5',['~AnyData',['../structAsyncFw_1_1AnyData.html#a6d5534e474c91c9e0760eb80e8fdeda8',1,'AsyncFw::AnyData']]],
-  ['_7ecache_6',['~Cache',['../classAsyncFw_1_1Cache.html#a957fe3275720316a4ca43eb2c1e810b5',1,'AsyncFw::Cache']]],
+  ['_7ecache_6',['~Cache',['../classAsyncFw_1_1Cache.html#a543d5d6864349b37f72294bf87e5f7a4',1,'AsyncFw::Cache']]],
   ['_7efile_7',['~File',['../classAsyncFw_1_1File.html#ac704ebdf5f57d7a1c5ddf409d797fb69',1,'AsyncFw::File']]],
   ['_7efilesystemwatcher_8',['~FileSystemWatcher',['../classAsyncFw_1_1FileSystemWatcher.html#adfdbffe1e371260804159964e919b78b',1,'AsyncFw::FileSystemWatcher']]],
   ['_7efunctionconnectionguard_9',['~FunctionConnectionGuard',['../classAsyncFw_1_1FunctionConnectionGuard.html#a67c18ab01bdae4da0513e49c8b092597',1,'AsyncFw::FunctionConnectionGuard']]],

@@ -10,7 +10,7 @@ var searchData=
   ['readmessage_7',['readMessage',['../classAsyncFw_1_1Log.html#af85aba564a162221f53e80f010d7fbf3',1,'AsyncFw::Log']]],
   ['readtimeout_8',['readTimeout',['../classAsyncFw_1_1DataArrayAbstractTcp.html#ae58df4b570a50455f5f295513d7bdb52',1,'AsyncFw::DataArrayAbstractTcp']]],
   ['received_9',['received',['../classAsyncFw_1_1DataArrayAbstractTcp.html#aa14fbf40d42b2d193009793538cf4cfc',1,'AsyncFw::DataArrayAbstractTcp::received'],['../classAsyncFw_1_1DataArraySocket.html#ab0c23db25054ae85a92b6fb57f7da125',1,'AsyncFw::DataArraySocket::received']]],
-  ['refresh_10',['refresh',['../classAsyncFw_1_1Cache.html#a818ba1ab1f2335f6a4b6d649b2db6d6f',1,'AsyncFw::Cache']]],
+  ['refresh_10',['refresh',['../classAsyncFw_1_1Cache.html#a3f47fd0715fc859f0ad3f08b63f6c8c5',1,'AsyncFw::Cache']]],
   ['refused_11',['Refused',['../classAsyncFw_1_1AbstractSocket.html#a940a10b5f063e970cb7e46a61cab2415a39ae7fa79f41ed464e63aee7b5918080',1,'AsyncFw::AbstractSocket']]],
   ['releasebuffer_12',['releaseBuffer',['../classAsyncFw_1_1DataArraySocket.html#af6faaf80328db0a1644cd6b89ffae7eb',1,'AsyncFw::DataArraySocket']]],
   ['remove_13',['remove',['../classAsyncFw_1_1File.html#a22c7e349dbcc3242374c6c685948d201',1,'AsyncFw::File']]],

@@ -98,42 +98,60 @@ $(function(){initNavTree('classAsyncFw_1_1Cache.html','','classAsyncFw_1_1Cache-
   <div class="headertitle"><div class="title">AsyncFw::Cache&lt; T &gt; Class Template Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Example:  
+ <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a7fed99bed94c0eeb5302b2acc8f06563" id="r_a7fed99bed94c0eeb5302b2acc8f06563"><td class="memTemplParams" colspan="2">template&lt;typename F&gt; </td></tr>
-<tr class="memitem:a7fed99bed94c0eeb5302b2acc8f06563 template"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a7fed99bed94c0eeb5302b2acc8f06563">Cache</a> (int timeout, F function)</td></tr>
-<tr class="memdesc:a7fed99bed94c0eeb5302b2acc8f06563"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new <a class="el" href="classAsyncFw_1_1Cache.html">Cache</a> object.  <br /></td></tr>
-<tr class="memitem:a957fe3275720316a4ca43eb2c1e810b5" id="r_a957fe3275720316a4ca43eb2c1e810b5"><td class="memItemLeft"><a id="a957fe3275720316a4ca43eb2c1e810b5" name="a957fe3275720316a4ca43eb2c1e810b5"></a>
-virtual&#160;</td><td class="memItemRight"><b>~Cache</b> ()</td></tr>
-<tr class="memdesc:a957fe3275720316a4ca43eb2c1e810b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual-safe destructor ensuring polymorphically allocated callable cleanup. <br /></td></tr>
+<tr class="memitem:a1d9f24350bde97fff23f2dce1d28ed25" id="r_a1d9f24350bde97fff23f2dce1d28ed25"><td class="memTemplParams" colspan="2">template&lt;typename F&gt; </td></tr>
+<tr class="memitem:a1d9f24350bde97fff23f2dce1d28ed25 template"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a1d9f24350bde97fff23f2dce1d28ed25">Cache</a> (int timeout, F <a class="el" href="#afb746f3737c96d5750af6048696d7736">update</a>)</td></tr>
+<tr class="memdesc:a1d9f24350bde97fff23f2dce1d28ed25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new <a class="el" href="classAsyncFw_1_1Cache.html" title="Example:">Cache</a> object.  <br /></td></tr>
+<tr class="memitem:a543d5d6864349b37f72294bf87e5f7a4" id="r_a543d5d6864349b37f72294bf87e5f7a4"><td class="memItemLeft"><a id="a543d5d6864349b37f72294bf87e5f7a4" name="a543d5d6864349b37f72294bf87e5f7a4"></a>
+&#160;</td><td class="memItemRight"><b>~Cache</b> ()</td></tr>
+<tr class="memdesc:a543d5d6864349b37f72294bf87e5f7a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor that releases the polymorphically allocated callable. <br /></td></tr>
 <tr class="memitem:ab6bf6d14ec30bef03948fc2b4eea8681" id="r_ab6bf6d14ec30bef03948fc2b4eea8681"><td class="memItemLeft"><a class="el" href="structAsyncFw_1_1LockedData.html">LockedData</a>&lt; T &amp; &gt;&#160;</td><td class="memItemRight"><a class="el" href="#ab6bf6d14ec30bef03948fc2b4eea8681">acquire</a> ()</td></tr>
 <tr class="memdesc:ab6bf6d14ec30bef03948fc2b4eea8681"><td class="mdescLeft">&#160;</td><td class="mdescRight">Safely acquires the cached data view bound to its live thread lock.  <br /></td></tr>
 <tr class="memitem:a1508969e5cbd6a7b8e7a6a8fc04aa901" id="r_a1508969e5cbd6a7b8e7a6a8fc04aa901"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a1508969e5cbd6a7b8e7a6a8fc04aa901">store</a> (const T &amp;value)</td></tr>
 <tr class="memdesc:a1508969e5cbd6a7b8e7a6a8fc04aa901"><td class="mdescLeft">&#160;</td><td class="mdescRight">Securely stores a completely fresh object state inside the cache, extending its TTL.  <br /></td></tr>
-<tr class="memitem:a818ba1ab1f2335f6a4b6d649b2db6d6f" id="r_a818ba1ab1f2335f6a4b6d649b2db6d6f"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a818ba1ab1f2335f6a4b6d649b2db6d6f">refresh</a> ()</td></tr>
-<tr class="memdesc:a818ba1ab1f2335f6a4b6d649b2db6d6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Forces a cache invalidation and schedules an asynchronous refresh execution pipeline.  <br /></td></tr>
+<tr class="memitem:a3f47fd0715fc859f0ad3f08b63f6c8c5" id="r_a3f47fd0715fc859f0ad3f08b63f6c8c5"><td class="memItemLeft"><a id="a3f47fd0715fc859f0ad3f08b63f6c8c5" name="a3f47fd0715fc859f0ad3f08b63f6c8c5"></a>
+void&#160;</td><td class="memItemRight"><b>refresh</b> () override</td></tr>
+<tr class="memdesc:a3f47fd0715fc859f0ad3f08b63f6c8c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Forcibly invalidates the cache and schedules an async refresh. Public entry point; takes the lock. <br /></td></tr>
+<tr class="memitem:ace7b5fa22b0942c9d624fb335c87acf9" id="r_ace7b5fa22b0942c9d624fb335c87acf9"><td class="memItemLeft"><a id="ace7b5fa22b0942c9d624fb335c87acf9" name="ace7b5fa22b0942c9d624fb335c87acf9"></a>
+void&#160;</td><td class="memItemRight"><b>touch</b> () override</td></tr>
+<tr class="memdesc:ace7b5fa22b0942c9d624fb335c87acf9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extends the TTL without changing the value. Public entry point; schedules on the owning thread. <br /></td></tr>
+<tr class="memitem:a756b18e3a927e7968c5c38716fa06afc" id="r_a756b18e3a927e7968c5c38716fa06afc"><td class="memItemLeft"><a id="a756b18e3a927e7968c5c38716fa06afc" name="a756b18e3a927e7968c5c38716fa06afc"></a>
+bool&#160;</td><td class="memItemRight"><b>expired</b> () override</td></tr>
+<tr class="memdesc:a756b18e3a927e7968c5c38716fa06afc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the TTL has expired. Public entry point; takes the lock. <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pro-methods" class="groupheader"><a id="pro-methods" name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:afb746f3737c96d5750af6048696d7736" id="r_afb746f3737c96d5750af6048696d7736"><td class="memItemLeft"><a id="afb746f3737c96d5750af6048696d7736" name="afb746f3737c96d5750af6048696d7736"></a>
+void&#160;</td><td class="memItemRight"><b>update</b> () override</td></tr>
+<tr class="memdesc:afb746f3737c96d5750af6048696d7736"><td class="mdescLeft">&#160;</td><td class="mdescRight">Schedules the update callback. Caller must hold mutex. <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pro-attribs" class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:ad5384668bce919e867a985f97ec80d6f" id="r_ad5384668bce919e867a985f97ec80d6f"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#ad5384668bce919e867a985f97ec80d6f">timeout_</a></td></tr>
-<tr class="memitem:a4c456b12135f57ba1174b2a5f353bb36" id="r_a4c456b12135f57ba1174b2a5f353bb36"><td class="memItemLeft">T&#160;</td><td class="memItemRight"><a class="el" href="#a4c456b12135f57ba1174b2a5f353bb36">value_</a></td></tr>
-<tr class="memitem:a199a34a4ebabc364d6fed68abe3f9f07" id="r_a199a34a4ebabc364d6fed68abe3f9f07"><td class="memItemLeft">uint64_t&#160;</td><td class="memItemRight"><a class="el" href="#a199a34a4ebabc364d6fed68abe3f9f07">expire_</a></td></tr>
-<tr class="memitem:a3a0983c00a0d3c8122ab1abd27017bba" id="r_a3a0983c00a0d3c8122ab1abd27017bba"><td class="memItemLeft">std::mutex&#160;</td><td class="memItemRight"><a class="el" href="#a3a0983c00a0d3c8122ab1abd27017bba">mutex_</a></td></tr>
-<tr class="memitem:af4dbbee3cdb536a385fe401d8a467812" id="r_af4dbbee3cdb536a385fe401d8a467812"><td class="memItemLeft">Invocable&lt; void()&gt;::Abstract *&#160;</td><td class="memItemRight"><a class="el" href="#af4dbbee3cdb536a385fe401d8a467812">update_</a></td></tr>
+<tr class="memitem:a4c456b12135f57ba1174b2a5f353bb36" id="r_a4c456b12135f57ba1174b2a5f353bb36"><td class="memItemLeft"><a id="a4c456b12135f57ba1174b2a5f353bb36" name="a4c456b12135f57ba1174b2a5f353bb36"></a>
+T&#160;</td><td class="memItemRight"><b>value_</b></td></tr>
+<tr class="memdesc:a4c456b12135f57ba1174b2a5f353bb36"><td class="mdescLeft">&#160;</td><td class="mdescRight">Real inner cached data storage instance. <br /></td></tr>
+<tr class="memitem:af4dbbee3cdb536a385fe401d8a467812" id="r_af4dbbee3cdb536a385fe401d8a467812"><td class="memItemLeft"><a id="af4dbbee3cdb536a385fe401d8a467812" name="af4dbbee3cdb536a385fe401d8a467812"></a>
+Invocable&lt; void()&gt;::Abstract *&#160;</td><td class="memItemRight"><b>update_</b></td></tr>
+<tr class="memdesc:af4dbbee3cdb536a385fe401d8a467812"><td class="mdescLeft">&#160;</td><td class="mdescRight">Invocable for data updates. <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename T&gt;<br />
-class AsyncFw::Cache&lt; T &gt;</div><p>thread-safe cache wrapper that automatically triggers an update signal when the value expires.</p>
-<p>Implements the Stale-While-Revalidate pattern. When the cache expires, the first thread marks it as updating, temporarily releases the lock, and triggers an asynchronous update signal via a QueuedOnly policy. Subsequent readers during the update phase instantly receive the stale value without blocking, ensuring maximum high availability and zero downtime. </p><dl class="tparams"><dt>Template Parameters</dt><dd>
+class AsyncFw::Cache&lt; T &gt;</div><p>Example: </p>
+<p>thread-safe cache wrapper that automatically triggers an update signal when the value expires.</p>
+<p>Implements the Stale-While-Revalidate pattern. When the cache expires, the first reader marks it for updating and schedules the update callback via the owning thread's task queue. Subsequent data requests arriving during the update process immediately receive the stale value without blocking, ensuring maximum availability and zero downtime. </p><dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">T</td><td>The type of the cached data object. </td></tr>
+    <tr><td class="paramname">T</td><td>The type of the cached data object. <div class="fragment"></div><!-- fragment --> </td></tr>
   </table>
   </dd>
 </dl>
 </div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a7fed99bed94c0eeb5302b2acc8f06563" name="a7fed99bed94c0eeb5302b2acc8f06563"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7fed99bed94c0eeb5302b2acc8f06563">&#9670;&#160;</a></span>Cache()</h2>
+<a id="a1d9f24350bde97fff23f2dce1d28ed25" name="a1d9f24350bde97fff23f2dce1d28ed25"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1d9f24350bde97fff23f2dce1d28ed25">&#9670;&#160;</a></span>Cache()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -153,7 +171,7 @@ template&lt;typename F&gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">F</td>          <td class="paramname"><span class="paramname"><em>function</em></span>&#160;)</td>
+          <td class="paramtype">F</td>          <td class="paramname"><span class="paramname"><em>update</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -163,7 +181,7 @@ template&lt;typename F&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Constructs a new <a class="el" href="classAsyncFw_1_1Cache.html">Cache</a> object. </p>
+<p>Constructs a new <a class="el" href="classAsyncFw_1_1Cache.html" title="Example:">Cache</a> object. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">F</td><td>Any callable type matching the signature void().</td></tr>
@@ -173,10 +191,16 @@ template&lt;typename F&gt; </div>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">timeout</td><td>The Time-To-Live (TTL) duration for the cache in milliseconds.</td></tr>
-    <tr><td class="paramname">function</td><td>The update function/lambda to be executed upon cache expiration. </td></tr>
+    <tr><td class="paramname"><a class="el" href="#afb746f3737c96d5750af6048696d7736" title="Schedules the update callback. Caller must hold mutex.">update</a></td><td>The update function/lambda to be executed upon cache expiration. </td></tr>
   </table>
   </dd>
 </dl>
+<div id="dynsection-0" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
+<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-0-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1Cache_a1d9f24350bde97fff23f2dce1d28ed25_cgraph.svg" width="396" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
 
 </div>
 </div>
@@ -207,7 +231,13 @@ template&lt;typename T&gt; </div>
 </div><div class="memdoc">
 
 <p>Safely acquires the cached data view bound to its live thread lock. </p>
-<p>If the TTL has expired, it atomically drops the lock and dispatches the update() signal. </p><dl class="section return"><dt>Returns</dt><dd>An AbstractThread::Locked structure bundling the mutable reference to the data and its active lock. </dd></dl>
+<p>If the TTL has expired, the first reader marks the cache as updating and schedules the update callback via the owning thread's task queue. The lock is held for the duration of <a class="el" href="#ab6bf6d14ec30bef03948fc2b4eea8681" title="Safely acquires the cached data view bound to its live thread lock.">acquire()</a> only; the callback runs later in the thread's event loop. Subsequent readers during the update phase instantly receive the stale value. </p><dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="structAsyncFw_1_1LockedData.html" title="A zero-copy RAII carrier that couples a synchronized resource view with its active lock guard.">LockedData</a> bundle holding the mutable reference to the data and its active lock. </dd></dl>
+<div id="dynsection-1" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
+<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-1-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1Cache_ab6bf6d14ec30bef03948fc2b4eea8681_cgraph.svg" width="400" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
 
 </div>
 </div>
@@ -246,165 +276,8 @@ template&lt;typename T&gt; </div>
 
 </div>
 </div>
-<a id="a818ba1ab1f2335f6a4b6d649b2db6d6f" name="a818ba1ab1f2335f6a4b6d649b2db6d6f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a818ba1ab1f2335f6a4b6d649b2db6d6f">&#9670;&#160;</a></span>refresh()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void <a class="el" href="classAsyncFw_1_1Cache.html">AsyncFw::Cache</a>&lt; T &gt;::refresh </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Forces a cache invalidation and schedules an asynchronous refresh execution pipeline. </p>
-<p>Employs a double-trigger guard to ensure multiple concurrent refresh calls do not spawn duplicate background worker tasks. Safe to call from any external thread pool context. </p>
-
-</div>
-</div>
-<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
-<a id="ad5384668bce919e867a985f97ec80d6f" name="ad5384668bce919e867a985f97ec80d6f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad5384668bce919e867a985f97ec80d6f">&#9670;&#160;</a></span>timeout_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">int <a class="el" href="classAsyncFw_1_1Cache.html">AsyncFw::Cache</a>&lt; T &gt;::timeout_</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p><a class="el" href="classAsyncFw_1_1Cache.html">Cache</a> expiration timeout duration in milliseconds. </p>
-
-</div>
-</div>
-<a id="a4c456b12135f57ba1174b2a5f353bb36" name="a4c456b12135f57ba1174b2a5f353bb36"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4c456b12135f57ba1174b2a5f353bb36">&#9670;&#160;</a></span>value_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">T <a class="el" href="classAsyncFw_1_1Cache.html">AsyncFw::Cache</a>&lt; T &gt;::value_</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Real inner cached data storage instance. </p>
-
-</div>
-</div>
-<a id="a199a34a4ebabc364d6fed68abe3f9f07" name="a199a34a4ebabc364d6fed68abe3f9f07"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a199a34a4ebabc364d6fed68abe3f9f07">&#9670;&#160;</a></span>expire_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint64_t <a class="el" href="classAsyncFw_1_1Cache.html">AsyncFw::Cache</a>&lt; T &gt;::expire_</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Timestamp in milliseconds denoting when the current cache frame expires. </p>
-
-</div>
-</div>
-<a id="a3a0983c00a0d3c8122ab1abd27017bba" name="a3a0983c00a0d3c8122ab1abd27017bba"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3a0983c00a0d3c8122ab1abd27017bba">&#9670;&#160;</a></span>mutex_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::mutex <a class="el" href="classAsyncFw_1_1Cache.html">AsyncFw::Cache</a>&lt; T &gt;::mutex_</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Core synchronization primitive for state isolation. </p>
-
-</div>
-</div>
-<a id="af4dbbee3cdb536a385fe401d8a467812" name="af4dbbee3cdb536a385fe401d8a467812"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af4dbbee3cdb536a385fe401d8a467812">&#9670;&#160;</a></span>update_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">Invocable&lt;void()&gt;::Abstract* <a class="el" href="classAsyncFw_1_1Cache.html">AsyncFw::Cache</a>&lt; T &gt;::update_</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Encapsulated polymorphic callback executed to refresh data. </p>
-
-</div>
-</div>
-<hr/>The documentation for this class was generated from the following files:<ul>
+<hr/>The documentation for this class was generated from the following file:<ul>
 <li>main/<a class="el" href="Cache_8h_source.html">Cache.h</a></li>
-<li>main/<b>Cache.cpp</b></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['expire_5f_0',['expire_',['../classAsyncFw_1_1Cache.html#a199a34a4ebabc364d6fed68abe3f9f07',1,'AsyncFw::Cache']]]
+  ['fd_5f_0',['fd_',['../classAsyncFw_1_1AbstractSocket.html#a1380ccdb23066b7084eca638b4232761',1,'AsyncFw::AbstractSocket']]],
+  ['finished_1',['finished',['../classAsyncFw_1_1Thread.html#ad4c31cb77c83c080affcd0cda66debe4',1,'AsyncFw::Thread']]]
 ];

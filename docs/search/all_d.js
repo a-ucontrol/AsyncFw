@@ -19,5 +19,5 @@ var searchData=
   ['exists_16',['exists',['../classAsyncFw_1_1File.html#a4260fca380a387a8347b83bb4bee91b5',1,'AsyncFw::File']]],
   ['exit_17',['exit',['../classAsyncFw_1_1MainThread.html#a76fed3a2c1cfdbdb67f2b209e6457657',1,'AsyncFw::MainThread::exit()'],['../classAsyncFw_1_1MainThread.html#a4f68db1062428237c247332121c93612',1,'AsyncFw::MainThread::exit(int code)']]],
   ['exitcode_18',['exitCode',['../classAsyncFw_1_1SystemProcess.html#a3916d3f3c7f90b7a6e099258daee8762',1,'AsyncFw::SystemProcess']]],
-  ['expire_5f_19',['expire_',['../classAsyncFw_1_1Cache.html#a199a34a4ebabc364d6fed68abe3f9f07',1,'AsyncFw::Cache']]]
+  ['expired_19',['expired',['../classAsyncFw_1_1Cache.html#a756b18e3a927e7968c5c38716fa06afc',1,'AsyncFw::Cache']]]
 ];

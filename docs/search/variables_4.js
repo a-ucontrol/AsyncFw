@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['hostadded_0',['hostAdded',['../classAsyncFw_1_1MulticastDns.html#a973574ac5d99e8b3ef2455ded3e90407',1,'AsyncFw::MulticastDns']]],
-  ['hostchanged_1',['hostChanged',['../classAsyncFw_1_1MulticastDns.html#a00da8b82983f3da4d37809761b04df10',1,'AsyncFw::MulticastDns']]],
-  ['hostremoved_2',['hostRemoved',['../classAsyncFw_1_1MulticastDns.html#a97cbf66dbddc356f45aad429e118d287',1,'AsyncFw::MulticastDns']]]
+  ['incoming_0',['incoming',['../classAsyncFw_1_1HttpServer.html#ab0370ceb3eec1973e97a19d65552845b',1,'AsyncFw::HttpServer::incoming'],['../classAsyncFw_1_1ListenSocket.html#ad0eef1c8a0e89ee08edc4b40d4cb87e4',1,'AsyncFw::ListenSocket::incoming']]],
+  ['ipv4_1',['ipv4',['../structAsyncFw_1_1MulticastDns_1_1Host.html#a57f0b04e6bb05cc48b7c205c959ec964',1,'AsyncFw::MulticastDns::Host']]]
 ];

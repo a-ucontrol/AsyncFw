@@ -19,23 +19,29 @@ template <typename T>
 struct LockedData {
   static_assert(std::is_reference_v<T> || std::is_pointer_v<T>, "LockedData<T> error: T must be either a reference or a pointer to avoid copying!");
   using _T = std::remove_reference_t<T>;
-  /** @brief Constructs the LockedData container by binding a raw pointer target directly. */
-  LockedData(_T *data, std::mutex &mutex) : data_(data), mutex_(&mutex) { mutex_->lock(); }
+  /** @brief Constructs the LockedData container by binding a raw pointer target and acquiring the mutex. */
+  LockedData(_T *data, std::mutex &mutex) : mutex_(&mutex) {
+    mutex_->lock();
+    data_ = data;
+  }
   /** @brief Constructs the LockedData container by taking the address of an lvalue reference. */
   LockedData(_T &data, std::mutex &mutex) : LockedData(&data, mutex) {}
-  /** @brief Move constructor that transfers the critical section ownership from an rvalue LockedData state. */
-  LockedData(const LockedData &&locked) : data_(locked.data_), mutex_(locked.mutex_) { locked.mutex_ = nullptr; }
+  /** @brief Move constructor that transfers the critical section ownership from an rvalue LockedData state. The source is left without lock ownership and with a null data pointer. */
+  LockedData(LockedData &&locked) : data_(locked.data_), mutex_(locked.mutex_) {
+    locked.data_ = nullptr;
+    locked.mutex_ = nullptr;
+  }
   /** @brief Destructor that safely releases the acquired mutex if this instance still retains its ownership. */
   ~LockedData() {
     if (mutex_) mutex_->unlock();
   }
   /** @brief Indirection operator that returns a pointer to the protected inner resource. */
-  _T *operator->() { return data_; }
+  _T *operator->() const { return data_; }
   /** @brief Indirection operator that returns a reference to the protected inner resource. */
-  _T &operator*() { return *data_; }
+  _T &operator*() const { return *data_; }
 
 protected:
-  _T *data_;                  /**< Uniform internal pointer to the protected inner resource. */
-  mutable std::mutex *mutex_; /**< Pointer to the synchronization primitive, cleared upon moving. */
+  _T *data_;           ///< Pointer to the protected inner resource.
+  std::mutex *mutex_;  ///< Pointer to the synchronization primitive, cleared upon moving.
 };
 }  // namespace AsyncFw
