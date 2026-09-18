@@ -26,7 +26,7 @@ protected:
   /** @brief Schedules the update callback. Caller must hold mutex_. */
   virtual void update();
   int timeout_;             ///< Cache expiration timeout duration in milliseconds.
-  uint64_t expire_;         ///< Timestamp in milliseconds when the current cache frame expires. 0 while an update is in progress.
+  int64_t expire_;          ///< Timestamp in milliseconds when the current cache frame expires. 0 while an update is in progress.
   std::mutex mutex_;        ///< Core synchronization primitive for state isolation.
   AbstractThread *thread_;  ///< Execution thread managing this cache. Must not be null.
 };
