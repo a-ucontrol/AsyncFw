@@ -37,7 +37,7 @@ int main(int argc, char *argv[]) {
   configCache.store({"127.0.0.1", 8000, 50});
 
   timer.timeout.connect([&configCache]() {
-    auto conf = configCache.acquire();
+    auto conf = configCache.acquireShared();
     logInfo() << "Config IP:" << conf->ipAddress << "Port:" << conf->port;
     if (conf->port == 8080) AsyncFw::MainThread::exit(0);
   });
