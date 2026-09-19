@@ -12,7 +12,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include <thread>
 #include <mutex>
 #include <vector>
-#include "LockedData.h"
+#include "LockData.h"
 #include "invocable.hpp"
 
 #define AsyncFw_STATIC_INIT_PRIORITY 65530
@@ -123,7 +123,7 @@ public:
   /** @brief Returns a pointer to the AsyncFw::AbstractThread that manages the currently executing thread. */
   static AbstractThread *current();
   /** @brief Returns a synchronized view of all active threads. @return An AbstractThread::Locked structure bundling the thread list reference with its lifetime guard. */
-  static LockedData<const std::vector<AbstractThread *> &> threads();
+  static LockData<const std::vector<AbstractThread *> &> threads();
 
   /** @brief This is called from the thread when it starts executing. */
   virtual void startedEvent();

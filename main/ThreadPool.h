@@ -40,7 +40,7 @@ public:
   /** @brief Returns the identifier name of the thread pool. */
   std::string name() const;
   /** @brief Thread-safely returns the internal list of threads managed by this pool. */
-  LockedData<const std::vector<AbstractThreadPool::Thread *> &> threads();
+  LockData<const std::vector<AbstractThreadPool::Thread *> &> threads();
 
 protected:
   /** @brief Registers a new thread into the pool. */

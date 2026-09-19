@@ -45,9 +45,9 @@ public:
   ~Cache() { delete update_; }
   /** @brief Safely acquires the cached data view bound to its live thread lock.
   @details If the TTL has expired, the first reader marks the cache as updating and schedules the update callback via the owning thread's task queue. The lock is held for the duration of acquire() only; the callback runs later in the thread's event loop. Subsequent readers during the update phase instantly receive the stale value.
-  @return A LockedData bundle holding the mutable reference to the data and its active lock. */
-  LockedData<T &> acquire() {
-    LockedData<T &> _locked {value_, mutex_};
+  @return A LockData bundle holding the mutable reference to the data and its active lock. */
+  LockData<T &> acquire() {
+    LockData<T &> _locked {value_, mutex_};
     if (expire_ == 0 || !AbstractCache::expired()) return _locked;
     update();
     return _locked;
