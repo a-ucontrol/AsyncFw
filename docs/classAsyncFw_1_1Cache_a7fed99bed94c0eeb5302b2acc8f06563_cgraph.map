@@ -1,0 +1,9 @@
+<map id="AsyncFw::Cache::Cache" name="AsyncFw::Cache::Cache">
+<area shape="rect" id="Node000001" title="Constructs a new Cache object." alt="" coords="5,13,174,40"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractThread.html#af33c5949edb374d673a7a9ac0c81ec32" title="Returns a pointer to the AsyncFw::AbstractThread that manages the currently executing thread." alt="" coords="222,5,395,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="174,24,209,26,203,27,174,29"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractThread.html#a8c9202c90ac101522f26c4260cb01b59" title="Constructs a thread." alt="" coords="443,5,616,48"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="395,24,430,27,425,27,396,29"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd" title="Returns name of managed thread." alt="" coords="664,5,838,48"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="617,24,651,27,646,27,617,29"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="AsyncFw::Cache::store" name="AsyncFw::Cache::store">
+<area shape="rect" id="Node000001" title="Securely stores a completely fresh object state inside the cache, extending its TTL." alt="" coords="5,5,165,32"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1Cache.html#ae62164b66514fb2d77d01ff4b638f8f6" title="Commits the update by extending the TTL from now." alt="" coords="213,5,375,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="165,16,200,19,194,19,165,21"/>
+</map>

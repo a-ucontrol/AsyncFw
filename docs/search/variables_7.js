@@ -1,6 +1,11 @@
 var searchData=
 [
-  ['name_0',['name',['../structAsyncFw_1_1LogStream_1_1Message.html#af6373a2f7362ff25d5341e5c373e1554',1,'AsyncFw::LogStream::Message::name'],['../structAsyncFw_1_1MulticastDns_1_1Host.html#a505099c452dad4bfcaa5e1bdc3f56f82',1,'AsyncFw::MulticastDns::Host::name']]],
-  ['note_1',['note',['../structAsyncFw_1_1LogStream_1_1Message.html#abac2923c4b2c7076a731b88df2420fa5',1,'AsyncFw::LogStream::Message']]],
-  ['notify_2',['notify',['../classAsyncFw_1_1ApplicationNotifier.html#a989eaa483fec75f7d90730d031db0b2a',1,'AsyncFw::ApplicationNotifier::notify'],['../classAsyncFw_1_1FileSystemWatcher.html#a4c808b22785dbc3182a9e7fa600b0919',1,'AsyncFw::FileSystemWatcher::notify'],['../classAsyncFw_1_1PollNotifier.html#a8bcd61fb697ec4d0d53b942feb5b8026',1,'AsyncFw::PollNotifier::notify']]]
+  ['maxreadbuffers_0',['maxReadBuffers',['../classAsyncFw_1_1DataArrayAbstractTcp.html#a8bc546c3135e674fcf13e2ee8228fbab',1,'AsyncFw::DataArrayAbstractTcp']]],
+  ['maxreadsize_1',['maxReadSize',['../classAsyncFw_1_1DataArrayAbstractTcp.html#ad1cfe0836b7e9e184d3be17942b0dc4e',1,'AsyncFw::DataArrayAbstractTcp']]],
+  ['maxsockets_2',['maxSockets',['../classAsyncFw_1_1DataArrayAbstractTcp.html#a61d8fea700e5b4eda7434b7b3e55aedb',1,'AsyncFw::DataArrayAbstractTcp']]],
+  ['maxthreads_3',['maxThreads',['../classAsyncFw_1_1DataArrayAbstractTcp.html#a7777e20d24f0dc8136bf916e1ae29440',1,'AsyncFw::DataArrayAbstractTcp']]],
+  ['maxwritebuffers_4',['maxWriteBuffers',['../classAsyncFw_1_1DataArrayAbstractTcp.html#a43b6f6a4f67c9b2c718f48ea999d5727',1,'AsyncFw::DataArrayAbstractTcp']]],
+  ['maxwritesize_5',['maxWriteSize',['../classAsyncFw_1_1DataArrayAbstractTcp.html#a47d8c0d1876602ace92aad264ad62695',1,'AsyncFw::DataArrayAbstractTcp']]],
+  ['misc_6',['misc',['../structAsyncFw_1_1MulticastDns_1_1Host.html#a987597239d178d34f2bea34880e11cd8',1,'AsyncFw::MulticastDns::Host']]],
+  ['mutex_5f_7',['mutex_',['../structAsyncFw_1_1LockData.html#af64f92c12ae030de209a553ee0f8ab9a',1,'AsyncFw::LockData::mutex_'],['../classAsyncFw_1_1Cache.html#af328b6acdf2b3b36531e1e94ac3d44e9',1,'AsyncFw::Cache::mutex_'],['../structAsyncFw_1_1SharedLockData.html#a1c88a888819bc0ee7073d3a9d04199bf',1,'AsyncFw::SharedLockData::mutex_']]]
 ];

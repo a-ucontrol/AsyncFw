@@ -11,10 +11,11 @@ var searchData=
   ['_7efilesystemwatcher_8',['~FileSystemWatcher',['../classAsyncFw_1_1FileSystemWatcher.html#adfdbffe1e371260804159964e919b78b',1,'AsyncFw::FileSystemWatcher']]],
   ['_7efunctionconnectionguard_9',['~FunctionConnectionGuard',['../classAsyncFw_1_1FunctionConnectionGuard.html#a67c18ab01bdae4da0513e49c8b092597',1,'AsyncFw::FunctionConnectionGuard']]],
   ['_7einstance_10',['~Instance',['../classAsyncFw_1_1Instance.html#a6f25472f8b38f5cd6fa3d681919bf50a',1,'AsyncFw::Instance']]],
-  ['_7elockeddata_11',['~LockedData',['../structAsyncFw_1_1LockedData.html#a49123baa7a4af23dd82fd0c72e0aa9eb',1,'AsyncFw::LockedData']]],
+  ['_7elockdata_11',['~LockData',['../structAsyncFw_1_1LockData.html#ac8958f95f81ccbd74fe0813c3805fb7d',1,'AsyncFw::LockData']]],
   ['_7elog_12',['~Log',['../classAsyncFw_1_1Log.html#a7f9618da213c4789bb158d337c819e22',1,'AsyncFw::Log']]],
   ['_7errd_13',['~Rrd',['../classAsyncFw_1_1Rrd.html#a56d6e047fa884528c91286f552f8a239',1,'AsyncFw::Rrd']]],
   ['_7errdclient_14',['~RrdClient',['../classAsyncFw_1_1RrdClient.html#a9db5f1a5ddaa3c083851d557764937c0',1,'AsyncFw::RrdClient']]],
   ['_7errdserver_15',['~RrdServer',['../classAsyncFw_1_1RrdServer.html#ad57e2c435b5730d56efe5615e31b0075',1,'AsyncFw::RrdServer']]],
-  ['_7esystemprocess_16',['~SystemProcess',['../classAsyncFw_1_1SystemProcess.html#ae280edaf59815e2e4cbac2ba71382d21',1,'AsyncFw::SystemProcess']]]
+  ['_7esharedlockdata_16',['~SharedLockData',['../structAsyncFw_1_1SharedLockData.html#a1fb47bb31c0707c95b91856c449c8223',1,'AsyncFw::SharedLockData']]],
+  ['_7esystemprocess_17',['~SystemProcess',['../classAsyncFw_1_1SystemProcess.html#ae280edaf59815e2e4cbac2ba71382d21',1,'AsyncFw::SystemProcess']]]
 ];

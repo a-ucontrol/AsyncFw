@@ -7,12 +7,13 @@ var searchData=
   ['listensocket_4',['ListenSocket',['../classAsyncFw_1_1ListenSocket.html',1,'AsyncFw']]],
   ['listensocket_2eh_5',['ListenSocket.h',['../ListenSocket_8h.html',1,'']]],
   ['llipv4_6',['llipv4',['../structAsyncFw_1_1MulticastDns_1_1Host.html#a153d28d6f64ff9992efef53a035d35c3',1,'AsyncFw::MulticastDns::Host']]],
-  ['lockeddata_7',['LockedData',['../structAsyncFw_1_1LockedData.html',1,'AsyncFw::LockedData&lt; T &gt;'],['../structAsyncFw_1_1LockedData.html#ada3e12bb01043235d1bc7c0c9fe0bb81',1,'AsyncFw::LockedData::LockedData(_T *data, std::mutex &amp;mutex)'],['../structAsyncFw_1_1LockedData.html#ab556ac768063627ea67df33d0bf9657c',1,'AsyncFw::LockedData::LockedData(_T &amp;data, std::mutex &amp;mutex)'],['../structAsyncFw_1_1LockedData.html#ac4b480052e75e6bccb7140106784d972',1,'AsyncFw::LockedData::LockedData(LockedData &amp;&amp;locked)']]],
-  ['lockeddata_2eh_8',['LockedData.h',['../LockedData_8h.html',1,'']]],
-  ['lockguard_9',['LockGuard',['../classAsyncFw_1_1AbstractThread.html#a4e97803ef650d36ba80ef1471c4b643c',1,'AsyncFw::AbstractThread']]],
-  ['lockguard_10',['lockGuard',['../classAsyncFw_1_1AbstractThread.html#a6e17293ccd9683f5bd8ca9a3dcd52e7d',1,'AsyncFw::AbstractThread']]],
-  ['log_11',['Log',['../classAsyncFw_1_1Log.html',1,'AsyncFw::Log'],['../classAsyncFw_1_1Log.html#a832d13f4e9231eee37d8decb5b9b96d7',1,'AsyncFw::Log::Log()']]],
-  ['log_2eh_12',['Log.h',['../Log_8h.html',1,'']]],
-  ['logstream_13',['LogStream',['../index.html#autotoc_md9',1,'7. Thread-Safe Diagnostic Stream: &lt;span class=&quot;tt&quot;&gt;LogStream&lt;/span&gt;'],['../classAsyncFw_1_1LogStream.html',1,'AsyncFw::LogStream']]],
-  ['logstream_2eh_14',['LogStream.h',['../LogStream_8h.html',1,'']]]
+  ['lock_7',['Lock',['../SharedLockData_8h.html#ab8bc20e4f7d757a564b0c386069ca560',1,'AsyncFw::Mode']]],
+  ['lockdata_8',['LockData',['../structAsyncFw_1_1LockData.html',1,'AsyncFw::LockData&lt; T &gt;'],['../structAsyncFw_1_1LockData.html#aee5d6ec2d179ffc65b6a8795633780ba',1,'AsyncFw::LockData::LockData(_T *data, std::mutex &amp;mutex)'],['../structAsyncFw_1_1LockData.html#a924d121043ebee545d87988344d902f9',1,'AsyncFw::LockData::LockData(_T &amp;data, std::mutex &amp;mutex)'],['../structAsyncFw_1_1LockData.html#a0db0647359ede027065fb0517f7fd98e',1,'AsyncFw::LockData::LockData(LockData &amp;&amp;locked)']]],
+  ['lockdata_2eh_9',['LockData.h',['../LockData_8h.html',1,'']]],
+  ['lockguard_10',['LockGuard',['../classAsyncFw_1_1AbstractThread.html#a4e97803ef650d36ba80ef1471c4b643c',1,'AsyncFw::AbstractThread']]],
+  ['lockguard_11',['lockGuard',['../classAsyncFw_1_1AbstractThread.html#a6e17293ccd9683f5bd8ca9a3dcd52e7d',1,'AsyncFw::AbstractThread']]],
+  ['log_12',['Log',['../classAsyncFw_1_1Log.html',1,'AsyncFw::Log'],['../classAsyncFw_1_1Log.html#a832d13f4e9231eee37d8decb5b9b96d7',1,'AsyncFw::Log::Log()']]],
+  ['log_2eh_13',['Log.h',['../Log_8h.html',1,'']]],
+  ['logstream_14',['LogStream',['../index.html#autotoc_md9',1,'7. Thread-Safe Diagnostic Stream: &lt;span class=&quot;tt&quot;&gt;LogStream&lt;/span&gt;'],['../classAsyncFw_1_1LogStream.html',1,'AsyncFw::LogStream']]],
+  ['logstream_2eh_15',['LogStream.h',['../LogStream_8h.html',1,'']]]
 ];

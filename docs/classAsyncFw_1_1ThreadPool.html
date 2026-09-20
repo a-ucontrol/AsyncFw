@@ -139,9 +139,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ac312e723c2e0fa3e4cc18e518853bdf2 inherit pub_methods_classAsyncFw_1_1AbstractThreadPool" id="r_ac312e723c2e0fa3e4cc18e518853bdf2"><td class="memItemLeft">
 std::string&#160;</td><td class="memItemRight"><b>name</b> () const</td></tr>
 <tr class="memdesc:ac312e723c2e0fa3e4cc18e518853bdf2 inherit pub_methods_classAsyncFw_1_1AbstractThreadPool"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the identifier name of the thread pool. <br /></td></tr>
-<tr class="memitem:a6b7e2166a50495fb97d9bfa8928c71de inherit pub_methods_classAsyncFw_1_1AbstractThreadPool" id="r_a6b7e2166a50495fb97d9bfa8928c71de"><td class="memItemLeft">
-<a class="el" href="structAsyncFw_1_1LockedData.html">LockedData</a>&lt; const std::vector&lt; <a class="el" href="classAsyncFw_1_1AbstractThreadPool_1_1Thread.html">AbstractThreadPool::Thread</a> * &gt; &amp; &gt;&#160;</td><td class="memItemRight"><b>threads</b> ()</td></tr>
-<tr class="memdesc:a6b7e2166a50495fb97d9bfa8928c71de inherit pub_methods_classAsyncFw_1_1AbstractThreadPool"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thread-safely returns the internal list of threads managed by this pool. <br /></td></tr>
+<tr class="memitem:aa98cd77b8a66d2f85d7315f8395485e1 inherit pub_methods_classAsyncFw_1_1AbstractThreadPool" id="r_aa98cd77b8a66d2f85d7315f8395485e1"><td class="memItemLeft">
+<a class="el" href="structAsyncFw_1_1LockData.html">LockData</a>&lt; const std::vector&lt; <a class="el" href="classAsyncFw_1_1AbstractThreadPool_1_1Thread.html">AbstractThreadPool::Thread</a> * &gt; &amp; &gt;&#160;</td><td class="memItemRight"><b>threads</b> ()</td></tr>
+<tr class="memdesc:aa98cd77b8a66d2f85d7315f8395485e1 inherit pub_methods_classAsyncFw_1_1AbstractThreadPool"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thread-safely returns the internal list of threads managed by this pool. <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-static-methods" class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -209,7 +209,9 @@ std::mutex&#160;</td><td class="memItemRight"><b>mutex</b></td></tr>
 <div class="line">  Pool *threadPool = <a class="code hl_function" href="classAsyncFw_1_1Instance.html#a8000597f0e7ee4bd6669491a5b502beb">AsyncFw::Instance&lt;AsyncFw::ThreadPool&gt;::create&lt;Pool&gt;</a>(<span class="stringliteral">&quot;ExampleThreadPool&quot;</span>);</div>
 <div class="line">  logInfo() &lt;&lt; threadPool-&gt;text();</div>
 <div class="line"> </div>
-<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1AbstractThread.html">AsyncFw::AbstractThread</a> *_lt = <a class="code hl_function" href="#a086c0271dcb7c4be416705d622145f83">AsyncFw::ThreadPool::instance</a>()-&gt;<a class="code hl_function" href="#a02cf5b98df2bbd01b4757e09fceece49">createThread</a>(<span class="stringliteral">&quot;LogThread&quot;</span>);</div>
+<div class="line">  <span class="comment">//AsyncFw::AbstractThread *_lt = AsyncFw::ThreadPool::instance()-&gt;createThread(&quot;LogThread&quot;);</span></div>
+<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1AbstractThread.html">AsyncFw::AbstractThread</a> *_lt = <span class="keyword">new</span> <a class="code hl_class" href="classAsyncFw_1_1Thread.html">AsyncFw::Thread</a>(); <span class="comment">// error: AsyncFw::AbstractThread::Private::List::~List() -&gt; thread list not empty</span></div>
+<div class="line">  _lt-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#afdaccb5da7d4bee5e9ff687f761bd21f">start</a>();</div>
 <div class="line">  _lt-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a786474d037b50053f1a97af7b67e6069">invoke</a>([]() { <a class="code hl_function" href="classAsyncFw_1_1Instance.html#a8000597f0e7ee4bd6669491a5b502beb">AsyncFw::Instance&lt;AsyncFw::Log&gt;::create</a>(); }, <span class="keyword">true</span>);  <span class="comment">//create log instance in log thread _lt</span></div>
 <div class="line"> </div>
 <div class="line">  <a class="code hl_class" href="classAsyncFw_1_1AbstractThread.html">AsyncFw::AbstractThread</a> *_t = <a class="code hl_function" href="#a086c0271dcb7c4be416705d622145f83">AsyncFw::ThreadPool::instance</a>()-&gt;<a class="code hl_function" href="#a02cf5b98df2bbd01b4757e09fceece49">createThread</a>(<span class="stringliteral">&quot;SyncExample&quot;</span>);</div>
@@ -255,10 +257,10 @@ std::mutex&#160;</td><td class="memItemRight"><b>mutex</b></td></tr>
 <div class="line">    std::vector&lt;AsyncFw::AbstractThreadPool *&gt; pools = <a class="code hl_function" href="classAsyncFw_1_1AbstractThreadPool.html#a8b3a66a03bf52ef75c7427f2778bfd44">AsyncFw::ThreadPool::pools</a>();</div>
 <div class="line">    <span class="keywordflow">for</span> (<a class="code hl_class" href="classAsyncFw_1_1AbstractThreadPool.html">AsyncFw::AbstractThreadPool</a> *pool : pools) {</div>
 <div class="line">      lsNotice() &lt;&lt; pool-&gt;name();</div>
-<div class="line">      <a class="code hl_struct" href="structAsyncFw_1_1LockedData.html">AsyncFw::LockedData&lt;const std::vector&lt;AsyncFw::AbstractThreadPool::Thread *&gt;</a> &amp;&gt; threads = pool-&gt;threads();</div>
+<div class="line">      <a class="code hl_struct" href="structAsyncFw_1_1LockData.html">AsyncFw::LockData&lt;const std::vector&lt;AsyncFw::AbstractThreadPool::Thread *&gt;</a> &amp;&gt; threads = pool-&gt;threads();</div>
 <div class="line">      <span class="keywordflow">for</span> (<span class="keyword">const</span> <a class="code hl_class" href="classAsyncFw_1_1AbstractThreadPool_1_1Thread.html">AsyncFw::AbstractThreadPool::Thread</a> *thread : *threads) { lsInfoGreen() &lt;&lt; thread-&gt;name(); }</div>
 <div class="line">    }</div>
-<div class="line">    <span class="keywordflow">for</span> (<span class="keyword">const</span> <a class="code hl_class" href="classAsyncFw_1_1AbstractThread.html">AsyncFw::AbstractThread</a> *thread : *<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a7a5babc1c1823c2986ab04a8cc94d8af">AsyncFw::AbstractThread::threads</a>()) { lsInfoMagenta() &lt;&lt; thread-&gt;name(); }</div>
+<div class="line">    <span class="keywordflow">for</span> (<span class="keyword">const</span> <a class="code hl_class" href="classAsyncFw_1_1AbstractThread.html">AsyncFw::AbstractThread</a> *thread : *<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a60a5aaaf66d017f31b26a72c46c15751">AsyncFw::AbstractThread::threads</a>()) { lsInfoMagenta() &lt;&lt; thread-&gt;name(); }</div>
 <div class="line">  });</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordtype">int</span> ret = <a class="code hl_function" href="classAsyncFw_1_1MainThread.html#ad12e620772820ad751868c7b49fa4190">AsyncFw::MainThread::exec</a>();</div>

@@ -1,0 +1,5 @@
+<map id="AsyncFw::Cache::touch" name="AsyncFw::Cache::touch">
+<area shape="rect" id="Node000001" title="Commits the update by extending the TTL from now." alt="" coords="213,5,375,32"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1Cache.html#a1508969e5cbd6a7b8e7a6a8fc04aa901" title="Securely stores a completely fresh object state inside the cache, extending its TTL." alt="" coords="5,5,165,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="194,19,165,21,165,16,200,19"/>
+</map>

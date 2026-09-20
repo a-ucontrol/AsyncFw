@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.16.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>AsyncFw: core/LockedData.h File Reference</title>
+<title>AsyncFw: main/SharedLockData.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -69,7 +69,7 @@ $(function() { codefold.init(); });
   </div>
 </div>
 <script type="text/javascript">
-$(function(){initNavTree('LockedData_8h.html','',''); });
+$(function(){initNavTree('SharedLockData_8h.html','',''); });
 </script>
 <div id="container">
 <div id="doc-content">
@@ -95,36 +95,76 @@ $(function(){initNavTree('LockedData_8h.html','',''); });
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">LockedData.h File Reference</div></div>
+  <div class="headertitle"><div class="title">SharedLockData.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>The LockedData class.  
+<p>The SharedLockData class.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;mutex&gt;</code><br />
-</div><div class="textblock"><div id="dynsection-0" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Include dependency graph for LockedData.h:</div>
+<div class="textblock"><code>#include &lt;shared_mutex&gt;</code><br />
+</div><div class="textblock"><div id="dynsection-0" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Include dependency graph for SharedLockData.h:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="LockedData_8h__incl.svg" width="143" height="112"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="SharedLockData_8h__incl.svg" width="172" height="112"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div><div class="textblock"><div id="dynsection-1" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>This graph shows which files directly or indirectly include this file:</div>
 <div id="dynsection-1-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-1-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="LockedData_8h__dep__incl.svg" width="2124" height="486"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="SharedLockData_8h__dep__incl.svg" width="172" height="112"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
-<p><a href="LockedData_8h_source.html">Go to the source code of this file.</a></p>
+<p><a href="SharedLockData_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:AsyncFw_3A_3ALockedData_3C_20T_20_3E" id="r_AsyncFw_3A_3ALockedData_3C_20T_20_3E"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structAsyncFw_1_1LockedData.html">AsyncFw::LockedData&lt; T &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A zero-copy RAII carrier that couples a synchronized resource view with its active lock guard.  <a href="structAsyncFw_1_1LockedData.html#details">More...</a><br /></td></tr>
+<tr class="memitem:AsyncFw_3A_3ASharedLockData_3C_20T_2C_20M_20_3E" id="r_AsyncFw_3A_3ASharedLockData_3C_20T_2C_20M_20_3E"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structAsyncFw_1_1SharedLockData.html">AsyncFw::SharedLockData&lt; T, M &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A zero-copy RAII carrier that couples a synchronized resource view with its active shared_mutex lock guard.  <a href="structAsyncFw_1_1SharedLockData.html#details">More...</a><br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-enum-members" class="groupheader"><a id="enum-members" name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:ab8bc20e4f7d757a564b0c386069ca560" id="r_ab8bc20e4f7d757a564b0c386069ca560"><td class="memItemLeft">enum class &#160;</td><td class="memItemRight"><a class="el" href="#ab8bc20e4f7d757a564b0c386069ca560">AsyncFw::Mode::Lock</a> { <a class="el" href="#ab8bc20e4f7d757a564b0c386069ca560a2ef50b4c466304dc6ac77bac8a779971">Exclusive</a>
+, <a class="el" href="#ab8bc20e4f7d757a564b0c386069ca560aa6156ea9d66fef24e87e841fbabf7cca">Shared</a>
+ }</td></tr>
+<tr class="memdesc:ab8bc20e4f7d757a564b0c386069ca560"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects the locking discipline for a <a class="el" href="structAsyncFw_1_1SharedLockData.html" title="A zero-copy RAII carrier that couples a synchronized resource view with its active shared_mutex lock ...">SharedLockData</a> carrier.  <a href="#ab8bc20e4f7d757a564b0c386069ca560">More...</a><br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>The LockedData class. </p>
-</div></div><!-- contents -->
+<div class="textblock"><p>The SharedLockData class. </p>
+</div><a name="doc-enum-members" id="doc-enum-members"></a><h2 id="header-doc-enum-members" class="groupheader">Enumeration Type Documentation</h2>
+<a id="ab8bc20e4f7d757a564b0c386069ca560" name="ab8bc20e4f7d757a564b0c386069ca560"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab8bc20e4f7d757a564b0c386069ca560">&#9670;&#160;</a></span>Lock</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum class <a class="el" href="#ab8bc20e4f7d757a564b0c386069ca560">AsyncFw::Mode::Lock</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel strong">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Selects the locking discipline for a SharedLockData carrier. </p>
+<p><a class="el" href="SharedLockData_8h.html" title="The SharedLockData class.">SharedLockData.h</a> &lt;AsyncFw/SharedLockData&gt;</p>
+<p>Exclusive mirrors std::shared_mutex::lock; Shared mirrors std::shared_mutex::lock_shared. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ab8bc20e4f7d757a564b0c386069ca560a2ef50b4c466304dc6ac77bac8a779971" name="ab8bc20e4f7d757a564b0c386069ca560a2ef50b4c466304dc6ac77bac8a779971"></a>Exclusive&#160;</td><td class="fielddoc"><p>Exclusive (write) lock. Blocks all readers until released. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ab8bc20e4f7d757a564b0c386069ca560aa6156ea9d66fef24e87e841fbabf7cca" name="ab8bc20e4f7d757a564b0c386069ca560aa6156ea9d66fef24e87e841fbabf7cca"></a>Shared&#160;</td><td class="fielddoc"><p>Shared (read) lock. Multiple readers may hold it simultaneously. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <div id="page-nav" class="page-nav-panel">
 <div id="page-nav-resize-handle"></div>
@@ -137,7 +177,7 @@ Classes</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><b>core</b></li><li class="navelem"><a href="LockedData_8h.html">LockedData.h</a></li>
+    <li class="navelem"><b>main</b></li><li class="navelem"><a href="SharedLockData_8h.html">SharedLockData.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.16.1 </li>
   </ul>
 </div>

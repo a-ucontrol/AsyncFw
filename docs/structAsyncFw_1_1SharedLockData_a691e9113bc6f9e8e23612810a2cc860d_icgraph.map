@@ -1,0 +1,7 @@
+<map id="AsyncFw::SharedLockData::SharedLockData" name="AsyncFw::SharedLockData::SharedLockData">
+<area shape="rect" id="Node000001" title="Constructs the carrier by binding a raw pointer target and acquiring the lock." alt="" coords="235,39,416,81"/>
+<area shape="rect" id="Node000002" href="$structAsyncFw_1_1SharedLockData.html#af911379f5e36ee746b8d469d55ebb741" title="Constructs the carrier by taking the address of an lvalue reference." alt="" coords="5,5,187,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="217,45,187,43,187,37,222,44"/>
+<area shape="rect" id="Node000003" href="$structAsyncFw_1_1SharedLockData.html#ad51d65ae35d812c2edb3f151d035a353" title="Move constructor that transfers the critical section ownership from an rvalue SharedLockData state." alt="" coords="5,72,187,115"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="217,76,187,83,187,78,222,75"/>
+</map>

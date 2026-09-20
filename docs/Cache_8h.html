@@ -102,11 +102,13 @@ $(function(){initNavTree('Cache_8h.html','',''); });
 <p>The Cache class.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="AbstractThread_8h_source.html">../core/AbstractThread.h</a>&quot;</code><br />
+<code>#include &quot;../core/invocable.hpp&quot;</code><br />
+<code>#include &quot;<a class="el" href="SharedLockData_8h_source.html">SharedLockData.h</a>&quot;</code><br />
 </div><div class="textblock"><div id="dynsection-0" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Include dependency graph for Cache.h:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="Cache_8h__incl.svg" width="454" height="262"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="Cache_8h__incl.svg" width="568" height="262"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
 <p><a href="Cache_8h_source.html">Go to the source code of this file.</a></p>
@@ -115,6 +117,11 @@ $(function(){initNavTree('Cache_8h.html','',''); });
 Classes</h2></td></tr>
 <tr class="memitem:AsyncFw_3A_3ACache_3C_20T_20_3E" id="r_AsyncFw_3A_3ACache_3C_20T_20_3E"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classAsyncFw_1_1Cache.html">AsyncFw::Cache&lt; T &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Example:  <a href="classAsyncFw_1_1Cache.html#details">More...</a><br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-define-members" class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a84536e3bb269076855444fea65c744ea" id="r_a84536e3bb269076855444fea65c744ea"><td class="memItemLeft"><a id="a84536e3bb269076855444fea65c744ea" name="a84536e3bb269076855444fea65c744ea"></a>
+#define&#160;</td><td class="memItemRight"><b>MILLISECONDS_SINCE_EPOCH</b>&#160;&#160;&#160;(std::chrono::duration_cast&lt;std::chrono::milliseconds&gt;(std::chrono::steady_clock::now().time_since_epoch()).count())</td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The Cache class. </p>

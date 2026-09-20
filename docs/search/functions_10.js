@@ -7,7 +7,7 @@ var searchData=
   ['readfromarray_4',['readFromArray',['../classAsyncFw_1_1Rrd.html#a74af3bc94a8b411adf93b0abe8745441',1,'AsyncFw::Rrd']]],
   ['readline_5',['readLine',['../classAsyncFw_1_1File.html#a861146c8fe75ac121d094faa88dca18f',1,'AsyncFw::File']]],
   ['readmessage_6',['readMessage',['../classAsyncFw_1_1Log.html#af85aba564a162221f53e80f010d7fbf3',1,'AsyncFw::Log']]],
-  ['refresh_7',['refresh',['../classAsyncFw_1_1Cache.html#a3f47fd0715fc859f0ad3f08b63f6c8c5',1,'AsyncFw::Cache']]],
+  ['refresh_7',['refresh',['../classAsyncFw_1_1Cache.html#a818ba1ab1f2335f6a4b6d649b2db6d6f',1,'AsyncFw::Cache']]],
   ['releasebuffer_8',['releaseBuffer',['../classAsyncFw_1_1DataArraySocket.html#af6faaf80328db0a1644cd6b89ffae7eb',1,'AsyncFw::DataArraySocket']]],
   ['remove_9',['remove',['../classAsyncFw_1_1File.html#a22c7e349dbcc3242374c6c685948d201',1,'AsyncFw::File']]],
   ['removedescriptor_10',['removeDescriptor',['../classAsyncFw_1_1PollNotifier.html#a63d989535fa3af6dcb2e8656999f8315',1,'AsyncFw::PollNotifier']]],

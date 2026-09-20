@@ -9,7 +9,7 @@ var dir_4270bfced15e0e73154b13468c7c9ad9 =
     [ "extend_trace.hpp", "extend__trace_8hpp_source.html", null ],
     [ "FunctionConnector.h", "FunctionConnector_8h.html", "FunctionConnector_8h" ],
     [ "invocable.hpp", "invocable_8hpp_source.html", null ],
-    [ "LockedData.h", "LockedData_8h.html", "LockedData_8h" ],
+    [ "LockData.h", "LockData_8h.html", "LockData_8h" ],
     [ "LogStream.h", "LogStream_8h.html", "LogStream_8h" ],
     [ "Thread.h", "Thread_8h.html", "Thread_8h" ],
     [ "TlsContext.h", "TlsContext_8h.html", "TlsContext_8h" ]

@@ -101,57 +101,76 @@ $(function(){initNavTree('classAsyncFw_1_1Cache.html','','classAsyncFw_1_1Cache-
 
 <p>Example:  
  <a href="#details">More...</a></p>
+<div id="dynsection-0" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Collaboration diagram for AsyncFw::Cache&lt; T &gt;:</div>
+<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-0-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1Cache__coll__graph.svg" width="184" height="136"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a1d9f24350bde97fff23f2dce1d28ed25" id="r_a1d9f24350bde97fff23f2dce1d28ed25"><td class="memTemplParams" colspan="2">template&lt;typename F&gt; </td></tr>
-<tr class="memitem:a1d9f24350bde97fff23f2dce1d28ed25 template"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a1d9f24350bde97fff23f2dce1d28ed25">Cache</a> (int timeout, F <a class="el" href="#afb746f3737c96d5750af6048696d7736">update</a>)</td></tr>
-<tr class="memdesc:a1d9f24350bde97fff23f2dce1d28ed25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new <a class="el" href="classAsyncFw_1_1Cache.html" title="Example:">Cache</a> object.  <br /></td></tr>
+<tr class="memitem:a7fed99bed94c0eeb5302b2acc8f06563" id="r_a7fed99bed94c0eeb5302b2acc8f06563"><td class="memTemplParams" colspan="2">template&lt;typename F&gt; </td></tr>
+<tr class="memitem:a7fed99bed94c0eeb5302b2acc8f06563 template"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a7fed99bed94c0eeb5302b2acc8f06563">Cache</a> (int timeout, F function)</td></tr>
+<tr class="memdesc:a7fed99bed94c0eeb5302b2acc8f06563"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new <a class="el" href="classAsyncFw_1_1Cache.html" title="Example:">Cache</a> object.  <br /></td></tr>
+<tr class="memitem:ac30e8bd679ad15bf10016044c24357d6" id="r_ac30e8bd679ad15bf10016044c24357d6"><td class="memItemLeft"><a id="ac30e8bd679ad15bf10016044c24357d6" name="ac30e8bd679ad15bf10016044c24357d6"></a>
+&#160;</td><td class="memItemRight"><b>Cache</b> (const Cache &amp;)=delete</td></tr>
+<tr class="memitem:a002f1b5303e481e639a811d566c3a3bd" id="r_a002f1b5303e481e639a811d566c3a3bd"><td class="memItemLeft"><a id="a002f1b5303e481e639a811d566c3a3bd" name="a002f1b5303e481e639a811d566c3a3bd"></a>
+<a class="el" href="#a7fed99bed94c0eeb5302b2acc8f06563">Cache</a> &amp;&#160;</td><td class="memItemRight"><b>operator=</b> (const <a class="el" href="#a7fed99bed94c0eeb5302b2acc8f06563">Cache</a> &amp;)=delete</td></tr>
+<tr class="memitem:ad39d8beed04865bcc82c71cd8cbb5d2c" id="r_ad39d8beed04865bcc82c71cd8cbb5d2c"><td class="memItemLeft"><a id="ad39d8beed04865bcc82c71cd8cbb5d2c" name="ad39d8beed04865bcc82c71cd8cbb5d2c"></a>
+&#160;</td><td class="memItemRight"><b>Cache</b> (Cache &amp;&amp;)=delete</td></tr>
+<tr class="memitem:a599d871ed6a10d34f4da3bae84d023ae" id="r_a599d871ed6a10d34f4da3bae84d023ae"><td class="memItemLeft"><a id="a599d871ed6a10d34f4da3bae84d023ae" name="a599d871ed6a10d34f4da3bae84d023ae"></a>
+<a class="el" href="#a7fed99bed94c0eeb5302b2acc8f06563">Cache</a> &amp;&#160;</td><td class="memItemRight"><b>operator=</b> (<a class="el" href="#a7fed99bed94c0eeb5302b2acc8f06563">Cache</a> &amp;&amp;)=delete</td></tr>
 <tr class="memitem:a543d5d6864349b37f72294bf87e5f7a4" id="r_a543d5d6864349b37f72294bf87e5f7a4"><td class="memItemLeft"><a id="a543d5d6864349b37f72294bf87e5f7a4" name="a543d5d6864349b37f72294bf87e5f7a4"></a>
 &#160;</td><td class="memItemRight"><b>~Cache</b> ()</td></tr>
 <tr class="memdesc:a543d5d6864349b37f72294bf87e5f7a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor that releases the polymorphically allocated callable. <br /></td></tr>
-<tr class="memitem:ab6bf6d14ec30bef03948fc2b4eea8681" id="r_ab6bf6d14ec30bef03948fc2b4eea8681"><td class="memItemLeft"><a class="el" href="structAsyncFw_1_1LockedData.html">LockedData</a>&lt; T &amp; &gt;&#160;</td><td class="memItemRight"><a class="el" href="#ab6bf6d14ec30bef03948fc2b4eea8681">acquire</a> ()</td></tr>
-<tr class="memdesc:ab6bf6d14ec30bef03948fc2b4eea8681"><td class="mdescLeft">&#160;</td><td class="mdescRight">Safely acquires the cached data view bound to its live thread lock.  <br /></td></tr>
+<tr class="memitem:a9874cd229d175f558aa8a60689edbe33" id="r_a9874cd229d175f558aa8a60689edbe33"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="SharedLockData_8h.html#ab8bc20e4f7d757a564b0c386069ca560">Mode::Lock</a> M = Mode::Lock::Exclusive&gt; </td></tr>
+<tr class="memitem:a9874cd229d175f558aa8a60689edbe33 template"><td class="memItemLeft"><a class="el" href="structAsyncFw_1_1SharedLockData.html">SharedLockData</a>&lt; T &amp;, M &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a9874cd229d175f558aa8a60689edbe33">acquire</a> ()</td></tr>
+<tr class="memdesc:a9874cd229d175f558aa8a60689edbe33"><td class="mdescLeft">&#160;</td><td class="mdescRight">Acquires locked access to the cached value.  <br /></td></tr>
 <tr class="memitem:a1508969e5cbd6a7b8e7a6a8fc04aa901" id="r_a1508969e5cbd6a7b8e7a6a8fc04aa901"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a1508969e5cbd6a7b8e7a6a8fc04aa901">store</a> (const T &amp;value)</td></tr>
 <tr class="memdesc:a1508969e5cbd6a7b8e7a6a8fc04aa901"><td class="mdescLeft">&#160;</td><td class="mdescRight">Securely stores a completely fresh object state inside the cache, extending its TTL.  <br /></td></tr>
-<tr class="memitem:a3f47fd0715fc859f0ad3f08b63f6c8c5" id="r_a3f47fd0715fc859f0ad3f08b63f6c8c5"><td class="memItemLeft"><a id="a3f47fd0715fc859f0ad3f08b63f6c8c5" name="a3f47fd0715fc859f0ad3f08b63f6c8c5"></a>
-void&#160;</td><td class="memItemRight"><b>refresh</b> () override</td></tr>
-<tr class="memdesc:a3f47fd0715fc859f0ad3f08b63f6c8c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Forcibly invalidates the cache and schedules an async refresh. Public entry point; takes the lock. <br /></td></tr>
-<tr class="memitem:ace7b5fa22b0942c9d624fb335c87acf9" id="r_ace7b5fa22b0942c9d624fb335c87acf9"><td class="memItemLeft"><a id="ace7b5fa22b0942c9d624fb335c87acf9" name="ace7b5fa22b0942c9d624fb335c87acf9"></a>
-void&#160;</td><td class="memItemRight"><b>touch</b> () override</td></tr>
-<tr class="memdesc:ace7b5fa22b0942c9d624fb335c87acf9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extends the TTL without changing the value. Public entry point; schedules on the owning thread. <br /></td></tr>
-<tr class="memitem:a756b18e3a927e7968c5c38716fa06afc" id="r_a756b18e3a927e7968c5c38716fa06afc"><td class="memItemLeft"><a id="a756b18e3a927e7968c5c38716fa06afc" name="a756b18e3a927e7968c5c38716fa06afc"></a>
-bool&#160;</td><td class="memItemRight"><b>expired</b> () override</td></tr>
-<tr class="memdesc:a756b18e3a927e7968c5c38716fa06afc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the TTL has expired. Public entry point; takes the lock. <br /></td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 id="header-pro-methods" class="groupheader"><a id="pro-methods" name="pro-methods"></a>
-Protected Member Functions</h2></td></tr>
-<tr class="memitem:afb746f3737c96d5750af6048696d7736" id="r_afb746f3737c96d5750af6048696d7736"><td class="memItemLeft"><a id="afb746f3737c96d5750af6048696d7736" name="afb746f3737c96d5750af6048696d7736"></a>
-void&#160;</td><td class="memItemRight"><b>update</b> () override</td></tr>
-<tr class="memdesc:afb746f3737c96d5750af6048696d7736"><td class="mdescLeft">&#160;</td><td class="mdescRight">Schedules the update callback. Caller must hold mutex. <br /></td></tr>
+<tr class="memitem:a818ba1ab1f2335f6a4b6d649b2db6d6f" id="r_a818ba1ab1f2335f6a4b6d649b2db6d6f"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a818ba1ab1f2335f6a4b6d649b2db6d6f">refresh</a> ()</td></tr>
+<tr class="memdesc:a818ba1ab1f2335f6a4b6d649b2db6d6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Forces a cache invalidation and schedules an asynchronous refresh.  <br /></td></tr>
+<tr class="memitem:ae62164b66514fb2d77d01ff4b638f8f6" id="r_ae62164b66514fb2d77d01ff4b638f8f6"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ae62164b66514fb2d77d01ff4b638f8f6">touch</a> ()</td></tr>
+<tr class="memdesc:ae62164b66514fb2d77d01ff4b638f8f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Commits the update by extending the TTL from now.  <br /></td></tr>
+<tr class="memitem:aa007ed9035cda520898a069e8b158361" id="r_aa007ed9035cda520898a069e8b158361"><td class="memItemLeft"><a id="aa007ed9035cda520898a069e8b158361" name="aa007ed9035cda520898a069e8b158361"></a>
+bool&#160;</td><td class="memItemRight"><b>expired</b> () const</td></tr>
+<tr class="memdesc:aa007ed9035cda520898a069e8b158361"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lock-free hint: true if the TTL has expired. <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pro-attribs" class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
+<tr class="memitem:a7200c545842c5b8aced0b9b5f3836f99" id="r_a7200c545842c5b8aced0b9b5f3836f99"><td class="memItemLeft"><a id="a7200c545842c5b8aced0b9b5f3836f99" name="a7200c545842c5b8aced0b9b5f3836f99"></a>
+<a class="el" href="classAsyncFw_1_1AbstractThread.html">AbstractThread</a> *&#160;</td><td class="memItemRight"><b>thread_</b></td></tr>
+<tr class="memdesc:a7200c545842c5b8aced0b9b5f3836f99"><td class="mdescLeft">&#160;</td><td class="mdescRight">Owning event loop / executor captured at construction. <br /></td></tr>
+<tr class="memitem:ad5384668bce919e867a985f97ec80d6f" id="r_ad5384668bce919e867a985f97ec80d6f"><td class="memItemLeft"><a id="ad5384668bce919e867a985f97ec80d6f" name="ad5384668bce919e867a985f97ec80d6f"></a>
+int&#160;</td><td class="memItemRight"><b>timeout_</b></td></tr>
+<tr class="memdesc:ad5384668bce919e867a985f97ec80d6f"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classAsyncFw_1_1Cache.html" title="Example:">Cache</a> expiration timeout duration in milliseconds. <br /></td></tr>
 <tr class="memitem:a4c456b12135f57ba1174b2a5f353bb36" id="r_a4c456b12135f57ba1174b2a5f353bb36"><td class="memItemLeft"><a id="a4c456b12135f57ba1174b2a5f353bb36" name="a4c456b12135f57ba1174b2a5f353bb36"></a>
 T&#160;</td><td class="memItemRight"><b>value_</b></td></tr>
 <tr class="memdesc:a4c456b12135f57ba1174b2a5f353bb36"><td class="mdescLeft">&#160;</td><td class="mdescRight">Real inner cached data storage instance. <br /></td></tr>
+<tr class="memitem:aacfc6f996811ce15b9efbb155b0ef3c7" id="r_aacfc6f996811ce15b9efbb155b0ef3c7"><td class="memItemLeft"><a id="aacfc6f996811ce15b9efbb155b0ef3c7" name="aacfc6f996811ce15b9efbb155b0ef3c7"></a>
+std::atomic&lt; int64_t &gt;&#160;</td><td class="memItemRight"><b>expire_</b></td></tr>
+<tr class="memdesc:aacfc6f996811ce15b9efbb155b0ef3c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">0 while updating, else deadline timestamp in ms. <br /></td></tr>
+<tr class="memitem:af328b6acdf2b3b36531e1e94ac3d44e9" id="r_af328b6acdf2b3b36531e1e94ac3d44e9"><td class="memItemLeft"><a id="af328b6acdf2b3b36531e1e94ac3d44e9" name="af328b6acdf2b3b36531e1e94ac3d44e9"></a>
+std::shared_mutex&#160;</td><td class="memItemRight"><b>mutex_</b></td></tr>
+<tr class="memdesc:af328b6acdf2b3b36531e1e94ac3d44e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Guards value only, expire_ is atomic. <br /></td></tr>
 <tr class="memitem:af4dbbee3cdb536a385fe401d8a467812" id="r_af4dbbee3cdb536a385fe401d8a467812"><td class="memItemLeft"><a id="af4dbbee3cdb536a385fe401d8a467812" name="af4dbbee3cdb536a385fe401d8a467812"></a>
 Invocable&lt; void()&gt;::Abstract *&#160;</td><td class="memItemRight"><b>update_</b></td></tr>
-<tr class="memdesc:af4dbbee3cdb536a385fe401d8a467812"><td class="mdescLeft">&#160;</td><td class="mdescRight">Invocable for data updates. <br /></td></tr>
+<tr class="memdesc:af4dbbee3cdb536a385fe401d8a467812"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encapsulated polymorphic callback executed to refresh data. <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename T&gt;<br />
 class AsyncFw::Cache&lt; T &gt;</div><p>Example: </p>
 <p>thread-safe cache wrapper that automatically triggers an update signal when the value expires.</p>
-<p>Implements the Stale-While-Revalidate pattern. When the cache expires, the first reader marks it for updating and schedules the update callback via the owning thread's task queue. Subsequent data requests arriving during the update process immediately receive the stale value without blocking, ensuring maximum availability and zero downtime. </p><dl class="tparams"><dt>Template Parameters</dt><dd>
+<p>Implements the Stale-While-Revalidate pattern. When the TTL expires, the first caller atomically claims the update slot on expire_ (CAS in <a class="el" href="#a9874cd229d175f558aa8a60689edbe33" title="Acquires locked access to the cached value.">acquire()</a>, exchange in <a class="el" href="#a818ba1ab1f2335f6a4b6d649b2db6d6f" title="Forces a cache invalidation and schedules an asynchronous refresh.">refresh()</a>) and dispatches the user callback asynchronously through thread_-&gt;invoke(). Subsequent readers during the update phase instantly receive the stale value without blocking on the updater. Readers do not serialize against each other: value_ is guarded by a shared_mutex while expire_ is an atomic lifecycle flag. </p><dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">T</td><td>The type of the cached data object. <div class="fragment"></div><!-- fragment --> </td></tr>
   </table>
   </dd>
 </dl>
 </div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a1d9f24350bde97fff23f2dce1d28ed25" name="a1d9f24350bde97fff23f2dce1d28ed25"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1d9f24350bde97fff23f2dce1d28ed25">&#9670;&#160;</a></span>Cache()</h2>
+<a id="a7fed99bed94c0eeb5302b2acc8f06563" name="a7fed99bed94c0eeb5302b2acc8f06563"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7fed99bed94c0eeb5302b2acc8f06563">&#9670;&#160;</a></span>Cache()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -171,7 +190,7 @@ template&lt;typename F&gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">F</td>          <td class="paramname"><span class="paramname"><em>update</em></span>&#160;)</td>
+          <td class="paramtype">F</td>          <td class="paramname"><span class="paramname"><em>function</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -191,33 +210,35 @@ template&lt;typename F&gt; </div>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">timeout</td><td>The Time-To-Live (TTL) duration for the cache in milliseconds.</td></tr>
-    <tr><td class="paramname"><a class="el" href="#afb746f3737c96d5750af6048696d7736" title="Schedules the update callback. Caller must hold mutex.">update</a></td><td>The update function/lambda to be executed upon cache expiration. </td></tr>
+    <tr><td class="paramname">function</td><td>The update function/lambda to be executed upon cache expiration. Runs asynchronously on <a class="el" href="classAsyncFw_1_1AbstractThread.html#af33c5949edb374d673a7a9ac0c81ec32" title="Returns a pointer to the AsyncFw::AbstractThread that manages the currently executing thread.">AbstractThread::current()</a> captured at construction time. </td></tr>
   </table>
   </dd>
 </dl>
-<div id="dynsection-0" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
-<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-1" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
+<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-0-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1Cache_a1d9f24350bde97fff23f2dce1d28ed25_cgraph.svg" width="396" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div id="dynsection-1-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1Cache_a7fed99bed94c0eeb5302b2acc8f06563_cgraph.svg" width="843" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
-<a id="ab6bf6d14ec30bef03948fc2b4eea8681" name="ab6bf6d14ec30bef03948fc2b4eea8681"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab6bf6d14ec30bef03948fc2b4eea8681">&#9670;&#160;</a></span>acquire()</h2>
+<a id="a9874cd229d175f558aa8a60689edbe33" name="a9874cd229d175f558aa8a60689edbe33"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9874cd229d175f558aa8a60689edbe33">&#9670;&#160;</a></span>acquire()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;typename T&gt; </div>
+<div class="memtemplate">
+template&lt;<a class="el" href="SharedLockData_8h.html#ab8bc20e4f7d757a564b0c386069ca560">Mode::Lock</a> M = Mode::Lock::Exclusive&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structAsyncFw_1_1LockedData.html">LockedData</a>&lt; T &amp; &gt; <a class="el" href="classAsyncFw_1_1Cache.html">AsyncFw::Cache</a>&lt; T &gt;::acquire </td>
+          <td class="memname"><a class="el" href="structAsyncFw_1_1SharedLockData.html">SharedLockData</a>&lt; T &amp;, M &gt; <a class="el" href="classAsyncFw_1_1Cache.html">AsyncFw::Cache</a>&lt; T &gt;::acquire </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
@@ -230,14 +251,15 @@ template&lt;typename T&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Safely acquires the cached data view bound to its live thread lock. </p>
-<p>If the TTL has expired, the first reader marks the cache as updating and schedules the update callback via the owning thread's task queue. The lock is held for the duration of <a class="el" href="#ab6bf6d14ec30bef03948fc2b4eea8681" title="Safely acquires the cached data view bound to its live thread lock.">acquire()</a> only; the callback runs later in the thread's event loop. Subsequent readers during the update phase instantly receive the stale value. </p><dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="structAsyncFw_1_1LockedData.html" title="A zero-copy RAII carrier that couples a synchronized resource view with its active lock guard.">LockedData</a> bundle holding the mutable reference to the data and its active lock. </dd></dl>
-<div id="dynsection-1" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
-<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-1-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1Cache_ab6bf6d14ec30bef03948fc2b4eea8681_cgraph.svg" width="400" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
+<p>Acquires locked access to the cached value. </p>
+<p>The locking discipline is selected by the M template parameter: <a class="el" href="SharedLockData_8h.html#ab8bc20e4f7d757a564b0c386069ca560a2ef50b4c466304dc6ac77bac8a779971" title="Exclusive (write) lock. Blocks all readers until released.">Mode::Lock::Exclusive</a> (default) yields a mutable reference for the updater, <a class="el" href="SharedLockData_8h.html#ab8bc20e4f7d757a564b0c386069ca560aa6156ea9d66fef24e87e841fbabf7cca" title="Shared (read) lock. Multiple readers may hold it simultaneously.">Mode::Lock::Shared</a> yields a const reference for readers. If the TTL has expired, the first caller atomically claims the update slot and dispatches the update callback asynchronously on thread_ before the lock is taken. </p><dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">M</td><td>The locking discipline. Defaults to <a class="el" href="SharedLockData_8h.html#ab8bc20e4f7d757a564b0c386069ca560a2ef50b4c466304dc6ac77bac8a779971" title="Exclusive (write) lock. Blocks all readers until released.">Mode::Lock::Exclusive</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="structAsyncFw_1_1SharedLockData.html" title="A zero-copy RAII carrier that couples a synchronized resource view with its active shared_mutex lock ...">SharedLockData</a> bundling the reference to the data and its active lock. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>When M == <a class="el" href="SharedLockData_8h.html#ab8bc20e4f7d757a564b0c386069ca560a2ef50b4c466304dc6ac77bac8a779971" title="Exclusive (write) lock. Blocks all readers until released.">Mode::Lock::Exclusive</a>, the caller is the updater: it must mutate value_ via the returned <a class="el" href="structAsyncFw_1_1SharedLockData.html" title="A zero-copy RAII carrier that couples a synchronized resource view with its active shared_mutex lock ...">SharedLockData</a> and call <a class="el" href="#ae62164b66514fb2d77d01ff4b638f8f6" title="Commits the update by extending the TTL from now.">touch()</a> before that object goes out of scope. When M == <a class="el" href="SharedLockData_8h.html#ab8bc20e4f7d757a564b0c386069ca560aa6156ea9d66fef24e87e841fbabf7cca" title="Shared (read) lock. Multiple readers may hold it simultaneously.">Mode::Lock::Shared</a>, the caller is a plain reader and must not call <a class="el" href="#ae62164b66514fb2d77d01ff4b638f8f6" title="Commits the update by extending the TTL from now.">touch()</a>. </dd></dl>
 
 </div>
 </div>
@@ -273,6 +295,78 @@ template&lt;typename T&gt; </div>
   </table>
   </dd>
 </dl>
+<div id="dynsection-2" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
+<div id="dynsection-2-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-2-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1Cache_a1508969e5cbd6a7b8e7a6a8fc04aa901_cgraph.svg" width="380" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<a id="a818ba1ab1f2335f6a4b6d649b2db6d6f" name="a818ba1ab1f2335f6a4b6d649b2db6d6f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a818ba1ab1f2335f6a4b6d649b2db6d6f">&#9670;&#160;</a></span>refresh()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classAsyncFw_1_1Cache.html">AsyncFw::Cache</a>&lt; T &gt;::refresh </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Forces a cache invalidation and schedules an asynchronous refresh. </p>
+<p>Atomically exchanges expire_ to 0 and dispatches the update callback only if the previous value was non-zero. This guarantees a single winner among concurrent refresh calls and callers arriving while an update is already in flight. Does not require the mutex: expire_ is atomic and refresh does not touch value_. Safe to call from any thread. </p><dl class="section note"><dt>Note</dt><dd>Unlike <a class="el" href="#a9874cd229d175f558aa8a60689edbe33" title="Acquires locked access to the cached value.">acquire()</a>, <a class="el" href="#a818ba1ab1f2335f6a4b6d649b2db6d6f" title="Forces a cache invalidation and schedules an asynchronous refresh.">refresh()</a> ignores the current TTL and always invalidates: even fresh data is discarded and re-fetched. </dd></dl>
+
+</div>
+</div>
+<a id="ae62164b66514fb2d77d01ff4b638f8f6" name="ae62164b66514fb2d77d01ff4b638f8f6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae62164b66514fb2d77d01ff4b638f8f6">&#9670;&#160;</a></span>touch()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classAsyncFw_1_1Cache.html">AsyncFw::Cache</a>&lt; T &gt;::touch </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Commits the update by extending the TTL from now. </p>
+<dl class="section note"><dt>Note</dt><dd>MUST be called by the update handler before it releases the lock acquired via <a class="el" href="#a9874cd229d175f558aa8a60689edbe33" title="Acquires locked access to the cached value.">acquire()</a>. Skipping it leaves expire_ == 0 forever and the cache stops refreshing. Safe to call while holding the exclusive lock returned from <a class="el" href="#a9874cd229d175f558aa8a60689edbe33" title="Acquires locked access to the cached value.">acquire()</a>: expire_ is atomic and value_ is not touched. </dd></dl>
+<div id="dynsection-3" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-3-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1Cache_ae62164b66514fb2d77d01ff4b638f8f6_icgraph.svg" width="380" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
 
 </div>
 </div>

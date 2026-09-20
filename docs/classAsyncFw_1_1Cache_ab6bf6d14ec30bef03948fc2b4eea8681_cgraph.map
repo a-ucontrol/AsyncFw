@@ -1,5 +1,0 @@
-<map id="AsyncFw::Cache::acquire" name="AsyncFw::Cache::acquire">
-<area shape="rect" id="Node000001" title="Safely acquires the cached data view bound to its live thread lock." alt="" coords="5,5,178,32"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1Cache.html#afb746f3737c96d5750af6048696d7736" title="Schedules the update callback. Caller must hold mutex." alt="" coords="226,5,395,32"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="178,16,213,19,207,19,178,21"/>
-</map>
