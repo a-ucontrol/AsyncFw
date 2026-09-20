@@ -22,8 +22,8 @@ int main(int argc, char *argv[]) {
   Pool *threadPool = AsyncFw::Instance<AsyncFw::ThreadPool>::create<Pool>("ExampleThreadPool");
   logInfo() << threadPool->text();
 
-  //AsyncFw::AbstractThread *_lt = AsyncFw::ThreadPool::instance()->createThread("LogThread");
-  AsyncFw::AbstractThread *_lt = new AsyncFw::Thread(); // error: AsyncFw::AbstractThread::Private::List::~List() -> thread list not empty
+  AsyncFw::AbstractThread *_lt = AsyncFw::ThreadPool::instance()->createThread("LogThread");
+  //AsyncFw::AbstractThread *_lt = new AsyncFw::Thread(); // error: AsyncFw::AbstractThread::Private::List::~List() -> thread list not empty
   _lt->start();
   _lt->invoke([]() { AsyncFw::Instance<AsyncFw::Log>::create(); }, true);  //create log instance in log thread _lt
 
