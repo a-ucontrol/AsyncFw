@@ -26,12 +26,6 @@ public:
     thread_ = AbstractThread::current();
     expire_ = 1;
   }
-
-  Cache(const Cache &) = delete;
-  Cache &operator=(const Cache &) = delete;
-  Cache(Cache &&) = delete;
-  Cache &operator=(Cache &&) = delete;
-
   /** @brief Destructor that releases the polymorphically allocated callable. */
   ~Cache() { delete update_; }
   /** @brief Acquires locked access to the cached value.
