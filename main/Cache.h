@@ -10,10 +10,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 /** @file Cache.h @brief The Cache class. */
 
 #include "../core/AbstractThread.h"
-#include "../core/invocable.hpp"
 #include "SharedLockData.h"
-
-#define MILLISECONDS_SINCE_EPOCH (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now().time_since_epoch()).count())
 
 namespace AsyncFw {
 /** @class Cache @brief A thread-safe cache wrapper that automatically triggers an update signal when the value expires.
@@ -27,7 +24,7 @@ public:
   template <typename F>
   Cache(int timeout, F function) : timeout_(timeout), update_(new Invocable<void()>::Function(std::forward<F>(function))) {
     thread_ = AbstractThread::current();
-    expire_ = MILLISECONDS_SINCE_EPOCH;
+    expire_ = 1;
   }
 
   Cache(const Cache &) = delete;
@@ -44,7 +41,7 @@ public:
   template <Mode::Lock M = Mode::Lock::Exclusive>
   SharedLockData<T &, M> acquire() {
     int64_t expected = expire_.load(std::memory_order_relaxed);
-    if (expected != 0 && expected <= MILLISECONDS_SINCE_EPOCH) {
+    if (expected != 0 && expected <= std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now().time_since_epoch()).count()) {
       if (expire_.compare_exchange_strong(expected, 0, std::memory_order_relaxed)) {
         thread_->invoke([this]() { (*update_)(); });
       }
@@ -69,11 +66,11 @@ public:
   }
   /** @brief Commits the update by extending the TTL from now.
   @note MUST be called by the update handler before it releases the lock acquired via acquire(). Skipping it leaves expire_ == 0 forever and the cache stops refreshing. Safe to call while holding the exclusive lock returned from acquire(): expire_ is atomic and value_ is not touched. */
-  void touch() { expire_.store(timeout_ + MILLISECONDS_SINCE_EPOCH, std::memory_order_relaxed); }
+  void touch() { expire_.store(timeout_ + std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now().time_since_epoch()).count(), std::memory_order_relaxed); }
   /** @brief Lock-free hint: true if the TTL has expired. */
   bool expired() const {
     int64_t e = expire_.load(std::memory_order_relaxed);
-    return !e || e <= MILLISECONDS_SINCE_EPOCH;
+    return !e || e <= std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
   }
 
 protected:
