@@ -151,7 +151,6 @@ set(AsyncFw_MAIN_HEADERS
 )
 
 set(AsyncFw_MAIN_SOURCES
-  "main/Cache.cpp"
   "main/ListenSocket.cpp"
   "main/DataArraySocket.cpp"
   "main/DataArrayTcpServer.cpp"

@@ -123,6 +123,10 @@ void run_examples(bool _socket) {
   logInfo() << "Start:" << app;
   process.start(app, {"--tst"});
   process.wait();
+  app = EXAMPLES_PATH "CacheExample";
+  logInfo() << "Start:" << app;
+  process.start(app, {"--tst"});
+  process.wait();
 
   if (!ok) {
     logAlert() << "-ERROR!-";

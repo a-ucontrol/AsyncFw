@@ -17,7 +17,6 @@ namespace AsyncFw {
 @tparam T The resource type declaration, which must be either a reference or a pointer. */
 template <typename T>
 struct LockData {
-  static_assert(std::is_reference_v<T> || std::is_pointer_v<T>, "LockData<T> error: T must be either a reference or a pointer to avoid copying!");
   using _T = std::remove_reference_t<T>;
   /** @brief Constructs the LockData container by binding a raw pointer target and acquiring the mutex. */
   LockData(_T *data, std::mutex &mutex) : data_(data), mutex_(&mutex) { mutex_->lock(); }

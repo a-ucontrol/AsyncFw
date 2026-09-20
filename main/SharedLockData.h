@@ -26,10 +26,7 @@ enum class Lock {
 @tparam T The resource type declaration, which must be either a reference or a pointer. @tparam M The locking discipline. Defaults to Mode::Lock::Exclusive, mirroring std::shared_mutex::lock. */
 template <typename T, Mode::Lock M = Mode::Lock::Exclusive>
 struct SharedLockData {
-  static_assert(std::is_reference_v<T> || std::is_pointer_v<T>, "SharedLockData<T> error: T must be either a reference or a pointer to avoid copying!");
-
   using _T = std::conditional_t<M == Mode::Lock::Exclusive, std::remove_reference_t<T>, const std::remove_reference_t<T>>;
-
   /** @brief Constructs the carrier by binding a raw pointer target and acquiring the lock.
   @details Acquires an exclusive lock for Mode::Lock::Exclusive, or a shared lock for Mode::Lock::Shared. */
   SharedLockData(_T *data, std::shared_mutex &mutex) : data_(data), mutex_(&mutex) {
