@@ -140,7 +140,6 @@ set(AsyncFw_MAIN_HEADERS
   "${CMAKE_CURRENT_LIST_DIR}/main/MulticastDns.h"
   "${CMAKE_CURRENT_LIST_DIR}/main/mdns-types.h"
   "${CMAKE_CURRENT_LIST_DIR}/main/Instance.h"
-  "${CMAKE_CURRENT_LIST_DIR}/main/SharedLockData.h"
   "${CMAKE_CURRENT_LIST_DIR}/main/ApplicationNotifier.h"
   "${CMAKE_CURRENT_LIST_DIR}/main/Version.h"
   "${CMAKE_CURRENT_LIST_DIR}/main/log-types.hpp"

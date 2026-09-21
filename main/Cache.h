@@ -10,7 +10,6 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 /** @file Cache.h @brief The Cache class. */
 
 #include "../core/AbstractThread.h"
-#include "SharedLockData.h"
 
 namespace AsyncFw {
 /** @class Cache @brief A thread-safe cache wrapper that automatically triggers an update signal when the value expires.
@@ -30,10 +29,11 @@ public:
   ~Cache() { delete update_; }
   /** @brief Acquires locked access to the cached value.
   @details The locking discipline is selected by the M template parameter: Mode::Lock::Exclusive (default) yields a mutable reference for the updater, Mode::Lock::Shared yields a const reference for readers. If the TTL has expired, the first caller atomically claims the update slot and dispatches the update callback asynchronously on thread_ before the lock is taken.
-  @tparam M The locking discipline. Defaults to Mode::Lock::Exclusive. @return A SharedLockData bundling the reference to the data and its active lock.
-  @note When M == Mode::Lock::Exclusive, the caller is the updater: it must mutate value_ via the returned SharedLockData and call touch() before that object goes out of scope. When M == Mode::Lock::Shared, the caller is a plain reader and must not call touch(). */
+  @tparam M The locking discipline. Defaults to Mode::Lock::Exclusive. Mode::Lock::Mutex is not applicable to Cache. @return A LockData bundling the reference to the data and its active lock.
+  @note When M == Mode::Lock::Exclusive, the caller is the updater: it must mutate value_ via the returned LockData and call touch() before that object goes out of scope. When M == Mode::Lock::Shared, the caller is a plain reader and must not call touch(). */
   template <Mode::Lock M = Mode::Lock::Exclusive>
-  SharedLockData<T &, M> acquire() {
+  LockData<T &, M> acquire() {
+    static_assert(M != Mode::Lock::Mutex, "Cache::acquire: Mode::Lock::Mutex is not applicable, use Exclusive or Shared");
     int64_t expected = expire_.load(std::memory_order_relaxed);
     if (expected != 0 && expected <= std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now().time_since_epoch()).count()) {
       if (expire_.compare_exchange_strong(expected, 0, std::memory_order_relaxed)) {
