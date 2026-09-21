@@ -99,8 +99,10 @@ $(function(){initNavTree('classAsyncFw_1_1Cache.html','','classAsyncFw_1_1Cache-
 </div><!--header-->
 <div class="contents">
 
-<p>Example:  
+<p>A thread-safe cache wrapper that automatically triggers an update signal when the value expires.  
  <a href="#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="Cache_8h_source.html">AsyncFw/Cache</a>&gt;</code></p>
 <div id="dynsection-0" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Collaboration diagram for AsyncFw::Cache&lt; T &gt;:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
 </div>
@@ -112,7 +114,7 @@ $(function(){initNavTree('classAsyncFw_1_1Cache.html','','classAsyncFw_1_1Cache-
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a7fed99bed94c0eeb5302b2acc8f06563" id="r_a7fed99bed94c0eeb5302b2acc8f06563"><td class="memTemplParams" colspan="2">template&lt;typename F&gt; </td></tr>
 <tr class="memitem:a7fed99bed94c0eeb5302b2acc8f06563 template"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a7fed99bed94c0eeb5302b2acc8f06563">Cache</a> (int timeout, F function)</td></tr>
-<tr class="memdesc:a7fed99bed94c0eeb5302b2acc8f06563"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new <a class="el" href="classAsyncFw_1_1Cache.html" title="Example:">Cache</a> object.  <br /></td></tr>
+<tr class="memdesc:a7fed99bed94c0eeb5302b2acc8f06563"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new <a class="el" href="classAsyncFw_1_1Cache.html" title="A thread-safe cache wrapper that automatically triggers an update signal when the value expires.">Cache</a> object.  <br /></td></tr>
 <tr class="memitem:a543d5d6864349b37f72294bf87e5f7a4" id="r_a543d5d6864349b37f72294bf87e5f7a4"><td class="memItemLeft"><a id="a543d5d6864349b37f72294bf87e5f7a4" name="a543d5d6864349b37f72294bf87e5f7a4"></a>
 &#160;</td><td class="memItemRight"><b>~Cache</b> ()</td></tr>
 <tr class="memdesc:a543d5d6864349b37f72294bf87e5f7a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor that releases the polymorphically allocated callable. <br /></td></tr>
@@ -136,7 +138,7 @@ Protected Attributes</h2></td></tr>
 <tr class="memdesc:a7200c545842c5b8aced0b9b5f3836f99"><td class="mdescLeft">&#160;</td><td class="mdescRight">Owning event loop / executor captured at construction. <br /></td></tr>
 <tr class="memitem:ad5384668bce919e867a985f97ec80d6f" id="r_ad5384668bce919e867a985f97ec80d6f"><td class="memItemLeft"><a id="ad5384668bce919e867a985f97ec80d6f" name="ad5384668bce919e867a985f97ec80d6f"></a>
 int&#160;</td><td class="memItemRight"><b>timeout_</b></td></tr>
-<tr class="memdesc:ad5384668bce919e867a985f97ec80d6f"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classAsyncFw_1_1Cache.html" title="Example:">Cache</a> expiration timeout duration in milliseconds. <br /></td></tr>
+<tr class="memdesc:ad5384668bce919e867a985f97ec80d6f"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classAsyncFw_1_1Cache.html" title="A thread-safe cache wrapper that automatically triggers an update signal when the value expires.">Cache</a> expiration timeout duration in milliseconds. <br /></td></tr>
 <tr class="memitem:a4c456b12135f57ba1174b2a5f353bb36" id="r_a4c456b12135f57ba1174b2a5f353bb36"><td class="memItemLeft"><a id="a4c456b12135f57ba1174b2a5f353bb36" name="a4c456b12135f57ba1174b2a5f353bb36"></a>
 T&#160;</td><td class="memItemRight"><b>value_</b></td></tr>
 <tr class="memdesc:a4c456b12135f57ba1174b2a5f353bb36"><td class="mdescLeft">&#160;</td><td class="mdescRight">Real inner cached data storage instance. <br /></td></tr>
@@ -152,15 +154,14 @@ Invocable&lt; void()&gt;::Abstract *&#160;</td><td class="memItemRight"><b>updat
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename T&gt;<br />
-class AsyncFw::Cache&lt; T &gt;</div><p>Example: </p>
-<p>thread-safe cache wrapper that automatically triggers an update signal when the value expires.</p>
+class AsyncFw::Cache&lt; T &gt;</div><p>A thread-safe cache wrapper that automatically triggers an update signal when the value expires. </p>
 <p>Implements the Stale-While-Revalidate pattern. When the TTL expires, the first caller atomically claims the update slot on expire_ (CAS in <a class="el" href="#aa8e1d111e7bc04bca6cb9d42047accac" title="Acquires locked access to the cached value.">acquire()</a>, exchange in <a class="el" href="#a818ba1ab1f2335f6a4b6d649b2db6d6f" title="Forces a cache invalidation and schedules an asynchronous refresh.">refresh()</a>) and dispatches the user callback asynchronously through thread_-&gt;invoke(). Subsequent readers during the update phase instantly receive the stale value without blocking on the updater. Readers do not serialize against each other: value_ is guarded by a shared_mutex while expire_ is an atomic lifecycle flag. </p><dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">T</td><td>The type of the cached data object. <div class="fragment"></div><!-- fragment --> </td></tr>
+    <tr><td class="paramname">T</td><td>The type of the cached data object.</td></tr>
   </table>
   </dd>
 </dl>
-</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<p>Example: </p><div class="fragment"></div><!-- fragment --> </div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a7fed99bed94c0eeb5302b2acc8f06563" name="a7fed99bed94c0eeb5302b2acc8f06563"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7fed99bed94c0eeb5302b2acc8f06563">&#9670;&#160;</a></span>Cache()</h2>
 
@@ -192,7 +193,7 @@ template&lt;typename F&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Constructs a new <a class="el" href="classAsyncFw_1_1Cache.html" title="Example:">Cache</a> object. </p>
+<p>Constructs a new <a class="el" href="classAsyncFw_1_1Cache.html" title="A thread-safe cache wrapper that automatically triggers an update signal when the value expires.">Cache</a> object. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">F</td><td>Any callable type matching the signature void().</td></tr>
@@ -246,7 +247,7 @@ template&lt;<a class="el" href="LockData_8h.html#ab8bc20e4f7d757a564b0c386069ca5
 <p>Acquires locked access to the cached value. </p>
 <p>The locking discipline is selected by the M template parameter: <a class="el" href="LockData_8h.html#ab8bc20e4f7d757a564b0c386069ca560a2ef50b4c466304dc6ac77bac8a779971" title="std::shared_mutex exclusive (write) lock. Blocks all readers until released.">Mode::Lock::Exclusive</a> (default) yields a mutable reference for the updater, <a class="el" href="LockData_8h.html#ab8bc20e4f7d757a564b0c386069ca560aa6156ea9d66fef24e87e841fbabf7cca" title="std::shared_mutex shared (read) lock. Multiple readers may hold it simultaneously.">Mode::Lock::Shared</a> yields a const reference for readers. If the TTL has expired, the first caller atomically claims the update slot and dispatches the update callback asynchronously on thread_ before the lock is taken. </p><dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">M</td><td>The locking discipline. Defaults to <a class="el" href="LockData_8h.html#ab8bc20e4f7d757a564b0c386069ca560a2ef50b4c466304dc6ac77bac8a779971" title="std::shared_mutex exclusive (write) lock. Blocks all readers until released.">Mode::Lock::Exclusive</a>. <a class="el" href="LockData_8h.html#ab8bc20e4f7d757a564b0c386069ca560a648c65b85d6dae62ee3d0130b0da2f01" title="std::mutex, exclusive semantics. Cheaper than shared_mutex; no concurrent readers.">Mode::Lock::Mutex</a> is not applicable to <a class="el" href="classAsyncFw_1_1Cache.html" title="Example:">Cache</a>. </td></tr>
+    <tr><td class="paramname">M</td><td>The locking discipline. Defaults to <a class="el" href="LockData_8h.html#ab8bc20e4f7d757a564b0c386069ca560a2ef50b4c466304dc6ac77bac8a779971" title="std::shared_mutex exclusive (write) lock. Blocks all readers until released.">Mode::Lock::Exclusive</a>. <a class="el" href="LockData_8h.html#ab8bc20e4f7d757a564b0c386069ca560a648c65b85d6dae62ee3d0130b0da2f01" title="std::mutex, exclusive semantics. Cheaper than shared_mutex; no concurrent readers.">Mode::Lock::Mutex</a> is not applicable to <a class="el" href="classAsyncFw_1_1Cache.html" title="A thread-safe cache wrapper that automatically triggers an update signal when the value expires.">Cache</a>. </td></tr>
   </table>
   </dd>
 </dl>

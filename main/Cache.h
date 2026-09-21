@@ -12,7 +12,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include "../core/AbstractThread.h"
 
 namespace AsyncFw {
-/** @class Cache @brief A thread-safe cache wrapper that automatically triggers an update signal when the value expires.
+/** @class Cache Cache.h <AsyncFw/Cache> @brief A thread-safe cache wrapper that automatically triggers an update signal when the value expires.
 @details Implements the Stale-While-Revalidate pattern. When the TTL expires, the first caller atomically claims the update slot on expire_ (CAS in acquire(), exchange in refresh()) and dispatches the user callback asynchronously through thread_->invoke(). Subsequent readers during the update phase instantly receive the stale value without blocking on the updater. Readers do not serialize against each other: value_ is guarded by a shared_mutex while expire_ is an atomic lifecycle flag.
 @tparam T The type of the cached data object.
 @brief Example: @snippet Cache/main.cpp snippet */
