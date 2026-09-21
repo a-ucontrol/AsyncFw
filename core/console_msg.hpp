@@ -12,7 +12,7 @@ namespace AsyncFw {
 void console_msg_(const std::string &);
 }
 
-#ifdef LS_NO_WARNING
+#ifndef LS_NO_WARNING
   #define console_msg(x, y) AsyncFw::console_msg_(std::string(x) + ": " + y)
 #else
   #define console_msg(x, y) ((void)0)

@@ -123,7 +123,10 @@ ThreadPool::~ThreadPool() {
 
 ThreadPool::Thread *ThreadPool::createThread(const std::string &_name) {
   Thread *thread = new Thread((!_name.empty()) ? _name : name() + " thread", this);
-  thread_->invoke([thread]() { thread->start(); });
+  thread_->invoke([thread]() {
+    if (!thread->running()) thread->start();
+    else lsTrace() << "thread already running" << thread->name();
+  });
   lsTrace() << '(' + thread->name() + ')';
   return thread;
 }

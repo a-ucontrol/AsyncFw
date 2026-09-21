@@ -28,6 +28,7 @@ int main(int argc, char *argv[]) {
   _lt->invoke([]() { AsyncFw::Instance<AsyncFw::Log>::create(); }, true);  //create log instance in log thread _lt
 
   AsyncFw::AbstractThread *_t = AsyncFw::ThreadPool::instance()->createThread("SyncExample");
+  _t->start();  // need for sync before AsyncFw::MainThread::exec()
 
   AsyncFw::ThreadPool::sync(_t, []() {
     AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::current();
