@@ -1,5 +1,5 @@
 <map id="AsyncFw::Cache&lt; T &gt;" name="AsyncFw::Cache&lt; T &gt;">
-<area shape="rect" id="Node000001" title="A thread&#45;safe cache wrapper that automatically triggers an update signal when the value expires." alt="" coords="15,104,169,131"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractThread.html" title="The AbstractThread class provides the base functionality for thread management." alt="" coords="5,5,179,32"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="94,46,95,104,89,103,90,49"/>
+<area shape="rect" id="Node000001" title="A thread&#45;safe cache wrapper that emits an update signal when the value expires." alt="" coords="25,120,180,147"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1FunctionConnector.html" title="Provides a thread&#45;safe, publisher&#45;subscriber mechanism to establish sender&#45;to&#45;receivers connections." alt="" coords="5,5,200,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="105,62,105,120,100,119,100,65"/>
 </map>

@@ -76,7 +76,7 @@ void AbstractThreadPool::quit() {
 
 std::string AbstractThreadPool::name() const { return private_.name; }
 
-LockData<const std::vector<AbstractThreadPool::Thread *> &> AbstractThreadPool::threads() { return {threads_, mutex}; }
+LockData<const std::vector<AbstractThreadPool::Thread *>> AbstractThreadPool::threads() { return {threads_, mutex}; }
 
 void AbstractThreadPool::appendThread(AbstractThreadPool::Thread *thread) {
   AbstractThread::LockGuard lock(mutex);
@@ -123,7 +123,7 @@ ThreadPool::~ThreadPool() {
 
 ThreadPool::Thread *ThreadPool::createThread(const std::string &_name) {
   Thread *thread = new Thread((!_name.empty()) ? _name : name() + " thread", this);
-  thread->start();
+  thread_->invoke([thread]() { thread->start(); });
   lsTrace() << '(' + thread->name() + ')';
   return thread;
 }

@@ -70,7 +70,7 @@ int main(int argc, char *argv[]) {
     std::vector<AsyncFw::AbstractThreadPool *> pools = AsyncFw::ThreadPool::pools();
     for (AsyncFw::AbstractThreadPool *pool : pools) {
       lsNotice() << pool->name();
-      AsyncFw::LockData<const std::vector<AsyncFw::AbstractThreadPool::Thread *> &> threads = pool->threads();
+      AsyncFw::LockData<const std::vector<AsyncFw::AbstractThreadPool::Thread *>> threads = pool->threads();
       for (const AsyncFw::AbstractThreadPool::Thread *thread : *threads) { lsInfoGreen() << thread->name(); }
     }
     for (const AsyncFw::AbstractThread *thread : *AsyncFw::AbstractThread::threads()) { lsInfoMagenta() << thread->name(); }
