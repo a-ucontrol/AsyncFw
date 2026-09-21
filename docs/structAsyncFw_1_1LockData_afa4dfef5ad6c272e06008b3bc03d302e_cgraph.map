@@ -1,0 +1,5 @@
+<map id="AsyncFw::LockData::LockData" name="AsyncFw::LockData::LockData">
+<area shape="rect" id="Node000001" title="Move constructor that transfers the critical section ownership from an rvalue LockData state." alt="" coords="5,5,154,48"/>
+<area shape="rect" id="Node000002" href="$structAsyncFw_1_1LockData.html#a3123d789ca69c7028677594d404766e0" title="Constructs the carrier by binding a raw pointer target and acquiring the lock." alt="" coords="202,5,350,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="154,24,189,26,183,27,154,29"/>
+</map>

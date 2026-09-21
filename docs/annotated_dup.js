@@ -43,7 +43,6 @@ var annotated_dup =
       [ "Rrd", "classAsyncFw_1_1Rrd.html", "classAsyncFw_1_1Rrd" ],
       [ "RrdClient", "classAsyncFw_1_1RrdClient.html", "classAsyncFw_1_1RrdClient" ],
       [ "RrdServer", "classAsyncFw_1_1RrdServer.html", "classAsyncFw_1_1RrdServer" ],
-      [ "SharedLockData", "structAsyncFw_1_1SharedLockData.html", "structAsyncFw_1_1SharedLockData" ],
       [ "SystemProcess", "classAsyncFw_1_1SystemProcess.html", "classAsyncFw_1_1SystemProcess" ],
       [ "AbstractTask", "classAsyncFw_1_1AbstractTask.html", "classAsyncFw_1_1AbstractTask" ],
       [ "Task", "classAsyncFw_1_1Task.html", "classAsyncFw_1_1Task" ],

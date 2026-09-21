@@ -1,40 +1,41 @@
 <map id="main/Log.h" name="main/Log.h">
-<area shape="rect" id="Node000001" title="The AbstractLog and Log classes." alt="" coords="177,5,262,32"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="87,80,144,107"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="200,35,148,73,144,69,203,30"/>
-<area shape="rect" id="Node000003" href="$LogStream_8h.html" title="The LogStream class." alt="" coords="86,155,222,181"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="215,30,168,142,163,139,213,35"/>
-<area shape="rect" id="Node000008" href="$Rrd_8h.html" title="The Rrd class." alt="" coords="336,80,389,107"/>
-<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="244,30,326,72,321,73,245,35"/>
-<area shape="rect" id="Node000017" href="$Instance_8h.html" title="The AbstractInstance and Instance classes." alt="" coords="218,80,301,107"/>
-<area shape="poly" id="edge20_Node000001_Node000017" title=" " alt="" coords="227,30,248,66,243,66,226,35"/>
+<area shape="rect" id="Node000001" title="The AbstractLog and Log classes." alt="" coords="188,5,273,32"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="98,80,154,107"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="210,35,159,73,155,69,214,30"/>
+<area shape="rect" id="Node000003" href="$LogStream_8h.html" title="The LogStream class." alt="" coords="97,155,233,181"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="226,30,179,142,174,139,223,35"/>
+<area shape="rect" id="Node000008" href="$Rrd_8h.html" title="The Rrd class." alt="" coords="346,80,400,107"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="255,30,337,72,332,73,255,35"/>
+<area shape="rect" id="Node000018" href="$Instance_8h.html" title="The AbstractInstance and Instance classes." alt="" coords="229,80,311,107"/>
+<area shape="poly" id="edge20_Node000001_Node000018" title=" " alt="" coords="237,30,259,66,253,66,237,35"/>
 <area shape="rect" id="Node000004" title=" " alt="" coords="5,229,74,256"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="133,184,74,223,71,219,136,180"/>
-<area shape="rect" id="Node000005" title=" " alt="" coords="359,304,416,331"/>
-<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="161,179,186,217,202,237,221,254,251,272,283,286,346,307,341,308,281,291,248,277,218,258,198,240,181,220,160,184"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="142,184,76,223,73,219,144,180"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="308,304,366,331"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="170,179,191,216,221,254,257,280,296,300,291,301,254,284,218,258,187,219,169,184"/>
 <area shape="rect" id="Node000006" title=" " alt="" coords="98,229,157,256"/>
-<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="151,180,140,216,135,214,148,184"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="160,180,143,217,139,214,157,184"/>
 <area shape="rect" id="Node000007" title=" " alt="" coords="232,229,292,256"/>
-<area shape="poly" id="edge6_Node000003_Node000007" title=" " alt="" coords="173,179,233,219,228,221,173,185"/>
-<area shape="rect" id="Node000009" href="$FunctionConnector_8h.html" title="The AbstractFunctionConnector, FunctionConnector, FunctionConnectorProtected, FunctionConnectionGuard..." alt="" coords="451,155,633,181"/>
-<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="389,103,499,148,494,149,389,108"/>
-<area shape="rect" id="Node000015" href="$DataArray_8h.html" title="The DataArray, DataArrayView, DataArrayList and DataStream classes." alt="" coords="297,155,427,181"/>
-<area shape="poly" id="edge16_Node000008_Node000015" title=" " alt="" coords="363,105,365,140,360,138,361,110"/>
-<area shape="rect" id="Node000010" href="$AbstractThread_8h.html" title="The AbstractThread class." alt="" coords="482,229,603,256"/>
-<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="544,180,544,215,540,212,541,184"/>
-<area shape="poly" id="edge12_Node000010_Node000005" title=" " alt="" coords="518,256,429,300,427,295,513,257"/>
-<area shape="rect" id="Node000011" title=" " alt="" coords="618,304,675,331"/>
-<area shape="poly" id="edge10_Node000010_Node000011" title=" " alt="" coords="561,254,618,295,613,295,560,259"/>
-<area shape="rect" id="Node000012" title=" " alt="" coords="570,379,627,405"/>
-<area shape="poly" id="edge11_Node000010_Node000012" title=" " alt="" coords="524,255,504,273,487,291,478,310,478,320,482,329,496,347,515,360,557,381,552,381,512,365,493,350,477,332,473,321,473,309,483,288,501,269,519,258"/>
-<area shape="rect" id="Node000013" href="$LockData_8h.html" title="The LockData class." alt="" coords="699,304,788,331"/>
-<area shape="poly" id="edge13_Node000010_Node000013" title=" " alt="" coords="578,254,697,298,691,298,577,259"/>
-<area shape="rect" id="Node000014" href="$invocable_8hpp_source.html" title=" " alt="" coords="492,304,593,331"/>
-<area shape="poly" id="edge15_Node000010_Node000014" title=" " alt="" coords="544,255,544,290,540,287,540,259"/>
-<area shape="poly" id="edge14_Node000013_Node000012" title=" " alt="" coords="721,331,638,374,636,369,716,332"/>
-<area shape="poly" id="edge17_Node000015_Node000005" title=" " alt="" coords="369,180,385,229,390,290,385,287,380,230,366,184"/>
-<area shape="poly" id="edge18_Node000015_Node000007" title=" " alt="" coords="347,180,293,222,290,218,343,183"/>
-<area shape="rect" id="Node000016" title=" " alt="" coords="317,229,370,256"/>
-<area shape="poly" id="edge19_Node000015_Node000016" title=" " alt="" coords="361,180,353,216,348,213,357,184"/>
-<area shape="poly" id="edge21_Node000017_Node000016" title=" " alt="" coords="262,105,271,141,287,180,319,219,313,219,283,183,266,143,260,110"/>
+<area shape="poly" id="edge6_Node000003_Node000007" title=" " alt="" coords="182,179,236,219,231,221,182,185"/>
+<area shape="rect" id="Node000009" href="$FunctionConnector_8h.html" title="The AbstractFunctionConnector, FunctionConnector, FunctionConnectorProtected, FunctionConnectionGuard..." alt="" coords="462,155,644,181"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="400,103,510,148,505,149,400,108"/>
+<area shape="rect" id="Node000016" href="$DataArray_8h.html" title="The DataArray, DataArrayView, DataArrayList and DataStream classes." alt="" coords="308,155,438,181"/>
+<area shape="poly" id="edge16_Node000008_Node000016" title=" " alt="" coords="374,105,375,140,370,138,372,110"/>
+<area shape="rect" id="Node000010" href="$AbstractThread_8h.html" title="The AbstractThread class." alt="" coords="492,229,614,256"/>
+<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="554,180,555,215,551,212,551,184"/>
+<area shape="poly" id="edge12_Node000010_Node000005" title=" " alt="" coords="518,256,381,304,379,299,513,257"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="628,304,686,331"/>
+<area shape="poly" id="edge10_Node000010_Node000011" title=" " alt="" coords="572,254,629,295,624,295,570,259"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="710,304,767,331"/>
+<area shape="poly" id="edge11_Node000010_Node000012" title=" " alt="" coords="586,254,698,299,693,299,585,259"/>
+<area shape="rect" id="Node000013" href="$LockData_8h.html" title="The LockData class." alt="" coords="390,304,478,331"/>
+<area shape="poly" id="edge13_Node000010_Node000013" title=" " alt="" coords="535,256,469,298,467,293,530,257"/>
+<area shape="rect" id="Node000015" href="$invocable_8hpp_source.html" title=" " alt="" coords="502,304,604,331"/>
+<area shape="poly" id="edge15_Node000010_Node000015" title=" " alt="" coords="555,255,555,290,551,287,551,259"/>
+<area shape="rect" id="Node000014" title=" " alt="" coords="382,379,486,405"/>
+<area shape="poly" id="edge14_Node000013_Node000014" title=" " alt="" coords="436,329,436,365,432,361,432,333"/>
+<area shape="poly" id="edge17_Node000016_Node000005" title=" " alt="" coords="379,179,388,215,388,236,385,257,375,277,362,295,359,290,370,274,380,255,383,236,382,216,376,184"/>
+<area shape="poly" id="edge18_Node000016_Node000007" title=" " alt="" coords="356,180,295,223,293,218,351,183"/>
+<area shape="rect" id="Node000017" title=" " alt="" coords="317,229,370,256"/>
+<area shape="poly" id="edge19_Node000016_Node000017" title=" " alt="" coords="370,180,356,217,352,213,366,184"/>
+<area shape="poly" id="edge21_Node000018_Node000017" title=" " alt="" coords="273,104,283,141,298,180,324,218,319,218,293,183,278,142,271,110"/>
 </map>

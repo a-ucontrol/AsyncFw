@@ -1,14 +1,15 @@
 <map id="core/AbstractThread.h" name="core/AbstractThread.h">
-<area shape="rect" id="Node000001" title="The AbstractThread class." alt="" coords="92,5,242,32"/>
+<area shape="rect" id="Node000001" title="The AbstractThread class." alt="" coords="122,5,272,32"/>
 <area shape="rect" id="Node000002" title=" " alt="" coords="5,80,63,107"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="143,35,72,75,69,70,145,30"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="153,155,211,181"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="157,30,134,67,128,86,130,106,141,125,156,144,151,143,137,128,125,107,122,86,129,64,153,34"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="139,80,196,107"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="169,30,170,65,165,63,166,35"/>
-<area shape="rect" id="Node000005" href="$LockData_8h.html" title="The LockData class." alt="" coords="220,80,309,107"/>
-<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="185,30,239,70,233,71,184,35"/>
-<area shape="rect" id="Node000006" href="$invocable_8hpp_source.html" title=" " alt="" coords="333,80,434,107"/>
-<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="205,30,334,73,329,76,205,35"/>
-<area shape="poly" id="edge5_Node000005_Node000003" title=" " alt="" coords="253,106,209,147,206,142,248,108"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="167,35,78,76,75,71,169,30"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="87,80,144,107"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="185,31,142,72,139,68,180,34"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="168,80,225,107"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="198,30,199,65,194,63,195,35"/>
+<area shape="rect" id="Node000005" href="$LockData_8h.html" title="The LockData class." alt="" coords="250,80,338,107"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="214,30,268,70,263,71,213,35"/>
+<area shape="rect" id="Node000007" href="$invocable_8hpp_source.html" title=" " alt="" coords="362,80,463,107"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="235,30,363,74,358,76,234,35"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="242,155,346,181"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="296,105,296,141,292,137,292,109"/>
 </map>

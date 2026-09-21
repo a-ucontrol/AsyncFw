@@ -116,9 +116,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a543d5d6864349b37f72294bf87e5f7a4" id="r_a543d5d6864349b37f72294bf87e5f7a4"><td class="memItemLeft"><a id="a543d5d6864349b37f72294bf87e5f7a4" name="a543d5d6864349b37f72294bf87e5f7a4"></a>
 &#160;</td><td class="memItemRight"><b>~Cache</b> ()</td></tr>
 <tr class="memdesc:a543d5d6864349b37f72294bf87e5f7a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor that releases the polymorphically allocated callable. <br /></td></tr>
-<tr class="memitem:a9874cd229d175f558aa8a60689edbe33" id="r_a9874cd229d175f558aa8a60689edbe33"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="SharedLockData_8h.html#ab8bc20e4f7d757a564b0c386069ca560">Mode::Lock</a> M = Mode::Lock::Exclusive&gt; </td></tr>
-<tr class="memitem:a9874cd229d175f558aa8a60689edbe33 template"><td class="memItemLeft"><a class="el" href="structAsyncFw_1_1SharedLockData.html">SharedLockData</a>&lt; T &amp;, M &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a9874cd229d175f558aa8a60689edbe33">acquire</a> ()</td></tr>
-<tr class="memdesc:a9874cd229d175f558aa8a60689edbe33"><td class="mdescLeft">&#160;</td><td class="mdescRight">Acquires locked access to the cached value.  <br /></td></tr>
+<tr class="memitem:aa8e1d111e7bc04bca6cb9d42047accac" id="r_aa8e1d111e7bc04bca6cb9d42047accac"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="LockData_8h.html#ab8bc20e4f7d757a564b0c386069ca560">Mode::Lock</a> M = Mode::Lock::Exclusive&gt; </td></tr>
+<tr class="memitem:aa8e1d111e7bc04bca6cb9d42047accac template"><td class="memItemLeft"><a class="el" href="structAsyncFw_1_1LockData.html">LockData</a>&lt; T &amp;, M &gt;&#160;</td><td class="memItemRight"><a class="el" href="#aa8e1d111e7bc04bca6cb9d42047accac">acquire</a> ()</td></tr>
+<tr class="memdesc:aa8e1d111e7bc04bca6cb9d42047accac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Acquires locked access to the cached value.  <br /></td></tr>
 <tr class="memitem:a1508969e5cbd6a7b8e7a6a8fc04aa901" id="r_a1508969e5cbd6a7b8e7a6a8fc04aa901"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a1508969e5cbd6a7b8e7a6a8fc04aa901">store</a> (const T &amp;value)</td></tr>
 <tr class="memdesc:a1508969e5cbd6a7b8e7a6a8fc04aa901"><td class="mdescLeft">&#160;</td><td class="mdescRight">Securely stores a completely fresh object state inside the cache, extending its TTL.  <br /></td></tr>
 <tr class="memitem:a818ba1ab1f2335f6a4b6d649b2db6d6f" id="r_a818ba1ab1f2335f6a4b6d649b2db6d6f"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a818ba1ab1f2335f6a4b6d649b2db6d6f">refresh</a> ()</td></tr>
@@ -154,7 +154,7 @@ Invocable&lt; void()&gt;::Abstract *&#160;</td><td class="memItemRight"><b>updat
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename T&gt;<br />
 class AsyncFw::Cache&lt; T &gt;</div><p>Example: </p>
 <p>thread-safe cache wrapper that automatically triggers an update signal when the value expires.</p>
-<p>Implements the Stale-While-Revalidate pattern. When the TTL expires, the first caller atomically claims the update slot on expire_ (CAS in <a class="el" href="#a9874cd229d175f558aa8a60689edbe33" title="Acquires locked access to the cached value.">acquire()</a>, exchange in <a class="el" href="#a818ba1ab1f2335f6a4b6d649b2db6d6f" title="Forces a cache invalidation and schedules an asynchronous refresh.">refresh()</a>) and dispatches the user callback asynchronously through thread_-&gt;invoke(). Subsequent readers during the update phase instantly receive the stale value without blocking on the updater. Readers do not serialize against each other: value_ is guarded by a shared_mutex while expire_ is an atomic lifecycle flag. </p><dl class="tparams"><dt>Template Parameters</dt><dd>
+<p>Implements the Stale-While-Revalidate pattern. When the TTL expires, the first caller atomically claims the update slot on expire_ (CAS in <a class="el" href="#aa8e1d111e7bc04bca6cb9d42047accac" title="Acquires locked access to the cached value.">acquire()</a>, exchange in <a class="el" href="#a818ba1ab1f2335f6a4b6d649b2db6d6f" title="Forces a cache invalidation and schedules an asynchronous refresh.">refresh()</a>) and dispatches the user callback asynchronously through thread_-&gt;invoke(). Subsequent readers during the update phase instantly receive the stale value without blocking on the updater. Readers do not serialize against each other: value_ is guarded by a shared_mutex while expire_ is an atomic lifecycle flag. </p><dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">T</td><td>The type of the cached data object. <div class="fragment"></div><!-- fragment --> </td></tr>
   </table>
@@ -216,21 +216,21 @@ template&lt;typename F&gt; </div>
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
-<a id="a9874cd229d175f558aa8a60689edbe33" name="a9874cd229d175f558aa8a60689edbe33"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9874cd229d175f558aa8a60689edbe33">&#9670;&#160;</a></span>acquire()</h2>
+<a id="aa8e1d111e7bc04bca6cb9d42047accac" name="aa8e1d111e7bc04bca6cb9d42047accac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa8e1d111e7bc04bca6cb9d42047accac">&#9670;&#160;</a></span>acquire()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;typename T&gt; </div>
 <div class="memtemplate">
-template&lt;<a class="el" href="SharedLockData_8h.html#ab8bc20e4f7d757a564b0c386069ca560">Mode::Lock</a> M = Mode::Lock::Exclusive&gt; </div>
+template&lt;<a class="el" href="LockData_8h.html#ab8bc20e4f7d757a564b0c386069ca560">Mode::Lock</a> M = Mode::Lock::Exclusive&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structAsyncFw_1_1SharedLockData.html">SharedLockData</a>&lt; T &amp;, M &gt; <a class="el" href="classAsyncFw_1_1Cache.html">AsyncFw::Cache</a>&lt; T &gt;::acquire </td>
+          <td class="memname"><a class="el" href="structAsyncFw_1_1LockData.html">LockData</a>&lt; T &amp;, M &gt; <a class="el" href="classAsyncFw_1_1Cache.html">AsyncFw::Cache</a>&lt; T &gt;::acquire </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
@@ -244,14 +244,14 @@ template&lt;<a class="el" href="SharedLockData_8h.html#ab8bc20e4f7d757a564b0c386
 </div><div class="memdoc">
 
 <p>Acquires locked access to the cached value. </p>
-<p>The locking discipline is selected by the M template parameter: <a class="el" href="SharedLockData_8h.html#ab8bc20e4f7d757a564b0c386069ca560a2ef50b4c466304dc6ac77bac8a779971" title="Exclusive (write) lock. Blocks all readers until released.">Mode::Lock::Exclusive</a> (default) yields a mutable reference for the updater, <a class="el" href="SharedLockData_8h.html#ab8bc20e4f7d757a564b0c386069ca560aa6156ea9d66fef24e87e841fbabf7cca" title="Shared (read) lock. Multiple readers may hold it simultaneously.">Mode::Lock::Shared</a> yields a const reference for readers. If the TTL has expired, the first caller atomically claims the update slot and dispatches the update callback asynchronously on thread_ before the lock is taken. </p><dl class="tparams"><dt>Template Parameters</dt><dd>
+<p>The locking discipline is selected by the M template parameter: <a class="el" href="LockData_8h.html#ab8bc20e4f7d757a564b0c386069ca560a2ef50b4c466304dc6ac77bac8a779971" title="std::shared_mutex exclusive (write) lock. Blocks all readers until released.">Mode::Lock::Exclusive</a> (default) yields a mutable reference for the updater, <a class="el" href="LockData_8h.html#ab8bc20e4f7d757a564b0c386069ca560aa6156ea9d66fef24e87e841fbabf7cca" title="std::shared_mutex shared (read) lock. Multiple readers may hold it simultaneously.">Mode::Lock::Shared</a> yields a const reference for readers. If the TTL has expired, the first caller atomically claims the update slot and dispatches the update callback asynchronously on thread_ before the lock is taken. </p><dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">M</td><td>The locking discipline. Defaults to <a class="el" href="SharedLockData_8h.html#ab8bc20e4f7d757a564b0c386069ca560a2ef50b4c466304dc6ac77bac8a779971" title="Exclusive (write) lock. Blocks all readers until released.">Mode::Lock::Exclusive</a>. </td></tr>
+    <tr><td class="paramname">M</td><td>The locking discipline. Defaults to <a class="el" href="LockData_8h.html#ab8bc20e4f7d757a564b0c386069ca560a2ef50b4c466304dc6ac77bac8a779971" title="std::shared_mutex exclusive (write) lock. Blocks all readers until released.">Mode::Lock::Exclusive</a>. <a class="el" href="LockData_8h.html#ab8bc20e4f7d757a564b0c386069ca560a648c65b85d6dae62ee3d0130b0da2f01" title="std::mutex, exclusive semantics. Cheaper than shared_mutex; no concurrent readers.">Mode::Lock::Mutex</a> is not applicable to <a class="el" href="classAsyncFw_1_1Cache.html" title="Example:">Cache</a>. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="structAsyncFw_1_1SharedLockData.html" title="A zero-copy RAII carrier that couples a synchronized resource view with its active shared_mutex lock ...">SharedLockData</a> bundling the reference to the data and its active lock. </dd></dl>
-<dl class="section note"><dt>Note</dt><dd>When M == <a class="el" href="SharedLockData_8h.html#ab8bc20e4f7d757a564b0c386069ca560a2ef50b4c466304dc6ac77bac8a779971" title="Exclusive (write) lock. Blocks all readers until released.">Mode::Lock::Exclusive</a>, the caller is the updater: it must mutate value_ via the returned <a class="el" href="structAsyncFw_1_1SharedLockData.html" title="A zero-copy RAII carrier that couples a synchronized resource view with its active shared_mutex lock ...">SharedLockData</a> and call <a class="el" href="#ae62164b66514fb2d77d01ff4b638f8f6" title="Commits the update by extending the TTL from now.">touch()</a> before that object goes out of scope. When M == <a class="el" href="SharedLockData_8h.html#ab8bc20e4f7d757a564b0c386069ca560aa6156ea9d66fef24e87e841fbabf7cca" title="Shared (read) lock. Multiple readers may hold it simultaneously.">Mode::Lock::Shared</a>, the caller is a plain reader and must not call <a class="el" href="#ae62164b66514fb2d77d01ff4b638f8f6" title="Commits the update by extending the TTL from now.">touch()</a>. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="structAsyncFw_1_1LockData.html" title="A zero-copy RAII carrier that couples a synchronized resource view with its active lock guard.">LockData</a> bundling the reference to the data and its active lock. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>When M == <a class="el" href="LockData_8h.html#ab8bc20e4f7d757a564b0c386069ca560a2ef50b4c466304dc6ac77bac8a779971" title="std::shared_mutex exclusive (write) lock. Blocks all readers until released.">Mode::Lock::Exclusive</a>, the caller is the updater: it must mutate value_ via the returned <a class="el" href="structAsyncFw_1_1LockData.html" title="A zero-copy RAII carrier that couples a synchronized resource view with its active lock guard.">LockData</a> and call <a class="el" href="#ae62164b66514fb2d77d01ff4b638f8f6" title="Commits the update by extending the TTL from now.">touch()</a> before that object goes out of scope. When M == <a class="el" href="LockData_8h.html#ab8bc20e4f7d757a564b0c386069ca560aa6156ea9d66fef24e87e841fbabf7cca" title="std::shared_mutex shared (read) lock. Multiple readers may hold it simultaneously.">Mode::Lock::Shared</a>, the caller is a plain reader and must not call <a class="el" href="#ae62164b66514fb2d77d01ff4b638f8f6" title="Commits the update by extending the TTL from now.">touch()</a>. </dd></dl>
 
 </div>
 </div>
@@ -322,7 +322,7 @@ template&lt;typename T&gt; </div>
 </div><div class="memdoc">
 
 <p>Forces a cache invalidation and schedules an asynchronous refresh. </p>
-<p>Atomically exchanges expire_ to 0 and dispatches the update callback only if the previous value was non-zero. This guarantees a single winner among concurrent refresh calls and callers arriving while an update is already in flight. Does not require the mutex: expire_ is atomic and refresh does not touch value_. Safe to call from any thread. </p><dl class="section note"><dt>Note</dt><dd>Unlike <a class="el" href="#a9874cd229d175f558aa8a60689edbe33" title="Acquires locked access to the cached value.">acquire()</a>, <a class="el" href="#a818ba1ab1f2335f6a4b6d649b2db6d6f" title="Forces a cache invalidation and schedules an asynchronous refresh.">refresh()</a> ignores the current TTL and always invalidates: even fresh data is discarded and re-fetched. </dd></dl>
+<p>Atomically exchanges expire_ to 0 and dispatches the update callback only if the previous value was non-zero. This guarantees a single winner among concurrent refresh calls and callers arriving while an update is already in flight. Does not require the mutex: expire_ is atomic and refresh does not touch value_. Safe to call from any thread. </p><dl class="section note"><dt>Note</dt><dd>Unlike <a class="el" href="#aa8e1d111e7bc04bca6cb9d42047accac" title="Acquires locked access to the cached value.">acquire()</a>, <a class="el" href="#a818ba1ab1f2335f6a4b6d649b2db6d6f" title="Forces a cache invalidation and schedules an asynchronous refresh.">refresh()</a> ignores the current TTL and always invalidates: even fresh data is discarded and re-fetched. </dd></dl>
 
 </div>
 </div>
@@ -352,7 +352,7 @@ template&lt;typename T&gt; </div>
 </div><div class="memdoc">
 
 <p>Commits the update by extending the TTL from now. </p>
-<dl class="section note"><dt>Note</dt><dd>MUST be called by the update handler before it releases the lock acquired via <a class="el" href="#a9874cd229d175f558aa8a60689edbe33" title="Acquires locked access to the cached value.">acquire()</a>. Skipping it leaves expire_ == 0 forever and the cache stops refreshing. Safe to call while holding the exclusive lock returned from <a class="el" href="#a9874cd229d175f558aa8a60689edbe33" title="Acquires locked access to the cached value.">acquire()</a>: expire_ is atomic and value_ is not touched. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>MUST be called by the update handler before it releases the lock acquired via <a class="el" href="#aa8e1d111e7bc04bca6cb9d42047accac" title="Acquires locked access to the cached value.">acquire()</a>. Skipping it leaves expire_ == 0 forever and the cache stops refreshing. Safe to call while holding the exclusive lock returned from <a class="el" href="#aa8e1d111e7bc04bca6cb9d42047accac" title="Acquires locked access to the cached value.">acquire()</a>: expire_ is atomic and value_ is not touched. </dd></dl>
 <div id="dynsection-3" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
 <div id="dynsection-3-summary" class="dynsummary" style="display:block;">
 </div>

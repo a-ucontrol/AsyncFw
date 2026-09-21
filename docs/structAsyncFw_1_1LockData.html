@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.16.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>AsyncFw: AsyncFw::LockData&lt; T &gt; Struct Template Reference</title>
+<title>AsyncFw: AsyncFw::LockData&lt; T, M &gt; Struct Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -95,7 +95,7 @@ $(function(){initNavTree('structAsyncFw_1_1LockData.html','','structAsyncFw_1_1L
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">AsyncFw::LockData&lt; T &gt; Struct Template Reference</div></div>
+  <div class="headertitle"><div class="title">AsyncFw::LockData&lt; T, M &gt; Struct Template Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
@@ -106,51 +106,217 @@ $(function(){initNavTree('structAsyncFw_1_1LockData.html','','structAsyncFw_1_1L
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-types" class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a417d8d4d8e196362a2c3b630c135f108" id="r_a417d8d4d8e196362a2c3b630c135f108"><td class="memItemLeft"><a id="a417d8d4d8e196362a2c3b630c135f108" name="a417d8d4d8e196362a2c3b630c135f108"></a>
-using&#160;</td><td class="memItemRight"><b>_T</b> = std::remove_reference_t&lt;T&gt;</td></tr>
+<tr class="memitem:a413cf63a7621496f465488fcfec7858d" id="r_a413cf63a7621496f465488fcfec7858d"><td class="memItemLeft"><a id="a413cf63a7621496f465488fcfec7858d" name="a413cf63a7621496f465488fcfec7858d"></a>
+using&#160;</td><td class="memItemRight"><b>_T</b> = std::conditional_t&lt;M == <a class="el" href="LockData_8h.html#ab8bc20e4f7d757a564b0c386069ca560aa6156ea9d66fef24e87e841fbabf7cca">Mode::Lock::Shared</a>, const std::remove_reference_t&lt;T&gt;, std::remove_reference_t&lt;T&gt;&gt;</td></tr>
+<tr class="memitem:a0a7e87b52c6bceb7c187f12230647938" id="r_a0a7e87b52c6bceb7c187f12230647938"><td class="memItemLeft"><a id="a0a7e87b52c6bceb7c187f12230647938" name="a0a7e87b52c6bceb7c187f12230647938"></a>
+using&#160;</td><td class="memItemRight"><b>_M</b> = std::conditional_t&lt;M == <a class="el" href="LockData_8h.html#ab8bc20e4f7d757a564b0c386069ca560a648c65b85d6dae62ee3d0130b0da2f01">Mode::Lock::Mutex</a>, std::mutex, std::shared_mutex&gt;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aee5d6ec2d179ffc65b6a8795633780ba" id="r_aee5d6ec2d179ffc65b6a8795633780ba"><td class="memItemLeft"><a id="aee5d6ec2d179ffc65b6a8795633780ba" name="aee5d6ec2d179ffc65b6a8795633780ba"></a>
-&#160;</td><td class="memItemRight"><b>LockData</b> (_T *data, std::mutex &amp;mutex)</td></tr>
-<tr class="memdesc:aee5d6ec2d179ffc65b6a8795633780ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs the <a class="el" href="structAsyncFw_1_1LockData.html" title="A zero-copy RAII carrier that couples a synchronized resource view with its active lock guard.">LockData</a> container by binding a raw pointer target and acquiring the mutex. <br /></td></tr>
-<tr class="memitem:a924d121043ebee545d87988344d902f9" id="r_a924d121043ebee545d87988344d902f9"><td class="memItemLeft"><a id="a924d121043ebee545d87988344d902f9" name="a924d121043ebee545d87988344d902f9"></a>
-&#160;</td><td class="memItemRight"><b>LockData</b> (_T &amp;data, std::mutex &amp;mutex)</td></tr>
-<tr class="memdesc:a924d121043ebee545d87988344d902f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs the <a class="el" href="structAsyncFw_1_1LockData.html" title="A zero-copy RAII carrier that couples a synchronized resource view with its active lock guard.">LockData</a> container by taking the address of an lvalue reference. <br /></td></tr>
-<tr class="memitem:a0db0647359ede027065fb0517f7fd98e" id="r_a0db0647359ede027065fb0517f7fd98e"><td class="memItemLeft"><a id="a0db0647359ede027065fb0517f7fd98e" name="a0db0647359ede027065fb0517f7fd98e"></a>
-&#160;</td><td class="memItemRight"><b>LockData</b> (LockData &amp;&amp;locked)</td></tr>
-<tr class="memdesc:a0db0647359ede027065fb0517f7fd98e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move constructor that transfers the critical section ownership from an rvalue <a class="el" href="structAsyncFw_1_1LockData.html" title="A zero-copy RAII carrier that couples a synchronized resource view with its active lock guard.">LockData</a> state. The source is left without lock ownership and with a null data pointer. <br /></td></tr>
-<tr class="memitem:ac8958f95f81ccbd74fe0813c3805fb7d" id="r_ac8958f95f81ccbd74fe0813c3805fb7d"><td class="memItemLeft"><a id="ac8958f95f81ccbd74fe0813c3805fb7d" name="ac8958f95f81ccbd74fe0813c3805fb7d"></a>
-&#160;</td><td class="memItemRight"><b>~LockData</b> ()</td></tr>
-<tr class="memdesc:ac8958f95f81ccbd74fe0813c3805fb7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor that safely releases the acquired mutex if this instance still retains its ownership. <br /></td></tr>
-<tr class="memitem:a45790921a2a4d6c12a9c8c4b5764ed1b" id="r_a45790921a2a4d6c12a9c8c4b5764ed1b"><td class="memItemLeft"><a id="a45790921a2a4d6c12a9c8c4b5764ed1b" name="a45790921a2a4d6c12a9c8c4b5764ed1b"></a>
-_T *&#160;</td><td class="memItemRight"><b>operator-&gt;</b> () const</td></tr>
-<tr class="memdesc:a45790921a2a4d6c12a9c8c4b5764ed1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indirection operator that returns a pointer to the protected inner resource. <br /></td></tr>
-<tr class="memitem:a5a16a7b4f8f689cfed27bb17f293ffe6" id="r_a5a16a7b4f8f689cfed27bb17f293ffe6"><td class="memItemLeft"><a id="a5a16a7b4f8f689cfed27bb17f293ffe6" name="a5a16a7b4f8f689cfed27bb17f293ffe6"></a>
-_T &amp;&#160;</td><td class="memItemRight"><b>operator*</b> () const</td></tr>
-<tr class="memdesc:a5a16a7b4f8f689cfed27bb17f293ffe6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indirection operator that returns a reference to the protected inner resource. <br /></td></tr>
+<tr class="memitem:a3123d789ca69c7028677594d404766e0" id="r_a3123d789ca69c7028677594d404766e0"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a3123d789ca69c7028677594d404766e0">LockData</a> (_T *data, _M &amp;mutex)</td></tr>
+<tr class="memdesc:a3123d789ca69c7028677594d404766e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs the carrier by binding a raw pointer target and acquiring the lock.  <br /></td></tr>
+<tr class="memitem:ae066580f33d5932bc97ba2a421d85adf" id="r_ae066580f33d5932bc97ba2a421d85adf"><td class="memItemLeft"><a id="ae066580f33d5932bc97ba2a421d85adf" name="ae066580f33d5932bc97ba2a421d85adf"></a>
+&#160;</td><td class="memItemRight"><b>LockData</b> (_T &amp;data, _M &amp;mutex)</td></tr>
+<tr class="memdesc:ae066580f33d5932bc97ba2a421d85adf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs the carrier by taking the address of an lvalue reference. Delegates to the pointer overload. <br /></td></tr>
+<tr class="memitem:afa4dfef5ad6c272e06008b3bc03d302e" id="r_afa4dfef5ad6c272e06008b3bc03d302e"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#afa4dfef5ad6c272e06008b3bc03d302e">LockData</a> (LockData &amp;&amp;locked)</td></tr>
+<tr class="memdesc:afa4dfef5ad6c272e06008b3bc03d302e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move constructor that transfers the critical section ownership from an rvalue <a class="el" href="structAsyncFw_1_1LockData.html" title="A zero-copy RAII carrier that couples a synchronized resource view with its active lock guard.">LockData</a> state.  <br /></td></tr>
+<tr class="memitem:a0844d740fdb993a3227bfe55cd4012ea" id="r_a0844d740fdb993a3227bfe55cd4012ea"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a0844d740fdb993a3227bfe55cd4012ea">~LockData</a> ()</td></tr>
+<tr class="memdesc:a0844d740fdb993a3227bfe55cd4012ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor that releases the acquired lock if this instance still retains its ownership.  <br /></td></tr>
+<tr class="memitem:ac721cfbf389f784194c5500d5cc55910" id="r_ac721cfbf389f784194c5500d5cc55910"><td class="memItemLeft">_T *&#160;</td><td class="memItemRight"><a class="el" href="#ac721cfbf389f784194c5500d5cc55910">operator-&gt;</a> () const</td></tr>
+<tr class="memdesc:ac721cfbf389f784194c5500d5cc55910"><td class="mdescLeft">&#160;</td><td class="mdescRight">Member access operator returning a pointer to the protected resource.  <br /></td></tr>
+<tr class="memitem:a141d5c6d5897d1095c3e8d3859feb14c" id="r_a141d5c6d5897d1095c3e8d3859feb14c"><td class="memItemLeft">_T &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a141d5c6d5897d1095c3e8d3859feb14c">operator*</a> () const</td></tr>
+<tr class="memdesc:a141d5c6d5897d1095c3e8d3859feb14c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dereference operator returning a reference to the protected resource.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pro-attribs" class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:ab5b5a2266b75e14d50859ff2b7e32c26" id="r_ab5b5a2266b75e14d50859ff2b7e32c26"><td class="memItemLeft"><a id="ab5b5a2266b75e14d50859ff2b7e32c26" name="ab5b5a2266b75e14d50859ff2b7e32c26"></a>
+<tr class="memitem:a74de45058b55f8189402a25d800c509d" id="r_a74de45058b55f8189402a25d800c509d"><td class="memItemLeft"><a id="a74de45058b55f8189402a25d800c509d" name="a74de45058b55f8189402a25d800c509d"></a>
 _T *&#160;</td><td class="memItemRight"><b>data_</b></td></tr>
-<tr class="memdesc:ab5b5a2266b75e14d50859ff2b7e32c26"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the protected inner resource. <br /></td></tr>
-<tr class="memitem:af64f92c12ae030de209a553ee0f8ab9a" id="r_af64f92c12ae030de209a553ee0f8ab9a"><td class="memItemLeft"><a id="af64f92c12ae030de209a553ee0f8ab9a" name="af64f92c12ae030de209a553ee0f8ab9a"></a>
-std::mutex *&#160;</td><td class="memItemRight"><b>mutex_</b></td></tr>
-<tr class="memdesc:af64f92c12ae030de209a553ee0f8ab9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the synchronization primitive, cleared upon moving. <br /></td></tr>
+<tr class="memdesc:a74de45058b55f8189402a25d800c509d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the protected inner resource. <br /></td></tr>
+<tr class="memitem:a9fef00e8cf10bee6cf0ce71d683d26d4" id="r_a9fef00e8cf10bee6cf0ce71d683d26d4"><td class="memItemLeft"><a id="a9fef00e8cf10bee6cf0ce71d683d26d4" name="a9fef00e8cf10bee6cf0ce71d683d26d4"></a>
+_M *&#160;</td><td class="memItemRight"><b>mutex_</b></td></tr>
+<tr class="memdesc:a9fef00e8cf10bee6cf0ce71d683d26d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the acquired lock (std::mutex or std::shared_mutex, per M); null after moving. <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><div class="compoundTemplParams">template&lt;typename T&gt;<br />
-struct AsyncFw::LockData&lt; T &gt;</div><p>A zero-copy RAII carrier that couples a synchronized resource view with its active lock guard. </p>
-<p>Enforces compile-time checks to ensure that the underlying type is strictly a reference or a pointer, effectively preventing accidental heavy memory allocations or copying during multi-threaded data sharing. </p><dl class="tparams"><dt>Template Parameters</dt><dd>
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename T, <a class="el" href="LockData_8h.html#ab8bc20e4f7d757a564b0c386069ca560">Mode::Lock</a> M = Mode::Lock::Mutex&gt;<br />
+struct AsyncFw::LockData&lt; T, M &gt;</div><p>A zero-copy RAII carrier that couples a synchronized resource view with its active lock guard. </p>
+<p>The underlying mutex type and locking discipline are selected at compile time via the M template parameter: <a class="el" href="LockData_8h.html#ab8bc20e4f7d757a564b0c386069ca560a648c65b85d6dae62ee3d0130b0da2f01" title="std::mutex, exclusive semantics. Cheaper than shared_mutex; no concurrent readers.">Mode::Lock::Mutex</a> uses std::mutex with exclusive semantics, <a class="el" href="LockData_8h.html#ab8bc20e4f7d757a564b0c386069ca560a2ef50b4c466304dc6ac77bac8a779971" title="std::shared_mutex exclusive (write) lock. Blocks all readers until released.">Mode::Lock::Exclusive</a> uses std::shared_mutex::lock, and <a class="el" href="LockData_8h.html#ab8bc20e4f7d757a564b0c386069ca560aa6156ea9d66fef24e87e841fbabf7cca" title="std::shared_mutex shared (read) lock. Multiple readers may hold it simultaneously.">Mode::Lock::Shared</a> uses std::shared_mutex::lock_shared. The lock is acquired in the constructor and released in the destructor, so the protected resource remains valid for the lifetime of the <a class="el" href="structAsyncFw_1_1LockData.html" title="A zero-copy RAII carrier that couples a synchronized resource view with its active lock guard.">LockData</a> instance. </p><dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">T</td><td>The resource type declaration, which must be either a reference or a pointer. </td></tr>
+    <tr><td class="paramname">M</td><td>The locking discipline. Defaults to <a class="el" href="LockData_8h.html#ab8bc20e4f7d757a564b0c386069ca560a648c65b85d6dae62ee3d0130b0da2f01" title="std::mutex, exclusive semantics. Cheaper than shared_mutex; no concurrent readers.">Mode::Lock::Mutex</a>, which uses std::mutex with exclusive semantics. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="ThreadPool_2main_8cpp-example.html#_a20">ThreadPool/main.cpp</a>.</dd>
 </dl>
-</div><hr/>The documentation for this struct was generated from the following file:<ul>
+</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a3123d789ca69c7028677594d404766e0" name="a3123d789ca69c7028677594d404766e0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3123d789ca69c7028677594d404766e0">&#9670;&#160;</a></span>LockData() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, <a class="el" href="LockData_8h.html#ab8bc20e4f7d757a564b0c386069ca560">Mode::Lock</a> M = Mode::Lock::Mutex&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structAsyncFw_1_1LockData.html">AsyncFw::LockData</a>&lt; T, M &gt;::LockData </td>
+          <td>(</td>
+          <td class="paramtype">_T *</td>          <td class="paramname"><span class="paramname"><em>data</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">_M &amp;</td>          <td class="paramname"><span class="paramname"><em>mutex</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructs the carrier by binding a raw pointer target and acquiring the lock. </p>
+<p>Acquires std::mutex::lock for <a class="el" href="LockData_8h.html#ab8bc20e4f7d757a564b0c386069ca560a648c65b85d6dae62ee3d0130b0da2f01" title="std::mutex, exclusive semantics. Cheaper than shared_mutex; no concurrent readers.">Mode::Lock::Mutex</a>, std::shared_mutex::lock for <a class="el" href="LockData_8h.html#ab8bc20e4f7d757a564b0c386069ca560a2ef50b4c466304dc6ac77bac8a779971" title="std::shared_mutex exclusive (write) lock. Blocks all readers until released.">Mode::Lock::Exclusive</a>, or std::shared_mutex::lock_shared for <a class="el" href="LockData_8h.html#ab8bc20e4f7d757a564b0c386069ca560aa6156ea9d66fef24e87e841fbabf7cca" title="std::shared_mutex shared (read) lock. Multiple readers may hold it simultaneously.">Mode::Lock::Shared</a>. </p>
+<div id="dynsection-0" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-0-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="structAsyncFw_1_1LockData_a3123d789ca69c7028677594d404766e0_icgraph.svg" width="356" height="120"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<a id="afa4dfef5ad6c272e06008b3bc03d302e" name="afa4dfef5ad6c272e06008b3bc03d302e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afa4dfef5ad6c272e06008b3bc03d302e">&#9670;&#160;</a></span>LockData() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, <a class="el" href="LockData_8h.html#ab8bc20e4f7d757a564b0c386069ca560">Mode::Lock</a> M = Mode::Lock::Mutex&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structAsyncFw_1_1LockData.html">AsyncFw::LockData</a>&lt; T, M &gt;::LockData </td>
+          <td>(</td>
+          <td class="paramtype">LockData&lt; T, M &gt; &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>locked</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Move constructor that transfers the critical section ownership from an rvalue <a class="el" href="structAsyncFw_1_1LockData.html" title="A zero-copy RAII carrier that couples a synchronized resource view with its active lock guard.">LockData</a> state. </p>
+<p>The source is left without lock ownership and with a null data pointer. </p>
+<div id="dynsection-1" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
+<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-1-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="structAsyncFw_1_1LockData_afa4dfef5ad6c272e06008b3bc03d302e_cgraph.svg" width="356" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<a id="a0844d740fdb993a3227bfe55cd4012ea" name="a0844d740fdb993a3227bfe55cd4012ea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0844d740fdb993a3227bfe55cd4012ea">&#9670;&#160;</a></span>~LockData()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, <a class="el" href="LockData_8h.html#ab8bc20e4f7d757a564b0c386069ca560">Mode::Lock</a> M = Mode::Lock::Mutex&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structAsyncFw_1_1LockData.html">AsyncFw::LockData</a>&lt; T, M &gt;::~<a class="el" href="#a3123d789ca69c7028677594d404766e0">LockData</a> </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Destructor that releases the acquired lock if this instance still retains its ownership. </p>
+<p>Mirrors the constructor: unlock for Mutex and Exclusive, unlock_shared for Shared. A moved-from instance holds no lock and does nothing on destruction. </p>
+
+</div>
+</div>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="ac721cfbf389f784194c5500d5cc55910" name="ac721cfbf389f784194c5500d5cc55910"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac721cfbf389f784194c5500d5cc55910">&#9670;&#160;</a></span>operator-&gt;()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, <a class="el" href="LockData_8h.html#ab8bc20e4f7d757a564b0c386069ca560">Mode::Lock</a> M = Mode::Lock::Mutex&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_T * <a class="el" href="structAsyncFw_1_1LockData.html">AsyncFw::LockData</a>&lt; T, M &gt;::operator-&gt; </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Member access operator returning a pointer to the protected resource. </p>
+<p>The pointee type is mutable for <a class="el" href="LockData_8h.html#ab8bc20e4f7d757a564b0c386069ca560a648c65b85d6dae62ee3d0130b0da2f01" title="std::mutex, exclusive semantics. Cheaper than shared_mutex; no concurrent readers.">Mode::Lock::Mutex</a> and <a class="el" href="LockData_8h.html#ab8bc20e4f7d757a564b0c386069ca560a2ef50b4c466304dc6ac77bac8a779971" title="std::shared_mutex exclusive (write) lock. Blocks all readers until released.">Mode::Lock::Exclusive</a>, and const for <a class="el" href="LockData_8h.html#ab8bc20e4f7d757a564b0c386069ca560aa6156ea9d66fef24e87e841fbabf7cca" title="std::shared_mutex shared (read) lock. Multiple readers may hold it simultaneously.">Mode::Lock::Shared</a>. </p>
+
+</div>
+</div>
+<a id="a141d5c6d5897d1095c3e8d3859feb14c" name="a141d5c6d5897d1095c3e8d3859feb14c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a141d5c6d5897d1095c3e8d3859feb14c">&#9670;&#160;</a></span>operator*()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, <a class="el" href="LockData_8h.html#ab8bc20e4f7d757a564b0c386069ca560">Mode::Lock</a> M = Mode::Lock::Mutex&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_T &amp; <a class="el" href="structAsyncFw_1_1LockData.html">AsyncFw::LockData</a>&lt; T, M &gt;::operator* </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Dereference operator returning a reference to the protected resource. </p>
+<p>The reference type is mutable for <a class="el" href="LockData_8h.html#ab8bc20e4f7d757a564b0c386069ca560a648c65b85d6dae62ee3d0130b0da2f01" title="std::mutex, exclusive semantics. Cheaper than shared_mutex; no concurrent readers.">Mode::Lock::Mutex</a> and <a class="el" href="LockData_8h.html#ab8bc20e4f7d757a564b0c386069ca560a2ef50b4c466304dc6ac77bac8a779971" title="std::shared_mutex exclusive (write) lock. Blocks all readers until released.">Mode::Lock::Exclusive</a>, and const for <a class="el" href="LockData_8h.html#ab8bc20e4f7d757a564b0c386069ca560aa6156ea9d66fef24e87e841fbabf7cca" title="std::shared_mutex shared (read) lock. Multiple readers may hold it simultaneously.">Mode::Lock::Shared</a>. </p>
+
+</div>
+</div>
+<hr/>The documentation for this struct was generated from the following file:<ul>
 <li>core/<a class="el" href="LockData_8h_source.html">LockData.h</a></li>
 </ul>
 </div><!-- contents -->
