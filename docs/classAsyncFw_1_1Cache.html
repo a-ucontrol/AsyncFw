@@ -252,6 +252,8 @@ template&lt;<a class="el" href="LockData_8h.html#ab8bc20e4f7d757a564b0c386069ca5
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="structAsyncFw_1_1LockData.html" title="A zero-copy RAII carrier that couples a synchronized resource view with its active lock guard.">LockData</a> bundling the reference to the data and its active lock. </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>When M == <a class="el" href="LockData_8h.html#ab8bc20e4f7d757a564b0c386069ca560a2ef50b4c466304dc6ac77bac8a779971" title="std::shared_mutex exclusive (write) lock. Blocks all readers until released.">Mode::Lock::Exclusive</a>, the caller is the updater: it must mutate value_ via the returned <a class="el" href="structAsyncFw_1_1LockData.html" title="A zero-copy RAII carrier that couples a synchronized resource view with its active lock guard.">LockData</a> and call <a class="el" href="#ae62164b66514fb2d77d01ff4b638f8f6" title="Commits the update by extending the TTL from now.">touch()</a> before that object goes out of scope. When M == <a class="el" href="LockData_8h.html#ab8bc20e4f7d757a564b0c386069ca560aa6156ea9d66fef24e87e841fbabf7cca" title="std::shared_mutex shared (read) lock. Multiple readers may hold it simultaneously.">Mode::Lock::Shared</a>, the caller is a plain reader and must not call <a class="el" href="#ae62164b66514fb2d77d01ff4b638f8f6" title="Commits the update by extending the TTL from now.">touch()</a>. </dd></dl>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="Cache_2main_8cpp-example.html#a0">Cache/main.cpp</a>.</dd>
+</dl>
 
 </div>
 </div>
@@ -353,6 +355,8 @@ template&lt;typename T&gt; </div>
 
 <p>Commits the update by extending the TTL from now. </p>
 <dl class="section note"><dt>Note</dt><dd>MUST be called by the update handler before it releases the lock acquired via <a class="el" href="#aa8e1d111e7bc04bca6cb9d42047accac" title="Acquires locked access to the cached value.">acquire()</a>. Skipping it leaves expire_ == 0 forever and the cache stops refreshing. Safe to call while holding the exclusive lock returned from <a class="el" href="#aa8e1d111e7bc04bca6cb9d42047accac" title="Acquires locked access to the cached value.">acquire()</a>: expire_ is atomic and value_ is not touched. </dd></dl>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="Cache_2main_8cpp-example.html#a1">Cache/main.cpp</a>.</dd>
+</dl>
 <div id="dynsection-3" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
 <div id="dynsection-3-summary" class="dynsummary" style="display:block;">
 </div>

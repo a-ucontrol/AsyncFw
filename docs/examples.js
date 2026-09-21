@@ -1,6 +1,7 @@
 var examples =
 [
     [ "ApplicationNotifier/main.cpp", "ApplicationNotifier_2main_8cpp-example.html", null ],
+    [ "Cache/main.cpp", "Cache_2main_8cpp-example.html", null ],
     [ "ContainerTask/main.cpp", "ContainerTask_2main_8cpp-example.html", null ],
     [ "Coroutine/main.cpp", "Coroutine_2main_8cpp-example.html", null ],
     [ "CoroutineInvoke/main.cpp", "CoroutineInvoke_2main_8cpp-example.html", null ],

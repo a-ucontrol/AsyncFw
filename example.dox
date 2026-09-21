@@ -1,4 +1,5 @@
 /** @example ApplicationNotifier/main.cpp ApplicationNotifier example */
+/** @example Cache/main.cpp Cache example */
 /** @example ContainerTask/main.cpp Task in container example */
 /** @example Coroutine/main.cpp Coroutine example */
 /** @example CoroutineInvoke/main.cpp Coroutine invoke example */
