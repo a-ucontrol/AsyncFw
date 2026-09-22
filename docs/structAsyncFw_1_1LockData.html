@@ -142,11 +142,26 @@ struct AsyncFw::LockData&lt; T, M &gt;</div><p>A zero-copy RAII carrier that cou
 <p>The underlying mutex type and locking discipline are selected at compile time via the M template parameter: <a class="el" href="LockData_8h.html#ab8bc20e4f7d757a564b0c386069ca560a648c65b85d6dae62ee3d0130b0da2f01" title="std::mutex, exclusive semantics. Cheaper than shared_mutex; no concurrent readers.">Mode::Lock::Mutex</a> uses std::mutex with exclusive semantics, <a class="el" href="LockData_8h.html#ab8bc20e4f7d757a564b0c386069ca560a2ef50b4c466304dc6ac77bac8a779971" title="std::shared_mutex exclusive (write) lock. Blocks all readers until released.">Mode::Lock::Exclusive</a> uses std::shared_mutex::lock, and <a class="el" href="LockData_8h.html#ab8bc20e4f7d757a564b0c386069ca560aa6156ea9d66fef24e87e841fbabf7cca" title="std::shared_mutex shared (read) lock. Multiple readers may hold it simultaneously.">Mode::Lock::Shared</a> uses std::shared_mutex::lock_shared. The lock is acquired in the constructor and released in the destructor, so the protected resource remains valid for the lifetime of the <a class="el" href="structAsyncFw_1_1LockData.html" title="A zero-copy RAII carrier that couples a synchronized resource view with its active lock guard.">LockData</a> instance. </p><dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">T</td><td>The resource type declaration, which must be either a reference or a pointer. </td></tr>
-    <tr><td class="paramname">M</td><td>The locking discipline. Defaults to <a class="el" href="LockData_8h.html#ab8bc20e4f7d757a564b0c386069ca560a648c65b85d6dae62ee3d0130b0da2f01" title="std::mutex, exclusive semantics. Cheaper than shared_mutex; no concurrent readers.">Mode::Lock::Mutex</a>, which uses std::mutex with exclusive semantics. </td></tr>
+    <tr><td class="paramname">M</td><td>The locking discipline. Defaults to <a class="el" href="LockData_8h.html#ab8bc20e4f7d757a564b0c386069ca560a648c65b85d6dae62ee3d0130b0da2f01" title="std::mutex, exclusive semantics. Cheaper than shared_mutex; no concurrent readers.">Mode::Lock::Mutex</a>, which uses std::mutex with exclusive semantics.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="ThreadPool_2main_8cpp-example.html#_a20">ThreadPool/main.cpp</a>.</dd>
+<p>Example: </p><div class="fragment"><div class="line">  <span class="keyword">class </span>Downloader {</div>
+<div class="line">  <span class="keyword">public</span>:</div>
+<div class="line">    AsyncFw::FunctionConnector&lt;int&gt; progressChanged;</div>
+<div class="line">    <span class="keywordtype">void</span> start() { <span class="comment">/* ... */</span> }</div>
+<div class="line">  };</div>
+<div class="line"> </div>
+<div class="line">  <span class="keywordtype">void</span> monitorDownload(Downloader &amp; downloader) {</div>
+<div class="line">    <span class="comment">// Bind the connection to a local guard scope</span></div>
+<div class="line">    <a class="code hl_class" href="classAsyncFw_1_1FunctionConnectionGuard.html">AsyncFw::FunctionConnectionGuard</a> guard = downloader.progressChanged.connect([](<span class="keywordtype">int</span> percent) { std::cout &lt;&lt; <span class="stringliteral">&quot;Download progress: &quot;</span> &lt;&lt; percent &lt;&lt; <span class="stringliteral">&quot;%&quot;</span> &lt;&lt; std::endl; });</div>
+<div class="line">    downloader.start();</div>
+<div class="line">    <span class="comment">// ... do some work ...</span></div>
+<div class="line">    <span class="comment">// When monitorDownload exits, guard is destroyed.</span></div>
+<div class="line">    <span class="comment">// The connection is automatically severed, preventing further lambda invocations.</span></div>
+<div class="line">  }</div>
+<div class="line"> </div>
+</div><!-- fragment --> <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="ThreadPool_2main_8cpp-example.html#_a20">ThreadPool/main.cpp</a>.</dd>
 </dl>
 </div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a3123d789ca69c7028677594d404766e0" name="a3123d789ca69c7028677594d404766e0"></a>

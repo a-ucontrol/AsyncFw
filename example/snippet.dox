@@ -113,4 +113,23 @@ void example() {
   logAlert() << "logAlert";
   //logEmergency() << "Emergency";  // Un-commenting this will automatically throw a std::runtime_error
   //! [LogStream]
+
+  //! [LockData]
+  struct Example {
+    struct Config {
+      std::string ipAddress = "127.0.0.1";
+      int port = 8080;
+      int maxConnections = 50;
+    } conf_;
+    LockData<Config> lockedConfig() { return {conf_, mutex_}; }  // Acquire lock, return carrier by value (moved out)
+    std::mutex mutex_;                                           // Mutex guarding conf_
+  };
+
+  Example example;
+  {                                                           // conf scope — lock is held for this entire block
+    LockData<Example::Config> conf = example.lockedConfig();  // Locks mutex_ in constructor
+    lsDebug() << conf->ipAddress;                             // Read protected data via operator->
+    conf->maxConnections = 100;                               // Write protected data (mutable for Mutex mode)
+  }  // Destructor unlocks mutex_ here
+  //! [LockData]
 }
