@@ -35,7 +35,7 @@ int main(int argc, char *argv[]) {
 
   AsyncFw::TlsContext _cert2;
   _cert2.generateKey(KEY_BITS);
-  req = _cert1.generateRequest({{"C", "RU"}, {"ST", "RU-region"}, {"CN", "common_name.org.ru"}, {"L", "RU-l"}, {"O", "Org"}, {"OU", "Org-unit"}, {"serialNumber", "device-000-00-00"}, {"emailAddress", "ssl@org.email.ru"}, {"dnQualifier", "device"}}, "IP:192.168.100.101,IP:192.168.100.102,IP:192.168.100.103");
+  req = _cert2.generateRequest({{"C", "RU"}, {"ST", "RU-region"}, {"CN", "common_name.org.ru"}, {"L", "RU-l"}, {"O", "Org"}, {"OU", "Org-unit"}, {"serialNumber", "device-000-00-00"}, {"emailAddress", "ssl@org.email.ru"}, {"dnQualifier", "device"}}, "IP:192.168.100.101,IP:192.168.100.102,IP:192.168.100.103");
   _cert2.setCertificate(_ca.signRequest(req));
 
   _cert2.appendTrusted(_ca.certificate());

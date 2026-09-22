@@ -169,9 +169,9 @@ void AbstractTlsSocket::activateEvent() {
   X509 *_pc = SSL_get_peer_certificate(private_.ssl);
   if (_pc) {
     X509_NAME *_n = X509_get_subject_name(_pc);
-    X509_free(_pc);
     X509_NAME_get_text_by_NID(_n, NID_commonName, name, sizeof(name));
-  } else std::sprintf(name, "no peer cerificate");
+    X509_free(_pc);
+  } else std::sprintf(name, "no peer certificate");
 
   trace() << ((private_.encrypt == 1) ? "server" : "client") << "connected" << LogStream::Color::Green << name;
   activateReady();

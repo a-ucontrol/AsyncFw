@@ -410,7 +410,7 @@ AbstractThread::~AbstractThread() {
     lsWarning() << LogStream::Color::DarkRed << "poll task list not empty" << private_.poll_tasks.size();
     while (!private_.poll_tasks.empty()) {
       Private::PollTask *_pt = private_.poll_tasks.back();
-      private_.poll_tasks.erase(private_.poll_tasks.end());
+      private_.poll_tasks.pop_back();
       delete _pt;
     }
   }

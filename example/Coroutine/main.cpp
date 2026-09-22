@@ -53,8 +53,8 @@ int main(int argc, char *argv[]) {
     logNotice() << "coro_task: resumed in thread" << ct->name() << ct->id();
     AsyncFw::MainThread::exit(0);
   });
-
-  coro_task();
+AsyncFw::CoroutineTask a=  coro_task();
+AsyncFw::CoroutineTask b = a;
 
   logNotice() << "Start Application";
 

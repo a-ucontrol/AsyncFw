@@ -43,14 +43,13 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 namespace AsyncFw {
 /** @class LogStream LogStream.h <AsyncFw/LogStream> @brief A high-performance, thread-safe logging stream utility utilizing RAII execution semantics.
 @details LogStream provides dynamic string and data formatting using standard C++ stream insertion operators (operator<<). The logged content is accumulated in an internal buffer and is guaranteed to flush automatically to the configured outputs when the temporary LogStream instance is destroyed at the end of the statement (RAII).
-@exception std::runtime_error Thrown automatically if the log level is Emergency.
-@note Throwing a log with Emergency level will automatically raise a std::runtime_error.
+@warning Logging with the Emergency level does NOT throw an exception. It flushes the message, prints a [FATAL] diagnostic to stderr, and calls std::terminate() immediately. The stack is not unwound and destructors of local objects are not executed.
 @note Please refer to the **example** for compile-time log optimizations (like LS_NO_TRACE) and standard inline vs formatting syntax usage styles.
 @brief Example: @snippet snippet.dox LogStream */
 class LogStream {
 public:
   enum MessageType : uint8_t {
-    Emergency = 0x00,  ///< Critical failure. Crashes the app with an exception.
+    Emergency = 0x00,  ///< Critical failure. Terminates the process via std::terminate().
     Alert = 0x01,      ///< Action must be taken immediately.
     Error = 0x02,      ///< Error conditions.
     Warning = 0x03,    ///< Warning conditions.
@@ -175,9 +174,6 @@ public:
 private:
   static class Data {
     friend LogStream;
-
-  public:
-    static void set(int);
 
   private:
     Data();

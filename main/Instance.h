@@ -73,13 +73,12 @@ public:
   /** @brief Retrieves the active engine-wide global default pointer for this instance type. @return A raw pointer to the managed object of type T, or nullptr if uninitialized. */
   static T *get() { return i_->value; }
 
-  /** @brief Initializes the instance tracker shell and updates the internal static reference context pointer. */
-  Instance(const std::string &name = {}) : AbstractInstance(name) { i_ = this; }
-
   /** @brief Overridden destructor that guarantees explicit deferred memory release for the managed resource. */
   virtual ~Instance() override { Instance<T>::destroyValue(); }
 
 protected:
+  /** @brief Initializes the instance tracker shell and updates the internal static reference context pointer. */
+  Instance(const std::string &name = {}) : AbstractInstance(name) { i_ = this; }
   Instance(const Instance &) = delete;
 
   /** @brief Concretely frees the managed object allocation using standard C++ delete semantics. */
