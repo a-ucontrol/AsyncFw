@@ -25,7 +25,7 @@ enum class Lock {
 /** @struct LockData LockData.h <AsyncFw/LockData> @brief A zero-copy RAII carrier that couples a synchronized resource view with its active lock guard.
 @details The underlying mutex type and locking discipline are selected at compile time via the M template parameter: Mode::Lock::Mutex uses std::mutex with exclusive semantics, Mode::Lock::Exclusive uses std::shared_mutex::lock, and Mode::Lock::Shared uses std::shared_mutex::lock_shared. The lock is acquired in the constructor and released in the destructor, so the protected resource remains valid for the lifetime of the LockData instance.
 @tparam T The resource type declaration, which must be either a reference or a pointer. @tparam M The locking discipline. Defaults to Mode::Lock::Mutex, which uses std::mutex with exclusive semantics.
-@brief Example: @snippet snippet.dox FunctionConnectorGuard */
+@brief Example: @snippet snippet.dox LockData */
 template <typename T, Mode::Lock M = Mode::Lock::Mutex>
 struct LockData {
   using _T = std::conditional_t<M == Mode::Lock::Shared, const std::remove_reference_t<T>, std::remove_reference_t<T>>;

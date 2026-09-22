@@ -146,21 +146,22 @@ struct AsyncFw::LockData&lt; T, M &gt;</div><p>A zero-copy RAII carrier that cou
   </table>
   </dd>
 </dl>
-<p>Example: </p><div class="fragment"><div class="line">  <span class="keyword">class </span>Downloader {</div>
-<div class="line">  <span class="keyword">public</span>:</div>
-<div class="line">    AsyncFw::FunctionConnector&lt;int&gt; progressChanged;</div>
-<div class="line">    <span class="keywordtype">void</span> start() { <span class="comment">/* ... */</span> }</div>
+<p>Example: </p><div class="fragment"><div class="line">  <span class="keyword">struct </span>Example {</div>
+<div class="line">    <span class="keyword">struct </span>Config {</div>
+<div class="line">      std::string ipAddress = <span class="stringliteral">&quot;127.0.0.1&quot;</span>;</div>
+<div class="line">      <span class="keywordtype">int</span> port = 8080;</div>
+<div class="line">      <span class="keywordtype">int</span> maxConnections = 50;</div>
+<div class="line">    } conf_;</div>
+<div class="line">    LockData&lt;Config&gt; lockedConfig() { <span class="keywordflow">return</span> {conf_, mutex_}; }  <span class="comment">// Acquire lock, return carrier by value (moved out)</span></div>
+<div class="line">    std::mutex mutex_;                                           <span class="comment">// Mutex guarding conf_</span></div>
 <div class="line">  };</div>
 <div class="line"> </div>
-<div class="line">  <span class="keywordtype">void</span> monitorDownload(Downloader &amp; downloader) {</div>
-<div class="line">    <span class="comment">// Bind the connection to a local guard scope</span></div>
-<div class="line">    <a class="code hl_class" href="classAsyncFw_1_1FunctionConnectionGuard.html">AsyncFw::FunctionConnectionGuard</a> guard = downloader.progressChanged.connect([](<span class="keywordtype">int</span> percent) { std::cout &lt;&lt; <span class="stringliteral">&quot;Download progress: &quot;</span> &lt;&lt; percent &lt;&lt; <span class="stringliteral">&quot;%&quot;</span> &lt;&lt; std::endl; });</div>
-<div class="line">    downloader.start();</div>
-<div class="line">    <span class="comment">// ... do some work ...</span></div>
-<div class="line">    <span class="comment">// When monitorDownload exits, guard is destroyed.</span></div>
-<div class="line">    <span class="comment">// The connection is automatically severed, preventing further lambda invocations.</span></div>
-<div class="line">  }</div>
-<div class="line"> </div>
+<div class="line">  Example example;</div>
+<div class="line">  {                                                           <span class="comment">// conf scope — lock is held for this entire block</span></div>
+<div class="line">    <a class="code hl_struct" href="structAsyncFw_1_1LockData.html">LockData&lt;Example::Config&gt;</a> conf = example.lockedConfig();  <span class="comment">// Locks mutex_ in constructor</span></div>
+<div class="line">    lsDebug() &lt;&lt; conf-&gt;ipAddress;                             <span class="comment">// Read protected data via operator-&gt;</span></div>
+<div class="line">    conf-&gt;maxConnections = 100;                               <span class="comment">// Write protected data (mutable for Mutex mode)</span></div>
+<div class="line">  }  <span class="comment">// Destructor unlocks mutex_ here</span></div>
 </div><!-- fragment --> <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="ThreadPool_2main_8cpp-example.html#_a20">ThreadPool/main.cpp</a>.</dd>
 </dl>
 </div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
