@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
     configCache.update.connect([&configCache]() {
       lsNotice() << "update in:" << AsyncFw::Thread::current()->name();
       std::this_thread::sleep_for(std::chrono::milliseconds(25));
-      auto conf = configCache.acquire();
+      AsyncFw::LockData conf = configCache.acquire();
       conf->ipAddress = "192.168.1.50";
       conf->port = 8080;
       conf->maxConnections = 100;
@@ -41,7 +41,7 @@ int main(int argc, char *argv[]) {
 
   AsyncFw::Timer timer;
   timer.timeout.connect([&configCache]() {
-    auto conf = configCache.acquire<AsyncFw::Mode::Lock::Shared>();
+    AsyncFw::LockData conf = configCache.acquire<AsyncFw::Mode::Lock::Shared>();
     lsInfoGreen() << "Config IP:" << conf->ipAddress << "Port:" << conf->port;
     if (conf->port == 8080) AsyncFw::MainThread::exit(0);
   });

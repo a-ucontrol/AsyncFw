@@ -127,7 +127,7 @@ $(function(){initNavTree('Cache_2main_8cpp-example.html','',''); });
 <div class="line">    configCache.update.connect([&amp;configCache]() {</div>
 <div class="line">      lsNotice() &lt;&lt; <span class="stringliteral">&quot;update in:&quot;</span> &lt;&lt; <a id="a7" name="a7"></a><a class="code hl_function" href="classAsyncFw_1_1Thread.html#a0a3bd6a54db28f73ff59cfea6a40b07a">AsyncFw::Thread::current</a>()-&gt;<a id="a8" name="a8"></a><a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd">name</a>();</div>
 <div class="line">      std::this_thread::sleep_for(std::chrono::milliseconds(25));</div>
-<div class="line">      <span class="keyword">auto</span> conf = configCache.acquire();</div>
+<div class="line">      <a id="_a9" name="_a9"></a><a class="code hl_struct" href="structAsyncFw_1_1LockData.html">AsyncFw::LockData</a> conf = configCache.acquire();</div>
 <div class="line">      conf-&gt;ipAddress = <span class="stringliteral">&quot;192.168.1.50&quot;</span>;</div>
 <div class="line">      conf-&gt;port = 8080;</div>
 <div class="line">      conf-&gt;maxConnections = 100;</div>
@@ -139,17 +139,17 @@ $(function(){initNavTree('Cache_2main_8cpp-example.html','',''); });
 <div class="line"> </div>
 <div class="line">  configCache.store({<span class="stringliteral">&quot;127.0.0.1&quot;</span>, 8000, 50});</div>
 <div class="line"> </div>
-<div class="line">  <a id="_a9" name="_a9"></a><a class="code hl_class" href="classAsyncFw_1_1Timer.html">AsyncFw::Timer</a> timer;</div>
-<div class="line">  timer.<a id="a10" name="a10"></a><a class="code hl_variable" href="classAsyncFw_1_1Timer.html#acf307d575a38d2b3bb852202d0126fcd">timeout</a>.<a class="code hl_function" href="classAsyncFw_1_1FunctionConnector.html#ae1f65144956b3b1247d58614e4080f63">connect</a>([&amp;configCache]() {</div>
-<div class="line">    <span class="keyword">auto</span> conf = configCache.acquire&lt;<a id="_a11" name="_a11"></a><a class="code hl_enumvalue" href="LockData_8h.html#ab8bc20e4f7d757a564b0c386069ca560aa6156ea9d66fef24e87e841fbabf7cca">AsyncFw::Mode::Lock::Shared</a>&gt;();</div>
+<div class="line">  <a id="_a10" name="_a10"></a><a class="code hl_class" href="classAsyncFw_1_1Timer.html">AsyncFw::Timer</a> timer;</div>
+<div class="line">  timer.<a id="a11" name="a11"></a><a class="code hl_variable" href="classAsyncFw_1_1Timer.html#acf307d575a38d2b3bb852202d0126fcd">timeout</a>.<a class="code hl_function" href="classAsyncFw_1_1FunctionConnector.html#ae1f65144956b3b1247d58614e4080f63">connect</a>([&amp;configCache]() {</div>
+<div class="line">    <a class="code hl_struct" href="structAsyncFw_1_1LockData.html">AsyncFw::LockData</a> conf = configCache.acquire&lt;<a id="_a12" name="_a12"></a><a class="code hl_enumvalue" href="LockData_8h.html#ab8bc20e4f7d757a564b0c386069ca560aa6156ea9d66fef24e87e841fbabf7cca">AsyncFw::Mode::Lock::Shared</a>&gt;();</div>
 <div class="line">    lsInfoGreen() &lt;&lt; <span class="stringliteral">&quot;Config IP:&quot;</span> &lt;&lt; conf-&gt;ipAddress &lt;&lt; <span class="stringliteral">&quot;Port:&quot;</span> &lt;&lt; conf-&gt;port;</div>
-<div class="line">    <span class="keywordflow">if</span> (conf-&gt;port == 8080) <a id="a12" name="a12"></a><a class="code hl_function" href="classAsyncFw_1_1MainThread.html#a76fed3a2c1cfdbdb67f2b209e6457657">AsyncFw::MainThread::exit</a>(0);</div>
+<div class="line">    <span class="keywordflow">if</span> (conf-&gt;port == 8080) <a id="a13" name="a13"></a><a class="code hl_function" href="classAsyncFw_1_1MainThread.html#a76fed3a2c1cfdbdb67f2b209e6457657">AsyncFw::MainThread::exit</a>(0);</div>
 <div class="line">  });</div>
 <div class="line"> </div>
-<div class="line">  timer.<a id="a13" name="a13"></a><a class="code hl_function" href="classAsyncFw_1_1Timer.html#a14d02d88bd3682afd7c8fd72cc670e46">start</a>(10);</div>
+<div class="line">  timer.<a id="a14" name="a14"></a><a class="code hl_function" href="classAsyncFw_1_1Timer.html#a14d02d88bd3682afd7c8fd72cc670e46">start</a>(10);</div>
 <div class="line"> </div>
 <div class="line">  logNotice() &lt;&lt; <span class="stringliteral">&quot;Start Application&quot;</span>;</div>
-<div class="line">  <span class="keywordtype">int</span> ret = <a id="a14" name="a14"></a><a class="code hl_function" href="classAsyncFw_1_1MainThread.html#ad12e620772820ad751868c7b49fa4190">AsyncFw::MainThread::exec</a>();</div>
+<div class="line">  <span class="keywordtype">int</span> ret = <a id="a15" name="a15"></a><a class="code hl_function" href="classAsyncFw_1_1MainThread.html#ad12e620772820ad751868c7b49fa4190">AsyncFw::MainThread::exec</a>();</div>
 <div class="line">  logNotice() &lt;&lt; <span class="stringliteral">&quot;End Application&quot;</span> &lt;&lt; ret;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">return</span> ret;</div>
@@ -169,6 +169,7 @@ $(function(){initNavTree('Cache_2main_8cpp-example.html','',''); });
 <div class="ttc" id="aclassAsyncFw_1_1Timer_html"><div class="ttname"><a href="classAsyncFw_1_1Timer.html">AsyncFw::Timer</a></div><div class="ttdoc">The Timer class.</div><div class="ttdef"><b>Definition</b> Timer.h:18</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1Timer_html_a14d02d88bd3682afd7c8fd72cc670e46"><div class="ttname"><a href="classAsyncFw_1_1Timer.html#a14d02d88bd3682afd7c8fd72cc670e46">AsyncFw::Timer::start</a></div><div class="ttdeci">void start(int, bool=false)</div><div class="ttdoc">Starts or restarts a timer with the specified timeout. If the timer is already running,...</div><div class="ttdef"><b>Definition</b> Timer.cpp:29</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1Timer_html_acf307d575a38d2b3bb852202d0126fcd"><div class="ttname"><a href="classAsyncFw_1_1Timer.html#acf307d575a38d2b3bb852202d0126fcd">AsyncFw::Timer::timeout</a></div><div class="ttdeci">FunctionConnector ::Protected&lt; Timer &gt; timeout</div><div class="ttdoc">The Timer::timeout connector.</div><div class="ttdef"><b>Definition</b> Timer.h:34</div></div>
+<div class="ttc" id="astructAsyncFw_1_1LockData_html"><div class="ttname"><a href="structAsyncFw_1_1LockData.html">AsyncFw::LockData</a></div><div class="ttdoc">A zero-copy RAII carrier that couples a synchronized resource view with its active lock guard.</div><div class="ttdef"><b>Definition</b> LockData.h:30</div></div>
 </div><!-- fragment --> </div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->

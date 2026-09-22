@@ -162,7 +162,7 @@ struct AsyncFw::LockData&lt; T, M &gt;</div><p>A zero-copy RAII carrier that cou
 <div class="line">    lsDebug() &lt;&lt; conf-&gt;ipAddress;                             <span class="comment">// Read protected data via operator-&gt;</span></div>
 <div class="line">    conf-&gt;maxConnections = 100;                               <span class="comment">// Write protected data (mutable for Mutex mode)</span></div>
 <div class="line">  }  <span class="comment">// Destructor unlocks mutex_ here</span></div>
-</div><!-- fragment --> <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="ThreadPool_2main_8cpp-example.html#_a20">ThreadPool/main.cpp</a>.</dd>
+</div><!-- fragment --> <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="Cache_2main_8cpp-example.html#_a9">Cache/main.cpp</a>, and <a class="el" href="ThreadPool_2main_8cpp-example.html#_a20">ThreadPool/main.cpp</a>.</dd>
 </dl>
 </div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a3123d789ca69c7028677594d404766e0" name="a3123d789ca69c7028677594d404766e0"></a>
