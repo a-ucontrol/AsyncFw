@@ -218,15 +218,8 @@ static void&#160;</td><td class="memItemRight"><b>setSenderPrefix</b> (const std
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A high-performance, thread-safe logging stream utility utilizing RAII execution semantics. </p>
-<p><a class="el" href="classAsyncFw_1_1LogStream.html" title="A high-performance, thread-safe logging stream utility utilizing RAII execution semantics.">LogStream</a> provides dynamic string and data formatting using standard C++ stream insertion operators (operator&lt;&lt;). The logged content is accumulated in an internal buffer and is guaranteed to flush automatically to the configured outputs when the temporary <a class="el" href="classAsyncFw_1_1LogStream.html" title="A high-performance, thread-safe logging stream utility utilizing RAII execution semantics.">LogStream</a> instance is destroyed at the end of the statement (RAII). </p><dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">std::runtime_error</td><td>Thrown automatically if the log level is Emergency. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section note"><dt>Note</dt><dd>Throwing a log with Emergency level will automatically raise a std::runtime_error. </dd>
-<dd>
-Please refer to the <b>example</b> for compile-time log optimizations (like LS_NO_TRACE) and standard inline vs formatting syntax usage styles.</dd></dl>
+<p><a class="el" href="classAsyncFw_1_1LogStream.html" title="A high-performance, thread-safe logging stream utility utilizing RAII execution semantics.">LogStream</a> provides dynamic string and data formatting using standard C++ stream insertion operators (operator&lt;&lt;). The logged content is accumulated in an internal buffer and is guaranteed to flush automatically to the configured outputs when the temporary <a class="el" href="classAsyncFw_1_1LogStream.html" title="A high-performance, thread-safe logging stream utility utilizing RAII execution semantics.">LogStream</a> instance is destroyed at the end of the statement (RAII). </p><dl class="section warning"><dt>Warning</dt><dd>Logging with the Emergency level does NOT throw an exception. It flushes the message, prints a [FATAL] diagnostic to stderr, and calls std::terminate() immediately. The stack is not unwound and destructors of local objects are not executed. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Please refer to the <b>example</b> for compile-time log optimizations (like LS_NO_TRACE) and standard inline vs formatting syntax usage styles.</dd></dl>
 <p>Example: </p><div class="fragment"><div class="line">  <span class="comment">// 1. Inline streaming macros (ls*): Print FULL function signatures (__PRETTY_FUNCTION__)</span></div>
 <div class="line">  <span class="comment">// These macros can be completely stripped out at compile-time (e.g. via #define LS_NO_TRACE)</span></div>
 <div class="line">  lsTrace() &lt;&lt; <span class="stringliteral">&quot;Trace&quot;</span>;</div>
@@ -264,7 +257,7 @@ Please refer to the <b>example</b> for compile-time log optimizations (like LS_N
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="afa2f6c5311ced6b973d39d6e5ced5731a66e8e44e1adfebd567c25c6611a5e418" name="afa2f6c5311ced6b973d39d6e5ced5731a66e8e44e1adfebd567c25c6611a5e418"></a>Emergency&#160;</td><td class="fielddoc"><p>Critical failure. Crashes the app with an exception. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="afa2f6c5311ced6b973d39d6e5ced5731a66e8e44e1adfebd567c25c6611a5e418" name="afa2f6c5311ced6b973d39d6e5ced5731a66e8e44e1adfebd567c25c6611a5e418"></a>Emergency&#160;</td><td class="fielddoc"><p>Critical failure. Terminates the process via std::terminate(). </p>
 </td></tr>
 <tr><td class="fieldname"><a id="afa2f6c5311ced6b973d39d6e5ced5731a8e7cdb29641eddbcac3012fe6eb3cd3d" name="afa2f6c5311ced6b973d39d6e5ced5731a8e7cdb29641eddbcac3012fe6eb3cd3d"></a>Alert&#160;</td><td class="fielddoc"><p>Action must be taken immediately. </p>
 </td></tr>

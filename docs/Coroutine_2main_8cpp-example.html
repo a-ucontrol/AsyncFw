@@ -154,8 +154,8 @@ $(function(){initNavTree('Coroutine_2main_8cpp-example.html','',''); });
 <div class="line">    logNotice() &lt;&lt; <span class="stringliteral">&quot;coro_task: resumed in thread&quot;</span> &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd">name</a>() &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a41d1cf92e033bcc11e2394cb949e031a">id</a>();</div>
 <div class="line">    <a id="a8" name="a8"></a><a class="code hl_function" href="classAsyncFw_1_1MainThread.html#a76fed3a2c1cfdbdb67f2b209e6457657">AsyncFw::MainThread::exit</a>(0);</div>
 <div class="line">  });</div>
-<div class="line"> </div>
-<div class="line">  coro_task();</div>
+<div class="line"><a class="code hl_struct" href="structAsyncFw_1_1CoroutineTask.html">AsyncFw::CoroutineTask</a> a=  coro_task();</div>
+<div class="line"><a class="code hl_struct" href="structAsyncFw_1_1CoroutineTask.html">AsyncFw::CoroutineTask</a> b = a;</div>
 <div class="line"> </div>
 <div class="line">  logNotice() &lt;&lt; <span class="stringliteral">&quot;Start Application&quot;</span>;</div>
 <div class="line"> </div>
