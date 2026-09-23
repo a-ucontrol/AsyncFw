@@ -533,9 +533,9 @@ void AbstractSocket::pollEvent(int _e) {
         return;
       }
     }
-    warning_if(state_ == State::Connected && AbstractSocket::read_available_fd() < 0) << LogStream::Color::Red << "socket not empty before activate event";
+    warning_if(state_ == State::Connected && AbstractSocket::read_available_fd() < 0) << LogStream::Color::Red << "socket empty before activate event";
     activateEvent();
-    warning_if(state_ == State::Connected && AbstractSocket::read_available_fd() > 0) << LogStream::Color::Yellow << "socket empty after activate event";
+    warning_if(state_ == State::Connected && AbstractSocket::read_available_fd() > 0) << LogStream::Color::Yellow << "socket not empty after activate event";
     if (state_ != State::Active || read_available_fd() <= 0) return;
   }
   if (_e & AbstractThread::PollIn) {

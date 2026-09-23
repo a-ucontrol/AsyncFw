@@ -86,8 +86,8 @@ void DataArrayAbstractTcp::Thread::initSocket(DataArraySocket *socket) {
 }
 
 void DataArrayAbstractTcp::Thread::destroySocket(DataArraySocket *socket) {
-  socket->removeTimer();
   socket->close();
+  socket->removeTimer();
   socket->removeFromThread();
   if (!pool->thread()->invoke([this, socket, e = sockets_.empty()]() {
     socket->destroy();
