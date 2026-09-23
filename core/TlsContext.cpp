@@ -22,7 +22,7 @@ struct TlsContext::Private {
   ~Private() {
     if (ctx) {
       std::vector<Private *>::iterator it = lower_bound(verify.begin(), verify.end(), this, [](const Private *p1, const Private *p2) { return p1->ctx < p2->ctx; });
-      if (it != verify.end()) { verify.erase(it); }
+      if (it != verify.end() && *it == this) { verify.erase(it); }
       SSL_CTX_free(ctx);
     }
   }
@@ -66,6 +66,7 @@ DataArray TlsContext::Private::certificate(X509 *_c) {
 std::string TlsContext::Private::info(EVP_PKEY *_k) {
   BIGNUM *bnk = nullptr;
   EVP_PKEY_get_bn_param(_k, OSSL_PKEY_PARAM_RSA_N, &bnk);
+  if (!bnk) return {};
   BIO *_bio = BIO_new(BIO_s_mem());
   ASN1_bn_print(_bio, "Modulus:", bnk, nullptr, 0);
   BN_free(bnk);
@@ -147,7 +148,12 @@ bool TlsContext::generateCertificate(const std::vector<std::pair<std::string, st
   X509_set_issuer_name(_c, name);
   X509_EXTENSION *ext = nullptr;
   if (!san.empty()) {
-    ext = X509V3_EXT_conf(NULL, NULL, SN_subject_alt_name, san.c_str());
+    ext = X509V3_EXT_nconf(NULL, NULL, SN_subject_alt_name, san.c_str());
+    if (!ext) {
+      X509_free(_c);
+      lsError() << "build san ext";
+      return false;
+    }
     if (!X509_add_ext(_c, ext, -1)) {
       X509_EXTENSION_free(ext);
       X509_free(_c);
@@ -157,9 +163,15 @@ bool TlsContext::generateCertificate(const std::vector<std::pair<std::string, st
     X509_EXTENSION_free(ext);
   }
   if (!ca.empty()) {
-    ext = X509V3_EXT_conf(NULL, NULL, SN_basic_constraints, ca.c_str());
+    ext = X509V3_EXT_nconf(NULL, NULL, SN_basic_constraints, ca.c_str());
+    if (!ext) {
+      X509_free(_c);
+      lsError() << "build ca ext";
+      return false;
+    }
     if (!X509_add_ext(_c, ext, -1)) {
       X509_EXTENSION_free(ext);
+      X509_free(_c);
       lsError() << "add ca ext";
       return false;
     }
@@ -191,14 +203,15 @@ DataArray TlsContext::generateRequest(const std::vector<std::pair<std::string, s
   for (const std::pair<std::string, std::string> &_e : subject) { X509_NAME_add_entry_by_txt(name, _e.first.c_str(), MBSTRING_ASC, reinterpret_cast<const unsigned char *>(_e.second.c_str()), -1, -1, 0); }
   STACK_OF(X509_EXTENSION) *extlist = sk_X509_EXTENSION_new_null();
   if (!extlist) {
-    sk_X509_EXTENSION_free(extlist);
+    X509_REQ_free(_r);
     return {};
   }
   X509_EXTENSION *ext_ca = nullptr;
   if (!extensions.empty()) {
-    ext_ca = X509V3_EXT_conf(NULL, NULL, SN_basic_constraints, extensions.c_str());
+    ext_ca = X509V3_EXT_nconf(NULL, NULL, SN_basic_constraints, extensions.c_str());
     if (!ext_ca) {
       sk_X509_EXTENSION_free(extlist);
+      X509_REQ_free(_r);
       lsError() << "add ca ext";
       return {};
     };
@@ -206,10 +219,11 @@ DataArray TlsContext::generateRequest(const std::vector<std::pair<std::string, s
   }
   X509_EXTENSION *ext_san = nullptr;
   if (!san.empty()) {
-    ext_san = X509V3_EXT_conf(NULL, NULL, SN_subject_alt_name, san.c_str());
+    ext_san = X509V3_EXT_nconf(NULL, NULL, SN_subject_alt_name, san.c_str());
     if (!ext_san) {
       if (ext_ca) X509_EXTENSION_free(ext_ca);
       sk_X509_EXTENSION_free(extlist);
+      X509_REQ_free(_r);
       lsError() << "add san ext";
       return {};
     };
@@ -219,6 +233,7 @@ DataArray TlsContext::generateRequest(const std::vector<std::pair<std::string, s
     if (ext_ca) X509_EXTENSION_free(ext_ca);
     if (ext_san) X509_EXTENSION_free(ext_san);
     sk_X509_EXTENSION_free(extlist);
+    X509_REQ_free(_r);
     return {};
   }
   sk_X509_EXTENSION_free(extlist);
@@ -226,7 +241,6 @@ DataArray TlsContext::generateRequest(const std::vector<std::pair<std::string, s
   if (ext_ca) X509_EXTENSION_free(ext_ca);
   if (!X509_REQ_sign(_r, _k, EVP_sha256())) {
     lsError() << "signing certificate";
-    EVP_PKEY_free(_k);
     X509_REQ_free(_r);
     return {};
   }
@@ -260,11 +274,14 @@ DataArray TlsContext::signRequest(DataArray &req, int days) {
   X509_REQ *_req = PEM_read_bio_X509_REQ(_bio, nullptr, nullptr, nullptr);
   BIO_free(_bio);
   if (!_req) {
+    X509_free(_rc);
     lsError() << "read request";
     return {};
   }
   EVP_PKEY *_rk = X509_REQ_get_pubkey(_req);
   if (!_rk) {
+    X509_REQ_free(_req);
+    X509_free(_rc);
     lsError() << "read req key";
     return {};
   }
@@ -278,20 +295,20 @@ DataArray TlsContext::signRequest(DataArray &req, int days) {
   X509_set_subject_name(_rc, X509_REQ_get_subject_name(_req));
   STACK_OF(X509_EXTENSION) *extlist = X509_REQ_get_extensions(_req);
   if (!extlist) {
-    sk_X509_EXTENSION_free(extlist);
+    X509_REQ_free(_req);
+    X509_free(_rc);
     return {};
   }
   int _s = sk_X509_EXTENSION_num(extlist);
   for (int i = 0; i < _s; i++) {
-    X509_EXTENSION *_e = sk_X509_EXTENSION_value(extlist, i);
-    if (!X509_add_ext(_rc, _e, -1)) {
-      X509_EXTENSION_free(_e);
-      sk_X509_EXTENSION_free(extlist);
+    if (!X509_add_ext(_rc, sk_X509_EXTENSION_value(extlist, i), -1)) {
+      sk_X509_EXTENSION_pop_free(extlist, X509_EXTENSION_free);
+      X509_REQ_free(_req);
+      X509_free(_rc);
       return {};
     }
-    X509_EXTENSION_free(_e);
   }
-  sk_X509_EXTENSION_free(extlist);
+  sk_X509_EXTENSION_pop_free(extlist, X509_EXTENSION_free);
   X509_REQ_free(_req);
   if (!X509_sign(_rc, _k, EVP_sha256())) {
     lsError() << "signing certificate";
@@ -315,7 +332,7 @@ std::string TlsContext::commonName() const {
     return {};
   }
   char name[256];
-  X509_NAME_get_text_by_NID(X509_get_subject_name(_c), NID_commonName, name, sizeof(name));
+  if (X509_NAME_get_text_by_NID(X509_get_subject_name(_c), NID_commonName, name, sizeof(name)) < 0) return {};
   return name;
 }
 
@@ -399,7 +416,7 @@ int TlsContext::verify(int ok, X509_STORE_CTX *ctx) {
   SSL *ssl = static_cast<SSL *>(X509_STORE_CTX_get_ex_data(ctx, SSL_get_ex_data_X509_STORE_CTX_idx()));
   SSL_CTX *ssl_ctx = SSL_get_SSL_CTX(ssl);
   std::vector<Private *>::iterator it = lower_bound(Private::verify.begin(), Private::verify.end(), ssl_ctx, [](const Private *p, const SSL_CTX *ctx) { return p->ctx < ctx; });
-  if (it != Private::verify.end()) {
+  if (it != Private::verify.end() && (*it)->ctx == ssl_ctx) {
     if (ok) return ok;
     int _e = X509_STORE_CTX_get_error(ctx);
     if ((*it)->ignoreErrors & 0x01) {  // ignore time validity errors
@@ -434,6 +451,10 @@ std::string TlsContext::infoRequest(const DataArray &request) {
   BIO *_bio = BIO_new_mem_buf(request.data(), request.size());
   X509_REQ *_r = PEM_read_bio_X509_REQ(_bio, NULL, NULL, NULL);
   BIO_free(_bio);
+  if (!_r) {
+    lsError() << "read request";
+    return {};
+  }
   _bio = BIO_new(BIO_s_mem());
   X509_REQ_print(_bio, _r);
   X509_REQ_free(_r);
@@ -492,9 +513,17 @@ bool TlsContext::verifyCertificate() const {
   }
   BIGNUM *bnk = nullptr;
   EVP_PKEY_get_bn_param(_k, OSSL_PKEY_PARAM_RSA_N, &bnk);
+  if (!bnk) {
+    EVP_PKEY_free(_ck);
+    return false;
+  }
   BIGNUM *bnc = nullptr;
   EVP_PKEY_get_bn_param(_ck, OSSL_PKEY_PARAM_RSA_N, &bnc);
   EVP_PKEY_free(_ck);
+  if (!bnc) {
+    BN_free(bnk);
+    return false;
+  }
   bool result = BN_cmp(bnk, bnc) == 0;
   BN_free(bnk);
   BN_free(bnc);

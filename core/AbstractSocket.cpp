@@ -400,7 +400,7 @@ std::string AbstractSocket::address() const {
     return _ip;
   }
   char _ip[INET6_ADDRSTRLEN];
-  inet_ntop(AF_INET, &reinterpret_cast<const sockaddr_in6 *>(&private_.la)->sin6_addr, _ip, sizeof _ip);
+  inet_ntop(AF_INET6, &reinterpret_cast<const sockaddr_in6 *>(&private_.la)->sin6_addr, _ip, sizeof _ip);
   return _ip;
 }
 
@@ -416,7 +416,7 @@ std::string AbstractSocket::peerAddress() const {
     return _ip;
   }
   char _ip[INET6_ADDRSTRLEN];
-  inet_ntop(AF_INET, &reinterpret_cast<const sockaddr_in6 *>(&private_.pa)->sin6_addr, _ip, sizeof _ip);
+  inet_ntop(AF_INET6, &reinterpret_cast<const sockaddr_in6 *>(&private_.pa)->sin6_addr, _ip, sizeof _ip);
   return _ip;
 }
 
