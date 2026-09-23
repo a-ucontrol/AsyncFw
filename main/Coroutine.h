@@ -18,8 +18,6 @@ namespace AsyncFw {
 /** @struct CoroutineTask Coroutine.h <AsyncFw/Coroutine> @brief A class representing a coroutine task that can be suspended and resumed.
 @details It manages the C++20 coroutine state, holds the underlying handle, and orchestrates the lifecycle via its internal promise_type. */
 struct CoroutineTask {
-  CoroutineTask();
-  virtual ~CoroutineTask();
   /** @struct promise_type Coroutine.h <AsyncFw/Coroutine> @brief The promise type object required by the C++20 coroutine standard.
   @details Inherits from AnyData to allow coroutine state to pass and hold dynamic data types between suspension points and resumption steps. */
   struct promise_type : public AnyData {
@@ -40,12 +38,14 @@ struct CoroutineTask {
     struct Private;
     Private &private_;
   };
-  /** @brief Return true if task finished. */
-  bool finished();
+  ~CoroutineTask();
   /** @brief Runs nested Thread::exec() and wait for task finished. */
   void wait();
 
 private:
+  CoroutineTask(promise_type *);
+  CoroutineTask(const CoroutineTask &) = delete;
+  CoroutineTask &operator=(const CoroutineTask &) = delete;
   promise_type *promise;
 };
 

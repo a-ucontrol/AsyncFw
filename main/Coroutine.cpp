@@ -19,7 +19,10 @@ struct CoroutineTask::promise_type::Private {
   bool finished = false;
 };
 
-CoroutineTask::CoroutineTask() { lsTrace(); }
+CoroutineTask::CoroutineTask(promise_type *p) : promise(p) {
+  p->private_.task = this;
+  lsTrace();
+}
 
 CoroutineTask::~CoroutineTask() {
   std::coroutine_handle<promise_type> h = std::coroutine_handle<promise_type>::from_promise(*promise);
@@ -33,8 +36,6 @@ void CoroutineTask::wait() {
   promise->private_.waiter.wait();
 }
 
-bool CoroutineTask::finished() { return promise->private_.finished; }
-
 CoroutineTask::promise_type::promise_type() : private_(*new Private) {
   private_.thread = AbstractThread::current();
   lsTrace();
@@ -45,12 +46,7 @@ CoroutineTask::promise_type::~promise_type() {
   lsTrace();
 }
 
-CoroutineTask CoroutineTask::promise_type::get_return_object() {
-  CoroutineTask t;
-  t.promise = this;
-  private_.task = &t;
-  return t;
-}
+CoroutineTask CoroutineTask::promise_type::get_return_object() { return CoroutineTask(this); }
 
 std::suspend_never CoroutineTask::promise_type::initial_suspend() noexcept { return {}; }
 
