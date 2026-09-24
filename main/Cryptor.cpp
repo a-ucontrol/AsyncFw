@@ -78,6 +78,10 @@ bool Cryptor::encrypt(const DataArrayView &key, const DataArrayView &text, DataA
 }
 
 bool Cryptor::decrypt(const DataArrayView &key, const DataArrayView &ctext, DataArray &text) {
+  if (ctext.size() < 16) {
+    lsDebug() << "ciphertext too short";
+    return false;
+  }
   std::size_t i = 16;
   try {
     decrypt(key, DataArrayView(ctext.data() + ctext.size() - i, i), DataArrayView(ctext.data(), ctext.size() - i), text);
