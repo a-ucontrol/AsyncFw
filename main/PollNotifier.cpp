@@ -23,10 +23,11 @@ PollNotifier::~PollNotifier() {
 }
 
 bool PollNotifier::setDescriptor(int fd, AbstractThread::PollEvents events) {
-  bool _r = thread_->appendPollTask(fd, events, [this](AbstractThread::PollEvents events) {
+  if (fd_ != -1) thread_->removePollDescriptor(fd_);
+  bool _r = thread_->appendPollTask(fd, events, [this, fd](AbstractThread::PollEvents events) {
     if (events & ~(AbstractThread::PollIn | AbstractThread::PollOut)) {
-      lsError() << "descriptor:" << fd_ << ", event:" << events;
-      thread_->removePollDescriptor(fd_);
+      lsError() << "descriptor:" << fd << ", event:" << events;
+      thread_->removePollDescriptor(fd);
       fail_ = true;
       return;
     }
