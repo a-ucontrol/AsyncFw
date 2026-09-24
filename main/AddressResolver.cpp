@@ -28,13 +28,13 @@ struct AddressResolver::Private {
     options.sock_state_cb_data = this;
     options.sock_state_cb = [](void *data, ares_socket_t s, int read, int write) {
       lsTrace("change state fd {} read:{} write:{}", s, read, write);
-      AbstractThread::PollEvents e = (read) ? AbstractThread::PollIn : AbstractThread::PollNo | (write) ? AbstractThread::PollOut : AbstractThread::PollNo;
+      AbstractThread::PollEvents e = ((read) ? AbstractThread::PollIn : AbstractThread::PollNo) | ((write) ? AbstractThread::PollOut : AbstractThread::PollNo);
       if (static_cast<Private *>(data)->events) {
         if (!e) {
           static_cast<Private *>(data)->thread->removePollDescriptor(s);
           const ares_fd_events_t _ae = {s, ARES_FD_EVENT_NONE};
           ares_process_fds(static_cast<Private *>(data)->channel, &_ae, 1, 0);
-        } else if (!(static_cast<Private *>(data)->events & e)) {
+        } else if (static_cast<uint8_t>(static_cast<Private *>(data)->events) != static_cast<uint8_t>(e)) {
           static_cast<Private *>(data)->events = e;
           static_cast<Private *>(data)->thread->modifyPollDescriptor(s, e);
         }
@@ -54,6 +54,10 @@ struct AddressResolver::Private {
   }
 
   ~Private() {
+    if (tid >= 0) {
+      thread->removeTimer(tid);
+      tid = -1;
+    }
     ares_destroy(channel);
     lsTrace();
   }

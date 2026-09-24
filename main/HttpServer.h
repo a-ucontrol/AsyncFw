@@ -192,7 +192,7 @@ public:
     /** @brief Returns the absolute path requested by the client (e.g., "/index.html"). */
     std::string path() const;
     /** @brief Extracts the value of a specific HTTP header. @param name The target header key (case-insensitive depending on parser rules). @return The associated header value or an empty string if missing. */
-    std::string heaaderItemValue(const std::string &) const;
+    std::string headerItemValue(const std::string &) const;
     /** @brief Extracts a specific key's value from the URL query string. @param name Query parameter name. @return Parameter value or an empty string. */
     std::string queryItemValue(const std::string &) const;
 

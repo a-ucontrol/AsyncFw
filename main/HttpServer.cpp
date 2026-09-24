@@ -502,7 +502,7 @@ void HttpServer::sendToWebSockets(const std::string &data) {  //Дичь, для
 }
 
 bool HttpServer::listen(uint16_t port) {
-  warning_if(!private_.tlsContext.empty()) << private_.tlsContext.infoCertificate();
+  trace_if(!private_.tlsContext.empty()) << private_.tlsContext.infoCertificate();
   bool b = private_.listener.listen("0.0.0.0", port);
   if (b) {
     private_.listenerGuard = private_.listener.incoming.connect([this](int descriptor, const std::string &address, bool *accept) {
@@ -648,7 +648,7 @@ bool HttpServer::Response::send() {
         std::string ext = std::filesystem::path(fn).extension().string();
         if (!ext.empty()) ext = std::filesystem::path(fn).extension().string().substr(1);
         std::map<std::string, std::string>::iterator it = Private::mimeTypes.find(ext);
-        mimeType_ = (it != Private::mimeTypes.end()) ? it->second.c_str() : "application/octet-stream";
+        mimeType_ = (it != Private::mimeTypes.end()) ? it->second : "application/octet-stream";
       }
       contentLength = std::filesystem::file_size(fn);
       trace() << LogStream::Color::Green << header();
@@ -705,7 +705,7 @@ std::string HttpServer::Request::methodName() const { return private_.request.me
 
 std::string HttpServer::Request::path() const { return private_.uri->path; }
 
-std::string HttpServer::Request::heaaderItemValue(const std::string &name) const {
+std::string HttpServer::Request::headerItemValue(const std::string &name) const {
   for (const httpparser::Request::HeaderItem &item : private_.request.headers) {
     if (name.size() == item.name.size()) {
       for (size_t i = 0; i != name.size(); ++i) {

@@ -1054,7 +1054,7 @@ bool AbstractThread::modifyPollDescriptor(int fd, PollEvents events) {
 #ifdef POLL_WAIT
   LockGuard lock(private_.mutex);
   std::vector<Private::PollTask *>::iterator it = std::lower_bound(private_.poll_tasks.begin(), private_.poll_tasks.end(), fd, Private::Compare());
-  if (it != private_.poll_tasks.end() && (*it)->fd != fd) {
+  if (it == private_.poll_tasks.end() || (*it)->fd != fd) {
     console_msg("AbstractThread " + LOG_THREAD_NAME, "modify poll descriptor: " + std::to_string(fd) + " not found");
     return false;
   }
