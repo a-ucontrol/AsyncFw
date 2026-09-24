@@ -5,7 +5,7 @@ var classAsyncFw_1_1HttpServer_1_1Request =
     [ "method", "classAsyncFw_1_1HttpServer_1_1Request.html#a4f2b12b853417562150d8af0a5622ef0", null ],
     [ "methodName", "classAsyncFw_1_1HttpServer_1_1Request.html#a86b3acbb445c3fde881a1fe31441a9c8", null ],
     [ "path", "classAsyncFw_1_1HttpServer_1_1Request.html#afa488a05d879b6cbdca0853401352d19", null ],
-    [ "heaaderItemValue", "classAsyncFw_1_1HttpServer_1_1Request.html#a52389751ddf9659da47c8a98ec71cf03", null ],
+    [ "headerItemValue", "classAsyncFw_1_1HttpServer_1_1Request.html#aa7be1f1b63b631ba9cbf133b4f2ddc9c", null ],
     [ "queryItemValue", "classAsyncFw_1_1HttpServer_1_1Request.html#a425bab4718cc7b8958b3db159335f471", null ],
     [ "content", "classAsyncFw_1_1HttpServer_1_1Request.html#ae9ef372f9c20c4500ac2c4a44ac3d5ec", null ],
     [ "peerAddress", "classAsyncFw_1_1HttpServer_1_1Request.html#ae6dd1000936e0237652c11a2845b3f7d", null ],

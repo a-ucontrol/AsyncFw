@@ -1,8 +1,8 @@
 var searchData=
 [
   ['hastls_0',['hasTls',['../classAsyncFw_1_1HttpServer.html#a1e3e419d07c51b25f0f4910db1e21b1f',1,'AsyncFw::HttpServer']]],
-  ['heaaderitemvalue_1',['heaaderItemValue',['../classAsyncFw_1_1HttpServer_1_1Request.html#a52389751ddf9659da47c8a98ec71cf03',1,'AsyncFw::HttpServer::Request']]],
-  ['header_2',['header',['../classAsyncFw_1_1HttpServer_1_1Response.html#a5dd46db3eac7d1a07948d072e71c11f2',1,'AsyncFw::HttpServer::Response']]],
+  ['header_1',['header',['../classAsyncFw_1_1HttpServer_1_1Response.html#a5dd46db3eac7d1a07948d072e71c11f2',1,'AsyncFw::HttpServer::Response']]],
+  ['headeritemvalue_2',['headerItemValue',['../classAsyncFw_1_1HttpServer_1_1Request.html#aa7be1f1b63b631ba9cbf133b4f2ddc9c',1,'AsyncFw::HttpServer::Request']]],
   ['helpers_3',['Coroutine API Helpers',['../group__coroutine__api.html',1,'']]],
   ['host_4',['Host',['../structAsyncFw_1_1MulticastDns_1_1Host.html',1,'AsyncFw::MulticastDns']]],
   ['hostadded_5',['hostAdded',['../classAsyncFw_1_1MulticastDns.html#a973574ac5d99e8b3ef2455ded3e90407',1,'AsyncFw::MulticastDns']]],

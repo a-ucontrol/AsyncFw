@@ -9,7 +9,7 @@ var searchData=
   ['finality_6',['finality',['../classAsyncFw_1_1AbstractLog.html#a8dd93228e8424dccdd74adbb6422bd78',1,'AsyncFw::AbstractLog::finality()'],['../classAsyncFw_1_1Log.html#a27bf2284363cc365c8af12e923b95db5',1,'AsyncFw::Log::finality()']]],
   ['findminimalsocketsthread_7',['findMinimalSocketsThread',['../classAsyncFw_1_1DataArrayAbstractTcp.html#a1d9557d91e39b12da701e6d371d71031',1,'AsyncFw::DataArrayAbstractTcp']]],
   ['finished_8',['Finished',['../classAsyncFw_1_1SystemProcess.html#afad39352d4d8376d1304bc340a0cf32fafbad76ce6453263110ca967474dfa1a7',1,'AsyncFw::SystemProcess']]],
-  ['finished_9',['finished',['../classAsyncFw_1_1Thread.html#ad4c31cb77c83c080affcd0cda66debe4',1,'AsyncFw::Thread::finished'],['../structAsyncFw_1_1CoroutineTask.html#a2a9141689d60da24339465aa0d225a27',1,'AsyncFw::CoroutineTask::finished()']]],
+  ['finished_9',['finished',['../classAsyncFw_1_1Thread.html#ad4c31cb77c83c080affcd0cda66debe4',1,'AsyncFw::Thread']]],
   ['finishedevent_10',['finishedEvent',['../classAsyncFw_1_1AbstractThread.html#ad43b7b79e541bd1d6cce20f0231cc64d',1,'AsyncFw::AbstractThread::finishedEvent()'],['../classAsyncFw_1_1Thread.html#ae9fc9cf8baddcc8dfa0e14784918c4a5',1,'AsyncFw::Thread::finishedEvent()']]],
   ['flush_11',['flush',['../classAsyncFw_1_1LogStream.html#a1c31d56a7729253b17bb8cff44d06dda',1,'AsyncFw::LogStream::flush()'],['../classAsyncFw_1_1File.html#af87fa862de707575b8badd044a5af80e',1,'AsyncFw::File::flush()'],['../classAsyncFw_1_1AbstractLog.html#a872f1ea526aea7e961ce1eba43a15303',1,'AsyncFw::AbstractLog::flush()']]],
   ['fstream_12',['fstream',['../classAsyncFw_1_1File.html#aa6ae13a7d7a317da534536f29d4bd803',1,'AsyncFw::File']]],
