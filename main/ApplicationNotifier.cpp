@@ -12,13 +12,9 @@ using namespace AsyncFw;
 
 Instance<ApplicationNotifier> ApplicationNotifier::instance_ {"ApplicationNotifier"};
 
-ApplicationNotifier::ApplicationNotifier() {
-  if (!instance_.value) instance_.value = this;
-  else { logEmergency("Only one ApplicationNotifier can exist"); }
-  lsTrace();
-}
+ApplicationNotifier::ApplicationNotifier() { lsTrace(); }
 
 AsyncFw::ApplicationNotifier::~ApplicationNotifier() {
-  instance_.value = nullptr;
+  if (instance_.value == this) instance_.value = nullptr;
   lsTrace();
 }
