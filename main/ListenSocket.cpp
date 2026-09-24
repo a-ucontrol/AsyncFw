@@ -29,8 +29,8 @@ using namespace AsyncFw;
 
 void ListenSocket::incomingEvent() {
   sockaddr_storage _a;
-  socklen_t _l = sizeof _a;
   for (;;) {
+    socklen_t _l = sizeof _a;
     int _cd = accept(fd_, (struct sockaddr *)&_a, &_l);
     trace() << _cd;
     if (_cd < 0) {

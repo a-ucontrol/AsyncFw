@@ -18,6 +18,8 @@ namespace AsyncFw {
 @brief Example: @snippet ListenSocket/main.cpp snippet */
 class ListenSocket : private AbstractSocket {
 public:
+  ListenSocket(int family, int type, int protocol) : AbstractSocket(family, type, protocol) {}
+  using AbstractSocket::AbstractSocket;
   using AbstractSocket::address;
   using AbstractSocket::close;
   using AbstractSocket::destroy;

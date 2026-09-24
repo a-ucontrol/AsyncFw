@@ -6,28 +6,30 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 */
 
 //! [snippet]
+#include <netinet/in.h>
 #include <AsyncFw/DataArray>
 #include <AsyncFw/AbstractTlsSocket>
 #include <AsyncFw/ListenSocket>
 #include <AsyncFw/MainThread>
 #include <AsyncFw/LogStream>
 
-class TcpSocket : public AsyncFw::AbstractTlsSocket {
+class Ipv6Socket : public AsyncFw::AbstractSocket {
 public:
-  static TcpSocket *create() { return new TcpSocket; }
+  static Ipv6Socket *create() { return new Ipv6Socket(); }
+  Ipv6Socket() : AsyncFw::AbstractSocket(AF_INET6, SOCK_STREAM, IPPROTO_TCP) {}
   void stateEvent() {
     stateChanged(state_);
     logDebug() << "State event:" << static_cast<int>(state_);
   }
   void readEvent() { received(read()); }
-  AsyncFw::FunctionConnector<const AsyncFw::DataArray &>::Protected<TcpSocket> received;
-  AsyncFw::FunctionConnector<AsyncFw::AbstractSocket::State>::Protected<TcpSocket> stateChanged;
+  AsyncFw::FunctionConnector<const AsyncFw::DataArray &>::Protected<Ipv6Socket> received;
+  AsyncFw::FunctionConnector<AsyncFw::AbstractSocket::State>::Protected<Ipv6Socket> stateChanged;
 };
 
 int main(int argc, char *argv[]) {
-  AsyncFw::ListenSocket ls;
+  AsyncFw::ListenSocket ls(AF_INET6, SOCK_STREAM, IPPROTO_TCP);
   ls.incoming.connect([](int fd, const std::string &address, bool *accept) {
-    TcpSocket *socket = TcpSocket::create();
+    Ipv6Socket *socket = Ipv6Socket::create();
     socket->setDescriptor(fd);
     socket->received.connect([socket](const AsyncFw::DataArray &data) {
       logNotice() << "received:" << data;
@@ -38,17 +40,20 @@ int main(int argc, char *argv[]) {
     *accept = true;
   });
 
-  ls.listen("0.0.0.0", 18080);
+  if (!ls.listen("::1", 18080)) {
+    logError() << "IPv6 listen failed";
+    return -1;
+  }
 
   if (argc == 2 && std::string(argv[1]) == "--tst") {
-    TcpSocket *_socket = TcpSocket::create();
+    Ipv6Socket *_socket = Ipv6Socket::create();
     _socket->stateChanged.connect([_socket](const AsyncFw::AbstractSocket::State state) {
       if (state == AsyncFw::AbstractSocket::State::Active) {
         logDebug() << "Send request";
         _socket->write("q");
       }
     });
-    _socket->connect("127.0.0.1", 18080);
+    _socket->connect("::1", 18080);
   }
 
   logNotice() << "Start Application";

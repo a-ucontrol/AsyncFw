@@ -120,10 +120,33 @@ bool AbstractSocket::listen(const std::string &address, uint16_t port) {
 #if defined(SOCKET_REUSEPORT) && !defined(_WIN32)
   if (setsockopt(_fd, SOL_SOCKET, SO_REUSEPORT, &_val, sizeof _val) < 0) lsError("set SO_REUSEPORT");
 #endif
-  reinterpret_cast<sockaddr_in *>(&private_.la)->sin_port = htons(port);
-  reinterpret_cast<sockaddr_in *>(&private_.la)->sin_addr.s_addr = inet_addr(address.c_str());
 
-  if (::bind(_fd, reinterpret_cast<struct sockaddr *>(&private_.la), sizeof(private_.la)) || ::listen(_fd, SOCKET_CONNECTION_QUEUED)) {
+  socklen_t _sa_len;
+  if (private_.la.ss_family == AF_INET) {
+    sockaddr_in *_sa = reinterpret_cast<sockaddr_in *>(&private_.la);
+    _sa->sin_port = htons(port);
+    if (inet_pton(AF_INET, address.c_str(), &_sa->sin_addr) != 1) {
+      lsError() << "invalid ipv4 address" << address;
+      close_fd(_fd);
+      return false;
+    }
+    _sa_len = sizeof(sockaddr_in);
+  } else if (private_.la.ss_family == AF_INET6) {
+    sockaddr_in6 *_sa = reinterpret_cast<sockaddr_in6 *>(&private_.la);
+    _sa->sin6_port = htons(port);
+    if (inet_pton(AF_INET6, address.c_str(), &_sa->sin6_addr) != 1) {
+      lsError() << "invalid ipv6 address" << address;
+      close_fd(_fd);
+      return false;
+    }
+    _sa_len = sizeof(sockaddr_in6);
+  } else {
+    lsError() << "unsupported address family" << private_.la.ss_family;
+    close_fd(_fd);
+    return false;
+  }
+
+  if (::bind(_fd, reinterpret_cast<struct sockaddr *>(&private_.la), _sa_len) || ::listen(_fd, SOCKET_CONNECTION_QUEUED)) {
     close_fd(_fd);
     lsError() << "listen error:" << port;
     return false;
@@ -225,7 +248,6 @@ bool AbstractSocket::connect(const std::string &address, uint16_t port) {
   u_long _nb = 1;
   ioctlsocket(_fd, FIONBIO, &_nb);
 #endif
-  socklen_t _l;
   /*
   int _val = 1;
   if (setsockopt(_fd, SOL_TCP, TCP_NODELAY, &_val, sizeof _val) < 0) lsError("set TCP_NODELAY");
@@ -239,10 +261,32 @@ bool AbstractSocket::connect(const std::string &address, uint16_t port) {
   if (getsockopt(_fd, SOL_SOCKET, SO_RCVBUF, &_val, &_l) < 0) lsError("SO_RCVBUF");
   else { lsDebug() << "SO_RCVBUF" << LogStream::Color::Red << _val; }
 */
-  reinterpret_cast<sockaddr_in *>(&private_.pa)->sin_port = htons(port);
-  reinterpret_cast<sockaddr_in *>(&private_.pa)->sin_addr.s_addr = inet_addr(address.c_str());
+  socklen_t _sa_len;
+  if (private_.pa.ss_family == AF_INET) {
+    sockaddr_in *_sa = reinterpret_cast<sockaddr_in *>(&private_.pa);
+    _sa->sin_port = htons(port);
+    if (inet_pton(AF_INET, address.c_str(), &_sa->sin_addr) != 1) {
+      lsError() << "invalid ipv4 address" << address;
+      close_fd(_fd);
+      return false;
+    }
+    _sa_len = sizeof(sockaddr_in);
+  } else if (private_.pa.ss_family == AF_INET6) {
+    sockaddr_in6 *_sa = reinterpret_cast<sockaddr_in6 *>(&private_.pa);
+    _sa->sin6_port = htons(port);
+    if (inet_pton(AF_INET6, address.c_str(), &_sa->sin6_addr) != 1) {
+      lsError() << "invalid ipv6 address" << address;
+      close_fd(_fd);
+      return false;
+    }
+    _sa_len = sizeof(sockaddr_in6);
+  } else {
+    lsError() << "unsupported address family" << private_.pa.ss_family;
+    close_fd(_fd);
+    return false;
+  }
 
-  if (::connect(_fd, reinterpret_cast<struct sockaddr *>(&private_.pa), sizeof(private_.pa)) < 0) {
+  if (::connect(_fd, reinterpret_cast<struct sockaddr *>(&private_.pa), _sa_len) < 0) {
     if (errno != EINPROGRESS) {
       lsError() << "connect error" << address + ':' + std::to_string(port) << _fd << errno;
       close_fd(_fd);
@@ -250,8 +294,8 @@ bool AbstractSocket::connect(const std::string &address, uint16_t port) {
     }
   }
 
-  _l = sizeof(private_.la);
-  if (getsockname(_fd, reinterpret_cast<struct sockaddr *>(&private_.la), &_l) < 0) lsError() << "error socket address";
+  _sa_len = sizeof(private_.la);
+  if (getsockname(_fd, reinterpret_cast<struct sockaddr *>(&private_.la), &_sa_len) < 0) lsError() << "error socket address";
 
   lsTrace() << _fd << LogStream::Color::DarkGreen << "local:" << this->address() + ':' + std::to_string(this->port()) << "peer:" << peerAddress() + ':' + std::to_string(peerPort());
 
