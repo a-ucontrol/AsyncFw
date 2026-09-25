@@ -526,7 +526,7 @@ void AbstractThread::exec() {
   int _nested;
   {  //lock scope
     LockGuard lock(private_.mutex);
-    warning_if(private_.process_tasks_.size() || private_.process_poll_tasks_.size() || private_.process_timer_tasks_.size()) << LogStream::Color::Red << "not empty" << private_.process_tasks_.size() << private_.process_poll_tasks_.size() << private_.process_timer_tasks_.size();
+    trace_if(private_.process_tasks_.size() || private_.process_poll_tasks_.size() || private_.process_timer_tasks_.size()) << LogStream::Color::Red << "not empty" << private_.process_tasks_.size() << private_.process_poll_tasks_.size() << private_.process_timer_tasks_.size();
     if (private_.state >= Private::Running && private_.state < Private::Finished) {  //nested exec
       _nested = ++private_.nested;
       trace() << LOG_THREAD_NAME << LogStream::Color::Red << "nested" << _nested << LogStream::Color::Green << private_.process_tasks_.size() << private_.process_poll_tasks_.size() << private_.process_timer_tasks_.size();
