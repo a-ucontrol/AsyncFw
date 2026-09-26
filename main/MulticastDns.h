@@ -21,11 +21,12 @@ public:
   struct Private;
   /** @brief Represents a discovered network node or service instance. */
   struct Host {
-    std::string name;    ///< Host or service name (e.g., "printer").
-    std::string ipv4;    ///< Primary IPv4 address string.
-    std::string llipv4;  ///< Link-Local IPv4 address (169.254.x.x).
-    std::string misc;    ///< Metadata string from the mDNS TXT record.
-    uint16_t port = 0;   ///< Target network port of the active service.
+    std::string name;                              ///< Host or service name (e.g., "printer").
+    std::string ipv4;                              ///< Primary IPv4 address string.
+    std::string llipv4;                            ///< Link-Local IPv4 address (169.254.x.x).
+    std::string misc;                              ///< Metadata string from the mDNS TXT record.
+    uint16_t port = 0;                             ///< Target network port of the active service.
+    std::chrono::steady_clock::time_point expire;  ///< Host is dropped when now() >= expire.
     bool operator==(const Host &h) const { return name == h.name && ipv4 == h.ipv4 && llipv4 == h.llipv4 && misc == h.misc && port == h.port; }
     bool operator!=(const Host &h) const { return !operator==(h); }
   };
@@ -64,9 +65,8 @@ public:
   /** @brief Checks if the mDNS local responder is running. */
   bool serviceRunning() const;
 
-  /** @brief Starts the background cyclic network polling task for host discovery. @param mode Querier mode. @param seconds Seconds between cyclic search queries. */
-  /* @warning If using Unicast5353 mode while multiple mDNS processes, services, or daemon instances are active on the SAME local device, the OS will load-balance unicast traffic on port 5353 across their sockets. This breaks unicast response delivery, causing broken host discovery and missing ports. Use Multicast or Unicast mode if other mDNS services are running on the machine. */
-  bool startQuerier(QuerierMode, int = 60);
+  /** @brief Starts the background cyclic network polling task for host discovery. @param mode Querier mode. @param queryTimeout Seconds between cyclic search queries. @param expireTimeout Seconds a host stays in the list without confirmation. 0 uses queryTimeout * 2. */
+  bool startQuerier(QuerierMode, int = 60, int = 0);
   /**  @brief Starts the background cyclic network polling task for host discovery, Querier mode is Multicast. @param seconds Seconds between cyclic search queries. */
   bool startQuerier(int = 60);
   /** @brief Terminates the active host search routine. */

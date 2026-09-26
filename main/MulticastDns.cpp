@@ -47,6 +47,7 @@ struct MulticastDns::Private {
   std::vector<Host> hosts;
   int qtid;
   int queryTimeout;
+  int expireTimeout;
 };
 
 struct Compare {
@@ -162,7 +163,13 @@ const std::vector<MulticastDns::Host> MulticastDns::hosts() const {
   return private_.hosts;
 }
 
-int MulticastDns::sendQuery(int seconds) { return sendQuery({{"PTR", private_.serviceType}}, seconds); }
+int MulticastDns::sendQuery(int seconds) {
+  if (seconds) {
+    std::lock_guard<std::mutex> lock(private_.mutex);
+    for (auto &h : private_.hosts) h.expire = std::chrono::steady_clock::time_point {};
+  }
+  return sendQuery({{"PTR", private_.serviceType}}, seconds);
+}
 
 void MulticastDns::setServiceType(const std::string &serviceType) {
   private_.serviceType = serviceType;
@@ -217,6 +224,10 @@ bool MulticastDns::startService(const std::string &hostname, const std::string &
   for (int i = 0; i != private_.sd.num_sockets; ++i) {
     int fd = private_.sd.sockets[i];
     private_.thread->appendPollTask(fd, AbstractThread::PollIn, [this, fd](AbstractThread::PollEvents e) {
+      if (!serviceRunning()) {
+        lsTrace() << "service not running";
+        return;
+      }
       trace() << "service poll task" << fd;
       if (!(e & AbstractThread::PollIn)) {
         private_.thread->removePollDescriptor(fd);
@@ -246,8 +257,8 @@ void MulticastDns::servicePollEvent(int fd) {
   for (int r;;) {
     r = mdns_service_event(fd, &private_.sd);
     if (r == -2) {
-      trace() << LogStream::Color::Blue << "redirect to querier" << fd;
-      querierPollEvent(fd);
+      trace() << LogStream::Color::Blue << "ignore own response" << fd;
+      if (::recv(fd, private_.sd.buffer, private_.sd.capacity, 0) <= 0) break;
       continue;
     }
     if (r <= 0) break;
@@ -264,7 +275,7 @@ void MulticastDns::stopService(bool goodbye) {
   private_.sd.num_sockets = 0;
 }
 
-bool MulticastDns::startQuerier(QuerierMode mode, int seconds) {
+bool MulticastDns::startQuerier(QuerierMode mode, int queryTimeout, int expireTimeout) {
   if (private_.qd.num_sockets > 0) return false;
   private_.qd.mode = mode;
   int r = start_mdns_querier(&private_.qd);
@@ -288,7 +299,8 @@ bool MulticastDns::startQuerier(QuerierMode mode, int seconds) {
     });
   }
   private_.qtid = private_.thread->appendTimerTask(0, [this]() { querierTimerEvent(); });
-  private_.queryTimeout = seconds;
+  private_.queryTimeout = queryTimeout;
+  private_.expireTimeout = (expireTimeout) ? expireTimeout : queryTimeout * 2;
   sendQuery();
   return true;
 }
@@ -304,16 +316,24 @@ void MulticastDns::querierPollEvent(int fd) {
     auto *_host = static_cast<Host *>(ctx.resultHost);
     for (auto host = private_.hosts.begin(); host != private_.hosts.end();) {
       if (_host->name == host->name) {
-        if (*_host == *host) return;
-        lsDebug() << (*host).name << (*host).ipv4 << (*host).llipv4 << (*host).port << (*host).misc << std::endl << _host->name << _host->ipv4 << _host->llipv4 << _host->port << _host->misc;
-        hostChanged(*_host);
-        std::lock_guard<std::mutex> lock(private_.mutex);
-        *host = *_host;
+        if (*_host == *host) {
+          std::lock_guard<std::mutex> lock(private_.mutex);
+          host->expire = std::chrono::steady_clock::now() + std::chrono::seconds(private_.expireTimeout);
+          return;
+        }
+        {  //lock scope
+          std::lock_guard<std::mutex> lock(private_.mutex);
+          lsDebug() << (*host).name << (*host).ipv4 << (*host).llipv4 << (*host).port << (*host).misc << std::endl << _host->name << _host->ipv4 << _host->llipv4 << _host->port << _host->misc;
+          *host = *_host;
+          host->expire = std::chrono::steady_clock::now() + std::chrono::seconds(private_.expireTimeout);
+        }
+        hostChanged(*host);
         return;
       }
       host++;
     }
     std::lock_guard<std::mutex> lock(private_.mutex);
+    _host->expire = std::chrono::steady_clock::now() + std::chrono::seconds(private_.expireTimeout);
     private_.hosts.push_back(*_host);
     hostAdded(*_host);
   }
@@ -338,8 +358,11 @@ void MulticastDns::stopQuerier() {
   private_.qd.num_sockets = 0;
 
   private_.hostList.clear();
-  update();
-  lsDebug() << "host list size:" << private_.hosts.size();
+  {  //lock scope
+    std::lock_guard<std::mutex> lock(private_.mutex);
+    for (auto &h : private_.hosts) hostRemoved(h);
+    private_.hosts.clear();
+  }
 }
 
 bool MulticastDns::querierRunning() const { return private_.qd.num_sockets > 0; }
@@ -347,12 +370,11 @@ bool MulticastDns::querierRunning() const { return private_.qd.num_sockets > 0; 
 void MulticastDns::update() {
   lsTrace() << LogStream::Color::Magenta << "update";
   std::lock_guard<std::mutex> lock(private_.mutex);
-  for (std::vector<MulticastDns::Host>::iterator host = private_.hosts.begin(); host != private_.hosts.end();) {
-    std::vector<MulticastDns::Host>::iterator it = std::lower_bound(private_.hostList.begin(), private_.hostList.end(), host->name, Compare());
-    if (it != private_.hostList.end() && (*it).name == host->name) host++;
-    else {
-      hostRemoved(*host);
-      host = private_.hosts.erase(host);
-    }
+  auto now = std::chrono::steady_clock::now();
+  for (auto it = private_.hosts.begin(); it != private_.hosts.end();) {
+    if (now >= it->expire) {
+      hostRemoved(*it);
+      it = private_.hosts.erase(it);
+    } else ++it;
   }
 }
