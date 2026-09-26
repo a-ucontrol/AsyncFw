@@ -27,7 +27,7 @@ public:
   /** @brief Opens the file using the previously specified name. @param m The file open mode flags (defaults to binary input). @return True if the file was opened successfully. */
   bool open(std::ios::openmode = std::ios::binary | std::ios::in);
   /** @brief Checks if the file is currently open. @return True if the file stream is open. */
-  bool isOpen();
+  bool isOpen() const;
   /** @brief Closes the file and flushes outstanding buffers to disk. */
   void close();
   /** @brief Forces internal output buffers to be written to the physical disk. */
@@ -35,9 +35,9 @@ public:
   /** @brief Deletes file from disk. */
   void remove();
   /** @brief Returns the cached size of the file determined when it was opened. @return Size of file in bytes. */
-  std::size_t size();
+  std::size_t size() const;
   /** @brief Checks if the file physically exists on disk. @return True if the file exists. */
-  bool exists();
+  bool exists() const;
   /** @brief Reads data from the file into a DataArray container.
   @details If the parameter is set to @b std::numeric_limits<std::size_t>::max(), it reads all remaining data from the current position to the end of the file.
   @param s Number of bytes to read (defaults to @b std::numeric_limits<std::size_t>::max()). @return A filled DataArray object, or an empty one on failure. */

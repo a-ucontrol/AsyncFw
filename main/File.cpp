@@ -51,7 +51,7 @@ bool File::open(std::ios::openmode m) {
   return !private_.f.fail();
 }
 
-bool File::isOpen() { return private_.f.is_open(); }
+bool File::isOpen() const { return private_.f.is_open(); }
 
 void File::close() {
   if (private_.f.is_open()) {
@@ -72,9 +72,9 @@ void File::remove() {
   private_.fs = 0;
 }
 
-std::size_t File::size() { return private_.fs; }
+std::size_t File::size() const { return private_.fs; }
 
-bool File::exists() { return std::filesystem::exists(private_.fn); }
+bool File::exists() const { return std::filesystem::exists(private_.fn); }
 
 DataArray File::read(std::size_t s) {
   if (private_.f.fail() || !private_.f.is_open()) return {};

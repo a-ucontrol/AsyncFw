@@ -80,6 +80,7 @@ FileSystemWatcher::FileSystemWatcher(const std::vector<std::string> &paths) : pr
     char *buf = new char[size];
     if (read(private_.notifyfd_, buf, size) != size) {
       lsError();
+      delete[] buf;
       return;
     }
     int offset = 0;
