@@ -78,7 +78,7 @@ AddressResolver::~AddressResolver() {
 }
 void AddressResolver::resolve(const std::string &name, Family family, int timeout) {
   if (private_.tid >= 0) {
-    lsError() << "timer task already exists";
+    lsWarning() << "rejected, resolve still in progress";
     return;
   }
   private_.tid = private_.thread->appendTimerTask(timeout, [this]() { ares_cancel(private_.channel); });
@@ -120,7 +120,15 @@ void AddressResolver::resolve(const std::string &name, Family family, int timeou
 
 CoroutineAwait<AddressResolver::Result> AddressResolver::coResolve(const std::string &name, Family family, int timeout) {
   return CoroutineAwait<Result>([this, name, family, timeout](AsyncFw::CoroutineHandle h) {
-    completed.connect<AsyncFw::AbstractFunctionConnector::Connection::Queued>([h](int, const std::vector<std::string> &list) {
+    if (private_.tid >= 0) {
+      lsWarning() << "rejected, resolve still in progress";
+      h.promise().setData({});
+      h.resume();
+      return;
+    }
+    FunctionConnectionGuard *_g = new FunctionConnectionGuard();
+    *_g = completed.connect<AsyncFw::AbstractFunctionConnector::Connection::Queued>([h, _g](int, const std::vector<std::string> &list) {
+      delete _g;
       h.promise().setData(list);
       h.resume();
     });
