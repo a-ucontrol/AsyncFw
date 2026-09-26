@@ -25,7 +25,7 @@ struct SystemProcess::Private {
   bool read_fd(int, std::string *);
 
   int in = -1;
-  bool redirect_stdin = true;
+  bool redirect_stdin;
   AbstractThread::Waiter waiter_;
   State state_ = None;
 
@@ -164,6 +164,13 @@ bool SystemProcess::Private::process() {
   int _pipe_err[2];
   int _pipe_in[2];
 
+  //build _args before fork() (async-signal-safe)
+  std::vector<const char *> _args;
+  _args.reserve(args.size() + 2);
+  _args.push_back(cmdline_.c_str());
+  for (std::size_t i = 0; i != args.size(); ++i) _args.push_back(args[i].c_str());
+  _args.push_back(nullptr);
+
   if (pipe(_pipe_out) == -1) return false;
   if (pipe(_pipe_err) == -1) {
     ::close(_pipe_out[0]);
@@ -204,19 +211,15 @@ bool SystemProcess::Private::process() {
     return true;
   }
 
-  std::vector<const char *> _args;
-
   if (::close(_pipe_out[0]) == -1 || dup2(_pipe_out[1], STDOUT_FILENO) == -1 || ::close(_pipe_out[1]) == -1) goto FAIL;
   if (::close(_pipe_err[0]) == -1 || dup2(_pipe_err[1], STDERR_FILENO) == -1 || ::close(_pipe_err[1]) == -1) goto FAIL;
   if (::close(_pipe_in[1]) == -1 || dup2(_pipe_in[0], STDIN_FILENO) == -1 || ::close(_pipe_in[0]) == -1) goto FAIL;
 
-  _args.push_back(cmdline_.c_str());
-  for (std::size_t i = 0; i != args.size(); ++i) _args.push_back(args[i].c_str());
-  _args.push_back(nullptr);
   execv(cmdline_.c_str(), const_cast<char **>(_args.data()));
 
 FAIL:
-  std::terminate();
+  //_exit — system call that terminates the process immediately, without handlers
+  _exit(127);
 }
 
 bool SystemProcess::Private::read_fd(int fd, std::string *buf) {
