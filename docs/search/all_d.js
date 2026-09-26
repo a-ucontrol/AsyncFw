@@ -17,9 +17,10 @@ var searchData=
   ['exchange_14',['exchange',['../classAsyncFw_1_1DataArrayTcpClient.html#a380c907a396d306611fe7dc21f35f74f',1,'AsyncFw::DataArrayTcpClient']]],
   ['exclusive_15',['Exclusive',['../LockData_8h.html#ab8bc20e4f7d757a564b0c386069ca560a2ef50b4c466304dc6ac77bac8a779971',1,'AsyncFw::Mode']]],
   ['exec_16',['exec',['../classAsyncFw_1_1AbstractThread.html#a1abe0f5c637dcc6af5aff00c5291bd4f',1,'AsyncFw::AbstractThread::exec()'],['../classAsyncFw_1_1MainThread.html#ad12e620772820ad751868c7b49fa4190',1,'AsyncFw::MainThread::exec()'],['../classAsyncFw_1_1SystemProcess.html#a60b511b96334e37888a4504d7cd9058d',1,'AsyncFw::SystemProcess::exec(const std::string &amp;cmd, const std::vector&lt; std::string &gt; &amp;args, T f)'],['../classAsyncFw_1_1SystemProcess.html#a92eabb2559b3f3ade0311f9624ae1eb0',1,'AsyncFw::SystemProcess::exec(const std::string &amp;cmd, T f)'],['../classAsyncFw_1_1SystemProcess.html#a5895c87c14c0e03dcb36bfd8f109c90a',1,'AsyncFw::SystemProcess::exec(const std::string &amp;cmd, const std::vector&lt; std::string &gt; &amp;args={})']]],
-  ['exists_17',['exists',['../classAsyncFw_1_1File.html#a4260fca380a387a8347b83bb4bee91b5',1,'AsyncFw::File']]],
+  ['exists_17',['exists',['../classAsyncFw_1_1File.html#a53118ce36851cb1c6845a82f915fd8ba',1,'AsyncFw::File']]],
   ['exit_18',['exit',['../classAsyncFw_1_1MainThread.html#a76fed3a2c1cfdbdb67f2b209e6457657',1,'AsyncFw::MainThread::exit()'],['../classAsyncFw_1_1MainThread.html#a4f68db1062428237c247332121c93612',1,'AsyncFw::MainThread::exit(int code)']]],
   ['exitcode_19',['exitCode',['../classAsyncFw_1_1SystemProcess.html#a3916d3f3c7f90b7a6e099258daee8762',1,'AsyncFw::SystemProcess']]],
-  ['expire_5f_20',['expire_',['../classAsyncFw_1_1Cache.html#aacfc6f996811ce15b9efbb155b0ef3c7',1,'AsyncFw::Cache']]],
-  ['expired_21',['expired',['../classAsyncFw_1_1Cache.html#aa007ed9035cda520898a069e8b158361',1,'AsyncFw::Cache']]]
+  ['expire_20',['expire',['../structAsyncFw_1_1MulticastDns_1_1Host.html#a9d23aff77ab46e1342d63ce8a9d4fd5f',1,'AsyncFw::MulticastDns::Host']]],
+  ['expire_5f_21',['expire_',['../classAsyncFw_1_1Cache.html#aacfc6f996811ce15b9efbb155b0ef3c7',1,'AsyncFw::Cache']]],
+  ['expired_22',['expired',['../classAsyncFw_1_1Cache.html#aa007ed9035cda520898a069e8b158361',1,'AsyncFw::Cache']]]
 ];
