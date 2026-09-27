@@ -15,6 +15,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 struct ssl_ctx_st;
 struct x509_store_ctx_st;
+struct x509_st;
 
 namespace AsyncFw {
 class DataArray;
@@ -38,9 +39,10 @@ public:
   TlsContext();
   TlsContext(const DataArray &, const DataArray &, const DataArrayList &, const std::string & = {}, IgnoreErrors = None);
   TlsContext(const TlsContext &);
-  TlsContext(const TlsContext &&) = delete;
+  TlsContext(TlsContext &&) = delete;
   ~TlsContext();
   TlsContext &operator=(const TlsContext &);
+  TlsContext &operator=(TlsContext &&) = delete;
 
   /** @brief Return private key in PEM format */
   DataArray key() const;
@@ -93,6 +95,8 @@ public:
   static std::string infoCertificate(const DataArray &);
   /** @brief Parses a raw PEM-formatted Certificate Signing Request (CSR) and decodes its payload properties. @param request DataArray holding the raw CSR bytes in PEM format. @return A human-readable summary of the requested subject DN attributes and public key properties. */
   static std::string infoRequest(const DataArray &);
+  /** @brief Return certificate common name */
+  static std::string commonName(x509_st *);
 
   /** @brief Fetches the most recent thread-local diagnostic error string recorded by the OpenSSL library stack. @return A description of the top error on the stack, or an empty string if clear. */
   static std::string errorString();

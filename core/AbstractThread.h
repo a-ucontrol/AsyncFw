@@ -79,7 +79,8 @@ public:
 
   /** @brief Runs a function in a managed thread. @param function The function to be executed. @param sync Blocking wait if true. @return True if the function is added to the queue. */
   template <typename F>
-  typename std::enable_if<std::is_void<typename std::invoke_result<F>::type>::value, bool>::type invoke(F function, bool sync = false) const {
+    requires std::is_void_v<std::invoke_result_t<F>>
+  bool invoke(F function, bool sync = false) const {
     if (!sync) {
       AbstractTask *_t = new Invocable<void()>::Function(std::forward<F>(function));
       if (!invokeTask(_t)) {

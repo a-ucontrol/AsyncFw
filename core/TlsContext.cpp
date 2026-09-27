@@ -325,16 +325,7 @@ DataArray TlsContext::signRequest(DataArray &req, int days) {
   return _da;
 }
 
-std::string TlsContext::commonName() const {
-  X509 *_c = SSL_CTX_get0_certificate(private_->ctx);
-  if (!_c) {
-    lsTrace() << LogStream::Color::DarkRed << "no certificate";
-    return {};
-  }
-  char name[256];
-  if (X509_NAME_get_text_by_NID(X509_get_subject_name(_c), NID_commonName, name, sizeof(name)) < 0) return {};
-  return name;
-}
+std::string TlsContext::commonName() const { return commonName(SSL_CTX_get0_certificate(private_->ctx)); }
 
 DataArray TlsContext::key() const {
   EVP_PKEY *_k = SSL_CTX_get0_privatekey(private_->ctx);
@@ -463,6 +454,27 @@ std::string TlsContext::infoRequest(const DataArray &request) {
   BIO_read(_bio, _da.data(), _da.size());
   BIO_free(_bio);
   return std::string(_da.view());
+}
+
+std::string TlsContext::commonName(X509 *cert) {
+  if (!cert) {
+    lsWarning() << "null certificate";
+    return {};
+  }
+  X509_NAME *subject = X509_get_subject_name(cert);
+  if (!subject) return {};
+  int index = X509_NAME_get_index_by_NID(subject, NID_commonName, -1);
+  if (index < 0) return {};
+  X509_NAME_ENTRY *entry = X509_NAME_get_entry(subject, index);
+  if (!entry) return {};
+  ASN1_STRING *data = X509_NAME_ENTRY_get_data(entry);
+  if (!data) return {};
+  unsigned char *utf8;
+  int len = ASN1_STRING_to_UTF8(&utf8, data);
+  if (len < 0) return {};
+  std::string result(reinterpret_cast<char *>(utf8), len);
+  OPENSSL_free(utf8);
+  return result;
 }
 
 std::string TlsContext::errorString() { return ERR_error_string(ERR_get_error(), nullptr); }

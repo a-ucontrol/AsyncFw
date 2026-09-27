@@ -40,10 +40,12 @@ Thread::~Thread() {
 
 void Thread::startedEvent() {
 #ifndef _WIN32
+  //SIGPIPE if close fd while tls handshake, AbstractTlsSocket::acceptEvent()
   sigset_t _s;
   sigemptyset(&_s);
   sigaddset(&_s, SIGPIPE);
-  sigprocmask(SIG_BLOCK, &_s, nullptr);  //SIGPIPE if close fd while tls handshake, AbstractTlsSocket::acceptEvent()
+  //sigprocmask(SIG_BLOCK, &_s, nullptr); The use of sigprocmask() is unspecified in a multithreaded process
+  pthread_sigmask(SIG_BLOCK, &_s, nullptr);
 #endif
   AbstractThread::startedEvent();
   started();

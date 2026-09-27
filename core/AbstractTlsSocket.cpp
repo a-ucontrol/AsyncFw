@@ -165,14 +165,7 @@ void AbstractTlsSocket::activateEvent() {
     close();
     return;
   }
-  char name[256];
-  X509 *_pc = SSL_get0_peer_certificate(private_.ssl);
-  if (_pc) {
-    X509_NAME *_n = X509_get_subject_name(_pc);
-    if (X509_NAME_get_text_by_NID(_n, NID_commonName, name, sizeof(name)) < 0) std::sprintf(name, "error read peer common name");
-  } else std::sprintf(name, "no peer certificate");
-
-  trace() << ((private_.encrypt == 1) ? "server" : "client") << "connected" << LogStream::Color::Green << name;
+  trace() << ((private_.encrypt == 1) ? "server" : "client") << "connected" << LogStream::Color::Green << TlsContext::commonName(SSL_get0_peer_certificate(private_.ssl));
   activateReady();
 }
 
