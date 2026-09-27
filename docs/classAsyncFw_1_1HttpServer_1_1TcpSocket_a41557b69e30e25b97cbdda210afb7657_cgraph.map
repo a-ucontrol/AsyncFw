@@ -14,7 +14,7 @@
 <area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="592,84,662,64,657,66,594,89"/>
 <area shape="rect" id="Node000006" href="$classAsyncFw_1_1Thread.html#a0a3bd6a54db28f73ff59cfea6a40b07a" title="Returns a pointer to the AsyncFw::Thread that manages the currently executing thread." alt="" coords="658,95,831,121"/>
 <area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="609,105,646,108,640,108,610,111"/>
-<area shape="rect" id="Node000011" href="$classAsyncFw_1_1AbstractThread.html#a786474d037b50053f1a97af7b67e6069" title="Runs a function in a managed thread." alt="" coords="658,160,831,203"/>
+<area shape="rect" id="Node000011" href="$classAsyncFw_1_1AbstractThread.html#af1382b21117f049a9ab7063017d7fae6" title="Runs a function in a managed thread." alt="" coords="658,160,831,203"/>
 <area shape="poly" id="edge12_Node000003_Node000011" title=" " alt="" coords="589,127,666,154,660,155,589,132"/>
 <area shape="rect" id="Node000005" href="$classAsyncFw_1_1AbstractSocket.html#a5db12267a6d2241e81f570463f2d7ef5" title="Called when the connection state changes." alt="" coords="880,5,1054,48"/>
 <area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="832,31,867,32,862,33,833,37"/>

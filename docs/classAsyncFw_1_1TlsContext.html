@@ -117,10 +117,12 @@ Public Member Functions</h2></td></tr>
 &#160;</td><td class="memItemRight"><b>TlsContext</b> (const <a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> &amp;, const <a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> &amp;, const <a class="el" href="classAsyncFw_1_1DataArrayList.html">DataArrayList</a> &amp;, const std::string &amp;={}, <a class="el" href="#a34b8c61895eaf10b54060df0feb54de8">IgnoreErrors</a>=None)</td></tr>
 <tr class="memitem:a598925cf28e91ac25d110b10f8c28e42" id="r_a598925cf28e91ac25d110b10f8c28e42"><td class="memItemLeft"><a id="a598925cf28e91ac25d110b10f8c28e42" name="a598925cf28e91ac25d110b10f8c28e42"></a>
 &#160;</td><td class="memItemRight"><b>TlsContext</b> (const TlsContext &amp;)</td></tr>
-<tr class="memitem:a51ec0e09ce3b9313fb5d8e28cc4b91af" id="r_a51ec0e09ce3b9313fb5d8e28cc4b91af"><td class="memItemLeft"><a id="a51ec0e09ce3b9313fb5d8e28cc4b91af" name="a51ec0e09ce3b9313fb5d8e28cc4b91af"></a>
-&#160;</td><td class="memItemRight"><b>TlsContext</b> (const TlsContext &amp;&amp;)=delete</td></tr>
+<tr class="memitem:a6c1787304079848b083c33ec098ac449" id="r_a6c1787304079848b083c33ec098ac449"><td class="memItemLeft"><a id="a6c1787304079848b083c33ec098ac449" name="a6c1787304079848b083c33ec098ac449"></a>
+&#160;</td><td class="memItemRight"><b>TlsContext</b> (TlsContext &amp;&amp;)=delete</td></tr>
 <tr class="memitem:a1a065787538c29063dd4bbf457c6a502" id="r_a1a065787538c29063dd4bbf457c6a502"><td class="memItemLeft"><a id="a1a065787538c29063dd4bbf457c6a502" name="a1a065787538c29063dd4bbf457c6a502"></a>
 TlsContext &amp;&#160;</td><td class="memItemRight"><b>operator=</b> (const TlsContext &amp;)</td></tr>
+<tr class="memitem:a81401b25f5011c8de32bbc462ed4f917" id="r_a81401b25f5011c8de32bbc462ed4f917"><td class="memItemLeft"><a id="a81401b25f5011c8de32bbc462ed4f917" name="a81401b25f5011c8de32bbc462ed4f917"></a>
+TlsContext &amp;&#160;</td><td class="memItemRight"><b>operator=</b> (TlsContext &amp;&amp;)=delete</td></tr>
 <tr class="memitem:adbefc1c150e7e2965f27e154fce622e4" id="r_adbefc1c150e7e2965f27e154fce622e4"><td class="memItemLeft"><a id="adbefc1c150e7e2965f27e154fce622e4" name="adbefc1c150e7e2965f27e154fce622e4"></a>
 <a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a>&#160;</td><td class="memItemRight"><b>key</b> () const</td></tr>
 <tr class="memdesc:adbefc1c150e7e2965f27e154fce622e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return private key in PEM format. <br /></td></tr>
@@ -183,6 +185,9 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memdesc:a5a5b903dc3ed153720b6c50367c0c309"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parses a raw PEM-formatted X509 certificate buffer and extracts its metadata header.  <br /></td></tr>
 <tr class="memitem:a0d49f644e95fd8a232d8b20f00ba826b" id="r_a0d49f644e95fd8a232d8b20f00ba826b"><td class="memItemLeft">static std::string&#160;</td><td class="memItemRight"><a class="el" href="#a0d49f644e95fd8a232d8b20f00ba826b">infoRequest</a> (const <a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> &amp;)</td></tr>
 <tr class="memdesc:a0d49f644e95fd8a232d8b20f00ba826b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parses a raw PEM-formatted Certificate Signing Request (CSR) and decodes its payload properties.  <br /></td></tr>
+<tr class="memitem:aae5a2c625b605846de7f2897464dcf91" id="r_aae5a2c625b605846de7f2897464dcf91"><td class="memItemLeft"><a id="aae5a2c625b605846de7f2897464dcf91" name="aae5a2c625b605846de7f2897464dcf91"></a>
+static std::string&#160;</td><td class="memItemRight"><b>commonName</b> (x509_st *)</td></tr>
+<tr class="memdesc:aae5a2c625b605846de7f2897464dcf91"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return certificate common name. <br /></td></tr>
 <tr class="memitem:a712171aa534c1f982c8d449fe17a6e7d" id="r_a712171aa534c1f982c8d449fe17a6e7d"><td class="memItemLeft">static std::string&#160;</td><td class="memItemRight"><a class="el" href="#a712171aa534c1f982c8d449fe17a6e7d">errorString</a> ()</td></tr>
 <tr class="memdesc:a712171aa534c1f982c8d449fe17a6e7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fetches the most recent thread-local diagnostic error string recorded by the OpenSSL library stack.  <br /></td></tr>
 <tr class="memitem:a41d87bc0c29abb02c8b00b5da6fd9dbe" id="r_a41d87bc0c29abb02c8b00b5da6fd9dbe"><td class="memItemLeft">static std::string&#160;</td><td class="memItemRight"><a class="el" href="#a41d87bc0c29abb02c8b00b5da6fd9dbe">allErrorStrings</a> ()</td></tr>

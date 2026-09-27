@@ -16,7 +16,7 @@
 <area shape="poly" id="edge10_Node000004_Node000011" title=" " alt="" coords="366,169,419,179,414,180,366,174"/>
 <area shape="rect" id="Node000006" href="$classAsyncFw_1_1AbstractThread.html#af33c5949edb374d673a7a9ac0c81ec32" title="Returns a pointer to the AsyncFw::AbstractThread that manages the currently executing thread." alt="" coords="627,72,801,115"/>
 <area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="579,112,614,109,609,110,580,118"/>
-<area shape="rect" id="Node000009" href="$classAsyncFw_1_1AbstractThread.html#a786474d037b50053f1a97af7b67e6069" title="Runs a function in a managed thread." alt="" coords="627,139,801,181"/>
+<area shape="rect" id="Node000009" href="$classAsyncFw_1_1AbstractThread.html#af1382b21117f049a9ab7063017d7fae6" title="Runs a function in a managed thread." alt="" coords="627,139,801,181"/>
 <area shape="poly" id="edge8_Node000005_Node000009" title=" " alt="" coords="579,136,615,143,609,144,580,141"/>
 <area shape="rect" id="Node000007" href="$classAsyncFw_1_1AbstractThread.html#a8c9202c90ac101522f26c4260cb01b59" title="Constructs a thread." alt="" coords="849,72,1022,115"/>
 <area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="801,91,836,93,830,94,801,96"/>
