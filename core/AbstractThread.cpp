@@ -170,11 +170,7 @@ struct AbstractThread::Private {
   };
   struct ProcessPollTask {
     int fd;
-#ifndef IO_URING_WAIT
     uint16_t events;
-#else
-    uint16_t events;
-#endif
     AbstractPollTask *task;
   };
 
