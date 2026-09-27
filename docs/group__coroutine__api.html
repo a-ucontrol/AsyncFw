@@ -304,9 +304,8 @@ template&lt;typename T = AbstractThread, typename M, typename O, typename... Arg
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="structAsyncFw_1_1CoroutineAwait.html" title="Generic awaiter for wrapping asynchronous triggers or callback-based APIs into co_await.">CoroutineAwait</a> object to be used with co_await.</dd></dl>
 <p>Helper function to pause the current coroutine execution on the spot without creating or managing an explicit <a class="el" href="classAsyncFw_1_1Timer.html" title="The Timer class.">AsyncFw::Timer</a> object instance.</p>
-<p>Example: </p><div class="fragment"><div class="line"><span class="keyword">co_await</span> <a class="code hl_function" href="#ga37b3a970310b55e69ed1cb7aa9ab3646">AsyncFw::coTimeout</a>(500); <span class="comment">// Sleep for 500 milliseconds without a Timer object </span></div>
-<div class="ttc" id="agroup__coroutine__api_html_ga37b3a970310b55e69ed1cb7aa9ab3646"><div class="ttname"><a href="#ga37b3a970310b55e69ed1cb7aa9ab3646">AsyncFw::coTimeout</a></div><div class="ttdeci">CoroutineAwait&lt; void &gt; coTimeout(int)</div><div class="ttdoc">Non-blocking coroutine sleep for the specified timeout interval.</div><div class="ttdef"><b>Definition</b> Timer.cpp:47</div></div>
-</div><!-- fragment --> <div id="dynsection-0" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
+<dl class="section user"><dt>Example: @code co_await AsyncFw::coTimeout(500); // Sleep for 500 milliseconds without a Timer object \endcode </dt><dd></dd></dl>
+<div id="dynsection-0" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">

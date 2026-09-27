@@ -1,5 +1,5 @@
 <map id="AsyncFw::Log" name="AsyncFw::Log">
-<area shape="rect" id="Node000001" title="Asynchronous log manager with circular database (Rrd) backend and duplicate сompression." alt="" coords="202,337,307,364"/>
+<area shape="rect" id="Node000001" title="Asynchronous log manager with circular database (Rrd) backend and duplicate compression." alt="" coords="202,337,307,364"/>
 <area shape="rect" id="Node000002" href="$classAsyncFw_1_1Rrd.html" title="A high&#45;performance circular database engine (Round&#45;Robin Database) for time&#45;series and structural dat..." alt="" coords="264,261,370,288"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="300,298,267,339,264,335,295,301"/>
 <area shape="rect" id="Node000003" href="$classAsyncFw_1_1FunctionConnector.html" title="Provides a thread&#45;safe, publisher&#45;subscriber mechanism to establish sender&#45;to&#45;receivers connections." alt="" coords="5,5,200,48"/>

@@ -15,7 +15,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 namespace AsyncFw {
 /** @class ApplicationNotifier ApplicationNotifier.h <AsyncFw/ApplicationNotifier> @brief The ApplicationNotifier class.
-@brief Example: @snippet ApplicationNotifier/main.cpp snippet */
+@par Example: @snippet ApplicationNotifier/main.cpp snippet */
 class ApplicationNotifier {
 public:
   /** @brief The Value struct. */

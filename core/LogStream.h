@@ -45,7 +45,7 @@ namespace AsyncFw {
 @details LogStream provides dynamic string and data formatting using standard C++ stream insertion operators (operator<<). The logged content is accumulated in an internal buffer and is guaranteed to flush automatically to the configured outputs when the temporary LogStream instance is destroyed at the end of the statement (RAII).
 @warning Logging with the Emergency level does NOT throw an exception. It flushes the message, prints a [FATAL] diagnostic to stderr, and calls std::terminate() immediately. The stack is not unwound and destructors of local objects are not executed.
 @note Please refer to the **example** for compile-time log optimizations (like LS_NO_TRACE) and standard inline vs formatting syntax usage styles.
-@brief Example: @snippet snippet.dox LogStream */
+@par Example: @snippet snippet.dox LogStream */
 class LogStream {
 public:
   enum MessageType : uint8_t {

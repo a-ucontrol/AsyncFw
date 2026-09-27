@@ -19,7 +19,7 @@ class DataArrayView;
 class LogStream;
 /** @class DataArray DataArray.h <AsyncFw/DataArray> @brief The DataArray class, provides an array of bytes.
 @details Implements a rich set of constructors and conversion tools to seamlessly bridge standard C++ primitives, strings, and raw memory buffers into an encapsulated binary package.
-@brief Example: @snippet DataArray/main.cpp snippet */
+@par Example: @snippet DataArray/main.cpp snippet */
 class DataArray : public std::vector<uint8_t> {
 public:
   /** @brief Compresses the provided data view using the framework's default compression algorithm.
@@ -51,7 +51,7 @@ public:
 };
 /** @class DataArrayView DataArray.h <AsyncFw/DataArray> @brief A lightweight, non-allocating string-like descriptor pointing to a contiguous block of binary data.
 @details Inherits from std::string_view. Used to pass references to chunks of external memory safely without triggering expensive deep copies.
-@brief Example: @snippet DataArray/main.cpp snippet */
+@par Example: @snippet DataArray/main.cpp snippet */
 class DataArrayView : public std::string_view {
 public:
   /** @brief Universal perfect-forwarding constructor proxying arguments directly to the underlying std::string_view. */
@@ -68,7 +68,7 @@ public:
   DataArrayList split(const char) const;
 };
 /** @class DataArrayList DataArray.h <AsyncFw/DataArray> @brief A specialized container aggregating multiple DataArray instances.
-@brief Example: @snippet DataArray/main.cpp snippet */
+@par Example: @snippet DataArray/main.cpp snippet */
 class DataArrayList : public std::vector<DataArray> {
 public:
   using std::vector<DataArray>::vector;
@@ -79,7 +79,7 @@ public:
 /** @class DataStream DataArray.h <AsyncFw/DataArray> @brief A fast, compact binary serialization stream.
 @details Supports stream operators (<< and >>) to easily encode and decode primitives, strings, and byte arrays into packed, tightly structured binary payloads using optimized variable-length length prefixes.
 @note This class explicitly blocks copying and moving.
-@brief Example: @snippet DataArray/main.cpp snippet */
+@par Example: @snippet DataArray/main.cpp snippet */
 class DataStream {
 public:
   /** @brief Constructs a write-only serialization stream building an internal data container from scratch. */

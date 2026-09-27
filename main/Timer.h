@@ -14,7 +14,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 namespace AsyncFw {
 /** @class Timer Timer.h <AsyncFw/Timer> @brief The Timer class
-@brief Example: @snippet Timer/main.cpp snippet */
+@par Example: @snippet Timer/main.cpp snippet */
 class Timer {
 public:
   /** @brief Starts a single shot timer with the specified timeout @param ms timeout interval in milliseconds @param function runs at timeout */
@@ -33,7 +33,7 @@ public:
   /** @brief The Timer::timeout connector */
   FunctionConnector<>::Protected<Timer> timeout;
   /** @brief Asynchronously waits for the specified timeout interval @param ms interval in milliseconds @return CoroutineAwait object to be used with co_await
-  @brief Example: \code co_await timer.coTimeout(500); // Sleep for 500 milliseconds \endcode */
+  @par Example: \code co_await timer.coTimeout(500); // Sleep for 500 milliseconds \endcode */
   CoroutineAwait<void> coTimeout(int);
 
 private:
@@ -61,6 +61,6 @@ private:
 /** @brief Non-blocking coroutine sleep for the specified timeout interval. @param ms Timeout interval in milliseconds. @return CoroutineAwait object to be used with co_await.
 @details Helper function to pause the current coroutine execution on the spot without creating or managing an explicit AsyncFw::Timer object instance.
 \ingroup coroutine_api
-@brief Example: \code co_await AsyncFw::coTimeout(500); // Sleep for 500 milliseconds without a Timer object \endcode */
+@par Example: \code co_await AsyncFw::coTimeout(500); // Sleep for 500 milliseconds without a Timer object \endcode */
 CoroutineAwait<void> coTimeout(int);
 }  // namespace AsyncFw

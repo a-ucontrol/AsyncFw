@@ -15,7 +15,7 @@ namespace AsyncFw {
 /** @class Cache Cache.h <AsyncFw/Cache> @brief A thread-safe cache wrapper that emits an update signal when the value expires.
 @details Implements the Stale-While-Revalidate pattern. When the TTL expires, the first caller atomically claims the update slot on expire_ (CAS in acquire(), exchange in refresh()) and emits the update signal. The actual refresh work is performed by subscribers of update; the Cache itself does not know which thread the work runs on. A subscriber may dispatch to another thread, run inline, or only log — the Cache only cares that touch() is eventually called. Subsequent readers during the update phase instantly receive the stale value if the subscriber dispatches elsewhere; if a subscriber runs inline on a caller thread, that caller blocks for the duration of the callback. Readers do not serialize against each other: value_ is guarded by a shared_mutex while expire_ is an atomic lifecycle flag. The update signal uses FunctionConnector<>::Protected<Cache<T>> with the Auto policy: subscribers connected from the emitting thread are invoked inline, others are queued to their own thread.
 @tparam T The type of the cached data object.
-@brief Example: @snippet Cache/main.cpp snippet */
+@par Example: @snippet Cache/main.cpp snippet */
 template <typename T>
 class Cache {
 public:

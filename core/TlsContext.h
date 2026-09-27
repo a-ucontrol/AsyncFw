@@ -24,7 +24,7 @@ class LogStream;
 @details TlsContext encapsulates the shared state required to establish secure Transport Layer Security (TLS) connections. It acts as a centralized repository for loading public key infrastructure (PKI) certificates, private keys, and trusted Certificate Authorities (CAs).
 @warning Thread Affinity & Immutability Contract:
 This class is **NOT thread-safe for modifications**. It must be fully configured (keys loaded, rules set) within a single thread *BEFORE* being assigned to any active network socket. Once attached to a socket, the context **MUST be treated as strictly Immutable (Read-Only)**. Concurrent writes during active I/O will cause catastrophic Data Races and Undefined Behavior.
-@brief Example: @snippet TlsContext/main.cpp snippet */
+@par Example: @snippet TlsContext/main.cpp snippet */
 class TlsContext {
   friend class AbstractTlsSocket;
   struct Private;

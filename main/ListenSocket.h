@@ -15,7 +15,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 namespace AsyncFw {
 /** @class ListenSocket ListenSocket.h <AsyncFw/ListenSocket> @brief Server-side socket wrapper specialized for listening and accepting incoming network connections.
 @details Leverages private inheritance from AbstractSocket to safely expose only server-specific management methods while encapsulating and hiding client-centric I/O routines.
-@brief Example: @snippet ListenSocket/main.cpp snippet */
+@par Example: @snippet ListenSocket/main.cpp snippet */
 class ListenSocket : private AbstractSocket {
 public:
   ListenSocket(int family, int type, int protocol) : AbstractSocket(family, type, protocol) {}

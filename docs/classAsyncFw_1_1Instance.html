@@ -162,44 +162,9 @@ virtual void&#160;</td><td class="memItemRight"><b>created</b> ()</td></tr>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename T&gt;<br />
 class AsyncFw::Instance&lt; T &gt;</div><p>A template-based global registry wrapper for managing application-wide default objects (Global Default Instances). </p>
-<p>Unlike a strict Singleton pattern, the underlying class (e.g., <a class="el" href="classAsyncFw_1_1ThreadPool.html" title="Manages a set of reusable worker threads for concurrent task execution, eliminating the need to spawn...">ThreadPool</a>) remains a standard class that can be instantiated multiple times independently. This wrapper acts as a Service Locator, managing a single engine-wide global default instance. </p><dl class="section warning"><dt>Warning</dt><dd>The static <a class="el" href="#a8000597f0e7ee4bd6669491a5b502beb" title="Registers a custom derived class instance as the engine-wide global default.">create()</a> methods are <b>NOT thread-safe for concurrent instantiation</b>. All global default instances MUST be explicitly initialized (via <a class="el" href="#a8000597f0e7ee4bd6669491a5b502beb" title="Registers a custom derived class instance as the engine-wide global default.">create()</a>) inside the primary execution thread (typically within main()) <em>BEFORE</em> any background worker threads or event loops are launched.</dd></dl>
-<p>Example: </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;AsyncFw/MainThread&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;AsyncFw/LogStream&gt;</span></div>
-<div class="line"> </div>
-<div class="line"><span class="keyword">class </span>ExampleClass {</div>
-<div class="line"><span class="keyword">public</span>:</div>
-<div class="line">  <span class="keyword">static</span> <span class="keyword">inline</span> ExampleClass *instance() { <span class="keywordflow">return</span> instance_.value; }</div>
-<div class="line">  ExampleClass(<span class="keyword">const</span> std::string &amp;name) : name_(name) { lsDebug() &lt;&lt; name_; }</div>
-<div class="line">  ~ExampleClass() {</div>
-<div class="line">    <span class="comment">// Clear the global pointer if the instance is being destroyed.</span></div>
-<div class="line">    <span class="keywordflow">if</span> (instance_.value == <span class="keyword">this</span>) instance_.value = <span class="keyword">nullptr</span>;</div>
-<div class="line">    lsDebug() &lt;&lt; name_;</div>
-<div class="line">  }</div>
-<div class="line">  <span class="keyword">const</span> std::string &amp;name() { <span class="keywordflow">return</span> name_; }</div>
-<div class="line"> </div>
-<div class="line"><span class="keyword">private</span>:</div>
-<div class="line">  <span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">class </span>Instance : <span class="keyword">public</span> AsyncFw::Instance&lt;ExampleClass&gt; {</div>
-<div class="line">  <span class="keyword">public</span>:</div>
-<div class="line">    <span class="keyword">using </span>AsyncFw::Instance&lt;ExampleClass&gt;::Instance;</div>
-<div class="line">    <span class="keywordtype">void</span> created()<span class="keyword"> override </span>{ lsInfoGreen() &lt;&lt; value-&gt;name(); }</div>
-<div class="line">  } instance_ {<span class="stringliteral">&quot;ExampleClass&quot;</span>};</div>
-<div class="line">  std::string name_;</div>
-<div class="line">};</div>
-<div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[]) {</div>
-<div class="line">  ExampleClass _e(<span class="stringliteral">&quot;ExampleClass&quot;</span>);</div>
-<div class="line">  <a class="code hl_function" href="#a8000597f0e7ee4bd6669491a5b502beb">AsyncFw::Instance&lt;ExampleClass&gt;::create</a>(<span class="stringliteral">&quot;ExampleClassInstance&quot;</span>);</div>
-<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Thread.html#a0a3bd6a54db28f73ff59cfea6a40b07a">AsyncFw::Thread::current</a>()-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a786474d037b50053f1a97af7b67e6069">invoke</a>([]() { <a class="code hl_function" href="classAsyncFw_1_1MainThread.html#a76fed3a2c1cfdbdb67f2b209e6457657">AsyncFw::MainThread::exit</a>(); });</div>
-<div class="line"> </div>
-<div class="line">  lsInfoMagenta() &lt;&lt; _e.name();</div>
-<div class="line">  lsInfoMagenta() &lt;&lt; ExampleClass::instance()-&gt;name();</div>
-<div class="line"> </div>
-<div class="line">  lsNotice() &lt;&lt; <span class="stringliteral">&quot;Start Application&quot;</span>;</div>
-<div class="line">  <span class="keywordtype">int</span> ret = <a class="code hl_function" href="classAsyncFw_1_1MainThread.html#ad12e620772820ad751868c7b49fa4190">AsyncFw::MainThread::exec</a>();</div>
-<div class="line">  lsNotice() &lt;&lt; <span class="stringliteral">&quot;End Application &quot;</span> &lt;&lt; ret;</div>
-<div class="line">  <span class="keywordflow">return</span> ret;</div>
-<div class="line">}</div>
-</div><!-- fragment --> </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<p>Unlike a strict Singleton pattern, the underlying class (e.g., <a class="el" href="classAsyncFw_1_1ThreadPool.html" title="Manages a set of reusable worker threads for concurrent task execution, eliminating the need to spawn...">ThreadPool</a>) remains a standard class that can be instantiated multiple times independently. This wrapper acts as a Service Locator, managing a single engine-wide global default instance. </p><dl class="section warning"><dt>Warning</dt><dd>The static <a class="el" href="#a8000597f0e7ee4bd6669491a5b502beb" title="Registers a custom derived class instance as the engine-wide global default.">create()</a> methods are <b>NOT thread-safe for concurrent instantiation</b>. All global default instances MUST be explicitly initialized (via <a class="el" href="#a8000597f0e7ee4bd6669491a5b502beb" title="Registers a custom derived class instance as the engine-wide global default.">create()</a>) inside the primary execution thread (typically within main()) <em>BEFORE</em> any background worker threads or event loops are launched. </dd></dl>
+<dl class="section user"><dt>Example: @snippet Instance/main.cpp snippet </dt><dd></dd></dl>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
 <a id="a8000597f0e7ee4bd6669491a5b502beb" name="a8000597f0e7ee4bd6669491a5b502beb"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a8000597f0e7ee4bd6669491a5b502beb">&#9670;&#160;</a></span>create() <span class="overload">[1/2]</span></h2>
 

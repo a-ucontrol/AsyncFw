@@ -14,7 +14,7 @@ class DataArray;
 class DataArrayView;
 
 /** @class Cryptor Cryptor.h <AsyncFw/Cryptor> @brief Utility class providing static interfaces for high-performance symmetric data cryptography.
-@details Wraps low-level cryptographic backends (e.g., OpenSSL cipher suites) into a clean, type-safe interface operating with the framework's DataArray and DataArrayView containers. Natively supports automated Initialization Vector (IV) generation and secure block padding. @brief Example: @snippet Cryptor/main.cpp snippet */
+@details Wraps low-level cryptographic backends (e.g., OpenSSL cipher suites) into a clean, type-safe interface operating with the framework's DataArray and DataArrayView containers. Natively supports automated Initialization Vector (IV) generation and secure block padding. @par Example: @snippet Cryptor/main.cpp snippet */
 class Cryptor {
 public:
   /** @brief Type-safely encrypts raw data payload into a secure ciphertext buffer.

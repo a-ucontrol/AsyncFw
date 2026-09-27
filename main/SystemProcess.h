@@ -16,7 +16,7 @@ namespace AsyncFw {
 /** @class SystemProcess SystemProcess.h <AsyncFw/SystemProcess> @brief Manages spawning and asynchronous communication with external processes.
 @warning Optimized for Unix-like systems. Maintains cross-platform behavior when compiled with Qt.
 @note Life cycle events are driven by AbstractFunctionConnector::Queued policy.
-@brief Example: @snippet SystemProcess/main.cpp snippet */
+@par Example: @snippet SystemProcess/main.cpp snippet */
 class SystemProcess {
 public:
   /** @enum State @brief Process lifecycle states.*/

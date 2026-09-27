@@ -20,7 +20,7 @@
 <!-- Node2 -->
 <g id="Node000002" class="node">
 <title>Node2</title>
-<g id="a_Node000002"><a xlink:href="classAsyncFw_1_1Log.html" target="_top" xlink:title="Asynchronous log manager with circular database (Rrd) backend and duplicate сompression.">
+<g id="a_Node000002"><a xlink:href="classAsyncFw_1_1Log.html" target="_top" xlink:title="Asynchronous log manager with circular database (Rrd) backend and duplicate compression.">
 <polygon fill="white" stroke="#666666" points="79,-20 0,-20 0,0 79,0 79,-20"/>
 <text xml:space="preserve" text-anchor="middle" x="39.5" y="-6.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::Log</text>
 </a>
