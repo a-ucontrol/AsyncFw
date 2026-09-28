@@ -120,10 +120,6 @@ $(function(){initNavTree('classAsyncFw_1_1ListenSocket.html','','classAsyncFw_1_
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a506818e5ecf3a30c359cc1ca0cc98c87" id="r_a506818e5ecf3a30c359cc1ca0cc98c87"><td class="memItemLeft"><a id="a506818e5ecf3a30c359cc1ca0cc98c87" name="a506818e5ecf3a30c359cc1ca0cc98c87"></a>
 &#160;</td><td class="memItemRight"><b>ListenSocket</b> (int family, int type, int protocol)</td></tr>
-<tr class="memitem:a2b3066513b7cf718a97fe6c9f3cc11e6" id="r_a2b3066513b7cf718a97fe6c9f3cc11e6"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a2b3066513b7cf718a97fe6c9f3cc11e6">AbstractSocket</a> (<a class="el" href="classAsyncFw_1_1AbstractSocket.html#a8720ba9755d46ce21efa6056e7cf5034">OutputBufferMode</a>=<a class="el" href="classAsyncFw_1_1AbstractSocket.html#a8720ba9755d46ce21efa6056e7cf5034ae5cae7a164a407735575fa1f4760c7de">Application</a>)</td></tr>
-<tr class="memdesc:a2b3066513b7cf718a97fe6c9f3cc11e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an <a class="el" href="classAsyncFw_1_1AbstractSocket.html" title="Abstract base class providing core network socket functionality and OS descriptor abstraction.">AbstractSocket</a> with default parameters (AF_INET, SOCK_STREAM, IPPROTO_TCP) and binds it to the current thread context.  <br /></td></tr>
-<tr class="memitem:aa66ea88eb21787155ef487b89da94f96" id="r_aa66ea88eb21787155ef487b89da94f96"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#aa66ea88eb21787155ef487b89da94f96">AbstractSocket</a> (int, int, int, <a class="el" href="classAsyncFw_1_1AbstractSocket.html#a8720ba9755d46ce21efa6056e7cf5034">OutputBufferMode</a>=<a class="el" href="classAsyncFw_1_1AbstractSocket.html#a8720ba9755d46ce21efa6056e7cf5034ae5cae7a164a407735575fa1f4760c7de">Application</a>)</td></tr>
-<tr class="memdesc:aa66ea88eb21787155ef487b89da94f96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an <a class="el" href="classAsyncFw_1_1AbstractSocket.html" title="Abstract base class providing core network socket functionality and OS descriptor abstraction.">AbstractSocket</a> and binds it to the current thread context.  <br /></td></tr>
 <tr class="memitem:a3dd69e137ca3cf50f90607c17bbdc312" id="r_a3dd69e137ca3cf50f90607c17bbdc312"><td class="memItemLeft"><a id="a3dd69e137ca3cf50f90607c17bbdc312" name="a3dd69e137ca3cf50f90607c17bbdc312"></a>
 std::string&#160;</td><td class="memItemRight"><b>address</b> () const</td></tr>
 <tr class="memdesc:a3dd69e137ca3cf50f90607c17bbdc312"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return local address bound to this socket interface. <br /></td></tr>
@@ -235,73 +231,6 @@ Protected Member Functions</h2></td></tr>
 <p>Called upon incoming connection. Executed on a server listening socket when a client connects. </p>
 
 <p>Reimplemented from <a class="el" href="classAsyncFw_1_1AbstractSocket.html#ad6d428c75ae5b7321a3838b22abcdf6b">AsyncFw::AbstractSocket</a>.</p>
-
-</div>
-</div>
-<a id="a2b3066513b7cf718a97fe6c9f3cc11e6" name="a2b3066513b7cf718a97fe6c9f3cc11e6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2b3066513b7cf718a97fe6c9f3cc11e6">&#9670;&#160;</a></span>AbstractSocket() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classAsyncFw_1_1AbstractSocket.html#a2b3066513b7cf718a97fe6c9f3cc11e6">AbstractSocket::AbstractSocket</a> </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classAsyncFw_1_1AbstractSocket.html#a8720ba9755d46ce21efa6056e7cf5034">OutputBufferMode</a></td>          <td class="paramname"><span class="paramname"><em>mode</em></span><span class="paramdefsep"> = </span><span class="paramdefval"><a class="el" href="classAsyncFw_1_1AbstractSocket.html#a8720ba9755d46ce21efa6056e7cf5034ae5cae7a164a407735575fa1f4760c7de">Application</a></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Constructs an <a class="el" href="classAsyncFw_1_1AbstractSocket.html" title="Abstract base class providing core network socket functionality and OS descriptor abstraction.">AbstractSocket</a> with default parameters (AF_INET, SOCK_STREAM, IPPROTO_TCP) and binds it to the current thread context. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">mode</td><td>The new mode for interpreting the buffer content. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="aa66ea88eb21787155ef487b89da94f96" name="aa66ea88eb21787155ef487b89da94f96"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa66ea88eb21787155ef487b89da94f96">&#9670;&#160;</a></span>AbstractSocket() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classAsyncFw_1_1AbstractSocket.html#a2b3066513b7cf718a97fe6c9f3cc11e6">AbstractSocket::AbstractSocket</a> </td>
-          <td>(</td>
-          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>family</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>type</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>protocol</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classAsyncFw_1_1AbstractSocket.html#a8720ba9755d46ce21efa6056e7cf5034">OutputBufferMode</a></td>          <td class="paramname"><span class="paramname"><em>mode</em></span><span class="paramdefsep"> = </span><span class="paramdefval"><a class="el" href="classAsyncFw_1_1AbstractSocket.html#a8720ba9755d46ce21efa6056e7cf5034ae5cae7a164a407735575fa1f4760c7de">Application</a></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Constructs an <a class="el" href="classAsyncFw_1_1AbstractSocket.html" title="Abstract base class providing core network socket functionality and OS descriptor abstraction.">AbstractSocket</a> and binds it to the current thread context. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">family</td><td>Address family.</td></tr>
-    <tr><td class="paramname">type</td><td>Socket type.</td></tr>
-    <tr><td class="paramname">protocol</td><td>Internet protocol.</td></tr>
-    <tr><td class="paramname">mode</td><td>The new mode for interpreting the buffer content. </td></tr>
-  </table>
-  </dd>
-</dl>
 
 </div>
 </div>
