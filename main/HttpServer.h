@@ -21,7 +21,8 @@ namespace AsyncFw {
 using namespace AsyncFw;
 /** @class HttpServer HttpServer.h <AsyncFw/HttpServer> @brief Asynchronous HTTP and WebSocket server.
 @details The HttpServer class provides routing mechanisms, support for secure TLS connections, integration with WebSockets via frames, and a custom request filtering hook (peek).
-@par Example: @snippet HttpServer/main.cpp snippet */
+@par Example
+@snippet HttpServer/main.cpp snippet */
 class HttpServer {
   friend LogStream &operator<<(LogStream &, const HttpServer &);
 

@@ -16,7 +16,8 @@ class TlsContext;
 
 /** @class AbstractTlsSocket AbstractTlsSocket.h <AsyncFw/AbstractTlsSocket> @brief Abstract base class providing Transport Layer Security (TLS/SSL) encryption layers on top of standard network sockets.
 @details Extends the basic AbstractSocket interface to introduce cryptographic session wraps. It abstracts OpenSSL state transitions, handles non-blocking TLS server/client handshakes, intercepts read/write pipelines, and enforces peer identity validation logic.
-@par Example: @snippet Socket/main.cpp snippet */
+@par Example
+@snippet Socket/main.cpp snippet */
 class AbstractTlsSocket : public AbstractSocket {
   friend LogStream &operator<<(LogStream &, const AbstractTlsSocket &);
 

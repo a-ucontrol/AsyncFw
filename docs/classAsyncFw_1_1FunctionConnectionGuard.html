@@ -127,7 +127,22 @@ Public Member Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>An RAII guard that automatically manages the lifecycle of a <a class="el" href="classAsyncFw_1_1FunctionConnector.html" title="Provides a thread-safe, publisher-subscriber mechanism to establish sender-to-receivers connections.">FunctionConnector</a> connection. </p>
 <p>This class provides automated connection management using the Resource Acquisition Is Initialization (RAII) idiom. When a <a class="el" href="classAsyncFw_1_1FunctionConnectionGuard.html" title="An RAII guard that automatically manages the lifecycle of a FunctionConnector connection.">FunctionConnectionGuard</a> goes out of scope or is destroyed, it automatically disconnects and cleans up its associated connection. It supports move semantics, allowing the guard to be transferred between scopes or stored inside containers. It explicitly disables copying. </p><dl class="section note"><dt>Note</dt><dd>The destruction of the connection is thread-safe. If the connection type is asynchronous and managed by another thread, the actual deletion of the connection object is safely dispatched to that specific thread event loop. </dd></dl>
-<dl class="section user"><dt>Example: @snippet snippet.dox FunctionConnectorGuard </dt><dd></dd></dl>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">class </span>Downloader {</div>
+<div class="line">  <span class="keyword">public</span>:</div>
+<div class="line">    AsyncFw::FunctionConnector&lt;int&gt; progressChanged;</div>
+<div class="line">    <span class="keywordtype">void</span> start() { <span class="comment">/* ... */</span> }</div>
+<div class="line">  };</div>
+<div class="line"> </div>
+<div class="line">  <span class="keywordtype">void</span> monitorDownload(Downloader &amp; downloader) {</div>
+<div class="line">    <span class="comment">// Bind the connection to a local guard scope</span></div>
+<div class="line">    <a class="code hl_class" href="classAsyncFw_1_1FunctionConnectionGuard.html">AsyncFw::FunctionConnectionGuard</a> guard = downloader.progressChanged.connect([](<span class="keywordtype">int</span> percent) { std::cout &lt;&lt; <span class="stringliteral">&quot;Download progress: &quot;</span> &lt;&lt; percent &lt;&lt; <span class="stringliteral">&quot;%&quot;</span> &lt;&lt; std::endl; });</div>
+<div class="line">    downloader.start();</div>
+<div class="line">    <span class="comment">// ... do some work ...</span></div>
+<div class="line">    <span class="comment">// When monitorDownload exits, guard is destroyed.</span></div>
+<div class="line">    <span class="comment">// The connection is automatically severed, preventing further lambda invocations.</span></div>
+<div class="line">  }</div>
+<div class="line"> </div>
+</div><!-- fragment --> </dd></dl>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="LogTcp_2main_8cpp-example.html#_a15">LogTcp/main.cpp</a>.</dd>
 </dl>
 </div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>

@@ -152,7 +152,37 @@ Friends</h2></td></tr>
 <li><b>Debouncing Mechanism:</b> In-flight modifications (continuous bursts of write operations) are automatically aggregated. A single Changed notification is dispatched exactly 1 second after the file system activity settles down. </li>
 </ul>
 </dd></dl>
-<dl class="section user"><dt>Example: @snippet FileSystemWatcher/main.cpp snippet </dt><dd></dd></dl>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;AsyncFw/FileSystemWatcher&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;AsyncFw/File&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;AsyncFw/MainThread&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;AsyncFw/LogStream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">using namespace </span>AsyncFw;</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[]) {</div>
+<div class="line"><span class="preprocessor">#ifdef USE_QAPPLICATION</span></div>
+<div class="line">  QCoreApplication app(argc, argv);</div>
+<div class="line"><span class="preprocessor">#endif</span></div>
+<div class="line"> </div>
+<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1FileSystemWatcher.html">FileSystemWatcher</a> watcher {{<span class="stringliteral">&quot;/tmp/FileSystemWatcher.example&quot;</span>}};</div>
+<div class="line">  watcher.<a class="code hl_variable" href="#a4c808b22785dbc3182a9e7fa600b0919">notify</a>.<a class="code hl_function" href="classAsyncFw_1_1FunctionConnector.html#ae1f65144956b3b1247d58614e4080f63">connect</a>([](<span class="keyword">const</span> std::string &amp;name, <span class="keywordtype">int</span> event) {</div>
+<div class="line">    lsInfoMagenta() &lt;&lt; <span class="stringliteral">&quot;file:&quot;</span> &lt;&lt; name &lt;&lt; event;  <span class="comment">// event: -1 removed / 0 changed / 1 created</span></div>
+<div class="line">    <a class="code hl_function" href="classAsyncFw_1_1MainThread.html#a76fed3a2c1cfdbdb67f2b209e6457657">MainThread::exit</a>();</div>
+<div class="line">  });</div>
+<div class="line"> </div>
+<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1File.html">File</a> _f {<span class="stringliteral">&quot;/tmp/FileSystemWatcher.example&quot;</span>};</div>
+<div class="line">  <span class="keywordflow">if</span> (_f.<a class="code hl_function" href="classAsyncFw_1_1File.html#a53118ce36851cb1c6845a82f915fd8ba">exists</a>()) _f.<a class="code hl_function" href="classAsyncFw_1_1File.html#a22c7e349dbcc3242374c6c685948d201">remove</a>();</div>
+<div class="line">  <span class="keywordflow">else</span> { _f.<a class="code hl_function" href="classAsyncFw_1_1File.html#a212a2b7db1a9cffd87c78b0285671bea">open</a>(std::ios::binary | std::ios::out); };</div>
+<div class="line"> </div>
+<div class="line">  lsInfoGreen() &lt;&lt; watcher;</div>
+<div class="line"> </div>
+<div class="line">  lsNotice() &lt;&lt; <span class="stringliteral">&quot;Start Application&quot;</span>;</div>
+<div class="line">  <span class="keywordtype">int</span> ret = <a class="code hl_function" href="classAsyncFw_1_1MainThread.html#ad12e620772820ad751868c7b49fa4190">MainThread::exec</a>();</div>
+<div class="line">  lsNotice() &lt;&lt; <span class="stringliteral">&quot;End Application&quot;</span> &lt;&lt; ret;</div>
+<div class="line"> </div>
+<div class="line">  <span class="keywordflow">return</span> ret;</div>
+<div class="line">}</div>
+</div><!-- fragment --> </dd></dl>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="FileSystemWatcher_2main_8cpp-example.html#_a0">FileSystemWatcher/main.cpp</a>.</dd>
 </dl>
 </div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>

@@ -83,7 +83,8 @@ private:
 
 /** @class Log Log.h <AsyncFw/Log> @brief Asynchronous log manager with circular database (Rrd) backend and duplicate compression.
 @details Intercepts engine-wide LogStream invocations, queues them thread-safely, and dispatches writing tasks to a dedicated backend thread.
-@par Example: @snippet Log/main.cpp snippet */
+@par Example
+@snippet Log/main.cpp snippet */
 class Log : public Rrd, public AbstractLog {
 public:
   using Message = LogStream::Message;

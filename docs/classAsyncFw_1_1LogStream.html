@@ -220,7 +220,31 @@ static void&#160;</td><td class="memItemRight"><b>setSenderPrefix</b> (const std
 <div class="textblock"><p>A high-performance, thread-safe logging stream utility utilizing RAII execution semantics. </p>
 <p><a class="el" href="classAsyncFw_1_1LogStream.html" title="A high-performance, thread-safe logging stream utility utilizing RAII execution semantics.">LogStream</a> provides dynamic string and data formatting using standard C++ stream insertion operators (operator&lt;&lt;). The logged content is accumulated in an internal buffer and is guaranteed to flush automatically to the configured outputs when the temporary <a class="el" href="classAsyncFw_1_1LogStream.html" title="A high-performance, thread-safe logging stream utility utilizing RAII execution semantics.">LogStream</a> instance is destroyed at the end of the statement (RAII). </p><dl class="section warning"><dt>Warning</dt><dd>Logging with the Emergency level does NOT throw an exception. It flushes the message, prints a [FATAL] diagnostic to stderr, and calls std::terminate() immediately. The stack is not unwound and destructors of local objects are not executed. </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>Please refer to the <b>example</b> for compile-time log optimizations (like LS_NO_TRACE) and standard inline vs formatting syntax usage styles. </dd></dl>
-<dl class="section user"><dt>Example: @snippet snippet.dox LogStream </dt><dd></dd></dl>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="comment">// 1. Inline streaming macros (ls*): Print FULL function signatures (__PRETTY_FUNCTION__)</span></div>
+<div class="line">  <span class="comment">// These macros can be completely stripped out at compile-time (e.g. via #define LS_NO_TRACE)</span></div>
+<div class="line">  lsTrace() &lt;&lt; <span class="stringliteral">&quot;Trace&quot;</span>;</div>
+<div class="line">  lsDebug() &lt;&lt; <span class="stringliteral">&quot;Debug&quot;</span>;</div>
+<div class="line">  lsInfo() &lt;&lt; <span class="stringliteral">&quot;Info&quot;</span>;</div>
+<div class="line">  lsInfoRed() &lt;&lt; <span class="stringliteral">&quot;Info red&quot;</span>;</div>
+<div class="line">  lsInfoGreen() &lt;&lt; <span class="stringliteral">&quot;Info green&quot;</span>;</div>
+<div class="line">  lsInfoBlue() &lt;&lt; <span class="stringliteral">&quot;Info blue&quot;</span>;</div>
+<div class="line">  lsInfoMagenta() &lt;&lt; <span class="stringliteral">&quot;Info magenta&quot;</span>;</div>
+<div class="line">  lsInfoCyan() &lt;&lt; <span class="stringliteral">&quot;Info cyan&quot;</span>;</div>
+<div class="line">  lsNotice() &lt;&lt; <span class="stringliteral">&quot;Notice&quot;</span>;</div>
+<div class="line">  lsWarning() &lt;&lt; <span class="stringliteral">&quot;Warning&quot;</span>;</div>
+<div class="line">  lsError() &lt;&lt; <span class="stringliteral">&quot;Error&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">// 2. Formatting macros (log*): Print only the parsed Class Name or &quot;Application&quot;</span></div>
+<div class="line">  <span class="comment">// Unlike ls* macros, these are always compiled into the binary</span></div>
+<div class="line">  logTrace() &lt;&lt; <span class="stringliteral">&quot;Trace&quot;</span>;</div>
+<div class="line">  logDebug() &lt;&lt; <span class="stringliteral">&quot;Debug&quot;</span>;</div>
+<div class="line">  logInfo() &lt;&lt; <span class="stringliteral">&quot;Info&quot;</span>;</div>
+<div class="line">  logNotice() &lt;&lt; <span class="stringliteral">&quot;Notice&quot;</span>;</div>
+<div class="line">  logWarning() &lt;&lt; <span class="stringliteral">&quot;Warning&quot;</span>;</div>
+<div class="line">  logError() &lt;&lt; <span class="stringliteral">&quot;Error&quot;</span>;</div>
+<div class="line">  logAlert() &lt;&lt; <span class="stringliteral">&quot;logAlert&quot;</span>;</div>
+<div class="line">  <span class="comment">//logEmergency() &lt;&lt; &quot;Emergency&quot;;  // Un-commenting this will automatically throw a std::runtime_error</span></div>
+</div><!-- fragment --> </dd></dl>
 </div><a name="doc-enum-members" id="doc-enum-members"></a><h2 id="header-doc-enum-members" class="groupheader">Member Enumeration Documentation</h2>
 <a id="afa2f6c5311ced6b973d39d6e5ced5731" name="afa2f6c5311ced6b973d39d6e5ced5731"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#afa2f6c5311ced6b973d39d6e5ced5731">&#9670;&#160;</a></span>MessageType</h2>

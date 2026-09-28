@@ -155,7 +155,55 @@ class AsyncFw::Cache&lt; T &gt;</div><p>A thread-safe cache wrapper that emits a
   </table>
   </dd>
 </dl>
-<dl class="section user"><dt>Example: @snippet Cache/main.cpp snippet </dt><dd></dd></dl>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;AsyncFw/MainThread&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;AsyncFw/ThreadPool&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;AsyncFw/Timer&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;AsyncFw/Cache&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;AsyncFw/LogStream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">struct </span>Config {</div>
+<div class="line">  std::string ipAddress;</div>
+<div class="line">  <span class="keywordtype">int</span> port;</div>
+<div class="line">  <span class="keywordtype">int</span> maxConnections;</div>
+<div class="line">};</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[]) {</div>
+<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Instance.html#a8000597f0e7ee4bd6669491a5b502beb">AsyncFw::Instance&lt;AsyncFw::ThreadPool&gt;::create</a>(<span class="stringliteral">&quot;CacheExamplePool&quot;</span>);</div>
+<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1Thread.html">AsyncFw::Thread</a> *thread = <a class="code hl_function" href="classAsyncFw_1_1ThreadPool.html#a086c0271dcb7c4be416705d622145f83">AsyncFw::ThreadPool::instance</a>()-&gt;<a class="code hl_function" href="classAsyncFw_1_1ThreadPool.html#a02cf5b98df2bbd01b4757e09fceece49">createThread</a>(<span class="stringliteral">&quot;CacheExampleThread&quot;</span>);</div>
+<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1Cache.html">AsyncFw::Cache&lt;Config&gt;</a> configCache(50);</div>
+<div class="line"> </div>
+<div class="line">  thread-&gt;<a class="code hl_variable" href="classAsyncFw_1_1Thread.html#abac958eae1def0e3c0e32a7ebebc45eb">started</a>.<a class="code hl_function" href="classAsyncFw_1_1FunctionConnector.html#ae1f65144956b3b1247d58614e4080f63">connect</a>([&amp;configCache]() {</div>
+<div class="line">    configCache.update.connect([&amp;configCache]() {</div>
+<div class="line">      lsNotice() &lt;&lt; <span class="stringliteral">&quot;update in:&quot;</span> &lt;&lt; <a class="code hl_function" href="classAsyncFw_1_1Thread.html#a0a3bd6a54db28f73ff59cfea6a40b07a">AsyncFw::Thread::current</a>()-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd">name</a>();</div>
+<div class="line">      std::this_thread::sleep_for(std::chrono::milliseconds(25));</div>
+<div class="line">      <a class="code hl_struct" href="structAsyncFw_1_1LockData.html">AsyncFw::LockData</a> conf = configCache.acquire();</div>
+<div class="line">      conf-&gt;ipAddress = <span class="stringliteral">&quot;192.168.1.50&quot;</span>;</div>
+<div class="line">      conf-&gt;port = 8080;</div>
+<div class="line">      conf-&gt;maxConnections = 100;</div>
+<div class="line">      configCache.touch();</div>
+<div class="line">    });</div>
+<div class="line">  });</div>
+<div class="line"> </div>
+<div class="line">  configCache.update.connect([&amp;configCache]() { lsDebug() &lt;&lt; <span class="stringliteral">&quot;log only&quot;</span> &lt;&lt; <a class="code hl_function" href="classAsyncFw_1_1Thread.html#a0a3bd6a54db28f73ff59cfea6a40b07a">AsyncFw::Thread::current</a>()-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd">name</a>(); });</div>
+<div class="line"> </div>
+<div class="line">  configCache.store({<span class="stringliteral">&quot;127.0.0.1&quot;</span>, 8000, 50});</div>
+<div class="line"> </div>
+<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1Timer.html">AsyncFw::Timer</a> timer;</div>
+<div class="line">  timer.<a class="code hl_variable" href="classAsyncFw_1_1Timer.html#acf307d575a38d2b3bb852202d0126fcd">timeout</a>.<a class="code hl_function" href="classAsyncFw_1_1FunctionConnector.html#ae1f65144956b3b1247d58614e4080f63">connect</a>([&amp;configCache]() {</div>
+<div class="line">    <a class="code hl_struct" href="structAsyncFw_1_1LockData.html">AsyncFw::LockData</a> conf = configCache.acquire&lt;<a class="code hl_enumvalue" href="LockData_8h.html#ab8bc20e4f7d757a564b0c386069ca560aa6156ea9d66fef24e87e841fbabf7cca">AsyncFw::Mode::Lock::Shared</a>&gt;();</div>
+<div class="line">    lsInfoGreen() &lt;&lt; <span class="stringliteral">&quot;Config IP:&quot;</span> &lt;&lt; conf-&gt;ipAddress &lt;&lt; <span class="stringliteral">&quot;Port:&quot;</span> &lt;&lt; conf-&gt;port;</div>
+<div class="line">    <span class="keywordflow">if</span> (conf-&gt;port == 8080) <a class="code hl_function" href="classAsyncFw_1_1MainThread.html#a76fed3a2c1cfdbdb67f2b209e6457657">AsyncFw::MainThread::exit</a>(0);</div>
+<div class="line">  });</div>
+<div class="line"> </div>
+<div class="line">  timer.<a class="code hl_function" href="classAsyncFw_1_1Timer.html#a14d02d88bd3682afd7c8fd72cc670e46">start</a>(10);</div>
+<div class="line"> </div>
+<div class="line">  logNotice() &lt;&lt; <span class="stringliteral">&quot;Start Application&quot;</span>;</div>
+<div class="line">  <span class="keywordtype">int</span> ret = <a class="code hl_function" href="classAsyncFw_1_1MainThread.html#ad12e620772820ad751868c7b49fa4190">AsyncFw::MainThread::exec</a>();</div>
+<div class="line">  logNotice() &lt;&lt; <span class="stringliteral">&quot;End Application&quot;</span> &lt;&lt; ret;</div>
+<div class="line"> </div>
+<div class="line">  <span class="keywordflow">return</span> ret;</div>
+<div class="line">}</div>
+</div><!-- fragment --> </dd></dl>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="Cache_2main_8cpp-example.html#_a4">Cache/main.cpp</a>.</dd>
 </dl>
 </div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>

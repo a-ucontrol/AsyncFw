@@ -20,7 +20,8 @@ namespace AsyncFw {
 - **File-Centric Design:** This class is engineered primarily to monitor specific file paths.
 - **Windows Wildcard Limitation:** Broad directory masks or wildcard paths (e.g., /tmp/\*) are **not supported on Windows + Qt6** and will cause addPath to fail. This usage is valid only under native Linux implementations.
 - **Debouncing Mechanism:** In-flight modifications (continuous bursts of write operations) are automatically aggregated. A single Changed notification is dispatched exactly 1 second after the file system activity settles down.
-@par Example: @snippet FileSystemWatcher/main.cpp snippet */
+@par Example
+@snippet FileSystemWatcher/main.cpp snippet */
 class FileSystemWatcher {
   friend LogStream &operator<<(LogStream &, const FileSystemWatcher &);
   /** @enum Event @brief Internal mapping of the file system events. */

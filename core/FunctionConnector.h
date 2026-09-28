@@ -184,7 +184,8 @@ protected:
 2. **Protected Variant (Auto policy, emission restricted to Sender):** @code AsyncFw::FunctionConnector<int, std::string>::Protected<Sender> connector; @endcode
 3. **Strict Compile-Time Variant (Emission restricted to Sender and strict connection type validation):** @code AsyncFw::FunctionConnector<int, std::string>::Policy<AsyncFw::AbstractFunctionConnector::DirectOnly>::Protected<Sender> connector; @endcode
 @note All subscription registrations and signal emissions are fully synchronized internally.
-@par Example: @snippet FunctionConnector/main.cpp snippet */
+@par Example
+@snippet FunctionConnector/main.cpp snippet */
 template <typename... Args>
 class FunctionConnector : public internal::FunctionConnector<AbstractFunctionConnector::Auto, Args...> {
 public:
@@ -236,7 +237,8 @@ public:
 /** @class FunctionConnectionGuard FunctionConnector.h <AsyncFw/FunctionConnector> @brief An RAII guard that automatically manages the lifecycle of a FunctionConnector connection.
 @details This class provides automated connection management using the Resource Acquisition Is Initialization (RAII) idiom. When a FunctionConnectionGuard goes out of scope or is destroyed, it automatically disconnects and cleans up its associated connection. It supports move semantics, allowing the guard to be transferred between scopes or stored inside containers. It explicitly disables copying.
 @note The destruction of the connection is thread-safe. If the connection type is asynchronous and managed by another thread, the actual deletion of the connection object is safely dispatched to that specific thread event loop.
-@par Example: @snippet snippet.dox FunctionConnectorGuard */
+@par Example
+@snippet snippet.dox FunctionConnectorGuard */
 class FunctionConnectionGuard {
   friend AbstractFunctionConnector::Connection;
 
@@ -263,7 +265,8 @@ private:
 
 /** @class FunctionConnectionGuardList FunctionConnector.h <AsyncFw/FunctionConnector> @brief A helper container designed to manage multiple FunctionConnectionGuard lifecycles at once.
 @details Inherits from std::vector<FunctionConnectionGuard>. It provides a convenient way to aggregate multiple connection guards within a single scope (e.g., inside a controller or view class). When the list goes out of scope, all registered connections are safely and automatically disconnected.
-@par Example: @snippet snippet.dox FunctionConnectorGuardList */
+@par Example
+@snippet snippet.dox FunctionConnectorGuardList */
 class FunctionConnectionGuardList : public std::vector<FunctionConnectionGuard> {
 public:
   /** @brief Appends a moving connection guard to the management list. */

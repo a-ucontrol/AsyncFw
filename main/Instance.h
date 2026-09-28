@@ -39,7 +39,8 @@ private:
 /** @class Instance Instance.h <AsyncFw/Instance> @brief A template-based global registry wrapper for managing application-wide default objects (Global Default Instances).
 @details Unlike a strict Singleton pattern, the underlying class (e.g., ThreadPool) remains a standard class that can be instantiated multiple times independently. This wrapper acts as a Service Locator, managing a single engine-wide global default instance.
 @warning The static create() methods are **NOT thread-safe for concurrent instantiation**. All global default instances MUST be explicitly initialized (via create()) inside the primary execution thread (typically within main()) *BEFORE* any background worker threads or event loops are launched.
-@par Example: @snippet Instance/main.cpp snippet */
+@par Example
+@snippet Instance/main.cpp snippet */
 template <typename T>
 class Instance : public AbstractInstance {
   friend T;
