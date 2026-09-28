@@ -85,7 +85,7 @@ int query_callback(int, const struct sockaddr *from, size_t addrlen, mdns_entry_
       std::string name = hostName(MDNS_STRING_FORMAT(namestr));
       std::vector<MulticastDns::Host>::iterator it = std::lower_bound(currentHostList.begin(), currentHostList.end(), name, Compare());
       if (it != currentHostList.end() && (*it).name == name) (*it).ipv4.clear();
-      else { currentHostList.insert(it, {name, {}, {}, {}, 0}); }
+      else { currentHostList.insert(it, {name, {}, {}, {}, 0, {}}); }
       trace() << "PTR" << std::endl << MDNS_STRING_FORMAT(fromaddrstr) << entrytype << MDNS_STRING_FORMAT(entrystr) << name;
     } else trace() << "PTR" << std::endl << MDNS_STRING_FORMAT(fromaddrstr) << entrytype << MDNS_STRING_FORMAT(entrystr);
   } else if (rtype == MDNS_RECORDTYPE_SRV) {
@@ -258,7 +258,7 @@ void MulticastDns::servicePollEvent(int fd) {
     r = mdns_service_event(fd, &private_.sd);
     if (r == -2) {
       trace() << LogStream::Color::Blue << "ignore own response" << fd;
-      if (::recv(fd, private_.sd.buffer, private_.sd.capacity, 0) <= 0) break;
+      if (::recv(fd, static_cast<char *>(private_.sd.buffer), private_.sd.capacity, 0) <= 0) break;
       continue;
     }
     if (r <= 0) break;
