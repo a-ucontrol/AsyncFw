@@ -378,7 +378,7 @@ AbstractThread::~AbstractThread() {
   lsTrace() << LOG_THREAD_NAME << LogStream::Color::Magenta << private_.id << LogStream::Color::Default << "-" << private_.tasks.size() << private_.timers.size() << private_.poll_tasks.size() << "-" << private_.process_tasks_.size() << private_.process_timer_tasks_.size() << private_.process_poll_tasks_.size();
 
   if (!private_.tasks.empty()) {
-    lsDebug() << LogStream::Color::DarkRed << "task list not empty" << private_.tasks.size();
+    lsTrace() << LogStream::Color::DarkRed << "task list not empty" << private_.tasks.size();
     std::swap(private_.process_tasks_, private_.tasks);
     private_.process_tasks();
   }
@@ -396,7 +396,7 @@ AbstractThread::~AbstractThread() {
 #endif
 
   if (!private_.timers.empty()) {
-    lsDebug() << LogStream::Color::DarkRed << "timer list not empty" << private_.timers.size();
+    lsTrace() << LogStream::Color::DarkRed << "timer list not empty" << private_.timers.size();
     while (!private_.timers.empty()) {
       Private::Timer _timer = private_.timers.back();
       private_.timers.pop_back();
@@ -405,7 +405,7 @@ AbstractThread::~AbstractThread() {
     }
   }
   if (!private_.poll_tasks.empty()) {
-    lsWarning() << LogStream::Color::DarkRed << "poll task list not empty" << private_.poll_tasks.size();
+    lsDebug() << LogStream::Color::DarkRed << "poll task list not empty" << private_.poll_tasks.size();
     while (!private_.poll_tasks.empty()) {
       Private::PollTask *_pt = private_.poll_tasks.back();
       private_.poll_tasks.pop_back();

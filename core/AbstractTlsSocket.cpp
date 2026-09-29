@@ -260,5 +260,13 @@ int AbstractTlsSocket::write_fd(const void *data, int size) {
 #endif
 
 namespace AsyncFw {
-LogStream &operator<<(LogStream &log, const AbstractTlsSocket &s) { return (log << *static_cast<const AbstractSocket *>(&s)) << (!s.private_.ctx.empty() ? s.private_.ctx.commonName() + '/' + (!s.private_.ctx.verifyName().empty() ? s.private_.ctx.verifyName() : "\"\"") : "empty"); }
+LogStream &operator<<(LogStream &log, const AbstractTlsSocket &s) {
+  log << *static_cast<const AbstractSocket *>(&s);
+  if (!s.private_.ctx.empty()) {
+    std::string cn = s.private_.ctx.commonName();
+    std::string vn = s.private_.ctx.verifyName();
+    return log << (!cn.empty() ? cn : "\"\"") + '/' + (!vn.empty() ? vn : "\"\"");
+  }
+  return log << "empty";
+}
 }  // namespace AsyncFw

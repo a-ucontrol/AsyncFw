@@ -325,9 +325,19 @@ DataArray TlsContext::signRequest(DataArray &req, int days) {
   return _da;
 }
 
-std::string TlsContext::commonName() const { return commonName(SSL_CTX_get0_certificate(private_->ctx)); }
+std::string TlsContext::commonName() const {
+  if (!private_->ctx) {
+    lsWarning() << "empty";
+    return {};
+  }
+  return commonName(SSL_CTX_get0_certificate(private_->ctx));
+}
 
 DataArray TlsContext::key() const {
+  if (!private_->ctx) {
+    lsWarning() << "empty";
+    return {};
+  }
   EVP_PKEY *_k = SSL_CTX_get0_privatekey(private_->ctx);
   if (!_k) {
     lsError() << "get key";
@@ -337,6 +347,10 @@ DataArray TlsContext::key() const {
 }
 
 DataArray TlsContext::certificate() const {
+  if (!private_->ctx) {
+    lsWarning() << "empty";
+    return {};
+  }
   X509 *_c = SSL_CTX_get0_certificate(private_->ctx);
   if (!_c) {
     lsError() << "get certificate";
@@ -346,6 +360,10 @@ DataArray TlsContext::certificate() const {
 }
 
 DataArrayList TlsContext::trusted() const {
+  if (!private_->ctx) {
+    lsWarning() << "empty";
+    return {};
+  }
   X509_STORE *_store = SSL_CTX_get_cert_store(private_->ctx);
   STACK_OF(X509) *_t = X509_STORE_get1_all_certs(_store);
   int _s = sk_X509_num(_t);
@@ -458,7 +476,7 @@ std::string TlsContext::infoRequest(const DataArray &request) {
 
 std::string TlsContext::commonName(X509 *cert) {
   if (!cert) {
-    lsWarning() << "null certificate";
+    lsTrace() << "null certificate";
     return {};
   }
   X509_NAME *subject = X509_get_subject_name(cert);

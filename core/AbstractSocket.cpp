@@ -89,9 +89,9 @@ AbstractSocket::AbstractSocket(int family, int type, int protocol, OutputBufferM
 }
 
 AbstractSocket::~AbstractSocket() {
+  lsTrace() << thread_ << address() + ':' + std::to_string(port()) + '/' + peerAddress() + ':' + std::to_string(peerPort());
   if (state_ != Destroy) {
-    lsWarning() << this << LogStream::Color::Red << "not destroy state:" << static_cast<int>(state_);
-    lsTrace() << thread_ << address() + ':' + std::to_string(port()) + '/' + peerAddress() + ':' + std::to_string(peerPort());
+    lsDebug() << this << LogStream::Color::Red << "not destroy state:" << static_cast<int>(state_);
     if (thread_) {
       if (fd_ >= 0) thread_->removePollDescriptor(fd_);
       removeFromThread();
@@ -99,7 +99,6 @@ AbstractSocket::~AbstractSocket() {
   }
   if (fd_ >= 0) close_fd(fd_);
   delete &private_;
-  lsTrace();
 }
 
 bool AbstractSocket::listen(const std::string &address, uint16_t port) {
