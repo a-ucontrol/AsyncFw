@@ -374,6 +374,15 @@ AbstractThread::~AbstractThread() {
   close_fd(private_.WAKE_FD_WRITE);
   #endif
 #endif
+
+  lsTrace() << LOG_THREAD_NAME << LogStream::Color::Magenta << private_.id << LogStream::Color::Default << "-" << private_.tasks.size() << private_.timers.size() << private_.poll_tasks.size() << "-" << private_.process_tasks_.size() << private_.process_timer_tasks_.size() << private_.process_poll_tasks_.size();
+
+  if (!private_.tasks.empty()) {
+    lsDebug() << LogStream::Color::DarkRed << "task list not empty" << private_.tasks.size();
+    std::swap(private_.process_tasks_, private_.tasks);
+    private_.process_tasks();
+  }
+
 #ifdef IO_URING_WAIT
   struct io_uring_sqe *sqe = io_uring_get_sqe(&private_.ring);
   if (sqe) {
@@ -386,13 +395,6 @@ AbstractThread::~AbstractThread() {
   io_uring_queue_exit(&private_.ring);
 #endif
 
-  lsTrace() << LOG_THREAD_NAME << LogStream::Color::Magenta << private_.id << LogStream::Color::Default << "-" << private_.tasks.size() << private_.timers.size() << private_.poll_tasks.size() << "-" << private_.process_tasks_.size() << private_.process_timer_tasks_.size() << private_.process_poll_tasks_.size();
-
-  if (!private_.tasks.empty()) {
-    lsDebug() << LogStream::Color::DarkRed << "task list not empty" << private_.tasks.size();
-    std::swap(private_.process_tasks_, private_.tasks);
-    private_.process_tasks();
-  }
   if (!private_.timers.empty()) {
     lsDebug() << LogStream::Color::DarkRed << "timer list not empty" << private_.timers.size();
     while (!private_.timers.empty()) {

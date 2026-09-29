@@ -98,18 +98,16 @@ private:
     });
 #endif
 #ifdef EXIT_ON_UNIX_SIGNAL
-    eventfd_ = eventfd(0, EFD_NONBLOCK);
-  #ifdef USE_QAPPLICATION
     AbstractThread::current()->invoke([this]() {
-  #endif
+      eventfd_ = eventfd(0, EFD_NONBLOCK);
       appendPollTask(eventfd_, AbstractThread::PollIn, [this](AbstractThread::PollEvents) {
         eventfd_t _v;
         if (eventfd_read(eventfd_, &_v) == 0) (*exitTask)();
       });
   #ifdef USE_QAPPLICATION
       startedEvent();
-    });
   #endif
+    });
 #endif
   }
   ~MainThread() {
