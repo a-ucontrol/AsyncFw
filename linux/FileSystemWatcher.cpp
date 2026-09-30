@@ -143,7 +143,7 @@ FileSystemWatcher::FileSystemWatcher(const std::vector<std::string> &paths) : pr
         }
         continue;
       }
-
+      if (e->len == 0) continue;
       Private::WatchPath wp;
       wp.directory = (*itd)->directory;
       wp.name = e->name;
@@ -246,9 +246,10 @@ bool FileSystemWatcher::removePath(const std::string &path) {
   private_.remove_(*itw);
   std::vector<Private::Watch *>::iterator itd = std::lower_bound(private_.wds_.begin(), private_.wds_.end(), (*itw)->d, Private::CompareWatchDescriptor());
   warning_if(itd == private_.wds_.end() || (*itd)->d != (*itw)->d) << LogStream::Color::Red << "itd == wds_.end() || (*itd)->d != (*itw)->d";
-  inotify_rm_watch(private_.notifyfd_, (*itd)->d);
-  if (!(*itd)->name.empty()) private_.wds_.erase(itd);
-  else {
+  if (!(*itd)->name.empty()) {
+    inotify_rm_watch(private_.notifyfd_, (*itd)->d);
+    private_.wds_.erase(itd);
+  } else {
     Private::WatchPath wp;
     wp.directory = (*itd)->directory;
     std::pair<std::vector<Private::Watch *>::iterator, std::vector<Private::Watch *>::iterator> itp = std::equal_range(private_.files_.begin(), private_.files_.end(), wp, Private::CompareWatch());
