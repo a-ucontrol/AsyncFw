@@ -11,22 +11,31 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include <AsyncFw/Timer>
 #include <AsyncFw/LogStream>
 
+//#define REDIRECT_STDIN
+
 int main(int argc, char *argv[]) {
 #ifdef USE_QAPPLICATION
   QCoreApplication app(argc, argv);
 #endif
-
+#ifndef REDIRECT_STDIN
   AsyncFw::SystemProcess process;
+#else
+  AsyncFw::SystemProcess process(true);
+#endif
   process.output.connect([](const std::string &str, bool err) {
     if (!err) logInfo() << "OUT:" << '\n' + str;
-    else { logError() << "ERR:" << '\n' + str; }
+    else logError() << "ERR:" << '\n' + str;
   });
   process.stateChanged.connect([](AsyncFw::SystemProcess::State _s) {
     if (_s == AsyncFw::SystemProcess::Running) return;
     AsyncFw::MainThread::exit(0);
   });
 #ifndef _WIN32
+  #ifndef REDIRECT_STDIN
   bool _r = process.start("/bin/bash");
+  #else
+  bool _r = process.start("/bin/bash", {"-i"});  // for redirect stdin
+  #endif
   if (!_r) {
     logNotice() << "Start '/bin/bash' error";
     return 0;

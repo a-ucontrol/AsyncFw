@@ -66,20 +66,6 @@ bool SystemProcess::start() {
     return false;
   }
 
-  if (private_.redirect_stdin)
-    private_.thread_->appendPollTask(STDIN_FILENO, AbstractThread::PollIn, [this](AbstractThread::PollEvents e) {
-      if (e & AbstractThread::PollIn) {
-        std::string buf;
-        if (private_.read_fd(STDIN_FILENO, &buf)) input(buf);
-        trace() << LogStream::Color::DarkRed << "pollin in" << buf.size();
-      }
-      if (e & ~AbstractThread::PollIn) {
-        private_.thread_->removePollDescriptor(STDIN_FILENO);
-        private_.redirect_stdin = false;
-        lsWarning() << LogStream::Color::Red << "redirect stdin disabled";
-      }
-    });
-
   private_.thread_->appendPollTask(private_.out, AbstractThread::PollIn, [this](AbstractThread::PollEvents e) {
     if (e & AbstractThread::PollIn) {
       std::string buf;
@@ -139,9 +125,10 @@ bool SystemProcess::input(const std::string &str) const {
 void SystemProcess::finality() {
   int r;
 
-  if (private_.redirect_stdin) private_.thread_->removePollDescriptor(STDIN_FILENO);
-  ::close(private_.in);
-  private_.in = -1;
+  if (private_.in >= 0) {
+    ::close(private_.in);
+    private_.in = -1;
+  }
   lsTrace() << LogStream::Color::Red << "closed input";
 
   if (waitpid(private_.pid_, &r, 0) == private_.pid_) {
@@ -177,7 +164,7 @@ bool SystemProcess::Private::process() {
     ::close(_pipe_out[1]);
     return false;
   }
-  if (pipe(_pipe_in) == -1) {
+  if (!redirect_stdin && pipe(_pipe_in) == -1) {
     ::close(_pipe_out[0]);
     ::close(_pipe_out[1]);
     ::close(_pipe_err[0]);
@@ -189,31 +176,35 @@ bool SystemProcess::Private::process() {
     ::close(_pipe_out[1]);
     ::close(_pipe_err[0]);
     ::close(_pipe_err[1]);
-    ::close(_pipe_in[0]);
-    ::close(_pipe_in[1]);
+    if (!redirect_stdin) {
+      ::close(_pipe_in[0]);
+      ::close(_pipe_in[1]);
+    }
     return false;
   }
 
   if (pid_ > 0) {
     if (::close(_pipe_out[1]) == -1) {
       ::close(_pipe_err[1]);
-      ::close(_pipe_in[0]);
+      if (!redirect_stdin) ::close(_pipe_in[0]);
       return false;
     }
     if (::close(_pipe_err[1]) == -1) {
-      ::close(_pipe_in[0]);
+      if (!redirect_stdin) ::close(_pipe_in[0]);
       return false;
     }
-    if (::close(_pipe_in[0]) == -1) return false;
     out = _pipe_out[0];
     err = _pipe_err[0];
-    in = _pipe_in[1];
+    if (!redirect_stdin) {
+      if (::close(_pipe_in[0]) == -1) return false;
+      in = _pipe_in[1];
+    }
     return true;
   }
 
   if (::close(_pipe_out[0]) == -1 || dup2(_pipe_out[1], STDOUT_FILENO) == -1 || ::close(_pipe_out[1]) == -1) goto FAIL;
   if (::close(_pipe_err[0]) == -1 || dup2(_pipe_err[1], STDERR_FILENO) == -1 || ::close(_pipe_err[1]) == -1) goto FAIL;
-  if (::close(_pipe_in[1]) == -1 || dup2(_pipe_in[0], STDIN_FILENO) == -1 || ::close(_pipe_in[0]) == -1) goto FAIL;
+  if (!redirect_stdin && (::close(_pipe_in[1]) == -1 || dup2(_pipe_in[0], STDIN_FILENO) == -1 || ::close(_pipe_in[0]) == -1)) goto FAIL;
 
   execv(cmdline_.c_str(), const_cast<char **>(_args.data()));
 

@@ -28,9 +28,8 @@ public:
     Crashed,   ///< Process terminated abnormally by OS or crash.
     Error      ///< Failed to fork, exec, or open I/O channels.
   };
-  /** @brief Constructs a new SystemProcess manager.
-  @param redirect_stdin **False (Default):** Input is written manually via input() method. **True:** Child process shares the standard input (stdin) with the parent process.
-  @warning When True, parent process must not read from stdin while child is active. */
+  /** @brief Constructs a new SystemProcess manager. @param redirect_stdin @n **False (Default):** A private pipe is created. The child reads from it, and the parent writes via input(). @n **True:** The child inherits the parent's standard input file descriptor directly. The child keeps all tty properties (isatty, termios, job control, SIGWINCH, Ctrl+C delivery). input() returns false in this mode.
+  @warning When redirect_stdin is True, the parent must not read from stdin while the child is active. */
   SystemProcess(bool = false);
   /** @brief Destructor. Synchronously releases internal data structures. */
   ~SystemProcess();
@@ -46,7 +45,8 @@ public:
   void wait();
   /** @brief Gets operating system exit status code. @return Integer exit code. Valid only when state() is Finished or Crashed. */
   int exitCode();
-  /** @brief Writes data string to standard input (stdin) of the child process. @param str Raw string buffer. @return True if successfully written. */
+  /** @brief Writes data string to standard input (stdin) of the child process. @param str Raw string buffer. @return True if successfully written.
+  @note Returns false when constructed with redirect_stdin == True — in that mode the child inherits the parent's stdin directly and there is no per-process input channel. */
   bool input(const std::string &) const;
 
   /** @brief Emitted asynchronously when the process execution state changes. */
