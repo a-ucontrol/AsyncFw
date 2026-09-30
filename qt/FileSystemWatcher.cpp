@@ -19,6 +19,12 @@ using namespace AsyncFw;
 #endif
 #include "core/extend_trace.hpp"
 
+// QFileSystemWatcher emits fileChanged() once per flush on Linux and often
+// twice per save on Windows. Without IN_CLOSE_WRITE (which the Qt API does
+// not expose) silence is used as a proxy for "end of activity", so bursts
+// are aggregated into a single debounced Changed.
+#define FILESYSTEMWATCHER_DEBOUNCE_MS 200
+
 struct FileSystemWatcher::Private {
   QFileSystemWatcher watcher_;
   struct WatchPath {
@@ -29,7 +35,7 @@ struct FileSystemWatcher::Private {
   };
   struct Watch : public WatchPath {
     using WatchPath::WatchPath;
-    bool d;
+    bool d;  // false: file watch is active; true: file is missing, rely on directory watch
   };
   std::vector<Watch *> files_;
   AbstractThread *thread_;
@@ -69,25 +75,33 @@ FileSystemWatcher::FileSystemWatcher(const std::vector<std::string> &paths) : pr
     std::replace(_path.begin(), _path.end(), '\\', '/');
     Private::WatchPath w(_path);
     auto it = std::lower_bound(private_.files_.begin(), private_.files_.end(), w, Private::CompareWatch());
-    if (it != private_.files_.end() && (*it)->name == w.name && (*it)->directory == w.directory) {
-      Private::Watch *watchItem = *it;
-      if (!private_.watcher_.files().contains(path)) notify(_path, Removed);
-      else {
-        notify(_path, Changed);
-        private_.remove_(watchItem);
+    if (it == private_.files_.end() || (*it)->name != w.name || (*it)->directory != w.directory) return;
+    Private::Watch *watchItem = *it;
+    if (!private_.watcher_.files().contains(path)) {
+      // File removed or renamed. Notify immediately, drop any pending debounced
+      // Changed for this file, and switch to the parent directory so a later
+      // recreation is detected.
+      notify(_path, Removed);
+      private_.remove_(watchItem);
+      if (!watchItem->d) {
+        private_.watcher_.addPath(QString::fromStdString(watchItem->directory));
+        watchItem->d = true;
       }
+    } else {
+      // File modified. Aggregate bursts into a single debounced Changed.
+      private_.append_(watchItem);
     }
   });
   QObject::connect(&private_.watcher_, &QFileSystemWatcher::directoryChanged, [this](const QString &path) {
-    std::string _path = path.toStdString();
-    std::replace(_path.begin(), _path.end(), '\\', '/');
+    std::string dirPath = path.toStdString();
+    std::replace(dirPath.begin(), dirPath.end(), '\\', '/');
     for (Private::Watch *w : private_.files_) {
-      if (w->directory == _path) {
-        _path = w->directory + '/' + w->name;
-        if (std::filesystem::exists(_path) && !private_.watcher_.files().contains(QString::fromStdString(_path))) {
-          private_.watcher_.addPath(QString::fromStdString(_path));
-          notify(_path, Created);
-        }
+      if (w->directory != dirPath || !w->d) continue;
+      std::string filePath = w->directory + '/' + w->name;
+      if (std::filesystem::exists(filePath) && !private_.watcher_.files().contains(QString::fromStdString(filePath))) {
+        private_.watcher_.addPath(QString::fromStdString(filePath));
+        w->d = false;
+        notify(filePath, Created);
       }
     }
   });
@@ -114,14 +128,15 @@ bool FileSystemWatcher::addPath(const std::string &path) {
     delete w;
     return false;
   }
-  //w->d = !((w->name != "*") ? private_.watcher_.addPath(path.c_str()) : true);
-  w->d = !private_.watcher_.addPath(path.c_str());
-  if (w->d) {
-    w->d = private_.watcher_.addPath(w->directory.c_str());
-    if (!w->d) {
-      delete w;
-      return false;
-    }
+  if (private_.watcher_.addPath(path.c_str())) {
+    // File exists and is now being watched directly.
+    w->d = false;
+  } else {
+    // File does not exist: fall back to watching the parent directory. The
+    // addPath() return value is intentionally ignored — the directory may
+    // already be watched on behalf of another pending file in the same dir.
+    private_.watcher_.addPath(w->directory.c_str());
+    w->d = true;
   }
   private_.files_.insert(it, w);
   return true;
@@ -138,9 +153,23 @@ bool FileSystemWatcher::removePath(const std::string &path) {
   Private::WatchPath wp {path};
   std::vector<Private::Watch *>::iterator itw = std::lower_bound(private_.files_.begin(), private_.files_.end(), wp, Private::CompareWatch());
   if (itw == private_.files_.end() || (*itw)->name != wp.name || (*itw)->directory != wp.directory) return false;
-  private_.remove_(*itw);
-  private_.watcher_.removePath(path.c_str());
-  delete *itw;
+  Private::Watch *w = *itw;
+  private_.remove_(w);
+  if (w->d) {
+    // Directory-watch mode: drop the directory from QFileSystemWatcher only
+    // if no other tracked file in the same directory still relies on it.
+    bool stillNeeded = false;
+    for (const Private::Watch *other : private_.files_) {
+      if (other != w && other->d && other->directory == w->directory) {
+        stillNeeded = true;
+        break;
+      }
+    }
+    if (!stillNeeded) private_.watcher_.removePath(QString::fromStdString(w->directory));
+  } else {
+    private_.watcher_.removePath(QString::fromStdString(w->directory + '/' + w->name));
+  }
+  delete w;
   private_.files_.erase(itw);
   return true;
 }
@@ -161,7 +190,7 @@ std::vector<std::string> FileSystemWatcher::paths() const {
 
 void FileSystemWatcher::Private::append_(const Watch *_w) {
   trace() << LogStream::Color::DarkRed << _w->directory << _w->name << _w->d;
-  thread_->modifyTimer(timerid_, 1000);
+  thread_->modifyTimer(timerid_, FILESYSTEMWATCHER_DEBOUNCE_MS);
   std::vector<const Watch *>::iterator it = std::find(we_.begin(), we_.end(), _w);
   if (it != we_.end()) return;
   we_.emplace_back(_w);
