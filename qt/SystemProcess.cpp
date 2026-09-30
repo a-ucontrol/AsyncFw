@@ -26,18 +26,57 @@ struct SystemProcess::Private {
   State state_ = None;
   AbstractThread *thread_;
   std::vector<std::string> args;
-  int code_;
+  int code_ = 0;
   std::string cmdline_;
   QProcess process_;
+  bool finalized_ = false;
 };
 
 SystemProcess::SystemProcess(bool redirect_stdin) : private_(*new Private) {
   private_.redirect_stdin = redirect_stdin;
   private_.thread_ = AbstractThread::current();
+
+  private_.process_.setInputChannelMode(private_.redirect_stdin ? QProcess::ForwardedInputChannel : QProcess::ManagedInputChannel);
+
+  QObject::connect(&private_.process_, &QProcess::readyReadStandardOutput, [this]() {
+    if (private_.state_ != Running) return;
+    std::string buf = private_.process_.readAllStandardOutput().toStdString();
+    output(buf, false);
+    trace() << "out" << buf.size() << LogStream::Color::DarkGreen << buf;
+  });
+
+  QObject::connect(&private_.process_, &QProcess::readyReadStandardError, [this]() {
+    if (private_.state_ != Running) return;
+    std::string buf = private_.process_.readAllStandardError().toStdString();
+    output(buf, true);
+    trace() << "err" << buf.size() << LogStream::Color::DarkRed << buf;
+  });
+
+  QObject::connect(&private_.process_, &QProcess::finished, [this](int exitCode, QProcess::ExitStatus exitStatus) {
+    if (private_.state_ != Running) return;
+    private_.state_ = exitStatus == QProcess::NormalExit ? Finished : Crashed;
+    private_.code_ = exitCode;
+    finality();
+  });
+
+  QObject::connect(&private_.process_, &QProcess::errorOccurred, [this](QProcess::ProcessError err) {
+    if (private_.state_ != Running) return;
+    // Crashed is reported by finished() with CrashExit status; skip here
+    // to avoid overwriting the more precise result.
+    if (err == QProcess::Crashed) return;
+    lsWarning() << "QProcess error:" << static_cast<int>(err) << private_.process_.errorString();
+    private_.state_ = Error;
+    if (private_.code_ == 0) private_.code_ = -1;
+    finality();
+  });
+
   lsTrace();
 }
 
 SystemProcess::~SystemProcess() {
+  // Detach signals before tearing down so no handler runs against a
+  // half-destroyed object.
+  private_.process_.disconnect();
   delete &private_;
   lsTrace();
 }
@@ -51,44 +90,28 @@ bool SystemProcess::start(const std::string &_cmdline, const std::vector<std::st
 bool SystemProcess::start() {
   private_.state_ = None;
   private_.code_ = 0;
-
-  private_.process_.setInputChannelMode(private_.redirect_stdin ? QProcess::ForwardedInputChannel : QProcess::ManagedInputChannel);
-
-  QObject::connect(&private_.process_, &QProcess::readyReadStandardOutput, [this]() {
-    std::string buf = private_.process_.readAllStandardOutput().toStdString();
-    output(buf, false);
-    trace() << "out" << buf.size() << LogStream::Color::DarkGreen << buf;
-  });
-
-  QObject::connect(&private_.process_, &QProcess::readyReadStandardError, [this]() {
-    std::string buf = private_.process_.readAllStandardError().toStdString();
-    output(buf, true);
-    trace() << "out" << buf.size() << LogStream::Color::DarkRed << buf;
-  });
-
-  QObject::connect(&private_.process_, &QProcess::finished, [this](int exitCode, QProcess::ExitStatus exitStatus) {
-    private_.state_ = exitStatus == QProcess::NormalExit ? Finished : Crashed;
-    private_.code_ = exitCode;
-    finality();
-  });
-
-  lsTrace() << LogStream::Color::Green << private_.cmdline_;
-
-  private_.state_ = Running;
-  stateChanged(private_.state_);
+  private_.finalized_ = false;
 
   QStringList _args;
   for (const std::string &a : private_.args) _args += QString::fromStdString(a);
   private_.process_.setProgram(QString::fromStdString(private_.cmdline_));
   private_.process_.setArguments(_args);
+
+  lsTrace() << LogStream::Color::Green << private_.cmdline_;
+
   private_.process_.start();
 
   if (private_.process_.state() == QProcess::NotRunning) {
+    // Synchronous startup failure. Asynchronous failures arrive via
+    // errorOccurred() below.
     private_.state_ = Error;
     private_.code_ = -1;
+    stateChanged(private_.state_);
     return false;
   }
 
+  private_.state_ = Running;
+  stateChanged(private_.state_);
   return true;
 }
 
@@ -106,12 +129,35 @@ void SystemProcess::wait() {
 
 int SystemProcess::exitCode() { return private_.code_; }
 
-bool SystemProcess::input(const std::string &str) const { return private_.process_.write(QByteArray::fromStdString(str)) > 0; }
+bool SystemProcess::input(const std::string &str) const {
+  if (private_.redirect_stdin) {
+    // Child shares the parent's stdin (ForwardedInputChannel); there is
+    // no per-process input channel to write to.
+    return false;
+  }
+  return private_.process_.write(QByteArray::fromStdString(str)) > 0;
+}
 
 void SystemProcess::finality() {
-  private_.process_.disconnect();
+  if (private_.finalized_) return;
+  private_.finalized_ = true;
+
+  // Drain any residual output. readyRead signals normally arrive before
+  // finished, but errorOccurred may fire without them.
+  {
+    std::string buf = private_.process_.readAllStandardOutput().toStdString();
+    if (!buf.empty()) output(buf, false);
+  }
+  {
+    std::string buf = private_.process_.readAllStandardError().toStdString();
+    if (!buf.empty()) output(buf, true);
+  }
+
   stateChanged(private_.state_);
+
   if (private_.loop.isRunning()) {
+    // Deliver queued signal deliveries before leaving the nested loop, so
+    // subscribers get the final output and state in one pass.
     private_.loop.processEvents();
     private_.loop.quit();
   }
