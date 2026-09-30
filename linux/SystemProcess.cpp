@@ -7,6 +7,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #include <cstdlib>
 #include <asm-generic/ioctls.h>
+#include <fcntl.h>
 #include <sys/ioctl.h>
 #include <sys/wait.h>
 #include "core/AbstractThread.h"
@@ -150,6 +151,7 @@ bool SystemProcess::Private::process() {
   int _pipe_out[2];
   int _pipe_err[2];
   int _pipe_in[2];
+  int _pipe_exec[2];
 
   //build _args before fork() (async-signal-safe)
   std::vector<const char *> _args;
@@ -171,7 +173,7 @@ bool SystemProcess::Private::process() {
     ::close(_pipe_err[1]);
     return false;
   }
-  if ((pid_ = fork()) == -1) {
+  if (pipe2(_pipe_exec, O_CLOEXEC) == -1) {
     ::close(_pipe_out[0]);
     ::close(_pipe_out[1]);
     ::close(_pipe_err[0]);
@@ -183,21 +185,83 @@ bool SystemProcess::Private::process() {
     return false;
   }
 
+  if ((pid_ = fork()) == -1) {
+    ::close(_pipe_out[0]);
+    ::close(_pipe_out[1]);
+    ::close(_pipe_err[0]);
+    ::close(_pipe_err[1]);
+    if (!redirect_stdin) {
+      ::close(_pipe_in[0]);
+      ::close(_pipe_in[1]);
+    }
+    ::close(_pipe_exec[0]);
+    ::close(_pipe_exec[1]);
+    return false;
+  }
+
   if (pid_ > 0) {
     if (::close(_pipe_out[1]) == -1) {
+      ::close(_pipe_out[0]);
+      ::close(_pipe_err[0]);
+      ::close(_pipe_exec[0]);
       ::close(_pipe_err[1]);
-      if (!redirect_stdin) ::close(_pipe_in[0]);
+      ::close(_pipe_exec[1]);
+      if (!redirect_stdin) {
+        ::close(_pipe_in[0]);
+        ::close(_pipe_in[1]);
+      }
       return false;
     }
     if (::close(_pipe_err[1]) == -1) {
-      if (!redirect_stdin) ::close(_pipe_in[0]);
+      ::close(_pipe_out[0]);
+      ::close(_pipe_err[0]);
+      ::close(_pipe_exec[0]);
+      ::close(_pipe_exec[1]);
+      if (!redirect_stdin) {
+        ::close(_pipe_in[0]);
+        ::close(_pipe_in[1]);
+      }
       return false;
+    }
+    if (::close(_pipe_exec[1]) == -1) {
+      ::close(_pipe_out[0]);
+      ::close(_pipe_err[0]);
+      ::close(_pipe_exec[0]);
+      if (!redirect_stdin) {
+        ::close(_pipe_in[0]);
+        ::close(_pipe_in[1]);
+      }
+      return false;
+    }
+    if (!redirect_stdin) {
+      if (::close(_pipe_in[0]) == -1) {
+        ::close(_pipe_out[0]);
+        ::close(_pipe_err[0]);
+        ::close(_pipe_exec[0]);
+        ::close(_pipe_in[1]);
+        return false;
+      }
+      in = _pipe_in[1];
     }
     out = _pipe_out[0];
     err = _pipe_err[0];
-    if (!redirect_stdin) {
-      if (::close(_pipe_in[0]) == -1) return false;
-      in = _pipe_in[1];
+    int _errno = 0;
+    ssize_t n = ::read(_pipe_exec[0], &_errno, sizeof(_errno));
+    ::close(_pipe_exec[0]);
+    if (n == static_cast<ssize_t>(sizeof(_errno))) {
+      int dummy;
+      waitpid(pid_, &dummy, 0);
+      pid_ = -1;
+      ::close(out);
+      out = -1;
+      ::close(err);
+      err = -1;
+      if (!redirect_stdin) {
+        ::close(in);
+        in = -1;
+      }
+      errno = _errno;
+      return false;
     }
     return true;
   }
@@ -209,6 +273,8 @@ bool SystemProcess::Private::process() {
   execv(cmdline_.c_str(), const_cast<char **>(_args.data()));
 
 FAIL:
+  int e = errno;
+  (void)::write(_pipe_exec[1], &e, sizeof(e));
   //_exit — system call that terminates the process immediately, without handlers
   _exit(127);
 }
