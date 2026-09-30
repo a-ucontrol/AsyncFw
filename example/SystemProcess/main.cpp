@@ -37,7 +37,7 @@ int main(int argc, char *argv[]) {
   bool _r = process.start("/bin/bash", {"-i"});  // for redirect stdin
   #endif
   if (!_r) {
-    logNotice() << "Start '/bin/bash' error";
+    logError() << "Start '/bin/bash' error" << process.exitCode() << (int)process.state();
     return 0;
   }
   AsyncFw::Timer::single(10, [&process]() { process.input("echo 1234567890\n"); });
