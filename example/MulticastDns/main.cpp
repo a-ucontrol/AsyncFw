@@ -19,7 +19,7 @@ int main(int argc, char *argv[]) {
 
   _mdns.hostAdded.connect([&_mdns](const MulticastDns::Host &host) {
     lsInfoGreen() << "Added" << host.name << host.ipv4 << host.llipv4 << host.misc << host.port;
-    _mdns.stopService();
+    Thread::current()->invoke([&_mdns]() { _mdns.stopService(); });
   });
   _mdns.hostChanged.connect([](const MulticastDns::Host &host) {
     lsInfoMagenta() << "Changed" << host.name << host.ipv4 << host.llipv4 << host.misc << host.port;
