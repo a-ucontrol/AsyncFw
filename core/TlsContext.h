@@ -114,7 +114,7 @@ public:
   @param enable True to enforce strict peer verification, false to skip validation (not recommended for production). */
   void setVerifyPeer(bool);
   /** @brief Returns the expected hostname configured for remote peer validation. @return A reference to the string containing the target domain name or Common Name (CN). */
-  std::string &verifyName() const;
+  const std::string &verifyName() const;
   /** @brief Sets the expected hostname or domain name to validate against the remote peer's certificate.
   @details Configures the context to strictly match the remote server's Common Name (CN) or Subject Alternative Name (SAN) fields with the provided string, preventing identity spoofing.
   @warning Thread Affinity: Must only be called during the initialization phase. Modifying this on the fly for active sockets causes critical data races.
