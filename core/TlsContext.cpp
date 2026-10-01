@@ -11,7 +11,6 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include <openssl/x509v3.h>
 
 #include <atomic>
-#include <algorithm>
 #include "DataArray.h"
 #include "LogStream.h"
 #include "TlsContext.h"
@@ -20,12 +19,19 @@ using namespace AsyncFw;
 
 struct TlsContext::Private {
   ~Private() {
+    if (ctx) SSL_CTX_free(ctx);
+  }
+
+  void createOpenSslContext() {
+    ctx = SSL_CTX_new(TLS_method());
     if (ctx) {
-      std::vector<Private *>::iterator it = lower_bound(verify.begin(), verify.end(), this, [](const Private *p1, const Private *p2) { return p1->ctx < p2->ctx; });
-      if (it != verify.end() && *it == this) { verify.erase(it); }
-      SSL_CTX_free(ctx);
+      if (exIdx == -1) exIdx = SSL_CTX_get_ex_new_index(0, nullptr, nullptr, nullptr, nullptr);
+      SSL_CTX_set_ex_data(ctx, exIdx, this);
     }
   }
+
+  inline static int exIdx = -1;
+
   SSL_CTX *ctx = nullptr;
 
   DataArray key(EVP_PKEY *);
@@ -39,8 +45,6 @@ struct TlsContext::Private {
   int serial = 0;
   std::atomic_int ref = 1;
   uint8_t ignoreErrors = 0;
-
-  static inline std::vector<Private *> verify;
 };
 
 DataArray TlsContext::Private::key(EVP_PKEY *_k) {
@@ -121,7 +125,7 @@ bool TlsContext::generateKey(int bits) {
     lsError() << "generate key";
     return false;
   }
-  if (!private_->ctx) private_->ctx = SSL_CTX_new(TLS_method());
+  if (!private_->ctx) private_->createOpenSslContext();
   int r = SSL_CTX_use_PrivateKey(private_->ctx, _k);
   EVP_PKEY_free(_k);
   return r == 1;
@@ -423,25 +427,34 @@ std::string TlsContext::infoTrusted() const {
 
 int TlsContext::verify(int ok, X509_STORE_CTX *ctx) {
   SSL *ssl = static_cast<SSL *>(X509_STORE_CTX_get_ex_data(ctx, SSL_get_ex_data_X509_STORE_CTX_idx()));
-  SSL_CTX *ssl_ctx = SSL_get_SSL_CTX(ssl);
-  std::vector<Private *>::iterator it = lower_bound(Private::verify.begin(), Private::verify.end(), ssl_ctx, [](const Private *p, const SSL_CTX *ctx) { return p->ctx < ctx; });
-  if (it != Private::verify.end() && (*it)->ctx == ssl_ctx) {
-    if (ok) return ok;
-    int _e = X509_STORE_CTX_get_error(ctx);
-    if ((*it)->ignoreErrors & 0x01) {  // ignore time validity errors
-      if (_e == X509_V_ERR_CERT_NOT_YET_VALID) {
-        lsWarning("certificate not yet valid");
-        return 1;
-      }
-      if (_e == X509_V_ERR_CERT_HAS_EXPIRED) {
-        lsWarning("certificate has expired");
-        return 1;
-      }
-    }
-    lsError() << _e;
+  if (!ssl) {
+    lsError() << "get ssl";
     return 0;
   }
-  return ok;
+  SSL_CTX *ssl_ctx = SSL_get_SSL_CTX(ssl);
+  if (!ssl_ctx) {
+    lsError() << "get ctx";
+    return 0;
+  }
+  Private *p = static_cast<Private *>(SSL_CTX_get_ex_data(ssl_ctx, Private::exIdx));
+  if (!p) {
+    lsError() << "get data";
+    return 0;
+  }
+  if (ok) return ok;
+  int _e = X509_STORE_CTX_get_error(ctx);
+  if (p->ignoreErrors & 0x01) {
+    if (_e == X509_V_ERR_CERT_NOT_YET_VALID) {
+      lsWarning("certificate not yet valid");
+      return 1;
+    }
+    if (_e == X509_V_ERR_CERT_HAS_EXPIRED) {
+      lsWarning("certificate has expired");
+      return 1;
+    }
+  }
+  lsError() << _e;
+  return 0;
 }
 
 std::string TlsContext::infoKey(const DataArray &key) {
@@ -516,12 +529,7 @@ const std::string &TlsContext::verifyName() const { return private_->verifyName;
 
 void TlsContext::setVerifyName(const std::string &name) const { private_->verifyName = name; }
 
-void TlsContext::setIgnoreErrors(IgnoreErrors errors) const {
-  private_->ignoreErrors = errors;
-  if (!private_->ctx) private_->ctx = SSL_CTX_new(TLS_method());
-  std::vector<Private *>::iterator it = lower_bound(private_->verify.begin(), private_->verify.end(), private_, [](const Private *p1, const Private *p2) { return p1->ctx < p2->ctx; });
-  if (it == private_->verify.end() || *it != private_) private_->verify.insert(it, private_);
-}
+void TlsContext::setIgnoreErrors(IgnoreErrors errors) const { private_->ignoreErrors = errors; }
 
 ssl_ctx_st *TlsContext::opensslCtx() const { return private_->ctx; }
 
@@ -565,7 +573,7 @@ bool TlsContext::setKey(const DataArray &_da) {
   EVP_PKEY *_k = PEM_read_bio_PrivateKey(_bio, nullptr, nullptr, nullptr);
   BIO_free(_bio);
   if (!_k) return false;
-  if (!private_->ctx) private_->ctx = SSL_CTX_new(TLS_method());
+  if (!private_->ctx) private_->createOpenSslContext();
   int r = SSL_CTX_use_PrivateKey(private_->ctx, _k);
   EVP_PKEY_free(_k);
   if (r == 1) return true;
@@ -581,7 +589,7 @@ bool TlsContext::setCertificate(const DataArray &_da) {
     lsError() << "read certificate";
     return false;
   }
-  if (!private_->ctx) private_->ctx = SSL_CTX_new(TLS_method());
+  if (!private_->ctx) private_->createOpenSslContext();
   int r = SSL_CTX_use_certificate(private_->ctx, _c);
   X509_free(_c);
   if (r == 1) return true;
@@ -597,7 +605,7 @@ bool TlsContext::appendTrusted(const DataArray &_da) {
     lsError() << "read certificate";
     return false;
   }
-  if (!private_->ctx) private_->ctx = SSL_CTX_new(TLS_method());
+  if (!private_->ctx) private_->createOpenSslContext();
   X509_STORE *_store = SSL_CTX_get_cert_store(private_->ctx);
   int r = X509_STORE_add_cert(_store, _c);
   X509_free(_c);
@@ -609,7 +617,7 @@ bool TlsContext::appendTrusted(const DataArray &_da) {
 
 bool TlsContext::setDefaultVerifyPaths() {
   lsDebug() << X509_get_default_cert_dir() << getenv(X509_get_default_cert_dir_env());
-  if (!private_->ctx) private_->ctx = SSL_CTX_new(TLS_method());
+  if (!private_->ctx) private_->createOpenSslContext();
   return SSL_CTX_set_default_verify_paths(private_->ctx);
 }
 
