@@ -33,7 +33,7 @@ struct TlsContext::Private {
   std::string info(EVP_PKEY *);
   std::string info(X509 *);
 
-  bool vefifyPeer = true;
+  bool verifyPeer = true;
   std::string verifyName;
 
   int serial = 0;
@@ -508,9 +508,9 @@ std::string TlsContext::allErrorStrings() {
   return str;
 }
 
-bool TlsContext::verifyPeer() { return private_->vefifyPeer; }
+bool TlsContext::verifyPeer() { return private_->verifyPeer; }
 
-void TlsContext::setVerifyPeer(bool enable) { private_->vefifyPeer = enable; }
+void TlsContext::setVerifyPeer(bool enable) { private_->verifyPeer = enable; }
 
 std::string &TlsContext::verifyName() const { return private_->verifyName; }
 
