@@ -91,7 +91,7 @@ AbstractSocket::AbstractSocket(int family, int type, int protocol, OutputBufferM
 AbstractSocket::~AbstractSocket() {
   lsTrace() << thread_ << address() + ':' + std::to_string(port()) + '/' + peerAddress() + ':' + std::to_string(peerPort());
   if (state_ != Destroy) {
-    lsDebug() << this << LogStream::Color::Red << "not destroy state:" << static_cast<int>(state_);
+    lsDebug() << this << "not destroy state:" << static_cast<int>(state_);
     if (thread_) {
       if (fd_ >= 0) thread_->removePollDescriptor(fd_);
       removeFromThread();
@@ -571,7 +571,7 @@ void AbstractSocket::pollEvent(int _e) {
 #endif
         private_.errorString = "Connection closed";
         private_.error = Closed;
-        lsDebug() << LogStream::Color::Red << private_.errorString << "(not active)";
+        lsTrace() << LogStream::Color::DarkRed << private_.errorString << "(not active)";
         close();
         return;
       }
