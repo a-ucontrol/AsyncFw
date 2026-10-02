@@ -868,7 +868,7 @@ void AbstractThread::Private::wake() {
 bool AbstractThread::invokeTask(AbstractTask *task) const {
   {  //lock scope
     LockGuard lock(private_.mutex);
-    warning_if(!private_.state) << LogStream::Color::Red << "thread not running" << LOG_THREAD_NAME << private_.id;
+    trace_if(!private_.state) << LogStream::Color::Red << "thread not running" << LOG_THREAD_NAME << private_.id;
     if (private_.state < Private::Finished) {
       if (private_.state == Private::Interrupted) private_.state = Private::Running;
       private_.tasks.push(task);
