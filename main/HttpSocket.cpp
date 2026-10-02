@@ -71,32 +71,56 @@ void HttpSocket::readEvent() {
     if (i == std::string::npos) return;
     headerSize_ = i;
 
-    received_ += read(headerSize_ + 4);
+    received_ += read(headerSize_ + 4);  // received_ contains only the header section here
 
     std::size_t j;
     std::string _lc;
     _lc.resize(received_.size());
     std::transform(received_.begin(), received_.begin() + received_.size(), _lc.begin(), [](unsigned char c) { return std::tolower(c); });
     if ((i = _lc.find("content-length:")) != std::string::npos) {
-      if ((j = received_.view().find("\r\n", i + 15)) != std::string::npos) {
-        std::string str(received_.begin() + i + 15, received_.begin() + j);
-        contentLenght_ = std::stoi(str);
+      if (_lc.find("transfer-encoding:") != std::string::npos) {
+        lsWarning("both Content-Length and Transfer-Encoding present");
+        disconnect();
+        return;
       }
+      if ((j = received_.view().find("\r\n", i + 15)) == std::string::npos) {
+        lsWarning("malformed content-length header");
+        disconnect();
+        return;
+      }
+      std::size_t k = i + 15;
+      while (k < j && (received_[k] == ' ' || received_[k] == '\t')) ++k;
+      std::size_t value = 0;
+      if (k == j) {
+        lsWarning("empty content-length value");
+        disconnect();
+        return;
+      }
+      for (; k < j; ++k) {
+        uint8_t c = received_[k];
+        if (c < '0' || c > '9') {
+          lsWarning("invalid content-length value");
+          disconnect();
+          return;
+        }
+        if (value > (std::numeric_limits<std::size_t>::max() - static_cast<std::size_t>(c - '0')) / 10) {
+          lsWarning("content-length overflow");
+          disconnect();
+          return;
+        }
+        value = value * 10 + static_cast<std::size_t>(c - '0');
+      }
+      contentLenght_ = value;
       if (contentLenght_ == 0) {
         full_ = true;
         received(received_);
         return;
       }
-      if (contentLenght_ == std::string::npos) {
-        lsError("error http read");
-        disconnect();
-        return;
-      }
     } else if ((i = _lc.find("transfer-encoding:")) != std::string::npos) {
       if ((j = received_.view().find("\r\n", i + 18)) != std::string::npos) {
-        std::string str(received_.begin() + i + 18, received_.begin() + j);
+        std::string str(_lc.begin() + i + 18, _lc.begin() + j);
         if (str.find("chunked") == std::string::npos) {
-          lsError("error http read");
+          lsWarning("error http read");
           disconnect();
           return;
         }
@@ -106,7 +130,7 @@ void HttpSocket::readEvent() {
       received(received_);
       return;
     } else {
-      lsError("error http read");
+      lsWarning("error http read");
       disconnect();
       return;
     }
