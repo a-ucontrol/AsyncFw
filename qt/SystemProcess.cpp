@@ -10,6 +10,8 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include <QEventLoop>
 #include "core/AbstractThread.h"
 #include "core/LogStream.h"
+#define USE_QAPPLICATION
+#include "main/log-types.hpp"
 
 #include "main/SystemProcess.h"
 
