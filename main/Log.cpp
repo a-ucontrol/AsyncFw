@@ -188,7 +188,7 @@ Log::Log(int size, const std::string &name) : Rrd(size, name), AbstractLog() {
   thread_ = Rrd::thread_;
 
   tdg = thread_->destroying.connect([this]() {
-    lsWarning() << "log thread destroying, finalize logger";
+    lsDebug() << LogStream::Color::DarkRed << "log thread destroying, finalize logger";
     finality();
   });
 
@@ -211,8 +211,8 @@ void Log::finality() {
     autoSave = -1;
     AbstractLog::finality();
   }, true)) {
-    console_msg("Log", "thread not running");
     if (instance_.value == this) LogStream::setCompleted(&LogStream::console_output);
+    lsTrace() << LogStream::Color::Red << "thread not running";
     stopTimer(&timerIdAutosave);
     autoSave = -1;
     AbstractLog::finality();
