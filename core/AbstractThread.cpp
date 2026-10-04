@@ -88,6 +88,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #define LOG_THREAD_NAME ('(' + private_.name + ')')
 #define QUEUE_TASKS_OVERLOAD_SIZE 128
+#define NESTED_OVERLOAD_SIZE 32
 
 #include "console_msg.hpp"
 
@@ -527,6 +528,7 @@ void AbstractThread::exec() {
     trace_if(private_.process_tasks_.size() || private_.process_poll_tasks_.size() || private_.process_timer_tasks_.size()) << LogStream::Color::Red << "not empty" << private_.process_tasks_.size() << private_.process_poll_tasks_.size() << private_.process_timer_tasks_.size();
     if (private_.state >= Private::Running && private_.state < Private::Finished) {  //nested exec
       _nested = ++private_.nested;
+      if (_nested > NESTED_OVERLOAD_SIZE) console_msg("AbstractThread " + LOG_THREAD_NAME, "nested exec overload, warning limit: " + std::to_string(NESTED_OVERLOAD_SIZE) + ", size: " + std::to_string(_nested));
       trace() << LOG_THREAD_NAME << LogStream::Color::Red << "nested" << _nested << LogStream::Color::Green << private_.process_tasks_.size() << private_.process_poll_tasks_.size() << private_.process_timer_tasks_.size();
       if (!private_.process_tasks_.empty()) {
         private_.mutex.unlock();
