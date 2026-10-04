@@ -27,8 +27,13 @@ int main(int argc, char *argv[]) {
   });
 
   File _f {"/tmp/FileSystemWatcher.example"};
-  if (_f.exists()) _f.remove();
-  else { _f.open(std::ios::binary | std::ios::out); };
+  if (_f.exists()) {
+    lsDebug() << "remove: tmp/FileSystemWatcher.example";
+    _f.remove();
+  } else {
+    lsDebug() << "create: tmp/FileSystemWatcher.example";
+    _f.open(std::ios::binary | std::ios::out);
+  };
 
   lsInfoGreen() << watcher;
 

@@ -14,6 +14,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include <string>
 
 namespace AsyncFw {
+static_assert(std::endian::native == std::endian::little, "AsyncFw wire protocol assumes little-endian host");
 class DataArrayList;
 class DataArrayView;
 class LogStream;
