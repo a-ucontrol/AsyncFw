@@ -33,16 +33,6 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
   #define POLLNVAL_ 0x0004
 #endif
 
-#if !defined LS_NO_ERROR
-  #define checkCurrentThread() \
-    if (std::this_thread::get_id() != AsyncFw_THREAD->id()) lsError() << "executed from different thread"
-  #define checkDifferentThread() \
-    if (std::this_thread::get_id() == AsyncFw_THREAD->id()) lsError() << "executed from own thread"
-#else
-  #define checkCurrentThread()
-  #define checkDifferentThread()
-#endif
-
 namespace AsyncFw {
 class LogStream;
 /** @class AbstractThread AbstractThread.h <AsyncFw/AbstractThread> @brief The AbstractThread class provides the base functionality for thread management.

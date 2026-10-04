@@ -13,13 +13,21 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include "core/Thread.h"
 #include "DataArraySocket.h"
 
+#if defined CHECK_EXECUTED_THREAD
+  #define checkCurrentThread() \
+    if (std::this_thread::get_id() != thread_->id()) lsError() << "executed from different thread"
+  #define checkDifferentThread() \
+    if (std::this_thread::get_id() == thread_->id()) lsError() << "executed from own thread"
+#else
+  #define checkCurrentThread()
+  #define checkDifferentThread()
+#endif
+
 #ifdef EXTEND_SOCKET_TRACE
   #define ENABLE_EXTEND_TRACE
 #endif
 #include "core/extend_trace.hpp"
 
-#undef AsyncFw_THREAD
-#define AsyncFw_THREAD this->thread()
 using namespace AsyncFw;
 
 struct DataArraySocket::Private {
@@ -354,6 +362,7 @@ void DataArraySocket::releaseBuffer(const DataArray *da) const {
 }
 
 void DataArraySocket::initServerConnection() {
+  checkCurrentThread();
   private_.address = peerAddress();
   private_.port = peerPort();
   lsTrace();

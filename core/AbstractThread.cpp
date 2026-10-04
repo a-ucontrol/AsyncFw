@@ -41,8 +41,14 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
   #endif
 #endif
 
-#if !defined LS_NO_ERROR
-  #define AsyncFw_THREAD this
+#if defined CHECK_EXECUTED_THREAD
+  #define checkCurrentThread() \
+    if (std::this_thread::get_id() != id()) lsError() << "executed from different thread"
+  #define checkDifferentThread() \
+    if (std::this_thread::get_id() == id()) lsError() << "executed from own thread"
+#else
+  #define checkCurrentThread()
+  #define checkDifferentThread()
 #endif
 
 #ifdef EXTEND_THREAD_TRACE

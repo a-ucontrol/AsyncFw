@@ -120,12 +120,7 @@ DataArrayTcpClient::Thread *DataArrayTcpClient::createThread() {
 
 DataArrayTcpClient::Thread::~Thread() { lsTrace(); }
 
-#if !defined LS_NO_ERROR
-  #define AsyncFw_THREAD this
-#endif
-
 DataArraySocket *DataArrayTcpClient::Thread::createSocket() {
-  checkCurrentThread();
   DataArraySocket *tcpSocket = new DataArraySocket();
   tcpSocket->setConnectTimeout(client()->waitForConnectTimeout_);
   tcpSocket->setReconnectTimeout(client()->reconnectTimeout_);

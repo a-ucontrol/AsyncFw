@@ -41,8 +41,14 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #include "AbstractSocket.h"
 
-#if !defined LS_NO_ERROR
-  #define AsyncFw_THREAD thread_
+#if defined CHECK_EXECUTED_THREAD
+  #define checkCurrentThread() \
+    if (std::this_thread::get_id() != thread_->id()) lsError() << "executed from different thread"
+  #define checkDifferentThread() \
+    if (std::this_thread::get_id() == thread_->id()) lsError() << "executed from own thread"
+#else
+  #define checkCurrentThread()
+  #define checkDifferentThread()
 #endif
 
 #ifdef EXTEND_SOCKET_TRACE
