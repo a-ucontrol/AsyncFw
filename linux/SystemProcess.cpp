@@ -274,7 +274,7 @@ bool SystemProcess::Private::process() {
 
 FAIL:
   int e = errno;
-  (void)::write(_pipe_exec[1], &e, sizeof(e));
+  (void)!::write(_pipe_exec[1], &e, sizeof(e));
   //_exit — system call that terminates the process immediately, without handlers
   _exit(127);
 }
