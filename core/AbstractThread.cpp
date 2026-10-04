@@ -261,7 +261,10 @@ void AbstractThread::Private::destroy_removed_polls() {
     if (cqe->user_data == reinterpret_cast<uint64_t>(&wake_fd)) continue;
   #endif
     Private::PollTask *_d = reinterpret_cast<Private::PollTask *>(cqe->user_data);
-    warning_if(!_d) << "(!_d)" << _d << cqe->res << cqe->flags;
+    if (!_d) {
+      trace() << "(!_d)" << _d << cqe->res << cqe->flags;
+      continue;
+    }
     if (_d->fd == -1) {
       trace() << LogStream::Color::DarkYellow << '(' + name + ") delete" << _d << cqe->res;
       delete _d;
@@ -723,17 +726,21 @@ void AbstractThread::exec() {
             uint32_t head;
             io_uring_for_each_cqe(&private_.ring, head, cqe) {
               r++;
+              Private::PollTask *_d = reinterpret_cast<Private::PollTask *>(cqe->user_data);
+              if (!_d) {
+                trace() << LogStream::Color::Red << "(!_d)" << LOG_THREAD_NAME << cqe->res;
+                continue;
+              }
   #ifdef IO_URING_WAKE
-              if (cqe->user_data == static_cast<uint64_t>(-1)) {
+              if (reinterpret_cast<uint64_t>(_d) == static_cast<uint64_t>(-1)) {
                 trace() << LogStream::Color::Magenta << "waked" << LOG_THREAD_NAME << private_.wake_;
   #elif defined EVENTFD_WAKE
-              if (reinterpret_cast<void *>(cqe->user_data) == &private_.wake_fd) {
+              if (reinterpret_cast<void *>(_d) == &private_.wake_fd) {
                 trace() << LogStream::Color::Magenta << "waked" << LOG_THREAD_NAME << private_.WAKE_FD << private_.wake_;
   #endif
               } else {
-                Private::PollTask *_d = reinterpret_cast<Private::PollTask *>(cqe->user_data);
                 trace() << "cqe" << cqe->res << _d;
-                warning_if((cqe->res < 0 && cqe->res != -ECANCELED) || !_d) << LogStream::Color::Red << "((cqe->res < 0 && cqe->res != -ECANCELED) || !_d)" << _d << cqe->res << cqe->flags;
+                warning_if(cqe->res < 0 && cqe->res != -ECANCELED) << LogStream::Color::Red << "(cqe->res < 0 && cqe->res != -ECANCELED)" << _d << cqe->res << cqe->flags;
 
                 _d->flags |= 0x01;
                 int32_t events = (cqe->res > 0) ? cqe->res & (_d->events | POLLERR_ | POLLHUP_ | POLLNVAL_ | 0x2000) : 0;
@@ -1183,7 +1190,10 @@ void AbstractThread::removePollDescriptor(int fd) {
       static thread_local struct io_uring_sync_cancel_reg reg {};
       reg.addr = reinterpret_cast<uint64_t>(_d);
       int r = io_uring_register_sync_cancel(&private_.ring, &reg);
-      if (r < 0) console_msg("AbstractThread " + LOG_THREAD_NAME, "remove poll descriptor: " + std::to_string(fd) + " sync cancel error " + std::to_string(r));
+      if (r < 0) {
+        if (r != -ENOENT) console_msg("AbstractThread " + LOG_THREAD_NAME, "remove poll descriptor: " + std::to_string(fd) + " sync cancel error " + std::to_string(r));
+        else trace() << LogStream::Color::Red << "sync cancel error" << private_.state;
+      }
       return;
     }
     trace() << LogStream::Yellow << "append delete task" << _d << fd;
