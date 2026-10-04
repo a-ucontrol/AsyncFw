@@ -1186,14 +1186,15 @@ void AbstractThread::removePollDescriptor(int fd) {
     _d->fd = -1;
     if (!(_d->flags & 0x04)) {
       if (_d->flags) return;
-      trace() << LogStream::Yellow << "sync cancel" << _d;
-      static thread_local struct io_uring_sync_cancel_reg reg {};
-      reg.addr = reinterpret_cast<uint64_t>(_d);
-      int r = io_uring_register_sync_cancel(&private_.ring, &reg);
-      if (r < 0) {
-        if (r != -ENOENT) console_msg("AbstractThread " + LOG_THREAD_NAME, "remove poll descriptor: " + std::to_string(fd) + " sync cancel error " + std::to_string(r));
-        else trace() << LogStream::Color::Red << "sync cancel error" << private_.state;
+      trace() << LogStream::Yellow << "cancel" << _d;
+      struct io_uring_sqe *sqe;
+      if (!(sqe = io_uring_get_sqe(&private_.ring))) {
+        console_msg("AbstractThread " + LOG_THREAD_NAME, "remove poll descriptor: " + std::to_string(fd) + "  error get sqe");
+        return;
       }
+      io_uring_prep_cancel(sqe, _d, 0);
+      sqe->flags |= IOSQE_CQE_SKIP_SUCCESS;
+      if (!private_.wake_) io_uring_submit(&private_.ring);
       return;
     }
     trace() << LogStream::Yellow << "append delete task" << _d << fd;
