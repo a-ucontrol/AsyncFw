@@ -143,8 +143,6 @@ Macros</h2></td></tr>
 #define&#160;</td><td class="memItemRight"><b>POLLHUP_</b>&#160;&#160;&#160;0x010</td></tr>
 <tr class="memitem:a5fc9dcb358196fc8e3ce7bc542c3139e" id="r_a5fc9dcb358196fc8e3ce7bc542c3139e"><td class="memItemLeft"><a id="a5fc9dcb358196fc8e3ce7bc542c3139e" name="a5fc9dcb358196fc8e3ce7bc542c3139e"></a>
 #define&#160;</td><td class="memItemRight"><b>POLLNVAL_</b>&#160;&#160;&#160;0x020</td></tr>
-<tr class="memitem:a9e0a9b8ffda0ad584163c6d53b570fb8" id="r_a9e0a9b8ffda0ad584163c6d53b570fb8"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#a9e0a9b8ffda0ad584163c6d53b570fb8">checkCurrentThread</a>()</td></tr>
-<tr class="memitem:aa1febc1d1f2877e38f6de79d0c5c38f9" id="r_aa1febc1d1f2877e38f6de79d0c5c38f9"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#aa1febc1d1f2877e38f6de79d0c5c38f9">checkDifferentThread</a>()</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
@@ -157,44 +155,7 @@ constexpr bool&#160;</td><td class="memItemRight"><b>AsyncFw::operator!=</b> (<a
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The AbstractThread class. </p>
-</div><a name="doc-define-members" id="doc-define-members"></a><h2 id="header-doc-define-members" class="groupheader">Macro Definition Documentation</h2>
-<a id="a9e0a9b8ffda0ad584163c6d53b570fb8" name="a9e0a9b8ffda0ad584163c6d53b570fb8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9e0a9b8ffda0ad584163c6d53b570fb8">&#9670;&#160;</a></span>checkCurrentThread</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define checkCurrentThread</td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">if</span> (std::this_thread::get_id() != AsyncFw_THREAD-&gt;id()) lsError() &lt;&lt; <span class="stringliteral">&quot;executed from different thread&quot;</span></div>
-</div><!-- fragment -->
-</div>
-</div>
-<a id="aa1febc1d1f2877e38f6de79d0c5c38f9" name="aa1febc1d1f2877e38f6de79d0c5c38f9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa1febc1d1f2877e38f6de79d0c5c38f9">&#9670;&#160;</a></span>checkDifferentThread</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define checkDifferentThread</td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">if</span> (std::this_thread::get_id() == AsyncFw_THREAD-&gt;id()) lsError() &lt;&lt; <span class="stringliteral">&quot;executed from own thread&quot;</span></div>
-</div><!-- fragment -->
-</div>
-</div>
-</div><!-- contents -->
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <div id="page-nav" class="page-nav-panel">
 <div id="page-nav-resize-handle"></div>

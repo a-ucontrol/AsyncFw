@@ -1,0 +1,5 @@
+<map id="AsyncFw::AbstractSocket::error" name="AsyncFw::AbstractSocket::error">
+<area shape="rect" id="Node000001" title="Fetches the most recent runtime error category flag assigned to this socket." alt="" coords="214,5,388,48"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1ListenSocket.html#a73a200f0008dbf9f820bdb2b8a0054cf" title="Schedules the socket for deferred asynchronous destruction." alt="" coords="5,5,166,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="195,27,166,29,166,24,201,26"/>
+</map>
