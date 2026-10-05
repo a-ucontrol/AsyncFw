@@ -453,7 +453,7 @@ int TlsContext::verify(int ok, X509_STORE_CTX *ctx) {
       return 1;
     }
   }
-  lsError() << _e;
+  lsWarning() << _e << X509_verify_cert_error_string(_e);
   return 0;
 }
 
