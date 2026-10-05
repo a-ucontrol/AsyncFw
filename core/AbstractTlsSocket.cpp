@@ -100,6 +100,12 @@ void AbstractTlsSocket::activateEvent() {
   trace() << fd_;
   if (!private_.ssl) {
     private_.ssl = SSL_new(private_.ctx.opensslCtx());
+    if (!private_.ssl) {
+      setError(AbstractSocket::Activate);
+      setErrorString("TLS context is empty or SSL creation failed");
+      close();
+      return;
+    }
     if (private_.encrypt == 1) SSL_set_ssl_method(private_.ssl, TLS_server_method());
     else { SSL_set_ssl_method(private_.ssl, TLS_client_method()); }
 
@@ -113,10 +119,15 @@ void AbstractTlsSocket::activateEvent() {
     SSL_set_bio(private_.ssl, _bio, _bio);
 #endif
     SSL_set_read_ahead(private_.ssl, 1);
-    if (!private_.ctx.verifyName().empty()) {
+    if (private_.ctx.verifyPeer() && !private_.ctx.verifyName().empty()) {
       lsTrace() << fd_ << "verify name" << LogStream::Color::Green << private_.ctx.verifyName();
       SSL_set_hostflags(private_.ssl, X509_CHECK_FLAG_NO_PARTIAL_WILDCARDS);
-      if (!SSL_set1_host(private_.ssl, private_.ctx.verifyName().c_str())) lsError();
+      if (!SSL_set1_host(private_.ssl, private_.ctx.verifyName().c_str())) {
+        setError(AbstractSocket::Activate);
+        setErrorString("Cannot configure hostname verification");
+        close();
+        return;
+      }
     }
   }
 #ifdef USE_SSL_BIO_PAIR
