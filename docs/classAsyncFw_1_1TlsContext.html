@@ -172,10 +172,10 @@ std::string&#160;</td><td class="memItemRight"><b>infoTrusted</b> () const</td><
 <tr class="memdesc:aa737deca3889536ad8de72d46694afd6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables or disables remote peer certificate validation.  <br /></td></tr>
 <tr class="memitem:ad7cee7044f7a5ee30d777ccff5e96ddd" id="r_ad7cee7044f7a5ee30d777ccff5e96ddd"><td class="memItemLeft">const std::string &amp;&#160;</td><td class="memItemRight"><a class="el" href="#ad7cee7044f7a5ee30d777ccff5e96ddd">verifyName</a> () const</td></tr>
 <tr class="memdesc:ad7cee7044f7a5ee30d777ccff5e96ddd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the expected hostname configured for remote peer validation.  <br /></td></tr>
-<tr class="memitem:af91659fea6356bbfb141951ad725b4b2" id="r_af91659fea6356bbfb141951ad725b4b2"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#af91659fea6356bbfb141951ad725b4b2">setVerifyName</a> (const std::string &amp;) const</td></tr>
-<tr class="memdesc:af91659fea6356bbfb141951ad725b4b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the expected hostname or domain name to validate against the remote peer's certificate.  <br /></td></tr>
-<tr class="memitem:a8ff0baee1fbf9337ea367d1da7c5e475" id="r_a8ff0baee1fbf9337ea367d1da7c5e475"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a8ff0baee1fbf9337ea367d1da7c5e475">setIgnoreErrors</a> (<a class="el" href="#a34b8c61895eaf10b54060df0feb54de8">IgnoreErrors</a>) const</td></tr>
-<tr class="memdesc:a8ff0baee1fbf9337ea367d1da7c5e475"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures specific handshake validation bypass flags.  <br /></td></tr>
+<tr class="memitem:a5106ea9b761649e16dc71187394a5994" id="r_a5106ea9b761649e16dc71187394a5994"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a5106ea9b761649e16dc71187394a5994">setVerifyName</a> (const std::string &amp;)</td></tr>
+<tr class="memdesc:a5106ea9b761649e16dc71187394a5994"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the expected hostname or domain name to validate against the remote peer's certificate.  <br /></td></tr>
+<tr class="memitem:a95d09f3c02708c7a55d61af0fa1dc2fa" id="r_a95d09f3c02708c7a55d61af0fa1dc2fa"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a95d09f3c02708c7a55d61af0fa1dc2fa">setIgnoreErrors</a> (<a class="el" href="#a34b8c61895eaf10b54060df0feb54de8">IgnoreErrors</a>)</td></tr>
+<tr class="memdesc:a95d09f3c02708c7a55d61af0fa1dc2fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures specific handshake validation bypass flags.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-static-methods" class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -230,7 +230,7 @@ class&#160;</td><td class="memItemRight"><b>AbstractTlsSocket</b></td></tr>
 <div class="line">  _cert1.<a class="code hl_function" href="#afb5237df49026bf53948efaafaa2f0f9">setCertificate</a>(_ca.<a class="code hl_function" href="#afa0f66d0eb5f4a0e5b6e3f0017488bd6">signRequest</a>(req));</div>
 <div class="line"> </div>
 <div class="line">  _cert1.<a class="code hl_function" href="#a98271f22f48785585546a63f4e3f22af">appendTrusted</a>(_ca.<a class="code hl_function" href="#a1f84d5908bb3af689637ef250ddb1467">certificate</a>());</div>
-<div class="line">  _cert1.<a class="code hl_function" href="#af91659fea6356bbfb141951ad725b4b2">setVerifyName</a>(<span class="stringliteral">&quot;VerifyName&quot;</span>);</div>
+<div class="line">  _cert1.<a class="code hl_function" href="#a5106ea9b761649e16dc71187394a5994">setVerifyName</a>(<span class="stringliteral">&quot;VerifyName&quot;</span>);</div>
 <div class="line">  lsInfoCyan() &lt;&lt; _cert1;</div>
 <div class="line"> </div>
 <div class="line">  <a class="code hl_class" href="classAsyncFw_1_1TlsContext.html">AsyncFw::TlsContext</a> _cert2;</div>
@@ -239,7 +239,7 @@ class&#160;</td><td class="memItemRight"><b>AbstractTlsSocket</b></td></tr>
 <div class="line">  _cert2.<a class="code hl_function" href="#afb5237df49026bf53948efaafaa2f0f9">setCertificate</a>(_ca.<a class="code hl_function" href="#afa0f66d0eb5f4a0e5b6e3f0017488bd6">signRequest</a>(req));</div>
 <div class="line"> </div>
 <div class="line">  _cert2.<a class="code hl_function" href="#a98271f22f48785585546a63f4e3f22af">appendTrusted</a>(_ca.<a class="code hl_function" href="#a1f84d5908bb3af689637ef250ddb1467">certificate</a>());</div>
-<div class="line">  _cert2.<a class="code hl_function" href="#af91659fea6356bbfb141951ad725b4b2">setVerifyName</a>(<span class="stringliteral">&quot;VerifyName&quot;</span>);</div>
+<div class="line">  _cert2.<a class="code hl_function" href="#a5106ea9b761649e16dc71187394a5994">setVerifyName</a>(<span class="stringliteral">&quot;VerifyName&quot;</span>);</div>
 <div class="line">  lsInfoMagenta() &lt;&lt; _cert2;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
@@ -732,8 +732,8 @@ class&#160;</td><td class="memItemRight"><b>AbstractTlsSocket</b></td></tr>
 
 </div>
 </div>
-<a id="af91659fea6356bbfb141951ad725b4b2" name="af91659fea6356bbfb141951ad725b4b2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af91659fea6356bbfb141951ad725b4b2">&#9670;&#160;</a></span>setVerifyName()</h2>
+<a id="a5106ea9b761649e16dc71187394a5994" name="a5106ea9b761649e16dc71187394a5994"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5106ea9b761649e16dc71187394a5994">&#9670;&#160;</a></span>setVerifyName()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -742,7 +742,7 @@ class&#160;</td><td class="memItemRight"><b>AbstractTlsSocket</b></td></tr>
           <td class="memname">void TlsContext::setVerifyName </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>name</em></span></td><td>)</td>
-          <td> const</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -760,8 +760,8 @@ class&#160;</td><td class="memItemRight"><b>AbstractTlsSocket</b></td></tr>
 
 </div>
 </div>
-<a id="a8ff0baee1fbf9337ea367d1da7c5e475" name="a8ff0baee1fbf9337ea367d1da7c5e475"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8ff0baee1fbf9337ea367d1da7c5e475">&#9670;&#160;</a></span>setIgnoreErrors()</h2>
+<a id="a95d09f3c02708c7a55d61af0fa1dc2fa" name="a95d09f3c02708c7a55d61af0fa1dc2fa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a95d09f3c02708c7a55d61af0fa1dc2fa">&#9670;&#160;</a></span>setIgnoreErrors()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -770,7 +770,7 @@ class&#160;</td><td class="memItemRight"><b>AbstractTlsSocket</b></td></tr>
           <td class="memname">void TlsContext::setIgnoreErrors </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="#a34b8c61895eaf10b54060df0feb54de8">IgnoreErrors</a></td>          <td class="paramname"><span class="paramname"><em>errors</em></span></td><td>)</td>
-          <td> const</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">

@@ -22,7 +22,7 @@ var classAsyncFw_1_1TlsContext =
     [ "verifyPeer", "classAsyncFw_1_1TlsContext.html#a7e91efeef7720c709f396b8322b27c15", null ],
     [ "setVerifyPeer", "classAsyncFw_1_1TlsContext.html#aa737deca3889536ad8de72d46694afd6", null ],
     [ "verifyName", "classAsyncFw_1_1TlsContext.html#ad7cee7044f7a5ee30d777ccff5e96ddd", null ],
-    [ "setVerifyName", "classAsyncFw_1_1TlsContext.html#af91659fea6356bbfb141951ad725b4b2", null ],
-    [ "setIgnoreErrors", "classAsyncFw_1_1TlsContext.html#a8ff0baee1fbf9337ea367d1da7c5e475", null ],
+    [ "setVerifyName", "classAsyncFw_1_1TlsContext.html#a5106ea9b761649e16dc71187394a5994", null ],
+    [ "setIgnoreErrors", "classAsyncFw_1_1TlsContext.html#a95d09f3c02708c7a55d61af0fa1dc2fa", null ],
     [ "opensslCtx", "classAsyncFw_1_1TlsContext.html#a61e8dab3c3cf42cb434191c252a1f4ab", null ]
 ];
