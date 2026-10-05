@@ -487,7 +487,7 @@ bool HttpServer::webSocketSend(const HttpSocket *socket, const DataArray &data) 
   return const_cast<HttpSocket *>(socket)->write(_out) > 0;
 }
 
-void HttpServer::sendToWebSockets(const std::string &data) {  //Дичь, для отладки, надо убрать
+void HttpServer::sendToWebSockets(const std::string &data) {
   std::string _f;
 
   for (HttpServer::TcpSocket *socket : sockets) {
