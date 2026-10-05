@@ -13,7 +13,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include "core/Thread.h"
 #include "DataArraySocket.h"
 
-#if defined CHECK_EXECUTED_THREAD
+#if defined CHЕCK_EXECUTION_THREAD
   #define checkCurrentThread() \
     if (std::this_thread::get_id() != thread_->id()) lsError() << "executed from different thread"
   #define checkDifferentThread() \
