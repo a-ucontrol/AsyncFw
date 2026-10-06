@@ -143,8 +143,8 @@ void&#160;</td><td class="memItemRight"><b>wait</b> ()</td></tr>
 <tr class="memdesc:a98555529994f67d993e103999604f1ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Blocks current execution frame until process finishes. Spins a nested Event Loop, allowing other thread tasks to execute in parallel. <br /></td></tr>
 <tr class="memitem:a3916d3f3c7f90b7a6e099258daee8762" id="r_a3916d3f3c7f90b7a6e099258daee8762"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#a3916d3f3c7f90b7a6e099258daee8762">exitCode</a> ()</td></tr>
 <tr class="memdesc:a3916d3f3c7f90b7a6e099258daee8762"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets operating system exit status code.  <br /></td></tr>
-<tr class="memitem:a2474831568ca17479f4b7b4350cb13c8" id="r_a2474831568ca17479f4b7b4350cb13c8"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a2474831568ca17479f4b7b4350cb13c8">input</a> (const std::string &amp;) const</td></tr>
-<tr class="memdesc:a2474831568ca17479f4b7b4350cb13c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes data string to standard input (stdin) of the child process.  <br /></td></tr>
+<tr class="memitem:acf67e053cb46ecd0cfe7b0f0c7f7329b" id="r_acf67e053cb46ecd0cfe7b0f0c7f7329b"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#acf67e053cb46ecd0cfe7b0f0c7f7329b">input</a> (const std::string &amp;) const</td></tr>
+<tr class="memdesc:acf67e053cb46ecd0cfe7b0f0c7f7329b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes a data string to the standard input (stdin) of the child process.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-static-methods" class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -206,20 +206,20 @@ Public Attributes</h2></td></tr>
 <div class="line">    logError() &lt;&lt; <span class="stringliteral">&quot;Start &#39;/bin/bash&#39; error&quot;</span> &lt;&lt; process.<a class="code hl_function" href="#a3916d3f3c7f90b7a6e099258daee8762">exitCode</a>() &lt;&lt; (int)process.<a class="code hl_function" href="#ab0bbc948a5d59acc1bfc2327cb74f4c1">state</a>();</div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">  }</div>
-<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">AsyncFw::Timer::single</a>(10, [&amp;process]() { process.<a class="code hl_function" href="#a2474831568ca17479f4b7b4350cb13c8">input</a>(<span class="stringliteral">&quot;echo 1234567890\n&quot;</span>); });</div>
-<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">AsyncFw::Timer::single</a>(20, [&amp;process]() { process.<a class="code hl_function" href="#a2474831568ca17479f4b7b4350cb13c8">input</a>(<span class="stringliteral">&quot;_cmd_\n&quot;</span>); });  <span class="comment">//error: _cmd_ not found</span></div>
-<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">AsyncFw::Timer::single</a>(30, [&amp;process]() { process.<a class="code hl_function" href="#a2474831568ca17479f4b7b4350cb13c8">input</a>(<span class="stringliteral">&quot;ls\n&quot;</span>); });</div>
-<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">AsyncFw::Timer::single</a>(40, [&amp;process]() { process.<a class="code hl_function" href="#a2474831568ca17479f4b7b4350cb13c8">input</a>(<span class="stringliteral">&quot;exit\n&quot;</span>); });</div>
+<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">AsyncFw::Timer::single</a>(10, [&amp;process]() { process.<a class="code hl_function" href="#acf67e053cb46ecd0cfe7b0f0c7f7329b">input</a>(<span class="stringliteral">&quot;echo 1234567890\n&quot;</span>); });</div>
+<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">AsyncFw::Timer::single</a>(20, [&amp;process]() { process.<a class="code hl_function" href="#acf67e053cb46ecd0cfe7b0f0c7f7329b">input</a>(<span class="stringliteral">&quot;_cmd_\n&quot;</span>); });  <span class="comment">//error: _cmd_ not found</span></div>
+<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">AsyncFw::Timer::single</a>(30, [&amp;process]() { process.<a class="code hl_function" href="#acf67e053cb46ecd0cfe7b0f0c7f7329b">input</a>(<span class="stringliteral">&quot;ls\n&quot;</span>); });</div>
+<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">AsyncFw::Timer::single</a>(40, [&amp;process]() { process.<a class="code hl_function" href="#acf67e053cb46ecd0cfe7b0f0c7f7329b">input</a>(<span class="stringliteral">&quot;exit\n&quot;</span>); });</div>
 <div class="line"><span class="preprocessor">#else</span></div>
 <div class="line">  <span class="keywordtype">bool</span> _r = process.<a class="code hl_function" href="#a07450fc564490581360f8ff9244291c8">start</a>(<span class="stringliteral">&quot;cmd.exe&quot;</span>);</div>
 <div class="line">  <span class="keywordflow">if</span> (!_r) {</div>
 <div class="line">    logNotice() &lt;&lt; <span class="stringliteral">&quot;Start &#39;cmd.exe&#39; error&quot;</span>;</div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">  }</div>
-<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">AsyncFw::Timer::single</a>(10, [&amp;process]() { process.<a class="code hl_function" href="#a2474831568ca17479f4b7b4350cb13c8">input</a>(<span class="stringliteral">&quot;echo 1234567890\n&quot;</span>); });</div>
-<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">AsyncFw::Timer::single</a>(20, [&amp;process]() { process.<a class="code hl_function" href="#a2474831568ca17479f4b7b4350cb13c8">input</a>(<span class="stringliteral">&quot;_cmd_\n&quot;</span>); });  <span class="comment">//error: _cmd_ not found</span></div>
-<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">AsyncFw::Timer::single</a>(30, [&amp;process]() { process.<a class="code hl_function" href="#a2474831568ca17479f4b7b4350cb13c8">input</a>(<span class="stringliteral">&quot;dir\n&quot;</span>); });</div>
-<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">AsyncFw::Timer::single</a>(40, [&amp;process]() { process.<a class="code hl_function" href="#a2474831568ca17479f4b7b4350cb13c8">input</a>(<span class="stringliteral">&quot;exit\n&quot;</span>); });</div>
+<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">AsyncFw::Timer::single</a>(10, [&amp;process]() { process.<a class="code hl_function" href="#acf67e053cb46ecd0cfe7b0f0c7f7329b">input</a>(<span class="stringliteral">&quot;echo 1234567890\n&quot;</span>); });</div>
+<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">AsyncFw::Timer::single</a>(20, [&amp;process]() { process.<a class="code hl_function" href="#acf67e053cb46ecd0cfe7b0f0c7f7329b">input</a>(<span class="stringliteral">&quot;_cmd_\n&quot;</span>); });  <span class="comment">//error: _cmd_ not found</span></div>
+<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">AsyncFw::Timer::single</a>(30, [&amp;process]() { process.<a class="code hl_function" href="#acf67e053cb46ecd0cfe7b0f0c7f7329b">input</a>(<span class="stringliteral">&quot;dir\n&quot;</span>); });</div>
+<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Timer.html#ac71f0729e65046914c3358e87759f9e9">AsyncFw::Timer::single</a>(40, [&amp;process]() { process.<a class="code hl_function" href="#acf67e053cb46ecd0cfe7b0f0c7f7329b">input</a>(<span class="stringliteral">&quot;exit\n&quot;</span>); });</div>
 <div class="line"><span class="preprocessor">#endif</span></div>
 <div class="line">  logNotice() &lt;&lt; <span class="stringliteral">&quot;Start Application&quot;</span>;</div>
 <div class="line">  <span class="keywordtype">int</span> ret = <a class="code hl_function" href="classAsyncFw_1_1MainThread.html#ad12e620772820ad751868c7b49fa4190">AsyncFw::MainThread::exec</a>();</div>
@@ -279,8 +279,8 @@ Public Attributes</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">redirect_stdin</td><td><br  />
- <b>False (Default):</b> A private pipe is created. The child reads from it, and the parent writes via <a class="el" href="#a2474831568ca17479f4b7b4350cb13c8" title="Writes data string to standard input (stdin) of the child process.">input()</a>. <br  />
- <b>True:</b> The child inherits the parent's standard input file descriptor directly. The child keeps all tty properties (isatty, termios, job control, SIGWINCH, Ctrl+C delivery). <a class="el" href="#a2474831568ca17479f4b7b4350cb13c8" title="Writes data string to standard input (stdin) of the child process.">input()</a> returns false in this mode. </td></tr>
+ <b>False (Default):</b> A private pipe is created. The child reads from it, and the parent writes via <a class="el" href="#acf67e053cb46ecd0cfe7b0f0c7f7329b" title="Writes a data string to the standard input (stdin) of the child process.">input()</a>. <br  />
+ <b>True:</b> The child inherits the parent's standard input file descriptor directly. The child keeps all tty properties (isatty, termios, job control, SIGWINCH, Ctrl+C delivery). <a class="el" href="#acf67e053cb46ecd0cfe7b0f0c7f7329b" title="Writes a data string to the standard input (stdin) of the child process.">input()</a> returns false in this mode. </td></tr>
   </table>
   </dd>
 </dl>
@@ -424,14 +424,14 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a2474831568ca17479f4b7b4350cb13c8" name="a2474831568ca17479f4b7b4350cb13c8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2474831568ca17479f4b7b4350cb13c8">&#9670;&#160;</a></span>input()</h2>
+<a id="acf67e053cb46ecd0cfe7b0f0c7f7329b" name="acf67e053cb46ecd0cfe7b0f0c7f7329b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acf67e053cb46ecd0cfe7b0f0c7f7329b">&#9670;&#160;</a></span>input()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool SystemProcess::input </td>
+          <td class="memname">int SystemProcess::input </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>str</em></span></td><td>)</td>
           <td> const</td>
@@ -439,15 +439,16 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Writes data string to standard input (stdin) of the child process. </p>
+<p>Writes a data string to the standard input (stdin) of the child process. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">str</td><td>Raw string buffer. </td></tr>
+    <tr><td class="paramname">str</td><td>Raw string buffer to send. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>True if successfully written. </dd></dl>
-<dl class="section note"><dt>Note</dt><dd>Returns false when constructed with redirect_stdin == True — in that mode the child inherits the parent's stdin directly and there is no per-process input channel. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The number of bytes actually written on success, or a negative value on failure. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Returns a negative value when constructed with redirect_stdin == True — in that mode the child inherits the parent's stdin directly and there is no per-process input channel. </dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>A successful return does not guarantee that the entire buffer was delivered. The underlying write may accept only part of <code class="param">str</code>. Callers sending large payloads must compare the returned byte count against str.size() and resend the remainder. </dd></dl>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="SystemProcess_2main_8cpp-example.html#a12">SystemProcess/main.cpp</a>.</dd>
 </dl>
 
