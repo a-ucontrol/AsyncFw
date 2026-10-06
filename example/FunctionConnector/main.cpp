@@ -68,10 +68,18 @@ int main(int argc, char *argv[]) {
   _gl += sender->connector.connect<AsyncFw::AbstractFunctionConnector::Connection::Queued>(&Receiver::send, &receiver);
   _gl += receiver.connector.connect([](int _i, TST _t) { lsInfoGreen() << "receiver" << _i << _t.val; });
 
-  auto lambda = [](int val, TST tst) {
+  TST captured {999};
+  auto lambda = [captured](int val, TST tst) {
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
-    lsNotice() << "sender->connector (lambda)" << val << tst.val;
+    lsNotice() << "sender->connector (lambda lvalue)" << val << tst.val << captured.val;
   };
+
+  TST captured_rv {777};
+  sender->connector.connect<AsyncFw::AbstractFunctionConnector::Connection::Queued>([captured_rv](int val, TST tst) {
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    lsNotice() << "sender->connector (lambda rvalue)" << val << tst.val << captured_rv.val;
+  });
+
   sender->connector.connect<AsyncFw::AbstractFunctionConnector::Connection::Queued>(lambda);
   sender->connector.connect<AsyncFw::AbstractFunctionConnector::Connection::Queued>(lambda);
 

@@ -83,12 +83,12 @@ class FunctionConnector : public AbstractFunctionConnector {
 public:
   FunctionConnector() : AbstractFunctionConnector(P) {}
   template <Connection::Type T = Connection::Default, typename F>
-  Connection &connect(F f) const {
+  Connection &connect(F &&f) const {
     if constexpr ((P & 0x10) != 0) { static_assert(T == Connection::Default, "Error: Connection type mismatch!"); }
     constexpr typename Connection::Type type = (T != Connection::Default) ? T : static_cast<Connection::Type>(P & ~0x10);
     std::lock_guard<mutex_t> lock(mutex);
 #ifndef __clang_analyzer__
-    return *new Connection(f, this, type);
+    return *new Connection(std::forward<F>(f), this, type);
 #endif
   }
   template <Connection::Type T = Connection::Default, typename M, typename O>
@@ -145,14 +145,15 @@ protected:
 
   public:
     template <typename F>
-    Connection(F &f, const AbstractFunctionConnector *c, Type t) : AbstractFunctionConnector::Connection(c, t), f_(new Function<F>(std::forward<F>(f))) {}
+    Connection(F &&f, const AbstractFunctionConnector *c, Type t) : AbstractFunctionConnector::Connection(c, t), f_(new Function<std::decay_t<F>>(std::forward<F>(f))) {}
     template <typename M, typename O>
     Connection(M m, O *o, const AbstractFunctionConnector *c, Type t) : AbstractFunctionConnector::Connection(c, t), f_(new MemberFunction<M, O>(m, o)) {}
 
   private:
     template <typename F>
     struct Function final : AbstractFunction {
-      Function(F &&f) : f_(std::forward<F>(f)) {}
+      template <typename T>
+      Function(T &&f) : f_(std::forward<T>(f)) {}
       void operator()(Args &...args) override { return f_(std::forward<Args>(args)...); }
       void invoke(Args &...args) override { this->f_(args...); }
       F f_;
