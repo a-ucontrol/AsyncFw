@@ -19,6 +19,13 @@ class AbstractFunctionConnector {
   friend FunctionConnectionGuard;
 
 public:
+  /*
+  std::recursive_mutex: signal emission is reentrant within a single thread
+  (Direct/Auto on the same thread). A plain mutex would self-deadlock on the
+  first reentrant emit.
+  */
+  using mutex_t = std::recursive_mutex;
+
   /** @enum ConnectionPolicy @brief Defines the default invocation behavior and validation constraints for the connector.
   @details This enumeration serves two purposes based on the value provided:
   1. **Default Value (Relaxed Modes):** If a subscriber connects without a specific Connection::Type, the connector falls back to the configured ConnectionPolicy (Auto, Direct, Queued, or Sync).
@@ -65,7 +72,7 @@ protected:
   virtual ~AbstractFunctionConnector() = 0;
   ConnectionPolicy connectionPolicy;
   mutable std::vector<Connection *> list;
-  mutable std::mutex mutex;
+  mutable mutex_t mutex;
 };
 
 namespace internal {
@@ -79,7 +86,7 @@ public:
   Connection &connect(F f) const {
     if constexpr ((P & 0x10) != 0) { static_assert(T == Connection::Default, "Error: Connection type mismatch!"); }
     constexpr typename Connection::Type type = (T != Connection::Default) ? T : static_cast<Connection::Type>(P & ~0x10);
-    std::lock_guard<std::mutex> lock(mutex);
+    std::lock_guard<mutex_t> lock(mutex);
 #ifndef __clang_analyzer__
     return *new Connection(f, this, type);
 #endif
@@ -88,13 +95,13 @@ public:
   Connection &connect(M m, O *o) const {
     if constexpr ((P & 0x10) != 0) { static_assert(T == Connection::Default, "Error: Connection type mismatch!"); }
     constexpr typename Connection::Type type = (T != Connection::Default) ? T : static_cast<Connection::Type>(P & ~0x10);
-    std::lock_guard<std::mutex> lock(mutex);
+    std::lock_guard<mutex_t> lock(mutex);
 #ifndef __clang_analyzer__
     return *new Connection(m, o, this, type);
 #endif
   }
   void operator()(Args... args) const {
-    std::lock_guard<std::mutex> lock(mutex);
+    std::lock_guard<mutex_t> lock(mutex);
     for (const AbstractFunctionConnector::Connection *c : list) {
       if (!c->thread_) continue;
       if (c->type_ == Connection::Direct || (c->type_ != Connection::Queued && c->thread_->id() == std::this_thread::get_id())) {

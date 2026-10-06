@@ -19,7 +19,7 @@ using namespace AsyncFw;
 AbstractFunctionConnector::AbstractFunctionConnector(ConnectionPolicy type) : connectionPolicy(type) { trace() << this; }
 
 AbstractFunctionConnector::~AbstractFunctionConnector() {
-  std::lock_guard<std::mutex> lock(mutex);
+  std::lock_guard<mutex_t> lock(mutex);
   trace() << this << list.size();
   for (Connection *c : list) {
     c->connector_ = nullptr;
@@ -36,7 +36,7 @@ AbstractFunctionConnector::Connection::Connection(const AbstractFunctionConnecto
 AbstractFunctionConnector::Connection::~Connection() {
   if (guard_) guard_->connection_ = nullptr;
   if (!connector_) return;
-  std::lock_guard<std::mutex> lock(connector_->mutex);
+  std::lock_guard<mutex_t> lock(connector_->mutex);
   std::vector<Connection *>::iterator it = std::lower_bound(connector_->list.begin(), connector_->list.end(), this, [](const Connection *c1, const Connection *c2) { return c1 < c2; });
   connector_->list.erase(it);
   trace() << this << connector_ << connector_->list.size();
