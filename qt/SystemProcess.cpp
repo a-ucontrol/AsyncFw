@@ -131,13 +131,13 @@ void SystemProcess::wait() {
 
 int SystemProcess::exitCode() { return private_.code_; }
 
-bool SystemProcess::input(const std::string &str) const {
+int SystemProcess::input(const std::string &str) const {
   if (private_.redirect_stdin) {
     // Child shares the parent's stdin (ForwardedInputChannel); there is
     // no per-process input channel to write to.
-    return false;
+    return -1;
   }
-  return private_.process_.write(QByteArray::fromStdString(str)) > 0;
+  return private_.process_.write(QByteArray::fromStdString(str));
 }
 
 void SystemProcess::finality() {

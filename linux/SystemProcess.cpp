@@ -118,9 +118,9 @@ void SystemProcess::wait() {
 
 int SystemProcess::exitCode() { return private_.code_; }
 
-bool SystemProcess::input(const std::string &str) const {
-  if (private_.in < 0) return false;
-  return write(private_.in, str.data(), str.size()) > 0;
+int SystemProcess::input(const std::string &str) const {
+  if (private_.in < 0) return -1;
+  return write(private_.in, str.data(), str.size());
 }
 
 void SystemProcess::finality() {
