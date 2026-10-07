@@ -155,9 +155,9 @@
 <g id="Node000010" class="node">
 <title>Node10</title>
 <g id="a_Node000010"><a xlink:href="classAsyncFw_1_1AbstractSocket.html#acb6850773f2a617d9beb1bac6f0bf2f0" target="_top" xlink:title="Low&#45;level native operating system read operation proxying requests directly down to the fd handle.">
-<polygon fill="white" stroke="#666666" points="640,-157 509.25,-157 509.25,-125 640,-125 640,-157"/>
-<text xml:space="preserve" text-anchor="start" x="517.25" y="-143.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AbstractSocket</text>
-<text xml:space="preserve" text-anchor="middle" x="574.62" y="-131.5" font-family="Helvetica,sans-Serif" font-size="10.00">::read_fd</text>
+<polygon fill="white" stroke="#666666" points="640,-163 509.25,-163 509.25,-131 640,-131 640,-163"/>
+<text xml:space="preserve" text-anchor="start" x="517.25" y="-149.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AbstractSocket</text>
+<text xml:space="preserve" text-anchor="middle" x="574.62" y="-137.5" font-family="Helvetica,sans-Serif" font-size="10.00">::read_fd</text>
 </a>
 </g>
 </g>
@@ -165,8 +165,8 @@
 <g id="edge12_Node000002_Node000010" class="edge">
 <title>Node2&#45;&gt;Node10</title>
 <g id="a_edge12_Node000002_Node000010"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M231.58,-221.88C247.95,-196.45 283.73,-147.98 329,-129 384.78,-105.61 454.09,-111.92 504.68,-122.14"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="503.84,-125.54 514.35,-124.2 505.3,-118.69 503.84,-125.54"/>
+<path fill="none" stroke="#63b8ff" d="M231.58,-221.88C247.95,-196.45 283.73,-147.98 329,-129 388.09,-104.22 462.22,-114.79 513.3,-127.71"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="512.14,-131.02 522.7,-130.19 513.92,-124.26 512.14,-131.02"/>
 </a>
 </g>
 </g>
@@ -296,8 +296,8 @@
 <g id="Node000011" class="node">
 <title>Node11</title>
 <g id="a_Node000011"><a xlink:href="structAsyncFw_1_1AnyData.html#aa6d2c3488a44e34e25a0971b01a27b3c" target="_top" xlink:title="Type&#45;safely extracts and returns the stored data value.">
-<polygon fill="white" stroke="#666666" points="804.5,-282 678.25,-282 678.25,-262 804.5,-262 804.5,-282"/>
-<text xml:space="preserve" text-anchor="middle" x="741.38" y="-268.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AnyData::data</text>
+<polygon fill="white" stroke="#666666" points="804.5,-238 678.25,-238 678.25,-218 804.5,-218 804.5,-238"/>
+<text xml:space="preserve" text-anchor="middle" x="741.38" y="-224.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AnyData::data</text>
 </a>
 </g>
 </g>
@@ -305,8 +305,8 @@
 <g id="edge13_Node000010_Node000011" class="edge">
 <title>Node10&#45;&gt;Node11</title>
 <g id="a_edge13_Node000010_Node000011"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M596.16,-157.33C627.4,-182.17 686.63,-229.26 718.6,-254.68"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="716.03,-257.11 726.03,-260.59 720.38,-251.63 716.03,-257.11"/>
+<path fill="none" stroke="#63b8ff" d="M608.96,-163.39C638.15,-177.74 680.23,-198.43 708.86,-212.51"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="707.24,-215.61 717.76,-216.88 710.33,-209.33 707.24,-215.61"/>
 </a>
 </g>
 </g>
@@ -314,8 +314,8 @@
 <g id="edge17_Node000014_Node000011" class="edge">
 <title>Node14&#45;&gt;Node11</title>
 <g id="a_edge17_Node000014_Node000011"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M461.76,-288.47C477.11,-292 493.69,-295.21 509.25,-297 566.98,-303.65 582.32,-304.07 640,-297 658.72,-294.7 678.97,-290.09 696.34,-285.44"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="697.14,-288.85 705.84,-282.81 695.27,-282.1 697.14,-288.85"/>
+<path fill="none" stroke="#63b8ff" d="M465.83,-255.51C480.05,-252.29 495.1,-249.22 509.25,-247 561.5,-238.8 620.99,-234.01 666.52,-231.3"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="666.49,-234.8 676.28,-230.73 666.09,-227.81 666.49,-234.8"/>
 </a>
 </g>
 </g>
@@ -338,31 +338,12 @@
 </a>
 </g>
 </g>
-<!-- Node16 -->
-<g id="Node000016" class="node">
-<title>Node16</title>
-<g id="a_Node000016"><a xlink:href="classAsyncFw_1_1AbstractSocket.html#af8141e7714603e6c83c0640a2d74ec90" target="_top" xlink:title="Called when writing to the socket is possible.">
-<polygon fill="white" stroke="#666666" points="640,-238 509.25,-238 509.25,-206 640,-206 640,-238"/>
-<text xml:space="preserve" text-anchor="start" x="517.25" y="-224.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AbstractSocket</text>
-<text xml:space="preserve" text-anchor="middle" x="574.62" y="-212.5" font-family="Helvetica,sans-Serif" font-size="10.00">::writeEvent</text>
-</a>
-</g>
-</g>
-<!-- Node14&#45;&gt;Node16 -->
-<g id="edge21_Node000014_Node000016" class="edge">
-<title>Node14&#45;&gt;Node16</title>
-<g id="a_edge21_Node000014_Node000016"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M458.28,-255.63C473.6,-251.16 490.35,-246.28 506.23,-241.65"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="506.98,-245.08 515.6,-238.92 505.02,-238.36 506.98,-245.08"/>
-</a>
-</g>
-</g>
 <!-- Node15&#45;&gt;Node11 -->
 <g id="edge19_Node000015_Node000011" class="edge">
 <title>Node15&#45;&gt;Node11</title>
 <g id="a_edge19_Node000015_Node000011"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M640.27,-272C648.85,-272 657.71,-272 666.44,-272"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="666.29,-275.5 676.29,-272 666.29,-268.5 666.29,-275.5"/>
+<path fill="none" stroke="#63b8ff" d="M636.97,-255.62C654.68,-250.89 673.78,-245.78 690.69,-241.27"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="691.23,-244.75 699.99,-238.79 689.42,-237.99 691.23,-244.75"/>
 </a>
 </g>
 </g>
@@ -372,6 +353,25 @@
 <g id="a_edge20_Node000015_Node000014"><a xlink:title=" ">
 <path fill="none" stroke="#63b8ff" d="M508.98,-278.56C498.99,-278.74 488.6,-278.79 478.38,-278.71"/>
 <polygon fill="#63b8ff" stroke="#63b8ff" points="478.52,-275.21 468.48,-278.59 478.43,-282.21 478.52,-275.21"/>
+</a>
+</g>
+</g>
+<!-- Node16 -->
+<g id="Node000016" class="node">
+<title>Node16</title>
+<g id="a_Node000016"><a xlink:href="classAsyncFw_1_1AbstractSocket.html#af8141e7714603e6c83c0640a2d74ec90" target="_top" xlink:title="Called when writing to the socket is possible.">
+<polygon fill="white" stroke="#666666" points="806.75,-288 676,-288 676,-256 806.75,-256 806.75,-288"/>
+<text xml:space="preserve" text-anchor="start" x="684" y="-274.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AbstractSocket</text>
+<text xml:space="preserve" text-anchor="middle" x="741.38" y="-262.5" font-family="Helvetica,sans-Serif" font-size="10.00">::writeEvent</text>
+</a>
+</g>
+</g>
+<!-- Node15&#45;&gt;Node16 -->
+<g id="edge21_Node000015_Node000016" class="edge">
+<title>Node15&#45;&gt;Node16</title>
+<g id="a_edge21_Node000015_Node000016"><a xlink:title=" ">
+<path fill="none" stroke="#63b8ff" d="M640.27,-272C648.17,-272 656.3,-272 664.35,-272"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="664.14,-275.5 674.14,-272 664.14,-268.5 664.14,-275.5"/>
 </a>
 </g>
 </g>

@@ -440,7 +440,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Writes a data string to the standard input (stdin) of the child process. </p>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>The parent-side pipe is opened with O_NONBLOCK, so the call returns as soon as the kernel pipe buffer is full rather than blocking the caller's event-loop thread. On a partial write it returns the number of bytes accepted; the caller must retry the remainder, typically after observing <code>errno</code> == EAGAIN. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">str</td><td>Raw string buffer to send. </td></tr>
   </table>

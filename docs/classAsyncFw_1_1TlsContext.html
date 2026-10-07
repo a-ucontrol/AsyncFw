@@ -245,7 +245,7 @@ class&#160;</td><td class="memItemRight"><b>AbstractTlsSocket</b></td></tr>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 </div><!-- fragment --> </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="HttpSocket_2main_8cpp-example.html#_a0">HttpSocket/main.cpp</a>, <a class="el" href="Socket_2main_8cpp-example.html#_a12">Socket/main.cpp</a>, and <a class="el" href="TlsContext_2main_8cpp-example.html#_a0">TlsContext/main.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="DataArrayTcp_2main_8cpp-example.html#_a0">DataArrayTcp/main.cpp</a>, <a class="el" href="HttpServer_2main_8cpp-example.html#_a11">HttpServer/main.cpp</a>, <a class="el" href="HttpSocket_2main_8cpp-example.html#_a0">HttpSocket/main.cpp</a>, <a class="el" href="Socket_2main_8cpp-example.html#_a12">Socket/main.cpp</a>, and <a class="el" href="TlsContext_2main_8cpp-example.html#_a0">TlsContext/main.cpp</a>.</dd>
 </dl>
 </div><a name="doc-enum-members" id="doc-enum-members"></a><h2 id="header-doc-enum-members" class="groupheader">Member Enumeration Documentation</h2>
 <a id="a34b8c61895eaf10b54060df0feb54de8" name="a34b8c61895eaf10b54060df0feb54de8"></a>
@@ -312,7 +312,7 @@ class&#160;</td><td class="memItemRight"><b>AbstractTlsSocket</b></td></tr>
 
 <p>Set certificate. </p>
 <dl class="section warning"><dt>Warning</dt><dd>Must only be called during initialization phase. Never call this method if the context is already shared with active sockets. </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="TlsContext_2main_8cpp-example.html#a5">TlsContext/main.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="DataArrayTcp_2main_8cpp-example.html#a5">DataArrayTcp/main.cpp</a>, <a class="el" href="HttpServer_2main_8cpp-example.html#a16">HttpServer/main.cpp</a>, and <a class="el" href="TlsContext_2main_8cpp-example.html#a5">TlsContext/main.cpp</a>.</dd>
 </dl>
 <div id="dynsection-1" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
 <div id="dynsection-1-summary" class="dynsummary" style="display:block;">
@@ -340,7 +340,7 @@ class&#160;</td><td class="memItemRight"><b>AbstractTlsSocket</b></td></tr>
 
 <p>Append trusted certificate. </p>
 <dl class="section note"><dt>Note</dt><dd>Safe to call during initial configuration. Modifying trusted root CAs on the fly for active sockets is strictly prohibited. </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="TlsContext_2main_8cpp-example.html#a7">TlsContext/main.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="DataArrayTcp_2main_8cpp-example.html#a7">DataArrayTcp/main.cpp</a>, <a class="el" href="HttpServer_2main_8cpp-example.html#a18">HttpServer/main.cpp</a>, and <a class="el" href="TlsContext_2main_8cpp-example.html#a7">TlsContext/main.cpp</a>.</dd>
 </dl>
 
 </div>
@@ -368,7 +368,7 @@ class&#160;</td><td class="memItemRight"><b>AbstractTlsSocket</b></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if generated </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="TlsContext_2main_8cpp-example.html#a1">TlsContext/main.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="DataArrayTcp_2main_8cpp-example.html#a1">DataArrayTcp/main.cpp</a>, <a class="el" href="HttpServer_2main_8cpp-example.html#a12">HttpServer/main.cpp</a>, and <a class="el" href="TlsContext_2main_8cpp-example.html#a1">TlsContext/main.cpp</a>.</dd>
 </dl>
 
 </div>
@@ -413,7 +413,7 @@ class&#160;</td><td class="memItemRight"><b>AbstractTlsSocket</b></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if generated </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="TlsContext_2main_8cpp-example.html#a2">TlsContext/main.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="DataArrayTcp_2main_8cpp-example.html#a2">DataArrayTcp/main.cpp</a>, <a class="el" href="HttpServer_2main_8cpp-example.html#a13">HttpServer/main.cpp</a>, and <a class="el" href="TlsContext_2main_8cpp-example.html#a2">TlsContext/main.cpp</a>.</dd>
 </dl>
 
 </div>
@@ -452,7 +452,7 @@ class&#160;</td><td class="memItemRight"><b>AbstractTlsSocket</b></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="classAsyncFw_1_1DataArray.html" title="The DataArray class, provides an array of bytes.">DataArray</a> containing the generated CSR in PEM format. </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="TlsContext_2main_8cpp-example.html#a4">TlsContext/main.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="DataArrayTcp_2main_8cpp-example.html#a4">DataArrayTcp/main.cpp</a>, <a class="el" href="HttpServer_2main_8cpp-example.html#a15">HttpServer/main.cpp</a>, and <a class="el" href="TlsContext_2main_8cpp-example.html#a4">TlsContext/main.cpp</a>.</dd>
 </dl>
 
 </div>
@@ -485,7 +485,7 @@ class&#160;</td><td class="memItemRight"><b>AbstractTlsSocket</b></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="classAsyncFw_1_1DataArray.html" title="The DataArray class, provides an array of bytes.">DataArray</a> containing the signed X509 certificate in PEM format. </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="TlsContext_2main_8cpp-example.html#a6">TlsContext/main.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="DataArrayTcp_2main_8cpp-example.html#a6">DataArrayTcp/main.cpp</a>, <a class="el" href="HttpServer_2main_8cpp-example.html#a17">HttpServer/main.cpp</a>, and <a class="el" href="TlsContext_2main_8cpp-example.html#a6">TlsContext/main.cpp</a>.</dd>
 </dl>
 
 </div>
@@ -709,6 +709,8 @@ class&#160;</td><td class="memItemRight"><b>AbstractTlsSocket</b></td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="DataArrayTcp_2main_8cpp-example.html#a9">DataArrayTcp/main.cpp</a>, and <a class="el" href="HttpServer_2main_8cpp-example.html#a20">HttpServer/main.cpp</a>.</dd>
+</dl>
 
 </div>
 </div>
@@ -755,7 +757,7 @@ class&#160;</td><td class="memItemRight"><b>AbstractTlsSocket</b></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="HttpSocket_2main_8cpp-example.html#a2">HttpSocket/main.cpp</a>, <a class="el" href="Socket_2main_8cpp-example.html#a14">Socket/main.cpp</a>, and <a class="el" href="TlsContext_2main_8cpp-example.html#a9">TlsContext/main.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="DataArrayTcp_2main_8cpp-example.html#a10">DataArrayTcp/main.cpp</a>, <a class="el" href="HttpServer_2main_8cpp-example.html#a21">HttpServer/main.cpp</a>, <a class="el" href="HttpSocket_2main_8cpp-example.html#a2">HttpSocket/main.cpp</a>, <a class="el" href="Socket_2main_8cpp-example.html#a14">Socket/main.cpp</a>, and <a class="el" href="TlsContext_2main_8cpp-example.html#a9">TlsContext/main.cpp</a>.</dd>
 </dl>
 
 </div>

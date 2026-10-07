@@ -123,10 +123,9 @@ var NAVTREEINDEX1 =
 "classAsyncFw_1_1DataArrayTcpServer.html#aee0352f08202c4ee379b244f69e2a2e8":[2,0,0,26,5],
 "classAsyncFw_1_1DataArrayView.html":[2,0,0,5],
 "classAsyncFw_1_1DataArrayView.html#a0614fa75fc23b3a9839c45733957d6e0":[2,0,0,5,1],
-"classAsyncFw_1_1DataArrayView.html#a5037f9b6a55397a1a999e22198bb54ea":[2,0,0,5,3],
-"classAsyncFw_1_1DataArrayView.html#a5a35bb0c7c6c44781b883a789520128c":[2,0,0,5,2],
+"classAsyncFw_1_1DataArrayView.html#a5037f9b6a55397a1a999e22198bb54ea":[2,0,0,5,2],
 "classAsyncFw_1_1DataArrayView.html#ad04f46e3d78a878d98603a6820e6039d":[2,0,0,5,0],
-"classAsyncFw_1_1DataArrayView.html#af0409dfe7cdeea6df5d33174abb0e464":[2,0,0,5,4],
+"classAsyncFw_1_1DataArrayView.html#af0409dfe7cdeea6df5d33174abb0e464":[2,0,0,5,3],
 "classAsyncFw_1_1DataStream.html":[2,0,0,7],
 "classAsyncFw_1_1DataStream.html#a5483f91b758e0383fec1fd3c540425ef":[2,0,0,7,1],
 "classAsyncFw_1_1DataStream.html#a58e67062bf6cd3f77a8203758b01eaf8":[2,0,0,7,4],
@@ -249,5 +248,6 @@ var NAVTREEINDEX1 =
 "classAsyncFw_1_1ListenSocket.html#aa29d033332c09e341d159b2189c774e9":[2,0,0,33,5],
 "classAsyncFw_1_1ListenSocket.html#ac1bc405f0f80094fd63f200f81977c57":[2,0,0,33,0],
 "classAsyncFw_1_1ListenSocket.html#ad0eef1c8a0e89ee08edc4b40d4cb87e4":[2,0,0,33,6],
-"classAsyncFw_1_1Log.html":[2,0,0,35]
+"classAsyncFw_1_1Log.html":[2,0,0,35],
+"classAsyncFw_1_1Log.html#a27bf2284363cc365c8af12e923b95db5":[2,0,0,35,2]
 };
