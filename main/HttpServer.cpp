@@ -502,7 +502,6 @@ void HttpServer::sendToWebSockets(const std::string &data) {
 }
 
 bool HttpServer::listen(uint16_t port) {
-  trace_if(!private_.tlsContext.empty()) << private_.tlsContext.infoCertificate();
   bool b = private_.listener.listen("0.0.0.0", port);
   if (b) {
     private_.listenerGuard = private_.listener.incoming.connect([this](int descriptor, const std::string &address, bool *accept) {
@@ -511,11 +510,11 @@ bool HttpServer::listen(uint16_t port) {
         TcpSocket *socket = new TcpSocket(this);
         sockets.emplace_back(socket);
         trace() << "(incoming) socket created, total:" << sockets.size() << "tls data" << !private_.tlsContext.empty();
-        if (!private_.tlsContext.empty()) socket->AbstractSocket::setDescriptor(descriptor);
-        else {
+        if (!private_.tlsContext.empty()) {
           socket->setContext(private_.tlsContext);
-          socket->setDescriptor(descriptor);
+          trace() << private_.tlsContext.infoCertificate();
         }
+        socket->setDescriptor(descriptor);
         *accept = true;
       }
     });
