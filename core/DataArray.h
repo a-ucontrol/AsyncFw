@@ -62,8 +62,6 @@ public:
   DataArrayView(Args... args) : std::string_view(args...) {}
   /** @brief Constructs a data view pointing to an explicit raw memory address with a specific size. */
   DataArrayView(const uint8_t *, std::size_t);
-  /** @brief Constructs a data view mapping a precise iterator-bounded range of an existing DataArray. */
-  DataArrayView(const DataArray::iterator, const DataArray::iterator);
   /** @brief Constructs a data view mapping the entire memory buffer of an existing DataArray. */
   DataArrayView(const DataArray &);
   /** @brief Splices the viewed binary stream into a tokenized list using a specific delimiter character.

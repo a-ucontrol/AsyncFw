@@ -98,8 +98,6 @@ DataArray DataArray::operator+(const char v) {
 
 DataArrayView::DataArrayView(const uint8_t *data, std::size_t size) : std::string_view(reinterpret_cast<const char *>(data), size) {}
 
-DataArrayView::DataArrayView(const DataArray::iterator begin, const DataArray::iterator end) : std::string_view(reinterpret_cast<const char *>(&(*begin)), end - begin) {}
-
 DataArrayView::DataArrayView(const DataArray &da) : DataArrayView(da.data(), da.size()) {}
 
 DataArrayList DataArrayView::split(const char c) const {
