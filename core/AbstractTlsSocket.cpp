@@ -227,7 +227,7 @@ READ_FD:
 
   SSL_peek(private_.ssl, nullptr, 0);
   r = SSL_pending(private_.ssl);
-  return r > 0 ? r : -1;
+  return r >= 0 ? r : -1;
 }
 #endif
 
