@@ -8,6 +8,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 //! [snippet]
 #include <AsyncFw/HttpServer>
 #include <AsyncFw/MainThread>
+#include <AsyncFw/TlsContext>
 #include <AsyncFw/LogStream>
 
 using namespace AsyncFw;
@@ -28,7 +29,25 @@ int main(int argc, char *argv[]) {
   _http.listen(18080);
 
   if (argc == 2 && std::string(argv[1]) == "--tst") {
+    TlsContext ca;
+    ca.generateKey(2048);
+    ca.generateCertificate({{"CN", "HttpServerExample-CA"}});
+
+    TlsContext srvTls;
+    srvTls.generateKey(2048);
+    DataArray req = srvTls.generateRequest({{"CN", "localhost"}}, "DNS:localhost,IP:127.0.0.1");
+    srvTls.setCertificate(ca.signRequest(req));
+    srvTls.appendTrusted(ca.certificate());
+    srvTls.setVerifyPeer(false);
+
+    TlsContext cliTls;
+    cliTls.appendTrusted(ca.certificate());
+    cliTls.setVerifyName("localhost");
+
+    _http.setTlsContext(srvTls);
+
     HttpSocket *_socket = HttpSocket::create();
+    _socket->setContext(cliTls);
     _socket->stateChanged.connect([_socket](const AsyncFw::AbstractSocket::State state) {
       if (state == AsyncFw::AbstractSocket::State::Active) {
         logDebug() << "Send request";

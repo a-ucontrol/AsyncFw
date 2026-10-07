@@ -9,12 +9,35 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include <AsyncFw/MainThread>
 #include <AsyncFw/DataArrayTcpServer>
 #include <AsyncFw/DataArrayTcpClient>
+#include <AsyncFw/TlsContext>
 #include <AsyncFw/LogStream>
 
+using namespace AsyncFw;
+
 int main(int argc, char *argv[]) {
+  TlsContext ca;
+  ca.generateKey(2048);
+  ca.generateCertificate({{"CN", "DataArrayTcpExample-CA"}});
+
+  TlsContext srvTls;
+  srvTls.generateKey(2048);
+  DataArray req = srvTls.generateRequest({{"CN", "localhost"}}, "DNS:localhost,IP:127.0.0.1");
+  srvTls.setCertificate(ca.signRequest(req));
+  srvTls.appendTrusted(ca.certificate());
+  srvTls.setVerifyPeer(false);
+
+  TlsContext cliTls;
+  cliTls.appendTrusted(ca.certificate());
+  cliTls.setVerifyName("localhost");
+
   AsyncFw::DataArrayTcpServer _server;
   AsyncFw::DataArrayTcpClient _client;
   AsyncFw::DataArraySocket *_socket;
+
+  _server.setEncryptionDisabled("127.0.0.1", false);
+  _client.setEncryptionDisabled("127.0.0.1", false);
+  _server.setTlsContext(srvTls);
+  _client.setTlsContext(cliTls);
 
   _server.received.connect([](const AsyncFw::DataArraySocket *socket, const AsyncFw::DataArray *data, uint32_t id) {
     lsDebug() << "Server received" << *socket << *data << id;
