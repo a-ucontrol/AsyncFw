@@ -45,7 +45,9 @@ public:
   void wait();
   /** @brief Gets operating system exit status code. @return Integer exit code. Valid only when state() is Finished or Crashed. */
   int exitCode();
-  /** @brief Writes a data string to the standard input (stdin) of the child process. @param str Raw string buffer to send. @return The number of bytes actually written on success, or a negative value on failure.
+  /** @brief Writes a data string to the standard input (stdin) of the child process.
+  @details The parent-side pipe is opened with O_NONBLOCK, so the call returns as soon as the kernel pipe buffer is full rather than blocking the caller's event-loop thread. On a partial write it returns the number of bytes accepted; the caller must retry the remainder, typically after observing @c errno == EAGAIN.
+  @param str Raw string buffer to send. @return The number of bytes actually written on success, or a negative value on failure.
   @note Returns a negative value when constructed with redirect_stdin == True — in that mode the child inherits the parent's stdin directly and there is no per-process input channel.
   @warning A successful return does not guarantee that the entire buffer was delivered. The underlying write may accept only part of @p str. Callers sending large payloads must compare the returned byte count against str.size() and resend the remainder. */
   int input(const std::string &) const;

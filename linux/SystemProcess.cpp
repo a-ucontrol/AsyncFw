@@ -166,6 +166,7 @@ bool SystemProcess::Private::process() {
     ::close(_pipe_out[1]);
     return false;
   }
+
   if (!redirect_stdin && pipe(_pipe_in) == -1) {
     ::close(_pipe_out[0]);
     ::close(_pipe_out[1]);
@@ -173,6 +174,20 @@ bool SystemProcess::Private::process() {
     ::close(_pipe_err[1]);
     return false;
   }
+
+  if (!redirect_stdin) {
+    int _flags = fcntl(_pipe_in[1], F_GETFL, 0);
+    if (_flags < 0 || fcntl(_pipe_in[1], F_SETFL, _flags | O_NONBLOCK) < 0) {
+      ::close(_pipe_out[0]);
+      ::close(_pipe_out[1]);
+      ::close(_pipe_err[0]);
+      ::close(_pipe_err[1]);
+      ::close(_pipe_in[0]);
+      ::close(_pipe_in[1]);
+      return false;
+    }
+  }
+
   if (pipe2(_pipe_exec, O_CLOEXEC) == -1) {
     ::close(_pipe_out[0]);
     ::close(_pipe_out[1]);
