@@ -279,11 +279,17 @@ void AbstractThread::Waiter::complete() {
     lsWarning() << "not waiting";
     return;
   }
+  if (thread_->id() == std::this_thread::get_id()) {
+    AbstractThread *_t = thread_;
+    thread_ = nullptr;
+    _t->quit();
+    return;
+  }
   thread_->invoke([this]() {
     AbstractThread *_t = thread_;
     thread_ = nullptr;
     _t->quit();
-  }, true);
+  });
 }
 
 void AbstractThread::Waiter::wait() {
