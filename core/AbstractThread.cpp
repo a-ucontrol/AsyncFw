@@ -275,7 +275,10 @@ void AbstractThread::Private::destroy_removed_polls() {
 
 void AbstractThread::Waiter::complete() {
   trace() << this;
-  warning_if(!thread_) << "not waiting";  // debug-only diagnostic, crashes below in release
+  if (!thread_) {
+    lsWarning() << "not waiting";
+    return;
+  }
   thread_->invoke([this]() {
     AbstractThread *_t = thread_;
     thread_ = nullptr;

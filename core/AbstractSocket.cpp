@@ -400,7 +400,7 @@ DataArray AbstractSocket::read(int size) {
 int AbstractSocket::write(const uint8_t *data, int size) {
   warning_if(size <= 0) << LogStream::Color::Red << "size for write is null";
   int _r = write_fd(data, size);
-  if (_r > 0 && !(private_.flags & 0xC0)) {
+  if (_r > 0 && !(private_.flags & 0x40)) {
     private_.flags |= 0x40;
     AbstractThread::AbstractTask *_t = new Invocable<void()>::Function([this] {
       trace() << LogStream::Color::DarkGreen << "write event task";
