@@ -326,12 +326,8 @@ bool DataArraySocket::transmit(const DataArray &ba, uint32_t pi, bool wait) cons
     _da += ba;
     private_.transmitList.push_back(_da);
     if (buffers == 0) thread_->invoke([this]() { const_cast<DataArraySocket *>(this)->writeSocket(); }, wait);
-    else {
-      if (wait) {
-        thread_->requestInterrupt();
-        thread_->waitInterrupted();
-      }
-    }
+    else if (wait) thread_->invoke([]() {}, true);
+
     _r = true;
   }, true);
   return _r;
