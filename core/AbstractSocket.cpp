@@ -403,10 +403,9 @@ int AbstractSocket::write(const uint8_t *data, int size) {
   if (_r > 0 && !(private_.flags & 0x40)) {
     private_.flags |= 0x40;
     AbstractThread::AbstractTask *_t = new Invocable<void()>::Function([this] {
-      trace() << LogStream::Color::DarkGreen << "write event task";
+      trace() << LogStream::Color::DarkGreen << "write event task" << private_.flags;
       private_.flags &= ~0x40;
       if (!(private_.flags & 0x80)) writeEvent();
-      else lsDebug() << LogStream::Color::Red << "(private_.flags & 0x80)";
     });
     if (!thread_->invokeTask(_t)) {
       lsError() << "thread not running";
