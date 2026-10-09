@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
 
   AsyncFw::ApplicationNotifier::instance()->notify.connect([&_test](const AsyncFw::ApplicationNotifier::Value &_val) {
     lsNotice() << _val.type;
-    if (!_val.empty()) lsInfoMagenta() << _val.data<std::chrono::time_point<std::chrono::system_clock>>();
+    if (!_val.empty()) lsInfo() << _val.data<std::chrono::time_point<std::chrono::system_clock>>();
     if (_val.type == TestThreadStarted) _test.quit();
     else if (_val.type == TestThreadFinished) { AsyncFw::MainThread::exit(); }
   });

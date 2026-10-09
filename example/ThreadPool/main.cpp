@@ -72,9 +72,9 @@ int main(int argc, char *argv[]) {
     for (AsyncFw::AbstractThreadPool *pool : pools) {
       lsNotice() << pool->name();
       AsyncFw::LockData threads = pool->threads();
-      for (const AsyncFw::AbstractThreadPool::Thread *thread : *threads) { lsInfoGreen() << thread->name(); }
+      for (const AsyncFw::AbstractThreadPool::Thread *thread : *threads) { lsInfo() << thread->name(); }
     }
-    for (const AsyncFw::AbstractThread *thread : *AsyncFw::AbstractThread::threads()) { lsInfoMagenta() << thread->name(); }
+    for (const AsyncFw::AbstractThread *thread : *AsyncFw::AbstractThread::threads()) { lsInfo() << thread->name(); }
   });
 
   int ret = AsyncFw::MainThread::exec();

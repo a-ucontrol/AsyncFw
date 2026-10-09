@@ -18,14 +18,14 @@ int main(int argc, char *argv[]) {
   MulticastDns _mdns {"AsyncFw_mdns_example_service"};
 
   _mdns.hostAdded.connect([&_mdns](const MulticastDns::Host &host) {
-    lsInfoGreen() << "Added" << host.name << host.ipv4 << host.llipv4 << host.misc << host.port;
+    lsInfo() << "Added" << host.name << host.ipv4 << host.llipv4 << host.misc << host.port;
     Thread::current()->invoke([&_mdns]() { _mdns.stopService(); });
   });
   _mdns.hostChanged.connect([](const MulticastDns::Host &host) {
-    lsInfoMagenta() << "Changed" << host.name << host.ipv4 << host.llipv4 << host.misc << host.port;
+    lsInfo() << LogStream::Color::DarkMagenta << "Changed" << host.name << host.ipv4 << host.llipv4 << host.misc << host.port;
     MainThread::exit();
   });
-  _mdns.hostRemoved.connect([](const MulticastDns::Host &host) { lsInfoRed() << "Removed" << host.name << host.ipv4 << host.llipv4 << host.misc << host.port; });
+  _mdns.hostRemoved.connect([](const MulticastDns::Host &host) { lsInfo() << LogStream::Color::DarkRed << "Removed" << host.name << host.ipv4 << host.llipv4 << host.misc << host.port; });
 
   _mdns.startService("AsyncFw_host", "AsyncFw_misc_string", 18080);
   _mdns.startQuerier();

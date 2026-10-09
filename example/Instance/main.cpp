@@ -24,7 +24,7 @@ private:
   static inline class Instance : public AsyncFw::Instance<ExampleClass> {
   public:
     using AsyncFw::Instance<ExampleClass>::Instance;
-    void created() override { lsInfoGreen() << value->name(); }
+    void created() override { lsInfo() << value->name(); }
   } instance_ {"ExampleClass"};
   std::string name_;
 };
@@ -34,8 +34,8 @@ int main(int argc, char *argv[]) {
   AsyncFw::Instance<ExampleClass>::create("ExampleClassInstance");
   AsyncFw::Thread::current()->invoke([]() { AsyncFw::MainThread::exit(); });
 
-  lsInfoMagenta() << _e.name();
-  lsInfoMagenta() << ExampleClass::instance()->name();
+  lsInfo() << _e.name();
+  lsInfo() << ExampleClass::instance()->name();
 
   lsNotice() << "Start Application";
   int ret = AsyncFw::MainThread::exec();

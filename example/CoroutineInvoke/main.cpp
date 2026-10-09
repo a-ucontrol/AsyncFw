@@ -12,16 +12,16 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 using namespace AsyncFw;
 
 struct TST {
-  TST(int i) : val(i) { lsInfoGreen() << val; }
-  ~TST() { lsInfoRed() << val; }
+  TST(int i) : val(i) { lsDebug() << val; }
+  ~TST() { lsDebug() << val; }
   TST(const TST &v) {
     val = v.val;
-    lsInfoMagenta() << "copy" << val;
+    lsDebug() << "copy" << val;
   }
   TST(TST &&v) {
     val = v.val;
     v.val = -1;
-    lsInfoCyan() << "move" << val;
+    lsDebug() << "move" << val;
   }
   int val = 0;
 };
@@ -57,23 +57,18 @@ CoroutineTask task() {
   co_await coInvoke(&_thread, &Example::tst_void, &_e, _s);
   std::string s = co_await coInvoke(&_thread, &Example::tst_string, &_e, _s);
 
-  double j1 = co_await coInvoke(
-      [](double v1, double v2) {
-        std::this_thread::sleep_for(std::chrono::milliseconds(10));
-        return v1 + v2 + 2.5;
-      },
-      100.5, 15.5);
+  double j1 = co_await coInvoke([](double v1, double v2) {
+    std::this_thread::sleep_for(std::chrono::milliseconds(10));
+    return v1 + v2 + 2.5;
+  }, 100.5, 15.5);
 
-  double j2 = co_await coInvoke(
-      &_thread,
-      [](double v1, double v2) {
-        std::this_thread::sleep_for(std::chrono::milliseconds(10));
-        return v1 + v2 + 3.5;
-      },
-      100.5, 15.5);
+  double j2 = co_await coInvoke(&_thread, [](double v1, double v2) {
+    std::this_thread::sleep_for(std::chrono::milliseconds(10));
+    return v1 + v2 + 3.5;
+  }, 100.5, 15.5);
 
   double j3;
-  TST _tst{1001};
+  TST _tst {1001};
   {  //lambda scope
     auto lambda = [](double v1, double v2, TST) {
       std::this_thread::sleep_for(std::chrono::milliseconds(10));

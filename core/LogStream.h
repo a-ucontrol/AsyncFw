@@ -227,24 +227,9 @@ private:
     if constexpr (0) AsyncFw::LogStream().output
 #endif
 #ifndef LS_NO_INFO
-  #define lsInfo AsyncFw::LogStream(+AsyncFw::LogStream::Info | AsyncFw::LogStream::DarkYellow, __PRETTY_FUNCTION__, __FILE__, __LINE__, LS_DEFAULT_FLAGS).output
-  #define lsInfoRed AsyncFw::LogStream(+AsyncFw::LogStream::Info | AsyncFw::LogStream::DarkRed, __PRETTY_FUNCTION__, __FILE__, __LINE__, LS_DEFAULT_FLAGS).output
-  #define lsInfoGreen AsyncFw::LogStream(+AsyncFw::LogStream::Info | AsyncFw::LogStream::DarkGreen, __PRETTY_FUNCTION__, __FILE__, __LINE__, LS_DEFAULT_FLAGS).output
-  #define lsInfoBlue AsyncFw::LogStream(+AsyncFw::LogStream::Info | AsyncFw::LogStream::DarkBlue, __PRETTY_FUNCTION__, __FILE__, __LINE__, LS_DEFAULT_FLAGS).output
-  #define lsInfoCyan AsyncFw::LogStream(+AsyncFw::LogStream::Info | AsyncFw::LogStream::DarkCyan, __PRETTY_FUNCTION__, __FILE__, __LINE__, LS_DEFAULT_FLAGS).output
-  #define lsInfoMagenta AsyncFw::LogStream(+AsyncFw::LogStream::Info | AsyncFw::LogStream::DarkMagenta, __PRETTY_FUNCTION__, __FILE__, __LINE__, LS_DEFAULT_FLAGS).output
+  #define lsInfo AsyncFw::LogStream(+AsyncFw::LogStream::Info | AsyncFw::LogStream::DarkGreen, __PRETTY_FUNCTION__, __FILE__, __LINE__, LS_DEFAULT_FLAGS).output
 #else
   #define lsInfo \
-    if constexpr (0) AsyncFw::LogStream().output
-  #define lsInfoRed \
-    if constexpr (0) AsyncFw::LogStream().output
-  #define lsInfoGreen \
-    if constexpr (0) AsyncFw::LogStream().output
-  #define lsInfoBlue \
-    if constexpr (0) AsyncFw::LogStream().output
-  #define lsInfoCyan \
-    if constexpr (0) AsyncFw::LogStream().output
-  #define lsInfoMagenta \
     if constexpr (0) AsyncFw::LogStream().output
 #endif
 #ifndef LS_NO_NOTICE

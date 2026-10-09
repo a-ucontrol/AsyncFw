@@ -28,9 +28,9 @@ int main(int argc, char *argv[]) {
       AsyncFw::MainThread::exit(0);
       return;
     }
-    lsInfoGreen() << tasks.front()->running();
+    lsInfo() << tasks.front()->running();
     (*tasks.front())();
-    lsInfoGreen() << tasks.front()->running();
+    lsInfo() << tasks.front()->running();
     tasks.pop();
   });
 

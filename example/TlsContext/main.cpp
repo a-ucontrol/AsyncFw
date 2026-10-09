@@ -31,7 +31,7 @@ int main(int argc, char *argv[]) {
 
   _cert1.appendTrusted(_ca.certificate());
   _cert1.setVerifyName("VerifyName");
-  lsInfoCyan() << _cert1;
+  lsInfo() << _cert1;
 
   AsyncFw::TlsContext _cert2;
   _cert2.generateKey(KEY_BITS);
@@ -40,7 +40,7 @@ int main(int argc, char *argv[]) {
 
   _cert2.appendTrusted(_ca.certificate());
   _cert2.setVerifyName("VerifyName");
-  lsInfoMagenta() << _cert2;
+  lsInfo() << _cert2;
 
   return 0;
 }

@@ -376,7 +376,7 @@ HttpServer::TcpSocket::TcpSocket(HttpServer *server) : HttpSocket(), server_(ser
     if (_state != Unconnected) return;
     if (response) response->socket_ = nullptr;
     if (server_) server_->sockets.erase(std::find(server_->sockets.begin(), server_->sockets.end(), this));
-    lsInfoCyan() << "unconnected" << peerAddress() << peerPort() << "sockets:" << server_->sockets.size();
+    lsInfo() << "unconnected" << peerAddress() << peerPort() << "sockets:" << server_->sockets.size();
     destroy();
   });
   received.connect([this](const DataArray &request) {

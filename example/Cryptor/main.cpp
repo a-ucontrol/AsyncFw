@@ -25,7 +25,7 @@ int main(int argc, char *argv[]) {
 
   _r = AsyncFw::Cryptor::decrypt(_key, _encrypted, _decrypted);
 
-  lsInfoGreen() << _r << std::endl << _decrypted;
+  lsInfo() << _r << std::endl << _decrypted;
 
   return 0;
 }

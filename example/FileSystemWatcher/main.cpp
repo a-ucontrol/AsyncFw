@@ -22,7 +22,7 @@ int main(int argc, char *argv[]) {
 
   FileSystemWatcher watcher {{"/tmp/FileSystemWatcher.example"}};
   watcher.notify.connect([](const std::string &name, int event) {
-    lsInfoMagenta() << "file:" << name << event;  // event: -1 removed / 0 changed / 1 created
+    lsInfo() << LogStream::Color::DarkMagenta << "file:" << name << event;  // event: -1 removed / 0 changed / 1 created
     MainThread::exit();
   });
 
@@ -35,7 +35,7 @@ int main(int argc, char *argv[]) {
     _f.open(std::ios::binary | std::ios::out);
   };
 
-  lsInfoGreen() << watcher;
+  lsInfo() << watcher;
 
   lsNotice() << "Start Application";
   int ret = MainThread::exec();
@@ -75,7 +75,7 @@ int main(int argc, char *argv[]) {
   int scenarioBNotify = 0;
 
   FunctionConnectionGuard g = watcher.notify.connect([&](const std::string &name, int event) {
-    lsInfoMagenta() << "notify:" << name << event;
+    lsInfo() << "notify:" << name << event;
 
     if (phase == 0 && name == f2 && event == 1) {
       // Scenario A success: f2 was created after removePath(f1), even
@@ -86,17 +86,17 @@ int main(int argc, char *argv[]) {
   });
 
   // ---- Scenario A ------------------------------------------------------
-  lsInfoGreen() << "=== Scenario A: shared directory watch ===";
+  lsInfo() << "=== Scenario A: shared directory watch ===";
 
   // Both pending: registers a single shared dir wd.
   watcher.addPath(f1);
   watcher.addPath(f2);
-  lsInfoGreen() << watcher;
+  lsInfo() << watcher;
 
   // BUG (pre-fix): kills the shared wd, f2 loses observation.
   watcher.removePath(f1);
-  lsInfoGreen() << "after removePath(file1)";
-  lsInfoGreen() << watcher;
+  lsInfo() << "after removePath(file1)";
+  lsInfo() << watcher;
 
   // Create f2 -- watcher must still report Created(f2).
   {
@@ -107,7 +107,7 @@ int main(int argc, char *argv[]) {
   // ---- Scenario B ------------------------------------------------------
   // Runs 300 ms later, after Scenario A's notification has been delivered.
   Timer::single(300, [&]() {
-    lsInfoGreen() << "=== Scenario B: file watch lifecycle ===";
+    lsInfo() << "=== Scenario B: file watch lifecycle ===";
     phase = 1;
 
     // f3 exists -> addPath registers an exclusive file wd.
@@ -116,17 +116,17 @@ int main(int argc, char *argv[]) {
       _f.open(std::ios::binary | std::ios::out);
     }
     watcher.addPath(f3);
-    lsInfoGreen() << watcher;
+    lsInfo() << watcher;
 
     // removePath(f3) must call inotify_rm_watch() for the file wd.
     watcher.removePath(f3);
-    lsInfoGreen() << "after removePath(file3)";
-    lsInfoGreen() << watcher;
+    lsInfo() << "after removePath(file3)";
+    lsInfo() << watcher;
 
     // Re-add the same existing file: must register a fresh wd.
     watcher.addPath(f3);
-    lsInfoGreen() << "after re-addPath(file3)";
-    lsInfoGreen() << watcher;
+    lsInfo() << "after re-addPath(file3)";
+    lsInfo() << watcher;
 
     // Write f3 -- expect exactly one Changed on the new wd.
     {

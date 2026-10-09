@@ -42,7 +42,7 @@ int main(int argc, char *argv[]) {
   AsyncFw::Timer timer;
   timer.timeout.connect([&configCache]() {
     AsyncFw::LockData conf = configCache.acquire<AsyncFw::Mode::Lock::Shared>();
-    lsInfoGreen() << "Config IP:" << conf->ipAddress << "Port:" << conf->port;
+    lsInfo() << "Config IP:" << conf->ipAddress << "Port:" << conf->port;
     if (conf->port == 8080) AsyncFw::MainThread::exit(0);
   });
 

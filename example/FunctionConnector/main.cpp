@@ -12,16 +12,16 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include <AsyncFw/LogStream>
 
 struct TST {
-  TST(int i) : val(i) { lsInfoGreen() << val; }
-  ~TST() { lsInfoRed() << val; }
+  TST(int i) : val(i) { lsDebug() << val; }
+  ~TST() { lsDebug() << val; }
   TST(const TST &v) {
     val = v.val;
-    lsInfoMagenta() << "copy" << val;
+    lsDebug() << "copy" << val;
   }
   TST(TST &&v) {
     val = v.val;
     v.val = -1;
-    lsInfoCyan() << "move" << val;
+    lsDebug() << "move" << val;
   }
   int val = 0;
 };
@@ -31,7 +31,7 @@ public:
   Sender() {
     timer.timeout.connect([this]() {
       AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::current();
-      lsInfoGreen() << cnt << "send from thread:" << ct->name() << ct->id();
+      lsDebug() << cnt << "send from thread:" << ct->name() << ct->id();
       connector(cnt++, _tst);
       if (cnt == 1) AsyncFw::MainThread::exit(0);
     });
@@ -48,10 +48,7 @@ private:
 
 class Receiver {
 public:
-  void send(int _i, TST _t) {
-    lsInfoGreen();
-    connector(_i, _t);
-  }
+  void send(int _i, TST _t) { connector(_i, _t); }
   AsyncFw::FunctionConnector<int, TST>::Protected<Receiver> connector;
 };
 
@@ -66,7 +63,7 @@ int main(int argc, char *argv[]) {
   Receiver receiver;
   AsyncFw::FunctionConnectionGuardList _gl;
   _gl += sender->connector.connect<AsyncFw::AbstractFunctionConnector::Connection::Queued>(&Receiver::send, &receiver);
-  _gl += receiver.connector.connect([](int _i, TST _t) { lsInfoGreen() << "receiver" << _i << _t.val; });
+  _gl += receiver.connector.connect([](int _i, TST _t) { lsInfo() << "receiver" << _i << _t.val; });
 
   TST captured {999};
   auto lambda = [captured](int val, TST tst) {

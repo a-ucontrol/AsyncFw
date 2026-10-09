@@ -30,11 +30,6 @@ int main(int argc, char *argv[]) {
   lsTrace() << "Trace";
   lsDebug() << "Debug";
   lsInfo() << "Info";
-  lsInfoRed() << "Info red";
-  lsInfoGreen() << "Info green";
-  lsInfoBlue() << "Info blue";
-  lsInfoMagenta() << "Info magenta";
-  lsInfoCyan() << "Info cyan";
   lsNotice() << "Notice";
   lsWarning() << "Warning";
   lsError() << "Error";
