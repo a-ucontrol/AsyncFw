@@ -113,16 +113,16 @@ $(function(){initNavTree('CoroutineInvoke_2main_8cpp-example.html','',''); });
 <div class="line"><span class="keyword">using namespace </span>AsyncFw;</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">struct </span>TST {</div>
-<div class="line">  TST(<span class="keywordtype">int</span> i) : val(i) { lsInfoGreen() &lt;&lt; val; }</div>
-<div class="line">  ~TST() { lsInfoRed() &lt;&lt; val; }</div>
+<div class="line">  TST(<span class="keywordtype">int</span> i) : val(i) { lsDebug() &lt;&lt; val; }</div>
+<div class="line">  ~TST() { lsDebug() &lt;&lt; val; }</div>
 <div class="line">  TST(<span class="keyword">const</span> TST &amp;v) {</div>
 <div class="line">    val = v.val;</div>
-<div class="line">    lsInfoMagenta() &lt;&lt; <span class="stringliteral">&quot;copy&quot;</span> &lt;&lt; val;</div>
+<div class="line">    lsDebug() &lt;&lt; <span class="stringliteral">&quot;copy&quot;</span> &lt;&lt; val;</div>
 <div class="line">  }</div>
 <div class="line">  TST(TST &amp;&amp;v) {</div>
 <div class="line">    val = v.val;</div>
 <div class="line">    v.val = -1;</div>
-<div class="line">    lsInfoCyan() &lt;&lt; <span class="stringliteral">&quot;move&quot;</span> &lt;&lt; val;</div>
+<div class="line">    lsDebug() &lt;&lt; <span class="stringliteral">&quot;move&quot;</span> &lt;&lt; val;</div>
 <div class="line">  }</div>
 <div class="line">  <span class="keywordtype">int</span> val = 0;</div>
 <div class="line">};</div>
@@ -158,23 +158,18 @@ $(function(){initNavTree('CoroutineInvoke_2main_8cpp-example.html','',''); });
 <div class="line">  <span class="keyword">co_await</span> <a class="code hl_function" href="group__coroutine__api.html#ga0005f3892c4f008098e0ee2634481d5a">coInvoke</a>(&amp;_thread, &amp;Example::tst_void, &amp;_e, _s);</div>
 <div class="line">  std::string s = <span class="keyword">co_await</span> <a class="code hl_function" href="group__coroutine__api.html#ga0005f3892c4f008098e0ee2634481d5a">coInvoke</a>(&amp;_thread, &amp;Example::tst_string, &amp;_e, _s);</div>
 <div class="line"> </div>
-<div class="line">  <span class="keywordtype">double</span> j1 = <span class="keyword">co_await</span> <a class="code hl_function" href="group__coroutine__api.html#ga0005f3892c4f008098e0ee2634481d5a">coInvoke</a>(</div>
-<div class="line">      [](<span class="keywordtype">double</span> v1, <span class="keywordtype">double</span> v2) {</div>
-<div class="line">        std::this_thread::sleep_for(std::chrono::milliseconds(10));</div>
-<div class="line">        <span class="keywordflow">return</span> v1 + v2 + 2.5;</div>
-<div class="line">      },</div>
-<div class="line">      100.5, 15.5);</div>
+<div class="line">  <span class="keywordtype">double</span> j1 = <span class="keyword">co_await</span> <a class="code hl_function" href="group__coroutine__api.html#ga0005f3892c4f008098e0ee2634481d5a">coInvoke</a>([](<span class="keywordtype">double</span> v1, <span class="keywordtype">double</span> v2) {</div>
+<div class="line">    std::this_thread::sleep_for(std::chrono::milliseconds(10));</div>
+<div class="line">    <span class="keywordflow">return</span> v1 + v2 + 2.5;</div>
+<div class="line">  }, 100.5, 15.5);</div>
 <div class="line"> </div>
-<div class="line">  <span class="keywordtype">double</span> j2 = <span class="keyword">co_await</span> <a class="code hl_function" href="group__coroutine__api.html#ga0005f3892c4f008098e0ee2634481d5a">coInvoke</a>(</div>
-<div class="line">      &amp;_thread,</div>
-<div class="line">      [](<span class="keywordtype">double</span> v1, <span class="keywordtype">double</span> v2) {</div>
-<div class="line">        std::this_thread::sleep_for(std::chrono::milliseconds(10));</div>
-<div class="line">        <span class="keywordflow">return</span> v1 + v2 + 3.5;</div>
-<div class="line">      },</div>
-<div class="line">      100.5, 15.5);</div>
+<div class="line">  <span class="keywordtype">double</span> j2 = <span class="keyword">co_await</span> <a class="code hl_function" href="group__coroutine__api.html#ga0005f3892c4f008098e0ee2634481d5a">coInvoke</a>(&amp;_thread, [](<span class="keywordtype">double</span> v1, <span class="keywordtype">double</span> v2) {</div>
+<div class="line">    std::this_thread::sleep_for(std::chrono::milliseconds(10));</div>
+<div class="line">    <span class="keywordflow">return</span> v1 + v2 + 3.5;</div>
+<div class="line">  }, 100.5, 15.5);</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordtype">double</span> j3;</div>
-<div class="line">  TST _tst{1001};</div>
+<div class="line">  TST _tst {1001};</div>
 <div class="line">  {  <span class="comment">//lambda scope</span></div>
 <div class="line">    <span class="keyword">auto</span> lambda = [](<span class="keywordtype">double</span> v1, <span class="keywordtype">double</span> v2, TST) {</div>
 <div class="line">      std::this_thread::sleep_for(std::chrono::milliseconds(10));</div>

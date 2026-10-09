@@ -142,7 +142,7 @@ $(function(){initNavTree('Cache_2main_8cpp-example.html','',''); });
 <div class="line">  <a id="_a10" name="_a10"></a><a class="code hl_class" href="classAsyncFw_1_1Timer.html">AsyncFw::Timer</a> timer;</div>
 <div class="line">  timer.<a id="a11" name="a11"></a><a class="code hl_variable" href="classAsyncFw_1_1Timer.html#acf307d575a38d2b3bb852202d0126fcd">timeout</a>.<a class="code hl_function" href="classAsyncFw_1_1FunctionConnector.html#ae1f65144956b3b1247d58614e4080f63">connect</a>([&amp;configCache]() {</div>
 <div class="line">    <a class="code hl_struct" href="structAsyncFw_1_1LockData.html">AsyncFw::LockData</a> conf = configCache.acquire&lt;<a id="_a12" name="_a12"></a><a class="code hl_enumvalue" href="LockData_8h.html#ab8bc20e4f7d757a564b0c386069ca560aa6156ea9d66fef24e87e841fbabf7cca">AsyncFw::Mode::Lock::Shared</a>&gt;();</div>
-<div class="line">    lsInfoGreen() &lt;&lt; <span class="stringliteral">&quot;Config IP:&quot;</span> &lt;&lt; conf-&gt;ipAddress &lt;&lt; <span class="stringliteral">&quot;Port:&quot;</span> &lt;&lt; conf-&gt;port;</div>
+<div class="line">    lsInfo() &lt;&lt; <span class="stringliteral">&quot;Config IP:&quot;</span> &lt;&lt; conf-&gt;ipAddress &lt;&lt; <span class="stringliteral">&quot;Port:&quot;</span> &lt;&lt; conf-&gt;port;</div>
 <div class="line">    <span class="keywordflow">if</span> (conf-&gt;port == 8080) <a id="a13" name="a13"></a><a class="code hl_function" href="classAsyncFw_1_1MainThread.html#a76fed3a2c1cfdbdb67f2b209e6457657">AsyncFw::MainThread::exit</a>(0);</div>
 <div class="line">  });</div>
 <div class="line"> </div>

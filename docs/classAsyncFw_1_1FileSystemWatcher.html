@@ -166,7 +166,7 @@ Friends</h2></td></tr>
 <div class="line"> </div>
 <div class="line">  <a class="code hl_class" href="classAsyncFw_1_1FileSystemWatcher.html">FileSystemWatcher</a> watcher {{<span class="stringliteral">&quot;/tmp/FileSystemWatcher.example&quot;</span>}};</div>
 <div class="line">  watcher.<a class="code hl_variable" href="#a4c808b22785dbc3182a9e7fa600b0919">notify</a>.<a class="code hl_function" href="classAsyncFw_1_1FunctionConnector.html#ae1f65144956b3b1247d58614e4080f63">connect</a>([](<span class="keyword">const</span> std::string &amp;name, <span class="keywordtype">int</span> event) {</div>
-<div class="line">    lsInfoMagenta() &lt;&lt; <span class="stringliteral">&quot;file:&quot;</span> &lt;&lt; name &lt;&lt; event;  <span class="comment">// event: -1 removed / 0 changed / 1 created</span></div>
+<div class="line">    lsInfo() &lt;&lt; LogStream::Color::DarkMagenta &lt;&lt; <span class="stringliteral">&quot;file:&quot;</span> &lt;&lt; name &lt;&lt; event;  <span class="comment">// event: -1 removed / 0 changed / 1 created</span></div>
 <div class="line">    <a class="code hl_function" href="classAsyncFw_1_1MainThread.html#a76fed3a2c1cfdbdb67f2b209e6457657">MainThread::exit</a>();</div>
 <div class="line">  });</div>
 <div class="line"> </div>
@@ -179,7 +179,7 @@ Friends</h2></td></tr>
 <div class="line">    _f.<a class="code hl_function" href="classAsyncFw_1_1File.html#a212a2b7db1a9cffd87c78b0285671bea">open</a>(std::ios::binary | std::ios::out);</div>
 <div class="line">  };</div>
 <div class="line"> </div>
-<div class="line">  lsInfoGreen() &lt;&lt; watcher;</div>
+<div class="line">  lsInfo() &lt;&lt; watcher;</div>
 <div class="line"> </div>
 <div class="line">  lsNotice() &lt;&lt; <span class="stringliteral">&quot;Start Application&quot;</span>;</div>
 <div class="line">  <span class="keywordtype">int</span> ret = <a class="code hl_function" href="classAsyncFw_1_1MainThread.html#ad12e620772820ad751868c7b49fa4190">MainThread::exec</a>();</div>
