@@ -1,13 +1,13 @@
 <map id="main/MainThread.h" name="main/MainThread.h">
-<area shape="rect" id="Node000001" title="The MainThread class." alt="" coords="309,5,442,32"/>
+<area shape="rect" id="Node000001" title="The MainThread class." alt="" coords="301,5,434,32"/>
 <area shape="rect" id="Node000002" href="$Thread_8h.html" title="The Thread class." alt="" coords="140,80,253,107"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="342,34,243,76,240,72,346,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="336,34,242,76,239,71,340,31"/>
 <area shape="rect" id="Node000011" href="$Instance_8h.html" title="The AbstractInstance and Instance classes." alt="" coords="277,80,359,107"/>
-<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="367,31,339,70,335,66,364,35"/>
-<area shape="rect" id="Node000013" title=" " alt="" coords="384,80,484,107"/>
-<area shape="poly" id="edge12_Node000001_Node000013" title=" " alt="" coords="386,30,417,68,412,68,385,35"/>
-<area shape="rect" id="Node000014" title=" " alt="" coords="508,80,576,107"/>
-<area shape="poly" id="edge13_Node000001_Node000014" title=" " alt="" coords="404,30,502,73,496,74,404,35"/>
+<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="360,30,337,69,333,65,357,35"/>
+<area shape="rect" id="Node000013" title=" " alt="" coords="383,80,450,107"/>
+<area shape="poly" id="edge12_Node000001_Node000013" title=" " alt="" coords="376,30,402,67,397,67,375,35"/>
+<area shape="rect" id="Node000014" title=" " alt="" coords="475,80,532,107"/>
+<area shape="poly" id="edge13_Node000001_Node000014" title=" " alt="" coords="391,30,469,72,464,73,391,35"/>
 <area shape="rect" id="Node000003" href="$FunctionConnector_8h.html" title="The AbstractFunctionConnector, FunctionConnector, FunctionConnectorProtected, FunctionConnectionGuard..." alt="" coords="126,155,267,181"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="198,105,199,140,194,138,196,110"/>
 <area shape="rect" id="Node000004" href="$AbstractThread_8h.html" title="The AbstractThread class." alt="" coords="136,229,257,256"/>
