@@ -110,10 +110,12 @@ void run_examples(bool _socket) {
   process.start(app);
   process.wait();
 
+#if defined __linux__ || defined USE_QAPPLICATION
   app = EXAMPLES_PATH "FileSystemWatcherExample";
   logInfo() << "Start:" << app;
   process.start(app);
   process.wait();
+#endif
 
   app = EXAMPLES_PATH "ListenSocketExample";
   logInfo() << "Start:" << app;

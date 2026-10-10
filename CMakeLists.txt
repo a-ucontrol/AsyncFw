@@ -177,15 +177,17 @@ set(AsyncFw_MAIN_SOURCES
   "main/log-types.cpp"
 )
 
-set(AsyncFw_LINUX_SOURCES
-  "main/AddressResolver.cpp"
-)
-
 if(NOT USE_QAPPLICATION)
-  set(AsyncFw_LINUX_SOURCES ${AsyncFw_LINUX_SOURCES}
-    "linux/FileSystemWatcher.cpp"
-    "linux/SystemProcess.cpp"
-  )
+  if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+    set(AsyncFw_LINUX_SOURCES
+      "linux/FileSystemWatcher.cpp"
+    )
+  endif()
+  if(UNIX)
+    set(AsyncFw_POSIX_SOURCES
+      "posix/SystemProcess.cpp"
+    )
+  endif()
 else()
   set(AsyncFw_QT_SOURCES
     "qt/FileSystemWatcher.cpp"
@@ -193,9 +195,9 @@ else()
   )
 endif()
 
-if(AMD64_USE_CARES)
-  set(AsyncFw_WINDOWS_SOURCES
-    "main/AddressResolver.cpp" #need cares for AMD64 #!!!
+if(NOT WIN32 OR AMD64_USE_CARES)
+  set(AsyncFw_MAIN_SOURCES ${AsyncFw_MAIN_SOURCES}
+    "main/AddressResolver.cpp" #need cares for WIN32 #!!!
   )
 endif()
 
@@ -215,15 +217,7 @@ endif()
 include_directories(include)
 include_directories(.)
 
-set(PROJECT_SOURCES ${AsyncFw_CORE_SOURCES} ${AsyncFw_MAIN_SOURCES} ${AsyncFw_INTERNAL_HEADERS} ${AsyncFw_CORE_HEADERS} ${AsyncFw_MAIN_HEADERS} ${AsyncFw_QT_SOURCES} ${AsyncFw_3rdparty_SOURCES})
-
-if(${CMAKE_SYSTEM_PROCESSOR} STREQUAL "AMD64")
-  if(AsyncFw_WINDOWS_SOURCES)
-    set(PROJECT_SOURCES ${PROJECT_SOURCES} ${AsyncFw_WINDOWS_SOURCES})
-  endif()
-else()
-  set(PROJECT_SOURCES ${PROJECT_SOURCES} ${AsyncFw_LINUX_SOURCES})
-endif()
+set(PROJECT_SOURCES ${AsyncFw_CORE_SOURCES} ${AsyncFw_MAIN_SOURCES} ${AsyncFw_INTERNAL_HEADERS} ${AsyncFw_CORE_HEADERS} ${AsyncFw_MAIN_HEADERS} ${AsyncFw_LINUX_SOURCES} ${AsyncFw_POSIX_SOURCES} ${AsyncFw_QT_SOURCES} ${AsyncFw_3rdparty_SOURCES})
 
 include(GNUInstallDirs)
 
@@ -322,16 +316,18 @@ if(NOT AsyncFw_DISABLE_BUILD_EXAMPLES)
   add_subdirectory(example/DataArray)
   add_subdirectory(example/TlsContext)
   add_subdirectory(example/Cache)
-  if(NOT ${CMAKE_SYSTEM_PROCESSOR} STREQUAL "AMD64" OR AMD64_USE_CARES)
+  if(NOT WIN32 OR AMD64_USE_CARES)
     add_subdirectory(example/Socket)
     add_subdirectory(example/HttpSocket)
   endif()
-  if(NOT ${CMAKE_SYSTEM_PROCESSOR} STREQUAL "AMD64" OR USE_QAPPLICATION)
+  if(CMAKE_SYSTEM_NAME STREQUAL "Linux" OR USE_QAPPLICATION)
     add_subdirectory(example/FileSystemWatcher)
+  endif()
+  if(NOT WIN32 OR USE_QAPPLICATION)
     add_subdirectory(example/SystemProcess)
     add_subdirectory(example/run-examples)
    endif()
-  if(NOT ${CMAKE_SYSTEM_PROCESSOR} STREQUAL "AMD64")
+  if(NOT WIN32)
     add_subdirectory(example/Stdin)
     add_subdirectory(example/Uart)
   endif()
