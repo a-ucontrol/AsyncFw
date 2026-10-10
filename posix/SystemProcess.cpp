@@ -19,6 +19,10 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #endif
 #include "core/extend_trace.hpp"
 
+#ifndef HAVE_PIPE2
+int pipe2(int[2], int);
+#endif
+
 using namespace AsyncFw;
 
 struct SystemProcess::Private {
