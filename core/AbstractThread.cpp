@@ -22,7 +22,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 //#define EPOLL_EDGE_TRIGGERED
 //#define IO_URING_WAIT
 #else
-  #ifdef __linux
+  #ifdef __linux__
     #ifndef IO_URING_WAIT
       #define EVENTFD_WAKE
       #define EPOLL_WAIT
@@ -66,7 +66,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
     #include <fcntl.h>
   #endif
   #ifdef POLL_WAIT
-    #include <sys/poll.h>
+    #include <poll.h>
   #elif defined EPOLL_WAIT
     #include <sys/epoll.h>
     #define EPOLL_WAIT_EVENTS 32
@@ -99,6 +99,21 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #define NESTED_OVERLOAD_SIZE 32
 
 #include "console_msg.hpp"
+
+#if !defined HAVE_PIPE2 && !defined _WIN32
+int pipe2(int fds[2], int flags) {
+  if (::pipe(fds) != 0) return -1;
+  if (flags & O_CLOEXEC) {
+    ::fcntl(fds[0], F_SETFD, FD_CLOEXEC);
+    ::fcntl(fds[1], F_SETFD, FD_CLOEXEC);
+  }
+  if (flags & O_NONBLOCK) {
+    ::fcntl(fds[0], F_SETFL, ::fcntl(fds[0], F_GETFL, 0) | O_NONBLOCK);
+    ::fcntl(fds[1], F_SETFL, ::fcntl(fds[1], F_GETFL, 0) | O_NONBLOCK);
+  }
+  return 0;
+}
+#endif
 
 using namespace AsyncFw;
 

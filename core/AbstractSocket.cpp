@@ -19,7 +19,6 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
   #include <sys/ioctl.h>
   #include <arpa/inet.h>
   #include <netinet/tcp.h>
-  #include <linux/sockios.h>
   #include <unistd.h>
 
   #define close_fd ::close
@@ -85,7 +84,11 @@ AbstractSocket::AbstractSocket(OutputBufferMode mode) : AbstractSocket(AF_INET, 
 AbstractSocket::AbstractSocket(int family, int type, int protocol, OutputBufferMode mode) : private_(*new Private) {
   private_.la.ss_family = family;
   private_.pa.ss_family = family;
+#ifdef SOCK_CLOEXEC
+  private_.type = type | SOCK_CLOEXEC;
+#else
   private_.type = type;
+#endif
   private_.protocol = protocol;
   private_.flags = mode;
   thread_ = Thread::current();
@@ -196,7 +199,7 @@ int AbstractSocket::read_available_fd() const {
   }
 #else
   int r;
-  if (ioctl(fd_, SIOCINQ, &r) < 0) {
+  if (ioctl(fd_, FIONREAD, &r) < 0) {
     lsError() << fd_ << errno;
     return -2;
   }

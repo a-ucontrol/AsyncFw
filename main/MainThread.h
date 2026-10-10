@@ -25,11 +25,14 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #ifdef EXIT_ON_UNIX_SIGNAL
   #include <unistd.h>
-  #ifdef __linux
+  #ifdef __linux__
     #define EXIT_EVENTFD
     #include <sys/eventfd.h>
   #else
     #include <fcntl.h>
+    #ifndef HAVE_PIPE2
+int pipe2(int[2], int);
+    #endif
   #endif
 #endif
 

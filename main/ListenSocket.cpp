@@ -7,6 +7,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #ifndef _WIN32
   #include <arpa/inet.h>
+  #include <fcntl.h>
   #include <unistd.h>
   #define close_fd ::close
 #else
@@ -15,7 +16,6 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
   #define close_fd ::closesocket
 #endif
 
-#include "core/AbstractSocket.h"
 #include "core/LogStream.h"
 #include "core/Thread.h"
 #include "ListenSocket.h"
@@ -31,12 +31,19 @@ void ListenSocket::incomingEvent() {
   sockaddr_storage _a;
   for (;;) {
     socklen_t _l = sizeof _a;
+#ifdef HAVE_ACCEPT4
+    int _cd = accept4(fd_, (struct sockaddr *)&_a, &_l, SOCK_CLOEXEC);
+#else
     int _cd = accept(fd_, (struct sockaddr *)&_a, &_l);
+#endif
     trace() << _cd;
     if (_cd < 0) {
       trace() << LogStream::Color::Red << "(_cd < 0)";
       return;
     }
+#if !defined HAVE_ACCEPT4 && !defined _WIN32
+    fcntl(_cd, F_SETFD, FD_CLOEXEC);
+#endif
     std::string _pa;
     if (_a.ss_family == AF_INET) {
       char _ip[INET_ADDRSTRLEN];
