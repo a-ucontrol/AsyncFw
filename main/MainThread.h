@@ -100,7 +100,7 @@ private:
 #ifdef EXIT_ON_UNIX_SIGNAL
     AbstractThread::current()->invoke([this]() {
       if (id() == std::thread::id {}) return;  // exec() was never entered (e.g. main returns without calling MainThread::exec())
-      eventfd_ = eventfd(0, EFD_NONBLOCK);
+      eventfd_ = eventfd(0, EFD_NONBLOCK | EFD_CLOEXEC);
       appendPollTask(eventfd_, AbstractThread::PollIn, [this](AbstractThread::PollEvents) {
         eventfd_t _v;
         if (eventfd_read(eventfd_, &_v) == 0) (*exitTask)();

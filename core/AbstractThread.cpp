@@ -62,6 +62,8 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
   #elif defined SOCKET_PAIR_WAKE || defined SOCKET_CLOSE_WAKE
     #include <sys/socket.h>
     #include <netinet/in.h>
+  #elif defined PIPE_WAKE
+    #include <fcntl.h>
   #endif
   #ifdef POLL_WAIT
     #include <sys/poll.h>
@@ -332,10 +334,10 @@ AbstractThread::AbstractThread(const std::string &name) : private_(*new Private)
 #endif
 
 #ifdef PIPE_WAKE
-  ::pipe(private_.pipe);
+  ::pipe2(private_.pipe, O_CLOEXEC);
   private_.WAKE_FD = private_.pipe[0];
 #elif defined EVENTFD_WAKE
-  private_.WAKE_FD = eventfd(0, EFD_NONBLOCK);
+  private_.WAKE_FD = eventfd(0, EFD_NONBLOCK | EFD_CLOEXEC);
 #elif defined SOCKET_PAIR_WAKE
   struct sockaddr_in addr;
   private_.WAKE_FD = ::socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
@@ -354,7 +356,7 @@ AbstractThread::AbstractThread(const std::string &name) : private_(*new Private)
 #endif
 
 #ifdef EPOLL_WAIT
-  private_.epoll_fd = epoll_create1(0);
+  private_.epoll_fd = epoll_create1(EPOLL_CLOEXEC);
   struct epoll_event event;
   #ifndef EPOLL_EDGE_TRIGGERED
   event.events = EPOLLIN;

@@ -7,6 +7,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #include <sys/ioctl.h>
 #include <sys/inotify.h>
+#include <fcntl.h>
 #include <unistd.h>
 #include "core/AbstractThread.h"
 #include "core/LogStream.h"
@@ -69,7 +70,7 @@ FileSystemWatcher::FileSystemWatcher(const std::vector<std::string> &paths) : pr
     private_.we_.clear();
   });
 
-  private_.notifyfd_ = inotify_init();
+  private_.notifyfd_ = inotify_init1(O_CLOEXEC);
 
   private_.thread_->appendPollTask(private_.notifyfd_, AbstractThread::PollIn, [this](AbstractThread::PollEvents) {
     int size;
