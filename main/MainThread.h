@@ -24,8 +24,13 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #endif
 
 #ifdef EXIT_ON_UNIX_SIGNAL
-  #include <sys/eventfd.h>
   #include <unistd.h>
+  #ifdef __linux
+    #define EXIT_EVENTFD
+    #include <sys/eventfd.h>
+  #else
+    #include <fcntl.h>
+  #endif
 #endif
 
 namespace AsyncFw {
@@ -62,7 +67,12 @@ public:
   /** @brief Signals the master event loop to terminate gracefully by executing the exit task. This call is safe to use from a UNIX signal handler. */
   static void exit() {
 #ifdef EXIT_ON_UNIX_SIGNAL
+  #ifdef EXIT_EVENTFD
     if (mt_.eventfd_ >= 0) eventfd_write(mt_.eventfd_, 1);
+  #else
+    char _c = '\x0';
+    if (mt_.exit_pipe[1] >= 0) ::write(mt_.exit_pipe[1], &_c, 1);
+  #endif
 #else
     (*mt_.exitTask)();
 #endif
@@ -100,10 +110,17 @@ private:
 #ifdef EXIT_ON_UNIX_SIGNAL
     AbstractThread::current()->invoke([this]() {
       if (id() == std::thread::id {}) return;  // exec() was never entered (e.g. main returns without calling MainThread::exec())
+  #ifdef EXIT_EVENTFD
       eventfd_ = eventfd(0, EFD_NONBLOCK | EFD_CLOEXEC);
       appendPollTask(eventfd_, AbstractThread::PollIn, [this](AbstractThread::PollEvents) {
         eventfd_t _v;
         if (eventfd_read(eventfd_, &_v) == 0) (*exitTask)();
+  #else
+      pipe2(exit_pipe, O_CLOEXEC | O_NONBLOCK);
+      appendPollTask(exit_pipe[0], AbstractThread::PollIn, [this](AbstractThread::PollEvents) {
+        char _c;
+        if (::read(exit_pipe[0], &_c, sizeof(_c)) == 1) (*exitTask)();
+  #endif
       });
   #ifdef USE_QAPPLICATION
       startedEvent();
@@ -113,10 +130,18 @@ private:
   }
   ~MainThread() {
 #ifdef EXIT_ON_UNIX_SIGNAL
+  #ifdef EXIT_EVENTFD
     if (eventfd_ >= 0) {
       removePollDescriptor(eventfd_);
       ::close(eventfd_);
     }
+  #else
+    if (exit_pipe[0] >= 0) {
+      removePollDescriptor(exit_pipe[0]);
+      ::close(exit_pipe[0]);
+      ::close(exit_pipe[1]);
+    }
+  #endif
 #endif
     delete exitTask;
     AbstractInstance::destroyValues();
@@ -264,7 +289,11 @@ private:
   AbstractThread::AbstractTask *exitTask = nullptr;
   int code_ = 0;
 #ifdef EXIT_ON_UNIX_SIGNAL
+  #ifdef EXIT_EVENTFD
   int eventfd_ = -1;
+  #else
+  int exit_pipe[2] = {-1, -1};
+  #endif
 #endif
 #ifdef USE_QAPPLICATION
   int state_ = 0;
