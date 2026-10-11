@@ -100,7 +100,7 @@ AbstractSocket::AbstractSocket(int family, int type, int protocol, OutputBufferM
 AbstractSocket::~AbstractSocket() {
   lsTrace() << thread_ << address() + ':' + std::to_string(port()) + '/' + peerAddress() + ':' + std::to_string(peerPort());
   if (state_ != Destroy) {
-    lsDebug() << this << "not destroy state:" << static_cast<int>(state_);
+    trace() << this << "not destroy state:" << static_cast<int>(state_);
     if (thread_) {
       if (fd_ >= 0) thread_->removePollDescriptor(fd_);
       removeFromThread();

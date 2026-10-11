@@ -198,7 +198,7 @@ int AbstractTlsSocket::read_available_fd() const {
     return -1;
   }
   r = SSL_pending(private_.ssl);
-  return r > 0 ? r : -1;
+  return r >= 0 ? r : -1;
 }
 #else
 int AbstractTlsSocket::read_available_fd() const {
