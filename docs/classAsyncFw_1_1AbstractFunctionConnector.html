@@ -125,6 +125,8 @@ Public Types</h2></td></tr>
 <tr class="memdesc:ab248bd16cbfcac609f58d401abec4368"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the default invocation behavior and validation constraints for the connector.  <a href="#ab248bd16cbfcac609f58d401abec4368">More...</a><br /></td></tr>
 <tr class="memitem:aa60a1926e3e5753ee2fe9d4c96bba1d6" id="r_aa60a1926e3e5753ee2fe9d4c96bba1d6"><td class="memItemLeft"><a id="aa60a1926e3e5753ee2fe9d4c96bba1d6" name="aa60a1926e3e5753ee2fe9d4c96bba1d6"></a>
 using&#160;</td><td class="memItemRight"><b>mutex_t</b> = std::recursive_mutex</td></tr>
+<tr class="memitem:a75937a54e9b933d78b164f3ad10ca412" id="r_a75937a54e9b933d78b164f3ad10ca412"><td class="memItemLeft"><a id="a75937a54e9b933d78b164f3ad10ca412" name="a75937a54e9b933d78b164f3ad10ca412"></a>
+using&#160;</td><td class="memItemRight"><b>connection_list_t</b> = std::list&lt;<a class="el" href="classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html">Connection</a> *&gt;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -135,8 +137,8 @@ Public Member Functions</h2></td></tr>
 Protected Attributes</h2></td></tr>
 <tr class="memitem:adaae220e6f5d33782357524b6b153929" id="r_adaae220e6f5d33782357524b6b153929"><td class="memItemLeft"><a id="adaae220e6f5d33782357524b6b153929" name="adaae220e6f5d33782357524b6b153929"></a>
 <a class="el" href="#ab248bd16cbfcac609f58d401abec4368">ConnectionPolicy</a>&#160;</td><td class="memItemRight"><b>connectionPolicy</b></td></tr>
-<tr class="memitem:a45286993b0bf30d1ca32bd6d87de34c0" id="r_a45286993b0bf30d1ca32bd6d87de34c0"><td class="memItemLeft"><a id="a45286993b0bf30d1ca32bd6d87de34c0" name="a45286993b0bf30d1ca32bd6d87de34c0"></a>
-std::vector&lt; <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html">Connection</a> * &gt;&#160;</td><td class="memItemRight"><b>list</b></td></tr>
+<tr class="memitem:a915586ba2c3a15fc730e4db61793cdf9" id="r_a915586ba2c3a15fc730e4db61793cdf9"><td class="memItemLeft"><a id="a915586ba2c3a15fc730e4db61793cdf9" name="a915586ba2c3a15fc730e4db61793cdf9"></a>
+connection_list_t&#160;</td><td class="memItemRight"><b>list</b></td></tr>
 <tr class="memitem:ad76ee37042fa7403020f82e94a2f9c74" id="r_ad76ee37042fa7403020f82e94a2f9c74"><td class="memItemLeft"><a id="ad76ee37042fa7403020f82e94a2f9c74" name="ad76ee37042fa7403020f82e94a2f9c74"></a>
 mutex_t&#160;</td><td class="memItemRight"><b>mutex</b></td></tr>
 </table>
