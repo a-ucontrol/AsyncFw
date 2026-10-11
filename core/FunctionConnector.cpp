@@ -5,7 +5,6 @@ This file is part of the AsyncFw project. Licensed under the MIT License.
 See {Link: LICENSE file https://mit-license.org} in the project root for full license information.
 */
 
-#include <algorithm>
 #include "LogStream.h"
 #include "FunctionConnector.h"
 
@@ -28,8 +27,7 @@ AbstractFunctionConnector::~AbstractFunctionConnector() {
 }
 
 AbstractFunctionConnector::Connection::Connection(const AbstractFunctionConnector *connector, Type type) : thread_(AbstractThread::current()), type_(type != static_cast<Connection::Type>(0x80) ? type : static_cast<Type>(connector->connectionPolicy & ~0x10)), connector_(connector) {
-  std::vector<Connection *>::iterator it = std::lower_bound(connector_->list.begin(), connector_->list.end(), this, [](const Connection *c1, const Connection *c2) { return c1 < c2; });
-  connector_->list.insert(it, this);
+  connector_->list.push_back(this);
   trace() << LogStream::Color::Green << static_cast<int>(type_) << thread_->name() << this << connector_ << connector_->list.size();
 }
 
@@ -37,7 +35,7 @@ AbstractFunctionConnector::Connection::~Connection() {
   if (guard_) guard_->connection_ = nullptr;
   if (!connector_) return;
   std::lock_guard<mutex_t> lock(connector_->mutex);
-  std::vector<Connection *>::iterator it = std::lower_bound(connector_->list.begin(), connector_->list.end(), this, [](const Connection *c1, const Connection *c2) { return c1 < c2; });
+  connection_list_t::iterator it = std::find(connector_->list.begin(), connector_->list.end(), this);
   connector_->list.erase(it);
   trace() << this << connector_ << connector_->list.size();
 }

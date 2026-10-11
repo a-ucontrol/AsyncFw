@@ -10,6 +10,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 /** @file FunctionConnector.h @brief The AbstractFunctionConnector, FunctionConnector, FunctionConnectorProtected, FunctionConnectionGuard and FunctionConnectionGuardList classes. */
 /** @example FunctionConnector/main.cpp FunctionConnector example */
 
+#include <list>
 #include "AbstractThread.h"
 
 namespace AsyncFw {
@@ -19,12 +20,19 @@ class AbstractFunctionConnector {
   friend FunctionConnectionGuard;
 
 public:
+  class Connection;
   /*
   std::recursive_mutex: signal emission is reentrant within a single thread
   (Direct/Auto on the same thread). A plain mutex would self-deadlock on the
   first reentrant emit.
   */
   using mutex_t = std::recursive_mutex;
+  /*
+  std::list: iterators stay valid across insertions, so a subscriber
+  may connect() to the same connector during emit without invalidating
+  the cursor in operator().
+  */
+  using connection_list_t = std::list<Connection *>;
 
   /** @enum ConnectionPolicy @brief Defines the default invocation behavior and validation constraints for the connector.
   @details This enumeration serves two purposes based on the value provided:
@@ -71,7 +79,7 @@ public:
 protected:
   virtual ~AbstractFunctionConnector() = 0;
   ConnectionPolicy connectionPolicy;
-  mutable std::vector<Connection *> list;
+  mutable connection_list_t list;
   mutable mutex_t mutex;
 };
 
@@ -102,7 +110,9 @@ public:
   }
   void operator()(Args... args) const {
     std::lock_guard<mutex_t> lock(mutex);
-    for (const AbstractFunctionConnector::Connection *c : list) {
+    for (connection_list_t::const_iterator it = list.begin(); it != list.end();) {
+      const AbstractFunctionConnector::Connection *c = *it;
+      ++it;  // advance-before-invoke
       if (!c->thread_) continue;
       if (c->type_ == Connection::Direct || (c->type_ != Connection::Queued && c->thread_->id() == std::this_thread::get_id())) {
         (static_cast<const Connection *>(c)->f_)->invoke(args...);
