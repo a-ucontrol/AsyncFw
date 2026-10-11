@@ -38,13 +38,13 @@ int main(int argc, char *argv[]) {
   addressInfo.completed.connect([&socket](int r, const std::vector<std::string> &list) {
     if (r == 0 && !list.empty()) {
       for (const std::string _s : list) logNotice() << _s;
-      socket->connect(list[0], SERVER_PORT);
+      socket->thread()->invoke([socket, addr = list[0]]() { socket->connect(addr, SERVER_PORT); });
       return;
     }
     AsyncFw::MainThread::exit(-1);
   });
 
-  socket->stateChanged.connect([&socket](const AsyncFw::AbstractSocket::State state) {
+  socket->stateChanged.connect<AsyncFw::AbstractFunctionConnector::Connection::Direct>([&socket](const AsyncFw::AbstractSocket::State state) {
     if (state == AsyncFw::AbstractSocket::State::Active) {
       logDebug() << "Send request";
       socket->write("GET " GET_FILE " HTTP/1.1\r\nHost:" SERVER_NAME "\r\n\r\n");
