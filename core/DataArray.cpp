@@ -360,6 +360,12 @@ void DataStream::Private::r(int size, uint8_t *p) {
 void DataStream::Private::sw(std::size_t _s) {
   uint8_t i = 0;
   for (std::size_t _tmp = _s >> 5; _tmp; ++i) _tmp >>= 8;
+#if SIZE_MAX == UINT64_MAX
+  if (i > 7) {
+    fail = true;
+    return;
+  }
+#endif
   uint8_t j = i | (_s << 3);
   w(sizeof(uint8_t), &j);
   if (fail || !i) return;
@@ -371,7 +377,13 @@ void DataStream::Private::sr(std::size_t *s) {
   uint8_t i;
   r(sizeof(uint8_t), &i);
   if (fail) return;
-  uint8_t j = (i & (sizeof(std::size_t) - 1));  // (i & 0x07) -> sizeof(std::size_t) == 8 , (i & 0x03) -> sizeof(std::size_t) == 4
+  uint8_t j = (i & 0x07);
+#if SIZE_MAX == UINT32_MAX
+  if (j > 4) {
+    fail = true;
+    return;
+  }
+#endif
   i >>= 3;
   if (!j) {
     *s = i;
