@@ -69,9 +69,10 @@ DataArray::DataArray(const char c) : std::vector<uint8_t>(1, c) {}
 DataArray::DataArray(const std::vector<char> &v) : std::vector<uint8_t>(v.begin(), v.end()) {}
 
 const DataArrayView DataArray::view(std::size_t i, std::size_t j) const {
-  if (i >= std::vector<uint8_t>::size()) return {};
-  if (!j || i + j >= std::vector<uint8_t>::size()) return {data() + i, std::vector<uint8_t>::size() - i};
-  return {data() + i, static_cast<std::size_t>(j)};
+  std::size_t n = std::vector<uint8_t>::size();
+  if (i >= n) return {};
+  if (j == 0 || j > n - i) j = n - i;
+  return {data() + i, j};
 }
 
 DataArray &DataArray::operator+=(const DataArrayView &v) {
@@ -349,7 +350,7 @@ void DataStream::Private::r(int size, uint8_t *p) {
     console_msg("DataStream", "trying read from stream for write");
     return;
   }
-  if ((pos + size) > data->size()) {
+  if (static_cast<std::size_t>(size) > data->size() - pos) {
     fail = true;
     return;
   }
