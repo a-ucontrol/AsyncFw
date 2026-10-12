@@ -59,10 +59,16 @@ FunctionConnectionGuard::~FunctionConnectionGuard() {
 }
 
 void FunctionConnectionGuard::destroyConnection() {
+#if 0
   AbstractThread *_thread = connection_->thread_;
   connection_->thread_ = nullptr;
   connection_->guard_ = nullptr;
-  if ((connection_->type_ != AbstractFunctionConnector::Connection::Direct && _thread->id() != std::this_thread::get_id()) || !_thread->invoke([_p = connection_]() { delete _p; })) { delete connection_; }
+  if (!_thread->invoke([_p = connection_]() { delete _p; })) { delete connection_; }
+#else
+  connection_->thread_ = nullptr;
+  connection_->guard_ = nullptr;
+  delete connection_;
+#endif
 }
 
 void FunctionConnectionGuard::operator=(AbstractFunctionConnector::Connection &connection) {

@@ -10,7 +10,6 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 /** @file FunctionConnector.h @brief The AbstractFunctionConnector, FunctionConnector, FunctionConnectorProtected, FunctionConnectionGuard and FunctionConnectionGuardList classes. */
 /** @example FunctionConnector/main.cpp FunctionConnector example */
 
-#include <list>
 #include "AbstractThread.h"
 
 namespace AsyncFw {
@@ -21,19 +20,8 @@ class AbstractFunctionConnector {
 
 public:
   class Connection;
-  /*
-  std::recursive_mutex: signal emission is reentrant within a single thread
-  (Direct/Auto on the same thread). A plain mutex would self-deadlock on the
-  first reentrant emit.
-  */
-  using mutex_t = std::recursive_mutex;
-  /*
-  std::list: iterators stay valid across insertions, so a subscriber
-  may connect() to the same connector during emit without invalidating
-  the cursor in operator().
-  */
-  using connection_list_t = std::list<Connection *>;
-
+  using mutex_t = std::mutex;
+  using connection_list_t = std::vector<Connection *>;
   /** @enum ConnectionPolicy @brief Defines the default invocation behavior and validation constraints for the connector.
   @details This enumeration serves two purposes based on the value provided:
   1. **Default Value (Relaxed Modes):** If a subscriber connects without a specific Connection::Type, the connector falls back to the configured ConnectionPolicy (Auto, Direct, Queued, or Sync).
@@ -108,17 +96,23 @@ public:
     return *new Connection(m, o, this, type);
 #endif
   }
+#if 0
+  /*
+  This implementation: holds the mutex across all invokes and relies.
+  Deadlocks on reentrant emission from a slot andis unsafe when a
+  connection is destroyed from another thread mid-emit.
+  See also the implementation of: void FunctionConnectionGuard::destroyConnection().
+  */
   void operator()(Args... args) const {
     std::lock_guard<mutex_t> lock(mutex);
-    for (connection_list_t::const_iterator it = list.begin(); it != list.end();) {
-      const AbstractFunctionConnector::Connection *c = *it;
-      ++it;  // advance-before-invoke
+    for (const AbstractFunctionConnector::Connection *c : list) {
       if (!c->thread_) continue;
       if (c->type_ == Connection::Direct || (c->type_ != Connection::Queued && c->thread_->id() == std::this_thread::get_id())) {
         (static_cast<const Connection *>(c)->f_)->invoke(args...);
         continue;
       }
       if (c->type_ != Connection::Sync) {
+        static_cast<const Connection *>(c)->f_->ref_++;
         AbstractThread::AbstractTask *_t = new QueuedTask(static_cast<const Connection *>(c)->f_, args...);
         if (!c->thread_->invokeTask(_t)) delete _t;
       } else {
@@ -126,7 +120,39 @@ public:
       }
     }
   }
-
+#else
+  void operator()(Args... args) const {
+    struct Invoke {
+      AbstractThread *thread;
+      AbstractFunction *f;
+      AbstractFunctionConnector::Connection::Type t;
+    };
+    std::vector<Invoke> _il;
+    {  //lock scope
+      std::lock_guard<mutex_t> lock(mutex);
+      _il.reserve(list.size());
+      for (const AbstractFunctionConnector::Connection *c : list) {
+        if (!c->thread_) continue;
+        static_cast<const Connection *>(c)->f_->ref_++;
+        _il.push_back({static_cast<const Connection *>(c)->thread_, static_cast<const Connection *>(c)->f_, static_cast<const Connection *>(c)->type_});
+      }
+    }
+    for (const Invoke &i : _il) {
+      if (i.t == Connection::Direct || (i.t != Connection::Queued && i.thread->id() == std::this_thread::get_id())) {
+        i.f->invoke(args...);
+        i.f->release();
+        continue;
+      }
+      if (i.t != Connection::Sync) {
+        AbstractThread::AbstractTask *_t = new QueuedTask(i.f, args...);
+        if (!i.thread->invokeTask(_t)) delete _t;
+        continue;
+      }
+      i.thread->invoke([_f = i.f, &args...]() { _f->invoke(args...); }, true);
+      i.f->release();
+    }
+  }
+#endif
 protected:
   struct AbstractFunction : Invocable<void(Args &...)>::Abstract {
     /*
@@ -138,13 +164,14 @@ protected:
     */
     virtual void invoke(Args &...args) = 0;
     std::atomic_int ref_ = 1;
+    void release() {
+      if (--ref_ == 0) delete this;
+    }
   };
   struct QueuedTask : public AbstractThread::AbstractTask {
   public:
-    QueuedTask(AbstractFunction *f, Args &...args) : f_(f), args_(args...) { f_->ref_++; }
-    ~QueuedTask() {
-      if (--f_->ref_ == 0) delete f_;
-    }
+    QueuedTask(AbstractFunction *f, Args &...args) : f_(f), args_(args...) {}
+    ~QueuedTask() { f_->release(); }
     void operator()() override { std::apply(*f_, args_); }
     AbstractFunction *f_;
     std::tuple<std::decay_t<Args>...> args_;
@@ -176,9 +203,7 @@ protected:
       M m_;
       O *o_;
     };
-    ~Connection() override {
-      if (--f_->ref_ == 0) delete f_;
-    }
+    ~Connection() override { f_->release(); }
     AbstractFunction *f_;
   };
 };
