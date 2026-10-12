@@ -1,38 +1,36 @@
 <map id="main/Timer.h" name="main/Timer.h">
-<area shape="rect" id="Node000001" title="The Timer class." alt="" coords="5,5,102,32"/>
-<area shape="rect" id="Node000002" href="$FunctionConnector_8h.html" title="The AbstractFunctionConnector, FunctionConnector, FunctionConnectorProtected, FunctionConnectionGuard..." alt="" coords="62,304,245,331"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="48,35,43,61,36,98,34,140,41,180,58,214,80,245,128,293,123,295,76,248,53,217,36,182,28,140,30,97,38,60,49,30"/>
-<area shape="rect" id="Node000011" href="$Coroutine_8h.html" title="The CoroutineTask, CoroutineAwait, CoroutineInvokeAwait structs." alt="" coords="109,80,198,107"/>
-<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="70,30,126,69,121,72,72,35"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="82,379,121,405"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="143,333,121,368,117,365,146,329"/>
-<area shape="rect" id="Node000004" href="$AbstractThread_8h.html" title="The AbstractThread class." alt="" coords="145,379,266,405"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="163,329,190,366,185,366,162,334"/>
-<area shape="rect" id="Node000005" title=" " alt="" coords="14,453,72,480"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="176,408,87,449,84,444,178,404"/>
-<area shape="rect" id="Node000006" title=" " alt="" coords="96,453,153,480"/>
-<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="193,404,151,445,148,441,189,408"/>
-<area shape="rect" id="Node000007" title=" " alt="" coords="177,453,234,480"/>
-<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="207,404,208,439,203,437,204,408"/>
-<area shape="rect" id="Node000008" href="$LockData_8h.html" title="The LockData class." alt="" coords="259,453,347,480"/>
-<area shape="poly" id="edge7_Node000004_Node000008" title=" " alt="" coords="223,403,277,444,271,444,222,408"/>
-<area shape="rect" id="Node000010" href="$invocable_8hpp_source.html" title=" " alt="" coords="371,453,472,480"/>
-<area shape="poly" id="edge9_Node000004_Node000010" title=" " alt="" coords="243,403,372,447,367,449,243,409"/>
-<area shape="rect" id="Node000009" title=" " alt="" coords="251,528,354,555"/>
-<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="305,479,305,514,301,511,301,482"/>
-<area shape="rect" id="Node000012" title=" " alt="" coords="51,155,125,181"/>
-<area shape="poly" id="edge11_Node000011_Node000012" title=" " alt="" coords="141,110,112,145,107,142,143,105"/>
-<area shape="rect" id="Node000013" href="$AnyData_8h.html" title="The AnyData class." alt="" coords="150,155,274,181"/>
-<area shape="poly" id="edge12_Node000011_Node000013" title=" " alt="" coords="164,105,195,142,190,143,164,110"/>
-<area shape="rect" id="Node000015" href="$ThreadPool_8h.html" title="The AbstractThreadPool and ThreadPool classes." alt="" coords="299,155,397,181"/>
-<area shape="poly" id="edge14_Node000011_Node000015" title=" " alt="" coords="187,105,302,147,297,150,188,110"/>
-<area shape="rect" id="Node000014" title=" " alt="" coords="147,229,189,256"/>
-<area shape="poly" id="edge13_Node000013_Node000014" title=" " alt="" coords="203,184,186,217,181,215,206,180"/>
-<area shape="rect" id="Node000016" href="$Thread_8h.html" title="The Thread class." alt="" coords="213,229,326,256"/>
-<area shape="poly" id="edge15_Node000015_Node000016" title=" " alt="" coords="333,184,296,221,292,217,336,180"/>
-<area shape="rect" id="Node000017" href="$Instance_8h.html" title="The AbstractInstance and Instance classes." alt="" coords="350,229,432,256"/>
-<area shape="poly" id="edge17_Node000015_Node000017" title=" " alt="" coords="356,179,378,216,373,216,355,184"/>
-<area shape="poly" id="edge16_Node000016_Node000002" title=" " alt="" coords="247,258,189,297,185,293,251,255"/>
-<area shape="rect" id="Node000018" title=" " alt="" coords="364,304,418,331"/>
-<area shape="poly" id="edge18_Node000017_Node000018" title=" " alt="" coords="392,254,393,289,388,287,390,259"/>
+<area shape="rect" id="Node000001" title="The Timer class." alt="" coords="48,5,145,32"/>
+<area shape="rect" id="Node000002" href="$FunctionConnector_8h.html" title="The AbstractFunctionConnector, FunctionConnector, FunctionConnectorProtected, FunctionConnectionGuard..." alt="" coords="106,304,288,331"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="91,35,86,61,79,98,77,140,85,180,101,214,124,245,172,293,167,295,119,248,97,217,79,182,71,140,73,97,81,60,93,30"/>
+<area shape="rect" id="Node000010" href="$Coroutine_8h.html" title="The CoroutineTask, CoroutineAwait, CoroutineInvokeAwait structs." alt="" coords="152,80,241,107"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="113,30,169,69,164,72,115,35"/>
+<area shape="rect" id="Node000003" href="$AbstractThread_8h.html" title="The AbstractThread class." alt="" coords="136,379,257,405"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="198,329,199,364,194,362,196,334"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="5,453,63,480"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="167,408,78,449,75,444,169,403"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="87,453,144,480"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="185,404,142,445,139,441,180,408"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="168,453,225,480"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="198,404,199,439,194,437,195,408"/>
+<area shape="rect" id="Node000007" href="$LockData_8h.html" title="The LockData class." alt="" coords="250,453,338,480"/>
+<area shape="poly" id="edge6_Node000003_Node000007" title=" " alt="" coords="214,403,268,444,263,444,213,408"/>
+<area shape="rect" id="Node000009" href="$invocable_8hpp_source.html" title=" " alt="" coords="362,453,463,480"/>
+<area shape="poly" id="edge8_Node000003_Node000009" title=" " alt="" coords="235,403,363,447,358,449,234,409"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="242,528,346,555"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="296,479,296,514,292,511,292,482"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="94,155,168,181"/>
+<area shape="poly" id="edge10_Node000010_Node000011" title=" " alt="" coords="184,110,155,145,150,142,187,105"/>
+<area shape="rect" id="Node000012" href="$AnyData_8h.html" title="The AnyData class." alt="" coords="193,155,318,181"/>
+<area shape="poly" id="edge11_Node000010_Node000012" title=" " alt="" coords="207,105,238,142,233,143,207,110"/>
+<area shape="rect" id="Node000014" href="$ThreadPool_8h.html" title="The AbstractThreadPool and ThreadPool classes." alt="" coords="342,155,440,181"/>
+<area shape="poly" id="edge13_Node000010_Node000014" title=" " alt="" coords="230,105,345,148,341,150,231,110"/>
+<area shape="rect" id="Node000013" title=" " alt="" coords="190,229,232,256"/>
+<area shape="poly" id="edge12_Node000012_Node000013" title=" " alt="" coords="249,180,229,217,225,215,246,184"/>
+<area shape="rect" id="Node000015" href="$Thread_8h.html" title="The Thread class." alt="" coords="256,229,369,256"/>
+<area shape="poly" id="edge14_Node000014_Node000015" title=" " alt="" coords="376,184,339,221,336,217,380,180"/>
+<area shape="rect" id="Node000016" href="$Instance_8h.html" title="The AbstractInstance and Instance classes." alt="" coords="393,229,475,256"/>
+<area shape="poly" id="edge16_Node000014_Node000016" title=" " alt="" coords="399,179,422,216,416,216,398,184"/>
+<area shape="poly" id="edge15_Node000015_Node000002" title=" " alt="" coords="291,258,232,297,228,293,294,255"/>
+<area shape="rect" id="Node000017" title=" " alt="" coords="407,304,461,331"/>
+<area shape="poly" id="edge17_Node000016_Node000017" title=" " alt="" coords="435,254,436,290,432,287,433,259"/>
 </map>
