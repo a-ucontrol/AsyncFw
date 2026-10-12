@@ -29,7 +29,7 @@ include(cmake/version.cmake)
 #add_definitions(-DLS_NO_WARNING)
 #add_definitions(-DLS_NO_ERROR)
 
-#add_definitions(-DCHЕCK_EXECUTION_THREAD)
+#add_definitions(-DCHECK_EXECUTION_THREAD)
 
 #add_definitions(-DEXTEND_LOGSTREAM_TRACE)
 #add_definitions(-DEXTEND_RRD_TRACE)

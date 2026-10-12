@@ -185,7 +185,7 @@ void HttpSocket::writeEvent() {
       int p = _p * 100 / _s;
       if (progress_ != p) progress(progress_ = p);
     }
-    if (_p == static_cast<int>(_s) || file_.fail()) {
+    if (static_cast<std::size_t>(_p) == _s || file_.fail()) {
       file_.close();
       if (connectionClose || file_.fail()) disconnect();
     }
