@@ -10,15 +10,6 @@ include(cmake/version.cmake)
 #set(BUILD_SHARED_LIBS ON)
 #set(CMAKE_INTERPROCEDURAL_OPTIMIZATION ON)
 
-### int main()
-### {
-###   std::thread t1([]{});
-###   std::thread t2([]{});
-###   t1.join();
-###   t2.join();
-### }
-### gcc main.cpp -lstdc++ -g -fsanitize=thread,undefined
-### -- int main() with -fsanitize=thread,undefined -> ThreadSanitizer: data race
 ### __tsan_on_report -> break point function for debugger
 
 #set(COMPILER_FLAGS "-g -fsanitize=thread")
@@ -29,8 +20,7 @@ include(cmake/version.cmake)
 #set(CMAKE_CXX_COMPILER clang++)
 
 #set(EPOLL_EDGE_TRIGGERED ON)
-#set(IO_URING_WAIT ON)
-#set(IO_URING_WAKE ON)
+#set(ENABLE_IO_URING ON)
 
 #add_definitions(-DLS_NO_TRACE)
 #add_definitions(-DLS_NO_DEBUG)
@@ -242,11 +232,8 @@ else()
   target_compile_options(${AsyncFw_PROJECT_NAME} PUBLIC -Wno-psabi)
   target_compile_definitions(${AsyncFw_PROJECT_NAME} PRIVATE VERSION_HPP="${CMAKE_CURRENT_BINARY_DIR}/version.hpp")
 
-  if(IO_URING_WAIT)
-    target_compile_definitions(${AsyncFw_PROJECT_NAME} PRIVATE IO_URING_WAIT)
-    if(IO_URING_WAKE)
-      target_compile_definitions(${AsyncFw_PROJECT_NAME} PRIVATE IO_URING_WAKE)
-    endif()
+  if(ENABLE_IO_URING)
+    target_compile_definitions(${AsyncFw_PROJECT_NAME} PRIVATE IO_URING_WAIT IO_URING_WAKE)
   else()
     if(EPOLL_EDGE_TRIGGERED)
       target_compile_definitions(${AsyncFw_PROJECT_NAME} PRIVATE EPOLL_EDGE_TRIGGERED)
@@ -273,7 +260,7 @@ if(NOT ${CMAKE_SYSTEM_PROCESSOR} STREQUAL "AMD64")
     target_compile_definitions(${AsyncFw_PROJECT_NAME} PRIVATE HAVE_ACCEPT4)
   endif()
   target_link_libraries(${AsyncFw_PROJECT_NAME} cares)
-  if(IO_URING_WAIT)
+  if(ENABLE_IO_URING)
     target_link_libraries(${AsyncFw_PROJECT_NAME} uring)
   endif()
 else()
