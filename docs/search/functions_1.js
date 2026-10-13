@@ -16,7 +16,7 @@ var searchData=
   ['contextempty_13',['contextEmpty',['../classAsyncFw_1_1AbstractTlsSocket.html#a9043562cf451851003009adedb277d7b',1,'AsyncFw::AbstractTlsSocket']]],
   ['coresolve_14',['coResolve',['../classAsyncFw_1_1AddressResolver.html#a59f08f5d62fba62538b9094548fa1fd0',1,'AsyncFw::AddressResolver']]],
   ['cotimeout_15',['coTimeout',['../classAsyncFw_1_1Timer.html#aad1874fc8c5f41c278e4e4de81609e54',1,'AsyncFw::Timer::coTimeout()'],['../group__coroutine__api.html#ga37b3a970310b55e69ed1cb7aa9ab3646',1,'AsyncFw::coTimeout()']]],
-  ['count_16',['count',['../classAsyncFw_1_1Rrd.html#a2da84a54164e2273cb4183d9f2a72dec',1,'AsyncFw::Rrd']]],
+  ['count_16',['count',['../classAsyncFw_1_1Rrd.html#a69b5af14958a7141a63754765c479879',1,'AsyncFw::Rrd']]],
   ['create_17',['create',['../classAsyncFw_1_1Instance.html#a8000597f0e7ee4bd6669491a5b502beb',1,'AsyncFw::Instance::create(Args... args)'],['../classAsyncFw_1_1Instance.html#a158800905f9c1ce225fcabbfa5b1d053',1,'AsyncFw::Instance::create(Args... args)']]],
   ['created_18',['created',['../classAsyncFw_1_1AbstractInstance.html#ad4ae1bfcd37c2450b85b35257f92360f',1,'AsyncFw::AbstractInstance']]],
   ['createsocket_19',['createSocket',['../classAsyncFw_1_1DataArrayTcpClient.html#aa005c8c643454bd1ae4ae0c7fe4c1068',1,'AsyncFw::DataArrayTcpClient']]],
