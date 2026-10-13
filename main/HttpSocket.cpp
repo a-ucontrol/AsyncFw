@@ -130,7 +130,7 @@ void HttpSocket::readEvent() {
       received(received_);
       return;
     } else {
-      lsWarning("error http read");
+      lsDebug() << LogStream::Color::Blue << "error http read" << _da.size() << received_.size();
       disconnect();
       return;
     }
@@ -195,7 +195,7 @@ void HttpSocket::writeEvent() {
 }
 
 void HttpSocket::disconnect() {
-  thread_->invoke([this]() { AbstractTlsSocket::disconnect(); });
+  if (!thread_->invoke([this]() { AbstractTlsSocket::disconnect(); })) AbstractTlsSocket::disconnect();
 }
 
 void HttpSocket::close() {

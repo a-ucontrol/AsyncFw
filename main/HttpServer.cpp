@@ -464,7 +464,7 @@ HttpServer::HttpServer(const std::string &httpPath) : private_(*new Private()) {
 HttpServer::~HttpServer() {
   if (instance_.value == this) instance_.value = nullptr;
   if (peek) delete peek;
-  clearConnections();
+  close();
   delete &private_;
   lsTrace();
 }
@@ -477,7 +477,7 @@ void HttpServer::fileUploadProgress(TcpSocket *, int progress) { trace() << prog
 
 void HttpServer::disconnectFromHost(TcpSocket *socket) {
   lsTrace();
-  AbstractThread::current()->invoke([socket]() { socket->disconnect(); });
+  socket->disconnect();
 }
 
 bool HttpServer::webSocketSend(const HttpSocket *socket, const DataArray &data) {
@@ -533,6 +533,7 @@ void HttpServer::close() {
   lsDebug() << LogStream::Color::Blue << "Tcp server close, port: " + std::to_string(private_.listener.port());
   private_.listener.close();
   private_.listenerGuard = {};
+  clearConnections();
 }
 
 bool HttpServer::execRule(const Request &req) {
