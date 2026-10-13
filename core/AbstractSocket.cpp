@@ -73,7 +73,7 @@ struct AbstractSocket::Private {
 
   // 0x01 — OutputBufferMode::Application (application-level data, requires processing before sending)
   // 0x02 — OutputBufferMode::Network (network bytes ready to send)
-  // 0x20 — protection against repeated calls to AbstractSocket::read_available_fd() (cached rs_ is used)
+  // 0x20 — skip FIONREAD ioctl in AbstractSocket::read_available_fd(): caller knows rs
   // 0x40 — a writeEvent() task is already scheduled
   // 0x80 — there is data in the write buffer wda_, waiting for PollOut event
   uint8_t flags;
@@ -356,6 +356,7 @@ void AbstractSocket::read_fd(DataArray &da) {
     private_.rs = read_available_fd();
     private_.flags &= ~0x20;
   } while (private_.rs > 0);
+  if (private_.rs < 0) private_.rs = 0;
 }
 
 int AbstractSocket::read(uint8_t *data, int size) {
