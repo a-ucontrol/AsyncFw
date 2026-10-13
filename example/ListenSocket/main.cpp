@@ -34,6 +34,7 @@ int main(int argc, char *argv[]) {
     socket->received.connect([socket](const AsyncFw::DataArray &data) {
       logNotice() << "received:" << data;
       socket->write("Answer\n");
+      socket->disconnect();
       if (data == AsyncFw::DataArray('q')) AsyncFw::MainThread::exit(0);
     });
     logInfo() << "Incoming:" << fd << address;
@@ -51,6 +52,7 @@ int main(int argc, char *argv[]) {
       if (state == AsyncFw::AbstractSocket::State::Active) {
         logDebug() << "Send request";
         _socket->write("q");
+        _socket->disconnect();
       }
     });
     _socket->connect("::1", 18080);

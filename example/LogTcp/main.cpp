@@ -71,6 +71,8 @@ int main(int argc, char *argv[]) {
   int ret = AsyncFw::MainThread::exec();
   lsNotice() << "End Application" << ret;
 
+  _tcp_client.disconnectFromHost(_client_socket);
+
   return ret;
 }
 //! [snippet]
