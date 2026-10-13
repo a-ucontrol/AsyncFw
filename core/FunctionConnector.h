@@ -132,7 +132,6 @@ public:
       std::lock_guard<mutex_t> lock(mutex);
       _il.reserve(list.size());
       for (const AbstractFunctionConnector::Connection *c : list) {
-        if (!c->thread_) continue;
         static_cast<const Connection *>(c)->f_->ref_++;
         _il.push_back({static_cast<const Connection *>(c)->thread_, static_cast<const Connection *>(c)->f_, static_cast<const Connection *>(c)->type_});
       }

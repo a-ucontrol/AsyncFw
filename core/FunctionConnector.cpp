@@ -65,8 +65,12 @@ void FunctionConnectionGuard::destroyConnection() {
   connection_->guard_ = nullptr;
   if (!_thread->invoke([_p = connection_]() { delete _p; })) { delete connection_; }
 #else
-  connection_->thread_ = nullptr;
-  connection_->guard_ = nullptr;
+  {  //lock scope
+    std::lock_guard<AbstractFunctionConnector::mutex_t> lock(connection_->connector_->mutex);
+    auto it = std::find(connection_->connector_->list.begin(), connection_->connector_->list.end(), connection_);
+    connection_->connector_->list.erase(it);
+    connection_->connector_ = nullptr;
+  }
   delete connection_;
 #endif
 }
