@@ -48,7 +48,7 @@ int main(int argc, char *argv[]) {
 
   if (argc == 2 && std::string(argv[1]) == "--tst") {
     Ipv6Socket *_socket = Ipv6Socket::create();
-    _socket->stateChanged.connect([_socket](const AsyncFw::AbstractSocket::State state) {
+    _socket->stateChanged.connect<AsyncFw::AbstractFunctionConnector::Connection::Queued>([_socket](const AsyncFw::AbstractSocket::State state) {
       if (state == AsyncFw::AbstractSocket::State::Active) {
         logDebug() << "Send request";
         _socket->write("q");
