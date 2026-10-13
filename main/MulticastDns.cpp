@@ -22,6 +22,16 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #define MDNS_STRING_FORMAT(s) std::string(s.str, s.length)
 #define MDNS_STRING_VIEW_FORMAT(s) std::string_view(s.str, s.length)
 
+#if defined CHECK_EXECUTION_THREAD
+  #define checkCurrentThread() \
+    if (std::this_thread::get_id() != private_.thread->id()) lsError() << "executed from different thread"
+  #define checkDifferentThread() \
+    if (std::this_thread::get_id() == private_.thread->id()) lsError() << "executed from own thread"
+#else
+  #define checkCurrentThread()
+  #define checkDifferentThread()
+#endif
+
 using namespace AsyncFw;
 
 extern "C" {
@@ -164,6 +174,7 @@ const std::vector<MulticastDns::Host> MulticastDns::hosts() const {
 }
 
 int MulticastDns::sendQuery(int seconds) {
+  checkCurrentThread();
   if (seconds) {
     std::lock_guard<std::mutex> lock(private_.mutex);
     for (auto &h : private_.hosts) h.expire = std::chrono::steady_clock::time_point {};
