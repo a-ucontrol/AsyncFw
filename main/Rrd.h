@@ -44,7 +44,7 @@ public:
   /** @brief Returns the absolute maximum capability size (total slots) configured for this circular ring buffer layout. */
   uint32_t size() { return dbSize; }
   /** @brief Returns the total number of valid data items currently populated inside the database allocation framework. */
-  uint32_t count();
+  uint32_t count() const;
 
   /** @brief Directly extracts a raw binary data array chunk element from the specified ring buffer index allocation slot.
   @warning Must lock the target processing background thread before executing this method context. */
@@ -73,7 +73,6 @@ protected:
   uint64_t last_;
   uint32_t dbSize;
   ItemList dataBase;
-  uint32_t count_;
   bool readOnly = false;
 
 private:

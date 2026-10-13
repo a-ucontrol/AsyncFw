@@ -39,10 +39,7 @@ Rrd::Rrd(int size, int interval, int fillInterval, const std::string &name) : db
 
       if (!createFile() && !readOnly) console_msg("Rrd", "create failed: " + name);
     }
-  } else {
-    count_ = 0;
-    dataBase.resize(dbSize);
-  }
+  } else dataBase.resize(dbSize);
 }
 Rrd::Rrd(int size, int interval, int fillInterval) : Rrd(size, interval, fillInterval, {}) {}
 
@@ -57,7 +54,6 @@ Rrd::Rrd(int size, const std::string &name) : Rrd(size, 0, 0, name) {}
 Rrd::Rrd(int size) : Rrd(size, 0, 0, {}) {}
 
 bool Rrd::createFile() {
-  count_ = 0;
   dataBase.clear();
   dataBase.resize(dbSize);
   last_ = 0;
@@ -83,7 +79,6 @@ void Rrd::append(const Item &data, uint64_t index) {
       return;
     }
 
-    if (count_ < dbSize && count_ < pos) count_ += 1;
     uint32_t i = pos % dbSize;
     dataBase[i] = data;
 
@@ -111,12 +106,12 @@ void Rrd::append(const Item &data, uint64_t index) {
 }
 
 Rrd::Item Rrd::readFromArray(uint32_t index) {  //Must lock the thread before calling this method
-  uint64_t i = 1 + last_ + index - count_;
+  uint64_t i = 1 + last_ + index - std::min<uint64_t>(last_, dbSize);
   return dataBase[i % dbSize];
 }
 
 void Rrd::writeToArray(uint32_t index, const Item &ba) {  //Must lock the thread before calling this method
-  uint64_t i = 1 + last_ + index - count_;
+  uint64_t i = 1 + last_ + index - std::min<uint64_t>(last_, dbSize);
   dataBase[i % dbSize] = ba;
 }
 
@@ -125,7 +120,6 @@ void Rrd::clear() {
     AbstractThread::LockGuard lock = thread_->lockGuard();
     for (uint32_t i = 0; i != dbSize; ++i) dataBase[i].clear();
     last_ = 0;
-    count_ = 0;
   }
   updated();
 }
@@ -135,9 +129,9 @@ uint64_t Rrd::lastIndex() {
   return last_;
 }
 
-uint32_t Rrd::count() {
+uint32_t Rrd::count() const {
   AbstractThread::LockGuard lock = thread_->lockGuard();
-  return count_;
+  return static_cast<uint32_t>(std::min<uint64_t>(last_, dbSize));
 }
 
 uint64_t Rrd::read(DataArrayList *list, uint64_t val, uint32_t size, uint64_t *lastIndex) {
@@ -187,9 +181,6 @@ bool Rrd::readFromFile() {
     console_msg("Rrd", "error database size: " + std::to_string(dataBase.size()));
   } else {
     ok = true;
-    count_ = 0;
-    for (const Item &ba : dataBase)
-      if (!ba.empty()) count_++;
     updated();
   }
   return ok;
