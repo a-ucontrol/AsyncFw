@@ -85,5 +85,6 @@ private:
   bool createFile();
   bool readFromFile();
   bool saveToFile(const std::string &fn = {});
+  uint32_t count_() const;
 };
 }  // namespace AsyncFw
