@@ -76,9 +76,13 @@ public:
   /** @brief Broadcasts an immediate multicast query to discover hosts. @param seconds Optional timeout in seconds to arm or reset the cyclic discovery timer (0 uses default query timeout). @return The number of network sockets through which the query was successfully transmitted, or a negative error code on failure. */
   int sendQuery(int = 0);
 
-  FunctionConnector<const Host &>::Protected<MulticastDns> hostAdded;    ///< Triggered when a new device is found.
-  FunctionConnector<const Host &>::Protected<MulticastDns> hostChanged;  ///< Triggered when a device alters parameters.
-  FunctionConnector<const Host &>::Protected<MulticastDns> hostRemoved;  ///< Triggered when a device leaves or times out.
+  /** @brief Triggered when a device is found. */
+  FunctionConnector<const Host &>::Protected<MulticastDns> hostAdded;
+  /** @brief Triggered when a device alters parameters.
+  @note A goodbye packet (TTL=0) is reported here with host.port == 0, not as a removal. The host stays in the list marked unavailable, subscribe to hostRemoved for actual departure. */
+  FunctionConnector<const Host &>::Protected<MulticastDns> hostChanged;
+  /** @brief Triggered when a device leaves or times out. */
+  FunctionConnector<const Host &>::Protected<MulticastDns> hostRemoved;
 
 private:
   static Instance<MulticastDns> instance_;
