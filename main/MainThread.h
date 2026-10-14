@@ -64,6 +64,7 @@ public:
 #else
     mt_.state_ = 1;
     if (!qApp) return -1;
+    mt_.invoke([]() { mt_.startedEvent(); });
     return qApp->exec();
 #endif
   }
@@ -111,8 +112,8 @@ private:
     });
 #endif
 #ifdef EXIT_ON_UNIX_SIGNAL
-    AbstractThread::current()->invoke([this]() {
-      if (id() == std::thread::id {}) return;  // exec() was never entered (e.g. main returns without calling MainThread::exec())
+    Thread::current()->started.connect([this]() {
+      if (eventfd_ >= 0) return;
   #ifdef EXIT_EVENTFD
       eventfd_ = eventfd(0, EFD_NONBLOCK | EFD_CLOEXEC);
       appendPollTask(eventfd_, AbstractThread::PollIn, [this](AbstractThread::PollEvents) {
@@ -125,9 +126,6 @@ private:
         if (::read(exit_pipe[0], &_c, sizeof(_c)) == 1) (*exitTask)();
   #endif
       });
-  #ifdef USE_QAPPLICATION
-      startedEvent();
-  #endif
     });
 #endif
   }

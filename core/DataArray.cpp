@@ -340,16 +340,20 @@ void DataStream::Private::w(int size, const uint8_t *p) {
     console_msg("DataStream", "trying write to stream for read");
     return;
   }
-  data->insert(data->end(), p, p + size);
+  if (!size) return;
+  try {
+    data->insert(data->end(), p, p + size);
+  } catch (std::exception &) { fail = true; }
 }
 
 void DataStream::Private::r(int size, uint8_t *p) {
-  if (fail || !size) return;
+  if (fail) return;
   if (!read) {
     fail = true;
     console_msg("DataStream", "trying read from stream for write");
     return;
   }
+  if (!size) return;
   if (static_cast<std::size_t>(size) > data->size() - pos) {
     fail = true;
     return;
