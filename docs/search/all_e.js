@@ -28,7 +28,7 @@ var searchData=
   ['functionconnector_3c_20const_20asyncfw_3a_3ahttpsocket_20_2a_2c_20const_20asyncfw_3a_3adataarray_20_26_20_3e_25',['FunctionConnector&lt; const AsyncFw::HttpSocket *, const AsyncFw::DataArray &amp; &gt;',['../classAsyncFw_1_1FunctionConnector.html',1,'AsyncFw']]],
   ['functionconnector_3c_20const_20asyncfw_3a_3amulticastdns_3a_3ahost_20_26_20_3e_26',['FunctionConnector&lt; const AsyncFw::MulticastDns::Host &amp; &gt;',['../classAsyncFw_1_1FunctionConnector.html',1,'AsyncFw']]],
   ['functionconnector_3c_20const_20std_3a_3astring_20_26_2c_20bool_20_3e_27',['FunctionConnector&lt; const std::string &amp;, bool &gt;',['../classAsyncFw_1_1FunctionConnector.html',1,'AsyncFw']]],
-  ['functionconnector_3c_20const_20std_3a_3astring_20_26_2c_20int_20_3e_28',['FunctionConnector&lt; const std::string &amp;, int &gt;',['../classAsyncFw_1_1FunctionConnector.html',1,'AsyncFw']]],
+  ['functionconnector_3c_20const_20std_3a_3astring_20_26_2c_20event_20_3e_28',['FunctionConnector&lt; const std::string &amp;, Event &gt;',['../classAsyncFw_1_1FunctionConnector.html',1,'AsyncFw']]],
   ['functionconnector_3c_20int_20_3e_29',['FunctionConnector&lt; int &gt;',['../classAsyncFw_1_1FunctionConnector.html',1,'AsyncFw']]],
   ['functionconnector_3c_20int_2c_20const_20std_3a_3astring_20_26_2c_20bool_20_2a_20_3e_30',['FunctionConnector&lt; int, const std::string &amp;, bool * &gt;',['../classAsyncFw_1_1FunctionConnector.html',1,'AsyncFw']]],
   ['functionconnector_3c_20int_2c_20const_20std_3a_3avector_3c_20std_3a_3astring_20_3e_20_26_20_3e_31',['FunctionConnector&lt; int, const std::vector&lt; std::string &gt; &amp; &gt;',['../classAsyncFw_1_1FunctionConnector.html',1,'AsyncFw']]],

@@ -7,5 +7,5 @@ var searchData=
   ['nospace_4',['nospace',['../classAsyncFw_1_1LogStream.html#ae131a8f28831e608f08a311eaac8ccc5',1,'AsyncFw::LogStream']]],
   ['note_5',['note',['../structAsyncFw_1_1LogStream_1_1Message.html#abac2923c4b2c7076a731b88df2420fa5',1,'AsyncFw::LogStream::Message']]],
   ['notice_6',['Notice',['../classAsyncFw_1_1LogStream.html#afa2f6c5311ced6b973d39d6e5ced5731ae60e1a6347736018009842563cd57231',1,'AsyncFw::LogStream']]],
-  ['notify_7',['notify',['../classAsyncFw_1_1ApplicationNotifier.html#a989eaa483fec75f7d90730d031db0b2a',1,'AsyncFw::ApplicationNotifier::notify'],['../classAsyncFw_1_1FileSystemWatcher.html#a4c808b22785dbc3182a9e7fa600b0919',1,'AsyncFw::FileSystemWatcher::notify'],['../classAsyncFw_1_1PollNotifier.html#a8bcd61fb697ec4d0d53b942feb5b8026',1,'AsyncFw::PollNotifier::notify']]]
+  ['notify_7',['notify',['../classAsyncFw_1_1ApplicationNotifier.html#a989eaa483fec75f7d90730d031db0b2a',1,'AsyncFw::ApplicationNotifier::notify'],['../classAsyncFw_1_1FileSystemWatcher.html#acb3993d4436979c28727a7bea56c53b8',1,'AsyncFw::FileSystemWatcher::notify'],['../classAsyncFw_1_1PollNotifier.html#a8bcd61fb697ec4d0d53b942feb5b8026',1,'AsyncFw::PollNotifier::notify']]]
 ];

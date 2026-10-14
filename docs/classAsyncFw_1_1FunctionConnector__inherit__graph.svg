@@ -155,7 +155,7 @@
 <g id="a_Node000008"><a xlink:href="classAsyncFw_1_1FunctionConnector.html" target="_top" xlink:title=" ">
 <polygon fill="white" stroke="#666666" points="510.5,-546.07 364.75,-546.07 364.75,-514.07 510.5,-514.07 510.5,-546.07"/>
 <text xml:space="preserve" text-anchor="start" x="372.75" y="-532.57" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::FunctionConnector</text>
-<text xml:space="preserve" text-anchor="middle" x="437.62" y="-520.57" font-family="Helvetica,sans-Serif" font-size="10.00">&lt; const std::string &amp;, int &gt;</text>
+<text xml:space="preserve" text-anchor="middle" x="437.62" y="-520.57" font-family="Helvetica,sans-Serif" font-size="10.00">&lt; const std::string &amp;, Event &gt;</text>
 </a>
 </g>
 </g>
@@ -168,7 +168,7 @@
 </a>
 </g>
 <text xml:space="preserve" text-anchor="start" x="204.62" y="-544.39" font-family="Helvetica,sans-Serif" font-size="10.00" fill="grey">&lt; const std::string</text>
-<text xml:space="preserve" text-anchor="start" x="204.62" y="-528.39" font-family="Helvetica,sans-Serif" font-size="10.00" fill="grey">   &amp;, int &gt;</text>
+<text xml:space="preserve" text-anchor="start" x="204.62" y="-528.39" font-family="Helvetica,sans-Serif" font-size="10.00" fill="grey">   &amp;, Event &gt;</text>
 </g>
 <!-- Node9 -->
 <g id="Node000009" class="node">
