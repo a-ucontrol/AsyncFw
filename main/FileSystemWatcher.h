@@ -52,7 +52,7 @@ public:
   std::vector<std::string> paths() const;
   /** @brief The FunctionConnector for notification of file-related events.
   @details Sends the normalized full path to the file that triggered the event, and specify the event type: **(Deleted)**, **(Modified)**, or **(Created)**. */
-  FunctionConnector<const std::string &, int>::Protected<FileSystemWatcher> notify;
+  FunctionConnector<const std::string &, Event>::Protected<FileSystemWatcher> notify;
 
 private:
   static Instance<FileSystemWatcher> instance_;

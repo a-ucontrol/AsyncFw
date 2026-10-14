@@ -125,7 +125,7 @@ FileSystemWatcher::FileSystemWatcher(const std::vector<std::string> &paths) : pr
           continue;
         }
         if (e->mask & IN_CLOSE_WRITE) {
-          notify((*itd)->directory + '/' + (*itd)->name, 0);
+          notify((*itd)->directory + '/' + (*itd)->name, Changed);
           private_.remove_(*itd);
           lsDebug() << "close write" << (*itd)->directory + '/' + (*itd)->name << (*itd)->d;
           continue;
