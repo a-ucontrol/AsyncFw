@@ -562,14 +562,21 @@ void AbstractSocket::pollEvent(int _e) {
     return;
   }
   if (_e & (AbstractThread::PollHup | AbstractThread::PollErr)) {
-    private_.errorString = "Connection refused";
-    private_.error = Refused;
-    lsDebug() << LogStream::Color::Red << private_.errorString << "(poll hup/error)" << static_cast<int>(_e);
-    close();
-    return;
+    if (state_ == State::Connecting) {
+      private_.errorString = "Connection refused";
+      private_.error = Refused;
+      lsDebug() << LogStream::Color::Red << private_.errorString << "(connecting)" << static_cast<int>(_e);
+      close();
+      return;
+    } else if (state_ == State::Connected) {
+      private_.errorString = "Connection closed";
+      private_.error = Closed;
+      lsDebug() << LogStream::Color::Red << private_.errorString << "(connected)" << static_cast<int>(_e);
+      close();
+      return;
+    }
   }
   if (state_ == State::Connecting) {
-    thread_->modifyPollDescriptor(fd_, AbstractThread::PollIn);
     state_ = State::Connected;
     stateEvent();
   }
@@ -587,14 +594,12 @@ void AbstractSocket::pollEvent(int _e) {
         return;
       }
     }
-    warning_if(state_ == State::Connected && AbstractSocket::read_available_fd() < 0) << LogStream::Color::Red << "socket empty before activate event";
     activateEvent();
-    warning_if(state_ == State::Connected && AbstractSocket::read_available_fd() > 0) << LogStream::Color::Yellow << "socket not empty after activate event";
     if (state_ != State::Active || read_available_fd() <= 0) return;
   }
   if (_e & AbstractThread::PollIn) {
-    warning_if(AbstractSocket::read_available_fd() < 0) << LogStream::Color::Red << "socket empty before read";
     private_.rs = read_available_fd();
+    trace_if(private_.rs < 0) << LogStream::Color::Red << "socket empty before read";
     if (private_.rs > 0) {
       readEvent();
       if (private_.rs > 0) {
@@ -616,16 +621,19 @@ void AbstractSocket::pollEvent(int _e) {
       close();
       return;
     }
-    warning_if(AbstractSocket::read_available_fd() > 0) << LogStream::Color::Yellow << "socket not empty after read";
+    warning_if(AbstractSocket::read_available_fd() > 0) << LogStream::Color::Red << "socket not empty after read";
   }
+  if (_e & (AbstractThread::PollHup | AbstractThread::PollErr
 #if defined EPOLL_EDGE_TRIGGERED || defined IO_URING_WAIT
-  if (_e & 0x2000) {
+            | 0x2000
+#endif
+            )) {
     private_.errorString = "Connection closed";
     private_.error = Closed;
+    lsDebug() << LogStream::Color::Red << private_.errorString << "(hup/error)" << static_cast<int>(_e);
     close();
     return;
   }
-#endif
   if (_e & AbstractThread::PollOut) {
     writeEvent();
     if (private_.wda.empty()) {

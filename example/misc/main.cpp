@@ -589,3 +589,220 @@ int main(int argc, char *argv[]) {
   return ret;
 }
 #endif
+
+#if 0
+  #include <AsyncFw/MainThread>
+  #include <AsyncFw/LogStream>
+  #include <AsyncFw/AbstractSocket>
+  #include <AsyncFw/Timer>
+
+  #include <poll.h>
+  #include <sys/socket.h>
+  #include <netinet/in.h>
+  #include <arpa/inet.h>
+  #include <unistd.h>
+
+  #include <functional>
+  #include <string>
+  #include <vector>
+
+using namespace AsyncFw;
+
+namespace {
+
+int g_failed = 0;
+int g_total = 0;
+
+  #define EXPECT(cond)                                                                                \
+    do {                                                                                              \
+      ++g_total;                                                                                      \
+      if (!(cond)) {                                                                                  \
+        ++g_failed;                                                                                   \
+        lsError() << LogStream::Color::Red << "FAIL " << __FILE__ << ':' << __LINE__ << ' ' << #cond; \
+      } else {                                                                                        \
+        lsDebug() << LogStream::Color::Green << "ok   " << __LINE__ << ' ' << #cond;                  \
+      }                                                                                               \
+    } while (0)
+
+struct Trace {
+  std::vector<int> states;
+  std::vector<int> errors;
+  std::vector<std::string> strings;
+  bool sawConnected = false;
+  bool sawActive = false;
+  bool sawRefused = false;
+  bool sawClosed = false;
+  bool reachedUnconnected = false;
+
+  void record(int state, int err, const std::string& es) {
+    states.push_back(state);
+    errors.push_back(err);
+    strings.push_back(es);
+    if (state == AbstractSocket::Connected) sawConnected = true;
+    if (state == AbstractSocket::Active) sawActive = true;
+    if (err == AbstractSocket::Refused) sawRefused = true;
+    if (err == AbstractSocket::Closed) sawClosed = true;
+    if (state == AbstractSocket::Unconnected) reachedUnconnected = true;
+  }
+
+  std::string dump() const {
+    std::string r;
+    for (size_t i = 0; i < states.size(); ++i) {
+      if (i) r += " -> ";
+      r += std::to_string(states[i]) + "/" + std::to_string(errors[i]);
+      if (!strings[i].empty()) r += "(\"" + strings[i] + "\")";
+    }
+    return r;
+  }
+};
+
+class ProbeSocket : public AbstractSocket {
+public:
+  Trace trace;
+  void stateEvent() override {
+    trace.record(state_, error(), errorString());
+    lsDebug() << LogStream::Color::Cyan
+              << "state=" << static_cast<int>(state_)
+              << "error=" << static_cast<int>(error())
+              << "msg=" << errorString();
+  }
+};
+
+// ---------- raw helper ---------------------------
+
+int rawListen(int& out_fd) {
+  int fd = ::socket(AF_INET, SOCK_STREAM, 0);
+  if (fd < 0) return -1;
+  int one = 1;
+  ::setsockopt(fd, SOL_SOCKET, SO_REUSEADDR, &one, sizeof(one));
+  sockaddr_in sa{};
+  sa.sin_family = AF_INET;
+  sa.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
+  sa.sin_port = 0;
+  if (::bind(fd, (sockaddr*)&sa, sizeof(sa)) < 0) { ::close(fd); return -1; }
+  if (::listen(fd, 1) < 0) { ::close(fd); return -1; }
+  socklen_t len = sizeof(sa);
+  if (::getsockname(fd, (sockaddr*)&sa, &len) < 0) { ::close(fd); return -1; }
+  out_fd = fd;
+  return ntohs(sa.sin_port);
+}
+
+int pickClosedPort() {
+  int fd = -1;
+  int p = rawListen(fd);
+  if (p < 0) return -1;
+  ::close(fd);
+  return p;
+}
+
+int rawAccept(int listen_fd, int timeout_ms) {
+  pollfd pfd{listen_fd, POLLIN, 0};
+  if (::poll(&pfd, 1, timeout_ms) <= 0) return -1;
+  sockaddr_in sa{};
+  socklen_t len = sizeof(sa);
+  return ::accept(listen_fd, (sockaddr*)&sa, &len);
+}
+
+// ---------- scenarios ----------------------------
+
+using Done = std::function<void()>;
+
+void test_connect_refused(Done next) {
+  lsNotice() << "=== Test 1: connect() to closed port ===";
+  int port = pickClosedPort();
+  EXPECT(port > 0);
+
+  auto* s = new ProbeSocket();
+  s->connect("127.0.0.1", port);
+
+  Timer::single(400, [s, next]() {
+    lsNotice() << "  trace: " << s->trace.dump();
+    // Problem 1: must NOT emit Connected for a refused connect.
+    EXPECT(!s->trace.sawConnected);
+    // Problem 2: must report Refused (not Closed).
+    EXPECT(s->trace.sawRefused);
+    EXPECT(!s->trace.sawClosed);
+    EXPECT(s->trace.reachedUnconnected);
+    delete s;
+    next();
+  });
+}
+
+void test_graceful_close(Done next) {
+  lsNotice() << "=== Test 2: graceful FIN from Active ===";
+  int listen_fd = -1;
+  int port = rawListen(listen_fd);
+  EXPECT(port > 0);
+
+  auto* s = new ProbeSocket();
+  s->connect("127.0.0.1", port);
+
+  Timer::single(200, [s, listen_fd, next]() {
+    int client_fd = rawAccept(listen_fd, 200);
+    EXPECT(client_fd >= 0);
+    EXPECT(s->trace.sawActive);
+
+    ::close(client_fd);   // graceful FIN
+    ::close(listen_fd);
+
+    Timer::single(400, [s, next]() {
+      lsNotice() << "  trace: " << s->trace.dump();
+      // Problem 3: graceful close must NOT be classified as Refused.
+      EXPECT(!s->trace.sawRefused);
+      EXPECT(s->trace.sawClosed);
+      delete s;
+      next();
+    });
+  });
+}
+
+void test_rst_close(Done next) {
+  lsNotice() << "=== Test 3: RST from Active ===";
+  int listen_fd = -1;
+  int port = rawListen(listen_fd);
+  EXPECT(port > 0);
+
+  auto* s = new ProbeSocket();
+  s->connect("127.0.0.1", port);
+
+  Timer::single(200, [s, listen_fd, next]() {
+    int client_fd = rawAccept(listen_fd, 200);
+    EXPECT(client_fd >= 0);
+    EXPECT(s->trace.sawActive);
+
+    linger lg{1, 0};      // SO_LINGER(0) → close() sends RST
+    ::setsockopt(client_fd, SOL_SOCKET, SO_LINGER, &lg, sizeof(lg));
+    ::close(client_fd);
+    ::close(listen_fd);
+
+    Timer::single(400, [s, next]() {
+      lsNotice() << "  trace: " << s->trace.dump();
+      EXPECT(!s->trace.sawRefused);
+      EXPECT(s->trace.sawClosed);
+      delete s;
+      next();
+    });
+  });
+}
+
+}  // namespace
+
+int main(int argc, char* argv[]) {
+  lsNotice() << "AbstractSocket HUP/ERR error classification test";
+
+  Timer::single(10, []() {
+    test_connect_refused([]() {
+      test_graceful_close([]() {
+        test_rst_close([]() {
+          lsNotice() << "=== Done ===";
+          if (g_failed) lsError() << LogStream::Color::Red << "FAILED " << g_failed << '/' << g_total;
+          else          lsNotice() << LogStream::Color::Green << "PASSED " << g_total;
+          MainThread::exit(g_failed ? 1 : 0);
+        });
+      });
+    });
+  });
+
+  return MainThread::exec();
+}
+#endif
