@@ -10,6 +10,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 /** @file FunctionConnector.h @brief The AbstractFunctionConnector, FunctionConnector, FunctionConnectorProtected, FunctionConnectionGuard and FunctionConnectionGuardList classes. */
 /** @example FunctionConnector/main.cpp FunctionConnector example */
 
+#include <atomic>
 #include "AbstractThread.h"
 
 namespace AsyncFw {
@@ -17,6 +18,9 @@ class FunctionConnectionGuard;
 /** @class AbstractFunctionConnector FunctionConnector.h <AsyncFw/FunctionConnector> @brief The AbstractFunctionConnector class provides the base functionality for FunctionConnector. */
 class AbstractFunctionConnector {
   friend FunctionConnectionGuard;
+
+protected:
+  struct List;
 
 public:
   class Connection;
@@ -55,20 +59,33 @@ public:
     Type type_;
 
   protected:
-    Connection(const AbstractFunctionConnector *, Type);
+    Connection(List *, Type);
     virtual ~Connection() = 0;
 
   private:
-    const AbstractFunctionConnector *connector_;
+    List *list_;
     FunctionConnectionGuard *guard_ = nullptr;
   };
   AbstractFunctionConnector(ConnectionPolicy = Auto);
 
 protected:
+  struct List : protected connection_list_t {
+    using connection_list_t::begin;
+    using connection_list_t::end;
+    using connection_list_t::erase;
+    using connection_list_t::iterator;
+    using connection_list_t::push_back;
+    using connection_list_t::size;
+    mutex_t mutex;
+    std::atomic<int> ref_ {1};
+    void addRef() { ref_.fetch_add(1, std::memory_order_relaxed); }
+    void release() {
+      if (ref_.fetch_sub(1, std::memory_order_acq_rel) == 1) delete this;
+    }
+  };
   virtual ~AbstractFunctionConnector() = 0;
   ConnectionPolicy connectionPolicy;
-  mutable connection_list_t list;
-  mutable mutex_t mutex;
+  List *list;
 };
 
 namespace internal {
@@ -82,30 +99,29 @@ public:
   Connection &connect(F &&f) const {
     if constexpr ((P & 0x10) != 0) { static_assert(T == Connection::Default, "Error: Connection type mismatch!"); }
     constexpr typename Connection::Type type = (T != Connection::Default) ? T : static_cast<Connection::Type>(P & ~0x10);
-    std::lock_guard<mutex_t> lock(mutex);
+    std::lock_guard<mutex_t> lock(list->mutex);
 #ifndef __clang_analyzer__
-    return *new Connection(std::forward<F>(f), this, type);
+    return *new Connection(std::forward<F>(f), list, type != static_cast<Connection::Type>(0x80) ? type : static_cast<Connection::Type>(connectionPolicy & ~0x10));
 #endif
   }
   template <Connection::Type T = Connection::Default, typename M, typename O>
   Connection &connect(M m, O *o) const {
     if constexpr ((P & 0x10) != 0) { static_assert(T == Connection::Default, "Error: Connection type mismatch!"); }
     constexpr typename Connection::Type type = (T != Connection::Default) ? T : static_cast<Connection::Type>(P & ~0x10);
-    std::lock_guard<mutex_t> lock(mutex);
+    std::lock_guard<mutex_t> lock(list->mutex);
 #ifndef __clang_analyzer__
-    return *new Connection(m, o, this, type);
+    return *new Connection(m, o, list, type != static_cast<Connection::Type>(0x80) ? type : static_cast<Connection::Type>(connectionPolicy & ~0x10));
 #endif
   }
 #if 0
   /*
   This implementation: holds the mutex across all invokes and relies.
-  Deadlocks on reentrant emission from a slot andis unsafe when a
-  connection is destroyed from another thread mid-emit.
-  See also the implementation of: void FunctionConnectionGuard::destroyConnection().
+  Deadlocks on reentrant emission from a slot and when a
+  connection is destroyed from own thread mid-emit.
   */
   void operator()(Args... args) const {
-    std::lock_guard<mutex_t> lock(mutex);
-    for (const AbstractFunctionConnector::Connection *c : list) {
+    std::lock_guard<mutex_t> lock(list->mutex);
+    for (const AbstractFunctionConnector::Connection *c : *list) {
       if (!c->thread_) continue;
       if (c->type_ == Connection::Direct || (c->type_ != Connection::Queued && c->thread_->id() == std::this_thread::get_id())) {
         (static_cast<const Connection *>(c)->f_)->invoke(args...);
@@ -129,9 +145,9 @@ public:
     };
     std::vector<Invoke> _il;
     {  //lock scope
-      std::lock_guard<mutex_t> lock(mutex);
-      _il.reserve(list.size());
-      for (const AbstractFunctionConnector::Connection *c : list) {
+      std::lock_guard<mutex_t> lock(list->mutex);
+      _il.reserve(list->size());
+      for (const AbstractFunctionConnector::Connection *c : *list) {
         static_cast<const Connection *>(c)->f_->ref_++;
         _il.push_back({static_cast<const Connection *>(c)->thread_, static_cast<const Connection *>(c)->f_, static_cast<const Connection *>(c)->type_});
       }
@@ -181,9 +197,9 @@ protected:
 
   public:
     template <typename F>
-    Connection(F &&f, const AbstractFunctionConnector *c, Type t) : AbstractFunctionConnector::Connection(c, t), f_(new Function<std::decay_t<F>>(std::forward<F>(f))) {}
+    Connection(F &&f, List *l, Type t) : AbstractFunctionConnector::Connection(l, t), f_(new Function<std::decay_t<F>>(std::forward<F>(f))) {}
     template <typename M, typename O>
-    Connection(M m, O *o, const AbstractFunctionConnector *c, Type t) : AbstractFunctionConnector::Connection(c, t), f_(new MemberFunction<M, O>(m, o)) {}
+    Connection(M m, O *o, List *l, Type t) : AbstractFunctionConnector::Connection(l, t), f_(new MemberFunction<M, O>(m, o)) {}
 
   private:
     template <typename F>
@@ -282,7 +298,7 @@ public:
 @par Example
 @snippet snippet.dox FunctionConnectorGuard */
 class FunctionConnectionGuard {
-  friend AbstractFunctionConnector::Connection;
+  friend AbstractFunctionConnector;
 
 public:
   /** @brief Constructs an empty, uninitialized connection guard. */
@@ -302,6 +318,7 @@ public:
 
 private:
   AbstractFunctionConnector::Connection *connection_;
+  AbstractFunctionConnector::List *list_;
   void destroyConnection();
 };
 

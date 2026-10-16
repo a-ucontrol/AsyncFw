@@ -16,76 +16,80 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 using namespace AsyncFw;
 
-AbstractFunctionConnector::AbstractFunctionConnector(ConnectionPolicy type) : connectionPolicy(type) { trace() << this; }
+AbstractFunctionConnector::AbstractFunctionConnector(ConnectionPolicy type) : connectionPolicy(type), list(new List) { trace() << this; }
 
 AbstractFunctionConnector::~AbstractFunctionConnector() {
-  std::lock_guard<mutex_t> lock(mutex);
-  trace() << this << list.size();
-  for (Connection *c : list) {
-    c->connector_ = nullptr;
-    if (c->thread_) delete c;
+  {  // lock scope
+    std::lock_guard<mutex_t> lock(list->mutex);
+    trace() << this << list->size();
+    for (Connection *c : *list) {
+      c->list_ = nullptr;
+      delete c;
+    }
   }
+  list->release();
 }
 
-AbstractFunctionConnector::Connection::Connection(const AbstractFunctionConnector *connector, Type type) : thread_(AbstractThread::current()), type_(type != static_cast<Connection::Type>(0x80) ? type : static_cast<Type>(connector->connectionPolicy & ~0x10)), connector_(connector) {
-  connector_->list.push_back(this);
-  trace() << LogStream::Color::Green << static_cast<int>(type_) << thread_->name() << this << connector_ << connector_->list.size();
+AbstractFunctionConnector::Connection::Connection(List *list, Type type) : thread_(AbstractThread::current()), type_(type), list_(list) {
+  list->push_back(this);
+  trace() << LogStream::Color::Green << static_cast<int>(type_) << thread_->name() << this << list << list->size();
 }
 
 AbstractFunctionConnector::Connection::~Connection() {
   if (guard_) guard_->connection_ = nullptr;
-  if (!connector_) return;
-  std::lock_guard<mutex_t> lock(connector_->mutex);
-  connection_list_t::iterator it = std::find(connector_->list.begin(), connector_->list.end(), this);
-  connector_->list.erase(it);
-  trace() << this << connector_ << connector_->list.size();
+  if (!list_) return;
+  std::lock_guard<mutex_t> lock(list_->mutex);
+  connection_list_t::iterator it = std::find(list_->begin(), list_->end(), this);
+  list_->erase(it);
+  trace() << this << list_ << list_->size();
 }
 
-FunctionConnectionGuard::FunctionConnectionGuard() : connection_(nullptr) {}
+FunctionConnectionGuard::FunctionConnectionGuard() : connection_(nullptr), list_(nullptr) {}
 
-FunctionConnectionGuard::FunctionConnectionGuard(FunctionConnectionGuard &&guard) {
-  connection_ = guard.connection_;
+FunctionConnectionGuard::FunctionConnectionGuard(FunctionConnectionGuard &&guard) : connection_(guard.connection_), list_(guard.list_) {
   guard.connection_ = nullptr;
+  guard.list_ = nullptr;
   if (connection_) connection_->guard_ = this;
 }
 
-FunctionConnectionGuard::FunctionConnectionGuard(AbstractFunctionConnector::Connection &connection) : connection_(&connection) {
+FunctionConnectionGuard::FunctionConnectionGuard(AbstractFunctionConnector::Connection &connection) : connection_(&connection), list_(connection.list_) {
+  list_->addRef();
   connection_->guard_ = this;
   trace() << this;
 }
 
 FunctionConnectionGuard::~FunctionConnectionGuard() {
-  if (connection_) destroyConnection();
+  if (list_) destroyConnection();
   trace() << this;
 }
 
 void FunctionConnectionGuard::destroyConnection() {
-#if 0
-  AbstractThread *_thread = connection_->thread_;
-  connection_->thread_ = nullptr;
-  connection_->guard_ = nullptr;
-  if (!_thread->invoke([_p = connection_]() { delete _p; })) { delete connection_; }
-#else
-  {  //lock scope
-    std::lock_guard<AbstractFunctionConnector::mutex_t> lock(connection_->connector_->mutex);
-    auto it = std::find(connection_->connector_->list.begin(), connection_->connector_->list.end(), connection_);
-    connection_->connector_->list.erase(it);
-    connection_->connector_ = nullptr;
+  {  // lock scope
+    std::lock_guard<AbstractFunctionConnector::mutex_t> lock(list_->mutex);
+    if (connection_) {
+      AbstractFunctionConnector::List::iterator it = std::find(list_->begin(), list_->end(), connection_);
+      list_->erase(it);
+      connection_->list_ = nullptr;
+      delete connection_;
+    }
   }
-  delete connection_;
-#endif
+  list_->release();
 }
 
 void FunctionConnectionGuard::operator=(AbstractFunctionConnector::Connection &connection) {
-  if (connection_) destroyConnection();
+  if (list_) destroyConnection();
+  list_ = connection.list_;
+  list_->addRef();
   connection_ = &connection;
   connection_->guard_ = this;
 }
 
 void FunctionConnectionGuard::operator=(FunctionConnectionGuard &&guard) {
-  if (connection_) destroyConnection();
+  if (list_) destroyConnection();
   connection_ = guard.connection_;
+  list_ = guard.list_;
   guard.connection_ = nullptr;
+  guard.list_ = nullptr;
   if (connection_) connection_->guard_ = this;
 }
 
