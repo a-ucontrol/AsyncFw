@@ -64,7 +64,7 @@ public:
     bool waiting();
 
   private:
-    AbstractThread *thread_ = nullptr;
+    std::atomic<AbstractThread *> thread_ = nullptr;
   };
 
   /** @brief Runs a function in a managed thread. @param function The function to be executed. @param sync Blocking wait if true. @return True if the function is added to the queue. */
