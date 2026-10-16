@@ -11,12 +11,16 @@ if(USE_QAPPLICATION)
   add_definitions(-DUSE_QAPPLICATION)
 endif()
 
+set(EXAMPLES_PATH "${CMAKE_BINARY_DIR}/example-bin/")
+add_definitions(-DEXAMPLES_PATH="${EXAMPLES_PATH}")
+if(NOT AsyncFw_DISABLE_BUILD_TESTS)
+  set(TESTS_PATH "${CMAKE_BINARY_DIR}/test-bin/")
+  add_definitions(-DTESTS_PATH="${TESTS_PATH}")
+endif()
+
 set(PROJECT_SOURCES
   main.cpp
 )
-
-set(EXAMPLES_PATH "${CMAKE_BINARY_DIR}/example-bin/")
-add_definitions(-DEXAMPLES_PATH="${EXAMPLES_PATH}")
 
 add_executable(${TARGET} ${PROJECT_SOURCES})
 target_link_libraries(${TARGET} ${AsyncFw_PROJECT_NAME})

@@ -282,6 +282,11 @@ install(FILES ${AsyncFw_MAIN_HEADERS} DESTINATION include/AsyncFw/main)
 install(FILES ${AsyncFw_INCLUDE} DESTINATION include/AsyncFw)
 install(FILES "${CMAKE_CURRENT_LIST_DIR}/AsyncFwConfig.cmake" "${CMAKE_CURRENT_BINARY_DIR}/AsyncFwConfigVersion.cmake" DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/AsyncFw)
 
+if(NOT AsyncFw_DISABLE_BUILD_TESTS)
+  add_definitions(-DENABLE_TESTS)
+  add_subdirectory(test)
+endif()
+
 if(NOT AsyncFw_DISABLE_BUILD_EXAMPLES)
   add_subdirectory(example/FunctionConnector)
   add_subdirectory(example/ThreadInvoke)

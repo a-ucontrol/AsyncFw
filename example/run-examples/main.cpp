@@ -127,6 +127,18 @@ void run_examples(bool _socket) {
   process.start(app, {"--tst"});
   process.wait();
 
+#ifdef ENABLE_TESTS
+  app = TESTS_PATH "tests-core";
+  logInfo() << "Start:" << app;
+  process.start(app);
+  process.wait();
+  app = TESTS_PATH "tests-main";
+  logInfo() << "Start:" << app;
+  process.start(app);
+  process.wait();
+#endif
+
+
   if (!ok) {
     logAlert() << "-ERROR!-";
     logAlert() << "=ERROR!=\n" << err;
