@@ -829,15 +829,12 @@ void AbstractThread::exec() {
 
 void AbstractThread::stop() {
   warning_if(std::this_thread::get_id() == private_.id) << LogStream::Color::Red << "executed from own thread" << LOG_THREAD_NAME;
-  int _state;
   {  //lock scope
     LockGuard lock(private_.mutex);
     if (!private_.state || private_.state == Private::Finished || private_.id == std::thread::id {}) return;
-    _state = private_.state;
   }
-
   lsDebug() << LogStream::Color::Red << LOG_THREAD_NAME << "stopping running thread:" << private_.id << "from:" << std::this_thread::get_id();
-  if (!(_state & Private::WaitFinished)) quit();
+  quit();  // Always call quit(), as there might be a nested exec().
   waitFinished();
 }
 
