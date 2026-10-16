@@ -1,4 +1,4 @@
-#if 1
+#if 0
   #include <AsyncFw/MainThread>
   #include <AsyncFw/LogStream>
   #include <AsyncFw/DataArray>
@@ -13,7 +13,7 @@ int main(int argc, char *argv[]) {
 }
 #endif
 
-#if 0
+#if 1
   #include <atomic>
   #include <chrono>
   #include <memory>
@@ -33,8 +33,8 @@ using Conn = AbstractFunctionConnector::Connection;
 // g_failed is returned from main so CI can detect the failure.
 // ---------------------------------------------------------------------------
 namespace {
-int g_failed = 0;
-int g_total = 0;
+std::atomic<int> g_failed = 0;
+std::atomic<int> g_total = 0;
 
   #define EXPECT(cond)                                                                        \
     do {                                                                                      \
@@ -336,6 +336,104 @@ void test_independent_connections() {
   (void)c2;
 }
 
+void test_guard_destroy_during_concurrent_emit() {
+  FunctionConnector<int> fc;
+  std::atomic<int>  received{0};
+  std::atomic<bool> stop{false};
+
+  // Connection создаётся в главном потоке, оборачивается в heap-guard.
+  FunctionConnectionGuard *guard = new FunctionConnectionGuard(
+      fc.connect<Conn::Direct>([&](int v) {
+    received.fetch_add(v, std::memory_order_relaxed);
+    std::this_thread::yield();
+  }));
+
+  // Эмиттер в отдельном потоке.
+  std::thread emitter([&]() {
+    while (!stop.load(std::memory_order_relaxed)) {
+      fc(1);
+      std::this_thread::yield();
+    }
+  });
+
+  std::this_thread::sleep_for(std::chrono::milliseconds(20));
+
+  // Уничтожаем guard, пока эмиттер работает. Здесь TSan должен либо
+  // молчать, либо указать на гонку по Connection::guard_.
+  delete guard;
+
+  std::this_thread::sleep_for(std::chrono::milliseconds(20));
+  stop = true;
+  emitter.join();
+
+  lsNotice() << "test_guard_destroy_during_concurrent_emit: received =" << received.load();
+  EXPECT(received.load() > 0);
+}
+// ---------------------------------------------------------------------------
+// Guard уничтожается в одном AsyncFw::Thread, коннектор — в другом.
+// std::thread не нужен: используем AsyncFw::Thread и его invoke().
+//
+// ПОРЯДОК ОБЪЯВЛЕНИЯ ВАЖЕН:
+//   Лямбды, отправленные через invoke(), выполняются асинхронно и читают
+//   ready/go/done по ссылке. C++ разрушает локали в порядке, обратном
+//   объявлению. Если объявить ready/go после tA/tB, то на выходе из scope
+//   они будут разрушены РАНЬШЕ ~Thread, а лямбды в этот момент ещё бегут —
+//   ASan ловит это как stack-use-after-scope.
+//
+//   Поэтому ready/go/done объявлены до tA/tB: они доживают до момента,
+//   когда оба потока гарантированно завершены.
+//
+// ПОЧЕМУ done:
+//   ~Thread блокирует вызывающий поток до фактического завершения exec(),
+//   но полагаться только на это хрупко — неявный контракт. done явно
+//   фиксирует «обе лямбды закончили читать go/ready», до выхода из scope.
+// ---------------------------------------------------------------------------
+void test_guard_and_connector_concurrent_destroy_asyncfw() {
+  for (int i = 0; i < 200; ++i) {
+    std::atomic<int>  ready{0};    // сколько лямбд дошли до spin-wait
+    std::atomic<bool> go{false};   // сигнал «отпускаем обе лямбды»
+    std::atomic<int>  done{0};     // сколько лямбд полностью вернулись
+
+    auto *fc = new FunctionConnector<int>;
+    auto *g  = new FunctionConnectionGuard(
+        fc->connect<Conn::Direct>([](int) {}));
+
+    Thread tA("destroy-guard");
+    Thread tB("destroy-connector");
+    tA.start();
+    tB.start();
+
+    tA.invoke([&]() {
+      ready.fetch_add(1);
+      while (!go.load()) std::this_thread::yield();
+      delete g;
+      g = nullptr;
+      done.fetch_add(1);           // последний визит к общим данным
+    });
+    tB.invoke([&]() {
+      ready.fetch_add(1);
+      while (!go.load()) std::this_thread::yield();
+      delete fc;
+      fc = nullptr;
+      done.fetch_add(1);           // последний визит к общим данным
+    });
+
+    // Обе лямбды стартовали и висят в spin-wait
+    while (ready.load() < 2) std::this_thread::yield();
+
+    // Отпускаем обе лямбды — стартует конкурирующее разрушение
+    go = true;
+
+    // Дожидаемся полного завершения лямбд до выхода из scope.
+    // После этого ни один поток больше не трогает ready/go/done.
+    while (done.load() < 2) std::this_thread::yield();
+
+    // Здесь вызываются ~tB и ~tA (в этом порядке — обратном объявлению).
+    // К этому моменту лямбды мертвы, ждать особо нечего, но ~Thread
+    // всё равно корректно дожидается exec().
+  }
+  EXPECT(true);
+}
 }  // namespace
 
 int main(int, char **) {
@@ -355,12 +453,14 @@ int main(int, char **) {
   test_queued_deferred_not_inline();
   test_protected_emitter();
   test_independent_connections();
+  test_guard_destroy_during_concurrent_emit();
+  test_guard_and_connector_concurrent_destroy_asyncfw();
 
   if (g_failed) {
-    lsError() << LogStream::Color::Red << "FunctionConnectorTest:" << g_failed << '/' << g_total << "checks failed";
+    lsError() << LogStream::Color::Red << "FunctionConnectorTest:" << g_failed.load() << '/' << g_total.load() << "checks failed";
     return 1;
   }
-  lsNotice() << "FunctionConnectorTest:" << g_total << "checks passed";
+  lsNotice() << "FunctionConnectorTest:" << g_total.load() << "checks passed";
   return 0;
 }
 #endif
