@@ -145,7 +145,13 @@ Protected Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Server-side socket wrapper specialized for listening and accepting incoming network connections. </p>
-<p>Leverages private inheritance from <a class="el" href="classAsyncFw_1_1AbstractSocket.html" title="Abstract base class providing core network socket functionality and OS descriptor abstraction.">AbstractSocket</a> to safely expose only server-specific management methods while encapsulating and hiding client-centric I/O routines. </p><dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;netinet/in.h&gt;</span></div>
+<p>Leverages private inheritance from <a class="el" href="classAsyncFw_1_1AbstractSocket.html" title="Abstract base class providing core network socket functionality and OS descriptor abstraction.">AbstractSocket</a> to safely expose only server-specific management methods while encapsulating and hiding client-centric I/O routines. </p><dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line"><span class="preprocessor">#ifndef _WIN32</span></div>
+<div class="line"><span class="preprocessor">  #include &lt;netinet/in.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#else</span></div>
+<div class="line"><span class="preprocessor">  #include &lt;winsock2.h&gt;</span></div>
+<div class="line"><span class="preprocessor">  #include &lt;ws2tcpip.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#endif</span></div>
+<div class="line"> </div>
 <div class="line"><span class="preprocessor">#include &lt;AsyncFw/DataArray&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;AsyncFw/AbstractTlsSocket&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;AsyncFw/ListenSocket&gt;</span></div>

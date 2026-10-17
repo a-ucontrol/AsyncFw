@@ -106,7 +106,13 @@ $(function(){initNavTree('ListenSocket_2main_8cpp-example.html','',''); });
 <div class="line"><span class="comment">See {Link: LICENSE file https://mit-license.org} in the project root for full license information.</span></div>
 <div class="line"><span class="comment">*/</span></div>
 <div class="line"></div>
-<div class="line"><span class="preprocessor">#include &lt;netinet/in.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#ifndef _WIN32</span></div>
+<div class="line"><span class="preprocessor">  #include &lt;netinet/in.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#else</span></div>
+<div class="line"><span class="preprocessor">  #include &lt;winsock2.h&gt;</span></div>
+<div class="line"><span class="preprocessor">  #include &lt;ws2tcpip.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#endif</span></div>
+<div class="line"> </div>
 <div class="line"><span class="preprocessor">#include &lt;AsyncFw/DataArray&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;AsyncFw/AbstractTlsSocket&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;AsyncFw/ListenSocket&gt;</span></div>
