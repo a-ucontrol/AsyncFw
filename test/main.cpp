@@ -1,8 +1,9 @@
 // Tests for classes under main/.
 // Groups:
 //   A. ThreadPool          — destroy thread from its own task.
-//   B. Coroutine           — suspend/resume, wait, coInvoke.
+//   B. Coroutine           — suspend/resume, wait, coInvoke (basic).
 //   C. FileSystemWatcher   — shared dir watch, file lifecycle, delete+recreate.
+//   D. Coroutine — TST     — coInvoke copy/move semantics for value types.
 //
 // Threading layout:
 //   - ThreadPool lives on a dedicated `poolOwner` thread so that its
@@ -13,6 +14,15 @@
 //   - FileSystemWatcher runs on MainThread::exec() and must run last: the
 //     first MainThread::exit() permanently finishes Main's event loop, and
 //     any later invokeTask() would silently return false.
+//
+// Known TSan warning with ENABLE_IO_URING:
+//   io_uring_get_sqe() from ~AbstractThread concurrently on two threads is
+//   reported as a data race. This is a liburing SQE-ring sharing artifact
+//   (the same shared memory mapping), not a real data race in AsyncFw.
+//   Tests that create Thread objects in parallel and let them destruct on
+//   different threads simultaneously are guarded by `#ifndef IO_URING_WAIT`
+//   so that builds with ENABLE_IO_URING can be TSan-clean by opting out of
+//   those stress paths. Default builds (EPOLL_WAIT) exercise everything.
 
 #include <atomic>
 #include <chrono>
@@ -52,15 +62,91 @@ do {                                                                            
   }                                                                                       \
 } while (0)
 
-    template <typename F>
-    bool wait_for(F pred, int ms = 2000) {
-  auto deadline = std::chrono::steady_clock::now() + std::chrono::milliseconds(ms);
-  while (std::chrono::steady_clock::now() < deadline) {
-    if (pred()) return true;
-    std::this_thread::sleep_for(std::chrono::milliseconds(1));
+#define EXPECT_MSG(cond, msg)                                                               \
+    do {                                                                                      \
+      ++g_total;                                                                              \
+      if (!(cond)) {                                                                          \
+        ++g_failed;                                                                           \
+        lsError() << LogStream::Color::Red << "FAIL" << __FILE__ << ':' << __LINE__           \
+        << #cond << " — " << (msg);                                                 \
+  }                                                                                       \
+} while (0)
+
+  template <typename F>
+  bool wait_for(F pred, int ms = 2000) {
+    auto deadline = std::chrono::steady_clock::now() + std::chrono::milliseconds(ms);
+    while (std::chrono::steady_clock::now() < deadline) {
+      if (pred()) return true;
+      std::this_thread::sleep_for(std::chrono::milliseconds(1));
+    }
+    return pred();
   }
-  return pred();
-}
+
+// ---------------------------------------------------------------------------
+// TST — probe object for copy/move semantics verification (mirrors core.cpp).
+// Kept independent from core.cpp because test binaries are separate; sharing
+// would require a common header, which is deliberately avoided.
+// ---------------------------------------------------------------------------
+struct TST {
+  static std::atomic<int> copies_;
+  static std::atomic<int> moves_;
+  static std::atomic<int> live_;
+
+  int val = 0;
+
+  explicit TST(int v = 0) : val(v) {
+    ++live_;
+    lsDebug() << "ctor" << val;
+  }
+  TST(const TST &o) : val(o.val) {
+    ++live_;
+    ++copies_;
+    lsDebug() << "copy" << val;
+  }
+  TST(TST &&o) noexcept : val(o.val) {
+    o.val = -1;  // moved-from marker
+    ++live_;
+    ++moves_;
+    lsDebug() << "move" << val;
+  }
+  TST &operator=(const TST &o) {
+    val = o.val;
+    ++copies_;
+    lsDebug() << "copy=" << val;
+    return *this;
+  }
+  TST &operator=(TST &&o) noexcept {
+    if (this != &o) {
+      val = o.val;
+      o.val = -1;
+      ++moves_;
+      lsDebug() << "move=" << val;
+    }
+    return *this;
+  }
+  ~TST() {
+    --live_;
+    lsDebug() << "dtor" << val;
+  }
+};
+inline bool isMovedFrom(const TST &t) { return t.val == -1; }
+
+std::atomic<int> TST::copies_{0};
+std::atomic<int> TST::moves_{0};
+std::atomic<int> TST::live_{0};
+
+struct TSTMeter {
+  int copies;
+  int moves;
+  int live;
+  TSTMeter()
+      : copies(TST::copies_.load()),
+      moves(TST::moves_.load()),
+      live(TST::live_.load()) {}
+  int copiesDelta() const { return TST::copies_.load() - copies; }
+  int movesDelta() const { return TST::moves_.load() - moves; }
+  int liveDelta() const { return TST::live_.load() - live; }
+};
 
 // ============================================================================
 // Group A. ThreadPool
@@ -70,6 +156,9 @@ do {                                                                            
 // same thread. Internally destroy() sync-invokes back to the pool's owning
 // thread, so the pool must live on a separate AsyncFw::Thread whose exec()
 // is running while the main thread waits here.
+//
+// Note: createThread() already schedules start() in the pool owner thread;
+// calling start() again from here would log "thread already running".
 void test_threadpool_destroy_from_own_task() {
   ThreadPool *pool = ThreadPool::instance();
   EXPECT(pool != nullptr);
@@ -77,7 +166,6 @@ void test_threadpool_destroy_from_own_task() {
   std::atomic<bool> reachedEnd{false};
 
   AbstractThreadPool::Thread *t = pool->createThread("DestroyFromOwnTask");
-  t->start();
   t->invoke([t, &reachedEnd]() {
     t->destroy();
     // Must not touch t after destroy() — it may already be scheduled for
@@ -90,7 +178,7 @@ void test_threadpool_destroy_from_own_task() {
 }
 
 // ============================================================================
-// Group B. Coroutine
+// Group B. Coroutine — basics
 // ============================================================================
 
 // Basic co_await with synchronous resume: control returns to the caller
@@ -283,7 +371,276 @@ void test_filesystemwatcher_scenarios() {
   MainThread::exec();
 }
 
+// ============================================================================
+// Group D. Coroutine — TST (copy/move semantics of coInvoke)
+// ============================================================================
+//
+// coInvoke is single-shot dispatch to exactly one callable. Its argument
+// handling is deliberately minimal — no intermediate tuple copy, no apply
+// move:
+//
+//   coInvoke(f, args...) forwards its arguments into
+//   CoroutineInvokeAwait<R(Args...)> with `Args` deduced as forwarding-refs:
+//     - lvalue arg  → Args = TST&   → tuple<TST&>   holds a *reference*
+//     - xvalue arg  → Args = TST&&  → tuple<TST&&>  holds a *reference*
+//
+//   At resume, await_suspend does std::apply(*f_, std::move(a_)). Because
+//   the tuple elements are references, std::move(a_) yields the same
+//   lvalue/xvalue reference — the reference itself is moved, not the TST.
+//   The callable's value-parameter is then initialized directly from that
+//   reference, performing exactly one copy (lvalue) or one move (xvalue).
+//
+// Net cost (single value-param callable):
+//   lvalue arg: 1 copy  (into callable value-param); caller intact.
+//   xvalue arg: 1 move  (into callable value-param); caller moved-from.
+//
+// IMPORTANT — lifetime contract:
+//   The tuple holds a reference, not an owning copy. The argument MUST stay
+//   alive until the co_await completes. This is fine in normal usage where
+//   the caller does `co_await coInvoke(f, arg)` and `arg` is a local that
+//   lives across the await; it is NOT safe to hand coInvoke a temporary
+//   that would outlive the enclosing scope before resume_queued delivers
+//   the continuation.
+//
+//   This is a deliberate single-shot optimization — unlike
+//   FunctionConnector multicast, where any intermediate move would
+//   move-steal from subsequent subscribers (see the CRITICAL WARNING in
+//   core/invocable.hpp). Any change to this contract MUST be reflected
+//   here in the counters below.
+//
+// Return-by-value: promise().setData(std::any(result)) copies/moves into
+// the std::any; data<R>() returns by value (another copy). Treated as part
+// of the dispatch cost, not a leak — liveDelta still returns to baseline.
+
+// coInvoke to the global ThreadPool, lvalue TST argument.
+// The caller's TST must not become moved-from: the tuple holds a reference,
+// and only the callable's value-param takes a copy.
+void test_coroutine_coInvoke_pool_lvalue_tst() {
+  TSTMeter meter;
+  {
+    std::atomic<bool> finished{false};
+    std::atomic<int> seenVal{-1};
+
+    Thread driver("co-pool-lv");
+    driver.start();
+    driver.invoke([&]() {
+      auto coro = [&]() -> CoroutineTask {
+        TST arg{7};
+        int c0 = TST::copies_.load();
+        int m0 = TST::moves_.load();
+        co_await coInvoke([&](TST t) {
+          seenVal = t.val;
+        }, arg);
+        int c = TST::copies_.load() - c0;
+        int m = TST::moves_.load() - m0;
+        // lvalue arg: 1 copy into the callable's value-param.
+        // Zero moves: tuple<TST&> only holds a reference, caller untouched.
+        EXPECT_MSG(c == 1, "copies delta=" + std::to_string(c) + " (expected 1: value-param copy)");
+        EXPECT_MSG(m == 0, "moves delta=" + std::to_string(m) + " (expected 0: caller intact)");
+        EXPECT(!isMovedFrom(arg));
+        EXPECT(arg.val == 7);
+        finished = true;
+      };
+      coro().wait();
+    });
+
+    EXPECT(wait_for([&] { return finished.load(); }));
+    EXPECT(seenVal.load() == 7);
+    driver.invoke([]() {}, true);  // barrier before ~driver
+  }
+  EXPECT(meter.liveDelta() == 0);
+}
+
+// coInvoke to the global ThreadPool, xvalue TST argument.
+// The caller's object becomes moved-from (value-param move); the tuple
+// itself only holds a reference, so no additional move is produced.
+void test_coroutine_coInvoke_pool_xvalue_tst() {
+  TSTMeter meter;
+  {
+    std::atomic<bool> finished{false};
+    std::atomic<int> seenVal{-1};
+
+    Thread driver("co-pool-xv");
+    driver.start();
+    driver.invoke([&]() {
+      auto coro = [&]() -> CoroutineTask {
+        TST arg{7};
+        int c0 = TST::copies_.load();
+        int m0 = TST::moves_.load();
+        co_await coInvoke([&](TST t) {
+          seenVal = t.val;
+        }, std::move(arg));
+        int c = TST::copies_.load() - c0;
+        int m = TST::moves_.load() - m0;
+        // xvalue arg: 1 move into the callable's value-param.
+        // Zero copies: tuple<TST&&> only holds a reference.
+        EXPECT_MSG(c == 0, "copies delta=" + std::to_string(c) + " (expected 0)");
+        EXPECT_MSG(m == 1, "moves delta=" + std::to_string(m) + " (expected 1: value-param move)");
+        EXPECT(isMovedFrom(arg));
+        finished = true;
+      };
+      coro().wait();
+    });
+
+    EXPECT(wait_for([&] { return finished.load(); }));
+    EXPECT(seenVal.load() == 7);
+    driver.invoke([]() {}, true);
+  }
+  EXPECT(meter.liveDelta() == 0);
+}
+
+// coInvoke to a specific AsyncFw::Thread, lvalue TST argument.
+// Same copy/move contract as the pool overload; the only difference is the
+// target thread. Also verifies that the callable ran on `target`.
+void test_coroutine_coInvoke_thread_lvalue_tst() {
+  TSTMeter meter;
+  {
+    Thread target("co-target-lv");
+    target.start();
+
+    std::atomic<bool> finished{false};
+    std::atomic<int> seenVal{-1};
+    std::atomic<std::thread::id> observed{};
+    const std::thread::id expected = target.id();
+
+    Thread driver("co-driver-lv");
+    driver.start();
+    driver.invoke([&]() {
+      auto coro = [&]() -> CoroutineTask {
+        TST arg{7};
+        int c0 = TST::copies_.load();
+        int m0 = TST::moves_.load();
+        co_await coInvoke(&target, [&](TST t) {
+          seenVal = t.val;
+          observed = std::this_thread::get_id();
+        }, arg);
+        int c = TST::copies_.load() - c0;
+        int m = TST::moves_.load() - m0;
+        EXPECT_MSG(c == 1, "copies delta=" + std::to_string(c) + " (expected 1: value-param copy)");
+        EXPECT_MSG(m == 0, "moves delta=" + std::to_string(m) + " (expected 0: caller intact)");
+        EXPECT(!isMovedFrom(arg));
+        finished = true;
+      };
+      coro().wait();
+    });
+
+    EXPECT(wait_for([&] { return finished.load(); }));
+    EXPECT(seenVal.load() == 7);
+    EXPECT(observed.load() == expected);
+    driver.invoke([]() {}, true);
+  }
+  EXPECT(meter.liveDelta() == 0);
+}
+
+// coInvoke to a specific AsyncFw::Thread, xvalue TST argument.
+void test_coroutine_coInvoke_thread_xvalue_tst() {
+  TSTMeter meter;
+  {
+    Thread target("co-target-xv");
+    target.start();
+
+    std::atomic<bool> finished{false};
+    std::atomic<int> seenVal{-1};
+
+    Thread driver("co-driver-xv");
+    driver.start();
+    driver.invoke([&]() {
+      auto coro = [&]() -> CoroutineTask {
+        TST arg{7};
+        int c0 = TST::copies_.load();
+        int m0 = TST::moves_.load();
+        co_await coInvoke(&target, [&](TST t) {
+          seenVal = t.val;
+        }, std::move(arg));
+        int c = TST::copies_.load() - c0;
+        int m = TST::moves_.load() - m0;
+        EXPECT_MSG(c == 0, "copies delta=" + std::to_string(c) + " (expected 0)");
+        EXPECT_MSG(m == 1, "moves delta=" + std::to_string(m) + " (expected 1: value-param move)");
+        EXPECT(isMovedFrom(arg));
+        finished = true;
+      };
+      coro().wait();
+    });
+
+    EXPECT(wait_for([&] { return finished.load(); }));
+    EXPECT(seenVal.load() == 7);
+    driver.invoke([]() {}, true);
+  }
+  EXPECT(meter.liveDelta() == 0);
+}
+
+// coInvoke returning TST by value. The result travels through
+// promise().setData(std::any) and data<TST>(), which copies/moves into the
+// std::any (and back out). We only assert semantic correctness: the value
+// round-trips intact and no TST leaks. Exact copy counts are intentionally
+// not pinned — they depend on std::any internals, not on coInvoke logic.
+void test_coroutine_coInvoke_returns_tst() {
+  TSTMeter meter;
+  {
+    std::atomic<bool> finished{false};
+    std::atomic<int> resultVal{-1};
+
+    Thread driver("co-return-tst");
+    driver.start();
+    driver.invoke([&]() {
+      auto coro = [&]() -> CoroutineTask {
+        TST r = co_await coInvoke([]() -> TST {
+          return TST{42};
+        });
+        resultVal = r.val;
+        finished = true;
+      };
+      coro().wait();
+    });
+
+    EXPECT(wait_for([&] { return finished.load(); }));
+    EXPECT(resultVal.load() == 42);
+    driver.invoke([]() {}, true);
+  }
+  EXPECT(meter.liveDelta() == 0);
+}
+
+// coInvoke where the callable captures a TST by value (mirrors the
+// example/CoroutineInvoke pattern). The capture must survive the await.
+void test_coroutine_coInvoke_lambda_capture_tst() {
+  TSTMeter meter;
+  {
+    std::atomic<bool> finished{false};
+    std::atomic<int> captureSeenVal{-1};
+    std::atomic<int> argSeenVal{-1};
+
+    Thread driver("co-cap-tst");
+    driver.start();
+    driver.invoke([&]() {
+      auto coro = [&]() -> CoroutineTask {
+        TST cap{111};
+        auto lambda = [&, cap](TST t) {
+          captureSeenVal = cap.val;
+          argSeenVal = t.val;
+        };
+        TST arg{42};
+        co_await coInvoke(lambda, arg);
+        EXPECT(!isMovedFrom(cap));
+        EXPECT(cap.val == 111);
+        EXPECT(!isMovedFrom(arg));
+        finished = true;
+      };
+      coro().wait();
+    });
+
+    EXPECT(wait_for([&] { return finished.load(); }));
+    EXPECT(captureSeenVal.load() == 111);
+    EXPECT(argSeenVal.load() == 42);
+    driver.invoke([]() {}, true);
+  }
+  EXPECT(meter.liveDelta() == 0);
+}
+
 }  // namespace
+
+// ============================================================================
+// main
+// ============================================================================
 
 int main(int, char **) {
   // ThreadPool must live on a dedicated thread whose exec() is running for
@@ -296,11 +653,21 @@ int main(int, char **) {
   // --- Group A: ThreadPool --------------------------------------------
   test_threadpool_destroy_from_own_task();
 
-  // --- Group B: Coroutine ---------------------------------------------
+  // --- Group B: Coroutine — basics ------------------------------------
   test_coroutine_basic_suspend_resume();
   test_coroutine_wait_blocks_until_done();
   test_coroutine_coInvoke_returns_value();
   test_coroutine_coInvoke_void();
+
+  // --- Group D: Coroutine — TST ---------------------------------------
+  // Runs before FileSystemWatcher: no MainThread::exec() involved, so it
+  // is independent of the "Main loop must run last" constraint.
+  test_coroutine_coInvoke_pool_lvalue_tst();
+  test_coroutine_coInvoke_pool_xvalue_tst();
+  test_coroutine_coInvoke_thread_lvalue_tst();
+  test_coroutine_coInvoke_thread_xvalue_tst();
+  test_coroutine_coInvoke_returns_tst();
+  test_coroutine_coInvoke_lambda_capture_tst();
 
   // --- Group C: FileSystemWatcher -------------------------------------
   // Runs on MainThread::exec(). Must be last because MainThread::exit()

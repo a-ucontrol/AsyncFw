@@ -11,17 +11,20 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include <AsyncFw/Timer>
 #include <AsyncFw/LogStream>
 
+std::atomic_int cp = 0;
+std::atomic_int mv = 0;
+
 struct TST {
   TST(int i) : val(i) { lsDebug() << val; }
   ~TST() { lsDebug() << val; }
   TST(const TST &v) {
     val = v.val;
-    lsDebug() << "copy" << val;
+    lsDebug() << "copy" << val << ++cp;
   }
   TST(TST &&v) {
     val = v.val;
     v.val = -1;
-    lsDebug() << "move" << val;
+    lsDebug() << "move" << val << ++mv;
   }
   int val = 0;
 };
