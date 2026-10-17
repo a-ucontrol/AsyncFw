@@ -71,7 +71,7 @@ int main(int argc, char *argv[]) {
       AsyncFw::MainThread::exit(-1);
       co_return;
     }
-    for (const std::string _s : list) logNotice() << _s;
+    for (const std::string &_s : list) logNotice() << _s;
     co_await socket.coConnect(list[0], 443);
     AsyncFw::MainThread::exit(0);
   }};

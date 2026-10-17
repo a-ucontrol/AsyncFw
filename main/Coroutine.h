@@ -128,9 +128,9 @@ public:
 
 private:
   AbstractThread *t_;
+  Invocable<R(Args...)>::Abstract *f_;
   mutable CoroutineHandle h_;
   mutable std::tuple<Args...> a_;
-  Invocable<R(Args...)>::Abstract *f_;
 };
 
 /** @defgroup coroutine_api Coroutine API Helpers

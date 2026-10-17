@@ -33,14 +33,14 @@ int main(int argc, char *argv[]) {
 
   std::string str;
   AsyncFw::PollNotifier notifier(fd);
-  notifier.notify.connect([&notifier, &fd, &str](AsyncFw::AbstractThread::PollEvents) {
+  notifier.notify.connect([&fd, &str](AsyncFw::AbstractThread::PollEvents) {
     char buf[128];
     int r = read(fd, buf, sizeof(buf) - 1);
     if (r > 0) {
       buf[r] = 0;
       str += buf;
       for (;;) {
-        int i = str.find('\n');
+        std::size_t i = str.find('\n');
         if (i == std::string::npos) break;
         lsDebug() << "readed: " << str.substr(0, ++i);
         str.erase(0, i);
