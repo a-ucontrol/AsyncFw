@@ -155,17 +155,20 @@ class AsyncFw::FunctionConnector&lt; Args &gt;</div><p>Provides a thread-safe, p
 <div class="line"><span class="preprocessor">#include &lt;AsyncFw/Timer&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;AsyncFw/LogStream&gt;</span></div>
 <div class="line"> </div>
+<div class="line">std::atomic_int cp = 0;</div>
+<div class="line">std::atomic_int mv = 0;</div>
+<div class="line"> </div>
 <div class="line"><span class="keyword">struct </span>TST {</div>
 <div class="line">  TST(<span class="keywordtype">int</span> i) : val(i) { lsDebug() &lt;&lt; val; }</div>
 <div class="line">  ~TST() { lsDebug() &lt;&lt; val; }</div>
 <div class="line">  TST(<span class="keyword">const</span> TST &amp;v) {</div>
 <div class="line">    val = v.val;</div>
-<div class="line">    lsDebug() &lt;&lt; <span class="stringliteral">&quot;copy&quot;</span> &lt;&lt; val;</div>
+<div class="line">    lsDebug() &lt;&lt; <span class="stringliteral">&quot;copy&quot;</span> &lt;&lt; val &lt;&lt; ++cp;</div>
 <div class="line">  }</div>
 <div class="line">  TST(TST &amp;&amp;v) {</div>
 <div class="line">    val = v.val;</div>
 <div class="line">    v.val = -1;</div>
-<div class="line">    lsDebug() &lt;&lt; <span class="stringliteral">&quot;move&quot;</span> &lt;&lt; val;</div>
+<div class="line">    lsDebug() &lt;&lt; <span class="stringliteral">&quot;move&quot;</span> &lt;&lt; val &lt;&lt; ++mv;</div>
 <div class="line">  }</div>
 <div class="line">  <span class="keywordtype">int</span> val = 0;</div>
 <div class="line">};</div>

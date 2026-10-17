@@ -111,17 +111,20 @@ $(function(){initNavTree('FunctionConnector_2main_8cpp-example.html','',''); });
 <div class="line"><span class="preprocessor">#include &lt;AsyncFw/Timer&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;AsyncFw/LogStream&gt;</span></div>
 <div class="line"> </div>
+<div class="line">std::atomic_int cp = 0;</div>
+<div class="line">std::atomic_int mv = 0;</div>
+<div class="line"> </div>
 <div class="line"><span class="keyword">struct </span>TST {</div>
 <div class="line">  TST(<span class="keywordtype">int</span> i) : val(i) { lsDebug() &lt;&lt; val; }</div>
 <div class="line">  ~TST() { lsDebug() &lt;&lt; val; }</div>
 <div class="line">  TST(<span class="keyword">const</span> TST &amp;v) {</div>
 <div class="line">    val = v.val;</div>
-<div class="line">    lsDebug() &lt;&lt; <span class="stringliteral">&quot;copy&quot;</span> &lt;&lt; val;</div>
+<div class="line">    lsDebug() &lt;&lt; <span class="stringliteral">&quot;copy&quot;</span> &lt;&lt; val &lt;&lt; ++cp;</div>
 <div class="line">  }</div>
 <div class="line">  TST(TST &amp;&amp;v) {</div>
 <div class="line">    val = v.val;</div>
 <div class="line">    v.val = -1;</div>
-<div class="line">    lsDebug() &lt;&lt; <span class="stringliteral">&quot;move&quot;</span> &lt;&lt; val;</div>
+<div class="line">    lsDebug() &lt;&lt; <span class="stringliteral">&quot;move&quot;</span> &lt;&lt; val &lt;&lt; ++mv;</div>
 <div class="line">  }</div>
 <div class="line">  <span class="keywordtype">int</span> val = 0;</div>
 <div class="line">};</div>
@@ -190,9 +193,9 @@ $(function(){initNavTree('FunctionConnector_2main_8cpp-example.html','',''); });
 <div class="line">}</div>
 <div class="ttc" id="aclassAsyncFw_1_1AbstractFunctionConnector_1_1Connection_html_a860b83046c90e62d768e0acde74626c6a6c561775a673adbed77c380ee036a01f"><div class="ttname"><a href="classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html#a860b83046c90e62d768e0acde74626c6a6c561775a673adbed77c380ee036a01f">AsyncFw::AbstractFunctionConnector::Connection::Queued</a></div><div class="ttdeci">@ Queued</div><div class="ttdoc">Posts a task containing a copy of the arguments into the receiver thread&#39;s event loop....</div><div class="ttdef"><b>Definition</b> FunctionConnector.h:54</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1AbstractThread_html"><div class="ttname"><a href="classAsyncFw_1_1AbstractThread.html">AsyncFw::AbstractThread</a></div><div class="ttdoc">The AbstractThread class provides the base functionality for thread management.</div><div class="ttdef"><b>Definition</b> AbstractThread.h:40</div></div>
-<div class="ttc" id="aclassAsyncFw_1_1AbstractThread_html_a0cd916251e061aaf3d456575ef052edd"><div class="ttname"><a href="classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd">AsyncFw::AbstractThread::name</a></div><div class="ttdeci">std::string name() const</div><div class="ttdoc">Returns name of managed thread.</div><div class="ttdef"><b>Definition</b> AbstractThread.cpp:951</div></div>
-<div class="ttc" id="aclassAsyncFw_1_1AbstractThread_html_a41d1cf92e033bcc11e2394cb949e031a"><div class="ttname"><a href="classAsyncFw_1_1AbstractThread.html#a41d1cf92e033bcc11e2394cb949e031a">AsyncFw::AbstractThread::id</a></div><div class="ttdeci">std::thread::id id() const</div><div class="ttdoc">Returns unique identifier of managed thread.</div><div class="ttdef"><b>Definition</b> AbstractThread.cpp:949</div></div>
-<div class="ttc" id="aclassAsyncFw_1_1AbstractThread_html_af33c5949edb374d673a7a9ac0c81ec32"><div class="ttname"><a href="classAsyncFw_1_1AbstractThread.html#af33c5949edb374d673a7a9ac0c81ec32">AsyncFw::AbstractThread::current</a></div><div class="ttdeci">static AbstractThread * current()</div><div class="ttdoc">Returns a pointer to the AsyncFw::AbstractThread that manages the currently executing thread.</div><div class="ttdef"><b>Definition</b> AbstractThread.cpp:449</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1AbstractThread_html_a0cd916251e061aaf3d456575ef052edd"><div class="ttname"><a href="classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd">AsyncFw::AbstractThread::name</a></div><div class="ttdeci">std::string name() const</div><div class="ttdoc">Returns name of managed thread.</div><div class="ttdef"><b>Definition</b> AbstractThread.cpp:950</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1AbstractThread_html_a41d1cf92e033bcc11e2394cb949e031a"><div class="ttname"><a href="classAsyncFw_1_1AbstractThread.html#a41d1cf92e033bcc11e2394cb949e031a">AsyncFw::AbstractThread::id</a></div><div class="ttdeci">std::thread::id id() const</div><div class="ttdoc">Returns unique identifier of managed thread.</div><div class="ttdef"><b>Definition</b> AbstractThread.cpp:948</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1AbstractThread_html_af33c5949edb374d673a7a9ac0c81ec32"><div class="ttname"><a href="classAsyncFw_1_1AbstractThread.html#af33c5949edb374d673a7a9ac0c81ec32">AsyncFw::AbstractThread::current</a></div><div class="ttdeci">static AbstractThread * current()</div><div class="ttdoc">Returns a pointer to the AsyncFw::AbstractThread that manages the currently executing thread.</div><div class="ttdef"><b>Definition</b> AbstractThread.cpp:448</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1FunctionConnectionGuardList_html"><div class="ttname"><a href="classAsyncFw_1_1FunctionConnectionGuardList.html">AsyncFw::FunctionConnectionGuardList</a></div><div class="ttdoc">A helper container designed to manage multiple FunctionConnectionGuard lifecycles at once.</div><div class="ttdef"><b>Definition</b> FunctionConnector.h:328</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1FunctionConnector_html_a9fb8f282c88da90aeaab52a3c174d82b"><div class="ttname"><a href="classAsyncFw_1_1FunctionConnector.html#a9fb8f282c88da90aeaab52a3c174d82b">AsyncFw::FunctionConnector::Protected</a></div><div class="ttdeci">internal::FunctionConnectorProtected&lt; AbstractFunctionConnector::Auto, T, Args... &gt; Protected</div><div class="ttdoc">A protected connector variant where only a single designated owner class can emit messages.</div><div class="ttdef"><b>Definition</b> FunctionConnector.h:285</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1MainThread_html_a76fed3a2c1cfdbdb67f2b209e6457657"><div class="ttname"><a href="classAsyncFw_1_1MainThread.html#a76fed3a2c1cfdbdb67f2b209e6457657">AsyncFw::MainThread::exit</a></div><div class="ttdeci">static void exit()</div><div class="ttdoc">Signals the master event loop to terminate gracefully by executing the exit task. This call is safe t...</div><div class="ttdef"><b>Definition</b> MainThread.h:72</div></div>
