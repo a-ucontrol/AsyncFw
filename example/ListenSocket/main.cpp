@@ -6,7 +6,13 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 */
 
 //! [snippet]
-#include <netinet/in.h>
+#ifndef _WIN32
+  #include <netinet/in.h>
+#else
+  #include <winsock2.h>
+  #include <ws2tcpip.h>
+#endif
+
 #include <AsyncFw/DataArray>
 #include <AsyncFw/AbstractTlsSocket>
 #include <AsyncFw/ListenSocket>

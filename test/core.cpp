@@ -23,13 +23,12 @@
 #include <AsyncFw/AbstractSocket>
 #include <AsyncFw/LogStream>
 
-#include <poll.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#include <unistd.h>
-
 #ifndef _WIN32
+  #include <poll.h>
+  #include <sys/socket.h>
+  #include <netinet/in.h>
+  #include <arpa/inet.h>
+  #include <unistd.h>
   #include <dirent.h>
 #endif
 
@@ -1271,7 +1270,7 @@ public:
     lsDebug() << LogStream::Color::Cyan << "state=" << static_cast<int>(state_) << "error=" << static_cast<int>(error()) << "msg=" << errorString();
   }
 };
-
+#ifndef _WIN32
 int rawListen(int &out_fd) {
   int fd = ::socket(AF_INET, SOCK_STREAM, 0);
   if (fd < 0) return -1;
@@ -1390,7 +1389,7 @@ void test_rst_close(Done next) {
     });
   });
 }
-
+#endif
 // ============================================================================
 // Group E. AbstractThread::Waiter
 // ============================================================================
@@ -1523,7 +1522,7 @@ int main(int, char **) {
 
   // --- Group C: MainThread re-exec ------------------------------------
   test_mainthread_reexec();
-
+#ifndef _WIN32
   // --- Group D: AbstractSocket HUP/ERR --------------------------------
   Timer::single(10, []() {
     test_connect_refused([]() {
@@ -1535,7 +1534,7 @@ int main(int, char **) {
       });
     });
   });
-
+#endif
   // --- Group E: AbstractThread::Waiter ---------------------------------
   test_waiter_complete_from_same_thread();
   test_waiter_nested();
