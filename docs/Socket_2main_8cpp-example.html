@@ -171,7 +171,7 @@ $(function(){initNavTree('Socket_2main_8cpp-example.html','',''); });
 <div class="line">      <a class="code hl_function" href="classAsyncFw_1_1MainThread.html#a76fed3a2c1cfdbdb67f2b209e6457657">AsyncFw::MainThread::exit</a>(-1);</div>
 <div class="line">      <span class="keyword">co_return</span>;</div>
 <div class="line">    }</div>
-<div class="line">    <span class="keywordflow">for</span> (<span class="keyword">const</span> std::string _s : list) logNotice() &lt;&lt; _s;</div>
+<div class="line">    <span class="keywordflow">for</span> (<span class="keyword">const</span> std::string &amp;_s : list) logNotice() &lt;&lt; _s;</div>
 <div class="line">    <span class="keyword">co_await</span> socket.coConnect(list[0], 443);</div>
 <div class="line">    <a class="code hl_function" href="classAsyncFw_1_1MainThread.html#a76fed3a2c1cfdbdb67f2b209e6457657">AsyncFw::MainThread::exit</a>(0);</div>
 <div class="line">  }};</div>
