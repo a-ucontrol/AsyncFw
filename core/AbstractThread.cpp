@@ -396,6 +396,17 @@ AbstractThread::~AbstractThread() {
     std::vector<AbstractThread *>::iterator it = std::lower_bound(Private::list.begin(), Private::list.end(), this, Private::Compare());
     if (it != Private::list.end() && (*it) == this) Private::list.erase(it);
     else { lsError() << "thread not found"; }
+#ifdef IO_URING_WAIT
+    struct io_uring_sqe *sqe = io_uring_get_sqe(&private_.ring);
+    if (sqe) {
+      trace() << "destroy removed polls";
+      io_uring_prep_cancel64(sqe, 0, IORING_ASYNC_CANCEL_ANY);
+      sqe->flags |= IOSQE_CQE_SKIP_SUCCESS;
+      io_uring_submit(&private_.ring);
+      private_.destroy_removed_polls();
+    } else lsError() << "error get sqe";
+    io_uring_queue_exit(&private_.ring);
+#endif
     trace() << "threads:" << std::to_string(Private::list.size());
   }
 #ifndef IO_URING_WAKE
@@ -412,18 +423,6 @@ AbstractThread::~AbstractThread() {
     std::swap(private_.process_tasks_, private_.tasks);
     private_.process_tasks();
   }
-
-#ifdef IO_URING_WAIT
-  struct io_uring_sqe *sqe = io_uring_get_sqe(&private_.ring);
-  if (sqe) {
-    trace() << "destroy removed polls";
-    io_uring_prep_cancel64(sqe, 0, IORING_ASYNC_CANCEL_ANY);
-    sqe->flags |= IOSQE_CQE_SKIP_SUCCESS;
-    io_uring_submit(&private_.ring);
-    private_.destroy_removed_polls();
-  } else lsError() << "error get sqe";
-  io_uring_queue_exit(&private_.ring);
-#endif
 
   if (!private_.timers.empty()) {
     lsTrace() << LogStream::Color::DarkRed << "timer list not empty" << private_.timers.size();
