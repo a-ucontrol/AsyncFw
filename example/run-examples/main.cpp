@@ -50,6 +50,10 @@ void run_examples(bool _socket) {
   logInfo() << "Start:" << app;
   process.start(app);
   process.wait();
+  app = EXAMPLES_PATH "FunctionConnectorExample";
+  logInfo() << "Start:" << app;
+  process.start(app);
+  process.wait();
   app = EXAMPLES_PATH "ThreadInvokeExample";
   logInfo() << "Start:" << app;
   process.start(app);

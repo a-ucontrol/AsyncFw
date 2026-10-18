@@ -23,8 +23,7 @@ int main(int argc, char *argv[]) {
   logInfo() << threadPool->text();
 
   AsyncFw::AbstractThread *_lt = AsyncFw::ThreadPool::instance()->createThread("LogThread");
-  //AsyncFw::AbstractThread *_lt = new AsyncFw::Thread(); // error: AsyncFw::AbstractThread::Private::List::~List() -> thread list not empty
-  _lt->start();
+  _lt->start();                                                            // need for sync before AsyncFw::MainThread::exec()
   _lt->invoke([]() { AsyncFw::Instance<AsyncFw::Log>::create(); }, true);  //create log instance in log thread _lt
 
   AsyncFw::AbstractThread *_t = AsyncFw::ThreadPool::instance()->createThread("SyncExample");
@@ -61,9 +60,6 @@ int main(int argc, char *argv[]) {
     logNotice() << "result:" << r << "run in thread" << ct->name() << ct->id();
     AsyncFw::MainThread::exit(0);
   });
-
-  AsyncFw::AbstractThreadPool::Thread *_t1 = AsyncFw::ThreadPool::instance()->createThread("DestroyFromThreadExample");
-  _t1->invoke([_t1]() { _t1->destroy(); });
 
   logNotice() << "Start Application";
 
