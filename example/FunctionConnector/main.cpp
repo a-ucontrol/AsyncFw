@@ -16,9 +16,8 @@ class Sender {
 public:
   Sender() {
     timer.timeout.connect([this]() {
-      AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::current();
-      lsDebug() << ++cnt << "send from thread:" << ct->name();
-      connector(cnt);
+      lsDebug() << cnt << "send from thread:" << AsyncFw::AbstractThread::current();
+      connector(++cnt);
       if (cnt == 3) {
         timer.stop();
         AsyncFw::MainThread::quit();
@@ -36,10 +35,7 @@ private:
 
 class Receiver {
 public:
-  void receive(int val) {
-    AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::current();
-    lsDebug() << val << "receive in thread:" << ct->name() << ct->id();
-  }
+  void receive(int val) { lsDebug() << val << "receive in thread:" << AsyncFw::AbstractThread::current(); }
 };
 
 int main(int argc, char *argv[]) {
