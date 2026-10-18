@@ -71,6 +71,11 @@ public:
   /** @brief Signals the master event loop to terminate gracefully by executing the exit task. This call is safe to use from a UNIX signal handler. */
   static void exit() {
 #ifdef EXIT_ON_UNIX_SIGNAL
+  /*
+  Does not interrupt the current task queue. Producers must stop, and
+  long-running tasks must check interruptRequested(), once the queue drains,
+  exec() reaches poll() and processes the exit signal.
+  */
   #ifdef EXIT_EVENTFD
     if (mt_.eventfd_ >= 0) eventfd_write(mt_.eventfd_, 1);
   #else

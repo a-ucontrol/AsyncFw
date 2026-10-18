@@ -585,14 +585,17 @@ void AbstractThread::exec() {
     {  //lock scope, wait new tasks or wakeup
       std::unique_lock<std::mutex> lock(private_.mutex);
     CONTINUE:
+      /*
+      Tasks have strict priority over poll(), while the queue is non-empty we
+      never enter poll(), so exec() cannot sleep with work pending. If the
+      queue is oversized, warn but keep draining.
+      Is processed on the next idle boundary - producers must stop and
+      long tasks must observe interpretRequested() for the queue to drain.
+      */
       if (!private_.tasks.empty()) {
         std::swap(private_.process_tasks_, private_.tasks);  //take new tasks
-        if (!private_.wake_ || private_.process_tasks_.size() <= QUEUE_TASKS_OVERLOAD_SIZE) continue;
-        //invoke tasks and check poll descriptors and timers
-        console_msg("AbstractThread " + LOG_THREAD_NAME, "queue tasks overload, warning limit: " + std::to_string(QUEUE_TASKS_OVERLOAD_SIZE) + ", size: " + std::to_string(private_.process_tasks_.size()));
-        private_.mutex.unlock();
-        private_.process_tasks();
-        private_.mutex.lock();
+        if (private_.process_tasks_.size() > QUEUE_TASKS_OVERLOAD_SIZE) console_msg("AbstractThread " + LOG_THREAD_NAME, "queue tasks overload, warning limit: " + std::to_string(QUEUE_TASKS_OVERLOAD_SIZE) + ", size: " + std::to_string(private_.process_tasks_.size()));
+        continue;
       }
 
       if (private_.state & Private::WaitFinished) break;
