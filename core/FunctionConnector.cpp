@@ -27,7 +27,7 @@ AbstractFunctionConnector::~AbstractFunctionConnector() {
       delete c;
     }
   }
-  list->release();
+  if (list->ref_.fetch_sub(1, std::memory_order_acq_rel) == 1) delete list;
 }
 
 AbstractFunctionConnector::Connection::Connection(List *list, Type type) : thread_(AbstractThread::current()), type_(type), list_(list) {
@@ -53,7 +53,7 @@ FunctionConnectionGuard::FunctionConnectionGuard(FunctionConnectionGuard &&guard
 }
 
 FunctionConnectionGuard::FunctionConnectionGuard(AbstractFunctionConnector::Connection &connection) : connection_(&connection), list_(connection.list_) {
-  list_->addRef();
+  list_->ref_.fetch_add(1, std::memory_order_relaxed);
   connection_->guard_ = this;
   trace() << this;
 }
@@ -73,13 +73,13 @@ void FunctionConnectionGuard::destroyConnection() {
       delete connection_;
     }
   }
-  list_->release();
+  if (list_->ref_.fetch_sub(1, std::memory_order_acq_rel) == 1) delete list_;
 }
 
 void FunctionConnectionGuard::operator=(AbstractFunctionConnector::Connection &connection) {
   if (list_) destroyConnection();
   list_ = connection.list_;
-  list_->addRef();
+  list_->ref_.fetch_add(1, std::memory_order_relaxed);
   connection_ = &connection;
   connection_->guard_ = this;
 }

@@ -78,10 +78,6 @@ protected:
     using connection_list_t::size;
     mutex_t mutex;
     std::atomic<int> ref_ {1};
-    void addRef() { ref_.fetch_add(1, std::memory_order_relaxed); }
-    void release() {
-      if (ref_.fetch_sub(1, std::memory_order_acq_rel) == 1) delete this;
-    }
   };
   virtual ~AbstractFunctionConnector() = 0;
   ConnectionPolicy connectionPolicy;
@@ -148,14 +144,14 @@ public:
       std::lock_guard<mutex_t> lock(list->mutex);
       _il.reserve(list->size());
       for (const AbstractFunctionConnector::Connection *c : *list) {
-        static_cast<const Connection *>(c)->f_->ref_++;
+        static_cast<const Connection *>(c)->f_->ref_.fetch_add(1, std::memory_order_relaxed);
         _il.push_back({static_cast<const Connection *>(c)->thread_, static_cast<const Connection *>(c)->f_, static_cast<const Connection *>(c)->type_});
       }
     }
     for (const Invoke &i : _il) {
       if (i.t == Connection::Direct || (i.t != Connection::Queued && i.thread->id() == std::this_thread::get_id())) {
         i.f->invoke(args...);
-        i.f->release();
+        if (i.f->ref_.fetch_sub(1, std::memory_order_acq_rel) == 1) delete i.f;
         continue;
       }
       if (i.t != Connection::Sync) {
@@ -164,7 +160,7 @@ public:
         continue;
       }
       i.thread->invoke([_f = i.f, &args...]() { _f->invoke(args...); }, true);
-      i.f->release();
+      if (i.f->ref_.fetch_sub(1, std::memory_order_acq_rel) == 1) delete i.f;
     }
   }
 #endif
@@ -179,14 +175,13 @@ protected:
     */
     virtual void invoke(Args &...args) = 0;
     std::atomic_int ref_ = 1;
-    void release() {
-      if (--ref_ == 0) delete this;
-    }
   };
   struct QueuedTask : public AbstractThread::AbstractTask {
   public:
     QueuedTask(AbstractFunction *f, Args &...args) : f_(f), args_(args...) {}
-    ~QueuedTask() { f_->release(); }
+    ~QueuedTask() {
+      if (f_->ref_.fetch_sub(1, std::memory_order_acq_rel) == 1) delete f_;
+    }
     void operator()() override { std::apply(*f_, args_); }
     AbstractFunction *f_;
     std::tuple<std::decay_t<Args>...> args_;
@@ -218,7 +213,9 @@ protected:
       M m_;
       O *o_;
     };
-    ~Connection() override { f_->release(); }
+    ~Connection() override {
+      if (f_->ref_.fetch_sub(1, std::memory_order_acq_rel) == 1) delete f_;
+    }
     AbstractFunction *f_;
   };
 };
