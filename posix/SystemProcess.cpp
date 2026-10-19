@@ -164,8 +164,8 @@ bool SystemProcess::Private::process() {
   for (std::size_t i = 0; i != args.size(); ++i) _args.push_back(args[i].c_str());
   _args.push_back(nullptr);
 
-  if (pipe(_pipe_out) == -1) return false;
-  if (pipe(_pipe_err) == -1) {
+  if (pipe2(_pipe_out, O_NONBLOCK) == -1) return false;
+  if (pipe2(_pipe_err, O_NONBLOCK) == -1) {
     ::close(_pipe_out[0]);
     ::close(_pipe_out[1]);
     return false;

@@ -342,7 +342,7 @@ AbstractThread::AbstractThread(const std::string &name) : private_(*new Private)
 #endif
 
 #ifdef PIPE_WAKE
-  ::pipe2(private_.pipe, O_CLOEXEC);
+  ::pipe2(private_.pipe, O_CLOEXEC | O_NONBLOCK);
   private_.WAKE_FD = private_.pipe[0];
 #elif defined EVENTFD_WAKE
   private_.WAKE_FD = eventfd(0, EFD_NONBLOCK | EFD_CLOEXEC);
