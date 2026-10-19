@@ -413,6 +413,9 @@ AbstractThread::~AbstractThread() {
   close_fd(private_.WAKE_FD_WRITE);
   #endif
 #endif
+#ifdef EPOLL_WAIT
+  ::close(private_.epoll_fd);
+#endif
 
   lsTrace() << LOG_THREAD_NAME << LogStream::Color::Magenta << private_.id << LogStream::Color::Default << "-" << private_.tasks.size() << private_.timers.size() << private_.poll_tasks.size() << "-" << private_.process_tasks_.size() << private_.process_timer_tasks_.size() << private_.process_poll_tasks_.size();
 
