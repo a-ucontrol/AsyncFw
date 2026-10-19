@@ -292,33 +292,31 @@ void AbstractThread::Private::destroy_removed_polls() {
 
 void AbstractThread::Waiter::complete() {
   trace() << this;
-  AbstractThread *_t = thread_.exchange(nullptr, std::memory_order_relaxed);
-  if (!_t) {
+  if (!thread_) {
     lsWarning() << "not waiting";
     return;
   }
-  if (_t->id() == std::this_thread::get_id()) {
-    _t->quit();
-    return;
-  }
-  _t->invoke([_t]() { _t->quit(); });
+#ifndef LS_NO_WARNING
+  if (thread_->id() != std::this_thread::get_id()) { lsWarning() << "executed from a thread other than the one that called wait()"; }
+#endif
+  thread_->quit();
+  thread_ = nullptr;
 }
 
 void AbstractThread::Waiter::wait() {
   trace() << this << "start";
-  AbstractThread *_t = current();
-  thread_.store(_t, std::memory_order_relaxed);
+  AbstractThread *_t = thread_ = current();
   int _q = 0;
   for (;;) {
     _t->exec();
-    if (!thread_.load(std::memory_order_relaxed)) break;
+    if (!thread_) break;
     _q++;
   }
   trace() << this << "end" << _q;
   while (_q--) _t->quit();
 }
 
-bool AbstractThread::Waiter::waiting() { return thread_.load(std::memory_order_relaxed); }
+bool AbstractThread::Waiter::waiting() { return thread_; }
 
 AbstractThread::Private::List::~List() {
   if (!empty()) lsError() << "thread list not empty:" << size();

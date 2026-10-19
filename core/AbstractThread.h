@@ -53,6 +53,7 @@ public:
 
   /** @class Waiter @brief Synchronization primitive for nested event loop.
   @details Spawns a sub-event loop via exec() within the current thread to achieve pseudo-synchronous blocking waits (e.g., inside CoroutineTask::wait()). This keeps the thread processing active events and prevents context deadlocks.
+  @note Not thread-safe, complete() must be called on the thread that called wait().
   @warning Cascade Effect (Stack Invariant): Due to the nature of execution nesting, any prior nested exec loop will terminate only after all subsequent (deeper) nested loops are fully completed. */
   class Waiter {
   public:
@@ -64,7 +65,7 @@ public:
     bool waiting();
 
   private:
-    std::atomic<AbstractThread *> thread_ = nullptr;
+    AbstractThread *thread_ = nullptr;
   };
 
   /** @brief Runs a function in a managed thread. @param function The function to be executed. @param sync Blocking wait if true. @return True if the function is added to the queue. */
