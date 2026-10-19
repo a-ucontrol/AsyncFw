@@ -15,14 +15,6 @@
 //     first MainThread::exit() permanently finishes Main's event loop, and
 //     any later invokeTask() would silently return false.
 //
-// Known TSan warning with ENABLE_IO_URING:
-//   io_uring_get_sqe() from ~AbstractThread concurrently on two threads is
-//   reported as a data race. This is a liburing SQE-ring sharing artifact
-//   (the same shared memory mapping), not a real data race in AsyncFw.
-//   Tests that create Thread objects in parallel and let them destruct on
-//   different threads simultaneously are guarded by `#ifndef IO_URING_WAIT`
-//   so that builds with ENABLE_IO_URING can be TSan-clean by opting out of
-//   those stress paths. Default builds (EPOLL_WAIT) exercise everything.
 
 #include <atomic>
 #include <chrono>
@@ -46,41 +38,45 @@ using Conn = AbstractFunctionConnector::Connection;
 
 namespace {
 
+void log_output(const LogStream::Message &message, uint8_t flags) {
+  if ((message.type & 0x07) > 5) return;
+  LogStream::console_output(message, flags);
+}
+
 // ============================================================================
 // Test harness
 // ============================================================================
 
-std::atomic<int> g_failed{0};
-std::atomic<int> g_total{0};
+std::atomic<int> g_failed {0};
+std::atomic<int> g_total {0};
 
 #define EXPECT(cond)                                                                        \
-do {                                                                                      \
-      ++g_total;                                                                              \
-      if (!(cond)) {                                                                          \
-        ++g_failed;                                                                           \
-        lsError() << LogStream::Color::Red << "FAIL" << __FILE__ << ':' << __LINE__ << #cond; \
-  }                                                                                       \
-} while (0)
+  do {                                                                                      \
+    ++g_total;                                                                              \
+    if (!(cond)) {                                                                          \
+      ++g_failed;                                                                           \
+      lsError() << LogStream::Color::Red << "FAIL" << __FILE__ << ':' << __LINE__ << #cond; \
+    }                                                                                       \
+  } while (0)
 
-#define EXPECT_MSG(cond, msg)                                                               \
-    do {                                                                                      \
-      ++g_total;                                                                              \
-      if (!(cond)) {                                                                          \
-        ++g_failed;                                                                           \
-        lsError() << LogStream::Color::Red << "FAIL" << __FILE__ << ':' << __LINE__           \
-        << #cond << " — " << (msg);                                                 \
-  }                                                                                       \
-} while (0)
+#define EXPECT_MSG(cond, msg)                                                                                 \
+  do {                                                                                                        \
+    ++g_total;                                                                                                \
+    if (!(cond)) {                                                                                            \
+      ++g_failed;                                                                                             \
+      lsError() << LogStream::Color::Red << "FAIL" << __FILE__ << ':' << __LINE__ << #cond << " — " << (msg); \
+    }                                                                                                         \
+  } while (0)
 
-  template <typename F>
-  bool wait_for(F pred, int ms = 2000) {
-    auto deadline = std::chrono::steady_clock::now() + std::chrono::milliseconds(ms);
-    while (std::chrono::steady_clock::now() < deadline) {
-      if (pred()) return true;
-      std::this_thread::sleep_for(std::chrono::milliseconds(1));
-    }
-    return pred();
+template <typename F>
+bool wait_for(F pred, int ms = 2000) {
+  auto deadline = std::chrono::steady_clock::now() + std::chrono::milliseconds(ms);
+  while (std::chrono::steady_clock::now() < deadline) {
+    if (pred()) return true;
+    std::this_thread::sleep_for(std::chrono::milliseconds(1));
   }
+  return pred();
+}
 
 // ---------------------------------------------------------------------------
 // TST — probe object for copy/move semantics verification (mirrors core.cpp).
@@ -131,18 +127,15 @@ struct TST {
 };
 inline bool isMovedFrom(const TST &t) { return t.val == -1; }
 
-std::atomic<int> TST::copies_{0};
-std::atomic<int> TST::moves_{0};
-std::atomic<int> TST::live_{0};
+std::atomic<int> TST::copies_ {0};
+std::atomic<int> TST::moves_ {0};
+std::atomic<int> TST::live_ {0};
 
 struct TSTMeter {
   int copies;
   int moves;
   int live;
-  TSTMeter()
-      : copies(TST::copies_.load()),
-      moves(TST::moves_.load()),
-      live(TST::live_.load()) {}
+  TSTMeter() : copies(TST::copies_.load()), moves(TST::moves_.load()), live(TST::live_.load()) {}
   int copiesDelta() const { return TST::copies_.load() - copies; }
   int movesDelta() const { return TST::moves_.load() - moves; }
   int liveDelta() const { return TST::live_.load() - live; }
@@ -163,7 +156,7 @@ void test_threadpool_destroy_from_own_task() {
   ThreadPool *pool = ThreadPool::instance();
   EXPECT(pool != nullptr);
 
-  std::atomic<bool> reachedEnd{false};
+  std::atomic<bool> reachedEnd {false};
 
   AbstractThreadPool::Thread *t = pool->createThread("DestroyFromOwnTask");
   t->invoke([t, &reachedEnd]() {
@@ -184,7 +177,7 @@ void test_threadpool_destroy_from_own_task() {
 // Basic co_await with synchronous resume: control returns to the caller
 // frame and the coroutine body completes without any external event source.
 void test_coroutine_basic_suspend_resume() {
-  std::atomic<int> steps{0};
+  std::atomic<int> steps {0};
 
   auto coro = [&]() -> CoroutineTask {
     ++steps;
@@ -205,14 +198,12 @@ void test_coroutine_wait_blocks_until_done() {
   Thread t("coro-wait");
   t.start();
 
-  std::atomic<bool> completed{false};
-  std::atomic<bool> waitReturned{false};
+  std::atomic<bool> completed {false};
+  std::atomic<bool> waitReturned {false};
 
   t.invoke([&]() {
     auto coro = [&]() -> CoroutineTask {
-      co_await CoroutineAwait<void>([](CoroutineHandle h) {
-        Timer::single(20, [h]() { h.resume(); });
-      });
+      co_await CoroutineAwait<void>([](CoroutineHandle h) { Timer::single(20, [h]() { h.resume(); }); });
       completed = true;
     };
     CoroutineTask ct = coro();
@@ -231,8 +222,8 @@ void test_coroutine_coInvoke_returns_value() {
   Thread t("coro-invoke-val");
   t.start();
 
-  std::atomic<int> result{0};
-  std::atomic<bool> finished{false};
+  std::atomic<int> result {0};
+  std::atomic<bool> finished {false};
 
   t.invoke([&]() {
     auto coro = [&]() -> CoroutineTask {
@@ -252,8 +243,8 @@ void test_coroutine_coInvoke_void() {
   Thread t("coro-invoke-void");
   t.start();
 
-  std::atomic<bool> ranCallable{false};
-  std::atomic<bool> finished{false};
+  std::atomic<bool> ranCallable {false};
+  std::atomic<bool> finished {false};
 
   t.invoke([&]() {
     auto coro = [&]() -> CoroutineTask {
@@ -268,8 +259,103 @@ void test_coroutine_coInvoke_void() {
 }
 
 // ============================================================================
-// Group C. FileSystemWatcher
+// Group C'. FileSystemWatcher — IN_CLOSE_WRITE bypasses debounce (characterization)
 // ============================================================================
+//
+// Contract being pinned here (verified against linux/FileSystemWatcher.cpp):
+//
+//   IN_MODIFY / IN_ATTRIB  → append_()  → we_[]        → debounce(1000ms) → Changed
+//   IN_CLOSE_WRITE         → notify(Changed) IMMEDIATELY + remove_(w)     → Changed
+//
+// So a single write() produces TWO inotify events on the watched file
+// (IN_MODIFY and then IN_CLOSE_WRITE), and IN_CLOSE_WRITE emits Changed
+// right away while cancelling the pending debounce for that Watch*.
+//
+// Consequences pinned by this test:
+//
+//   1. Two separate write() calls -> two Changed notifications, NOT one.
+//      The debounce window does not coalesce across close-write boundaries.
+//
+//   2. Recreating the Watch* between the two write() calls (removePath +
+//      addPath) does NOT produce a duplicate Changed. removePath() calls
+//      remove_(w), which cancels any pending debounce entry for the old
+//      Watch*, and addPath() allocates a fresh Watch* whose subsequent
+//      IN_CLOSE_WRITE fires exactly once. If a regression ever introduced
+//      a dangling entry in we_[] (pointer-vs-key comparison bug), the
+//      debounce timer would notify a freed Watch* and either crash under
+//      ASan or emit an extra Changed here.
+//
+//   3. The debounce timer itself fires with an empty we_[] because both
+//      IN_MODIFY entries were cancelled by their matching IN_CLOSE_WRITE.
+//      It must not emit anything at that point.
+void test_filesystemwatcher_recreate_in_debounce_window() {
+  const std::string dir = "/tmp/AsyncFw-test-FileSystemWatcher-recreate";
+  const std::string f = dir + "/recreate.txt";
+
+  std::filesystem::remove_all(dir);
+  std::filesystem::create_directories(dir);
+
+  // Create the file first so addPath() takes the "file exists" branch
+  // (file watch). The directory-watch path is a different state machine
+  // and is already covered by test_filesystemwatcher_scenarios().
+  {
+    File _f {f};
+    _f.open(std::ios::binary | std::ios::out);
+  }
+
+  FileSystemWatcher watcher;
+  std::atomic<int> changedCount {0};
+  FunctionConnectionGuard g = watcher.notify.connect([&](const std::string &name, int event) {
+    lsInfo() << "recreate-notify:" << name << event;
+    if (name == f && event == 0) ++changedCount;  // 0 = Changed
+  });
+
+  watcher.addPath(f);  // w1, file watch
+
+  // First write: IN_MODIFY(w1) -> append_(w1); IN_CLOSE_WRITE(w1) -> Changed #1.
+  {
+    File _f {f};
+    _f.open(std::ios::binary | std::ios::app);
+    _f.write("x", 1);
+  }
+
+  // Give the poll-task a chance to drain IN_MODIFY(w1) + IN_CLOSE_WRITE(w1)
+  // before we recreate the watch. Poll runs on Main; we are on Main, so we
+  // yield via Timer::single(50). 50ms < debounce(1000ms) — the debounce timer
+  // is still armed when we recreate, which is exactly the window we want.
+  Timer::single(50, [&, f]() {
+    // Recreate w1 -> w2 inside the debounce window.
+    // removePath(w1) must cancel w1's pending debounce entry (remove_(w1)).
+    // addPath() must allocate a fresh Watch* (w2) with the same key.
+    watcher.removePath(f);
+    watcher.addPath(f);
+
+    // Second write on w2: IN_MODIFY(w2) -> append_(w2);
+    // IN_CLOSE_WRITE(w2) -> Changed #2. No duplicate from w1.
+    {
+      File _f {f};
+      _f.open(std::ios::binary | std::ios::app);
+      _f.write("y", 1);
+    }
+  });
+
+  // After debounce(1000ms) from the second write, we_ must be empty
+  // (both IN_MODIFY entries were cancelled by their IN_CLOSE_WRITE).
+  // Give some margin so we also catch a hypothetical late fire.
+  Timer::single(1500, [&]() {
+    lsNotice() << "recreate-in-debounce: Changed(f) count =" << changedCount.load();
+    EXPECT_MSG(changedCount.load() == 2, "Changed(f) count=" + std::to_string(changedCount.load()) +
+                                             " (expected 2: one per write() — IN_CLOSE_WRITE bypasses debounce "
+                                             "and emits immediately, cancelling the pending IN_MODIFY entry; "
+                                             "a count >2 would mean a dangling Watch* in we_[] emitted an "
+                                             "extra Changed; a count <2 would mean a lost close-write event)");
+    MainThread::exit();
+  });
+
+  MainThread::exec();
+}
+
+// FileSystemWatcher
 
 // Scenario A: shared directory watch.
 //   f1 and f2 are both pending (do not exist yet), so addPath() registers
@@ -297,20 +383,16 @@ void test_filesystemwatcher_scenarios() {
 
   FileSystemWatcher watcher;
   int phase = 0;
-  std::atomic<bool> scenarioAOk{false};
-  std::atomic<int> scenarioBNotify{0};
-  std::atomic<int> scenarioCRemoved{0};
-  std::atomic<int> scenarioCCreated{0};
+  std::atomic<bool> scenarioAOk {false};
+  std::atomic<int> scenarioBNotify {0};
+  std::atomic<int> scenarioCRemoved {0};
+  std::atomic<int> scenarioCCreated {0};
 
   FunctionConnectionGuard g = watcher.notify.connect([&](const std::string &name, int event) {
     lsInfo() << "notify:" << name << event;
     // event: -1 = Removed, 0 = Changed, 1 = Created.
-    if (phase == 0 && name == f2 && event == 1) {
-      scenarioAOk = true;
-    }
-    if (phase == 1 && name == f3 && event == 0) {
-      ++scenarioBNotify;
-    }
+    if (phase == 0 && name == f2 && event == 1) { scenarioAOk = true; }
+    if (phase == 1 && name == f3 && event == 0) { ++scenarioBNotify; }
     if (name == f4 && event == -1) ++scenarioCRemoved;
     if (name == f4 && event == 1) ++scenarioCCreated;
   });
@@ -320,7 +402,7 @@ void test_filesystemwatcher_scenarios() {
   watcher.addPath(f2);
   watcher.removePath(f1);
   {
-    File _f{f2};
+    File _f {f2};
     _f.open(std::ios::binary | std::ios::out);
   }
 
@@ -328,14 +410,14 @@ void test_filesystemwatcher_scenarios() {
   Timer::single(300, [&, f3]() {
     phase = 1;
     {
-      File _f{f3};
+      File _f {f3};
       _f.open(std::ios::binary | std::ios::out);
     }
     watcher.addPath(f3);
     watcher.removePath(f3);
     watcher.addPath(f3);
     {
-      File _f{f3};
+      File _f {f3};
       _f.open(std::ios::binary | std::ios::out | std::ios::app);
       _f.write("b", 1);
     }
@@ -343,13 +425,13 @@ void test_filesystemwatcher_scenarios() {
 
   // ---- Scenario C (delete + recreate) ---------------------------------
   {
-    File _f{f4};
+    File _f {f4};
     _f.open(std::ios::binary | std::ios::out);
   }
   watcher.addPath(f4);
   std::filesystem::remove(f4);
   Timer::single(300, [f4]() {
-    File _f{f4};
+    File _f {f4};
     _f.open(std::ios::binary | std::ios::out);
   });
 
@@ -357,13 +439,12 @@ void test_filesystemwatcher_scenarios() {
   Timer::single(1500, [&]() {
     lsNotice() << "Scenario A:" << (scenarioAOk.load() ? "OK" : "BUG (Created(f2) not received)");
     lsNotice() << "Scenario B: Changed(f3) count =" << scenarioBNotify.load();
-    lsNotice() << "Scenario C: Removed(f4) =" << scenarioCRemoved.load()
-               << "Created(f4) =" << scenarioCCreated.load();
+    lsNotice() << "Scenario C: Removed(f4) =" << scenarioCRemoved.load() << "Created(f4) =" << scenarioCCreated.load();
 
     EXPECT(scenarioAOk.load());
     EXPECT(scenarioBNotify.load() == 1);
-    EXPECT(scenarioCRemoved.load() >= 1);
-    EXPECT(scenarioCCreated.load() >= 1);
+    EXPECT(scenarioCRemoved.load() == 1);
+    EXPECT(scenarioCCreated.load() == 1);
 
     MainThread::exit();
   });
@@ -418,19 +499,17 @@ void test_filesystemwatcher_scenarios() {
 void test_coroutine_coInvoke_pool_lvalue_tst() {
   TSTMeter meter;
   {
-    std::atomic<bool> finished{false};
-    std::atomic<int> seenVal{-1};
+    std::atomic<bool> finished {false};
+    std::atomic<int> seenVal {-1};
 
     Thread driver("co-pool-lv");
     driver.start();
     driver.invoke([&]() {
       auto coro = [&]() -> CoroutineTask {
-        TST arg{7};
+        TST arg {7};
         int c0 = TST::copies_.load();
         int m0 = TST::moves_.load();
-        co_await coInvoke([&](TST t) {
-          seenVal = t.val;
-        }, arg);
+        co_await coInvoke([&](TST t) { seenVal = t.val; }, arg);
         int c = TST::copies_.load() - c0;
         int m = TST::moves_.load() - m0;
         // lvalue arg: 1 copy into the callable's value-param.
@@ -457,19 +536,17 @@ void test_coroutine_coInvoke_pool_lvalue_tst() {
 void test_coroutine_coInvoke_pool_xvalue_tst() {
   TSTMeter meter;
   {
-    std::atomic<bool> finished{false};
-    std::atomic<int> seenVal{-1};
+    std::atomic<bool> finished {false};
+    std::atomic<int> seenVal {-1};
 
     Thread driver("co-pool-xv");
     driver.start();
     driver.invoke([&]() {
       auto coro = [&]() -> CoroutineTask {
-        TST arg{7};
+        TST arg {7};
         int c0 = TST::copies_.load();
         int m0 = TST::moves_.load();
-        co_await coInvoke([&](TST t) {
-          seenVal = t.val;
-        }, std::move(arg));
+        co_await coInvoke([&](TST t) { seenVal = t.val; }, std::move(arg));
         int c = TST::copies_.load() - c0;
         int m = TST::moves_.load() - m0;
         // xvalue arg: 1 move into the callable's value-param.
@@ -498,16 +575,16 @@ void test_coroutine_coInvoke_thread_lvalue_tst() {
     Thread target("co-target-lv");
     target.start();
 
-    std::atomic<bool> finished{false};
-    std::atomic<int> seenVal{-1};
-    std::atomic<std::thread::id> observed{};
+    std::atomic<bool> finished {false};
+    std::atomic<int> seenVal {-1};
+    std::atomic<std::thread::id> observed {};
     const std::thread::id expected = target.id();
 
     Thread driver("co-driver-lv");
     driver.start();
     driver.invoke([&]() {
       auto coro = [&]() -> CoroutineTask {
-        TST arg{7};
+        TST arg {7};
         int c0 = TST::copies_.load();
         int m0 = TST::moves_.load();
         co_await coInvoke(&target, [&](TST t) {
@@ -539,19 +616,17 @@ void test_coroutine_coInvoke_thread_xvalue_tst() {
     Thread target("co-target-xv");
     target.start();
 
-    std::atomic<bool> finished{false};
-    std::atomic<int> seenVal{-1};
+    std::atomic<bool> finished {false};
+    std::atomic<int> seenVal {-1};
 
     Thread driver("co-driver-xv");
     driver.start();
     driver.invoke([&]() {
       auto coro = [&]() -> CoroutineTask {
-        TST arg{7};
+        TST arg {7};
         int c0 = TST::copies_.load();
         int m0 = TST::moves_.load();
-        co_await coInvoke(&target, [&](TST t) {
-          seenVal = t.val;
-        }, std::move(arg));
+        co_await coInvoke(&target, [&](TST t) { seenVal = t.val; }, std::move(arg));
         int c = TST::copies_.load() - c0;
         int m = TST::moves_.load() - m0;
         EXPECT_MSG(c == 0, "copies delta=" + std::to_string(c) + " (expected 0)");
@@ -577,16 +652,14 @@ void test_coroutine_coInvoke_thread_xvalue_tst() {
 void test_coroutine_coInvoke_returns_tst() {
   TSTMeter meter;
   {
-    std::atomic<bool> finished{false};
-    std::atomic<int> resultVal{-1};
+    std::atomic<bool> finished {false};
+    std::atomic<int> resultVal {-1};
 
     Thread driver("co-return-tst");
     driver.start();
     driver.invoke([&]() {
       auto coro = [&]() -> CoroutineTask {
-        TST r = co_await coInvoke([]() -> TST {
-          return TST{42};
-        });
+        TST r = co_await coInvoke([]() -> TST { return TST {42}; });
         resultVal = r.val;
         finished = true;
       };
@@ -605,20 +678,20 @@ void test_coroutine_coInvoke_returns_tst() {
 void test_coroutine_coInvoke_lambda_capture_tst() {
   TSTMeter meter;
   {
-    std::atomic<bool> finished{false};
-    std::atomic<int> captureSeenVal{-1};
-    std::atomic<int> argSeenVal{-1};
+    std::atomic<bool> finished {false};
+    std::atomic<int> captureSeenVal {-1};
+    std::atomic<int> argSeenVal {-1};
 
     Thread driver("co-cap-tst");
     driver.start();
     driver.invoke([&]() {
       auto coro = [&]() -> CoroutineTask {
-        TST cap{111};
+        TST cap {111};
         auto lambda = [&, cap](TST t) {
           captureSeenVal = cap.val;
           argSeenVal = t.val;
         };
-        TST arg{42};
+        TST arg {42};
         co_await coInvoke(lambda, arg);
         EXPECT(!isMovedFrom(cap));
         EXPECT(cap.val == 111);
@@ -643,6 +716,9 @@ void test_coroutine_coInvoke_lambda_capture_tst() {
 // ============================================================================
 
 int main(int, char **) {
+  lsNotice() << "set log output";
+  LogStream::setCompleted(&log_output);
+
   // ThreadPool must live on a dedicated thread whose exec() is running for
   // the entire test run: pool workers use sync-invoke into the pool owner,
   // and coInvoke depends on it as the default offload target.
@@ -672,6 +748,7 @@ int main(int, char **) {
   // --- Group C: FileSystemWatcher -------------------------------------
   // Runs on MainThread::exec(). Must be last because MainThread::exit()
   // permanently finishes Main's event loop.
+  test_filesystemwatcher_recreate_in_debounce_window();
   test_filesystemwatcher_scenarios();
 
   // --- Cleanup --------------------------------------------------------
@@ -683,8 +760,7 @@ int main(int, char **) {
 
   // --- Report ---------------------------------------------------------
   if (g_failed.load()) {
-    lsError() << LogStream::Color::Red
-              << "main: " << g_failed.load() << '/' << g_total.load() << " checks failed";
+    lsError() << LogStream::Color::Red << "main: " << g_failed.load() << '/' << g_total.load() << " checks failed";
     return 1;
   }
   lsNotice() << "main: " << g_total.load() << " checks passed";

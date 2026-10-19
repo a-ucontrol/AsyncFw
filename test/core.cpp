@@ -37,6 +37,11 @@ using Conn = AbstractFunctionConnector::Connection;
 
 namespace {
 
+void log_output(const LogStream::Message &message, uint8_t flags) {
+  if ((message.type & 0x07) > 5) return;
+  LogStream::console_output(message, flags);
+}
+
 // ============================================================================
 // Test harness
 // ============================================================================
@@ -1463,6 +1468,9 @@ void test_waiter_complete_from_other_thread() {
 // ============================================================================
 
 int main(int, char **) {
+  lsNotice() << "set log output";
+  LogStream::setCompleted(&log_output);
+
   // --- Group A: FunctionConnector -------------------------------------
   test_direct_same_thread();
   test_direct_zero_args();
