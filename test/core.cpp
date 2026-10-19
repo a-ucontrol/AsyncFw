@@ -38,7 +38,7 @@ using Conn = AbstractFunctionConnector::Connection;
 namespace {
 
 void log_output(const LogStream::Message &message, uint8_t flags) {
- // if ((message.type & 0x07) > 5) return;
+  if ((message.type & 0x07) > 5) return;
   LogStream::console_output(message, flags);
 }
 
