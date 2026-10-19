@@ -1457,32 +1457,31 @@ void test_waiter_complete_via_invoke() {
     waitReturned = true;
   });
 
-  EXPECT(wait_for([&] { return waiterPtr.load() != nullptr; }, 1000));
+  EXPECT(wait_for([&] { return waiterPtr.load() != nullptr; }, 250));
 
- // Supported pattern: dispatch complete() into the target thread.
+  // Supported pattern: dispatch complete() into the target thread.
   t.invoke([&]() { waiterPtr.load()->complete(); });
 
-  EXPECT(wait_for([&] { return waitReturned.load(); }, 2000));
+  EXPECT(wait_for([&] { return waitReturned.load(); }, 500));
 }
 
+AsyncFw::Thread::Waiter _w1;
+AsyncFw::Thread::Waiter _w2;
 void test_waiter_quit_from_nested_exec_nested_count() {
-  AsyncFw::Thread::Waiter _w1;
-  AsyncFw::Thread::Waiter _w2;
-
   AsyncFw::Timer::single(50, []() { AsyncFw::MainThread::exit(); });
 
-  AsyncFw::Timer::single(1000, [&_w1, &_w2]() {
+  AsyncFw::Timer::single(1000, []() {
     _w1.complete();
     _w2.complete();
   });
 
-  AsyncFw::Thread::current()->started.connect([&_w1, &_w2]() {
-    AsyncFw::Thread::current()->invoke([&_w1]() {
+  AsyncFw::Thread::current()->started.connect([]() {
+    AsyncFw::Thread::current()->invoke([]() {
       lsNotice() << "start wait 1";
       _w1.wait();
       lsNotice() << "end wait 1";
     });
-    AsyncFw::Thread::current()->invoke([&_w2]() {
+    AsyncFw::Thread::current()->invoke([]() {
       lsNotice() << "start wait 2";
       _w2.wait();
       lsNotice() << "end wait 2";
@@ -1495,12 +1494,10 @@ void test_waiter_quit_from_nested_exec_nested_count() {
 
   AsyncFw::Timer::single(50, []() { AsyncFw::MainThread::exit(); });
 
-  AsyncFw::Timer::single(1000, [&_w1, &_w2]() {
+  AsyncFw::Timer::single(1000, []() {
     _w1.complete();
     _w2.complete();
   });
-
-  AsyncFw::Thread::current()->invoke([](){}, true);
 
   EXPECT(true);
 }
@@ -1600,6 +1597,12 @@ int main(int, char **) {
     lsError() << LogStream::Color::Red << "core: " << g_failed.load() << '/' << g_total.load() << " checks failed";
     return 1;
   }
-  lsNotice() << "core: " << g_total.load() << " checks passed";
+
+  int total = g_total.load();
+  if (total != 182) {
+    lsError() << "core: " << total << '/' << 182;
+    return -1;
+  }
+  lsNotice() << "core: " << total << " checks passed";
   return 0;
 }
