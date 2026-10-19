@@ -1500,6 +1500,8 @@ void test_waiter_quit_from_nested_exec_nested_count() {
     _w2.complete();
   });
 
+  AsyncFw::Thread::current()->invoke([](){}, true);
+
   EXPECT(true);
 }
 
