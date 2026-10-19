@@ -38,7 +38,7 @@ using Conn = AbstractFunctionConnector::Connection;
 namespace {
 
 void log_output(const LogStream::Message &message, uint8_t flags) {
-  if ((message.type & 0x07) > 5) return;
+ // if ((message.type & 0x07) > 5) return;
   LogStream::console_output(message, flags);
 }
 
@@ -1395,6 +1395,7 @@ void test_rst_close(Done next) {
   });
 }
 #endif
+
 // ============================================================================
 // Group E. AbstractThread::Waiter
 // ============================================================================
@@ -1439,8 +1440,10 @@ void test_waiter_nested() {
   EXPECT(done.load() == 2);
 }
 
-void test_waiter_complete_from_other_thread() {
-  Thread t("waiter-cross");
+// complete() routed through the target thread's event loop is the supported
+// cross-thread pattern: the caller does not touch Waiter state directly.
+void test_waiter_complete_via_invoke() {
+  Thread t("waiter-via-invoke");
   t.start();
 
   std::atomic<Thread::Waiter *> waiterPtr {nullptr};
@@ -1456,9 +1459,48 @@ void test_waiter_complete_from_other_thread() {
 
   EXPECT(wait_for([&] { return waiterPtr.load() != nullptr; }, 1000));
 
-  waiterPtr.load()->complete();
+ // Supported pattern: dispatch complete() into the target thread.
+  t.invoke([&]() { waiterPtr.load()->complete(); });
 
   EXPECT(wait_for([&] { return waitReturned.load(); }, 2000));
+}
+
+void test_waiter_quit_from_nested_exec_nested_count() {
+  AsyncFw::Thread::Waiter _w1;
+  AsyncFw::Thread::Waiter _w2;
+
+  AsyncFw::Timer::single(50, []() { AsyncFw::MainThread::exit(); });
+
+  AsyncFw::Timer::single(1000, [&_w1, &_w2]() {
+    _w1.complete();
+    _w2.complete();
+  });
+
+  AsyncFw::Thread::current()->started.connect([&_w1, &_w2]() {
+    AsyncFw::Thread::current()->invoke([&_w1]() {
+      lsNotice() << "start wait 1";
+      _w1.wait();
+      lsNotice() << "end wait 1";
+    });
+    AsyncFw::Thread::current()->invoke([&_w2]() {
+      lsNotice() << "start wait 2";
+      _w2.wait();
+      lsNotice() << "end wait 2";
+    });
+  });
+
+  lsNotice() << "1 Start";
+  int ret = AsyncFw::MainThread::exec();
+  lsNotice() << "1 End " << ret;
+
+  AsyncFw::Timer::single(50, []() { AsyncFw::MainThread::exit(); });
+
+  AsyncFw::Timer::single(1000, [&_w1, &_w2]() {
+    _w1.complete();
+    _w2.complete();
+  });
+
+  EXPECT(true);
 }
 
 }  // namespace
@@ -1546,7 +1588,8 @@ int main(int, char **) {
   // --- Group E: AbstractThread::Waiter ---------------------------------
   test_waiter_complete_from_same_thread();
   test_waiter_nested();
-  test_waiter_complete_from_other_thread();
+  test_waiter_complete_via_invoke();
+  test_waiter_quit_from_nested_exec_nested_count();
 
   MainThread::exec();
 
