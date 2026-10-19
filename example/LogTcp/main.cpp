@@ -64,8 +64,8 @@ int main(int argc, char *argv[]) {
   logNotice() << "Notice";
   logWarning() << "Warning";
   logError() << "Error";
-  logAlert() << "logAlert";
-  //logEmergency() << "Emergency";  // throw
+  logAlert() << "Alert";
+  //logEmergency() << "Emergency";  // terminate
 
   lsNotice() << "Start Application";
   int ret = AsyncFw::MainThread::exec();
