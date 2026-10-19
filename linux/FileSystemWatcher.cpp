@@ -70,7 +70,7 @@ FileSystemWatcher::FileSystemWatcher(const std::vector<std::string> &paths) : pr
     private_.we_.clear();
   });
 
-  private_.notifyfd_ = inotify_init1(O_CLOEXEC);
+  private_.notifyfd_ = inotify_init1(O_CLOEXEC | O_NONBLOCK);
 
   private_.thread_->appendPollTask(private_.notifyfd_, AbstractThread::PollIn, [this](AbstractThread::PollEvents) {
     int size;
@@ -115,7 +115,10 @@ FileSystemWatcher::FileSystemWatcher(const std::vector<std::string> &paths) : pr
             continue;
           }
 
-          if (i < 0) continue;
+          if (i < 0) {
+            lsError() << "inotify_add_watch(directory) failed, file watch lost" << w->directory + '/' + w->name << "errno:" << errno;
+            continue;
+          }
 
           Private::Watch *dw = new Private::Watch();
           dw->d = i;
@@ -156,17 +159,17 @@ FileSystemWatcher::FileSystemWatcher(const std::vector<std::string> &paths) : pr
       }
       if (e->mask & IN_CREATE) {
         if ((*itw)->name == e->name) {
-          (*itw)->d = inotify_add_watch(private_.notifyfd_, (wp.directory + '/' + e->name).c_str(), IN_ATTRIB | IN_MODIFY | IN_CLOSE_WRITE | IN_DELETE_SELF);
+          if ((*itw)->d < 0) (*itw)->d = inotify_add_watch(private_.notifyfd_, (wp.directory + '/' + e->name).c_str(), IN_ATTRIB | IN_MODIFY | IN_CLOSE_WRITE | IN_DELETE_SELF);
           if ((*itw)->d < 0) {
-            lsWarning() << "inotify add watch error:" << (*itw)->d;
+            lsError() << "inotify_add_watch(file) failed" << wp.directory + '/' + e->name << "errno:" << errno;
             (*itw)->d = (*itd)->d;
           } else {
             itd = std::lower_bound(private_.wds_.begin(), private_.wds_.end(), (*itw)->d, Private::CompareWatchDescriptor());
             private_.wds_.insert(itd, *itw);
+            notify(wp.directory + '/' + e->name, Created);
+            lsDebug() << "created (watch directory)" << wp.directory + '/' + wp.name;
           }
         }
-        notify(wp.directory + '/' + e->name, Created);
-        lsDebug() << "created (watch directory)" << wp.directory + '/' + wp.name;
         continue;
       }
       if (e->mask & IN_DELETE) {
