@@ -50,7 +50,7 @@ AbstractThreadPool::~AbstractThreadPool() {
   bool b = threads_.size() > 0;
   mutex.unlock();
   if (b) {
-    lsDebug() << LogStream::Color::Red << "destroyed with threads";
+    lsTrace() << LogStream::Color::DarkRed << "destroyed with threads";
     AbstractThreadPool::quit();
   }
   std::vector<AbstractThreadPool *>::iterator it = std::lower_bound(Private::list.begin(), Private::list.end(), this, Private::Compare());
@@ -106,7 +106,7 @@ void AbstractThreadPool::Thread::destroy() {
     delete p;
   });
   if (!pool->thread_->invokeTask(_t)) {
-    lsDebug() << LogStream::Color::Red << "pool thread not running" << '(' + pool->thread_->name() + ')';
+    lsTrace() << LogStream::Color::DarkRed << "pool thread already finished" << '(' + pool->thread_->name() + ')';
     (*_t)();
     delete _t;
   }
