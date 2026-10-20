@@ -39,7 +39,7 @@ int main(int argc, char *argv[]) {
     for (const AsyncFw::Rrd::Item &_item : _list) {
       AsyncFw::LogStream::Message _message = _log.messageFromRrdItem(_item);
       std::cout << "-----" << _message.string << "-----" << std::endl;
-      if (_message.string == "logAlert") {
+      if (_message.string == "=Exit=") {
         std::cout << "----- AsyncFw::MainThread::exit() -----" << std::endl;
         _g = {};
         AsyncFw::MainThread::exit();
@@ -66,6 +66,8 @@ int main(int argc, char *argv[]) {
   logError() << "Error";
   logAlert() << "Alert";
   //logEmergency() << "Emergency";  // terminate
+
+  logNotice("=Exit=");  // exit in client
 
   lsNotice() << "Start Application";
   int ret = AsyncFw::MainThread::exec();
