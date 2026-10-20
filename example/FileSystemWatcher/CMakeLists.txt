@@ -11,8 +11,6 @@ if(USE_QAPPLICATION)
   add_definitions(-DUSE_QAPPLICATION)
 endif()
 
-add_definitions(-DHTTP_SERVER_HOME="${CMAKE_SOURCE_DIR}/docs")
-
 set(PROJECT_SOURCES
   main.cpp
 )

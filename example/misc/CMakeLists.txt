@@ -15,6 +15,8 @@ set(PROJECT_SOURCES
   main.cpp
 )
 
+add_definitions(-DHTTP_SERVER_HOME="${CMAKE_SOURCE_DIR}/docs")
+
 add_executable(${TARGET} ${PROJECT_SOURCES})
 target_link_libraries(${TARGET} ${AsyncFw_PROJECT_NAME})
 set_target_properties(${TARGET} PROPERTIES
