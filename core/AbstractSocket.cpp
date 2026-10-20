@@ -402,14 +402,14 @@ DataArray AbstractSocket::read(int size) {
 }
 
 int AbstractSocket::write(const uint8_t *data, int size) {
-  warning_if(size <= 0) << LogStream::Color::Red << "size for write is null";
+  warning_if(size <= 0 || state_ != Active) << LogStream::Color::Red << "size <= 0 || state_ != Active" << size << (int)state_;
   int _r = write_fd(data, size);
   if (_r > 0 && !(private_.flags & 0x40)) {
     private_.flags |= 0x40;
     AbstractThread::AbstractTask *_t = new Invocable<void()>::Function([this] {
-      trace() << LogStream::Color::DarkGreen << "write event task" << private_.flags;
+      trace() << LogStream::Color::DarkGreen << "write event task" << private_.flags << (int)state_;
       private_.flags &= ~0x40;
-      if (!(private_.flags & 0x80)) writeEvent();
+      if (!(private_.flags & 0x80) && state_ == Active) writeEvent();
     });
     if (!thread_->invokeTask(_t)) {
       lsError() << "thread not running";
