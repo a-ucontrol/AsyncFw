@@ -1465,41 +1465,41 @@ void test_waiter_complete_via_invoke() {
   EXPECT(wait_for([&] { return waitReturned.load(); }, 500));
 }
 
-AsyncFw::Thread::Waiter _w1;
-AsyncFw::Thread::Waiter _w2;
 void test_waiter_quit_from_nested_exec_nested_count() {
-  AsyncFw::Timer::single(50, []() { AsyncFw::MainThread::exit(); });
+  AsyncFw::Thread thread("WaiterQuitTest");
 
-  AsyncFw::Timer::single(1000, []() {
-    _w1.complete();
-    _w2.complete();
-  });
-
-  AsyncFw::Thread::current()->started.connect([]() {
-    AsyncFw::Thread::current()->invoke([]() {
-      lsNotice() << "start wait 1";
+  bool _error = false;
+  AsyncFw::Thread::Waiter _w1;
+  AsyncFw::Thread::Waiter _w2;
+  thread.started.connect([&_w1, &_w2, &thread, &_error]() {
+    AsyncFw::Timer::single(1000, [&thread, &_error]() {
+      _error = true;
+      lsError() << "timeout";
+      thread.quit();
+    });
+    AsyncFw::Timer::single(50, [&thread]() { thread.quit(); });
+    AsyncFw::Timer::single(500, [&_w1, &_w2]() {
+      _w1.complete();
+      _w2.complete();
+    });
+    AsyncFw::Thread::current()->invoke([&_w1]() {
+      lsInfo() << "start wait 1";
       _w1.wait();
-      lsNotice() << "end wait 1";
+      lsInfo() << "end wait 1";
     });
-    AsyncFw::Thread::current()->invoke([]() {
-      lsNotice() << "start wait 2";
+    AsyncFw::Thread::current()->invoke([&_w2]() {
+      lsInfo() << "start wait 2";
       _w2.wait();
-      lsNotice() << "end wait 2";
+      lsInfo() << "end wait 2";
     });
   });
 
-  lsNotice() << "1 Start";
-  int ret = AsyncFw::MainThread::exec();
-  lsNotice() << "1 End " << ret;
+  lsNotice() << "start";
+  thread.start();
+  thread.waitFinished();
+  lsNotice() << "end";
 
-  AsyncFw::Timer::single(50, []() { AsyncFw::MainThread::exit(); });
-
-  AsyncFw::Timer::single(1000, []() {
-    _w1.complete();
-    _w2.complete();
-  });
-
-  EXPECT(true);
+  EXPECT(!_error);
 }
 
 }  // namespace
@@ -1573,7 +1573,7 @@ int main(int, char **) {
   test_mainthread_reexec();
 #ifndef _WIN32
   // --- Group D: AbstractSocket HUP/ERR --------------------------------
-  Timer::single(10, []() {
+  Thread::current()->started.connect([]() {
     test_connect_refused([]() {
       test_graceful_close([]() {
         test_rst_close([]() {
