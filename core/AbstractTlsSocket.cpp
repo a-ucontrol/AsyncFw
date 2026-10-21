@@ -239,34 +239,45 @@ int AbstractTlsSocket::read_fd(void *data, int size) const {
 #ifndef USE_SSL_BIO_PAIR
 int AbstractTlsSocket::write_fd(const void *data, int size) {
   if (!private_.encrypt) return AbstractSocket::write_fd(data, size);
-  int r = SSL_write(private_.ssl, data, size);
-  if (r <= 0) {
-    int e = SSL_get_error(private_.ssl, r);
-    if (e == SSL_ERROR_WANT_READ) return 0;
-    if (e == SSL_ERROR_WANT_WRITE) {
-      thread_->modifyPollDescriptor(fd_, AbstractThread::PollIn | AbstractThread::PollOut);
-      return 0;
+  const uint8_t *p = static_cast<const uint8_t *>(data);
+  int _size = size;
+  while (_size > 0) {
+    int r = SSL_write(private_.ssl, p, _size);
+    if (r <= 0) {
+      int e = SSL_get_error(private_.ssl, r);
+      if (e == SSL_ERROR_WANT_WRITE) { return size - _size; }
+      lsError() << r << e << TlsContext::allErrorStrings();
+      return -1;
     }
-    return -1;
+    p += r;
+    _size -= r;
   }
-  return r;
+  return size - _size;
 }
 #else
 int AbstractTlsSocket::write_fd(const void *data, int size) {
-  if (!private_.encrypt) { return AbstractSocket::write_fd(data, size); }
-  int r = SSL_write(private_.ssl, data, size);
-  if (r <= 0) {
-    int _e = SSL_get_error(private_.ssl, r);
-    if (_e == SSL_ERROR_WANT_READ || _e == SSL_ERROR_WANT_WRITE) return 0;
-    return -1;
+  if (!private_.encrypt) return AbstractSocket::write_fd(data, size);
+  const uint8_t *p = static_cast<const uint8_t *>(data);
+  int _size = size;
+  while (_size > 0) {
+    int r = SSL_write(private_.ssl, p, _size);
+    if (r <= 0) {
+      int e = SSL_get_error(private_.ssl, r);
+      lsError() << r << e << TlsContext::allErrorStrings() << BIO_ctrl_pending(private_.bio);
+      return -1;
+    }
+    for (;;) {
+      int _pending = BIO_ctrl_pending(private_.bio);
+      if (_pending <= 0) break;
+      std::vector<uint8_t> buf(_pending);
+      int n = BIO_read(private_.bio, buf.data(), _pending);
+      if (n <= 0) break;
+      AbstractSocket::write_fd(buf.data(), n);
+    }
+    p += r;
+    _size -= r;
   }
-  int _size = BIO_ctrl_pending(private_.bio);
-  if (_size > 0) {
-    std::vector<uint8_t> _buf(_size);
-    _size = BIO_read(private_.bio, _buf.data(), _size);
-    if (_size > 0) AbstractSocket::write_fd(_buf.data(), _size);
-  }
-  return r;
+  return size;
 }
 #endif
 
