@@ -574,7 +574,7 @@ void AbstractSocket::removeFromThread() {
 }
 
 void AbstractSocket::pollEvent(int _e) {
-  trace() << LogStream::Color::DarkMagenta << fd_ << static_cast<int>(_e) << static_cast<int>(state_);
+  trace() << LogStream::Color::DarkMagenta << fd_ << static_cast<int>(_e) << static_cast<int>(state_) << private_.rda.size() << private_.wda.size() << static_cast<int>(private_.flags);
   if (state_ == State::Listening) {
     incomingEvent();
     return;
