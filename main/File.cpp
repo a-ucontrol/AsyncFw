@@ -94,7 +94,7 @@ DataArray File::read(std::size_t s) {
     if (r > 0) _da.insert(_da.end(), buf, buf + r);
     else break;
   }
-  if (!_da.empty()) private_.f.clear();
+  if (private_.f.eof() && !private_.f.bad()) private_.f.clear();
   return _da;
 }
 
