@@ -403,19 +403,35 @@ DataArray AbstractSocket::read(int size) {
 
 int AbstractSocket::write(const uint8_t *data, int size) {
   warning_if(size <= 0 || state_ != Active) << LogStream::Color::Red << "size <= 0 || state_ != Active" << size << (int)state_;
+  if ((private_.flags & 0x01) && !private_.wda.empty()) {
+    trace() << LogStream::Color::DarkCyan << "private_.wda.insert" << size << private_.wda.size();
+    private_.wda.insert(private_.wda.end(), data, data + size);
+    return size;
+  }
   int _r = write_fd(data, size);
-  if (_r > 0 && !(private_.flags & 0x40)) {
-    private_.flags |= 0x40;
-    AbstractThread::AbstractTask *_t = new Invocable<void()>::Function([this] {
-      trace() << LogStream::Color::DarkGreen << "write event task" << private_.flags << (int)state_;
-      private_.flags &= ~0x40;
-      if (!(private_.flags & 0x80) && state_ == Active) writeEvent();
-    });
-    if (!thread_->invokeTask(_t)) {
-      lsError() << "thread not running";
-      private_.flags &= ~0x40;
-      delete _t;
+  if (_r == size) {
+    if (!(private_.flags & 0x40)) {
+      private_.flags |= 0x40;
+      AbstractThread::AbstractTask *_t = new Invocable<void()>::Function([this] {
+        trace() << LogStream::Color::DarkGreen << "write event task" << private_.flags << (int)state_;
+        private_.flags &= ~0x40;
+        if (!(private_.flags & 0x80) && state_ == Active) writeEvent();
+      });
+      if (!thread_->invokeTask(_t)) {
+        lsError() << "thread not running";
+        private_.flags &= ~0x40;
+        delete _t;
+      }
     }
+  } else if (private_.flags & 0x01) {
+    if (!(private_.flags & 0x80)) {
+      thread_->modifyPollDescriptor(fd_, AbstractThread::PollIn | AbstractThread::PollOut);
+      private_.flags |= 0x80;
+      trace() << LogStream::Color::Cyan << "(AbstractThread::PollIn | AbstractThread::PollOut)";
+    }
+    trace() << LogStream::Color::Cyan << "private_.wda.insert" << size;
+    private_.wda.insert(private_.wda.end(), data + ((_r > 0) ? _r : 0), data + size);
+    _r = size;
   }
   return _r;
 }
@@ -501,7 +517,8 @@ int AbstractSocket::read_fd(void *data, int size) const {
 }
 
 int AbstractSocket::write_fd(const void *data, int size) {
-  if (data != private_.wda.data() && !private_.wda.empty()) {
+  if ((private_.flags & 0x02) && data != private_.wda.data() && !private_.wda.empty()) {
+    trace() << LogStream::Color::DarkCyan << "private_.wda.insert" << size << private_.wda.size();
     private_.wda.insert(private_.wda.end(), static_cast<const char *>(data), static_cast<const char *>(data) + size);
     return size;
   }
@@ -510,13 +527,14 @@ int AbstractSocket::write_fd(const void *data, int size) {
 #else
   int r = ::send(fd_, static_cast<const char *>(data), size, 0);
 #endif
-  if (data != private_.wda.data()) {
+  if ((private_.flags & 0x02) && data != private_.wda.data()) {
     if (r < size) {
       if (!(private_.flags & 0x80)) {
         thread_->modifyPollDescriptor(fd_, AbstractThread::PollIn | AbstractThread::PollOut);
         private_.flags |= 0x80;
         trace() << LogStream::Color::Cyan << "(AbstractThread::PollIn | AbstractThread::PollOut)";
       }
+      trace() << LogStream::Color::Cyan << "private_.wda.insert" << size;
       private_.wda.insert(private_.wda.end(), static_cast<const char *>(data) + ((r > 0) ? r : 0), static_cast<const char *>(data) + size);
     }
     r = size;
