@@ -25,6 +25,7 @@ struct TlsContext::Private {
   void createOpenSslContext() {
     ctx = SSL_CTX_new(TLS_method());
     if (ctx) {
+      SSL_CTX_set_mode(ctx, SSL_MODE_ACCEPT_MOVING_WRITE_BUFFER);
       if (exIdx == -1) exIdx = SSL_CTX_get_ex_new_index(0, nullptr, nullptr, nullptr, nullptr);
       SSL_CTX_set_ex_data(ctx, exIdx, this);
     }
