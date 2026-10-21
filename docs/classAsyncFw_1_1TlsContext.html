@@ -663,6 +663,12 @@ class&#160;</td><td class="memItemRight"><b>AbstractTlsSocket</b></td></tr>
 
 <p>Unwinds and flushes the entire OpenSSL global error queue into a single concatenated text report. </p>
 <p>Iteratively calls ERR_get_error() until empty. Ideal for printing a comprehensive post-mortem report following a major handshake crash. </p><dl class="section return"><dt>Returns</dt><dd>A structured text block containing all pending OpenSSL error codes and reasons. </dd></dl>
+<div id="dynsection-5" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-5-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-5-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1TlsContext_a41d87bc0c29abb02c8b00b5da6fd9dbe_icgraph.svg" width="400" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
 
 </div>
 </div>
@@ -808,10 +814,10 @@ class&#160;</td><td class="memItemRight"><b>AbstractTlsSocket</b></td></tr>
 <p>Returns a pointer to the underlying native OpenSSL context structure. </p>
 <p>This method acts as an escape hatch providing direct access to the raw SSL_CTX handle. It allows internal framework components or customized cryptographic extensions to invoke low-level OpenSSL API operations directly. </p><dl class="section warning"><dt>Warning</dt><dd>Direct modification of the returned context outside the initialization phase bypasses thread-safety guarantees and will cause undefined behavior. </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>A pointer to the native ssl_ctx_st (SSL_CTX) structure handled by OpenSSL. </dd></dl>
-<div id="dynsection-5" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
-<div id="dynsection-5-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-6" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-6-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-5-content" class="dyncontent" style="display:none;">
+<div id="dynsection-6-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1TlsContext_a61e8dab3c3cf42cb434191c252a1f4ab_icgraph.svg" width="632" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
