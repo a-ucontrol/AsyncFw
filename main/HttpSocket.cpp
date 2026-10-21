@@ -15,7 +15,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #endif
 #include "core/extend_trace.hpp"
 
-#define SOCKET_WRITE_SIZE 8192
+#define SOCKET_WRITE_SIZE (1024 * 16)
 
 using namespace AsyncFw;
 
@@ -29,7 +29,7 @@ HttpSocket *HttpSocket::create(AsyncFw::Thread *_t) {
 HttpSocket::HttpSocket() : AbstractTlsSocket() { lsTrace(); }
 
 HttpSocket::~HttpSocket() {
-  if (tid_ != -1) thread_->removeTimer(tid_);
+  if (tid_ != -1 && thread_) thread_->removeTimer(tid_);
   lsTrace();
 }
 
@@ -177,7 +177,9 @@ void HttpSocket::writeEvent() {
   if (full_) clearReceived();
   if (pendingWrite() >= SOCKET_WRITE_SIZE) return;
   if (file_.isOpen()) {
-    DataArray da = file_.read(SOCKET_WRITE_SIZE);
+    DataArray da = file_.read(SOCKET_WRITE_SIZE / 2);
+    if (!da.empty()) write(da);
+    da = file_.read(SOCKET_WRITE_SIZE / 2);
     if (!da.empty()) write(da);
     std::streamsize _p = file_.tellg();
     std::size_t _s = file_.size();
@@ -203,7 +205,13 @@ void HttpSocket::close() {
 }
 
 void HttpSocket::destroy() {
-  thread_->invoke([this]() { AbstractTlsSocket::destroy(); });
+  thread_->invoke([this]() {
+    if (tid_ != -1) {
+      thread_->removeTimer(tid_);
+      tid_ = -1;
+    }
+    AbstractTlsSocket::destroy();
+  });
 }
 
 DataArrayView HttpSocket::header() { return received_.view(0, headerSize_); }
