@@ -110,8 +110,8 @@ void HttpSocket::readEvent() {
         }
         value = value * 10 + static_cast<std::size_t>(c - '0');
       }
-      contentLenght_ = value;
-      if (contentLenght_ == 0) {
+      contentLength_ = value;
+      if (contentLength_ == 0) {
         full_ = true;
         received(received_);
         return;
@@ -136,11 +136,18 @@ void HttpSocket::readEvent() {
     }
   }
 
-  if (contentLenght_ != std::string::npos) {
+  if (contentLength_ != std::string::npos) {
     received_ += _da;
     _da.clear();
-    if (contentLenght_ != received_.size() - headerSize_ - 4) return;
-    contentLenght_ = std::string::npos;
+    std::size_t _l = received_.size() - headerSize_ - 4;
+    if (_l < contentLength_) return;
+    if (_l > contentLength_) {
+      lsWarning() << "unexpected data after body:" << _l << "bytes, expected" << contentLength_ << "(" << peerAddress() << ":" << peerPort() << ")";
+      contentLength_ = std::string::npos;
+      disconnect();
+      return;
+    }
+    contentLength_ = std::string::npos;
     full_ = true;
     received(received_);
     return;

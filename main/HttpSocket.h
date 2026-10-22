@@ -53,8 +53,8 @@ private:
   DataArray received_;
   File file_;
   int progress_;
-  int headerSize_;
-  std::size_t contentLenght_ = std::string::npos;
+  std::size_t headerSize_;
+  std::size_t contentLength_ = std::string::npos;
   int tid_ = -1;
   bool full_ = false;
 };
