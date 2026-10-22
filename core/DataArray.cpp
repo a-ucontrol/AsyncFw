@@ -18,9 +18,13 @@ DataArray DataArray::compress(const DataArrayView &v) {
   std::size_t _size = v.size();
   uLongf _uLongf = compressBound(_size);
   uint8_t j = 0;
-  for (;; ++j) {
-    if (!(_size >> (5 + j * 8))) break;
+  for (std::size_t _tmp = _size >> 5; _tmp; ++j) _tmp >>= 8;
+#if SIZE_MAX == UINT64_MAX
+  if (j > 7) {
+    console_msg("DataArray", "compress failed: input too large");
+    return {};
   }
+#endif
   DataArray _c;
   _c.resize(_uLongf + sizeof(uint8_t) + j);
   if (::compress(_c.data() + sizeof(uint8_t) + j, &_uLongf, reinterpret_cast<const uint8_t *>(v.data()), v.size())) {
@@ -39,6 +43,12 @@ DataArray DataArray::uncompress(const DataArrayView &v) {
   std::size_t _size = 0;
   uint8_t j = (v[0] & 0x07);
   if (j) {
+#if SIZE_MAX == UINT32_MAX
+    if (j > 4) {
+      console_msg("DataArray", "uncompress failed: size too large");
+      return {};
+    }
+#endif
     if (v.size() < sizeof(uint8_t) + j) return {};
     for (int i = 0; i != j; ++i) (reinterpret_cast<char *>(&_size))[i] = v[sizeof(uint8_t) + i];
     _size <<= 5;
