@@ -50,9 +50,6 @@ public:
   MulticastDns(const std::string & = {});
   virtual ~MulticastDns();
 
-  /** @brief Thread-safe getter returning a snapshot of all discovered network hosts. */
-  const std::vector<Host> hosts() const;
-
   /** @brief Sets the target mDNS/DNS-SD service descriptor pattern for the browser. */
   void setServiceType(const std::string &);
   /** @brief Returns the current tracked service classification. */
@@ -77,12 +74,16 @@ public:
   int sendQuery(int = 0);
 
   /** @brief Triggered when a device is found. */
-  FunctionConnector<const Host &>::Protected<MulticastDns> hostAdded;
+  FunctionConnector<const Host &>::Policy<AbstractFunctionConnector::Queued>::Protected<MulticastDns> hostAdded;
   /** @brief Triggered when a device alters parameters.
   @note A goodbye packet (TTL=0) is reported here with host.port == 0, not as a removal. The host stays in the list marked unavailable, subscribe to hostRemoved for actual departure. */
-  FunctionConnector<const Host &>::Protected<MulticastDns> hostChanged;
+  FunctionConnector<const Host &>::Policy<AbstractFunctionConnector::Queued>::Protected<MulticastDns> hostChanged;
   /** @brief Triggered when a device leaves or times out. */
-  FunctionConnector<const Host &>::Protected<MulticastDns> hostRemoved;
+  FunctionConnector<const Host &>::Policy<AbstractFunctionConnector::Queued>::Protected<MulticastDns> hostRemoved;
+
+protected:
+  /** @brief Thread-safe getter returning a snapshot of all discovered network hosts. */
+  const std::vector<Host> hosts() const;
 
 private:
   static Instance<MulticastDns> instance_;
