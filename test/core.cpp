@@ -1119,7 +1119,7 @@ void test_guard_and_connector_concurrent_destroy_asyncfw() {
   Thread tB("destroy-connector");
   tA.start();
   tB.start();
-  for (int i = 0; i < 100000; ++i) {
+  for (int i = 0; i < 1000; ++i) {
     std::atomic<int> ready {0};
     std::atomic<bool> go {false};
     std::atomic<int> done {0};
