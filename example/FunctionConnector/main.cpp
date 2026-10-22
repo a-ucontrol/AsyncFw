@@ -38,7 +38,7 @@ public:
   void receive(int val) { lsDebug() << val << "receive in thread:" << AsyncFw::AbstractThread::current(); }
 };
 
-int main(int argc, char *argv[]) {
+int main(int, char **) {
   AsyncFw::Thread thread("SenderThread");
   std::shared_ptr<Sender> sender;  // after thread
 

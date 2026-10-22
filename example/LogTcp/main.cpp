@@ -14,7 +14,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include <AsyncFw/RrdClient>
 #include <AsyncFw/DataArrayTcpClient>
 
-int main(int argc, char *argv[]) {
+int main(int, char **) {
   AsyncFw::Thread logThread {"LogThread"};
   logThread.start();
   logThread.invoke([]() { AsyncFw::Instance<AsyncFw::Log>::create(1000); }, true);

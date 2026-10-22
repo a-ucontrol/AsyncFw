@@ -10,7 +10,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include <AsyncFw/Cryptor>
 #include <AsyncFw/LogStream>
 
-int main(int argc, char *argv[]) {
+int main(int, char **) {
   std::string _key = "012345678901234567890123456789++";
   std::string _str =
       "#include <AsyncFw/MainThread>\n"

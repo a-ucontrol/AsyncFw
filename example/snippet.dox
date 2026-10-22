@@ -2,7 +2,7 @@
 #include <core/LogStream.h>
 #include <main/MainThread.h>
 
-int main(int argc, char *argv[]) {
+int main(int, char **) {
   AsyncFw::Thread::current()->invoke([]() { AsyncFw::MainThread::exit(123); });
 
   logDebug() << "Start Application";

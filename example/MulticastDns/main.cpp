@@ -13,7 +13,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 using namespace AsyncFw;
 
-int main(int argc, char *argv[]) {
+int main(int, char **) {
   LogStream::setTimeFormat(LOG_STREAM_DEFAULT_TIME_FORMAT, true);
   MulticastDns _mdns {"AsyncFw_mdns_example_service"};
 

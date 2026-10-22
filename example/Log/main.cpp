@@ -10,7 +10,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include <AsyncFw/MainThread>
 #include <AsyncFw/Log>
 
-int main(int argc, char *argv[]) {
+int main(int, char **) {
   // 1. Create a dedicated background thread for safe, non-blocking file logging
   AsyncFw::Thread logThread {"LogThread"};
   logThread.start();

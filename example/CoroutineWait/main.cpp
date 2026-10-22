@@ -43,7 +43,7 @@ void tst(int _ms) {
   logNotice() << _ms << ms_end - ms_start << "=====" << CURRENT_TIME_MS - tst_time;
 }
 
-int main(int argc, char *argv[]) {
+int main(int, char **) {
   AsyncFw::Instance<AsyncFw::ThreadPool>::create("CoroutineWaitExamplePool", 5);
 
   //tst(5000);

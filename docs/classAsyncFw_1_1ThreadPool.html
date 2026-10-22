@@ -29,7 +29,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">AsyncFw<span id="projectnumber">&#160;1.4</span>
+   <div id="projectname">AsyncFw<span id="projectnumber">&#160;1.5</span>
    </div>
    <div id="projectbrief">Async Framework is c++ runtime with timers, poll notifiers, sockets, coroutines, etc.</div>
   </td>
@@ -203,7 +203,7 @@ std::mutex&#160;</td><td class="memItemRight"><b>mutex</b></td></tr>
 <div class="line">  std::string text() { <span class="keywordflow">return</span> <span class="stringliteral">&quot;Pool&quot;</span>; }</div>
 <div class="line">};</div>
 <div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[]) {</div>
+<div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span>, <span class="keywordtype">char</span> **) {</div>
 <div class="line">  <a class="code hl_function" href="classAsyncFw_1_1LogStream.html#a06c9086f31d54eeacec98a9ba8e72171">AsyncFw::LogStream::setTimeFormat</a>(<span class="stringliteral">&quot;%Y-%m-%d %H:%M:%S&quot;</span>, <span class="keyword">true</span>);</div>
 <div class="line"> </div>
 <div class="line">  Pool *threadPool = <a class="code hl_function" href="classAsyncFw_1_1Instance.html#a8000597f0e7ee4bd6669491a5b502beb">AsyncFw::Instance&lt;AsyncFw::ThreadPool&gt;::create&lt;Pool&gt;</a>(<span class="stringliteral">&quot;ExampleThreadPool&quot;</span>);</div>

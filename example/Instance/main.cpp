@@ -29,7 +29,7 @@ private:
   std::string name_;
 };
 
-int main(int argc, char *argv[]) {
+int main(int, char **) {
   ExampleClass _e("ExampleClass");
   AsyncFw::Instance<ExampleClass>::create("ExampleClassInstance");
   AsyncFw::Thread::current()->invoke([]() { AsyncFw::MainThread::exit(); });

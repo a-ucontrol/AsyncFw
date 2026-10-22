@@ -18,7 +18,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #define SERVER_PORT 443
 #define GET_FILE "/a-ucontrol/AsyncFw"
 
-int main(int argc, char *argv[]) {
+int main(int, char **) {
   AsyncFw::TlsContext context;
 
   if (!context.setDefaultVerifyPaths()) {

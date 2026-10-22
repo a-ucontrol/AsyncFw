@@ -14,7 +14,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include <AsyncFw/PollNotifier>
 #include <AsyncFw/LogStream>
 
-int main(int argc, char *argv[]) {
+int main(int, char **) {
   AsyncFw::PollNotifier notifier(STDIN_FILENO);
   notifier.notify.connect([&notifier](AsyncFw::AbstractThread::PollEvents e) {
     char buf[128];

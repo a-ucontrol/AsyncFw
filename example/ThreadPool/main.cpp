@@ -16,7 +16,7 @@ public:
   std::string text() { return "Pool"; }
 };
 
-int main(int argc, char *argv[]) {
+int main(int, char **) {
   AsyncFw::LogStream::setTimeFormat("%Y-%m-%d %H:%M:%S", true);
 
   Pool *threadPool = AsyncFw::Instance<AsyncFw::ThreadPool>::create<Pool>("ExampleThreadPool");

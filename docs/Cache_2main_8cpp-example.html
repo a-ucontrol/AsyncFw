@@ -29,7 +29,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">AsyncFw<span id="projectnumber">&#160;1.4</span>
+   <div id="projectname">AsyncFw<span id="projectnumber">&#160;1.5</span>
    </div>
    <div id="projectbrief">Async Framework is c++ runtime with timers, poll notifiers, sockets, coroutines, etc.</div>
   </td>
@@ -118,7 +118,7 @@ $(function(){initNavTree('Cache_2main_8cpp-example.html','',''); });
 <div class="line">  <span class="keywordtype">int</span> maxConnections;</div>
 <div class="line">};</div>
 <div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[]) {</div>
+<div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span>, <span class="keywordtype">char</span> **) {</div>
 <div class="line">  <a id="a0" name="a0"></a><a class="code hl_function" href="classAsyncFw_1_1Instance.html#a8000597f0e7ee4bd6669491a5b502beb">AsyncFw::Instance&lt;AsyncFw::ThreadPool&gt;::create</a>(<span class="stringliteral">&quot;CacheExamplePool&quot;</span>);</div>
 <div class="line">  <a id="_a1" name="_a1"></a><a class="code hl_class" href="classAsyncFw_1_1Thread.html">AsyncFw::Thread</a> *thread = <a id="a2" name="a2"></a><a class="code hl_function" href="classAsyncFw_1_1ThreadPool.html#a086c0271dcb7c4be416705d622145f83">AsyncFw::ThreadPool::instance</a>()-&gt;<a id="a3" name="a3"></a><a class="code hl_function" href="classAsyncFw_1_1ThreadPool.html#a02cf5b98df2bbd01b4757e09fceece49">createThread</a>(<span class="stringliteral">&quot;CacheExampleThread&quot;</span>);</div>
 <div class="line">  <a id="_a4" name="_a4"></a><a class="code hl_class" href="classAsyncFw_1_1Cache.html">AsyncFw::Cache&lt;Config&gt;</a> configCache(50);</div>

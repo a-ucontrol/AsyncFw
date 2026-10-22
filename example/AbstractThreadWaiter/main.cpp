@@ -3,7 +3,7 @@
 
 #include <AsyncFw/Timer>
 
-int main(int argc, char *argv[]) {
+int main(int, char **) {
   AsyncFw::Thread::Waiter _w1;
   AsyncFw::Thread::Waiter _w2;
 

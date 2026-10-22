@@ -52,7 +52,7 @@ private:
   AsyncFw::DataArray da;
 };
 
-int main(int argc, char *argv[]) {
+int main(int, char **) {
   AsyncFw::TlsContext context;
 
   if (!context.setDefaultVerifyPaths()) {

@@ -13,7 +13,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 enum AppMessages { MainThreadStarted, MainThreadFinished, TestThreadStarted, TestThreadFinished };
 
-int main(int argc, char *argv[]) {
+int main(int, char **) {
   AsyncFw::Instance<AsyncFw::ApplicationNotifier>::create();
 
   AsyncFw::Thread _test;

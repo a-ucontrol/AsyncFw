@@ -12,7 +12,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include <AsyncFw/Task>
 #include <AsyncFw/LogStream>
 
-int main(int argc, char *argv[]) {
+int main(int, char **) {
   AsyncFw::Thread thread;
   AsyncFw::Timer timer;
   std::queue<std::shared_ptr<AsyncFw::AbstractTask>> tasks;

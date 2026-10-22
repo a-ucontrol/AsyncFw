@@ -14,7 +14,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 using namespace AsyncFw;
 
-int main(int argc, char *argv[]) {
+int main(int, char **) {
   TlsContext ca;
   ca.generateKey(2048);
   ca.generateCertificate({{"CN", "DataArrayTcpExample-CA"}});

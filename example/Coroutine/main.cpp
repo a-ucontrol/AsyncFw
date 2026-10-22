@@ -27,7 +27,7 @@ AsyncFw::CoroutineTask task() {
   logNotice() << "task: resumed in thread" << ct->name() << ct->id();
 }
 
-int main(int argc, char *argv[]) {
+int main(int, char **) {
   AsyncFw::Instance<AsyncFw::ThreadPool>::create("CoroutineExamplePool");
 
   task();

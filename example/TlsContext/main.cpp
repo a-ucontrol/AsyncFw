@@ -12,7 +12,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #define KEY_BITS 2048
 
-int main(int argc, char *argv[]) {
+int main(int, char **) {
   AsyncFw::TlsContext _ctx;
 
   AsyncFw::TlsContext _root_ca;

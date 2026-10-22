@@ -68,7 +68,7 @@ CoroutineTask task() {
   MainThread::exit();
 }
 
-int main(int argc, char *argv[]) {
+int main(int, char **) {
   AsyncFw::Instance<AsyncFw::ThreadPool>::create("CoroutineAwaitExamplePool");
 
   task();

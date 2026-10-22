@@ -65,7 +65,7 @@ See the [GitHub repository], [documentation] and [examples] for details.
     AsyncFw::FunctionConnectionGuard fcg;
   };
 
-  int main(int argc, char *argv[]) {
+  int main(int, char **) {
     Sender *sender;
     AsyncFw::Thread thread("SenderThread");
     thread.start();
@@ -111,7 +111,7 @@ See the [GitHub repository], [documentation] and [examples] for details.
       AsyncFw::MainThread::exit(0);
     }
   
-    int main(int argc, char *argv[]) {
+    int main(int, char **) {
       runApplicationLogic();
       logNotice() << "Booting Main Engine Event Loop...";
       int ret = AsyncFw::MainThread::exec();
@@ -135,7 +135,7 @@ See the [GitHub repository], [documentation] and [examples] for details.
       AsyncFw::MainThread::exit(0);
     }
   
-    int main(int argc, char *argv[]) {
+    int main(int, char **) {
       AsyncFw::Timer timer1;
       timer1.start(10);
       AsyncFw::Timer timer2;

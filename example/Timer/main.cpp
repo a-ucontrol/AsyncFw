@@ -20,7 +20,7 @@ AsyncFw::CoroutineTask task(AsyncFw::Timer *timer) {
   AsyncFw::MainThread::exit(0);
 }
 
-int main(int argc, char *argv[]) {
+int main(int, char **) {
   AsyncFw::Timer timer1;
   timer1.start(10);
   AsyncFw::Timer timer2;

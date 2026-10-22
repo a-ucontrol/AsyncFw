@@ -18,7 +18,7 @@ struct Config {
   int maxConnections;
 };
 
-int main(int argc, char *argv[]) {
+int main(int, char **) {
   AsyncFw::Instance<AsyncFw::ThreadPool>::create("CacheExamplePool");
   AsyncFw::Thread *thread = AsyncFw::ThreadPool::instance()->createThread("CacheExampleThread");
   AsyncFw::Cache<Config> configCache(50);

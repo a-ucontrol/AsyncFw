@@ -13,7 +13,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 //#define REDIRECT_STDIN
 
-int main(int argc, char *argv[]) {
+int main(int argc, char * argv[]) {
 #ifdef USE_QAPPLICATION
   QCoreApplication app(argc, argv);
 #endif

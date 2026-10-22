@@ -8,7 +8,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include <AsyncFw/MainThread>
 #include <AsyncFw/LogStream>
 
-int main(int argc, char *argv[]) {
+int main(int, char **) {
   AsyncFw::AbstractThread *_mainThread = AsyncFw::AbstractThread::current();
   AsyncFw::Thread thread1("T1");
   AsyncFw::Thread thread2("T2");

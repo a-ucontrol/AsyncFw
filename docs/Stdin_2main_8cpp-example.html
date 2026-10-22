@@ -29,7 +29,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">AsyncFw<span id="projectnumber">&#160;1.4</span>
+   <div id="projectname">AsyncFw<span id="projectnumber">&#160;1.5</span>
    </div>
    <div id="projectbrief">Async Framework is c++ runtime with timers, poll notifiers, sockets, coroutines, etc.</div>
   </td>
@@ -114,7 +114,7 @@ $(function(){initNavTree('Stdin_2main_8cpp-example.html','',''); });
 <div class="line"><span class="preprocessor">#include &lt;AsyncFw/PollNotifier&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;AsyncFw/LogStream&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[]) {</div>
+<div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span>, <span class="keywordtype">char</span> **) {</div>
 <div class="line">  <a id="_a0" name="_a0"></a><a class="code hl_class" href="classAsyncFw_1_1PollNotifier.html">AsyncFw::PollNotifier</a> notifier(STDIN_FILENO);</div>
 <div class="line">  notifier.<a id="a1" name="a1"></a><a class="code hl_variable" href="classAsyncFw_1_1PollNotifier.html#a8bcd61fb697ec4d0d53b942feb5b8026">notify</a>.<a id="a2" name="a2"></a><a class="code hl_function" href="classAsyncFw_1_1FunctionConnector.html#ae1f65144956b3b1247d58614e4080f63">connect</a>([&amp;notifier](<a id="_a3" name="_a3"></a><a class="code hl_enumeration" href="classAsyncFw_1_1AbstractThread.html#a654efa5f41b38ff679e48211e8904a59">AsyncFw::AbstractThread::PollEvents</a> e) {</div>
 <div class="line">    <span class="keywordtype">char</span> buf[128];</div>

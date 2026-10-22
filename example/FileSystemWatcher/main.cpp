@@ -10,6 +10,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include <AsyncFw/File>
 #include <AsyncFw/MainThread>
 #include <AsyncFw/LogStream>
+#include <filesystem>
 
 using namespace AsyncFw;
 
@@ -17,6 +18,8 @@ int main(int argc, char *argv[]) {
 #ifdef USE_QAPPLICATION
   QCoreApplication app(argc, argv);
 #endif
+
+  std::filesystem::create_directories("/tmp/FileSystemWatcher.example");
 
   FileSystemWatcher watcher {{"/tmp/FileSystemWatcher.example/file.txt"}};
   watcher.notify.connect([](const std::string &name, int event) {

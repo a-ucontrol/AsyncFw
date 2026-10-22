@@ -152,7 +152,7 @@ void run_examples(bool _socket) {
   AsyncFw::MainThread::exit(ok ? 0 : -1);
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char * argv[]) {
 #ifdef USE_QAPPLICATION
   QCoreApplication app(argc, argv);
 #endif
