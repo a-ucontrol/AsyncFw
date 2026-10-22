@@ -6,7 +6,6 @@ var classAsyncFw_1_1MulticastDns =
       [ "Unicast", "classAsyncFw_1_1MulticastDns.html#a4db656bae572e9b28e1ebef4b6f05465a1951dca893badeb1f1992fa9805ebb91", null ]
     ] ],
     [ "MulticastDns", "classAsyncFw_1_1MulticastDns.html#ab9bfb41e98cd4ecf1cc63f8acd023afd", null ],
-    [ "hosts", "classAsyncFw_1_1MulticastDns.html#a1aae9d9612ba077da938bb80a8c3330d", null ],
     [ "setServiceType", "classAsyncFw_1_1MulticastDns.html#a6604b92ff217e3502a3eca746efe9403", null ],
     [ "serviceType", "classAsyncFw_1_1MulticastDns.html#a23e336e5c39f79f847b12014558e8dda", null ],
     [ "startService", "classAsyncFw_1_1MulticastDns.html#a010507720899efd7b653d3e33bc64f0a", null ],
@@ -17,7 +16,8 @@ var classAsyncFw_1_1MulticastDns =
     [ "stopQuerier", "classAsyncFw_1_1MulticastDns.html#a03b1bd87ba47f61a0443e42cec2a78cb", null ],
     [ "querierRunning", "classAsyncFw_1_1MulticastDns.html#a9afe98db8817d4d9c6b6eb1ba07f5e60", null ],
     [ "sendQuery", "classAsyncFw_1_1MulticastDns.html#a091b0f3d62c8f78f33a396f4cbf140b0", null ],
-    [ "hostAdded", "classAsyncFw_1_1MulticastDns.html#a973574ac5d99e8b3ef2455ded3e90407", null ],
-    [ "hostChanged", "classAsyncFw_1_1MulticastDns.html#a00da8b82983f3da4d37809761b04df10", null ],
-    [ "hostRemoved", "classAsyncFw_1_1MulticastDns.html#a97cbf66dbddc356f45aad429e118d287", null ]
+    [ "hosts", "classAsyncFw_1_1MulticastDns.html#a1aae9d9612ba077da938bb80a8c3330d", null ],
+    [ "hostAdded", "classAsyncFw_1_1MulticastDns.html#a6899b58abfe6c2e69d0b55a6ac92b869", null ],
+    [ "hostChanged", "classAsyncFw_1_1MulticastDns.html#a7f38462fdd8b96c856a14f708f2a72c5", null ],
+    [ "hostRemoved", "classAsyncFw_1_1MulticastDns.html#a86f3cda5153f7230800f7022510bc6e8", null ]
 ];

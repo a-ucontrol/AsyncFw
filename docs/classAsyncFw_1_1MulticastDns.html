@@ -127,9 +127,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ab9bfb41e98cd4ecf1cc63f8acd023afd" id="r_ab9bfb41e98cd4ecf1cc63f8acd023afd"><td class="memItemLeft"><a id="ab9bfb41e98cd4ecf1cc63f8acd023afd" name="ab9bfb41e98cd4ecf1cc63f8acd023afd"></a>
 &#160;</td><td class="memItemRight"><b>MulticastDns</b> (const std::string &amp;={})</td></tr>
 <tr class="memdesc:ab9bfb41e98cd4ecf1cc63f8acd023afd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the mDNS node with a specific target service type (e.g., "_http._tcp"). <br /></td></tr>
-<tr class="memitem:a1aae9d9612ba077da938bb80a8c3330d" id="r_a1aae9d9612ba077da938bb80a8c3330d"><td class="memItemLeft"><a id="a1aae9d9612ba077da938bb80a8c3330d" name="a1aae9d9612ba077da938bb80a8c3330d"></a>
-const std::vector&lt; <a class="el" href="structAsyncFw_1_1MulticastDns_1_1Host.html">Host</a> &gt;&#160;</td><td class="memItemRight"><b>hosts</b> () const</td></tr>
-<tr class="memdesc:a1aae9d9612ba077da938bb80a8c3330d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thread-safe getter returning a snapshot of all discovered network hosts. <br /></td></tr>
 <tr class="memitem:a6604b92ff217e3502a3eca746efe9403" id="r_a6604b92ff217e3502a3eca746efe9403"><td class="memItemLeft"><a id="a6604b92ff217e3502a3eca746efe9403" name="a6604b92ff217e3502a3eca746efe9403"></a>
 void&#160;</td><td class="memItemRight"><b>setServiceType</b> (const std::string &amp;)</td></tr>
 <tr class="memdesc:a6604b92ff217e3502a3eca746efe9403"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the target mDNS/DNS-SD service descriptor pattern for the browser. <br /></td></tr>
@@ -166,14 +163,20 @@ static <a class="el" href="#ab9bfb41e98cd4ecf1cc63f8acd023afd">MulticastDns</a> 
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a973574ac5d99e8b3ef2455ded3e90407" id="r_a973574ac5d99e8b3ef2455ded3e90407"><td class="memItemLeft"><a id="a973574ac5d99e8b3ef2455ded3e90407" name="a973574ac5d99e8b3ef2455ded3e90407"></a>
-<a class="el" href="classAsyncFw_1_1FunctionConnector.html">FunctionConnector</a>&lt; const <a class="el" href="structAsyncFw_1_1MulticastDns_1_1Host.html">Host</a> &amp; &gt;::Protected&lt; <a class="el" href="#ab9bfb41e98cd4ecf1cc63f8acd023afd">MulticastDns</a> &gt;&#160;</td><td class="memItemRight"><b>hostAdded</b></td></tr>
-<tr class="memdesc:a973574ac5d99e8b3ef2455ded3e90407"><td class="mdescLeft">&#160;</td><td class="mdescRight">Triggered when a device is found. <br /></td></tr>
-<tr class="memitem:a00da8b82983f3da4d37809761b04df10" id="r_a00da8b82983f3da4d37809761b04df10"><td class="memItemLeft"><a class="el" href="classAsyncFw_1_1FunctionConnector.html">FunctionConnector</a>&lt; const <a class="el" href="structAsyncFw_1_1MulticastDns_1_1Host.html">Host</a> &amp; &gt;::Protected&lt; <a class="el" href="#ab9bfb41e98cd4ecf1cc63f8acd023afd">MulticastDns</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a00da8b82983f3da4d37809761b04df10">hostChanged</a></td></tr>
-<tr class="memdesc:a00da8b82983f3da4d37809761b04df10"><td class="mdescLeft">&#160;</td><td class="mdescRight">Triggered when a device alters parameters.  <br /></td></tr>
-<tr class="memitem:a97cbf66dbddc356f45aad429e118d287" id="r_a97cbf66dbddc356f45aad429e118d287"><td class="memItemLeft"><a id="a97cbf66dbddc356f45aad429e118d287" name="a97cbf66dbddc356f45aad429e118d287"></a>
-<a class="el" href="classAsyncFw_1_1FunctionConnector.html">FunctionConnector</a>&lt; const <a class="el" href="structAsyncFw_1_1MulticastDns_1_1Host.html">Host</a> &amp; &gt;::Protected&lt; <a class="el" href="#ab9bfb41e98cd4ecf1cc63f8acd023afd">MulticastDns</a> &gt;&#160;</td><td class="memItemRight"><b>hostRemoved</b></td></tr>
-<tr class="memdesc:a97cbf66dbddc356f45aad429e118d287"><td class="mdescLeft">&#160;</td><td class="mdescRight">Triggered when a device leaves or times out. <br /></td></tr>
+<tr class="memitem:a6899b58abfe6c2e69d0b55a6ac92b869" id="r_a6899b58abfe6c2e69d0b55a6ac92b869"><td class="memItemLeft"><a id="a6899b58abfe6c2e69d0b55a6ac92b869" name="a6899b58abfe6c2e69d0b55a6ac92b869"></a>
+<a class="el" href="classAsyncFw_1_1FunctionConnector.html">FunctionConnector</a>&lt; const <a class="el" href="structAsyncFw_1_1MulticastDns_1_1Host.html">Host</a> &amp; &gt;::Policy&lt; <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector.html#ab248bd16cbfcac609f58d401abec4368a5d08e36148e4f87ea06266376ac65da9">AbstractFunctionConnector::Queued</a> &gt;::Protected&lt; <a class="el" href="#ab9bfb41e98cd4ecf1cc63f8acd023afd">MulticastDns</a> &gt;&#160;</td><td class="memItemRight"><b>hostAdded</b></td></tr>
+<tr class="memdesc:a6899b58abfe6c2e69d0b55a6ac92b869"><td class="mdescLeft">&#160;</td><td class="mdescRight">Triggered when a device is found. <br /></td></tr>
+<tr class="memitem:a7f38462fdd8b96c856a14f708f2a72c5" id="r_a7f38462fdd8b96c856a14f708f2a72c5"><td class="memItemLeft"><a class="el" href="classAsyncFw_1_1FunctionConnector.html">FunctionConnector</a>&lt; const <a class="el" href="structAsyncFw_1_1MulticastDns_1_1Host.html">Host</a> &amp; &gt;::Policy&lt; <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector.html#ab248bd16cbfcac609f58d401abec4368a5d08e36148e4f87ea06266376ac65da9">AbstractFunctionConnector::Queued</a> &gt;::Protected&lt; <a class="el" href="#ab9bfb41e98cd4ecf1cc63f8acd023afd">MulticastDns</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a7f38462fdd8b96c856a14f708f2a72c5">hostChanged</a></td></tr>
+<tr class="memdesc:a7f38462fdd8b96c856a14f708f2a72c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Triggered when a device alters parameters.  <br /></td></tr>
+<tr class="memitem:a86f3cda5153f7230800f7022510bc6e8" id="r_a86f3cda5153f7230800f7022510bc6e8"><td class="memItemLeft"><a id="a86f3cda5153f7230800f7022510bc6e8" name="a86f3cda5153f7230800f7022510bc6e8"></a>
+<a class="el" href="classAsyncFw_1_1FunctionConnector.html">FunctionConnector</a>&lt; const <a class="el" href="structAsyncFw_1_1MulticastDns_1_1Host.html">Host</a> &amp; &gt;::Policy&lt; <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector.html#ab248bd16cbfcac609f58d401abec4368a5d08e36148e4f87ea06266376ac65da9">AbstractFunctionConnector::Queued</a> &gt;::Protected&lt; <a class="el" href="#ab9bfb41e98cd4ecf1cc63f8acd023afd">MulticastDns</a> &gt;&#160;</td><td class="memItemRight"><b>hostRemoved</b></td></tr>
+<tr class="memdesc:a86f3cda5153f7230800f7022510bc6e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Triggered when a device leaves or times out. <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pro-methods" class="groupheader"><a id="pro-methods" name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:a1aae9d9612ba077da938bb80a8c3330d" id="r_a1aae9d9612ba077da938bb80a8c3330d"><td class="memItemLeft"><a id="a1aae9d9612ba077da938bb80a8c3330d" name="a1aae9d9612ba077da938bb80a8c3330d"></a>
+const std::vector&lt; <a class="el" href="structAsyncFw_1_1MulticastDns_1_1Host.html">Host</a> &gt;&#160;</td><td class="memItemRight"><b>hosts</b> () const</td></tr>
+<tr class="memdesc:a1aae9d9612ba077da938bb80a8c3330d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thread-safe getter returning a snapshot of all discovered network hosts. <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Asynchronous mDNS/DNS-SD service responder and discovery browser. </p>
@@ -327,14 +330,14 @@ Public Attributes</h2></td></tr>
 </div>
 </div>
 <a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
-<a id="a00da8b82983f3da4d37809761b04df10" name="a00da8b82983f3da4d37809761b04df10"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a00da8b82983f3da4d37809761b04df10">&#9670;&#160;</a></span>hostChanged</h2>
+<a id="a7f38462fdd8b96c856a14f708f2a72c5" name="a7f38462fdd8b96c856a14f708f2a72c5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7f38462fdd8b96c856a14f708f2a72c5">&#9670;&#160;</a></span>hostChanged</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classAsyncFw_1_1FunctionConnector.html">FunctionConnector</a>&lt;const <a class="el" href="structAsyncFw_1_1MulticastDns_1_1Host.html">Host</a> &amp;&gt;::Protected&lt;<a class="el" href="#ab9bfb41e98cd4ecf1cc63f8acd023afd">MulticastDns</a>&gt; AsyncFw::MulticastDns::hostChanged</td>
+          <td class="memname"><a class="el" href="classAsyncFw_1_1FunctionConnector.html">FunctionConnector</a>&lt;const <a class="el" href="structAsyncFw_1_1MulticastDns_1_1Host.html">Host</a> &amp;&gt;::Policy&lt;<a class="el" href="classAsyncFw_1_1AbstractFunctionConnector.html#ab248bd16cbfcac609f58d401abec4368a5d08e36148e4f87ea06266376ac65da9">AbstractFunctionConnector::Queued</a>&gt;::Protected&lt;<a class="el" href="#ab9bfb41e98cd4ecf1cc63f8acd023afd">MulticastDns</a>&gt; AsyncFw::MulticastDns::hostChanged</td>
         </tr>
       </table>
 </div><div class="memdoc">
