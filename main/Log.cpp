@@ -212,7 +212,7 @@ void Log::finality() {
     AbstractLog::finality();
   }, true)) {
     if (instance_.value == this) LogStream::setCompleted(&LogStream::console_output);
-    lsTrace() << LogStream::Color::Red << "thread not running";
+    lsTrace() << "thread not running";
     stopTimer(&timerIdAutosave);
     autoSave = -1;
     AbstractLog::finality();
