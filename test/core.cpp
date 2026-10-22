@@ -1115,18 +1115,17 @@ void test_guard_destroy_during_concurrent_emit() {
 //   is fragile (implicit contract). done makes "both lambdas finished reading
 //   go/ready" explicit before leaving the scope.
 void test_guard_and_connector_concurrent_destroy_asyncfw() {
-  for (int i = 0; i < 200; ++i) {
+  Thread tA("destroy-guard");
+  Thread tB("destroy-connector");
+  tA.start();
+  tB.start();
+  for (int i = 0; i < 100000; ++i) {
     std::atomic<int> ready {0};
     std::atomic<bool> go {false};
     std::atomic<int> done {0};
 
     auto *fc = new FunctionConnector<int>;
     auto *g = new FunctionConnectionGuard(fc->connect<Conn::Direct>([](int) {}));
-
-    Thread tA("destroy-guard");
-    Thread tB("destroy-connector");
-    tA.start();
-    tB.start();
 
     tA.invoke([&]() {
       ready.fetch_add(1);
