@@ -1171,6 +1171,301 @@ void test_thread_waits_for_running_task() {
 }
 
 // ============================================================================
+// Group B'. AbstractThread timer & destructor edge cases
+// ============================================================================
+//
+// These tests pin the semantics of two paths:
+//
+//   removeTimer()
+//     - state <  Finished  : deleter queued (invokeTask returns true)
+//     - state >= Finished  : synchronous fallback delete (invokeTask false)
+//       This path is safe because timer tasks only run from process_timers(),
+//       which is already done once state >= Finished.
+//
+//   ~AbstractThread() drain (post-fix)
+//     - ONE swap(process_tasks_, tasks) + process_tasks() pass
+//     - tasks scheduled *during* that pass (via invokeTask() from a task's
+//       operator()) land in private_.tasks AFTER the swap; they are NOT
+//       run — they are deleted (with lsError) before ~Private destroys
+//       the queue. This prevents both the pre-fix leak (dropped pointer)
+//       and an unbounded destructor loop (spawn chain).
+//
+// Covered scenarios (mirror example/misc/main.cpp A–F):
+//   A/B  removeTimer from own operator() (direct call + via callback)
+//   C    removeTimer after thread is Finished (synchronous fallback)
+//   D    removeTimer from a foreign thread while the timer fires
+//   E    removeTimer from a foreign thread while operator() is blocked
+//   F1   ~Thread with pending timers (started + finished)
+//   F2   ~Thread with pending timers + pending task (never-started)
+//   F2b  ~Thread where a pending task spawns another during drain
+//        (spawned task is discarded, not run, not leaked — expected
+//        lsError from ~AbstractThread)
+// ---------------------------------------------------------------------------
+
+void test_timer_remove_from_own_task() {
+  // A + B: the timer task removes itself — either by calling removeTimer()
+  // directly, or from a callback it invokes. state == Running in both cases,
+  // so the deleter is queued and the task survives its own tail; if the
+  // fix ever regresses to a synchronous delete, `afterRemoveRan` would be a
+  // UAF write that ASAN catches immediately.
+  for (int viaCallback = 0; viaCallback < 2; ++viaCallback) {
+    Thread thread(viaCallback ? "timer-via-cb" : "timer-self");
+    thread.start();
+
+    std::atomic<bool> started {false};
+    std::atomic<bool> afterRemoveRan {false};
+    std::atomic<int> fires {0};
+
+    struct Task : AbstractThread::AbstractTask {
+      AbstractThread *th = nullptr;
+      std::atomic<bool> *started = nullptr;
+      std::atomic<bool> *afterRemove = nullptr;
+      std::atomic<int> *fires = nullptr;
+      std::function<void()> onFire;
+      int id = -1;
+      void operator()() override {
+        (*fires)++;
+        started->store(true);
+        if (onFire) onFire();
+        else th->removeTimer(id);
+        afterRemove->store(true);  // UAF here if removeTimer deleted us
+      }
+    };
+    auto *task = new Task;
+    task->th = &thread;
+    task->started = &started;
+    task->afterRemove = &afterRemoveRan;
+    task->fires = &fires;
+    if (viaCallback) task->onFire = [task, &thread]() { thread.removeTimer(task->id); };
+
+    thread.invoke([&thread, task]() { task->id = thread.appendTimer(5, task); }, true);
+
+    EXPECT(wait_for([&] { return started.load(); }));
+    EXPECT(wait_for([&] { return afterRemoveRan.load(); }));
+    EXPECT(fires.load() == 1);
+
+    thread.quit();
+    thread.waitFinished();
+  }
+}
+
+void test_timer_remove_after_finished() {
+  // C: removeTimer() on a fully-finished thread hits the synchronous
+  // fallback in removeTimer (invokeTask returns false because state >=
+  // Finished). Deleting a pending timer task synchronously is safe here
+  // because timer tasks run only from process_timers(), already drained.
+  auto *thread = new Thread("timer-fallback");
+  thread->start();
+
+  std::atomic<bool> timerFired {false};
+  int tid = -1;
+
+  thread->invoke([thread, &tid, &timerFired]() {
+    struct Task : AbstractThread::AbstractTask {
+      std::atomic<bool> *fired;
+      void operator()() override { fired->store(true); }
+    };
+    auto *t = new Task;
+    t->fired = &timerFired;
+    tid = thread->appendTimer(60000, t);
+  }, true);
+  EXPECT(tid >= 0);
+  EXPECT(!timerFired.load());
+
+  thread->quit();
+  thread->waitFinished();
+
+  // Must not crash / leak; internally exercises the fallback delete.
+  thread->removeTimer(tid);
+  delete thread;
+  EXPECT(!timerFired.load());
+}
+
+void test_timer_remove_while_foreign_fire() {
+  // D: foreign-thread removeTimer racing with timer fires. Re-arm cycles
+  // exercise private_.timers under the mutex; TSAN must stay clean.
+  Thread thread("timer-race");
+  thread.start();
+
+  std::atomic<int> fires {0};
+  std::atomic<int> currentId {-1};
+
+  struct Task : AbstractThread::AbstractTask {
+    std::atomic<int> *fired;
+    void operator()() override { (*fired)++; }
+  };
+  auto arm = [&]() {
+    auto *t = new Task;
+    t->fired = &fires;
+    thread.invoke([&thread, t, &currentId]() { currentId = thread.appendTimer(1, t); }, true);
+  };
+
+  arm();
+  EXPECT(wait_for([&] { return fires.load() > 0; }, 500));
+
+  for (int i = 0; i < 5; ++i) {
+    int id = currentId.exchange(-1);
+    if (id >= 0) thread.removeTimer(id);
+    std::this_thread::yield();
+    if (i < 4) {
+      arm();
+      std::this_thread::sleep_for(std::chrono::milliseconds(5));
+    }
+  }
+  // Leave one pending timer alive so ~Thread exercises timer cleanup.
+  arm();
+  std::this_thread::sleep_for(std::chrono::milliseconds(5));
+  EXPECT(fires.load() >= 1);
+
+  thread.quit();
+  thread.waitFinished();
+}
+
+void test_timer_remove_while_task_blocked() {
+  // E: foreign-thread removeTimer while operator() is blocked in sleep.
+  // The task must survive until its operator() returns; the deleter runs
+  // afterwards (mirrors AddressResolver::ares_cancel).
+  Thread thread("timer-blocked");
+  thread.start();
+
+  std::atomic<bool> started {false};
+  std::atomic<bool> completed {false};
+  std::atomic<int> timerId {-1};
+
+  struct Task : AbstractThread::AbstractTask {
+    std::atomic<bool> *startedPtr;
+    std::atomic<bool> *completedPtr;
+    void operator()() override {
+      startedPtr->store(true);
+      std::this_thread::sleep_for(std::chrono::milliseconds(50));
+      completedPtr->store(true);  // UAF here if removeTimer deleted us
+    }
+  };
+  auto *task = new Task;
+  task->startedPtr = &started;
+  task->completedPtr = &completed;
+
+  thread.invoke([&thread, task, &timerId]() { timerId = thread.appendTimer(1, task); }, true);
+  EXPECT(timerId.load() >= 0);
+  EXPECT(wait_for([&] { return started.load(); }));
+
+  // Foreign-thread removal while task is in sleep.
+  thread.removeTimer(timerId.load());
+
+  EXPECT(wait_for([&] { return completed.load(); }));
+
+  thread.quit();
+  thread.waitFinished();
+}
+
+void test_destructor_with_pending_timers() {
+  // F1: started + finished thread, 2 pending (never-fired) timers.
+  // exec() final already drained private_.tasks; ~AbstractThread sees only
+  // timers and deletes them. No fire, no crash, no leak.
+  auto *thread = new Thread("dtor-timers");
+  thread->start();
+
+  std::atomic<int> fires {0};
+  struct Task : AbstractThread::AbstractTask {
+    std::atomic<int> *fired;
+    void operator()() override { (*fired)++; }
+  };
+  thread->invoke([thread, &fires]() {
+    for (int i = 0; i < 2; ++i) {
+      auto *t = new Task;
+      t->fired = &fires;
+      thread->appendTimer(60000, t);
+    }
+  }, true);
+
+  thread->quit();
+  thread->waitFinished();
+  EXPECT(fires.load() == 0);
+
+  delete thread;  // ~AbstractThread deletes both pending timers
+  EXPECT(fires.load() == 0);
+}
+
+void test_destructor_with_pending_task_and_timers() {
+  // F2: never-started thread with 1 pending task + 2 pending timers.
+  // ~AbstractThread's single swap+process_tasks() runs the pending task;
+  // timers are deleted afterward (order: tasks first, timers second).
+  // Verifies the drain contract on the "happy path".
+  auto *thread = new Thread("dtor-pending");
+
+  std::atomic<bool> taskRan {false};
+  std::atomic<int> fires {0};
+
+  struct PendingTask : AbstractThread::AbstractTask {
+    std::atomic<bool> *ran;
+    void operator()() override { ran->store(true); }
+  };
+  auto *p = new PendingTask;
+  p->ran = &taskRan;
+  EXPECT(thread->invokeTask(p));  // state == None -> succeeds
+
+  struct TimerTask : AbstractThread::AbstractTask {
+    std::atomic<int> *fired;
+    void operator()() override { (*fired)++; }
+  };
+  for (int i = 0; i < 2; ++i) {
+    auto *t = new TimerTask;
+    t->fired = &fires;
+    thread->appendTimer(60000, t);
+  }
+
+  delete thread;  // drain task; delete timers
+
+  EXPECT(taskRan.load());
+  EXPECT(fires.load() == 0);
+}
+
+void test_destructor_discards_tasks_spawned_during_drain() {
+  // F2b: never-started thread, pending task1 which schedules task2 via
+  // invokeTask() from within operator(). ~AbstractThread's drain is a
+  // SINGLE swap+process_tasks() pass; task2 lands in private_.tasks AFTER
+  // the swap, and the post-fix destructor then discards it (deletes
+  // without running, with an lsError). This guards against BOTH:
+  //   - the pre-fix leak (LSan would report Task2's allocation), and
+  //   - an unbounded destructor loop if a chain of self-spawning tasks
+  //     were ever involved.
+  //
+  // An error line from ~AbstractThread is EXPECTED here (part of the fix's
+  // contract). It is not a test failure — only the EXPECTs below matter.
+  auto *thread = new Thread("dtor-spawn");
+
+  std::atomic<bool> task1Ran {false};
+  std::atomic<bool> task2Ran {false};
+
+  struct Task2 : AbstractThread::AbstractTask {
+    std::atomic<bool> *ran;
+    void operator()() override { ran->store(true); }
+  };
+  auto *t2 = new Task2;
+  t2->ran = &task2Ran;
+
+  struct Task1 : AbstractThread::AbstractTask {
+    AbstractThread *th;
+    std::atomic<bool> *ran;
+    AbstractThread::AbstractTask *next;
+    void operator()() override {
+      ran->store(true);
+      EXPECT_MSG(th->invokeTask(next), "invokeTask from within ~AbstractThread drain must succeed (state == None)");
+    }
+  };
+  auto *t1 = new Task1;
+  t1->th = thread;
+  t1->ran = &task1Ran;
+  t1->next = t2;
+  EXPECT(thread->invokeTask(t1));
+
+  delete thread;  // drain -> task1 runs -> spawns task2 -> task2 discarded
+
+  EXPECT_MSG(task1Ran.load(), "task1 must run (single-pass drain by ~AbstractThread)");
+  EXPECT_MSG(!task2Ran.load(), "task2 must NOT run (discarded after single-pass drain; expected lsError from ~AbstractThread)");
+}
+
+// ============================================================================
 // Group C. MainThread re-exec
 // ============================================================================
 
@@ -1567,6 +1862,14 @@ int main(int, char **) {
 
   // --- Group B: AbstractThread ----------------------------------------
   test_thread_waits_for_running_task();
+  // --- Group B': AbstractThread timer & destructor edge cases ---------
+  test_timer_remove_from_own_task();
+  test_timer_remove_after_finished();
+  test_timer_remove_while_foreign_fire();
+  test_timer_remove_while_task_blocked();
+  test_destructor_with_pending_timers();
+  test_destructor_with_pending_task_and_timers();
+  test_destructor_discards_tasks_spawned_during_drain();
 
   // --- Group C: MainThread re-exec ------------------------------------
   test_mainthread_reexec();
@@ -1598,8 +1901,8 @@ int main(int, char **) {
   }
 
   int total = g_total.load();
-  if (total != 182) {
-    lsError() << "core: " << total << '/' << 182;
+  if (total != 205) {
+    lsError() << "core: " << total << '/' << 205;
     return -1;
   }
   lsNotice() << "core: " << total << " checks passed";

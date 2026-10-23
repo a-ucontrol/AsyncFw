@@ -423,6 +423,14 @@ AbstractThread::~AbstractThread() {
     lsTrace() << LogStream::Color::DarkRed << "task list not empty" << private_.tasks.size();
     std::swap(private_.process_tasks_, private_.tasks);
     private_.process_tasks();
+    if (!private_.tasks.empty()) {
+      lsError() << LogStream::Color::Red << "task list not empty" << private_.tasks.size() << "state" << private_.state;
+      while (!private_.tasks.empty()) {
+        AbstractTask *_task = private_.tasks.back();
+        private_.tasks.pop();
+        delete _task;
+      }
+    }
   }
 
   if (!private_.timers.empty()) {
