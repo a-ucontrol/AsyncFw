@@ -23,7 +23,7 @@ int main(int, char **) {
   logInfo() << threadPool->text();
 
   AsyncFw::Thread *_lt = AsyncFw::ThreadPool::instance()->createThread("LogThread");
-  _lt->started.connect([]() {
+  _lt->started.connect<AsyncFw::AbstractFunctionConnector::Connection::Sync>([]() {
     AsyncFw::Instance<AsyncFw::Log>::create();  //create log instance in log thread _lt
   });
 
