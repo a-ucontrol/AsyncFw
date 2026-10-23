@@ -19,8 +19,8 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 using namespace AsyncFw;
 RrdClient::RrdClient(DataArraySocket *socket, const std::vector<Rrd *> &rrd) : rrd_(rrd), tcpSocket(socket), lastTime(rrd.size(), 0) {
   gl_ += socket->received.connect([this](const DataArray *da, uint32_t pi) {
-    if (pi > 0x0F) {
-      lsError() << "(pi > 0x0F)" << pi;
+    if (pi >= rrd_.size()) {
+      lsError() << "received out-of-range pi:" << pi << "rrd_.size():" << rrd_.size();
       return;
     }
     tcpRead(da, pi);

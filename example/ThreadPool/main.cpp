@@ -22,17 +22,19 @@ int main(int, char **) {
   Pool *threadPool = AsyncFw::Instance<AsyncFw::ThreadPool>::create<Pool>("ExampleThreadPool");
   logInfo() << threadPool->text();
 
-  AsyncFw::AbstractThread *_lt = AsyncFw::ThreadPool::instance()->createThread("LogThread");
-  _lt->start();                                                            // need for sync before AsyncFw::MainThread::exec()
-  _lt->invoke([]() { AsyncFw::Instance<AsyncFw::Log>::create(); }, true);  //create log instance in log thread _lt
+  AsyncFw::Thread *_lt = AsyncFw::ThreadPool::instance()->createThread("LogThread");
+  _lt->started.connect([]() {
+    AsyncFw::Instance<AsyncFw::Log>::create();  //create log instance in log thread _lt
+  });
 
-  AsyncFw::AbstractThread *_t = AsyncFw::ThreadPool::instance()->createThread("SyncExample");
-  _t->start();  // need for sync before AsyncFw::MainThread::exec()
+  AsyncFw::Thread *_t = AsyncFw::ThreadPool::instance()->createThread("SyncExample");
 
-  AsyncFw::ThreadPool::sync(_t, []() {
-    AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::current();
-    std::this_thread::sleep_for(std::chrono::milliseconds(10));
-    logInfo() << "sync run in thread" << ct->name() << ct->id();
+  _t->started.connect([_t]() {
+    AsyncFw::ThreadPool::sync(_t, []() {
+      AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::current();
+      std::this_thread::sleep_for(std::chrono::milliseconds(10));
+      logInfo() << "sync run in thread" << ct->name() << ct->id();
+    });
   });
 
   AsyncFw::ThreadPool::async([]() {
