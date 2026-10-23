@@ -203,8 +203,14 @@ void HttpSocket::writeEvent() {
   writeContent();
 }
 
+bool HttpSocket::connect(const std::string &address, uint16_t port) {
+  bool _r = false;
+  thread_->invoke([this, address, port, &_r]() { _r = AbstractTlsSocket::connect(address, port); }, true);
+  return _r;
+}
+
 void HttpSocket::disconnect() {
-  if (!thread_->invoke([this]() { AbstractTlsSocket::disconnect(); })) AbstractTlsSocket::disconnect();
+  thread_->invoke([this]() { AbstractTlsSocket::disconnect(); });
 }
 
 void HttpSocket::close() {

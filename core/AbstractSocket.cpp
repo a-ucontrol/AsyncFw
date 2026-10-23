@@ -244,6 +244,7 @@ void AbstractSocket::setDescriptor(int fd) {
 }
 
 bool AbstractSocket::connect(const std::string &address, uint16_t port) {
+  checkCurrentThread();
   int _fd = socket(private_.pa.ss_family, private_.type, private_.protocol);
   if (_fd < 0) {
     lsError() << "socket descriptor error";

@@ -38,7 +38,7 @@ int main(int, char **) {
   addressInfo.completed.connect([&socket](int r, const std::vector<std::string> &list) {
     if (r == 0 && !list.empty()) {
       for (const std::string &_s : list) logNotice() << _s;
-      socket->thread()->invoke([socket, addr = list[0]]() { socket->connect(addr, SERVER_PORT); });
+      socket->connect(list[0], SERVER_PORT);
       return;
     }
     AsyncFw::MainThread::exit(-1);

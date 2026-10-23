@@ -29,6 +29,7 @@ public:
   void readEvent() override;
   void writeEvent() override;
 
+  bool connect(const std::string &, uint16_t) override;
   void disconnect() override;
   void close() override;
   void destroy() override;
