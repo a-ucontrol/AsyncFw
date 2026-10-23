@@ -1,0 +1,5 @@
+<map id="AsyncFw::AbstractTlsSocket::connect" name="AsyncFw::AbstractTlsSocket::connect">
+<area shape="rect" id="Node000001" title="Initiates an outbound client TCP connection, automatically determining the TLS role." alt="" coords="204,5,396,48"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1HttpSocket.html#a974b10998baf028573c6dde3bd899b33" title="Initiates an outbound client TCP connection, automatically determining the TLS role." alt="" coords="5,5,156,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="186,27,156,29,156,24,191,26"/>
+</map>

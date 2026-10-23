@@ -15,6 +15,11 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include "LogStream.h"
 #include "TlsContext.h"
 
+#ifdef EXTEND_TLSCONTEXT_TRACE
+  #define ENABLE_EXTEND_TRACE
+#endif
+#include "extend_trace.hpp"
+
 using namespace AsyncFw;
 
 struct TlsContext::Private {
@@ -490,7 +495,7 @@ std::string TlsContext::infoRequest(const DataArray &request) {
 
 std::string TlsContext::commonName(X509 *cert) {
   if (!cert) {
-    lsTrace() << "null certificate";
+    trace() << "null certificate";
     return {};
   }
   X509_NAME *subject = X509_get_subject_name(cert);

@@ -308,7 +308,7 @@ template&lt;typename T&gt; </div>
 </div><div class="memdoc">
 
 <p>Stores a completely fresh object state inside the cache, extending its TTL. </p>
-<p>Takes the exclusive lock briefly to copy <code class="param">value</code>, then commits the new deadline via <a class="el" href="#ae62164b66514fb2d77d01ff4b638f8f6" title="Commits the update by extending the TTL from now.">touch()</a>. Safe to call from any thread. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Takes the exclusive lock briefly to copy value, then commits the new deadline via <a class="el" href="#ae62164b66514fb2d77d01ff4b638f8f6" title="Commits the update by extending the TTL from now.">touch()</a>. Safe to call from any thread. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">value</td><td>The new value to store inside the cache. </td></tr>
   </table>

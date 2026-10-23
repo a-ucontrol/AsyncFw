@@ -38,7 +38,7 @@ public:
     return {value_, mutex_};
   }
   /** @brief Stores a completely fresh object state inside the cache, extending its TTL.
-  @details Takes the exclusive lock briefly to copy @p value, then commits the new deadline via touch(). Safe to call from any thread.
+  @details Takes the exclusive lock briefly to copy value, then commits the new deadline via touch(). Safe to call from any thread.
   @param value The new value to store inside the cache. */
   void store(const T &value) {
     {  //lock scope

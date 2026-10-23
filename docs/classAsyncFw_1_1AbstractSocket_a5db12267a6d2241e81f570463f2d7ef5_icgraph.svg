@@ -12,9 +12,9 @@
 <g id="Node000001" class="node">
 <title>Node1</title>
 <g id="a_Node000001"><a xlink:title="Called when the connection state changes.">
-<polygon fill="#999999" stroke="#666666" points="1307,-197 1176.25,-197 1176.25,-165 1307,-165 1307,-197"/>
-<text xml:space="preserve" text-anchor="start" x="1184.25" y="-183.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AbstractSocket</text>
-<text xml:space="preserve" text-anchor="middle" x="1241.62" y="-171.5" font-family="Helvetica,sans-Serif" font-size="10.00">::stateEvent</text>
+<polygon fill="#999999" stroke="#666666" points="1307,-198 1176.25,-198 1176.25,-166 1307,-166 1307,-198"/>
+<text xml:space="preserve" text-anchor="start" x="1184.25" y="-184.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AbstractSocket</text>
+<text xml:space="preserve" text-anchor="middle" x="1241.62" y="-172.5" font-family="Helvetica,sans-Serif" font-size="10.00">::stateEvent</text>
 </a>
 </g>
 </g>
@@ -32,8 +32,8 @@
 <g id="edge1_Node000001_Node000002" class="edge">
 <title>Node1&#45;&gt;Node2</title>
 <g id="a_edge1_Node000001_Node000002"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M1218.11,-205.47C1183.94,-242.59 1119.9,-312.16 1090.87,-343.71"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="1220.49,-208.04 1224.69,-198.31 1215.34,-203.3 1220.49,-208.04"/>
+<path fill="none" stroke="#63b8ff" d="M1217.8,-206.66C1183.62,-243.59 1120.07,-312.25 1091.04,-343.61"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="1220.17,-209.25 1224.39,-199.54 1215.03,-204.5 1220.17,-209.25"/>
 </a>
 </g>
 </g>
@@ -41,9 +41,9 @@
 <g id="Node000006" class="node">
 <title>Node6</title>
 <g id="a_Node000006"><a xlink:href="classAsyncFw_1_1AbstractSocket.html#a77c0a9ea7c5061c406673bbe8b18d60d" target="_top" xlink:title="Closes the network connection and unsubscribes from thread polling events.">
-<polygon fill="white" stroke="#666666" points="1140.25,-272 1009.5,-272 1009.5,-240 1140.25,-240 1140.25,-272"/>
-<text xml:space="preserve" text-anchor="start" x="1017.5" y="-258.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AbstractSocket</text>
-<text xml:space="preserve" text-anchor="middle" x="1074.88" y="-246.5" font-family="Helvetica,sans-Serif" font-size="10.00">::close</text>
+<polygon fill="white" stroke="#666666" points="1140.25,-273 1009.5,-273 1009.5,-241 1140.25,-241 1140.25,-273"/>
+<text xml:space="preserve" text-anchor="start" x="1017.5" y="-259.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AbstractSocket</text>
+<text xml:space="preserve" text-anchor="middle" x="1074.88" y="-247.5" font-family="Helvetica,sans-Serif" font-size="10.00">::close</text>
 </a>
 </g>
 </g>
@@ -51,8 +51,8 @@
 <g id="edge6_Node000001_Node000006" class="edge">
 <title>Node1&#45;&gt;Node6</title>
 <g id="a_edge6_Node000001_Node000006"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M1194.08,-202.19C1168.04,-214.04 1136.07,-228.6 1111.95,-239.58"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="1195.44,-205.41 1203.09,-198.09 1192.54,-199.04 1195.44,-205.41"/>
+<path fill="none" stroke="#63b8ff" d="M1194.08,-203.19C1168.04,-215.04 1136.07,-229.6 1111.95,-240.58"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="1195.44,-206.41 1203.09,-199.09 1192.54,-200.04 1195.44,-206.41"/>
 </a>
 </g>
 </g>
@@ -60,18 +60,18 @@
 <g id="Node000013" class="node">
 <title>Node13</title>
 <g id="a_Node000013"><a xlink:href="classAsyncFw_1_1AbstractSocket.html#a96c331ff22db7a34923c34f575075e6a" target="_top" xlink:title="Disconnects the socket from the remote host gracefully.">
-<polygon fill="white" stroke="#666666" points="966.75,-222 836,-222 836,-190 966.75,-190 966.75,-222"/>
-<text xml:space="preserve" text-anchor="start" x="844" y="-208.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AbstractSocket</text>
-<text xml:space="preserve" text-anchor="middle" x="901.38" y="-196.5" font-family="Helvetica,sans-Serif" font-size="10.00">::disconnect</text>
+<polygon fill="white" stroke="#666666" points="966.75,-223 836,-223 836,-191 966.75,-191 966.75,-223"/>
+<text xml:space="preserve" text-anchor="start" x="844" y="-209.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AbstractSocket</text>
+<text xml:space="preserve" text-anchor="middle" x="901.38" y="-197.5" font-family="Helvetica,sans-Serif" font-size="10.00">::disconnect</text>
 </a>
 </g>
 </g>
 <!-- Node1&#45;&gt;Node13 -->
-<g id="edge32_Node000001_Node000013" class="edge">
+<g id="edge33_Node000001_Node000013" class="edge">
 <title>Node1&#45;&gt;Node13</title>
-<g id="a_edge32_Node000001_Node000013"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M1164.7,-190.6C1156.46,-191.49 1148.18,-192.31 1140.25,-193 1081.74,-198.09 1014.95,-201.53 967.07,-203.59"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="1164.84,-194.11 1174.39,-189.53 1164.07,-187.15 1164.84,-194.11"/>
+<g id="a_edge33_Node000001_Node000013"><a xlink:title=" ">
+<path fill="none" stroke="#63b8ff" d="M1164.7,-191.6C1156.46,-192.49 1148.18,-193.31 1140.25,-194 1081.74,-199.09 1014.95,-202.53 967.07,-204.59"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="1164.84,-195.11 1174.39,-190.53 1164.07,-188.15 1164.84,-195.11"/>
 </a>
 </g>
 </g>
@@ -79,9 +79,9 @@
 <g id="Node000026" class="node">
 <title>Node26</title>
 <g id="a_Node000026"><a xlink:href="classAsyncFw_1_1AbstractSocket.html#ac4b8765d203b4d4bc77d9d6e00d5dd85" target="_top" xlink:title="Initiates an asynchronous connection to a remote host.">
-<polygon fill="white" stroke="#666666" points="1140.25,-166 1009.5,-166 1009.5,-134 1140.25,-134 1140.25,-166"/>
-<text xml:space="preserve" text-anchor="start" x="1017.5" y="-152.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AbstractSocket</text>
-<text xml:space="preserve" text-anchor="middle" x="1074.88" y="-140.5" font-family="Helvetica,sans-Serif" font-size="10.00">::connect</text>
+<polygon fill="white" stroke="#666666" points="1140.25,-167 1009.5,-167 1009.5,-135 1140.25,-135 1140.25,-167"/>
+<text xml:space="preserve" text-anchor="start" x="1017.5" y="-153.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AbstractSocket</text>
+<text xml:space="preserve" text-anchor="middle" x="1074.88" y="-141.5" font-family="Helvetica,sans-Serif" font-size="10.00">::connect</text>
 </a>
 </g>
 </g>
@@ -89,46 +89,46 @@
 <g id="edge29_Node000001_Node000026" class="edge">
 <title>Node1&#45;&gt;Node26</title>
 <g id="a_edge29_Node000001_Node000026"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M1164.69,-166.71C1156.64,-165.2 1148.51,-163.67 1140.6,-162.18"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="1164.02,-170.15 1174.5,-168.56 1165.32,-163.27 1164.02,-170.15"/>
+<path fill="none" stroke="#63b8ff" d="M1164.69,-167.71C1156.64,-166.2 1148.51,-164.67 1140.6,-163.18"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="1164.02,-171.15 1174.5,-169.56 1165.32,-164.27 1164.02,-171.15"/>
 </a>
 </g>
 </g>
-<!-- Node28 -->
-<g id="Node000028" class="node">
-<title>Node28</title>
-<g id="a_Node000028"><a xlink:href="classAsyncFw_1_1AbstractSocket.html#a426c3b10de20344079571d6708f096ca" target="_top" xlink:title="Listen for incoming connections on address and port.">
-<polygon fill="white" stroke="#666666" points="1140.25,-98 1009.5,-98 1009.5,-66 1140.25,-66 1140.25,-98"/>
-<text xml:space="preserve" text-anchor="start" x="1017.5" y="-84.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AbstractSocket</text>
-<text xml:space="preserve" text-anchor="middle" x="1074.88" y="-72.5" font-family="Helvetica,sans-Serif" font-size="10.00">::listen</text>
+<!-- Node29 -->
+<g id="Node000029" class="node">
+<title>Node29</title>
+<g id="a_Node000029"><a xlink:href="classAsyncFw_1_1AbstractSocket.html#a426c3b10de20344079571d6708f096ca" target="_top" xlink:title="Listen for incoming connections on address and port.">
+<polygon fill="white" stroke="#666666" points="1140.25,-99 1009.5,-99 1009.5,-67 1140.25,-67 1140.25,-99"/>
+<text xml:space="preserve" text-anchor="start" x="1017.5" y="-85.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AbstractSocket</text>
+<text xml:space="preserve" text-anchor="middle" x="1074.88" y="-73.5" font-family="Helvetica,sans-Serif" font-size="10.00">::listen</text>
 </a>
 </g>
 </g>
-<!-- Node1&#45;&gt;Node28 -->
-<g id="edge33_Node000001_Node000028" class="edge">
-<title>Node1&#45;&gt;Node28</title>
-<g id="a_edge33_Node000001_Node000028"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M1203.58,-158.74C1173.09,-140.42 1130.56,-114.86 1103.12,-98.37"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="1201.75,-161.72 1212.12,-163.87 1205.35,-155.72 1201.75,-161.72"/>
+<!-- Node1&#45;&gt;Node29 -->
+<g id="edge34_Node000001_Node000029" class="edge">
+<title>Node1&#45;&gt;Node29</title>
+<g id="a_edge34_Node000001_Node000029"><a xlink:title=" ">
+<path fill="none" stroke="#63b8ff" d="M1203.58,-159.74C1173.09,-141.42 1130.56,-115.86 1103.12,-99.37"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="1201.75,-162.72 1212.12,-164.87 1205.35,-156.72 1201.75,-162.72"/>
 </a>
 </g>
 </g>
-<!-- Node30 -->
-<g id="Node000030" class="node">
-<title>Node30</title>
-<g id="a_Node000030"><a xlink:href="classAsyncFw_1_1AbstractSocket.html#a0ffc2cb5dd293722a9336a528357f9c5" target="_top" xlink:title="Binds a raw native operating system socket file descriptor to this instance.">
-<polygon fill="white" stroke="#666666" points="1140.25,-48 1009.5,-48 1009.5,-16 1140.25,-16 1140.25,-48"/>
-<text xml:space="preserve" text-anchor="start" x="1017.5" y="-34.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AbstractSocket</text>
-<text xml:space="preserve" text-anchor="middle" x="1074.88" y="-22.5" font-family="Helvetica,sans-Serif" font-size="10.00">::setDescriptor</text>
+<!-- Node31 -->
+<g id="Node000031" class="node">
+<title>Node31</title>
+<g id="a_Node000031"><a xlink:href="classAsyncFw_1_1AbstractSocket.html#a0ffc2cb5dd293722a9336a528357f9c5" target="_top" xlink:title="Binds a raw native operating system socket file descriptor to this instance.">
+<polygon fill="white" stroke="#666666" points="1140.25,-49 1009.5,-49 1009.5,-17 1140.25,-17 1140.25,-49"/>
+<text xml:space="preserve" text-anchor="start" x="1017.5" y="-35.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AbstractSocket</text>
+<text xml:space="preserve" text-anchor="middle" x="1074.88" y="-23.5" font-family="Helvetica,sans-Serif" font-size="10.00">::setDescriptor</text>
 </a>
 </g>
 </g>
-<!-- Node1&#45;&gt;Node30 -->
-<g id="edge36_Node000001_Node000030" class="edge">
-<title>Node1&#45;&gt;Node30</title>
-<g id="a_edge36_Node000001_Node000030"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M1225.28,-154.86C1207.83,-127.16 1176.95,-83.78 1140.25,-57 1135.89,-53.82 1131.08,-50.99 1126.1,-48.47"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="1222.29,-156.67 1230.5,-163.36 1228.25,-153 1222.29,-156.67"/>
+<!-- Node1&#45;&gt;Node31 -->
+<g id="edge37_Node000001_Node000031" class="edge">
+<title>Node1&#45;&gt;Node31</title>
+<g id="a_edge37_Node000001_Node000031"><a xlink:title=" ">
+<path fill="none" stroke="#63b8ff" d="M1225.28,-155.86C1207.83,-128.16 1176.95,-84.78 1140.25,-58 1135.89,-54.82 1131.08,-51.99 1126.1,-49.47"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="1222.29,-157.67 1230.5,-164.36 1228.25,-154 1222.29,-157.67"/>
 </a>
 </g>
 </g>
@@ -212,8 +212,8 @@
 <g id="edge7_Node000006_Node000007" class="edge">
 <title>Node6&#45;&gt;Node7</title>
 <g id="a_edge7_Node000006_Node000007"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M1009.67,-275.84C991.88,-281.34 972.76,-287.25 955.67,-292.53"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="1010.58,-279.22 1019.11,-272.93 1008.52,-272.53 1010.58,-279.22"/>
+<path fill="none" stroke="#63b8ff" d="M1009.03,-276.66C991.74,-281.91 973.24,-287.51 956.58,-292.56"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="1009.61,-280.14 1018.16,-273.89 1007.58,-273.44 1009.61,-280.14"/>
 </a>
 </g>
 </g>
@@ -221,9 +221,9 @@
 <g id="Node000010" class="node">
 <title>Node10</title>
 <g id="a_Node000010"><a xlink:href="classAsyncFw_1_1AbstractSocket.html#a73a200f0008dbf9f820bdb2b8a0054cf" target="_top" xlink:title="Schedules the socket for deferred asynchronous destruction.">
-<polygon fill="white" stroke="#666666" points="966.75,-272 836,-272 836,-240 966.75,-240 966.75,-272"/>
-<text xml:space="preserve" text-anchor="start" x="844" y="-258.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AbstractSocket</text>
-<text xml:space="preserve" text-anchor="middle" x="901.38" y="-246.5" font-family="Helvetica,sans-Serif" font-size="10.00">::destroy</text>
+<polygon fill="white" stroke="#666666" points="966.75,-273 836,-273 836,-241 966.75,-241 966.75,-273"/>
+<text xml:space="preserve" text-anchor="start" x="844" y="-259.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AbstractSocket</text>
+<text xml:space="preserve" text-anchor="middle" x="901.38" y="-247.5" font-family="Helvetica,sans-Serif" font-size="10.00">::destroy</text>
 </a>
 </g>
 </g>
@@ -231,8 +231,8 @@
 <g id="edge12_Node000006_Node000010" class="edge">
 <title>Node6&#45;&gt;Node10</title>
 <g id="a_edge12_Node000006_Node000010"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M997.62,-256C987.4,-256 977.01,-256 967.02,-256"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="997.52,-259.5 1007.52,-256 997.52,-252.5 997.52,-259.5"/>
+<path fill="none" stroke="#63b8ff" d="M997.62,-257C987.4,-257 977.01,-257 967.02,-257"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="997.52,-260.5 1007.52,-257 997.52,-253.5 997.52,-260.5"/>
 </a>
 </g>
 </g>
@@ -240,8 +240,8 @@
 <g id="edge15_Node000006_Node000013" class="edge">
 <title>Node6&#45;&gt;Node13</title>
 <g id="a_edge15_Node000006_Node000013"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M1006.91,-236.48C991.05,-231.85 974.29,-226.97 958.95,-222.49"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="1005.69,-239.77 1016.27,-239.2 1007.65,-233.05 1005.69,-239.77"/>
+<path fill="none" stroke="#63b8ff" d="M1006.91,-237.48C991.05,-232.85 974.29,-227.97 958.95,-223.49"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="1005.69,-240.77 1016.27,-240.2 1007.65,-234.05 1005.69,-240.77"/>
 </a>
 </g>
 </g>
@@ -315,8 +315,8 @@
 <g id="edge13_Node000010_Node000011" class="edge">
 <title>Node10&#45;&gt;Node11</title>
 <g id="a_edge13_Node000010_Node000011"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M824.28,-255.15C808.68,-254.97 792.54,-254.79 777.82,-254.62"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="823.97,-258.64 834,-255.26 824.04,-251.64 823.97,-258.64"/>
+<path fill="none" stroke="#63b8ff" d="M824.28,-255.72C808.68,-255.46 792.54,-255.19 777.82,-254.94"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="823.95,-259.21 834.01,-255.88 824.07,-252.22 823.95,-259.21"/>
 </a>
 </g>
 </g>
@@ -353,8 +353,8 @@
 <g id="edge16_Node000013_Node000014" class="edge">
 <title>Node13&#45;&gt;Node14</title>
 <g id="a_edge16_Node000013_Node000014"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M824.18,-205.15C814.02,-205.03 803.63,-204.91 793.56,-204.8"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="823.97,-208.64 834,-205.26 824.04,-201.64 823.97,-208.64"/>
+<path fill="none" stroke="#63b8ff" d="M824.18,-205.72C814.02,-205.55 803.63,-205.37 793.56,-205.2"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="823.95,-209.21 834.01,-205.88 824.07,-202.22 823.95,-209.21"/>
 </a>
 </g>
 </g>
@@ -391,8 +391,8 @@
 <g id="edge20_Node000014_Node000018" class="edge">
 <title>Node14&#45;&gt;Node18</title>
 <g id="a_edge20_Node000014_Node000018"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M679.72,-182.33C647.91,-165.27 604.26,-141.85 575.34,-126.34"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="677.8,-185.27 688.26,-186.91 681.11,-179.1 677.8,-185.27"/>
+<path fill="none" stroke="#63b8ff" d="M664.55,-183.31C659.23,-180.98 653.97,-178.53 649,-176 619.8,-161.17 588.31,-140.49 567.7,-126.25"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="662.82,-186.38 673.39,-187.05 665.54,-179.93 662.82,-186.38"/>
 </a>
 </g>
 </g>
@@ -580,8 +580,8 @@
 <g id="edge30_Node000026_Node000026" class="edge">
 <title>Node26&#45;&gt;Node26</title>
 <g id="a_edge30_Node000026_Node000026"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M1102.66,-177.71C1098.03,-181.48 1088.77,-184 1074.88,-184 1049.47,-184 1039.55,-175.58 1045.11,-166.44"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="1106.1,-178.39 1104.38,-167.93 1099.2,-177.18 1106.1,-178.39"/>
+<path fill="none" stroke="#63b8ff" d="M1102.66,-178.71C1098.03,-182.48 1088.77,-185 1074.88,-185 1049.47,-185 1039.55,-176.58 1045.11,-167.44"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="1106.1,-179.39 1104.38,-168.93 1099.2,-178.18 1106.1,-179.39"/>
 </a>
 </g>
 </g>
@@ -589,9 +589,9 @@
 <g id="Node000027" class="node">
 <title>Node27</title>
 <g id="a_Node000027"><a xlink:href="classAsyncFw_1_1AbstractTlsSocket.html#a2d9c3d5d540b82fb516f5c56def48a02" target="_top" xlink:title="Initiates an outbound client TCP connection, automatically determining the TLS role.">
-<polygon fill="white" stroke="#666666" points="973.5,-166 829.25,-166 829.25,-134 973.5,-134 973.5,-166"/>
-<text xml:space="preserve" text-anchor="start" x="837.25" y="-152.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AbstractTlsSocket</text>
-<text xml:space="preserve" text-anchor="middle" x="901.38" y="-140.5" font-family="Helvetica,sans-Serif" font-size="10.00">::connect</text>
+<polygon fill="white" stroke="#666666" points="973.5,-167 829.25,-167 829.25,-135 973.5,-135 973.5,-167"/>
+<text xml:space="preserve" text-anchor="start" x="837.25" y="-153.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AbstractTlsSocket</text>
+<text xml:space="preserve" text-anchor="middle" x="901.38" y="-141.5" font-family="Helvetica,sans-Serif" font-size="10.00">::connect</text>
 </a>
 </g>
 </g>
@@ -599,64 +599,83 @@
 <g id="edge31_Node000026_Node000027" class="edge">
 <title>Node26&#45;&gt;Node27</title>
 <g id="a_edge31_Node000026_Node000027"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M997.6,-150C989.72,-150 981.73,-150 973.9,-150"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="997.52,-153.5 1007.52,-150 997.52,-146.5 997.52,-153.5"/>
+<path fill="none" stroke="#63b8ff" d="M997.6,-151C989.72,-151 981.73,-151 973.9,-151"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="997.52,-154.5 1007.52,-151 997.52,-147.5 997.52,-154.5"/>
 </a>
 </g>
 </g>
-<!-- Node28&#45;&gt;Node28 -->
-<g id="edge34_Node000028_Node000028" class="edge">
-<title>Node28&#45;&gt;Node28</title>
-<g id="a_edge34_Node000028_Node000028"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M1102.66,-109.71C1098.03,-113.48 1088.77,-116 1074.88,-116 1049.47,-116 1039.55,-107.58 1045.11,-98.44"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="1106.1,-110.39 1104.38,-99.93 1099.2,-109.18 1106.1,-110.39"/>
+<!-- Node28 -->
+<g id="Node000028" class="node">
+<title>Node28</title>
+<g id="a_Node000028"><a xlink:href="classAsyncFw_1_1HttpSocket.html#a974b10998baf028573c6dde3bd899b33" target="_top" xlink:title="Initiates an outbound client TCP connection, automatically determining the TLS role.">
+<polygon fill="white" stroke="#666666" points="777.5,-167 664.75,-167 664.75,-135 777.5,-135 777.5,-167"/>
+<text xml:space="preserve" text-anchor="start" x="672.75" y="-153.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::HttpSocket</text>
+<text xml:space="preserve" text-anchor="middle" x="721.12" y="-141.5" font-family="Helvetica,sans-Serif" font-size="10.00">::connect</text>
 </a>
 </g>
 </g>
-<!-- Node29 -->
-<g id="Node000029" class="node">
-<title>Node29</title>
-<g id="a_Node000029"><a xlink:href="classAsyncFw_1_1HttpServer.html#aa1ce738d4f20186506c1c4f4290a8a3d" target="_top" xlink:title="Binds to all available interfaces (0.0.0.0) and starts listening for incoming traffic on a specific T...">
-<polygon fill="white" stroke="#666666" points="776.38,-73 665.88,-73 665.88,-41 776.38,-41 776.38,-73"/>
-<text xml:space="preserve" text-anchor="start" x="673.88" y="-59.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::HttpServer</text>
-<text xml:space="preserve" text-anchor="middle" x="721.12" y="-47.5" font-family="Helvetica,sans-Serif" font-size="10.00">::listen</text>
+<!-- Node27&#45;&gt;Node28 -->
+<g id="edge32_Node000027_Node000028" class="edge">
+<title>Node27&#45;&gt;Node28</title>
+<g id="a_edge32_Node000027_Node000028"><a xlink:title=" ">
+<path fill="none" stroke="#63b8ff" d="M817.68,-151C804.23,-151 790.58,-151 777.98,-151"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="817.39,-154.5 827.39,-151 817.39,-147.5 817.39,-154.5"/>
 </a>
 </g>
 </g>
-<!-- Node28&#45;&gt;Node29 -->
-<g id="edge35_Node000028_Node000029" class="edge">
-<title>Node28&#45;&gt;Node29</title>
-<g id="a_edge35_Node000028_Node000029"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M998.1,-76.61C931.46,-71.88 836.1,-65.1 776.71,-60.88"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="997.63,-80.09 1007.85,-77.31 998.12,-73.11 997.63,-80.09"/>
+<!-- Node29&#45;&gt;Node29 -->
+<g id="edge35_Node000029_Node000029" class="edge">
+<title>Node29&#45;&gt;Node29</title>
+<g id="a_edge35_Node000029_Node000029"><a xlink:title=" ">
+<path fill="none" stroke="#63b8ff" d="M1102.66,-110.71C1098.03,-114.48 1088.77,-117 1074.88,-117 1049.47,-117 1039.55,-108.58 1045.11,-99.44"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="1106.1,-111.39 1104.38,-100.93 1099.2,-110.18 1106.1,-111.39"/>
 </a>
 </g>
 </g>
-<!-- Node31 -->
-<g id="Node000031" class="node">
-<title>Node31</title>
-<g id="a_Node000031"><a xlink:href="classAsyncFw_1_1AbstractTlsSocket.html#a89721fd68ed3de138aa6167dd98ec5fa" target="_top" xlink:title="Binds a raw native operating system socket descriptor to this managed context.">
-<polygon fill="white" stroke="#666666" points="973.5,-50 829.25,-50 829.25,-18 973.5,-18 973.5,-50"/>
-<text xml:space="preserve" text-anchor="start" x="837.25" y="-36.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AbstractTlsSocket</text>
-<text xml:space="preserve" text-anchor="middle" x="901.38" y="-24.5" font-family="Helvetica,sans-Serif" font-size="10.00">::setDescriptor</text>
+<!-- Node30 -->
+<g id="Node000030" class="node">
+<title>Node30</title>
+<g id="a_Node000030"><a xlink:href="classAsyncFw_1_1HttpServer.html#aa1ce738d4f20186506c1c4f4290a8a3d" target="_top" xlink:title="Binds to all available interfaces (0.0.0.0) and starts listening for incoming traffic on a specific T...">
+<polygon fill="white" stroke="#666666" points="776.38,-74 665.88,-74 665.88,-42 776.38,-42 776.38,-74"/>
+<text xml:space="preserve" text-anchor="start" x="673.88" y="-60.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::HttpServer</text>
+<text xml:space="preserve" text-anchor="middle" x="721.12" y="-48.5" font-family="Helvetica,sans-Serif" font-size="10.00">::listen</text>
 </a>
 </g>
 </g>
-<!-- Node30&#45;&gt;Node31 -->
-<g id="edge37_Node000030_Node000031" class="edge">
-<title>Node30&#45;&gt;Node31</title>
-<g id="a_edge37_Node000030_Node000031"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M997.6,-32.89C989.72,-32.98 981.73,-33.07 973.9,-33.17"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="997.57,-36.39 1007.52,-32.77 997.48,-29.39 997.57,-36.39"/>
+<!-- Node29&#45;&gt;Node30 -->
+<g id="edge36_Node000029_Node000030" class="edge">
+<title>Node29&#45;&gt;Node30</title>
+<g id="a_edge36_Node000029_Node000030"><a xlink:title=" ">
+<path fill="none" stroke="#63b8ff" d="M998.1,-77.61C931.46,-72.88 836.1,-66.1 776.71,-61.88"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="997.63,-81.09 1007.85,-78.31 998.12,-74.11 997.63,-81.09"/>
 </a>
 </g>
 </g>
-<!-- Node31&#45;&gt;Node29 -->
-<g id="edge38_Node000031_Node000029" class="edge">
-<title>Node31&#45;&gt;Node29</title>
-<g id="a_edge38_Node000031_Node000029"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M817.83,-44.65C803.94,-46.44 789.83,-48.26 776.87,-49.94"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="817.93,-48.17 827.4,-43.42 817.03,-41.22 817.93,-48.17"/>
+<!-- Node32 -->
+<g id="Node000032" class="node">
+<title>Node32</title>
+<g id="a_Node000032"><a xlink:href="classAsyncFw_1_1AbstractTlsSocket.html#a89721fd68ed3de138aa6167dd98ec5fa" target="_top" xlink:title="Binds a raw native operating system socket descriptor to this managed context.">
+<polygon fill="white" stroke="#666666" points="973.5,-51 829.25,-51 829.25,-19 973.5,-19 973.5,-51"/>
+<text xml:space="preserve" text-anchor="start" x="837.25" y="-37.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AbstractTlsSocket</text>
+<text xml:space="preserve" text-anchor="middle" x="901.38" y="-25.5" font-family="Helvetica,sans-Serif" font-size="10.00">::setDescriptor</text>
+</a>
+</g>
+</g>
+<!-- Node31&#45;&gt;Node32 -->
+<g id="edge38_Node000031_Node000032" class="edge">
+<title>Node31&#45;&gt;Node32</title>
+<g id="a_edge38_Node000031_Node000032"><a xlink:title=" ">
+<path fill="none" stroke="#63b8ff" d="M997.6,-33.89C989.72,-33.98 981.73,-34.07 973.9,-34.17"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="997.57,-37.39 1007.52,-33.77 997.48,-30.39 997.57,-37.39"/>
+</a>
+</g>
+</g>
+<!-- Node32&#45;&gt;Node30 -->
+<g id="edge39_Node000032_Node000030" class="edge">
+<title>Node32&#45;&gt;Node30</title>
+<g id="a_edge39_Node000032_Node000030"><a xlink:title=" ">
+<path fill="none" stroke="#63b8ff" d="M817.83,-45.65C803.94,-47.44 789.83,-49.26 776.87,-50.94"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="817.93,-49.17 827.4,-44.42 817.03,-42.22 817.93,-49.17"/>
 </a>
 </g>
 </g>

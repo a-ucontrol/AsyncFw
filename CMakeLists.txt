@@ -41,6 +41,7 @@ include(cmake/version.cmake)
 #add_definitions(-DEXTEND_FUNCTIONCONNECTOR_TRACE)
 #add_definitions(-DEXTEND_HTTP_TRACE)
 #add_definitions(-DEXTEND_MDNS_TRACE)
+#add_definitions(-DEXTEND_TLSCONTEXT_TRACE)
 # -- defines.cmake
 
 if(NOT FINAL_RELEASE AND EXISTS "${CMAKE_CURRENT_LIST_DIR}/defines.cmake")
