@@ -32,14 +32,6 @@ protected:
   virtual void socketStateChanged(const DataArraySocket *);
 
 public:
-  /** @enum Result @brief Defines specific error codes returned during data exchange operations. */
-  enum Result {
-    ErrorExchangeNotActive = -103,       /**< Exchange aborted because the network loop or socket is inactive. */
-    ErrorExchangeTransmit = -104,        /**< Failed to enqueue or transmit the request packet. */
-    ErrorExchangeConnectionClose = -105, /**< Connection was dropped by the remote peer during exchange. */
-    ErrorExchangeTimeout = -106,         /**< Timeout reached before the response frame was completely received. */
-    ErrorExchangeThread = -107           /**< Thread synchronization or contextual framework error. */
-  };
   /** @brief Constructs a new DataArrayTcpClient object. @param name Optional name identifier for the client thread/instance (defaults to "TcpClient"). */
   DataArrayTcpClient(const std::string & = "TcpClient");
   /** @brief Explicitly connects a specific socket to a target host and port. @param socket Pointer to the managed DataArraySocket instance. @param address Target IP address or hostname. @param port Target network port. @param timeout Connection timeout in milliseconds. If 0, uses the default timeout. */
@@ -53,10 +45,6 @@ public:
   /** @brief Safely shuts down, unregisters, and deletes a managed socket. @param socket Pointer to the DataArraySocket to destroy. */
   void destroySocket(DataArraySocket *);
 
-  /** @brief Executes a synchronous request-response data exchange over a specific socket.
-  @details Transmits the outgoing array, blocks the calling thread, and waits for the specific response frame.
-  @param socket Pointer to the active socket executing the transmission. @param request The DataArray containing payload to be sent. @param response Pointer to a DataArray destination where incoming data will be loaded. @param id The transaction/packet identifier matching the response. @param timeout Maximum duration to wait for the completed response in milliseconds (defaults to 5000). @return 0 on success, or one of the negative codes from the Result enum on failure. */
-  int exchange(const DataArraySocket *, const DataArray &, const DataArray *, uint32_t, int = 5000);
   /** @brief Returns the maximum number of concurrent sockets allowed in this client instance. @return Socket limit capacity. */
   std::size_t socketLimit() { return maxSockets; }
   /** @brief Sets the default timeout interval for establishing connections. @param timeout Timeout interval in milliseconds. */

@@ -7,8 +7,6 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #include <algorithm>
 #include "core/LogStream.h"
-#include "Timer.h"
-#include "Coroutine.h"
 #include "DataArraySocket.h"
 
 #include "DataArrayTcpClient.h"
@@ -55,44 +53,6 @@ DataArraySocket *DataArrayTcpClient::createSocket(Thread *thread) {
 void DataArrayTcpClient::destroySocket(DataArraySocket *socket) {
   Thread *thread = static_cast<Thread *>(socket->thread());
   if (thread) thread->invoke([thread, socket]() { thread->destroySocket(socket); }, true);
-}
-
-int DataArrayTcpClient::exchange(const DataArraySocket *socket, const DataArray &wda, const DataArray *rda, uint32_t pi, int timeout) {
-  if (AbstractThread::current() != thread_) return ErrorExchangeThread;
-  if (socket->state_ != AbstractSocket::State::Active) return ErrorExchangeNotActive;
-  FunctionConnectionGuardList _gl;
-  std::coroutine_handle<> h;
-  Timer t;
-  int ret = 0;
-  _gl += socket->received.connect([pi, &rda, &h](const DataArray *_rda, uint32_t _pi) {
-    if (!h || _pi != pi) return;
-    rda = _rda;
-    h.resume();
-  });
-  _gl += socket->stateChanged.connect([&h, &ret](AbstractSocket::State state) {
-    if (!h || state != AbstractSocket::State::Unconnected) return;
-    ret = ErrorExchangeConnectionClose;
-    h.resume();
-  });
-  _gl += t.timeout.connect([&h, &ret]() {
-    ret = ErrorExchangeTimeout;
-    h.resume();
-  });
-  auto _ct([&h, &wda, &ret, socket, pi, timeout, &t]() -> CoroutineTask {
-    co_await CoroutineAwait<void>([&h, &wda, &ret, socket, pi, timeout, &t](std::coroutine_handle<> _h) {
-      h = _h;
-      if (!const_cast<DataArraySocket *>(socket)->transmit(wda, pi)) {
-        ret = ErrorExchangeTransmit;
-        _h.resume();
-        return;
-      }
-      t.start(timeout);
-    });
-    h = nullptr;
-  });
-  _ct().wait();
-  lsDebug() << ret;
-  return ret;
 }
 
 void DataArrayTcpClient::connectToHost(DataArraySocket *socket, const std::string &address, uint16_t port, int timeout) {
