@@ -104,7 +104,10 @@ public:
   ThreadPool(int workThreads = ThreadPool_DEFAULT_WORK_THREADS) : ThreadPool("ThreadPool", workThreads) {}
   ~ThreadPool();
 
-  /** @brief Spawns and adds a new managed worker thread to the pool. */
+  /** @brief Spawns a new managed worker thread.
+  @details The thread is created immediately but started asynchronously, start() is posted to the pool's owner event loop. This gives the caller a window to connect started/finished signals before the thread begins to run.
+  @param name Optional thread nam, empty uses "<pool name> thread". @return Pointer to the newly created Thread.
+  @note The returned thread is NOT running yet. Callers that need the thread operational before the current function continues (e.g. before a subsequent sync invoke() on it) must call Thread::start() explicitly. */
   Thread *createThread(const std::string &name = {});
 
   void removeThread(AbstractThreadPool::Thread *) override;
