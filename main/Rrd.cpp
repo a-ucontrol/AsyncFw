@@ -136,19 +136,19 @@ uint32_t Rrd::count() const {
 
 uint32_t Rrd::count_() const { return (last_ < dbSize) ? last_ : dbSize; }
 
-uint64_t Rrd::read(DataArrayList *list, uint64_t val, uint32_t size, uint64_t *lastIndex) {
+uint64_t Rrd::read(DataArrayList *list, uint64_t index, uint32_t size, uint64_t *lastIndex) {
   if (!size) size = dbSize;
   AbstractThread::LockGuard lock = thread_->lockGuard();
   if (lastIndex) *lastIndex = last_;
-  if (val > last_) return last_;
-  if ((last_ - val) > dbSize) val = 1 + last_ - dbSize;
-  uint32_t i = val % dbSize;
+  if (index > last_) return last_;
+  if ((last_ - index) > dbSize) index = 1 + last_ - dbSize;
+  uint32_t i = index % dbSize;
   while (size--) {
     list->push_back(dataBase[i++]);
     if (i == dbSize) i = 0;
-    if ((++val) > last_) break;
+    if ((++index) > last_) break;
   }
-  return val - 1;
+  return index - 1;
 }
 
 bool Rrd::readFromFile() {

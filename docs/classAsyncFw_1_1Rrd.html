@@ -139,8 +139,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a56d6e047fa884528c91286f552f8a239" id="r_a56d6e047fa884528c91286f552f8a239"><td class="memItemLeft"><a id="a56d6e047fa884528c91286f552f8a239" name="a56d6e047fa884528c91286f552f8a239"></a>
 &#160;</td><td class="memItemRight"><b>~Rrd</b> ()</td></tr>
 <tr class="memdesc:a56d6e047fa884528c91286f552f8a239"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. Synchronizes outstanding dirty data buffers to disk and frees internal evaluation assets. <br /></td></tr>
-<tr class="memitem:a171ca62295eb74da3e222bb14e14dea8" id="r_a171ca62295eb74da3e222bb14e14dea8"><td class="memItemLeft">uint64_t&#160;</td><td class="memItemRight"><a class="el" href="#a171ca62295eb74da3e222bb14e14dea8">read</a> (<a class="el" href="classAsyncFw_1_1DataArrayList.html">DataArrayList</a> *, uint64_t=0, uint32_t=0, uint64_t *=nullptr)</td></tr>
-<tr class="memdesc:a171ca62295eb74da3e222bb14e14dea8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Slices historical time-series data records from a given timestamp and extracts them into a provided destination list container.  <br /></td></tr>
+<tr class="memitem:a95bfb5ab301e74e2a0b3d59e4d815b8d" id="r_a95bfb5ab301e74e2a0b3d59e4d815b8d"><td class="memItemLeft">uint64_t&#160;</td><td class="memItemRight"><a class="el" href="#a95bfb5ab301e74e2a0b3d59e4d815b8d">read</a> (<a class="el" href="classAsyncFw_1_1DataArrayList.html">DataArrayList</a> *, uint64_t=1, uint32_t=0, uint64_t *=nullptr)</td></tr>
+<tr class="memdesc:a95bfb5ab301e74e2a0b3d59e4d815b8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Slices historical time-series data records from a given timestamp and extracts them into a provided destination list container.  <br /></td></tr>
 <tr class="memitem:a330145de892c6f5e916d7dda15aeedfc" id="r_a330145de892c6f5e916d7dda15aeedfc"><td class="memItemLeft"><a id="a330145de892c6f5e916d7dda15aeedfc" name="a330145de892c6f5e916d7dda15aeedfc"></a>
 uint32_t&#160;</td><td class="memItemRight"><b>size</b> ()</td></tr>
 <tr class="memdesc:a330145de892c6f5e916d7dda15aeedfc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the absolute maximum capability size (total slots) configured for this circular ring buffer layout. <br /></td></tr>
@@ -393,8 +393,8 @@ template&lt;typename F&gt; </div>
 
 </div>
 </div>
-<a id="a171ca62295eb74da3e222bb14e14dea8" name="a171ca62295eb74da3e222bb14e14dea8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a171ca62295eb74da3e222bb14e14dea8">&#9670;&#160;</a></span>read()</h2>
+<a id="a95bfb5ab301e74e2a0b3d59e4d815b8d" name="a95bfb5ab301e74e2a0b3d59e4d815b8d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a95bfb5ab301e74e2a0b3d59e4d815b8d">&#9670;&#160;</a></span>read()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -407,7 +407,7 @@ template&lt;typename F&gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint64_t</td>          <td class="paramname"><span class="paramname"><em>val</em></span><span class="paramdefsep"> = </span><span class="paramdefval">0</span>, </td>
+          <td class="paramtype">uint64_t</td>          <td class="paramname"><span class="paramname"><em>index</em></span><span class="paramdefsep"> = </span><span class="paramdefval">1</span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -423,6 +423,7 @@ template&lt;typename F&gt; </div>
 </div><div class="memdoc">
 
 <p>Slices historical time-series data records from a given timestamp and extracts them into a provided destination list container. </p>
+<dl class="section note"><dt>Note</dt><dd>Index 0 is never used to store actual data. </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>The unique timestamp boundary configuration of the last successfully extracted record item. </dd></dl>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="LogTcp_2main_8cpp-example.html#a19">LogTcp/main.cpp</a>.</dd>
 </dl>
@@ -430,13 +431,13 @@ template&lt;typename F&gt; </div>
 <div id="dynsection-7-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-7-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1Rrd_a171ca62295eb74da3e222bb14e14dea8_cgraph.svg" width="364" height="88"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1Rrd_a95bfb5ab301e74e2a0b3d59e4d815b8d_cgraph.svg" width="364" height="88"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 <div id="dynsection-8" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
 <div id="dynsection-8-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-8-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1Rrd_a171ca62295eb74da3e222bb14e14dea8_icgraph.svg" width="550" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1Rrd_a95bfb5ab301e74e2a0b3d59e4d815b8d_icgraph.svg" width="550" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>

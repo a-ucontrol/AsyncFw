@@ -39,8 +39,10 @@ public:
   /** @brief Destructor. Synchronizes outstanding dirty data buffers to disk and frees internal evaluation assets. */
   ~Rrd();
 
-  /** @brief Slices historical time-series data records from a given timestamp and extracts them into a provided destination list container. @return The unique timestamp boundary configuration of the last successfully extracted record item. */
-  uint64_t read(DataArrayList *, uint64_t = 0, uint32_t = 0, uint64_t * = nullptr);
+  /** @brief Slices historical time-series data records from a given timestamp and extracts them into a provided destination list container.
+  @note Index 0 is never used to store actual data.
+  @return The unique timestamp boundary configuration of the last successfully extracted record item. */
+  uint64_t read(DataArrayList *, uint64_t = 1, uint32_t = 0, uint64_t * = nullptr);
   /** @brief Returns the absolute maximum capability size (total slots) configured for this circular ring buffer layout. */
   uint32_t size() { return dbSize; }
   /** @brief Returns the total number of valid data items currently populated inside the database allocation framework. */

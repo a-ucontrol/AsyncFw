@@ -29,13 +29,13 @@ int main(int, char **) {
   AsyncFw::RrdClient _rrd_client {_client_socket, {&_log}};
   _rrd_client.connectToHost("127.0.0.1", 10000);
 
-  uint64_t index = _log.lastIndex();
+  uint64_t index = 1;
   AsyncFw::FunctionConnectionGuard _g;
   _g = _log.updated.connect<AsyncFw::AbstractFunctionConnector::Connection::Direct>([&_log, &index, &_g]() {
     if (index == _log.lastIndex()) return;
     AsyncFw::Rrd::ItemList _list;
-    _log.read(&_list, index, std::numeric_limits<uint32_t>::max(), &index);
     std::cout << "=====" << index << "=====" << _log.lastIndex() << "=====";
+    _log.read(&_list, index, std::numeric_limits<uint32_t>::max(), &index);
     for (const AsyncFw::Rrd::Item &_item : _list) {
       AsyncFw::LogStream::Message _message = _log.messageFromRrdItem(_item);
       std::cout << "-----" << _message.string << "-----" << std::endl;
