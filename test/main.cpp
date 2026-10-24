@@ -31,6 +31,7 @@
 #include <AsyncFw/MainThread>
 #include <AsyncFw/FileSystemWatcher>
 #include <AsyncFw/File>
+#include <AsyncFw/Rrd>
 #include <AsyncFw/LogStream>
 
 using namespace AsyncFw;
@@ -709,6 +710,158 @@ void test_coroutine_coInvoke_lambda_capture_tst() {
   EXPECT(meter.liveDelta() == 0);
 }
 
+// ============================================================================
+// Group E. Rrd — count() / readFromArray() with sparse and sequential fills
+// ============================================================================
+//
+// Regression coverage for the count_ removal in commit 0e7f0829. count_ was
+// replaced by std::min(last_, dbSize), which is equivalent to "number of
+// valid records" ONLY when every append() either:
+//   (a) uses index == 0 (auto-sequential, as Log does), or
+//   (b) uses consecutive explicit indexes starting from a fresh clear()
+//       (as RrdClient does once steady-state sync is reached).
+//
+// On the *first* sync, RrdClient::tcpRead fills its local Rrd with the
+// server's last TRANSMIT_COUNT records by passing explicit non-consecutive
+// indexes (val - N + 1 .. val). last_ jumps to the server's position while
+// only N slots are actually populated, so min(last_, size()) overstates
+// count() by orders of magnitude. readFromArray(0) then reads an empty
+// slot, and uCLogWidget's rowCount() (= log->count()) renders a wall of
+// empty "Emergency / 1970-01-01" rows above the real logs.
+//
+// Invariants pinned here (see Rrd::count() docstring for the canonical
+// formulation):
+//   Sequential append (index == 0):        count() == min(lastIndex(), size())
+//   Sparse append (explicit index jumps):  count() == actual append count
+//                                          (capped at size())
+//   readFromArray(0)                    → first actually-appended record
+//   readFromArray(count() - 1)          → last actually-appended record
+//   clear(): count() == 0, lastIndex() == 0
+//   File roundtrip: invariants survive save() → load().
+
+static std::string rrdItemStr(const Rrd::Item &it) { return std::string(it.begin(), it.end()); }
+
+// Baseline: sequential auto-index append keeps count() == number of appends.
+void test_rrd_sequential_append() {
+  Rrd rrd(10);
+  EXPECT(rrd.count() == 0);
+  EXPECT(rrd.lastIndex() == 0);
+
+  for (int i = 1; i <= 5; ++i) rrd.append(DataArray(std::to_string(i)));
+
+  EXPECT(rrd.count() == 5);
+  EXPECT(rrd.lastIndex() == 5);
+  for (int i = 0; i < 5; ++i) {
+    EXPECT_MSG(rrdItemStr(rrd.readFromArray(i)) == std::to_string(i + 1),
+               "readFromArray(" + std::to_string(i) + ")");
+  }
+}
+
+// Baseline: sequential appends that wrap the ring cap count() at size().
+void test_rrd_sequential_wrap() {
+  Rrd rrd(10);
+  for (int i = 1; i <= 15; ++i) rrd.append(DataArray(std::to_string(i)));
+
+  EXPECT(rrd.count() == 10);
+  EXPECT(rrd.lastIndex() == 15);
+  EXPECT(rrdItemStr(rrd.readFromArray(0)) == "6");
+  EXPECT(rrdItemStr(rrd.readFromArray(9)) == "15");
+}
+
+// THE BUG CASE. Mirrors RrdClient::tcpRead first-sync: server already has
+// 4100 records, client requests the last 100. Each append carries an explicit
+// index, so last_ jumps to 4100 while only 100 slots are populated.
+// Before the fix count() returned 1000 (min(4100, 1000)) and readFromArray(0)
+// read an empty slot 900 positions away.
+void test_rrd_sparse_append_like_rrdclient() {
+  Rrd rrd(1000);
+
+  const uint64_t firstIdx = 4001;  // server's (last - 100 + 1)
+  const uint64_t n        = 100;
+  for (uint64_t i = 0; i < n; ++i) {
+    rrd.append(DataArray(std::to_string(firstIdx + i)), firstIdx + i);
+  }
+
+  EXPECT(rrd.lastIndex() == firstIdx + n - 1);
+
+  const uint32_t got = rrd.count();
+  EXPECT_MSG(got == n,
+             "count()=" + std::to_string(got) + " (expected " + std::to_string(n) +
+                 " — length of the valid suffix, not min(lastIndex(), size()))");
+
+  const std::string got0 = rrdItemStr(rrd.readFromArray(0));
+  EXPECT_MSG(got0 == std::to_string(firstIdx),
+             "readFromArray(0)=\"" + got0 + "\" (expected \"" + std::to_string(firstIdx) +
+                 "\" — empty slot here means count_/lastIndex() mapping is broken)");
+
+  const std::string gotLast = rrdItemStr(rrd.readFromArray(n - 1));
+  EXPECT_MSG(gotLast == std::to_string(firstIdx + n - 1),
+             "readFromArray(count-1)=\"" + gotLast + "\"");
+
+  for (uint64_t i = 0; i < n; ++i) {
+    EXPECT_MSG(rrdItemStr(rrd.readFromArray(i)) == std::to_string(firstIdx + i),
+               "readFromArray(" + std::to_string(i) + ")");
+  }
+}
+
+// clear() resets both last_ and count_.
+void test_rrd_clear() {
+  Rrd rrd(10);
+  for (int i = 1; i <= 5; ++i) rrd.append(DataArray(std::to_string(i)));
+  EXPECT(rrd.count() == 5);
+
+  rrd.clear();
+  EXPECT(rrd.count() == 0);
+  EXPECT(rrd.lastIndex() == 0);
+
+  // Appending after clear() starts a fresh suffix.
+  for (int i = 1; i <= 3; ++i) rrd.append(DataArray(std::to_string(100 + i)));
+  EXPECT(rrd.count() == 3);
+  EXPECT(rrd.lastIndex() == 3);
+  EXPECT(rrdItemStr(rrd.readFromArray(0)) == "101");
+  EXPECT(rrdItemStr(rrd.readFromArray(2)) == "103");
+}
+
+// THE BUG CASE ON RELOAD. File roundtrip of a sparse-filled Rrd must preserve
+// count() and readFromArray() semantics. The pre-fix readFromFile dropped the
+// non-empty-scan that restored count_, so a sparse-filled file reloaded with
+// count() == min(last_, size()) and produced the same empty-slot reads as
+// test_rrd_sparse_append_like_rrdclient.
+void test_rrd_file_roundtrip_sparse() {
+  const std::string fn = "/tmp/AsyncFw-test-rrd-sparse.db";
+  std::filesystem::remove(fn);
+
+  const uint64_t firstIdx = 4001;
+  const uint64_t n        = 100;
+
+  {
+    Rrd rrd(1000, fn);
+    for (uint64_t i = 0; i < n; ++i) {
+      rrd.append(DataArray(std::to_string(firstIdx + i)), firstIdx + i);
+    }
+    EXPECT(rrd.count() == n);
+    rrd.save();
+  }
+
+  {
+    Rrd rrd(1000, fn);
+    const uint32_t got = rrd.count();
+    EXPECT_MSG(got == n,
+               "count() after reload=" + std::to_string(got) + " (expected " + std::to_string(n) + ")");
+    EXPECT(rrd.lastIndex() == firstIdx + n - 1);
+
+    const std::string got0 = rrdItemStr(rrd.readFromArray(0));
+    EXPECT_MSG(got0 == std::to_string(firstIdx),
+               "readFromArray(0) after reload=\"" + got0 + "\"");
+
+    const std::string gotLast = rrdItemStr(rrd.readFromArray(n - 1));
+    EXPECT_MSG(gotLast == std::to_string(firstIdx + n - 1),
+               "readFromArray(count-1) after reload=\"" + gotLast + "\"");
+  }
+
+  std::filesystem::remove(fn);
+}
+
 }  // namespace
 
 // ============================================================================
@@ -744,6 +897,16 @@ int main(int, char **) {
   test_coroutine_coInvoke_thread_xvalue_tst();
   test_coroutine_coInvoke_returns_tst();
   test_coroutine_coInvoke_lambda_capture_tst();
+
+  // --- Group E: Rrd ---------------------------------------------------
+  // Independent of MainThread::exec(); placed before FileSystemWatcher so
+  // the (possible) warning from Rrd::save() while MainThread's id is still
+  // set doesn't leak into the FS tests' logs.
+  test_rrd_sequential_append();
+  test_rrd_sequential_wrap();
+  test_rrd_sparse_append_like_rrdclient();
+  test_rrd_clear();
+  test_rrd_file_roundtrip_sparse();
 
   // --- Group C: FileSystemWatcher -------------------------------------
   // Runs on MainThread::exec(). Must be last because MainThread::exit()
