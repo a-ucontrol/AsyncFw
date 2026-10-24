@@ -73,6 +73,9 @@ public:
   /** @brief Broadcasts an immediate multicast query to discover hosts. @param seconds Optional timeout in seconds to arm or reset the cyclic discovery timer (0 uses default query timeout). @return The number of network sockets through which the query was successfully transmitted, or a negative error code on failure. */
   int sendQuery(int = 0);
 
+  /** @brief Thread-safe getter returning a snapshot of all discovered network hosts. */
+  const std::vector<Host> hosts() const;
+
   /** @brief Triggered when a device is found. */
   FunctionConnector<const Host &>::Policy<AbstractFunctionConnector::Queued>::Protected<MulticastDns> hostAdded;
   /** @brief Triggered when a device alters parameters.
@@ -80,10 +83,6 @@ public:
   FunctionConnector<const Host &>::Policy<AbstractFunctionConnector::Queued>::Protected<MulticastDns> hostChanged;
   /** @brief Triggered when a device leaves or times out. */
   FunctionConnector<const Host &>::Policy<AbstractFunctionConnector::Queued>::Protected<MulticastDns> hostRemoved;
-
-protected:
-  /** @brief Thread-safe getter returning a snapshot of all discovered network hosts. */
-  const std::vector<Host> hosts() const;
 
 private:
   static Instance<MulticastDns> instance_;

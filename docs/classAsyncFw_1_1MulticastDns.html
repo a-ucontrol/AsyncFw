@@ -154,6 +154,9 @@ bool&#160;</td><td class="memItemRight"><b>querierRunning</b> () const</td></tr>
 <tr class="memdesc:a9afe98db8817d4d9c6b6eb1ba07f5e60"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the network query browser is actively polling. <br /></td></tr>
 <tr class="memitem:a091b0f3d62c8f78f33a396f4cbf140b0" id="r_a091b0f3d62c8f78f33a396f4cbf140b0"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#a091b0f3d62c8f78f33a396f4cbf140b0">sendQuery</a> (int=0)</td></tr>
 <tr class="memdesc:a091b0f3d62c8f78f33a396f4cbf140b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Broadcasts an immediate multicast query to discover hosts.  <br /></td></tr>
+<tr class="memitem:a1aae9d9612ba077da938bb80a8c3330d" id="r_a1aae9d9612ba077da938bb80a8c3330d"><td class="memItemLeft"><a id="a1aae9d9612ba077da938bb80a8c3330d" name="a1aae9d9612ba077da938bb80a8c3330d"></a>
+const std::vector&lt; <a class="el" href="structAsyncFw_1_1MulticastDns_1_1Host.html">Host</a> &gt;&#160;</td><td class="memItemRight"><b>hosts</b> () const</td></tr>
+<tr class="memdesc:a1aae9d9612ba077da938bb80a8c3330d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thread-safe getter returning a snapshot of all discovered network hosts. <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-static-methods" class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -171,12 +174,6 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a86f3cda5153f7230800f7022510bc6e8" id="r_a86f3cda5153f7230800f7022510bc6e8"><td class="memItemLeft"><a id="a86f3cda5153f7230800f7022510bc6e8" name="a86f3cda5153f7230800f7022510bc6e8"></a>
 <a class="el" href="classAsyncFw_1_1FunctionConnector.html">FunctionConnector</a>&lt; const <a class="el" href="structAsyncFw_1_1MulticastDns_1_1Host.html">Host</a> &amp; &gt;::Policy&lt; <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector.html#ab248bd16cbfcac609f58d401abec4368a5d08e36148e4f87ea06266376ac65da9">AbstractFunctionConnector::Queued</a> &gt;::Protected&lt; <a class="el" href="#ab9bfb41e98cd4ecf1cc63f8acd023afd">MulticastDns</a> &gt;&#160;</td><td class="memItemRight"><b>hostRemoved</b></td></tr>
 <tr class="memdesc:a86f3cda5153f7230800f7022510bc6e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Triggered when a device leaves or times out. <br /></td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 id="header-pro-methods" class="groupheader"><a id="pro-methods" name="pro-methods"></a>
-Protected Member Functions</h2></td></tr>
-<tr class="memitem:a1aae9d9612ba077da938bb80a8c3330d" id="r_a1aae9d9612ba077da938bb80a8c3330d"><td class="memItemLeft"><a id="a1aae9d9612ba077da938bb80a8c3330d" name="a1aae9d9612ba077da938bb80a8c3330d"></a>
-const std::vector&lt; <a class="el" href="structAsyncFw_1_1MulticastDns_1_1Host.html">Host</a> &gt;&#160;</td><td class="memItemRight"><b>hosts</b> () const</td></tr>
-<tr class="memdesc:a1aae9d9612ba077da938bb80a8c3330d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thread-safe getter returning a snapshot of all discovered network hosts. <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Asynchronous mDNS/DNS-SD service responder and discovery browser. </p>
