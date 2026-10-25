@@ -117,13 +117,11 @@ void Rrd::append(const Item &data, uint64_t index) {
 }
 
 Rrd::Item Rrd::readFromArray(uint32_t index) {  //Must lock the thread before calling this method
-  uint64_t i = 1 + last_ + index - count_();
-  return dataBase[i % dbSize];
+  return dataBase[(first_ + index) % dbSize];
 }
 
 void Rrd::writeToArray(uint32_t index, const Item &ba) {  //Must lock the thread before calling this method
-  uint64_t i = 1 + last_ + index - count_();
-  dataBase[i % dbSize] = ba;
+  dataBase[(first_ + index) % dbSize] = ba;
 }
 
 void Rrd::clear() {
@@ -143,10 +141,8 @@ uint64_t Rrd::lastIndex() {
 
 uint32_t Rrd::count() const {
   AbstractThread::LockGuard lock = thread_->lockGuard();
-  return count_();
+  return (first_ == 0) ? 0 : static_cast<uint32_t>(last_ - first_ + 1);
 }
-
-uint32_t Rrd::count_() const { return (first_ == 0) ? 0 : static_cast<uint32_t>(last_ - first_ + 1); }
 
 uint64_t Rrd::read(DataArrayList *list, uint64_t index, uint32_t size, uint64_t *lastIndex) {
   if (!size) size = dbSize;
@@ -244,7 +240,7 @@ bool Rrd::saveToFile(const std::string &_fileToSave) {
 #ifdef EXTEND_RRD_TRACE
   std::chrono::time_point<std::chrono::steady_clock> t = std::chrono::steady_clock::now();
   int size = _ds.array().size();
-  trace() << "Rrd: saved:" << fileToSave << std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - t).count()) + "ms, mem size: " + std::to_string(size) + ", count:" + std::to_string(count_()) + '/' + std::to_string(dbSize) + ", file size:" + std::to_string(_buf.size()) + ", ratio: " + std::to_string(size / static_cast<int>(_buf.size()));
+  trace() << "Rrd: saved:" << fileToSave << std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - t).count()) + "ms, mem size: " + std::to_string(size) + ", count:" + std::to_string(count()) + '/' + std::to_string(dbSize) + ", file size:" + std::to_string(_buf.size()) + ", ratio: " + std::to_string(size / static_cast<int>(_buf.size()));
 #endif
   return true;
 }
