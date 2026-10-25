@@ -64,7 +64,14 @@ bool Rrd::createFile() {
 
 void Rrd::append(const Item &data, uint64_t index) {
   if (!dbSize) return;
-  uint64_t pos = index ? index : interval_ ? Rrd_CURRENT_TIME / interval_ : 1;
+  uint64_t pos;
+  if (index) {
+    if (!interval_) {
+      lsError() << "explicit index requires interval_ > 0";
+      return;
+    }
+    pos = index;
+  } else pos = interval_ ? Rrd_CURRENT_TIME / interval_ : 1;
   bool _average;
   {  //lock scope
     AbstractThread::LockGuard lock = thread_->lockGuard();
@@ -176,7 +183,10 @@ bool Rrd::readFromFile() {
     DataStream ds(_buf);
     ds >> last_;
     ds >> dataBase;
-    if (ds.fail()) dataBase.clear();
+    if (ds.fail()) {
+      dataBase.clear();
+      return false;
+    }
   }
 
   bool ok = false;
@@ -186,18 +196,23 @@ bool Rrd::readFromFile() {
   }
   if (static_cast<uint32_t>(dataBase.size()) != dbSize) {
     console_msg("Rrd", "error database size: " + std::to_string(dataBase.size()));
-  } else {
+  } else if (!first_) {
     ok = true;
     first_ = 0;
-    if (last_ - first_ + 1 > dbSize) first_ = last_ - dbSize + 1;
-    else
-      for (uint64_t i = 0; i != dataBase.size(); ++i) {
-        if (!dataBase[i].empty()) {
-          first_ = i;
-          updated();
-          break;
-        }
+    if (dbSize > 0 && last_ > 0) {
+      uint64_t j = 0;
+      for (uint64_t i = 0; i < dbSize; ++i) {
+        if (dataBase[i].empty()) continue;
+        if (last_ < i) continue;
+        uint64_t p = i + ((last_ - i) / dbSize) * dbSize;
+        if (j == 0 || p < j) j = p;
       }
+      first_ = j;
+    }
+    updated();
+  } else {
+    ok = true;
+    updated();
   }
   return ok;
 }

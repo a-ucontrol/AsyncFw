@@ -775,9 +775,7 @@ void test_rrd_clear() {
 // (900 empty + 100 real); post-fix returns just the 100 real ones.
 void test_rrd_read_clamp_to_first() {
   Rrd rrd(1000, 1, 0);  // interval_ = 1 → explicit index allowed
-  for (uint64_t i = 0; i < 100; ++i) {
-    rrd.append(DataArray(std::to_string(4001 + i)), 4001 + i);
-  }
+  for (uint64_t i = 0; i < 100; ++i) { rrd.append(DataArray(std::to_string(4001 + i)), 4001 + i); }
   EXPECT(rrd.count() == 100);
   EXPECT(rrd.lastIndex() == 4100);
 
@@ -848,7 +846,7 @@ void test_rrd_readonly_load_contiguous() {
 // Prohibition: explicit index with interval_ == 0 must be rejected.
 // Auto-index still works in the same instance.
 void test_rrd_append_explicit_index_prohibited() {
-  Rrd rrd(1000);  // interval_ == 0
+  Rrd rrd(1000);                        // interval_ == 0
   rrd.append(DataArray("4001"), 4001);  // prohibited
   EXPECT_MSG(rrd.count() == 0, "count=" + std::to_string(rrd.count()) + " (append(item, index) must be rejected)");
   EXPECT_MSG(rrd.lastIndex() == 0, "lastIndex=" + std::to_string(rrd.lastIndex()));
@@ -868,18 +866,13 @@ void test_rrd_append_auto_index_matches_rrdclient() {
   Rrd client(1000);
 
   const uint64_t serverFirst = 4001;
-  const uint64_t serverLast  = 5000;
-  for (uint64_t p = serverFirst; p <= serverLast; ++p) {
-    client.append(DataArray(std::to_string(p)));
-  }
+  const uint64_t serverLast = 5000;
+  for (uint64_t p = serverFirst; p <= serverLast; ++p) { client.append(DataArray(std::to_string(p))); }
 
   EXPECT(client.count() == 1000);
-  EXPECT_MSG(client.lastIndex() == 1000, "lastIndex=" + std::to_string(client.lastIndex()) +
-                                             " (local counter, not server position)");
-  EXPECT_MSG(rrdItemStr(client.readFromArray(0)) == std::to_string(serverFirst),
-             "readFromArray(0)=\"" + rrdItemStr(client.readFromArray(0)) + "\"");
-  EXPECT_MSG(rrdItemStr(client.readFromArray(999)) == std::to_string(serverLast),
-             "readFromArray(999)=\"" + rrdItemStr(client.readFromArray(999)) + "\"");
+  EXPECT_MSG(client.lastIndex() == 1000, "lastIndex=" + std::to_string(client.lastIndex()) + " (local counter, not server position)");
+  EXPECT_MSG(rrdItemStr(client.readFromArray(0)) == std::to_string(serverFirst), "readFromArray(0)=\"" + rrdItemStr(client.readFromArray(0)) + "\"");
+  EXPECT_MSG(rrdItemStr(client.readFromArray(999)) == std::to_string(serverLast), "readFromArray(999)=\"" + rrdItemStr(client.readFromArray(999)) + "\"");
 }
 
 // interval > 0 allows explicit index. Gaps (fill == 0) are cleared but remain
@@ -892,12 +885,11 @@ void test_rrd_append_explicit_index_with_interval() {
   rrd.append(DataArray("400"), 400);
 
   EXPECT(rrd.lastIndex() == 400);
-  EXPECT_MSG(rrd.count() == 301, "count=" + std::to_string(rrd.count()) +
-                                     " (span [first_=100, last_=400] includes cleared gaps)");
+  EXPECT_MSG(rrd.count() == 301, "count=" + std::to_string(rrd.count()) + " (span [first_=100, last_=400] includes cleared gaps)");
   EXPECT(rrdItemStr(rrd.readFromArray(0)) == "100");
-  EXPECT(rrdItemStr(rrd.readFromArray(1)) == "");   // gap 101..199
+  EXPECT(rrdItemStr(rrd.readFromArray(1)) == "");  // gap 101..199
   EXPECT(rrdItemStr(rrd.readFromArray(100)) == "200");
-  EXPECT(rrdItemStr(rrd.readFromArray(101)) == ""); // gap 201..399
+  EXPECT(rrdItemStr(rrd.readFromArray(101)) == "");  // gap 201..399
   EXPECT(rrdItemStr(rrd.readFromArray(300)) == "400");
 }
 
@@ -939,7 +931,7 @@ void test_rrd_file_roundtrip_sparse_offset() {
   std::filesystem::remove(fn);
 
   {
-    Rrd rrd(1000, 1, 0, fn);   // dbSize = 1000
+    Rrd rrd(1000, 1, 0, fn);  // dbSize = 1000
     rrd.append(DataArray("1001"), 1001);
     rrd.append(DataArray("1101"), 1101);
     rrd.append(DataArray("1301"), 1301);
@@ -951,18 +943,67 @@ void test_rrd_file_roundtrip_sparse_offset() {
   {
     Rrd rrd(1000, 1, 0, fn);
     EXPECT_MSG(rrd.lastIndex() == 1301, "lastIndex after reload=" + std::to_string(rrd.lastIndex()));
-    EXPECT_MSG(rrd.count() == 301,
-               "count after reload=" + std::to_string(rrd.count()) +
-                   " (sparse positions > dbSize: first_ must be 1001, not last_ - dbSize + 1 = 302)");
-    EXPECT_MSG(rrdItemStr(rrd.readFromArray(0)) == "1001",
-               "readFromArray(0) after reload=\"" + rrdItemStr(rrd.readFromArray(0)) + "\"");
-    EXPECT_MSG(rrdItemStr(rrd.readFromArray(300)) == "1301",
-               "readFromArray(300) after reload=\"" + rrdItemStr(rrd.readFromArray(300)) + "\"");
+    EXPECT_MSG(rrd.count() == 301, "count after reload=" + std::to_string(rrd.count()) + " (sparse positions > dbSize: first_ must be 1001, not last_ - dbSize + 1 = 302)");
+    EXPECT_MSG(rrdItemStr(rrd.readFromArray(0)) == "1001", "readFromArray(0) after reload=\"" + rrdItemStr(rrd.readFromArray(0)) + "\"");
+    EXPECT_MSG(rrdItemStr(rrd.readFromArray(300)) == "1301", "readFromArray(300) after reload=\"" + rrdItemStr(rrd.readFromArray(300)) + "\"");
   }
 
   std::filesystem::remove(fn);
 }
 
+// Regression: sparse positions >= dbSize. Without first_ persisted, the
+// wrap fallback (last_ - dbSize + 1) understates first_ for sparse fills
+// that started above dbSize. With first_ stored, the exact position is
+// preserved.
+void test_rrd_file_roundtrip_sparse_offset2() {
+  const std::string fn = "/tmp/AsyncFw-test-rrd-sparse-offset.db";
+  std::filesystem::remove(fn);
+
+  {
+    Rrd rrd(1000, 1, 0, fn);  // interval_ > 0, dbSize = 1000
+    rrd.append(DataArray("1001"), 1001);
+    rrd.append(DataArray("1101"), 1101);
+    rrd.append(DataArray("1301"), 1301);
+    EXPECT(rrd.count() == 301);
+    EXPECT(rrd.lastIndex() == 1301);
+    rrd.save();
+  }
+
+  {
+    Rrd rrd(1000, 1, 0, fn);
+    EXPECT_MSG(rrd.lastIndex() == 1301, "lastIndex after reload=" + std::to_string(rrd.lastIndex()));
+    EXPECT_MSG(rrd.count() == 301, "count after reload=" + std::to_string(rrd.count()) + " (sparse positions > dbSize: first_ must be 1001, not last_ - dbSize + 1 = 302)");
+    EXPECT_MSG(rrdItemStr(rrd.readFromArray(0)) == "1001", "readFromArray(0) after reload=\"" + rrdItemStr(rrd.readFromArray(0)) + "\"");
+    EXPECT_MSG(rrdItemStr(rrd.readFromArray(200)) == "", "readFromArray(200) after reload=\"" + rrdItemStr(rrd.readFromArray(200)) + "\" (gap at position 1201)");
+    EXPECT_MSG(rrdItemStr(rrd.readFromArray(300)) == "1301", "readFromArray(300) after reload=\"" + rrdItemStr(rrd.readFromArray(300)) + "\"");
+  }
+
+  std::filesystem::remove(fn);
+}
+
+// Edge: single record at position == dbSize. Without first_ persisted,
+// wrap fallback gives first_ = dbSize - dbSize + 1 = 1 (off-by-(dbSize-1)).
+void test_rrd_file_roundtrip_first_equals_dbsize() {
+  const std::string fn = "/tmp/AsyncFw-test-rrd-first-eq-db.db";
+  std::filesystem::remove(fn);
+
+  {
+    Rrd rrd(10, 1, 0, fn);
+    rrd.append(DataArray("data"), 10);  // pos == dbSize
+    EXPECT(rrd.count() == 1);
+    EXPECT(rrd.lastIndex() == 10);
+    rrd.save();
+  }
+
+  {
+    Rrd rrd(10, 1, 0, fn);
+    EXPECT_MSG(rrd.count() == 1, "count=" + std::to_string(rrd.count()) + " (was: fallback wrap = 10)");
+    EXPECT_MSG(rrd.lastIndex() == 10, "lastIndex=" + std::to_string(rrd.lastIndex()));
+    EXPECT_MSG(rrdItemStr(rrd.readFromArray(0)) == "data", "readFromArray(0)=\"" + rrdItemStr(rrd.readFromArray(0)) + "\"");
+  }
+
+  std::filesystem::remove(fn);
+}
 }  // namespace
 
 // ============================================================================
@@ -1011,6 +1052,8 @@ int main(int, char **) {
   test_rrd_file_roundtrip_sparse_time_based();
   test_rrd_readonly_load_contiguous();
   test_rrd_file_roundtrip_sparse_offset();
+  test_rrd_file_roundtrip_sparse_offset2();
+  test_rrd_file_roundtrip_first_equals_dbsize();
 
   // --- Group C: FileSystemWatcher -------------------------------------
   // Runs on MainThread::exec(). Must be last because MainThread::exit()
