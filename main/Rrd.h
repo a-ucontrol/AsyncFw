@@ -72,10 +72,10 @@ public:
 
 protected:
   Thread *thread_;
+  uint32_t first_;
   uint64_t last_;
   uint32_t dbSize;
   ItemList dataBase;
-  uint32_t count_;
   bool readOnly = false;
 
 private:
@@ -88,5 +88,6 @@ private:
   bool createFile();
   bool readFromFile();
   bool saveToFile(const std::string &fn = {});
+  uint32_t count_() const;
 };
 }  // namespace AsyncFw

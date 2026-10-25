@@ -27,11 +27,11 @@ using namespace AsyncFw;
 Rrd::Rrd(int size, int interval, int fillInterval, const std::string &name) : dbSize(size), interval_(interval), fill(interval ? fillInterval / interval : 0) {
   lsTrace();
   thread_ = Thread::current();
-  if (size == 0) {
-    readOnly = true;
-    if (name.empty()) return;
-  }
+  first_ = 0;
   last_ = 0;
+
+  if (size == 0) readOnly = true;
+
   if (!name.empty()) {
     file = name;
     if (!readFromFile()) {
@@ -39,10 +39,7 @@ Rrd::Rrd(int size, int interval, int fillInterval, const std::string &name) : db
 
       if (!createFile() && !readOnly) console_msg("Rrd", "create failed: " + name);
     }
-  } else {
-    count_ = 0;
-    dataBase.resize(dbSize);
-  }
+  } else if (!readOnly) dataBase.resize(dbSize);
 }
 Rrd::Rrd(int size, int interval, int fillInterval) : Rrd(size, interval, fillInterval, {}) {}
 
@@ -57,9 +54,9 @@ Rrd::Rrd(int size, const std::string &name) : Rrd(size, 0, 0, name) {}
 Rrd::Rrd(int size) : Rrd(size, 0, 0, {}) {}
 
 bool Rrd::createFile() {
-  count_ = 0;
   dataBase.clear();
   dataBase.resize(dbSize);
+  first_ = 0;
   last_ = 0;
   if (readOnly || !saveToFile()) return false;
   return true;
@@ -83,7 +80,9 @@ void Rrd::append(const Item &data, uint64_t index) {
       return;
     }
 
-    if (count_ < dbSize && count_ < pos) count_ += 1;
+    if (first_ == 0) first_ = pos;
+    else if (pos - first_ + 1 > dbSize) first_ = pos - dbSize + 1;
+
     uint32_t i = pos % dbSize;
     dataBase[i] = data;
 
@@ -111,12 +110,12 @@ void Rrd::append(const Item &data, uint64_t index) {
 }
 
 Rrd::Item Rrd::readFromArray(uint32_t index) {  //Must lock the thread before calling this method
-  uint64_t i = 1 + last_ + index - count_;
+  uint64_t i = 1 + last_ + index - count_();
   return dataBase[i % dbSize];
 }
 
 void Rrd::writeToArray(uint32_t index, const Item &ba) {  //Must lock the thread before calling this method
-  uint64_t i = 1 + last_ + index - count_;
+  uint64_t i = 1 + last_ + index - count_();
   dataBase[i % dbSize] = ba;
 }
 
@@ -124,8 +123,8 @@ void Rrd::clear() {
   {  //lock scope
     AbstractThread::LockGuard lock = thread_->lockGuard();
     for (uint32_t i = 0; i != dbSize; ++i) dataBase[i].clear();
+    first_ = 0;
     last_ = 0;
-    count_ = 0;
   }
   updated();
 }
@@ -137,15 +136,17 @@ uint64_t Rrd::lastIndex() {
 
 uint32_t Rrd::count() const {
   AbstractThread::LockGuard lock = thread_->lockGuard();
-  return count_;
+  return count_();
 }
+
+uint32_t Rrd::count_() const { return (first_ == 0) ? 0 : static_cast<uint32_t>(last_ - first_ + 1); }
 
 uint64_t Rrd::read(DataArrayList *list, uint64_t index, uint32_t size, uint64_t *lastIndex) {
   if (!size) size = dbSize;
   AbstractThread::LockGuard lock = thread_->lockGuard();
   if (lastIndex) *lastIndex = last_;
   if (index > last_) return last_;
-  if ((last_ - index) > dbSize) index = 1 + last_ - dbSize;
+  if (index < first_) index = first_;
   uint32_t i = index % dbSize;
   while (size--) {
     list->push_back(dataBase[i++]);
@@ -187,10 +188,16 @@ bool Rrd::readFromFile() {
     console_msg("Rrd", "error database size: " + std::to_string(dataBase.size()));
   } else {
     ok = true;
-    count_ = 0;
-    for (const Item &ba : dataBase)
-      if (!ba.empty()) count_++;
-    updated();
+    first_ = 0;
+    if (last_ - first_ + 1 > dbSize) first_ = last_ - dbSize + 1;
+    else
+      for (uint64_t i = 0; i != dataBase.size(); ++i) {
+        if (!dataBase[i].empty()) {
+          first_ = i;
+          updated();
+          break;
+        }
+      }
   }
   return ok;
 }
