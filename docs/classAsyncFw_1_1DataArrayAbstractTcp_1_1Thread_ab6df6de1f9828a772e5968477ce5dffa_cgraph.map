@@ -1,11 +1,32 @@
 <map id="AsyncFw::DataArrayAbstractTcp::Thread::destroySocket" name="AsyncFw::DataArrayAbstractTcp::Thread::destroySocket">
-<area shape="rect" id="Node000001" title="Performs cleanup routines and safely removes a socket from the thread loop." alt="" coords="5,39,198,81"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractTlsSocket.html#a46dbd8e4895445214a4f46ee46433d6c" title="Immediately releases OpenSSL session pointers and forcefully closes the system&#45;level descriptor." alt="" coords="246,5,438,48"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="198,44,233,41,228,43,199,49"/>
-<area shape="rect" id="Node000005" href="$classAsyncFw_1_1AbstractSocket.html#aa0f81593deeb67fe6a3031e9d57738d4" title="Synchronously detaches the socket from its execution thread." alt="" coords="255,72,429,115"/>
-<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="198,71,242,79,236,79,198,76"/>
-<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractSocket.html#a77c0a9ea7c5061c406673bbe8b18d60d" title="Closes the network connection and unsubscribes from thread polling events." alt="" coords="486,5,660,48"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="438,24,473,26,468,27,438,29"/>
-<area shape="rect" id="Node000004" href="$classAsyncFw_1_1AbstractSocket.html#a5db12267a6d2241e81f570463f2d7ef5" title="Called when the connection state changes." alt="" coords="708,5,883,48"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="661,24,695,26,690,27,661,29"/>
+<area shape="rect" id="Node000001" title="Performs cleanup routines and safely removes a socket from the thread loop." alt="" coords="5,120,198,163"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractTlsSocket.html#a46dbd8e4895445214a4f46ee46433d6c" title="Immediately releases OpenSSL session pointers and forcefully closes the system&#45;level descriptor." alt="" coords="249,20,442,63"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="145,117,245,72,264,67,259,70,247,77,148,122"/>
+<area shape="rect" id="Node000005" href="$classAsyncFw_1_1AbstractSocket.html#a73a200f0008dbf9f820bdb2b8a0054cf" title="Schedules the socket for deferred asynchronous destruction." alt="" coords="258,87,432,129"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="197,126,245,121,240,123,199,131"/>
+<area shape="rect" id="Node000013" href="$classAsyncFw_1_1AbstractThreadPool.html#ac312e723c2e0fa3e4cc18e518853bdf2" title="Returns the identifier name of the thread pool." alt="" coords="246,153,445,196"/>
+<area shape="poly" id="edge15_Node000001_Node000013" title=" " alt="" coords="198,152,233,158,227,160,198,157"/>
+<area shape="rect" id="Node000014" href="$classAsyncFw_1_1AbstractSocket.html#aa0f81593deeb67fe6a3031e9d57738d4" title="Synchronously detaches the socket from its execution thread." alt="" coords="258,220,432,263"/>
+<area shape="poly" id="edge16_Node000001_Node000014" title=" " alt="" coords="147,161,247,206,264,214,259,214,245,210,146,166"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractSocket.html#a77c0a9ea7c5061c406673bbe8b18d60d" title="Closes the network connection and unsubscribes from thread polling events." alt="" coords="493,20,667,63"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="442,39,480,41,475,42,443,44"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1AbstractSocket.html#a5db12267a6d2241e81f570463f2d7ef5" title="Called when the connection state changes." alt="" coords="715,5,890,48"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="667,33,702,33,697,34,668,38"/>
+<area shape="poly" id="edge5_Node000005_Node000003" title=" " alt="" coords="422,84,490,67,485,68,424,89"/>
+<area shape="rect" id="Node000006" href="$classAsyncFw_1_1Thread.html#a0a3bd6a54db28f73ff59cfea6a40b07a" title="Returns a pointer to the AsyncFw::Thread that manages the currently executing thread." alt="" coords="494,95,666,121"/>
+<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="433,105,481,107,476,109,434,111"/>
+<area shape="rect" id="Node000011" href="$classAsyncFw_1_1AbstractThread.html#af1382b21117f049a9ab7063017d7fae6" title="Runs a function in a managed thread." alt="" coords="494,160,667,203"/>
+<area shape="poly" id="edge13_Node000005_Node000011" title=" " alt="" coords="416,127,497,155,492,155,415,132"/>
+<area shape="rect" id="Node000007" href="$classAsyncFw_1_1AbstractThread.html#af33c5949edb374d673a7a9ac0c81ec32" title="Returns a pointer to the AsyncFw::AbstractThread that manages the currently executing thread." alt="" coords="716,72,889,115"/>
+<area shape="poly" id="edge7_Node000006_Node000007" title=" " alt="" coords="666,100,703,100,697,100,667,105"/>
+<area shape="rect" id="Node000010" href="$classAsyncFw_1_1Thread.html#afc5e422090767dd84020381fb9a4d490" title="Constructs a thread." alt="" coords="716,139,889,165"/>
+<area shape="poly" id="edge10_Node000006_Node000010" title=" " alt="" coords="651,119,719,135,714,135,651,125"/>
+<area shape="rect" id="Node000008" href="$classAsyncFw_1_1AbstractThread.html#a8c9202c90ac101522f26c4260cb01b59" title="Constructs a thread." alt="" coords="938,72,1111,115"/>
+<area shape="poly" id="edge8_Node000007_Node000008" title=" " alt="" coords="890,91,925,93,919,94,890,96"/>
+<area shape="rect" id="Node000009" href="$classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd" title="Returns name of managed thread." alt="" coords="1159,101,1332,144"/>
+<area shape="poly" id="edge9_Node000008_Node000009" title=" " alt="" coords="1111,102,1146,109,1141,109,1111,108"/>
+<area shape="poly" id="edge11_Node000010_Node000008" title=" " alt="" coords="855,135,924,120,929,119,856,141"/>
+<area shape="poly" id="edge12_Node000010_Node000009" title=" " alt="" coords="889,144,1146,129,1141,130,890,149"/>
+<area shape="rect" id="Node000012" href="$classAsyncFw_1_1AbstractThread.html#abe96e6b2a1de041f0d25390a6b77e50a" title="Runs a task in a managed thread." alt="" coords="716,189,889,232"/>
+<area shape="poly" id="edge14_Node000011_Node000012" title=" " alt="" coords="667,190,703,197,698,197,667,195"/>
 </map>
