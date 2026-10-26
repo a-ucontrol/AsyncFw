@@ -140,7 +140,7 @@ uint64_t Rrd::lastIndex() {
 
 uint32_t Rrd::count() const {
   AbstractThread::LockGuard lock = thread_->lockGuard();
-  return (first_ == 0) ? 0 : static_cast<uint32_t>(last_ - first_ + 1);
+  return (first_ == 0) ? 0 : last_ - first_ + 1;
 }
 
 uint64_t Rrd::read(DataArrayList *list, uint64_t index, uint32_t size, uint64_t *lastIndex) {
@@ -238,7 +238,7 @@ bool Rrd::saveToFile(const std::string &_fileToSave) {
 #ifdef EXTEND_RRD_TRACE
   std::chrono::time_point<std::chrono::steady_clock> t = std::chrono::steady_clock::now();
   int size = _ds.array().size();
-  trace() << "Rrd: saved:" << fileToSave << std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - t).count()) + "ms, mem size: " + std::to_string(size) + ", count:" + std::to_string(count()) + '/' + std::to_string(dbSize) + ", file size:" + std::to_string(_buf.size()) + ", ratio: " + std::to_string(size / static_cast<int>(_buf.size()));
+  trace() << "Rrd: saved:" << fileToSave << std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - t).count()) + "ms, mem size: " + std::to_string(size) + ", count:" + std::to_string((first_ == 0) ? 0 : last_ - first_ + 1) + '/' + std::to_string(dbSize) + ", file size:" + std::to_string(_buf.size()) + ", ratio: " + std::to_string(size / static_cast<int>(_buf.size()));
 #endif
   return true;
 }
