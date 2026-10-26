@@ -163,7 +163,7 @@ bool Rrd::readFromFile() {
   _f.open(file, std::ios::binary);
   if (_f.fail()) return false;
   _f.seekg(0, std::ios::end);
-  uint32_t _size = _f.tellg();
+  std::streamsize _size = _f.tellg();
   _f.seekg(0, std::ios::beg);
   DataArray _buf;
   _buf.resize(_size);
@@ -174,48 +174,47 @@ bool Rrd::readFromFile() {
   _buf = DataArray::uncompress(_buf);
 #endif
 
-  if (!_buf.empty()) {
-    DataStream ds(_buf);
-    ds >> last_;
-    ds >> dataBase;
-    if (ds.fail()) {
-      dataBase.clear();
-      return false;
-    }
+  if (_buf.empty()) return false;
+
+  DataStream ds(_buf);
+  ds >> last_;
+  ds >> dataBase;
+  if (!ds.end()) ds >> first_;
+  else first_ = 0;
+  if (ds.fail()) {
+    trace() << "(ds.fail())";
+    return false;
   }
 
-  bool ok = false;
   if (readOnly) {
     dbSize = dataBase.size();
     trace() << "Rrd: size:" << dbSize;
   }
   if (static_cast<uint32_t>(dataBase.size()) != dbSize) {
     console_msg("Rrd", "error database size: " + std::to_string(dataBase.size()));
-  } else if (!first_) {
-    ok = true;
-    first_ = 0;
-    if (dbSize > 0 && last_ > 0) {
-      uint64_t j = 0;
-      for (uint64_t i = 0; i < dbSize; ++i) {
-        if (dataBase[i].empty()) continue;
-        if (last_ < i) continue;
-        uint64_t p = i + ((last_ - i) / dbSize) * dbSize;
-        if (j == 0 || p < j) j = p;
-      }
-      first_ = j;
-    }
-    updated();
-  } else {
-    ok = true;
-    updated();
+    return false;
   }
-  return ok;
+  /*
+  first_ computed by the formula equals the real first_ if and only
+  if last_ - first_ + 1 >= dbSize
+  (span ≥ dbSize, i.e. the ring has wrapped at least once) or interval_ == 0
+  */
+  if (first_ == 0) { first_ = (dbSize == 0 || last_ == 0) ? 0 : (last_ > dbSize ? last_ - dbSize + 1 : 1); }
+
+  updated();
+  return true;
 }
 
 bool Rrd::saveToFile(const std::string &_fileToSave) {
   DataStream _ds;
   _ds << last_;
   _ds << dataBase;
+  if (interval_) _ds << first_;
+
+  if (_ds.fail()) {
+    trace() << "(ds.fail())";
+    return false;
+  }
 
 #ifdef Rrd_COMPRESS_FILE
   DataArray _buf = DataArray::compress(_ds.array());

@@ -24,11 +24,9 @@ class LogStream;
 @snippet DataArray/main.cpp snippet */
 class DataArray : public std::vector<uint8_t> {
 public:
-  /** @brief Compresses the provided data view using the framework's default compression algorithm.
-  @param v The source binary data view to compress. @return A new compressed DataArray container. */
+  /** @brief Compresses the provided data view using the framework's default compression algorithm. @param v The source binary data view to compress. @return A new compressed DataArray container. */
   static DataArray compress(const DataArrayView &);
-  /** @brief Uncompresses the provided compressed data view back to its original raw form.
-  @param v The compressed binary data view. @return A new decompressed DataArray container. */
+  /** @brief Uncompresses the provided compressed data view back to its original raw form. @param v The compressed binary data view. @return A new decompressed DataArray container. */
   static DataArray uncompress(const DataArrayView &);
   using std::vector<uint8_t>::vector;
   /** @brief Constructs a byte array from a standard string instance. */
@@ -39,8 +37,7 @@ public:
   DataArray(const char);
   /** @brief Constructs a byte array by copying raw values from a signed character vector. */
   DataArray(const std::vector<char> &);
-  /** @brief Creates a lightweight, non-allocating view slicing a sub-region of this byte array.
-  @param i The starting index of the slice. Defaults to 0. @param j The length of the slice. If 0, captures everything up to the end of the array. @return A read-only DataArrayView mapping the selected range. */
+  /** @brief Creates a lightweight, non-allocating view slicing a sub-region of this byte array. @param i The starting index of the slice. Defaults to 0. @param j The length of the slice. If 0, captures everything up to the end of the array. @return A read-only DataArrayView mapping the selected range. */
   const DataArrayView view(std::size_t = 0, std::size_t = 0) const;
   /** @brief Appends the contents of a data view directly to the end of this array. */
   DataArray &operator+=(const DataArrayView &);
@@ -64,8 +61,7 @@ public:
   DataArrayView(const uint8_t *, std::size_t);
   /** @brief Constructs a data view mapping the entire memory buffer of an existing DataArray. */
   DataArrayView(const DataArray &);
-  /** @brief Splices the viewed binary stream into a tokenized list using a specific delimiter character.
-  @param c The dividing boundary byte/character. @return A newly constructed list container holding independent slices. */
+  /** @brief Splices the viewed binary stream into a tokenized list using a specific delimiter character. @param c The dividing boundary byte/character. @return A newly constructed list container holding independent slices. */
   DataArrayList split(const char) const;
 };
 /** @class DataArrayList DataArray.h <AsyncFw/DataArray> @brief A specialized container aggregating multiple DataArray instances.
@@ -74,8 +70,7 @@ public:
 class DataArrayList : public std::vector<DataArray> {
 public:
   using std::vector<DataArray>::vector;
-  /** @brief Flattens and concatenates all elements in this list into a single unified array, separated by a glue character.
-  @param c The spacer byte inserted between adjacent items. @return A newly allocated, merged DataArray container. */
+  /** @brief Flattens and concatenates all elements in this list into a single unified array, separated by a glue character. @param c The spacer byte inserted between adjacent items. @return A newly allocated, merged DataArray container. */
   DataArray join(const char) const;
 };
 /** @class DataStream DataArray.h <AsyncFw/DataArray> @brief A fast, compact binary serialization stream.
@@ -122,12 +117,13 @@ public:
   DataStream &operator>>(DataArrayList &);
   /** @} */
 
-  /** @brief Retrieves a reference to the active cumulative raw byte array built by the stream.
-  @return Immutable reference to the binary buffer. */
+  /** @brief Retrieves a reference to the active cumulative raw byte array built by the stream. @return Immutable reference to the binary buffer. */
   const DataArray &array() const;
-  /** @brief Checks if the stream pipeline encountered a boundary check failure, bad memory, or malformed data packets.
-  @return True if an operation failed or the stream is corrupted. */
+  /** @brief Checks if the stream pipeline encountered a boundary check failure, bad memory, or malformed data packets. @return True if an operation failed or the stream is corrupted. */
   bool fail() const;
+  /** @brief Checks if the stream position has reached (or passed) the end of the buffer. @return True if position at end of the buffer.
+  @note After a read failure pos is not advanced, so end() may be false on a failed stream. Always check fail() separately. */
+  bool end() const;
 
 private:
   struct Private;

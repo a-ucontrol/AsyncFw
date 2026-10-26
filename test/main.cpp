@@ -949,40 +949,11 @@ void test_rrd_file_roundtrip_sparse_time_based() {
   std::filesystem::remove(fn);
 }
 
-// Regression: sparse positions >= dbSize. Without first_ persisted in the
-// file, readFromFile's wrap branch computes first_ = last_ - dbSize + 1,
-// which is wrong for sparse fills. With first_ stored, the exact position
-// is preserved.
-void test_rrd_file_roundtrip_sparse_offset() {
-  const std::string fn = "/tmp/AsyncFw-test-rrd-sparse-offset.db";
-  std::filesystem::remove(fn);
-
-  {
-    Rrd rrd(1000, 1, 0, fn);  // dbSize = 1000
-    rrd.append(DataArray("1001"), 1001);
-    rrd.append(DataArray("1101"), 1101);
-    rrd.append(DataArray("1301"), 1301);
-    EXPECT(rrd.count() == 301);
-    EXPECT(rrd.lastIndex() == 1301);
-    rrd.save();
-  }
-
-  {
-    Rrd rrd(1000, 1, 0, fn);
-    EXPECT_MSG(rrd.lastIndex() == 1301, "lastIndex after reload=" + std::to_string(rrd.lastIndex()));
-    EXPECT_MSG(rrd.count() == 301, "count after reload=" + std::to_string(rrd.count()) + " (sparse positions > dbSize: first_ must be 1001, not last_ - dbSize + 1 = 302)");
-    EXPECT_MSG(rrdItemStr(rrd.readFromArray(0)) == "1001", "readFromArray(0) after reload=\"" + rrdItemStr(rrd.readFromArray(0)) + "\"");
-    EXPECT_MSG(rrdItemStr(rrd.readFromArray(300)) == "1301", "readFromArray(300) after reload=\"" + rrdItemStr(rrd.readFromArray(300)) + "\"");
-  }
-
-  std::filesystem::remove(fn);
-}
-
 // Regression: sparse positions >= dbSize. Without first_ persisted, the
 // wrap fallback (last_ - dbSize + 1) understates first_ for sparse fills
 // that started above dbSize. With first_ stored, the exact position is
 // preserved.
-void test_rrd_file_roundtrip_sparse_offset2() {
+void test_rrd_file_roundtrip_sparse_offset() {
   const std::string fn = "/tmp/AsyncFw-test-rrd-sparse-offset.db";
   std::filesystem::remove(fn);
 
@@ -1031,6 +1002,67 @@ void test_rrd_file_roundtrip_first_equals_dbsize() {
 
   std::filesystem::remove(fn);
 }
+
+// Regression: interval_ > 0, fill == 0, first_ falls into a cleared gap after
+// wrap. Without first_ persisted in the file, scan-based reconstruction of
+// readFromFile() picked the only non-empty slot (position last_), collapsing
+// count() to 1.
+//
+// Scenario (matches example/misc/main.cpp repro):
+//   Rrd(10, 1, 0, fn):
+//     append("A", 1)   -> first_=1,  last_=1,  slot 1 = "A"
+//     append("B", 21)  -> first_=12, last_=21, slot 1 = "B" ("A" overwritten
+//                         by wrap), slots 2..9 and 0 cleared (gap 12..20)
+//   pre-save count() = 21 - 12 + 1 = 10.
+//
+// With the fix, saveToFile() writes first_ for interval_ > 0 and readFromFile()
+// restores it; without the fix, scan picks first_ = 21 -> count() = 1.
+//
+// No MainThread::exec() involved — pure save/reload.
+void test_rrd_first_persisted_sparse() {
+  const std::string fn = "/tmp/AsyncFw-test-rrd-first-sparse.db";
+  std::filesystem::remove(fn);
+
+  // ---- Phase 1: build sparse DB and save -----------------------------
+  {
+    Rrd rrd(10, 1, 0, fn);
+    rrd.append(DataArray("A"), 1);
+    rrd.append(DataArray("B"), 21);
+
+    EXPECT_MSG(rrd.lastIndex() == 21, "pre-save lastIndex=" + std::to_string(rrd.lastIndex()));
+    EXPECT_MSG(rrd.count() == 10, "pre-save count=" + std::to_string(rrd.count()));
+    EXPECT_MSG(rrdItemStr(rrd.readFromArray(0)) == "", "pre-save readFromArray(0) (gap at position 12), got \"" + rrdItemStr(rrd.readFromArray(0)) + "\"");
+    EXPECT_MSG(rrdItemStr(rrd.readFromArray(9)) == "B", "pre-save readFromArray(9) (position 21), got \"" + rrdItemStr(rrd.readFromArray(9)) + "\"");
+    rrd.save();
+  }
+
+  // ---- Phase 2: reload (read-write) ----------------------------------
+  {
+    Rrd rrd(10, 1, 0, fn);
+    EXPECT_MSG(rrd.lastIndex() == 21, "lastIndex after reload=" + std::to_string(rrd.lastIndex()));
+    EXPECT_MSG(rrd.count() == 10, "count after reload=" + std::to_string(rrd.count()) +
+                                      " (expected 10; without first_ persisted, scan-based reconstruction "
+                                      "picks first_=21 because only slot 1 (= position 21) is non-empty)");
+    EXPECT_MSG(rrdItemStr(rrd.readFromArray(0)) == "", "readFromArray(0) after reload (gap at position 12), got \"" + rrdItemStr(rrd.readFromArray(0)) + "\"");
+    EXPECT_MSG(rrdItemStr(rrd.readFromArray(9)) == "B", "readFromArray(9) after reload (position 21), got \"" + rrdItemStr(rrd.readFromArray(9)) + "\"");
+  }
+
+  // ---- Phase 3: reload (read-only, dbSize taken from the file) -------
+  // Rrd(0, fn) must not modify the file and must restore first_ too.
+  const auto sizeBefore = std::filesystem::file_size(fn);
+  {
+    Rrd view(0, fn);  // readOnly
+    EXPECT_MSG(view.lastIndex() == 21, "read-only lastIndex=" + std::to_string(view.lastIndex()));
+    EXPECT_MSG(view.count() == 10, "read-only count=" + std::to_string(view.count()));
+    EXPECT_MSG(rrdItemStr(view.readFromArray(0)) == "", "read-only readFromArray(0) (gap at position 12)");
+    EXPECT_MSG(rrdItemStr(view.readFromArray(9)) == "B", "read-only readFromArray(9) (position 21)");
+  }
+  const auto sizeAfter = std::filesystem::file_size(fn);
+  EXPECT_MSG(sizeBefore == sizeAfter, "read-only reload modified the file: before=" + std::to_string(sizeBefore) + " after=" + std::to_string(sizeAfter));
+
+  std::filesystem::remove(fn);
+}
+
 }  // namespace
 
 // ============================================================================
@@ -1079,8 +1111,8 @@ int main(int, char **) {
   test_rrd_file_roundtrip_sparse_time_based();
   test_rrd_readonly_load_contiguous();
   test_rrd_file_roundtrip_sparse_offset();
-  test_rrd_file_roundtrip_sparse_offset2();
   test_rrd_file_roundtrip_first_equals_dbsize();
+  test_rrd_first_persisted_sparse();
 
   // --- Group C: FileSystemWatcher -------------------------------------
   // Runs on MainThread::exec(). Must be last because MainThread::exit()

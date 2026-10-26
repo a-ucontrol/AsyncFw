@@ -186,6 +186,8 @@ const DataArray &DataStream::array() const { return *private_.data; }
 
 bool DataStream::fail() const { return private_.fail; }
 
+bool DataStream::end() const { return private_.pos >= private_.data->size(); }
+
 DataStream &DataStream::operator<<(uint8_t v) {
   private_.w(sizeof(uint8_t), &v);
   return *this;
