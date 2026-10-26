@@ -199,8 +199,13 @@ bool Rrd::readFromFile() {
   if last_ - first_ + 1 >= dbSize
   (span ≥ dbSize, i.e. the ring has wrapped at least once) or interval_ == 0
   */
-  if (first_ == 0) { first_ = (dbSize == 0 || last_ == 0) ? 0 : (last_ > dbSize ? last_ - dbSize + 1 : 1); }
-
+  if (first_ == 0) {
+    if (!interval_) {
+      uint64_t start = (last_ > dbSize) ? last_ - dbSize + 1 : 1;
+      first_ = last_;
+      while (first_ > start && !dataBase[(first_ - 1) % dbSize].empty()) first_--;
+    } else first_ = (dbSize == 0 || last_ == 0) ? 0 : (last_ > dbSize ? last_ - dbSize + 1 : 1);
+  }
   updated();
   return true;
 }

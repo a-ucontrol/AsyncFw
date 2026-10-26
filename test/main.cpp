@@ -1063,6 +1063,211 @@ void test_rrd_first_persisted_sparse() {
   std::filesystem::remove(fn);
 }
 
+// Empty DB after reload: last_ == 0 must not overflow first_.
+void test_rrd_reload_empty() {
+  const std::string fn = "/tmp/AsyncFw-test-rrd-reload-empty.db";
+  std::filesystem::remove(fn);
+  {
+    Rrd r(10, 0, 0, fn);
+    r.save();
+  }
+  Rrd r(10, 0, 0, fn);
+  EXPECT(r.count() == 0);
+  EXPECT(r.lastIndex() == 0);
+  std::filesystem::remove(fn);
+}
+
+// Single item at pos 1 (Log with 1 message).
+void test_rrd_reload_single_at_one() {
+  const std::string fn = "/tmp/AsyncFw-test-rrd-reload-single1.db";
+  std::filesystem::remove(fn);
+  {
+    Rrd r(1000, 0, 0, fn);
+    r.append(DataArray("x"), 1);
+    r.save();
+  }
+  Rrd r(1000, 0, 0, fn);
+  EXPECT_MSG(r.count() == 1, "count=" + std::to_string(r.count()));
+  EXPECT(r.lastIndex() == 1);
+  EXPECT(rrdItemStr(r.readFromArray(0)) == "x");
+  std::filesystem::remove(fn);
+}
+
+// Single item at pos N > 1 (RrdClient with one server record).
+void test_rrd_reload_single_at_high() {
+  const std::string fn = "/tmp/AsyncFw-test-rrd-reload-singleN.db";
+  std::filesystem::remove(fn);
+  {
+    Rrd r(1000, 0, 0, fn);
+    r.append(DataArray("x"), 5000);
+    r.save();
+  }
+  Rrd r(1000, 0, 0, fn);
+  EXPECT_MSG(r.count() == 1, "count=" + std::to_string(r.count()));
+  EXPECT(r.lastIndex() == 5000);
+  EXPECT(rrdItemStr(r.readFromArray(0)) == "x");
+  std::filesystem::remove(fn);
+}
+
+// Regression: interval_ > 0, span < dbSize, P > 1. Formula
+// max(1, last_ - dbSize + 1) understates first_ because the ring hasn't
+// wrapped yet, and scan is not available (interval_ > 0 path only has the
+// formula fallback). The only reliable source is first_ persisted in the file.
+//
+//   Rrd(10, 1, 0, fn):
+//     append("x", 5)   -> first_=5,  last_=5
+//     append("y", 8)   -> first_=5,  last_=8, span=4 < dbSize=10
+//   real count() = 4.
+//   Without first_ in file: formula gives first_=1, count()=8 (wrong).
+void test_rrd_first_persisted_unwrapped() {
+  const std::string fn = "/tmp/AsyncFw-test-rrd-first-unwrapped.db";
+  std::filesystem::remove(fn);
+
+  {
+    Rrd rrd(10, 1, 0, fn);
+    rrd.append(DataArray("x"), 5);
+    rrd.append(DataArray("y"), 8);
+    EXPECT_MSG(rrd.count() == 4, "pre-save count=" + std::to_string(rrd.count()));
+    EXPECT_MSG(rrd.lastIndex() == 8, "pre-save lastIndex=" + std::to_string(rrd.lastIndex()));
+    rrd.save();
+  }
+
+  {
+    Rrd rrd(10, 1, 0, fn);
+    EXPECT_MSG(rrd.lastIndex() == 8, "lastIndex after reload=" + std::to_string(rrd.lastIndex()));
+    EXPECT_MSG(rrd.count() == 4, "count after reload=" + std::to_string(rrd.count()) + " (span=4 < dbSize=10; formula would give 8; only persisted first_=5 is correct)");
+    EXPECT_MSG(rrdItemStr(rrd.readFromArray(0)) == "x", "readFromArray(0) after reload=\"" + rrdItemStr(rrd.readFromArray(0)) + "\"");
+    EXPECT_MSG(rrdItemStr(rrd.readFromArray(3)) == "y", "readFromArray(3) after reload=\"" + rrdItemStr(rrd.readFromArray(3)) + "\"");
+  }
+
+  std::filesystem::remove(fn);
+}
+
+// interval_ == 0 with explicit sequential indices starting at 4001.
+// Scan must find first_=4001; the formula would give last_ - dbSize + 1 = 3101.
+// Pins the interval_==0 branch: it must use scan, not the formula.
+void test_rrd_interval_zero_sparse_start() {
+  const std::string fn = "/tmp/AsyncFw-test-rrd-i0-sparse.db";
+  std::filesystem::remove(fn);
+
+  {
+    Rrd rrd(1000, 0, 0, fn);
+    for (uint64_t i = 0; i < 100; ++i) rrd.append(DataArray(std::to_string(4001 + i)), 4001 + i);
+    EXPECT_MSG(rrd.count() == 100, "pre-save count=" + std::to_string(rrd.count()));
+    EXPECT_MSG(rrd.lastIndex() == 4100, "pre-save lastIndex=" + std::to_string(rrd.lastIndex()));
+    rrd.save();
+  }
+
+  {
+    Rrd rrd(1000, 0, 0, fn);
+    EXPECT_MSG(rrd.count() == 100, "count after reload=" + std::to_string(rrd.count()) + " (interval_=0 must use scan; formula would give last_-dbSize+1 = 3101)");
+    EXPECT_MSG(rrd.lastIndex() == 4100, "lastIndex after reload=" + std::to_string(rrd.lastIndex()));
+    EXPECT_MSG(rrdItemStr(rrd.readFromArray(0)) == "4001", "readFromArray(0) after reload=\"" + rrdItemStr(rrd.readFromArray(0)) + "\"");
+    EXPECT_MSG(rrdItemStr(rrd.readFromArray(99)) == "4100", "readFromArray(99) after reload=\"" + rrdItemStr(rrd.readFromArray(99)) + "\"");
+  }
+
+  std::filesystem::remove(fn);
+}
+
+// Build a legacy Rrd file at `fn` with the pre-first_ layout:
+//   [last_][dataBase]            (no first_ trailer)
+// compressed exactly like Rrd::saveToFile. Read-side should detect the
+// missing trailer (DataStream::end() right after >> dataBase) and fall back
+// to scan (interval_ == 0) or formula (interval_ > 0). Pins backward
+// compatibility of Rrd::readFromFile.
+static void writeLegacyRrdFile(const std::string &fn, uint64_t last, const DataArrayList &db) {
+  DataStream ds;
+  ds << last;
+  ds << db;
+  DataArray buf = DataArray::compress(ds.array());
+  std::ofstream f(fn, std::ios::binary);
+  f.write(reinterpret_cast<const char *>(buf.data()), buf.size());
+}
+
+// Legacy file, interval_ == 0, ring wrapped (span == dbSize).
+// Scan must reconstruct first_ = last_ - dbSize + 1 = 191, matching what
+// saveToFile would have written if first_ had been persisted. This is the
+// Log-with-many-messages pattern: old Log files (before first_ was added)
+// must still load without losing records.
+//
+// Physical db layout (slot = pos % dbSize):
+//   db[0]="200", db[1]="191", db[2]="192", ..., db[9]="199"
+//   first_=191, last_=200
+void test_rrd_legacy_file_interval0_wrapped() {
+  const std::string fn = "/tmp/AsyncFw-test-rrd-legacy-i0-wrap.db";
+  std::filesystem::remove(fn);
+
+  DataArrayList db;
+  db.resize(10);
+  for (uint64_t p = 191; p <= 200; ++p) db[p % 10] = DataArray(std::to_string(p));
+  writeLegacyRrdFile(fn, 200, db);
+
+  Rrd rrd(10, 0, 0, fn);  // interval_ == 0 -> scan branch
+  EXPECT_MSG(rrd.lastIndex() == 200, "lastIndex=" + std::to_string(rrd.lastIndex()));
+  EXPECT_MSG(rrd.count() == 10, "count=" + std::to_string(rrd.count()) +
+                                    " (legacy file, no first_: scan must reconstruct first_=191, "
+                                    "matching what saveToFile would write for a wrapped ring)");
+  EXPECT_MSG(rrdItemStr(rrd.readFromArray(0)) == "191", "readFromArray(0)=\"" + rrdItemStr(rrd.readFromArray(0)) + "\"");
+  EXPECT_MSG(rrdItemStr(rrd.readFromArray(9)) == "200", "readFromArray(9)=\"" + rrdItemStr(rrd.readFromArray(9)) + "\"");
+
+  std::filesystem::remove(fn);
+}
+
+// Legacy file, interval_ == 0, NOT wrapped (span < dbSize).
+// This is where scan is strictly required: formula would give
+// last_ - dbSize + 1 = 4001, hiding the real first_ = 5000 and inflating
+// count() to 1000. Scan must walk down from last_ until the first empty
+// physical slot and stop.
+//
+// Physical db layout (dbSize=1000, one record at position 5000):
+//   db[0]="5000", db[1..999]=empty
+//   first_=5000, last_=5000
+void test_rrd_legacy_file_interval0_single_high() {
+  const std::string fn = "/tmp/AsyncFw-test-rrd-legacy-i0-single.db";
+  std::filesystem::remove(fn);
+
+  DataArrayList db;
+  db.resize(1000);
+  db[5000 % 1000] = DataArray("x");
+  writeLegacyRrdFile(fn, 5000, db);
+
+  Rrd rrd(1000, 0, 0, fn);  // interval_ == 0 -> scan branch
+  EXPECT_MSG(rrd.lastIndex() == 5000, "lastIndex=" + std::to_string(rrd.lastIndex()));
+  EXPECT_MSG(rrd.count() == 1, "count=" + std::to_string(rrd.count()) + " (legacy scan must find first_=5000; formula would inflate to 1000)");
+  EXPECT_MSG(rrdItemStr(rrd.readFromArray(0)) == "x", "readFromArray(0)=\"" + rrdItemStr(rrd.readFromArray(0)) + "\"");
+
+  std::filesystem::remove(fn);
+}
+
+// Legacy file, interval_ > 0, wrapped. This path has no scan (interval_ > 0
+// uses the formula), and for a wrapped ring the formula is exact:
+//   first_ = last_ - dbSize + 1 = 200 - 10 + 1 = 191
+// Pins the formula fallback for pre-first_ time-based Rrd files.
+//
+// Note: legacy interval_ > 0 files that were written UNWRAPPED will still
+// reload with a wrong first_ (formula understates); this is a documented
+// limitation of the fallback, not a regression. New files always carry
+// first_, so the limitation only affects pre-upgrade archives.
+void test_rrd_legacy_file_interval_positive_wrapped() {
+  const std::string fn = "/tmp/AsyncFw-test-rrd-legacy-i1-wrap.db";
+  std::filesystem::remove(fn);
+
+  DataArrayList db;
+  db.resize(10);
+  for (uint64_t p = 191; p <= 200; ++p) db[p % 10] = DataArray(std::to_string(p));
+  writeLegacyRrdFile(fn, 200, db);
+
+  Rrd rrd(10, 1, 0, fn);  // interval_ > 0 -> formula fallback
+  EXPECT_MSG(rrd.lastIndex() == 200, "lastIndex=" + std::to_string(rrd.lastIndex()));
+  EXPECT_MSG(rrd.count() == 10, "count=" + std::to_string(rrd.count()) +
+                                    " (legacy file, no first_: interval_>0 fallback uses formula "
+                                    "last_-dbSize+1=191 for the wrapped ring)");
+  EXPECT_MSG(rrdItemStr(rrd.readFromArray(0)) == "191", "readFromArray(0)=\"" + rrdItemStr(rrd.readFromArray(0)) + "\"");
+  EXPECT_MSG(rrdItemStr(rrd.readFromArray(9)) == "200", "readFromArray(9)=\"" + rrdItemStr(rrd.readFromArray(9)) + "\"");
+
+  std::filesystem::remove(fn);
+}
+
 }  // namespace
 
 // ============================================================================
@@ -1113,6 +1318,14 @@ int main(int, char **) {
   test_rrd_file_roundtrip_sparse_offset();
   test_rrd_file_roundtrip_first_equals_dbsize();
   test_rrd_first_persisted_sparse();
+  test_rrd_reload_empty();
+  test_rrd_reload_single_at_one();
+  test_rrd_reload_single_at_high();
+  test_rrd_first_persisted_unwrapped();
+  test_rrd_interval_zero_sparse_start();
+  test_rrd_legacy_file_interval0_wrapped();
+  test_rrd_legacy_file_interval0_single_high();
+  test_rrd_legacy_file_interval_positive_wrapped();
 
   // --- Group C: FileSystemWatcher -------------------------------------
   // Runs on MainThread::exec(). Must be last because MainThread::exit()
