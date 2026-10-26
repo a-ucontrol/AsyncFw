@@ -6,11 +6,10 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 */
 
 #include <filesystem>
-#include <fstream>
-
 #include "core/LogStream.h"
 #include "core/console_msg.hpp"
 #include "core/Thread.h"
+#include "File.h"
 #include "Rrd.h"
 
 #ifdef EXTEND_RRD_TRACE
@@ -159,15 +158,9 @@ uint64_t Rrd::read(DataArrayList *list, uint64_t index, uint32_t size, uint64_t 
 }
 
 bool Rrd::readFromFile() {
-  std::ifstream _f;
-  _f.open(file, std::ios::binary);
-  if (_f.fail()) return false;
-  _f.seekg(0, std::ios::end);
-  std::streamsize _size = _f.tellg();
-  _f.seekg(0, std::ios::beg);
-  DataArray _buf;
-  _buf.resize(_size);
-  _f.read(reinterpret_cast<char *>(_buf.data()), _buf.size());
+  File _f;
+  _f.open(file);
+  DataArray _buf = _f.read();
   _f.close();
 
 #ifdef Rrd_COMPRESS_FILE
@@ -228,10 +221,10 @@ bool Rrd::saveToFile(const std::string &_fileToSave) {
   #define _buf _ds.array()
 #endif
 
-  std::ofstream _f;
+  File _f;
   std::string fileToSave = (!_fileToSave.empty()) ? _fileToSave : file;
-  _f.open(fileToSave, std::ios::binary);
-  if (!_f.fail()) _f.write(reinterpret_cast<const char *>(_buf.data()), _buf.size());
+  _f.open(fileToSave, std::ios::binary | std::ios::out);
+  if (!_f.fail()) _f.write(_buf);
   if (!_f.fail()) _f.flush();
   _f.close();
 
