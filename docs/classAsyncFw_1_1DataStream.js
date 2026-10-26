@@ -4,5 +4,6 @@ var classAsyncFw_1_1DataStream =
     [ "DataStream", "classAsyncFw_1_1DataStream.html#a5483f91b758e0383fec1fd3c540425ef", null ],
     [ "operator<<", "classAsyncFw_1_1DataStream.html#ac2fcf2fccb05fc820d943721eb827f20", null ],
     [ "array", "classAsyncFw_1_1DataStream.html#ae64c4b08a3259146d4476c0385352479", null ],
-    [ "fail", "classAsyncFw_1_1DataStream.html#a58e67062bf6cd3f77a8203758b01eaf8", null ]
+    [ "fail", "classAsyncFw_1_1DataStream.html#a58e67062bf6cd3f77a8203758b01eaf8", null ],
+    [ "end", "classAsyncFw_1_1DataStream.html#ad09c9469f0e49d48d030e474d06801a3", null ]
 ];
