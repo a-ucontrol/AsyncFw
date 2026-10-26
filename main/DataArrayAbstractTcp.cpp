@@ -69,6 +69,13 @@ int DataArrayAbstractTcp::sockets(std::vector<DataArraySocket *> *list) {
   return count;
 }
 
+#if defined CHECK_EXECUTION_THREAD
+  #define checkCurrentThread() \
+    if (std::this_thread::get_id() != id()) lsError() << "executed from different thread"
+#else
+  #define checkCurrentThread()
+#endif
+
 void DataArrayAbstractTcp::Thread::initSocket(DataArraySocket *socket) {
   DataArrayAbstractTcp *tcp = static_cast<DataArrayAbstractTcp *>(pool);
   socket->setReadTimeout(tcp->readTimeout);
@@ -86,15 +93,14 @@ void DataArrayAbstractTcp::Thread::initSocket(DataArraySocket *socket) {
 }
 
 void DataArrayAbstractTcp::Thread::destroySocket(DataArraySocket *socket) {
+  checkCurrentThread();
   socket->close();
   socket->removeTimer();
   socket->removeFromThread();
+  if (sockets_.empty()) OPENSSL_thread_stop();
   if (!pool->thread()->invoke([this, socket, e = sockets_.empty()]() {
     socket->destroy();
-    if (e) {
-      OPENSSL_thread_stop();
-      destroy();
-    }
+    if (e) destroy();
   }))
     socket->destroy();
   lsTrace() << LogStream::Color::Green << '(' + name() + ')' << LogStream::Color::Magenta << sockets_.size();
