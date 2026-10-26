@@ -65,17 +65,16 @@ bool Rrd::createFile() {
 void Rrd::append(const Item &data, uint64_t index) {
   if (!dbSize) return;
   uint64_t pos;
-  if (index) {
-    if (!interval_) {
-      lsError() << "explicit index requires interval_ > 0";
-      return;
-    }
-    pos = index;
-  } else pos = interval_ ? Rrd_CURRENT_TIME / interval_ : 1;
   bool _average;
   {  //lock scope
     AbstractThread::LockGuard lock = thread_->lockGuard();
-    if (!index && !interval_) pos += last_;
+    if (index) {
+      if (!interval_ && index != last_ + 1 && last_) {
+        console_msg("Rrd", "explicit non-sequential index in auto-index mode, expected: " + std::to_string(last_ + 1) + " got: " + std::to_string(index));
+        return;
+      }
+      pos = index;
+    } else pos = interval_ ? Rrd_CURRENT_TIME / interval_ : last_ + 1;
 
     uint32_t empty;
     if (pos > last_) {
