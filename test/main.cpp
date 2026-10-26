@@ -843,18 +843,45 @@ void test_rrd_readonly_load_contiguous() {
   std::filesystem::remove(fn);
 }
 
-// Prohibition: explicit index with interval_ == 0 must be rejected.
-// Auto-index still works in the same instance.
-void test_rrd_append_explicit_index_prohibited() {
-  Rrd rrd(1000);                        // interval_ == 0
-  rrd.append(DataArray("4001"), 4001);  // prohibited
-  EXPECT_MSG(rrd.count() == 0, "count=" + std::to_string(rrd.count()) + " (append(item, index) must be rejected)");
-  EXPECT_MSG(rrd.lastIndex() == 0, "lastIndex=" + std::to_string(rrd.lastIndex()));
+// Contract for interval_ == 0 (auto-index mode):
+//   - empty DB (last_ == 0): any explicit index is allowed (seeds first_/last_,
+//     used by RrdClient to start from an arbitrary server position);
+//   - non-empty DB: explicit index must be last_ + 1 (sequential only).
+void test_rrd_append_explicit_index_auto_mode() {
+  Rrd rrd(1000);  // interval_ == 0
 
-  rrd.append(DataArray("first"));  // auto-index still works
+  // 1. Empty DB: any explicit index is allowed.
+  rrd.append(DataArray("5000"), 5000);
   EXPECT(rrd.count() == 1);
-  EXPECT(rrd.lastIndex() == 1);
-  EXPECT(rrdItemStr(rrd.readFromArray(0)) == "first");
+  EXPECT(rrd.lastIndex() == 5000);
+  EXPECT(rrdItemStr(rrd.readFromArray(0)) == "5000");
+
+  // 2. Non-empty DB, sequential explicit index: allowed.
+  rrd.append(DataArray("5001"), 5001);
+  EXPECT(rrd.count() == 2);
+  EXPECT(rrd.lastIndex() == 5001);
+  EXPECT(rrdItemStr(rrd.readFromArray(1)) == "5001");
+
+  // 3. Non-empty DB, forward jump: rejected.
+  rrd.append(DataArray("bad-forward"), 6000);
+  EXPECT(rrd.count() == 2);
+  EXPECT(rrd.lastIndex() == 5001);
+
+  // 4. Non-empty DB, duplicate: rejected.
+  rrd.append(DataArray("bad-duplicate"), 5001);
+  EXPECT(rrd.count() == 2);
+  EXPECT(rrd.lastIndex() == 5001);
+
+  // 5. Non-empty DB, rewind: rejected.
+  rrd.append(DataArray("bad-rewind"), 5000);
+  EXPECT(rrd.count() == 2);
+  EXPECT(rrd.lastIndex() == 5001);
+
+  // 6. Auto-index after explicit: continues from last_ + 1.
+  rrd.append(DataArray("5002"));
+  EXPECT(rrd.count() == 3);
+  EXPECT(rrd.lastIndex() == 5002);
+  EXPECT(rrdItemStr(rrd.readFromArray(2)) == "5002");
 }
 
 // Auto-index contiguous fill: count == min(lastIndex, dbSize).
@@ -1044,7 +1071,7 @@ int main(int, char **) {
   test_rrd_sequential_append();
   test_rrd_sequential_wrap();
   test_rrd_clear();
-  test_rrd_append_explicit_index_prohibited();
+  test_rrd_append_explicit_index_auto_mode();
   test_rrd_append_auto_index_matches_rrdclient();
   test_rrd_append_explicit_index_with_interval();
   test_rrd_read_clamp_to_first();
