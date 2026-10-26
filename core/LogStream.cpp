@@ -159,7 +159,7 @@ LogStream::LogStream(uint8_t type, const char *function, const char *file, int l
   if (flags & 0x0001) name += sender(function);
   else { name += function; }
 }
-void handle() {}
+
 LogStream::~LogStream() {
   if ((type & 0x07) == Emergency) {
     data.completed({type, name, ((flags & 0x8000) ? stream.str() : ""), std::string(file) + ":" + std::to_string(line)}, flags | LOG_STREAM_FLUSH);
