@@ -84,6 +84,7 @@ public:
   DataStream();
   /** @brief Constructs a read-only deserialization stream operating directly on top of an existing immutable byte array. */
   DataStream(const DataArray &);
+  DataStream(const DataStream &) = delete;
   ~DataStream();
 
   /** @brief Serialization & Deserialization Operators
