@@ -771,10 +771,10 @@ void AbstractThread::exec() {
   #endif
               } else {
                 trace() << "cqe" << cqe->res << _d;
-                warning_if(cqe->res < 0 && cqe->res != -ECANCELED) << LogStream::Color::Red << "(cqe->res < 0 && cqe->res != -ECANCELED)" << _d << cqe->res << cqe->flags;
+                warning_if(cqe->res < 0 && cqe->res != -ECANCELED || _d->fd < 0) << LogStream::Color::Red << "(cqe->res < 0 && cqe->res != -ECANCELED || _d->fd < 0)" << cqe->res << cqe->flags << _d << _d->fd;
 
                 _d->flags |= 0x01;
-                int32_t events = (cqe->res > 0) ? cqe->res & (_d->events | POLLERR_ | POLLHUP_ | POLLNVAL_ | 0x2000) : 0;
+                int32_t events = (cqe->res > 0 && _d->fd >= 0) ? cqe->res & (_d->events | POLLERR_ | POLLHUP_ | POLLNVAL_ | 0x2000) : 0;
                 if (events) private_.process_poll_tasks_.push({_d->fd, static_cast<uint16_t>(events), _d->task});
 
                 if (!(events & (POLLERR_ | POLLHUP_ | POLLNVAL_))) {
