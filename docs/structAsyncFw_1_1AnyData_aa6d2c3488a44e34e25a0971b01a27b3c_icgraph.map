@@ -1,6 +1,6 @@
 <map id="AsyncFw::AnyData::data" name="AsyncFw::AnyData::data">
 <area shape="rect" id="Node000001" title="Type&#45;safely extracts and returns the stored data value." alt="" coords="934,298,1102,325"/>
-<area shape="rect" id="Node000002" href="$structAsyncFw_1_1AnyData.html#a667ea182dec03e9ca81e86cdc7db8842" title="Constructs an AnyData storage shell with an optional initial type&#45;safe payload." alt="" coords="691,105,886,132"/>
+<area shape="rect" id="Node000002" href="$structAsyncFw_1_1AnyData.html#a1240003af641a3439f9e25bd11135be2" title="Constructs an AnyData storage shell with an optional initial type&#45;safe payload." alt="" coords="691,105,886,132"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="999,284,953,219,921,183,884,152,849,135,849,130,887,148,925,180,957,216,1004,285"/>
 <area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractSocket.html#a374dd4ce66bfcc8a6dcf40b4ba552828" title="Reads incoming data into a raw byte buffer up to a specified maximum size." alt="" coords="460,30,634,73"/>
 <area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="992,286,946,241,916,217,884,197,857,184,832,178,787,174,742,168,717,160,690,146,674,131,665,116,656,101,642,87,624,76,623,71,645,83,661,98,669,113,678,128,693,141,719,155,743,163,787,168,833,173,859,179,887,192,920,213,950,237,998,287"/>

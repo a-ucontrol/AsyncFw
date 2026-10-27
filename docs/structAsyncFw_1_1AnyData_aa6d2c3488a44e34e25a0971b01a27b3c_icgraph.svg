@@ -20,7 +20,7 @@
 <!-- Node2 -->
 <g id="Node000002" class="node">
 <title>Node2</title>
-<g id="a_Node000002"><a xlink:href="structAsyncFw_1_1AnyData.html#a667ea182dec03e9ca81e86cdc7db8842" target="_top" xlink:title="Constructs an AnyData storage shell with an optional initial type&#45;safe payload.">
+<g id="a_Node000002"><a xlink:href="structAsyncFw_1_1AnyData.html#a1240003af641a3439f9e25bd11135be2" target="_top" xlink:title="Constructs an AnyData storage shell with an optional initial type&#45;safe payload.">
 <polygon fill="white" stroke="#666666" points="660.25,-378 514.5,-378 514.5,-358 660.25,-358 660.25,-378"/>
 <text xml:space="preserve" text-anchor="middle" x="587.38" y="-364.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AnyData::AnyData</text>
 </a>

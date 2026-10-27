@@ -1,7 +1,6 @@
 var structAsyncFw_1_1AnyData =
 [
-    [ "AnyData", "structAsyncFw_1_1AnyData.html#a667ea182dec03e9ca81e86cdc7db8842", null ],
-    [ "~AnyData", "structAsyncFw_1_1AnyData.html#a6d5534e474c91c9e0760eb80e8fdeda8", null ],
+    [ "AnyData", "structAsyncFw_1_1AnyData.html#a1240003af641a3439f9e25bd11135be2", null ],
     [ "data", "structAsyncFw_1_1AnyData.html#aa6d2c3488a44e34e25a0971b01a27b3c", null ],
     [ "data", "structAsyncFw_1_1AnyData.html#a9d604c8e053676ded700990eae9ff67f", null ],
     [ "setData", "structAsyncFw_1_1AnyData.html#af4204174192d3b8c2f83dda18366a953", null ],
