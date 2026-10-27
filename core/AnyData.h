@@ -22,15 +22,13 @@ struct AnyData {
     return std::any_cast<T>(data_);
   }
   /** @brief Constructs an AnyData storage shell with an optional initial type-safe payload. */
-  AnyData(const std::any & = {});
-  /** @brief Virtual-safe destructor allowing polymorphic cleanup of stored elements. */
-  ~AnyData();
+  AnyData(const std::any &data = {}) : data_(data) {}
   /** @brief Retrieves a mutable reference to the underlying global raw container block. */
-  std::any &data() const;
+  std::any &data() const { return data_; }
   /** @brief Overwrites or assigns a new type-safe payload inside the storage box. */
-  void setData(const std::any &data) const;
+  void setData(const std::any &data) const { data_ = data; }
   /** @brief Checks if the container currently holds no data payload values. */
-  bool empty() const;
+  bool empty() const { return !data_.has_value(); }
 
 protected:
   mutable std::any data_;  ///< Storage container for holding type-safe variables on the fly.

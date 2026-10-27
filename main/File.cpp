@@ -9,8 +9,6 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include <fstream>
 
 #include "core/DataArray.h"
-#include "core/LogStream.h"
-
 #include "File.h"
 
 using namespace AsyncFw;
@@ -25,12 +23,10 @@ struct File::Private {
 File::File(const std::string &fn) : private_(*new Private) {
   private_.fn = fn;
   private_.fs = 0;
-  lsTrace();
 }
 
 File::~File() {
   close();
-  lsTrace();
   delete &private_;
 }
 
@@ -47,7 +43,6 @@ bool File::open(std::ios::openmode m) {
     auto _s = std::filesystem::file_size(private_.fn, ec);
     private_.fs = (!ec && _s != static_cast<uintmax_t>(-1)) ? static_cast<std::size_t>(_s) : 0;
   } else private_.fs = 0;
-  lsTrace() << private_.fn;
   return !private_.f.fail();
 }
 
@@ -56,7 +51,6 @@ bool File::isOpen() const { return private_.f.is_open(); }
 void File::close() {
   if (private_.f.is_open()) {
     private_.f.close();
-    lsTrace() << private_.fn;
     return;
   }
 }

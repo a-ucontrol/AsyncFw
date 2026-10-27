@@ -6,7 +6,7 @@ endif()
 
 include(cmake/version.cmake)
 
-# defines.cmake
+#defines.cmake
 #set(BUILD_SHARED_LIBS ON)
 #set(CMAKE_INTERPROCEDURAL_OPTIMIZATION ON)
 
@@ -42,7 +42,7 @@ include(cmake/version.cmake)
 #add_definitions(-DEXTEND_HTTP_TRACE)
 #add_definitions(-DEXTEND_MDNS_TRACE)
 #add_definitions(-DEXTEND_TLSCONTEXT_TRACE)
-# -- defines.cmake
+#-- defines.cmake
 
 if(NOT FINAL_RELEASE AND EXISTS "${CMAKE_CURRENT_LIST_DIR}/defines.cmake")
   include("${CMAKE_CURRENT_LIST_DIR}/defines.cmake")
@@ -53,7 +53,7 @@ project(${AsyncFw_PROJECT_NAME} VERSION ${VERSION_STRING} LANGUAGES C CXX)
 message(STATUS "CMAKE_SYSTEM_PROCESSOR: ${CMAKE_SYSTEM_PROCESSOR}")
 
 if(${CMAKE_SYSTEM_PROCESSOR} STREQUAL "AMD64")
-  #need for run examles in wine: export SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
+#need for run examles in wine : export SSL_CERT_FILE = / etc / ssl / certs / ca - certificates.crt
   if(NOT AMD64_OPENSSL_INCLUDE_DIR OR NOT AMD64_OPENSSL_LIB_DIR)
     message(FATAL_ERROR "AMD64_OPENSSL_INCLUDE_DIR OR AMD64_OPENSSL_LIB_DIR not set")
   endif()
@@ -99,7 +99,6 @@ set(AsyncFw_CORE_HEADERS
 set(AsyncFw_CORE_SOURCES
   "core/AbstractThread.cpp"
   "core/Thread.cpp"
-  "core/AnyData.cpp"
   "core/AbstractSocket.cpp"
   "core/AbstractTlsSocket.cpp"
   "core/DataArray.cpp"
