@@ -59,8 +59,9 @@ public:
   static int exec() {
 #ifndef USE_QAPPLICATION
     if (mt_.running()) return -1;
+    mt_.code_.store(0, std::memory_order_relaxed);
     mt_.Thread::exec();
-    return mt_.code_;
+    return mt_.code_.load(std::memory_order_relaxed);
 #else
     mt_.state_ = 1;
     if (!qApp) return -1;
@@ -88,7 +89,8 @@ public:
   }
   /** @brief Signals the master event loop to terminate gracefully with a specific exit code. @param code The exit code returned by exec(). */
   static void exit(int code) {
-    mt_.code_ = code;
+    int _v = 0;
+    mt_.code_.compare_exchange_strong(_v, code, std::memory_order_relaxed);
     exit();
   }
   /** @brief Initiates an immediate graceful shutdown without executing the exit task. This call is NOT safe to use from a UNIX signal handler. */
@@ -96,7 +98,7 @@ public:
 #ifndef USE_QAPPLICATION
     mt_.Thread::quit();
 #else
-    qApp->exit(mt_.code_);
+    qApp->exit(mt_.code_.load(std::memory_order_relaxed));
 #endif
   }
 
@@ -118,13 +120,14 @@ private:
 #endif
 #ifdef EXIT_ON_UNIX_SIGNAL
     Thread::current()->started.connect([this]() {
-      if (eventfd_ >= 0) return;
   #ifdef EXIT_EVENTFD
+      if (eventfd_ >= 0) return;
       eventfd_ = eventfd(0, EFD_NONBLOCK | EFD_CLOEXEC);
       appendPollTask(eventfd_, AbstractThread::PollIn, [this](AbstractThread::PollEvents) {
         eventfd_t _v;
         if (eventfd_read(eventfd_, &_v) == 0) (*exitTask)();
   #else
+      if (exit_pipe[0] >= 0) return;
       pipe2(exit_pipe, O_CLOEXEC | O_NONBLOCK);
       appendPollTask(exit_pipe[0], AbstractThread::PollIn, [this](AbstractThread::PollEvents) {
         char _c;
@@ -293,7 +296,7 @@ private:
   QList<std::shared_ptr<Poll>> notifiers;
 #endif
   AbstractThread::AbstractTask *exitTask = nullptr;
-  int code_ = 0;
+  std::atomic<int> code_;
 #ifdef EXIT_ON_UNIX_SIGNAL
   #ifdef EXIT_EVENTFD
   int eventfd_ = -1;
