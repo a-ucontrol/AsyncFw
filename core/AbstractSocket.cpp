@@ -163,7 +163,7 @@ bool AbstractSocket::listen(const std::string &address, uint16_t port) {
   private_.error = None;
   private_.errorString.clear();
   state_ = State::Listening;
-  thread_->invoke([this, _fd]() { changeDescriptor(_fd); });
+  changeDescriptor(_fd);
   thread_->appendPollTask(_fd, AbstractThread::PollIn, [this](AbstractThread::PollEvents _e) { pollEvent(_e); });
   stateEvent();
   return true;
@@ -244,7 +244,6 @@ void AbstractSocket::setDescriptor(int fd) {
 }
 
 bool AbstractSocket::connect(const std::string &address, uint16_t port) {
-  checkCurrentThread();
   int _fd = socket(private_.pa.ss_family, private_.type, private_.protocol);
   if (_fd < 0) {
     lsError() << "socket descriptor error";
@@ -311,7 +310,7 @@ bool AbstractSocket::connect(const std::string &address, uint16_t port) {
   private_.error = None;
   private_.errorString.clear();
   state_ = State::Connecting;
-  thread_->invoke([this, _fd]() { changeDescriptor(_fd); });
+  changeDescriptor(_fd);
   thread_->appendPollTask(_fd, AbstractThread::PollOut, [this](AbstractThread::PollEvents _e) { pollEvent(_e); });
   stateEvent();
   return true;
