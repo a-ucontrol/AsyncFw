@@ -16,6 +16,11 @@
 //     any later invokeTask() would silently return false.
 //
 
+#ifndef _WIN32
+  #include <pthread.h>
+  #include <signal.h>
+#endif
+
 #include <atomic>
 #include <chrono>
 #include <filesystem>
@@ -1268,6 +1273,121 @@ void test_rrd_legacy_file_interval_positive_wrapped() {
   std::filesystem::remove(fn);
 }
 
+// ============================================================================
+// Group F. MainThread::exit(int) signal safety
+// ============================================================================
+//
+// MainThread::exec() resets code_ to 0 on entry, and exit(int) uses CAS
+// (0 -> code) so that:
+//   - only the first successful write per exec() cycle changes code_,
+//   - only the winning write wakes the loop via eventfd (failed CAS does
+//     not reach eventfd_write),
+//   - a new exec() cycle is isolated from the previous cycle's state.
+//
+// Covered paths:
+//   1. exit(int) from a signal handler delivered on Main (raise).
+//   2. exit(int) from a signal handler delivered on a worker (pthread_kill).
+//      This is the cross-thread case where code_ is written by the worker
+//      and read by Main — the std::atomic<int> requirement.
+//   3. re-exec after a previous exit(int) picks up the new code, not the
+//      stale one from the previous exec() cycle.
+//   4. concurrent exit(int) spam from a worker while Main leaves exec().
+//      Only the first spam write wins; further writes hit CAS-failure and
+//      do NOT wake the loop again. Contract: exec() returns a positive
+//      code, and the next exec() is not polluted by stale eventfd.
+//
+// Fundamental race window (not a bug, documented in MainThread.h):
+//   A signal arriving AFTER the final code_.load() inside exec() is not
+//   seen by that exec(). That's why test 4 asserts ret > 0, not an exact
+//   value.
+//
+// Ordering constraints:
+//   Group F MUST come after Group C (FileSystemWatcher) so the event loop
+//   is clean when FileSystemWatcher schedules its 1500 ms timers. Group F
+//   MAY leave code_ non-zero; any future exec() resets it.
+//
+// Behavioral note (documented in MainThread::exit):
+//   exit(int) called BEFORE exec() with code != 0 is silently overwritten
+//   by the reset in exec(). Call exit() from within the running loop
+//   (invoke / Timer) if you need a non-zero code to survive.
+
+#ifdef EXIT_ON_UNIX_SIGNAL
+
+void exit_signal_handler(int signo) { MainThread::exit(100 + signo); }
+
+bool install_exit_signal_handler(int signo) {
+  struct sigaction sa {};
+  sa.sa_handler = &exit_signal_handler;
+  sigemptyset(&sa.sa_mask);
+  sa.sa_flags = 0;
+  return ::sigaction(signo, &sa, nullptr) == 0;
+}
+
+// exit(int) called from the Main thread via a synchronous signal.
+// raise() in a Timer callback delivers SIGUSR1 to Main; the handler runs
+// inline on Main and calls exit(100 + SIGUSR1); exec() returns that code.
+void test_exit_signal_from_main() {
+  Timer::single(10, []() { ::raise(SIGUSR1); });
+  int ret = MainThread::exec();
+  EXPECT_MSG(ret == 100 + SIGUSR1, "exec() returned " + std::to_string(ret) + " (expected " + std::to_string(100 + SIGUSR1) + ")");
+}
+
+void test_exit_signal_from_worker() {
+  Thread worker("SignalSender");
+
+  // Subscribe BEFORE start(): start() only waits for setId(), and the
+  // worker reaches startedEvent() (which emits started()) potentially
+  // before start() returns. Subscribing after start() races with the
+  // first (and only) emit — workerTid would stay 0 forever.
+  std::atomic<std::uintptr_t> workerTid {0};
+  FunctionConnectionGuard g = worker.started.connect([&workerTid]() { workerTid.store(reinterpret_cast<std::uintptr_t>(::pthread_self())); });
+
+  worker.start();
+  while (workerTid.load() == 0) std::this_thread::yield();
+
+  Timer::single(10, [&workerTid]() { ::pthread_kill(reinterpret_cast<pthread_t>(workerTid.load()), SIGUSR2); });
+  int ret = MainThread::exec();
+  EXPECT_MSG(ret == 100 + SIGUSR2, "exec() returned " + std::to_string(ret) + " (expected " + std::to_string(100 + SIGUSR2) + ")");
+}
+
+// Re-exec with a specific code after a previous exec() cycle.
+// Verifies that:
+//   - exec() resets code_ to 0 on entry (Test 2 left it at 112),
+//   - the new exit(7) CAS(0 -> 7) wins and its code is returned,
+//   - no stale eventfd wakeup from a prior cycle short-circuits the poll.
+void test_exit_signal_reexec_with_code() {
+  Timer::single(10, []() { MainThread::exit(7); });
+  int ret = MainThread::exec();
+  EXPECT_MSG(ret == 7, "exec() returned " + std::to_string(ret) + " (expected 7)");
+}
+
+// Concurrent exit(int) spam from a worker while Main leaves exec().
+// First CAS(0 -> K) wins; all subsequent spam writes fail CAS and do NOT
+// touch eventfd. exec() must return a positive code (the winner K).
+void test_exit_signal_spam() {
+  std::atomic<bool> stop {false};
+  std::atomic<int> lastWritten {0};
+
+  Thread spam("ExitSpammer");
+  spam.start();
+  spam.invoke([&]() {
+    for (int i = 1; !stop.load(); ++i) {
+      MainThread::exit(i);
+      lastWritten.store(i);
+      std::this_thread::yield();
+    }
+  });
+
+  int ret = MainThread::exec();
+  stop = true;
+  spam.invoke([]() {}, true);  // barrier: spam has left its loop
+
+  EXPECT_MSG(ret > 0, "exec() returned non-positive code " + std::to_string(ret));
+  lsNotice() << "test_exit_signal_spam: ret=" << ret << "lastWritten=" << lastWritten.load() << "(ret is the winning CAS value; lastWritten is the last spam iteration)";
+}
+
+#endif  // EXIT_ON_UNIX_SIGNAL
+
 }  // namespace
 
 // ============================================================================
@@ -1332,6 +1452,25 @@ int main(int, char **) {
   // permanently finishes Main's event loop.
   test_filesystemwatcher_recreate_in_debounce_window();
   test_filesystemwatcher_scenarios();
+
+  // --- Group F: MainThread::exit(int) signal safety -------------------
+  // Runs AFTER Group C so FileSystemWatcher's timers/inotify events are
+  // handled while the event loop is still pristine.
+#ifdef EXIT_ON_UNIX_SIGNAL
+  {
+    bool ok = install_exit_signal_handler(SIGUSR1) && install_exit_signal_handler(SIGUSR2);
+    if (ok) {
+      test_exit_signal_from_main();
+      test_exit_signal_from_worker();
+      test_exit_signal_reexec_with_code();
+      test_exit_signal_spam();
+    } else {
+      lsWarning() << "Group F (exit-signal): cannot install SIGUSR1/SIGUSR2, skipped";
+    }
+  }
+#else
+  lsNotice() << "Group F (exit-signal): skipped on this platform (no POSIX signals)";
+#endif
 
   // --- Cleanup --------------------------------------------------------
   // Stop workers on their own thread so any pending sync-invokes from the

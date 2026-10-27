@@ -1564,6 +1564,8 @@ struct Trace {
 class ProbeSocket : public AbstractSocket {
 public:
   Trace trace;
+  int fd() const { return fd_; }
+  State st() const { return state_; }
   void stateEvent() override {
     trace.record(state_, error(), errorString());
     lsDebug() << LogStream::Color::Cyan << "state=" << static_cast<int>(state_) << "error=" << static_cast<int>(error()) << "msg=" << errorString();
@@ -1686,6 +1688,112 @@ void test_rst_close(Done next) {
       delete s;
       next();
     });
+  });
+}
+
+// ---------------------------------------------------------------------------
+// Group D' — fd_ == -1 window and stale cqe after close
+// ---------------------------------------------------------------------------
+//
+// 1. fd_ must be set synchronously inside connect().
+//    Without the fix, changeDescriptor runs via thread_->invoke(), so fd_
+//    stays -1 until the event loop runs. close() right after connect()
+//    early-returns (if (fd_ == -1) return;) and the OS descriptor leaks
+//    until ~AbstractSocket.
+//
+// 2. changeDescriptor and removeFromThread use std::find(this), not
+//    lower_bound with Thread::Compare. With two sockets that both have
+//    fd_ == -1, lower_bound sorts by pointer and can erase the wrong one.
+//
+// 3. Stale poll cqe after close() must not call the task.
+//    close() -> removePollDescriptor() -> io_uring_prep_cancel. If the
+//    poll already fired, its cqe arrives with _d->fd == -1. Without the
+//    guard in exec(), the task runs against a socket whose lifetime may
+//    have ended (UAF), or (if still alive) hits WDA_EMPTY ->
+//    modifyPollDescriptor(-1) -> "not found".
+
+// fd_ is valid immediately after connect(), and close() right after
+// connect() actually closes. No event loop tick required.
+void test_connect_fd_synchronous() {
+  int listen_fd = -1;
+  int port = rawListen(listen_fd);
+  EXPECT(port > 0);
+
+  auto *s = new ProbeSocket();
+  s->connect("127.0.0.1", port);
+
+  EXPECT_MSG(s->fd() >= 0, "fd_ = " + std::to_string(s->fd()) + " right after connect() (deferred changeDescriptor bug)");
+
+  s->close();
+  EXPECT_MSG(s->fd() == -1, "fd_ = " + std::to_string(s->fd()) + " right after close() (early-return on fd_ == -1)");
+  EXPECT_MSG(s->st() == AbstractSocket::Unconnected, "state_ = " + std::to_string((int)s->st()) + " right after close() (expected Unconnected)");
+
+  delete s;
+  ::close(listen_fd);
+}
+
+// Two sockets with fd_ == -1 in the same thread. changeDescriptor must
+// locate `this` via std::find. With lower_bound(Thread::Compare), both
+// sockets sort by pointer, and the wrong one can be erased - corrupting
+// sockets_ and leading to double-delete in ~Thread.
+void test_two_sockets_fd_sorting() {
+  int lfd1 = -1;
+  int lfd2 = -1;
+  int port1 = rawListen(lfd1);
+  int port2 = rawListen(lfd2);
+  EXPECT(port1 > 0 && port2 > 0);
+
+  auto *s1 = new ProbeSocket();
+  auto *s2 = new ProbeSocket();
+
+  // Reverse order: s2 enters the vector first, both at fd_ == -1.
+  s2->connect("127.0.0.1", port2);
+  s1->connect("127.0.0.1", port1);
+
+  EXPECT_MSG(s1->fd() >= 0, "s1 fd_ = " + std::to_string(s1->fd()));
+  EXPECT_MSG(s2->fd() >= 0, "s2 fd_ = " + std::to_string(s2->fd()));
+  EXPECT_MSG(s1->fd() != s2->fd(), "s1 and s2 share fd_ = " + std::to_string(s1->fd()));
+
+  int s2_fd = s2->fd();
+  s1->close();
+  EXPECT_MSG(s1->fd() == -1, "s1 fd_ = " + std::to_string(s1->fd()) + " after close");
+  EXPECT_MSG(s2->fd() == s2_fd, "s2 fd_ = " + std::to_string(s2->fd()) + " changed unexpectedly (was " + std::to_string(s2_fd) + ")");
+
+  s2->close();
+  delete s1;
+  delete s2;
+  ::close(lfd1);
+  ::close(lfd2);
+}
+
+// Stale poll cqe after close(): the task must not run.
+// Runs inside the existing MainThread::exec() chain, so the loop is
+// already ticking. connect() submits a poll via io_uring; close()
+// cancels it. If the poll already fired, its cqe arrives with _d->fd = -1
+// - the guard in exec() must drop it without calling the task. If the
+// task ever runs, it hits WDA_EMPTY -> modifyPollDescriptor(-1) ->
+// "modify poll descriptor: -1 not found", and (under ASan) may UAF if
+// the socket has since been destroyed.
+void test_stale_cqe_after_close(Done next) {
+  int listen_fd = -1;
+  int port = rawListen(listen_fd);
+  EXPECT(port > 0);
+
+  auto *s = new ProbeSocket();
+  s->connect("127.0.0.1", port);
+  EXPECT(s->fd() >= 0);
+
+  s->close();
+  EXPECT(s->fd() == -1);
+  EXPECT(s->st() == AbstractSocket::Unconnected);
+
+  // Let the event loop tick: any in-flight cqe for the cancelled poll
+  // is delivered here. The task must not be invoked.
+  Timer::single(100, [s, listen_fd, next]() {
+    EXPECT_MSG(s->st() == AbstractSocket::Unconnected, "state_ = " + std::to_string((int)s->st()) + " after event loop tick (stale cqe reached the task?)");
+    delete s;
+    ::close(listen_fd);
+    next();
   });
 }
 #endif
@@ -1873,19 +1981,27 @@ int main(int, char **) {
 
   // --- Group C: MainThread re-exec ------------------------------------
   test_mainthread_reexec();
+
 #ifndef _WIN32
+  // --- Group D': fd_ window and stale cqe -----------------------------
+  test_connect_fd_synchronous();
+  test_two_sockets_fd_sorting();
+
   // --- Group D: AbstractSocket HUP/ERR --------------------------------
   Thread::current()->started.connect([]() {
     test_connect_refused([]() {
       test_graceful_close([]() {
         test_rst_close([]() {
-          lsNotice() << "=== AbstractSocket tests done ===";
-          MainThread::exit();
+          test_stale_cqe_after_close([]() {
+            lsNotice() << "=== AbstractSocket tests done ===";
+            MainThread::exit();
+          });
         });
       });
     });
   });
 #endif
+
   // --- Group E: AbstractThread::Waiter ---------------------------------
   test_waiter_complete_from_same_thread();
   test_waiter_nested();
@@ -1901,8 +2017,8 @@ int main(int, char **) {
   }
 
   int total = g_total.load();
-  if (total != 205) {
-    lsError() << "core: " << total << '/' << 205;
+  if (total != 220) {
+    lsError() << "core: " << total << '/' << 220;
     return -1;
   }
   lsNotice() << "core: " << total << " checks passed";
