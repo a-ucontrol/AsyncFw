@@ -1701,9 +1701,12 @@ void test_rst_close(Done next) {
 //    early-returns (if (fd_ == -1) return;) and the OS descriptor leaks
 //    until ~AbstractSocket.
 //
-// 2. changeDescriptor and removeFromThread use std::find(this), not
-//    lower_bound with Thread::Compare. With two sockets that both have
-//    fd_ == -1, lower_bound sorts by pointer and can erase the wrong one.
+// 2. Two sockets with fd_ == -1 in the same thread. sockets_ is sorted by
+//    (fd_, pointer) via Thread::Compare; the pointer tie-breaker is unique,
+//    so lower_bound(this) returns the exact position of `this` even when
+//    several sockets share fd_ == -1. close() on one socket must not disturb
+//    the other's fd_ and must not double-delete in ~Thread (which would
+//    happen if lower_bound could return a neighbouring socket instead).
 //
 // 3. Stale poll cqe after close() must not call the task.
 //    close() -> removePollDescriptor() -> io_uring_prep_cancel. If the

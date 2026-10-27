@@ -119,7 +119,6 @@ public:
   void operator()(Args... args) const {
     std::lock_guard<mutex_t> lock(list->mutex);
     for (const AbstractFunctionConnector::Connection *c : *list) {
-      if (!c->thread_) continue;
       if (c->type_ == Connection::Direct || (c->type_ != Connection::Queued && c->thread_->id() == std::this_thread::get_id())) {
         (static_cast<const Connection *>(c)->f_)->invoke(args...);
         continue;

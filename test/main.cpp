@@ -1362,8 +1362,17 @@ void test_exit_signal_reexec_with_code() {
 }
 
 // Concurrent exit(int) spam from a worker while Main leaves exec().
-// First CAS(0 -> K) wins; all subsequent spam writes fail CAS and do NOT
-// touch eventfd. exec() must return a positive code (the winner K).
+//
+// MainThread::exit(int) has two steps: CAS(0 -> K) on code_, then a wakeup.
+// All racing callers execute the wakeup; only the first CAS winner fixes
+// code_, so exec() returns the first writer's value. Extra wakeups coalesce
+// in the eventfd counter — one eventfd_read drains the whole counter, so
+// each exec() cycle runs at most one exit-task invocation even under heavy
+// spam.
+//
+// Contract pinned here: exec() returns a positive code (the CAS winner)
+// and does not crash under concurrent exit() calls. Exact write counts on
+// eventfd are implementation-defined.
 void test_exit_signal_spam() {
   std::atomic<bool> stop {false};
   std::atomic<int> lastWritten {0};
