@@ -99,25 +99,43 @@ $(function(){initNavTree('index.html','',''); });
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="md_README"></a></p>
-<p>Async Framework is a lightweight, high-performance C++20 runtime that brings asynchronous programming to your applications. It features built-in support for timers, poll notifiers (event-driven I/O), thread-safe signals/slots, sockets, and native C++20 coroutines.</p>
-<p>AsyncFw allows you to run long-running operations concurrently across multiple threads without ever blocking your primary event loop.</p>
-<p>See the <a href="https://github.com/a-ucontrol/AsyncFw">GitHub repository</a>, <a href="https://a-ucontrol.github.io/AsyncFw">documentation</a> and <a href="https://a-ucontrol.github.io/AsyncFw/examples.html">examples</a> for details.</p>
+<p>Async Framework is a lightweight C++20 runtime for asynchronous programming. It provides timers, poll notifiers, thread-safe signals/slots, asynchronous sockets, and native C++20 coroutines on top of a custom event loop, so long-running work can be offloaded to worker threads without blocking the main loop.</p>
+<p>See the <a href="https://github.com/a-ucontrol/AsyncFw">GitHub repository</a>, <a href="https://a-ucontrol.github.io/AsyncFw">documentation</a>, and <a href="https://a-ucontrol.github.io/AsyncFw/examples.html">examples</a> for details.</p>
 <hr  />
 <h1 class="doxsection"><a class="anchor" id="autotoc_md2"></a>
 Core Architecture &amp; Components</h1>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md3"></a>
 1. The Core Backbone: <span class="tt">AbstractThread</span></h2>
-<p><span class="tt">AbstractThread</span> is the foundational element of the entire framework. It goes beyond a simple <span class="tt">std::thread</span> wrapper by maintaining its own <b>Task Queue</b> and a localized <b>Event Loop (Reactor)</b>.</p><ul>
-<li><b>The Reactor Loop</b>: Internally, <span class="tt">AbstractThread::exec()</span> runs a highly optimized polling loop. On Linux, it leverages <b><span class="tt">epoll</span></b> (<span class="tt">epoll_wait</span>); on other systems, it falls back to standard <b><span class="tt">poll</span></b>.</li>
-<li><b>Non-Blocking Inter-Thread Wakeup</b>: When a foreign thread posts a task via <span class="tt">invoke()</span>, it inserts the task into a synchronized queue and wakes up the target thread's blocking <span class="tt">epoll_wait</span> instantly. On Linux, this is achieved via <b><span class="tt">eventfd</span></b>, which completely eliminates pipe-based memory overhead on Linux.</li>
-<li><b>Intelligent Nested Loops</b>: It handles nested invocation processing safely (<span class="tt">nested_</span> tracking). If an inner loop is executed, it can yield to process waiting asynchronous callbacks, prevent deadlines from slipping, and protect against stack overflow or event deadlocks.</li>
-<li><b>Deterministic Graceful Shutdown</b>: Using <span class="tt">requestInterrupt()</span> and <span class="tt">waitInterrupted()</span>, a thread transitions through safe structural states, ensuring that pending items in the pipeline are safely flushed before resources are released.</li>
+<p><span class="tt">AbstractThread</span> is the base of the framework. It is a <span class="tt">std::thread</span> wrapper with its own <b>task queue</b> and <b>event loop</b>.</p>
+<ul>
+<li><b>Reactor loop</b>: <span class="tt">AbstractThread::exec()</span> runs a polling loop. The backend is selected at build time:<ul>
+<li><b><span class="tt">io_uring</span></b> when <span class="tt">ENABLE_IO_URING</span> is defined (<span class="tt">io_uring_wait_cqe_timeout</span>),</li>
+<li><b><span class="tt">epoll</span></b> on Linux (<span class="tt">epoll_wait</span>, optionally edge-triggered via <span class="tt">EPOLL_EDGE_TRIGGERED</span>),</li>
+<li><b><span class="tt">poll()</span></b> elsewhere (including <span class="tt">WSAPoll</span> on Windows).</li>
+</ul>
+</li>
+<li><b>Inter-thread wakeup</b>: when another thread posts a task via <span class="tt">invoke()</span>, the task is added to a synchronized queue and the target thread's blocking wait is interrupted. The wake mechanism is build-time selectable: <span class="tt">eventfd</span> on Linux, <span class="tt">pipe2</span> on generic POSIX, a connected UDP <span class="tt">socketpair</span> on Windows, or a self-close socket in the debug configuration.</li>
+<li><b>Nested exec()</b>: <span class="tt">exec()</span> may be re-entered. The framework tracks the nesting level, drains pending tasks first, and yields to timers/poll events instead of blocking.</li>
+<li><b>Graceful shutdown</b>: <span class="tt">requestInterrupt()</span> and <span class="tt">waitInterrupted()</span> move the thread through a defined state sequence (<span class="tt">WaitStarted → Running → WaitInterrupted → Interrupted → WaitFinished → Finished</span>), ensuring queued work is flushed before resources are released.</li>
 </ul>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md4"></a>
 2. Cross-Thread Signals: <span class="tt">FunctionConnector</span></h2>
-<p><span class="tt">FunctionConnector</span> provides a synchronized signaling system. By utilizing the <span class="tt">Protected</span> variant, you enforce strict encapsulation: <b>only the owner class can emit the signal</b>, while any external component can safely connect to it using a clean, non-mutating <span class="tt">const</span> reference.</p>
-<ul>
-<li><b>Code Example (Signals &amp; Slots):</b> <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;AsyncFw/FunctionConnector&gt;</span></div>
+<p><span class="tt">FunctionConnector</span> is a thread-safe signal/slot mechanism. The <span class="tt">Protected</span> variant restricts signal emission to the owning class, while any external component can connect using a <span class="tt">const</span> reference.</p>
+<p>Connection policies are chosen per subscriber:</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Policy  </th><th class="markdownTableHeadNone">Behaviour  </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">Direct</span>  </td><td class="markdownTableBodyNone">Runs in the emitting thread.  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">Queued</span>  </td><td class="markdownTableBodyNone">Posts a task to the receiver's thread event loop.  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">Sync</span>  </td><td class="markdownTableBodyNone">Posts to the receiver's thread and blocks the emitter until done.  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">Auto</span> (default)  </td><td class="markdownTableBodyNone"><span class="tt">Direct</span> if emitter and receiver share a thread, <span class="tt">Queued</span> otherwise.  </td></tr>
+</table>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;AsyncFw/FunctionConnector&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;AsyncFw/MainThread&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;AsyncFw/Thread&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;AsyncFw/Timer&gt;</span></div>
@@ -134,8 +152,11 @@ Core Architecture &amp; Components</h1>
 <div class="line">    timer.timeout.connect([<span class="keyword">this</span>]() {</div>
 <div class="line">      AsyncFw::AbstractThread *ct = <a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#af33c5949edb374d673a7a9ac0c81ec32">AsyncFw::AbstractThread::current</a>();</div>
 <div class="line">      logInfo() &lt;&lt; cnt &lt;&lt; <span class="stringliteral">&quot;send from thread:&quot;</span> &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd">name</a>() &lt;&lt; ct-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a41d1cf92e033bcc11e2394cb949e031a">id</a>();</div>
-<div class="line">      connector(cnt++, <span class="stringliteral">&quot;&quot;</span>);</div>
-<div class="line">      <span class="keywordflow">if</span> (cnt == 10) <a class="code hl_function" href="classAsyncFw_1_1MainThread.html#a76fed3a2c1cfdbdb67f2b209e6457657">AsyncFw::MainThread::exit</a>(0);</div>
+<div class="line">      connector(++cnt, <span class="stringliteral">&quot;&quot;</span>);</div>
+<div class="line">      <span class="keywordflow">if</span> (cnt == 10) {</div>
+<div class="line">        timer.stop();</div>
+<div class="line">        <a class="code hl_function" href="classAsyncFw_1_1MainThread.html#a76fed3a2c1cfdbdb67f2b209e6457657">AsyncFw::MainThread::exit</a>(0);</div>
+<div class="line">      }</div>
 <div class="line">    });</div>
 <div class="line">    timer.start(10);</div>
 <div class="line">  }</div>
@@ -157,10 +178,15 @@ Core Architecture &amp; Components</h1>
 <div class="line">};</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span>, <span class="keywordtype">char</span> **) {</div>
-<div class="line">  Sender *sender;</div>
 <div class="line">  <a class="code hl_class" href="classAsyncFw_1_1Thread.html">AsyncFw::Thread</a> thread(<span class="stringliteral">&quot;SenderThread&quot;</span>);</div>
 <div class="line">  thread.start();</div>
-<div class="line">  thread.invoke([&amp;sender]() { sender = <span class="keyword">new</span> Sender; }, <span class="keyword">true</span>);</div>
+<div class="line"> </div>
+<div class="line">  Sender *sender = <span class="keyword">nullptr</span>;</div>
+<div class="line">  thread.invoke([&amp;sender]() { sender = <span class="keyword">new</span> Sender(); }, <span class="keyword">true</span>);</div>
+<div class="line">  <span class="keywordflow">if</span> (!sender) {</div>
+<div class="line">    lsError() &lt;&lt; <span class="stringliteral">&quot;Sender creation failed&quot;</span>;</div>
+<div class="line">    <span class="keywordflow">return</span> 1;</div>
+<div class="line">  }</div>
 <div class="line"> </div>
 <div class="line">  Receiver receiver1(<span class="stringliteral">&quot;R1&quot;</span>, *sender);</div>
 <div class="line">  Receiver receiver2(<span class="stringliteral">&quot;R2&quot;</span>, *sender);</div>
@@ -168,32 +194,35 @@ Core Architecture &amp; Components</h1>
 <div class="line">  MethodConnectionExample _e;</div>
 <div class="line">  sender-&gt;connector.connect(&amp;MethodConnectionExample::method, &amp;_e);</div>
 <div class="line"> </div>
-<div class="line">  <span class="keyword">auto</span> lambda = [](<span class="keywordtype">int</span> val, <span class="keyword">const</span> std::string &amp;) { lsNotice() &lt;&lt; <span class="stringliteral">&quot;sender-&gt;connector (lambda)&quot;</span> &lt;&lt; val; };</div>
+<div class="line">  <span class="keyword">auto</span> lambda = [](<span class="keywordtype">int</span> val, <span class="keyword">const</span> std::string &amp;) {</div>
+<div class="line">    lsNotice() &lt;&lt; <span class="stringliteral">&quot;sender-&gt;connector (lambda)&quot;</span> &lt;&lt; val;</div>
+<div class="line">  };</div>
 <div class="line">  sender-&gt;connector.connect(lambda);</div>
 <div class="line"> </div>
 <div class="line">  logNotice() &lt;&lt; <span class="stringliteral">&quot;Start Application&quot;</span>;</div>
 <div class="line">  <span class="keywordtype">int</span> ret = <a class="code hl_function" href="classAsyncFw_1_1MainThread.html#ad12e620772820ad751868c7b49fa4190">AsyncFw::MainThread::exec</a>();</div>
-<div class="line">  <span class="keyword">delete</span> sender;</div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">// Destroy the Sender on the thread that owns it.</span></div>
+<div class="line">  thread.invoke([&amp;sender]() { <span class="keyword">delete</span> sender; sender = <span class="keyword">nullptr</span>; }, <span class="keyword">true</span>);</div>
 <div class="line">  <span class="keywordflow">return</span> ret;</div>
 <div class="line">}</div>
-<div class="ttc" id="aclassAsyncFw_1_1AbstractThread_html_a0cd916251e061aaf3d456575ef052edd"><div class="ttname"><a href="classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd">AsyncFw::AbstractThread::name</a></div><div class="ttdeci">std::string name() const</div><div class="ttdoc">Returns name of managed thread.</div><div class="ttdef"><b>Definition</b> AbstractThread.cpp:963</div></div>
-<div class="ttc" id="aclassAsyncFw_1_1AbstractThread_html_a41d1cf92e033bcc11e2394cb949e031a"><div class="ttname"><a href="classAsyncFw_1_1AbstractThread.html#a41d1cf92e033bcc11e2394cb949e031a">AsyncFw::AbstractThread::id</a></div><div class="ttdeci">std::thread::id id() const</div><div class="ttdoc">Returns unique identifier of managed thread.</div><div class="ttdef"><b>Definition</b> AbstractThread.cpp:961</div></div>
-<div class="ttc" id="aclassAsyncFw_1_1AbstractThread_html_af33c5949edb374d673a7a9ac0c81ec32"><div class="ttname"><a href="classAsyncFw_1_1AbstractThread.html#af33c5949edb374d673a7a9ac0c81ec32">AsyncFw::AbstractThread::current</a></div><div class="ttdeci">static AbstractThread * current()</div><div class="ttdoc">Returns a pointer to the AsyncFw::AbstractThread that manages the currently executing thread.</div><div class="ttdef"><b>Definition</b> AbstractThread.cpp:457</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1AbstractThread_html_a0cd916251e061aaf3d456575ef052edd"><div class="ttname"><a href="classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd">AsyncFw::AbstractThread::name</a></div><div class="ttdeci">std::string name() const</div><div class="ttdoc">Returns name of managed thread.</div><div class="ttdef"><b>Definition</b> AbstractThread.cpp:954</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1AbstractThread_html_a41d1cf92e033bcc11e2394cb949e031a"><div class="ttname"><a href="classAsyncFw_1_1AbstractThread.html#a41d1cf92e033bcc11e2394cb949e031a">AsyncFw::AbstractThread::id</a></div><div class="ttdeci">std::thread::id id() const</div><div class="ttdoc">Returns unique identifier of managed thread.</div><div class="ttdef"><b>Definition</b> AbstractThread.cpp:952</div></div>
+<div class="ttc" id="aclassAsyncFw_1_1AbstractThread_html_af33c5949edb374d673a7a9ac0c81ec32"><div class="ttname"><a href="classAsyncFw_1_1AbstractThread.html#af33c5949edb374d673a7a9ac0c81ec32">AsyncFw::AbstractThread::current</a></div><div class="ttdeci">static AbstractThread * current()</div><div class="ttdoc">Returns a pointer to the AsyncFw::AbstractThread that manages the currently executing thread.</div><div class="ttdef"><b>Definition</b> AbstractThread.cpp:448</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1FunctionConnector_html_a9fb8f282c88da90aeaab52a3c174d82b"><div class="ttname"><a href="classAsyncFw_1_1FunctionConnector.html#a9fb8f282c88da90aeaab52a3c174d82b">AsyncFw::FunctionConnector::Protected</a></div><div class="ttdeci">internal::FunctionConnectorProtected&lt; AbstractFunctionConnector::Auto, T, Args... &gt; Protected</div><div class="ttdoc">A protected connector variant where only a single designated owner class can emit messages.</div><div class="ttdef"><b>Definition</b> FunctionConnector.h:282</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1MainThread_html_a76fed3a2c1cfdbdb67f2b209e6457657"><div class="ttname"><a href="classAsyncFw_1_1MainThread.html#a76fed3a2c1cfdbdb67f2b209e6457657">AsyncFw::MainThread::exit</a></div><div class="ttdeci">static void exit()</div><div class="ttdoc">Signals the master event loop to terminate gracefully by executing the exit task. This call is safe t...</div><div class="ttdef"><b>Definition</b> MainThread.h:73</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1MainThread_html_ad12e620772820ad751868c7b49fa4190"><div class="ttname"><a href="classAsyncFw_1_1MainThread.html#ad12e620772820ad751868c7b49fa4190">AsyncFw::MainThread::exec</a></div><div class="ttdeci">static int exec()</div><div class="ttdoc">Starts the master application event loop on the current thread. This call is blocking.</div><div class="ttdef"><b>Definition</b> MainThread.h:59</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1Thread_html"><div class="ttname"><a href="classAsyncFw_1_1Thread.html">AsyncFw::Thread</a></div><div class="ttdoc">AsyncFw::Thread thread with sockets.</div><div class="ttdef"><b>Definition</b> Thread.h:18</div></div>
-</div><!-- fragment --> </li>
+</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md5"></a>
+3. Coroutines and RPC-Style Dispatch: <span class="tt">coInvoke</span></h2>
+<p>The coroutine layer (<span class="tt">CoroutineTask</span>, <span class="tt">CoroutineAwait</span>, <span class="tt">CoroutineInvokeAwait</span>) ties C++20 coroutines into the cross-thread infrastructure.</p>
+<ul>
+<li><b>Thread marshalling</b>: when a coroutine yields via <span class="tt">co_await</span>, work is dispatched to a target thread or thread pool. When it finishes, <span class="tt">promise_type::resume_queued()</span> schedules the continuation back onto the thread where the coroutine was created.</li>
+<li><b>State transport</b>: the <span class="tt">promise_type</span> inherits from <span class="tt">AnyData</span>, so a background task can store its result in the coroutine frame and <span class="tt">await_resume</span> can retrieve it.</li>
+<li><b><span class="tt">coInvoke</span></b>: awaitable helper for calling free functions, lambdas, or member methods and getting the return value back. Without an explicit target thread the call is scheduled onto the global <span class="tt">ThreadPool</span> instance, which must have been created during bootstrap.</li>
 </ul>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md5"></a>
-3. Deep Coroutine Orchestration &amp; RPC: <span class="tt">coInvoke</span></h2>
-<p><span class="tt">AsyncFw</span> supercharges C++20 coroutines by tying their suspension hooks directly into the framework's cross-thread architecture via <span class="tt">CoroutineTask</span> and generic awaiters (<span class="tt">CoroutineAwait</span>, <span class="tt">CoroutineInvokeAwait</span>).</p><ul>
-<li><b>Automated Thread Marshalling</b>: When a coroutine yields via <span class="tt">co_await</span>, heavy jobs are offloaded to background workers. Once done, the internal <span class="tt">promise_type::resume_queued()</span> automatically schedules continuation back onto the thread where the coroutine was originally created.</li>
-<li><b>Stateful Data Transport</b>: The coroutine <span class="tt">promise_type</span> inherits from <span class="tt">AnyData</span>, turning the underlying compiler-generated coroutine frame into a dynamic data store. Background tasks push computed results directly into the frame.</li>
-<li><b>The <span class="tt">coInvoke</span> Engine</b>: Provides an elite, non-blocking remote procedure call (RPC) syntax. Developers can await free functions, lambdas, or class member methods using <span class="tt">co_await coInvoke(...)</span>.</li>
-<li><b>Code Example (Offloading work to ThreadPool):</b> <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;chrono&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;string&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;AsyncFw/MainThread&gt;</span></div>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;AsyncFw/MainThread&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;AsyncFw/ThreadPool&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;AsyncFw/Coroutine&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;AsyncFw/LogStream&gt;</span></div>
 <div class="line"> </div>
@@ -202,22 +231,26 @@ Core Architecture &amp; Components</h1>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><a class="code hl_struct" href="structAsyncFw_1_1CoroutineTask.html">AsyncFw::CoroutineTask</a> runApplicationLogic() {</div>
-<div class="line">  lsNotice() &lt;&lt; <span class="stringliteral">&quot;Starting application flow on Main Thread...&quot;</span>;</div>
+<div class="line">  lsNotice() &lt;&lt; <span class="stringliteral">&quot;Starting application flow on Main thread...&quot;</span>;</div>
 <div class="line">  <span class="keywordtype">int</span> computationResult = <span class="keyword">co_await</span> <a class="code hl_function" href="group__coroutine__api.html#ga0005f3892c4f008098e0ee2634481d5a">AsyncFw::coInvoke</a>(heavyCalculation, 10);</div>
-<div class="line">  lsNotice() &lt;&lt; <span class="stringliteral">&quot;Computation successfully returned: &quot;</span> &lt;&lt; computationResult;</div>
+<div class="line">  lsNotice() &lt;&lt; <span class="stringliteral">&quot;Computation returned:&quot;</span> &lt;&lt; computationResult;</div>
 <div class="line">  <a class="code hl_function" href="classAsyncFw_1_1MainThread.html#a76fed3a2c1cfdbdb67f2b209e6457657">AsyncFw::MainThread::exit</a>(0);</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span>, <span class="keywordtype">char</span> **) {</div>
-<div class="line">  runApplicationLogic();</div>
+<div class="line">  <span class="comment">// coInvoke() without an explicit target thread uses the global ThreadPool,</span></div>
+<div class="line">  <span class="comment">// which must exist before the first co_await.</span></div>
+<div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Instance.html#a8000597f0e7ee4bd6669491a5b502beb">AsyncFw::Instance&lt;AsyncFw::ThreadPool&gt;::create</a>(<span class="stringliteral">&quot;CoroutineExamplePool&quot;</span>);</div>
+<div class="line"> </div>
+<div class="line">  runApplicationLogic();  <span class="comment">// fire-and-forget; MainThread::exit() ends exec()</span></div>
 <div class="line">  logNotice() &lt;&lt; <span class="stringliteral">&quot;Booting Main Engine Event Loop...&quot;</span>;</div>
-<div class="line">  <span class="keywordtype">int</span> ret = <a class="code hl_function" href="classAsyncFw_1_1MainThread.html#ad12e620772820ad751868c7b49fa4190">AsyncFw::MainThread::exec</a>();</div>
-<div class="line">  <span class="keywordflow">return</span> ret;</div>
+<div class="line">  <span class="keywordflow">return</span> <a class="code hl_function" href="classAsyncFw_1_1MainThread.html#ad12e620772820ad751868c7b49fa4190">AsyncFw::MainThread::exec</a>();</div>
 <div class="line">}</div>
+<div class="ttc" id="aclassAsyncFw_1_1Instance_html_a8000597f0e7ee4bd6669491a5b502beb"><div class="ttname"><a href="classAsyncFw_1_1Instance.html#a8000597f0e7ee4bd6669491a5b502beb">AsyncFw::Instance::create</a></div><div class="ttdeci">static CT * create(Args... args)</div><div class="ttdoc">Registers a custom derived class instance as the engine-wide global default.</div><div class="ttdef"><b>Definition</b> Instance.h:51</div></div>
 <div class="ttc" id="agroup__coroutine__api_html_ga0005f3892c4f008098e0ee2634481d5a"><div class="ttname"><a href="group__coroutine__api.html#ga0005f3892c4f008098e0ee2634481d5a">AsyncFw::coInvoke</a></div><div class="ttdeci">auto coInvoke(F &amp;&amp;f, Args &amp;&amp;...args)</div><div class="ttdoc">Offloads a callable function/lambda to the global ThreadPool and awaits its completion.</div><div class="ttdef"><b>Definition</b> Coroutine.h:141</div></div>
 <div class="ttc" id="astructAsyncFw_1_1CoroutineTask_html"><div class="ttname"><a href="structAsyncFw_1_1CoroutineTask.html">AsyncFw::CoroutineTask</a></div><div class="ttdoc">A class representing a coroutine task that can be suspended and resumed.</div><div class="ttdef"><b>Definition</b> Coroutine.h:20</div></div>
-</div><!-- fragment --></li>
-<li><b>Code Example (Asynchronous wait via Timer):</b> <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;chrono&gt;</span></div>
+</div><!-- fragment --><p>Waiting on a timer:</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;chrono&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;AsyncFw/MainThread&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;AsyncFw/Timer&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;AsyncFw/LogStream&gt;</span></div>
@@ -250,46 +283,53 @@ Core Architecture &amp; Components</h1>
 <div class="ttc" id="aclassAsyncFw_1_1Timer_html_a14d02d88bd3682afd7c8fd72cc670e46"><div class="ttname"><a href="classAsyncFw_1_1Timer.html#a14d02d88bd3682afd7c8fd72cc670e46">AsyncFw::Timer::start</a></div><div class="ttdeci">void start(int, bool=false)</div><div class="ttdoc">Starts or restarts a timer with the specified timeout. If the timer is already running,...</div><div class="ttdef"><b>Definition</b> Timer.cpp:29</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1Timer_html_aad1874fc8c5f41c278e4e4de81609e54"><div class="ttname"><a href="classAsyncFw_1_1Timer.html#aad1874fc8c5f41c278e4e4de81609e54">AsyncFw::Timer::coTimeout</a></div><div class="ttdeci">CoroutineAwait&lt; void &gt; coTimeout(int)</div><div class="ttdoc">Asynchronously waits for the specified timeout interval.</div><div class="ttdef"><b>Definition</b> Timer.cpp:36</div></div>
 <div class="ttc" id="aclassAsyncFw_1_1Timer_html_acf307d575a38d2b3bb852202d0126fcd"><div class="ttname"><a href="classAsyncFw_1_1Timer.html#acf307d575a38d2b3bb852202d0126fcd">AsyncFw::Timer::timeout</a></div><div class="ttdeci">FunctionConnector ::Protected&lt; Timer &gt; timeout</div><div class="ttdoc">The Timer::timeout connector.</div><div class="ttdef"><b>Definition</b> Timer.h:35</div></div>
-</div><!-- fragment --></li>
-</ul>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md6"></a>
-4. Network Worker Thread: <span class="tt">Thread</span> &amp; Secure Sockets</h2>
-<p><span class="tt">Thread</span> inherits from <span class="tt">AbstractThread</span> and specializes in managing network connections, asynchronous sockets (<span class="tt">AbstractSocket</span>), and connection pools.</p><ul>
-<li><b>Socket Lifecycle Management</b>: Acts as an RAII container for asynchronous sockets. When a <span class="tt">Thread</span> instance is destroyed, it automatically interrupts its loop, safely waits for finish, and gracefully closes and deletes all registered sockets.</li>
-<li><b>Robust Crash Prevention (<span class="tt">SIGPIPE</span>)</b>: On POSIX/Unix systems, the worker automatically blocks <span class="tt">SIGPIPE</span> at startup. This prevents the entire application from terminating abruptly if a remote client disconnects during a TLS handshake.</li>
-<li><b>TLS/SSL Cryptographic Layer</b>: Through <span class="tt">AbstractTlsSocket</span>, the framework builds a secure layer on top of standard network sockets.</li>
+</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md6"></a>
+4. Network Worker Thread: <span class="tt">Thread</span> and Sockets</h2>
+<p><span class="tt">Thread</span> derives from <span class="tt">AbstractThread</span> and specialises in managing network connections (<span class="tt">AbstractSocket</span>, <span class="tt">AbstractTlsSocket</span>, <span class="tt">DataArraySocket</span>).</p>
+<ul>
+<li><b>Socket ownership</b>: <span class="tt">Thread</span> owns the sockets registered on it. On destruction it stops its loop, waits for it to finish, and closes/deletes every remaining socket.</li>
+<li><b><span class="tt">SIGPIPE</span> blocking</b>: on POSIX systems, <span class="tt">Thread::startedEvent()</span> blocks <span class="tt">SIGPIPE</span> via <span class="tt">pthread_sigmask</span> so a remote disconnect during a TLS handshake does not terminate the process.</li>
+<li><b>TLS layer</b>: <span class="tt">AbstractTlsSocket</span> overrides read/write paths to <span class="tt">SSL_read</span>/<span class="tt">SSL_write</span> and drives the non-blocking handshake state machine (<span class="tt">SSL_accept</span>/<span class="tt">SSL_connect</span>).</li>
 </ul>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md7"></a>
-5. Cryptographic State &amp; PKI: <span class="tt">TlsContext</span></h2>
-<p><span class="tt">TlsContext</span> acts as the secure state machine wrapping OpenSSL (<span class="tt">SSL_CTX</span>), decoupling TLS configuration logic from network I/O routines.</p><ul>
-<li><b>Automated OpenSSL Lifecycle</b>: Uses a reference-counted <span class="tt">Private</span> implementation to manage raw OpenSSL pointers, guaranteeing that resources like <span class="tt">SSL_CTX_free</span> are safely called.</li>
-<li><b>On-the-Fly PKI Generation</b>: Natively provides capability to generate RSA keys (<span class="tt">generateKey</span>), export certificate signing requests (<span class="tt">generateRequest</span>), and sign x509 certificates (<span class="tt">signRequest</span>).</li>
+5. TLS Configuration: <span class="tt">TlsContext</span></h2>
+<p><span class="tt">TlsContext</span> wraps <span class="tt">SSL_CTX</span> and separates TLS configuration from network I/O.</p>
+<ul>
+<li><b>Reference-counted lifetime</b>: the underlying OpenSSL context is shared between <span class="tt">TlsContext</span> copies and released once the last copy is destroyed.</li>
+<li><b>PKI helpers</b>: <span class="tt">generateKey</span> (currently RSA via <span class="tt">EVP_RSA_gen</span>), <span class="tt">generateRequest</span> (CSR), and <span class="tt">signRequest</span> (x509 signing). <span class="tt">appendTrusted</span>/<span class="tt">setDefaultVerifyPaths</span> configure the trust store.</li>
+<li><b>Peer verification</b>: <span class="tt">setVerifyPeer</span>, <span class="tt">setVerifyName</span> (hostname / SAN check), and <span class="tt">setIgnoreErrors</span> (<span class="tt">IgnoreErrors::TimeValidity</span>) control validation during the handshake.</li>
+<li><b>Immutability</b>: the class is documented as not thread-safe for modification. Configure it fully before assigning it to a socket.</li>
 </ul>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md8"></a>
-6. Smart Task Distribution: <span class="tt">ThreadPool</span></h2>
-<p><span class="tt">ThreadPool</span> manages a set of reusable worker threads to eliminate the overhead of spawning new threads for individual tasks.</p><ul>
-<li><b>Load-Balanced Distribution</b>: Features automated thread selection via <span class="tt">getThread()</span>, which automatically routes new tasks to the least loaded worker thread.</li>
-<li><b>Cross-Thread Return Pipes</b>: You can execute a computing function inside a background pool thread, and <span class="tt">AsyncFw</span> will automatically capture its return value and route it back as a callback invocation inside the caller's thread context.</li>
+6. Task Distribution: <span class="tt">ThreadPool</span></h2>
+<p><span class="tt">ThreadPool</span> manages a set of reusable worker threads.</p>
+<ul>
+<li><b>Load balancing</b>: <span class="tt">getThread()</span> returns the least-loaded worker, creating new workers lazily up to <span class="tt">workThreadsSize</span>.</li>
+<li><b>Callback round-trip</b>: <span class="tt">ThreadPool::async(thread, fn, result)</span> runs <span class="tt">fn</span> on the worker and invokes <span class="tt">result</span> back on the caller's thread with the return value (or with no argument for <span class="tt">void</span> returns).</li>
 </ul>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md9"></a>
-7. Thread-Safe Diagnostic Stream: <span class="tt">LogStream</span></h2>
-<p><span class="tt">LogStream</span> provides a high-performance, thread-safe diagnostics and logging architecture utilizing strict RAII execution semantics.</p><ul>
-<li><b>Automatic RAII Flushing</b>: Logged content is accumulated inside an internal thread-isolated buffer stream. It is guaranteed to safely flush when the temporary statement-level <span class="tt">LogStream</span> instance goes out of scope and is destroyed.</li>
-<li><b>Modern C++20 Formatting</b>: Natively supports standard stream insertion chains (<span class="tt">operator&lt;&lt;</span>) alongside modern, type-safe compile-time text formatting via <span class="tt">std::format</span> engines.</li>
+7. Logging: <span class="tt">LogStream</span></h2>
+<p><span class="tt">LogStream</span> is a thread-safe diagnostic stream with RAII lifetime.</p>
+<ul>
+<li><b>RAII flush</b>: a temporary <span class="tt">LogStream</span> instance accumulates output and flushes when the statement ends. Concurrent output is serialised via <span class="tt">std::osyncstream</span>.</li>
+<li><b>Two interfaces</b>: C++ stream insertion (<span class="tt">operator&lt;&lt;</span>) and <span class="tt">std::format</span>-style <span class="tt">output("value: {}", v)</span>.</li>
+<li><b>Level macros</b>: <span class="tt">lsTrace</span>/<span class="tt">lsDebug</span>/... macros can be compiled out via <span class="tt">LS_NO_*</span> defines; <span class="tt">logTrace</span>/<span class="tt">logDebug</span>/... are always compiled in.</li>
 </ul>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md10"></a>
-8. The Application Master: <span class="tt">MainThread</span></h2>
-<p><span class="tt">MainThread</span> (inheriting from <span class="tt">Thread</span>) manages the application's primary boot thread (the one driving your <span class="tt">main()</span> function).</p><ul>
-<li><b>Global Execution Frame</b>: Triggered via the blocking <span class="tt">MainThread::exec()</span>, it stalls the main function to orchestrate timers, system interrupts, and queued procedures.</li>
-<li><b>Transparent Qt Integration</b>: If the <span class="tt">USE_QAPPLICATION</span> macro is defined, <span class="tt">MainThread</span> swaps its internal poll-engine for <span class="tt">qApp-&gt;exec()</span>, mapping <span class="tt">AsyncFw</span> timers and descriptor hooks onto the native Qt event loop.</li>
+8. Application Master: <span class="tt">MainThread</span></h2>
+<p><span class="tt">MainThread</span> derives from <span class="tt">Thread</span> and drives the primary application thread.</p>
+<ul>
+<li><b><span class="tt">MainThread::exec()</span></b>: starts the event loop on the current thread. <span class="tt">MainThread::exit()</span> and <span class="tt">MainThread::exit(code)</span> request shutdown from any thread (and, when <span class="tt">EXIT_ON_UNIX_SIGNAL</span> is active, from a POSIX signal handler via a self-pipe / <span class="tt">eventfd</span>).</li>
+<li><b>Qt integration (<span class="tt">USE_QAPPLICATION</span>)</b>: <span class="tt">MainThread::exec()</span> delegates to <span class="tt">qApp-&gt;exec()</span>. Framework primitives are mapped to Qt equivalents — timers via <span class="tt">QObject::startTimer</span>, queued tasks via <span class="tt">QMetaObject::invokeMethod</span>, and descriptor readiness via <span class="tt">QSocketNotifier</span>.</li>
 </ul>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md11"></a>
-9. Asynchronous Service Discovery: <span class="tt">MulticastDns</span></h2>
-<p><span class="tt">MulticastDns</span> delivers a high-performance, asynchronous zero-configuration networking engine implementing <b>mDNS (Multicast DNS)</b> and <b>DNS-SD (DNS Service Discovery)</b> protocols.</p><ul>
-<li><b>Reactive I/O Multiplexing</b>: Seamlessly delegates low-level mDNS network descriptors directly to the active <span class="tt">AbstractThread</span> event loop. It executes completely non-blocking network operations, drawing negligible CPU overhead without spawning heavy system threads.</li>
-<li><b>State-Isolated Multi-Instance Architecture</b>: Engineered with a strict stateless underlying C-layer wrapped inside a robust C++ RAII container. Multiple independent <span class="tt">MulticastDns</span> instances can run concurrently to browse, query, or publish entirely different service types without cross-instance memory corruption.</li>
-<li><b>Unified Lifecycle &amp; Memory Management</b>: Leverages a private internal storage buffer synchronized via <span class="tt">std::mutex</span> to guarantee bulletproof thread safety. All network sockets and memory buffers are bound to the instance lifespan and gracefully cleaned up upon destruction.</li>
-<li><b>Event-Driven Signal Notifications</b>: Exposes type-safe reactive callback interfaces powered by <span class="tt">FunctionConnector</span> (<span class="tt">hostAdded</span>, <span class="tt">hostChanged</span>, <span class="tt">hostRemoved</span>). This allows application business logic to hook into real-time network topology shifts via expressive lambda routines. </li>
+9. mDNS / DNS-SD: <span class="tt">MulticastDns</span></h2>
+<p><span class="tt">MulticastDns</span> implements mDNS and DNS-SD over the framework's event loop.</p>
+<ul>
+<li><b>Event-loop integration</b>: descriptor readiness for mDNS sockets is registered with the owning <span class="tt">AbstractThread</span>, so no extra thread is required.</li>
+<li><b>Multiple instances</b>: each <span class="tt">MulticastDns</span> instance owns its own sockets and buffers, so different instances can browse or publish independent service types concurrently.</li>
+<li><b>Thread safety</b>: the internal host list is guarded by a <span class="tt">std::mutex</span>; sockets and buffers are released on destruction.</li>
+<li><b>Signals</b>: <span class="tt">hostAdded</span>, <span class="tt">hostChanged</span>, and <span class="tt">hostRemoved</span> are <span class="tt">FunctionConnector</span>s. A goodbye packet (TTL=0) is reported through <span class="tt">hostChanged</span> with <span class="tt">port == 0</span>; removal (expiry or explicit deletion) is reported through <span class="tt">hostRemoved</span>. </li>
 </ul>
 </div></div><!-- PageDoc -->
 <a href="doxygen_crawl.html"></a>

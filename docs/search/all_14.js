@@ -14,6 +14,7 @@ var searchData=
   ['lockguard_11',['lockGuard',['../classAsyncFw_1_1AbstractThread.html#a6e17293ccd9683f5bd8ca9a3dcd52e7d',1,'AsyncFw::AbstractThread']]],
   ['log_12',['Log',['../classAsyncFw_1_1Log.html',1,'AsyncFw::Log'],['../classAsyncFw_1_1Log.html#a832d13f4e9231eee37d8decb5b9b96d7',1,'AsyncFw::Log::Log()']]],
   ['log_2eh_13',['Log.h',['../Log_8h.html',1,'']]],
-  ['logstream_14',['LogStream',['../index.html#autotoc_md9',1,'7. Thread-Safe Diagnostic Stream: &lt;span class=&quot;tt&quot;&gt;LogStream&lt;/span&gt;'],['../classAsyncFw_1_1LogStream.html',1,'AsyncFw::LogStream']]],
-  ['logstream_2eh_15',['LogStream.h',['../LogStream_8h.html',1,'']]]
+  ['logging_3a_20logstream_14',['7. Logging: &lt;span class=&quot;tt&quot;&gt;LogStream&lt;/span&gt;',['../index.html#autotoc_md9',1,'']]],
+  ['logstream_15',['LogStream',['../index.html#autotoc_md9',1,'7. Logging: &lt;span class=&quot;tt&quot;&gt;LogStream&lt;/span&gt;'],['../classAsyncFw_1_1LogStream.html',1,'AsyncFw::LogStream']]],
+  ['logstream_2eh_16',['LogStream.h',['../LogStream_8h.html',1,'']]]
 ];

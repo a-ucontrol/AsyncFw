@@ -10,7 +10,7 @@ var searchData=
   ['warning_7',['Warning',['../classAsyncFw_1_1LogStream.html#afa2f6c5311ced6b973d39d6e5ced5731a96aad685f21a4a927c6c3a74274efd5a',1,'AsyncFw::LogStream']]],
   ['websocketreceived_8',['webSocketReceived',['../classAsyncFw_1_1HttpServer.html#abc4ca40dd30bf85e0328a65360e2038f',1,'AsyncFw::HttpServer']]],
   ['websocketsend_9',['webSocketSend',['../classAsyncFw_1_1HttpServer.html#adbe9b1d1649b32cb126ae37fcd37914f',1,'AsyncFw::HttpServer']]],
-  ['worker_20thread_3a_20thread_20secure_20sockets_10',['4. Network Worker Thread: &lt;span class=&quot;tt&quot;&gt;Thread&lt;/span&gt; &amp;amp; Secure Sockets',['../index.html#autotoc_md6',1,'']]],
+  ['worker_20thread_3a_20thread_20and_20sockets_10',['4. Network Worker Thread: &lt;span class=&quot;tt&quot;&gt;Thread&lt;/span&gt; and Sockets',['../index.html#autotoc_md6',1,'']]],
   ['workload_11',['workLoad',['../classAsyncFw_1_1AbstractThread.html#a474577d15fa4b52abee863b44a0b7f89',1,'AsyncFw::AbstractThread']]],
   ['write_12',['Write',['../classAsyncFw_1_1AbstractSocket.html#a940a10b5f063e970cb7e46a61cab2415a6084632d3ad9ef3f0bce55a0751c817b',1,'AsyncFw::AbstractSocket']]],
   ['write_13',['write',['../classAsyncFw_1_1AbstractSocket.html#a6b5bfbc488d553dca8a2d01b6b415482',1,'AsyncFw::AbstractSocket::write(const uint8_t *, int)'],['../classAsyncFw_1_1AbstractSocket.html#a4ad7bcd91ec7a91270d83bf583d62be1',1,'AsyncFw::AbstractSocket::write(const DataArray &amp;)'],['../classAsyncFw_1_1File.html#a0cd5ad18548cd40cd34f2146a63bb147',1,'AsyncFw::File::write(const DataArray &amp;)'],['../classAsyncFw_1_1File.html#a2965e419210567f0a2f81f30b0862ee6',1,'AsyncFw::File::write(const char *, std::streamsize)']]],

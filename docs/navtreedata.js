@@ -28,13 +28,13 @@ var NAVTREE =
     [ "Core Architecture &amp; Components", "index.html#autotoc_md2", [
       [ "1. The Core Backbone: <span class=\"tt\">AbstractThread</span>", "index.html#autotoc_md3", null ],
       [ "2. Cross-Thread Signals: <span class=\"tt\">FunctionConnector</span>", "index.html#autotoc_md4", null ],
-      [ "3. Deep Coroutine Orchestration &amp; RPC: <span class=\"tt\">coInvoke</span>", "index.html#autotoc_md5", null ],
-      [ "4. Network Worker Thread: <span class=\"tt\">Thread</span> &amp; Secure Sockets", "index.html#autotoc_md6", null ],
-      [ "5. Cryptographic State &amp; PKI: <span class=\"tt\">TlsContext</span>", "index.html#autotoc_md7", null ],
-      [ "6. Smart Task Distribution: <span class=\"tt\">ThreadPool</span>", "index.html#autotoc_md8", null ],
-      [ "7. Thread-Safe Diagnostic Stream: <span class=\"tt\">LogStream</span>", "index.html#autotoc_md9", null ],
-      [ "8. The Application Master: <span class=\"tt\">MainThread</span>", "index.html#autotoc_md10", null ],
-      [ "9. Asynchronous Service Discovery: <span class=\"tt\">MulticastDns</span>", "index.html#autotoc_md11", null ]
+      [ "3. Coroutines and RPC-Style Dispatch: <span class=\"tt\">coInvoke</span>", "index.html#autotoc_md5", null ],
+      [ "4. Network Worker Thread: <span class=\"tt\">Thread</span> and Sockets", "index.html#autotoc_md6", null ],
+      [ "5. TLS Configuration: <span class=\"tt\">TlsContext</span>", "index.html#autotoc_md7", null ],
+      [ "6. Task Distribution: <span class=\"tt\">ThreadPool</span>", "index.html#autotoc_md8", null ],
+      [ "7. Logging: <span class=\"tt\">LogStream</span>", "index.html#autotoc_md9", null ],
+      [ "8. Application Master: <span class=\"tt\">MainThread</span>", "index.html#autotoc_md10", null ],
+      [ "9. mDNS / DNS-SD: <span class=\"tt\">MulticastDns</span>", "index.html#autotoc_md11", null ]
     ] ],
     [ "Topics", "topics.html", "topics" ],
     [ "Classes", "annotated.html", [
