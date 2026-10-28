@@ -1183,12 +1183,13 @@ void test_thread_waits_for_running_task() {
 //       which is already done once state >= Finished.
 //
 //   ~AbstractThread() drain (post-fix)
-//     - ONE swap(process_tasks_, tasks) + process_tasks() pass
-//     - tasks scheduled *during* that pass (via invokeTask() from a task's
-//       operator()) land in private_.tasks AFTER the swap; they are NOT
-//       run — they are deleted (with lsError) before ~Private destroys
-//       the queue. This prevents both the pre-fix leak (dropped pointer)
-//       and an unbounded destructor loop (spawn chain).
+//     - Take pending tasks (swap into process_tasks_), set the Destroying
+//       flag, then run the tasks once, with loop primitives (io_uring
+//       ring, epoll_fd, wake_fd) still alive.
+//     - No lock is needed: the destructor's caller guarantees exclusive
+//       ownership. The invariant we rely on is purely ordering — the flag
+//       must be set before process_tasks() so invokeTask() from within a
+//       drain task is rejected.
 //
 // Covered scenarios (mirror example/misc/main.cpp A–F):
 //   A/B  removeTimer from own operator() (direct call + via callback)
@@ -1198,8 +1199,8 @@ void test_thread_waits_for_running_task() {
 //   F1   ~Thread with pending timers (started + finished)
 //   F2   ~Thread with pending timers + pending task (never-started)
 //   F2b  ~Thread where a pending task spawns another during drain
-//        (spawned task is discarded, not run, not leaked — expected
-//        lsError from ~AbstractThread)
+//        (spawned task is rejected by invokeTask() because state is
+//        Destroying; the caller must delete the rejected task.
 // ---------------------------------------------------------------------------
 
 void test_timer_remove_from_own_task() {
@@ -1420,18 +1421,25 @@ void test_destructor_with_pending_task_and_timers() {
   EXPECT(fires.load() == 0);
 }
 
-void test_destructor_discards_tasks_spawned_during_drain() {
+void test_destructor_rejects_invoke_during_drain() {
   // F2b: never-started thread, pending task1 which schedules task2 via
-  // invokeTask() from within operator(). ~AbstractThread's drain is a
-  // SINGLE swap+process_tasks() pass; task2 lands in private_.tasks AFTER
-  // the swap, and the post-fix destructor then discards it (deletes
-  // without running, with an lsError). This guards against BOTH:
-  //   - the pre-fix leak (LSan would report Task2's allocation), and
-  //   - an unbounded destructor loop if a chain of self-spawning tasks
-  //     were ever involved.
+  // invokeTask() from within operator(). ~AbstractThread sets the
+  // Destroying flag before running pending tasks (after the drain swap,
+  // but before process_tasks()), so task2 is rejected at the invokeTask()
+  // boundary and never enters private_.tasks — invokeTask() returns false,
+  // ownership stays with the caller. Task1::operator() below deletes task2
+  // on rejection (matching the contract of AbstractThread::invoke()).
   //
-  // An error line from ~AbstractThread is EXPECTED here (part of the fix's
-  // contract). It is not a test failure — only the EXPECTs below matter.
+  // This guards against:
+  //   - a regression where Destroying is missing or set after the drain
+  //     (task2 would land in private_.tasks and leak — EXPECT_MSG below
+  //     fails; under an ASan build LSan additionally reports the allocation)
+  //   - an unbounded destructor loop if a chain of self-spawning tasks
+  //     were ever involved (state check short-circuits).
+  //
+  // No error line is expected from ~AbstractThread here. If one appears,
+  // it means the Destroying flag is set too late — treat that as the bug,
+  // not as an expected output.
   auto *thread = new Thread("dtor-spawn");
 
   std::atomic<bool> task1Ran {false};
@@ -1450,7 +1458,15 @@ void test_destructor_discards_tasks_spawned_during_drain() {
     AbstractThread::AbstractTask *next;
     void operator()() override {
       ran->store(true);
-      EXPECT_MSG(th->invokeTask(next), "invokeTask from within ~AbstractThread drain must succeed (state == None)");
+      // invokeTask() returns false during Destroying: ownership stays with
+      // us, so we must delete the rejected task. On regression (r == true)
+      // do NOT delete — invokeTask claimed ownership and a double-free here
+      // would mask the real failure; that path leaks, and LSan (under ASAN)
+      // reports the exact allocation, pointing at the missing/delayed
+      // Destroying flag.
+      bool r = th->invokeTask(next);
+      EXPECT_MSG(!r, "invokeTask from within ~AbstractThread drain must not succeed (destroying)");
+      if (!r) delete next;
     }
   };
   auto *t1 = new Task1;
@@ -1459,10 +1475,10 @@ void test_destructor_discards_tasks_spawned_during_drain() {
   t1->next = t2;
   EXPECT(thread->invokeTask(t1));
 
-  delete thread;  // drain -> task1 runs -> spawns task2 -> task2 discarded
+  delete thread;  // drain -> task1 runs -> task2 rejected by invokeTask
 
   EXPECT_MSG(task1Ran.load(), "task1 must run (single-pass drain by ~AbstractThread)");
-  EXPECT_MSG(!task2Ran.load(), "task2 must NOT run (discarded after single-pass drain; expected lsError from ~AbstractThread)");
+  EXPECT_MSG(!task2Ran.load(), "task2 must NOT run (rejected by invokeTask during Destroying)");
 }
 
 // ============================================================================
@@ -1980,7 +1996,7 @@ int main(int, char **) {
   test_timer_remove_while_task_blocked();
   test_destructor_with_pending_timers();
   test_destructor_with_pending_task_and_timers();
-  test_destructor_discards_tasks_spawned_during_drain();
+  test_destructor_rejects_invoke_during_drain();
 
   // --- Group C: MainThread re-exec ------------------------------------
   test_mainthread_reexec();

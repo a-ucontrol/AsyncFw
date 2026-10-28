@@ -389,6 +389,13 @@ AbstractThread::AbstractThread(const std::string &name) : private_(*new Private)
 
 AbstractThread::~AbstractThread() {
   stop();
+  lsTrace() << LOG_THREAD_NAME << LogStream::Color::Magenta << private_.id << LogStream::Color::Default << "-" << private_.tasks.size() << private_.timers.size() << private_.poll_tasks.size() << "-" << private_.process_tasks_.size() << private_.process_timer_tasks_.size() << private_.process_poll_tasks_.size();
+  if (!private_.tasks.empty()) {
+    lsTrace() << LogStream::Color::DarkRed << "task list not empty" << private_.tasks.size();
+    std::swap(private_.process_tasks_, private_.tasks);
+    private_.state |= 0x80;  // destroying, invokeTask() must return false
+    private_.process_tasks();
+  }
   {  //lock scope
     LockGuard lock(Private::list.mutex);
     std::vector<AbstractThread *>::iterator it = std::lower_bound(Private::list.begin(), Private::list.end(), this, Private::Compare());
@@ -416,22 +423,6 @@ AbstractThread::~AbstractThread() {
 #ifdef EPOLL_WAIT
   ::close(private_.epoll_fd);
 #endif
-
-  lsTrace() << LOG_THREAD_NAME << LogStream::Color::Magenta << private_.id << LogStream::Color::Default << "-" << private_.tasks.size() << private_.timers.size() << private_.poll_tasks.size() << "-" << private_.process_tasks_.size() << private_.process_timer_tasks_.size() << private_.process_poll_tasks_.size();
-
-  if (!private_.tasks.empty()) {
-    lsTrace() << LogStream::Color::DarkRed << "task list not empty" << private_.tasks.size();
-    std::swap(private_.process_tasks_, private_.tasks);
-    private_.process_tasks();
-    if (!private_.tasks.empty()) {
-      lsError() << LogStream::Color::Red << "task list not empty" << private_.tasks.size() << "state" << private_.state;
-      while (!private_.tasks.empty()) {
-        AbstractTask *_task = private_.tasks.back();
-        private_.tasks.pop();
-        delete _task;
-      }
-    }
-  }
 
   if (!private_.timers.empty()) {
     lsTrace() << LogStream::Color::DarkRed << "timer list not empty" << private_.timers.size();
