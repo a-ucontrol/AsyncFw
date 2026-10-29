@@ -16,7 +16,15 @@ using namespace AsyncFw;
 int main(int argc, char *argv[]) {
   HttpServer _http {HTTP_SERVER_HOME};
 
-  _http.setPeek([](const HttpServer::Request &, std::any) { return true; });
+  _http.setPeek([](const HttpServer::Request &request, std::any) {
+    lsTrace() << request.path() << request.headerItemValue("ID");
+    if (request.headerItemValue("ID") == "A1") {
+      request.response()->setStatusCode(HttpServer::Response::StatusCode::Forbidden);
+      request.response()->send();
+      return false;
+    }
+    return true;
+  });
 
   _http.addRoute("/quit", HttpServer::Request::Method::Get, [](const HttpServer::Request &request) {
     HttpServer::Response *resp = request.response();
@@ -56,8 +64,14 @@ int main(int argc, char *argv[]) {
     });
     _socket->received.connect<AbstractFunctionConnector::Connection::Queued>([_socket](const AsyncFw::DataArray &_da) {
       lsDebug() << _da.view(0, _da.size() > 1024 ? 1024 : _da.size());
-      _socket->write("GET /quit HTTP/1.1\r\n\r\n");
-      _socket->disconnect();
+      if (_da.view(9, 3) == "403") {
+        logDebug() << "Send quit";
+        _socket->write("GET /quit HTTP/1.1\r\n\r\n");
+        _socket->disconnect();
+        return;
+      }
+      lsDebug() << "Send quit A1";
+      _socket->write("GET /quit HTTP/1.1\r\nID: A1\r\n\r\n");
     });
     _socket->connect("127.0.0.1", 18080);
   }

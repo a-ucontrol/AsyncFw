@@ -220,7 +220,15 @@ Friends</h2></td></tr>
 <div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[]) {</div>
 <div class="line">  <a class="code hl_class" href="classAsyncFw_1_1HttpServer.html">HttpServer</a> _http {HTTP_SERVER_HOME};</div>
 <div class="line"> </div>
-<div class="line">  _http.<a class="code hl_function" href="#ad0bb08fb4a0ef0fd28961e29a8275bd0">setPeek</a>([](<span class="keyword">const</span> <a class="code hl_class" href="classAsyncFw_1_1HttpServer_1_1Request.html">HttpServer::Request</a> &amp;, std::any) { <span class="keywordflow">return</span> <span class="keyword">true</span>; });</div>
+<div class="line">  _http.<a class="code hl_function" href="#ad0bb08fb4a0ef0fd28961e29a8275bd0">setPeek</a>([](<span class="keyword">const</span> <a class="code hl_class" href="classAsyncFw_1_1HttpServer_1_1Request.html">HttpServer::Request</a> &amp;request, std::any) {</div>
+<div class="line">    lsTrace() &lt;&lt; request.<a class="code hl_function" href="classAsyncFw_1_1HttpServer_1_1Request.html#afa488a05d879b6cbdca0853401352d19">path</a>() &lt;&lt; request.<a class="code hl_function" href="classAsyncFw_1_1HttpServer_1_1Request.html#aa7be1f1b63b631ba9cbf133b4f2ddc9c">headerItemValue</a>(<span class="stringliteral">&quot;ID&quot;</span>);</div>
+<div class="line">    <span class="keywordflow">if</span> (request.<a class="code hl_function" href="classAsyncFw_1_1HttpServer_1_1Request.html#aa7be1f1b63b631ba9cbf133b4f2ddc9c">headerItemValue</a>(<span class="stringliteral">&quot;ID&quot;</span>) == <span class="stringliteral">&quot;A1&quot;</span>) {</div>
+<div class="line">      request.<a class="code hl_function" href="classAsyncFw_1_1HttpServer_1_1Request.html#a6183c383629786f1f45cc58a7cdba48c">response</a>()-&gt;<a class="code hl_function" href="classAsyncFw_1_1HttpServer_1_1Response.html#a3bd5303884754553c8dcf33c3b98da3c">setStatusCode</a>(HttpServer::Response::StatusCode::Forbidden);</div>
+<div class="line">      request.<a class="code hl_function" href="classAsyncFw_1_1HttpServer_1_1Request.html#a6183c383629786f1f45cc58a7cdba48c">response</a>()-&gt;<a class="code hl_function" href="classAsyncFw_1_1HttpServer_1_1Response.html#a52925841696f5351ff43b46530c18390">send</a>();</div>
+<div class="line">      <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line">    }</div>
+<div class="line">    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line">  });</div>
 <div class="line"> </div>
 <div class="line">  _http.<a class="code hl_function" href="#a5c32aee1be945562ee7c5601ecdc187b">addRoute</a>(<span class="stringliteral">&quot;/quit&quot;</span>, HttpServer::Request::Method::Get, [](<span class="keyword">const</span> <a class="code hl_class" href="classAsyncFw_1_1HttpServer_1_1Request.html">HttpServer::Request</a> &amp;request) {</div>
 <div class="line">    <a class="code hl_class" href="classAsyncFw_1_1HttpServer_1_1Response.html">HttpServer::Response</a> *resp = request.<a class="code hl_function" href="classAsyncFw_1_1HttpServer_1_1Request.html#a6183c383629786f1f45cc58a7cdba48c">response</a>();</div>
@@ -260,8 +268,14 @@ Friends</h2></td></tr>
 <div class="line">    });</div>
 <div class="line">    _socket-&gt;received.connect&lt;<a class="code hl_enumvalue" href="classAsyncFw_1_1AbstractFunctionConnector_1_1Connection.html#a860b83046c90e62d768e0acde74626c6a6c561775a673adbed77c380ee036a01f">AbstractFunctionConnector::Connection::Queued</a>&gt;([_socket](<span class="keyword">const</span> <a class="code hl_class" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> &amp;_da) {</div>
 <div class="line">      lsDebug() &lt;&lt; _da.view(0, _da.size() &gt; 1024 ? 1024 : _da.size());</div>
-<div class="line">      _socket-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractSocket.html#a6b5bfbc488d553dca8a2d01b6b415482">write</a>(<span class="stringliteral">&quot;GET /quit HTTP/1.1\r\n\r\n&quot;</span>);</div>
-<div class="line">      _socket-&gt;<a class="code hl_function" href="classAsyncFw_1_1HttpSocket.html#a33dadd18584b3b2b76a02dffa0a831fb">disconnect</a>();</div>
+<div class="line">      <span class="keywordflow">if</span> (_da.view(9, 3) == <span class="stringliteral">&quot;403&quot;</span>) {</div>
+<div class="line">        logDebug() &lt;&lt; <span class="stringliteral">&quot;Send quit&quot;</span>;</div>
+<div class="line">        _socket-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractSocket.html#a6b5bfbc488d553dca8a2d01b6b415482">write</a>(<span class="stringliteral">&quot;GET /quit HTTP/1.1\r\n\r\n&quot;</span>);</div>
+<div class="line">        _socket-&gt;<a class="code hl_function" href="classAsyncFw_1_1HttpSocket.html#a33dadd18584b3b2b76a02dffa0a831fb">disconnect</a>();</div>
+<div class="line">        <span class="keywordflow">return</span>;</div>
+<div class="line">      }</div>
+<div class="line">      lsDebug() &lt;&lt; <span class="stringliteral">&quot;Send quit A1&quot;</span>;</div>
+<div class="line">      _socket-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractSocket.html#a6b5bfbc488d553dca8a2d01b6b415482">write</a>(<span class="stringliteral">&quot;GET /quit HTTP/1.1\r\nID: A1\r\n\r\n&quot;</span>);</div>
 <div class="line">    });</div>
 <div class="line">    _socket-&gt;<a class="code hl_function" href="classAsyncFw_1_1HttpSocket.html#a974b10998baf028573c6dde3bd899b33">connect</a>(<span class="stringliteral">&quot;127.0.0.1&quot;</span>, 18080);</div>
 <div class="line">  }</div>
@@ -370,7 +384,7 @@ template&lt;typename A&gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="HttpServer_2main_8cpp-example.html#a3">HttpServer/main.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="HttpServer_2main_8cpp-example.html#a8">HttpServer/main.cpp</a>.</dd>
 </dl>
 
 </div>
