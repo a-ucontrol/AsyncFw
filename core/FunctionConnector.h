@@ -41,7 +41,7 @@ public:
   };
   /** @class Connection FunctionConnector.h <AsyncFw/FunctionConnector> @brief Represents an active linkage between a sender's signal/connector and a specific receiver slot.
   @details The Connection class  representing a single active subscription. @n It stores crucial metadata required for dispatching events, including the target execution context AsyncFw::AbstractThread and the requested synchronization strategy Type. @n Instances of this class are typically allocated on the heap when a subscriber calls connect. Lifetime and memory cleanup are managed automatically by the framework, or can be tied to scopes via FunctionConnectionGuard.
-  @note The receiver's thread is captured from AbstractThread::current() at construction time, connect() must therefore be called from Thread, from a plain std::thread the captured thread_ is nullptr and Queued/Sync delivery will fail. */
+  @note The receiver's thread is captured from AbstractThread::current() at construction time, connect() must therefore be called from Thread, from a plain std::thread the captured thread_ is nullptr and Queued/Sync delivery will crash. */
   class Connection {
     friend AbstractFunctionConnector;
     friend FunctionConnectionGuard;
