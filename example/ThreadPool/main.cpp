@@ -23,22 +23,13 @@ int main(int, char **) {
   logInfo() << threadPool->text();
 
   AsyncFw::Thread *_lt = AsyncFw::ThreadPool::instance()->createThread("LogThread");
-  /*
-  createThread() posts start() to the pool owner's event loop (here MainThread).
-  We need LogThread running before the synchronous invoke() below: without this
-  explicit start(), MainThread would block on the sync wait, the pool owner
-  would never drain its queue, and the queued async start() would starve -
-  deadlock. Explicit start() is safe: the queued async start() checks
-  Thread::running() and no-ops.
-  */
-  _lt->start();
   _lt->invoke([]() {
     AsyncFw::Instance<AsyncFw::Log>::create();  //create log instance in log thread _lt
   }, true);
 
   AsyncFw::Thread *_t = AsyncFw::ThreadPool::instance()->createThread("SyncExample");
 
-  _t->started.connect([_t]() {
+  _t->invoke([_t]() {
     AsyncFw::ThreadPool::sync(_t, []() {
       AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::current();
       std::this_thread::sleep_for(std::chrono::milliseconds(10));

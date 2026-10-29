@@ -123,19 +123,17 @@ ThreadPool::~ThreadPool() {
 
 ThreadPool::Thread *ThreadPool::createThread(const std::string &_name) {
   Thread *thread = new Thread((!_name.empty()) ? _name : name() + " thread", this);
-  thread_->invoke([thread]() {
-    if (!thread->running()) thread->start();
-    else lsTrace() << "thread already running" << thread->name();
-  });
+  thread->start();
   lsTrace() << '(' + thread->name() + ')';
   return thread;
 }
 
 void ThreadPool::removeThread(AbstractThreadPool::Thread *thread) {
-  thread_->invoke([this, thread]() {
+  {  //lock scope
+    AbstractThread::LockGuard lock = thread_->lockGuard();
     std::vector<AbstractThreadPool::Thread *>::iterator it = std::find(workThreads_.begin(), workThreads_.end(), thread);
     if (it != workThreads_.end()) { workThreads_.erase(it); }
-  }, true);
+  }
   AbstractThreadPool::removeThread(thread);
   lsTrace() << '(' + thread->name() + ')';
 }
@@ -147,27 +145,28 @@ void ThreadPool::quit() {
 
 AbstractThreadPool::Thread *ThreadPool::getThread() {
   ThreadPool::Thread *_t = nullptr;
-  thread_->invoke([this, &_t]() {
+  {  //lock scope
+    AbstractThread::LockGuard lock = thread_->lockGuard();
     int _s = workThreads_.size();
     if (_s < workThreadsSize_) {
       for (int i = 0; i != _s; ++i)
         if (workThreads_[i]->workLoad() == 0) {
           _t = workThreads_[i];
-          return;
+          return _t;
         }
-
       workThreads_.emplace_back(createThread("Work-" + std::to_string(_s)));
       _t = workThreads_.back();
-      return;
-    }
-    int _load = std::numeric_limits<int>::max();
-    for (int i = 0; i != _s; ++i) {
-      int _l = workThreads_[i]->workLoad();
-      if (_l < _load) {
-        _load = _l;
-        _t = workThreads_[i];
+    } else {
+      int _load = std::numeric_limits<int>::max();
+      for (int i = 0; i != _s; ++i) {
+        int _l = workThreads_[i]->workLoad();
+        if (_l < _load) {
+          _load = _l;
+          _t = workThreads_[i];
+        }
       }
+      return _t;
     }
-  }, true);
+  }
   return _t;
 }

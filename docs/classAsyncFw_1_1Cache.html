@@ -172,7 +172,7 @@ class AsyncFw::Cache&lt; T &gt;</div><p>A thread-safe cache wrapper that emits a
 <div class="line">  <a class="code hl_class" href="classAsyncFw_1_1Thread.html">AsyncFw::Thread</a> *thread = <a class="code hl_function" href="classAsyncFw_1_1ThreadPool.html#a086c0271dcb7c4be416705d622145f83">AsyncFw::ThreadPool::instance</a>()-&gt;<a class="code hl_function" href="classAsyncFw_1_1ThreadPool.html#a02cf5b98df2bbd01b4757e09fceece49">createThread</a>(<span class="stringliteral">&quot;CacheExampleThread&quot;</span>);</div>
 <div class="line">  <a class="code hl_class" href="classAsyncFw_1_1Cache.html">AsyncFw::Cache&lt;Config&gt;</a> configCache(50);</div>
 <div class="line"> </div>
-<div class="line">  thread-&gt;<a class="code hl_variable" href="classAsyncFw_1_1Thread.html#abac958eae1def0e3c0e32a7ebebc45eb">started</a>.<a class="code hl_function" href="classAsyncFw_1_1FunctionConnector.html#ae1f65144956b3b1247d58614e4080f63">connect</a>([&amp;configCache]() {</div>
+<div class="line">  thread-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#af1382b21117f049a9ab7063017d7fae6">invoke</a>([&amp;configCache]() {</div>
 <div class="line">    configCache.update.connect([&amp;configCache]() {</div>
 <div class="line">      lsNotice() &lt;&lt; <span class="stringliteral">&quot;update in:&quot;</span> &lt;&lt; <a class="code hl_function" href="classAsyncFw_1_1Thread.html#a0a3bd6a54db28f73ff59cfea6a40b07a">AsyncFw::Thread::current</a>()-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd">name</a>();</div>
 <div class="line">      std::this_thread::sleep_for(std::chrono::milliseconds(25));</div>

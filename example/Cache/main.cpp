@@ -23,7 +23,7 @@ int main(int, char **) {
   AsyncFw::Thread *thread = AsyncFw::ThreadPool::instance()->createThread("CacheExampleThread");
   AsyncFw::Cache<Config> configCache(50);
 
-  thread->started.connect([&configCache]() {
+  thread->invoke([&configCache]() {
     configCache.update.connect([&configCache]() {
       lsNotice() << "update in:" << AsyncFw::Thread::current()->name();
       std::this_thread::sleep_for(std::chrono::milliseconds(25));

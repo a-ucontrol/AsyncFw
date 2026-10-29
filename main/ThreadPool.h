@@ -105,7 +105,7 @@ public:
   ~ThreadPool();
 
   /** @brief Spawns a new managed worker thread.
-  @details The thread is created immediately but started asynchronously, start() is posted to the pool's owner event loop. This gives the caller a window to connect started/finished signals before the thread begins to run.
+  @details The returned thread is already running, start() does not return until started() has been emitted. Consequently started.connect() after this call deterministically misses the signal. Use Thread::invoke() for post-start setup.
   @param name Optional thread nam, empty uses "<pool name> thread". @return Pointer to the newly created Thread.
   @note The returned thread is NOT running yet. Callers that need the thread operational before the current function continues (e.g. before a subsequent sync invoke() on it) must call Thread::start() explicitly. */
   Thread *createThread(const std::string &name = {});
@@ -113,7 +113,8 @@ public:
   void removeThread(AbstractThreadPool::Thread *) override;
   virtual void quit() override;
 
-  /** @brief Selects and returns the least loaded thread from the pool for task distribution. */
+  /** @brief Selects and returns the least loaded thread from the pool for task distribution.
+  @details Same started() timing contract as createThread(). */
   AbstractThreadPool::Thread *getThread();
 
 private:

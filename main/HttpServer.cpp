@@ -613,7 +613,7 @@ std::string HttpServer::Response::header() const {
   std::string ba = "HTTP/" + version + ' ' + std::to_string(static_cast<int>(statusCode_)) + "\r\n";
   if (!mimeType_.empty()) ba += "Content-Type: " + mimeType_ + "\r\n";
   else {
-    if (!contentLength) ba += "Content-Type: application/x-empty\r\n";
+    if (!contentLength) ba += "Content-Type: application/octet-stream\r\n";
     else { ba += "Content-Type: text/plain\r\n"; }
   }
   ba += "Content-Length: " + std::to_string(contentLength) + "\r\n";
