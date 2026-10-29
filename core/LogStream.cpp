@@ -21,7 +21,6 @@ using namespace AsyncFw;
 LogStream::Data LogStream::data __attribute__((init_priority(AsyncFw_STATIC_INIT_PRIORITY)));
 
 void LogStream::console_output(const Message &message, uint8_t flags) {
-  if (!(flags & 0x80) && (message.type & 0x07) > LOG_STREAM_CONSOLE_LEVEL) return;
   std::string _message = message.string;
   std::string str;
   if (flags & LOG_STREAM_CONSOLE_COLOR) { str = colorString(static_cast<Color>(message.type & 0xF8)); }

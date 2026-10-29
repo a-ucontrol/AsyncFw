@@ -19,8 +19,10 @@ include(cmake/version.cmake)
 #set(CMAKE_C_COMPILER clang)
 #set(CMAKE_CXX_COMPILER clang++)
 
-#set(EPOLL_EDGE_TRIGGERED ON)
 #set(ENABLE_IO_URING ON)
+
+#add_definitions(-DUSE_SSL_BIO_PAIR)
+#add_definitions(-DEPOLL_EDGE_TRIGGERED)
 
 #add_definitions(-DLS_NO_TRACE)
 #add_definitions(-DLS_NO_DEBUG)
@@ -234,10 +236,6 @@ else()
 
   if(ENABLE_IO_URING)
     target_compile_definitions(${AsyncFw_PROJECT_NAME} PRIVATE IO_URING_WAIT IO_URING_WAKE)
-  else()
-    if(EPOLL_EDGE_TRIGGERED)
-      target_compile_definitions(${AsyncFw_PROJECT_NAME} PRIVATE EPOLL_EDGE_TRIGGERED)
-    endif()
   endif()
 
   install(TARGETS ${AsyncFw_PROJECT_NAME} EXPORT AsyncFw_TARGETS DESTINATION ${CMAKE_INSTALL_LIBDIR})

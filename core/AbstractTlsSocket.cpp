@@ -15,8 +15,6 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #include "AbstractTlsSocket.h"
 
-//#define USE_SSL_BIO_PAIR
-
 using namespace AsyncFw;
 
 #ifdef EXTEND_SOCKET_TRACE

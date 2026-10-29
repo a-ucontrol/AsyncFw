@@ -16,7 +16,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 //#include <cxxabi.h>
 
-#define LOG_STREAM_CONSOLE_LEVEL 7
+//#define LOG_STREAM_CONSOLE_LEVEL 7
 
 #define LOG_STREAM_CONSOLE_SENDER 0x01
 #define LOG_STREAM_CONSOLE_SPACE 0x02
