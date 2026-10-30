@@ -119,7 +119,7 @@ public:
   @details Configures the context to strictly match the remote server's Common Name (CN) or Subject Alternative Name (SAN) fields with the provided string, preventing identity spoofing.
   @warning Thread Affinity: Must only be called during the initialization phase. Modifying this on the fly for active sockets causes critical data races.
   @param hostname The exact domain name or host IP string expected from the remote peer. */
-  void setVerifyName(const std::string &);
+  void setVerifyName(const std::string &) const;
   /** @brief Configures specific handshake validation bypass flags.
   @warning This method modifies the global internal verification registry. Calling it concurrently or post-initialization will corrupt the verification state. */
   void setIgnoreErrors(IgnoreErrors);

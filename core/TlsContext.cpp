@@ -533,7 +533,7 @@ void TlsContext::setVerifyPeer(bool enable) { private_->verifyPeer = enable; }
 
 const std::string &TlsContext::verifyName() const { return private_->verifyName; }
 
-void TlsContext::setVerifyName(const std::string &name) { private_->verifyName = name; }
+void TlsContext::setVerifyName(const std::string &name) const { private_->verifyName = name; }
 
 void TlsContext::setIgnoreErrors(IgnoreErrors errors) { private_->ignoreErrors = errors; }
 
