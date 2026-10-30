@@ -441,9 +441,10 @@ int AbstractSocket::write(const DataArray &da) { return write(da.data(), da.size
 void AbstractSocket::close() {
   if (fd_ == -1) return;
   if (state_ != State::Closing) thread_->removePollDescriptor(fd_);
-  close_fd(fd_);
   lsTrace() << LogStream::Color::Red << fd_;
+  int _fd = fd_;
   changeDescriptor(-1);
+  close_fd(_fd);
   state_ = State::Unconnected;
   private_.rs = 0;
   private_.rda.clear();
