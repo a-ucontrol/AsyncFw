@@ -576,7 +576,6 @@ void AbstractThread::exec() {
       private_.state = Private::Running;
       private_.mutex.unlock();
       startedEvent();
-      private_.process_tasks();  // task at start() - condition_variable.notify_all()
       private_.mutex.lock();
     }
     std::swap(private_.process_tasks_, private_.tasks);  //take exists tasks
@@ -928,8 +927,7 @@ void AbstractThread::start() {
     {  //lock scope
       LockGuard lock(private_.mutex);
       setId();
-      AbstractThread::AbstractTask *_t = new Invocable<void()>::Function([this]() { private_.condition_variable.notify_all(); });
-      private_.process_tasks_.push(_t);
+      private_.condition_variable.notify_all();
     }
     exec();
     {  //lock scope

@@ -105,17 +105,18 @@ public:
   ~ThreadPool();
 
   /** @brief Spawns a new managed worker thread.
-  @details The returned thread is already running, start() does not return until started() has been emitted. Consequently started.connect() after this call deterministically misses the signal. Use Thread::invoke() for post-start setup.
-  @param name Optional thread nam, empty uses "<pool name> thread". @return Pointer to the newly created Thread.
-  @note The returned thread is NOT running yet. Callers that need the thread operational before the current function continues (e.g. before a subsequent sync invoke() on it) must call Thread::start() explicitly. */
-  Thread *createThread(const std::string &name = {});
+  @details The thread is started synchronously, started() may fire before or after this call returns, so a started.connect() registered after the call can miss the signal. Use function to wire connections deterministically - it runs on the caller's thread after construction and before start(), takes ownership and deletes the object after invocation.
+  @param name Optional thread name, empty uses "<pool name> thread". @param function  Optional one-shot initializer receiving the new Thread* before start(). @return Pointer to the newly created Thread. */
+  Thread *createThread(const std::string &name = {}, Invocable<void(Thread *)>::Abstract *fun = nullptr);
+
+  /** @brief Selects and returns the least loaded thread from the pool for task distribution.
+  @details "Load" is task-queue depth (workLoad()), not CPU usage. If the pool is under max workers size and some worker has an empty queue, it is returned directly - already running, started() long since emitted. Otherwise a new worker is created via createThread(), with its started() timing (started() may fire before or after this returns) and no fun hook for deterministic pre-start wiring.
+  @note Thread-safe, blocks on pool-owner synchronization, and on new-worker startup.
+  @return Selected worker, or nullptr if the pool was constructed with workThreads == 0. Callers almost always dereference the result immediately — nullptr means a near-certain crash. Treat workThreads >= 1 as a precondition, not a suggestion. */
+  AbstractThreadPool::Thread *getThread();
 
   void removeThread(AbstractThreadPool::Thread *) override;
   virtual void quit() override;
-
-  /** @brief Selects and returns the least loaded thread from the pool for task distribution.
-  @details Same started() timing contract as createThread(). */
-  AbstractThreadPool::Thread *getThread();
 
 private:
   static Instance<ThreadPool> instance_;

@@ -121,8 +121,12 @@ ThreadPool::~ThreadPool() {
   lsTrace() << '(' + name() + ')';
 }
 
-ThreadPool::Thread *ThreadPool::createThread(const std::string &_name) {
-  Thread *thread = new Thread((!_name.empty()) ? _name : name() + " thread", this);
+ThreadPool::Thread *ThreadPool::createThread(const std::string &name, Invocable<void(Thread *)>::Abstract *f) {
+  Thread *thread = new Thread((!name.empty()) ? name : this->name() + " thread", this);
+  if (f) {
+    (*f)(thread);
+    delete f;
+  }
   thread->start();
   lsTrace() << '(' + thread->name() + ')';
   return thread;

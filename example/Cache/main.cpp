@@ -20,33 +20,32 @@ struct Config {
 
 int main(int, char **) {
   AsyncFw::Instance<AsyncFw::ThreadPool>::create("CacheExamplePool");
-  AsyncFw::Thread *thread = AsyncFw::ThreadPool::instance()->createThread("CacheExampleThread");
   AsyncFw::Cache<Config> configCache(50);
-
-  thread->invoke([&configCache]() {
-    configCache.update.connect([&configCache]() {
-      lsNotice() << "update in:" << AsyncFw::Thread::current()->name();
-      std::this_thread::sleep_for(std::chrono::milliseconds(25));
-      AsyncFw::LockData conf = configCache.acquire();
-      conf->ipAddress = "192.168.1.50";
-      conf->port = 8080;
-      conf->maxConnections = 100;
-      configCache.touch();
+  AsyncFw::Timer timer;
+  AsyncFw::ThreadPool::instance()->createThread("CacheExampleThread", new AsyncFw::Invocable<void(AsyncFw::ThreadPool::Thread *)>::Function([&configCache, &timer](AsyncFw::Thread *thread) {
+    thread->started.connect([&configCache, &timer]() {
+      configCache.update.connect([&configCache]() {
+        lsNotice() << "update in:" << AsyncFw::Thread::current()->name();
+        std::this_thread::sleep_for(std::chrono::milliseconds(25));
+        AsyncFw::LockData conf = configCache.acquire();
+        conf->ipAddress = "192.168.1.50";
+        conf->port = 8080;
+        conf->maxConnections = 100;
+        configCache.touch();
+      });
+      timer.start(10);
     });
-  });
+  }));
 
   configCache.update.connect([&configCache]() { lsDebug() << "log only" << AsyncFw::Thread::current()->name(); });
 
   configCache.store({"127.0.0.1", 8000, 50});
 
-  AsyncFw::Timer timer;
   timer.timeout.connect([&configCache]() {
     AsyncFw::LockData conf = configCache.acquire<AsyncFw::Mode::Lock::Shared>();
     lsInfo() << "Config IP:" << conf->ipAddress << "Port:" << conf->port;
     if (conf->port == 8080) AsyncFw::MainThread::exit(0);
   });
-
-  timer.start(10);
 
   logNotice() << "Start Application";
   int ret = AsyncFw::MainThread::exec();
