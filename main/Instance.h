@@ -10,6 +10,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 /** @file Instance.h @brief The AbstractInstance and Instance classes. */
 
 #include <string>
+#include <typeinfo>
 
 namespace AsyncFw {
 /** @class AbstractInstance Instance.h <AsyncFw/Instance> @brief Abstract base class for global default service providers and managed instances. */
@@ -19,8 +20,8 @@ public:
   static void destroyValues();
 
 protected:
-  /** @brief Constructs an abstract instance registry entry with a specific identifier name. */
-  AbstractInstance(const std::string &name);
+  /** @brief Constructs an abstract instance registry entry with a specific type and name. */
+  AbstractInstance(const std::type_info &, const std::string &);
 
   /** @brief Pure virtual destructor requiring an explicit implementation body. */
   virtual ~AbstractInstance() = 0;
@@ -30,6 +31,9 @@ protected:
 
   /** @brief Hook callback method executed immediately after the instance value is created. */
   virtual void created();
+
+  /** @brief Searches the internal registry (populated by AbstractInstance constructors) for the entry whose registered std::type_info matches the given one. @param ti The std::type_info of the target class. @return Pointer to the matching AbstractInstance. */
+  static AbstractInstance *findInstance(const std::type_info &);
 
 private:
   struct Private;
@@ -49,11 +53,12 @@ public:
   /** @brief Registers a custom derived class instance as the engine-wide global default. @tparam CT The concrete target type to instantiate (must derive from T or be T itself). @param args Variadic arguments forwarded to the constructor of type CT. @return A pointer to the newly created object, or nullptr if an instance already exists. */
   template <typename CT, typename... Args>
   static CT *create(Args... args) {
-    if (!i_->value) {
+    Instance<T> *_i = static_cast<Instance<T> *>(AbstractInstance::findInstance(typeid(T)));
+    if (!_i->value) {
       CT *_v = new CT(args...);
-      if (!i_->value) {
-        i_->value = static_cast<T *>(_v);
-        i_->created();
+      if (!_i->value) {
+        _i->value = static_cast<T *>(_v);
+        _i->created();
       }
 #ifndef __clang_analyzer__
       return _v;
@@ -69,17 +74,20 @@ public:
   }
 
   /** @brief Manually sets or replaces the internal instance tracking pointer. @param p Pointer to the pre-allocated object of type T. */
-  static void set(T *p) { i_->value = p; }
+  static void set(T *p) { static_cast<Instance<T> *>(AbstractInstance::findInstance(typeid(T)))->value = p; }
 
   /** @brief Retrieves the active engine-wide global default pointer for this instance type. @return A raw pointer to the managed object of type T, or nullptr if uninitialized. */
-  static T *get() { return i_->value; }
+  static T *get() {
+    static Instance<T> *_i = static_cast<Instance<T> *>(AbstractInstance::findInstance(typeid(T)));
+    return _i->value;
+  }
 
   /** @brief Overridden destructor that guarantees explicit deferred memory release for the managed resource. */
   virtual ~Instance() override { Instance<T>::destroyValue(); }
 
 protected:
   /** @brief Initializes the instance tracker shell and updates the internal static reference context pointer. */
-  Instance(const std::string &name = {}) : AbstractInstance(name) { i_ = this; }
+  Instance(const std::string &name = {}) : AbstractInstance(typeid(T), name) {}
   Instance(const Instance &) = delete;
 
   /** @brief Concretely frees the managed object allocation using standard C++ delete semantics. */
@@ -93,6 +101,5 @@ protected:
 
 private:
   T *value = nullptr;
-  static inline Instance<T> *i_;
 };
 }  // namespace AsyncFw

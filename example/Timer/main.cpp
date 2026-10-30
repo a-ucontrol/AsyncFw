@@ -6,28 +6,28 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 */
 
 //! [snippet]
-#include <chrono>
 #include <AsyncFw/MainThread>
 #include <AsyncFw/Timer>
 #include <AsyncFw/LogStream>
 
 AsyncFw::CoroutineTask task(AsyncFw::Timer *timer) {
-  lsDebug() << "coro task" << std::chrono::system_clock::now();
+  lsDebug() << "coro task - 1";
   co_await timer->coTimeout(10);
-  lsDebug() << "coro task" << std::chrono::system_clock::now();
+  lsDebug() << "coro task - 2";
   co_await timer->coTimeout(10);
-  lsDebug() << "coro task" << std::chrono::system_clock::now();
+  lsDebug() << "coro task - 3";
   AsyncFw::MainThread::exit(0);
 }
 
 int main(int, char **) {
+  AsyncFw::LogStream::setTimeFormat("%Y-%m-%d %H:%M:%S", true);
   AsyncFw::Timer timer1;
   timer1.start(10);
   AsyncFw::Timer timer2;
 
-  timer1.timeout.connect([]() { lsDebug() << std::chrono::system_clock::now() << " timer1 timeout"; });
+  timer1.timeout.connect([]() { lsDebug() << " timer1 timeout"; });
 
-  timer2.timeout.connect([]() { lsDebug() << std::chrono::system_clock::now() << " timer2 timeout"; });
+  timer2.timeout.connect([]() { lsDebug() << " timer2 timeout"; });
 
   task(&timer2);
 

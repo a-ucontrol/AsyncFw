@@ -23,7 +23,9 @@ struct AbstractInstance::Private {
   private:
     ~List();
   } list __attribute__((init_priority(AsyncFw_STATIC_INIT_PRIORITY + 3)));
-  std::string name;
+  Private(const std::type_info &ti, const std::string &name) : ti(ti), name(name) {}
+  const std::type_info &ti;
+  const std::string name;
 };
 
 void AbstractInstance::destroyValues() {
@@ -44,7 +46,7 @@ AbstractInstance::Private::List::~List() {
 }
 
 void AbstractInstance::Private::List::append(AbstractInstance *_i) {
-  std::vector<AbstractInstance *>::iterator it = std::lower_bound(list.begin(), list.end(), _i, [](const AbstractInstance *i1, const AbstractInstance *i2) { return i1 < i2; });
+  std::vector<AbstractInstance *>::iterator it = std::lower_bound(list.begin(), list.end(), _i, [](const AbstractInstance *i1, const AbstractInstance *i2) { return i1->private_.ti.before(i2->private_.ti); });
   list.insert(it, _i);
   lsTrace() << _i->private_.name;
 }
@@ -55,14 +57,11 @@ void AbstractInstance::Private::List::remove(AbstractInstance *_i) {
     lsError() << "instance list empty";
     return;
   }
-  std::vector<AbstractInstance *>::iterator it = std::lower_bound(list.begin(), list.end(), _i, [](const AbstractInstance *i1, const AbstractInstance *i2) { return i1 < i2; });
+  std::vector<AbstractInstance *>::iterator it = std::lower_bound(list.begin(), list.end(), _i, [](const AbstractInstance *i1, const AbstractInstance *i2) { return i1->private_.ti.before(i2->private_.ti); });
   list.erase(it);
 }
 
-AbstractInstance::AbstractInstance(const std::string &name) : private_(*new Private) {
-  private_.name = name;
-  Private::list.append(this);
-}
+AbstractInstance::AbstractInstance(const std::type_info &type, const std::string &name) : private_(*new Private(type, name)) { Private::list.append(this); }
 
 AbstractInstance::~AbstractInstance() {
   Private::list.remove(this);
@@ -70,3 +69,8 @@ AbstractInstance::~AbstractInstance() {
 }
 
 void AbstractInstance::created() { lsDebug() << LogStream::Color::Cyan << private_.name; }
+
+AbstractInstance *AbstractInstance::findInstance(const std::type_info &ti) {
+  std::vector<AbstractInstance *>::iterator it = std::lower_bound(Private::list.begin(), Private::list.end(), ti, [](const AbstractInstance *i, const std::type_info &ti) { return i->private_.ti.before(ti); });
+  return *it;
+}
