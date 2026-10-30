@@ -1,0 +1,13 @@
+<map id="AsyncFw::Instance::create" name="AsyncFw::Instance::create">
+<area shape="rect" id="Node000001" title="Registers a custom derived class instance as the engine&#45;wide global default." alt="" coords="5,72,148,115"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractInstance.html#ad4ae1bfcd37c2450b85b35257f92360f" title="Hook callback method executed immediately after the instance value is created." alt="" coords="196,5,379,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="145,69,205,52,201,55,147,74"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractInstance.html#a9120adb991396471a688eb8b3cc68ae5" title="Searches the internal registry (populated by AbstractInstance constructors) for the entry whose regis..." alt="" coords="196,72,379,115"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="148,91,183,92,178,94,149,96"/>
+<area shape="rect" id="Node000005" href="$classAsyncFw_1_1Instance.html#ad3082d43d5fbacbb414b6a983ea7702a" title="Initializes the instance tracker shell and updates the internal static reference context pointer." alt="" coords="216,139,358,181"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="146,113,206,133,200,134,146,118"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1AbstractInstance.html#a81882a11abd8747733a34c270ca43866" title="Constructs an abstract instance registry entry with a specific type and name." alt="" coords="427,105,610,148"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="379,104,414,111,409,111,379,109"/>
+<area shape="poly" id="edge4_Node000004_Node000004" title=" " alt="" coords="475,103,473,95,480,86,496,81,519,79,543,81,560,90,555,89,542,86,519,84,497,86,483,91,478,97,480,106"/>
+<area shape="poly" id="edge6_Node000005_Node000004" title=" " alt="" coords="359,147,409,142,414,142,359,152"/>
+</map>

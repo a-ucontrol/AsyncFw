@@ -141,23 +141,29 @@ static void&#160;</td><td class="memItemRight"><b>destroyValues</b> ()</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pro-methods" class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:aec767689656fb7dbb79dd7a130caa4ab" id="r_aec767689656fb7dbb79dd7a130caa4ab"><td class="memItemLeft"><a id="aec767689656fb7dbb79dd7a130caa4ab" name="aec767689656fb7dbb79dd7a130caa4ab"></a>
-&#160;</td><td class="memItemRight"><b>Instance</b> (const std::string &amp;name={})</td></tr>
-<tr class="memdesc:aec767689656fb7dbb79dd7a130caa4ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the instance tracker shell and updates the internal static reference context pointer. <br /></td></tr>
+<tr class="memitem:ad3082d43d5fbacbb414b6a983ea7702a" id="r_ad3082d43d5fbacbb414b6a983ea7702a"><td class="memItemLeft"><a id="ad3082d43d5fbacbb414b6a983ea7702a" name="ad3082d43d5fbacbb414b6a983ea7702a"></a>
+&#160;</td><td class="memItemRight"><b>Instance</b> ()</td></tr>
+<tr class="memdesc:ad3082d43d5fbacbb414b6a983ea7702a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the instance tracker shell and updates the internal static reference context pointer. <br /></td></tr>
 <tr class="memitem:a994026e715e5158a02c4e5dc743b4047" id="r_a994026e715e5158a02c4e5dc743b4047"><td class="memItemLeft"><a id="a994026e715e5158a02c4e5dc743b4047" name="a994026e715e5158a02c4e5dc743b4047"></a>
 &#160;</td><td class="memItemRight"><b>Instance</b> (const Instance &amp;)=delete</td></tr>
 <tr class="memitem:a3c6c90c36f431613e8fcfd0c195fdbe0" id="r_a3c6c90c36f431613e8fcfd0c195fdbe0"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a3c6c90c36f431613e8fcfd0c195fdbe0">destroyValue</a> () override</td></tr>
 <tr class="memdesc:a3c6c90c36f431613e8fcfd0c195fdbe0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Concretely frees the managed object allocation using standard C++ delete semantics.  <br /></td></tr>
 <tr class="inherit_header pro_methods_classAsyncFw_1_1AbstractInstance"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_methods_classAsyncFw_1_1AbstractInstance')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Protected Member Functions inherited from <a class="el" href="classAsyncFw_1_1AbstractInstance.html">AsyncFw::AbstractInstance</a></td></tr>
-<tr class="memitem:a884cd39afa818f16031336cb8bc87ef1 inherit pro_methods_classAsyncFw_1_1AbstractInstance" id="r_a884cd39afa818f16031336cb8bc87ef1"><td class="memItemLeft">
-&#160;</td><td class="memItemRight"><b>AbstractInstance</b> (const std::string &amp;name)</td></tr>
-<tr class="memdesc:a884cd39afa818f16031336cb8bc87ef1 inherit pro_methods_classAsyncFw_1_1AbstractInstance"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an abstract instance registry entry with a specific identifier name. <br /></td></tr>
+<tr class="memitem:a81882a11abd8747733a34c270ca43866 inherit pro_methods_classAsyncFw_1_1AbstractInstance" id="r_a81882a11abd8747733a34c270ca43866"><td class="memItemLeft">
+&#160;</td><td class="memItemRight"><b>AbstractInstance</b> (const std::type_info &amp;)</td></tr>
+<tr class="memdesc:a81882a11abd8747733a34c270ca43866 inherit pro_methods_classAsyncFw_1_1AbstractInstance"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an abstract instance registry entry with a specific type and name. <br /></td></tr>
 <tr class="memitem:a1809713ff787e9f05d8458d15493146a inherit pro_methods_classAsyncFw_1_1AbstractInstance" id="r_a1809713ff787e9f05d8458d15493146a"><td class="memItemLeft">
 virtual&#160;</td><td class="memItemRight"><b>~AbstractInstance</b> ()=0</td></tr>
 <tr class="memdesc:a1809713ff787e9f05d8458d15493146a inherit pro_methods_classAsyncFw_1_1AbstractInstance"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pure virtual destructor requiring an explicit implementation body. <br /></td></tr>
 <tr class="memitem:ad4ae1bfcd37c2450b85b35257f92360f inherit pro_methods_classAsyncFw_1_1AbstractInstance" id="r_ad4ae1bfcd37c2450b85b35257f92360f"><td class="memItemLeft">
 virtual void&#160;</td><td class="memItemRight"><b>created</b> ()</td></tr>
 <tr class="memdesc:ad4ae1bfcd37c2450b85b35257f92360f inherit pro_methods_classAsyncFw_1_1AbstractInstance"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hook callback method executed immediately after the instance value is created. <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-inherited" class="groupheader"><a id="inherited" name="inherited"></a>
+Additional Inherited Members</h2></td></tr>
+<tr class="inherit_header pro_static_methods_classAsyncFw_1_1AbstractInstance"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_static_methods_classAsyncFw_1_1AbstractInstance')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Static Protected Member Functions inherited from <a class="el" href="classAsyncFw_1_1AbstractInstance.html">AsyncFw::AbstractInstance</a></td></tr>
+<tr class="memitem:a9120adb991396471a688eb8b3cc68ae5 inherit pro_static_methods_classAsyncFw_1_1AbstractInstance" id="r_a9120adb991396471a688eb8b3cc68ae5"><td class="memItemLeft">static <a class="el" href="classAsyncFw_1_1AbstractInstance.html#a81882a11abd8747733a34c270ca43866">AbstractInstance</a> *&#160;</td><td class="memItemRight"><a class="el" href="classAsyncFw_1_1AbstractInstance.html#a9120adb991396471a688eb8b3cc68ae5">findInstance</a> (const std::type_info &amp;)</td></tr>
+<tr class="memdesc:a9120adb991396471a688eb8b3cc68ae5 inherit pro_static_methods_classAsyncFw_1_1AbstractInstance"><td class="mdescLeft">&#160;</td><td class="mdescRight">Searches the internal registry (populated by <a class="el" href="classAsyncFw_1_1AbstractInstance.html" title="Abstract base class for global default service providers and managed instances.">AbstractInstance</a> constructors) for the entry whose registered std::type_info matches the given one.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename T&gt;<br />
@@ -182,7 +188,7 @@ class AsyncFw::Instance&lt; T &gt;</div><p>A template-based global registry wrap
 <div class="line">  <span class="keyword">public</span>:</div>
 <div class="line">    <span class="keyword">using </span>AsyncFw::Instance&lt;ExampleClass&gt;::Instance;</div>
 <div class="line">    <span class="keywordtype">void</span> created()<span class="keyword"> override </span>{ lsInfo() &lt;&lt; value-&gt;name(); }</div>
-<div class="line">  } instance_ {<span class="stringliteral">&quot;ExampleClass&quot;</span>};</div>
+<div class="line">  } instance_;</div>
 <div class="line">  std::string name_;</div>
 <div class="line">};</div>
 <div class="line"> </div>
@@ -244,10 +250,16 @@ template&lt;typename CT, typename... Args&gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>A pointer to the newly created object, or nullptr if an instance already exists. </dd></dl>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="ApplicationNotifier_2main_8cpp-example.html#a0">ApplicationNotifier/main.cpp</a>, <a class="el" href="Cache_2main_8cpp-example.html#a0">Cache/main.cpp</a>, <a class="el" href="Coroutine_2main_8cpp-example.html#a7">Coroutine/main.cpp</a>, <a class="el" href="CoroutineInvoke_2main_8cpp-example.html#a7">CoroutineInvoke/main.cpp</a>, <a class="el" href="CoroutineWait_2main_8cpp-example.html#a5">CoroutineWait/main.cpp</a>, <a class="el" href="Log_2main_8cpp-example.html#a3">Log/main.cpp</a>, <a class="el" href="LogTcp_2main_8cpp-example.html#a3">LogTcp/main.cpp</a>, and <a class="el" href="ThreadPool_2main_8cpp-example.html#a2">ThreadPool/main.cpp</a>.</dd>
 </dl>
-<div id="dynsection-2" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-2" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
 <div id="dynsection-2-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-2-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1Instance_a8000597f0e7ee4bd6669491a5b502beb_cgraph.svg" width="616" height="187"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+<div id="dynsection-3" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-3-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1Instance_a8000597f0e7ee4bd6669491a5b502beb_icgraph.svg" width="344" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
@@ -288,11 +300,11 @@ template&lt;typename... Args&gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A pointer to the created instance object of type T, or nullptr if it already exists. </dd></dl>
-<div id="dynsection-3" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
-<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-4" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
+<div id="dynsection-4-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-3-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1Instance_a158800905f9c1ce225fcabbfa5b1d053_cgraph.svg" width="344" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div id="dynsection-4-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1Instance_a158800905f9c1ce225fcabbfa5b1d053_cgraph.svg" width="807" height="187"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -329,6 +341,12 @@ template&lt;typename T&gt; </div>
   </table>
   </dd>
 </dl>
+<div id="dynsection-5" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
+<div id="dynsection-5-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-5-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1Instance_ac288330eee2512b0f87ce1013697abff_cgraph.svg" width="634" height="120"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
 
 </div>
 </div>
@@ -359,6 +377,12 @@ template&lt;typename T&gt; </div>
 
 <p>Retrieves the active engine-wide global default pointer for this instance type. </p>
 <dl class="section return"><dt>Returns</dt><dd>A raw pointer to the managed object of type T, or nullptr if uninitialized. </dd></dl>
+<div id="dynsection-6" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
+<div id="dynsection-6-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-6-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1Instance_a30d476114eb37aafb60ac3a6467c2fcd_cgraph.svg" width="634" height="120"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
 
 </div>
 </div>
@@ -390,10 +414,10 @@ template&lt;typename T&gt; </div>
 <p>Concretely frees the managed object allocation using standard C++ delete semantics. </p>
 
 <p>Implements <a class="el" href="classAsyncFw_1_1AbstractInstance.html#a2cddd3e61ae002fa6be00ae760cb5123">AsyncFw::AbstractInstance</a>.</p>
-<div id="dynsection-4" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
-<div id="dynsection-4-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-7" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-7-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-4-content" class="dyncontent" style="display:none;">
+<div id="dynsection-7-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1Instance_a3c6c90c36f431613e8fcfd0c195fdbe0_icgraph.svg" width="344" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 

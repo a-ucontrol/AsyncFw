@@ -118,9 +118,9 @@ static void&#160;</td><td class="memItemRight"><b>destroyValues</b> ()</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pro-methods" class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:a884cd39afa818f16031336cb8bc87ef1" id="r_a884cd39afa818f16031336cb8bc87ef1"><td class="memItemLeft"><a id="a884cd39afa818f16031336cb8bc87ef1" name="a884cd39afa818f16031336cb8bc87ef1"></a>
-&#160;</td><td class="memItemRight"><b>AbstractInstance</b> (const std::string &amp;name)</td></tr>
-<tr class="memdesc:a884cd39afa818f16031336cb8bc87ef1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an abstract instance registry entry with a specific identifier name. <br /></td></tr>
+<tr class="memitem:a81882a11abd8747733a34c270ca43866" id="r_a81882a11abd8747733a34c270ca43866"><td class="memItemLeft"><a id="a81882a11abd8747733a34c270ca43866" name="a81882a11abd8747733a34c270ca43866"></a>
+&#160;</td><td class="memItemRight"><b>AbstractInstance</b> (const std::type_info &amp;)</td></tr>
+<tr class="memdesc:a81882a11abd8747733a34c270ca43866"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an abstract instance registry entry with a specific type and name. <br /></td></tr>
 <tr class="memitem:a1809713ff787e9f05d8458d15493146a" id="r_a1809713ff787e9f05d8458d15493146a"><td class="memItemLeft"><a id="a1809713ff787e9f05d8458d15493146a" name="a1809713ff787e9f05d8458d15493146a"></a>
 virtual&#160;</td><td class="memItemRight"><b>~AbstractInstance</b> ()=0</td></tr>
 <tr class="memdesc:a1809713ff787e9f05d8458d15493146a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pure virtual destructor requiring an explicit implementation body. <br /></td></tr>
@@ -129,6 +129,11 @@ virtual&#160;</td><td class="memItemRight"><b>~AbstractInstance</b> ()=0</td></t
 <tr class="memitem:ad4ae1bfcd37c2450b85b35257f92360f" id="r_ad4ae1bfcd37c2450b85b35257f92360f"><td class="memItemLeft"><a id="ad4ae1bfcd37c2450b85b35257f92360f" name="ad4ae1bfcd37c2450b85b35257f92360f"></a>
 virtual void&#160;</td><td class="memItemRight"><b>created</b> ()</td></tr>
 <tr class="memdesc:ad4ae1bfcd37c2450b85b35257f92360f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hook callback method executed immediately after the instance value is created. <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pro-static-methods" class="groupheader"><a id="pro-static-methods" name="pro-static-methods"></a>
+Static Protected Member Functions</h2></td></tr>
+<tr class="memitem:a9120adb991396471a688eb8b3cc68ae5" id="r_a9120adb991396471a688eb8b3cc68ae5"><td class="memItemLeft">static <a class="el" href="#a81882a11abd8747733a34c270ca43866">AbstractInstance</a> *&#160;</td><td class="memItemRight"><a class="el" href="#a9120adb991396471a688eb8b3cc68ae5">findInstance</a> (const std::type_info &amp;)</td></tr>
+<tr class="memdesc:a9120adb991396471a688eb8b3cc68ae5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Searches the internal registry (populated by <a class="el" href="classAsyncFw_1_1AbstractInstance.html" title="Abstract base class for global default service providers and managed instances.">AbstractInstance</a> constructors) for the entry whose registered std::type_info matches the given one.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Abstract base class for global default service providers and managed instances. </p>
@@ -160,11 +165,63 @@ virtual void&#160;</td><td class="memItemRight"><b>created</b> ()</td></tr>
 <dl class="section return"><dt>Returns</dt><dd>True if the value was alive and successfully destroyed. </dd></dl>
 
 <p>Implemented in <a class="el" href="classAsyncFw_1_1Instance.html#a3c6c90c36f431613e8fcfd0c195fdbe0">AsyncFw::Instance&lt; T &gt;</a>, <a class="el" href="classAsyncFw_1_1Instance.html#a3c6c90c36f431613e8fcfd0c195fdbe0">AsyncFw::Instance&lt; AsyncFw::ApplicationNotifier &gt;</a>, <a class="el" href="classAsyncFw_1_1Instance.html#a3c6c90c36f431613e8fcfd0c195fdbe0">AsyncFw::Instance&lt; AsyncFw::FileSystemWatcher &gt;</a>, <a class="el" href="classAsyncFw_1_1Instance.html#a3c6c90c36f431613e8fcfd0c195fdbe0">AsyncFw::Instance&lt; AsyncFw::HttpServer &gt;</a>, <a class="el" href="classAsyncFw_1_1Instance.html#a3c6c90c36f431613e8fcfd0c195fdbe0">AsyncFw::Instance&lt; AsyncFw::MulticastDns &gt;</a>, <a class="el" href="classAsyncFw_1_1Instance.html#a3c6c90c36f431613e8fcfd0c195fdbe0">AsyncFw::Instance&lt; AsyncFw::ThreadPool &gt;</a>, and <a class="el" href="classAsyncFw_1_1Instance.html#a3c6c90c36f431613e8fcfd0c195fdbe0">AsyncFw::Instance&lt; Log &gt;</a>.</p>
-<div id="dynsection-1" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-1" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
 <div id="dynsection-1-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-1-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractInstance_a2cddd3e61ae002fa6be00ae760cb5123_cgraph.svg" width="426" height="78"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+<div id="dynsection-2" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-2-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-2-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractInstance_a2cddd3e61ae002fa6be00ae760cb5123_icgraph.svg" width="426" height="78"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<a id="a9120adb991396471a688eb8b3cc68ae5" name="a9120adb991396471a688eb8b3cc68ae5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9120adb991396471a688eb8b3cc68ae5">&#9670;&#160;</a></span>findInstance()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a81882a11abd8747733a34c270ca43866">AbstractInstance</a> * AbstractInstance::findInstance </td>
+          <td>(</td>
+          <td class="paramtype">const std::type_info &amp;</td>          <td class="paramname"><span class="paramname"><em>ti</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Searches the internal registry (populated by <a class="el" href="classAsyncFw_1_1AbstractInstance.html" title="Abstract base class for global default service providers and managed instances.">AbstractInstance</a> constructors) for the entry whose registered std::type_info matches the given one. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ti</td><td>The std::type_info of the target class. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Pointer to the matching <a class="el" href="classAsyncFw_1_1AbstractInstance.html" title="Abstract base class for global default service providers and managed instances.">AbstractInstance</a>. </dd></dl>
+<div id="dynsection-3" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
+<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-3-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractInstance_a9120adb991396471a688eb8b3cc68ae5_cgraph.svg" width="426" height="78"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+<div id="dynsection-4" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-4-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-4-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1AbstractInstance_a9120adb991396471a688eb8b3cc68ae5_icgraph.svg" width="594" height="155"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>

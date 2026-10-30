@@ -122,13 +122,13 @@ Public Member Functions</h2></td></tr>
 &#160;</td><td class="memItemRight"><b>ThreadPool</b> (const std::string &amp;, int=ThreadPool_DEFAULT_WORK_THREADS)</td></tr>
 <tr class="memitem:ae6362d32261e5eee521c6b604f6d29d2" id="r_ae6362d32261e5eee521c6b604f6d29d2"><td class="memItemLeft"><a id="ae6362d32261e5eee521c6b604f6d29d2" name="ae6362d32261e5eee521c6b604f6d29d2"></a>
 &#160;</td><td class="memItemRight"><b>ThreadPool</b> (int workThreads=ThreadPool_DEFAULT_WORK_THREADS)</td></tr>
-<tr class="memitem:a02cf5b98df2bbd01b4757e09fceece49" id="r_a02cf5b98df2bbd01b4757e09fceece49"><td class="memItemLeft"><a class="el" href="classAsyncFw_1_1AbstractThreadPool_1_1Thread.html">Thread</a> *&#160;</td><td class="memItemRight"><a class="el" href="#a02cf5b98df2bbd01b4757e09fceece49">createThread</a> (const std::string &amp;<a class="el" href="classAsyncFw_1_1AbstractThreadPool.html#ac312e723c2e0fa3e4cc18e518853bdf2">name</a>={})</td></tr>
-<tr class="memdesc:a02cf5b98df2bbd01b4757e09fceece49"><td class="mdescLeft">&#160;</td><td class="mdescRight">Spawns a new managed worker thread.  <br /></td></tr>
+<tr class="memitem:a0acb73f190e29a68ff2bfc1eb6c66a52" id="r_a0acb73f190e29a68ff2bfc1eb6c66a52"><td class="memItemLeft"><a class="el" href="classAsyncFw_1_1AbstractThreadPool_1_1Thread.html">Thread</a> *&#160;</td><td class="memItemRight"><a class="el" href="#a0acb73f190e29a68ff2bfc1eb6c66a52">createThread</a> (const std::string &amp;<a class="el" href="classAsyncFw_1_1AbstractThreadPool.html#ac312e723c2e0fa3e4cc18e518853bdf2">name</a>={}, Invocable&lt; void(<a class="el" href="classAsyncFw_1_1AbstractThreadPool_1_1Thread.html">Thread</a> *)&gt;::Abstract *fun=nullptr)</td></tr>
+<tr class="memdesc:a0acb73f190e29a68ff2bfc1eb6c66a52"><td class="mdescLeft">&#160;</td><td class="mdescRight">Spawns a new managed worker thread.  <br /></td></tr>
+<tr class="memitem:a4e73e16c0af130d6311c29952b11f720" id="r_a4e73e16c0af130d6311c29952b11f720"><td class="memItemLeft"><a class="el" href="classAsyncFw_1_1AbstractThreadPool_1_1Thread.html">AbstractThreadPool::Thread</a> *&#160;</td><td class="memItemRight"><a class="el" href="#a4e73e16c0af130d6311c29952b11f720">getThread</a> ()</td></tr>
+<tr class="memdesc:a4e73e16c0af130d6311c29952b11f720"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects and returns the least loaded thread from the pool for task distribution.  <br /></td></tr>
 <tr class="memitem:ad7f14a964e683f021a4d6c1c0a8bbf5d" id="r_ad7f14a964e683f021a4d6c1c0a8bbf5d"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ad7f14a964e683f021a4d6c1c0a8bbf5d">removeThread</a> (<a class="el" href="classAsyncFw_1_1AbstractThreadPool_1_1Thread.html">AbstractThreadPool::Thread</a> *) override</td></tr>
 <tr class="memdesc:ad7f14a964e683f021a4d6c1c0a8bbf5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unregisters a thread from the pool.  <br /></td></tr>
 <tr class="memitem:ad886c5e399443dc00b6ee303d6d96f60" id="r_ad886c5e399443dc00b6ee303d6d96f60"><td class="memItemLeft">virtual void&#160;</td><td class="memItemRight"><a class="el" href="#ad886c5e399443dc00b6ee303d6d96f60">quit</a> () override</td></tr>
-<tr class="memitem:a4e73e16c0af130d6311c29952b11f720" id="r_a4e73e16c0af130d6311c29952b11f720"><td class="memItemLeft"><a class="el" href="classAsyncFw_1_1AbstractThreadPool_1_1Thread.html">AbstractThreadPool::Thread</a> *&#160;</td><td class="memItemRight"><a class="el" href="#a4e73e16c0af130d6311c29952b11f720">getThread</a> ()</td></tr>
-<tr class="memdesc:a4e73e16c0af130d6311c29952b11f720"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects and returns the least loaded thread from the pool for task distribution.  <br /></td></tr>
 <tr class="inherit_header pub_methods_classAsyncFw_1_1AbstractThreadPool"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_classAsyncFw_1_1AbstractThreadPool')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Public Member Functions inherited from <a class="el" href="classAsyncFw_1_1AbstractThreadPool.html">AsyncFw::AbstractThreadPool</a></td></tr>
 <tr class="memitem:afcf27d92b9cb65d40ecc1457eca8b652 inherit pub_methods_classAsyncFw_1_1AbstractThreadPool" id="r_afcf27d92b9cb65d40ecc1457eca8b652"><td class="memItemLeft">
 &#160;</td><td class="memItemRight"><b>AbstractThreadPool</b> (const std::string &amp;)</td></tr>
@@ -207,12 +207,12 @@ std::mutex&#160;</td><td class="memItemRight"><b>mutex</b></td></tr>
 <div class="line">  Pool *threadPool = <a class="code hl_function" href="classAsyncFw_1_1Instance.html#a8000597f0e7ee4bd6669491a5b502beb">AsyncFw::Instance&lt;AsyncFw::ThreadPool&gt;::create&lt;Pool&gt;</a>(<span class="stringliteral">&quot;ExampleThreadPool&quot;</span>);</div>
 <div class="line">  logInfo() &lt;&lt; threadPool-&gt;text();</div>
 <div class="line"> </div>
-<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1Thread.html">AsyncFw::Thread</a> *_lt = <a class="code hl_function" href="#a086c0271dcb7c4be416705d622145f83">AsyncFw::ThreadPool::instance</a>()-&gt;<a class="code hl_function" href="#a02cf5b98df2bbd01b4757e09fceece49">createThread</a>(<span class="stringliteral">&quot;LogThread&quot;</span>);</div>
+<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1Thread.html">AsyncFw::Thread</a> *_lt = <a class="code hl_function" href="#a086c0271dcb7c4be416705d622145f83">AsyncFw::ThreadPool::instance</a>()-&gt;<a class="code hl_function" href="#a0acb73f190e29a68ff2bfc1eb6c66a52">createThread</a>(<span class="stringliteral">&quot;LogThread&quot;</span>);</div>
 <div class="line">  _lt-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#af1382b21117f049a9ab7063017d7fae6">invoke</a>([]() {</div>
 <div class="line">    <a class="code hl_function" href="classAsyncFw_1_1Instance.html#a8000597f0e7ee4bd6669491a5b502beb">AsyncFw::Instance&lt;AsyncFw::Log&gt;::create</a>();  <span class="comment">//create log instance in log thread _lt</span></div>
 <div class="line">  }, <span class="keyword">true</span>);</div>
 <div class="line"> </div>
-<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1Thread.html">AsyncFw::Thread</a> *_t = <a class="code hl_function" href="#a086c0271dcb7c4be416705d622145f83">AsyncFw::ThreadPool::instance</a>()-&gt;<a class="code hl_function" href="#a02cf5b98df2bbd01b4757e09fceece49">createThread</a>(<span class="stringliteral">&quot;SyncExample&quot;</span>);</div>
+<div class="line">  <a class="code hl_class" href="classAsyncFw_1_1Thread.html">AsyncFw::Thread</a> *_t = <a class="code hl_function" href="#a086c0271dcb7c4be416705d622145f83">AsyncFw::ThreadPool::instance</a>()-&gt;<a class="code hl_function" href="#a0acb73f190e29a68ff2bfc1eb6c66a52">createThread</a>(<span class="stringliteral">&quot;SyncExample&quot;</span>);</div>
 <div class="line"> </div>
 <div class="line">  _t-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#af1382b21117f049a9ab7063017d7fae6">invoke</a>([_t]() {</div>
 <div class="line">    <a class="code hl_function" href="#add8ee85dd7581acb117a805ff5a8c18a">AsyncFw::ThreadPool::sync</a>(_t, []() {</div>
@@ -268,8 +268,8 @@ std::mutex&#160;</td><td class="memItemRight"><b>mutex</b></td></tr>
 </div><!-- fragment --> <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="ThreadPool_2main_8cpp-example.html#_a0">ThreadPool/main.cpp</a>.</dd>
 </dl>
 </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
-<a id="a02cf5b98df2bbd01b4757e09fceece49" name="a02cf5b98df2bbd01b4757e09fceece49"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a02cf5b98df2bbd01b4757e09fceece49">&#9670;&#160;</a></span>createThread()</h2>
+<a id="a0acb73f190e29a68ff2bfc1eb6c66a52" name="a0acb73f190e29a68ff2bfc1eb6c66a52"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0acb73f190e29a68ff2bfc1eb6c66a52">&#9670;&#160;</a></span>createThread()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -277,34 +277,65 @@ std::mutex&#160;</td><td class="memItemRight"><b>mutex</b></td></tr>
         <tr>
           <td class="memname"><a class="el" href="classAsyncFw_1_1AbstractThreadPool_1_1Thread.html">ThreadPool::Thread</a> * ThreadPool::createThread </td>
           <td>(</td>
-          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>name</em></span><span class="paramdefsep"> = </span><span class="paramdefval">{}</span></td><td>)</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>name</em></span><span class="paramdefsep"> = </span><span class="paramdefval">{}</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">Invocable&lt; void(<a class="el" href="classAsyncFw_1_1AbstractThreadPool_1_1Thread.html">Thread</a> *)&gt;::Abstract *</td>          <td class="paramname"><span class="paramname"><em>fun</em></span><span class="paramdefsep"> = </span><span class="paramdefval">nullptr</span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>Spawns a new managed worker thread. </p>
-<p>The returned thread is already running, start() does not return until started() has been emitted. Consequently started.connect() after this call deterministically misses the signal. Use <a class="el" href="classAsyncFw_1_1AbstractThread.html#af1382b21117f049a9ab7063017d7fae6" title="Runs a function in a managed thread.">Thread::invoke()</a> for post-start setup. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>The thread is started synchronously, started() may fire before or after this call returns, so a started.connect() registered after the call can miss the signal. Use function to wire connections deterministically - it runs on the caller's thread after construction and before start(), takes ownership and deletes the object after invocation. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">name</td><td>Optional thread nam, empty uses "&lt;pool name&gt; thread". </td></tr>
+    <tr><td class="paramname">name</td><td>Optional thread name, empty uses "&lt;pool name&gt; thread".</td></tr>
+    <tr><td class="paramname">function</td><td>Optional one-shot initializer receiving the new Thread* before start(). </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Pointer to the newly created <a class="el" href="classAsyncFw_1_1Thread.html" title="AsyncFw::Thread thread with sockets.">Thread</a>. </dd></dl>
-<dl class="section note"><dt>Note</dt><dd>The returned thread is NOT running yet. Callers that need the thread operational before the current function continues (e.g. before a subsequent sync invoke() on it) must call <a class="el" href="classAsyncFw_1_1AbstractThread.html#afdaccb5da7d4bee5e9ff687f761bd21f" title="Create a managed thread and run exec().">Thread::start()</a> explicitly. </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="Cache_2main_8cpp-example.html#a3">Cache/main.cpp</a>, and <a class="el" href="ThreadPool_2main_8cpp-example.html#a5">ThreadPool/main.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="Cache_2main_8cpp-example.html#a4">Cache/main.cpp</a>, and <a class="el" href="ThreadPool_2main_8cpp-example.html#a5">ThreadPool/main.cpp</a>.</dd>
 </dl>
 <div id="dynsection-2" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
 <div id="dynsection-2-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-2-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1ThreadPool_a02cf5b98df2bbd01b4757e09fceece49_cgraph.svg" width="408" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1ThreadPool_a0acb73f190e29a68ff2bfc1eb6c66a52_cgraph.svg" width="408" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 <div id="dynsection-3" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
 <div id="dynsection-3-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-3-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1ThreadPool_a02cf5b98df2bbd01b4757e09fceece49_icgraph.svg" width="360" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1ThreadPool_a0acb73f190e29a68ff2bfc1eb6c66a52_icgraph.svg" width="360" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<a id="a4e73e16c0af130d6311c29952b11f720" name="a4e73e16c0af130d6311c29952b11f720"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4e73e16c0af130d6311c29952b11f720">&#9670;&#160;</a></span>getThread()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classAsyncFw_1_1AbstractThreadPool_1_1Thread.html">AbstractThreadPool::Thread</a> * ThreadPool::getThread </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Selects and returns the least loaded thread from the pool for task distribution. </p>
+<p>"Load" is task-queue depth (workLoad()), not CPU usage. If the pool is under max workers size and some worker has an empty queue, it is returned directly - already running, started() long since emitted. Otherwise a new worker is created via <a class="el" href="#a0acb73f190e29a68ff2bfc1eb6c66a52" title="Spawns a new managed worker thread.">createThread()</a>, with its started() timing (started() may fire before or after this returns) and no fun hook for deterministic pre-start wiring. </p><dl class="section note"><dt>Note</dt><dd>Thread-safe, blocks on pool-owner synchronization, and on new-worker startup. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Selected worker, or nullptr if the pool was constructed with workThreads == 0. Callers almost always dereference the result immediately — nullptr means a near-certain crash. Treat workThreads &gt;= 1 as a precondition, not a suggestion. </dd></dl>
+<div id="dynsection-4" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
+<div id="dynsection-4-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-4-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1ThreadPool_a4e73e16c0af130d6311c29952b11f720_cgraph.svg" width="607" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -335,10 +366,10 @@ std::mutex&#160;</td><td class="memItemRight"><b>mutex</b></td></tr>
 <p>Unregisters a thread from the pool. </p>
 
 <p>Reimplemented from <a class="el" href="classAsyncFw_1_1AbstractThreadPool.html#a8dd6e5afe3b1c8f0fac9176568909c54">AsyncFw::AbstractThreadPool</a>.</p>
-<div id="dynsection-4" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
-<div id="dynsection-4-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-5" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
+<div id="dynsection-5-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-4-content" class="dyncontent" style="display:none;">
+<div id="dynsection-5-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1ThreadPool_ad7f14a964e683f021a4d6c1c0a8bbf5d_cgraph.svg" width="408" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
@@ -368,32 +399,6 @@ std::mutex&#160;</td><td class="memItemRight"><b>mutex</b></td></tr>
 </div><div class="memdoc">
 
 <p>Reimplemented from <a class="el" href="classAsyncFw_1_1AbstractThreadPool.html">AsyncFw::AbstractThreadPool</a>.</p>
-
-</div>
-</div>
-<a id="a4e73e16c0af130d6311c29952b11f720" name="a4e73e16c0af130d6311c29952b11f720"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4e73e16c0af130d6311c29952b11f720">&#9670;&#160;</a></span>getThread()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classAsyncFw_1_1AbstractThreadPool_1_1Thread.html">AbstractThreadPool::Thread</a> * ThreadPool::getThread </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Selects and returns the least loaded thread from the pool for task distribution. </p>
-<p>Same started() timing contract as <a class="el" href="#a02cf5b98df2bbd01b4757e09fceece49" title="Spawns a new managed worker thread.">createThread()</a>. </p>
-<div id="dynsection-5" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
-<div id="dynsection-5-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-5-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1ThreadPool_a4e73e16c0af130d6311c29952b11f720_cgraph.svg" width="607" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
 
 </div>
 </div>
