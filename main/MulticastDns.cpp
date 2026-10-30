@@ -152,7 +152,7 @@ int query_callback(int, const struct sockaddr *from, size_t addrlen, mdns_entry_
 }
 }
 
-Instance<MulticastDns> MulticastDns::instance_ {"MulticastDns"};
+Instance<MulticastDns> MulticastDns::instance_;
 
 MulticastDns::MulticastDns(const std::string &_serviceType) : private_(*new Private()) {
   private_.thread = AbstractThread::current();

@@ -421,7 +421,7 @@ HttpServer::HttpRule::HttpRule(HttpRule &&r) : method(r.method) {
   r.exec = nullptr;
 }
 
-Instance<HttpServer> HttpServer::instance_ {"HttpServer"};
+Instance<HttpServer> HttpServer::instance_;
 
 HttpServer::HttpServer(const std::string &httpPath) : private_(*new Private()) {
   if (!httpPath.empty()) {

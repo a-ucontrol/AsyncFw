@@ -25,7 +25,7 @@ private:
   public:
     using AsyncFw::Instance<ExampleClass>::Instance;
     void created() override { lsInfo() << value->name(); }
-  } instance_ {"ExampleClass"};
+  } instance_;
   std::string name_;
 };
 

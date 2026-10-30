@@ -9,7 +9,6 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 /** @file Instance.h @brief The AbstractInstance and Instance classes. */
 
-#include <string>
 #include <typeinfo>
 
 namespace AsyncFw {
@@ -21,7 +20,7 @@ public:
 
 protected:
   /** @brief Constructs an abstract instance registry entry with a specific type and name. */
-  AbstractInstance(const std::type_info &, const std::string &);
+  AbstractInstance(const std::type_info &);
 
   /** @brief Pure virtual destructor requiring an explicit implementation body. */
   virtual ~AbstractInstance() = 0;
@@ -87,7 +86,7 @@ public:
 
 protected:
   /** @brief Initializes the instance tracker shell and updates the internal static reference context pointer. */
-  Instance(const std::string &name = {}) : AbstractInstance(typeid(T), name) {}
+  Instance() : AbstractInstance(typeid(T)) {}
   Instance(const Instance &) = delete;
 
   /** @brief Concretely frees the managed object allocation using standard C++ delete semantics. */

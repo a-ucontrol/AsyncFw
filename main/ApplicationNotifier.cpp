@@ -10,7 +10,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 using namespace AsyncFw;
 
-Instance<ApplicationNotifier> ApplicationNotifier::instance_ {"ApplicationNotifier"};
+Instance<ApplicationNotifier> ApplicationNotifier::instance_;
 
 ApplicationNotifier::ApplicationNotifier() { lsTrace(); }
 

@@ -23,9 +23,8 @@ struct AbstractInstance::Private {
   private:
     ~List();
   } list __attribute__((init_priority(AsyncFw_STATIC_INIT_PRIORITY + 3)));
-  Private(const std::type_info &ti, const std::string &name) : ti(ti), name(name) {}
+  Private(const std::type_info &ti) : ti(ti) {}
   const std::type_info &ti;
-  const std::string name;
 };
 
 void AbstractInstance::destroyValues() {
@@ -48,11 +47,11 @@ AbstractInstance::Private::List::~List() {
 void AbstractInstance::Private::List::append(AbstractInstance *_i) {
   std::vector<AbstractInstance *>::iterator it = std::lower_bound(list.begin(), list.end(), _i, [](const AbstractInstance *i1, const AbstractInstance *i2) { return i1->private_.ti.before(i2->private_.ti); });
   list.insert(it, _i);
-  lsTrace() << _i->private_.name;
+  lsTrace() << _i->private_.ti.name();
 }
 
 void AbstractInstance::Private::List::remove(AbstractInstance *_i) {
-  lsTrace() << _i->private_.name;
+  lsTrace() << _i->private_.ti.name();
   if (list.empty()) {
     lsError() << "instance list empty";
     return;
@@ -61,14 +60,14 @@ void AbstractInstance::Private::List::remove(AbstractInstance *_i) {
   list.erase(it);
 }
 
-AbstractInstance::AbstractInstance(const std::type_info &type, const std::string &name) : private_(*new Private(type, name)) { Private::list.append(this); }
+AbstractInstance::AbstractInstance(const std::type_info &type) : private_(*new Private(type)) { Private::list.append(this); }
 
 AbstractInstance::~AbstractInstance() {
   Private::list.remove(this);
   delete &private_;
 }
 
-void AbstractInstance::created() { lsDebug() << LogStream::Color::Cyan << private_.name; }
+void AbstractInstance::created() { lsDebug() << LogStream::Color::Cyan << private_.ti.name(); }
 
 AbstractInstance *AbstractInstance::findInstance(const std::type_info &ti) {
   std::vector<AbstractInstance *>::iterator it = std::lower_bound(Private::list.begin(), Private::list.end(), ti, [](const AbstractInstance *i, const std::type_info &ti) { return i->private_.ti.before(ti); });
