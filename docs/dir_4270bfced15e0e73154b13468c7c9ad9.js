@@ -8,6 +8,7 @@ var dir_4270bfced15e0e73154b13468c7c9ad9 =
     [ "DataArray.h", "DataArray_8h.html", "DataArray_8h" ],
     [ "extend_trace.hpp", "extend__trace_8hpp_source.html", null ],
     [ "FunctionConnector.h", "FunctionConnector_8h.html", "FunctionConnector_8h" ],
+    [ "init_priority.hpp", "init__priority_8hpp_source.html", null ],
     [ "invocable.hpp", "invocable_8hpp_source.html", null ],
     [ "LockData.h", "LockData_8h.html", "LockData_8h" ],
     [ "LogStream.h", "LogStream_8h.html", "LogStream_8h" ],

@@ -7,9 +7,8 @@
 <area shape="rect" id="Node000004" href="$classAsyncFw_1_1AbstractInstance.html#a9120adb991396471a688eb8b3cc68ae5" title="Searches the internal registry (populated by AbstractInstance constructors) for the entry whose regis..." alt="" coords="386,72,569,115"/>
 <area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="338,91,373,93,368,94,339,96"/>
 <area shape="rect" id="Node000006" href="$classAsyncFw_1_1Instance.html#ad3082d43d5fbacbb414b6a983ea7702a" title="Initializes the instance tracker shell and updates the internal static reference context pointer." alt="" coords="406,139,549,181"/>
-<area shape="poly" id="edge6_Node000002_Node000006" title=" " alt="" coords="337,113,396,133,391,133,336,118"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="337,113,396,133,391,133,336,118"/>
 <area shape="rect" id="Node000005" href="$classAsyncFw_1_1AbstractInstance.html#a81882a11abd8747733a34c270ca43866" title="Constructs an abstract instance registry entry with a specific type and name." alt="" coords="617,105,801,148"/>
 <area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="569,104,604,111,599,111,569,109"/>
-<area shape="poly" id="edge5_Node000005_Node000005" title=" " alt="" coords="666,103,663,95,671,86,686,81,709,79,734,81,750,90,745,89,732,86,709,84,687,86,674,91,669,97,670,106"/>
-<area shape="poly" id="edge7_Node000006_Node000005" title=" " alt="" coords="549,147,599,142,605,142,550,152"/>
+<area shape="poly" id="edge6_Node000006_Node000005" title=" " alt="" coords="549,147,599,142,605,142,550,152"/>
 </map>

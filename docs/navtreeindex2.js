@@ -221,7 +221,8 @@ var NAVTREEINDEX2 =
 "index.html#autotoc_md7":[0,4],
 "index.html#autotoc_md8":[0,5],
 "index.html#autotoc_md9":[0,6],
-"invocable_8hpp_source.html":[3,0,0,8],
+"init__priority_8hpp_source.html":[3,0,0,8],
+"invocable_8hpp_source.html":[3,0,0,9],
 "log-types_8hpp_source.html":[3,0,1,15],
 "mdns-types_8h_source.html":[3,0,1,18],
 "pages.html":[],
@@ -248,6 +249,5 @@ var NAVTREEINDEX2 =
 "structAsyncFw_1_1LockData.html#a9fef00e8cf10bee6cf0ce71d683d26d4":[2,0,0,12,7],
 "structAsyncFw_1_1LockData.html#ac721cfbf389f784194c5500d5cc55910":[2,0,0,12,4],
 "structAsyncFw_1_1LockData.html#ae066580f33d5932bc97ba2a421d85adf":[2,0,0,12,1],
-"structAsyncFw_1_1LockData.html#afa4dfef5ad6c272e06008b3bc03d302e":[2,0,0,12,2],
-"structAsyncFw_1_1LogStream_1_1Message.html":[2,0,0,13,0]
+"structAsyncFw_1_1LockData.html#afa4dfef5ad6c272e06008b3bc03d302e":[2,0,0,12,2]
 };
