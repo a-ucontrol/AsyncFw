@@ -8,6 +8,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include <algorithm>
 #include <condition_variable>
 #include <queue>
+#include "init_priority.hpp"
 #include "AbstractThread.h"
 #include "LogStream.h"
 
@@ -221,11 +222,13 @@ struct AbstractThread::Private {
 #endif
   };
 
-  static inline struct List : public std::vector<AbstractThread *> {
+  static struct List : public std::vector<AbstractThread *> {
     ~List();
     std::mutex mutex;
-  } list __attribute__((init_priority(AsyncFw_STATIC_INIT_PRIORITY + 1)));
+  } list;
 };
+
+InitPriority(AbstractThread::Private::List, AbstractThread::Private::list, 1);
 
 bool AbstractThread::Private::Compare::operator()(const AbstractThread *t1, const AbstractThread *t2) const {
   if (t1->private_.id != t2->private_.id) return t1->private_.id < t2->private_.id;

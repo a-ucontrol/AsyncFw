@@ -6,16 +6,17 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 */
 
 #include <algorithm>
+#include "core/init_priority.hpp"
 #include "core/LogStream.h"
 #include "ThreadPool.h"
 
 using namespace AsyncFw;
 
 struct AbstractThreadPool::Private {
-  static inline struct List : public std::vector<AbstractThreadPool *> {
+  static struct List : public std::vector<AbstractThreadPool *> {
     friend AbstractThreadPool;
     ~List();
-  } list __attribute__((init_priority(AsyncFw_STATIC_INIT_PRIORITY + 2)));
+  } list;
 
   struct Compare {
     bool operator()(const AbstractThread *t1, const AbstractThread *t2) const { return t1 < t2; }
@@ -23,6 +24,8 @@ struct AbstractThreadPool::Private {
   };
   std::string name;
 };
+
+InitPriority(AbstractThreadPool::Private::List, AbstractThreadPool::Private::list, 2);
 
 AbstractThreadPool::Private::List::~List() {
   if (!empty()) {

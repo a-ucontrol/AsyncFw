@@ -6,6 +6,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 */
 
 #include <algorithm>
+#include "core/init_priority.hpp"
 #include "core/AbstractThread.h"
 #include "core/LogStream.h"
 #include "Instance.h"
@@ -13,7 +14,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 using namespace AsyncFw;
 
 struct AbstractInstance::Private {
-  static inline class List : public std::vector<AbstractInstance *> {
+  static class List : public std::vector<AbstractInstance *> {
     friend AbstractInstance;
 
   public:
@@ -22,10 +23,12 @@ struct AbstractInstance::Private {
 
   private:
     ~List();
-  } list __attribute__((init_priority(AsyncFw_STATIC_INIT_PRIORITY + 3)));
+  } list;
   Private(const std::type_info &ti) : ti(ti) {}
   const std::type_info &ti;
 };
+
+InitPriority(AbstractInstance::Private::List, AbstractInstance::Private::list, 3);
 
 void AbstractInstance::destroyValues() {
   lsTrace() << Private::list.size();

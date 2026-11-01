@@ -8,9 +8,10 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include <iostream>
 #include <syncstream>
 #include <chrono>
-#include "core/AbstractThread.h"
+#include "init_priority.hpp"
+#include "AbstractThread.h"
 #ifdef EXTEND_LOGSTREAM_TRACE
-  #include "core/console_msg.hpp"
+  #include "console_msg.hpp"
 #endif
 #include "LogStream.h"
 
@@ -18,7 +19,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 using namespace AsyncFw;
 
-LogStream::Data LogStream::data __attribute__((init_priority(AsyncFw_STATIC_INIT_PRIORITY)));
+InitPriority(LogStream::Data, LogStream::data, 0);
 
 void LogStream::console_output(const Message &message, uint8_t flags) {
   std::string _message = message.string;

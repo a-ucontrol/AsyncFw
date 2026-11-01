@@ -15,8 +15,6 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include "LockData.h"
 #include "invocable.hpp"
 
-#define AsyncFw_STATIC_INIT_PRIORITY 65530
-
 #ifndef _WIN32
   #define POLLIN_ 0x001
   #define POLLPRI_ 0x002
