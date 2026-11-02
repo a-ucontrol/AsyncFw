@@ -28,7 +28,7 @@ struct AbstractInstance::Private {
   const std::type_info &ti;
 };
 
-InitPriority(AbstractInstance::Private::List, AbstractInstance::Private::list, 3);
+InitPriority(AbstractInstance::Private::List, AbstractInstance::Private::list, 2);
 
 void AbstractInstance::destroyValues() {
   lsTrace() << Private::list.size();
