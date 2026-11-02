@@ -33,10 +33,10 @@ InitPriority(AbstractInstance::Private::List, AbstractInstance::Private::list, 2
 void AbstractInstance::destroyValues() {
   lsTrace() << Private::list.size();
   int destroyed = 0;
-  std::for_each(Private::list.rbegin(), Private::list.rend(), [&destroyed](AbstractInstance *_i) {
+  for (AbstractInstance *_i : Private::list) {
     if (_i->destroyValue()) destroyed++;
-  });
-  lsDebug() << LogStream::Color::DarkCyan << "destroyed:" << destroyed;
+  }
+  lsTrace() << LogStream::Color::DarkCyan << "destroyed:" << destroyed;
 }
 
 AbstractInstance::Private::List::~List() {
