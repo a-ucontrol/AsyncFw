@@ -85,14 +85,12 @@ std::string AbstractThreadPool::name() const { return private_.name; }
 LockData<const std::vector<AbstractThreadPool::Thread *>> AbstractThreadPool::threads() { return {threads_, mutex}; }
 
 void AbstractThreadPool::appendThread(AbstractThreadPool::Thread *thread) {
-  AbstractThread::LockGuard lock(mutex);
   std::vector<AbstractThreadPool::Thread *>::iterator it = std::lower_bound(threads_.begin(), threads_.end(), thread, Private::Compare());
   threads_.insert(it, thread);
   lsTrace() << '(' + thread->name() + ')' << "threads:" << threads_.size();
 }
 
 void AbstractThreadPool::removeThread(AbstractThreadPool::Thread *thread) {
-  AbstractThread::LockGuard lock(mutex);
   std::vector<AbstractThreadPool::Thread *>::iterator it = std::lower_bound(threads_.begin(), threads_.end(), thread, Private::Compare());
   if (it != threads_.end() && (*it) == thread) threads_.erase(it);
   else lsDebug() << LogStream::Color::Red << "thread not found: (" + thread->name() + ')';
@@ -106,7 +104,10 @@ AbstractThreadPool::Thread::Thread(const std::string &name, AbstractThreadPool *
 
 void AbstractThreadPool::Thread::destroy() {
   lsTrace() << '(' + name() + ')';
-  pool->removeThread(this);
+  {
+    AbstractThread::LockGuard lock(pool->mutex);
+    pool->removeThread(this);
+  }
   AbstractTask *_t = new Invocable<void()>::Function([p = this]() {
     p->stop();
     delete p;
@@ -128,7 +129,11 @@ ThreadPool::~ThreadPool() {
 }
 
 ThreadPool::Thread *ThreadPool::createThread(const std::string &name, Invocable<void(Thread *)>::Abstract *f) {
-  Thread *thread = new Thread((!name.empty()) ? name : this->name() + " thread", this);
+  Thread *thread;
+  {  //lock scope
+    AbstractThread::LockGuard lock(mutex);
+    thread = new Thread((!name.empty()) ? name : this->name() + " thread", this);
+  }
   if (f) {
     (*f)(thread);
     delete f;
@@ -139,11 +144,8 @@ ThreadPool::Thread *ThreadPool::createThread(const std::string &name, Invocable<
 }
 
 void ThreadPool::removeThread(AbstractThreadPool::Thread *thread) {
-  {  //lock scope
-    AbstractThread::LockGuard lock = thread_->lockGuard();
-    std::vector<AbstractThreadPool::Thread *>::iterator it = std::find(workThreads_.begin(), workThreads_.end(), thread);
-    if (it != workThreads_.end()) { workThreads_.erase(it); }
-  }
+  std::vector<AbstractThreadPool::Thread *>::iterator it = std::find(workThreads_.begin(), workThreads_.end(), thread);
+  if (it != workThreads_.end()) { workThreads_.erase(it); }
   AbstractThreadPool::removeThread(thread);
   lsTrace() << '(' + thread->name() + ')';
 }
@@ -156,7 +158,7 @@ void ThreadPool::quit() {
 AbstractThreadPool::Thread *ThreadPool::getThread() {
   ThreadPool::Thread *_t = nullptr;
   {  //lock scope
-    AbstractThread::LockGuard lock = thread_->lockGuard();
+    AbstractThread::LockGuard lock(mutex);
     int _s = workThreads_.size();
     if (_s < workThreadsSize_) {
       for (int i = 0; i != _s; ++i)
@@ -164,8 +166,8 @@ AbstractThreadPool::Thread *ThreadPool::getThread() {
           _t = workThreads_[i];
           return _t;
         }
-      workThreads_.emplace_back(createThread("Work-" + std::to_string(_s)));
-      _t = workThreads_.back();
+      _t = new Thread("Work-" + std::to_string(_s), this);
+      workThreads_.emplace_back(_t);
     } else {
       int _load = std::numeric_limits<int>::max();
       for (int i = 0; i != _s; ++i) {
@@ -178,5 +180,6 @@ AbstractThreadPool::Thread *ThreadPool::getThread() {
       return _t;
     }
   }
+  if (_t) _t->start();
   return _t;
 }

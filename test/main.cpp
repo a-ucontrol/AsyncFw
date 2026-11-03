@@ -38,6 +38,7 @@
 #include <AsyncFw/File>
 #include <AsyncFw/Rrd>
 #include <AsyncFw/LogStream>
+#include <AsyncFw/Log>
 
 using namespace AsyncFw;
 using Conn = AbstractFunctionConnector::Connection;
@@ -174,6 +175,90 @@ void test_threadpool_destroy_from_own_task() {
 
   EXPECT(wait_for([&] { return reachedEnd.load(); }));
   EXPECT(wait_for([&] { return pool->threads()->empty(); }));
+}
+
+// ============================================================================
+// Group A'. ThreadPool getThread() with Log on the pool owner
+// ============================================================================
+//
+// Regression: getThread() deadlocked when Log lived on the same thread as
+// the pool's owner.
+//
+//   Old getThread():
+//     thread_->lockGuard()                     // pool owner's private_.mutex
+//       createThread → new Thread → lsTrace
+//         → Log::append → Log.thread_->lockGuard()  // SAME mutex → DEADLOCK
+//
+//   New getThread() uses pool::mutex — different lock, no overlap.
+//
+// Two sub-scenarios must both complete:
+//   1) getThread from the owner itself (original repro from the user)
+//   2) getThread from a foreign thread (same root cause)
+//
+// Detected via wait_for(..., 3000). On timeout we cannot recover (the caller
+// is stuck in getThread), so we force-exit with a clear message instead of
+// hanging the CI run.
+void test_threadpool_getthread_with_log_on_owner() {
+  // Dedicated owner thread — do not disturb the global pool.
+  Thread owner("getthread-log-owner");
+  owner.start();
+
+  // Log and a fresh ThreadPool live on `owner` — Log.thread_ == pool.thread_.
+  ThreadPool *pool = nullptr;
+  owner.invoke([&]() {
+    Instance<Log>::create(0);  // in-memory, no file
+    pool = new ThreadPool("GetThreadLogPool", 1);
+  }, true);
+
+  // --- Sub-scenario 1: getThread from the owner ---------------------------
+  std::atomic<AbstractThread *> fromOwner {nullptr};
+  std::atomic<bool> doneOwner {false};
+  owner.invoke([&]() {
+    fromOwner = pool->getThread();
+    doneOwner = true;
+  });
+  if (!wait_for([&] { return doneOwner.load(); }, 3000)) {
+    lsError() << "getThread() from owner did not return within 3s "
+                 "(deadlock regression: getThread must use pool::mutex, "
+                 "not owner's private_.mutex)";
+    std::_Exit(1);
+  }
+  EXPECT(fromOwner.load() != nullptr);
+
+  // --- Sub-scenario 2: getThread from a foreign thread --------------------
+  std::atomic<AbstractThread *> fromForeign {nullptr};
+  std::atomic<bool> doneForeign {false};
+  Thread caller("getthread-caller");
+  caller.start();
+  caller.invoke([&]() {
+    fromForeign = pool->getThread();
+    doneForeign = true;
+  });
+  if (!wait_for([&] { return doneForeign.load(); }, 3000)) {
+    lsError() << "getThread() from foreign thread did not return within 3s "
+                 "(deadlock regression)";
+    std::_Exit(1);
+  }
+  EXPECT(fromForeign.load() != nullptr);
+
+  // --- Cleanup ------------------------------------------------------------
+  // Barrier caller first so it is idle before touching pool/Log.
+  caller.invoke([]() {}, true);
+
+  // Order matters: destroy Log first, so ~Log::finality sets
+  // LogStream::setCompleted(&console_output). Then pool teardown logs
+  // (from the queued thread-destroy tasks) route straight to console and
+  // never re-enter Log::append while we hold any mutex.
+  owner.invoke([&]() {
+    if (Log *l = Instance<Log>::get()) delete l;
+  }, true);
+
+  owner.invoke([&]() {
+    delete pool;  // queues thread-destroy tasks on owner
+  }, true);
+  owner.invoke([]() {}, true);  // drain
+
+  // ~owner runs here; its exec() is idle because everything above drained.
 }
 
 // ============================================================================
@@ -1416,6 +1501,9 @@ int main(int, char **) {
 
   // --- Group A: ThreadPool --------------------------------------------
   test_threadpool_destroy_from_own_task();
+  test_threadpool_getthread_with_log_on_owner();
+  lsNotice() << "restore log output after ~Log";
+  LogStream::setCompleted(&log_output);
 
   // --- Group B: Coroutine — basics ------------------------------------
   test_coroutine_basic_suspend_resume();

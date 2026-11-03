@@ -31,13 +31,14 @@ DataArraySocket *DataArrayTcpClient::createSocket(Thread *thread) {
   if (thread == nullptr) {
     mutex.lock();
     if (threads_.size() < maxThreads) b = true;
-    mutex.unlock();
-    if (b) clientThread = createThread();
-    else {
-      mutex.lock();
+    if (b) {
+      clientThread = new Thread(name() + " thread", this);
+      mutex.unlock();
+      clientThread->start();
+    } else {
       clientThread = static_cast<Thread *>(findMinimalSocketsThread());
+      mutex.unlock();
       if (!clientThread) {
-        mutex.unlock();
         lsError() << "many connections";
         return nullptr;
       }
@@ -46,7 +47,6 @@ DataArraySocket *DataArrayTcpClient::createSocket(Thread *thread) {
 
   DataArraySocket *socket;
   clientThread->invoke([clientThread, &socket]() { socket = clientThread->createSocket(); }, true);
-  if (thread == nullptr && !b) mutex.unlock();
   return socket;
 }
 
@@ -73,7 +73,11 @@ void DataArrayTcpClient::connectToHost(const DataArraySocket *socket, int timeou
 }
 
 DataArrayTcpClient::Thread *DataArrayTcpClient::createThread() {
-  Thread *_t = new Thread(name() + " thread", this);
+  Thread *_t;
+  {  //lock scope
+    AbstractThread::LockGuard lock(mutex);
+    _t = new Thread(name() + " thread", this);
+  }
   _t->start();
   return _t;
 }

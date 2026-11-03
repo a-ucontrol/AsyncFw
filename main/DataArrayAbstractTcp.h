@@ -68,16 +68,12 @@ protected:
   class Thread : public AbstractThreadPool::Thread {
     friend class DataArrayAbstractTcp;
 
-  public:
-    /** @brief Constructs a new Thread instance within the pool framework. @param name Name string for thread tracking. @param _pool Pointer to the owner pool framework. */
-    Thread(const std::string &name, DataArrayAbstractTcp *_pool) : AbstractThreadPool::Thread(name, _pool), pool(_pool) {};
-
   protected:
+    using AbstractThreadPool::Thread::Thread;
     /** @brief Configures timeouts, buffer sizes, and signal bounds for a new socket context. @param socket Pointer to the DataArraySocket being introduced to this thread. */
     void initSocket(DataArraySocket *);
     /** @brief Performs cleanup routines and safely removes a socket from the thread loop. @param socket Pointer to the target DataArraySocket. */
     void destroySocket(DataArraySocket *);
-    AbstractThreadPool *pool; /**< Backward reference pointer to the base thread pool interface. */
   };
   /** @brief Locates the worker thread currently hosting the lowest number of socket contexts. @return Pointer to the least occupied Thread, or nullptr if no threads are running. */
   Thread *findMinimalSocketsThread();

@@ -20,13 +20,15 @@ class AbstractThreadPool {
 public:
   /** @class Thread @brief A specialized thread managed by an AbstractThreadPool. */
   class Thread : public AsyncFw::Thread {
+    friend class ThreadPool;
+
   public:
     /** @brief Gracefully destroys the thread, ensuring all tasks are flushed. */
     virtual void destroy();
-    /** @brief Constructs a pool-managed thread. */
-    Thread(const std::string &name, AbstractThreadPool *);
 
   protected:
+    /** @brief Constructs a pool-managed thread. */
+    Thread(const std::string &name, AbstractThreadPool *);
     /** @brief Pointer to the parent thread pool that owns this thread. */
     AbstractThreadPool *pool;
   };
@@ -43,9 +45,11 @@ public:
   LockData<const std::vector<AbstractThreadPool::Thread *>> threads();
 
 protected:
-  /** @brief Registers a new thread into the pool. */
+  /** @brief Registers a new thread into the pool.
+  @warning Caller MUST hold mutex. */
   virtual void appendThread(AbstractThreadPool::Thread *);
-  /** @brief Unregisters a thread from the pool. */
+  /** @brief Unregisters a thread from the pool.
+  @warning Caller MUST hold mutex. */
   virtual void removeThread(AbstractThreadPool::Thread *);
   std::vector<AbstractThreadPool::Thread *> threads_;
   std::mutex mutex;

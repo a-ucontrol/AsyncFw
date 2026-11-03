@@ -38,20 +38,18 @@ bool DataArrayTcpServer::incomingConnection(int socketDescriptor, const std::str
   Thread *serverThread;
   mutex.lock();
   bool b = (threads_.size() < maxThreads);
-  mutex.unlock();
   if (b) {
     serverThread = new Thread(name() + " thread", this);
+    mutex.unlock();
     serverThread->start();
   } else {
-    mutex.lock();
     serverThread = static_cast<Thread *>(findMinimalSocketsThread());
-    if (!serverThread && std::find(alwaysConnect_.begin(), alwaysConnect_.end(), address) == alwaysConnect_.end()) b = true;
+    if (!serverThread && std::find(alwaysConnect_.begin(), alwaysConnect_.end(), address) != alwaysConnect_.end()) serverThread = static_cast<Thread *>(threads_.at(0));
     mutex.unlock();
     if (!serverThread) {
       lsError() << "many connections";
-      serverThread = static_cast<Thread *>(threads_.at(0));
+      return false;
     }
-    if (b) return false;
   }
 
   bool encrypt = std::find(disabledEncryptionHosts_.begin(), disabledEncryptionHosts_.end(), address) == disabledEncryptionHosts_.end() && !tlsContext.empty();
