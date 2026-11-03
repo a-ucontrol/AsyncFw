@@ -262,14 +262,14 @@ public:
   }
   /** @brief Broadcasts a binary array payload to active WebSocket connections matching a specific filter criteria. @n Iterates through connected channels, matching their internal socketData against the provided key. @tparam T Type of the verification value stored inside the socket state. @param data Reference value used to filter recipient sockets. @param da Raw payload data to package inside the WebSocket framing layer. @return Count of successfully messaged channels, or -1 if framing layout serialization failed. */
   template <typename T>
-  int sendToWebSockets(const T &data, const AsyncFw::DataArray &da) {
+  int sendToWebSockets(const T &data, const AsyncFw::DataArray &da, bool bin = false) {
     AsyncFw::DataArray _f;
     int _r = 0;
     for (TcpSocket *socket : sockets) {
       if (!socket->ws_) continue;
       if (socket->data_.has_value() && data == std::any_cast<T>(socket->data_)) {
         if (_f.empty()) {
-          int _s = makeWebSocketFrame(da, &_f);
+          int _s = makeWebSocketFrame(da, &_f, bin);
           if (_s <= 0) return -1;
         }
         socket->write(_f);
@@ -295,9 +295,9 @@ public:
   /** @brief Forcefully terminates all active socket connections currently retained by the server. */
   void clearConnections();
   /** @brief Dispatches a pre-formatted frame envelope to an explicit WebSocket connection. */
-  bool webSocketSend(const HttpSocket *, const DataArray &);
+  bool webSocketSend(const HttpSocket *, const DataArray &, bool = false);
   /** @brief Broadcasts a raw string text frame across all active WebSocket communication channels. */
-  void sendToWebSockets(const std::string &);
+  void sendToWebSockets(const std::string &, bool = false);
   /** @brief Disconnects a specific client socket and clears it from the internally managed pool. */
   void disconnectFromHost(TcpSocket *socket);
   /** @brief Binds to all available interfaces (0.0.0.0) and starts listening for incoming traffic on a specific TCP port. */
@@ -318,7 +318,7 @@ public:
   /** @brief Signal connector emitted whenever a fresh client socket establishes a network link. */
   AsyncFw::FunctionConnector<int, const std::string &, bool *>::Policy<AsyncFw::AbstractFunctionConnector::SyncOnly>::Protected<HttpServer> incoming;
   /** @brief Signal connector emitted when incoming validated WebSocket framed blocks are assembled for read operations. */
-  AsyncFw::FunctionConnector<const HttpSocket *, const DataArray &>::Protected<HttpServer> webSocketReceived;
+  AsyncFw::FunctionConnector<const HttpSocket *, const DataArray &, bool>::Protected<HttpServer> webSocketReceived;
 
 protected:
   virtual void fileUploadProgress(TcpSocket *, int);

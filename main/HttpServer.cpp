@@ -405,7 +405,8 @@ void HttpServer::TcpSocket::readEvent() {
     WebSocketFrameType ft = ws_->getFrame(_da.data(), _da.size(), _out.data(), _out.size(), &out_length);
     if (ft == TEXT_FRAME || ft == BINARY_FRAME) {
       _out.resize(out_length);
-      if (server_) server_->webSocketReceived(this, _out);
+      if (ft == TEXT_FRAME && !_out.empty() && _out.back() == 0) _out.pop_back();
+      if (server_) server_->webSocketReceived(this, _out, ft == BINARY_FRAME);
     } else if (ft == CLOSING_FRAME || ft == ERROR_FRAME) disconnect();
     return;
   }
@@ -480,21 +481,21 @@ void HttpServer::disconnectFromHost(TcpSocket *socket) {
   socket->disconnect();
 }
 
-bool HttpServer::webSocketSend(const HttpSocket *socket, const DataArray &data) {
+bool HttpServer::webSocketSend(const HttpSocket *socket, const DataArray &data, bool bin) {
   if (!static_cast<const TcpSocket *>(socket)->ws_) return false;
   DataArray _out;
-  if (makeWebSocketFrame(data, &_out) <= 0) return false;
+  if (makeWebSocketFrame(data, &_out, bin) <= 0) return false;
   return const_cast<HttpSocket *>(socket)->write(_out) > 0;
 }
 
-void HttpServer::sendToWebSockets(const std::string &data) {
+void HttpServer::sendToWebSockets(const std::string &data, bool bin) {
   std::string _f;
 
   for (HttpServer::TcpSocket *socket : sockets) {
     if (!socket->ws_) continue;
     if (_f.empty()) {
       _f.resize(data.size() + 1 + 8);
-      int size = socket->ws_->makeFrame(WebSocketFrameType::TEXT_FRAME, (unsigned char *)data.data(), data.size(), (unsigned char *)_f.data(), _f.size());
+      int size = socket->ws_->makeFrame(bin ? WebSocketFrameType::BINARY_FRAME : WebSocketFrameType::TEXT_FRAME, (unsigned char *)data.data(), data.size(), (unsigned char *)_f.data(), _f.size());
       _f.resize(size);
     }
     socket->write(_f);

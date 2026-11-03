@@ -39,6 +39,8 @@
 #include <AsyncFw/Rrd>
 #include <AsyncFw/LogStream>
 #include <AsyncFw/Log>
+#include <AsyncFw/HttpServer>
+#include "3rdparty/WebSocket/WebSocket/WebSocket.h"
 
 using namespace AsyncFw;
 using Conn = AbstractFunctionConnector::Connection;
@@ -1482,6 +1484,178 @@ void test_exit_signal_spam() {
 
 #endif  // EXIT_ON_UNIX_SIGNAL
 
+// ============================================================================
+// WebSocket roundtrip
+// ============================================================================
+//
+// Exercises HttpServer's switchingProtocols() / webSocketReceived /
+// webSocketSend path plus a minimal RFC 6455 client on top of AbstractSocket.
+//
+// Why not HttpSocket: it is a strict HTTP/1.1 parser and cannot switch to
+// raw frame I/O on demand. A tiny AbstractSocket subclass keeps the
+// handshake explicit and free of HTTP-parser side effects.
+//
+// Why a fixed Sec-WebSocket-Key: deterministic Accept response lets the
+// client validate the server's handshake byte-for-byte.
+//
+// Placement: uses MainThread::exec() (HttpServer + WsTestClient both run
+// on Main). MUST run before test_exit_signal_spam (Group F): spam leaves
+// mt_.eventfd_ with pending writes, and a later exec() would exit on the
+// first poll without processing anything.
+
+constexpr const char *kWsClientKey = "dGhlIHNhbXBsZSBub25jZQ==";
+constexpr const char *kWsServerAccept = "s3pPLMBiTxaQ9kYGzzhZRbK+xOo=";
+
+class WsTestClient : public AbstractSocket {
+public:
+  FunctionConnector<>::Protected<WsTestClient> handshakeDone;
+  FunctionConnector<const std::string &>::Protected<WsTestClient> textReceived;
+
+  void start(const std::string &address, uint16_t port, const std::string &host, const std::string &path) {
+    request_ = "GET " + path +
+               " HTTP/1.1\r\n"
+               "Host: " +
+               host +
+               "\r\n"
+               "Upgrade: websocket\r\n"
+               "Connection: Upgrade\r\n"
+               "Sec-WebSocket-Key: " +
+               std::string(kWsClientKey) +
+               "\r\n"
+               "Sec-WebSocket-Version: 13\r\n\r\n";
+    connect(address, port);
+  }
+
+  bool sendText(const std::string &msg) {
+    if (!ws_) return false;
+    std::vector<uint8_t> in(msg.begin(), msg.end());
+    DataArray out;
+    out.resize(in.size() + 16);
+    int n = WebSocket::makeFrame(WebSocketFrameType::TEXT_FRAME, in.data(), in.size(), out.data(), out.size());
+    if (n <= 0) return false;
+    out.resize(n);
+    return write(out) == n;
+  }
+
+  ~WsTestClient() override { delete ws_; }
+
+protected:
+  void stateEvent() override {
+    if (state_ == Active) {
+      write(request_);
+      request_.clear();
+    } else if (state_ == Unconnected && error() != None) lsError() << "WsTestClient:" << errorString();
+  }
+
+  void readEvent() override {
+    DataArray chunk = read();
+    if (chunk.empty()) return;
+    if (!ws_) {
+      buf_ += chunk;
+      const std::string s(buf_.begin(), buf_.end());
+      std::size_t end = s.find("\r\n\r\n");
+      if (end == std::string::npos) return;
+      const std::string head = s.substr(0, end + 4);
+      if (head.find(" 101 ") == std::string::npos) {
+        lsError() << "Handshake failed:\n" << head;
+        disconnect();
+        return;
+      }
+      if (head.find("Sec-WebSocket-Accept: " + std::string(kWsServerAccept)) == std::string::npos) {
+        lsError() << "Accept mismatch:\n" << head;
+        disconnect();
+        return;
+      }
+      ws_ = new WebSocket;
+      buf_.clear();
+      handshakeDone();
+      if (end + 4 < s.size()) processFrame(reinterpret_cast<const uint8_t *>(s.data() + end + 4), s.size() - end - 4);
+      return;
+    }
+    processFrame(chunk.data(), chunk.size());
+  }
+
+  void close() override {
+    delete ws_;
+    ws_ = nullptr;
+    AbstractSocket::close();
+  }
+
+private:
+  void processFrame(const uint8_t *data, std::size_t size) {
+    DataArray out;
+    out.resize(size + 64);
+    int outLen = 0;
+    WebSocketFrameType ft = ws_->getFrame((unsigned char *)data, size, out.data(), out.size(), &outLen);
+    if (ft == WebSocketFrameType::TEXT_FRAME) {
+      out.resize(outLen);
+      while (!out.empty() && out.back() == 0) out.pop_back();
+      textReceived(std::string(out.begin(), out.end()));
+    } else if (ft == WebSocketFrameType::BINARY_FRAME) {
+      out.resize(outLen);
+      textReceived(std::string(out.begin(), out.end()));
+    } else if (ft == WebSocketFrameType::CLOSING_FRAME || ft == WebSocketFrameType::ERROR_FRAME) {
+      disconnect();
+    }
+  }
+
+  std::string request_;
+  DataArray buf_;
+  WebSocket *ws_ = nullptr;
+};
+
+void test_websocket_roundtrip() {
+  HttpServer http;
+  std::atomic<int> serverHandshake {0};
+  std::atomic<int> serverReceived {0};
+  std::atomic<int> clientHandshake {0};
+  std::atomic<int> clientEcho {0};
+  std::string echoBody;
+
+  http.addRoute("/ws", HttpServer::Request::Method::Get, [&serverHandshake](const HttpServer::Request &req) {
+    if (req.switchingProtocols()) ++serverHandshake;
+    else lsError() << "upgrade failed";
+  });
+  http.webSocketReceived.connect([&http, &serverReceived](const HttpSocket *socket, const DataArray &msg, bool bin) {
+    ++serverReceived;
+    http.webSocketSend(socket, DataArray(std::string("echo:") + std::string(msg.begin(), msg.end())), bin);
+  });
+
+  if (!http.listen(18080)) {
+    EXPECT_MSG(false, "listen(18080) failed");
+    return;
+  }
+
+  WsTestClient client;
+  FunctionConnectionGuardList guards;
+  guards += client.handshakeDone.connect([&client, &clientHandshake]() {
+    ++clientHandshake;
+    if (!client.sendText("ping")) lsError() << "sendText failed";
+  });
+  guards += client.textReceived.connect([&clientEcho, &echoBody](const std::string &msg) {
+    echoBody = msg;
+    ++clientEcho;
+    MainThread::exit(0);  // eventfd write → next poll iteration exits
+  });
+
+  // Cancel-able timeout (no timer leak after exec returns).
+  int timeoutId = AbstractThread::current()->appendTimerTask(3000, []() {
+    lsError() << "WebSocket test timeout";
+    MainThread::exit(1);
+  });
+
+  client.start("127.0.0.1", 18080, "localhost", "/ws");
+  int ret = MainThread::exec();
+  AbstractThread::current()->removeTimer(timeoutId);
+
+  EXPECT_MSG(ret == 0, "exec() returned " + std::to_string(ret));
+  EXPECT_MSG(serverHandshake.load() == 1, "serverHandshake=" + std::to_string(serverHandshake.load()));
+  EXPECT_MSG(serverReceived.load() == 1, "serverReceived=" + std::to_string(serverReceived.load()));
+  EXPECT_MSG(clientHandshake.load() == 1, "clientHandshake=" + std::to_string(clientHandshake.load()));
+  EXPECT_MSG(clientEcho.load() == 1, "clientEcho=" + std::to_string(clientEcho.load()));
+  EXPECT_MSG(echoBody == "echo:ping", "echoBody='" + echoBody + "'");
+}
+
 }  // namespace
 
 // ============================================================================
@@ -1549,6 +1723,11 @@ int main(int, char **) {
   // permanently finishes Main's event loop.
   test_filesystemwatcher_recreate_in_debounce_window();
   test_filesystemwatcher_scenarios();
+
+  // --- WebSocket roundtrip --------------------------------------------
+  // Uses MainThread::exec(). MUST be before Group F: spam leaves
+  // mt_.eventfd_ with pending writes, breaking subsequent exec().
+  test_websocket_roundtrip();
 
   // --- Group F: MainThread::exit(int) signal safety -------------------
   // Runs AFTER Group C so FileSystemWatcher's timers/inotify events are
