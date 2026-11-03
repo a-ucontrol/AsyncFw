@@ -1,27 +1,27 @@
 <map id="main/FileSystemWatcher.h" name="main/FileSystemWatcher.h">
-<area shape="rect" id="Node000001" title="The FileSystemWatcher class." alt="" coords="85,5,262,32"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="5,80,59,107"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="147,35,72,75,68,71,150,30"/>
-<area shape="rect" id="Node000003" href="$FunctionConnector_8h.html" title="The AbstractFunctionConnector, FunctionConnector, FunctionConnectorProtected, FunctionConnectionGuard..." alt="" coords="82,80,264,107"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="174,30,176,65,171,64,173,35"/>
-<area shape="rect" id="Node000012" href="$Instance_8h.html" title="The AbstractInstance and Instance classes." alt="" coords="289,80,415,107"/>
-<area shape="poly" id="edge11_Node000001_Node000012" title=" " alt="" coords="204,30,309,73,304,75,205,35"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="58,155,118,181"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="157,109,116,147,112,143,160,105"/>
-<area shape="rect" id="Node000005" href="$AbstractThread_8h.html" title="The AbstractThread class." alt="" coords="142,155,263,181"/>
-<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="179,105,195,140,189,140,178,110"/>
-<area shape="rect" id="Node000006" title=" " alt="" coords="11,229,69,256"/>
-<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="173,184,84,225,81,220,176,179"/>
-<area shape="rect" id="Node000007" title=" " alt="" coords="93,229,150,256"/>
-<area shape="poly" id="edge6_Node000005_Node000007" title=" " alt="" coords="191,180,148,221,145,217,186,184"/>
-<area shape="rect" id="Node000008" title=" " alt="" coords="174,229,231,256"/>
-<area shape="poly" id="edge7_Node000005_Node000008" title=" " alt="" coords="204,180,205,215,200,213,201,184"/>
-<area shape="rect" id="Node000009" href="$LockData_8h.html" title="The LockData class." alt="" coords="256,229,344,256"/>
-<area shape="poly" id="edge8_Node000005_Node000009" title=" " alt="" coords="220,179,274,220,269,220,219,184"/>
-<area shape="rect" id="Node000011" href="$invocable_8hpp_source.html" title=" " alt="" coords="368,229,469,256"/>
-<area shape="poly" id="edge10_Node000005_Node000011" title=" " alt="" coords="241,179,369,223,364,225,240,185"/>
-<area shape="rect" id="Node000010" title=" " alt="" coords="248,304,352,331"/>
-<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="302,255,302,290,298,287,298,258"/>
-<area shape="rect" id="Node000013" title=" " alt="" coords="318,155,386,181"/>
-<area shape="poly" id="edge12_Node000012_Node000013" title=" " alt="" coords="353,105,354,140,350,138,351,109"/>
+<area shape="rect" id="Node000001" title="The FileSystemWatcher class." alt="" coords="89,5,267,32"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="10,80,63,107"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="152,35,77,75,73,71,155,30"/>
+<area shape="rect" id="Node000003" href="$FunctionConnector_8h.html" title="The AbstractFunctionConnector, FunctionConnector, FunctionConnectorProtected, FunctionConnectionGuard..." alt="" coords="87,80,269,107"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="179,30,181,65,175,64,177,35"/>
+<area shape="rect" id="Node000012" href="$Instance_8h.html" title="The AbstractInstance and Instance classes." alt="" coords="293,80,375,107"/>
+<area shape="poly" id="edge11_Node000001_Node000012" title=" " alt="" coords="205,30,295,72,291,74,205,35"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="52,155,112,181"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="160,109,113,147,109,143,163,105"/>
+<area shape="rect" id="Node000005" href="$AbstractThread_8h.html" title="The AbstractThread class." alt="" coords="136,155,257,181"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="182,105,192,140,187,139,180,110"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="5,229,63,256"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="167,184,78,225,75,220,169,179"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="87,229,144,256"/>
+<area shape="poly" id="edge6_Node000005_Node000007" title=" " alt="" coords="185,180,142,221,139,217,180,184"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="168,229,225,256"/>
+<area shape="poly" id="edge7_Node000005_Node000008" title=" " alt="" coords="198,180,199,215,194,213,195,184"/>
+<area shape="rect" id="Node000009" href="$LockData_8h.html" title="The LockData class." alt="" coords="250,229,338,256"/>
+<area shape="poly" id="edge8_Node000005_Node000009" title=" " alt="" coords="214,179,268,220,263,220,213,184"/>
+<area shape="rect" id="Node000011" href="$invocable_8hpp_source.html" title=" " alt="" coords="362,229,463,256"/>
+<area shape="poly" id="edge10_Node000005_Node000011" title=" " alt="" coords="235,179,363,223,358,225,234,185"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="242,304,346,331"/>
+<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="296,255,296,290,292,287,292,258"/>
+<area shape="rect" id="Node000013" title=" " alt="" coords="300,155,368,181"/>
+<area shape="poly" id="edge12_Node000012_Node000013" title=" " alt="" coords="335,105,336,140,332,138,333,109"/>
 </map>
