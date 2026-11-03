@@ -61,7 +61,7 @@ WebSocketFrameType WebSocket::parseHandshake(unsigned char* input_frame, int inp
 	//printf("PARSED_KEY:%s \n", this->key.data());
 
 	//return FrameType::OPENING_FRAME;
-	printf("HANDSHAKE-PARSED\n");
+  //printf("HANDSHAKE-PARSED\n");
 	return OPENING_FRAME;
 }
 
