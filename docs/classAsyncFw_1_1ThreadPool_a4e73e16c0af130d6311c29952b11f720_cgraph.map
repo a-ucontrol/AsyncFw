@@ -1,7 +1,11 @@
 <map id="AsyncFw::ThreadPool::getThread" name="AsyncFw::ThreadPool::getThread">
-<area shape="rect" id="Node000001" title="Selects and returns the least loaded thread from the pool for task distribution." alt="" coords="5,5,156,48"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1ThreadPool.html#a0acb73f190e29a68ff2bfc1eb6c66a52" title="Spawns a new managed worker thread." alt="" coords="204,5,354,48"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="156,24,191,26,186,27,156,29"/>
-<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractThreadPool.html#ac312e723c2e0fa3e4cc18e518853bdf2" title="Returns the identifier name of the thread pool." alt="" coords="402,5,601,48"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="354,24,389,27,384,27,354,29"/>
+<area shape="rect" id="Node000001" title="Selects and returns the least loaded thread from the pool for task distribution." alt="" coords="5,39,156,81"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractThread.html#afdaccb5da7d4bee5e9ff687f761bd21f" title="Create a managed thread and run exec()." alt="" coords="204,39,377,81"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="156,57,191,59,186,61,156,63"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractThread.html#a1abe0f5c637dcc6af5aff00c5291bd4f" title="Run manage loop." alt="" coords="425,39,598,81"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="377,57,412,60,407,60,378,63"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1AbstractThread.html#ad43b7b79e541bd1d6cce20f0231cc64d" title="This call from the thread when it finishes execution." alt="" coords="646,5,820,48"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="598,44,628,42,633,42,599,50"/>
+<area shape="rect" id="Node000005" href="$classAsyncFw_1_1AbstractThread.html#a9b9db94ad8c90eafe1ef34a076af8498" title="This is called from the thread when it starts executing." alt="" coords="646,72,820,115"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="599,70,633,78,628,78,599,76"/>
 </map>

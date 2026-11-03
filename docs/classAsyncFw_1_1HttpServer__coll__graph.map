@@ -1,10 +1,10 @@
 <map id="AsyncFw::HttpServer" name="AsyncFw::HttpServer">
-<area shape="rect" id="Node000001" title="Asynchronous HTTP and WebSocket server." alt="" coords="859,63,1006,90"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="476,9,670,67"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="686,47,861,69,856,69,686,53"/>
-<area shape="rect" id="Node000003" href="$classAsyncFw_1_1FunctionConnector.html" title="Provides a thread&#45;safe, publisher&#45;subscriber mechanism to establish sender&#45;to&#45;receivers connections." alt="" coords="5,59,200,102"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="215,68,476,44,474,49,215,73"/>
-<area shape="rect" id="Node000004" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="463,91,683,150"/>
-<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="183,104,224,113,347,123,465,126,459,127,347,129,223,118,182,109"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="698,107,835,91,856,91,861,90,835,97,699,113"/>
+<area shape="rect" id="Node000001" title="Asynchronous HTTP and WebSocket server." alt="" coords="811,71,958,98"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="439,13,634,71"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="649,53,813,76,808,76,649,59"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1FunctionConnector.html" title="Provides a thread&#45;safe, publisher&#45;subscriber mechanism to establish sender&#45;to&#45;receivers connections." alt="" coords="5,67,200,110"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="214,67,223,66,441,46,437,50,224,71,216,73"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="438,97,635,171"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="163,114,224,133,278,140,334,143,440,144,434,144,334,149,278,146,223,138,162,119"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="650,118,787,99,808,99,813,98,787,105,651,124"/>
 </map>

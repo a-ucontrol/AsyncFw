@@ -178,9 +178,8 @@ static std::vector&lt; AbstractThreadPool * &gt;&#160;</td><td class="memItemRig
 <tr class="heading"><td colspan="2"><h2 id="header-inherited" class="groupheader"><a id="inherited" name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pro_methods_classAsyncFw_1_1AbstractThreadPool"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_methods_classAsyncFw_1_1AbstractThreadPool')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Protected Member Functions inherited from <a class="el" href="classAsyncFw_1_1AbstractThreadPool.html">AsyncFw::AbstractThreadPool</a></td></tr>
-<tr class="memitem:a1b2d31f7db01a7cacec702eb7323e620 inherit pro_methods_classAsyncFw_1_1AbstractThreadPool" id="r_a1b2d31f7db01a7cacec702eb7323e620"><td class="memItemLeft">
-virtual void&#160;</td><td class="memItemRight"><b>appendThread</b> (<a class="el" href="classAsyncFw_1_1AbstractThreadPool_1_1Thread.html">AbstractThreadPool::Thread</a> *)</td></tr>
-<tr class="memdesc:a1b2d31f7db01a7cacec702eb7323e620 inherit pro_methods_classAsyncFw_1_1AbstractThreadPool"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers a new thread into the pool. <br /></td></tr>
+<tr class="memitem:a1b2d31f7db01a7cacec702eb7323e620 inherit pro_methods_classAsyncFw_1_1AbstractThreadPool" id="r_a1b2d31f7db01a7cacec702eb7323e620"><td class="memItemLeft">virtual void&#160;</td><td class="memItemRight"><a class="el" href="classAsyncFw_1_1AbstractThreadPool.html#a1b2d31f7db01a7cacec702eb7323e620">appendThread</a> (<a class="el" href="classAsyncFw_1_1AbstractThreadPool_1_1Thread.html">AbstractThreadPool::Thread</a> *)</td></tr>
+<tr class="memdesc:a1b2d31f7db01a7cacec702eb7323e620 inherit pro_methods_classAsyncFw_1_1AbstractThreadPool"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers a new thread into the pool.  <br /></td></tr>
 <tr class="inherit_header pro_attribs_classAsyncFw_1_1AbstractThreadPool"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_attribs_classAsyncFw_1_1AbstractThreadPool')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Protected Attributes inherited from <a class="el" href="classAsyncFw_1_1AbstractThreadPool.html">AsyncFw::AbstractThreadPool</a></td></tr>
 <tr class="memitem:a6c0ae22d30b2c62a38474f66d8d2ead9 inherit pro_attribs_classAsyncFw_1_1AbstractThreadPool" id="r_a6c0ae22d30b2c62a38474f66d8d2ead9"><td class="memItemLeft">
 std::vector&lt; <a class="el" href="classAsyncFw_1_1AbstractThreadPool_1_1Thread.html">AbstractThreadPool::Thread</a> * &gt;&#160;</td><td class="memItemRight"><b>threads_</b></td></tr>
@@ -302,13 +301,7 @@ std::mutex&#160;</td><td class="memItemRight"><b>mutex</b></td></tr>
 <div id="dynsection-2-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-2-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1ThreadPool_a0acb73f190e29a68ff2bfc1eb6c66a52_cgraph.svg" width="408" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-<div id="dynsection-3" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
-<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-3-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1ThreadPool_a0acb73f190e29a68ff2bfc1eb6c66a52_icgraph.svg" width="360" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1ThreadPool_a0acb73f190e29a68ff2bfc1eb6c66a52_cgraph.svg" width="851" height="154"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -331,11 +324,11 @@ std::mutex&#160;</td><td class="memItemRight"><b>mutex</b></td></tr>
 <p>Selects and returns the least loaded thread from the pool for task distribution. </p>
 <p>"Load" is task-queue depth (workLoad()), not CPU usage. If the pool is under max workers size and some worker has an empty queue, it is returned directly - already running, started() long since emitted. Otherwise a new worker is created via <a class="el" href="#a0acb73f190e29a68ff2bfc1eb6c66a52" title="Spawns a new managed worker thread.">createThread()</a>, with its started() timing (started() may fire before or after this returns) and no fun hook for deterministic pre-start wiring. </p><dl class="section note"><dt>Note</dt><dd>Thread-safe, blocks on pool-owner synchronization, and on new-worker startup. </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>Selected worker, or nullptr if the pool was constructed with workThreads == 0. Callers almost always dereference the result immediately — nullptr means a near-certain crash. Treat workThreads &gt;= 1 as a precondition, not a suggestion. </dd></dl>
-<div id="dynsection-4" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
-<div id="dynsection-4-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-3" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
+<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-4-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1ThreadPool_a4e73e16c0af130d6311c29952b11f720_cgraph.svg" width="607" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div id="dynsection-3-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1ThreadPool_a4e73e16c0af130d6311c29952b11f720_cgraph.svg" width="826" height="120"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -364,12 +357,13 @@ std::mutex&#160;</td><td class="memItemRight"><b>mutex</b></td></tr>
 </div><div class="memdoc">
 
 <p>Unregisters a thread from the pool. </p>
+<dl class="section warning"><dt>Warning</dt><dd>Caller MUST hold mutex. </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classAsyncFw_1_1AbstractThreadPool.html#a8dd6e5afe3b1c8f0fac9176568909c54">AsyncFw::AbstractThreadPool</a>.</p>
-<div id="dynsection-5" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
-<div id="dynsection-5-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-4" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
+<div id="dynsection-4-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-5-content" class="dyncontent" style="display:none;">
+<div id="dynsection-4-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1ThreadPool_ad7f14a964e683f021a4d6c1c0a8bbf5d_cgraph.svg" width="408" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 

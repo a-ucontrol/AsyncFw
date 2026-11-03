@@ -1,5 +1,13 @@
 <map id="AsyncFw::ThreadPool::createThread" name="AsyncFw::ThreadPool::createThread">
-<area shape="rect" id="Node000001" title="Spawns a new managed worker thread." alt="" coords="5,5,156,48"/>
+<area shape="rect" id="Node000001" title="Spawns a new managed worker thread." alt="" coords="5,39,156,81"/>
 <area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractThreadPool.html#ac312e723c2e0fa3e4cc18e518853bdf2" title="Returns the identifier name of the thread pool." alt="" coords="204,5,403,48"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="156,24,191,26,186,27,156,29"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="155,46,191,43,186,45,157,51"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractThread.html#afdaccb5da7d4bee5e9ff687f761bd21f" title="Create a managed thread and run exec()." alt="" coords="217,72,390,115"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="156,69,204,77,198,79,156,74"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1AbstractThread.html#a1abe0f5c637dcc6af5aff00c5291bd4f" title="Run manage loop." alt="" coords="451,72,624,115"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="390,91,438,93,433,94,390,96"/>
+<area shape="rect" id="Node000005" href="$classAsyncFw_1_1AbstractThread.html#ad43b7b79e541bd1d6cce20f0231cc64d" title="This call from the thread when it finishes execution." alt="" coords="672,39,846,81"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="624,78,654,76,659,75,625,83"/>
+<area shape="rect" id="Node000006" href="$classAsyncFw_1_1AbstractThread.html#a9b9db94ad8c90eafe1ef34a076af8498" title="This is called from the thread when it starts executing." alt="" coords="672,105,846,148"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="625,104,659,111,654,111,625,109"/>
 </map>

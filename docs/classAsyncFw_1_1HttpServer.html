@@ -107,7 +107,7 @@ $(function(){initNavTree('classAsyncFw_1_1HttpServer.html','','classAsyncFw_1_1H
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1HttpServer__coll__graph.svg" width="1012" height="156"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1HttpServer__coll__graph.svg" width="964" height="178"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
@@ -132,9 +132,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a64e42967cdef1254142bcba26f246f07" id="r_a64e42967cdef1254142bcba26f246f07"><td class="memTemplParams" colspan="2">template&lt;typename O, typename A&gt; </td></tr>
 <tr class="memitem:a64e42967cdef1254142bcba26f246f07 template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a64e42967cdef1254142bcba26f246f07">addRoute</a> (const O object, const std::string &amp;url, <a class="el" href="classAsyncFw_1_1HttpServer_1_1Request.html#a41d6c54e0fbca4f6d6bc65abb6a97827">Request::Method</a> method, A action, const std::any &amp;data={})</td></tr>
 <tr class="memdesc:a64e42967cdef1254142bcba26f246f07"><td class="mdescLeft">&#160;</td><td class="mdescRight">Binds a specific class instance method as a route handler.  <br /></td></tr>
-<tr class="memitem:a2d02e93cd01d45ecc792f75fe7c99caf" id="r_a2d02e93cd01d45ecc792f75fe7c99caf"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
-<tr class="memitem:a2d02e93cd01d45ecc792f75fe7c99caf template"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#a2d02e93cd01d45ecc792f75fe7c99caf">sendToWebSockets</a> (const T &amp;data, const <a class="el" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> &amp;da)</td></tr>
-<tr class="memdesc:a2d02e93cd01d45ecc792f75fe7c99caf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Broadcasts a binary array payload to active WebSocket connections matching a specific filter criteria. <br  />
+<tr class="memitem:a83a871b19a72e15a5e29b568d3edf7e3" id="r_a83a871b19a72e15a5e29b568d3edf7e3"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
+<tr class="memitem:a83a871b19a72e15a5e29b568d3edf7e3 template"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#a83a871b19a72e15a5e29b568d3edf7e3">sendToWebSockets</a> (const T &amp;data, const <a class="el" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> &amp;da, bool bin=false)</td></tr>
+<tr class="memdesc:a83a871b19a72e15a5e29b568d3edf7e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Broadcasts a binary array payload to active WebSocket connections matching a specific filter criteria. <br  />
  Iterates through connected channels, matching their internal socketData against the provided key.  <br /></td></tr>
 <tr class="memitem:ad0bb08fb4a0ef0fd28961e29a8275bd0" id="r_ad0bb08fb4a0ef0fd28961e29a8275bd0"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
 <tr class="memitem:ad0bb08fb4a0ef0fd28961e29a8275bd0 template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ad0bb08fb4a0ef0fd28961e29a8275bd0">setPeek</a> (T f)</td></tr>
@@ -146,12 +146,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ad3761260dfd18899afc22c6f4bc0c556" id="r_ad3761260dfd18899afc22c6f4bc0c556"><td class="memItemLeft"><a id="ad3761260dfd18899afc22c6f4bc0c556" name="ad3761260dfd18899afc22c6f4bc0c556"></a>
 void&#160;</td><td class="memItemRight"><b>clearConnections</b> ()</td></tr>
 <tr class="memdesc:ad3761260dfd18899afc22c6f4bc0c556"><td class="mdescLeft">&#160;</td><td class="mdescRight">Forcefully terminates all active socket connections currently retained by the server. <br /></td></tr>
-<tr class="memitem:adbe9b1d1649b32cb126ae37fcd37914f" id="r_adbe9b1d1649b32cb126ae37fcd37914f"><td class="memItemLeft"><a id="adbe9b1d1649b32cb126ae37fcd37914f" name="adbe9b1d1649b32cb126ae37fcd37914f"></a>
-bool&#160;</td><td class="memItemRight"><b>webSocketSend</b> (const <a class="el" href="classAsyncFw_1_1HttpSocket.html">HttpSocket</a> *, const <a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> &amp;)</td></tr>
-<tr class="memdesc:adbe9b1d1649b32cb126ae37fcd37914f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dispatches a pre-formatted frame envelope to an explicit WebSocket connection. <br /></td></tr>
-<tr class="memitem:ac1225b4e5fe3b38d5c6ef4c664d0a59b" id="r_ac1225b4e5fe3b38d5c6ef4c664d0a59b"><td class="memItemLeft"><a id="ac1225b4e5fe3b38d5c6ef4c664d0a59b" name="ac1225b4e5fe3b38d5c6ef4c664d0a59b"></a>
-void&#160;</td><td class="memItemRight"><b>sendToWebSockets</b> (const std::string &amp;)</td></tr>
-<tr class="memdesc:ac1225b4e5fe3b38d5c6ef4c664d0a59b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Broadcasts a raw string text frame across all active WebSocket communication channels. <br /></td></tr>
+<tr class="memitem:accdc701b67370e6db7ad7308bb061e99" id="r_accdc701b67370e6db7ad7308bb061e99"><td class="memItemLeft"><a id="accdc701b67370e6db7ad7308bb061e99" name="accdc701b67370e6db7ad7308bb061e99"></a>
+bool&#160;</td><td class="memItemRight"><b>webSocketSend</b> (const <a class="el" href="classAsyncFw_1_1HttpSocket.html">HttpSocket</a> *, const <a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> &amp;, bool=false)</td></tr>
+<tr class="memdesc:accdc701b67370e6db7ad7308bb061e99"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dispatches a pre-formatted frame envelope to an explicit WebSocket connection. <br /></td></tr>
+<tr class="memitem:a8f23e73ead167ed5c279c055b7529984" id="r_a8f23e73ead167ed5c279c055b7529984"><td class="memItemLeft"><a id="a8f23e73ead167ed5c279c055b7529984" name="a8f23e73ead167ed5c279c055b7529984"></a>
+void&#160;</td><td class="memItemRight"><b>sendToWebSockets</b> (const std::string &amp;, bool=false)</td></tr>
+<tr class="memdesc:a8f23e73ead167ed5c279c055b7529984"><td class="mdescLeft">&#160;</td><td class="mdescRight">Broadcasts a raw string text frame across all active WebSocket communication channels. <br /></td></tr>
 <tr class="memitem:ad7dae50cc3787112980fa7075a60f811" id="r_ad7dae50cc3787112980fa7075a60f811"><td class="memItemLeft"><a id="ad7dae50cc3787112980fa7075a60f811" name="ad7dae50cc3787112980fa7075a60f811"></a>
 void&#160;</td><td class="memItemRight"><b>disconnectFromHost</b> (<a class="el" href="classAsyncFw_1_1HttpServer_1_1TcpSocket.html">TcpSocket</a> *socket)</td></tr>
 <tr class="memdesc:ad7dae50cc3787112980fa7075a60f811"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disconnects a specific client socket and clears it from the internally managed pool. <br /></td></tr>
@@ -185,9 +185,9 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:ab0370ceb3eec1973e97a19d65552845b" id="r_ab0370ceb3eec1973e97a19d65552845b"><td class="memItemLeft"><a id="ab0370ceb3eec1973e97a19d65552845b" name="ab0370ceb3eec1973e97a19d65552845b"></a>
 <a class="el" href="classAsyncFw_1_1FunctionConnector.html">AsyncFw::FunctionConnector</a>&lt; int, const std::string &amp;, bool * &gt;::Policy&lt; <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector.html#ab248bd16cbfcac609f58d401abec4368a067289a8bc60cc7b0be0e021db9ce81d">AsyncFw::AbstractFunctionConnector::SyncOnly</a> &gt;::Protected&lt; <a class="el" href="#a522928fa8bf3b13b706ac997d4f100dd">HttpServer</a> &gt;&#160;</td><td class="memItemRight"><b>incoming</b></td></tr>
 <tr class="memdesc:ab0370ceb3eec1973e97a19d65552845b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Signal connector emitted whenever a fresh client socket establishes a network link. <br /></td></tr>
-<tr class="memitem:abc4ca40dd30bf85e0328a65360e2038f" id="r_abc4ca40dd30bf85e0328a65360e2038f"><td class="memItemLeft"><a id="abc4ca40dd30bf85e0328a65360e2038f" name="abc4ca40dd30bf85e0328a65360e2038f"></a>
-<a class="el" href="classAsyncFw_1_1FunctionConnector.html">AsyncFw::FunctionConnector</a>&lt; const <a class="el" href="classAsyncFw_1_1HttpSocket.html">HttpSocket</a> *, const <a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> &amp; &gt;::Protected&lt; <a class="el" href="#a522928fa8bf3b13b706ac997d4f100dd">HttpServer</a> &gt;&#160;</td><td class="memItemRight"><b>webSocketReceived</b></td></tr>
-<tr class="memdesc:abc4ca40dd30bf85e0328a65360e2038f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Signal connector emitted when incoming validated WebSocket framed blocks are assembled for read operations. <br /></td></tr>
+<tr class="memitem:a69e68d6cc98b72d331fcbdf068a37761" id="r_a69e68d6cc98b72d331fcbdf068a37761"><td class="memItemLeft"><a id="a69e68d6cc98b72d331fcbdf068a37761" name="a69e68d6cc98b72d331fcbdf068a37761"></a>
+<a class="el" href="classAsyncFw_1_1FunctionConnector.html">AsyncFw::FunctionConnector</a>&lt; const <a class="el" href="classAsyncFw_1_1HttpSocket.html">HttpSocket</a> *, const <a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> &amp;, bool &gt;::Protected&lt; <a class="el" href="#a522928fa8bf3b13b706ac997d4f100dd">HttpServer</a> &gt;&#160;</td><td class="memItemRight"><b>webSocketReceived</b></td></tr>
+<tr class="memdesc:a69e68d6cc98b72d331fcbdf068a37761"><td class="mdescLeft">&#160;</td><td class="mdescRight">Signal connector emitted when incoming validated WebSocket framed blocks are assembled for read operations. <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pro-methods" class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -454,8 +454,8 @@ template&lt;typename O, typename A&gt; </div>
 
 </div>
 </div>
-<a id="a2d02e93cd01d45ecc792f75fe7c99caf" name="a2d02e93cd01d45ecc792f75fe7c99caf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2d02e93cd01d45ecc792f75fe7c99caf">&#9670;&#160;</a></span>sendToWebSockets()</h2>
+<a id="a83a871b19a72e15a5e29b568d3edf7e3" name="a83a871b19a72e15a5e29b568d3edf7e3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a83a871b19a72e15a5e29b568d3edf7e3">&#9670;&#160;</a></span>sendToWebSockets()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -473,7 +473,12 @@ template&lt;typename T&gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>da</em></span>&#160;)</td>
+          <td class="paramtype">const <a class="el" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>da</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>bin</em></span><span class="paramdefsep"> = </span><span class="paramdefval">false</span>&#160;)</td>
         </tr>
       </table>
   </td>
