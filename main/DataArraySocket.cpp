@@ -123,9 +123,8 @@ void DataArraySocket::stateEvent() {
       else if (private_.readTimeout > 0) { removeTimer(); }
     }
     private_.readSize = 0;
-    std::vector<DataArray *>::iterator it = std::find(private_.receiveList.begin(), private_.receiveList.end(), private_.receiveByteArray);
-    if (private_.receiveByteArray && it != private_.receiveList.end()) {
-      private_.receiveList.erase(it);
+    if (private_.receiveByteArray) {
+      private_.releaseBuffer(private_.receiveByteArray);
       private_.receiveByteArray = nullptr;
       lsWarning("disconnected while receive");
     }

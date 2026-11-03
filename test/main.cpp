@@ -16,6 +16,7 @@
 //     any later invokeTask() would silently return false.
 //
 
+#include <cstring>
 #ifndef _WIN32
   #include <pthread.h>
   #include <signal.h>
@@ -40,6 +41,9 @@
 #include <AsyncFw/LogStream>
 #include <AsyncFw/Log>
 #include <AsyncFw/HttpServer>
+#include <AsyncFw/ListenSocket>
+#include <AsyncFw/DataArrayTcpClient>
+
 #include "3rdparty/WebSocket/WebSocket/WebSocket.h"
 
 using namespace AsyncFw;
@@ -1719,6 +1723,97 @@ void test_listen_rebind_after_close() {
   }
 }
 
+#ifndef _WIN32
+// DataArraySocket: disconnect during partial frame receive.
+//
+// Server side (raw ListenSocket): accept, write the 8-byte DataArraySocket
+// frame header announcing 1 MiB, then 512 B of payload, then close the fd
+// (via *accept = false → ListenSocket::incomingEvent() closes it).
+//
+// Client side (DataArrayTcpClient → DataArraySocket): parses the header,
+// starts filling receiveByteArray, receives the 512 B prefix, then sees
+// EOF. stateEvent(Unconnected) hits the "disconnected while receive" branch.
+//
+// Pre-fix: the DataArray allocated in readEvent() is erased from
+// receiveList but never deleted → 24 B + 512 B leak, reported by LSan.
+// Post-fix: releaseBuffer() is called; ASan run stays clean.
+//
+// Under TSan (no leak detection) this test still exercises the path; the
+// assertions pin:
+//   - server actually accepted the connection (else the scenario is void),
+//   - final client state is Unconnected (we went through stateEvent),
+//   - no complete frame was delivered (proves partial receive).
+void test_datasocket_disconnect_partial_receive() {
+  ListenSocket listener;
+  std::atomic<bool> incomingSeen {false};
+  FunctionConnectionGuard lg = listener.incoming.connect([&](int fd, const std::string &, bool *accept) {
+    incomingSeen = true;
+
+    constexpr uint32_t announcedSize = 1024 * 1024;  // 1 MiB, never sent
+    constexpr uint32_t payloadId = 0xCAFE;
+    constexpr size_t partialBytes = 512;
+
+    uint8_t header[8];
+    std::memcpy(header, &announcedSize, sizeof(announcedSize));
+    std::memcpy(header + 4, &payloadId, sizeof(payloadId));
+    if (::write(fd, header, sizeof(header)) != static_cast<ssize_t>(sizeof(header))) {
+      *accept = false;
+      return;
+    }
+    uint8_t payload[partialBytes];
+    std::memset(payload, 'P', sizeof(payload));
+    ::write(fd, payload, sizeof(payload));
+
+    // Do not adopt fd: ListenSocket::incomingEvent() closes it right
+    // after this callback returns. The kernel send buffer still holds
+    // header + 512 B, and the FIN follows — exactly the state we need.
+    *accept = false;
+  });
+
+  if (!listener.listen("127.0.0.1", 0)) {
+    EXPECT_MSG(false, "partial_receive: listen failed");
+    return;
+  }
+  const uint16_t port = listener.port();
+
+  DataArrayTcpClient client;
+  client.setReconnectTimeout(0);  // no auto-reconnect after Unconnected
+  DataArraySocket *socket = client.createSocket();
+  EXPECT_MSG(socket != nullptr, "partial_receive: createSocket failed");
+  if (!socket) {
+    listener.close();
+    return;
+  }
+
+  std::atomic<int> finalState {-1};
+  std::atomic<bool> gotCompleteFrame {false};
+
+  // received fires only for fully assembled frames; must stay false.
+  socket->received.connect([&](const DataArray *, uint32_t) { gotCompleteFrame = true; });
+
+  socket->stateChanged.connect([&](AbstractSocket::State s) {
+    finalState = s;
+    if (s == AbstractSocket::State::Unconnected) Timer::single(50, []() { MainThread::exit(); });
+  });
+
+  client.connectToHost(socket, "127.0.0.1", port);
+
+  int tid = AbstractThread::current()->appendTimerTask(3000, []() {
+    lsError() << "partial_receive: timeout";
+    MainThread::exit(-1);
+  });
+  MainThread::exec();
+  AbstractThread::current()->removeTimer(tid);
+
+  EXPECT_MSG(incomingSeen.load(), "partial_receive: server never accepted");
+  EXPECT_MSG(finalState.load() == AbstractSocket::State::Unconnected, "partial_receive: final state = " + std::to_string(finalState.load()) + " (expected Unconnected)");
+  EXPECT_MSG(!gotCompleteFrame.load(), "partial_receive: complete frame delivered — scenario void");
+
+  listener.close();
+  client.destroySocket(socket);
+}
+#endif  // !_WIN32
+
 }  // namespace
 
 // ============================================================================
@@ -1796,6 +1891,13 @@ int main(int, char **) {
   // Uses MainThread::exec(). MUST be before Group F: spam leaves
   // mt_.eventfd_ with pending writes, breaking subsequent exec().
   test_websocket_roundtrip();
+
+#ifndef _WIN32
+  // --- DataArraySocket: disconnect during partial receive -------------
+  // Uses MainThread::exec(), like WebSocket and io_uring rebind. Must run
+  // before Group F (exit_signal_spam), which leaves eventfd dirty.
+  test_datasocket_disconnect_partial_receive();
+#endif
 
   // --- Group F: MainThread::exit(int) signal safety -------------------
   // Runs AFTER Group C so FileSystemWatcher's timers/inotify events are
