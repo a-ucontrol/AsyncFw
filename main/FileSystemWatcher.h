@@ -11,7 +11,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #include <string>
 #include "../core/FunctionConnector.h"
-#include "../main/Instance.h"
+#include "Instance.h"
 
 namespace AsyncFw {
 /** @class FileSystemWatcher FileSystemWatcher.h <AsyncFw/FileSystemWatcher> @brief Provides an asynchronous, cross-platform interface for monitoring specific files.
