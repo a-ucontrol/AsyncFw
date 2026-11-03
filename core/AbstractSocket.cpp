@@ -160,6 +160,13 @@ bool AbstractSocket::listen(const std::string &address, uint16_t port) {
     return false;
   }
 
+  socklen_t _l = _sa_len;
+  if (::getsockname(_fd, reinterpret_cast<struct sockaddr *>(&private_.la), &_l) < 0) {
+    close_fd(_fd);
+    lsError() << "getsockname after bind failed:" << errno;
+    return false;
+  }
+
   private_.error = None;
   private_.errorString.clear();
   state_ = State::Listening;
