@@ -155,26 +155,28 @@ void ThreadPool::quit() {
 
 AbstractThreadPool::Thread *ThreadPool::getThread() {
   ThreadPool::Thread *_t = nullptr;
-  thread_->invoke([this, &_t]() {
+  {  //lock scope
+    AbstractThread::LockGuard lock = thread_->lockGuard();
     int _s = workThreads_.size();
     if (_s < workThreadsSize_) {
       for (int i = 0; i != _s; ++i)
         if (workThreads_[i]->workLoad() == 0) {
           _t = workThreads_[i];
-          return;
+          return _t;
         }
       workThreads_.emplace_back(createThread("Work-" + std::to_string(_s)));
       _t = workThreads_.back();
-      return;
-    }
-    int _load = std::numeric_limits<int>::max();
-    for (int i = 0; i != _s; ++i) {
-      int _l = workThreads_[i]->workLoad();
-      if (_l < _load) {
-        _load = _l;
-        _t = workThreads_[i];
+    } else {
+      int _load = std::numeric_limits<int>::max();
+      for (int i = 0; i != _s; ++i) {
+        int _l = workThreads_[i]->workLoad();
+        if (_l < _load) {
+          _load = _l;
+          _t = workThreads_[i];
+        }
       }
+      return _t;
     }
-  }, true);
+  }
   return _t;
 }
