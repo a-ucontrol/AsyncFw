@@ -494,7 +494,7 @@ void HttpServer::sendToWebSockets(const std::string &data, bool bin) {
   for (HttpServer::TcpSocket *socket : sockets) {
     if (!socket->ws_) continue;
     if (_f.empty()) {
-      _f.resize(data.size() + 1 + 8);
+      _f.resize(data.size() + 2 + 8);
       int size = socket->ws_->makeFrame(bin ? WebSocketFrameType::BINARY_FRAME : WebSocketFrameType::TEXT_FRAME, (unsigned char *)data.data(), data.size(), (unsigned char *)_f.data(), _f.size());
       _f.resize(size);
     }
