@@ -1656,6 +1656,69 @@ void test_websocket_roundtrip() {
   EXPECT_MSG(echoBody == "echo:ping", "echoBody='" + echoBody + "'");
 }
 
+// Regression: with ENABLE_IO_URING (IO_URING_WAIT), close() ->
+// removePollDescriptor() used to queue an ASYNC cancel
+// (io_uring_prep_cancel). The listener's poll_add was still pending in the
+// kernel, so close(fd) in AbstractSocket::close() dropped only the
+// userspace reference — the kernel kept the file alive via the pending
+// poll — and a subsequent bind() on the same port failed with EADDRINUSE.
+//
+// The fix replaces the async cancel with io_uring_register_sync_cancel(),
+// which blocks until the pending poll is actually cancelled and the kernel
+// drops its file reference, so the port is free by the time
+// removePollDescriptor() returns.
+//
+// The test must submit the poll_add SQE to the kernel BEFORE close().
+// Otherwise the SQE is still in the SQ and no kernel op holds the fd —
+// the bug simply cannot reproduce. That is why each cycle runs exec()
+// for a few milliseconds before destroying the server.
+void test_listen_rebind_after_close() {
+  constexpr uint16_t kPort = 18080;
+  constexpr int kCycles = 3;
+
+  for (int cycle = 0; cycle < kCycles; ++cycle) {
+    // ---- Phase 1: listen + exec so the poll is kernel-side ---------
+    {
+      std::atomic<bool> listenOk {false};
+      {
+        HttpServer server;
+        Timer::single(5, [&]() {
+          listenOk = server.listen(kPort);
+          // ~20ms is plenty for exec() to enter its wait path at least
+          // once, which is where io_uring_sq_ready()/io_uring_submit()
+          // actually pushes the listener's poll_add SQE to the kernel.
+          Timer::single(20, [&server]() {
+#ifdef IO_URING_ASYNC_CANCEL
+            server.close();
+            lsWarning() << LogStream::Color::Red << "ENABLED IO_URING_ASYNC_CANCEL";
+#endif
+            MainThread::exit();
+          });
+        });
+        MainThread::exec();
+        EXPECT_MSG(listenOk.load(), "cycle " + std::to_string(cycle) + ": first listen(" + std::to_string(kPort) + ") failed");
+        if (!listenOk.load()) return;
+        // ~HttpServer runs here: close() -> removePollDescriptor() with
+        // the listener's poll still pending in the kernel. This is the
+        // exact call that the fix made synchronous.
+      }
+    }
+
+    // ---- Phase 2: immediate re-listen, NO exec() in between --------
+    // Before the fix, bind(kPort) returns EADDRINUSE here because the
+    // kernel is still holding the socket file via the pending poll.
+    {
+      HttpServer server;
+      const bool reListenOk = server.listen(kPort);
+      EXPECT_MSG(reListenOk, "cycle " + std::to_string(cycle) + ": re-listen(" + std::to_string(kPort) +
+                                 ") failed — port not freed after close "
+                                 "(io_uring cancel not synchronous)");
+      if (!reListenOk) return;
+      // ~HttpServer closes the listener at end of block.
+    }
+  }
+}
+
 }  // namespace
 
 // ============================================================================
@@ -1723,6 +1786,11 @@ int main(int, char **) {
   // permanently finishes Main's event loop.
   test_filesystemwatcher_recreate_in_debounce_window();
   test_filesystemwatcher_scenarios();
+
+  // --- io_uring listen rebind (regression) ----------------------------
+  // Must come before test_exit_signal_spam (Group F), which leaves the
+  // main thread's eventfd counter dirty and breaks subsequent exec().
+  test_listen_rebind_after_close();
 
   // --- WebSocket roundtrip --------------------------------------------
   // Uses MainThread::exec(). MUST be before Group F: spam leaves

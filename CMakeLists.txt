@@ -21,8 +21,9 @@ include(cmake/version.cmake)
 
 #set(ENABLE_IO_URING ON)
 
-#add_definitions(-DUSE_SSL_BIO_PAIR)
 #add_definitions(-DEPOLL_EDGE_TRIGGERED)
+#add_definitions(-DIO_URING_ASYNC_CANCEL)
+#add_definitions(-DUSE_SSL_BIO_PAIR)
 
 #add_definitions(-DLS_NO_TRACE)
 #add_definitions(-DLS_NO_DEBUG)

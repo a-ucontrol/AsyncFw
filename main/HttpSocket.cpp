@@ -210,11 +210,11 @@ bool HttpSocket::connect(const std::string &address, uint16_t port) {
 }
 
 void HttpSocket::disconnect() {
-  thread_->invoke([this]() { AbstractTlsSocket::disconnect(); });
+  thread_->invoke([this]() { AbstractTlsSocket::disconnect(); }, true);
 }
 
 void HttpSocket::close() {
-  thread_->invoke([this]() { AbstractTlsSocket::close(); });
+  thread_->invoke([this]() { AbstractTlsSocket::close(); }, true);
 }
 
 void HttpSocket::destroy() {
@@ -224,7 +224,7 @@ void HttpSocket::destroy() {
       tid_ = -1;
     }
     AbstractTlsSocket::destroy();
-  });
+  }, true);
 }
 
 DataArrayView HttpSocket::header() { return received_.view(0, headerSize_); }
