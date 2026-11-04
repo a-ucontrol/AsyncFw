@@ -188,12 +188,12 @@ void AbstractSocket::activateEvent() {
 void AbstractSocket::changeDescriptor(int _fd) {
   checkCurrentThread();
   std::vector<AbstractSocket *>::iterator it = std::lower_bound(thread_->sockets_.begin(), thread_->sockets_.end(), this, Thread::Compare());
-  if (it != thread_->sockets_.end()) {
+  if (it != thread_->sockets_.end() && *it == this) {
     thread_->sockets_.erase(it);
     fd_ = _fd;
     it = std::lower_bound(thread_->sockets_.begin(), thread_->sockets_.end(), this, Thread::Compare());
     thread_->sockets_.insert(it, this);
-  }
+  } else lsError() << "descriptor not found" << _fd;
 }
 
 int AbstractSocket::read_available_fd() const {

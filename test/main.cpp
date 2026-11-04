@@ -190,13 +190,6 @@ void test_threadpool_destroy_from_own_task() {
 // Regression: getThread() deadlocked when Log lived on the same thread as
 // the pool's owner.
 //
-//   Old getThread():
-//     thread_->lockGuard()                     // pool owner's private_.mutex
-//       createThread → new Thread → lsTrace
-//         → Log::append → Log.thread_->lockGuard()  // SAME mutex → DEADLOCK
-//
-//   New getThread() uses pool::mutex — different lock, no overlap.
-//
 // Two sub-scenarios must both complete:
 //   1) getThread from the owner itself (original repro from the user)
 //   2) getThread from a foreign thread (same root cause)
