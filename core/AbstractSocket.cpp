@@ -558,10 +558,7 @@ void AbstractSocket::destroy() {
   close();
   state_ = State::Destroy;
   if (!thread_) {
-    Thread::current()->invoke([_p = this]() {
-      _p->stateEvent();
-      delete _p;
-    });
+    Thread::current()->invoke([_p = this]() { delete _p; });
     return;
   }
   thread_->invoke([_p = this]() {

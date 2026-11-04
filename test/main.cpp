@@ -1756,7 +1756,7 @@ void test_datasocket_disconnect_partial_receive() {
     }
     uint8_t payload[partialBytes];
     std::memset(payload, 'P', sizeof(payload));
-    ::write(fd, payload, sizeof(payload));
+    (void)!::write(fd, payload, sizeof(payload));
 
     // Do not adopt fd: ListenSocket::incomingEvent() closes it right
     // after this callback returns. The kernel send buffer still holds
