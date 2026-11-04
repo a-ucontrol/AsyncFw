@@ -1464,20 +1464,28 @@ void test_exit_signal_spam() {
 
   Thread spam("ExitSpammer");
   spam.start();
-  spam.invoke([&]() {
-    for (int i = 1; !stop.load(); ++i) {
-      MainThread::exit(i);
-      lastWritten.store(i);
-      std::this_thread::yield();
-    }
+
+  // Запускаем цикл spam ПОСЛЕ того, как exec сбросит code_ и войдёт в цикл.
+  // Если spam успеет до code_.store(0) в exec, значение победителя CAS
+  // молча затирается сбросом — это задокументированное поведение
+  // MainThread::exit ("exit() called BEFORE exec() is silently overwritten").
+  // Планирование через Timer гарантирует, что exec уже выполнил свой сброс.
+  Timer::single(10, [&]() {
+    spam.invoke([&]() {
+      for (int i = 1; !stop.load(); ++i) {
+        MainThread::exit(i);
+        lastWritten.store(i);
+        std::this_thread::yield();
+      }
+    });
   });
 
   int ret = MainThread::exec();
   stop = true;
-  spam.invoke([]() {}, true);  // barrier: spam has left its loop
+  spam.invoke([]() {}, true);  // барьер: spam вышел из своего цикла
 
   EXPECT_MSG(ret > 0, "exec() returned non-positive code " + std::to_string(ret));
-  lsNotice() << "test_exit_signal_spam: ret=" << ret << "lastWritten=" << lastWritten.load() << "(ret is the winning CAS value; lastWritten is the last spam iteration)";
+  lsNotice() << "test_exit_signal_spam: ret=" << ret << " lastWritten=" << lastWritten.load() << " (ret is the winning CAS value; lastWritten is the last spam iteration)";
 }
 
 #endif  // EXIT_ON_UNIX_SIGNAL
