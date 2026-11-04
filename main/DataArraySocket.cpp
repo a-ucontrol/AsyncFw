@@ -403,27 +403,29 @@ bool DataArraySocket::connectToHost() {
   return AbstractTlsSocket::connect(private_.address, private_.port);
 }
 
-bool DataArraySocket::connectToHost(int timeout) {
+void DataArraySocket::connectToHost(int timeout) {
   if (private_.waiter.waiting()) {
     lsError() << "connect in process";
-    return false;
+    return;
   }
-
-  if (!timeout) {
+  if (timeout <= 0) {
     connectToHost();
-    return false;
+    return;
   }
-
-  thread_->invoke([this, timeout]() {
+  bool ok;
+  thread_->invoke([this, timeout, &ok]() {
     private_.flags |= 0x04;
     startTimer(timeout);
-    connectToHost();
+    ok = connectToHost();
   }, true);
-
+  if (!ok) {
+    removeTimer();
+    private_.flags &= ~0x04;
+    setErrorString("Connect start failed (" + peerString() + ')');
+    return;
+  }
   private_.waiter.wait();
-
   lsTrace();
-  return true;
 }
 
 bool DataArraySocket::connect(const std::string &address, uint16_t port) {
