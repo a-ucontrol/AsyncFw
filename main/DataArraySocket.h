@@ -49,7 +49,7 @@ public:
   /** @brief Forces the transmission of a keep-alive request (ping) to the remote peer. */
   void sendKeepAlive() { sendKeepAlive(true); }
   /** @brief Gets the current internal state of the socket. @return An AbstractSocket::State enum value. */
-  AbstractSocket::State state() const { return state_; }
+  AbstractSocket::State state() const;
   /** @brief Initiates a connection to the specified remote host and port. @param address Destination IP address. @param port Destination network port. @return True if the connection process was successfully started. */
   bool connect(const std::string &, uint16_t) override;
   /** @brief Disconnects the socket from the remote peer. */

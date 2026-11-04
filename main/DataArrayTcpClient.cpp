@@ -18,10 +18,7 @@ DataArrayTcpClient::DataArrayTcpClient(const std::string &name) : DataArrayAbstr
 void DataArrayTcpClient::socketStateChanged(const DataArraySocket *socket) {
   bool connected = socket->state_ == DataArraySocket::State::Active;
   if (!connected && socket->state_ != DataArraySocket::State::Unconnected) return;
-  thread_->invoke([this, socket, connected]() {
-    bool b = connected == (socket->state_ == DataArraySocket::State::Active);
-    if (b) connectionStateChanged(socket);
-  });
+  thread_->invoke([this, socket]() { connectionStateChanged(socket); });
   lsDebug((connected) ? "connected" : "disconnected");
 }
 

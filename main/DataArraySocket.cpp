@@ -377,6 +377,14 @@ const std::string DataArraySocket::hostAddress() const { return private_.address
 
 uint16_t DataArraySocket::hostPort() const { return private_.port; }
 
+AbstractSocket::State DataArraySocket::state() const {
+  AbstractThread *_t = thread_;
+  if (!_t) return Destroy;
+  AbstractSocket::State _s;
+  if (!_t->invoke([this, &_s]() { _s = state_; }, true)) return state_;
+  return _s;
+}
+
 bool DataArraySocket::connectToHost() {
   checkCurrentThread();
   if (private_.address.empty() || !private_.port) {
