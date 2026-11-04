@@ -43,6 +43,7 @@
 #include <AsyncFw/HttpServer>
 #include <AsyncFw/ListenSocket>
 #include <AsyncFw/DataArrayTcpClient>
+#include <AsyncFw/MulticastDns>
 
 #include "3rdparty/WebSocket/WebSocket/WebSocket.h"
 
@@ -1807,6 +1808,112 @@ void test_datasocket_disconnect_partial_receive() {
 }
 #endif  // !_WIN32
 
+// ============================================================================
+// Group G. MulticastDns — goodbye handling
+// ============================================================================
+//
+// Contract: a goodbye packet (SRV record with TTL=0) is reported via
+// hostChanged with host.port == 0, NOT as hostRemoved. The host stays in
+// the internal table marked unavailable (port == 0), allowing subscribers
+// (e.g. a UI host table that greys out the row while keeping it visible).
+// Actual removal fires only when the host's expire timestamp elapses or on
+// stopQuerier().
+//
+// Scenario (mirrors example/MulticastDns/main.cpp):
+//   1. Publish a service (startService).
+//   2. Start a querier (startQuerier Multicast).
+//   3. On the first hostAdded: trigger goodbye via stopService(true).
+//   4. Expect hostChanged with port == 0 and no hostRemoved.
+//   5. Timeout guard 5s.
+//
+// Isolation: unique service type + hostname, so no collision with real
+// mDNS traffic on the LAN or with other AsyncFw test runs. The mDNS
+// socket binds to 5353 — if a system daemon (avahi/systemd-resolved) is
+// already bound, startQuerier() fails and the test reports that explicitly.
+//
+// Placement: uses MainThread::exec(); must run before Group F (spam),
+// which leaves mt_.eventfd_ dirty and breaks subsequent exec().
+void test_multicast_dns_goodbye_reports_host_changed_port_zero() {
+  if (Instance<MulticastDns>::get() != nullptr) {
+    lsWarning() << "MulticastDns instance already exists; goodbye test skipped";
+    return;
+  }
+
+  const std::string serviceType = "AsyncFw_test_goodbye_service";
+  const std::string hostName = "AsyncFw_test_goodbye_host";
+  constexpr uint16_t servicePort = 18081;
+
+  MulticastDns *mdns = Instance<MulticastDns>::create(serviceType);
+  EXPECT_MSG(mdns != nullptr, "Instance<MulticastDns>::create returned nullptr");
+  if (!mdns) return;
+
+  std::atomic<int> addedCount {0};
+  std::atomic<int> changedCount {0};
+  std::atomic<int> removedCount {0};
+  std::atomic<uint16_t> addedPort {0};
+  std::atomic<bool> goodbyeReceived {false};
+
+  FunctionConnectionGuardList guards;
+
+  guards += mdns->hostAdded.connect([&, mdns](const MulticastDns::Host &host) {
+    if (addedCount.fetch_add(1) == 0) {
+      addedPort = host.port;
+      // Trigger a goodbye on the mDNS instance's own thread (Main here).
+      // stopService() default sends the goodbye packet; the querier will
+      // pick it up on the next poll iteration, delivering hostChanged
+      // with port == 0.
+      mdns->stopService(true);
+    }
+  });
+
+  guards += mdns->hostChanged.connect([&](const MulticastDns::Host &host) {
+    ++changedCount;
+    if (host.port == 0) {
+      goodbyeReceived = true;
+      MainThread::exit();
+    }
+  });
+
+  guards += mdns->hostRemoved.connect([&](const MulticastDns::Host &host) {
+    // Not expected here: goodbye must surface as hostChanged(port=0).
+    // hostRemoved fires only on expireTimeout elapsed or stopQuerier().
+    ++removedCount;
+    lsWarning() << "unexpected hostRemoved:" << host.name << host.port;
+  });
+
+  EXPECT_MSG(mdns->startService(hostName, "test", servicePort), "startService failed");
+  EXPECT_MSG(mdns->startQuerier(MulticastDns::Multicast, 60, 60), "startQuerier failed (port 5353 taken by avahi/systemd-resolved?)");
+
+  int timeoutId = AbstractThread::current()->appendTimerTask(5000, []() {
+    lsError() << "mDNS goodbye test timeout";
+    MainThread::exit(1);
+  });
+
+  int ret = MainThread::exec();
+  AbstractThread::current()->removeTimer(timeoutId);
+
+  // Snapshot counters BEFORE cleanup: stopQuerier() fires hostRemoved for
+  // every remaining host (a separate contract path), which would otherwise
+  // make removedCount > 0 and mask the goodbye assertion.
+  const int finalAdded = addedCount.load();
+  const int finalChanged = changedCount.load();
+  const int finalRemoved = removedCount.load();
+  const uint16_t finalAddedPort = addedPort.load();
+  const bool finalGoodbye = goodbyeReceived.load();
+
+  guards.clear();  // detach callbacks before stopQuerier fires hostRemoved
+
+  if (mdns->querierRunning()) mdns->stopQuerier();
+  if (mdns->serviceRunning()) mdns->stopService(false);
+
+  EXPECT_MSG(ret == 0, "exec() returned " + std::to_string(ret) + " (timeout or error)");
+  EXPECT_MSG(finalAdded >= 1, "hostAdded count = " + std::to_string(finalAdded));
+  EXPECT_MSG(finalAddedPort == servicePort, "hostAdded port = " + std::to_string(finalAddedPort) + " (expected " + std::to_string(servicePort) + ")");
+  EXPECT_MSG(finalGoodbye, "goodbye (hostChanged with port 0) not received");
+  EXPECT_MSG(finalChanged >= 1, "hostChanged count = " + std::to_string(finalChanged));
+  EXPECT_MSG(finalRemoved == 0, "hostRemoved fired during goodbye — host must stay in table until expire");
+}
+
 }  // namespace
 
 // ============================================================================
@@ -1891,6 +1998,10 @@ int main(int, char **) {
   // before Group F (exit_signal_spam), which leaves eventfd dirty.
   test_datasocket_disconnect_partial_receive();
 #endif
+
+  // --- MulticastDns goodbye -> hostChanged(port=0) --------------------
+  // Uses MainThread::exec(), must come before Group F (spam).
+  test_multicast_dns_goodbye_reports_host_changed_port_zero();
 
   // --- Group F: MainThread::exit(int) signal safety -------------------
   // Runs AFTER Group C so FileSystemWatcher's timers/inotify events are
