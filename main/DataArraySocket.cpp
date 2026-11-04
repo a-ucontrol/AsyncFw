@@ -5,7 +5,6 @@ This file is part of the AsyncFw project. Licensed under the MIT License.
 See {Link: LICENSE file https://mit-license.org} in the project root for full license information.
 */
 
-#include <algorithm>
 #include <deque>
 #include "core/DataArray.h"
 #include "core/TlsContext.h"
@@ -61,6 +60,8 @@ struct DataArraySocket::Private {
   int tid = -1;
   AsyncFw::AbstractThread::Waiter waiter;
 
+  std::atomic<AbstractSocket::State> state {AbstractSocket::State::Unconnected};
+
   void releaseBuffer(const DataArray *) const;
 };
 
@@ -98,6 +99,7 @@ void DataArraySocket::removeTimer() {
 
 void DataArraySocket::stateEvent() {
   trace() << static_cast<int>(state_);
+  private_.state.store(state_, std::memory_order_relaxed);
   if (state_ == State::Connected) {
     if (private_.flags & 0x04) {
       private_.flags &= ~0x04;
@@ -377,13 +379,7 @@ const std::string DataArraySocket::hostAddress() const { return private_.address
 
 uint16_t DataArraySocket::hostPort() const { return private_.port; }
 
-AbstractSocket::State DataArraySocket::state() const {
-  AbstractThread *_t = thread_;
-  if (!_t) return Destroy;
-  AbstractSocket::State _s;
-  if (!_t->invoke([this, &_s]() { _s = state_; }, true)) return state_;
-  return _s;
-}
+AbstractSocket::State DataArraySocket::state() const { return private_.state.load(std::memory_order_relaxed); }
 
 bool DataArraySocket::connectToHost() {
   checkCurrentThread();
