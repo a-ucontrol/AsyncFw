@@ -77,6 +77,15 @@ bool wait_for(F pred, int ms = 2000) {
   return pred();
 }
 
+std::string intVecToString(const std::vector<int> &v) {
+  std::string s;
+  for (size_t i = 0; i < v.size(); ++i) {
+    if (i) s += ',';
+    s += std::to_string(v[i]);
+  }
+  return s;
+}
+
 // Copy/move tracker — used to prove that multicast emit does not move-steal
 // from the first subscriber (see comment in core/invocable.hpp).
 struct Tracker {
@@ -1150,6 +1159,195 @@ void test_guard_and_connector_concurrent_destroy_asyncfw() {
   EXPECT(true);
 }
 
+// ---------------------------------------------------------------------------
+// Group A''. Invocation order
+// ---------------------------------------------------------------------------
+//
+// operator() builds the dispatch list `_il` under list->mutex by iterating
+// `list` (std::vector that connect() push_backs into, and erase() keeps
+// ordered on disconnect). It then walks `_il` front-to-back. This pins:
+//
+//   Direct / Sync: invoked inline in _il order → connect() order, always.
+//   Queued (same target thread): invokeTask() is FIFO, target-side
+//     process_tasks() drains FIFO → connect() order preserved.
+//   Auto (same thread): degrades to Direct → connect() order.
+//   Mixed Direct + Queued: order is preserved *within* each kind; the
+//     interleaving between kinds is NOT deterministic (Queued hops threads).
+//   Disconnect + reconnect: reconnect lands at the tail (push_back), the
+//     order of the remaining subscribers is unchanged (vector erase).
+//
+// What we do NOT test: order between two Direct subscribers when connect()
+// runs concurrently with emit() from another thread — that's a genuine race
+// in the caller, not in the framework.
+
+// Five Direct subscribers → emit → 0,1,2,3,4 in connect order.
+void test_connector_direct_invocation_order() {
+  FunctionConnector<int> fc;
+  std::vector<int> order;
+  for (int i = 0; i < 5; ++i) {
+    fc.connect<Conn::Direct>([&, i](int) { order.push_back(i); });
+  }
+  fc(0);
+  EXPECT_MSG(order == std::vector<int>({0, 1, 2, 3, 4}), "order = [" + intVecToString(order) + "] (expected [0,1,2,3,4])");
+}
+
+// Disconnect a middle subscriber → remaining order preserved.
+// Reconnect it → lands at the tail, not back in the middle.
+// Disconnect the head → remaining order preserved.
+void test_connector_direct_order_after_disconnect_reconnect() {
+  FunctionConnector<int> fc;
+  std::vector<int> order;
+
+  FunctionConnectionGuard gA = fc.connect<Conn::Direct>([&](int) { order.push_back(0); });
+  FunctionConnectionGuard gB = fc.connect<Conn::Direct>([&](int) { order.push_back(1); });
+  FunctionConnectionGuard gC = fc.connect<Conn::Direct>([&](int) { order.push_back(2); });
+  FunctionConnectionGuard gD = fc.connect<Conn::Direct>([&](int) { order.push_back(3); });
+  FunctionConnectionGuard gE = fc.connect<Conn::Direct>([&](int) { order.push_back(4); });
+
+  fc(0);
+  EXPECT_MSG(order == std::vector<int>({0, 1, 2, 3, 4}), "initial: [" + intVecToString(order) + "]");
+
+  order.clear();
+  gB = {};
+  fc(0);
+  EXPECT_MSG(order == std::vector<int>({0, 2, 3, 4}), "after disconnect(B): [" + intVecToString(order) + "] (expected [0,2,3,4])");
+
+  order.clear();
+  gB = fc.connect<Conn::Direct>([&](int) { order.push_back(1); });
+  fc(0);
+  EXPECT_MSG(order == std::vector<int>({0, 2, 3, 4, 1}), "reconnect(B) at tail: [" + intVecToString(order) + "] (expected [0,2,3,4,1])");
+
+  order.clear();
+  gA = {};
+  fc(0);
+  EXPECT_MSG(order == std::vector<int>({2, 3, 4, 1}), "after disconnect(A): [" + intVecToString(order) + "] (expected [2,3,4,1])");
+
+  (void)gC;
+  (void)gD;
+  (void)gE;
+}
+
+// Auto policy on the emit thread → Direct path → connect order.
+void test_connector_auto_same_thread_order() {
+  FunctionConnector<int> fc;
+  std::vector<int> order;
+  for (int i = 0; i < 5; ++i) {
+    fc.connect([&, i](int) { order.push_back(i); });
+  }
+  fc(0);
+  EXPECT_MSG(order == std::vector<int>({0, 1, 2, 3, 4}), "auto same-thread order: [" + intVecToString(order) + "]");
+}
+
+// Queued to a single target thread: connect order preserved, including
+// across two back-to-back emits (each invokeTask() is FIFO).
+void test_connector_queued_invocation_order() {
+  Thread target("order-queued");
+  target.start();
+
+  FunctionConnector<int> fc;
+  std::mutex m;
+  std::vector<int> order;
+  std::atomic<int> hits {0};
+
+  target.invoke([&]() {
+    for (int i = 0; i < 5; ++i) {
+      fc.connect<Conn::Queued>([&, i](int) {
+        std::lock_guard<std::mutex> l(m);
+        order.push_back(i);
+        hits.fetch_add(1);
+      });
+    }
+  }, true);
+
+  fc(0);
+  fc(0);
+
+  EXPECT(wait_for([&] { return hits.load() == 10; }));
+  target.invoke([]() {}, true);  // barrier: no in-flight slots
+
+  std::lock_guard<std::mutex> l(m);
+  EXPECT_MSG(order == std::vector<int>({0, 1, 2, 3, 4, 0, 1, 2, 3, 4}), "queued order, two emits: [" + intVecToString(order) +
+                                                                            "] "
+                                                                            "(expected [0,1,2,3,4,0,1,2,3,4])");
+}
+
+// Sync to a target thread: invoke(..., true) blocks the emitter per slot,
+// so the next slot in _il cannot start before the previous one returns.
+void test_connector_sync_invocation_order() {
+  Thread target("order-sync");
+  target.start();
+
+  FunctionConnector<int> fc;
+  std::mutex m;
+  std::vector<int> order;
+
+  target.invoke([&]() {
+    for (int i = 0; i < 5; ++i) {
+      fc.connect<Conn::Sync>([&, i](int) {
+        std::lock_guard<std::mutex> l(m);
+        order.push_back(i);
+      });
+    }
+  }, true);
+
+  fc(0);  // blocks until all 5 slots completed
+
+  std::lock_guard<std::mutex> l(m);
+  EXPECT_MSG(order == std::vector<int>({0, 1, 2, 3, 4}), "sync order: [" + intVecToString(order) + "]");
+}
+
+// Mixed Direct + Queued: order preserved within each kind; cross-kind
+// interleaving is not deterministic (Queued hops to `target`). We assert
+// only the intra-kind order plus completion of all Queued slots.
+void test_connector_mixed_direct_queued_order() {
+  Thread target("order-mixed");
+  target.start();
+
+  FunctionConnector<int> fc;
+  std::mutex m;
+  std::vector<int> directOrder;
+  std::vector<int> queuedOrder;
+  std::atomic<int> queuedHits {0};
+
+  // Slots 0, 2, 4 are Direct; slots 1, 3 are Queued. Connect order:
+  // 0(D), 1(Q), 2(D), 3(Q), 4(D).
+  fc.connect<Conn::Direct>([&](int) {
+    std::lock_guard<std::mutex> l(m);
+    directOrder.push_back(0);
+  });
+  target.invoke([&]() {
+    fc.connect<Conn::Queued>([&](int) {
+      std::lock_guard<std::mutex> l(m);
+      queuedOrder.push_back(1);
+      queuedHits.fetch_add(1);
+    });
+  }, true);
+  fc.connect<Conn::Direct>([&](int) {
+    std::lock_guard<std::mutex> l(m);
+    directOrder.push_back(2);
+  });
+  target.invoke([&]() {
+    fc.connect<Conn::Queued>([&](int) {
+      std::lock_guard<std::mutex> l(m);
+      queuedOrder.push_back(3);
+      queuedHits.fetch_add(1);
+    });
+  }, true);
+  fc.connect<Conn::Direct>([&](int) {
+    std::lock_guard<std::mutex> l(m);
+    directOrder.push_back(4);
+  });
+
+  fc(0);
+
+  EXPECT(wait_for([&] { return queuedHits.load() == 2; }));
+  target.invoke([]() {}, true);
+
+  std::lock_guard<std::mutex> l(m);
+  EXPECT_MSG(directOrder == std::vector<int>({0, 2, 4}), "direct order: [" + intVecToString(directOrder) + "] (expected [0,2,4])");
+  EXPECT_MSG(queuedOrder == std::vector<int>({1, 3}), "queued order: [" + intVecToString(queuedOrder) + "] (expected [1,3])");
+}
+
 // ============================================================================
 // Group B. AbstractThread
 // ============================================================================
@@ -1987,9 +2185,17 @@ int main(int, char **) {
   test_guard_destroy_during_concurrent_emit();
   test_guard_and_connector_concurrent_destroy_asyncfw();
 
+  // --- Group A: Invocation order ------------------------------------
+  test_connector_direct_invocation_order();
+  test_connector_direct_order_after_disconnect_reconnect();
+  test_connector_auto_same_thread_order();
+  test_connector_queued_invocation_order();
+  test_connector_sync_invocation_order();
+  test_connector_mixed_direct_queued_order();
+
   // --- Group B: AbstractThread ----------------------------------------
   test_thread_waits_for_running_task();
-  // --- Group B': AbstractThread timer & destructor edge cases ---------
+  // --- Group B: AbstractThread timer & destructor edge cases ---------
   test_timer_remove_from_own_task();
   test_timer_remove_after_finished();
   test_timer_remove_while_foreign_fire();
@@ -2002,7 +2208,7 @@ int main(int, char **) {
   test_mainthread_reexec();
 
 #ifndef _WIN32
-  // --- Group D': fd_ window and stale cqe -----------------------------
+  // --- Group D: fd_ window and stale cqe -----------------------------
   test_connect_fd_synchronous();
   test_two_sockets_fd_sorting();
 
@@ -2036,8 +2242,8 @@ int main(int, char **) {
   }
 
   int total = g_total.load();
-  if (total != 220) {
-    lsError() << "core: " << total << '/' << 220;
+  if (total != 232) {
+    lsError() << "core: " << total << '/' << 232;
     return -1;
   }
   lsNotice() << "core: " << total << " checks passed";
