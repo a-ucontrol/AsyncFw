@@ -11,7 +11,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include "LogStream.h"
 #include "console_msg.hpp"
 
-#define LOG_DATA_ARAY_SIZE_LIMIT 4096
+#define LOG_DATA_ARRAY_SIZE_LIMIT 4096
 
 using namespace AsyncFw;
 DataArray DataArray::compress(const DataArrayView &v) {
@@ -420,7 +420,7 @@ LogStream &operator<<(LogStream &log, const DataArrayView &v) {
     log << "[]";
     return log;
   }
-  if (v.size() > LOG_DATA_ARAY_SIZE_LIMIT) {
+  if (v.size() > LOG_DATA_ARRAY_SIZE_LIMIT) {
     log << "[Large data, size: " + std::to_string(v.size()) + "]";
     return log;
   }
