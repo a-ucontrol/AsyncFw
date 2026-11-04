@@ -13,7 +13,7 @@ var classAsyncFw_1_1DataArraySocket =
     [ "hostAddress", "classAsyncFw_1_1DataArraySocket.html#a464539f5d9b05703b35c9b817659a42f", null ],
     [ "hostPort", "classAsyncFw_1_1DataArraySocket.html#ac6538838fecb36204afd45f47b53a657", null ],
     [ "sendKeepAlive", "classAsyncFw_1_1DataArraySocket.html#a60d24e73561b9ffc720deefca7a6f720", null ],
-    [ "state", "classAsyncFw_1_1DataArraySocket.html#ae20bbfbd7138f5a6e0003ed6b117a7f7", null ],
+    [ "state", "classAsyncFw_1_1DataArraySocket.html#aa12b81fc27cbfa26b35ee7dedbabdbd0", null ],
     [ "connect", "classAsyncFw_1_1DataArraySocket.html#aed242e797aea527f8b86c4bc866ab454", null ],
     [ "disconnect", "classAsyncFw_1_1DataArraySocket.html#a9942cbf100e7898ba95c8fb92e059ae8", null ],
     [ "releaseBuffer", "classAsyncFw_1_1DataArraySocket.html#af6faaf80328db0a1644cd6b89ffae7eb", null ],
