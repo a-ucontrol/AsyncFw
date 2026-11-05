@@ -48,15 +48,15 @@ public:
   /** @brief Returns the maximum number of concurrent sockets allowed in this client instance. @return Socket limit capacity. */
   std::size_t socketLimit() { return maxSockets; }
   /** @brief Sets the default timeout interval for establishing connections. @param timeout Timeout interval in milliseconds. */
-  void setConnectTimeout(int timeout) { waitForConnectTimeout_ = timeout; }
+  void setConnectTimeout(int timeout) { waitForConnectTimeout = timeout; }
   /** @brief Sets the interval delay before attempting to reconnect a disconnected socket. @param timeout Reconnection delay in milliseconds. */
-  void setReconnectTimeout(int timeout) { reconnectTimeout_ = timeout; }
+  void setReconnectTimeout(int timeout) { reconnectTimeout = timeout; }
 
   /** @brief Signal / Connector triggered when any managed socket changes its connection status. */
   FunctionConnector<const DataArraySocket *>::Policy<AbstractFunctionConnector::DirectOnly>::Protected<DataArrayTcpClient> connectionStateChanged;
 
 private:
-  int waitForConnectTimeout_ = 10000;
-  int reconnectTimeout_ = 10000;
+  int waitForConnectTimeout = 10000;
+  int reconnectTimeout = 10000;
 };
 }  // namespace AsyncFw

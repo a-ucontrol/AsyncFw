@@ -8,6 +8,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include <algorithm>
 #include "core/LogStream.h"
 #include "DataArraySocket.h"
+#include "Timer.h"
 
 #include "DataArrayTcpClient.h"
 
@@ -65,7 +66,29 @@ void DataArrayTcpClient::connectToHost(const DataArraySocket *socket, int timeou
     return;
   }
   if (std::find(disabledEncryptionHosts_.begin(), disabledEncryptionHosts_.end(), socket->hostAddress()) != disabledEncryptionHosts_.end()) const_cast<DataArraySocket *>(socket)->setContext(TlsContext());
-  clientThread->invoke([&socket, &timeout]() { const_cast<DataArraySocket *>(socket)->connectToHost(timeout); }, true);
+  if (timeout > 0) {
+    // blocking call
+    AbstractThread *thread = Thread::current();
+    Thread::Waiter waiter;
+    Timer timer;
+    FunctionConnectionGuardList gl;
+    gl += timer.timeout.connect([clientThread, socket]() { clientThread->invoke([socket]() { const_cast<DataArraySocket *>(socket)->disconnect(); }); });
+    gl += socket->stateChanged.connect([&waiter, &gl, thread](AbstractSocket::State state) {
+      gl.clear();
+      thread->invoke([&waiter]() { waiter.complete(); });
+    });
+    clientThread->invoke([socket]() {
+      const_cast<DataArraySocket *>(socket)->setConnectTimeout(0);
+      const_cast<DataArraySocket *>(socket)->setWaitForEncryptionTimeout(0);
+      const_cast<DataArraySocket *>(socket)->connectToHost();
+    });
+    timer.start(timeout);
+    waiter.wait();
+    clientThread->invoke([this, socket]() {
+      const_cast<DataArraySocket *>(socket)->setConnectTimeout(waitForConnectTimeout);
+      const_cast<DataArraySocket *>(socket)->setWaitForEncryptionTimeout(waitForEncryptionTimeout);
+    });
+  } else clientThread->invoke([socket]() { const_cast<DataArraySocket *>(socket)->connectToHost(); });
   lsTrace();
 }
 
@@ -83,8 +106,8 @@ DataArrayTcpClient::Thread::~Thread() { lsTrace(); }
 
 DataArraySocket *DataArrayTcpClient::Thread::createSocket() {
   DataArraySocket *tcpSocket = new DataArraySocket();
-  tcpSocket->setConnectTimeout(client()->waitForConnectTimeout_);
-  tcpSocket->setReconnectTimeout(client()->reconnectTimeout_);
+  tcpSocket->setConnectTimeout(client()->waitForConnectTimeout);
+  tcpSocket->setReconnectTimeout(client()->reconnectTimeout);
   tcpSocket->setContext(client()->tlsContext);
   initSocket(const_cast<DataArraySocket *>(tcpSocket));
   tcpSocket->stateChanged.connect([this, tcpSocket](AbstractSocket::State state) {

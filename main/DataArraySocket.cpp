@@ -58,7 +58,6 @@ struct DataArraySocket::Private {
   mutable std::vector<DataArray *> receiveList;
   std::deque<DataArray> transmitList;
   int tid = -1;
-  AsyncFw::AbstractThread::Waiter waiter;
 
   std::atomic<AbstractSocket::State> state {AbstractSocket::State::Unconnected};
 
@@ -106,15 +105,9 @@ void DataArraySocket::stateEvent() {
       if (private_.sslConnection) {
         startTimer(private_.waitForEncryptionTimeout);
         lsDebug() << "client wait for encrypted" << private_.waitForEncryptionTimeout;
-        return;
       }
     }
-    return;
-  }
-
-  if (private_.waiter.waiting()) private_.waiter.complete();
-
-  if (state_ == AbstractSocket::State::Active) {
+  } else if (state_ == AbstractSocket::State::Active) {
     if (private_.sslConnection) private_.sslConnection = 4;
     private_.flags &= ~0x08;
     if (private_.readTimeout > 0) startTimer(private_.readTimeout);
@@ -134,7 +127,6 @@ void DataArraySocket::stateEvent() {
   } else if (state_ == AbstractSocket::State::Connecting) {
     if (!private_.receiveList.empty()) lsWarning("receive buffer not empty during connect");
   }
-
   stateChanged(state_);
 }
 
@@ -164,8 +156,6 @@ void DataArraySocket::timerEvent() {
       e = "Unknown timeout";
       lsError("unknown timeout (" + peerString() + ')');
     }
-
-    if (private_.waiter.waiting()) private_.waiter.complete();
 
     private_.flags |= 0x01;
     disconnect();
@@ -401,31 +391,6 @@ bool DataArraySocket::connectToHost() {
 
   if (!contextEmpty()) private_.sslConnection = 3;
   return AbstractTlsSocket::connect(private_.address, private_.port);
-}
-
-void DataArraySocket::connectToHost(int timeout) {
-  if (private_.waiter.waiting()) {
-    lsError() << "connect in process";
-    return;
-  }
-  if (timeout <= 0) {
-    connectToHost();
-    return;
-  }
-  bool ok;
-  thread_->invoke([this, timeout, &ok]() {
-    private_.flags |= 0x04;
-    startTimer(timeout);
-    ok = connectToHost();
-  }, true);
-  if (!ok) {
-    removeTimer();
-    private_.flags &= ~0x04;
-    setErrorString("Connect start failed (" + peerString() + ')');
-    return;
-  }
-  private_.waiter.wait();
-  lsTrace();
 }
 
 bool DataArraySocket::connect(const std::string &address, uint16_t port) {

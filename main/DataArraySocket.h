@@ -72,7 +72,6 @@ protected:
 
 private:
   bool connectToHost();
-  void connectToHost(int);
   void sendKeepAlive(bool);
   void writeSocket();
   void startTimer(int);
