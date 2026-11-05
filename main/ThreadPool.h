@@ -25,6 +25,8 @@ public:
   public:
     /** @brief Gracefully destroys the thread, ensuring all tasks are flushed. */
     virtual void destroy();
+    // Надо сделать докстринг
+    void removeFromPool();
 
   protected:
     /** @brief Constructs a pool-managed thread. */
