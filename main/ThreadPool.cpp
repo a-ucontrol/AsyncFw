@@ -132,7 +132,7 @@ ThreadPool::Thread *ThreadPool::createThread(const std::string &name, Invocable<
   Thread *thread;
   {  //lock scope
     AbstractThread::LockGuard lock(mutex);
-    thread = new Thread((!name.empty()) ? name : this->name() + " thread", this);
+    thread = new Thread(name, this);
   }
   if (f) {
     (*f)(thread);

@@ -108,11 +108,24 @@ public:
   ThreadPool(int workThreads = ThreadPool_DEFAULT_WORK_THREADS) : ThreadPool("ThreadPool", workThreads) {}
   ~ThreadPool();
 
-  /** @brief Spawns a new managed worker thread.
-  @details The thread is started synchronously, started() may fire before or after this call returns, so a started.connect() registered after the call can miss the signal. Use function to wire connections deterministically - it runs on the caller's thread after construction and before start(), takes ownership and deletes the object after invocation.
-  @param name Optional thread name, empty uses "<pool name> thread". @param function  Optional one-shot initializer receiving the new Thread* before start(). @return Pointer to the newly created Thread. */
-  Thread *createThread(const std::string &name = {}, Invocable<void(Thread *)>::Abstract *fun = nullptr);
-
+  /** @brief Spawns a new named worker thread, optionally running an initializer on the caller's thread before start().
+  @details Function f is invoked synchronously on the caller's thread after construction and before start() - the only way to wire started/finished/destroying deterministically (a started.connect() registered after this returns may miss the signal). The framework owns and deletes the wrapper after invocation.
+  @param name Thread name. @param f Callable with signature void(Thread *). @return Newly created Thread.
+  @note start() runs synchronously, the thread may already be running and may have emitted started() on return. */
+  template <typename T, typename = std::enable_if_t<!std::is_convertible_v<T, Invocable<void(Thread *)>::Abstract *>>>
+  Thread *createThread(const std::string &name, T f) {
+    return createThread(name, new Invocable<void(Thread *)>::Function(std::forward<T>(f)));
+  }
+  /** @brief Spawns a new worker thread with a empty name, running an initializer on the caller's thread before start().
+  @see createThread(const std::string &name, T f) */
+  template <typename T, typename = std::enable_if_t<!std::is_convertible_v<T, std::string>>>
+  Thread *createThread(T f) {
+    return createThread("", new Invocable<void(Thread *)>::Function(std::forward<T>(f)));
+  }
+  /** @brief Spawns a new named worker thread with no pre-start initializer.
+  @details Same lifecycle as the templated overload.
+  @param name Thread name. @return Newly created Thread. */
+  Thread *createThread(const std::string &name = {}) { return createThread(name, nullptr); }
   /** @brief Selects and returns the least loaded thread from the pool for task distribution.
   @details "Load" is task-queue depth (workLoad()), not CPU usage. If the pool is under max workers size and some worker has an empty queue, it is returned directly - already running, started() long since emitted. Otherwise a new worker is created via createThread(), with its started() timing (started() may fire before or after this returns) and no fun hook for deterministic pre-start wiring.
   @note Thread-safe, blocks on pool-owner synchronization, and on new-worker startup.
@@ -123,6 +136,7 @@ public:
   virtual void quit() override;
 
 private:
+  Thread *createThread(const std::string &, Invocable<void(Thread *)>::Abstract *fun);
   static Instance<ThreadPool> instance_;
   std::vector<AbstractThreadPool::Thread *> workThreads_;
   int workThreadsSize_;

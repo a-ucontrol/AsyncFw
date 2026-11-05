@@ -22,7 +22,7 @@ int main(int, char **) {
   AsyncFw::Instance<AsyncFw::ThreadPool>::create("CacheExamplePool");
   AsyncFw::Cache<Config> configCache(50);
   AsyncFw::Timer timer;
-  AsyncFw::ThreadPool::instance()->createThread("CacheExampleThread", new AsyncFw::Invocable<void(AsyncFw::ThreadPool::Thread *)>::Function([&configCache, &timer](AsyncFw::Thread *thread) {
+  AsyncFw::ThreadPool::instance()->createThread("CacheExampleThread", [&configCache, &timer](AsyncFw::Thread *thread) {
     thread->started.connect([&configCache, &timer]() {
       configCache.update.connect([&configCache]() {
         lsNotice() << "update in:" << AsyncFw::Thread::current()->name();
@@ -35,7 +35,7 @@ int main(int, char **) {
       });
       timer.start(10);
     });
-  }));
+  });
 
   configCache.update.connect([&configCache]() { lsDebug() << "log only" << AsyncFw::Thread::current()->name(); });
 
