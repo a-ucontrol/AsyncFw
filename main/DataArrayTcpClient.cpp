@@ -74,6 +74,7 @@ void DataArrayTcpClient::connectToHost(const DataArraySocket *socket, int timeou
     FunctionConnectionGuardList gl;
     gl += timer.timeout.connect([clientThread, socket]() { clientThread->invoke([socket]() { const_cast<DataArraySocket *>(socket)->disconnect(); }); });
     gl += socket->stateChanged.connect([&waiter, &gl, thread](AbstractSocket::State state) {
+      if (state != AbstractSocket::State::Active && state != AbstractSocket::State::Unconnected) return;
       gl.clear();
       thread->invoke([&waiter]() { waiter.complete(); });
     });
