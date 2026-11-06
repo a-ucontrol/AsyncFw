@@ -68,15 +68,18 @@ AbstractThreadPool::~AbstractThreadPool() {
 }
 
 void AbstractThreadPool::quit() {
-  Thread *t;
-  for (;;) {
-    {  //lock scope
-      std::lock_guard<std::mutex> lock(mutex);
-      if (threads_.empty()) break;
-      t = threads_.back();
+  auto _f = [this]() {
+    Thread *t;
+    for (;;) {
+      {  //lock scope
+        std::lock_guard<std::mutex> lock(mutex);
+        if (threads_.empty()) break;
+        t = threads_.back();
+      }
+      t->destroy();
     }
-    t->destroy();
-  }
+  };
+  if (!thread_->invoke(_f, true)) _f();
   lsTrace();
 }
 
@@ -104,7 +107,7 @@ AbstractThreadPool::Thread::Thread(const std::string &name, AbstractThreadPool *
 
 void AbstractThreadPool::Thread::destroy() {
   lsTrace() << '(' + name() + ')';
-  { //lock scope
+  {  //lock scope
     AbstractThread::LockGuard lock(pool->mutex);
     pool->removeThread(this);
   }
