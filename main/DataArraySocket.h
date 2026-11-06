@@ -23,7 +23,7 @@ class DataArraySocket : public AbstractTlsSocket {
 
 public:
   /** @brief Asynchronously transmits a data array through the socket. @param da Reference to the DataArray being sent. @param id The packet identifier. @param wait If true and called from outside the socket thread, blocks the thread until completion. @return True if the data was successfully queued for transmission. */
-  bool transmit(const DataArray &, uint32_t, bool = false) const;
+  bool transmit(const DataArray &, uint32_t) const;
   /** @brief Sets the timeout interval for connection establishment. @param timeout Timeout interval in milliseconds. */
   void setConnectTimeout(int timeout);
   /** @brief Sets the timeout interval for automatic reconnection upon disconnection. @param timeout Timeout interval in milliseconds. */

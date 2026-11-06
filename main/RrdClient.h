@@ -33,7 +33,7 @@ public:
   void disconnectFromHost();
   /** @brief Transmits a raw data frame or a custom query command to the remote server. @param data The DataArray payload containing the request or command. @param id Network packet transaction identifier. @param wait If true, blocks the calling thread until the data is successfully queued or sent. @return 0 or a positive tracking code on success, or a negative error status on failure.
   @note The packetId (pi) corresponds to the target Rrd database index and must not exceed 0x0F.*/
-  bool transmit(const DataArray &, uint32_t, bool = false);
+  bool transmit(const DataArray &, uint32_t);
   /** @brief Sets up TLS security context and credentials for private communications. @param context TLS certificates, keys, and security parameters. */
   void setTlsContext(const TlsContext &);
 

@@ -35,10 +35,10 @@ DataArrayAbstractTcp::Thread *DataArrayAbstractTcp::findMinimalSocketsThread() {
   return static_cast<Thread *>(t);
 }
 
-int DataArrayAbstractTcp::transmit(const DataArraySocket *socket, const DataArray &ba, uint32_t pi, bool wait) {
+int DataArrayAbstractTcp::transmit(const DataArraySocket *socket, const DataArray &ba, uint32_t pi, bool wait) { //!!! WIP: need implementation wait
   if (socket->state_ != AbstractSocket::State::Active) return ErrorTransmitNotActive;
   if (!socket->thread()) return ErrorTransmitInvoke;
-  bool b = const_cast<DataArraySocket *>(socket)->transmit(ba, pi, wait);
+  bool b = const_cast<DataArraySocket *>(socket)->transmit(ba, pi);
   return (b) ? 0 : ErrorTransmit;
 }
 

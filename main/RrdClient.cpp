@@ -62,7 +62,7 @@ void RrdClient::disconnectFromHost() {
   tcpSocket->thread()->invoke([this]() { tcpSocket->disconnect(); });
 }
 
-bool RrdClient::transmit(const DataArray &da, uint32_t pi, bool wait) { return tcpSocket->transmit(da, pi, wait); }
+bool RrdClient::transmit(const DataArray &da, uint32_t pi) { return tcpSocket->transmit(da, pi); }
 
 void RrdClient::setTlsContext(const TlsContext &context) { tcpSocket->setContext(context); }
 

@@ -1812,7 +1812,7 @@ void test_datasocket_disconnect_partial_receive() {
   EXPECT_MSG(!gotCompleteFrame.load(), "partial_receive: complete frame delivered — scenario void");
 
   listener.close();
-  client.destroySocket(socket);
+  client.quit();
 }
 #endif  // !_WIN32
 

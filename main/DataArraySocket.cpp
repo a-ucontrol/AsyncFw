@@ -273,13 +273,9 @@ void DataArraySocket::writeSocket() {
   }
 }
 
-bool DataArraySocket::transmit(const DataArray &ba, uint32_t pi, bool wait) const {
+bool DataArraySocket::transmit(const DataArray &ba, uint32_t pi) const {
   if (!thread()) {
     lsError("thread is nullptr") << static_cast<int>(state_);
-    return false;
-  }
-  if (std::this_thread::get_id() == thread()->id() && wait) {
-    lsError("tried transmit with wait from socket thread");
     return false;
   }
   if (state_ != AbstractSocket::State::Active) {
@@ -293,7 +289,7 @@ bool DataArraySocket::transmit(const DataArray &ba, uint32_t pi, bool wait) cons
     return false;
   }
   bool _r = false;
-  thread_->invoke([this, &_r, &ba, pi, wait]() {
+  thread_->invoke([this, &_r, &ba, pi]() {
     int buffers = private_.transmitList.size();
     if (buffers >= private_.maxWriteBuffers) {
       setErrorString("Many transmit buffers (" + peerString() + ')');
@@ -316,9 +312,7 @@ bool DataArraySocket::transmit(const DataArray &ba, uint32_t pi, bool wait) cons
     DataArray _da(((uint8_t *)&_v), ((uint8_t *)&_v) + 8);
     _da += ba;
     private_.transmitList.push_back(_da);
-    if (buffers == 0) thread_->invoke([this]() { const_cast<DataArraySocket *>(this)->writeSocket(); }, wait);
-    else if (wait) thread_->invoke([]() {}, true);
-
+    if (buffers == 0) thread_->invoke([this]() { const_cast<DataArraySocket *>(this)->writeSocket(); });
     _r = true;
   }, true);
   return _r;
