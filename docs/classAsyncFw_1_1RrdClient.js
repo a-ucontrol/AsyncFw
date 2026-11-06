@@ -5,6 +5,6 @@ var classAsyncFw_1_1RrdClient =
     [ "connectToHost", "classAsyncFw_1_1RrdClient.html#ab598862c2fcddef6f476db9d1ed9faf6", null ],
     [ "connectToHost", "classAsyncFw_1_1RrdClient.html#ad8724d7772f037925d9694c1afc20d8e", null ],
     [ "disconnectFromHost", "classAsyncFw_1_1RrdClient.html#a7437419c70ea6d55a6a701211b4582a2", null ],
-    [ "transmit", "classAsyncFw_1_1RrdClient.html#a4d6d253c85c993ed6906efe3ced940a7", null ],
+    [ "transmit", "classAsyncFw_1_1RrdClient.html#a69b362a29566f4721984cf1178decb30", null ],
     [ "setTlsContext", "classAsyncFw_1_1RrdClient.html#af2fd0de2fbfbca76e20f85d2d572f83b", null ]
 ];

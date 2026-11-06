@@ -119,8 +119,8 @@ void&#160;</td><td class="memItemRight"><b>connectToHost</b> ()</td></tr>
 <tr class="memitem:a7437419c70ea6d55a6a701211b4582a2" id="r_a7437419c70ea6d55a6a701211b4582a2"><td class="memItemLeft"><a id="a7437419c70ea6d55a6a701211b4582a2" name="a7437419c70ea6d55a6a701211b4582a2"></a>
 void&#160;</td><td class="memItemRight"><b>disconnectFromHost</b> ()</td></tr>
 <tr class="memdesc:a7437419c70ea6d55a6a701211b4582a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Explicitly disconnects the underlying client socket from the remote <a class="el" href="classAsyncFw_1_1RrdServer.html" title="A specialized network server component that exposes Round-Robin Databases (Rrd) via TCP.">RrdServer</a>. <br /></td></tr>
-<tr class="memitem:a4d6d253c85c993ed6906efe3ced940a7" id="r_a4d6d253c85c993ed6906efe3ced940a7"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a4d6d253c85c993ed6906efe3ced940a7">transmit</a> (const <a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> &amp;, uint32_t, bool=false)</td></tr>
-<tr class="memdesc:a4d6d253c85c993ed6906efe3ced940a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transmits a raw data frame or a custom query command to the remote server.  <br /></td></tr>
+<tr class="memitem:a69b362a29566f4721984cf1178decb30" id="r_a69b362a29566f4721984cf1178decb30"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a69b362a29566f4721984cf1178decb30">transmit</a> (const <a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> &amp;, uint32_t)</td></tr>
+<tr class="memdesc:a69b362a29566f4721984cf1178decb30"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transmits a raw data frame or a custom query command to the remote server.  <br /></td></tr>
 <tr class="memitem:af2fd0de2fbfbca76e20f85d2d572f83b" id="r_af2fd0de2fbfbca76e20f85d2d572f83b"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#af2fd0de2fbfbca76e20f85d2d572f83b">setTlsContext</a> (const <a class="el" href="classAsyncFw_1_1TlsContext.html">TlsContext</a> &amp;)</td></tr>
 <tr class="memdesc:af2fd0de2fbfbca76e20f85d2d572f83b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets up TLS security context and credentials for private communications.  <br /></td></tr>
 </table>
@@ -199,8 +199,8 @@ void&#160;</td><td class="memItemRight"><b>disconnectFromHost</b> ()</td></tr>
 
 </div>
 </div>
-<a id="a4d6d253c85c993ed6906efe3ced940a7" name="a4d6d253c85c993ed6906efe3ced940a7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4d6d253c85c993ed6906efe3ced940a7">&#9670;&#160;</a></span>transmit()</h2>
+<a id="a69b362a29566f4721984cf1178decb30" name="a69b362a29566f4721984cf1178decb30"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a69b362a29566f4721984cf1178decb30">&#9670;&#160;</a></span>transmit()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -213,12 +213,7 @@ void&#160;</td><td class="memItemRight"><b>disconnectFromHost</b> ()</td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>pi</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>wait</em></span><span class="paramdefsep"> = </span><span class="paramdefval">false</span>&#160;)</td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>pi</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">

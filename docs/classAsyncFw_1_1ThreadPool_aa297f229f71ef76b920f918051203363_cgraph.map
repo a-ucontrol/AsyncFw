@@ -1,0 +1,6 @@
+<map id="AsyncFw::ThreadPool::createThread" name="AsyncFw::ThreadPool::createThread">
+<area shape="rect" id="Node000001" title="Spawns a new named worker thread, optionally running an initializer on the caller&#39;s thread before sta..." alt="" coords="5,29,156,72"/>
+<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="38,28,36,19,44,10,58,5,81,3,104,5,120,13,115,14,103,10,80,8,60,10,47,15,42,21,43,29"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractThreadPool.html#ac312e723c2e0fa3e4cc18e518853bdf2" title="Returns the identifier name of the thread pool." alt="" coords="204,29,403,72"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="156,48,191,50,186,51,156,53"/>
+</map>
