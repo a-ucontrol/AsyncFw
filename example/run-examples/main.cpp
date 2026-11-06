@@ -140,6 +140,10 @@ void run_examples(bool _socket) {
   logInfo() << "Start:" << app;
   process.start(app);
   process.wait();
+  app = TESTS_PATH "tests-main2";
+  logInfo() << "Start:" << app;
+  process.start(app);
+  process.wait();
 #endif
 
 
