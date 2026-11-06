@@ -22,13 +22,6 @@ class TlsContext;
 @details Serves as the foundation for both DataArrayTcpServer and DataArrayTcpClient. It manages internal worker threads, applies uniform memory/buffer constraints, handles packet routing, and controls encryption policy rules. */
 class DataArrayAbstractTcp : public AbstractThreadPool {
 public:
-  /** @enum Result @brief Defines error codes specific to asynchronous data transmission operations. */
-  enum Result {
-    ErrorTransmitInvoke = -100,    /**< Cross-thread invocation failure during data transmission. */
-    ErrorTransmitNotActive = -101, /**< Transmission aborted because the target socket is not actively connected. */
-    ErrorTransmit = -102           /**< Low-level or buffer-queue failure while sending data. */
-  };
-
   /** @brief Constructs a new DataArrayAbstractTcp instance. @param name Name identifier for the underlying thread pool. */
   DataArrayAbstractTcp(const std::string &);
   void init(int readTimeout = 30000, int waitKeepAliveAnswerTimeout = 0, int waitForEncryptionTimeout = 10000, int maxThreads = 4, int maxSockets = 8, int maxReadBuffers = 16, int maxReadSize = 16 * 1024 * 1024, int maxWriteBuffers = 16, int maxWriteSize = 16 * 1024 * 1024, int socketReadBufferSize = 1024 * 512) {
@@ -43,8 +36,8 @@ public:
     this->maxWriteSize = maxWriteSize;
     this->socketReadBufferSize = socketReadBufferSize;
   }
-  /** @brief Asynchronously transmits a DataArray packet through a given socket context. @param socket Pointer to the target DataArraySocket. @param data Reference to the DataArray containing payload data. @param id Packet identification tag. @param wait If true, forces caller thread blocking until the buffer queues up. @return 0 on success, or a negative value from the Result enum on failure. */
-  int transmit(const DataArraySocket *, const DataArray &, uint32_t, bool = false);
+  /** @brief Asynchronously transmits a DataArray packet through a given socket context. @param socket Pointer to the target DataArraySocket. @param data Reference to the DataArray containing payload data. @param id Packet identification tag. @return True on success. */
+  bool transmit(const DataArraySocket *, const DataArray &, uint32_t);
   /** @brief Signals a specific managed socket to disconnect from its remote peer. @param socket Pointer to the DataArraySocket instance to be disconnected. */
   void disconnectFromHost(const DataArraySocket *);
   /** @brief Gathers a list of all active managed sockets and counts them. @param list Optional destination vector to populate with socket pointers. @return The total count of active sockets running in the framework. */

@@ -104,7 +104,10 @@ AbstractThreadPool::Thread::Thread(const std::string &name, AbstractThreadPool *
 
 void AbstractThreadPool::Thread::destroy() {
   lsTrace() << '(' + name() + ')';
-  removeFromPool();
+  { //lock scope
+    AbstractThread::LockGuard lock(pool->mutex);
+    pool->removeThread(this);
+  }
   AbstractTask *_t = new Invocable<void()>::Function([p = this]() {
     p->stop();
     delete p;
@@ -114,11 +117,6 @@ void AbstractThreadPool::Thread::destroy() {
     (*_t)();
     delete _t;
   }
-}
-
-void AbstractThreadPool::Thread::removeFromPool() {
-  AbstractThread::LockGuard lock(pool->mutex);
-  pool->removeThread(this);
 }
 
 Instance<ThreadPool> ThreadPool::instance_;

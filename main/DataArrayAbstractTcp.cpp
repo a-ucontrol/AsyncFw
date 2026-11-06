@@ -35,12 +35,7 @@ DataArrayAbstractTcp::Thread *DataArrayAbstractTcp::findMinimalSocketsThread() {
   return static_cast<Thread *>(t);
 }
 
-int DataArrayAbstractTcp::transmit(const DataArraySocket *socket, const DataArray &ba, uint32_t pi, bool wait) { //!!! WIP: need implementation wait
-  if (socket->state_ != AbstractSocket::State::Active) return ErrorTransmitNotActive;
-  if (!socket->thread()) return ErrorTransmitInvoke;
-  bool b = const_cast<DataArraySocket *>(socket)->transmit(ba, pi);
-  return (b) ? 0 : ErrorTransmit;
-}
+bool DataArrayAbstractTcp::transmit(const DataArraySocket *socket, const DataArray &ba, uint32_t pi) { return const_cast<DataArraySocket *>(socket)->transmit(ba, pi); }
 
 void DataArrayAbstractTcp::disconnectFromHost(const DataArraySocket *socket) {
   socket->thread()->invoke([socket]() { const_cast<DataArraySocket *>(socket)->disconnect(); }, true);
@@ -98,10 +93,7 @@ void DataArrayAbstractTcp::Thread::destroySocket(DataArraySocket *socket) {
   socket->removeTimer();
   socket->removeFromThread();
   bool e = sockets_.empty();
-  if (e) {
-    removeFromPool();
-    OPENSSL_thread_stop();
-  }
+  if (e) OPENSSL_thread_stop();
   if (!pool->thread()->invoke([this, socket, e]() {
     socket->destroy();
     if (e) destroy();

@@ -120,22 +120,14 @@ $(function(){initNavTree('classAsyncFw_1_1DataArrayAbstractTcp.html','','classAs
 Classes</h2></td></tr>
 <tr class="memitem:Thread" id="r_Thread"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classAsyncFw_1_1DataArrayAbstractTcp_1_1Thread.html">Thread</a></td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 id="header-pub-types" class="groupheader"><a id="pub-types" name="pub-types"></a>
-Public Types</h2></td></tr>
-<tr class="memitem:a0a77d6d5e166af850a5dfb588ccbc8fb" id="r_a0a77d6d5e166af850a5dfb588ccbc8fb"><td class="memItemLeft">enum &#160;</td><td class="memItemRight"><a class="el" href="#a0a77d6d5e166af850a5dfb588ccbc8fb">Result</a> { <a class="el" href="#a0a77d6d5e166af850a5dfb588ccbc8fba38dabc9c658f0b2bebeecf100ada6b0d">ErrorTransmitInvoke</a> = -100
-, <a class="el" href="#a0a77d6d5e166af850a5dfb588ccbc8fbacdf8f0246690ec54521eb89db2e0676f">ErrorTransmitNotActive</a> = -101
-, <a class="el" href="#a0a77d6d5e166af850a5dfb588ccbc8fbab13d6924f9f052b5cd28a86872b6bf86">ErrorTransmit</a> = -102
- }</td></tr>
-<tr class="memdesc:a0a77d6d5e166af850a5dfb588ccbc8fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines error codes specific to asynchronous data transmission operations.  <a href="#a0a77d6d5e166af850a5dfb588ccbc8fb">More...</a><br /></td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:adbdfede75d80d1c6c76800415d51b35c" id="r_adbdfede75d80d1c6c76800415d51b35c"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#adbdfede75d80d1c6c76800415d51b35c">DataArrayAbstractTcp</a> (const std::string &amp;)</td></tr>
 <tr class="memdesc:adbdfede75d80d1c6c76800415d51b35c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new <a class="el" href="classAsyncFw_1_1DataArrayAbstractTcp.html" title="Abstract base class implementing a multi-threaded TCP pool for socket and packet management.">DataArrayAbstractTcp</a> instance.  <br /></td></tr>
 <tr class="memitem:a595774ff7097b769451acc835ea4597d" id="r_a595774ff7097b769451acc835ea4597d"><td class="memItemLeft"><a id="a595774ff7097b769451acc835ea4597d" name="a595774ff7097b769451acc835ea4597d"></a>
 void&#160;</td><td class="memItemRight"><b>init</b> (int <a class="el" href="#ae58df4b570a50455f5f295513d7bdb52">readTimeout</a>=30000, int <a class="el" href="#a922b46fe2c91ea4eb92f17da008422df">waitKeepAliveAnswerTimeout</a>=0, int <a class="el" href="#ab4e8f2fc581da74be9e9f2a0845749d3">waitForEncryptionTimeout</a>=10000, int <a class="el" href="#a7777e20d24f0dc8136bf916e1ae29440">maxThreads</a>=4, int <a class="el" href="#a61d8fea700e5b4eda7434b7b3e55aedb">maxSockets</a>=8, int <a class="el" href="#a8bc546c3135e674fcf13e2ee8228fbab">maxReadBuffers</a>=16, int <a class="el" href="#ad1cfe0836b7e9e184d3be17942b0dc4e">maxReadSize</a>=16 *1024 *1024, int <a class="el" href="#a43b6f6a4f67c9b2c718f48ea999d5727">maxWriteBuffers</a>=16, int <a class="el" href="#a47d8c0d1876602ace92aad264ad62695">maxWriteSize</a>=16 *1024 *1024, int <a class="el" href="#ab52e14dcbac67ced6f4f009cb2d44396">socketReadBufferSize</a>=1024 *512)</td></tr>
-<tr class="memitem:a45af100bb7d2133f28884c278b8ec298" id="r_a45af100bb7d2133f28884c278b8ec298"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#a45af100bb7d2133f28884c278b8ec298">transmit</a> (const <a class="el" href="classAsyncFw_1_1DataArraySocket.html">DataArraySocket</a> *, const <a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> &amp;, uint32_t, bool=false)</td></tr>
-<tr class="memdesc:a45af100bb7d2133f28884c278b8ec298"><td class="mdescLeft">&#160;</td><td class="mdescRight">Asynchronously transmits a <a class="el" href="classAsyncFw_1_1DataArray.html" title="The DataArray class, provides an array of bytes.">DataArray</a> packet through a given socket context.  <br /></td></tr>
+<tr class="memitem:a081f4d502596fe7352d3b5e68344cab8" id="r_a081f4d502596fe7352d3b5e68344cab8"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a081f4d502596fe7352d3b5e68344cab8">transmit</a> (const <a class="el" href="classAsyncFw_1_1DataArraySocket.html">DataArraySocket</a> *, const <a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> &amp;, uint32_t)</td></tr>
+<tr class="memdesc:a081f4d502596fe7352d3b5e68344cab8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Asynchronously transmits a <a class="el" href="classAsyncFw_1_1DataArray.html" title="The DataArray class, provides an array of bytes.">DataArray</a> packet through a given socket context.  <br /></td></tr>
 <tr class="memitem:aa9d59be7845d746853397e1905880434" id="r_aa9d59be7845d746853397e1905880434"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#aa9d59be7845d746853397e1905880434">disconnectFromHost</a> (const <a class="el" href="classAsyncFw_1_1DataArraySocket.html">DataArraySocket</a> *)</td></tr>
 <tr class="memdesc:aa9d59be7845d746853397e1905880434"><td class="mdescLeft">&#160;</td><td class="mdescRight">Signals a specific managed socket to disconnect from its remote peer.  <br /></td></tr>
 <tr class="memitem:a0f47aa063695308b15258c682cf9bc49" id="r_a0f47aa063695308b15258c682cf9bc49"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#a0f47aa063695308b15258c682cf9bc49">sockets</a> (std::vector&lt; <a class="el" href="classAsyncFw_1_1DataArraySocket.html">DataArraySocket</a> * &gt; *=nullptr)</td></tr>
@@ -211,32 +203,7 @@ static std::vector&lt; AbstractThreadPool * &gt;&#160;</td><td class="memItemRig
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Abstract base class implementing a multi-threaded TCP pool for socket and packet management. </p>
 <p>Serves as the foundation for both <a class="el" href="classAsyncFw_1_1DataArrayTcpServer.html" title="An asynchronous TCP server class managing client connections and TLS security. Inherits from DataArra...">DataArrayTcpServer</a> and <a class="el" href="classAsyncFw_1_1DataArrayTcpClient.html" title="An asynchronous TCP client class managing outgoing server connections and synchronous exchanges....">DataArrayTcpClient</a>. It manages internal worker threads, applies uniform memory/buffer constraints, handles packet routing, and controls encryption policy rules. </p>
-</div><a name="doc-enum-members" id="doc-enum-members"></a><h2 id="header-doc-enum-members" class="groupheader">Member Enumeration Documentation</h2>
-<a id="a0a77d6d5e166af850a5dfb588ccbc8fb" name="a0a77d6d5e166af850a5dfb588ccbc8fb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0a77d6d5e166af850a5dfb588ccbc8fb">&#9670;&#160;</a></span>Result</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="#a0a77d6d5e166af850a5dfb588ccbc8fb">AsyncFw::DataArrayAbstractTcp::Result</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Defines error codes specific to asynchronous data transmission operations. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a0a77d6d5e166af850a5dfb588ccbc8fba38dabc9c658f0b2bebeecf100ada6b0d" name="a0a77d6d5e166af850a5dfb588ccbc8fba38dabc9c658f0b2bebeecf100ada6b0d"></a>ErrorTransmitInvoke&#160;</td><td class="fielddoc"><p>Cross-thread invocation failure during data transmission. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="a0a77d6d5e166af850a5dfb588ccbc8fbacdf8f0246690ec54521eb89db2e0676f" name="a0a77d6d5e166af850a5dfb588ccbc8fbacdf8f0246690ec54521eb89db2e0676f"></a>ErrorTransmitNotActive&#160;</td><td class="fielddoc"><p>Transmission aborted because the target socket is not actively connected. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="a0a77d6d5e166af850a5dfb588ccbc8fbab13d6924f9f052b5cd28a86872b6bf86" name="a0a77d6d5e166af850a5dfb588ccbc8fbab13d6924f9f052b5cd28a86872b6bf86"></a>ErrorTransmit&#160;</td><td class="fielddoc"><p>Low-level or buffer-queue failure while sending data. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
+</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="adbdfede75d80d1c6c76800415d51b35c" name="adbdfede75d80d1c6c76800415d51b35c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#adbdfede75d80d1c6c76800415d51b35c">&#9670;&#160;</a></span>DataArrayAbstractTcp()</h2>
 
@@ -275,14 +242,14 @@ static std::vector&lt; AbstractThreadPool * &gt;&#160;</td><td class="memItemRig
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
-<a id="a45af100bb7d2133f28884c278b8ec298" name="a45af100bb7d2133f28884c278b8ec298"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a45af100bb7d2133f28884c278b8ec298">&#9670;&#160;</a></span>transmit()</h2>
+<a id="a081f4d502596fe7352d3b5e68344cab8" name="a081f4d502596fe7352d3b5e68344cab8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a081f4d502596fe7352d3b5e68344cab8">&#9670;&#160;</a></span>transmit()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int DataArrayAbstractTcp::transmit </td>
+          <td class="memname">bool DataArrayAbstractTcp::transmit </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classAsyncFw_1_1DataArraySocket.html">DataArraySocket</a> *</td>          <td class="paramname"><span class="paramname"><em>socket</em></span>, </td>
         </tr>
@@ -294,12 +261,7 @@ static std::vector&lt; AbstractThreadPool * &gt;&#160;</td><td class="memItemRig
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>pi</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>wait</em></span><span class="paramdefsep"> = </span><span class="paramdefval">false</span>&#160;)</td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>pi</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -309,24 +271,22 @@ static std::vector&lt; AbstractThreadPool * &gt;&#160;</td><td class="memItemRig
   <table class="params">
     <tr><td class="paramname">socket</td><td>Pointer to the target <a class="el" href="classAsyncFw_1_1DataArraySocket.html" title="An asynchronous socket class for transmitting data arrays (DataArray) with TLS support....">DataArraySocket</a>.</td></tr>
     <tr><td class="paramname">data</td><td>Reference to the <a class="el" href="classAsyncFw_1_1DataArray.html" title="The DataArray class, provides an array of bytes.">DataArray</a> containing payload data.</td></tr>
-    <tr><td class="paramname">id</td><td>Packet identification tag.</td></tr>
-    <tr><td class="paramname">wait</td><td>If true, forces caller thread blocking until the buffer queues up. </td></tr>
+    <tr><td class="paramname">id</td><td>Packet identification tag. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>0 on success, or a negative value from the <a class="el" href="#a0a77d6d5e166af850a5dfb588ccbc8fb" title="Defines error codes specific to asynchronous data transmission operations.">Result</a> enum on failure. </dd></dl>
-<p>!! WIP: need implementation wait</p>
+<dl class="section return"><dt>Returns</dt><dd>True on success. </dd></dl>
 <div id="dynsection-4" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
 <div id="dynsection-4-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-4-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1DataArrayAbstractTcp_a45af100bb7d2133f28884c278b8ec298_cgraph.svg" width="426" height="78"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1DataArrayAbstractTcp_a081f4d502596fe7352d3b5e68344cab8_cgraph.svg" width="203" height="78"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 <div id="dynsection-5" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
 <div id="dynsection-5-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-5-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1DataArrayAbstractTcp_a45af100bb7d2133f28884c278b8ec298_icgraph.svg" width="203" height="78"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1DataArrayAbstractTcp_a081f4d502596fe7352d3b5e68344cab8_icgraph.svg" width="203" height="78"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
