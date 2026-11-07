@@ -19,6 +19,7 @@ class DataArraySocket : public AbstractTlsSocket {
   friend class DataArrayAbstractTcp;
   friend class DataArrayTcpServer;
   friend class DataArrayTcpClient;
+  friend class RrdClient;
   friend LogStream &operator<<(LogStream &, const DataArraySocket &);
 
 public:
@@ -57,13 +58,13 @@ public:
   /** @brief Frees the memory allocated for the read buffer associated with the given pointer. @param da Pointer to the data array that is no longer needed. */
   void releaseBuffer(const DataArray *) const;
 
+protected:
   /** @brief Signal / Connector triggered when the socket state changes. */
   FunctionConnector<AbstractSocket::State>::Policy<AbstractFunctionConnector::DirectOnly>::Protected<DataArraySocket> stateChanged;
   /** @brief Signal / Connector triggered when a complete data array is successfully received and parsed.
   @note Passes a pointer to the DataArray and its ID. The receiver is responsible for freeing the buffer by calling releaseBuffer(). */
   FunctionConnector<const DataArray *, uint32_t>::Policy<AbstractFunctionConnector::DirectOnly>::Protected<DataArraySocket> received;
 
-protected:
   DataArraySocket();
   ~DataArraySocket() override;
   void stateEvent() override;
