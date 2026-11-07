@@ -1,0 +1,16 @@
+<map id="AsyncFw::DataArrayTcpClient::connectToHost" name="AsyncFw::DataArrayTcpClient::connectToHost">
+<area shape="rect" id="Node000001" title="Explicitly connects a specific socket to a target host and port." alt="" coords="5,72,203,115"/>
+<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="59,71,57,62,65,53,80,47,104,45,130,48,146,56,141,57,128,53,104,51,81,53,68,57,62,63,64,72"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractThread.html#af1382b21117f049a9ab7063017d7fae6" title="Runs a function in a managed thread." alt="" coords="256,5,430,48"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="182,69,252,51,247,54,184,74"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1DataArraySocket.html#ace65cd7f4fb86d24ef6588508738404c" title="Configures the remote host address and port for subsequent connection attempts." alt="" coords="251,72,435,115"/>
+<area shape="poly" id="edge4_Node000001_Node000004" title=" " alt="" coords="203,91,238,93,233,94,204,96"/>
+<area shape="rect" id="Node000007" href="$classAsyncFw_1_1AbstractSocket.html#ac1b9b68ae7fe6c9312d9d713a7b444a9" title="Return Thread that manages the socket." alt="" coords="256,139,430,181"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="183,113,252,133,247,134,182,118"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractThread.html#abe96e6b2a1de041f0d25390a6b77e50a" title="Runs a task in a managed thread." alt="" coords="484,5,657,48"/>
+<area shape="poly" id="edge3_Node000002_Node000003" title=" " alt="" coords="429,24,470,26,465,27,430,29"/>
+<area shape="rect" id="Node000005" href="$classAsyncFw_1_1AbstractSocket.html#a3dd69e137ca3cf50f90607c17bbdc312" title="Return local address bound to this socket interface." alt="" coords="483,72,657,115"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="435,91,470,93,465,94,436,96"/>
+<area shape="rect" id="Node000006" href="$classAsyncFw_1_1AbstractSocket.html#aa29d033332c09e341d159b2189c774e9" title="Return local network port bound to this socket interface." alt="" coords="483,139,657,181"/>
+<area shape="poly" id="edge6_Node000004_Node000006" title=" " alt="" coords="418,113,483,134,478,134,417,118"/>
+</map>

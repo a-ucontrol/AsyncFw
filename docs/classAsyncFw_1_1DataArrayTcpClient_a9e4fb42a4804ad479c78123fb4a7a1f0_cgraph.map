@@ -1,0 +1,22 @@
+<map id="AsyncFw::DataArrayTcpClient::connectToHost" name="AsyncFw::DataArrayTcpClient::connectToHost">
+<area shape="rect" id="Node000001" title="Initiates a connection using a pre&#45;configured socket&#39;s internal host settings." alt="" coords="5,115,203,157"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1DataArrayTcpClient.html#aa32fc80e269557f5f5fba45cb5372750" title="Explicitly connects a specific socket to a target host and port." alt="" coords="251,85,448,128"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="202,122,238,119,233,121,204,127"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1AbstractThread.html#af1382b21117f049a9ab7063017d7fae6" title="Runs a function in a managed thread." alt="" coords="502,5,675,48"/>
+<area shape="poly" id="edge10_Node000001_Node000003" title=" " alt="" coords="131,112,184,77,216,60,250,47,310,32,371,23,488,20,483,22,372,29,311,37,251,52,218,65,187,81,135,116"/>
+<area shape="rect" id="Node000008" href="$classAsyncFw_1_1AbstractSocket.html#ac1b9b68ae7fe6c9312d9d713a7b444a9" title="Return Thread that manages the socket." alt="" coords="501,144,675,187"/>
+<area shape="poly" id="edge11_Node000001_Node000008" title=" " alt="" coords="203,139,487,157,484,161,203,145"/>
+<area shape="rect" id="Node000009" href="$classAsyncFw_1_1DataArraySocket.html#a464539f5d9b05703b35c9b817659a42f" title="Gets the remote host address previously assigned via setHost." alt="" coords="257,203,442,245"/>
+<area shape="poly" id="edge9_Node000001_Node000009" title=" " alt="" coords="166,155,276,196,271,198,166,161"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="304,84,302,75,310,66,326,61,349,59,375,61,392,70,386,70,374,66,349,64,327,66,313,71,307,77,309,86"/>
+<area shape="poly" id="edge3_Node000002_Node000003" title=" " alt="" coords="414,82,510,53,505,54,416,87"/>
+<area shape="rect" id="Node000005" href="$classAsyncFw_1_1DataArraySocket.html#ace65cd7f4fb86d24ef6588508738404c" title="Configures the remote host address and port for subsequent connection attempts." alt="" coords="496,77,680,120"/>
+<area shape="poly" id="edge5_Node000002_Node000005" title=" " alt="" coords="448,101,483,102,478,103,449,106"/>
+<area shape="poly" id="edge8_Node000002_Node000008" title=" " alt="" coords="439,126,488,140,483,140,439,131"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1AbstractThread.html#abe96e6b2a1de041f0d25390a6b77e50a" title="Runs a task in a managed thread." alt="" coords="729,5,902,48"/>
+<area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="675,24,716,26,710,27,675,29"/>
+<area shape="rect" id="Node000006" href="$classAsyncFw_1_1AbstractSocket.html#a3dd69e137ca3cf50f90607c17bbdc312" title="Return local address bound to this socket interface." alt="" coords="728,73,903,116"/>
+<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="681,94,716,96,710,97,681,100"/>
+<area shape="rect" id="Node000007" href="$classAsyncFw_1_1AbstractSocket.html#aa29d033332c09e341d159b2189c774e9" title="Return local network port bound to this socket interface." alt="" coords="728,140,903,183"/>
+<area shape="poly" id="edge7_Node000005_Node000007" title=" " alt="" coords="668,118,724,135,718,135,668,123"/>
+</map>

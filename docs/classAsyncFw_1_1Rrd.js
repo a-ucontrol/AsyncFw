@@ -9,12 +9,12 @@ var classAsyncFw_1_1Rrd =
     [ "read", "classAsyncFw_1_1Rrd.html#a95bfb5ab301e74e2a0b3d59e4d815b8d", null ],
     [ "size", "classAsyncFw_1_1Rrd.html#a330145de892c6f5e916d7dda15aeedfc", null ],
     [ "count", "classAsyncFw_1_1Rrd.html#a69b5af14958a7141a63754765c479879", null ],
-    [ "readFromArray", "classAsyncFw_1_1Rrd.html#a74af3bc94a8b411adf93b0abe8745441", null ],
-    [ "writeToArray", "classAsyncFw_1_1Rrd.html#a4aa5bc0099565061c0fc1c72cf99d8c6", null ],
     [ "append", "classAsyncFw_1_1Rrd.html#a4c33c8721d57d0b3666549a52bf2a696", null ],
     [ "save", "classAsyncFw_1_1Rrd.html#a7f2590f1a87af46970c6e54eefb4c6f6", null ],
     [ "clear", "classAsyncFw_1_1Rrd.html#a6d232ea0ea88fcfcd7ad84e9129f84e3", null ],
     [ "lastIndex", "classAsyncFw_1_1Rrd.html#a113f3548987e7b830295e91bc74e2b89", null ],
     [ "thread", "classAsyncFw_1_1Rrd.html#a0e1fdab32966afe235c8a3cbb9c3c528", null ],
+    [ "readFromArray", "classAsyncFw_1_1Rrd.html#a74af3bc94a8b411adf93b0abe8745441", null ],
+    [ "writeToArray", "classAsyncFw_1_1Rrd.html#a4aa5bc0099565061c0fc1c72cf99d8c6", null ],
     [ "updated", "classAsyncFw_1_1Rrd.html#a7ff19310fbae9fbf6b6a2b26bceb7cec", null ]
 ];

@@ -1,43 +1,47 @@
 <map id="AsyncFw::AbstractThread::invokeTask" name="AsyncFw::AbstractThread::invokeTask">
-<area shape="rect" id="Node000001" title="Runs a task in a managed thread." alt="" coords="1115,372,1288,415"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractThread.html#af1382b21117f049a9ab7063017d7fae6" title="Runs a function in a managed thread." alt="" coords="894,305,1067,348"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="1112,367,1054,351,1054,346,1117,367"/>
-<area shape="rect" id="Node000020" href="$classAsyncFw_1_1AbstractThread.html#a499a70b1d68a82fcded917a331f4cdef" title="Remove poll descriptor." alt="" coords="894,372,1067,415"/>
-<area shape="poly" id="edge19_Node000001_Node000020" title=" " alt="" coords="1097,394,1068,396,1067,391,1102,393"/>
-<area shape="rect" id="Node000021" href="$classAsyncFw_1_1AbstractThread.html#ae8fc0b3f68faed69e7f0b4e940ef12c0" title="Remove timer." alt="" coords="894,439,1067,481"/>
-<area shape="poly" id="edge20_Node000001_Node000021" title=" " alt="" coords="1117,419,1054,441,1053,435,1112,420"/>
-<area shape="rect" id="Node000003" href="$classAsyncFw_1_1ThreadPool.html#a0a35c4070964e69b187842b69b04d325" title="Asynchronously invokes a function in the given thread&#39;s event loop." alt="" coords="672,5,822,48"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="968,289,952,240,927,178,891,116,869,87,844,62,822,48,822,42,847,58,873,84,895,113,932,176,957,238,973,291"/>
-<area shape="rect" id="Node000005" href="$classAsyncFw_1_1ThreadPool.html#a9919894e586310a7ea5b780845376e17" title="Asynchronously invokes a void function in the target thread, and executes a result callback in the ca..." alt="" coords="672,72,822,115"/>
-<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="962,291,943,254,917,210,884,167,844,129,823,116,823,110,847,125,888,163,921,207,947,252,967,292"/>
-<area shape="rect" id="Node000006" href="$classAsyncFw_1_1DataArrayTcpClient.html#a39e5b88e09a327955fb47b64dc60f568" title="Initiates a connection using a pre&#45;configured socket&#39;s internal host settings." alt="" coords="648,139,846,181"/>
-<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="950,293,904,244,875,218,844,196,824,185,824,179,847,191,879,214,908,240,956,294"/>
-<area shape="rect" id="Node000007" href="$classAsyncFw_1_1DataArrayTcpClient.html#aa005c8c643454bd1ae4ae0c7fe4c1068" title="Allocates a new socket instance and associates it with a specific worker thread." alt="" coords="648,205,846,248"/>
-<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="923,298,845,262,816,251,816,246,847,258,928,298"/>
-<area shape="rect" id="Node000008" href="$classAsyncFw_1_1AbstractSocket.html#a73a200f0008dbf9f820bdb2b8a0054cf" title="Schedules the socket for deferred asynchronous destruction." alt="" coords="660,272,834,315"/>
-<area shape="poly" id="edge7_Node000002_Node000008" title=" " alt="" coords="876,312,835,308,834,303,881,312"/>
-<area shape="rect" id="Node000012" href="$classAsyncFw_1_1HttpServer_1_1Response.html#afa24643371f00fe11d7df0f9caae4134" title="Destroys the response object and cleans up its allocated resources." alt="" coords="673,339,821,381"/>
-<area shape="poly" id="edge11_Node000002_Node000012" title=" " alt="" coords="875,342,822,352,820,347,880,341"/>
-<area shape="rect" id="Node000016" href="$classAsyncFw_1_1DataArrayTcpClient.html#afb856fb1b426dd583fc46062f347b3f9" title="Safely shuts down, unregisters, and deletes a managed socket." alt="" coords="648,405,846,448"/>
-<area shape="poly" id="edge15_Node000002_Node000016" title=" " alt="" coords="906,354,895,362,871,379,847,396,821,407,819,402,844,391,868,375,892,358,901,356"/>
-<area shape="rect" id="Node000017" href="$classAsyncFw_1_1DataArrayAbstractTcp.html#aa9d59be7845d746853397e1905880434" title="Signals a specific managed socket to disconnect from its remote peer." alt="" coords="651,472,843,515"/>
-<area shape="poly" id="edge16_Node000002_Node000017" title=" " alt="" coords="899,356,896,362,879,386,873,411,866,436,848,462,830,474,828,469,844,458,861,434,867,410,874,384,892,358,894,359"/>
-<area shape="rect" id="Node000018" href="$classAsyncFw_1_1DataArrayAbstractTcp_1_1Thread.html#aca7c5fcf08cc257de061af63342cd466" title="Configures timeouts, buffer sizes, and signal bounds for a new socket context." alt="" coords="651,539,843,581"/>
-<area shape="poly" id="edge17_Node000002_Node000018" title=" " alt="" coords="898,357,896,362,881,382,874,403,873,444,871,486,863,507,848,528,833,541,830,536,844,525,858,505,866,485,867,444,869,402,876,380,892,358,893,359"/>
-<area shape="rect" id="Node000019" href="$classAsyncFw_1_1ThreadPool.html#add8ee85dd7581acb117a805ff5a8c18a" title="Synchronously invokes a function in the given thread&#39;s event loop (blocks the caller)." alt="" coords="672,605,822,648"/>
-<area shape="poly" id="edge18_Node000002_Node000019" title=" " alt="" coords="897,357,896,362,877,391,870,420,870,448,873,477,876,506,876,535,867,565,848,595,824,613,822,608,844,592,863,563,870,534,871,506,868,478,864,449,865,419,872,389,892,358,893,360"/>
-<area shape="rect" id="Node000004" href="$classAsyncFw_1_1ThreadPool.html#a5af6a927b72eec19abb94ee2477d00b5" title="Asynchronously invokes a function in the global pool, returning the result to a callback in the calle..." alt="" coords="429,5,579,48"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="654,28,581,29,579,24,659,26"/>
-<area shape="rect" id="Node000009" href="$classAsyncFw_1_1HttpSocket.html#a8268467d3581a4d393e9ccd288de32ff" title="Schedules the socket for deferred asynchronous destruction." alt="" coords="429,205,579,248"/>
-<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="649,268,580,250,579,245,655,267"/>
-<area shape="rect" id="Node000011" href="$classAsyncFw_1_1DataArrayAbstractTcp_1_1Thread.html#ab6df6de1f9828a772e5968477ce5dffa" title="Performs cleanup routines and safely removes a socket from the thread loop." alt="" coords="408,272,600,315"/>
-<area shape="poly" id="edge10_Node000008_Node000011" title=" " alt="" coords="641,294,601,296,600,291,647,293"/>
-<area shape="rect" id="Node000010" href="$classAsyncFw_1_1HttpServer_1_1TcpSocket.html#a41557b69e30e25b97cbdda210afb7657" title="Constructs a new TcpSocket associated with the parent server." alt="" coords="201,205,360,248"/>
-<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="411,228,362,229,360,224,416,225"/>
-<area shape="rect" id="Node000013" href="$classAsyncFw_1_1HttpServer_1_1Response.html#a52925841696f5351ff43b46530c18390" title="Finalizes and sends the response over the network via the associated socket." alt="" coords="430,339,578,381"/>
-<area shape="poly" id="edge12_Node000012_Node000013" title=" " alt="" coords="655,361,579,363,578,357,660,359"/>
-<area shape="rect" id="Node000014" href="$classAsyncFw_1_1HttpServer.html#a522928fa8bf3b13b706ac997d4f100dd" title="Constructs the HTTP server instance." alt="" coords="207,339,354,381"/>
-<area shape="poly" id="edge13_Node000013_Node000014" title=" " alt="" coords="413,361,355,363,354,357,418,359"/>
-<area shape="rect" id="Node000015" href="$classAsyncFw_1_1HttpServer.html#ad52f34791fe5848d9ba891b209fcdbe0" title="Accessor to fetch the globally managed singleton instance reference of the active HttpServer." alt="" coords="5,339,153,381"/>
-<area shape="poly" id="edge14_Node000014_Node000015" title=" " alt="" coords="189,362,154,362,152,358,193,358"/>
+<area shape="rect" id="Node000001" title="Runs a task in a managed thread." alt="" coords="1120,413,1293,456"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractThread.html#af1382b21117f049a9ab7063017d7fae6" title="Runs a function in a managed thread." alt="" coords="899,347,1072,389"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="1117,409,1059,393,1059,387,1122,408"/>
+<area shape="rect" id="Node000021" href="$classAsyncFw_1_1AbstractThread.html#a499a70b1d68a82fcded917a331f4cdef" title="Remove poll descriptor." alt="" coords="899,413,1072,456"/>
+<area shape="poly" id="edge22_Node000001_Node000021" title=" " alt="" coords="1102,435,1073,437,1072,432,1107,434"/>
+<area shape="rect" id="Node000022" href="$classAsyncFw_1_1AbstractThread.html#ae8fc0b3f68faed69e7f0b4e940ef12c0" title="Remove timer." alt="" coords="899,480,1072,523"/>
+<area shape="poly" id="edge23_Node000001_Node000022" title=" " alt="" coords="1122,460,1059,482,1058,477,1117,462"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1ThreadPool.html#a0a35c4070964e69b187842b69b04d325" title="Asynchronously invokes a function in the given thread&#39;s event loop." alt="" coords="677,5,827,48"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="976,330,962,273,938,201,901,126,877,92,849,62,828,47,828,42,852,58,881,89,905,124,943,199,967,272,980,332"/>
+<area shape="rect" id="Node000005" href="$classAsyncFw_1_1ThreadPool.html#a9919894e586310a7ea5b780845376e17" title="Asynchronously invokes a void function in the target thread, and executes a result callback in the ca..." alt="" coords="677,72,827,115"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="970,331,952,288,926,236,891,182,849,135,823,118,823,113,852,131,896,179,930,233,957,286,975,333"/>
+<area shape="rect" id="Node000006" href="$classAsyncFw_1_1DataArrayTcpClient.html#a9e4fb42a4804ad479c78123fb4a7a1f0" title="Initiates a connection using a pre&#45;configured socket&#39;s internal host settings." alt="" coords="408,172,605,215"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="968,331,951,294,925,251,891,211,871,194,849,180,816,166,780,157,744,153,707,153,636,160,575,174,573,169,635,155,707,147,744,148,781,152,818,161,852,175,875,189,895,207,929,248,955,292,974,333"/>
+<area shape="rect" id="Node000007" href="$classAsyncFw_1_1DataArrayTcpClient.html#aa32fc80e269557f5f5fba45cb5372750" title="Explicitly connects a specific socket to a target host and port." alt="" coords="653,213,851,256"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="946,336,902,303,849,270,826,259,826,254,852,266,905,299,951,337"/>
+<area shape="rect" id="Node000008" href="$classAsyncFw_1_1DataArrayTcpClient.html#a9e5750da7e8c2cd3fc61edb13dff27c7" title="Allocates a new socket instance and associates it with a specific worker thread." alt="" coords="653,280,851,323"/>
+<area shape="poly" id="edge9_Node000002_Node000008" title=" " alt="" coords="891,342,830,326,829,321,897,342"/>
+<area shape="rect" id="Node000009" href="$classAsyncFw_1_1AbstractSocket.html#a73a200f0008dbf9f820bdb2b8a0054cf" title="Schedules the socket for deferred asynchronous destruction." alt="" coords="665,347,839,389"/>
+<area shape="poly" id="edge10_Node000002_Node000009" title=" " alt="" coords="881,369,840,371,839,365,886,367"/>
+<area shape="rect" id="Node000013" href="$classAsyncFw_1_1HttpServer_1_1Response.html#afa24643371f00fe11d7df0f9caae4134" title="Destroys the response object and cleans up its allocated resources." alt="" coords="678,413,826,456"/>
+<area shape="poly" id="edge14_Node000002_Node000013" title=" " alt="" coords="891,395,827,416,825,411,896,393"/>
+<area shape="rect" id="Node000017" href="$classAsyncFw_1_1DataArrayTcpClient.html#afb856fb1b426dd583fc46062f347b3f9" title="Safely shuts down, unregisters, and deletes a managed socket." alt="" coords="653,480,851,523"/>
+<area shape="poly" id="edge18_Node000002_Node000017" title=" " alt="" coords="906,396,900,403,885,420,877,436,869,453,852,470,833,482,830,477,849,466,864,450,872,434,881,417,897,399,902,399"/>
+<area shape="rect" id="Node000018" href="$classAsyncFw_1_1DataArrayAbstractTcp.html#aa9d59be7845d746853397e1905880434" title="Signals a specific managed socket to disconnect from its remote peer." alt="" coords="656,547,848,589"/>
+<area shape="poly" id="edge19_Node000002_Node000018" title=" " alt="" coords="903,398,901,403,888,420,882,436,878,469,873,502,866,519,853,537,837,549,835,544,849,533,862,517,868,501,872,468,876,434,884,417,897,400,899,400"/>
+<area shape="rect" id="Node000019" href="$classAsyncFw_1_1DataArrayAbstractTcp_1_1Thread.html#aca7c5fcf08cc257de061af63342cd466" title="Configures timeouts, buffer sizes, and signal bounds for a new socket context." alt="" coords="656,613,848,656"/>
+<area shape="poly" id="edge20_Node000002_Node000019" title=" " alt="" coords="902,398,901,403,884,428,877,453,876,477,878,502,880,526,878,552,870,577,853,603,838,615,836,610,849,600,866,575,873,551,874,527,873,502,871,477,872,452,879,426,897,400,898,401"/>
+<area shape="rect" id="Node000020" href="$classAsyncFw_1_1ThreadPool.html#add8ee85dd7581acb117a805ff5a8c18a" title="Synchronously invokes a function in the given thread&#39;s event loop (blocks the caller)." alt="" coords="677,680,827,723"/>
+<area shape="poly" id="edge21_Node000002_Node000020" title=" " alt="" coords="902,398,901,403,880,437,873,470,873,502,878,535,883,568,883,601,875,635,853,670,829,688,827,683,849,666,870,633,878,601,878,568,873,536,868,503,867,469,875,435,897,400,898,401"/>
+<area shape="rect" id="Node000004" href="$classAsyncFw_1_1ThreadPool.html#a5af6a927b72eec19abb94ee2477d00b5" title="Asynchronously invokes a function in the global pool, returning the result to a callback in the calle..." alt="" coords="432,5,582,48"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="659,28,583,29,581,24,664,25"/>
+<area shape="poly" id="edge7_Node000007_Node000006" title=" " alt="" coords="635,216,606,213,605,207,641,215"/>
+<area shape="poly" id="edge8_Node000007_Node000007" title=" " alt="" coords="788,198,776,194,752,192,730,194,716,199,711,205,713,214,708,212,706,203,713,194,729,189,752,187,777,189,794,197"/>
+<area shape="rect" id="Node000010" href="$classAsyncFw_1_1HttpSocket.html#a8268467d3581a4d393e9ccd288de32ff" title="Schedules the socket for deferred asynchronous destruction." alt="" coords="432,280,582,323"/>
+<area shape="poly" id="edge11_Node000009_Node000010" title=" " alt="" coords="654,343,583,324,582,319,659,342"/>
+<area shape="rect" id="Node000012" href="$classAsyncFw_1_1DataArrayAbstractTcp_1_1Thread.html#ab6df6de1f9828a772e5968477ce5dffa" title="Performs cleanup routines and safely removes a socket from the thread loop." alt="" coords="410,347,603,389"/>
+<area shape="poly" id="edge13_Node000009_Node000012" title=" " alt="" coords="647,369,604,371,603,365,652,367"/>
+<area shape="rect" id="Node000011" href="$classAsyncFw_1_1HttpServer_1_1TcpSocket.html#a41557b69e30e25b97cbdda210afb7657" title="Constructs a new TcpSocket associated with the parent server." alt="" coords="201,280,360,323"/>
+<area shape="poly" id="edge12_Node000010_Node000011" title=" " alt="" coords="413,303,361,304,359,299,418,300"/>
+<area shape="rect" id="Node000014" href="$classAsyncFw_1_1HttpServer_1_1Response.html#a52925841696f5351ff43b46530c18390" title="Finalizes and sends the response over the network via the associated socket." alt="" coords="433,413,580,456"/>
+<area shape="poly" id="edge15_Node000013_Node000014" title=" " alt="" coords="660,435,581,437,580,432,665,434"/>
+<area shape="rect" id="Node000015" href="$classAsyncFw_1_1HttpServer.html#a522928fa8bf3b13b706ac997d4f100dd" title="Constructs the HTTP server instance." alt="" coords="207,413,354,456"/>
+<area shape="poly" id="edge16_Node000014_Node000015" title=" " alt="" coords="415,436,355,437,354,432,420,434"/>
+<area shape="rect" id="Node000016" href="$classAsyncFw_1_1HttpServer.html#ad52f34791fe5848d9ba891b209fcdbe0" title="Accessor to fetch the globally managed singleton instance reference of the active HttpServer." alt="" coords="5,413,153,456"/>
+<area shape="poly" id="edge17_Node000015_Node000016" title=" " alt="" coords="189,436,154,437,152,432,193,433"/>
 </map>
