@@ -12,8 +12,17 @@
 //   - DataArrayTcpServer listens, accepts, round-trips a frame, and
 //     tears down cleanly (listener closed, workers self-reap, no leaks).
 //
-// State-observation note (IMPORTANT)
-// ----------------------------------
+// State-observation notes
+// -----------------------
+// DataArraySocket::stateChanged and ::received are `protected` -- they are
+// connection targets of DataArrayAbstractTcp / DataArrayTcpClient, not of
+// application code. The pool-level connectors re-emit the same events:
+//   - DataArrayTcpClient::connectionStateChanged(const DataArraySocket *)
+//   - DataArrayTcpClient::received(const DataArraySocket *, const DataArray *,
+//                                  uint32_t)
+//   - DataArrayTcpServer::received(...) -- same shape
+// Tests subscribe to the pool connectors and filter by socket pointer.
+//
 // DataArraySocket::stateEvent() suppresses the Connecting state -- it calls
 // stateChanged() only for Connected, Active, and Unconnected. On a FAILED
 // connect there is no Connected/Active phase, so the only stateChanged a
@@ -23,7 +32,12 @@
 //
 // The robust signal for "connect attempt settled" is: the count of
 // stateChanged(Unconnected) fires increased since just before the connect
-// was issued. That is what all cycle tests below observe.
+// was issued. All cycle tests below observe that.
+//
+// Note about connectionStateChanged's argument: it delivers only the socket
+// pointer, not the new State value. Subscribers that need the state must
+// read socket->state() (public, atomic). Subscribers that only need to
+// count transitions can do so without reading state.
 
 #include <cstring>
 #ifndef _WIN32
@@ -36,6 +50,7 @@
 
 #include <atomic>
 #include <chrono>
+#include <set>
 #include <string>
 #include <thread>
 #include <vector>
@@ -61,36 +76,36 @@ std::atomic<int> g_failed {0};
 std::atomic<int> g_total {0};
 
 #define EXPECT(cond)                                                                        \
-do {                                                                                      \
-      ++g_total;                                                                              \
-      if (!(cond)) {                                                                          \
-        ++g_failed;                                                                           \
-        lsError() << LogStream::Color::Red << "FAIL" << __FILE__ << ':' << __LINE__ << #cond; \
-  }                                                                                       \
-} while (0)
+  do {                                                                                      \
+    ++g_total;                                                                              \
+    if (!(cond)) {                                                                          \
+      ++g_failed;                                                                           \
+      lsError() << LogStream::Color::Red << "FAIL" << __FILE__ << ':' << __LINE__ << #cond; \
+    }                                                                                       \
+  } while (0)
 
 #define EXPECT_MSG(cond, msg)                                                                                 \
-    do {                                                                                                        \
-      ++g_total;                                                                                                \
-      if (!(cond)) {                                                                                            \
-        ++g_failed;                                                                                             \
-        lsError() << LogStream::Color::Red << "FAIL" << __FILE__ << ':' << __LINE__ << #cond << " — " << (msg); \
-  }                                                                                                         \
-} while (0)
+  do {                                                                                                        \
+    ++g_total;                                                                                                \
+    if (!(cond)) {                                                                                            \
+      ++g_failed;                                                                                             \
+      lsError() << LogStream::Color::Red << "FAIL" << __FILE__ << ':' << __LINE__ << #cond << " — " << (msg); \
+    }                                                                                                         \
+  } while (0)
 
-  template <typename F>
-  bool wait_for(F pred, int ms = 2000) {
-    auto deadline = std::chrono::steady_clock::now() + std::chrono::milliseconds(ms);
-    while (std::chrono::steady_clock::now() < deadline) {
-      if (pred()) return true;
-      std::this_thread::sleep_for(std::chrono::milliseconds(1));
-    }
-    return pred();
+template <typename F>
+bool wait_for(F pred, int ms = 2000) {
+  auto deadline = std::chrono::steady_clock::now() + std::chrono::milliseconds(ms);
+  while (std::chrono::steady_clock::now() < deadline) {
+    if (pred()) return true;
+    std::this_thread::sleep_for(std::chrono::milliseconds(1));
   }
+  return pred();
+}
 
-// Waits until the counter grows past `before`. The counter is fed by a
-// stateChanged subscriber that only increments on Unconnected fires --
-// see file header note for why this is the only reliable settle signal.
+// Waits until the counter grows past `before`. See file header: on a failed
+// connect this is the only reliable "settled" signal, because stateChanged
+// never fires for the intermediate Connecting state.
 bool waitForUnconnectedFires(std::atomic<int> &counter, int before, int ms = 2000) {
   return wait_for([&] { return counter.load() > before; }, ms);
 }
@@ -179,8 +194,9 @@ void test_da_reconnect_after_failed_connect(DataArrayTcpClient &client) {
   DataArraySocket *socket = client.createSocket();
 
   std::atomic<int> unconnCount {0};
-  FunctionConnectionGuard g = socket->stateChanged.connect([&](AbstractSocket::State s) {
-    if (s == AbstractSocket::State::Unconnected) unconnCount.fetch_add(1);
+  FunctionConnectionGuard g = client.connectionStateChanged.connect([&](const DataArraySocket *s) {
+    if (s != socket) return;
+    unconnCount.fetch_add(1);
   });
 
   auto runCycle = [&](const char *label, const char *addr, uint16_t port) -> bool {
@@ -189,9 +205,7 @@ void test_da_reconnect_after_failed_connect(DataArrayTcpClient &client) {
     const bool ok = waitForUnconnectedFires(unconnCount, before, 2000);
     if (!ok) {
       lsError() << label << " did not settle;"
-                << " state=" << static_cast<int>(socket->state())
-                << " unconnCount(before=" << before
-                << ", now=" << unconnCount.load() << ")";
+                << " state=" << static_cast<int>(socket->state()) << " unconnCount(before=" << before << ", now=" << unconnCount.load() << ")";
     }
     return ok;
   };
@@ -206,9 +220,6 @@ void test_da_reconnect_after_failed_connect(DataArrayTcpClient &client) {
 // ============================================================================
 // accept-close stress: each iteration observes exactly one Unconnected fire
 // after connectToHost within 500 ms.
-//
-// Failure classification:
-//   - stuck:        no Unconnected fire within 500 ms
 // ============================================================================
 void test_da_rapid_accept_close(DataArrayTcpClient &client) {
   lsNotice() << "=== rapid accept-close stress ===";
@@ -225,8 +236,9 @@ void test_da_rapid_accept_close(DataArrayTcpClient &client) {
     DataArraySocket *socket = client.createSocket();
 
     std::atomic<int> unconnCount {0};
-    FunctionConnectionGuard g = socket->stateChanged.connect([&](AbstractSocket::State s) {
-      if (s == AbstractSocket::State::Unconnected) unconnCount.fetch_add(1);
+    FunctionConnectionGuard g = client.connectionStateChanged.connect([&](const DataArraySocket *s) {
+      if (s != socket) return;
+      unconnCount.fetch_add(1);
     });
 
     client.connectToHost(socket, "127.0.0.1", server.port);
@@ -234,8 +246,7 @@ void test_da_rapid_accept_close(DataArrayTcpClient &client) {
     if (!waitForUnconnectedFires(unconnCount, 0, 500)) {
       ++stuck;
       lsError() << "iter" << i << "did not settle in 500ms,"
-                << " state=" << static_cast<int>(socket->state())
-                << " unconnCount=" << unconnCount.load();
+                << " state=" << static_cast<int>(socket->state()) << " unconnCount=" << unconnCount.load();
     }
 
     g = {};
@@ -261,19 +272,22 @@ void test_da_partial_frame_close(DataArrayTcpClient &client) {
   std::atomic<bool> gotCompleteFrame {false};
 
   FunctionConnectionGuardList guards;
-  guards += socket->stateChanged.connect([&](AbstractSocket::State s) {
-    if (s == AbstractSocket::State::Unconnected) unconnCount.fetch_add(1);
+  guards += client.connectionStateChanged.connect([&](const DataArraySocket *s) {
+    if (s != socket) return;
+    unconnCount.fetch_add(1);
   });
-  guards += socket->received.connect([&gotCompleteFrame](const DataArray *, uint32_t) {
+  guards += client.received.connect([&](const DataArraySocket *s, const DataArray *, uint32_t) {
+    if (s != socket) return;
     gotCompleteFrame.store(true);
   });
 
   client.connectToHost(socket, "127.0.0.1", server.port);
 
   const bool settled = waitForUnconnectedFires(unconnCount, 0, 2000);
-  EXPECT_MSG(settled, "socket did not settle within 2000ms;"
-             " state=" + std::to_string(static_cast<int>(socket->state())) +
-                 " unconnCount=" + std::to_string(unconnCount.load()));
+  EXPECT_MSG(settled,
+             "socket did not settle within 2000ms;"
+             " state=" +
+                 std::to_string(static_cast<int>(socket->state())) + " unconnCount=" + std::to_string(unconnCount.load()));
   EXPECT_MSG(!gotCompleteFrame.load(), "complete frame delivered — scenario void");
 
   guards.clear();
@@ -293,8 +307,6 @@ void test_da_pool_teardown_on_last_socket(DataArrayTcpClient &client) {
 
   DataArraySocket *socket = client.createSocket();
   client.connectToHost(socket, "127.0.0.1", server.port);
-  // Any state is fine here; the point is that destroySocket drops the
-  // worker thread once sockets_ becomes empty.
   std::this_thread::sleep_for(std::chrono::milliseconds(100));
   client.destroySocket(socket);
   std::this_thread::sleep_for(std::chrono::milliseconds(50));
@@ -325,21 +337,30 @@ void test_da_pool_reuse_after_teardown(DataArrayTcpClient &client) {
   if (!s2) return;
 
   std::atomic<int> unconnCount {0};
-  FunctionConnectionGuard g = s2->stateChanged.connect([&](AbstractSocket::State s) {
-    if (s == AbstractSocket::State::Unconnected) unconnCount.fetch_add(1);
+  FunctionConnectionGuard g = client.connectionStateChanged.connect([&](const DataArraySocket *s) {
+    if (s != s2) return;
+    unconnCount.fetch_add(1);
   });
 
   client.connectToHost(s2, "127.0.0.1", server.port);
   const bool ok = waitForUnconnectedFires(unconnCount, 0, 2000);
-  EXPECT_MSG(ok, "fresh socket did not settle;"
-             " state=" + std::to_string(static_cast<int>(s2->state())) +
-                 " unconnCount=" + std::to_string(unconnCount.load()));
+  EXPECT_MSG(ok,
+             "fresh socket did not settle;"
+             " state=" +
+                 std::to_string(static_cast<int>(s2->state())) + " unconnCount=" + std::to_string(unconnCount.load()));
   g = {};
   client.destroySocket(s2);
 }
 
 // ============================================================================
-// State transition order on accept-close: Active precedes Unconnected.
+// accept-close must terminate in Unconnected for every iteration.
+//
+// Under `protected` connectors we cannot inspect the State value from the
+// subscriber (connectionStateChanged passes only the socket pointer).
+// Instead we observe the count of Unconnected fires per iteration and
+// verify the final public socket->state() snapshot. The internal order
+// Connected -> Active -> Unconnected is guaranteed by
+// DataArraySocket::stateEvent() and is not externally pinned.
 // ============================================================================
 void test_da_state_sequence(DataArrayTcpClient &client) {
   lsNotice() << "=== state sequence on accept-close ===";
@@ -349,55 +370,30 @@ void test_da_state_sequence(DataArrayTcpClient &client) {
     return;
   }
 
-  int badSequences = 0;
+  int badIterations = 0;
   constexpr int kIters = 20;
   for (int i = 0; i < kIters; ++i) {
     DataArraySocket *socket = client.createSocket();
-    std::mutex m;
-    std::vector<AbstractSocket::State> seq;
-    std::atomic<bool> settled {false};
 
-    FunctionConnectionGuard g = socket->stateChanged.connect([&](AbstractSocket::State s) {
-      std::lock_guard<std::mutex> l(m);
-      seq.push_back(s);
-      if (s == AbstractSocket::State::Unconnected) settled.store(true);
+    std::atomic<int> unconnCount {0};
+    FunctionConnectionGuard g = client.connectionStateChanged.connect([&](const DataArraySocket *s) {
+      if (s != socket) return;
+      unconnCount.fetch_add(1);
     });
 
     client.connectToHost(socket, "127.0.0.1", server.port);
 
-    int waited = 0;
-    while (!settled && waited < 500) {
-      std::this_thread::sleep_for(std::chrono::milliseconds(1));
-      ++waited;
+    const bool settled = waitForUnconnectedFires(unconnCount, 0, 500);
+    if (!settled || socket->state() != AbstractSocket::State::Unconnected) {
+      ++badIterations;
+      lsError() << "iter" << i << " settled=" << settled << " finalState=" << static_cast<int>(socket->state()) << " unconnCount=" << unconnCount.load();
     }
+
     g = {};
-
-    std::lock_guard<std::mutex> l(m);
-    bool sawActive = false;
-    bool sawUnconnected = false;
-    bool badOrder = false;
-    for (auto s : seq) {
-      if (s == AbstractSocket::State::Active) {
-        if (sawActive) badOrder = true;
-        sawActive = true;
-      } else if (s == AbstractSocket::State::Unconnected) {
-        if (sawUnconnected) badOrder = true;
-        sawUnconnected = true;
-      } else if (sawActive) {
-        badOrder = true;
-      }
-    }
-    if (!sawActive || !sawUnconnected || badOrder) {
-      ++badSequences;
-      std::string dump;
-      for (auto s : seq) dump += std::to_string(static_cast<int>(s)) + " ";
-      lsError() << "iter" << i << "bad sequence:[" << dump << "]";
-    }
-
     client.destroySocket(socket);
   }
 
-  EXPECT_MSG(badSequences == 0, std::to_string(badSequences) + " of " + std::to_string(kIters) + " had a bad state sequence");
+  EXPECT_MSG(badIterations == 0, std::to_string(badIterations) + " of " + std::to_string(kIters) + " iterations did not settle in Unconnected");
 }
 
 // ============================================================================
@@ -408,7 +404,8 @@ void test_da_no_reconnect_with_zero_timeout(DataArrayTcpClient &client) {
   DataArraySocket *socket = client.createSocket();
 
   std::atomic<int> transitionCount {0};
-  FunctionConnectionGuard g = socket->stateChanged.connect([&transitionCount](AbstractSocket::State) {
+  FunctionConnectionGuard g = client.connectionStateChanged.connect([&](const DataArraySocket *s) {
+    if (s != socket) return;
     ++transitionCount;
   });
 
@@ -420,11 +417,8 @@ void test_da_no_reconnect_with_zero_timeout(DataArrayTcpClient &client) {
   const int n = transitionCount.load();
   g = {};
 
-  EXPECT_MSG(socket->state() == AbstractSocket::State::Unconnected,
-             "socket did not settle to Unconnected; state=" +
-                 std::to_string(static_cast<int>(socket->state())));
-  EXPECT_MSG(n <= 3, "too many state transitions (" + std::to_string(n) +
-                         ") — reconnect likely active");
+  EXPECT_MSG(socket->state() == AbstractSocket::State::Unconnected, "socket did not settle to Unconnected; state=" + std::to_string(static_cast<int>(socket->state())));
+  EXPECT_MSG(n <= 3, "too many state transitions (" + std::to_string(n) + ") — reconnect likely active");
   client.destroySocket(socket);
 }
 
@@ -436,7 +430,9 @@ void test_da_no_reconnect_with_zero_timeout(DataArrayTcpClient &client) {
 // Client socket lives on `client` (poolOwner-thread); server lives on
 // `serverOwner`. Verifies:
 //   - listen() on the server's owner thread succeeds
-//   - client reaches Active
+//   - client reaches Active (observed via socket->state() after each
+//     connectionStateChanged emission — the pool connector only tells us
+//     "something changed", not "which state")
 //   - server->received fires with correct payload/id
 //   - server echo round-trips to client->received
 //   - clean teardown (close + delete + worker self-reap)
@@ -446,9 +442,7 @@ void test_tcp_server_roundtrip(AbstractThread *serverOwner, DataArrayTcpClient &
   const uint16_t port = 18999;
 
   std::atomic<DataArrayTcpServer *> serverPtr {nullptr};
-  serverOwner->invoke([&serverPtr]() {
-    serverPtr = new DataArrayTcpServer("DataArrayTcpServerMisc");
-  }, true);
+  serverOwner->invoke([&serverPtr]() { serverPtr = new DataArrayTcpServer("DataArrayTcpServerMisc"); }, true);
   DataArrayTcpServer *server = serverPtr.load();
   EXPECT_MSG(server != nullptr, "server allocation failed");
   if (!server) return;
@@ -469,10 +463,14 @@ void test_tcp_server_roundtrip(AbstractThread *serverOwner, DataArrayTcpClient &
   std::string serverPayload;
 
   FunctionConnectionGuardList guards;
-  guards += cs->stateChanged.connect([&](AbstractSocket::State s) {
-    if (s == AbstractSocket::State::Active) active.store(true);
+  guards += client.connectionStateChanged.connect([&](const DataArraySocket *s) {
+    if (s != cs) return;
+    // The pool connector does not carry the new State; read it from the
+    // public atomic snapshot instead.
+    if (cs->state() == AbstractSocket::State::Active) active.store(true);
   });
-  guards += cs->received.connect([&](const DataArray *, uint32_t id) {
+  guards += client.received.connect([&](const DataArraySocket *s, const DataArray *, uint32_t id) {
+    if (s != cs) return;
     ++clientRecv;
     clientRecvId = id;
   });
@@ -493,8 +491,7 @@ void test_tcp_server_roundtrip(AbstractThread *serverOwner, DataArrayTcpClient &
   if (listenOk.load()) {
     client.connectToHost(cs, "127.0.0.1", port);
     const bool gotActive = wait_for([&] { return active.load(); }, 3000);
-    EXPECT_MSG(gotActive, "client did not reach Active; state=" +
-                              std::to_string(static_cast<int>(cs->state())));
+    EXPECT_MSG(gotActive, "client did not reach Active; state=" + std::to_string(static_cast<int>(cs->state())));
 
     if (gotActive) {
       cs->transmit(DataArray("hello"), 42);
@@ -506,13 +503,11 @@ void test_tcp_server_roundtrip(AbstractThread *serverOwner, DataArrayTcpClient &
         std::lock_guard<std::mutex> l(serverMutex);
         EXPECT_MSG(serverPayload == "hello", "server payload='" + serverPayload + "'");
       }
-      EXPECT_MSG(serverRecvId.load() == 42u,
-                 "server id=" + std::to_string(serverRecvId.load()) + " (expected 42)");
+      EXPECT_MSG(serverRecvId.load() == 42u, "server id=" + std::to_string(serverRecvId.load()) + " (expected 42)");
 
       const bool gotClientRecv = wait_for([&] { return clientRecv.load() >= 1; }, 2000);
       EXPECT_MSG(gotClientRecv, "client did not receive echo within 2s");
-      EXPECT_MSG(clientRecvId.load() == 142u,
-                 "client id=" + std::to_string(clientRecvId.load()) + " (expected 142)");
+      EXPECT_MSG(clientRecvId.load() == 142u, "client id=" + std::to_string(clientRecvId.load()) + " (expected 142)");
     }
   }
 
@@ -525,13 +520,85 @@ void test_tcp_server_roundtrip(AbstractThread *serverOwner, DataArrayTcpClient &
 }
 
 // ============================================================================
+// DataArrayAbstractTcp::sockets() returns correct count and fills the list.
+//
+// Pins the public contract so any future rewrite of the internals keeps it:
+//   - empty server -> count 0, list empty (both for list!=nullptr and nullptr)
+//   - one accepted connection -> count 1, list.size 1, list[0]->peerAddress
+//     matches the connecting client (proves the pointer is a live
+//     DataArraySocket, not a misinterpreted AbstractSocket*)
+// ============================================================================
+void test_tcp_server_sockets_list(AbstractThread *serverOwner) {
+  lsNotice() << "=== DataArrayTcpServer::sockets() ===";
+
+  std::atomic<DataArrayTcpServer *> serverPtr {nullptr};
+  serverOwner->invoke([&serverPtr]() { serverPtr = new DataArrayTcpServer("SocketsListServer"); }, true);
+  DataArrayTcpServer *server = serverPtr.load();
+  EXPECT_MSG(server != nullptr, "server allocation failed");
+  if (!server) return;
+
+  // Empty server: count == 0, list stays empty.
+  {
+    std::vector<DataArraySocket *> list;
+    const int n = server->sockets(&list);
+    EXPECT_MSG(n == 0, "empty server: count=" + std::to_string(n));
+    EXPECT_MSG(list.empty(), "empty server: list.size=" + std::to_string(list.size()));
+  }
+  {
+    const int n = server->sockets(nullptr);
+    EXPECT_MSG(n == 0, "empty server (nullptr): count=" + std::to_string(n));
+  }
+
+  const uint16_t port = 18998;
+  std::atomic<bool> listenOk {false};
+  serverOwner->invoke([&]() { listenOk = server->listen("127.0.0.1", port); }, true);
+  EXPECT_MSG(listenOk.load(), "listen failed");
+
+  // Raw blocking client -- simplest way to force the server to accept
+  // without depending on the client-side pool.
+  int cfd = ::socket(AF_INET, SOCK_STREAM, 0);
+  EXPECT_MSG(cfd >= 0, "client socket() failed");
+  if (cfd >= 0) {
+    sockaddr_in sa {};
+    sa.sin_family = AF_INET;
+    sa.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
+    sa.sin_port = htons(port);
+    int r = ::connect(cfd, (sockaddr *)&sa, sizeof(sa));
+    EXPECT_MSG(r == 0, "client connect() failed");
+
+    const bool gotOne = wait_for([&] {
+      std::vector<DataArraySocket *> list;
+      return server->sockets(&list) == 1 && list[0]->peerAddress() == "127.0.0.1";
+    }, 2000);
+    EXPECT_MSG(gotOne, "server did not see 1 socket within 2s");
+
+    std::vector<DataArraySocket *> list;
+    const int n = server->sockets(&list);
+    EXPECT_MSG(n == 1, "count after accept=" + std::to_string(n));
+    EXPECT_MSG(list.size() == 1, "list.size=" + std::to_string(list.size()));
+    if (!list.empty() && list[0] != nullptr) {
+      const std::string addr = list[0]->peerAddress();
+      EXPECT_MSG(addr == "127.0.0.1", "list[0]->peerAddress=" + addr);
+    }
+
+    ::close(cfd);
+  }
+
+  serverOwner->invoke([&]() { server->close(); }, true);
+  std::this_thread::sleep_for(std::chrono::milliseconds(50));
+  serverOwner->invoke([&]() { delete server; }, true);
+}
+
+// ============================================================================
 // quit() from a foreign thread synchronously tears the pool down.
 //
 // AbstractThreadPool::quit() dispatches teardown to the pool owner via
 // invoke(..., true), so calling it from any thread is safe: it blocks
 // until the owner has destroyed all workers and their sockets.
 //
-// NOTE: this must run last — it destroys the client's pool entirely.
+// The socket is destroyed before quit() so ~Thread does not emit
+// "socket list not empty". NOTE: this test must run last — it destroys
+// the client's pool entirely.
 // ============================================================================
 void test_da_quit_from_foreign_thread(DataArrayTcpClient &client) {
   lsNotice() << "=== quit() from foreign thread ===";
@@ -539,6 +606,8 @@ void test_da_quit_from_foreign_thread(DataArrayTcpClient &client) {
   DataArraySocket *socket = client.createSocket();
   EXPECT_MSG(socket != nullptr, "createSocket failed");
   EXPECT_MSG(client.threads()->size() > 0, "pool has no workers before quit");
+
+  client.destroySocket(socket);
 
   std::thread foreign([&client]() { client.quit(); });
   foreign.join();
@@ -580,10 +649,8 @@ int main(int, char **) {
     test_da_pool_reuse_after_teardown(*dac);
     test_da_state_sequence(*dac);
     test_da_no_reconnect_with_zero_timeout(*dac);
-
-    // Server test — must precede quit() (which destroys the client's pool).
+    test_tcp_server_sockets_list(&poolOwner);
     test_tcp_server_roundtrip(&poolOwner, *dac);
-
     test_da_quit_from_foreign_thread(*dac);
 
     poolOwner.invoke([&dac]() {

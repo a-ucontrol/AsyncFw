@@ -601,13 +601,9 @@ void test_filesystemwatcher_wildcard() {
       EXPECT_MSG(createdPaths.count(f1) == 1, "Created(" + f1 + ") not observed");
       EXPECT_MSG(createdPaths.count(f2) == 1, "Created(" + f2 + ") not observed");
     }
-    EXPECT_MSG(createdCount.load() == 2,
-               "createdCount=" + std::to_string(createdCount.load()) + " (expected 2)");
-    EXPECT_MSG(removedCount.load() == 2,
-               "removedCount=" + std::to_string(removedCount.load()) + " (expected 2)");
-    EXPECT_MSG(changedCount.load() == 0,
-               "changedCount=" + std::to_string(changedCount.load()) +
-                   " — wildcard must not install a per-file watch");
+    EXPECT_MSG(createdCount.load() == 2, "createdCount=" + std::to_string(createdCount.load()) + " (expected 2)");
+    EXPECT_MSG(removedCount.load() == 2, "removedCount=" + std::to_string(removedCount.load()) + " (expected 2)");
+    EXPECT_MSG(changedCount.load() == 0, "changedCount=" + std::to_string(changedCount.load()) + " — wildcard must not install a per-file watch");
     MainThread::exit();
   });
 
@@ -650,8 +646,13 @@ void test_filesystemwatcher_exact_missing_no_spurious_notify() {
 
   FunctionConnectionGuard g = watcher.notify.connect([&](const std::string &path, int event) {
     std::lock_guard<std::mutex> l(m);
-    if (event == 1) { ++createdCount; createdPaths.insert(path); }
-    else if (event == -1) { ++removedCount; removedPaths.insert(path); }
+    if (event == 1) {
+      ++createdCount;
+      createdPaths.insert(path);
+    } else if (event == -1) {
+      ++removedCount;
+      removedPaths.insert(path);
+    }
   });
 
   EXPECT_MSG(watcher.addPath(watched), "addPath(exact, missing) failed");
@@ -660,9 +661,7 @@ void test_filesystemwatcher_exact_missing_no_spurious_notify() {
     File _f {unrelated};
     _f.open(std::ios::binary | std::ios::out);
   });
-  Timer::single(200, [unrelated]() {
-    std::filesystem::remove(unrelated);
-  });
+  Timer::single(200, [unrelated]() { std::filesystem::remove(unrelated); });
   Timer::single(400, [watched]() {
     File _f {watched};
     _f.open(std::ios::binary | std::ios::out);
@@ -670,14 +669,10 @@ void test_filesystemwatcher_exact_missing_no_spurious_notify() {
 
   Timer::single(600, [&, watched, unrelated]() {
     std::lock_guard<std::mutex> l(m);
-    EXPECT_MSG(createdPaths.count(unrelated) == 0,
-               "spurious Created(" + unrelated + "): exact watcher fired on unrelated file");
-    EXPECT_MSG(removedPaths.count(unrelated) == 0,
-               "spurious Removed(" + unrelated + "): exact watcher fired on unrelated file");
-    EXPECT_MSG(createdPaths.count(watched) == 1,
-               "Created(" + watched + ") missing — watcher didn't notice its own file");
-    EXPECT_MSG(createdCount.load() == 1,
-               "createdCount=" + std::to_string(createdCount.load()) + " (expected 1)");
+    EXPECT_MSG(createdPaths.count(unrelated) == 0, "spurious Created(" + unrelated + "): exact watcher fired on unrelated file");
+    EXPECT_MSG(removedPaths.count(unrelated) == 0, "spurious Removed(" + unrelated + "): exact watcher fired on unrelated file");
+    EXPECT_MSG(createdPaths.count(watched) == 1, "Created(" + watched + ") missing — watcher didn't notice its own file");
+    EXPECT_MSG(createdCount.load() == 1, "createdCount=" + std::to_string(createdCount.load()) + " (expected 1)");
     MainThread::exit();
   });
 
@@ -729,12 +724,8 @@ void test_filesystemwatcher_exact_and_wildcard() {
   });
 
   Timer::single(500, [&]() {
-    EXPECT_MSG(otherCount.load() == 1,
-               "Created(other.txt) count=" + std::to_string(otherCount.load()) +
-                   " (expected 1: wildcard branch)");
-    EXPECT_MSG(watchedCount.load() == 1,
-               "Created(watched.txt) count=" + std::to_string(watchedCount.load()) +
-                   " (expected 1: exact branch takes priority, no double-notify)");
+    EXPECT_MSG(otherCount.load() == 1, "Created(other.txt) count=" + std::to_string(otherCount.load()) + " (expected 1: wildcard branch)");
+    EXPECT_MSG(watchedCount.load() == 1, "Created(watched.txt) count=" + std::to_string(watchedCount.load()) + " (expected 1: exact branch takes priority, no double-notify)");
     MainThread::exit();
   });
 
@@ -1019,11 +1010,10 @@ static std::string rrdItemStr(const Rrd::Item &it) { return std::string(it.begin
 
 class RrdT : public Rrd {
 public:
-  using Rrd::Rrd;
   using Rrd::readFromArray;
+  using Rrd::Rrd;
   using Rrd::writeToArray;
 };
-
 
 // Baseline: auto-index appends keep count == number of appends.
 void test_rrd_sequential_append() {
@@ -1997,11 +1987,11 @@ void test_datasocket_disconnect_partial_receive() {
   std::atomic<bool> gotCompleteFrame {false};
 
   // received fires only for fully assembled frames; must stay false.
-  socket->received.connect([&](const DataArray *, uint32_t) { gotCompleteFrame = true; });
+  client.received.connect([&](const DataArraySocket *, const DataArray *, uint32_t) { gotCompleteFrame = true; });
 
-  socket->stateChanged.connect([&](AbstractSocket::State s) {
-    finalState = s;
-    if (s == AbstractSocket::State::Unconnected) Timer::single(50, []() { MainThread::exit(); });
+  client.connectionStateChanged.connect([&](const DataArraySocket *s) {
+    finalState = s->state();
+    if (finalState == AbstractSocket::State::Unconnected) Timer::single(50, []() { MainThread::exit(); });
   });
 
   client.connectToHost(socket, "127.0.0.1", port);
