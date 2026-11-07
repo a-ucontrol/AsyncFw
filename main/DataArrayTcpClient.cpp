@@ -54,20 +54,24 @@ void DataArrayTcpClient::destroySocket(DataArraySocket *socket) {
 }
 
 void DataArrayTcpClient::connectToHost(DataArraySocket *socket, const std::string &address, uint16_t port) {
-  socket->setHost(address, port);
+  AbstractThread *_t = socket->thread();
+  if (!_t) {
+    lsWarning() << "socket thread is null";
+    return;
+  }
+  _t->invoke([socket, address, port]() { socket->setHost(address, port); }, true);
   connectToHost(socket);
 }
 
 void DataArrayTcpClient::connectToHost(const DataArraySocket *socket) {
-  lsTrace("readTimeout: {}, waitKeepAliveAnswerTimeout: {}, waitForEncryptionTimeout: {}, maxThreads: {}, maxSockets: {}, maxReadBuffers = {}, maxReadSize = {}, maxWriteBuffers = {}, maxWriteSize = {}", readTimeout, waitKeepAliveAnswerTimeout, waitForEncryptionTimeout, maxThreads, maxSockets, maxReadBuffers, maxReadSize, maxWriteBuffers, maxWriteSize);
-  Thread *clientThread = static_cast<Thread *>(socket->thread());
-  if (!clientThread) {
-    lsWarning("unknown socket");
+  AbstractThread *_t = socket->thread();
+  if (!_t) {
+    lsWarning() << "socket thread is null";
     return;
   }
   if (std::find(disabledEncryptionHosts_.begin(), disabledEncryptionHosts_.end(), socket->hostAddress()) != disabledEncryptionHosts_.end()) const_cast<DataArraySocket *>(socket)->setContext(TlsContext());
-  clientThread->invoke([socket]() { const_cast<DataArraySocket *>(socket)->connectToHost(); }, true);
-  lsTrace();
+  _t->invoke([socket]() { const_cast<DataArraySocket *>(socket)->connectToHost(); });
+  lsTrace("readTimeout: {}, waitKeepAliveAnswerTimeout: {}, waitForEncryptionTimeout: {}, maxThreads: {}, maxSockets: {}, maxReadBuffers = {}, maxReadSize = {}, maxWriteBuffers = {}, maxWriteSize = {}", readTimeout, waitKeepAliveAnswerTimeout, waitForEncryptionTimeout, maxThreads, maxSockets, maxReadBuffers, maxReadSize, maxWriteBuffers, maxWriteSize);
 }
 
 DataArrayTcpClient::Thread *DataArrayTcpClient::createThread() {
