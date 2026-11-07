@@ -68,6 +68,7 @@ AbstractThreadPool::~AbstractThreadPool() {
 }
 
 void AbstractThreadPool::quit() {
+  thread_->invoke([]() {}, true);
   Thread *t;
   for (;;) {
     {  //lock scope
