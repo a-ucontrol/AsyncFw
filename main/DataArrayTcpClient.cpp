@@ -53,12 +53,12 @@ void DataArrayTcpClient::destroySocket(DataArraySocket *socket) {
   if (thread) thread->invoke([thread, socket]() { thread->destroySocket(socket); }, true);
 }
 
-void DataArrayTcpClient::connectToHost(DataArraySocket *socket, const std::string &address, uint16_t port, int timeout) {
+void DataArrayTcpClient::connectToHost(DataArraySocket *socket, const std::string &address, uint16_t port) {
   socket->setHost(address, port);
-  connectToHost(socket, timeout);
+  connectToHost(socket);
 }
 
-void DataArrayTcpClient::connectToHost(const DataArraySocket *socket, int timeout) {
+void DataArrayTcpClient::connectToHost(const DataArraySocket *socket) {
   lsTrace("readTimeout: {}, waitKeepAliveAnswerTimeout: {}, waitForEncryptionTimeout: {}, maxThreads: {}, maxSockets: {}, maxReadBuffers = {}, maxReadSize = {}, maxWriteBuffers = {}, maxWriteSize = {}", readTimeout, waitKeepAliveAnswerTimeout, waitForEncryptionTimeout, maxThreads, maxSockets, maxReadBuffers, maxReadSize, maxWriteBuffers, maxWriteSize);
   Thread *clientThread = static_cast<Thread *>(socket->thread());
   if (!clientThread) {
@@ -66,30 +66,7 @@ void DataArrayTcpClient::connectToHost(const DataArraySocket *socket, int timeou
     return;
   }
   if (std::find(disabledEncryptionHosts_.begin(), disabledEncryptionHosts_.end(), socket->hostAddress()) != disabledEncryptionHosts_.end()) const_cast<DataArraySocket *>(socket)->setContext(TlsContext());
-  if (timeout > 0) {
-    // blocking call
-    AbstractThread *thread = Thread::current();
-    Thread::Waiter waiter;
-    Timer timer;
-    FunctionConnectionGuardList gl;
-    gl += timer.timeout.connect([clientThread, socket]() { clientThread->invoke([socket]() { const_cast<DataArraySocket *>(socket)->disconnect(); }); });
-    gl += socket->stateChanged.connect([&waiter, &gl, thread](AbstractSocket::State state) {
-      if (state != AbstractSocket::State::Active && state != AbstractSocket::State::Unconnected) return;
-      gl.clear();
-      thread->invoke([&waiter]() { waiter.complete(); });
-    });
-    clientThread->invoke([socket]() {
-      const_cast<DataArraySocket *>(socket)->setConnectTimeout(0);
-      const_cast<DataArraySocket *>(socket)->setWaitForEncryptionTimeout(0);
-      const_cast<DataArraySocket *>(socket)->connectToHost();
-    });
-    timer.start(timeout);
-    waiter.wait();
-    clientThread->invoke([this, socket]() {
-      const_cast<DataArraySocket *>(socket)->setConnectTimeout(waitForConnectTimeout);
-      const_cast<DataArraySocket *>(socket)->setWaitForEncryptionTimeout(waitForEncryptionTimeout);
-    });
-  } else clientThread->invoke([socket]() { const_cast<DataArraySocket *>(socket)->connectToHost(); });
+  clientThread->invoke([socket]() { const_cast<DataArraySocket *>(socket)->connectToHost(); }, true);
   lsTrace();
 }
 

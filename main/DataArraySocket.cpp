@@ -107,6 +107,7 @@ void DataArraySocket::stateEvent() {
         lsDebug() << "client wait for encrypted" << private_.waitForEncryptionTimeout;
       }
     }
+    return;
   } else if (state_ == AbstractSocket::State::Active) {
     if (private_.sslConnection) private_.sslConnection = 4;
     private_.flags &= ~0x08;
@@ -126,6 +127,7 @@ void DataArraySocket::stateEvent() {
     lsTrace() << LogStream::Blue << "socket unconnected (" + peerString() + ')';
   } else if (state_ == AbstractSocket::State::Connecting) {
     if (!private_.receiveList.empty()) lsWarning("receive buffer not empty during connect");
+    return;
   }
   stateChanged(state_);
 }

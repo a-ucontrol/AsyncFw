@@ -34,14 +34,14 @@ protected:
 public:
   /** @brief Constructs a new DataArrayTcpClient object. @param name Optional name identifier for the client thread/instance (defaults to "TcpClient"). */
   DataArrayTcpClient(const std::string & = "TcpClient");
-  /** @brief Explicitly connects a specific socket to a target host and port. @param socket Pointer to the managed DataArraySocket instance. @param address Target IP address or hostname. @param port Target network port. @param timeout Connection timeout in milliseconds. If 0, uses the default timeout. */
-  void connectToHost(DataArraySocket *socket, const std::string &, uint16_t, int = 0);
-  /** @brief Initiates a connection using a pre-configured socket's internal host settings. @param socket Pointer to the managed DataArraySocket instance. @param timeout Connection timeout in milliseconds. If 0, uses the default timeout. */
-  void connectToHost(const DataArraySocket *, int = 0);
+  /** @brief Explicitly connects a specific socket to a target host and port. @param socket Pointer to the managed DataArraySocket instance. @param address Target IP address or hostname. @param port Target network port. */
+  void connectToHost(DataArraySocket *, const std::string &, uint16_t);
+  /** @brief Initiates a connection using a pre-configured socket's internal host settings. @param socket Pointer to the managed DataArraySocket instance. */
+  void connectToHost(const DataArraySocket *);
   /** @brief Allocates and spawns a new worker thread within the client pool context. @return Pointer to the newly created Thread instance. */
   Thread *createThread();
   /** @brief Allocates a new socket instance and associates it with a specific worker thread. @param thread Pointer to the target Thread. If nullptr, a thread is selected automatically. @return Pointer to the freshly initialized DataArraySocket instance. */
-  DataArraySocket *createSocket(Thread *thread = nullptr);
+  DataArraySocket *createSocket(Thread * = nullptr);
   /** @brief Safely shuts down, unregisters, and deletes a managed socket. @param socket Pointer to the DataArraySocket to destroy. */
   void destroySocket(DataArraySocket *);
 
