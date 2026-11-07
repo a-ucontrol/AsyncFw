@@ -226,6 +226,7 @@ int MulticastDns::sendQuery(const std::vector<std::pair<std::string, std::string
 bool MulticastDns::serviceRunning() const { return private_.sd.num_sockets > 0; }
 
 bool MulticastDns::startService(const std::string &hostname, const std::string &misc, uint16_t port) {
+  checkCurrentThread();
   if (private_.sd.num_sockets > 0) return false;
   std::snprintf(private_.sd.txt_misc_buffer, sizeof(private_.sd.txt_misc_buffer), "%s", misc.c_str());
   lsDebug() << hostname << private_.serviceType << private_.sd.txt_misc_buffer << port;
@@ -277,6 +278,7 @@ void MulticastDns::servicePollEvent(int fd) {
 }
 
 void MulticastDns::stopService(bool goodbye) {
+  checkCurrentThread();
   if (private_.sd.num_sockets == 0) {
     lsDebug() << LogStream::Color::Blue << "not running";
     return;
@@ -287,6 +289,7 @@ void MulticastDns::stopService(bool goodbye) {
 }
 
 bool MulticastDns::startQuerier(QuerierMode mode, int queryTimeout, int expireTimeout) {
+  checkCurrentThread();
   if (private_.qd.num_sockets > 0) return false;
   private_.qd.mode = mode;
   int r = start_mdns_querier(&private_.qd);
@@ -359,6 +362,7 @@ void MulticastDns::querierTimerEvent() {
 }
 
 void MulticastDns::stopQuerier() {
+  checkCurrentThread();
   if (private_.qd.num_sockets == 0) {
     lsDebug() << LogStream::Color::Blue << "not running";
     return;
