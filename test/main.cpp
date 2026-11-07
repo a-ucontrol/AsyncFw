@@ -819,9 +819,17 @@ void test_coroutine_coInvoke_lambda_capture_tst() {
 
 static std::string rrdItemStr(const Rrd::Item &it) { return std::string(it.begin(), it.end()); }
 
+class RrdT : public Rrd {
+public:
+  using Rrd::Rrd;
+  using Rrd::readFromArray;
+  using Rrd::writeToArray;
+};
+
+
 // Baseline: auto-index appends keep count == number of appends.
 void test_rrd_sequential_append() {
-  Rrd rrd(10);
+  RrdT rrd(10);
   EXPECT(rrd.count() == 0);
   EXPECT(rrd.lastIndex() == 0);
 
@@ -834,7 +842,7 @@ void test_rrd_sequential_append() {
 
 // Baseline: ring wrap caps count at dbSize and keeps the newest dbSize items.
 void test_rrd_sequential_wrap() {
-  Rrd rrd(10);
+  RrdT rrd(10);
   for (int i = 1; i <= 15; ++i) rrd.append(DataArray(std::to_string(i)));
 
   EXPECT(rrd.count() == 10);
@@ -845,7 +853,7 @@ void test_rrd_sequential_wrap() {
 
 // clear() resets first_ and last_ together.
 void test_rrd_clear() {
-  Rrd rrd(10);
+  RrdT rrd(10);
   for (int i = 1; i <= 5; ++i) rrd.append(DataArray(std::to_string(i)));
   EXPECT(rrd.count() == 5);
 
@@ -887,7 +895,7 @@ void test_rrd_file_roundtrip_contiguous() {
   std::filesystem::remove(fn);
 
   {
-    Rrd rrd(1000, fn);
+    RrdT rrd(1000, fn);
     for (int i = 1; i <= 5000; ++i) rrd.append(DataArray(std::to_string(i)));
     EXPECT(rrd.count() == 1000);
     EXPECT(rrd.lastIndex() == 5000);
@@ -895,7 +903,7 @@ void test_rrd_file_roundtrip_contiguous() {
   }
 
   {
-    Rrd rrd(1000, fn);
+    RrdT rrd(1000, fn);
     EXPECT(rrd.lastIndex() == 5000);
     EXPECT_MSG(rrd.count() == 1000, "count() after reload=" + std::to_string(rrd.count()));
     EXPECT_MSG(rrdItemStr(rrd.readFromArray(0)) == "4001", "readFromArray(0)=\"" + rrdItemStr(rrd.readFromArray(0)) + "\"");
@@ -920,7 +928,7 @@ void test_rrd_readonly_load_contiguous() {
   const auto sizeBefore = std::filesystem::file_size(fn);
 
   {
-    Rrd view(0, fn);  // readOnly
+    RrdT view(0, fn);  // readOnly
     EXPECT(view.count() == 1000);
     EXPECT(view.lastIndex() == 5000);
     EXPECT_MSG(rrdItemStr(view.readFromArray(0)) == "4001", "readFromArray(0) in read-only view");
@@ -938,7 +946,7 @@ void test_rrd_readonly_load_contiguous() {
 //     used by RrdClient to start from an arbitrary server position);
 //   - non-empty DB: explicit index must be last_ + 1 (sequential only).
 void test_rrd_append_explicit_index_auto_mode() {
-  Rrd rrd(1000);  // interval_ == 0
+  RrdT rrd(1000);  // interval_ == 0
 
   // 1. Empty DB: any explicit index is allowed.
   rrd.append(DataArray("5000"), 5000);
@@ -980,7 +988,7 @@ void test_rrd_append_explicit_index_auto_mode() {
 // an explicit index; server position is tracked in RrdClient::lastTime, not
 // in Rrd::lastIndex.
 void test_rrd_append_auto_index_matches_rrdclient() {
-  Rrd client(1000);
+  RrdT client(1000);
 
   const uint64_t serverFirst = 4001;
   const uint64_t serverLast = 5000;
@@ -996,7 +1004,7 @@ void test_rrd_append_auto_index_matches_rrdclient() {
 // inside the addressable range [first_, last_]; count() covers the full span,
 // consumers filter empty items.
 void test_rrd_append_explicit_index_with_interval() {
-  Rrd rrd(1000, 1, 0);  // interval = 1, fill = 0
+  RrdT rrd(1000, 1, 0);  // interval = 1, fill = 0
   rrd.append(DataArray("100"), 100);
   rrd.append(DataArray("200"), 200);
   rrd.append(DataArray("400"), 400);
@@ -1017,7 +1025,7 @@ void test_rrd_file_roundtrip_sparse_time_based() {
   std::filesystem::remove(fn);
 
   {
-    Rrd rrd(1000, 1, 0, fn);
+    RrdT rrd(1000, 1, 0, fn);
     rrd.append(DataArray("100"), 100);
     rrd.append(DataArray("200"), 200);
     rrd.append(DataArray("400"), 400);
@@ -1027,7 +1035,7 @@ void test_rrd_file_roundtrip_sparse_time_based() {
   }
 
   {
-    Rrd rrd(1000, 1, 0, fn);
+    RrdT rrd(1000, 1, 0, fn);
     EXPECT_MSG(rrd.lastIndex() == 400, "lastIndex after reload=" + std::to_string(rrd.lastIndex()));
     EXPECT_MSG(rrd.count() == 301, "count after reload=" + std::to_string(rrd.count()));
     EXPECT_MSG(rrdItemStr(rrd.readFromArray(0)) == "100", "readFromArray(0) after reload");
@@ -1048,7 +1056,7 @@ void test_rrd_file_roundtrip_sparse_offset() {
   std::filesystem::remove(fn);
 
   {
-    Rrd rrd(1000, 1, 0, fn);  // interval_ > 0, dbSize = 1000
+    RrdT rrd(1000, 1, 0, fn);  // interval_ > 0, dbSize = 1000
     rrd.append(DataArray("1001"), 1001);
     rrd.append(DataArray("1101"), 1101);
     rrd.append(DataArray("1301"), 1301);
@@ -1058,7 +1066,7 @@ void test_rrd_file_roundtrip_sparse_offset() {
   }
 
   {
-    Rrd rrd(1000, 1, 0, fn);
+    RrdT rrd(1000, 1, 0, fn);
     EXPECT_MSG(rrd.lastIndex() == 1301, "lastIndex after reload=" + std::to_string(rrd.lastIndex()));
     EXPECT_MSG(rrd.count() == 301, "count after reload=" + std::to_string(rrd.count()) + " (sparse positions > dbSize: first_ must be 1001, not last_ - dbSize + 1 = 302)");
     EXPECT_MSG(rrdItemStr(rrd.readFromArray(0)) == "1001", "readFromArray(0) after reload=\"" + rrdItemStr(rrd.readFromArray(0)) + "\"");
@@ -1076,7 +1084,7 @@ void test_rrd_file_roundtrip_first_equals_dbsize() {
   std::filesystem::remove(fn);
 
   {
-    Rrd rrd(10, 1, 0, fn);
+    RrdT rrd(10, 1, 0, fn);
     rrd.append(DataArray("data"), 10);  // pos == dbSize
     EXPECT(rrd.count() == 1);
     EXPECT(rrd.lastIndex() == 10);
@@ -1084,7 +1092,7 @@ void test_rrd_file_roundtrip_first_equals_dbsize() {
   }
 
   {
-    Rrd rrd(10, 1, 0, fn);
+    RrdT rrd(10, 1, 0, fn);
     EXPECT_MSG(rrd.count() == 1, "count=" + std::to_string(rrd.count()) + " (was: fallback wrap = 10)");
     EXPECT_MSG(rrd.lastIndex() == 10, "lastIndex=" + std::to_string(rrd.lastIndex()));
     EXPECT_MSG(rrdItemStr(rrd.readFromArray(0)) == "data", "readFromArray(0)=\"" + rrdItemStr(rrd.readFromArray(0)) + "\"");
@@ -1115,7 +1123,7 @@ void test_rrd_first_persisted_sparse() {
 
   // ---- Phase 1: build sparse DB and save -----------------------------
   {
-    Rrd rrd(10, 1, 0, fn);
+    RrdT rrd(10, 1, 0, fn);
     rrd.append(DataArray("A"), 1);
     rrd.append(DataArray("B"), 21);
 
@@ -1128,7 +1136,7 @@ void test_rrd_first_persisted_sparse() {
 
   // ---- Phase 2: reload (read-write) ----------------------------------
   {
-    Rrd rrd(10, 1, 0, fn);
+    RrdT rrd(10, 1, 0, fn);
     EXPECT_MSG(rrd.lastIndex() == 21, "lastIndex after reload=" + std::to_string(rrd.lastIndex()));
     EXPECT_MSG(rrd.count() == 10, "count after reload=" + std::to_string(rrd.count()) +
                                       " (expected 10; without first_ persisted, scan-based reconstruction "
@@ -1141,7 +1149,7 @@ void test_rrd_first_persisted_sparse() {
   // Rrd(0, fn) must not modify the file and must restore first_ too.
   const auto sizeBefore = std::filesystem::file_size(fn);
   {
-    Rrd view(0, fn);  // readOnly
+    RrdT view(0, fn);  // readOnly
     EXPECT_MSG(view.lastIndex() == 21, "read-only lastIndex=" + std::to_string(view.lastIndex()));
     EXPECT_MSG(view.count() == 10, "read-only count=" + std::to_string(view.count()));
     EXPECT_MSG(rrdItemStr(view.readFromArray(0)) == "", "read-only readFromArray(0) (gap at position 12)");
@@ -1172,11 +1180,11 @@ void test_rrd_reload_single_at_one() {
   const std::string fn = "/tmp/AsyncFw-test-rrd-reload-single1.db";
   std::filesystem::remove(fn);
   {
-    Rrd r(1000, 0, 0, fn);
+    RrdT r(1000, 0, 0, fn);
     r.append(DataArray("x"), 1);
     r.save();
   }
-  Rrd r(1000, 0, 0, fn);
+  RrdT r(1000, 0, 0, fn);
   EXPECT_MSG(r.count() == 1, "count=" + std::to_string(r.count()));
   EXPECT(r.lastIndex() == 1);
   EXPECT(rrdItemStr(r.readFromArray(0)) == "x");
@@ -1188,11 +1196,11 @@ void test_rrd_reload_single_at_high() {
   const std::string fn = "/tmp/AsyncFw-test-rrd-reload-singleN.db";
   std::filesystem::remove(fn);
   {
-    Rrd r(1000, 0, 0, fn);
+    RrdT r(1000, 0, 0, fn);
     r.append(DataArray("x"), 5000);
     r.save();
   }
-  Rrd r(1000, 0, 0, fn);
+  RrdT r(1000, 0, 0, fn);
   EXPECT_MSG(r.count() == 1, "count=" + std::to_string(r.count()));
   EXPECT(r.lastIndex() == 5000);
   EXPECT(rrdItemStr(r.readFromArray(0)) == "x");
@@ -1214,7 +1222,7 @@ void test_rrd_first_persisted_unwrapped() {
   std::filesystem::remove(fn);
 
   {
-    Rrd rrd(10, 1, 0, fn);
+    RrdT rrd(10, 1, 0, fn);
     rrd.append(DataArray("x"), 5);
     rrd.append(DataArray("y"), 8);
     EXPECT_MSG(rrd.count() == 4, "pre-save count=" + std::to_string(rrd.count()));
@@ -1223,7 +1231,7 @@ void test_rrd_first_persisted_unwrapped() {
   }
 
   {
-    Rrd rrd(10, 1, 0, fn);
+    RrdT rrd(10, 1, 0, fn);
     EXPECT_MSG(rrd.lastIndex() == 8, "lastIndex after reload=" + std::to_string(rrd.lastIndex()));
     EXPECT_MSG(rrd.count() == 4, "count after reload=" + std::to_string(rrd.count()) + " (span=4 < dbSize=10; formula would give 8; only persisted first_=5 is correct)");
     EXPECT_MSG(rrdItemStr(rrd.readFromArray(0)) == "x", "readFromArray(0) after reload=\"" + rrdItemStr(rrd.readFromArray(0)) + "\"");
@@ -1241,7 +1249,7 @@ void test_rrd_interval_zero_sparse_start() {
   std::filesystem::remove(fn);
 
   {
-    Rrd rrd(1000, 0, 0, fn);
+    RrdT rrd(1000, 0, 0, fn);
     for (uint64_t i = 0; i < 100; ++i) rrd.append(DataArray(std::to_string(4001 + i)), 4001 + i);
     EXPECT_MSG(rrd.count() == 100, "pre-save count=" + std::to_string(rrd.count()));
     EXPECT_MSG(rrd.lastIndex() == 4100, "pre-save lastIndex=" + std::to_string(rrd.lastIndex()));
@@ -1249,7 +1257,7 @@ void test_rrd_interval_zero_sparse_start() {
   }
 
   {
-    Rrd rrd(1000, 0, 0, fn);
+    RrdT rrd(1000, 0, 0, fn);
     EXPECT_MSG(rrd.count() == 100, "count after reload=" + std::to_string(rrd.count()) + " (interval_=0 must use scan; formula would give last_-dbSize+1 = 3101)");
     EXPECT_MSG(rrd.lastIndex() == 4100, "lastIndex after reload=" + std::to_string(rrd.lastIndex()));
     EXPECT_MSG(rrdItemStr(rrd.readFromArray(0)) == "4001", "readFromArray(0) after reload=\"" + rrdItemStr(rrd.readFromArray(0)) + "\"");
@@ -1292,7 +1300,7 @@ void test_rrd_legacy_file_interval0_wrapped() {
   for (uint64_t p = 191; p <= 200; ++p) db[p % 10] = DataArray(std::to_string(p));
   writeLegacyRrdFile(fn, 200, db);
 
-  Rrd rrd(10, 0, 0, fn);  // interval_ == 0 -> scan branch
+  RrdT rrd(10, 0, 0, fn);  // interval_ == 0 -> scan branch
   EXPECT_MSG(rrd.lastIndex() == 200, "lastIndex=" + std::to_string(rrd.lastIndex()));
   EXPECT_MSG(rrd.count() == 10, "count=" + std::to_string(rrd.count()) +
                                     " (legacy file, no first_: scan must reconstruct first_=191, "
@@ -1321,7 +1329,7 @@ void test_rrd_legacy_file_interval0_single_high() {
   db[5000 % 1000] = DataArray("x");
   writeLegacyRrdFile(fn, 5000, db);
 
-  Rrd rrd(1000, 0, 0, fn);  // interval_ == 0 -> scan branch
+  RrdT rrd(1000, 0, 0, fn);  // interval_ == 0 -> scan branch
   EXPECT_MSG(rrd.lastIndex() == 5000, "lastIndex=" + std::to_string(rrd.lastIndex()));
   EXPECT_MSG(rrd.count() == 1, "count=" + std::to_string(rrd.count()) + " (legacy scan must find first_=5000; formula would inflate to 1000)");
   EXPECT_MSG(rrdItemStr(rrd.readFromArray(0)) == "x", "readFromArray(0)=\"" + rrdItemStr(rrd.readFromArray(0)) + "\"");
@@ -1347,7 +1355,7 @@ void test_rrd_legacy_file_interval_positive_wrapped() {
   for (uint64_t p = 191; p <= 200; ++p) db[p % 10] = DataArray(std::to_string(p));
   writeLegacyRrdFile(fn, 200, db);
 
-  Rrd rrd(10, 1, 0, fn);  // interval_ > 0 -> formula fallback
+  RrdT rrd(10, 1, 0, fn);  // interval_ > 0 -> formula fallback
   EXPECT_MSG(rrd.lastIndex() == 200, "lastIndex=" + std::to_string(rrd.lastIndex()));
   EXPECT_MSG(rrd.count() == 10, "count=" + std::to_string(rrd.count()) +
                                     " (legacy file, no first_: interval_>0 fallback uses formula "

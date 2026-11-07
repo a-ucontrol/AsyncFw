@@ -47,14 +47,6 @@ public:
   uint32_t size() { return dbSize; }
   /** @brief Returns the total number of valid data items currently populated inside the database allocation framework. */
   uint32_t count() const;
-
-  /** @brief Directly extracts a raw binary data array chunk element from the specified ring buffer index allocation slot.
-  @warning Must lock the target processing background thread before executing this method context. */
-  Item readFromArray(uint32_t);
-  /** @brief Directly overwrites a raw binary data array chunk element at the specified ring buffer index allocation slot.
-  @warning Must lock the target processing background thread before executing this method context. */
-  void writeToArray(uint32_t, const Item &);
-
   /** @brief Ingests and commits a new item layout entry directly into the tail of the circular timeline framework tracking stack. */
   void append(const Item &data, uint64_t index = 0);
   /** @brief Forces a synchronous flushing execution write path to save memory tables down to an explicit local filesystem file path. */
@@ -71,6 +63,13 @@ public:
   Thread *thread() { return thread_; }
 
 protected:
+  /** @brief Directly extracts a raw binary data array chunk element from the specified ring buffer index allocation slot.
+  @warning Must lock the target processing background thread before executing this method context. */
+  Item readFromArray(uint32_t);
+  /** @brief Directly overwrites a raw binary data array chunk element at the specified ring buffer index allocation slot.
+  @warning Must lock the target processing background thread before executing this method context. */
+  void writeToArray(uint32_t, const Item &);
+
   Thread *thread_;
   uint64_t first_;
   uint64_t last_;
