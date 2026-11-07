@@ -17,6 +17,7 @@
 //
 
 #include <cstring>
+#include <set>
 #ifndef _WIN32
   #include <pthread.h>
   #include <signal.h>
@@ -537,6 +538,203 @@ void test_filesystemwatcher_scenarios() {
     EXPECT(scenarioCRemoved.load() == 1);
     EXPECT(scenarioCCreated.load() == 1);
 
+    MainThread::exit();
+  });
+
+  MainThread::exec();
+}
+
+// ============================================================================
+// Wildcard — Created fires for each new file, no per-file watch installed.
+//
+// Regression contract (see linux/FileSystemWatcher.cpp IN_CREATE handler):
+//   - Created(f) for every new file in the wildcard directory
+//   - Removed(f) for every removed file (IN_DELETE compares by descriptor,
+//     works for both wildcard and exact-existing entries)
+//   - Changed(f) NEVER fires: wildcard does not install per-file watches,
+//     so IN_MODIFY / IN_CLOSE_WRITE never reach the watcher
+// ============================================================================
+void test_filesystemwatcher_wildcard() {
+  const std::string dir = "/tmp/AsyncFw-test-FileSystemWatcher-wildcard";
+  const std::string f1 = dir + "/one.txt";
+  const std::string f2 = dir + "/two.txt";
+
+  std::error_code ec;
+  std::filesystem::remove_all(dir, ec);
+  std::filesystem::create_directories(dir, ec);
+
+  FileSystemWatcher watcher;
+  std::atomic<int> createdCount {0};
+  std::atomic<int> removedCount {0};
+  std::atomic<int> changedCount {0};
+  std::mutex m;
+  std::set<std::string> createdPaths;
+
+  FunctionConnectionGuard g = watcher.notify.connect([&](const std::string &path, int event) {
+    if (event == 1) {
+      ++createdCount;
+      std::lock_guard<std::mutex> l(m);
+      createdPaths.insert(path);
+    } else if (event == -1) {
+      ++removedCount;
+    } else {
+      ++changedCount;
+    }
+  });
+
+  EXPECT_MSG(watcher.addPath(dir + "/*"), "addPath wildcard failed");
+
+  Timer::single(100, [f1]() {
+    File _f {f1};
+    _f.open(std::ios::binary | std::ios::out);
+  });
+  Timer::single(200, [f2]() {
+    File _f {f2};
+    _f.open(std::ios::binary | std::ios::out);
+  });
+  Timer::single(400, [f1]() { std::filesystem::remove(f1); });
+  Timer::single(500, [f2]() { std::filesystem::remove(f2); });
+
+  Timer::single(700, [&, f1, f2]() {
+    {
+      std::lock_guard<std::mutex> l(m);
+      EXPECT_MSG(createdPaths.count(f1) == 1, "Created(" + f1 + ") not observed");
+      EXPECT_MSG(createdPaths.count(f2) == 1, "Created(" + f2 + ") not observed");
+    }
+    EXPECT_MSG(createdCount.load() == 2,
+               "createdCount=" + std::to_string(createdCount.load()) + " (expected 2)");
+    EXPECT_MSG(removedCount.load() == 2,
+               "removedCount=" + std::to_string(removedCount.load()) + " (expected 2)");
+    EXPECT_MSG(changedCount.load() == 0,
+               "changedCount=" + std::to_string(changedCount.load()) +
+                   " — wildcard must not install a per-file watch");
+    MainThread::exit();
+  });
+
+  MainThread::exec();
+}
+
+// ============================================================================
+// Exact-missing: adding a path that doesn't exist yet falls back to a
+// directory watch (IN_CREATE | IN_DELETE). An UNRELATED file being
+// created/deleted in that directory must NOT surface as Created/Removed
+// for the watched path.
+//
+// This is exactly the case that the current linux/FileSystemWatcher.cpp
+// IN_CREATE handler must preserve: the `notify(...)` for the exact branch
+// is inside `else` (file watch added successfully), and `else if ((*itw)->
+// name == "*")` only fires for wildcard entries.
+//
+// Timeline:
+//   100ms: create unrelated.txt (no exact match, no wildcard -> no notify)
+//   200ms: delete unrelated.txt (IN_DELETE, `itw` lookup fails -> no notify)
+//   400ms: create watched.txt (exact match -> file watch installed ->
+//          notify(Created))
+//   600ms: verify
+// ============================================================================
+void test_filesystemwatcher_exact_missing_no_spurious_notify() {
+  const std::string dir = "/tmp/AsyncFw-test-FileSystemWatcher-exact-missing";
+  const std::string watched = dir + "/watched.txt";
+  const std::string unrelated = dir + "/unrelated.txt";
+
+  std::error_code ec;
+  std::filesystem::remove_all(dir, ec);
+  std::filesystem::create_directories(dir, ec);
+
+  FileSystemWatcher watcher;
+  std::atomic<int> createdCount {0};
+  std::atomic<int> removedCount {0};
+  std::mutex m;
+  std::set<std::string> createdPaths;
+  std::set<std::string> removedPaths;
+
+  FunctionConnectionGuard g = watcher.notify.connect([&](const std::string &path, int event) {
+    std::lock_guard<std::mutex> l(m);
+    if (event == 1) { ++createdCount; createdPaths.insert(path); }
+    else if (event == -1) { ++removedCount; removedPaths.insert(path); }
+  });
+
+  EXPECT_MSG(watcher.addPath(watched), "addPath(exact, missing) failed");
+
+  Timer::single(100, [unrelated]() {
+    File _f {unrelated};
+    _f.open(std::ios::binary | std::ios::out);
+  });
+  Timer::single(200, [unrelated]() {
+    std::filesystem::remove(unrelated);
+  });
+  Timer::single(400, [watched]() {
+    File _f {watched};
+    _f.open(std::ios::binary | std::ios::out);
+  });
+
+  Timer::single(600, [&, watched, unrelated]() {
+    std::lock_guard<std::mutex> l(m);
+    EXPECT_MSG(createdPaths.count(unrelated) == 0,
+               "spurious Created(" + unrelated + "): exact watcher fired on unrelated file");
+    EXPECT_MSG(removedPaths.count(unrelated) == 0,
+               "spurious Removed(" + unrelated + "): exact watcher fired on unrelated file");
+    EXPECT_MSG(createdPaths.count(watched) == 1,
+               "Created(" + watched + ") missing — watcher didn't notice its own file");
+    EXPECT_MSG(createdCount.load() == 1,
+               "createdCount=" + std::to_string(createdCount.load()) + " (expected 1)");
+    MainThread::exit();
+  });
+
+  MainThread::exec();
+}
+
+// ============================================================================
+// Exact + Wildcard coexistence: exact match takes priority; the wildcard
+// branch must fire only for files NOT covered by an exact entry.
+//
+// This pins the `else if ((*itw)->name == "*")` branch: without it,
+// a file that doesn't match any exact entry would silently disappear
+// when both entries are registered in the same directory.
+//
+//   addPath(dir/watched.txt) + addPath(dir/*)
+//   create other.txt  -> wildcard branch fires: Created(other.txt)
+//   create watched.txt -> exact branch fires: Created(watched.txt),
+//                         NOT also Created(watched.txt) from wildcard
+// ============================================================================
+void test_filesystemwatcher_exact_and_wildcard() {
+  const std::string dir = "/tmp/AsyncFw-test-FileSystemWatcher-exact-wildcard";
+  const std::string watched = dir + "/watched.txt";
+  const std::string other = dir + "/other.txt";
+
+  std::error_code ec;
+  std::filesystem::remove_all(dir, ec);
+  std::filesystem::create_directories(dir, ec);
+
+  FileSystemWatcher watcher;
+  std::atomic<int> watchedCount {0};
+  std::atomic<int> otherCount {0};
+
+  FunctionConnectionGuard g = watcher.notify.connect([&](const std::string &path, int event) {
+    if (event != 1) return;
+    if (path == watched) ++watchedCount;
+    else if (path == other) ++otherCount;
+  });
+
+  EXPECT_MSG(watcher.addPath(watched), "addPath(exact) failed");
+  EXPECT_MSG(watcher.addPath(dir + "/*"), "addPath(wildcard) failed");
+
+  Timer::single(100, [other]() {
+    File _f {other};
+    _f.open(std::ios::binary | std::ios::out);
+  });
+  Timer::single(300, [watched]() {
+    File _f {watched};
+    _f.open(std::ios::binary | std::ios::out);
+  });
+
+  Timer::single(500, [&]() {
+    EXPECT_MSG(otherCount.load() == 1,
+               "Created(other.txt) count=" + std::to_string(otherCount.load()) +
+                   " (expected 1: wildcard branch)");
+    EXPECT_MSG(watchedCount.load() == 1,
+               "Created(watched.txt) count=" + std::to_string(watchedCount.load()) +
+                   " (expected 1: exact branch takes priority, no double-notify)");
     MainThread::exit();
   });
 
@@ -1997,6 +2195,9 @@ int main(int, char **) {
   // permanently finishes Main's event loop.
   test_filesystemwatcher_recreate_in_debounce_window();
   test_filesystemwatcher_scenarios();
+  test_filesystemwatcher_wildcard();
+  test_filesystemwatcher_exact_missing_no_spurious_notify();
+  test_filesystemwatcher_exact_and_wildcard();
 
   // --- io_uring listen rebind (regression) ----------------------------
   // Must come before test_exit_signal_spam (Group F), which leaves the

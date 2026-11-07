@@ -166,10 +166,11 @@ FileSystemWatcher::FileSystemWatcher(const std::vector<std::string> &paths) : pr
           } else {
             itd = std::lower_bound(private_.wds_.begin(), private_.wds_.end(), (*itw)->d, Private::CompareWatchDescriptor());
             private_.wds_.insert(itd, *itw);
-            notify(wp.directory + '/' + e->name, Created);
-            lsDebug() << "created (watch directory)" << wp.directory + '/' + wp.name;
           }
         }
+        // considering ((*itw)->name == "*")
+        notify(wp.directory + '/' + e->name, Created);
+        lsDebug() << "created (watch directory)" << wp.directory + '/' + wp.name;
         continue;
       }
       if (e->mask & IN_DELETE) {
