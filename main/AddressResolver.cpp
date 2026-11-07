@@ -32,6 +32,7 @@ struct AddressResolver::Private {
       if (static_cast<Private *>(data)->events) {
         if (!e) {
           static_cast<Private *>(data)->thread->removePollDescriptor(s);
+          static_cast<Private *>(data)->events = AbstractThread::PollNo;
           const ares_fd_events_t _ae = {s, ARES_FD_EVENT_NONE};
           ares_process_fds(static_cast<Private *>(data)->channel, &_ae, 1, 0);
         } else if (static_cast<uint8_t>(static_cast<Private *>(data)->events) != static_cast<uint8_t>(e)) {
