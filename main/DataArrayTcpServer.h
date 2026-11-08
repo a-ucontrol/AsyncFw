@@ -31,6 +31,9 @@ public:
   /** @brief Checks whether the server is currently actively listening for incoming connections. @return True if listening. */
   bool listening();
 
+  /** @brief Signal / Connector triggered when any managed socket disconnected. */
+  FunctionConnector<const DataArraySocket *>::Policy<AbstractFunctionConnector::DirectOnly>::Protected<DataArrayTcpServer> disconnected;
+
 private:
   class Thread : public DataArrayAbstractTcp::Thread {
     friend class DataArrayTcpServer;
