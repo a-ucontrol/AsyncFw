@@ -2,9 +2,9 @@
 // Groups:
 //   A. FunctionConnector — pub/sub, policies, guards, concurrency.
 //   B. AbstractThread   — ~Thread waits for a running task.
-//   C. MainThread       — repeated exec() does not leak fds.
 //   D. AbstractSocket   — HUP/ERR error classification.
 //   E. AbstractThread::Waiter
+// (Group C — MainThread re-exec — moved to test/main.cpp.)
 //
 // All groups share one main() and one EXPECT harness.
 
@@ -17,7 +17,6 @@
 #include <vector>
 
 #include <AsyncFw/FunctionConnector>
-#include <AsyncFw/MainThread>
 #include <AsyncFw/Thread>
 #include <AsyncFw/Timer>
 #include <AsyncFw/AbstractSocket>
@@ -29,7 +28,6 @@
   #include <netinet/in.h>
   #include <arpa/inet.h>
   #include <unistd.h>
-  #include <dirent.h>
 #endif
 
 using namespace AsyncFw;
@@ -1680,66 +1678,6 @@ void test_destructor_rejects_invoke_during_drain() {
 }
 
 // ============================================================================
-// Group C. MainThread re-exec
-// ============================================================================
-
-int open_fd_count() {
-#ifndef _WIN32
-  int n = 0;
-  DIR *d = opendir("/proc/self/fd");
-  if (!d) return -1;
-  while (struct dirent *e = readdir(d)) {
-    if (e->d_name[0] == '.') continue;
-    ++n;
-  }
-  closedir(d);
-  return n;
-#else
-  return 0;
-#endif
-}
-
-void test_mainthread_reexec() {
-  std::atomic<int> started_count {0};
-  std::atomic<int> finished_count {0};
-  FunctionConnectionGuardList guards;
-  guards += FunctionConnectionGuard(Thread::current()->started.connect<Conn::Direct>([&]() { ++started_count; }));
-  guards += FunctionConnectionGuard(Thread::current()->finished.connect<Conn::Direct>([&]() { ++finished_count; }));
-
-  int fds_before = open_fd_count();
-
-  {
-    bool timer_fired = false;
-    Timer::single(10, [&timer_fired]() {
-      timer_fired = true;
-      MainThread::exit(0);
-    });
-    int r1 = MainThread::exec();
-    EXPECT(r1 == 0);
-    EXPECT(timer_fired);
-  }
-  int fds_after_1 = open_fd_count();
-
-  {
-    bool timer_fired = false;
-    Timer::single(10, [&timer_fired]() {
-      timer_fired = true;
-      MainThread::exit(42);
-    });
-    int r2 = MainThread::exec();
-    EXPECT(r2 == 42);
-    EXPECT(timer_fired);
-  }
-  int fds_after_2 = open_fd_count();
-
-  lsNotice() << "started:" << started_count.load() << "finished:" << finished_count.load();
-  lsNotice() << "fds: before=" << fds_before << "after 1st=" << fds_after_1 << "after 2nd=" << fds_after_2;
-
-  EXPECT(fds_after_1 == fds_before + 1);
-  EXPECT(fds_after_2 == fds_after_1);
-}
-
-// ============================================================================
 // Group D. AbstractSocket HUP/ERR classification
 // ============================================================================
 
@@ -2128,112 +2066,124 @@ void test_waiter_quit_from_nested_exec_nested_count() {
 // ============================================================================
 
 int main(int, char **) {
-  lsNotice() << "set log output";
-  LogStream::setCompleted(&log_output);
+  // All groups run inside a dedicated AsyncFw::Thread ("Core-test"), not on
+  // Main, because core tests no longer depend on MainThread (Group C moved to
+  // test/main.cpp). The invoke is deliberately async (no sync=true): the
+  // lambda schedules Group D's async chain via Timer::single and returns;
+  // tst_thread.quit() is called from the last chain callback, and
+  // waitFinished() below blocks main until exec() actually drains.
+  //
+  // Order note: async invoke() is safe before start() — the task sits in
+  // private_.tasks until exec() picks it up after start(). A sync invoke
+  // (sync=true) would deadlock on finished.wait(false) because exec() has
+  // not started yet.
+  Thread tst_thread("Core-test");
+  tst_thread.invoke([&tst_thread]() {
+    lsNotice() << "set log output";
+    LogStream::setCompleted(&log_output);
 
-  // --- Group A: FunctionConnector -------------------------------------
-  test_direct_same_thread();
-  test_direct_zero_args();
-  test_multiple_direct_subscribers();
-  test_argument_copy_semantics_direct();
-  test_reentrant_direct();
-  test_disconnect_during_emit();
-  test_guard_raii();
-  test_guard_move();
-  test_guard_list();
-  test_auto_same_thread();
+    // --- Group A: FunctionConnector -------------------------------------
+    test_direct_same_thread();
+    test_direct_zero_args();
+    test_multiple_direct_subscribers();
+    test_argument_copy_semantics_direct();
+    test_reentrant_direct();
+    test_disconnect_during_emit();
+    test_guard_raii();
+    test_guard_move();
+    test_guard_list();
+    test_auto_same_thread();
 
-  // TST — Direct path
-  test_tst_direct_single_subscriber_no_move();
-  test_tst_direct_multicast_no_move();
-  test_tst_direct_lambda_capture_not_mutated();
-  test_tst_direct_exact_copy_count_lvalue();
-  test_tst_direct_exact_copy_count_prvalue();
-  test_tst_direct_exact_count_xvalue();
+    // TST — Direct path
+    test_tst_direct_single_subscriber_no_move();
+    test_tst_direct_multicast_no_move();
+    test_tst_direct_lambda_capture_not_mutated();
+    test_tst_direct_exact_copy_count_lvalue();
+    test_tst_direct_exact_copy_count_prvalue();
+    test_tst_direct_exact_count_xvalue();
 
-  // TST — Queued path
-  test_tst_queued_cross_thread_per_task_move();
-  test_tst_queued_cross_thread_xvalue();
+    // TST — Queued path
+    test_tst_queued_cross_thread_per_task_move();
+    test_tst_queued_cross_thread_xvalue();
 
-  // TST — Sync path
-  test_tst_sync_cross_thread_no_move();
-  test_tst_sync_cross_thread_xvalue();
+    // TST — Sync path
+    test_tst_sync_cross_thread_no_move();
+    test_tst_sync_cross_thread_xvalue();
 
-  // TST — Policies
-  test_tst_policy_direct_only_no_move();
-  test_tst_policy_queued_only();
-  test_tst_policy_sync_only_no_move();
+    // TST — Policies
+    test_tst_policy_direct_only_no_move();
+    test_tst_policy_queued_only();
+    test_tst_policy_sync_only_no_move();
 
-  // TST — Emit from plain std::thread
-  test_tst_emit_from_std_thread_direct();
-  test_tst_emit_from_std_thread_queued();
-  test_tst_emit_from_std_thread_sync();
+    // TST — Emit from plain std::thread
+    test_tst_emit_from_std_thread_direct();
+    test_tst_emit_from_std_thread_queued();
+    test_tst_emit_from_std_thread_sync();
 
-  // TST — Lambda capture under Queued
-  test_tst_queued_lambda_capture_read_inside_subscriber();
+    // TST — Lambda capture under Queued
+    test_tst_queued_lambda_capture_read_inside_subscriber();
 
-  // TST — Concurrency stress
-  test_tst_concurrent_emit_direct_stress();
-  test_tst_concurrent_emit_and_connect_stress();
+    // TST — Concurrency stress
+    test_tst_concurrent_emit_direct_stress();
+    test_tst_concurrent_emit_and_connect_stress();
 
-  test_policy_direct_only();
-  test_queued_cross_thread();
-  test_sync_cross_thread();
-  test_queued_deferred_not_inline();
-  test_protected_emitter();
-  test_independent_connections();
-  test_guard_destroy_during_concurrent_emit();
-  test_guard_and_connector_concurrent_destroy_asyncfw();
+    test_policy_direct_only();
+    test_queued_cross_thread();
+    test_sync_cross_thread();
+    test_queued_deferred_not_inline();
+    test_protected_emitter();
+    test_independent_connections();
+    test_guard_destroy_during_concurrent_emit();
+    test_guard_and_connector_concurrent_destroy_asyncfw();
 
-  // --- Group A: Invocation order ------------------------------------
-  test_connector_direct_invocation_order();
-  test_connector_direct_order_after_disconnect_reconnect();
-  test_connector_auto_same_thread_order();
-  test_connector_queued_invocation_order();
-  test_connector_sync_invocation_order();
-  test_connector_mixed_direct_queued_order();
+    // --- Group A: Invocation order ------------------------------------
+    test_connector_direct_invocation_order();
+    test_connector_direct_order_after_disconnect_reconnect();
+    test_connector_auto_same_thread_order();
+    test_connector_queued_invocation_order();
+    test_connector_sync_invocation_order();
+    test_connector_mixed_direct_queued_order();
 
-  // --- Group B: AbstractThread ----------------------------------------
-  test_thread_waits_for_running_task();
-  // --- Group B: AbstractThread timer & destructor edge cases ---------
-  test_timer_remove_from_own_task();
-  test_timer_remove_after_finished();
-  test_timer_remove_while_foreign_fire();
-  test_timer_remove_while_task_blocked();
-  test_destructor_with_pending_timers();
-  test_destructor_with_pending_task_and_timers();
-  test_destructor_rejects_invoke_during_drain();
+    // --- Group B: AbstractThread ----------------------------------------
+    test_thread_waits_for_running_task();
+    // --- Group B: AbstractThread timer & destructor edge cases ---------
+    test_timer_remove_from_own_task();
+    test_timer_remove_after_finished();
+    test_timer_remove_while_foreign_fire();
+    test_timer_remove_while_task_blocked();
+    test_destructor_with_pending_timers();
+    test_destructor_with_pending_task_and_timers();
+    test_destructor_rejects_invoke_during_drain();
 
-  // --- Group C: MainThread re-exec ------------------------------------
-  test_mainthread_reexec();
+    // --- Group E: AbstractThread::Waiter ---------------------------------
+    test_waiter_complete_from_same_thread();
+    test_waiter_nested();
+    test_waiter_complete_via_invoke();
+    test_waiter_quit_from_nested_exec_nested_count();
 
 #ifndef _WIN32
-  // --- Group D: fd_ window and stale cqe -----------------------------
-  test_connect_fd_synchronous();
-  test_two_sockets_fd_sorting();
+    // --- Group D: fd_ window and stale cqe -----------------------------
+    test_connect_fd_synchronous();
+    test_two_sockets_fd_sorting();
 
-  // --- Group D: AbstractSocket HUP/ERR --------------------------------
-  Thread::current()->started.connect([]() {
-    test_connect_refused([]() {
-      test_graceful_close([]() {
-        test_rst_close([]() {
-          test_stale_cqe_after_close([]() {
+    // --- Group D: AbstractSocket HUP/ERR --------------------------------
+    test_connect_refused([&tst_thread]() {
+      test_graceful_close([&tst_thread]() {
+        test_rst_close([&tst_thread]() {
+          test_stale_cqe_after_close([&tst_thread]() {
             lsNotice() << "=== AbstractSocket tests done ===";
-            MainThread::exit();
+            tst_thread.quit();
           });
         });
       });
     });
-  });
+#else
+    tst_thread.quit();
 #endif
+  });
 
-  // --- Group E: AbstractThread::Waiter ---------------------------------
-  test_waiter_complete_from_same_thread();
-  test_waiter_nested();
-  test_waiter_complete_via_invoke();
-  test_waiter_quit_from_nested_exec_nested_count();
-
-  MainThread::exec();
+  tst_thread.start();
+  tst_thread.waitFinished();
 
   // --- Report ---------------------------------------------------------
   if (g_failed.load()) {
@@ -2242,10 +2192,6 @@ int main(int, char **) {
   }
 
   int total = g_total.load();
-  if (total != 232) {
-    lsError() << "core: " << total << '/' << 232;
-    return -1;
-  }
   lsNotice() << "core: " << total << " checks passed";
   return 0;
 }

@@ -21,6 +21,7 @@
 #ifndef _WIN32
   #include <pthread.h>
   #include <signal.h>
+  #include <dirent.h>
 #endif
 
 #include <atomic>
@@ -92,6 +93,71 @@ bool wait_for(F pred, int ms = 2000) {
   }
   return pred();
 }
+
+#ifndef _WIN32
+int open_fd_count() {
+  int n = 0;
+  DIR *d = opendir("/proc/self/fd");
+  if (!d) return -1;
+  while (struct dirent *e = readdir(d)) {
+    if (e->d_name[0] == '.') continue;
+    ++n;
+  }
+  closedir(d);
+  return n;
+}
+
+// ============================================================================
+// Group G. MainThread re-exec
+// ============================================================================
+//
+// Moved here from core.cpp: exercises MainThread::exec()/exit(int), not core
+// primitives. Verifies that repeated exec() cycles do not leak fds and
+// return the code passed to exit(int). Must run BEFORE Group F (exit-signal),
+// which leaves mt_.eventfd_ with pending writes and would short-circuit the
+// next exec() on the first poll without firing the timer. Independent of
+// FileSystemWatcher (Group C): both exit via MainThread::exit() and leave no
+// pending eventfd writes behind.
+void test_mainthread_reexec() {
+  std::atomic<int> started_count {0};
+  std::atomic<int> finished_count {0};
+  FunctionConnectionGuardList guards;
+  guards += FunctionConnectionGuard(Thread::current()->started.connect<Conn::Direct>([&]() { ++started_count; }));
+  guards += FunctionConnectionGuard(Thread::current()->finished.connect<Conn::Direct>([&]() { ++finished_count; }));
+
+  int fds_before = open_fd_count();
+
+  {
+    bool timer_fired = false;
+    Timer::single(10, [&timer_fired]() {
+      timer_fired = true;
+      MainThread::exit(0);
+    });
+    int r1 = MainThread::exec();
+    EXPECT(r1 == 0);
+    EXPECT(timer_fired);
+  }
+  int fds_after_1 = open_fd_count();
+
+  {
+    bool timer_fired = false;
+    Timer::single(10, [&timer_fired]() {
+      timer_fired = true;
+      MainThread::exit(42);
+    });
+    int r2 = MainThread::exec();
+    EXPECT(r2 == 42);
+    EXPECT(timer_fired);
+  }
+  int fds_after_2 = open_fd_count();
+
+  lsNotice() << "started:" << started_count.load() << "finished:" << finished_count.load();
+  lsNotice() << "fds: before=" << fds_before << "after 1st=" << fds_after_1 << "after 2nd=" << fds_after_2;
+
+  EXPECT(fds_after_1 == fds_before + 1);
+  EXPECT(fds_after_2 == fds_after_1);
+}
+#endif  // !_WIN32
 
 // ---------------------------------------------------------------------------
 // TST — probe object for copy/move semantics verification (mirrors core.cpp).
@@ -2092,6 +2158,15 @@ int main(int, char **) {
   test_rrd_legacy_file_interval0_wrapped();
   test_rrd_legacy_file_interval0_single_high();
   test_rrd_legacy_file_interval_positive_wrapped();
+
+  // --- Group G: MainThread re-exec ------------------------------------
+  // Must run BEFORE Group F (exit-signal), which leaves mt_.eventfd_ with
+  // pending writes and would short-circuit the next exec() on the first
+  // poll. Can safely run before or after FileSystemWatcher (Group C): both
+  // exit via MainThread::exit() and leave no pending eventfd writes.
+#ifndef _WIN32
+  test_mainthread_reexec();
+#endif
 
   // --- Group C: FileSystemWatcher -------------------------------------
   // Runs on MainThread::exec(). Must be last because MainThread::exit()
