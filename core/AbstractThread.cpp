@@ -527,7 +527,10 @@ void AbstractThread::setId() {
   std::vector<AbstractThread *>::iterator it = std::lower_bound(Private::list.begin(), Private::list.end(), this, Private::Compare());
   if (it != Private::list.end() && (*it) == this) {
     Private::list.erase(it);
-    private_.id = _id;
+    {  //lock scope
+      LockGuard lock(private_.mutex);
+      private_.id = _id;
+    }
     it = std::lower_bound(Private::list.begin(), Private::list.end(), this, Private::Compare());
     Private::list.insert(it, this);
     trace() << LOG_THREAD_NAME << LogStream::Color::Magenta << _id;
@@ -542,14 +545,17 @@ void AbstractThread::clearId() {
   std::vector<AbstractThread *>::iterator it = std::lower_bound(Private::list.begin(), Private::list.end(), _id, Private::Compare());
   if (it != Private::list.end() && (*it) == this && private_.id == _id) {
     AbstractThread *_t = (*it);
-    _t->private_.id = {};
+    {  //lock scope
+      LockGuard lock(private_.mutex);
+      _t->private_.id = {};
+    }
     Private::list.erase(it);
     it = std::lower_bound(Private::list.begin(), Private::list.end(), _t, Private::Compare());
     Private::list.insert(it, _t);
     trace() << '(' + _t->private_.name + ')' << LogStream::Color::Magenta << _id;
     return;
   }
-  lsError() << "thread not found:" << LogStream::Color::Magenta << _id;
+  lsError() << "thread not found:" << _id;
 }
 
 void AbstractThread::exec() {
