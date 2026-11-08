@@ -7,5 +7,6 @@ var classAsyncFw_1_1DataArrayTcpServer =
     [ "setAlwaysConnect", "classAsyncFw_1_1DataArrayTcpServer.html#aaf79299ffea6dd3d665d64f5ab70f068", null ],
     [ "listening", "classAsyncFw_1_1DataArrayTcpServer.html#aee0352f08202c4ee379b244f69e2a2e8", null ],
     [ "setTlsContext", "classAsyncFw_1_1DataArrayTcpServer.html#a2af94dfaa43841e7f2aac8cd35eb9f9e", null ],
-    [ "setTlsContext", "classAsyncFw_1_1DataArrayTcpServer.html#a368587c93e41ea8004ee7ffdf98b10ca", null ]
+    [ "setTlsContext", "classAsyncFw_1_1DataArrayTcpServer.html#a368587c93e41ea8004ee7ffdf98b10ca", null ],
+    [ "disconnected", "classAsyncFw_1_1DataArrayTcpServer.html#a6b7785e732f7448a849d75464886f461", null ]
 ];
