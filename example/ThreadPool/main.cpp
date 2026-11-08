@@ -72,7 +72,35 @@ int main(int, char **) {
       AsyncFw::LockData threads = pool->threads();
       for (const AsyncFw::AbstractThreadPool::Thread *thread : *threads) { lsInfo() << thread->name(); }
     }
+
+    // Range-for over a temporary LockData: C++20 vs C++23.
+    //
+    // AbstractThread::threads() returns LockData<...>, which locks the
+    // internal mutex in its constructor and unlocks it in its destructor.
+    //
+    // In C++20 ([stmt.ranged]/1) the range-expression is materialized to
+    // `auto&& __range = *threads();` and the temporary LockData dies at the
+    // end of that full-expression — BEFORE the first iteration. The loop body
+    // then walks the vector with no lock held, racing against setId()/
+    // clearId()/appendThread()/removeThread().
+    //
+    // In C++23 (P2718R0 "Wording for P2644R1: Fix for range-based for loop
+    // with initializer") the temporary is lifetime-extended to the end of the
+    // loop. The one-liner is safe there.
+    //
+    // The project builds with C++20 (CMAKE_CXX_STANDARD 20), so the safe form
+    // is required today; the C++23 branch is kept for when the standard is
+    // bumped, to drop the boilerplate.
+#if defined(__cpp_range_based_for) && __cpp_range_based_for >= 202211L
+    // C++23: temporary LockData is lifetime-extended for the whole loop.
     for (const AsyncFw::AbstractThread *thread : *AsyncFw::AbstractThread::threads()) { lsInfo() << thread->name(); }
+#else
+    // C++20: bind LockData to a named variable so the mutex stays held.
+    {
+      auto locked = AsyncFw::AbstractThread::threads();
+      for (const AsyncFw::AbstractThread *thread : *locked) { lsInfo() << thread->name(); }
+    }
+#endif
   });
 
   int ret = AsyncFw::MainThread::exec();

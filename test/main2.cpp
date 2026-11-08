@@ -12,6 +12,13 @@
 //   - DataArrayTcpServer listens, accepts, round-trips a frame, and
 //     tears down cleanly (listener closed, workers self-reap, no leaks).
 //
+// sockets() contract (new public API on DataArrayAbstractTcp):
+//   - int sockets()                -> count of live sockets across workers
+//   - template <T> sockets(T f)    -> visitor on each worker, count
+//   - visitor runs on the worker thread (sockets_ is only stable there)
+//   - sockets() takes ownership of the internal Invocable wrapper
+//   - socket pointers passed to the visitor are valid only inside the call
+//
 // State-observation notes
 // -----------------------
 // DataArraySocket::stateChanged and ::received are `protected` -- they are
@@ -38,23 +45,17 @@
 // pointer, not the new State value. Subscribers that need the state must
 // read socket->state() (public, atomic).
 //
-// Address-reuse hazard (diagnostic rationale)
-// -------------------------------------------
-// connectionStateChanged() is delivered to Main asynchronously (via
-// thread_->invoke from DataArrayTcpClient::socketStateChanged). Meanwhile
-// DataArrayTcpClient::destroySocket() returns before the worker thread
-// actually deletes the socket (destroy is asynchronous on the pool owner).
-// The allocator can therefore hand the *same heap address* to the next
-// iteration's createSocket() while a late Unconnected from the previous
-// socket is still queued on Main. A subscriber filter of `s != socket`
-// matches by address, so the late event is mis-attributed to the new
-// socket and unconnCount is incremented spuriously.
-//
-// The AddressLedger below records every create/destroy in the test process
-// so the log explicitly shows such collisions. All accept-close tests also
-// flush the Main queue with invoke([](){}, true) before deciding, which
-// guarantees any late delivery from THIS socket has already landed when
-// we read socket->state().
+// Threading layout:
+//   - all DataArrayTcpClient / DataArrayTcpServer instances are created on
+//     `poolOwner`, so their `thread_` is poolOwner. Every deferred
+//     socketStateChanged / received delivery lands on poolOwner's queue.
+//   - poolOwner's exec() runs for the whole test, so deferred tasks are
+//     drained as soon as they are queued.
+//   - destructing a client / server from poolOwner (via poolOwner.invoke)
+//     drains prior tasks before the destructor runs, so the framework's
+//     FunctionConnector members are still alive when late tasks execute.
+//     Destroying from a non-owner thread without a barrier would be a
+//     use-after-free of the connector (see MiscExample history).
 
 #include <cstring>
 #ifndef _WIN32
@@ -133,22 +134,16 @@ int64_t now_ms() { return std::chrono::duration_cast<std::chrono::milliseconds>(
 // ---------------------------------------------------------------------------
 // AddressLedger — test-side diagnostic for heap address reuse across
 // iterations. Not part of the framework; purely observational.
-//
-// Rationale: destroySocket() returns before the socket is actually deleted
-// on the worker (socket->destroy() is async on the pool owner). The
-// allocator may hand the same address to the next createSocket() while a
-// late connectionStateChanged delivery from the previous socket is still
-// queued on Main. Logging these events makes such collisions explicit.
 // ---------------------------------------------------------------------------
 struct AddressLedger {
   std::mutex m;
-  std::map<const void *, int> created;    // addr -> iteration
-  std::map<const void *, int> destroyed;  // addr -> iteration
+  std::map<const void *, int> created;
+  std::map<const void *, int> destroyed;
 
   void onCreate(const void *p, int iter) {
     std::lock_guard<std::mutex> l(m);
     auto it = created.find(p);
-    if (it != created.end() && !destroyed.count(p)) { lsWarning() << "ADDRESS REUSE on create: " << p << " created in iter " << it->second << ", reused in iter " << iter << " while previous still live (destroy deferred by async pool teardown)"; }
+    if (it != created.end() && !destroyed.count(p)) { lsWarning() << "ADDRESS REUSE on create: " << p << " created in iter " << it->second << ", reused in iter " << iter << " while previous still live"; }
     created[p] = iter;
     destroyed.erase(p);
   }
@@ -166,7 +161,22 @@ struct AddressLedger {
 };
 AddressLedger g_ledger;
 
+// Move-only functor for the sockets() move-only probe.
+struct CountingFunctor {
+  std::atomic<int> *counter;
+
+  explicit CountingFunctor(std::atomic<int> *c) : counter(c) {}
+
+  CountingFunctor(const CountingFunctor &) = delete;
+  CountingFunctor &operator=(const CountingFunctor &) = delete;
+  CountingFunctor(CountingFunctor &&) = default;
+  CountingFunctor &operator=(CountingFunctor &&) = default;
+
+  void operator()(const DataArraySocket *) const { counter->fetch_add(1); }
+};
+
 #ifndef _WIN32
+
 // Raw POSIX listener used to drive specific client-side transitions.
 //   mode 1: accept() then immediate close(fd).
 //   mode 2: partial DataArraySocket frame, then close(fd).
@@ -241,9 +251,6 @@ void test_da_connect_is_async(DataArrayTcpClient &client) {
 
 // ============================================================================
 // Failed connect settles to Unconnected; socket stays reconnectable.
-//
-// Both attempts share one counter subscriber. Each connect attempt
-// increments the counter exactly once (on its Unconnected fire).
 // ============================================================================
 void test_da_reconnect_after_failed_connect(DataArrayTcpClient &client) {
   lsNotice() << "=== reconnect after failed connect ===";
@@ -277,19 +284,14 @@ void test_da_reconnect_after_failed_connect(DataArrayTcpClient &client) {
   EXPECT_MSG(runCycle("first (unroutable)", "192.0.2.1", 12345), "first connect did not settle");
   EXPECT_MSG(runCycle("second (refused)", "127.0.0.1", 1), "second connect did not settle");
 
-  AbstractThread::current()->invoke([]() {}, true);  // flush Main queue
+  AbstractThread::current()->invoke([]() {}, true);
   g = {};
   client.destroySocket(socket);
   g_ledger.onDestroy(socket, 100);
 }
 
 // ============================================================================
-// accept-close stress: each iteration observes exactly one Unconnected fire
-// after connectToHost within 500 ms.
-//
-// Iteration count raised to 300: the address-reuse race is rare (allocator
-// dependent), so a small loop may never hit it. Diagnostics log every
-// delivery and the live socket set so the failing case is self-describing.
+// accept-close stress.
 // ============================================================================
 void test_da_rapid_accept_close(DataArrayTcpClient &client) {
   lsNotice() << "=== rapid accept-close stress ===";
@@ -321,22 +323,12 @@ void test_da_rapid_accept_close(DataArrayTcpClient &client) {
     client.connectToHost(socket, "127.0.0.1", server.port);
 
     const bool settled = waitForUnconnectedFires(unconnCount, 0, 500);
-
-    // Snapshot pool sockets BEFORE and AFTER the flush to see whether a
-    // previous iteration's socket is still alive at this point (which is
-    // what enables address reuse).
-    std::vector<DataArraySocket *> liveBefore;
-    client.sockets(&liveBefore);
-
-    AbstractThread::current()->invoke([]() {}, true);  // flush Main queue
-
-    std::vector<DataArraySocket *> liveAfter;
-    client.sockets(&liveAfter);
+    AbstractThread::current()->invoke([]() {}, true);
 
     if (!settled) {
       ++stuck;
       lsError() << "rapid iter" << i << " did not settle in 500ms,"
-                << " selfState=" << static_cast<int>(socket->state()) << " unconnCount=" << unconnCount.load() << " foreign=" << foreign.load() << " liveBefore=" << liveBefore.size() << " liveAfter=" << liveAfter.size() << " socket=" << socket;
+                << " selfState=" << static_cast<int>(socket->state()) << " unconnCount=" << unconnCount.load() << " foreign=" << foreign.load() << " socket=" << socket;
     }
     foreignTotal += foreign.load();
 
@@ -350,7 +342,7 @@ void test_da_rapid_accept_close(DataArrayTcpClient &client) {
 }
 
 // ============================================================================
-// Partial frame then close: settle to Unconnected, no complete frame delivered.
+// Partial frame then close.
 // ============================================================================
 void test_da_partial_frame_close(DataArrayTcpClient &client) {
   lsNotice() << "=== partial frame then close ===";
@@ -384,7 +376,7 @@ void test_da_partial_frame_close(DataArrayTcpClient &client) {
   client.connectToHost(socket, "127.0.0.1", server.port);
 
   const bool settled = waitForUnconnectedFires(unconnCount, 0, 2000);
-  AbstractThread::current()->invoke([]() {}, true);  // flush Main queue
+  AbstractThread::current()->invoke([]() {}, true);
 
   EXPECT_MSG(settled,
              "socket did not settle within 2000ms;"
@@ -469,16 +461,7 @@ void test_da_pool_reuse_after_teardown(DataArrayTcpClient &client) {
 }
 
 // ============================================================================
-// accept-close must terminate in Unconnected for every iteration.
-//
-// Diagnostic version with heavy logging. Iteration count raised to 500 to
-// catch the rare address-reuse race. Per iteration:
-//   - logs every connectionStateChanged delivery with s, state, expect
-//   - logs the live socket set before/after Main queue flush
-//   - flushes the Main queue BEFORE deciding, so any late delivery from
-//     THIS socket has already landed when we read socket->state()
-//   - categorises the failure (foreign delivery vs. no delivery vs.
-//     resurrected state) and prints it
+// state sequence on accept-close (diagnostic, 500 iterations).
 // ============================================================================
 void test_da_state_sequence(DataArrayTcpClient &client) {
   lsNotice() << "=== state sequence on accept-close ===";
@@ -521,20 +504,7 @@ void test_da_state_sequence(DataArrayTcpClient &client) {
     client.connectToHost(socket, "127.0.0.1", server.port);
 
     const bool settled = waitForUnconnectedFires(unconnCount, 0, 500);
-
-    // Snapshot pool state right after settle, BEFORE any flush.
-    std::vector<DataArraySocket *> liveBefore;
-    client.sockets(&liveBefore);
-    lsTrace() << "state-seq iter" << i << " settled=" << settled << " unconnCount=" << unconnCount.load() << " foreign=" << foreign.load() << " selfNonUnconn=" << selfNonUnconn.load() << " selfState=" << static_cast<int>(socket->state()) << " liveBefore=" << liveBefore.size() << " socket=" << socket;
-
-    // Flush pending connectionStateChanged deliveries on Main so that any
-    // late Unconnected from THIS socket lands before we decide.
     AbstractThread::current()->invoke([]() {}, true);
-
-    // Snapshot again after flush.
-    std::vector<DataArraySocket *> liveAfter;
-    client.sockets(&liveAfter);
-    lsTrace() << "state-seq iter" << i << " after-flush selfState=" << static_cast<int>(socket->state()) << " unconnCount=" << unconnCount.load() << " foreign=" << foreign.load() << " liveAfter=" << liveAfter.size();
 
     const int fc = foreign.load();
     const int uc = unconnCount.load();
@@ -546,14 +516,14 @@ void test_da_state_sequence(DataArrayTcpClient &client) {
       if (uc == 0) ++noDelivery;
       if (fc == 0 && uc > 0 && socket->state() != AbstractSocket::State::Unconnected) ++resurrected;
 
-      lsError() << "state-seq iter" << i << " settled=" << settled << " unconnCount=" << uc << " foreign=" << fc << " selfNonUnconn=" << selfNonUnconn.load() << " finalState=" << static_cast<int>(socket->state()) << " liveBefore=" << liveBefore.size() << " liveAfter=" << liveAfter.size() << " socket=" << socket;
+      lsError() << "state-seq iter" << i << " settled=" << settled << " unconnCount=" << uc << " foreign=" << fc << " selfNonUnconn=" << selfNonUnconn.load() << " finalState=" << static_cast<int>(socket->state()) << " socket=" << socket;
 
       if (fc > 0) {
-        lsError() << "state-seq iter" << i << " => FOREIGN delivery observed; address reuse of a previous socket likely — late connectionStateChanged from old socket matched by address";
+        lsError() << "state-seq iter" << i << " => FOREIGN delivery observed";
       } else if (uc == 0) {
-        lsError() << "state-seq iter" << i << " => self Unconnected never delivered (queued delivery lost, or filtered out before counting)";
+        lsError() << "state-seq iter" << i << " => self Unconnected never delivered";
       } else {
-        lsError() << "state-seq iter" << i << " => self Unconnected delivered but state is not Unconnected; a late connect/active path resurrected the socket";
+        lsError() << "state-seq iter" << i << " => self Unconnected delivered but state is not Unconnected";
       }
     }
 
@@ -585,8 +555,6 @@ void test_da_no_reconnect_with_zero_timeout(DataArrayTcpClient &client) {
   });
 
   client.connectToHost(socket, "127.0.0.1", 1);
-
-  // 200 ms is ample for a refused connect on loopback; anything else is a bug.
   std::this_thread::sleep_for(std::chrono::milliseconds(200));
   AbstractThread::current()->invoke([]() {}, true);
 
@@ -650,7 +618,7 @@ void test_tcp_server_roundtrip(AbstractThread *serverOwner, DataArrayTcpClient &
     }
     serverRecvId = id;
     ++serverRecv;
-    const_cast<DataArraySocket *>(s)->transmit(*d, id + 100);  // echo back
+    const_cast<DataArraySocket *>(s)->transmit(*d, id + 100);
   });
 
   std::atomic<bool> listenOk {false};
@@ -684,7 +652,6 @@ void test_tcp_server_roundtrip(AbstractThread *serverOwner, DataArrayTcpClient &
   client.destroySocket(cs);
   g_ledger.onDestroy(cs, 600);
   serverOwner->invoke([&]() { server->close(); }, true);
-  // Workers self-reap when their last socket closes; give them a moment.
   std::this_thread::sleep_for(std::chrono::milliseconds(50));
   serverOwner->invoke([&]() { delete server; }, true);
 }
@@ -709,6 +676,396 @@ void test_da_quit_from_foreign_thread(DataArrayTcpClient &client) {
   const size_t after = client.threads()->size();
   EXPECT_MSG(after == 0, "threads_=" + std::to_string(after) + " after quit() from foreign thread");
 }
+
+// ============================================================================
+// ===============  sockets() API probes (DataArrayAbstractTcp)  ==============
+// ============================================================================
+//
+// Each probe creates its own DataArrayTcpClient on `poolOwner` so that
+// deferred socketStateChanged / received deliveries land on poolOwner's
+// running exec loop. The client is destroyed from poolOwner as well, so
+// the destructor drains prior tasks before tearing down the
+// FunctionConnector members.
+
+// ----------------------------------------------------------------------------
+// Probe A: sockets() returns the number of live sockets.
+// ----------------------------------------------------------------------------
+void test_sockets_count(AbstractThread *poolOwner) {
+  lsNotice() << "=== sockets() count ===";
+
+  DataArrayTcpClient *client = nullptr;
+  poolOwner->invoke([&]() { client = new DataArrayTcpClient("SocketsCountProbe"); }, true);
+  if (!client) {
+    EXPECT_MSG(false, "client alloc failed");
+    return;
+  }
+
+  std::vector<DataArraySocket *> sockets;
+  for (int i = 0; i < 6; ++i) {
+    DataArraySocket *s = client->createSocket();
+    if (!s) {
+      EXPECT_MSG(false, "createSocket failed");
+      break;
+    }
+    sockets.push_back(s);
+  }
+
+  int total = client->sockets();
+  lsInfo() << "total:" << total;
+  EXPECT(total == 6);
+
+  for (DataArraySocket *s : sockets) client->destroySocket(s);
+  poolOwner->invoke([&]() { delete client; }, true);
+}
+
+// ----------------------------------------------------------------------------
+// Probe B: sockets(lambda) visits each socket exactly once.
+// ----------------------------------------------------------------------------
+void test_sockets_visitor_visits_all(AbstractThread *poolOwner) {
+  lsNotice() << "=== sockets(lambda) visits all ===";
+
+  DataArrayTcpClient *client = nullptr;
+  poolOwner->invoke([&]() { client = new DataArrayTcpClient("SocketsVisitorProbe"); }, true);
+  if (!client) {
+    EXPECT_MSG(false, "client alloc failed");
+    return;
+  }
+
+  std::vector<DataArraySocket *> sockets;
+  for (int i = 0; i < 5; ++i) {
+    DataArraySocket *s = client->createSocket();
+    if (!s) break;
+    sockets.push_back(s);
+  }
+
+  std::atomic<int> visited {0};
+  int total = client->sockets([&visited](const DataArraySocket *) { visited.fetch_add(1, std::memory_order_relaxed); });
+
+  lsInfo() << "total:" << total << "visited:" << visited.load();
+  EXPECT(total == 5);
+  EXPECT(visited.load() == 5);
+
+  for (DataArraySocket *s : sockets) client->destroySocket(s);
+  poolOwner->invoke([&]() { delete client; }, true);
+}
+
+// ----------------------------------------------------------------------------
+// Probe C: visitor runs on the worker thread, not on the caller.
+// ----------------------------------------------------------------------------
+void test_sockets_visitor_runs_on_worker(AbstractThread *poolOwner) {
+  lsNotice() << "=== sockets(lambda) runs on worker ===";
+
+  DataArrayTcpClient *client = nullptr;
+  poolOwner->invoke([&]() { client = new DataArrayTcpClient("SocketsThreadProbe"); }, true);
+  if (!client) {
+    EXPECT_MSG(false, "client alloc failed");
+    return;
+  }
+
+  std::vector<DataArraySocket *> sockets;
+  for (int i = 0; i < 8; ++i) {
+    DataArraySocket *s = client->createSocket();
+    if (s) sockets.push_back(s);
+  }
+
+  // Collect worker ids up front. threads() returns a LockData; copy ids
+  // and release the lock before sockets() to avoid holding pool->mutex
+  // while sockets() itself locks it.
+  std::vector<std::thread::id> workerIds;
+  {
+    auto locked = client->threads();
+    for (AbstractThreadPool::Thread *t : *locked) workerIds.push_back(t->id());
+  }
+
+  std::mutex m;
+  std::vector<std::thread::id> observed;
+
+  int total = client->sockets([&m, &observed](const DataArraySocket *) {
+    std::lock_guard<std::mutex> l(m);
+    observed.push_back(std::this_thread::get_id());
+  });
+
+  bool mismatch = false;
+  {
+    std::lock_guard<std::mutex> l(m);
+    for (std::thread::id oid : observed) {
+      bool found = false;
+      for (std::thread::id wid : workerIds) {
+        if (wid == oid) {
+          found = true;
+          break;
+        }
+      }
+      if (!found) {
+        mismatch = true;
+        break;
+      }
+    }
+  }
+
+  lsInfo() << "total:" << total << "observed:" << observed.size() << "workers:" << workerIds.size() << "mismatch:" << mismatch;
+  EXPECT(total == 8);
+  EXPECT(observed.size() == 8);
+  EXPECT(!mismatch);
+
+  for (DataArraySocket *s : sockets) client->destroySocket(s);
+  poolOwner->invoke([&]() { delete client; }, true);
+}
+
+// ----------------------------------------------------------------------------
+// Probe D: sockets() on an empty pool returns 0; visitor is never invoked.
+// ----------------------------------------------------------------------------
+void test_sockets_empty_pool(AbstractThread *poolOwner) {
+  lsNotice() << "=== sockets() on empty pool ===";
+
+  DataArrayTcpClient *client = nullptr;
+  poolOwner->invoke([&]() { client = new DataArrayTcpClient("SocketsEmptyProbe"); }, true);
+  if (!client) {
+    EXPECT_MSG(false, "client alloc failed");
+    return;
+  }
+
+  std::atomic<int> visited {0};
+  int total = client->sockets([&visited](const DataArraySocket *) { visited.fetch_add(1); });
+
+  lsInfo() << "total:" << total << "visited:" << visited.load();
+  EXPECT(total == 0);
+  EXPECT(visited.load() == 0);
+
+  poolOwner->invoke([&]() { delete client; }, true);
+}
+
+// ----------------------------------------------------------------------------
+// Probe E: sockets() sees the current live set, not a stale snapshot.
+// ----------------------------------------------------------------------------
+void test_sockets_sees_current_state(AbstractThread *poolOwner) {
+  lsNotice() << "=== sockets() sees current state ===";
+
+  DataArrayTcpClient *client = nullptr;
+  poolOwner->invoke([&]() { client = new DataArrayTcpClient("SocketsStateProbe"); }, true);
+  if (!client) {
+    EXPECT_MSG(false, "client alloc failed");
+    return;
+  }
+
+  std::vector<DataArraySocket *> sockets;
+  for (int i = 0; i < 4; ++i) {
+    DataArraySocket *s = client->createSocket();
+    if (s) sockets.push_back(s);
+  }
+
+  int before = client->sockets();
+  EXPECT(before == 4);
+
+  if (!sockets.empty()) {
+    client->destroySocket(sockets.back());
+    sockets.pop_back();
+    // Let the async destroy settle on poolOwner before the next sockets().
+    std::this_thread::sleep_for(std::chrono::milliseconds(20));
+  }
+
+  int after = client->sockets();
+  lsInfo() << "before:" << before << "after:" << after;
+  EXPECT(after == 3);
+
+  for (DataArraySocket *s : sockets) client->destroySocket(s);
+  poolOwner->invoke([&]() { delete client; }, true);
+}
+
+// ----------------------------------------------------------------------------
+// Probe F: sockets() is per-pool, not global.
+// ----------------------------------------------------------------------------
+void test_sockets_per_pool(AbstractThread *poolOwner) {
+  lsNotice() << "=== sockets() is per-pool ===";
+
+  DataArrayTcpClient *a = nullptr;
+  DataArrayTcpClient *b = nullptr;
+  poolOwner->invoke([&]() {
+    a = new DataArrayTcpClient("PoolA");
+    b = new DataArrayTcpClient("PoolB");
+  }, true);
+  if (!a || !b) {
+    EXPECT_MSG(false, "client alloc failed");
+    return;
+  }
+
+  std::vector<DataArraySocket *> aSockets;
+  std::vector<DataArraySocket *> bSockets;
+  for (int i = 0; i < 3; ++i) {
+    DataArraySocket *s = a->createSocket();
+    if (s) aSockets.push_back(s);
+  }
+  for (int i = 0; i < 5; ++i) {
+    DataArraySocket *s = b->createSocket();
+    if (s) bSockets.push_back(s);
+  }
+
+  int ca = a->sockets();
+  int cb = b->sockets();
+  lsInfo() << "poolA:" << ca << "poolB:" << cb;
+  EXPECT(ca == 3);
+  EXPECT(cb == 5);
+
+  for (DataArraySocket *s : aSockets) a->destroySocket(s);
+  for (DataArraySocket *s : bSockets) b->destroySocket(s);
+  poolOwner->invoke([&]() {
+    delete a;
+    delete b;
+  }, true);
+}
+
+// ----------------------------------------------------------------------------
+// Probe G: sockets() after destroying every socket returns 0.
+// Also demonstrates sockets() as a drain barrier: destroySocket is
+// asynchronous on the pool owner, so the pool reports non-zero for a
+// short while after the last destroySocket call.
+// ----------------------------------------------------------------------------
+void test_sockets_after_all_destroyed(AbstractThread *poolOwner) {
+  lsNotice() << "=== sockets() after all destroyed ===";
+
+  DataArrayTcpClient *client = nullptr;
+  poolOwner->invoke([&]() { client = new DataArrayTcpClient("SocketsDrainProbe"); }, true);
+  if (!client) {
+    EXPECT_MSG(false, "client alloc failed");
+    return;
+  }
+
+  std::vector<DataArraySocket *> sockets;
+  for (int i = 0; i < 4; ++i) {
+    DataArraySocket *s = client->createSocket();
+    if (s) sockets.push_back(s);
+  }
+
+  EXPECT(client->sockets() == 4);
+  for (DataArraySocket *s : sockets) client->destroySocket(s);
+
+  int attempts = 0;
+  while (client->sockets() != 0 && attempts++ < 1000) { std::this_thread::sleep_for(std::chrono::milliseconds(1)); }
+  int after = client->sockets();
+  lsInfo() << "after drain:" << after << "attempts:" << attempts;
+  EXPECT(after == 0);
+
+  poolOwner->invoke([&]() { delete client; }, true);
+}
+
+// ----------------------------------------------------------------------------
+// Probe H: sockets(lambda) on DataArrayTcpServer — API is symmetric.
+// ----------------------------------------------------------------------------
+void test_sockets_server_side(AbstractThread *poolOwner) {
+  lsNotice() << "=== sockets() on DataArrayTcpServer ===";
+
+  const uint16_t port = 18099;
+  DataArrayTcpServer *server = nullptr;
+  DataArrayTcpClient *client = nullptr;
+  poolOwner->invoke([&]() {
+    server = new DataArrayTcpServer("SocketsServerProbe");
+    client = new DataArrayTcpClient("SocketsServerClient");
+  }, true);
+  if (!server || !client) {
+    EXPECT_MSG(false, "server/client alloc failed");
+    if (client) poolOwner->invoke([&]() { delete client; }, true);
+    if (server) poolOwner->invoke([&]() { delete server; }, true);
+    return;
+  }
+
+  // IMPORTANT: every server->sockets() call goes through poolOwner.
+  //
+  // incomingConnection() runs on poolOwner and does, in this order:
+  //   1) new Thread(name, this)   -> appendThread() under pool->mutex
+  //      (the Thread is now visible in threads_)
+  //   2) thread->start()          -> blocks until setId() completes in
+  //      the new thread
+  //
+  // There is a window between (1) and the end of (2) where a Thread is
+  // visible in threads_ but its id() is still the default-constructed
+  // value, being concurrently written by setId() on the new thread. If
+  // sockets() runs on a foreign thread during this window, invoke() ->
+  // id() reads that field concurrently with setId()'s write.
+  //
+  // AbstractThread::id() is safe *by contract* only after start() has
+  // returned. Serializing sockets() on poolOwner closes the window:
+  // start() blocks poolOwner until setId() is done, so any sockets()
+  // task queued on poolOwner runs strictly after the new worker's id
+  // is stable.
+  std::atomic<bool> listenOk {false};
+  poolOwner->invoke([&]() { listenOk = server->listen("127.0.0.1", port); }, true);
+  EXPECT_MSG(listenOk.load(),
+             "server.listen(" + std::to_string(port) + ") failed");
+
+  int initial = -1;
+  poolOwner->invoke([&]() { initial = server->sockets(); }, true);
+  EXPECT(initial == 0);
+
+  if (listenOk.load()) {
+    DataArraySocket *cs = client->createSocket();
+    if (cs) {
+      client->connectToHost(cs, "127.0.0.1", port);
+
+      int attempts = 0;
+      int n = 0;
+      while (attempts++ < 3000) {
+        poolOwner->invoke([&]() { n = server->sockets(); }, true);
+        if (n == 1) break;
+        std::this_thread::sleep_for(std::chrono::milliseconds(1));
+      }
+      lsInfo() << "server sockets:" << n;
+      EXPECT_MSG(n == 1, "server accepted no sockets; n=" + std::to_string(n));
+
+      std::atomic<int> visited {0};
+      int visitedCount = 0;
+      poolOwner->invoke([&]() {
+        visitedCount = server->sockets([&visited](const DataArraySocket *) {
+          visited.fetch_add(1);
+        });
+      }, true);
+      EXPECT_MSG(visitedCount == 1,
+                 "server sockets(lambda) total=" + std::to_string(visitedCount));
+      EXPECT_MSG(visited.load() == 1,
+                 "server sockets(lambda) visited=" + std::to_string(visited.load()));
+
+      client->destroySocket(cs);
+    }
+  }
+
+  poolOwner->invoke([&]() { server->close(); }, true);
+  std::this_thread::sleep_for(std::chrono::milliseconds(20));
+  poolOwner->invoke([&]() { delete client; }, true);
+  poolOwner->invoke([&]() { delete server; }, true);
+}
+// ----------------------------------------------------------------------------
+// Probe I: sockets(lambda) accepts a move-only functor.
+//
+// The template overload forwards the callable by std::forward into
+// Invocable<...>::Function, which constructs F by move. A functor with
+// deleted copy ctor and defaulted move ctor must therefore work.
+// ----------------------------------------------------------------------------
+void test_sockets_move_only_functor(AbstractThread *poolOwner) {
+  lsNotice() << "=== sockets(move-only functor) ===";
+
+  DataArrayTcpClient *client = nullptr;
+  poolOwner->invoke([&]() { client = new DataArrayTcpClient("SocketsFunctorProbe"); }, true);
+  if (!client) {
+    EXPECT_MSG(false, "client alloc failed");
+    return;
+  }
+
+  std::vector<DataArraySocket *> sockets;
+  for (int i = 0; i < 3; ++i) {
+    DataArraySocket *s = client->createSocket();
+    if (s) sockets.push_back(s);
+  }
+
+  std::atomic<int> visited {0};
+  int total = client->sockets(CountingFunctor {&visited});
+
+  lsInfo() << "total:" << total << "visited:" << visited.load();
+  EXPECT(total == 3);
+  EXPECT(visited.load() == 3);
+
+  for (DataArraySocket *s : sockets) client->destroySocket(s);
+  poolOwner->invoke([&]() { delete client; }, true);
+}
+
 #endif  // !_WIN32
 
 }  // namespace
@@ -735,6 +1092,7 @@ int main(int, char **) {
       dac->setReconnectTimeout(0);
     }, true);
 
+    // ---- Cycle / teardown tests (shared client `dac`) ----------------
     test_da_connect_is_async(*dac);
     test_da_reconnect_after_failed_connect(*dac);
     test_da_rapid_accept_close(*dac);
@@ -744,12 +1102,36 @@ int main(int, char **) {
     test_da_state_sequence(*dac);
     test_da_no_reconnect_with_zero_timeout(*dac);
     test_tcp_server_roundtrip(&poolOwner, *dac);
-    test_da_quit_from_foreign_thread(*dac);
 
     poolOwner.invoke([&dac]() {
       delete dac;
       dac = nullptr;
     }, true);
+
+    // ---- sockets() API probes (each creates its own client on owner) --
+    test_sockets_count(&poolOwner);
+    test_sockets_visitor_visits_all(&poolOwner);
+    test_sockets_visitor_runs_on_worker(&poolOwner);
+    test_sockets_empty_pool(&poolOwner);
+    test_sockets_sees_current_state(&poolOwner);
+    test_sockets_per_pool(&poolOwner);
+    test_sockets_after_all_destroyed(&poolOwner);
+    test_sockets_server_side(&poolOwner);
+    test_sockets_move_only_functor(&poolOwner);
+
+    // ---- quit() from a foreign thread (destroys the pool) ------------
+    // Must run last: it tears down `dac`'s pool entirely. Since we
+    // already deleted `dac`, this test uses its own client.
+    DataArrayTcpClient *quitClient = nullptr;
+    poolOwner.invoke([&]() {
+      quitClient = new DataArrayTcpClient("DataArrayTcpQuitMisc");
+      quitClient->setReconnectTimeout(0);
+    }, true);
+    if (quitClient) {
+      test_da_quit_from_foreign_thread(*quitClient);
+      poolOwner.invoke([&]() { delete quitClient; }, true);
+    }
+
     poolOwner.invoke([]() {
       if (ThreadPool *pool = ThreadPool::instance()) pool->quit();
     }, true);
