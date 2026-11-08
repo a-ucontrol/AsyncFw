@@ -2,9 +2,10 @@ var classAsyncFw_1_1DataArrayAbstractTcp =
 [
     [ "Thread", "classAsyncFw_1_1DataArrayAbstractTcp_1_1Thread.html", "classAsyncFw_1_1DataArrayAbstractTcp_1_1Thread" ],
     [ "DataArrayAbstractTcp", "classAsyncFw_1_1DataArrayAbstractTcp.html#adbdfede75d80d1c6c76800415d51b35c", null ],
+    [ "sockets", "classAsyncFw_1_1DataArrayAbstractTcp.html#a598c065c4d0385023703311d15708326", null ],
+    [ "sockets", "classAsyncFw_1_1DataArrayAbstractTcp.html#a3b407bdbb590f94c270406f564fb3e90", null ],
     [ "transmit", "classAsyncFw_1_1DataArrayAbstractTcp.html#a081f4d502596fe7352d3b5e68344cab8", null ],
     [ "disconnectFromHost", "classAsyncFw_1_1DataArrayAbstractTcp.html#aa9d59be7845d746853397e1905880434", null ],
-    [ "sockets", "classAsyncFw_1_1DataArrayAbstractTcp.html#a0f47aa063695308b15258c682cf9bc49", null ],
     [ "setEncryptionDisabled", "classAsyncFw_1_1DataArrayAbstractTcp.html#af825c0bcfa4f37f618c19563246a2559", null ],
     [ "setEncryptionDisabled", "classAsyncFw_1_1DataArrayAbstractTcp.html#aa63ef6a933e4d036529e7b32cb06a0d3", null ],
     [ "setTlsContext", "classAsyncFw_1_1DataArrayAbstractTcp.html#a2af94dfaa43841e7f2aac8cd35eb9f9e", null ],

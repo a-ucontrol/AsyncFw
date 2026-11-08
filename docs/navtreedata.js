@@ -61,8 +61,8 @@ var NAVTREEINDEX =
 [
 "AbstractSocket_8h.html",
 "classAsyncFw_1_1AbstractTlsSocket.html#a7800254e24419820e105e863c0266ac4",
-"classAsyncFw_1_1Log.html#af85aba564a162221f53e80f010d7fbf3",
-"structAsyncFw_1_1LogStream_1_1Message.html#abac2923c4b2c7076a731b88df2420fa5"
+"classAsyncFw_1_1Log.html#ab990350e0de8b9a9c6153f7c67b7a527",
+"structAsyncFw_1_1LogStream_1_1Message.html#a7d55dbc7e3fd3c5b106977df3ca2bbbb"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronization';

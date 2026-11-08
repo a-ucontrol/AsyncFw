@@ -61,7 +61,7 @@ var searchData=
   ['socketlimit_58',['socketLimit',['../classAsyncFw_1_1DataArrayTcpClient.html#a568d86a72be68556d29cb76855dd8029',1,'AsyncFw::DataArrayTcpClient']]],
   ['socketreadbuffersize_59',['socketReadBufferSize',['../classAsyncFw_1_1DataArrayAbstractTcp.html#ab52e14dcbac67ced6f4f009cb2d44396',1,'AsyncFw::DataArrayAbstractTcp']]],
   ['sockets_60',['4. Network Worker Thread: &lt;span class=&quot;tt&quot;&gt;Thread&lt;/span&gt; and Sockets',['../index.html#autotoc_md6',1,'']]],
-  ['sockets_61',['sockets',['../classAsyncFw_1_1DataArrayAbstractTcp.html#a0f47aa063695308b15258c682cf9bc49',1,'AsyncFw::DataArrayAbstractTcp']]],
+  ['sockets_61',['sockets',['../classAsyncFw_1_1DataArrayAbstractTcp.html#a598c065c4d0385023703311d15708326',1,'AsyncFw::DataArrayAbstractTcp::sockets(T f)'],['../classAsyncFw_1_1DataArrayAbstractTcp.html#a3b407bdbb590f94c270406f564fb3e90',1,'AsyncFw::DataArrayAbstractTcp::sockets()']]],
   ['sockets_5f_62',['sockets_',['../classAsyncFw_1_1Thread.html#a92780087225a95405529ddabbce2ae07',1,'AsyncFw::Thread']]],
   ['socketstatechanged_63',['socketStateChanged',['../classAsyncFw_1_1DataArrayTcpClient.html#acc665d05a338bf954fcdda64fe6ee8c7',1,'AsyncFw::DataArrayTcpClient']]],
   ['space_64',['space',['../classAsyncFw_1_1LogStream.html#abaece5fcf0e6a72bc5cc468d851cd02e',1,'AsyncFw::LogStream']]],

@@ -56,7 +56,7 @@ var searchData=
   ['socket_53',['socket',['../classAsyncFw_1_1HttpServer_1_1Response.html#ad33ca9292a0e375b907458eed9e70a67',1,'AsyncFw::HttpServer::Response']]],
   ['socketdata_54',['socketData',['../classAsyncFw_1_1HttpServer_1_1Request.html#a80a8403dbddf8e7b6bd5f9f687f5e543',1,'AsyncFw::HttpServer::Request']]],
   ['socketlimit_55',['socketLimit',['../classAsyncFw_1_1DataArrayTcpClient.html#a568d86a72be68556d29cb76855dd8029',1,'AsyncFw::DataArrayTcpClient']]],
-  ['sockets_56',['sockets',['../classAsyncFw_1_1DataArrayAbstractTcp.html#a0f47aa063695308b15258c682cf9bc49',1,'AsyncFw::DataArrayAbstractTcp']]],
+  ['sockets_56',['sockets',['../classAsyncFw_1_1DataArrayAbstractTcp.html#a598c065c4d0385023703311d15708326',1,'AsyncFw::DataArrayAbstractTcp::sockets(T f)'],['../classAsyncFw_1_1DataArrayAbstractTcp.html#a3b407bdbb590f94c270406f564fb3e90',1,'AsyncFw::DataArrayAbstractTcp::sockets()']]],
   ['socketstatechanged_57',['socketStateChanged',['../classAsyncFw_1_1DataArrayTcpClient.html#acc665d05a338bf954fcdda64fe6ee8c7',1,'AsyncFw::DataArrayTcpClient']]],
   ['space_58',['space',['../classAsyncFw_1_1LogStream.html#abaece5fcf0e6a72bc5cc468d851cd02e',1,'AsyncFw::LogStream']]],
   ['split_59',['split',['../classAsyncFw_1_1DataArrayView.html#af0409dfe7cdeea6df5d33174abb0e464',1,'AsyncFw::DataArrayView']]],

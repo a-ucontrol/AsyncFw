@@ -1,0 +1,6 @@
+<map id="AsyncFw::DataArrayAbstractTcp::sockets" name="AsyncFw::DataArrayAbstractTcp::sockets">
+<area shape="rect" id="Node000001" title="Count&#45;only overload, returns the number of live DataArraySocket instances across all workers of this ..." alt="" coords="246,29,438,72"/>
+<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="379,13,366,10,342,8,319,10,305,15,300,21,301,30,297,27,295,19,302,10,318,5,342,3,367,5,385,14"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1DataArrayAbstractTcp.html#a598c065c4d0385023703311d15708326" title="Walks every live DataArraySocket across all workers of this pool and invokes f on the owning worker t..." alt="" coords="5,29,198,72"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="228,51,198,53,198,48,233,50"/>
+</map>

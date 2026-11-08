@@ -122,6 +122,11 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a598c065c4d0385023703311d15708326" id="r_a598c065c4d0385023703311d15708326"><td class="memTemplParams" colspan="2">template&lt;typename T, typename = std::enable_if_t&lt;!std::is_convertible_v&lt;T, Invocable&lt;void(const DataArraySocket *)&gt;::Abstract *&gt;&gt;&gt; </td></tr>
+<tr class="memitem:a598c065c4d0385023703311d15708326 template"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#a598c065c4d0385023703311d15708326">sockets</a> (T f)</td></tr>
+<tr class="memdesc:a598c065c4d0385023703311d15708326"><td class="mdescLeft">&#160;</td><td class="mdescRight">Walks every live <a class="el" href="classAsyncFw_1_1DataArraySocket.html" title="An asynchronous socket class for transmitting data arrays (DataArray) with TLS support....">DataArraySocket</a> across all workers of this pool and invokes f on the owning worker thread for each one.  <br /></td></tr>
+<tr class="memitem:a3b407bdbb590f94c270406f564fb3e90" id="r_a3b407bdbb590f94c270406f564fb3e90"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#a3b407bdbb590f94c270406f564fb3e90">sockets</a> ()</td></tr>
+<tr class="memdesc:a3b407bdbb590f94c270406f564fb3e90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Count-only overload, returns the number of live <a class="el" href="classAsyncFw_1_1DataArraySocket.html" title="An asynchronous socket class for transmitting data arrays (DataArray) with TLS support....">DataArraySocket</a> instances across all workers of this pool.  <br /></td></tr>
 <tr class="memitem:adbdfede75d80d1c6c76800415d51b35c" id="r_adbdfede75d80d1c6c76800415d51b35c"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#adbdfede75d80d1c6c76800415d51b35c">DataArrayAbstractTcp</a> (const std::string &amp;)</td></tr>
 <tr class="memdesc:adbdfede75d80d1c6c76800415d51b35c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new <a class="el" href="classAsyncFw_1_1DataArrayAbstractTcp.html" title="Abstract base class implementing a multi-threaded TCP pool for socket and packet management.">DataArrayAbstractTcp</a> instance.  <br /></td></tr>
 <tr class="memitem:a595774ff7097b769451acc835ea4597d" id="r_a595774ff7097b769451acc835ea4597d"><td class="memItemLeft"><a id="a595774ff7097b769451acc835ea4597d" name="a595774ff7097b769451acc835ea4597d"></a>
@@ -130,8 +135,6 @@ void&#160;</td><td class="memItemRight"><b>init</b> (int <a class="el" href="#ae
 <tr class="memdesc:a081f4d502596fe7352d3b5e68344cab8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Asynchronously transmits a <a class="el" href="classAsyncFw_1_1DataArray.html" title="The DataArray class, provides an array of bytes.">DataArray</a> packet through a given socket context.  <br /></td></tr>
 <tr class="memitem:aa9d59be7845d746853397e1905880434" id="r_aa9d59be7845d746853397e1905880434"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#aa9d59be7845d746853397e1905880434">disconnectFromHost</a> (const <a class="el" href="classAsyncFw_1_1DataArraySocket.html">DataArraySocket</a> *)</td></tr>
 <tr class="memdesc:aa9d59be7845d746853397e1905880434"><td class="mdescLeft">&#160;</td><td class="mdescRight">Signals a specific managed socket to disconnect from its remote peer.  <br /></td></tr>
-<tr class="memitem:a0f47aa063695308b15258c682cf9bc49" id="r_a0f47aa063695308b15258c682cf9bc49"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#a0f47aa063695308b15258c682cf9bc49">sockets</a> (std::vector&lt; <a class="el" href="classAsyncFw_1_1DataArraySocket.html">DataArraySocket</a> * &gt; *=nullptr)</td></tr>
-<tr class="memdesc:a0f47aa063695308b15258c682cf9bc49"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gathers a list of all active managed sockets and counts them.  <br /></td></tr>
 <tr class="memitem:af825c0bcfa4f37f618c19563246a2559" id="r_af825c0bcfa4f37f618c19563246a2559"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#af825c0bcfa4f37f618c19563246a2559">setEncryptionDisabled</a> (const std::vector&lt; std::string &gt; &amp;list)</td></tr>
 <tr class="memdesc:af825c0bcfa4f37f618c19563246a2559"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a strict list of remote IP addresses where TLS encryption must be bypassed.  <br /></td></tr>
 <tr class="memitem:aa63ef6a933e4d036529e7b32cb06a0d3" id="r_aa63ef6a933e4d036529e7b32cb06a0d3"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#aa63ef6a933e4d036529e7b32cb06a0d3">setEncryptionDisabled</a> (const std::string &amp;, bool=true)</td></tr>
@@ -162,6 +165,8 @@ Public Attributes</h2></td></tr>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:a1d9557d91e39b12da701e6d371d71031" id="r_a1d9557d91e39b12da701e6d371d71031"><td class="memItemLeft"><a class="el" href="classAsyncFw_1_1DataArrayAbstractTcp_1_1Thread.html">Thread</a> *&#160;</td><td class="memItemRight"><a class="el" href="#a1d9557d91e39b12da701e6d371d71031">findMinimalSocketsThread</a> ()</td></tr>
 <tr class="memdesc:a1d9557d91e39b12da701e6d371d71031"><td class="mdescLeft">&#160;</td><td class="mdescRight">Locates the worker thread currently hosting the lowest number of socket contexts.  <br /></td></tr>
+<tr class="memitem:a11f075a509b8b526064dcb6adbf9eafc" id="r_a11f075a509b8b526064dcb6adbf9eafc"><td class="memItemLeft"><a id="a11f075a509b8b526064dcb6adbf9eafc" name="a11f075a509b8b526064dcb6adbf9eafc"></a>
+int&#160;</td><td class="memItemRight"><b>sockets</b> (Invocable&lt; void(const <a class="el" href="classAsyncFw_1_1DataArraySocket.html">DataArraySocket</a> *)&gt;::Abstract *)</td></tr>
 <tr class="inherit_header pro_methods_classAsyncFw_1_1AbstractThreadPool"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_methods_classAsyncFw_1_1AbstractThreadPool')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Protected Member Functions inherited from <a class="el" href="classAsyncFw_1_1AbstractThreadPool.html">AsyncFw::AbstractThreadPool</a></td></tr>
 <tr class="memitem:a1b2d31f7db01a7cacec702eb7323e620 inherit pro_methods_classAsyncFw_1_1AbstractThreadPool" id="r_a1b2d31f7db01a7cacec702eb7323e620"><td class="memItemLeft">virtual void&#160;</td><td class="memItemRight"><a class="el" href="classAsyncFw_1_1AbstractThreadPool.html#a1b2d31f7db01a7cacec702eb7323e620">appendThread</a> (<a class="el" href="classAsyncFw_1_1AbstractThreadPool_1_1Thread.html">AbstractThreadPool::Thread</a> *)</td></tr>
 <tr class="memdesc:a1b2d31f7db01a7cacec702eb7323e620 inherit pro_methods_classAsyncFw_1_1AbstractThreadPool"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers a new thread into the pool.  <br /></td></tr>
@@ -242,6 +247,95 @@ static std::vector&lt; AbstractThreadPool * &gt;&#160;</td><td class="memItemRig
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="a598c065c4d0385023703311d15708326" name="a598c065c4d0385023703311d15708326"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a598c065c4d0385023703311d15708326">&#9670;&#160;</a></span>sockets() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, typename = std::enable_if_t&lt;!std::is_convertible_v&lt;T, Invocable&lt;void(const DataArraySocket *)&gt;::Abstract *&gt;&gt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int AsyncFw::DataArrayAbstractTcp::sockets </td>
+          <td>(</td>
+          <td class="paramtype">T</td>          <td class="paramname"><span class="paramname"><em>f</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Walks every live <a class="el" href="classAsyncFw_1_1DataArraySocket.html" title="An asynchronous socket class for transmitting data arrays (DataArray) with TLS support....">DataArraySocket</a> across all workers of this pool and invokes f on the owning worker thread for each one. </p>
+<p>Wraps f in Invocable&lt;void(const DataArraySocket*)&gt;::Function and forwards to the protected sockets(Invocable*) overload, which takes ownership of the wrapper and deletes it before returning. The callable is passed by value, move-only functors are supported. The socket pointer is valid only for the duration of the call — the socket may be destroyed asynchronously afterwards. </p><dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>Callable signature-compatible with void(const DataArraySocket*).</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">f</td><td>Callable invoked once per live socket on the worker thread. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Total number of live sockets visited. </dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>The visitor must not re-enter this pool (recursive <a class="el" href="#a3b407bdbb590f94c270406f564fb3e90" title="Count-only overload, returns the number of live DataArraySocket instances across all workers of this ...">sockets()</a>, createSocket(), destroySocket(), <a class="el" href="classAsyncFw_1_1AbstractThreadPool.html#afbdc0c0970148fa095acd3a4ca97e3bf" title="Thread-safely returns the internal list of threads managed by this pool.">threads()</a>) and must not throw. </dd></dl>
+<div id="dynsection-4" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
+<div id="dynsection-4-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-4-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1DataArrayAbstractTcp_a598c065c4d0385023703311d15708326_cgraph.svg" width="444" height="78"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<a id="a3b407bdbb590f94c270406f564fb3e90" name="a3b407bdbb590f94c270406f564fb3e90"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3b407bdbb590f94c270406f564fb3e90">&#9670;&#160;</a></span>sockets() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int AsyncFw::DataArrayAbstractTcp::sockets </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Count-only overload, returns the number of live <a class="el" href="classAsyncFw_1_1DataArraySocket.html" title="An asynchronous socket class for transmitting data arrays (DataArray) with TLS support....">DataArraySocket</a> instances across all workers of this pool. </p>
+<dl class="section return"><dt>Returns</dt><dd>Total number of live sockets. </dd></dl>
+<div id="dynsection-5" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
+<div id="dynsection-5-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-5-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1DataArrayAbstractTcp_a3b407bdbb590f94c270406f564fb3e90_cgraph.svg" width="203" height="78"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+<div id="dynsection-6" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-6-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-6-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1DataArrayAbstractTcp_a3b407bdbb590f94c270406f564fb3e90_icgraph.svg" width="444" height="78"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
 <a id="a081f4d502596fe7352d3b5e68344cab8" name="a081f4d502596fe7352d3b5e68344cab8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a081f4d502596fe7352d3b5e68344cab8">&#9670;&#160;</a></span>transmit()</h2>
 
@@ -276,16 +370,16 @@ static std::vector&lt; AbstractThreadPool * &gt;&#160;</td><td class="memItemRig
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True on success. </dd></dl>
-<div id="dynsection-4" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
-<div id="dynsection-4-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-7" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
+<div id="dynsection-7-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-4-content" class="dyncontent" style="display:none;">
+<div id="dynsection-7-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1DataArrayAbstractTcp_a081f4d502596fe7352d3b5e68344cab8_cgraph.svg" width="203" height="78"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
-<div id="dynsection-5" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
-<div id="dynsection-5-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-8" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-8-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-5-content" class="dyncontent" style="display:none;">
+<div id="dynsection-8-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1DataArrayAbstractTcp_a081f4d502596fe7352d3b5e68344cab8_icgraph.svg" width="203" height="78"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
@@ -315,38 +409,12 @@ static std::vector&lt; AbstractThreadPool * &gt;&#160;</td><td class="memItemRig
 </dl>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="DataArrayTcp_2main_8cpp-example.html#a27">DataArrayTcp/main.cpp</a>, and <a class="el" href="LogTcp_2main_8cpp-example.html#a27">LogTcp/main.cpp</a>.</dd>
 </dl>
-<div id="dynsection-6" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
-<div id="dynsection-6-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-9" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
+<div id="dynsection-9-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-6-content" class="dyncontent" style="display:none;">
+<div id="dynsection-9-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1DataArrayAbstractTcp_aa9d59be7845d746853397e1905880434_cgraph.svg" width="647" height="120"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
-
-</div>
-</div>
-<a id="a0f47aa063695308b15258c682cf9bc49" name="a0f47aa063695308b15258c682cf9bc49"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0f47aa063695308b15258c682cf9bc49">&#9670;&#160;</a></span>sockets()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int DataArrayAbstractTcp::sockets </td>
-          <td>(</td>
-          <td class="paramtype">std::vector&lt; <a class="el" href="classAsyncFw_1_1DataArraySocket.html">DataArraySocket</a> * &gt; *</td>          <td class="paramname"><span class="paramname"><em>list</em></span><span class="paramdefsep"> = </span><span class="paramdefval">nullptr</span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Gathers a list of all active managed sockets and counts them. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">list</td><td>Optional destination vector to populate with socket pointers. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The total count of active sockets running in the framework. </dd></dl>
 
 </div>
 </div>
@@ -444,10 +512,10 @@ static std::vector&lt; AbstractThreadPool * &gt;&#160;</td><td class="memItemRig
 </dl>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="DataArrayTcp_2main_8cpp-example.html#a16">DataArrayTcp/main.cpp</a>.</dd>
 </dl>
-<div id="dynsection-7" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
-<div id="dynsection-7-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-10" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
+<div id="dynsection-10-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-7-content" class="dyncontent" style="display:none;">
+<div id="dynsection-10-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1DataArrayAbstractTcp_a2af94dfaa43841e7f2aac8cd35eb9f9e_cgraph.svg" width="444" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
@@ -511,10 +579,10 @@ static std::vector&lt; AbstractThreadPool * &gt;&#160;</td><td class="memItemRig
 
 <p>Locates the worker thread currently hosting the lowest number of socket contexts. </p>
 <dl class="section return"><dt>Returns</dt><dd>Pointer to the least occupied <a class="el" href="classAsyncFw_1_1DataArrayAbstractTcp_1_1Thread.html">Thread</a>, or nullptr if no threads are running. </dd></dl>
-<div id="dynsection-8" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
-<div id="dynsection-8-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-11" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
+<div id="dynsection-11-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-8-content" class="dyncontent" style="display:none;">
+<div id="dynsection-11-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1DataArrayAbstractTcp_a1d9557d91e39b12da701e6d371d71031_icgraph.svg" width="460" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
