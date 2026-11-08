@@ -52,15 +52,22 @@ void DataArrayAbstractTcp::setEncryptionDisabled(const std::string &address, boo
 
 void DataArrayAbstractTcp::setTlsContext(DataArraySocket *socket, const TlsContext &context) { socket->setContext(context); }
 
-int DataArrayAbstractTcp::sockets(std::vector<DataArraySocket *> *list) {
+int DataArrayAbstractTcp::sockets(Invocable<void(const DataArraySocket *)>::Abstract *fun) {
   int count = 0;
-  mutex.lock();
-  for (AbstractThread *thread : threads_) {
-    Thread::LockGuard lock = thread->lockGuard();
-    if (list) reinterpret_cast<std::vector<AbstractSocket *> *>(list)->insert(reinterpret_cast<std::vector<AbstractSocket *> *>(list)->end(), static_cast<Thread *>(thread)->sockets_.begin(), static_cast<Thread *>(thread)->sockets_.end());
-    count += static_cast<Thread *>(thread)->sockets_.size();
+#if defined(__cpp_range_based_for) && __cpp_range_based_for >= 202211L
+  for (AsyncFw::Thread *thread : *threads()) {
+#else
+  auto locked = threads();
+  for (AsyncFw::Thread *thread : *locked) {
+#endif
+    thread->invoke([thread, fun, &count]() {
+      for (const AbstractSocket *s : static_cast<Thread *>(thread)->sockets_) {
+        count++;
+        if (fun) (*fun)(static_cast<const DataArraySocket *>(s));
+      }
+    }, true);
   }
-  mutex.unlock();
+  if (fun) delete fun;
   return count;
 }
 
