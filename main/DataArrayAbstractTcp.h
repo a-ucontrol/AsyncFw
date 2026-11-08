@@ -92,6 +92,8 @@ protected:
   /** @brief Internal array of remote endpoints exempted from TLS handshake logic. */
   std::vector<std::string> disabledEncryptionHosts_ = {"127.0.0.1"};
   TlsContext tlsContext;
+
+private:
   int sockets(Invocable<void(const DataArraySocket *)>::Abstract *);
 };
 }  // namespace AsyncFw
