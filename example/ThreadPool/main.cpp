@@ -96,10 +96,12 @@ int main(int, char **) {
     for (const AsyncFw::AbstractThread *thread : *AsyncFw::AbstractThread::threads()) { lsInfo() << thread->name(); }
 #else
     // C++20: bind LockData to a named variable so the mutex stays held.
+    std::string names;
     {
       auto locked = AsyncFw::AbstractThread::threads();
-      for (const AsyncFw::AbstractThread *thread : *locked) { lsInfo() << thread->name(); }
+      for (const AsyncFw::AbstractThread *thread : *locked) { names += thread->name(); }
     }
+    for (auto name : names) lsInfo() << name;
 #endif
   });
 
