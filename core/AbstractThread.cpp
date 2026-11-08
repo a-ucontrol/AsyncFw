@@ -927,15 +927,15 @@ void AbstractThread::start() {
   }
   private_.state = Private::WaitStarted;
   std::thread t {[this]() {
+    setId();
     {  //lock scope
       LockGuard lock(private_.mutex);
-      setId();
       private_.condition_variable.notify_all();
     }
     exec();
+    clearId();
     {  //lock scope
       LockGuard lock(private_.mutex);
-      clearId();
       private_.state = Private::Finished;
       private_.condition_variable.notify_all();
     }
