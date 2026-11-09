@@ -6,6 +6,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 */
 
 #include <algorithm>
+#include "core/init_priority.hpp"
 #include "core/LogStream.h"
 #include "ThreadPool.h"
 
@@ -24,11 +25,7 @@ struct AbstractThreadPool::Private {
   std::string name;
 };
 
-/*
-Declared before Instance<ThreadPool>::instance_.
-So ~Instance<ThreadPool> must be completed before the ~Private::List
-*/
-AbstractThreadPool::Private::List AbstractThreadPool::Private::list;
+InitPriority(AbstractThreadPool::Private::List, AbstractThreadPool::Private::list, 2);
 
 AbstractThreadPool::Private::List::~List() {
   if (!empty()) {

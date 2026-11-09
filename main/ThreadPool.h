@@ -37,7 +37,7 @@ public:
   /** @brief Returns a list of all active thread pools in the application. */
   static std::vector<AbstractThreadPool *> pools();
   AbstractThreadPool(const std::string &);
-  virtual ~AbstractThreadPool();
+  virtual ~AbstractThreadPool() = 0;
   virtual void quit();
   AbstractThread *thread() { return thread_; }
   /** @brief Returns the identifier name of the thread pool. */
