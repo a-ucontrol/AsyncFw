@@ -316,9 +316,7 @@ void test_threadpool_getthread_with_log_on_owner() {
   // LogStream::setCompleted(&console_output). Then pool teardown logs
   // (from the queued thread-destroy tasks) route straight to console and
   // never re-enter Log::append while we hold any mutex.
-  owner.invoke([&]() {
-    if (Log *l = Instance<Log>::get()) delete l;
-  }, true);
+  owner.invoke([&]() { Instance<Log>::destroy(); }, true);
 
   owner.invoke([&]() {
     delete pool;  // queues thread-destroy tasks on owner
@@ -2097,6 +2095,62 @@ void test_multicast_dns_goodbye_reports_host_changed_port_zero() {
   EXPECT_MSG(finalRemoved == 0, "hostRemoved fired during goodbye — host must stay in table until expire");
 }
 
+// ============================================================================
+// Group H. Static destruction order — InitPriority on AbstractThreadPool::List
+// ============================================================================
+//
+// Regression for InitPriority(AbstractThreadPool::Private::List,
+// AbstractThreadPool::Private::list, 2) in ThreadPool.cpp.
+//
+// list is deliberately constructed with a priority lower than the default
+// (65532 vs 65535), so its destructor runs AFTER every default-priority
+// static — including every ~Instance<T> that might hold a ThreadPool. That
+// is the invariant that keeps ~List() from seeing a non-empty list at exit.
+//
+// Without InitPriority, destruction order across TUs is link-order
+// dependent. If ~List() fires before ~Instance<T>:
+//
+//   ~List()       → delete pool    (pool freed, but Instance<T>::value
+//                                   still points at it)
+//   ~Instance<T>  → delete pool    (double-free / UAF)
+//
+// Cross-TU is essential: if the registered pool lives in the same TU as
+// AbstractThreadPool::Private::list (as Instance<ThreadPool> does), source
+// order already guarantees correct teardown even without InitPriority. The
+// failure mode requires an Instance<T> from a DIFFERENT TU — exactly the
+// example/misc/main.cpp pattern replicated here.
+//
+// The holder is intentionally NOT destroyed in the test body. The ordering
+// invariant is exercised by process teardown itself. Under ASAN the
+// double-free aborts the process (non-zero exit code); without ASAN the
+// outcome depends on link order, so the only runtime assertion below is a
+// sanity check that the pool actually reached the static list — if it did
+// not, the test would pass trivially.
+//
+// If this test starts crashing at exit after a refactor, the first place
+// to look is ThreadPool.cpp — InitPriority MUST NOT be removed.
+struct StaticOrderPoolHolder {
+  ThreadPool *pool = nullptr;
+  StaticOrderPoolHolder() : pool(new ThreadPool("StaticOrderProbe")) {}
+  ~StaticOrderPoolHolder() {
+    pool->quit();
+    delete pool;
+  }
+  static inline AsyncFw::Instance<StaticOrderPoolHolder> instance_;
+};
+
+void test_static_destruction_order() {
+  auto *h = Instance<StaticOrderPoolHolder>::create();
+  EXPECT_MSG(h != nullptr, "Instance<StaticOrderPoolHolder>::create() returned nullptr");
+  EXPECT_MSG(h && h->pool != nullptr, "StaticOrderPoolHolder::pool is null");
+  EXPECT_MSG(ThreadPool::pools().size() >= 1,
+             "pool was not registered in AbstractThreadPool::pools() — "
+             "the test would pass trivially without a registered pool");
+  // Intentionally NOT destroyed here: the holder must stay alive until
+  // process exit so the ordering invariant between ~List() and ~Instance<T>
+  // is actually exercised.
+}
+
 }  // namespace
 
 // ============================================================================
@@ -2209,6 +2263,11 @@ int main(int, char **) {
 #else
   lsNotice() << "Group F (exit-signal): skipped on this platform (no POSIX signals)";
 #endif
+
+  // --- Group H: static destruction ordering ---------------------------
+  // Must run last: the probe pool has to be alive at process teardown so
+  // ~List() vs ~Instance<StaticOrderPoolHolder> ordering is exercised.
+  test_static_destruction_order();
 
   // --- Cleanup --------------------------------------------------------
   // Stop workers on their own thread so any pending sync-invokes from the
