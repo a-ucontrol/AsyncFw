@@ -74,7 +74,8 @@ public:
 
   /** @brief Deletes the registered global instance value and resets the internal pointer to nullptr. */
   static void destroy() { static_cast<Instance<T> *>(AbstractInstance::findInstance(typeid(T)))->destroyValue(); }
-
+  /** @brief Manually sets or replaces the internal instance tracking pointer. @param p Pointer to the pre-allocated object of type T. */
+  static void set(T *p) { static_cast<Instance<T> *>(AbstractInstance::findInstance(typeid(T)))->value = p; }
   /** @brief Retrieves the active engine-wide global default pointer for this instance type. @return A raw pointer to the managed object of type T, or nullptr if uninitialized. */
   static T *get() {
     static Instance<T> *_i = static_cast<Instance<T> *>(AbstractInstance::findInstance(typeid(T)));
