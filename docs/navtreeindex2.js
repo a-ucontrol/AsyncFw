@@ -1,6 +1,5 @@
 var NAVTREEINDEX2 =
 {
-"classAsyncFw_1_1Log.html#aa915e380895b72e2d636c73930b3f0e5":[2,0,0,35,4],
 "classAsyncFw_1_1Log.html#ab990350e0de8b9a9c6153f7c67b7a527":[2,0,0,35,8],
 "classAsyncFw_1_1Log.html#af85aba564a162221f53e80f010d7fbf3":[2,0,0,35,7],
 "classAsyncFw_1_1LogStream.html":[2,0,0,13],
@@ -249,5 +248,6 @@ var NAVTREEINDEX2 =
 "structAsyncFw_1_1LockData.html#ac721cfbf389f784194c5500d5cc55910":[2,0,0,12,4],
 "structAsyncFw_1_1LockData.html#ae066580f33d5932bc97ba2a421d85adf":[2,0,0,12,1],
 "structAsyncFw_1_1LockData.html#afa4dfef5ad6c272e06008b3bc03d302e":[2,0,0,12,2],
-"structAsyncFw_1_1LogStream_1_1Message.html":[2,0,0,13,0]
+"structAsyncFw_1_1LogStream_1_1Message.html":[2,0,0,13,0],
+"structAsyncFw_1_1LogStream_1_1Message.html#a4b2b2b0ff46ffb2a1f949f4953b34895":[2,0,0,13,0,1]
 };

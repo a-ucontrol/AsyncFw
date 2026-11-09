@@ -184,10 +184,12 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:aa14fbf40d42b2d193009793538cf4cfc inherit pub_attribs_classAsyncFw_1_1DataArrayAbstractTcp" id="r_aa14fbf40d42b2d193009793538cf4cfc"><td class="memItemLeft"><a class="el" href="classAsyncFw_1_1FunctionConnector.html">FunctionConnector</a>&lt; const <a class="el" href="classAsyncFw_1_1DataArraySocket.html">DataArraySocket</a> *, const <a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a> *, uint32_t &gt;::Policy&lt; <a class="el" href="classAsyncFw_1_1AbstractFunctionConnector.html#ab248bd16cbfcac609f58d401abec4368a3b1695a20470728ef441d8ccdd549b78">AbstractFunctionConnector::DirectOnly</a> &gt;::Protected&lt; <a class="el" href="classAsyncFw_1_1DataArrayAbstractTcp.html#adbdfede75d80d1c6c76800415d51b35c">DataArrayAbstractTcp</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="classAsyncFw_1_1DataArrayAbstractTcp.html#aa14fbf40d42b2d193009793538cf4cfc">received</a></td></tr>
 <tr class="memdesc:aa14fbf40d42b2d193009793538cf4cfc inherit pub_attribs_classAsyncFw_1_1DataArrayAbstractTcp"><td class="mdescLeft">&#160;</td><td class="mdescRight">Signal / Connector emitted when a complete <a class="el" href="classAsyncFw_1_1DataArray.html" title="The DataArray class, provides an array of bytes.">DataArray</a> packet is received by any pool socket.  <br /></td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 id="header-pro-methods" class="groupheader"><a id="pro-methods" name="pro-methods"></a>
-Protected Member Functions</h2></td></tr>
-<tr class="memitem:acc665d05a338bf954fcdda64fe6ee8c7" id="r_acc665d05a338bf954fcdda64fe6ee8c7"><td class="memItemLeft">virtual void&#160;</td><td class="memItemRight"><a class="el" href="#acc665d05a338bf954fcdda64fe6ee8c7">socketStateChanged</a> (const <a class="el" href="classAsyncFw_1_1DataArraySocket.html">DataArraySocket</a> *)</td></tr>
-<tr class="memdesc:acc665d05a338bf954fcdda64fe6ee8c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Internal handler triggered when an individual socket's state changes.  <br /></td></tr>
+<tr class="heading"><td colspan="2"><h2 id="header-inherited" class="groupheader"><a id="inherited" name="inherited"></a>
+Additional Inherited Members</h2></td></tr>
+<tr class="inherit_header pub_static_methods_classAsyncFw_1_1AbstractThreadPool"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_static_methods_classAsyncFw_1_1AbstractThreadPool')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Static Public Member Functions inherited from <a class="el" href="classAsyncFw_1_1AbstractThreadPool.html">AsyncFw::AbstractThreadPool</a></td></tr>
+<tr class="memitem:a8b3a66a03bf52ef75c7427f2778bfd44 inherit pub_static_methods_classAsyncFw_1_1AbstractThreadPool" id="r_a8b3a66a03bf52ef75c7427f2778bfd44"><td class="memItemLeft">
+static std::vector&lt; AbstractThreadPool * &gt;&#160;</td><td class="memItemRight"><b>pools</b> ()</td></tr>
+<tr class="memdesc:a8b3a66a03bf52ef75c7427f2778bfd44 inherit pub_static_methods_classAsyncFw_1_1AbstractThreadPool"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a list of all active thread pools in the application. <br /></td></tr>
 <tr class="inherit_header pro_methods_classAsyncFw_1_1DataArrayAbstractTcp"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_methods_classAsyncFw_1_1DataArrayAbstractTcp')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Protected Member Functions inherited from <a class="el" href="classAsyncFw_1_1DataArrayAbstractTcp.html">AsyncFw::DataArrayAbstractTcp</a></td></tr>
 <tr class="memitem:a1d9557d91e39b12da701e6d371d71031 inherit pro_methods_classAsyncFw_1_1DataArrayAbstractTcp" id="r_a1d9557d91e39b12da701e6d371d71031"><td class="memItemLeft"><a class="el" href="classAsyncFw_1_1DataArrayAbstractTcp_1_1Thread.html">Thread</a> *&#160;</td><td class="memItemRight"><a class="el" href="classAsyncFw_1_1DataArrayAbstractTcp.html#a1d9557d91e39b12da701e6d371d71031">findMinimalSocketsThread</a> ()</td></tr>
 <tr class="memdesc:a1d9557d91e39b12da701e6d371d71031 inherit pro_methods_classAsyncFw_1_1DataArrayAbstractTcp"><td class="mdescLeft">&#160;</td><td class="mdescRight">Locates the worker thread currently hosting the lowest number of socket contexts.  <br /></td></tr>
@@ -196,13 +198,6 @@ Protected Member Functions</h2></td></tr>
 <tr class="memdesc:a1b2d31f7db01a7cacec702eb7323e620 inherit pro_methods_classAsyncFw_1_1AbstractThreadPool"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers a new thread into the pool.  <br /></td></tr>
 <tr class="memitem:a8dd6e5afe3b1c8f0fac9176568909c54 inherit pro_methods_classAsyncFw_1_1AbstractThreadPool" id="r_a8dd6e5afe3b1c8f0fac9176568909c54"><td class="memItemLeft">virtual void&#160;</td><td class="memItemRight"><a class="el" href="classAsyncFw_1_1AbstractThreadPool.html#a8dd6e5afe3b1c8f0fac9176568909c54">removeThread</a> (<a class="el" href="classAsyncFw_1_1AbstractThreadPool_1_1Thread.html">AbstractThreadPool::Thread</a> *)</td></tr>
 <tr class="memdesc:a8dd6e5afe3b1c8f0fac9176568909c54 inherit pro_methods_classAsyncFw_1_1AbstractThreadPool"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unregisters a thread from the pool.  <br /></td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 id="header-inherited" class="groupheader"><a id="inherited" name="inherited"></a>
-Additional Inherited Members</h2></td></tr>
-<tr class="inherit_header pub_static_methods_classAsyncFw_1_1AbstractThreadPool"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_static_methods_classAsyncFw_1_1AbstractThreadPool')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Static Public Member Functions inherited from <a class="el" href="classAsyncFw_1_1AbstractThreadPool.html">AsyncFw::AbstractThreadPool</a></td></tr>
-<tr class="memitem:a8b3a66a03bf52ef75c7427f2778bfd44 inherit pub_static_methods_classAsyncFw_1_1AbstractThreadPool" id="r_a8b3a66a03bf52ef75c7427f2778bfd44"><td class="memItemLeft">
-static std::vector&lt; AbstractThreadPool * &gt;&#160;</td><td class="memItemRight"><b>pools</b> ()</td></tr>
-<tr class="memdesc:a8b3a66a03bf52ef75c7427f2778bfd44 inherit pub_static_methods_classAsyncFw_1_1AbstractThreadPool"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a list of all active thread pools in the application. <br /></td></tr>
 <tr class="inherit_header pro_attribs_classAsyncFw_1_1DataArrayAbstractTcp"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_attribs_classAsyncFw_1_1DataArrayAbstractTcp')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Protected Attributes inherited from <a class="el" href="classAsyncFw_1_1DataArrayAbstractTcp.html">AsyncFw::DataArrayAbstractTcp</a></td></tr>
 <tr class="memitem:ae58df4b570a50455f5f295513d7bdb52 inherit pro_attribs_classAsyncFw_1_1DataArrayAbstractTcp" id="r_ae58df4b570a50455f5f295513d7bdb52"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="classAsyncFw_1_1DataArrayAbstractTcp.html#ae58df4b570a50455f5f295513d7bdb52">readTimeout</a></td></tr>
 <tr class="memitem:a922b46fe2c91ea4eb92f17da008422df inherit pro_attribs_classAsyncFw_1_1DataArrayAbstractTcp" id="r_a922b46fe2c91ea4eb92f17da008422df"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="classAsyncFw_1_1DataArrayAbstractTcp.html#a922b46fe2c91ea4eb92f17da008422df">waitKeepAliveAnswerTimeout</a></td></tr>
@@ -264,39 +259,6 @@ std::mutex&#160;</td><td class="memItemRight"><b>mutex</b></td></tr>
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
-<a id="acc665d05a338bf954fcdda64fe6ee8c7" name="acc665d05a338bf954fcdda64fe6ee8c7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acc665d05a338bf954fcdda64fe6ee8c7">&#9670;&#160;</a></span>socketStateChanged()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void DataArrayTcpClient::socketStateChanged </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="classAsyncFw_1_1DataArraySocket.html">DataArraySocket</a> *</td>          <td class="paramname"><span class="paramname"><em>socket</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel protected">protected</span><span class="mlabel virtual">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Internal handler triggered when an individual socket's state changes. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">socket</td><td>Pointer to the socket whose state transitioned. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <a id="aa32fc80e269557f5f5fba45cb5372750" name="aa32fc80e269557f5f5fba45cb5372750"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa32fc80e269557f5f5fba45cb5372750">&#9670;&#160;</a></span>connectToHost() <span class="overload">[1/2]</span></h2>
 

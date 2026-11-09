@@ -134,10 +134,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a4e73e16c0af130d6311c29952b11f720"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects and returns the least loaded thread from the pool for task distribution.  <br /></td></tr>
 <tr class="memitem:ad7f14a964e683f021a4d6c1c0a8bbf5d" id="r_ad7f14a964e683f021a4d6c1c0a8bbf5d"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ad7f14a964e683f021a4d6c1c0a8bbf5d">removeThread</a> (<a class="el" href="classAsyncFw_1_1AbstractThreadPool_1_1Thread.html">AbstractThreadPool::Thread</a> *) override</td></tr>
 <tr class="memdesc:ad7f14a964e683f021a4d6c1c0a8bbf5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unregisters a thread from the pool.  <br /></td></tr>
-<tr class="memitem:ad886c5e399443dc00b6ee303d6d96f60" id="r_ad886c5e399443dc00b6ee303d6d96f60"><td class="memItemLeft">virtual void&#160;</td><td class="memItemRight"><a class="el" href="#ad886c5e399443dc00b6ee303d6d96f60">quit</a> () override</td></tr>
 <tr class="inherit_header pub_methods_classAsyncFw_1_1AbstractThreadPool"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_classAsyncFw_1_1AbstractThreadPool')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Public Member Functions inherited from <a class="el" href="classAsyncFw_1_1AbstractThreadPool.html">AsyncFw::AbstractThreadPool</a></td></tr>
 <tr class="memitem:afcf27d92b9cb65d40ecc1457eca8b652 inherit pub_methods_classAsyncFw_1_1AbstractThreadPool" id="r_afcf27d92b9cb65d40ecc1457eca8b652"><td class="memItemLeft">
 &#160;</td><td class="memItemRight"><b>AbstractThreadPool</b> (const std::string &amp;)</td></tr>
+<tr class="memitem:a39074937974ed39556239e1ec4efb16d inherit pub_methods_classAsyncFw_1_1AbstractThreadPool" id="r_a39074937974ed39556239e1ec4efb16d"><td class="memItemLeft">virtual void&#160;</td><td class="memItemRight"><a class="el" href="classAsyncFw_1_1AbstractThreadPool.html#a39074937974ed39556239e1ec4efb16d">quit</a> ()</td></tr>
 <tr class="memitem:a48b93b9caf8972713ca6c8b9c438f7c2 inherit pub_methods_classAsyncFw_1_1AbstractThreadPool" id="r_a48b93b9caf8972713ca6c8b9c438f7c2"><td class="memItemLeft">
 <a class="el" href="classAsyncFw_1_1AbstractThread.html">AbstractThread</a> *&#160;</td><td class="memItemRight"><b>thread</b> ()</td></tr>
 <tr class="memitem:ac312e723c2e0fa3e4cc18e518853bdf2 inherit pub_methods_classAsyncFw_1_1AbstractThreadPool" id="r_ac312e723c2e0fa3e4cc18e518853bdf2"><td class="memItemLeft">
@@ -493,33 +493,6 @@ template&lt;typename T, typename = std::enable_if_t&lt;!std::is_convertible_v&lt
 <div id="dynsection-7-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1ThreadPool_ad7f14a964e683f021a4d6c1c0a8bbf5d_cgraph.svg" width="408" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
-
-</div>
-</div>
-<a id="ad886c5e399443dc00b6ee303d6d96f60" name="ad886c5e399443dc00b6ee303d6d96f60"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad886c5e399443dc00b6ee303d6d96f60">&#9670;&#160;</a></span>quit()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void ThreadPool::quit </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel override">override</span><span class="mlabel virtual">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Reimplemented from <a class="el" href="classAsyncFw_1_1AbstractThreadPool.html">AsyncFw::AbstractThreadPool</a>.</p>
 
 </div>
 </div>

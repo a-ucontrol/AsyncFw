@@ -2,7 +2,6 @@ var classAsyncFw_1_1DataArrayTcpClient =
 [
     [ "Thread", "classAsyncFw_1_1DataArrayTcpClient_1_1Thread.html", "classAsyncFw_1_1DataArrayTcpClient_1_1Thread" ],
     [ "DataArrayTcpClient", "classAsyncFw_1_1DataArrayTcpClient.html#ac15595fca2d28f650f05557cb85c15ef", null ],
-    [ "socketStateChanged", "classAsyncFw_1_1DataArrayTcpClient.html#acc665d05a338bf954fcdda64fe6ee8c7", null ],
     [ "connectToHost", "classAsyncFw_1_1DataArrayTcpClient.html#aa32fc80e269557f5f5fba45cb5372750", null ],
     [ "connectToHost", "classAsyncFw_1_1DataArrayTcpClient.html#a9e4fb42a4804ad479c78123fb4a7a1f0", null ],
     [ "createThread", "classAsyncFw_1_1DataArrayTcpClient.html#af5306849ea109fb9e5bfba5360cfe57a", null ],
