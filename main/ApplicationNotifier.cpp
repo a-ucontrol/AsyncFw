@@ -14,7 +14,4 @@ Instance<ApplicationNotifier> ApplicationNotifier::instance_;
 
 ApplicationNotifier::ApplicationNotifier() { lsTrace(); }
 
-AsyncFw::ApplicationNotifier::~ApplicationNotifier() {
-  if (instance_.value == this) instance_.value = nullptr;
-  lsTrace();
-}
+AsyncFw::ApplicationNotifier::~ApplicationNotifier() { lsTrace(); }

@@ -200,7 +200,6 @@ Log::Log(int size, const std::string &name) : Rrd(size, name), AbstractLog() {
 Log::~Log() {
   lsTrace();
   finality();
-  if (instance_.value == this) instance_.value = nullptr;
 }
 
 void Log::finality() {

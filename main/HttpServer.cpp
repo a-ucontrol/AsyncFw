@@ -463,7 +463,6 @@ HttpServer::HttpServer(const std::string &httpPath) : private_(*new Private()) {
 }
 
 HttpServer::~HttpServer() {
-  if (instance_.value == this) instance_.value = nullptr;
   if (peek) delete peek;
   close();
   delete &private_;

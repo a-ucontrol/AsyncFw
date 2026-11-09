@@ -122,10 +122,7 @@ Instance<ThreadPool> ThreadPool::instance_;
 
 ThreadPool::ThreadPool(const std::string &name, int workThreads) : AbstractThreadPool(name), workThreadsSize_(workThreads) { lsTrace() << "created" << name; }
 
-ThreadPool::~ThreadPool() {
-  if (instance_.value == this) instance_.value = nullptr;
-  lsTrace() << '(' + name() + ')';
-}
+ThreadPool::~ThreadPool() { lsTrace() << '(' + name() + ')'; }
 
 ThreadPool::Thread *ThreadPool::createThread(const std::string &name, Invocable<void(Thread *)>::Abstract *f) {
   Thread *thread;

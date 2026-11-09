@@ -161,7 +161,6 @@ MulticastDns::MulticastDns(const std::string &_serviceType) : private_(*new Priv
 }
 
 MulticastDns::~MulticastDns() {
-  if (instance_.value == this) instance_.value = nullptr;
   stopService();
   stopQuerier();
   delete &private_;

@@ -191,7 +191,6 @@ FileSystemWatcher::FileSystemWatcher(const std::vector<std::string> &paths) : pr
 }
 
 FileSystemWatcher::~FileSystemWatcher() {
-  if (instance_.value == this) instance_.value = nullptr;
   private_.thread_->removePollDescriptor(private_.notifyfd_);
   private_.thread_->removeTimer(private_.timerid_);
   ::close(private_.notifyfd_);
