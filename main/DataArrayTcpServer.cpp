@@ -20,6 +20,12 @@ DataArrayTcpServer::DataArrayTcpServer(const std::string &name) : DataArrayAbstr
   lsTrace();
 }
 
+DataArrayTcpServer::~DataArrayTcpServer() {
+  if (listener->port()) listener->close();
+  if (threads_.size() > 0) DataArrayAbstractTcp::quit();
+  lsTrace();
+}
+
 void DataArrayTcpServer::quit() {
   close();
   DataArrayAbstractTcp::quit();
@@ -65,7 +71,7 @@ void DataArrayTcpServer::Thread::createSocket(int socketDescriptor, bool encrypt
 
   tcpSocket->stateChanged.connect([this, tcpSocket](AbstractSocket::State state) {
     if (state != AbstractSocket::State::Unconnected) return;
-    server()->disconnected(tcpSocket);
+    server()->thread_->invoke([this, tcpSocket]() { server()->disconnected(tcpSocket); });
     destroySocket(tcpSocket);
   });
 

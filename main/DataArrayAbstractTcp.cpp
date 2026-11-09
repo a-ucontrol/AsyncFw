@@ -54,19 +54,23 @@ void DataArrayAbstractTcp::setTlsContext(DataArraySocket *socket, const TlsConte
 
 int DataArrayAbstractTcp::sockets(Invocable<void(const DataArraySocket *)>::Abstract *fun) {
   int count = 0;
+  if (!thread_->invoke([this, fun, &count]() {
 #if defined(__cpp_range_based_for) && __cpp_range_based_for >= 202211L
-  for (AsyncFw::Thread *thread : *threads()) {
+    for (AsyncFw::Thread *thread : *threads()) {
 #else
-  auto locked = threads();
-  for (AsyncFw::Thread *thread : *locked) {
+    auto locked = threads();
+    for (AsyncFw::Thread *thread : *locked) {
 #endif
-    thread->invoke([thread, fun, &count]() {
-      for (const AbstractSocket *s : static_cast<Thread *>(thread)->sockets_) {
-        count++;
-        if (fun) (*fun)(static_cast<const DataArraySocket *>(s));
-      }
-    }, true);
-  }
+      thread->invoke([thread, fun, &count]() {
+        for (const AbstractSocket *s : static_cast<Thread *>(thread)->sockets_) {
+          count++;
+          if (fun) (*fun)(static_cast<const DataArraySocket *>(s));
+        }
+      }, true);
+    }
+  }, true))
+    lsWarning() << "pool thread not running";
+
   if (fun) delete fun;
   return count;
 }

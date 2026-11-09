@@ -28,12 +28,11 @@ protected:
     ~Thread() override;
     DataArraySocket *createSocket();
   };
-  /** @brief Internal handler triggered when an individual socket's state changes. @param socket Pointer to the socket whose state transitioned. */
-  virtual void socketStateChanged(const DataArraySocket *);
 
 public:
   /** @brief Constructs a new DataArrayTcpClient object. @param name Optional name identifier for the client thread/instance (defaults to "TcpClient"). */
   DataArrayTcpClient(const std::string & = "TcpClient");
+  ~DataArrayTcpClient() override;
   /** @brief Explicitly connects a specific socket to a target host and port. @param socket Pointer to the managed DataArraySocket instance. @param address Target IP address or hostname. @param port Target network port. */
   void connectToHost(DataArraySocket *, const std::string &, uint16_t);
   /** @brief Initiates a connection using a pre-configured socket's internal host settings. @param socket Pointer to the managed DataArraySocket instance. */

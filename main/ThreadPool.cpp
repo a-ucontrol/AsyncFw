@@ -52,10 +52,7 @@ AbstractThreadPool::AbstractThreadPool(const std::string &name) : private_(*new 
 }
 
 AbstractThreadPool::~AbstractThreadPool() {
-  mutex.lock();
-  bool b = threads_.size() > 0;
-  mutex.unlock();
-  if (b) {
+  if (threads_.size() > 0) {
     lsTrace() << LogStream::Color::DarkRed << "destroyed with threads";
     AbstractThreadPool::quit();
   }
@@ -68,16 +65,20 @@ AbstractThreadPool::~AbstractThreadPool() {
 }
 
 void AbstractThreadPool::quit() {
-  thread_->invoke([]() {}, true);
-  Thread *t;
-  for (;;) {
-    {  //lock scope
-      std::lock_guard<std::mutex> lock(mutex);
-      if (threads_.empty()) break;
-      t = threads_.back();
+  auto _f = [this]() {
+    Thread *t;
+    for (;;) {
+      {  //lock scope
+        std::lock_guard<std::mutex> lock(mutex);
+        if (threads_.empty()) break;
+        t = threads_.back();
+        threads_.pop_back();
+      }
+      t->stop();  // ~Thread()'s vptr reset must not race with a running exec() on another thread. stop() blocks until exec() returns.
+      delete t;
     }
-    t->destroy();
-  }
+  };
+  if (!thread_->invoke(_f, true)) _f();
   lsTrace();
 }
 
@@ -149,11 +150,6 @@ void ThreadPool::removeThread(AbstractThreadPool::Thread *thread) {
   if (it != workThreads_.end()) { workThreads_.erase(it); }
   AbstractThreadPool::removeThread(thread);
   lsTrace() << '(' + thread->name() + ')';
-}
-
-void ThreadPool::quit() {
-  AbstractThreadPool::quit();
-  lsTrace();
 }
 
 AbstractThreadPool::Thread *ThreadPool::getThread() {

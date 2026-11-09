@@ -11,6 +11,10 @@
 // Server-side contract:
 //   - DataArrayTcpServer listens, accepts, round-trips a frame, and
 //     tears down cleanly (listener closed, workers self-reap, no leaks).
+//   - Destroying a DataArrayTcpServer while a live socket is held by a
+//     worker MUST NOT leave the worker running after ~disconnected (the
+//     UAF window closed by ~DataArrayTcpServer::quit() plus the trailing
+//     barrier in AbstractThreadPool::quit()).
 //
 // sockets() contract (new public API on DataArrayAbstractTcp):
 //   - int sockets()                -> count of live sockets across workers
@@ -18,6 +22,9 @@
 //   - visitor runs on the worker thread (sockets_ is only stable there)
 //   - sockets() takes ownership of the internal Invocable wrapper
 //   - socket pointers passed to the visitor are valid only inside the call
+//   - sockets() is safe to call from any thread: it re-enters on the
+//     pool owner, which serializes with start()/setId() of newly created
+//     workers (fixes the data race on AbstractThread::id()).
 //
 // State-observation notes
 // -----------------------
@@ -989,8 +996,7 @@ void test_sockets_server_side(AbstractThread *poolOwner) {
   // is stable.
   std::atomic<bool> listenOk {false};
   poolOwner->invoke([&]() { listenOk = server->listen("127.0.0.1", port); }, true);
-  EXPECT_MSG(listenOk.load(),
-             "server.listen(" + std::to_string(port) + ") failed");
+  EXPECT_MSG(listenOk.load(), "server.listen(" + std::to_string(port) + ") failed");
 
   int initial = -1;
   poolOwner->invoke([&]() { initial = server->sockets(); }, true);
@@ -1013,15 +1019,9 @@ void test_sockets_server_side(AbstractThread *poolOwner) {
 
       std::atomic<int> visited {0};
       int visitedCount = 0;
-      poolOwner->invoke([&]() {
-        visitedCount = server->sockets([&visited](const DataArraySocket *) {
-          visited.fetch_add(1);
-        });
-      }, true);
-      EXPECT_MSG(visitedCount == 1,
-                 "server sockets(lambda) total=" + std::to_string(visitedCount));
-      EXPECT_MSG(visited.load() == 1,
-                 "server sockets(lambda) visited=" + std::to_string(visited.load()));
+      poolOwner->invoke([&]() { visitedCount = server->sockets([&visited](const DataArraySocket *) { visited.fetch_add(1); }); }, true);
+      EXPECT_MSG(visitedCount == 1, "server sockets(lambda) total=" + std::to_string(visitedCount));
+      EXPECT_MSG(visited.load() == 1, "server sockets(lambda) visited=" + std::to_string(visited.load()));
 
       client->destroySocket(cs);
     }
@@ -1064,6 +1064,129 @@ void test_sockets_move_only_functor(AbstractThread *poolOwner) {
 
   for (DataArraySocket *s : sockets) client->destroySocket(s);
   poolOwner->invoke([&]() { delete client; }, true);
+}
+
+// ============================================================================
+// ===============  UAF window: server destroyed with live sockets  ==========
+// ============================================================================
+//
+// Reproducer for the UAF that used to fire when a live server-side socket
+// received FIN after ~DataArrayTcpServer had already destroyed
+// DataArrayTcpServer::disconnected but before the worker was stopped.
+//
+// Background. Before ~DataArrayTcpServer::quit() existed, the destruction
+// order was:
+//
+//   ~DataArrayTcpServer()
+//     (implicit) member destruction in reverse declaration order:
+//        ~listener
+//        ~disconnected            ← FunctionConnector dead here
+//        ~DataArrayAbstractTcp
+//        ~AbstractThreadPool      ← quit() finally stops the workers
+//
+// Between ~disconnected and the workers actually stopping there was a
+// window in which a live server-side socket, still polled by its worker,
+// could receive FIN, call stateEvent(Unconnected) -> stateChanged ->
+// server()->disconnected(tcpSocket), and hit a destroyed mutex. TSan
+// reported "use of an invalid mutex" or "heap-use-after-free".
+//
+// The fix in the current tree:
+//   - ~DataArrayTcpServer() calls quit() in the body (before members go away);
+//   - AbstractThreadPool::quit() now ends with `thread_->invoke([], true)`,
+//     so stop-tasks actually run before quit() returns, and the workers
+//     are dead before ~disconnected / ~AbstractTcp run.
+//
+// This test forces the window with a tight loop: create server + client,
+// wait for accept, delete server, immediately send FIN, repeat. If any
+// iteration reaches ~disconnected while the worker is still alive, TSan
+// reports the UAF and the test will be flagged by the sanitizer build.
+//
+// Why it must run on a dedicated owner. `poolOwner` must have its own
+// exec() running so that (a) incomingConnection()'s synchronous start()
+// completes, and (b) the trailing barrier in ~AbstractThreadPool::quit()
+// can drain the stop-tasks. Using the global Main thread would make the
+// test order-sensitive.
+//
+// Why sockets() is invoked via poolOwner.invoke(..., true). The pool's
+// sockets() walks threads() and, for each worker, calls invoke() which
+// reads id(). AbstractThread::id() is only safe after start() has
+// returned (see Probe H comments). Serializing sockets() on the owner
+// closes the id()/setId() race window that the earlier version of this
+// reproducer was hitting.
+void test_da_server_destroy_uaf_window(AbstractThread *poolOwner) {
+  lsNotice() << "=== server destroyed with live socket (UAF window) ===";
+  constexpr uint16_t kPort = 18997;
+  constexpr int kIterations = 300;
+
+  int foreignTotal = 0;
+  int stuck = 0;
+
+  for (int i = 0; i < kIterations; ++i) {
+    // ---- Create server on owner -----------------------------------------
+    DataArrayTcpServer *server = nullptr;
+    poolOwner->invoke([&]() {
+      server = new DataArrayTcpServer("uaf-server-probe");
+      server->listen("127.0.0.1", kPort);
+    }, true);
+    if (!server) {
+      EXPECT_MSG(false, "server allocation failed");
+      return;
+    }
+
+    // ---- Create client on caller (this thread) --------------------------
+    DataArrayTcpClient client("uaf-client-probe");
+    DataArraySocket *cs = client.createSocket();
+    g_ledger.onCreate(cs, 10000 + i);
+
+    std::atomic<int> foreign {0};
+    FunctionConnectionGuard g = client.connectionStateChanged.connect([&, cs](const DataArraySocket *s) {
+      if (s != cs) ++foreign;
+    });
+
+    client.connectToHost(cs, "127.0.0.1", kPort);
+
+    // ---- Wait for accept: sockets() must run on the owner ---------------
+    // Serializing on poolOwner closes the id()/setId() race window.
+    std::atomic<int> n {0};
+    for (int tries = 0; tries < 2000; ++tries) {
+      poolOwner->invoke([&]() { n = server->sockets(); }, true);
+      if (n.load() > 0) break;
+      std::this_thread::sleep_for(std::chrono::milliseconds(1));
+    }
+    if (n.load() == 0) {
+      ++stuck;
+      lsError() << "uaf-window iter" << i << ": server did not accept client";
+      client.destroySocket(cs);
+      g_ledger.onDestroy(cs, 10000 + i);
+      g = {};
+      poolOwner->invoke([&]() { delete server; }, true);
+      continue;
+    }
+
+    // ---- Destroy the server BEFORE the client FIN arrives ---------------
+    // The worker is still alive right after delete returns; ~disconnected
+    // is now destroyed but ~AbstractThreadPool::quit()'s trailing barrier
+    // guarantees the worker is stopped before ~disconnected runs — as long
+    // as ~DataArrayTcpServer::quit() was called from the body, which the
+    // current tree does. This test exists to catch regressions of that
+    // invariant.
+    poolOwner->invoke([&]() { delete server; }, true);
+    server = nullptr;
+
+    // ---- Immediately send FIN from the client --------------------------
+    client.destroySocket(cs);
+    g_ledger.onDestroy(cs, 10000 + i);
+
+    // Let the owner drain stop-tasks for this iteration before the next.
+    poolOwner->invoke([&]() {}, true);
+
+    foreignTotal += foreign.load();
+    g = {};
+  }
+
+  lsNotice() << "uaf-window summary: iterations=" << kIterations << " stuck=" << stuck << " foreign=" << foreignTotal;
+  EXPECT_MSG(stuck == 0, "server never accepted in " + std::to_string(stuck) + "/" + std::to_string(kIterations) + " iterations");
+  EXPECT_MSG(foreignTotal == 0, "foreign connectionStateChanged deliveries: " + std::to_string(foreignTotal));
 }
 
 #endif  // !_WIN32
@@ -1118,6 +1241,12 @@ int main(int, char **) {
     test_sockets_after_all_destroyed(&poolOwner);
     test_sockets_server_side(&poolOwner);
     test_sockets_move_only_functor(&poolOwner);
+
+    // ---- UAF window: server destroyed with live socket -----------------
+    // Must run last among the server tests: it tears the workers down by
+    // deleting the server, then immediately FINs the client. Kept after
+    // all sockets() probes so it doesn't pollute their shared state.
+    test_da_server_destroy_uaf_window(&poolOwner);
 
     // ---- quit() from a foreign thread (destroys the pool) ------------
     // Must run last: it tears down `dac`'s pool entirely. Since we

@@ -20,6 +20,7 @@ public:
   using DataArrayAbstractTcp::setTlsContext;
   /** @brief Constructs a new DataArrayTcpServer object. @param name Optional name identifier for the server thread/instance (defaults to "TcpServer"). */
   DataArrayTcpServer(const std::string & = "TcpServer");
+  ~DataArrayTcpServer() override;
   /** @brief Stops the server and terminates all active worker threads and connections. */
   void quit() override;
   /** @brief Starts listening for incoming connections on the specified address and port. @param address IP address to bind to (e.g., "0.0.0.0" or "127.0.0.1"). @param port Network port to listen on. @return True if the server successfully started listening. */

@@ -20,6 +20,7 @@ class AbstractThreadPool {
 public:
   /** @class Thread @brief A specialized thread managed by an AbstractThreadPool. */
   class Thread : public AsyncFw::Thread {
+    friend class AbstractThreadPool;
     friend class ThreadPool;
 
   public:
@@ -133,7 +134,6 @@ public:
   AbstractThreadPool::Thread *getThread();
 
   void removeThread(AbstractThreadPool::Thread *) override;
-  virtual void quit() override;
 
 private:
   Thread *createThread(const std::string &, Invocable<void(Thread *)>::Abstract *fun);
