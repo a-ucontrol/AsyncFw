@@ -2391,10 +2391,10 @@ int main(int, char **) {
   poolOwner.invoke([]() { Instance<ThreadPool>::create("MainTestsPool"); }, true);
 
   // --- Group A: ThreadPool --------------------------------------------
-  test_threadpool_destroy_from_own_task();
   test_threadpool_getthread_with_log_on_owner();
   lsNotice() << "restore log output after ~Log";
   LogStream::setCompleted(&log_output);
+  test_threadpool_destroy_from_own_task();
 
   // --- Group B: Coroutine — basics ------------------------------------
   test_coroutine_basic_suspend_resume();
