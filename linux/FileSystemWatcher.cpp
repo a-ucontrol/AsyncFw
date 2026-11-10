@@ -160,12 +160,12 @@ FileSystemWatcher::FileSystemWatcher(const std::vector<std::string> &paths) : pr
       }
       if (e->mask & IN_CREATE) {
         if ((*itw)->name == e->name) {
-          (*itw)->d = inotify_add_watch(private_.notifyfd_, (wp.directory + '/' + e->name).c_str(), IN_ATTRIB | IN_MODIFY | IN_CLOSE_WRITE | IN_DELETE_SELF);
-          if ((*itw)->d < 0) {
-            lsTrace() << LogStream::Color::DarkRed << "inotify_add_watch(file) failed" << wp.directory + '/' + e->name << "errno:" << errno;
-            (*itw)->d = (*itd)->d;
+          int i = inotify_add_watch(private_.notifyfd_, (wp.directory + '/' + e->name).c_str(), IN_ATTRIB | IN_MODIFY | IN_CLOSE_WRITE | IN_DELETE_SELF);
+          if (i < 0) {
+            lsDebug() << LogStream::Color::Red << "inotify_add_watch(file) failed" << wp.directory + '/' + e->name << "errno:" << errno;
             continue;
           } else {
+            (*itw)->d = i;
             itd = std::lower_bound(private_.wds_.begin(), private_.wds_.end(), (*itw)->d, Private::CompareWatchDescriptor());
             private_.wds_.insert(itd, *itw);
           }
