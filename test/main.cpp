@@ -2381,7 +2381,7 @@ void test_static_destruction_order() {
 
 int main(int, char **) {
   lsNotice() << "set log output";
-  //LogStream::setCompleted(&log_output);
+  LogStream::setCompleted(&log_output);
 
   // ThreadPool must live on a dedicated thread whose exec() is running for
   // the entire test run: pool workers use sync-invoke into the pool owner,
@@ -2393,7 +2393,7 @@ int main(int, char **) {
   // --- Group A: ThreadPool --------------------------------------------
   test_threadpool_getthread_with_log_on_owner();
   lsNotice() << "restore log output after ~Log";
-//  LogStream::setCompleted(&log_output);
+  LogStream::setCompleted(&log_output);
   test_threadpool_destroy_from_own_task();
 
   // --- Group B: Coroutine — basics ------------------------------------
