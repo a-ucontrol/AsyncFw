@@ -253,6 +253,7 @@ public:
     addRule(url, Request::Method::Options, [this, action, data](const Request &request) {
       if (cors_request_enabled) request.response()->setStatusCode(Response::StatusCode::Ok);
       else { request.response()->setStatusCode(Response::StatusCode::Forbidden); }
+      request.response()->send();
     });
   }
   /** @brief Binds a specific class instance method as a route handler. @tparam O Pointer type targeting the owning class instance. @tparam A Pointer type matching a method signature of void Object::Method(const Request&). @param object Pointer to the instance executing the action. @param url The endpoint URI pattern. @param method The target HTTP execution method. @param action Pointer to the member method. @param data Optional context variable evaluated by the global peek filter. */

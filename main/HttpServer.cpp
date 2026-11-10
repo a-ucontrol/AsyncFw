@@ -376,7 +376,7 @@ HttpServer::TcpSocket::TcpSocket(HttpServer *server) : HttpSocket(), server_(ser
     if (_state != Unconnected) return;
     if (response) response->socket_ = nullptr;
     if (server_) server_->sockets.erase(std::find(server_->sockets.begin(), server_->sockets.end(), this));
-    lsInfo() << "unconnected" << peerAddress() << peerPort() << "sockets:" << server_->sockets.size();
+    lsInfo() << "unconnected" << peerAddress() << peerPort();
     destroy();
   });
   received.connect([this](const DataArray &request) {
@@ -464,6 +464,7 @@ HttpServer::HttpServer(const std::string &httpPath) : private_(*new Private()) {
 
 HttpServer::~HttpServer() {
   if (peek) delete peek;
+  for (TcpSocket *s : sockets) s->server_ = nullptr;
   close();
   delete &private_;
   lsTrace();
@@ -632,7 +633,8 @@ std::string HttpServer::Response::header() const {
 
 void HttpServer::Response::destroy() {
   if (socket_) socket_->response = nullptr;
-  AbstractThread::current()->invoke([_p = this]() { delete _p; });
+  auto _f = [_p = this]() { delete _p; };
+  if (!AbstractThread::current()->invoke(_f)) _f();
 }
 
 bool HttpServer::Response::send() {

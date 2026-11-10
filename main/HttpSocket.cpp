@@ -160,8 +160,14 @@ void HttpSocket::readEvent() {
 
     std::stringstream _stream;
     _stream << str;
-    int _n;
+    int _n = 0;
     _stream >> std::hex >> _n;
+
+    if (_stream.fail() || _n < 0) {
+      lsWarning("error chunk size");
+      disconnect();
+      return;
+    }
 
     if (_n == 0) {
       _da.clear();
@@ -210,7 +216,7 @@ bool HttpSocket::connect(const std::string &address, uint16_t port) {
 }
 
 void HttpSocket::disconnect() {
-  thread_->invoke([this]() { AbstractTlsSocket::disconnect(); }, true);
+  thread_->invoke([this]() { AbstractTlsSocket::disconnect(); });
 }
 
 void HttpSocket::close() {
@@ -234,6 +240,7 @@ DataArrayView HttpSocket::content() { return received_.view(headerSize_ + 4); }
 void HttpSocket::clearReceived() {
   received_.clear();
   full_ = false;
+  contentLength_ = std::string::npos;
   lsTrace();
 }
 

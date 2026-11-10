@@ -68,6 +68,7 @@ public:
     FunctionConnectionGuard *guard_ = nullptr;
   };
   AbstractFunctionConnector(ConnectionPolicy = Auto);
+  AbstractFunctionConnector(AbstractFunctionConnector &&) = delete;
 
 protected:
   struct List : protected connection_list_t {

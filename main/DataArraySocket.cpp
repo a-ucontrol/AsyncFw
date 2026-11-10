@@ -287,7 +287,7 @@ bool DataArraySocket::transmit(const DataArray &ba, uint32_t pi) const {
   warning_if(ba.empty()) << "transmit array empty (" + peerString() + ')';
   if (static_cast<int>(ba.size()) > private_.maxWriteSize) {
     setErrorString("Big transmit size: " + std::to_string(ba.size()) + " (" + peerString() + ')');
-    if (!private_.port) const_cast<DataArraySocket *>(this)->disconnect();
+    const_cast<DataArraySocket *>(this)->disconnect();
     return false;
   }
   bool _r = false;
@@ -295,7 +295,7 @@ bool DataArraySocket::transmit(const DataArray &ba, uint32_t pi) const {
     int buffers = private_.transmitList.size();
     if (buffers >= private_.maxWriteBuffers) {
       setErrorString("Many transmit buffers (" + peerString() + ')');
-      if (!private_.port) const_cast<DataArraySocket *>(this)->disconnect();
+      const_cast<DataArraySocket *>(this)->disconnect();
       return;
     }
     int size = 0;
@@ -303,7 +303,7 @@ bool DataArraySocket::transmit(const DataArray &ba, uint32_t pi) const {
       size += t.size() - 8;
       if (size > private_.maxWriteSize) {
         setErrorString("Transmit overflow (" + peerString() + ')');
-        if (!private_.port) const_cast<DataArraySocket *>(this)->disconnect();
+        const_cast<DataArraySocket *>(this)->disconnect();
         return;
       }
     }

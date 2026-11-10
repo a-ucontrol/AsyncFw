@@ -75,39 +75,39 @@
 </a>
 </g>
 </g>
-<!-- Node12 -->
-<g id="Node000012" class="node">
-<title>Node12</title>
-<g id="a_Node000012"><a xlink:href="classAsyncFw_1_1HttpServer_1_1Response.html#a1e25071dfc003a6530edf35e0249e4b9" target="_top" xlink:title="Sets the payload content from a raw DataArray.">
+<!-- Node10 -->
+<g id="Node000010" class="node">
+<title>Node10</title>
+<g id="a_Node000010"><a xlink:href="classAsyncFw_1_1HttpServer_1_1Response.html#a1e25071dfc003a6530edf35e0249e4b9" target="_top" xlink:title="Sets the payload content from a raw DataArray.">
 <polygon fill="white" stroke="#666666" points="275.38,-82 155.12,-82 155.12,-50 275.38,-50 275.38,-82"/>
 <text xml:space="preserve" text-anchor="start" x="163.12" y="-68.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::HttpServer</text>
 <text xml:space="preserve" text-anchor="middle" x="215.25" y="-56.5" font-family="Helvetica,sans-Serif" font-size="10.00">::Response::setContent</text>
 </a>
 </g>
 </g>
-<!-- Node1&#45;&gt;Node12 -->
-<g id="edge11_Node000001_Node000012" class="edge">
-<title>Node1&#45;&gt;Node12</title>
-<g id="a_edge11_Node000001_Node000012"><a xlink:title=" ">
+<!-- Node1&#45;&gt;Node10 -->
+<g id="edge9_Node000001_Node000010" class="edge">
+<title>Node1&#45;&gt;Node10</title>
+<g id="a_edge9_Node000001_Node000010"><a xlink:title=" ">
 <path fill="none" stroke="#63b8ff" d="M107.99,-99.63C121.83,-95.25 136.94,-90.46 151.31,-85.92"/>
 <polygon fill="#63b8ff" stroke="#63b8ff" points="152.21,-89.3 160.69,-82.95 150.1,-82.63 152.21,-89.3"/>
 </a>
 </g>
 </g>
-<!-- Node13 -->
-<g id="Node000013" class="node">
-<title>Node13</title>
-<g id="a_Node000013"><a xlink:href="classAsyncFw_1_1HttpServer_1_1Response.html#a3bd5303884754553c8dcf33c3b98da3c" target="_top" xlink:title="Assigns the HTTP status code for this response.">
+<!-- Node11 -->
+<g id="Node000011" class="node">
+<title>Node11</title>
+<g id="a_Node000011"><a xlink:href="classAsyncFw_1_1HttpServer_1_1Response.html#a3bd5303884754553c8dcf33c3b98da3c" target="_top" xlink:title="Assigns the HTTP status code for this response.">
 <polygon fill="white" stroke="#666666" points="284,-32 146.5,-32 146.5,0 284,0 284,-32"/>
 <text xml:space="preserve" text-anchor="start" x="154.5" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::HttpServer</text>
 <text xml:space="preserve" text-anchor="middle" x="215.25" y="-6.5" font-family="Helvetica,sans-Serif" font-size="10.00">::Response::setStatusCode</text>
 </a>
 </g>
 </g>
-<!-- Node1&#45;&gt;Node13 -->
-<g id="edge12_Node000001_Node000013" class="edge">
-<title>Node1&#45;&gt;Node13</title>
-<g id="a_edge12_Node000001_Node000013"><a xlink:title=" ">
+<!-- Node1&#45;&gt;Node11 -->
+<g id="edge10_Node000001_Node000011" class="edge">
+<title>Node1&#45;&gt;Node11</title>
+<g id="a_edge10_Node000001_Node000011"><a xlink:title=" ">
 <path fill="none" stroke="#63b8ff" d="M72.26,-99.76C89.37,-83.15 117.92,-57.5 146.5,-41 148.79,-39.68 151.16,-38.4 153.59,-37.18"/>
 <polygon fill="#63b8ff" stroke="#63b8ff" points="154.83,-40.46 162.42,-33.06 151.88,-34.12 154.83,-40.46"/>
 </a>
@@ -132,20 +132,20 @@
 </a>
 </g>
 </g>
-<!-- Node11 -->
-<g id="Node000011" class="node">
-<title>Node11</title>
-<g id="a_Node000011"><a xlink:href="classAsyncFw_1_1HttpServer_1_1Response.html#a5dd46db3eac7d1a07948d072e71c11f2" target="_top" xlink:title="Generates and returns the complete serialized HTTP header section.">
+<!-- Node9 -->
+<g id="Node000009" class="node">
+<title>Node9</title>
+<g id="a_Node000009"><a xlink:href="classAsyncFw_1_1HttpServer_1_1Response.html#a5dd46db3eac7d1a07948d072e71c11f2" target="_top" xlink:title="Generates and returns the complete serialized HTTP header section.">
 <polygon fill="white" stroke="#666666" points="430.5,-107 320,-107 320,-75 430.5,-75 430.5,-107"/>
 <text xml:space="preserve" text-anchor="start" x="328" y="-93.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::HttpServer</text>
 <text xml:space="preserve" text-anchor="middle" x="375.25" y="-81.5" font-family="Helvetica,sans-Serif" font-size="10.00">::Response::header</text>
 </a>
 </g>
 </g>
-<!-- Node4&#45;&gt;Node11 -->
-<g id="edge10_Node000004_Node000011" class="edge">
-<title>Node4&#45;&gt;Node11</title>
-<g id="a_edge10_Node000004_Node000011"><a xlink:title=" ">
+<!-- Node4&#45;&gt;Node9 -->
+<g id="edge8_Node000004_Node000009" class="edge">
+<title>Node4&#45;&gt;Node9</title>
+<g id="a_edge8_Node000004_Node000009"><a xlink:title=" ">
 <path fill="none" stroke="#63b8ff" d="M270.62,-107.4C282.72,-105.48 295.67,-103.43 308.18,-101.45"/>
 <polygon fill="#63b8ff" stroke="#63b8ff" points="308.68,-104.92 318.01,-99.9 307.59,-98 308.68,-104.92"/>
 </a>
@@ -155,9 +155,9 @@
 <g id="Node000006" class="node">
 <title>Node6</title>
 <g id="a_Node000006"><a xlink:href="classAsyncFw_1_1AbstractThread.html#af33c5949edb374d673a7a9ac0c81ec32" target="_top" xlink:title="Returns a pointer to the AsyncFw::AbstractThread that manages the currently executing thread.">
-<polygon fill="white" stroke="#666666" points="596.5,-182 466.5,-182 466.5,-150 596.5,-150 596.5,-182"/>
-<text xml:space="preserve" text-anchor="start" x="474.5" y="-168.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AbstractThread</text>
-<text xml:space="preserve" text-anchor="middle" x="531.5" y="-156.5" font-family="Helvetica,sans-Serif" font-size="10.00">::current</text>
+<polygon fill="white" stroke="#666666" points="596.5,-157 466.5,-157 466.5,-125 596.5,-125 596.5,-157"/>
+<text xml:space="preserve" text-anchor="start" x="474.5" y="-143.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AbstractThread</text>
+<text xml:space="preserve" text-anchor="middle" x="531.5" y="-131.5" font-family="Helvetica,sans-Serif" font-size="10.00">::current</text>
 </a>
 </g>
 </g>
@@ -165,27 +165,8 @@
 <g id="edge5_Node000005_Node000006" class="edge">
 <title>Node5&#45;&gt;Node6</title>
 <g id="a_edge5_Node000005_Node000006"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M430.63,-149.81C438.5,-151.09 446.72,-152.42 454.92,-153.75"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="454.12,-157.17 464.55,-155.31 455.24,-150.26 454.12,-157.17"/>
-</a>
-</g>
-</g>
-<!-- Node9 -->
-<g id="Node000009" class="node">
-<title>Node9</title>
-<g id="a_Node000009"><a xlink:href="classAsyncFw_1_1AbstractThread.html#af1382b21117f049a9ab7063017d7fae6" target="_top" xlink:title="Runs a function in a managed thread.">
-<polygon fill="white" stroke="#666666" points="596.5,-132 466.5,-132 466.5,-100 596.5,-100 596.5,-132"/>
-<text xml:space="preserve" text-anchor="start" x="474.5" y="-118.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AbstractThread</text>
-<text xml:space="preserve" text-anchor="middle" x="531.5" y="-106.5" font-family="Helvetica,sans-Serif" font-size="10.00">::invoke</text>
-</a>
-</g>
-</g>
-<!-- Node5&#45;&gt;Node9 -->
-<g id="edge8_Node000005_Node000009" class="edge">
-<title>Node5&#45;&gt;Node9</title>
-<g id="a_edge8_Node000005_Node000009"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M430.63,-132.19C438.5,-130.91 446.72,-129.58 454.92,-128.25"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="455.24,-131.74 464.55,-126.69 454.12,-124.83 455.24,-131.74"/>
+<path fill="none" stroke="#63b8ff" d="M430.63,-141C438.41,-141 446.54,-141 454.64,-141"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="454.53,-144.5 464.53,-141 454.53,-137.5 454.53,-144.5"/>
 </a>
 </g>
 </g>
@@ -193,9 +174,9 @@
 <g id="Node000007" class="node">
 <title>Node7</title>
 <g id="a_Node000007"><a xlink:href="classAsyncFw_1_1AbstractThread.html#a8c9202c90ac101522f26c4260cb01b59" target="_top" xlink:title="Constructs a thread.">
-<polygon fill="white" stroke="#666666" points="762.5,-182 632.5,-182 632.5,-150 762.5,-150 762.5,-182"/>
-<text xml:space="preserve" text-anchor="start" x="640.5" y="-168.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AbstractThread</text>
-<text xml:space="preserve" text-anchor="middle" x="697.5" y="-156.5" font-family="Helvetica,sans-Serif" font-size="10.00">::AbstractThread</text>
+<polygon fill="white" stroke="#666666" points="762.5,-157 632.5,-157 632.5,-125 762.5,-125 762.5,-157"/>
+<text xml:space="preserve" text-anchor="start" x="640.5" y="-143.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AbstractThread</text>
+<text xml:space="preserve" text-anchor="middle" x="697.5" y="-131.5" font-family="Helvetica,sans-Serif" font-size="10.00">::AbstractThread</text>
 </a>
 </g>
 </g>
@@ -203,8 +184,8 @@
 <g id="edge6_Node000006_Node000007" class="edge">
 <title>Node6&#45;&gt;Node7</title>
 <g id="a_edge6_Node000006_Node000007"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M596.85,-166C604.71,-166 612.81,-166 620.83,-166"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="620.56,-169.5 630.56,-166 620.56,-162.5 620.56,-169.5"/>
+<path fill="none" stroke="#63b8ff" d="M596.85,-141C604.71,-141 612.81,-141 620.83,-141"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="620.56,-144.5 630.56,-141 620.56,-137.5 620.56,-144.5"/>
 </a>
 </g>
 </g>
@@ -212,9 +193,9 @@
 <g id="Node000008" class="node">
 <title>Node8</title>
 <g id="a_Node000008"><a xlink:href="classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd" target="_top" xlink:title="Returns name of managed thread.">
-<polygon fill="white" stroke="#666666" points="928.5,-182 798.5,-182 798.5,-150 928.5,-150 928.5,-182"/>
-<text xml:space="preserve" text-anchor="start" x="806.5" y="-168.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AbstractThread</text>
-<text xml:space="preserve" text-anchor="middle" x="863.5" y="-156.5" font-family="Helvetica,sans-Serif" font-size="10.00">::name</text>
+<polygon fill="white" stroke="#666666" points="928.5,-157 798.5,-157 798.5,-125 928.5,-125 928.5,-157"/>
+<text xml:space="preserve" text-anchor="start" x="806.5" y="-143.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AbstractThread</text>
+<text xml:space="preserve" text-anchor="middle" x="863.5" y="-131.5" font-family="Helvetica,sans-Serif" font-size="10.00">::name</text>
 </a>
 </g>
 </g>
@@ -222,27 +203,8 @@
 <g id="edge7_Node000007_Node000008" class="edge">
 <title>Node7&#45;&gt;Node8</title>
 <g id="a_edge7_Node000007_Node000008"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M762.85,-166C770.71,-166 778.81,-166 786.83,-166"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="786.56,-169.5 796.56,-166 786.56,-162.5 786.56,-169.5"/>
-</a>
-</g>
-</g>
-<!-- Node10 -->
-<g id="Node000010" class="node">
-<title>Node10</title>
-<g id="a_Node000010"><a xlink:href="classAsyncFw_1_1AbstractThread.html#abe96e6b2a1de041f0d25390a6b77e50a" target="_top" xlink:title="Runs a task in a managed thread.">
-<polygon fill="white" stroke="#666666" points="762.5,-132 632.5,-132 632.5,-100 762.5,-100 762.5,-132"/>
-<text xml:space="preserve" text-anchor="start" x="640.5" y="-118.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::AbstractThread</text>
-<text xml:space="preserve" text-anchor="middle" x="697.5" y="-106.5" font-family="Helvetica,sans-Serif" font-size="10.00">::invokeTask</text>
-</a>
-</g>
-</g>
-<!-- Node9&#45;&gt;Node10 -->
-<g id="edge9_Node000009_Node000010" class="edge">
-<title>Node9&#45;&gt;Node10</title>
-<g id="a_edge9_Node000009_Node000010"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M596.85,-116C604.71,-116 612.81,-116 620.83,-116"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="620.56,-119.5 630.56,-116 620.56,-112.5 620.56,-119.5"/>
+<path fill="none" stroke="#63b8ff" d="M762.85,-141C770.71,-141 778.81,-141 786.83,-141"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="786.56,-144.5 796.56,-141 786.56,-137.5 786.56,-144.5"/>
 </a>
 </g>
 </g>

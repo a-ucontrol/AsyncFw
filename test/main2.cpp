@@ -316,28 +316,37 @@ void test_da_rapid_accept_close(DataArrayTcpClient &client) {
     DataArraySocket *socket = client.createSocket();
     g_ledger.onCreate(socket, i);
 
-    std::atomic<int> unconnCount {0};
-    std::atomic<int> foreign {0};
-    FunctionConnectionGuard g = client.connectionStateChanged.connect([&, socket, i](const DataArraySocket *s) {
-      if (s != socket) {
-        ++foreign;
-        lsWarning() << "rapid iter" << i << " FOREIGN s=" << s << " state=" << static_cast<int>(s->state()) << " (expected " << socket << ")";
+    // State живёт в куче. Поздняя эмиссия из _il-снимка в operator()
+    // держит свою копию shared_ptr -> состояние не умирает вместе с
+    // итерацией, и stack-reuse (TSAN: "Previous write ... Location is
+    // stack of thread T2") больше не создаёт гонку.
+    struct State {
+      std::atomic<int> unconnCount {0};
+      std::atomic<int> foreign {0};
+      const DataArraySocket *expected = nullptr;
+    };
+    auto state = std::make_shared<State>();
+    state->expected = socket;
+
+    FunctionConnectionGuard g = client.connectionStateChanged.connect([state, i](const DataArraySocket *s) {
+      if (s != state->expected) {
+        state->foreign.fetch_add(1, std::memory_order_relaxed);
+        lsWarning() << "rapid iter" << i << " FOREIGN s=" << s << " state=" << static_cast<int>(s->state()) << " (expected " << state->expected << ")";
         return;
       }
-      if (s->state() == AbstractSocket::State::Unconnected) unconnCount.fetch_add(1);
+      if (s->state() == AbstractSocket::State::Unconnected) state->unconnCount.fetch_add(1, std::memory_order_relaxed);
     });
 
     client.connectToHost(socket, "127.0.0.1", server.port);
 
-    const bool settled = waitForUnconnectedFires(unconnCount, 0, 500);
-    AbstractThread::current()->invoke([]() {}, true);
+    const bool settled = waitForUnconnectedFires(state->unconnCount, 0, 500);
 
     if (!settled) {
       ++stuck;
       lsError() << "rapid iter" << i << " did not settle in 500ms,"
-                << " selfState=" << static_cast<int>(socket->state()) << " unconnCount=" << unconnCount.load() << " foreign=" << foreign.load() << " socket=" << socket;
+                << " selfState=" << static_cast<int>(socket->state()) << " unconnCount=" << state->unconnCount.load() << " foreign=" << state->foreign.load() << " socket=" << socket;
     }
-    foreignTotal += foreign.load();
+    foreignTotal += state->foreign.load();
 
     g = {};
     client.destroySocket(socket);
@@ -488,33 +497,37 @@ void test_da_state_sequence(DataArrayTcpClient &client) {
     DataArraySocket *socket = client.createSocket();
     g_ledger.onCreate(socket, i);
 
-    std::atomic<int> unconnCount {0};
-    std::atomic<int> foreign {0};
-    std::atomic<int> selfNonUnconn {0};
+    struct State {
+      std::atomic<int> unconnCount {0};
+      std::atomic<int> foreign {0};
+      std::atomic<int> selfNonUnconn {0};
+      const DataArraySocket *expected = nullptr;
+    };
+    auto state = std::make_shared<State>();
+    state->expected = socket;
 
-    FunctionConnectionGuard g = client.connectionStateChanged.connect([&, socket, i](const DataArraySocket *s) {
+    FunctionConnectionGuard g = client.connectionStateChanged.connect([state, i](const DataArraySocket *s) {
       const int st = static_cast<int>(s->state());
-      lsTrace() << "state-seq iter" << i << " delivery s=" << s << " state=" << st << " expect=" << socket;
-      if (s != socket) {
-        ++foreign;
-        lsWarning() << "state-seq iter" << i << " FOREIGN s=" << s << " state=" << st << " (expected " << socket << ")";
+      lsTrace() << "state-seq iter" << i << " delivery s=" << s << " state=" << st << " expect=" << state->expected;
+      if (s != state->expected) {
+        state->foreign.fetch_add(1, std::memory_order_relaxed);
+        lsWarning() << "state-seq iter" << i << " FOREIGN s=" << s << " state=" << st << " (expected " << state->expected << ")";
         return;
       }
       if (s->state() == AbstractSocket::State::Unconnected) {
-        unconnCount.fetch_add(1);
+        state->unconnCount.fetch_add(1, std::memory_order_relaxed);
       } else {
-        ++selfNonUnconn;
+        state->selfNonUnconn.fetch_add(1, std::memory_order_relaxed);
         lsDebug() << "state-seq iter" << i << " self delivery with non-Unconnected state=" << st;
       }
     });
 
     client.connectToHost(socket, "127.0.0.1", server.port);
 
-    const bool settled = waitForUnconnectedFires(unconnCount, 0, 500);
-    AbstractThread::current()->invoke([]() {}, true);
+    const bool settled = waitForUnconnectedFires(state->unconnCount, 0, 500);
 
-    const int fc = foreign.load();
-    const int uc = unconnCount.load();
+    const int fc = state->foreign.load();
+    const int uc = state->unconnCount.load();
     const bool bad = !settled || uc == 0 || socket->state() != AbstractSocket::State::Unconnected;
 
     if (bad) {
@@ -523,7 +536,7 @@ void test_da_state_sequence(DataArrayTcpClient &client) {
       if (uc == 0) ++noDelivery;
       if (fc == 0 && uc > 0 && socket->state() != AbstractSocket::State::Unconnected) ++resurrected;
 
-      lsError() << "state-seq iter" << i << " settled=" << settled << " unconnCount=" << uc << " foreign=" << fc << " selfNonUnconn=" << selfNonUnconn.load() << " finalState=" << static_cast<int>(socket->state()) << " socket=" << socket;
+      lsError() << "state-seq iter" << i << " settled=" << settled << " unconnCount=" << uc << " foreign=" << fc << " selfNonUnconn=" << state->selfNonUnconn.load() << " finalState=" << static_cast<int>(socket->state()) << " socket=" << socket;
 
       if (fc > 0) {
         lsError() << "state-seq iter" << i << " => FOREIGN delivery observed";

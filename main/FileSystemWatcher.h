@@ -24,6 +24,8 @@ namespace AsyncFw {
 @snippet FileSystemWatcher/main.cpp snippet */
 class FileSystemWatcher {
   friend LogStream &operator<<(LogStream &, const FileSystemWatcher &);
+
+public:
   /** @enum Event @brief Internal mapping of the file system events. */
   enum Event : int8_t {
     Removed = -1,  ///< The monitored file was physically deleted or renamed out of its directory.
@@ -31,7 +33,6 @@ class FileSystemWatcher {
     Created = 1    ///< A previously missing monitored file was successfully created on disk.
   };
 
-public:
   /** @brief Retrieves the global instance pointer of the active FileSystemWatcher. @return Pointer to the active FileSystemWatcher instance, or nullptr if none exists. */
   static FileSystemWatcher *instance() { return instance_.value; }
   /** @brief Constructs a FileSystemWatcher and optionally starts monitoring given paths. @param paths A collection of absolute or relative specific file paths to track. */

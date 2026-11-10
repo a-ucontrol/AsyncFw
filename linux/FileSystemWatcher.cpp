@@ -120,10 +120,11 @@ FileSystemWatcher::FileSystemWatcher(const std::vector<std::string> &paths) : pr
             continue;
           }
 
+          itd = std::lower_bound(private_.wds_.begin(), private_.wds_.end(), i, Private::CompareWatchDescriptor());
+          if (itd != private_.wds_.end() && (*itd)->d == i) continue;
           Private::Watch *dw = new Private::Watch();
           dw->d = i;
           dw->directory = w->directory;
-          itd = std::lower_bound(private_.wds_.begin(), private_.wds_.end(), dw->d, Private::CompareWatchDescriptor());
           private_.wds_.insert(itd, dw);
           continue;
         }
@@ -159,16 +160,16 @@ FileSystemWatcher::FileSystemWatcher(const std::vector<std::string> &paths) : pr
       }
       if (e->mask & IN_CREATE) {
         if ((*itw)->name == e->name) {
-          if ((*itw)->d < 0) (*itw)->d = inotify_add_watch(private_.notifyfd_, (wp.directory + '/' + e->name).c_str(), IN_ATTRIB | IN_MODIFY | IN_CLOSE_WRITE | IN_DELETE_SELF);
+          (*itw)->d = inotify_add_watch(private_.notifyfd_, (wp.directory + '/' + e->name).c_str(), IN_ATTRIB | IN_MODIFY | IN_CLOSE_WRITE | IN_DELETE_SELF);
           if ((*itw)->d < 0) {
-            lsError() << "inotify_add_watch(file) failed" << wp.directory + '/' + e->name << "errno:" << errno;
+            lsTrace() << LogStream::Color::DarkRed << "inotify_add_watch(file) failed" << wp.directory + '/' + e->name << "errno:" << errno;
             (*itw)->d = (*itd)->d;
+            continue;
           } else {
             itd = std::lower_bound(private_.wds_.begin(), private_.wds_.end(), (*itw)->d, Private::CompareWatchDescriptor());
             private_.wds_.insert(itd, *itw);
           }
         }
-        // considering ((*itw)->name == "*")
         notify(wp.directory + '/' + e->name, Created);
         lsDebug() << "created (watch directory)" << wp.directory + '/' + wp.name;
         continue;

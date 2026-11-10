@@ -63,7 +63,7 @@ protected:
 
 private:
   struct LastMessage {
-    Message message;
+    Message message {0, 0, {}, {}, {}};
     int count = 1;
     int timerId = -1;
     bool marked = false;

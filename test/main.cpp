@@ -743,6 +743,135 @@ void test_filesystemwatcher_exact_missing_no_spurious_notify() {
   MainThread::exec();
 }
 
+void test_filesystemwatcher_exact_missing_changed() {
+  const std::string dir = "/tmp/AsyncFw-test-FileSystemWatcher-exact-missing-changed";
+  const std::string watched = dir + "/watched.txt";
+
+  std::error_code ec;
+  std::filesystem::remove_all(dir, ec);
+  std::filesystem::create_directories(dir, ec);
+
+  FileSystemWatcher watcher;
+  std::atomic<int> createdCount {0};
+  std::atomic<int> changedCount {0};
+
+  FunctionConnectionGuard g = watcher.notify.connect([&](const std::string &path, int event) {
+    if (path != watched) return;
+    if (event == 1) ++createdCount;
+    if (event == 0) ++changedCount;
+  });
+
+  EXPECT_MSG(watcher.addPath(watched), "addPath(exact, missing) failed");
+
+  Timer::single(100, [watched]() {
+    File _f(watched);
+    _f.open(std::ios::binary | std::ios::out);
+    _f.write("initial", 7);
+  });
+
+  Timer::single(500, [watched]() {
+    File _f(watched);
+    _f.open(std::ios::binary | std::ios::out | std::ios::app);
+    _f.write("appended", 8);
+  });
+
+  // Debounce для IN_MODIFY может отложить Changed; IN_CLOSE_WRITE шлёт сразу.
+  // Даём 1500 мс с запасом.
+  Timer::single(1500, [&]() {
+    EXPECT_MSG(createdCount.load() == 1, "Created count=" + std::to_string(createdCount.load()) + " (expected 1)");
+    EXPECT_MSG(changedCount.load() >= 1, "Changed count=" + std::to_string(changedCount.load()) + " — file watch was NOT installed after create (regression: IN_CREATE handler used (*itw)->d < 0, which is never true because d was set to directory fd)");
+    MainThread::exit();
+  });
+
+  MainThread::exec();
+}
+
+// ============================================================================
+// Exact-missing file, delete+recreate cycle.
+//
+// Регрессия: после IN_DELETE_SELF файловый watch снимается, но следующий
+// IN_CREATE может не переустановить его (см. предыдущий тест). Дополнительно
+// ловим накопление дубликатов `dw` в `wds_` (IN_DELETE_SELF-handler создаёт
+// новый `dw` с тем же dir_fd каждый цикл) и потенциальный двойной Removed
+// (IN_DELETE от directory watch + IN_DELETE_SELF от file watch).
+//
+// Ожидание на цикл: 1 Created (IN_CREATE), >= 1 Changed (IN_CLOSE_WRITE
+// после модификации), 1 Removed (только IN_DELETE_SELF, без дубля от
+// IN_DELETE, т.к. `(*itw)->d` уже восстановлен в dir_fd).
+// ============================================================================
+void test_filesystemwatcher_exact_recreate_cycle() {
+  const std::string dir = "/tmp/AsyncFw-test-FileSystemWatcher-recreate-cycle";
+  const std::string watched = dir + "/watched.txt";
+
+  std::error_code ec;
+  std::filesystem::remove_all(dir, ec);
+  std::filesystem::create_directories(dir, ec);
+
+  FileSystemWatcher watcher;
+  std::atomic<int> createdCount {0};
+  std::atomic<int> changedCount {0};
+  std::atomic<int> removedCount {0};
+
+  FunctionConnectionGuard g = watcher.notify.connect([&](const std::string &path, int event) {
+    if (path != watched) return;
+    if (event == FileSystemWatcher::Created) ++createdCount;
+    else if (event == FileSystemWatcher::Changed) ++changedCount;
+    else if (event == FileSystemWatcher::Removed) ++removedCount;
+  });
+
+  EXPECT_MSG(watcher.addPath(watched), "addPath(exact, missing) failed");
+
+  constexpr int kCycles = 3;
+  constexpr int kStepMs = 400;  // > 200ms debounce (Qt), IN_CLOSE_WRITE не ждёт
+
+  // Create / Modify / Remove в отдельных Timer'ах: между ними успевает
+  // отработать IN_CREATE-обработчик и установить file watch. Первый же
+  // write в том же Timer'е (как в test_filesystemwatcher_exact_missing_changed)
+  // был бы потерян: IN_MODIFY/IN_CLOSE_WRITE уходят в ядро раньше, чем
+  // inotify_add_watch(file) вернётся.
+  for (int c = 0; c < kCycles; ++c) {
+    const int base = 100 + c * kStepMs * 3;
+
+    // 1. Create (open(out) = O_WRONLY|O_CREAT|O_TRUNC, без write,
+    //    сразу close; IN_CREATE приходит, IN_CLOSE_WRITE без write — теряется)
+    Timer::single(base, [watched]() {
+      File _f(watched);
+      _f.open(std::ios::binary | std::ios::out);
+    });
+
+    // 2. Modify (open(app) + write; IN_MODIFY + IN_CLOSE_WRITE → Changed)
+    Timer::single(base + kStepMs, [watched]() {
+      File _f(watched);
+      _f.open(std::ios::binary | std::ios::out | std::ios::app);
+      _f.write("x", 1);
+    });
+
+    // 3. Remove (IN_DELETE_SELF + IN_IGNORED на file watch;
+    //    IN_DELETE на directory watch — не должен задвоить Removed)
+    Timer::single(base + kStepMs * 2, [watched]() {
+      std::error_code _ec;
+      std::filesystem::remove(watched, _ec);
+    });
+  }
+
+  // Дожидаемся последнего Removed + margin на debounce
+  Timer::single(100 + kCycles * kStepMs * 3 + 1500, [&]() {
+    lsNotice() << "recreate-cycle: Created=" << createdCount.load() << " Changed=" << changedCount.load() << " Removed=" << removedCount.load() << " (expected: Created=" << kCycles << " Removed=" << kCycles << " Changed>=" << kCycles << ")";
+
+    EXPECT_MSG(createdCount.load() == kCycles, "Created=" + std::to_string(createdCount.load()) + " (expected " + std::to_string(kCycles) + ")");
+    EXPECT_MSG(removedCount.load() == kCycles, "Removed=" + std::to_string(removedCount.load()) + " (expected " + std::to_string(kCycles) +
+                                                   "; duplicate Removed means IN_DELETE and IN_DELETE_SELF "
+                                                   "both notified for the same file)");
+    EXPECT_MSG(changedCount.load() >= kCycles, "Changed=" + std::to_string(changedCount.load()) + " (expected >= " + std::to_string(kCycles) +
+                                                   "; file watch was not installed after recreate "
+                                                   "in one of the cycles)");
+
+    MainThread::exit();
+  });
+
+  MainThread::exec();
+}
+
 // ============================================================================
 // Exact + Wildcard coexistence: exact match takes priority; the wildcard
 // branch must fire only for files NOT covered by an exact entry.
@@ -1922,6 +2051,99 @@ void test_websocket_roundtrip() {
   EXPECT_MSG(echoBody == "echo:ping", "echoBody='" + echoBody + "'");
 }
 
+// ============================================================================
+// Keep-alive: Content-Length: 0 followed by chunked on the SAME connection.
+//
+// Verifies two independent fixes:
+//
+//   1. Fix 3.2: contentLength_ must be reset to npos in clearReceived().
+//      Without it, the chunked response on the same keep-alive connection
+//      is parsed through the content-length path (contentLength_ = 0 left
+//      over from the previous response). That hits "unexpected data after
+//      body" in HttpSocket::readEvent, disconnects before invoking
+//      received(), and the test times out waiting for phase 2.
+//
+//   2. Response::destroy() lifecycle in the raw-write pattern. HttpServer's
+//      Response does not support Transfer-Encoding: chunked — header()
+//      always emits Content-Length. The documented escape hatch for chunked
+//      is to bypass send(), write raw bytes via socket(), then call
+//      destroy() explicitly. Under ASan+LSan, forgetting destroy() shows as
+//      a 136-byte direct leak of HttpServer::Response.
+//
+// Port 18085 avoids collision with test_websocket_roundtrip (18080) and
+// test_listen_rebind_after_close (18080).
+// ============================================================================
+void test_http_keepalive_empty_then_chunked() {
+  HttpServer server;
+
+  server.addRoute("/empty", HttpServer::Request::Method::Get, [](const HttpServer::Request &req) {
+    req.response()->setStatusCode(HttpServer::Response::StatusCode::Ok);
+    req.response()->send();  // Content-Length: 0
+  });
+
+  // Raw chunked write: bypass Response::send(), must call destroy() explicitly.
+  server.addRoute("/chunked", HttpServer::Request::Method::Get, [](const HttpServer::Request &req) {
+    req.response()->socket()->write(
+        "HTTP/1.1 200 OK\r\n"
+        "Transfer-Encoding: chunked\r\n\r\n"
+        "5\r\nhello\r\n0\r\n\r\n");
+    req.response()->destroy();  // required for raw-write pattern
+  });
+
+  EXPECT_MSG(server.listen(18085), "listen(18085) failed");
+
+  HttpSocket *client = HttpSocket::create();
+  std::atomic<int> phase {0};
+  std::atomic<int> phase1Bytes {0};
+  std::atomic<int> phase2Bytes {0};
+  std::string phase2Body;
+  std::atomic<bool> gotBoth {false};
+
+  FunctionConnectionGuardList guards;
+
+  guards += client->stateChanged.connect([&](AbstractSocket::State s) {
+    if (s != AbstractSocket::State::Active) return;
+    if (phase.load() == 0) {
+      client->write("GET /empty HTTP/1.1\r\nHost: x\r\n\r\n");
+      phase.store(1);
+    }
+  });
+
+  guards += client->received.connect([&](const DataArray &da) {
+    const int p = phase.load();
+    if (p == 1) {
+      phase1Bytes.store(static_cast<int>(da.size()));
+      // Same connection, second request. Without fix 3.2 the chunked
+      // response below hits "unexpected data after body" and disconnects
+      // before invoking received() again -> timeout.
+      client->write("GET /chunked HTTP/1.1\r\nHost: x\r\n\r\n");
+      phase.store(2);
+    } else if (p == 2) {
+      phase2Bytes.store(static_cast<int>(da.size()));
+      auto body = client->content();
+      phase2Body.assign(body.begin(), body.end());
+      gotBoth.store(true);
+      client->disconnect();
+      MainThread::exit();
+    }
+  });
+
+  Timer::single(3000, []() { MainThread::exit(1); });
+  client->connect("127.0.0.1", 18085);
+
+  int ret = MainThread::exec();
+  guards.clear();
+
+  EXPECT_MSG(ret == 0, "exec() returned " + std::to_string(ret) + " (expected 0; timeout or early disconnect)");
+  EXPECT_MSG(gotBoth.load(), "did not receive both responses");
+  EXPECT_MSG(phase1Bytes.load() > 0, "phase 1 (Content-Length: 0) got " + std::to_string(phase1Bytes.load()) + " bytes (expected > 0 header bytes)");
+  EXPECT_MSG(phase2Bytes.load() > 0, "phase 2 (chunked) got " + std::to_string(phase2Bytes.load()) + " bytes (expected header + body)");
+  EXPECT_MSG(phase2Body == "hello", "chunked body = '" + phase2Body +
+                                        "' (expected 'hello') — "
+                                        "contentLength_ was not reset after Content-Length: 0 "
+                                        "in the previous response (fix 3.2 regression)");
+}
+
 // Regression: with ENABLE_IO_URING (IO_URING_WAIT), close() ->
 // removePollDescriptor() used to queue an ASYNC cancel
 // (io_uring_prep_cancel). The listener's poll_add was still pending in the
@@ -2229,12 +2451,17 @@ int main(int, char **) {
   test_filesystemwatcher_scenarios();
   test_filesystemwatcher_wildcard();
   test_filesystemwatcher_exact_missing_no_spurious_notify();
+  test_filesystemwatcher_exact_missing_changed();
+  test_filesystemwatcher_exact_recreate_cycle();
   test_filesystemwatcher_exact_and_wildcard();
 
   // --- io_uring listen rebind (regression) ----------------------------
   // Must come before test_exit_signal_spam (Group F), which leaves the
   // main thread's eventfd counter dirty and breaks subsequent exec().
   test_listen_rebind_after_close();
+
+  // --- HTTP keep-alive: Content-Length: 0 -> chunked ------------------
+  test_http_keepalive_empty_then_chunked();
 
   // --- WebSocket roundtrip --------------------------------------------
   // Uses MainThread::exec(). MUST be before Group F: spam leaves
