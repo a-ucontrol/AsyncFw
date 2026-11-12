@@ -7,6 +7,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #include <cstdlib>
 #include <asm-generic/ioctls.h>
+#include <unistd.h>
 #include <fcntl.h>
 #include <sys/ioctl.h>
 #include <sys/wait.h>
