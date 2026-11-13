@@ -84,6 +84,7 @@ set(AsyncFw_INTERNAL_HEADERS
   "${CMAKE_CURRENT_LIST_DIR}/core/init_priority.hpp"
   "${CMAKE_CURRENT_LIST_DIR}/core/extend_trace.hpp"
   "${CMAKE_CURRENT_LIST_DIR}/core/console_msg.hpp"
+  "${CMAKE_CURRENT_LIST_DIR}/core/endian.hpp"
 )
 
 set(AsyncFw_CORE_HEADERS

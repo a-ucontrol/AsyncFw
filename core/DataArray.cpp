@@ -11,6 +11,11 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include "LogStream.h"
 #include "console_msg.hpp"
 
+#if defined(__BYTE_ORDER__) && defined(__ORDER_BIG_ENDIAN__) && __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
+  #include "endian.hpp"
+  #define AsyncFw_BIG_ENDIAN
+#endif
+
 #define LOG_DATA_ARRAY_SIZE_LIMIT 4096
 
 using namespace AsyncFw;
@@ -32,8 +37,16 @@ DataArray DataArray::compress(const DataArrayView &v) {
     return {};
   }
   _c[0] = j | (_size << 3);
+#ifdef AsyncFw_BIG_ENDIAN
+  std::size_t _v = _size >> 5;
+  for (uint8_t i = 0; i != j; ++i) {
+    _c[sizeof(uint8_t) + i] = static_cast<uint8_t>(_v);
+    _v >>= 8;
+  }
+#else
   _size >>= 5;
   for (int i = 0; i != j; ++i) _c[sizeof(uint8_t) + i] = (reinterpret_cast<char *>(&_size))[i];
+#endif
   _c.resize(_uLongf + sizeof(uint8_t) + j);
   return _c;
 }
@@ -50,7 +63,11 @@ DataArray DataArray::uncompress(const DataArrayView &v) {
     }
 #endif
     if (v.size() < sizeof(uint8_t) + j) return {};
+#ifdef AsyncFw_BIG_ENDIAN
+    for (int i = static_cast<int>(j) - 1; i >= 0; --i) { _size = (_size << 8) | static_cast<uint8_t>(v[sizeof(uint8_t) + i]); }
+#else
     for (int i = 0; i != j; ++i) (reinterpret_cast<char *>(&_size))[i] = v[sizeof(uint8_t) + i];
+#endif
     _size <<= 5;
   }
   _size |= (static_cast<uint8_t>(v[0]) >> 3);
@@ -172,6 +189,12 @@ DataStream::~DataStream() {
   delete &private_;
 }
 
+const DataArray &DataStream::array() const { return *private_.data; }
+
+bool DataStream::fail() const { return private_.fail; }
+
+bool DataStream::end() const { return private_.pos >= private_.data->size(); }
+
 DataStream &DataStream::operator<<(int8_t v) {
   private_.w(sizeof(int8_t), reinterpret_cast<uint8_t *>(&v));
   return *this;
@@ -181,12 +204,6 @@ DataStream &DataStream::operator>>(int8_t &v) {
   private_.r(sizeof(int8_t), reinterpret_cast<uint8_t *>(&v));
   return *this;
 }
-
-const DataArray &DataStream::array() const { return *private_.data; }
-
-bool DataStream::fail() const { return private_.fail; }
-
-bool DataStream::end() const { return private_.pos >= private_.data->size(); }
 
 DataStream &DataStream::operator<<(uint8_t v) {
   private_.w(sizeof(uint8_t), &v);
@@ -199,82 +216,130 @@ DataStream &DataStream::operator>>(uint8_t &v) {
 }
 
 DataStream &DataStream::operator<<(int16_t v) {
+#ifdef AsyncFw_BIG_ENDIAN
+  v = endian::to_le(v);
+#endif
   private_.w(sizeof(int16_t), reinterpret_cast<uint8_t *>(&v));
   return *this;
 }
 
 DataStream &DataStream::operator>>(int16_t &v) {
   private_.r(sizeof(int16_t), reinterpret_cast<uint8_t *>(&v));
+#ifdef AsyncFw_BIG_ENDIAN
+  if (!private_.fail) v = endian::from_le(v);
+#endif
   return *this;
 }
 
 DataStream &DataStream::operator<<(uint16_t v) {
+#ifdef AsyncFw_BIG_ENDIAN
+  v = endian::to_le(v);
+#endif
   private_.w(sizeof(uint16_t), reinterpret_cast<uint8_t *>(&v));
   return *this;
 }
 
 DataStream &DataStream::operator>>(uint16_t &v) {
   private_.r(sizeof(uint16_t), reinterpret_cast<uint8_t *>(&v));
+#ifdef AsyncFw_BIG_ENDIAN
+  if (!private_.fail) v = endian::from_le(v);
+#endif
   return *this;
 }
 
 DataStream &DataStream::operator<<(int32_t v) {
+#ifdef AsyncFw_BIG_ENDIAN
+  v = endian::to_le(v);
+#endif
   private_.w(sizeof(int32_t), reinterpret_cast<uint8_t *>(&v));
   return *this;
 }
 
 DataStream &DataStream::operator>>(int32_t &v) {
   private_.r(sizeof(int32_t), reinterpret_cast<uint8_t *>(&v));
+#ifdef AsyncFw_BIG_ENDIAN
+  if (!private_.fail) v = endian::from_le(v);
+#endif
   return *this;
 }
 
 DataStream &DataStream::operator<<(uint32_t v) {
+#ifdef AsyncFw_BIG_ENDIAN
+  v = endian::to_le(v);
+#endif
   private_.w(sizeof(uint32_t), reinterpret_cast<uint8_t *>(&v));
   return *this;
 }
 
 DataStream &DataStream::operator>>(uint32_t &v) {
   private_.r(sizeof(uint32_t), reinterpret_cast<uint8_t *>(&v));
+#ifdef AsyncFw_BIG_ENDIAN
+  if (!private_.fail) v = endian::from_le(v);
+#endif
   return *this;
 }
 
 DataStream &DataStream::operator<<(int64_t v) {
+#ifdef AsyncFw_BIG_ENDIAN
+  v = endian::to_le(v);
+#endif
   private_.w(sizeof(int64_t), reinterpret_cast<uint8_t *>(&v));
   return *this;
 }
 
 DataStream &DataStream::operator>>(int64_t &v) {
   private_.r(sizeof(int64_t), reinterpret_cast<uint8_t *>(&v));
+#ifdef AsyncFw_BIG_ENDIAN
+  if (!private_.fail) v = endian::from_le(v);
+#endif
   return *this;
 }
 
 DataStream &DataStream::operator<<(uint64_t v) {
+#ifdef AsyncFw_BIG_ENDIAN
+  v = endian::to_le(v);
+#endif
   private_.w(sizeof(uint64_t), reinterpret_cast<uint8_t *>(&v));
   return *this;
 }
 
 DataStream &DataStream::operator>>(uint64_t &v) {
   private_.r(sizeof(uint64_t), reinterpret_cast<uint8_t *>(&v));
+#ifdef AsyncFw_BIG_ENDIAN
+  if (!private_.fail) v = endian::from_le(v);
+#endif
   return *this;
 }
 
 DataStream &DataStream::operator<<(float v) {
+#ifdef AsyncFw_BIG_ENDIAN
+  v = endian::to_le(v);
+#endif
   private_.w(sizeof(float), reinterpret_cast<uint8_t *>(&v));
   return *this;
 }
 
 DataStream &DataStream::operator>>(float &v) {
   private_.r(sizeof(float), reinterpret_cast<uint8_t *>(&v));
+#ifdef AsyncFw_BIG_ENDIAN
+  if (!private_.fail) v = endian::from_le(v);
+#endif
   return *this;
 }
 
 DataStream &DataStream::operator<<(double v) {
+#ifdef AsyncFw_BIG_ENDIAN
+  v = endian::to_le(v);
+#endif
   private_.w(sizeof(double), reinterpret_cast<uint8_t *>(&v));
   return *this;
 }
 
 DataStream &DataStream::operator>>(double &v) {
   private_.r(sizeof(double), reinterpret_cast<uint8_t *>(&v));
+#ifdef AsyncFw_BIG_ENDIAN
+  if (!private_.fail) v = endian::from_le(v);
+#endif
   return *this;
 }
 
@@ -386,8 +451,18 @@ void DataStream::Private::sw(std::size_t _s) {
   uint8_t j = i | (_s << 3);
   w(sizeof(uint8_t), &j);
   if (fail || !i) return;
+#ifdef AsyncFw_BIG_ENDIAN
+  std::size_t _v = _s >> 5;
+  uint8_t _b[7] {};
+  for (uint8_t k = 0; k != i; ++k) {
+    _b[k] = static_cast<uint8_t>(_v);
+    _v >>= 8;
+  }
+  w(i, _b);
+#else
   _s >>= 5;
   w(i, reinterpret_cast<uint8_t *>(&_s));
+#endif
 }
 
 void DataStream::Private::sr(std::size_t *s) {
@@ -406,11 +481,22 @@ void DataStream::Private::sr(std::size_t *s) {
     *s = i;
     return;
   }
+#ifdef AsyncFw_BIG_ENDIAN
+  uint8_t _b[7] {};
+  r(j, _b);
+#else
   *s = 0;
   r(j, reinterpret_cast<uint8_t *>(s));
+#endif
   if (fail) return;
+#ifdef AsyncFw_BIG_ENDIAN
+  std::size_t _v = 0;
+  for (int k = static_cast<int>(j) - 1; k >= 0; --k) _v = (_v << 8) | _b[k];
+  *s = (_v << 5) | i;
+#else
   *s <<= 5;
   *s |= i;
+#endif
 }
 
 namespace AsyncFw {

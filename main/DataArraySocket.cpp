@@ -6,6 +6,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 */
 
 #include <deque>
+#include "core/endian.hpp"
 #include "core/DataArray.h"
 #include "core/TlsContext.h"
 #include "core/LogStream.h"
@@ -171,7 +172,7 @@ void DataArraySocket::sendKeepAlive(bool request) {
     lsWarning("tried transmit keep alive to inactive socket");
     return;
   }
-  uint64_t ka = 0xffffffff00000000;
+  uint64_t ka = endian::to_le(static_cast<uint64_t>(0xffffffff00000000));
   write(reinterpret_cast<const uint8_t *>(&ka), sizeof(ka));
   if (request) {
     private_.flags |= 0x02;
@@ -193,7 +194,9 @@ void DataArraySocket::readEvent() {
     if (start) {
       if (pendingRead() < static_cast<int>(sizeof(uint64_t))) return;
       read(reinterpret_cast<uint8_t *>(&private_.readSize), sizeof(uint32_t));
+      private_.readSize = endian::from_le(private_.readSize);
       read(reinterpret_cast<uint8_t *>(&private_.readId), sizeof(uint32_t));
+      private_.readId = endian::from_le(private_.readId);
       if (private_.readSize == 0) {
         if (private_.readId == 0xffffffff) {
           trace() << "receive keep alive (" + peerString() + ')';
@@ -311,6 +314,7 @@ bool DataArraySocket::transmit(const DataArray &ba, uint32_t pi) const {
     uint64_t _v = pi;
     _v <<= 32;
     _v |= static_cast<uint32_t>(ba.size());
+    _v = endian::to_le(_v);
     DataArray _da(((uint8_t *)&_v), ((uint8_t *)&_v) + 8);
     _da += ba;
     private_.transmitList.push_back(_da);

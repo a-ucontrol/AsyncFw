@@ -5,9 +5,11 @@ This file is part of the AsyncFw project. Licensed under the MIT License.
 See {Link: LICENSE file https://mit-license.org} in the project root for full license information.
 */
 
+#include <cstring>
 #include "DataArraySocket.h"
 #include "DataArrayTcpServer.h"
 #include "Rrd.h"
+#include "core/endian.hpp"
 #include "core/LogStream.h"
 #include "RrdServer.h"
 
@@ -25,7 +27,9 @@ RrdServer::RrdServer(DataArrayTcpServer *tcpServer, const std::vector<Rrd *> &rr
       trace() << "failed rrd index" << LogStream::Color::Red << pi;
       return;
     }
-    transmit(socket, *reinterpret_cast<const uint64_t *>(da->data()), TRANSMIT_COUNT, pi);
+    uint64_t _v;
+    std::memcpy(&_v, da->data(), sizeof(_v));
+    transmit(socket, endian::from_le(_v), TRANSMIT_COUNT, pi);
   });
   lsTrace();
 }

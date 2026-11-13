@@ -5,8 +5,10 @@ This file is part of the AsyncFw project. Licensed under the MIT License.
 See {Link: LICENSE file https://mit-license.org} in the project root for full license information.
 */
 
+#include <cstring>
 #include "core/LogStream.h"
 #include "core/Thread.h"
+#include "core/endian.hpp"
 #include "DataArraySocket.h"
 #include "Rrd.h"
 #include "RrdClient.h"
@@ -107,7 +109,8 @@ void RrdClient::tcpRead(const DataArray *rda, uint32_t n) {
 void RrdClient::request(int n) {
   DataArray ba;
   ba.resize(8);
-  *reinterpret_cast<uint64_t *>(ba.data()) = lastTime[n] + 1;
+  uint64_t _v = endian::to_le<uint64_t>(lastTime[n] + 1);
+  std::memcpy(ba.data(), &_v, sizeof(_v));
   tcpSocket->transmit(ba, n);
   trace() << lastTime[n];
 }
