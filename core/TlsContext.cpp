@@ -153,8 +153,8 @@ bool TlsContext::generateCertificate(const std::vector<std::pair<std::string, st
   X509_gmtime_adj(X509_get_notBefore(_c), 0);
   X509_gmtime_adj(X509_get_notAfter(_c), days * 24 * 3600L);
   X509_set_pubkey(_c, _k);
-  X509_NAME *name = X509_get_subject_name(_c);
-  for (const std::pair<std::string, std::string> &_e : subject) { X509_NAME_add_entry_by_txt(name, _e.first.c_str(), MBSTRING_ASC, reinterpret_cast<const unsigned char *>(_e.second.c_str()), -1, -1, 0); }
+  const X509_NAME *name = X509_get_subject_name(_c);
+  for (const std::pair<std::string, std::string> &_e : subject) { X509_NAME_add_entry_by_txt(const_cast<X509_NAME *>(name), _e.first.c_str(), MBSTRING_ASC, reinterpret_cast<const unsigned char *>(_e.second.c_str()), -1, -1, 0); }
   X509_set_issuer_name(_c, name);
   X509_EXTENSION *ext = nullptr;
   if (!san.empty()) {
@@ -209,8 +209,8 @@ DataArray TlsContext::generateRequest(const std::vector<std::pair<std::string, s
     return {};
   }
   X509_REQ_set_pubkey(_r, _k);
-  X509_NAME *name = X509_REQ_get_subject_name(_r);
-  for (const std::pair<std::string, std::string> &_e : subject) { X509_NAME_add_entry_by_txt(name, _e.first.c_str(), MBSTRING_ASC, reinterpret_cast<const unsigned char *>(_e.second.c_str()), -1, -1, 0); }
+  const X509_NAME *name = X509_REQ_get_subject_name(_r);
+  for (const std::pair<std::string, std::string> &_e : subject) { X509_NAME_add_entry_by_txt(const_cast<X509_NAME *>(name), _e.first.c_str(), MBSTRING_ASC, reinterpret_cast<const unsigned char *>(_e.second.c_str()), -1, -1, 0); }
   STACK_OF(X509_EXTENSION) *extlist = sk_X509_EXTENSION_new_null();
   if (!extlist) {
     X509_REQ_free(_r);
@@ -498,13 +498,13 @@ std::string TlsContext::commonName(X509 *cert) {
     trace() << "null certificate";
     return {};
   }
-  X509_NAME *subject = X509_get_subject_name(cert);
+  const X509_NAME *subject = X509_get_subject_name(cert);
   if (!subject) return {};
   int index = X509_NAME_get_index_by_NID(subject, NID_commonName, -1);
   if (index < 0) return {};
-  X509_NAME_ENTRY *entry = X509_NAME_get_entry(subject, index);
+  const X509_NAME_ENTRY *entry = X509_NAME_get_entry(subject, index);
   if (!entry) return {};
-  ASN1_STRING *data = X509_NAME_ENTRY_get_data(entry);
+  const ASN1_STRING *data = X509_NAME_ENTRY_get_data(entry);
   if (!data) return {};
   unsigned char *utf8;
   int len = ASN1_STRING_to_UTF8(&utf8, data);
