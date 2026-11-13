@@ -150,8 +150,9 @@ var NAVTREEINDEX2 =
 "console__msg_8hpp_source.html":[3,0,0,4],
 "dir_4270bfced15e0e73154b13468c7c9ad9.html":[3,0,0],
 "dir_5c982d53a68cdbcd421152b4020263a9.html":[3,0,1],
+"endian_8hpp_source.html":[3,0,0,6],
 "examples.html":[4],
-"extend__trace_8hpp_source.html":[3,0,0,6],
+"extend__trace_8hpp_source.html":[3,0,0,7],
 "files.html":[3,0],
 "functions.html":[2,3,0],
 "functions.html":[2,3,0,0],
@@ -223,8 +224,8 @@ var NAVTREEINDEX2 =
 "index.html#autotoc_md7":[0,4],
 "index.html#autotoc_md8":[0,5],
 "index.html#autotoc_md9":[0,6],
-"init__priority_8hpp_source.html":[3,0,0,8],
-"invocable_8hpp_source.html":[3,0,0,9],
+"init__priority_8hpp_source.html":[3,0,0,9],
+"invocable_8hpp_source.html":[3,0,0,10],
 "log-types_8hpp_source.html":[3,0,1,15],
 "mdns-types_8h_source.html":[3,0,1,18],
 "pages.html":[],
@@ -248,6 +249,5 @@ var NAVTREEINDEX2 =
 "structAsyncFw_1_1LockData.html#a141d5c6d5897d1095c3e8d3859feb14c":[2,0,0,12,5],
 "structAsyncFw_1_1LockData.html#a3123d789ca69c7028677594d404766e0":[2,0,0,12,0],
 "structAsyncFw_1_1LockData.html#a74de45058b55f8189402a25d800c509d":[2,0,0,12,6],
-"structAsyncFw_1_1LockData.html#a9fef00e8cf10bee6cf0ce71d683d26d4":[2,0,0,12,7],
-"structAsyncFw_1_1LockData.html#ac721cfbf389f784194c5500d5cc55910":[2,0,0,12,4]
+"structAsyncFw_1_1LockData.html#a9fef00e8cf10bee6cf0ce71d683d26d4":[2,0,0,12,7]
 };
