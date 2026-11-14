@@ -628,8 +628,8 @@ void test_tcp_server_roundtrip(AbstractThread *serverOwner, DataArrayTcpClient &
   });
   guards += client.received.connect([&, cs](const DataArraySocket *s, const DataArray *, uint32_t id) {
     if (s != cs) return;
-    ++clientRecv;
     clientRecvId = id;
+    ++clientRecv;
   });
   guards += server->received.connect([&](const DataArraySocket *s, const DataArray *d, uint32_t id) {
     {
@@ -662,9 +662,11 @@ void test_tcp_server_roundtrip(AbstractThread *serverOwner, DataArrayTcpClient &
       }
       EXPECT_MSG(serverRecvId.load() == 42u, "server id=" + std::to_string(serverRecvId.load()) + " (expected 42)");
 
-      const bool gotClientRecv = wait_for([&] { return clientRecv.load() >= 1; }, 2000);
-      EXPECT_MSG(gotClientRecv, "client did not receive echo within 2s");
-      EXPECT_MSG(clientRecvId.load() == 142u, "client id=" + std::to_string(clientRecvId.load()) + " (expected 142)");
+      const bool gotClientRecv = wait_for([&] { return clientRecvId.load() == 142u; }, 2000);
+      EXPECT_MSG(gotClientRecv,
+                 "client did not receive expected echo (id=142) within 2s;"
+                 " clientRecv=" +
+                     std::to_string(clientRecv.load()) + " clientRecvId=" + std::to_string(clientRecvId.load()));
     }
   }
 
