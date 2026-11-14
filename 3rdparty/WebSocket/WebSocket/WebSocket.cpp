@@ -150,9 +150,12 @@ string WebSocket::answerHandshake()
 
 		//printf("DIGEST:"); for(int i=0; i<20; i++) printf("%02x ",digest[i]); printf("\n");
 
-		accept_key = base64_encode((const unsigned char *)digest, 20); //160bit = 20 bytes/chars
+    //accept_key = base64_encode((const unsigned char *)digest, 20); //160bit = 20 bytes/chars
 
-		answer += "Sec-WebSocket-Accept: "+(accept_key)+"\r\n";
+        unsigned char b64[28];
+        int b64_len = EVP_EncodeBlock(b64, digest, 20);
+        accept_key.assign(reinterpret_cast<char *>(b64), b64_len);
+    answer += "Sec-WebSocket-Accept: "+(accept_key)+"\r\n";
 	}
 	if(this->protocol.length() > 0) {
 		answer += "Sec-WebSocket-Protocol: "+(this->protocol)+"\r\n";
