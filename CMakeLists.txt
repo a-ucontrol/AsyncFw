@@ -198,7 +198,6 @@ endif()
 
 set(AsyncFw_3rdparty_SOURCES
   "3rdparty/WebSocket/WebSocket/WebSocket.cpp"
-  "3rdparty/WebSocket/WebSocket/sha1/sha1.cpp"
   "3rdparty/WebSocket/WebSocket/base64/base64.cpp"
   "3rdparty/mdns/mdns.c"
 )

@@ -8,7 +8,8 @@
 
 //#include "md5/md5.h"
 #include "base64/base64.h"
-#include "sha1/sha1.h"
+//#include "sha1/sha1.h"
+#include <openssl/evp.h>
 
 //#include <iostream>
 #include <string>
@@ -126,14 +127,16 @@ string WebSocket::answerHandshake()
 
 		//printf("INTERMEDIATE_KEY:(%s)\n", accept_key.data());
 
-		SHA1 sha;
-		sha.Input(accept_key.data(), accept_key.size());
-		sha.Result((unsigned*)digest);
-		
+    //SHA1 sha;
+    //sha.Input(accept_key.data(), accept_key.size());
+    //sha.Result((unsigned*)digest);
+
+        EVP_Digest(accept_key.data(), accept_key.size(), digest, nullptr, EVP_sha1(), nullptr);
+
 		//printf("DIGEST:"); for(int i=0; i<20; i++) printf("%02x ",digest[i]); printf("\n");
 
 		//little endian to big endian
-		for(int i=0; i<20; i+=4) {
+    /*for(int i=0; i<20; i+=4) {
 			unsigned char c;
 
 			c = digest[i];
@@ -143,7 +146,7 @@ string WebSocket::answerHandshake()
 			c = digest[i+1];
 			digest[i+1] = digest[i+2];
 			digest[i+2] = c;
-		}
+    }*/
 
 		//printf("DIGEST:"); for(int i=0; i<20; i++) printf("%02x ",digest[i]); printf("\n");
 
