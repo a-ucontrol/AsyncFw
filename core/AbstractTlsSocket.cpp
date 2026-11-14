@@ -9,6 +9,15 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include <openssl/err.h>
 #include <openssl/x509v3.h>
 
+#ifndef _WIN32
+  #include <arpa/inet.h>
+  #include <sys/socket.h>
+#else
+  #include <winsock2.h>
+  #include <ws2tcpip.h>
+  #define inet_pton InetPtonA
+#endif
+
 #include "TlsContext.h"
 #include "Thread.h"
 #include "LogStream.h"
@@ -120,7 +129,18 @@ void AbstractTlsSocket::activateEvent() {
     if (private_.ctx.verifyPeer() && !private_.ctx.verifyName().empty()) {
       lsTrace() << fd_ << "verify name" << LogStream::Color::Green << private_.ctx.verifyName();
       SSL_set_hostflags(private_.ssl, X509_CHECK_FLAG_NO_PARTIAL_WILDCARDS);
-      if (!SSL_set1_host(private_.ssl, private_.ctx.verifyName().c_str())) {
+      int r;
+#if OPENSSL_VERSION_NUMBER >= 0x40000000L
+      unsigned char ipbuf[16];
+      if (inet_pton(AF_INET, private_.ctx.verifyName().c_str(), ipbuf) == 1 || inet_pton(AF_INET6, private_.ctx.verifyName().c_str(), ipbuf) == 1) {
+        r = SSL_add1_ipaddr(private_.ssl, private_.ctx.verifyName().c_str());
+      } else {
+        r = SSL_set1_dnsname(private_.ssl, private_.ctx.verifyName().c_str());
+      }
+#else
+      r = SSL_set1_host(private_.ssl, private_.ctx.verifyName().c_str());
+#endif
+      if (!r) {
         setError(AbstractSocket::Activate);
         setErrorString("Cannot configure hostname verification");
         close();
