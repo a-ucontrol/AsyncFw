@@ -1,4 +1,4 @@
-// Tests-main2: DataArrayTcp client + server suite.
+// Tests-main2: DataArrayTcp client/server + AddressResolver suite.
 //
 // Client-side contract:
 //   - connectToHost() is async and never blocks the caller.
@@ -71,6 +71,7 @@
   #include <sys/select.h>
   #include <sys/socket.h>
   #include <unistd.h>
+  #include <ares.h>
 #endif
 
 #include <atomic>
@@ -88,6 +89,8 @@
 #include <AsyncFw/DataArrayTcpClient>
 #include <AsyncFw/DataArrayTcpServer>
 #include <AsyncFw/DataArraySocket>
+#include <AsyncFw/PollNotifier>
+#include <AsyncFw/AddressResolver>
 
 using namespace AsyncFw;
 
@@ -1204,12 +1207,327 @@ void test_da_server_destroy_uaf_window(AbstractThread *poolOwner) {
   EXPECT_MSG(foreignTotal == 0, "foreign connectionStateChanged deliveries: " + std::to_string(foreignTotal));
 }
 
+// ============================================================================
+// MockDnsServer — UDP+TCP DNS responder for AddressResolver regression tests.
+//
+// Config.udp_tc = true  → UDP query answered with TC=1 (truncated)
+// Config.tcp_answer     → TCP query answered with A-record (192.0.2.1)
+//
+// The UDP TC=1 → TCP retry is the canonical trigger for the multi-socket
+// path in AddressResolver: c-ares opens a second socket (TCP) while the
+// first (UDP) is still tracked, exactly the sequence that broke
+// Private::events when it was a scalar.
+// ============================================================================
+class MockDnsServer {
+public:
+  struct Config {
+    bool udp_tc = false;
+    bool tcp_answer = true;
+    uint8_t answer_ip[4] = {192, 0, 2, 1};  // TEST-NET-1
+  };
+
+  MockDnsServer() = default;
+  ~MockDnsServer() { stop(); }
+  MockDnsServer(const MockDnsServer &) = delete;
+  MockDnsServer &operator=(const MockDnsServer &) = delete;
+
+  bool start(uint16_t port, Config cfg) {
+    stop();
+    cfg_ = cfg;
+
+    sockaddr_in sa {};
+    sa.sin_family = AF_INET;
+    sa.sin_port = htons(port);
+    sa.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
+
+    udp_fd_ = ::socket(AF_INET, SOCK_DGRAM | SOCK_CLOEXEC, 0);
+    if (udp_fd_ < 0) return false;
+    if (::bind(udp_fd_, (sockaddr *)&sa, sizeof(sa)) < 0) {
+      stop();
+      return false;
+    }
+
+    tcp_fd_ = ::socket(AF_INET, SOCK_STREAM | SOCK_CLOEXEC, 0);
+    if (tcp_fd_ < 0) {
+      stop();
+      return false;
+    }
+    int one = 1;
+    ::setsockopt(tcp_fd_, SOL_SOCKET, SO_REUSEADDR, &one, sizeof(one));
+    if (::bind(tcp_fd_, (sockaddr *)&sa, sizeof(sa)) < 0) {
+      stop();
+      return false;
+    }
+    if (::listen(tcp_fd_, 8) < 0) {
+      stop();
+      return false;
+    }
+
+    udp_notifier_ = std::make_unique<AsyncFw::PollNotifier>(udp_fd_);
+    udp_notifier_->notify.connect([this](AsyncFw::AbstractThread::PollEvents) { handleUdp(); });
+    tcp_notifier_ = std::make_unique<AsyncFw::PollNotifier>(tcp_fd_);
+    tcp_notifier_->notify.connect([this](AsyncFw::AbstractThread::PollEvents) { handleTcp(); });
+
+    return !udp_notifier_->fail() && !tcp_notifier_->fail();
+  }
+
+  void stop() {
+    udp_notifier_.reset();
+    tcp_notifier_.reset();
+    if (udp_fd_ >= 0) {
+      ::close(udp_fd_);
+      udp_fd_ = -1;
+    }
+    if (tcp_fd_ >= 0) {
+      ::close(tcp_fd_);
+      tcp_fd_ = -1;
+    }
+  }
+
+private:
+  void handleUdp() {
+    uint8_t buf[512];
+    sockaddr_in from {};
+    socklen_t flen = sizeof(from);
+    ssize_t n = ::recvfrom(udp_fd_, buf, sizeof(buf), 0, (sockaddr *)&from, &flen);
+    if (n < 12) return;
+    std::vector<uint8_t> resp;
+    if (cfg_.udp_tc) buildTruncated(buf, n, resp);
+    else buildAnswer(buf, n, resp);
+    ::sendto(udp_fd_, resp.data(), resp.size(), 0, (sockaddr *)&from, flen);
+  }
+
+  void handleTcp() {
+    int fd = ::accept(tcp_fd_, nullptr, nullptr);
+    if (fd < 0) return;
+    struct timeval tv {1, 0};
+    ::setsockopt(fd, SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof(tv));
+    ::setsockopt(fd, SOL_SOCKET, SO_SNDTIMEO, &tv, sizeof(tv));
+
+    uint8_t len_buf[2];
+    if (::read(fd, len_buf, 2) != 2) {
+      ::close(fd);
+      return;
+    }
+    uint16_t qlen = (len_buf[0] << 8) | len_buf[1];
+    std::vector<uint8_t> query(qlen);
+    size_t got = 0;
+    while (got < qlen) {
+      ssize_t r = ::read(fd, query.data() + got, qlen - got);
+      if (r <= 0) {
+        ::close(fd);
+        return;
+      }
+      got += r;
+    }
+
+    std::vector<uint8_t> resp;
+    if (cfg_.tcp_answer) buildAnswer(query.data(), qlen, resp);
+    else buildNxDomain(query.data(), qlen, resp);
+
+    uint8_t out_len[2] = {static_cast<uint8_t>(resp.size() >> 8), static_cast<uint8_t>(resp.size() & 0xff)};
+    (void)!::write(fd, out_len, 2);
+    (void)!::write(fd, resp.data(), resp.size());
+    ::close(fd);
+  }
+
+  static size_t questionEnd(const uint8_t *query, size_t qlen) {
+    if (qlen < 12) return 0;
+    uint16_t qdcount = (query[4] << 8) | query[5];
+    size_t pos = 12;
+    for (uint16_t q = 0; q < qdcount; ++q) {
+      while (pos < qlen && query[pos] != 0) {
+        uint8_t len = query[pos];
+        if (pos + 1 + len > qlen) return 0;
+        pos += 1 + len;
+      }
+      if (pos >= qlen) return 0;
+      ++pos;  // root label (0x00)
+      if (pos + 4 > qlen) return 0;
+      pos += 4;  // QTYPE (2) + QCLASS (2)
+    }
+    return pos;
+  }
+
+  void buildAnswer(const uint8_t *query, size_t qlen, std::vector<uint8_t> &out) const {
+    const size_t qend = questionEnd(query, qlen);
+    if (qend == 0) return;
+
+    out.resize(12);
+    out[0] = query[0];
+    out[1] = query[1];  // ID
+    out[2] = 0x81;      // QR=1, RD=1
+    out[3] = 0x80;      // RA=1, RCODE=0
+    out[4] = 0;
+    out[5] = 1;  // QDCOUNT=1
+    out[6] = 0;
+    out[7] = 1;  // ANCOUNT=1
+    out[8] = 0;
+    out[9] = 0;
+    out[10] = 0;
+    out[11] = 0;  // NS/AR = 0
+
+    out.insert(out.end(), query + 12, query + qend);
+
+    out.push_back(0xC0);
+    out.push_back(0x0C);  // NAME: pointer to QNAME
+    out.push_back(0x00);
+    out.push_back(0x01);  // TYPE=A
+    out.push_back(0x00);
+    out.push_back(0x01);  // CLASS=IN
+    out.push_back(0x00);
+    out.push_back(0x00);
+    out.push_back(0x00);
+    out.push_back(0x3C);  // TTL=60
+    out.push_back(0x00);
+    out.push_back(0x04);  // RDLENGTH=4
+    out.insert(out.end(), cfg_.answer_ip, cfg_.answer_ip + 4);
+  }
+
+  void buildTruncated(const uint8_t *query, size_t qlen, std::vector<uint8_t> &out) const {
+    const size_t qend = questionEnd(query, qlen);
+    if (qend == 0) return;
+
+    out.resize(12);
+    out[0] = query[0];
+    out[1] = query[1];
+    out[2] = 0x83;  // QR=1, TC=1, RD=1
+    out[3] = 0x80;  // RA=1, RCODE=0
+    out[4] = 0;
+    out[5] = 1;  // QDCOUNT=1
+    out[6] = 0;
+    out[7] = 0;  // ANCOUNT=0
+    out[8] = 0;
+    out[9] = 0;
+    out[10] = 0;
+    out[11] = 0;
+    out.insert(out.end(), query + 12, query + qend);  // question only
+  }
+
+  void buildNxDomain(const uint8_t *query, size_t qlen, std::vector<uint8_t> &out) const {
+    const size_t qend = questionEnd(query, qlen);
+    if (qend == 0) return;
+
+    out.resize(12);
+    out[0] = query[0];
+    out[1] = query[1];
+    out[2] = 0x81;  // QR=1, RD=1
+    out[3] = 0x83;  // RA=1, RCODE=3 (NXDOMAIN)
+    out[4] = 0;
+    out[5] = 1;  // QDCOUNT=1
+    out[6] = 0;
+    out[7] = 0;
+    out[8] = 0;
+    out[9] = 0;
+    out[10] = 0;
+    out[11] = 0;
+    out.insert(out.end(), query + 12, query + qend);
+  }
+
+  Config cfg_;
+  int udp_fd_ = -1;
+  int tcp_fd_ = -1;
+  std::unique_ptr<AsyncFw::PollNotifier> udp_notifier_;
+  std::unique_ptr<AsyncFw::PollNotifier> tcp_notifier_;
+};
+
+struct ResolveOutcome {
+  int status = -1;
+  int64_t ms = 0;
+  std::vector<std::string> addrs;
+};
+
+// Runs one resolve using a fresh AddressResolver, blocking via nested exec
+// on the current thread. Both the mock DNS PollNotifiers and the resolver's
+// c-ares poll tasks are driven by that nested exec.
+ResolveOutcome runResolve(const std::vector<std::string> &servers, const std::string &host, AsyncFw::AddressResolver::Family family, int timeoutMs) {
+  using namespace AsyncFw;
+  ResolveOutcome r;
+  AbstractThread::Waiter waiter;
+  AddressResolver resolver(servers);
+  FunctionConnectionGuard g = resolver.completed.connect([&r, &waiter](int status, const std::vector<std::string> &addrs) {
+    r.status = status;
+    r.addrs = addrs;
+    waiter.complete();
+  });
+
+  // Safety net: if resolve somehow never calls completed, force exit.
+  int capId = AbstractThread::current()->appendTimerTask(timeoutMs + 1000, [&waiter]() { waiter.complete(); });
+
+  auto t0 = std::chrono::steady_clock::now();
+  resolver.resolve(host, family, timeoutMs);
+  waiter.wait();
+  r.ms = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - t0).count();
+  AbstractThread::current()->removeTimer(capId);
+  return r;
+}
+
+// ============================================================================
+// Group K. AddressResolver — mock DNS on 127.0.0.1:10053
+// ============================================================================
+
+// Baseline: single UDP socket, no TC flag. Must pass before and after the
+// multi-socket fix; guards against regressions in the simple path.
+void test_address_resolver_single_socket() {
+  MockDnsServer dns;
+  EXPECT_MSG(dns.start(10053, {.udp_tc = false, .tcp_answer = true}), "mock DNS bind on 127.0.0.1:10053 failed (port busy?)");
+
+  ResolveOutcome r = runResolve({"127.0.0.1:10053"}, "single.example", AsyncFw::AddressResolver::Inet, 2000);
+
+  EXPECT_MSG(r.status == ARES_SUCCESS, "single-socket status=" + std::to_string(r.status) + " (" + ares_strerror(r.status) + ")");
+  EXPECT_MSG(r.addrs.size() == 1 && r.addrs[0] == "192.0.2.1", "single-socket addrs mismatch (expected 192.0.2.1)");
+  EXPECT_MSG(r.ms < 1000, "single-socket took " + std::to_string(r.ms) + "ms");
+}
+
+// Regression: UDP TC=1 forces c-ares to fall back to TCP. The new TCP
+// socket is opened while the UDP socket is still tracked — this is the
+// exact sequence that broke Private::events when it was a scalar. Fixed:
+// resolve completes in < 100ms with a real address. Broken: 2000ms timeout
+// (ARES_ECANCELLED) because the TCP socket never enters poll.
+void test_address_resolver_tcp_fallback() {
+  MockDnsServer dns;
+  EXPECT_MSG(dns.start(10053, {.udp_tc = true, .tcp_answer = true}), "mock DNS bind on 127.0.0.1:10053 failed");
+
+  ResolveOutcome r = runResolve({"127.0.0.1:10053"}, "fallback.example", AsyncFw::AddressResolver::Inet, 2000);
+
+  EXPECT_MSG(r.status == ARES_SUCCESS, "TCP fallback status=" + std::to_string(r.status) + " (" + ares_strerror(r.status) + ") — multi-socket bug regressed");
+  EXPECT_MSG(r.addrs.size() == 1 && r.addrs[0] == "192.0.2.1", "TCP fallback addrs mismatch (expected 192.0.2.1)");
+  EXPECT_MSG(r.ms < 1000, "TCP fallback took " + std::to_string(r.ms) + "ms — TCP socket not polled (Private::events bug)");
+}
+
+// Stress: N consecutive TCP-fallback resolves. Each iteration creates a
+// fresh AddressResolver + ~Private; the ~AddressResolver cleanup must not
+// leave orphan poll tasks in AbstractThread::poll_tasks (the "poll task
+// list not empty" symptom). If a regression reintroduces the orphan-
+// append bug, the framework's own ~AbstractThread will log it — and the
+// test framework treats any ~AbstractThread warning as a soft signal
+// captured in the test output.
+void test_address_resolver_tcp_fallback_iterations() {
+  constexpr int kIter = 5;
+  MockDnsServer dns;
+  EXPECT_MSG(dns.start(10053, {.udp_tc = true, .tcp_answer = true}), "mock DNS bind on 127.0.0.1:10053 failed");
+
+  int failures = 0;
+  int64_t maxMs = 0;
+  for (int i = 0; i < kIter; ++i) {
+    ResolveOutcome r = runResolve({"127.0.0.1:10053"}, "iter" + std::to_string(i) + ".example", AsyncFw::AddressResolver::Inet, 2000);
+    if (r.status != ARES_SUCCESS) {
+      ++failures;
+      lsError() << "iteration" << i << "status=" << r.status << ares_strerror(r.status);
+    }
+    if (r.ms > maxMs) maxMs = r.ms;
+  }
+
+  EXPECT_MSG(failures == 0, std::to_string(failures) + "/" + std::to_string(kIter) + " TCP-fallback iterations failed");
+  EXPECT_MSG(maxMs < 1000, "max iteration took " + std::to_string(maxMs) + "ms");
+}
+
 #endif  // !_WIN32
 
 }  // namespace
 
 int main(int, char **) {
-  LogStream::setCompleted(&log_output);
+  //LogStream::setCompleted(&log_output);
 
 #ifdef _WIN32
   lsNotice() << "tests-main2: skipped on Windows (no POSIX raw sockets)";
@@ -1262,6 +1580,15 @@ int main(int, char **) {
     // deleting the server, then immediately FINs the client. Kept after
     // all sockets() probes so it doesn't pollute their shared state.
     test_da_server_destroy_uaf_window(&poolOwner);
+
+    // ---- AddressResolver multi-socket regression (mock DNS) -------
+    // Must run on testMain (not poolOwner): both MockDnsServer's
+    // PollNotifiers and AddressResolver's c-ares channel are bound to
+    // AbstractThread::current() at construction. waiter.wait() spins a
+    // nested exec on testMain, processing both sets of poll events.
+    test_address_resolver_single_socket();
+    test_address_resolver_tcp_fallback();
+    test_address_resolver_tcp_fallback_iterations();
 
     // ---- quit() from a foreign thread (destroys the pool) ------------
     // Must run last: it tears down `dac`'s pool entirely. Since we

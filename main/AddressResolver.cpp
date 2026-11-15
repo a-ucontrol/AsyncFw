@@ -7,6 +7,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #include <ares.h>
 #include <cstring>
+#include <unordered_map>
 
 #include "core/AbstractThread.h"
 #include "core/LogStream.h"
@@ -22,35 +23,51 @@ static struct _ares_library {
 using namespace AsyncFw;
 
 struct AddressResolver::Private {
-  Private(AddressResolver *_ai) : ai(_ai) {
+  Private(AddressResolver *ar, const std::vector<std::string> &servers) : ar(ar) {
     thread = AbstractThread::current();
     memset(&options, 0, sizeof(options));
     options.sock_state_cb_data = this;
     options.sock_state_cb = [](void *data, ares_socket_t s, int read, int write) {
       lsTrace("change state fd {} read:{} write:{}", s, read, write);
+      auto p = static_cast<Private *>(data);
+      auto it = p->events.find(s);
+      const bool tracked = it != p->events.end();
+      const AbstractThread::PollEvents cur = tracked ? it->second : AbstractThread::PollNo;
       AbstractThread::PollEvents e = ((read) ? AbstractThread::PollIn : AbstractThread::PollNo) | ((write) ? AbstractThread::PollOut : AbstractThread::PollNo);
-      if (static_cast<Private *>(data)->events) {
-        if (!e) {
-          static_cast<Private *>(data)->thread->removePollDescriptor(s);
-          static_cast<Private *>(data)->events = AbstractThread::PollNo;
-          const ares_fd_events_t _ae = {s, ARES_FD_EVENT_NONE};
-          ares_process_fds(static_cast<Private *>(data)->channel, &_ae, 1, 0);
-        } else if (static_cast<uint8_t>(static_cast<Private *>(data)->events) != static_cast<uint8_t>(e)) {
-          static_cast<Private *>(data)->events = e;
-          static_cast<Private *>(data)->thread->modifyPollDescriptor(s, e);
-        }
+      if (static_cast<uint16_t>(e) == AbstractThread::PollNo) {
+        if (!tracked) return;
+        p->thread->removePollDescriptor(s);
+        p->events.erase(it);
+        const ares_fd_events_t _ae = {s, ARES_FD_EVENT_NONE};
+        ares_process_fds(p->channel, &_ae, 1, 0);
         return;
       }
-      lsTrace() << "append poll descriptor" << s;
-      static_cast<Private *>(data)->events = e;
-      static_cast<Private *>(data)->thread->appendPollTask(s, e, [fd = s, ch = static_cast<Private *>(data)->channel](int _e) {
-        lsDebug("poll event: {}, fd: {}", _e, fd) << ((_e != AbstractThread::PollOut) ? fd : 0);
-        const ares_fd_events_t _ae = {fd, (_e == AbstractThread::PollOut) ? ARES_FD_EVENT_WRITE : ARES_FD_EVENT_READ};
-        ares_process_fds(ch, &_ae, 1, 0);
-      });
+      if (!tracked) {
+        p->events[s] = e;
+        p->thread->appendPollTask(s, e, [fd = s, ch = static_cast<Private *>(data)->channel](int _e) {
+          lsDebug("poll event: {}, fd: {}", _e, fd) << ((_e != AbstractThread::PollOut) ? fd : 0);
+          const ares_fd_events_t _ae = {fd, (_e == AbstractThread::PollOut) ? ARES_FD_EVENT_WRITE : ARES_FD_EVENT_READ};
+          ares_process_fds(ch, &_ae, 1, 0);
+        });
+        lsTrace() << "append poll descriptor" << s;
+        return;
+      }
+      if (cur != static_cast<uint16_t>(e)) {
+        p->events[s] = e;
+        p->thread->modifyPollDescriptor(s, e);
+      }
     };
     int status = ares_init_options(&channel, &options, ARES_OPT_SOCK_STATE_CB);
-    if (status != ARES_SUCCESS) { lsError("Ares options init: {}", ares_strerror(status)); }
+    if (status != ARES_SUCCESS) lsError("Ares options init: {}", ares_strerror(status));
+    if (!servers.empty()) {
+      std::string csv;
+      for (size_t i = 0; i < servers.size(); ++i) {
+        if (i) csv += ',';
+        csv += servers[i];
+      }
+      int rc = ares_set_servers_csv(channel, csv.c_str());
+      if (rc != ARES_SUCCESS) lsError("Ares set servers csv: {}", ares_strerror(rc));
+    }
     lsTrace();
   }
 
@@ -63,15 +80,15 @@ struct AddressResolver::Private {
     lsTrace();
   }
 
-  AbstractThread::PollEvents events = AbstractThread::PollNo;
+  std::unordered_map<ares_socket_t, AbstractThread::PollEvents> events;
   ares_channel channel;
   ares_options options;
   AbstractThread *thread;
-  AddressResolver *ai;
+  AddressResolver *ar;
   int tid = -1;
 };
 
-AddressResolver::AddressResolver() : private_(*new Private(this)) { lsTrace(); }
+AddressResolver::AddressResolver(const std::vector<std::string> &servers) : private_(*new Private(this, servers)) { lsTrace(); }
 
 AddressResolver::~AddressResolver() {
   delete &private_;
@@ -115,7 +132,7 @@ void AddressResolver::resolve(const std::string &name, Family family, int timeou
       }
       ares_freeaddrinfo(result);
     } else lsWarning("Result: {}", ares_strerror(status));
-    static_cast<Private *>(data)->ai->completed(status, _r);
+    static_cast<Private *>(data)->ar->completed(status, _r);
   }, &private_);
 }
 
