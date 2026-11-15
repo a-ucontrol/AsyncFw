@@ -21,7 +21,7 @@ var searchData=
   ['addpath_18',['addPath',['../classAsyncFw_1_1FileSystemWatcher.html#a54e1efecd58f2cbae2932eba716de6a9',1,'AsyncFw::FileSystemWatcher']]],
   ['addpaths_19',['addPaths',['../classAsyncFw_1_1FileSystemWatcher.html#aa4e37387e27aa1508584b7d0b199d165',1,'AsyncFw::FileSystemWatcher']]],
   ['address_20',['address',['../classAsyncFw_1_1AbstractSocket.html#a3dd69e137ca3cf50f90607c17bbdc312',1,'AsyncFw::AbstractSocket::address()'],['../classAsyncFw_1_1ListenSocket.html#a3dd69e137ca3cf50f90607c17bbdc312',1,'AsyncFw::ListenSocket::address()']]],
-  ['addressresolver_21',['AddressResolver',['../classAsyncFw_1_1AddressResolver.html',1,'AsyncFw']]],
+  ['addressresolver_21',['AddressResolver',['../classAsyncFw_1_1AddressResolver.html',1,'AsyncFw::AddressResolver'],['../classAsyncFw_1_1AddressResolver.html#a56a2dbfe61a86ba9565b30b5d8d8bf64',1,'AsyncFw::AddressResolver::AddressResolver()']]],
   ['addressresolver_2eh_22',['AddressResolver.h',['../AddressResolver_8h.html',1,'']]],
   ['addroute_23',['addRoute',['../classAsyncFw_1_1HttpServer.html#a5c32aee1be945562ee7c5601ecdc187b',1,'AsyncFw::HttpServer::addRoute(const std::string &amp;url, Request::Method method, A action, const std::any &amp;data={})'],['../classAsyncFw_1_1HttpServer.html#a64e42967cdef1254142bcba26f246f07',1,'AsyncFw::HttpServer::addRoute(const O object, const std::string &amp;url, Request::Method method, A action, const std::any &amp;data={})']]],
   ['alert_24',['Alert',['../classAsyncFw_1_1LogStream.html#afa2f6c5311ced6b973d39d6e5ced5731a8e7cdb29641eddbcac3012fe6eb3cd3d',1,'AsyncFw::LogStream']]],

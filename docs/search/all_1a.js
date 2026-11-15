@@ -24,7 +24,7 @@ var searchData=
   ['removetimer_21',['removeTimer',['../classAsyncFw_1_1AbstractThread.html#ae8fc0b3f68faed69e7f0b4e940ef12c0',1,'AsyncFw::AbstractThread']]],
   ['request_22',['Request',['../classAsyncFw_1_1HttpServer_1_1Request.html',1,'AsyncFw::HttpServer::Request'],['../classAsyncFw_1_1HttpServer_1_1Request.html#adb47352909f6cc86597a33950b5f19a6',1,'AsyncFw::HttpServer::Request::Request()']]],
   ['requestinterrupt_23',['requestInterrupt',['../classAsyncFw_1_1AbstractThread.html#a16affc1626e26d18cc2d9eab21315591',1,'AsyncFw::AbstractThread']]],
-  ['resolve_24',['resolve',['../classAsyncFw_1_1AddressResolver.html#a9a5b78be91762ae5adc7f19aede8a662',1,'AsyncFw::AddressResolver']]],
+  ['resolve_24',['resolve',['../classAsyncFw_1_1AddressResolver.html#a80b4997bc86ba13a75bced6f3bd261bf',1,'AsyncFw::AddressResolver']]],
   ['response_25',['Response',['../classAsyncFw_1_1HttpServer_1_1Response.html',1,'AsyncFw::HttpServer']]],
   ['response_26',['response',['../classAsyncFw_1_1HttpServer_1_1Request.html#a6183c383629786f1f45cc58a7cdba48c',1,'AsyncFw::HttpServer::Request']]],
   ['resume_5fqueued_27',['resume_queued',['../structAsyncFw_1_1CoroutineTask_1_1promise__type.html#a6ef8c84c53068677172b21f5e08aa0b7',1,'AsyncFw::CoroutineTask::promise_type']]],
