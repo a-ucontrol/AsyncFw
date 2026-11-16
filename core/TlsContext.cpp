@@ -550,28 +550,10 @@ bool TlsContext::verifyCertificate() const {
     lsError() << "get certificate";
     return false;
   }
-  EVP_PKEY *_ck = X509_get_pubkey(_c);
-  if (!_ck) {
-    lsError() << "get certificate pubkey";
-    return false;
-  }
-  BIGNUM *bnk = nullptr;
-  EVP_PKEY_get_bn_param(_k, OSSL_PKEY_PARAM_RSA_N, &bnk);
-  if (!bnk) {
-    EVP_PKEY_free(_ck);
-    return false;
-  }
-  BIGNUM *bnc = nullptr;
-  EVP_PKEY_get_bn_param(_ck, OSSL_PKEY_PARAM_RSA_N, &bnc);
-  EVP_PKEY_free(_ck);
-  if (!bnc) {
-    BN_free(bnk);
-    return false;
-  }
-  bool result = BN_cmp(bnk, bnc) == 0;
-  BN_free(bnk);
-  BN_free(bnc);
-  return result;
+  int r = X509_check_private_key(_c, _k);
+  if (r == 1) return true;
+  lsError() << LogStream::Color::Red << ERR_error_string(ERR_get_error(), nullptr);
+  return false;
 }
 
 bool TlsContext::setKey(const DataArray &_da) {
