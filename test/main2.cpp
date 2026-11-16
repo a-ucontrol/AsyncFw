@@ -1527,7 +1527,7 @@ void test_address_resolver_tcp_fallback_iterations() {
 }  // namespace
 
 int main(int, char **) {
-  //LogStream::setCompleted(&log_output);
+  LogStream::setCompleted(&log_output);
 
 #ifdef _WIN32
   lsNotice() << "tests-main2: skipped on Windows (no POSIX raw sockets)";
