@@ -31,8 +31,8 @@
   #include <unistd.h>
 #endif
 
-static_assert(!std::is_copy_assignable_v<const AsyncFw::FunctionConnector<int>>);
-static_assert(!std::is_move_assignable_v<const AsyncFw::FunctionConnector<int>>);
+static_assert(!std::is_copy_assignable_v<AsyncFw::FunctionConnector<>>);
+static_assert(!std::is_move_assignable_v<AsyncFw::FunctionConnector<>>);
 static_assert(!std::is_copy_assignable_v<AsyncFw::DataStream>);
 static_assert(!std::is_move_assignable_v<AsyncFw::DataStream>);
 
