@@ -602,7 +602,7 @@ void AbstractThread::exec() {
       never enter poll(), so exec() cannot sleep with work pending. If the
       queue is oversized, warn but keep draining.
       Is processed on the next idle boundary - producers must stop and
-      long tasks must observe interpretRequested() for the queue to drain.
+      long tasks must observe interruptRequested() for the queue to drain.
       */
       if (!private_.tasks.empty()) {
         std::swap(private_.process_tasks_, private_.tasks);  //take new tasks
