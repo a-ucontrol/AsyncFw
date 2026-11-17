@@ -147,7 +147,9 @@ bool&#160;</td><td class="memItemRight"><b>empty</b> () const</td></tr>
 bool&#160;</td><td class="memItemRight"><b>verifyCertificate</b> () const</td></tr>
 <tr class="memdesc:a0355cba7c5bc6468bc9b53e0a21cfaef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return True if certificate verified. <br /></td></tr>
 <tr class="memitem:a10b3110e2d30a54d84c276716fb7d10a" id="r_a10b3110e2d30a54d84c276716fb7d10a"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a10b3110e2d30a54d84c276716fb7d10a">generateKey</a> (int=2048)</td></tr>
-<tr class="memdesc:a10b3110e2d30a54d84c276716fb7d10a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate private key.  <br /></td></tr>
+<tr class="memdesc:a10b3110e2d30a54d84c276716fb7d10a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate RSA private key.  <br /></td></tr>
+<tr class="memitem:abc3a66b0dc7e2a1272a1fc7558821e32" id="r_abc3a66b0dc7e2a1272a1fc7558821e32"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#abc3a66b0dc7e2a1272a1fc7558821e32">generateKey</a> (const std::string &amp;)</td></tr>
+<tr class="memdesc:abc3a66b0dc7e2a1272a1fc7558821e32"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate EC or EdDSA private key.  <br /></td></tr>
 <tr class="memitem:abda15e8e7a7417b458bdade8a5196ec3" id="r_abda15e8e7a7417b458bdade8a5196ec3"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#abda15e8e7a7417b458bdade8a5196ec3">generateCertificate</a> (const std::vector&lt; std::pair&lt; std::string, std::string &gt; &gt; &amp;={{&quot;CN&quot;, &quot;Root-CA&quot;}}, const std::string &amp;={}, const std::string &amp;=&quot;CA:TRUE,pathlen:1&quot;, int=365)</td></tr>
 <tr class="memdesc:abda15e8e7a7417b458bdade8a5196ec3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate certificate.  <br /></td></tr>
 <tr class="memitem:afc9e3204ccec18ac6029b5a4eb65f089" id="r_afc9e3204ccec18ac6029b5a4eb65f089"><td class="memItemLeft"><a class="el" href="classAsyncFw_1_1DataArray.html">DataArray</a>&#160;</td><td class="memItemRight"><a class="el" href="#afc9e3204ccec18ac6029b5a4eb65f089">generateRequest</a> (const std::vector&lt; std::pair&lt; std::string, std::string &gt; &gt; &amp;, const std::string &amp;={}, const std::string &amp;={})</td></tr>
@@ -346,7 +348,7 @@ class&#160;</td><td class="memItemRight"><b>AbstractTlsSocket</b></td></tr>
 </div>
 </div>
 <a id="a10b3110e2d30a54d84c276716fb7d10a" name="a10b3110e2d30a54d84c276716fb7d10a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a10b3110e2d30a54d84c276716fb7d10a">&#9670;&#160;</a></span>generateKey()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a10b3110e2d30a54d84c276716fb7d10a">&#9670;&#160;</a></span>generateKey() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -360,16 +362,42 @@ class&#160;</td><td class="memItemRight"><b>AbstractTlsSocket</b></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Generate private key. </p>
+<p>Generate RSA private key. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">bits</td><td>Number of bits in the generate key </td></tr>
+    <tr><td class="paramname">bits</td><td>Number of bits in the generated key </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if generated </dd></dl>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="DataArrayTcp_2main_8cpp-example.html#a1">DataArrayTcp/main.cpp</a>, <a class="el" href="HttpServer_2main_8cpp-example.html#a14">HttpServer/main.cpp</a>, and <a class="el" href="TlsContext_2main_8cpp-example.html#a1">TlsContext/main.cpp</a>.</dd>
 </dl>
+
+</div>
+</div>
+<a id="abc3a66b0dc7e2a1272a1fc7558821e32" name="abc3a66b0dc7e2a1272a1fc7558821e32"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abc3a66b0dc7e2a1272a1fc7558821e32">&#9670;&#160;</a></span>generateKey() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool TlsContext::generateKey </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>curve</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Generate EC or EdDSA private key. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">curve</td><td>Curve or algorithm name (e.g., "prime256v1", "secp384r1", "ED25519", "ED448") </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if generated </dd></dl>
 
 </div>
 </div>
