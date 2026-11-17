@@ -108,6 +108,7 @@ public:
   template <typename M, typename O, typename... A>
   CoroutineInvokeAwait(AbstractThread *thread, M m, O *o, A &&...a) : t_(thread), f_(new MemberFunction<M, O>(m, o)), a_(std::forward<A>(a)...) {}
   ~CoroutineInvokeAwait() { delete f_; }
+  CoroutineInvokeAwait(CoroutineInvokeAwait &&) = delete;
 
   void await_suspend(CoroutineHandle h) const noexcept {
     h_ = h;

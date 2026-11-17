@@ -49,6 +49,9 @@
 
 #include "3rdparty/WebSocket/WebSocket/WebSocket.h"
 
+static_assert(!std::is_copy_assignable_v<AsyncFw::CoroutineInvokeAwait<void(void)>>);
+static_assert(!std::is_move_assignable_v<AsyncFw::CoroutineInvokeAwait<void(void)>>);
+
 using namespace AsyncFw;
 using Conn = AbstractFunctionConnector::Connection;
 

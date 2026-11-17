@@ -27,6 +27,10 @@ RrdServer::RrdServer(DataArrayTcpServer *tcpServer, const std::vector<Rrd *> &rr
       trace() << "failed rrd index" << LogStream::Color::Red << pi;
       return;
     }
+    if (da->size() < sizeof(uint64_t)) {
+      lsWarning() << "invalid request size:" << da->size();
+      return;
+    }
     uint64_t _v;
     std::memcpy(&_v, da->data(), sizeof(_v));
     transmit(socket, endian::from_le(_v), TRANSMIT_COUNT, pi);
