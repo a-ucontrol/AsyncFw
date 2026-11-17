@@ -360,9 +360,9 @@ void test_tls_handshake_verification_failure() {
 // main
 // ============================================================================
 int main(int, char **) {
+  LogStream::setCompleted(&log_output);
   Thread tst_thread("Core2-test");
   tst_thread.invoke([&] {
-    LogStream::setCompleted(&log_output);
     test_tls_context_key_types();
     test_tls_handshake_ecdsa_and_eddsa();
     test_tls_handshake_verification_failure();
