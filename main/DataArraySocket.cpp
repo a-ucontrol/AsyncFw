@@ -50,7 +50,6 @@ struct DataArraySocket::Private {
   int readTimeout = 0;
   int waitForEncryptionTimeout = 10000;
   int waitKeepAliveResponseTimeout = 0;
-  int timerId = 0;
   uint32_t readSize = 0;
   uint32_t readId = 0;
   uint16_t port = 0;
