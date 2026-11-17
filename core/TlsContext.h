@@ -69,8 +69,10 @@ public:
   /** @brief Return True if certificate verified */
   bool verifyCertificate() const;
 
-  /** @brief Generate private key. @param bits Number of bits in the generate key @return True if generated */
+  /** @brief Generate RSA private key. @param bits Number of bits in the generated key @return True if generated */
   bool generateKey(int = 2048);
+  /** @brief Generate EC or EdDSA private key. @param curve Curve or algorithm name (e.g., "prime256v1", "secp384r1", "ED25519", "ED448") @return True if generated */
+  bool generateKey(const std::string &);
   /** @brief Generate certificate. @param subject Subject. @param san Subject alternative name. @param ca CA certificate. @param days The certificate validity period in days. @return True if generated */
   bool generateCertificate(const std::vector<std::pair<std::string, std::string>> & = {{"CN", "Root-CA"}}, const std::string & = {}, const std::string & = "CA:TRUE,pathlen:1", int = 365);
   /** @brief Generates a Certificate Signing Request (CSR). @param subject Certificate subject fields. @param san Subject Alternative Name string. @param extensions Additional X509v3 extensions. Example for CA: "CA:TRUE,pathlen:0". @return A DataArray containing the generated CSR in PEM format. */

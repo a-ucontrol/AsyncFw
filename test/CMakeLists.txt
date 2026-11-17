@@ -13,6 +13,12 @@ set_target_properties(${TARGET}-core PROPERTIES
   RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/test-bin"
 )
 
+add_executable(${TARGET}-core2 core2.cpp)
+target_link_libraries(${TARGET}-core2 ${AsyncFw_PROJECT_NAME})
+set_target_properties(${TARGET}-core2 PROPERTIES
+  RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/test-bin"
+)
+
 add_executable(${TARGET}-main main.cpp)
 target_link_libraries(${TARGET}-main ${AsyncFw_PROJECT_NAME})
 set_target_properties(${TARGET}-main PROPERTIES

@@ -7,7 +7,6 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 #include <openssl/ssl.h>
 #include <openssl/err.h>
-#include <openssl/core_names.h>
 #include <openssl/x509v3.h>
 
 #include <atomic>
@@ -37,6 +36,7 @@ struct TlsContext::Private {
   }
 
   inline static int exIdx = -1;
+  static const EVP_MD *signDigest(EVP_PKEY *k) { return (EVP_PKEY_is_a(k, "ED25519") || EVP_PKEY_is_a(k, "ED448")) ? nullptr : EVP_sha256(); }
 
   SSL_CTX *ctx = nullptr;
 
@@ -74,12 +74,8 @@ DataArray TlsContext::Private::certificate(X509 *_c) {
 }
 
 std::string TlsContext::Private::info(EVP_PKEY *_k) {
-  BIGNUM *bnk = nullptr;
-  EVP_PKEY_get_bn_param(_k, OSSL_PKEY_PARAM_RSA_N, &bnk);
-  if (!bnk) return {};
   BIO *_bio = BIO_new(BIO_s_mem());
-  ASN1_bn_print(_bio, "Modulus:", bnk, nullptr, 0);
-  BN_free(bnk);
+  if (EVP_PKEY_print_private(_bio, _k, 0, nullptr) <= 0) EVP_PKEY_print_public(_bio, _k, 0, nullptr);
   DataArray _da;
   _da.resize(BIO_ctrl_pending(_bio));
   BIO_read(_bio, _da.data(), _da.size());
@@ -129,6 +125,23 @@ bool TlsContext::generateKey(int bits) {
   EVP_PKEY *_k = EVP_RSA_gen(bits);
   if (!_k) {
     lsError() << "generate key";
+    return false;
+  }
+  if (!private_->ctx) private_->createOpenSslContext();
+  int r = SSL_CTX_use_PrivateKey(private_->ctx, _k);
+  EVP_PKEY_free(_k);
+  return r == 1;
+}
+
+bool TlsContext::generateKey(const std::string &curve) {
+  EVP_PKEY *_k = nullptr;
+  if (curve == "ED25519" || curve == "ED448") {
+    _k = EVP_PKEY_Q_keygen(nullptr, nullptr, curve.c_str());
+  } else {
+    _k = EVP_EC_gen(curve.c_str());
+  }
+  if (!_k) {
+    lsError() << "generate key" << curve;
     return false;
   }
   if (!private_->ctx) private_->createOpenSslContext();
@@ -187,7 +200,7 @@ bool TlsContext::generateCertificate(const std::vector<std::pair<std::string, st
     }
     X509_EXTENSION_free(ext);
   }
-  if (!X509_sign(_c, _k, EVP_sha256())) {
+  if (!X509_sign(_c, _k, Private::signDigest(_k))) {
     lsError() << "signing certificate";
     X509_free(_c);
     return false;
@@ -249,7 +262,7 @@ DataArray TlsContext::generateRequest(const std::vector<std::pair<std::string, s
   sk_X509_EXTENSION_free(extlist);
   if (ext_san) X509_EXTENSION_free(ext_san);
   if (ext_ca) X509_EXTENSION_free(ext_ca);
-  if (!X509_REQ_sign(_r, _k, EVP_sha256())) {
+  if (!X509_REQ_sign(_r, _k, Private::signDigest(_k))) {
     lsError() << "signing certificate";
     X509_REQ_free(_r);
     return {};
@@ -320,7 +333,7 @@ DataArray TlsContext::signRequest(DataArray &req, int days) {
   }
   sk_X509_EXTENSION_pop_free(extlist, X509_EXTENSION_free);
   X509_REQ_free(_req);
-  if (!X509_sign(_rc, _k, EVP_sha256())) {
+  if (!X509_sign(_rc, _k, Private::signDigest(_k))) {
     lsError() << "signing certificate";
     X509_free(_rc);
     return {};
