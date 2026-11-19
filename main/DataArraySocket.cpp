@@ -282,18 +282,18 @@ bool DataArraySocket::transmit(const DataArray &ba, uint32_t pi) const {
     lsError("thread is nullptr") << static_cast<int>(state_);
     return false;
   }
-  if (state_ != AbstractSocket::State::Active) {
-    lsWarning("tried transmit to inactive socket");
-    return false;
-  }
-  warning_if(ba.empty()) << "transmit array empty (" + peerString() + ')';
-  if (static_cast<int>(ba.size()) > private_.maxWriteSize) {
-    setErrorString("Big transmit size: " + std::to_string(ba.size()) + " (" + peerString() + ')');
-    const_cast<DataArraySocket *>(this)->disconnect();
-    return false;
-  }
   bool _r = false;
   thread_->invoke([this, &_r, &ba, pi]() {
+    if (state_ != AbstractSocket::State::Active) {
+      lsWarning("tried transmit to inactive socket");
+      return;
+    }
+    warning_if(ba.empty()) << "transmit array empty (" + peerString() + ')';
+    if (static_cast<int>(ba.size()) > private_.maxWriteSize) {
+      setErrorString("Big transmit size: " + std::to_string(ba.size()) + " (" + peerString() + ')');
+      const_cast<DataArraySocket *>(this)->disconnect();
+      return;
+    }
     int buffers = private_.transmitList.size();
     if (buffers >= private_.maxWriteBuffers) {
       setErrorString("Many transmit buffers (" + peerString() + ')');
