@@ -319,7 +319,7 @@ $(function(){initNavTree('HttpServer_8h_source.html','',''); });
 <div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>      <span class="keywordflow">if</span> (!peek || (*peek)(request, data)) action(request);</div>
 <div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>    });</div>
 <div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>    <span class="keywordflow">if</span> (findRule(url, Request::Method::Options) != rules.end()) <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>    addRule(url, Request::Method::Options, [<span class="keyword">this</span>, action, data](<span class="keyword">const</span> Request &amp;request) {</div>
+<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>    addRule(url, Request::Method::Options, [<span class="keyword">this</span>, data](<span class="keyword">const</span> Request &amp;request) {</div>
 <div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>      <span class="keywordflow">if</span> (cors_request_enabled) request.response()-&gt;setStatusCode(Response::StatusCode::Ok);</div>
 <div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span>      <span class="keywordflow">else</span> { request.response()-&gt;setStatusCode(Response::StatusCode::Forbidden); }</div>
 <div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>      request.response()-&gt;send();</div>

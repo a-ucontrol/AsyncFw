@@ -137,7 +137,7 @@ $(function(){initNavTree('Cache_2main_8cpp-example.html','',''); });
 <div class="line">    });</div>
 <div class="line">  });</div>
 <div class="line"> </div>
-<div class="line">  configCache.update.connect([&amp;configCache]() { lsDebug() &lt;&lt; <span class="stringliteral">&quot;log only&quot;</span> &lt;&lt; <a class="code hl_function" href="classAsyncFw_1_1Thread.html#a0a3bd6a54db28f73ff59cfea6a40b07a">AsyncFw::Thread::current</a>()-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd">name</a>(); });</div>
+<div class="line">  configCache.update.connect([]() { lsDebug() &lt;&lt; <span class="stringliteral">&quot;log only&quot;</span> &lt;&lt; <a class="code hl_function" href="classAsyncFw_1_1Thread.html#a0a3bd6a54db28f73ff59cfea6a40b07a">AsyncFw::Thread::current</a>()-&gt;<a class="code hl_function" href="classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd">name</a>(); });</div>
 <div class="line"> </div>
 <div class="line">  configCache.store({<span class="stringliteral">&quot;127.0.0.1&quot;</span>, 8000, 50});</div>
 <div class="line"> </div>
