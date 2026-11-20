@@ -27,7 +27,6 @@
 #include <atomic>
 #include <chrono>
 #include <filesystem>
-#include <memory>
 #include <string>
 #include <thread>
 #include <vector>
@@ -2180,7 +2179,7 @@ void test_listen_rebind_after_close() {
           // ~20ms is plenty for exec() to enter its wait path at least
           // once, which is where io_uring_sq_ready()/io_uring_submit()
           // actually pushes the listener's poll_add SQE to the kernel.
-          Timer::single(20, [&server]() {
+          Timer::single(20, [&]() {
 #ifdef IO_URING_ASYNC_CANCEL
             server.close();
             lsWarning() << LogStream::Color::Red << "ENABLED IO_URING_ASYNC_CANCEL";

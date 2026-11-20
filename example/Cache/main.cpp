@@ -37,7 +37,7 @@ int main(int, char **) {
     });
   });
 
-  configCache.update.connect([&configCache]() { lsDebug() << "log only" << AsyncFw::Thread::current()->name(); });
+  configCache.update.connect([]() { lsDebug() << "log only" << AsyncFw::Thread::current()->name(); });
 
   configCache.store({"127.0.0.1", 8000, 50});
 

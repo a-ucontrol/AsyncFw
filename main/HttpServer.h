@@ -249,7 +249,7 @@ public:
       if (!peek || (*peek)(request, data)) action(request);
     });
     if (findRule(url, Request::Method::Options) != rules.end()) return;
-    addRule(url, Request::Method::Options, [this, action, data](const Request &request) {
+    addRule(url, Request::Method::Options, [this, data](const Request &request) {
       if (cors_request_enabled) request.response()->setStatusCode(Response::StatusCode::Ok);
       else { request.response()->setStatusCode(Response::StatusCode::Forbidden); }
       request.response()->send();

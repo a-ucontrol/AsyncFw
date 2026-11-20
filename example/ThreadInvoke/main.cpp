@@ -30,7 +30,7 @@ int main(int, char **) {
       logInfo() << "run in thread" << ct->name() << ct->id();
       std::this_thread::sleep_for(std::chrono::milliseconds(10));
 
-      _mainThread->invoke([_mainThread]() {
+      _mainThread->invoke([]() {
         AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::current();
         logInfo() << "run in thread" << ct->name() << ct->id();
         std::this_thread::sleep_for(std::chrono::milliseconds(10));

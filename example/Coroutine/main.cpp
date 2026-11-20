@@ -12,7 +12,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 AsyncFw::CoroutineTask task() {
   AsyncFw::CoroutineAwait<void> await([](AsyncFw::CoroutineHandle h) {
-    AsyncFw::ThreadPool::async([h]() {
+    AsyncFw::ThreadPool::async([]() {
       AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::current();
       logInfo() << "task: run in thread" << ct->name() << ct->id();
       std::this_thread::sleep_for(std::chrono::milliseconds(10));
@@ -34,7 +34,7 @@ int main(int, char **) {
 
   auto coro_task([]() -> AsyncFw::CoroutineTask {
     AsyncFw::CoroutineAwait<void> await([](AsyncFw::CoroutineHandle h) {
-      AsyncFw::ThreadPool::async([h]() {
+      AsyncFw::ThreadPool::async([]() {
         AsyncFw::AbstractThread *ct = AsyncFw::AbstractThread::current();
         logInfo() << "coro_task: run in thread" << ct->name() << ct->id();
         std::this_thread::sleep_for(std::chrono::milliseconds(15));
