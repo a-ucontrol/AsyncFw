@@ -45,7 +45,7 @@ public:
     //Unicast5353 = 2
   };
   /** @brief Returns the global default instance pointer. */
-  static inline MulticastDns *instance() { return instance_.value; }
+  static MulticastDns *instance() { return instance_.value; }
   /** @brief Initializes the mDNS node with a specific target service type (e.g., "_http._tcp"). */
   MulticastDns(const std::string & = {});
   virtual ~MulticastDns();
@@ -85,7 +85,7 @@ public:
   FunctionConnector<const Host &>::Policy<AbstractFunctionConnector::Queued>::Protected<MulticastDns> hostRemoved;
 
 private:
-  static Instance<MulticastDns> instance_;
+  AsyncFw_INSTANCE<MulticastDns> instance_;
   void servicePollEvent(int);
   void querierPollEvent(int);
   void querierTimerEvent();

@@ -77,6 +77,8 @@ void LogStream::setTimeFormat(const std::string &_string, bool _show_ms) {
 
 void LogStream::setTimeOffset(int seconds) { data.timeOffset = seconds * 1000; }
 
+void LogStream::setCompleted(void (*completed)(const Message &, uint8_t)) { data.completed = completed; }
+
 std::string LogStream::sender(const char *function) {
   if (!function) return "Unknown";
   std::string_view str(function);

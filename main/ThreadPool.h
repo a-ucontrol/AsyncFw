@@ -103,7 +103,7 @@ public:
   }
 
   /** @brief Returns the instance of the global ThreadPool. */
-  static inline ThreadPool *instance() { return instance_.value; }
+  static ThreadPool *instance() { return instance_.value; }
 
   ThreadPool(const std::string &, int = ThreadPool_DEFAULT_WORK_THREADS);
   ThreadPool(int workThreads = ThreadPool_DEFAULT_WORK_THREADS) : ThreadPool("ThreadPool", workThreads) {}
@@ -137,7 +137,7 @@ public:
 
 private:
   Thread *createThread(const std::string &, Invocable<void(Thread *)>::Abstract *fun);
-  static Instance<ThreadPool> instance_;
+  AsyncFw_INSTANCE<ThreadPool> instance_;
   std::vector<AbstractThreadPool::Thread *> workThreads_;
   int workThreadsSize_;
 };

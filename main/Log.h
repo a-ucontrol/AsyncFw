@@ -94,7 +94,7 @@ public:
   using AbstractLog::append;
 
   /** @brief Global service locator shortcut to fetch the current engine-wide default log pointer. */
-  static inline Log *instance() { return instance_.value; }
+  static Log *instance() { return instance_.value; }
 
   /** @brief Constructs a persistent log system with a specific circular database size and file name context. */
   Log(int = 0, const std::string & = {});
@@ -127,11 +127,12 @@ protected:
   int timerIdAutosave = -1;
 
 private:
-  static class Instance : public AsyncFw::Instance<Log> {
+  class Instance : public AsyncFw::Instance<Log> {
   public:
     using AsyncFw::Instance<Log>::Instance;
     void created() override;
-  } instance_;
+  };
+  AsyncFw_INSTANCE instance_;
   static void lsAppend(const Message &m, uint8_t t);
   FunctionConnectionGuard tdg;
 };

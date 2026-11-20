@@ -314,7 +314,7 @@ public:
   void setEnableCorsRequests(bool);
 
   /** @brief Accessor to fetch the globally managed singleton instance reference of the active HttpServer. */
-  static inline HttpServer *instance() { return instance_.value; }
+  static HttpServer *instance() { return instance_.value; }
   /** @brief Signal connector emitted whenever a fresh client socket establishes a network link. */
   AsyncFw::FunctionConnector<int, const std::string &, bool *>::Policy<AsyncFw::AbstractFunctionConnector::SyncOnly>::Protected<HttpServer> incoming;
   /** @brief Signal connector emitted when incoming validated WebSocket framed blocks are assembled for read operations. */
@@ -336,7 +336,7 @@ private:
   RulesMap::iterator findRule(const std::string &, const Request::Method);
   std::vector<TcpSocket *> sockets;
   bool cors_request_enabled = true;
-  static Instance<HttpServer> instance_;
+  AsyncFw_INSTANCE<HttpServer> instance_;
   Invocable<bool(const Request &, std::any)>::Abstract *peek = nullptr;
   struct Private;
   Private &private_;

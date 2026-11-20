@@ -56,7 +56,7 @@ public:
   FunctionConnector<const std::string &, Event>::Protected<FileSystemWatcher> notify;
 
 private:
-  static Instance<FileSystemWatcher> instance_;
+  AsyncFw_INSTANCE<FileSystemWatcher> instance_;
   struct Private;
   Private &private_;
 };

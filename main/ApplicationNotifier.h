@@ -24,7 +24,7 @@ public:
     Value(int type, const std::any &data = {}) : AnyData(data), type(type) {}
     int type;
   };
-  static inline ApplicationNotifier *instance() { return instance_.value; }
+  static ApplicationNotifier *instance() { return instance_.value; }
   ApplicationNotifier();
   virtual ~ApplicationNotifier();
 
@@ -32,6 +32,6 @@ public:
   FunctionConnector<const Value &> notify;
 
 private:
-  static AsyncFw::Instance<ApplicationNotifier> instance_;
+  AsyncFw_INSTANCE<ApplicationNotifier> instance_;
 };
 }  // namespace AsyncFw

@@ -127,7 +127,7 @@ public:
   @param secondsOffset The explicit timezone offset in seconds. */
   static void setTimeOffset(int);
   /** @brief Intercepts completed log messages to route them to a custom sink (e.g. file, database, syslog). */
-  static void setCompleted(void (*completed)(const Message &, uint8_t)) { data.completed = completed; }
+  static void setCompleted(void (*completed)(const Message &, uint8_t));
   static void setFunctionPrefixIgnoreList(const std::vector<std::string> &list) { data.functionPrefixIgnoreList_ = list; }
   static void setSenderPrefix(const std::string &prefix) { data.senderPrefix_ = prefix; }
 
