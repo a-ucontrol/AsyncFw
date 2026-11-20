@@ -15,15 +15,10 @@ var searchData=
   ['instance_12',['Instance',['../classAsyncFw_1_1Instance.html',1,'AsyncFw::Instance&lt; T &gt;'],['../classAsyncFw_1_1Instance.html#ad3082d43d5fbacbb414b6a983ea7702a',1,'AsyncFw::Instance::Instance()']]],
   ['instance_13',['instance',['../classAsyncFw_1_1FileSystemWatcher.html#a16b4210d215a3b340c98f650d2071114',1,'AsyncFw::FileSystemWatcher::instance()'],['../classAsyncFw_1_1HttpServer.html#ad52f34791fe5848d9ba891b209fcdbe0',1,'AsyncFw::HttpServer::instance()'],['../classAsyncFw_1_1Log.html#a00e9a20e7303e9a24403046af176b6b2',1,'AsyncFw::Log::instance()'],['../classAsyncFw_1_1MulticastDns.html#a61341fa78536e7a787bbbce75116ef3e',1,'AsyncFw::MulticastDns::instance()'],['../classAsyncFw_1_1ThreadPool.html#a086c0271dcb7c4be416705d622145f83',1,'AsyncFw::ThreadPool::instance()']]],
   ['instance_2eh_14',['Instance.h',['../Instance_8h.html',1,'']]],
-  ['instance_3c_20asyncfw_3a_3aapplicationnotifier_20_3e_15',['Instance&lt; AsyncFw::ApplicationNotifier &gt;',['../classAsyncFw_1_1Instance.html',1,'AsyncFw']]],
-  ['instance_3c_20asyncfw_3a_3afilesystemwatcher_20_3e_16',['Instance&lt; AsyncFw::FileSystemWatcher &gt;',['../classAsyncFw_1_1Instance.html',1,'AsyncFw']]],
-  ['instance_3c_20asyncfw_3a_3ahttpserver_20_3e_17',['Instance&lt; AsyncFw::HttpServer &gt;',['../classAsyncFw_1_1Instance.html',1,'AsyncFw']]],
-  ['instance_3c_20asyncfw_3a_3amulticastdns_20_3e_18',['Instance&lt; AsyncFw::MulticastDns &gt;',['../classAsyncFw_1_1Instance.html',1,'AsyncFw']]],
-  ['instance_3c_20asyncfw_3a_3athreadpool_20_3e_19',['Instance&lt; AsyncFw::ThreadPool &gt;',['../classAsyncFw_1_1Instance.html',1,'AsyncFw']]],
-  ['instance_3c_20log_20_3e_20',['Instance&lt; Log &gt;',['../classAsyncFw_1_1Instance.html',1,'AsyncFw']]],
-  ['interruptrequested_21',['interruptRequested',['../classAsyncFw_1_1AbstractThread.html#ab614c8e9a266d924e86c3c49c1a6ff36',1,'AsyncFw::AbstractThread']]],
-  ['invoke_22',['invoke',['../classAsyncFw_1_1AbstractThread.html#af1382b21117f049a9ab7063017d7fae6',1,'AsyncFw::AbstractThread']]],
-  ['invoketask_23',['invokeTask',['../classAsyncFw_1_1AbstractThread.html#abe96e6b2a1de041f0d25390a6b77e50a',1,'AsyncFw::AbstractThread']]],
-  ['ipv4_24',['ipv4',['../structAsyncFw_1_1MulticastDns_1_1Host.html#a57f0b04e6bb05cc48b7c205c959ec964',1,'AsyncFw::MulticastDns::Host']]],
-  ['isopen_25',['isOpen',['../classAsyncFw_1_1File.html#abb0ce5b71ecf6fbaa538a812a622fc10',1,'AsyncFw::File']]]
+  ['instance_3c_20log_20_3e_15',['Instance&lt; Log &gt;',['../classAsyncFw_1_1Instance.html',1,'AsyncFw']]],
+  ['interruptrequested_16',['interruptRequested',['../classAsyncFw_1_1AbstractThread.html#ab614c8e9a266d924e86c3c49c1a6ff36',1,'AsyncFw::AbstractThread']]],
+  ['invoke_17',['invoke',['../classAsyncFw_1_1AbstractThread.html#af1382b21117f049a9ab7063017d7fae6',1,'AsyncFw::AbstractThread']]],
+  ['invoketask_18',['invokeTask',['../classAsyncFw_1_1AbstractThread.html#abe96e6b2a1de041f0d25390a6b77e50a',1,'AsyncFw::AbstractThread']]],
+  ['ipv4_19',['ipv4',['../structAsyncFw_1_1MulticastDns_1_1Host.html#a57f0b04e6bb05cc48b7c205c959ec964',1,'AsyncFw::MulticastDns::Host']]],
+  ['isopen_20',['isOpen',['../classAsyncFw_1_1File.html#abb0ce5b71ecf6fbaa538a812a622fc10',1,'AsyncFw::File']]]
 ];

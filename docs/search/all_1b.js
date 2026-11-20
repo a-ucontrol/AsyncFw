@@ -14,7 +14,7 @@ var searchData=
   ['setaverage_11',['setAverage',['../classAsyncFw_1_1Rrd.html#ac1e21d6150414b6d7632aff22f8f13c7',1,'AsyncFw::Rrd']]],
   ['setcertificate_12',['setCertificate',['../classAsyncFw_1_1TlsContext.html#afb5237df49026bf53948efaafaa2f0f9',1,'AsyncFw::TlsContext']]],
   ['setcolorout_13',['setColorOut',['../classAsyncFw_1_1AbstractLog.html#ad3d69f8e4e65e11f777961ff199cc305',1,'AsyncFw::AbstractLog']]],
-  ['setcompleted_14',['setCompleted',['../classAsyncFw_1_1LogStream.html#a2b004052ecdfc044a5369b90db412d40',1,'AsyncFw::LogStream']]],
+  ['setcompleted_14',['setCompleted',['../classAsyncFw_1_1LogStream.html#a3daf57d754eeabf08b0c94b94f6d75da',1,'AsyncFw::LogStream']]],
   ['setconnecttimeout_15',['setConnectTimeout',['../classAsyncFw_1_1DataArraySocket.html#aa54790ba28da3f83e8252fe5abaf6676',1,'AsyncFw::DataArraySocket::setConnectTimeout()'],['../classAsyncFw_1_1DataArrayTcpClient.html#a1023f2107bd696aab3c7e1d3b661fc91',1,'AsyncFw::DataArrayTcpClient::setConnectTimeout()']]],
   ['setconsolelevel_16',['setConsoleLevel',['../classAsyncFw_1_1AbstractLog.html#aca18be3a6c0f1c681fffc475f2eba5ac',1,'AsyncFw::AbstractLog']]],
   ['setcontent_17',['setContent',['../classAsyncFw_1_1HttpServer_1_1Response.html#a1e25071dfc003a6530edf35e0249e4b9',1,'AsyncFw::HttpServer::Response::setContent(const AsyncFw::DataArray &amp;)'],['../classAsyncFw_1_1HttpServer_1_1Response.html#ab9c9286252d93d6034b23f391c8fe8fb',1,'AsyncFw::HttpServer::Response::setContent(const std::vector&lt; uint8_t &gt; &amp;)']]],

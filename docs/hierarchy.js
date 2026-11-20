@@ -3,11 +3,6 @@ var hierarchy =
     [ "AsyncFw::AbstractFunctionConnector", "classAsyncFw_1_1AbstractFunctionConnector.html", null ],
     [ "AsyncFw::AbstractInstance", "classAsyncFw_1_1AbstractInstance.html", [
       [ "AsyncFw::Instance< Log >", "classAsyncFw_1_1Instance.html", null ],
-      [ "AsyncFw::Instance< AsyncFw::ApplicationNotifier >", "classAsyncFw_1_1Instance.html", null ],
-      [ "AsyncFw::Instance< AsyncFw::FileSystemWatcher >", "classAsyncFw_1_1Instance.html", null ],
-      [ "AsyncFw::Instance< AsyncFw::HttpServer >", "classAsyncFw_1_1Instance.html", null ],
-      [ "AsyncFw::Instance< AsyncFw::MulticastDns >", "classAsyncFw_1_1Instance.html", null ],
-      [ "AsyncFw::Instance< AsyncFw::ThreadPool >", "classAsyncFw_1_1Instance.html", null ],
       [ "AsyncFw::Instance< T >", "classAsyncFw_1_1Instance.html", null ]
     ] ],
     [ "AsyncFw::AbstractLog", "classAsyncFw_1_1AbstractLog.html", [
