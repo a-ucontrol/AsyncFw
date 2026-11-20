@@ -46,6 +46,7 @@ extern int start_mdns_querier(void *qd_void_ptr);
 extern void stop_mdns_querier(void *qd_void_ptr);
 extern void mdns_querier_event(int fd, void *qd_void_ptr, void *ctx_void_ptr);
 extern int send_mdns_query(void *qd_void_ptr, mdns_query_t *query, size_t count);
+}
 
 struct MulticastDns::Private {
   service_data_t sd = {};      // Low-level C-responder configuration buffers.
@@ -149,7 +150,6 @@ int query_callback(int, const struct sockaddr *from, size_t addrlen, mdns_entry_
     trace() << MDNS_STRING_FORMAT(fromaddrstr) << entrytype << "MDNS_RECORDTYPE_AAAA ignored";
   } else lsTrace() << "unknown RECORDTYPE:" << MDNS_STRING_FORMAT(fromaddrstr) << entrytype << MDNS_STRING_FORMAT(entrystr) << rtype << rclass << ttl << record_length;
   return 0;
-}
 }
 
 Instance<MulticastDns> MulticastDns::instance_;

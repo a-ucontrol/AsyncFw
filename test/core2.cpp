@@ -149,7 +149,7 @@ void test_tls_context_key_types() {
   }
 
   // 2. ECDSA curves (prime256v1 / P-256, secp384r1 / P-384)
-  for (const std::string &curve : {"prime256v1", "secp384r1"}) {
+  for (const std::string curve : {"prime256v1", "secp384r1"}) {
     TlsContext ca;
     EXPECT_MSG(ca.generateKey(curve), "generateKey failed for " + curve);
     EXPECT(!ca.key().empty());
@@ -183,7 +183,7 @@ void test_tls_context_key_types() {
   }
 
   // 3. EdDSA (ED25519, ED448) — exercises signDigest() returning nullptr
-  for (const std::string &alg : {"ED25519", "ED448"}) {
+  for (const std::string alg : {"ED25519", "ED448"}) {
     TlsContext ca;
     EXPECT_MSG(ca.generateKey(alg), "generateKey failed for " + alg);
     EXPECT(!ca.key().empty());

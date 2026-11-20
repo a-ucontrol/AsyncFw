@@ -417,6 +417,7 @@ void test_coroutine_coInvoke_void() {
   EXPECT(ranCallable.load());
 }
 
+#if !defined(_WIN32) || defined(USE_QAPPLICATION)
 // ============================================================================
 // Group C'. FileSystemWatcher — IN_CLOSE_WRITE bypasses debounce (characterization)
 // ============================================================================
@@ -927,6 +928,7 @@ void test_filesystemwatcher_exact_and_wildcard() {
 
   MainThread::exec();
 }
+#endif
 
 // ============================================================================
 // Group D. Coroutine — TST (copy/move semantics of coInvoke)
@@ -2447,6 +2449,7 @@ int main(int, char **) {
   test_mainthread_reexec();
 #endif
 
+#if !defined(_WIN32) || defined(USE_QAPPLICATION)
   // --- Group C: FileSystemWatcher -------------------------------------
   // Runs on MainThread::exec(). Must be last because MainThread::exit()
   // permanently finishes Main's event loop.
@@ -2457,6 +2460,7 @@ int main(int, char **) {
   test_filesystemwatcher_exact_missing_changed();
   test_filesystemwatcher_exact_recreate_cycle();
   test_filesystemwatcher_exact_and_wildcard();
+#endif
 
   // --- io_uring listen rebind (regression) ----------------------------
   // Must come before test_exit_signal_spam (Group F), which leaves the

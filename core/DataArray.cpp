@@ -168,7 +168,7 @@ struct DataStream::Private {
     }
     try {
       _v.resize(_s);
-    } catch (std::exception &e) { fail = true; };
+    } catch (std::exception &) { fail = true; };
   }
   void w(int, const uint8_t *);
   void r(int, uint8_t *);

@@ -1,8 +1,22 @@
+/*
+Copyright (c) 2019-2026 Alexandr Kuzmuk
+
+This file is part of the AsyncFw project. Licensed under the MIT License.
+See {Link: LICENSE file https://mit-license.org} in the project root for full license information.
+*/
+
 #pragma once
 
 #include <bit>
 #include <cstdint>
 #include <type_traits>
+
+#ifdef _MSC_VER
+  #include <cstdlib>
+  #define __builtin_bswap16 _byteswap_ushort
+  #define __builtin_bswap32 _byteswap_ulong
+  #define __builtin_bswap64 _byteswap_uint64
+#endif
 
 namespace AsyncFw::endian {
 template <typename T>

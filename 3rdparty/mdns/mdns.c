@@ -1064,7 +1064,7 @@ start_mdns_service(const char* _hostname, const char* _service_name, int service
 }
 
 #define MDNS_HEADER_FLAG_RESPONSE 0x8000U
-static inline size_t
+static inline int
 mdns_socket_listen_(int sock, void* buffer, size_t capacity, mdns_record_callback_fn callback,
 					void* user_data) {
 	struct sockaddr_in6 addr;
@@ -1082,7 +1082,7 @@ mdns_socket_listen_(int sock, void* buffer, size_t capacity, mdns_record_callbac
 	if (peek_ret >= 4) {
 		uint16_t flags = mdns_ntohs(&peek_header[1]);
 		if (flags & MDNS_HEADER_FLAG_RESPONSE)
-			return (size_t)-2;  // Возвращаем специальный маркер для C++ слоя
+			return -2;  // Возвращаем специальный маркер для C++ слоя
 	} else
 		return -1;
 

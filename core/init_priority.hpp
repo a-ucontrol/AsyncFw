@@ -28,7 +28,7 @@ Constraints:
   #define ASYNCFW_CRT_SECTION_2 ".CRT$XCR"
   #define ASYNCFW_CRT_SECTION_3 ".CRT$XCS"
   #define ASYNCFW_CRT_SECTION_4 ".CRT$XCT"
-  #define InitPriority(t, v, p) __pragma(section(ASYNCFW_CRT_SECTION_##p, long, read)) __pragma(init_seg(ASYNCFW_CRT_SECTION_##p)) t v
+  #define InitPriority(t, v, p) __pragma(warning(push)) __pragma(warning(disable : 4075)) __pragma(section(ASYNCFW_CRT_SECTION_##p, long, read)) __pragma(init_seg(ASYNCFW_CRT_SECTION_##p)) __pragma(warning(pop)) t v
 #else
   #define InitPriority(t, v, p) t v __attribute__((init_priority(65530 + p)))
 #endif
