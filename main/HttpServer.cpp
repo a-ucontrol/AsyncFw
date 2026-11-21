@@ -358,17 +358,16 @@ struct HttpServer::Private {
 
 struct HttpServer::Request::Private {
   friend class HttpServer;
-  Private(const std::string_view &str) {
+  Private(const std::string_view &str) : req_(str) {
     httpparser::HttpRequestParser parser;
     res = parser.parse(request, str.data(), str.data() + str.size());
     uri = std::make_unique<uri::Uri>(uri::parse_uri(".://" + request.uri));
-    req_ = str;
   }
   httpparser::Request request;
   std::unique_ptr<uri::Uri> uri;
   httpparser::HttpRequestParser::ParseResult res;
 
-  std::string req_;
+  std::string_view req_;
 };
 
 HttpServer::TcpSocket::TcpSocket(HttpServer *server) : HttpSocket(), server_(server) {
@@ -725,8 +724,8 @@ std::string HttpServer::Request::headerItemValue(const std::string &name) const 
 }
 
 std::string HttpServer::Request::queryItemValue(const std::string &name) const {
-  for (std::pair<std::string, std::string> q : private_.uri->query)
-    if (q.first == name) return q.second;
+  auto it = private_.uri->query.find(name);
+  if (it != private_.uri->query.end()) return it->second;
   return {};
 }
 
@@ -735,7 +734,7 @@ DataArray HttpServer::Request::content() const { return private_.request.content
 bool HttpServer::Request::switchingProtocols() const {
   response_->statusCode_ = Response::StatusCode::SwitchingProtocols;
   response_->socket_->ws_ = new WebSocket;
-  WebSocketFrameType ft = response_->socket_->ws_->parseHandshake(const_cast<unsigned char *>(reinterpret_cast<const unsigned char *>(private_.req_.c_str())), private_.req_.size());
+  WebSocketFrameType ft = response_->socket_->ws_->parseHandshake(reinterpret_cast<unsigned char *>(const_cast<char *>(private_.req_.data())), private_.req_.size());
   bool b = ft == WebSocketFrameType::OPENING_FRAME;
   if (b) response_->socket_->write(response_->socket_->ws_->answerHandshake());
   else {
