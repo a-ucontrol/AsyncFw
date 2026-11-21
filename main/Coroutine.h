@@ -57,8 +57,7 @@ struct CoroutineAwait {
   template <typename T>
   CoroutineAwait(T f) : f_(new Invocable<void(const CoroutineHandle)>::Function(std::forward<T>(f))) {}
   CoroutineAwait() = default;
-  CoroutineAwait(const CoroutineAwait &) = delete;
-  CoroutineAwait &operator=(const CoroutineAwait &) = delete;
+  CoroutineAwait(CoroutineAwait &&) = delete;
   virtual ~CoroutineAwait() {
     if (f_) delete f_;
   }
@@ -81,7 +80,7 @@ template <typename T>
 struct CoroutineInvokeAwait;
 
 template <typename R, typename... Args>
-struct CoroutineInvokeAwait<R(Args...)> {
+struct [[nodiscard]] CoroutineInvokeAwait<R(Args...)> {
 protected:
   template <typename F>
   struct Function final : public Invocable<R(Args...)>::Abstract {
@@ -108,7 +107,8 @@ public:
   template <typename M, typename O, typename... A>
   CoroutineInvokeAwait(AbstractThread *thread, M m, O *o, A &&...a) : t_(thread), f_(new MemberFunction<M, O>(m, o)), a_(std::forward<A>(a)...) {}
   ~CoroutineInvokeAwait() { delete f_; }
-  CoroutineInvokeAwait(CoroutineInvokeAwait &&) = delete;
+  CoroutineInvokeAwait(const CoroutineInvokeAwait &) = delete;
+  CoroutineInvokeAwait &operator=(const CoroutineInvokeAwait &) = delete;
 
   void await_suspend(CoroutineHandle h) const noexcept {
     h_ = h;
@@ -126,6 +126,9 @@ public:
   R await_resume() const noexcept {
     if constexpr (!std::is_void_v<R>) return h_.promise().data<R>();
   }
+
+  CoroutineInvokeAwait &&operator co_await() && noexcept { return std::forward<CoroutineInvokeAwait>(*this); }
+  CoroutineInvokeAwait &&operator co_await() & = delete;
 
 private:
   AbstractThread *t_;

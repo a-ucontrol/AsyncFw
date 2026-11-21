@@ -48,9 +48,18 @@
 
 #include "3rdparty/WebSocket/WebSocket/WebSocket.h"
 
-static_assert(!std::is_copy_assignable_v<AsyncFw::CoroutineInvokeAwait<void(void)>>);
-static_assert(!std::is_move_assignable_v<AsyncFw::CoroutineInvokeAwait<void(void)>>);
-
+static_assert(!std::is_copy_constructible_v<AsyncFw::CoroutineAwait<void>>);
+static_assert(!std::is_move_constructible_v<AsyncFw::CoroutineAwait<void>>);
+static_assert(!std::is_copy_assignable_v<AsyncFw::CoroutineAwait<void>>);
+static_assert(!std::is_move_assignable_v<AsyncFw::CoroutineAwait<void>>);
+static_assert(!std::is_copy_constructible_v<AsyncFw::CoroutineInvokeAwait<void()>>);
+static_assert(!std::is_move_constructible_v<AsyncFw::CoroutineInvokeAwait<void()>>);
+static_assert(!std::is_copy_assignable_v<AsyncFw::CoroutineInvokeAwait<void()>>);
+static_assert(!std::is_move_assignable_v<AsyncFw::CoroutineInvokeAwait<void()>>);
+static_assert(requires(AsyncFw::CoroutineInvokeAwait<void(void)> &&a) { std::move(a).operator co_await(); });
+template <typename T>
+concept HasLvalueCoAwait = requires(T &a) { a.operator co_await(); };
+static_assert(!HasLvalueCoAwait<AsyncFw::CoroutineInvokeAwait<void()>>);
 using namespace AsyncFw;
 using Conn = AbstractFunctionConnector::Connection;
 
