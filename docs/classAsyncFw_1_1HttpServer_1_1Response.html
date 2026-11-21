@@ -195,10 +195,11 @@ std::string&#160;</td><td class="memItemRight"><b>mimeType</b> () const</td></tr
 <tr class="memitem:a5dd46db3eac7d1a07948d072e71c11f2" id="r_a5dd46db3eac7d1a07948d072e71c11f2"><td class="memItemLeft"><a id="a5dd46db3eac7d1a07948d072e71c11f2" name="a5dd46db3eac7d1a07948d072e71c11f2"></a>
 std::string&#160;</td><td class="memItemRight"><b>header</b> () const</td></tr>
 <tr class="memdesc:a5dd46db3eac7d1a07948d072e71c11f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates and returns the complete serialized HTTP header section. <br /></td></tr>
-<tr class="memitem:a52925841696f5351ff43b46530c18390" id="r_a52925841696f5351ff43b46530c18390"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a52925841696f5351ff43b46530c18390">send</a> ()</td></tr>
-<tr class="memdesc:a52925841696f5351ff43b46530c18390"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finalizes and sends the response over the network via the associated socket.  <br /></td></tr>
-<tr class="memitem:a1e25071dfc003a6530edf35e0249e4b9" id="r_a1e25071dfc003a6530edf35e0249e4b9"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a1e25071dfc003a6530edf35e0249e4b9">setContent</a> (const <a class="el" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> &amp;)</td></tr>
-<tr class="memdesc:a1e25071dfc003a6530edf35e0249e4b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the payload content from a raw <a class="el" href="classAsyncFw_1_1DataArray.html" title="The DataArray class, provides an array of bytes.">DataArray</a>.  <br /></td></tr>
+<tr class="memitem:a65a034a79ecd24e9e40a364575f03fd8" id="r_a65a034a79ecd24e9e40a364575f03fd8"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a65a034a79ecd24e9e40a364575f03fd8">send</a> (const std::string &amp;fn={})</td></tr>
+<tr class="memdesc:a65a034a79ecd24e9e40a364575f03fd8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finalizes and sends the response over the network via the associated socket.  <br /></td></tr>
+<tr class="memitem:a1e25071dfc003a6530edf35e0249e4b9" id="r_a1e25071dfc003a6530edf35e0249e4b9"><td class="memItemLeft"><a id="a1e25071dfc003a6530edf35e0249e4b9" name="a1e25071dfc003a6530edf35e0249e4b9"></a>
+void&#160;</td><td class="memItemRight"><b>setContent</b> (const <a class="el" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> &amp;)</td></tr>
+<tr class="memdesc:a1e25071dfc003a6530edf35e0249e4b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the payload content from a raw <a class="el" href="classAsyncFw_1_1DataArray.html" title="The DataArray class, provides an array of bytes.">DataArray</a>. <br /></td></tr>
 <tr class="memitem:ab9c9286252d93d6034b23f391c8fe8fb" id="r_ab9c9286252d93d6034b23f391c8fe8fb"><td class="memItemLeft"><a id="ab9c9286252d93d6034b23f391c8fe8fb" name="ab9c9286252d93d6034b23f391c8fe8fb"></a>
 void&#160;</td><td class="memItemRight"><b>setContent</b> (const std::vector&lt; uint8_t &gt; &amp;)</td></tr>
 <tr class="memdesc:ab9c9286252d93d6034b23f391c8fe8fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the payload content from a byte vector. <br /></td></tr>
@@ -300,8 +301,8 @@ class&#160;</td><td class="memItemRight"><b>HttpServer</b></td></tr>
 
 </div>
 </div>
-<a id="a52925841696f5351ff43b46530c18390" name="a52925841696f5351ff43b46530c18390"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a52925841696f5351ff43b46530c18390">&#9670;&#160;</a></span>send()</h2>
+<a id="a65a034a79ecd24e9e40a364575f03fd8" name="a65a034a79ecd24e9e40a364575f03fd8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a65a034a79ecd24e9e40a364575f03fd8">&#9670;&#160;</a></span>send()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -309,13 +310,19 @@ class&#160;</td><td class="memItemRight"><b>HttpServer</b></td></tr>
         <tr>
           <td class="memname">bool HttpServer::Response::send </td>
           <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>fn</em></span><span class="paramdefsep"> = </span><span class="paramdefval">{}</span></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>Finalizes and sends the response over the network via the associated socket. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fn</td><td>Optional path to a local regular file to stream as the response body. When non-empty, overrides any data set via <a class="el" href="#a1e25071dfc003a6530edf35e0249e4b9" title="Sets the payload content from a raw DataArray.">setContent()</a>. The caller is responsible for validating the path against path traversal. </td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="section return"><dt>Returns</dt><dd>True if the response was successfully dispatched. </dd></dl>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="HttpServer_2main_8cpp-example.html#a7">HttpServer/main.cpp</a>.</dd>
 </dl>
@@ -323,39 +330,13 @@ class&#160;</td><td class="memItemRight"><b>HttpServer</b></td></tr>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1HttpServer_1_1Response_a52925841696f5351ff43b46530c18390_cgraph.svg" width="1018" height="120"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1HttpServer_1_1Response_a65a034a79ecd24e9e40a364575f03fd8_cgraph.svg" width="1018" height="120"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 <div id="dynsection-1" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
 <div id="dynsection-1-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-1-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1HttpServer_1_1Response_a52925841696f5351ff43b46530c18390_icgraph.svg" width="550" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-
-</div>
-</div>
-<a id="a1e25071dfc003a6530edf35e0249e4b9" name="a1e25071dfc003a6530edf35e0249e4b9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1e25071dfc003a6530edf35e0249e4b9">&#9670;&#160;</a></span>setContent()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void HttpServer::Response::setContent </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="classAsyncFw_1_1DataArray.html">AsyncFw::DataArray</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>ba</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Sets the payload content from a raw <a class="el" href="classAsyncFw_1_1DataArray.html" title="The DataArray class, provides an array of bytes.">DataArray</a>. </p>
-<dl class="section note"><dt>Note</dt><dd>Can accept special local file paths ("file://...") to trigger static file streaming. </dd></dl>
-<div id="dynsection-2" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
-<div id="dynsection-2-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-2-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1HttpServer_1_1Response_a1e25071dfc003a6530edf35e0249e4b9_icgraph.svg" width="562" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1HttpServer_1_1Response_a65a034a79ecd24e9e40a364575f03fd8_icgraph.svg" width="550" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
