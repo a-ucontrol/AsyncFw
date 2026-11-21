@@ -619,7 +619,7 @@ void AbstractSocket::pollEvent(int _e) {
     }
     activateEvent();
     if (state_ != State::Active
-#if !defined EPOLL_EDGE_TRIGGERED || !defined IO_URING_WAIT
+#if !defined EPOLL_EDGE_TRIGGERED && !defined IO_URING_WAIT
         || read_available_fd() <= 0
 #endif
     )
