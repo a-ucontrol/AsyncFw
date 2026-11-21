@@ -23,6 +23,7 @@ Timer::Timer() {
 
 Timer::~Timer() {
   thread_->removeTimer(timerId);
+  destroy();
   lsTrace();
 }
 
@@ -34,16 +35,20 @@ void Timer::start(int ms, bool single) {
 void Timer::stop() { thread_->modifyTimer(timerId, 0); }
 
 CoroutineAwait<void> Timer::coTimeout(int ms) {
-  FunctionConnectionGuard *_g = new FunctionConnectionGuard;
-  return CoroutineAwait<void>([this, ms, _g](CoroutineHandle h) {
+  FunctionConnectionGuardList *_gl = new FunctionConnectionGuardList;
+  return CoroutineAwait<void>([this, ms, _gl](CoroutineHandle h) {
     start(ms, true);
-    *_g = timeout.connect<AbstractFunctionConnector::Connection::Queued>([h, _g]() {
-      delete _g;
-      h.resume();
+    *_gl += timeout.connect<AbstractFunctionConnector::Connection::Direct>([h, _gl]() {
+      delete _gl;
+      h.promise().resume_queued();
+    });
+    *_gl += destroy.connect<AbstractFunctionConnector::Connection::Direct>([h, _gl]() {
+      delete _gl;
+      h.destroy();
     });
   });
 }
 
 CoroutineAwait<void> AsyncFw::coTimeout(int ms) {
-  return CoroutineAwait<void>([ms](CoroutineHandle h) { Timer::single(ms, [h]() { h.promise().resume_queued(); }); });
+  return CoroutineAwait<void>([ms](CoroutineHandle h) { Timer::single(ms, [h]() { h.resume(); }); });
 }
