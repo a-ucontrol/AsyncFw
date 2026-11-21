@@ -15,16 +15,16 @@ using namespace AsyncFw;
 class Example {
 public:
   double tst_double(int v1, double v2) const {
-    std::chrono::milliseconds(10);
+    std::this_thread::sleep_for(std::chrono::milliseconds(10));
     lsDebug() << v1 << v2 << Thread::current()->name();
     return v1 + v2 + 10000.0;
   }
   void tst_void(const std::string &s) const {
-    std::chrono::milliseconds(10);
+    std::this_thread::sleep_for(std::chrono::milliseconds(10));
     lsDebug() << s << Thread::current()->name();
   }
   std::string tst_string(std::string &s) const {
-    std::chrono::milliseconds(10);
+    std::this_thread::sleep_for(std::chrono::milliseconds(10));
     lsDebug() << s << Thread::current()->name();
     s = "-" + s + "-";
     return "***";
