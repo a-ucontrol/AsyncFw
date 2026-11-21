@@ -711,7 +711,7 @@ std::string HttpServer::Request::headerItemValue(const std::string &name) const 
   for (const httpparser::Request::HeaderItem &item : private_.request.headers) {
     if (name.size() == item.name.size()) {
       for (size_t i = 0; i != name.size(); ++i) {
-        if (std::tolower(name[i]) != std::tolower(item.name[i])) goto FAIL;
+        if (std::tolower(static_cast<unsigned char>(name[i])) != std::tolower(static_cast<unsigned char>(item.name[i]))) goto FAIL;
       }
       return item.value;
     FAIL:
