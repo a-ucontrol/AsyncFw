@@ -35,7 +35,7 @@
 <polygon fill="#9a32cd" stroke="#9a32cd" points="69.38,-78.38 72.88,-88.38 76.38,-78.38 69.38,-78.38"/>
 </a>
 </g>
-<text xml:space="preserve" text-anchor="start" x="75.88" y="-59.25" font-family="Helvetica,sans-Serif" font-size="10.00" fill="grey">destroy</text>
+<text xml:space="preserve" text-anchor="start" x="75.88" y="-59.25" font-family="Helvetica,sans-Serif" font-size="10.00" fill="grey">destroying</text>
 <text xml:space="preserve" text-anchor="start" x="75.88" y="-43.25" font-family="Helvetica,sans-Serif" font-size="10.00" fill="grey">timeout</text>
 </g>
 </g>

@@ -33,8 +33,8 @@ public:
 
   /** @brief The Timer::timeout connector */
   FunctionConnector<>::Protected<Timer> timeout;
-  /** @brief The Timer::destroy connector */
-  FunctionConnector<>::Protected<Timer> destroy;
+  /** @brief The Timer::destroying connector */
+  FunctionConnector<>::Protected<Timer> destroying;
   /** @brief Asynchronously waits for the specified timeout interval @param ms interval in milliseconds @return CoroutineAwait object to be used with co_await
   @par Example \code co_await timer.coTimeout(500); // Sleep for 500 milliseconds \endcode */
   CoroutineAwait<void> coTimeout(int);

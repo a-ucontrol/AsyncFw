@@ -91,7 +91,7 @@ struct AddressResolver::Private {
 AddressResolver::AddressResolver(const std::vector<std::string> &servers) : private_(*new Private(this, servers)) { lsTrace(); }
 
 AddressResolver::~AddressResolver() {
-  destroy();
+  destroying();
   delete &private_;
   lsTrace();
 }
@@ -151,7 +151,7 @@ CoroutineAwait<AddressResolver::Result> AddressResolver::coResolve(const std::st
       h.promise().setData(list);
       h.promise().resume_queued();
     });
-    *_gl += destroy.connect<AsyncFw::AbstractFunctionConnector::Connection::Direct>([h, _gl]() {
+    *_gl += destroying.connect<AsyncFw::AbstractFunctionConnector::Connection::Direct>([h, _gl]() {
       delete _gl;
       h.destroy();
     });

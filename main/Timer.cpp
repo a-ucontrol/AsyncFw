@@ -23,7 +23,7 @@ Timer::Timer() {
 
 Timer::~Timer() {
   thread_->removeTimer(timerId);
-  destroy();
+  destroying();
   lsTrace();
 }
 
@@ -42,7 +42,7 @@ CoroutineAwait<void> Timer::coTimeout(int ms) {
       delete _gl;
       h.promise().resume_queued();
     });
-    *_gl += destroy.connect<AbstractFunctionConnector::Connection::Direct>([h, _gl]() {
+    *_gl += destroying.connect<AbstractFunctionConnector::Connection::Direct>([h, _gl]() {
       delete _gl;
       h.destroy();
     });

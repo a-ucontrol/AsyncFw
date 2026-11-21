@@ -4,5 +4,5 @@ var classAsyncFw_1_1AddressResolver =
     [ "resolve", "classAsyncFw_1_1AddressResolver.html#a80b4997bc86ba13a75bced6f3bd261bf", null ],
     [ "coResolve", "classAsyncFw_1_1AddressResolver.html#a59f08f5d62fba62538b9094548fa1fd0", null ],
     [ "completed", "classAsyncFw_1_1AddressResolver.html#adc88c3beebbade60ab2005599de37051", null ],
-    [ "destroy", "classAsyncFw_1_1AddressResolver.html#af172f010c46614d124443cdb47f5ce96", null ]
+    [ "destroying", "classAsyncFw_1_1AddressResolver.html#a67458bbeed70a851ad2f8f91e7b5731a", null ]
 ];
