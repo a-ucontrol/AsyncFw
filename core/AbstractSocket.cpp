@@ -618,7 +618,12 @@ void AbstractSocket::pollEvent(int _e) {
       }
     }
     activateEvent();
-    if (state_ != State::Active || read_available_fd() <= 0) return;
+    if (state_ != State::Active
+#if !defined EPOLL_EDGE_TRIGGERED || !defined IO_URING_WAIT
+        || read_available_fd() <= 0
+#endif
+    )
+      return;
   }
   if (_e & AbstractThread::PollIn) {
     private_.rs = read_available_fd();
