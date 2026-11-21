@@ -128,10 +128,9 @@ public:
     void addHeader(const std::string &ba) { additionalHeaders.push_back(ba); }
     /** @brief Generates and returns the complete serialized HTTP header section. */
     std::string header() const;
-    /** @brief Finalizes and sends the response over the network via the associated socket. @return True if the response was successfully dispatched. */
-    bool send();
-    /** @brief Sets the payload content from a raw DataArray.
-    @note Can accept special local file paths ("file://...") to trigger static file streaming. */
+    /** @brief Finalizes and sends the response over the network via the associated socket. @param fn Optional path to a local regular file to stream as the response body. When non-empty, overrides any data set via setContent(). The caller is responsible for validating the path against path traversal. @return True if the response was successfully dispatched. */
+    bool send(const std::string &fn = {});
+    /** @brief Sets the payload content from a raw DataArray. */
     void setContent(const AsyncFw::DataArray &);
     /** @brief Sets the payload content from a byte vector. */
     void setContent(const std::vector<uint8_t> &);
@@ -152,7 +151,7 @@ public:
   private:
     std::vector<std::string> additionalHeaders;
     mutable StatusCode statusCode_ = Response::StatusCode::Ok;
-    mutable int contentLength = 0;
+    mutable uint64_t contentLength = 0;
     mutable std::string mimeType_;
     AsyncFw::DataArray content_;
 

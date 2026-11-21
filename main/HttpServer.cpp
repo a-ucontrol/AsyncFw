@@ -449,11 +449,11 @@ HttpServer::HttpServer(const std::string &httpPath) : private_(*new Private()) {
       return;
     }
 
-    if (std::filesystem::exists(path)) {
+    std::error_code ec;
+    if (std::filesystem::is_regular_file(path, ec)) {
       trace() << "return:" + path;
       request.response()->setStatusCode(Response::StatusCode::Ok);
-      request.response()->setContent("file://" + path);
-      request.response()->send();
+      request.response()->send(path);
       return;
     }
     request.response()->setStatusCode(Response::StatusCode::NotFound);
@@ -637,27 +637,30 @@ void HttpServer::Response::destroy() {
   if (!AbstractThread::current()->invoke(_f)) _f();
 }
 
-bool HttpServer::Response::send() {
+bool HttpServer::Response::send(const std::string &fn) {
   if (!socket_) {
     lsWarning() << "unknown socket";
     destroy();
     return false;
   }
-  if (content_.view().find("file://") == 0) {
-    std::string fn(content_.begin() + 7, content_.end());
-    if (std::filesystem::exists(fn)) {
+  if (!fn.empty()) {
+    std::error_code ec;
+    if (std::filesystem::is_regular_file(fn, ec)) {
       if (mimeType_.empty()) {
         std::string ext = std::filesystem::path(fn).extension().string();
-        if (!ext.empty()) ext = std::filesystem::path(fn).extension().string().substr(1);
+        if (!ext.empty()) ext = ext.substr(1);
         std::map<std::string, std::string>::iterator it = Private::mimeTypes.find(ext);
         mimeType_ = (it != Private::mimeTypes.end()) ? it->second : "application/octet-stream";
       }
-      contentLength = std::filesystem::file_size(fn);
-      trace() << LogStream::Color::Green << header();
-      socket_->write(header());
-      socket_->sendFile(fn);
-      destroy();
-      return true;
+      uint64_t size = std::filesystem::file_size(fn, ec);
+      if (!ec) {
+        contentLength = size;
+        trace() << LogStream::Color::Green << header();
+        socket_->write(header());
+        socket_->sendFile(fn);
+        destroy();
+        return true;
+      }
     }
     statusCode_ = Response::StatusCode::BadRequest;
     trace() << LogStream::Color::Green << header();
