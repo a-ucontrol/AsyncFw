@@ -1,7 +1,8 @@
 <map id="AsyncFw::AddressResolver" name="AsyncFw::AddressResolver">
-<area shape="rect" id="Node000001" title="Provides asynchronous DNS resolution using c&#45;ares." alt="" coords="10,272,195,299"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="5,141,200,200"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="105,214,105,273,100,271,100,217"/>
-<area shape="rect" id="Node000003" href="$classAsyncFw_1_1FunctionConnector.html" title="Provides a thread&#45;safe, publisher&#45;subscriber mechanism to establish sender&#45;to&#45;receivers connections." alt="" coords="5,5,200,48"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="104,61,105,141,100,140,101,66"/>
+<area shape="rect" id="Node000001" title="Provides asynchronous DNS resolution using c&#45;ares." alt="" coords="698,38,882,65"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1FunctionConnector.html" title=" " alt="" coords="388,61,582,120"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="597,74,695,64,700,63,598,79"/>
+<area shape="rect" id="Node000003" href="$classAsyncFw_1_1FunctionConnector.html" title="Provides a thread&#45;safe, publisher&#45;subscriber mechanism to establish sender&#45;to&#45;receivers connections." alt="" coords="5,30,200,73"/>
+<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="214,30,224,29,315,27,448,27,674,34,700,39,695,39,674,40,448,33,315,32,224,34,215,35"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="215,73,224,74,308,82,390,89,385,89,307,88,223,80,215,79"/>
 </map>
