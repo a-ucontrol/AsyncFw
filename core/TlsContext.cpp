@@ -75,7 +75,7 @@ DataArray TlsContext::Private::certificate(X509 *_c) {
 
 std::string TlsContext::Private::info(EVP_PKEY *_k) {
   BIO *_bio = BIO_new(BIO_s_mem());
-  if (EVP_PKEY_print_private(_bio, _k, 0, nullptr) <= 0) EVP_PKEY_print_public(_bio, _k, 0, nullptr);
+  EVP_PKEY_print_public(_bio, _k, 0, nullptr);
   DataArray _da;
   _da.resize(BIO_ctrl_pending(_bio));
   BIO_read(_bio, _da.data(), _da.size());
