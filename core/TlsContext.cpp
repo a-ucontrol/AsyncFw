@@ -26,17 +26,19 @@ struct TlsContext::Private {
     if (ctx) SSL_CTX_free(ctx);
   }
 
+  static const EVP_MD *signDigest(EVP_PKEY *k) { return (EVP_PKEY_is_a(k, "ED25519") || EVP_PKEY_is_a(k, "ED448")) ? nullptr : EVP_sha256(); }
+  static int exIdx() {
+    static const int idx = SSL_CTX_get_ex_new_index(0, nullptr, nullptr, nullptr, nullptr);
+    return idx;
+  }
+
   void createOpenSslContext() {
     ctx = SSL_CTX_new(TLS_method());
     if (ctx) {
       SSL_CTX_set_mode(ctx, SSL_MODE_ACCEPT_MOVING_WRITE_BUFFER | SSL_MODE_ENABLE_PARTIAL_WRITE);
-      if (exIdx == -1) exIdx = SSL_CTX_get_ex_new_index(0, nullptr, nullptr, nullptr, nullptr);
-      SSL_CTX_set_ex_data(ctx, exIdx, this);
+      SSL_CTX_set_ex_data(ctx, exIdx(), this);
     }
   }
-
-  inline static int exIdx = -1;
-  static const EVP_MD *signDigest(EVP_PKEY *k) { return (EVP_PKEY_is_a(k, "ED25519") || EVP_PKEY_is_a(k, "ED448")) ? nullptr : EVP_sha256(); }
 
   SSL_CTX *ctx = nullptr;
 
@@ -455,7 +457,7 @@ int TlsContext::verify(int ok, X509_STORE_CTX *ctx) {
     lsError() << "get ctx";
     return 0;
   }
-  Private *p = static_cast<Private *>(SSL_CTX_get_ex_data(ssl_ctx, Private::exIdx));
+  Private *p = static_cast<Private *>(SSL_CTX_get_ex_data(ssl_ctx, Private::exIdx()));
   if (!p) {
     lsError() << "get data";
     return 0;
