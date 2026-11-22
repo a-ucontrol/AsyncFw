@@ -844,7 +844,7 @@ void AbstractThread::exec() {
 void AbstractThread::stop() {
   {  //lock scope
     LockGuard lock(private_.mutex);
-    // Here, the private_.id field must be protected by a mutex - in casethe quit() method was previously called without a subsequent call to waitFinished(), оtherwise, a data race.
+    // Here, the private_.id field must be protected by a mutex - in case the quit() method was previously called without a subsequent call to waitFinished(), otherwise, a data race.
     warning_if(std::this_thread::get_id() == private_.id) << LogStream::Color::Red << "executed from own thread" << LOG_THREAD_NAME;
     if (!private_.state || private_.state == Private::Finished || private_.id == std::thread::id {}) return;
     trace() << LogStream::Color::Red << LOG_THREAD_NAME << "stopping running thread:" << private_.id << "from:" << std::this_thread::get_id();
