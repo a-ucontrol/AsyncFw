@@ -10,7 +10,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 /** @file Instance.h @brief The AbstractInstance and Instance classes. */
 
 #if defined(_MSC_VER)
-  #if defined(BUILD_SHARED_LIBS)
+  #if defined(AsyncFW_BUILD_LIBS)
     #define AsyncFw_INSTANCE static __declspec(dllexport) Instance
   #else
     #define AsyncFw_INSTANCE static __declspec(dllimport) Instance
