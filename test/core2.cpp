@@ -9,10 +9,13 @@
 //      and negative verification failure cases.
 
 #include <atomic>
-#include <chrono>
 #include <memory>
 #include <string>
 #include <vector>
+
+#ifndef _WIN32
+  #include <sys/socket.h>
+#endif
 
 #include <AsyncFw/AbstractTlsSocket>
 #include <AsyncFw/DataArray>
@@ -355,6 +358,118 @@ void test_tls_handshake_verification_failure() {
   EXPECT_MSG(clientSocket->reachedUnconnected, "client must settle to Unconnected");
   EXPECT_MSG(clientSocket->lastError == AbstractSocket::Activate, "expected Activate error on TLS verification failure");
 }
+
+// ============================================================================
+// Group C. AbstractSocket write buffer drain during Connected handshake
+// ============================================================================
+
+void test_socket_handshake_write_buffer_drain() {
+  lsNotice() << "=== AbstractSocket: write buffer drain during Connected state ===";
+
+  class HandshakeProbeSocket : public AbstractSocket {
+  public:
+    HandshakeProbeSocket() : AbstractSocket(Network) {}
+
+    FunctionConnector<>::Protected<HandshakeProbeSocket> activated;
+
+    bool reachedActive = false;
+    bool queuedInHandshake = false;
+    int initialPendingWrite = 0;
+
+  protected:
+    void activateEvent() override {
+      if (!handshakeStarted_) {
+        handshakeStarted_ = true;
+#ifndef _WIN32
+        int sndbuf = 4096;
+        ::setsockopt(fd_, SOL_SOCKET, SO_SNDBUF, &sndbuf, sizeof(sndbuf));
+#else
+        int sndbuf = 4096;
+        ::setsockopt(fd_, SOL_SOCKET, SO_SNDBUF, reinterpret_cast<const char *>(&sndbuf), sizeof(sndbuf));
+#endif
+        DataArray payload(256 * 1024, 'H');
+        write_fd(payload.data(), payload.size());
+        initialPendingWrite = pendingWrite();
+        queuedInHandshake = (initialPendingWrite > 0);
+      }
+      if (pendingWrite() == 0) { AbstractSocket::activateEvent(); }
+    }
+
+    void writeEvent() override {
+      if (state_ == Connected && pendingWrite() == 0) { AbstractSocket::activateEvent(); }
+    }
+
+    void stateEvent() override {
+      if (state_ == Active) {
+        reachedActive = true;
+        activated();
+        disconnect();
+      }
+    }
+
+  private:
+    bool handshakeStarted_ = false;
+  };
+
+  class HoldPeerSocket : public AbstractSocket {
+  public:
+    std::size_t totalRead = 0;
+    void pauseRead() { thread_->modifyPollDescriptor(fd_, AbstractThread::PollNo); }
+    void resumeRead() { thread_->modifyPollDescriptor(fd_, AbstractThread::PollIn); }
+    FunctionConnector<>::Protected<HoldPeerSocket> disconnected;
+
+  protected:
+    void stateEvent() override {
+      if (state_ == Unconnected) disconnected();
+    }
+    void readEvent() override { totalRead += read().size(); }
+  };
+
+  ListenSocket listener;
+  std::unique_ptr<HoldPeerSocket> serverPeer;
+  HandshakeProbeSocket clientSocket;
+
+  AbstractThread::Waiter waiter;
+  bool timedOut = false;
+
+  FunctionConnectionGuardList guards;
+  guards += listener.incoming.connect([&](int fd, const std::string &, bool *accept) {
+    serverPeer = std::make_unique<HoldPeerSocket>();
+    guards += serverPeer->disconnected.connect([&]() {
+      if (waiter.waiting()) waiter.complete();
+    });
+    serverPeer->setDescriptor(fd);
+    serverPeer->pauseRead();
+    *accept = true;
+
+    Timer::single(50, [&]() {
+      if (serverPeer) serverPeer->resumeRead();
+    });
+  });
+
+  EXPECT(listener.listen("127.0.0.1", 0));
+  uint16_t port = listener.port();
+  EXPECT(port > 0);
+
+  int timeoutId = AbstractThread::current()->appendTimerTask(3000, [&]() {
+    timedOut = true;
+    if (waiter.waiting()) waiter.complete();
+  });
+
+  EXPECT(clientSocket.connect("127.0.0.1", port));
+  waiter.wait();
+  AbstractThread::current()->removeTimer(timeoutId);
+  guards.clear();
+
+  if (serverPeer) serverPeer->close();
+  clientSocket.close();
+  listener.close();
+
+  EXPECT_MSG(!timedOut, "handshake write buffer drain timed out (pendingWrite stuck in Connected state)");
+  EXPECT_MSG(clientSocket.queuedInHandshake, "expected partial write to queue data in wda during handshake (pendingWrite=" + std::to_string(clientSocket.initialPendingWrite) + ")");
+  EXPECT_MSG(clientSocket.reachedActive, "client never reached Active after draining handshake write buffer");
+  EXPECT_MSG(serverPeer && serverPeer->totalRead == 256 * 1024, "server received " + std::to_string(serverPeer ? serverPeer->totalRead : 0) + " bytes (expected 262144)");
+}
 }  // namespace
 // ============================================================================
 // main
@@ -366,6 +481,7 @@ int main(int, char **) {
     test_tls_context_key_types();
     test_tls_handshake_ecdsa_and_eddsa();
     test_tls_handshake_verification_failure();
+    test_socket_handshake_write_buffer_drain();
     tst_thread.quit();
   });
   tst_thread.start();

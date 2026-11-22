@@ -604,7 +604,6 @@ void AbstractSocket::pollEvent(int _e) {
     stateEvent();
   }
   if (state_ == State::Connected) {
-    if (_e & AbstractThread::PollOut) thread_->modifyPollDescriptor(fd_, AbstractThread::PollIn);  //!!! тут надо сделать подобно PollOut для writeEvent(), если данные попали в private_.wda (что очень маловероятно), то они должны уйти оттуда через ::write()
     if (_e & AbstractThread::PollIn) {
       if (AbstractSocket::read_available_fd() < 0) {
 #if defined EPOLL_EDGE_TRIGGERED || defined IO_URING_WAIT
@@ -618,11 +617,13 @@ void AbstractSocket::pollEvent(int _e) {
       }
     }
     activateEvent();
-    if (state_ != State::Active
+    if ((state_ != State::Active
 #if !defined EPOLL_EDGE_TRIGGERED && !defined IO_URING_WAIT
-        || read_available_fd() <= 0
+         || read_available_fd() <= 0
 #endif
-    )
+         ) &&
+        !(_e & AbstractThread::PollOut))
+
       return;
   }
   if (_e & AbstractThread::PollIn) {
@@ -666,6 +667,10 @@ void AbstractSocket::pollEvent(int _e) {
     writeEvent();
     if (private_.wda.empty()) {
     WDA_EMPTY:
+      if (fd_ == -1) {
+        lsTrace() << LogStream::Color::DarkRed << "socket closed in writeEvent";
+        return;
+      }
       thread_->modifyPollDescriptor(fd_, AbstractThread::PollIn);
       private_.flags &= ~0x80;
       trace() << LogStream::Color::Magenta << "(AbstractThread::PollIn)";
