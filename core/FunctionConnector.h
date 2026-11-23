@@ -293,6 +293,7 @@ public:
 /** @class FunctionConnectionGuard FunctionConnector.h <AsyncFw/FunctionConnector> @brief An RAII guard that automatically manages the lifecycle of a FunctionConnector connection.
 @details This class provides automated connection management using the Resource Acquisition Is Initialization (RAII) idiom. When a FunctionConnectionGuard goes out of scope or is destroyed, it automatically disconnects and cleans up its associated connection. It supports move semantics, allowing the guard to be transferred between scopes or stored inside containers. It explicitly disables copying.
 @warning **This class is NOT thread-safe.** It must be owned by exactly one thread and manipulated (constructed, moved, assigned, destroyed) from that thread only, unless external synchronization is applied. @par Multiple threads may call connect() / emit concurrently while a guard on another thread is being destroyed. Guard destruction is the only mutating operation that is protected.
+@note A guard is optional, connections owned by the connector are cleaned up automatically when the connector is destroyed. Attach a guard only when the subscriber must disconnect earlier than the connector (e.g., the subscriber's scope ends first).
 @par Example
 @snippet snippet.dox FunctionConnectorGuard */
 class FunctionConnectionGuard {
