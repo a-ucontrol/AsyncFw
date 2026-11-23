@@ -642,6 +642,10 @@ bool HttpServer::Response::send(const std::string &fn) {
     destroy();
     return false;
   }
+  if (!socket_->response) {
+    lsError() << "now destroying";
+    return false;
+  }
   if (!fn.empty()) {
     std::error_code ec;
     if (std::filesystem::is_regular_file(fn, ec)) {
