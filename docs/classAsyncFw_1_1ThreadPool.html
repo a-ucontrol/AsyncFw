@@ -177,9 +177,9 @@ template&lt;typename F, typename R&gt; </td></tr>
 static ThreadPool *&#160;</td><td class="memItemRight"><b>instance</b> ()</td></tr>
 <tr class="memdesc:a086c0271dcb7c4be416705d622145f83"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the instance of the global <a class="el" href="classAsyncFw_1_1ThreadPool.html" title="Manages a set of reusable worker threads for concurrent task execution, eliminating the need to spawn...">ThreadPool</a>. <br /></td></tr>
 <tr class="inherit_header pub_static_methods_classAsyncFw_1_1AbstractThreadPool"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_static_methods_classAsyncFw_1_1AbstractThreadPool')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Static Public Member Functions inherited from <a class="el" href="classAsyncFw_1_1AbstractThreadPool.html">AsyncFw::AbstractThreadPool</a></td></tr>
-<tr class="memitem:a8b3a66a03bf52ef75c7427f2778bfd44 inherit pub_static_methods_classAsyncFw_1_1AbstractThreadPool" id="r_a8b3a66a03bf52ef75c7427f2778bfd44"><td class="memItemLeft">
-static std::vector&lt; AbstractThreadPool * &gt;&#160;</td><td class="memItemRight"><b>pools</b> ()</td></tr>
-<tr class="memdesc:a8b3a66a03bf52ef75c7427f2778bfd44 inherit pub_static_methods_classAsyncFw_1_1AbstractThreadPool"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a list of all active thread pools in the application. <br /></td></tr>
+<tr class="memitem:a89ef9246b5902a96003925e0072f29c6 inherit pub_static_methods_classAsyncFw_1_1AbstractThreadPool" id="r_a89ef9246b5902a96003925e0072f29c6"><td class="memItemLeft">
+static <a class="el" href="structAsyncFw_1_1LockData.html">LockData</a>&lt; const std::vector&lt; AbstractThreadPool * &gt; &gt;&#160;</td><td class="memItemRight"><b>pools</b> ()</td></tr>
+<tr class="memdesc:a89ef9246b5902a96003925e0072f29c6 inherit pub_static_methods_classAsyncFw_1_1AbstractThreadPool"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thread-safely returns the list of all active thread pools in the application. <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-inherited" class="groupheader"><a id="inherited" name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -256,8 +256,8 @@ std::mutex&#160;</td><td class="memItemRight"><b>mutex</b></td></tr>
 <div class="line">  logNotice() &lt;&lt; <span class="stringliteral">&quot;Start Application&quot;</span>;</div>
 <div class="line"> </div>
 <div class="line">  <a class="code hl_function" href="classAsyncFw_1_1Thread.html#a0a3bd6a54db28f73ff59cfea6a40b07a">AsyncFw::Thread::current</a>()-&gt;<a class="code hl_variable" href="classAsyncFw_1_1Thread.html#abac958eae1def0e3c0e32a7ebebc45eb">started</a>.<a class="code hl_function" href="classAsyncFw_1_1FunctionConnector.html#ae1f65144956b3b1247d58614e4080f63">connect</a>([]() {</div>
-<div class="line">    std::vector&lt;AsyncFw::AbstractThreadPool *&gt; pools = <a class="code hl_function" href="classAsyncFw_1_1AbstractThreadPool.html#a8b3a66a03bf52ef75c7427f2778bfd44">AsyncFw::ThreadPool::pools</a>();</div>
-<div class="line">    <span class="keywordflow">for</span> (<a class="code hl_class" href="classAsyncFw_1_1AbstractThreadPool.html">AsyncFw::AbstractThreadPool</a> *pool : pools) {</div>
+<div class="line">    <span class="keyword">auto</span> pools = <a class="code hl_function" href="classAsyncFw_1_1AbstractThreadPool.html#a89ef9246b5902a96003925e0072f29c6">AsyncFw::ThreadPool::pools</a>();</div>
+<div class="line">    <span class="keywordflow">for</span> (<a class="code hl_class" href="classAsyncFw_1_1AbstractThreadPool.html">AsyncFw::AbstractThreadPool</a> *pool : *pools) {</div>
 <div class="line">      lsNotice() &lt;&lt; pool-&gt;name();</div>
 <div class="line">      <a class="code hl_struct" href="structAsyncFw_1_1LockData.html">AsyncFw::LockData</a> threads = pool-&gt;threads();</div>
 <div class="line">      <span class="keywordflow">for</span> (<span class="keyword">const</span> <a class="code hl_class" href="classAsyncFw_1_1AbstractThreadPool_1_1Thread.html">AsyncFw::AbstractThreadPool::Thread</a> *thread : *threads) { lsInfo() &lt;&lt; thread-&gt;name(); }</div>
