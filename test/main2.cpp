@@ -294,7 +294,7 @@ void test_da_reconnect_after_failed_connect(DataArrayTcpClient &client) {
   EXPECT_MSG(runCycle("first (unroutable)", "192.0.2.1", 12345), "first connect did not settle");
   EXPECT_MSG(runCycle("second (refused)", "127.0.0.1", 1), "second connect did not settle");
 
-  AbstractThread::current()->invoke([]() {}, true);
+  client.thread()->invoke([]() {}, true);
   g = {};
   client.destroySocket(socket);
   g_ledger.onDestroy(socket, 100);
@@ -395,7 +395,7 @@ void test_da_partial_frame_close(DataArrayTcpClient &client) {
   client.connectToHost(socket, "127.0.0.1", server.port);
 
   const bool settled = waitForUnconnectedFires(unconnCount, 0, 2000);
-  AbstractThread::current()->invoke([]() {}, true);
+  client.thread()->invoke([]() {}, true);
 
   EXPECT_MSG(settled,
              "socket did not settle within 2000ms;"
@@ -468,7 +468,7 @@ void test_da_pool_reuse_after_teardown(DataArrayTcpClient &client) {
 
   client.connectToHost(s2, "127.0.0.1", server.port);
   const bool ok = waitForUnconnectedFires(unconnCount, 0, 2000);
-  AbstractThread::current()->invoke([]() {}, true);
+  client.thread()->invoke([]() {}, true);
 
   EXPECT_MSG(ok,
              "fresh socket did not settle;"
@@ -579,7 +579,7 @@ void test_da_no_reconnect_with_zero_timeout(DataArrayTcpClient &client) {
 
   client.connectToHost(socket, "127.0.0.1", 1);
   std::this_thread::sleep_for(std::chrono::milliseconds(200));
-  AbstractThread::current()->invoke([]() {}, true);
+  client.thread()->invoke([]() {}, true);
 
   const int n = transitionCount.load();
   g = {};
