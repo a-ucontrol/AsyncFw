@@ -2378,7 +2378,7 @@ void test_static_destruction_order() {
   auto *h = Instance<StaticOrderPoolHolder>::create();
   EXPECT_MSG(h != nullptr, "Instance<StaticOrderPoolHolder>::create() returned nullptr");
   EXPECT_MSG(h && h->pool != nullptr, "StaticOrderPoolHolder::pool is null");
-  EXPECT_MSG(ThreadPool::pools().size() >= 1,
+  EXPECT_MSG(ThreadPool::pools()->size() >= 1,
              "pool was not registered in AbstractThreadPool::pools() — "
              "the test would pass trivially without a registered pool");
   // Intentionally NOT destroyed here: the holder must stay alive until

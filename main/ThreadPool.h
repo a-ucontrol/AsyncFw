@@ -34,8 +34,8 @@ public:
     AbstractThreadPool *pool;
   };
 
-  /** @brief Returns a list of all active thread pools in the application. */
-  static std::vector<AbstractThreadPool *> pools();
+  /** @brief Thread-safely returns the list of all active thread pools in the application. */
+  static LockData<const std::vector<AbstractThreadPool *>> pools();
   AbstractThreadPool(const std::string &);
   virtual ~AbstractThreadPool() = 0;
   virtual void quit();

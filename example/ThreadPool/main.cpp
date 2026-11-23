@@ -66,8 +66,8 @@ int main(int, char **) {
   logNotice() << "Start Application";
 
   AsyncFw::Thread::current()->started.connect([]() {
-    std::vector<AsyncFw::AbstractThreadPool *> pools = AsyncFw::ThreadPool::pools();
-    for (AsyncFw::AbstractThreadPool *pool : pools) {
+    auto pools = AsyncFw::ThreadPool::pools();
+    for (AsyncFw::AbstractThreadPool *pool : *pools) {
       lsNotice() << pool->name();
       AsyncFw::LockData threads = pool->threads();
       for (const AsyncFw::AbstractThreadPool::Thread *thread : *threads) { lsInfo() << thread->name(); }
