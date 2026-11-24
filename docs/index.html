@@ -29,7 +29,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">AsyncFw<span id="projectnumber">&#160;1.5</span>
+   <div id="projectname">AsyncFw<span id="projectnumber">&#160;1.6</span>
    </div>
    <div id="projectbrief">Async Framework is c++ runtime with timers, poll notifiers, sockets, coroutines, etc.</div>
   </td>
@@ -99,7 +99,7 @@ $(function(){initNavTree('index.html','',''); });
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="md_README"></a></p>
-<p>Async Framework is a lightweight C++20 runtime for asynchronous programming. It provides timers, poll notifiers, thread-safe signals/slots, asynchronous sockets, and native C++20 coroutines on top of a custom event loop, so long-running work can be offloaded to worker threads without blocking the main loop.</p>
+<p>Async Framework is a lightweight C++23 runtime for asynchronous programming. It provides timers, poll notifiers, thread-safe signals/slots, asynchronous sockets, and native C++23 coroutines on top of a custom event loop, so long-running work can be offloaded to worker threads without blocking the main loop.</p>
 <p>See the <a href="https://github.com/a-ucontrol/AsyncFw">GitHub repository</a>, <a href="https://a-ucontrol.github.io/AsyncFw">documentation</a>, and <a href="https://a-ucontrol.github.io/AsyncFw/examples.html">examples</a> for details.</p>
 <hr  />
 <h1 class="doxsection"><a class="anchor" id="autotoc_md2"></a>
@@ -215,7 +215,7 @@ Core Architecture &amp; Components</h1>
 <div class="ttc" id="aclassAsyncFw_1_1Thread_html"><div class="ttname"><a href="classAsyncFw_1_1Thread.html">AsyncFw::Thread</a></div><div class="ttdoc">AsyncFw::Thread thread with sockets.</div><div class="ttdef"><b>Definition</b> Thread.h:18</div></div>
 </div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md5"></a>
 3. Coroutines and RPC-Style Dispatch: <span class="tt">coInvoke</span></h2>
-<p>The coroutine layer (<span class="tt">CoroutineTask</span>, <span class="tt">CoroutineAwait</span>, <span class="tt">CoroutineInvokeAwait</span>) ties C++20 coroutines into the cross-thread infrastructure.</p>
+<p>The coroutine layer (<span class="tt">CoroutineTask</span>, <span class="tt">CoroutineAwait</span>, <span class="tt">CoroutineInvokeAwait</span>) ties C++23 coroutines into the cross-thread infrastructure.</p>
 <ul>
 <li><b>Thread marshalling</b>: when a coroutine yields via <span class="tt">co_await</span>, work is dispatched to a target thread or thread pool. When it finishes, <span class="tt">promise_type::resume_queued()</span> schedules the continuation back onto the thread where the coroutine was created.</li>
 <li><b>State transport</b>: the <span class="tt">promise_type</span> inherits from <span class="tt">AnyData</span>, so a background task can store its result in the coroutine frame and <span class="tt">await_resume</span> can retrieve it.</li>
