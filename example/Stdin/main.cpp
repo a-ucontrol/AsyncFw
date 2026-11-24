@@ -7,7 +7,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 //! [snippet]
 /*
- * This exfample for Unix-like systems only
+ * This example for Unix-like systems only
 */
 #include <unistd.h>
 #include <AsyncFw/MainThread>

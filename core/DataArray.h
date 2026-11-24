@@ -41,11 +41,11 @@ public:
   /** @brief Appends the contents of a data view directly to the end of this array. */
   DataArray &operator+=(const DataArrayView &);
   /** @brief Concatenates this array and a data view, returning a combined copy. */
-  DataArray operator+(const DataArrayView &);
+  DataArray operator+(const DataArrayView &) const;
   /** @brief Appends a single character/byte to the end of this array. */
   DataArray &operator+=(const char);
   /** @brief Concatenates this array and a single character/byte, returning a combined copy. */
-  DataArray operator+(const char);
+  DataArray operator+(const char) const;
 };
 /** @class DataArrayView DataArray.h <AsyncFw/DataArray> @brief A lightweight, non-allocating string-like descriptor pointing to a contiguous block of binary data.
 @details Inherits from std::string_view. Used to pass references to chunks of external memory safely without triggering expensive deep copies.

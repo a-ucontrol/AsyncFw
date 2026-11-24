@@ -107,7 +107,7 @@ DataArray &DataArray::operator+=(const DataArrayView &v) {
   return *this;
 }
 
-DataArray DataArray::operator+(const DataArrayView &v) {
+DataArray DataArray::operator+(const DataArrayView &v) const {
   DataArray _da(*this);
   _da.insert(_da.end(), v.begin(), v.end());
   return _da;
@@ -118,7 +118,7 @@ DataArray &DataArray::operator+=(const char v) {
   return *this;
 }
 
-DataArray DataArray::operator+(const char v) {
+DataArray DataArray::operator+(const char v) const {
   DataArray _da(*this);
   _da.insert(_da.end(), v);
   return _da;

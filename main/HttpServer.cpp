@@ -23,8 +23,6 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #endif
 #include "core/extend_trace.hpp"
 
-#define SOCKET_WRITE_SIZE 8192
-
 using namespace AsyncFw;
 
 struct HttpServer::Private {

@@ -7,7 +7,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 
 //! [snippet]
 /*
- * This exfample for Unix-like systems only
+ * This example for Unix-like systems only
 */
 #include <termios.h>
 #include <fcntl.h>
@@ -42,7 +42,7 @@ int main(int, char **) {
       for (;;) {
         std::size_t i = str.find('\n');
         if (i == std::string::npos) break;
-        lsDebug() << "readed: " << str.substr(0, ++i);
+        lsDebug() << "read: " << str.substr(0, ++i);
         str.erase(0, i);
       }
     }

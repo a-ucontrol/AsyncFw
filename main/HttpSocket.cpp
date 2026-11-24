@@ -181,7 +181,7 @@ void HttpSocket::readEvent() {
     received_ += read(_n);
     _da.erase(_da.begin(), _da.begin() + 2);
 
-    lsTrace() << "readed:" << _n;
+    lsTrace() << "read:" << _n;
   }
 }
 
