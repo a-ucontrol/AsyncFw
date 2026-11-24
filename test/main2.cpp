@@ -91,6 +91,7 @@
 #include <AsyncFw/DataArraySocket>
 #include <AsyncFw/PollNotifier>
 #include <AsyncFw/AddressResolver>
+#include <AsyncFw/Timer>
 
 using namespace AsyncFw;
 
@@ -1524,6 +1525,71 @@ void test_address_resolver_tcp_fallback_iterations() {
 
 #endif  // !_WIN32
 
+// ============================================================================
+// Group T. Timer::Single & Timer::SingleGuard
+// ============================================================================
+void test_timer_single_and_guard() {
+  lsNotice() << "=== Timer::Single & Timer::SingleGuard ===";
+
+  Thread t("timer-single-test");
+  t.start();
+
+  std::atomic<int> firedFireAndForget {0};
+  std::atomic<int> firedCancelled {0};
+  std::atomic<int> firedGuardScope {0};
+  std::atomic<int> firedGuardReassignedOld {0};
+  std::atomic<int> firedGuardReassignedNew {0};
+  std::atomic<int> firedDirectInitGuard {0};
+  std::atomic<bool> done {false};
+
+  t.invoke([&]() {
+    AbstractThread::Waiter waiter;
+
+    // 1. Fire-and-forget: временный Single не отменяется при разрушении
+    Timer::single(10, [&]() { ++firedFireAndForget; });
+
+    // 2. Явная отмена через cancel()
+    auto st1 = Timer::single(20, [&]() { ++firedCancelled; });
+    EXPECT(static_cast<bool>(st1));
+    st1.cancel();
+    EXPECT(!static_cast<bool>(st1));
+    st1.cancel();  // повторный вызов безопасен
+
+    // 3. Автоматическая отмена при выходе за скоуп (SingleGuard)
+    {
+      Timer::SingleGuard st2;
+      st2 = Timer::single(30, [&]() { ++firedGuardScope; });
+      EXPECT(static_cast<bool>(st2));
+    }
+
+    // 4. Перезапуск / переприсваивание (старый отменяется, срабатывает только новый)
+    Timer::SingleGuard st3;
+    st3 = Timer::single(40, [&]() { ++firedGuardReassignedOld; });
+    st3 = Timer::single(50, [&]() {
+      ++firedGuardReassignedNew;
+      waiter.complete();
+    });
+
+    // 5. Прямая инициализация SingleGuard (если добавлен конструктор SingleGuard(Single &&))
+    // {
+    //   Timer::SingleGuard st4 = Timer::single(25, [&]() { ++firedDirectInitGuard; });
+    // }
+
+    waiter.wait();
+    // После срабатывания st3 должен автоматически сброситься в false
+    EXPECT(!static_cast<bool>(st3));
+    done = true;
+  }, true);
+
+  EXPECT(done.load());
+  EXPECT_MSG(firedFireAndForget.load() == 1, "fire-and-forget timer must fire once");
+  EXPECT_MSG(firedCancelled.load() == 0, "explicitly cancelled Single must not fire");
+  EXPECT_MSG(firedGuardScope.load() == 0, "SingleGuard must cancel timer on scope exit");
+  EXPECT_MSG(firedGuardReassignedOld.load() == 0, "reassigned SingleGuard must cancel previous timer");
+  EXPECT_MSG(firedGuardReassignedNew.load() == 1, "reassigned SingleGuard must fire new timer");
+  EXPECT_MSG(firedDirectInitGuard.load() == 0, "direct-initialized SingleGuard must cancel on scope exit");
+}
+
 }  // namespace
 
 int main(int, char **) {
@@ -1589,6 +1655,8 @@ int main(int, char **) {
     test_address_resolver_single_socket();
     test_address_resolver_tcp_fallback();
     test_address_resolver_tcp_fallback_iterations();
+
+    test_timer_single_and_guard();
 
     // ---- quit() from a foreign thread (destroys the pool) ------------
     // Must run last: it tears down `dac`'s pool entirely. Since we

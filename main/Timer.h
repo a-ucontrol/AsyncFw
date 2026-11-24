@@ -17,13 +17,68 @@ namespace AsyncFw {
 @par Example
 @snippet Timer/main.cpp snippet */
 class Timer {
-public:
-  /** @brief Starts a single shot timer with the specified timeout @param ms timeout interval in milliseconds @param function runs at timeout */
-  template <typename T>
-  static void single(int ms, T function) {
-    new SingleTimerTask(ms, function);
-  }
+  class Single {
+  public:
+    template <typename T>
+    Single(int ms, T f) : t_(new SingleTask<T>(this, ms, std::move(f))) {}
+    Single() = default;
+    Single(const Single &) = delete;
+    Single &operator=(const Single &) = delete;
+    Single(Single &&other) noexcept;
+    ~Single();
+    Single &operator=(Single &&other) noexcept;
+    void cancel();
+    operator bool() const { return t_ != nullptr; }
 
+  private:
+    class AbstractSingleTask : public AbstractThread::AbstractTask {
+      friend Single;
+
+    protected:
+      AbstractThread *thread_;
+      Single *st_;
+      int id_ = -1;
+    };
+    template <typename T>
+    class SingleTask : public AbstractSingleTask {
+    public:
+      SingleTask(Single *st, int ms, T f) : f_(std::move(f)) {
+        thread_ = AbstractThread::current();
+        st_ = st;
+        id_ = thread_->appendTimer(ms, this);
+      }
+      void operator()() override {
+        if (id_ < 0) return;
+        thread_->removeTimer(id_);
+        id_ = -1;
+        f_();
+      }
+      ~SingleTask() override {
+        if (st_) st_->t_ = nullptr;
+      }
+
+    private:
+      T f_;
+    };
+    AbstractSingleTask *t_ = nullptr;
+  };
+
+public:
+  /** @class SingleGuard Timer.h <AsyncFw/Timer> @brief An RAII guard that automatically cancels a single-shot timer when destroyed or reassigned.
+  @warning Not thread-safe. Must be owned and manipulated only by the thread that created the timer. */
+  class SingleGuard : private Single {
+  public:
+    using Single::cancel;
+    using Single::operator bool;
+    using Single::operator=;
+    SingleGuard() = default;
+    ~SingleGuard() { cancel(); }
+  };
+  /** @brief Starts a single-shot timer with the specified timeout. @param ms Timeout interval in milliseconds. @param function Callable executed when the timer expires. @return A Single handle that can be used to cancel the timer or assigned to a SingleGuard. */
+  template <typename T>
+  static Single single(int ms, T function) {
+    return Single(ms, std::move(function));
+  }
   Timer();
   ~Timer();
   /** @brief Starts or restarts a timer with the specified timeout. If the timer is already running, it will be restarted @param ms timeout interval in milliseconds @param single if true, the timer will be a single shot */
@@ -40,23 +95,6 @@ public:
   CoroutineAwait<void> coTimeout(int);
 
 private:
-  template <typename T>
-  class SingleTimerTask : public AbstractThread::AbstractTask {
-  public:
-    SingleTimerTask(int ms, T f) : f_(std::move(f)) {
-      thread_ = AbstractThread::current();
-      id_ = thread_->appendTimer(ms, this);
-    }
-    void operator()() override {
-      thread_->removeTimer(id_);
-      f_();
-    }
-
-  private:
-    AbstractThread *thread_;
-    int id_;
-    T f_;
-  };
   AbstractThread *thread_;
   int timerId = -1;
   bool single_;

@@ -52,3 +52,36 @@ CoroutineAwait<void> Timer::coTimeout(int ms) {
 CoroutineAwait<void> AsyncFw::coTimeout(int ms) {
   return CoroutineAwait<void>([ms](CoroutineHandle h) { Timer::single(ms, [h]() { h.resume(); }); });
 }
+
+Timer::Single::Single(Single &&other) noexcept : t_(other.t_) {
+  if (t_) {
+    t_->st_ = this;
+    other.t_ = nullptr;
+  }
+}
+
+Timer::Single::~Single() {
+  if (t_) t_->st_ = nullptr;
+}
+
+void Timer::Single::cancel() {
+  if (!t_) return;
+  if (t_->id_ >= 0) {
+    t_->thread_->removeTimer(t_->id_);
+    t_->id_ = -1;
+  }
+  t_->st_ = nullptr;
+  t_ = nullptr;
+}
+
+Timer::Single &Timer::Single::operator=(Single &&other) noexcept {
+  if (this != &other) {
+    cancel();
+    t_ = other.t_;
+    if (t_) {
+      t_->st_ = this;
+      other.t_ = nullptr;
+    }
+  }
+  return *this;
+}
