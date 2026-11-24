@@ -9,7 +9,6 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #include <algorithm>
 #include "core/AbstractThread.h"
 #include "core/LogStream.h"
-#include "Timer.h"
 #include "MulticastDns.h"
 #include "main/mdns-types.h"
 
@@ -156,6 +155,7 @@ Instance<MulticastDns> MulticastDns::instance_;
 
 MulticastDns::MulticastDns(const std::string &_serviceType) : private_(*new Private()) {
   private_.thread = AbstractThread::current();
+  std::ranges::fill(private_.sd.tid, -1);
   setServiceType(_serviceType);
   lsTrace();
 }
@@ -234,7 +234,7 @@ bool MulticastDns::startService(const std::string &hostname, const std::string &
   if (r || !private_.sd.num_sockets) return false;
   for (int i = 0; i != private_.sd.num_sockets; ++i) {
     int fd = private_.sd.sockets[i];
-    private_.thread->appendPollTask(fd, AbstractThread::PollIn, [this, fd](AbstractThread::PollEvents e) {
+    private_.thread->appendPollTask(fd, AbstractThread::PollIn, [this, fd, i](AbstractThread::PollEvents e) {
       if (!serviceRunning()) {
         lsTrace() << "service not running";
         return;
@@ -253,12 +253,16 @@ bool MulticastDns::startService(const std::string &hostname, const std::string &
         _val = 20 + distribution(generator);
       } else _val = 20 + (_val % 101);
 
-      Timer::single(_val, [this, fd]() {
-        if (serviceRunning()) {
-          private_.thread->modifyPollDescriptor(fd, AbstractThread::PollIn);  //Возвращаем fd в epoll
-          servicePollEvent(fd);
-        }
-      });
+      if (private_.sd.tid[i] == -1) {
+        private_.sd.tid[i] = private_.thread->appendTimerTask(_val, [this, fd, i]() {
+          private_.thread->removeTimer(private_.sd.tid[i]);
+          private_.sd.tid[i] = -1;
+          if (serviceRunning()) {
+            private_.thread->modifyPollDescriptor(fd, AbstractThread::PollIn);  //Возвращаем fd в epoll
+            servicePollEvent(fd);
+          }
+        });
+      } else private_.thread->modifyTimer(private_.sd.tid[i], _val);
     });
   }
   return true;
@@ -282,7 +286,13 @@ void MulticastDns::stopService(bool goodbye) {
     lsDebug() << LogStream::Color::Blue << "not running";
     return;
   }
-  for (int i = 0; i != private_.sd.num_sockets; ++i) { private_.thread->removePollDescriptor(private_.sd.sockets[i]); }
+  for (int i = 0; i != private_.sd.num_sockets; ++i) {
+    if (private_.sd.tid[i] != -1) {
+      private_.thread->removeTimer(private_.sd.tid[i]);
+      private_.sd.tid[i] = -1;
+    }
+    private_.thread->removePollDescriptor(private_.sd.sockets[i]);
+  }
   stop_mdns_service(&private_.sd, goodbye);
   private_.sd.num_sockets = 0;
 }

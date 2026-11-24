@@ -28,6 +28,7 @@ typedef struct service_t {
 
 typedef struct service_data_t {
   int sockets[256];
+  int tid[256];
   int num_sockets;
   void *buffer;
   char *service_name_buffer;
