@@ -85,7 +85,7 @@ file(GLOB AsyncFw_INCLUDE include/AsyncFw/*)
 
 add_custom_target(additional-files SOURCES AsyncFwConfig.cmake README.md example.dox example/snippet.dox ${AsyncFw_INCLUDE})
 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(AsyncFw_INTERNAL_HEADERS

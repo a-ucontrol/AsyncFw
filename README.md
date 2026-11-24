@@ -1,6 +1,6 @@
 # AsyncFw
 
-Async Framework is a lightweight C++20 runtime for asynchronous programming. It provides timers, poll notifiers, thread-safe signals/slots, asynchronous sockets, and native C++20 coroutines on top of a custom event loop, so long-running work can be offloaded to worker threads without blocking the main loop.
+Async Framework is a lightweight C++23 runtime for asynchronous programming. It provides timers, poll notifiers, thread-safe signals/slots, asynchronous sockets, and native C++23 coroutines on top of a custom event loop, so long-running work can be offloaded to worker threads without blocking the main loop.
 
 See the [GitHub repository], [documentation], and [examples] for details.
 
@@ -114,7 +114,7 @@ int main(int, char **) {
 
 ### 3. Coroutines and RPC-Style Dispatch: `coInvoke`
 
-The coroutine layer (`CoroutineTask`, `CoroutineAwait`, `CoroutineInvokeAwait`) ties C++20 coroutines into the cross-thread infrastructure.
+The coroutine layer (`CoroutineTask`, `CoroutineAwait`, `CoroutineInvokeAwait`) ties C++23 coroutines into the cross-thread infrastructure.
 
 * **Thread marshalling**: when a coroutine yields via `co_await`, work is dispatched to a target thread or thread pool. When it finishes, `promise_type::resume_queued()` schedules the continuation back onto the thread where the coroutine was created.
 * **State transport**: the `promise_type` inherits from `AnyData`, so a background task can store its result in the coroutine frame and `await_resume` can retrieve it.
