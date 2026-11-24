@@ -110,6 +110,11 @@ $(function(){initNavTree('classAsyncFw_1_1Timer.html','','classAsyncFw_1_1Timer-
 <div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1Timer__coll__graph.svg" width="206" height="174"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:SingleGuard" id="r_SingleGuard"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classAsyncFw_1_1Timer_1_1SingleGuard.html">SingleGuard</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">An RAII guard that automatically cancels a single-shot timer when destroyed or reassigned.  <a href="classAsyncFw_1_1Timer_1_1SingleGuard.html#details">More...</a><br /></td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a14d02d88bd3682afd7c8fd72cc670e46" id="r_a14d02d88bd3682afd7c8fd72cc670e46"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a14d02d88bd3682afd7c8fd72cc670e46">start</a> (int, bool=false)</td></tr>
@@ -122,9 +127,9 @@ void&#160;</td><td class="memItemRight"><b>stop</b> ()</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-static-methods" class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:ac71f0729e65046914c3358e87759f9e9" id="r_ac71f0729e65046914c3358e87759f9e9"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
-<tr class="memitem:ac71f0729e65046914c3358e87759f9e9 template"><td class="memItemLeft">static void&#160;</td><td class="memItemRight"><a class="el" href="#ac71f0729e65046914c3358e87759f9e9">single</a> (int ms, T function)</td></tr>
-<tr class="memdesc:ac71f0729e65046914c3358e87759f9e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts a single shot timer with the specified timeout.  <br /></td></tr>
+<tr class="memitem:aa879e090fd8f8936416964cdd5301bbc" id="r_aa879e090fd8f8936416964cdd5301bbc"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
+<tr class="memitem:aa879e090fd8f8936416964cdd5301bbc template"><td class="memItemLeft">static Single&#160;</td><td class="memItemRight"><a class="el" href="#aa879e090fd8f8936416964cdd5301bbc">single</a> (int ms, T function)</td></tr>
+<tr class="memdesc:aa879e090fd8f8936416964cdd5301bbc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts a single-shot timer with the specified timeout.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -171,8 +176,8 @@ Public Attributes</h2></td></tr>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="Cache_2main_8cpp-example.html#_a2">Cache/main.cpp</a>, <a class="el" href="ContainerTask_2main_8cpp-example.html#_a1">ContainerTask/main.cpp</a>, <a class="el" href="FunctionConnector_2main_8cpp-example.html#_a3">FunctionConnector/main.cpp</a>, and <a class="el" href="Timer_2main_8cpp-example.html#_a1">Timer/main.cpp</a>.</dd>
 </dl>
 </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
-<a id="ac71f0729e65046914c3358e87759f9e9" name="ac71f0729e65046914c3358e87759f9e9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac71f0729e65046914c3358e87759f9e9">&#9670;&#160;</a></span>single()</h2>
+<a id="aa879e090fd8f8936416964cdd5301bbc" name="aa879e090fd8f8936416964cdd5301bbc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa879e090fd8f8936416964cdd5301bbc">&#9670;&#160;</a></span>single()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -183,7 +188,7 @@ template&lt;typename T&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void AsyncFw::Timer::single </td>
+          <td class="memname">Single AsyncFw::Timer::single </td>
           <td>(</td>
           <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>ms</em></span>, </td>
         </tr>
@@ -200,21 +205,22 @@ template&lt;typename T&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Starts a single shot timer with the specified timeout. </p>
+<p>Starts a single-shot timer with the specified timeout. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">ms</td><td>timeout interval in milliseconds</td></tr>
-    <tr><td class="paramname">function</td><td>runs at timeout </td></tr>
+    <tr><td class="paramname">ms</td><td>Timeout interval in milliseconds.</td></tr>
+    <tr><td class="paramname">function</td><td>Callable executed when the timer expires. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>A Single handle that can be used to cancel the timer or assigned to a <a class="el" href="classAsyncFw_1_1Timer_1_1SingleGuard.html" title="An RAII guard that automatically cancels a single-shot timer when destroyed or reassigned.">SingleGuard</a>. </dd></dl>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="CoroutineWait_2main_8cpp-example.html#_a6">CoroutineWait/main.cpp</a>, and <a class="el" href="SystemProcess_2main_8cpp-example.html#a11">SystemProcess/main.cpp</a>.</dd>
 </dl>
 <div id="dynsection-1" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the caller graph for this function:</div>
 <div id="dynsection-1-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-1-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1Timer_ac71f0729e65046914c3358e87759f9e9_icgraph.svg" width="614" height="155"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1Timer_aa879e090fd8f8936416964cdd5301bbc_icgraph.svg" width="604" height="88"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>

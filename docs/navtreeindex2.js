@@ -119,11 +119,12 @@ var NAVTREEINDEX2 =
 "classAsyncFw_1_1ThreadPool.html#aa297f229f71ef76b920f918051203363":[2,0,0,46,0],
 "classAsyncFw_1_1ThreadPool.html#ad7f14a964e683f021a4d6c1c0a8bbf5d":[2,0,0,46,4],
 "classAsyncFw_1_1Timer.html":[2,0,0,47],
-"classAsyncFw_1_1Timer.html#a14d02d88bd3682afd7c8fd72cc670e46":[2,0,0,47,0],
-"classAsyncFw_1_1Timer.html#a63f0eb44b27402196590a03781515dba":[2,0,0,47,1],
-"classAsyncFw_1_1Timer.html#aad1874fc8c5f41c278e4e4de81609e54":[2,0,0,47,2],
-"classAsyncFw_1_1Timer.html#ac6789eb13c5435480e9501a692c941cb":[2,0,0,47,4],
-"classAsyncFw_1_1Timer.html#acf307d575a38d2b3bb852202d0126fcd":[2,0,0,47,3],
+"classAsyncFw_1_1Timer.html#a14d02d88bd3682afd7c8fd72cc670e46":[2,0,0,47,1],
+"classAsyncFw_1_1Timer.html#a63f0eb44b27402196590a03781515dba":[2,0,0,47,2],
+"classAsyncFw_1_1Timer.html#aad1874fc8c5f41c278e4e4de81609e54":[2,0,0,47,3],
+"classAsyncFw_1_1Timer.html#ac6789eb13c5435480e9501a692c941cb":[2,0,0,47,5],
+"classAsyncFw_1_1Timer.html#acf307d575a38d2b3bb852202d0126fcd":[2,0,0,47,4],
+"classAsyncFw_1_1Timer_1_1SingleGuard.html":[2,0,0,47,0],
 "classAsyncFw_1_1TlsContext.html":[2,0,0,15],
 "classAsyncFw_1_1TlsContext.html#a0355cba7c5bc6468bc9b53e0a21cfaef":[2,0,0,15,8],
 "classAsyncFw_1_1TlsContext.html#a0c268a29a857a658f0ed1254cbff746b":[2,0,0,15,3],
@@ -248,6 +249,5 @@ var NAVTREEINDEX2 =
 "structAsyncFw_1_1CoroutineTask_1_1promise__type.html":[2,0,0,19,0],
 "structAsyncFw_1_1CoroutineTask_1_1promise__type.html#a6ef8c84c53068677172b21f5e08aa0b7":[2,0,0,19,0,0],
 "structAsyncFw_1_1FunctionConnector_1_1Policy.html":[2,0,0,9,0],
-"structAsyncFw_1_1LockData.html":[2,0,0,12],
-"structAsyncFw_1_1LockData.html#a0844d740fdb993a3227bfe55cd4012ea":[2,0,0,12,3]
+"structAsyncFw_1_1LockData.html":[2,0,0,12]
 };

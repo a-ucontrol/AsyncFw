@@ -71,6 +71,7 @@ var hierarchy =
     ] ],
     [ "AsyncFw::RrdClient", "classAsyncFw_1_1RrdClient.html", null ],
     [ "AsyncFw::RrdServer", "classAsyncFw_1_1RrdServer.html", null ],
+    [ "AsyncFw::Timer::SingleGuard", "classAsyncFw_1_1Timer_1_1SingleGuard.html", null ],
     [ "AsyncFw::SystemProcess", "classAsyncFw_1_1SystemProcess.html", null ],
     [ "AsyncFw::Timer", "classAsyncFw_1_1Timer.html", null ],
     [ "AsyncFw::TlsContext", "classAsyncFw_1_1TlsContext.html", null ],
