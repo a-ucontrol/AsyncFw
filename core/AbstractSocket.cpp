@@ -55,7 +55,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 #endif
 #include "extend_trace.hpp"
 
-#define SOCKET_CONNECTION_QUEUED 16
+#define SOCKET_CONNECTION_QUEUED 512
 //#define SOCKET_REUSEPORT
 
 using namespace AsyncFw;

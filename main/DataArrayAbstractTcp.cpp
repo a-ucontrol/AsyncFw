@@ -16,22 +16,25 @@ using namespace AsyncFw;
 DataArrayAbstractTcp::DataArrayAbstractTcp(const std::string &name) : AbstractThreadPool(name) { init(); }
 
 DataArrayAbstractTcp::Thread *DataArrayAbstractTcp::findMinimalSocketsThread() {
-  int index = -1;
-  for (int i = 0, n = threads_.size(), m = maxSockets; i != n; ++i) {
-    {  //lock scope
-      Thread::LockGuard lock = threads_.at(i)->lockGuard();
-      int size = static_cast<Thread *>(threads_.at(i))->sockets_.size();
-      if (size < m) {
-        m = size;
-        index = i;
-        if (m == 0) {
-          lsError("empty sockets list in thread");
-          break;
+  AbstractThread *t = nullptr;
+  thread_->invoke([this, &t]() {
+    int index = -1;
+    for (int i = 0, n = threads_.size(), m = maxSockets; i != n; ++i) {
+      {  //lock scope
+        Thread::LockGuard lock = threads_.at(i)->lockGuard();
+        int size = static_cast<Thread *>(threads_.at(i))->sockets_.size();
+        if (size < m) {
+          m = size;
+          index = i;
+          if (m == 0) {
+            lsError("empty sockets list in thread");
+            break;
+          }
         }
       }
     }
-  }
-  AbstractThread *t = (index >= 0) ? threads_.at(index) : nullptr;
+    t = (index >= 0) ? threads_.at(index) : nullptr;
+  }, true);
   return static_cast<Thread *>(t);
 }
 
@@ -99,10 +102,17 @@ void DataArrayAbstractTcp::Thread::destroySocket(DataArraySocket *socket) {
   socket->removeTimer();
   socket->removeFromThread();
   bool e = sockets_.empty();
-  if (e) OPENSSL_thread_stop();
-  if (!pool->thread()->invoke([this, socket, e]() {
+  if (e) {
+    OPENSSL_thread_stop();
+    LockGuard lock = LockGuard(static_cast<DataArrayAbstractTcp *>(pool)->mutex);
+    static_cast<DataArrayAbstractTcp *>(pool)->removeThread(this);
+  }
+  if (!pool->thread()->invoke([p = this, socket, e]() {
     socket->destroy();
-    if (e) destroy();
+    if (e) {
+      p->stop();
+      delete p;
+    }
   }))
     socket->destroy();
   lsTrace() << LogStream::Color::Green << '(' + name() + ')' << LogStream::Color::Magenta << sockets_.size();

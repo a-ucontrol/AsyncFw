@@ -17,11 +17,12 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 namespace AsyncFw {
 /** @class AbstractThreadPool ThreadPool.h <AsyncFw/ThreadPool> @brief Abstract base class for creating and managing thread pools. */
 class AbstractThreadPool {
+  friend class ThreadPool;
+
 public:
   /** @class Thread @brief A specialized thread managed by an AbstractThreadPool. */
   class Thread : public AsyncFw::Thread {
     friend class AbstractThreadPool;
-    friend class ThreadPool;
 
   public:
     /** @brief Gracefully destroys the thread, ensuring all tasks are flushed. */
@@ -66,6 +67,14 @@ private:
 @snippet ThreadPool/main.cpp snippet */
 class ThreadPool : public AbstractThreadPool {
 public:
+  class Thread : public AbstractThreadPool::Thread {
+    friend class ThreadPool;
+
+  public:
+    using AbstractThreadPool::Thread::Thread;
+    virtual void destroy() override;
+  };
+
   /** @brief Synchronously invokes a function in the given thread's event loop (blocks the caller). */
   template <typename F>
   static bool sync(AbstractThread *_t, F f) {
@@ -138,7 +147,7 @@ public:
 private:
   Thread *createThread(const std::string &, Invocable<void(Thread *)>::Abstract *fun);
   AsyncFw_INSTANCE<ThreadPool> instance_;
-  std::vector<AbstractThreadPool::Thread *> workThreads_;
+  std::vector<Thread *> workThreads_;
   int workThreadsSize_;
 };
 }  // namespace AsyncFw
