@@ -102,18 +102,18 @@ void DataArrayAbstractTcp::Thread::destroySocket(DataArraySocket *socket) {
   socket->removeTimer();
   socket->removeFromThread();
   bool e = sockets_.empty();
-  if (e) {
-    OPENSSL_thread_stop();
-    LockGuard lock = LockGuard(static_cast<DataArrayAbstractTcp *>(pool)->mutex);
-    static_cast<DataArrayAbstractTcp *>(pool)->removeThread(this);
-  }
-  if (!pool->thread()->invoke([p = this, socket, e]() {
+  if (e) { OPENSSL_thread_stop(); }
+  if (pool->thread()->invoke([p = this, socket, e]() {
     socket->destroy();
     if (e) {
       p->stop();
       delete p;
     }
-  }))
-    socket->destroy();
+  })) {
+    if (e) {
+      LockGuard lock = LockGuard(static_cast<DataArrayAbstractTcp *>(pool)->mutex);
+      static_cast<DataArrayAbstractTcp *>(pool)->removeThread(this);
+    }
+  } else socket->destroy();
   lsTrace() << LogStream::Color::Green << '(' + name() + ')' << LogStream::Color::Magenta << sockets_.size();
 }

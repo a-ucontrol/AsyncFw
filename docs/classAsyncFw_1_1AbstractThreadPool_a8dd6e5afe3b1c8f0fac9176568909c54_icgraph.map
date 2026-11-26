@@ -1,7 +1,5 @@
 <map id="AsyncFw::AbstractThreadPool::removeThread" name="AsyncFw::AbstractThreadPool::removeThread">
-<area shape="rect" id="Node000001" title="Unregisters a thread from the pool." alt="" coords="246,39,445,81"/>
-<area shape="rect" id="Node000002" href="$classAsyncFw_1_1DataArrayAbstractTcp_1_1Thread.html#ab6df6de1f9828a772e5968477ce5dffa" title="Performs cleanup routines and safely removes a socket from the thread loop." alt="" coords="5,5,198,48"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="227,45,198,42,198,37,233,44"/>
-<area shape="rect" id="Node000003" href="$classAsyncFw_1_1ThreadPool.html#ad7f14a964e683f021a4d6c1c0a8bbf5d" title="Unregisters a thread from the pool." alt="" coords="26,72,177,115"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="228,76,177,86,177,80,233,75"/>
+<area shape="rect" id="Node000001" title="Unregisters a thread from the pool." alt="" coords="204,5,403,48"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1ThreadPool.html#ad7f14a964e683f021a4d6c1c0a8bbf5d" title="Unregisters a thread from the pool." alt="" coords="5,5,156,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="186,27,156,29,156,24,191,26"/>
 </map>
