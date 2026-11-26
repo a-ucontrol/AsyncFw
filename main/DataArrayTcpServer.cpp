@@ -21,8 +21,7 @@ DataArrayTcpServer::DataArrayTcpServer(const std::string &name) : DataArrayAbstr
 }
 
 DataArrayTcpServer::~DataArrayTcpServer() {
-  if (listener->port()) listener->close();
-  if (threads_.size() > 0) DataArrayAbstractTcp::quit();
+  DataArrayTcpServer::quit();
   lsTrace();
 }
 
@@ -66,16 +65,16 @@ bool DataArrayTcpServer::incomingConnection(int socketDescriptor, const std::str
 
 void DataArrayTcpServer::Thread::createSocket(int socketDescriptor, bool encrypt) {
   DataArraySocket *tcpSocket = new DataArraySocket();
-  std::string address = tcpSocket->peerAddress();
   initSocket(tcpSocket);
 
-  tcpSocket->stateChanged.connect([this, tcpSocket](AbstractSocket::State state) {
+  DataArrayTcpServer *_server = server();
+  tcpSocket->stateChanged.connect([this, _server, tcpSocket](AbstractSocket::State state) {
     if (state != AbstractSocket::State::Unconnected) return;
-    server()->thread_->invoke([this, tcpSocket]() { server()->disconnected(tcpSocket); });
+    _server->thread_->invoke([_server, tcpSocket]() { _server->disconnected(tcpSocket); });
     destroySocket(tcpSocket);
   });
 
-  if (encrypt) server()->setTlsContext(tcpSocket, server()->tlsContext);
+  if (encrypt) _server->setTlsContext(tcpSocket, _server->tlsContext);
 
   tcpSocket->initServerConnection();
   tcpSocket->setDescriptor(socketDescriptor);

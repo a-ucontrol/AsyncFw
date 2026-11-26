@@ -76,6 +76,10 @@ protected:
     void initSocket(DataArraySocket *);
     /** @brief Performs cleanup routines and safely removes a socket from the thread loop. @param socket Pointer to the target DataArraySocket. */
     void destroySocket(DataArraySocket *);
+
+  private:
+    std::atomic_flag destroying_;
+    std::atomic_int sockets_count_;
   };
   /** @brief Locates the worker thread currently hosting the lowest number of socket contexts. @return Pointer to the least occupied Thread, or nullptr if no threads are running. */
   Thread *findMinimalSocketsThread();

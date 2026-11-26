@@ -89,9 +89,9 @@ DataArraySocket *DataArrayTcpClient::Thread::createSocket() {
   tcpSocket->setReconnectTimeout(client()->reconnectTimeout);
   tcpSocket->setContext(client()->tlsContext);
   initSocket(const_cast<DataArraySocket *>(tcpSocket));
-  tcpSocket->stateChanged.connect([this, tcpSocket](AbstractSocket::State state) {
+  tcpSocket->stateChanged.connect([_c = client(), tcpSocket](AbstractSocket::State state) {
     if (state != AbstractSocket::State::Active && state != AbstractSocket::State::Unconnected) return;
-    client()->thread_->invoke([this, tcpSocket]() { client()->connectionStateChanged(tcpSocket); });
+    _c->thread_->invoke([_c, tcpSocket]() { _c->connectionStateChanged(tcpSocket); });
   });
   return tcpSocket;
 }
