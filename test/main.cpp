@@ -250,7 +250,7 @@ void test_threadpool_destroy_from_own_task() {
 
   std::atomic<bool> reachedEnd {false};
 
-  AbstractThreadPool::Thread *t = pool->createThread("DestroyFromOwnTask");
+  ThreadPool::Thread *t = pool->createThread("DestroyFromOwnTask");
   t->invoke([t, &reachedEnd]() {
     t->destroy();
     // Must not touch t after destroy() — it may already be scheduled for

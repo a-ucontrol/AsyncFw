@@ -1132,6 +1132,14 @@ void test_sockets_move_only_functor(AbstractThread *poolOwner) {
 // returned (see Probe H comments). Serializing sockets() on the owner
 // closes the id()/setId() race window that the earlier version of this
 // reproducer was hitting.
+//
+// Why both server and client must live on `poolOwner` (NOT on `testMain`):
+// `testMain`'s event loop is blocked inside the outer `testMain.invoke(..., true)`
+// for the entire duration of the test suite. Any pool created on `testMain` binds
+// its `thread_` to `testMain`, so deferred `connectionStateChanged` / `received`
+// tasks queue up unserviced until `~DataArrayTcpClient()` drains them during teardown
+// (after the test's `FunctionConnectionGuard` has already been reset). Creating
+// `client` on `poolOwner` gives it a live `exec()` loop, matching the other probes.
 void test_da_server_destroy_uaf_window(AbstractThread *poolOwner) {
   lsNotice() << "=== server destroyed with live socket (UAF window) ===";
   constexpr uint16_t kPort = 18997;
@@ -1140,32 +1148,35 @@ void test_da_server_destroy_uaf_window(AbstractThread *poolOwner) {
   int foreignTotal = 0;
   int stuck = 0;
 
+  DataArrayTcpClient *client = nullptr;
+  poolOwner->invoke([&]() {
+    client = new DataArrayTcpClient("uaf-client-probe");
+    client->setReconnectTimeout(0);
+  }, true);
+
   for (int i = 0; i < kIterations; ++i) {
-    // ---- Create server on owner -----------------------------------------
     DataArrayTcpServer *server = nullptr;
+    bool listenOk = false;
     poolOwner->invoke([&]() {
       server = new DataArrayTcpServer("uaf-server-probe");
-      server->listen("127.0.0.1", kPort);
+      listenOk = server->listen("127.0.0.1", kPort);
     }, true);
-    if (!server) {
-      EXPECT_MSG(false, "server allocation failed");
-      return;
+    if (!server || !listenOk) {
+      EXPECT_MSG(false, "server listen failed at iter " + std::to_string(i));
+      if (server) poolOwner->invoke([&]() { delete server; }, true);
+      break;
     }
 
-    // ---- Create client on caller (this thread) --------------------------
-    DataArrayTcpClient client("uaf-client-probe");
-    DataArraySocket *cs = client.createSocket();
+    DataArraySocket *cs = client->createSocket();
     g_ledger.onCreate(cs, 10000 + i);
 
     std::atomic<int> foreign {0};
-    FunctionConnectionGuard g = client.connectionStateChanged.connect([&, cs](const DataArraySocket *s) {
+    FunctionConnectionGuard g = client->connectionStateChanged.connect([&, cs](const DataArraySocket *s) {
       if (s != cs) ++foreign;
     });
 
-    client.connectToHost(cs, "127.0.0.1", kPort);
+    client->connectToHost(cs, "127.0.0.1", kPort);
 
-    // ---- Wait for accept: sockets() must run on the owner ---------------
-    // Serializing on poolOwner closes the id()/setId() race window.
     std::atomic<int> n {0};
     for (int tries = 0; tries < 2000; ++tries) {
       poolOwner->invoke([&]() { n = server->sockets(); }, true);
@@ -1175,33 +1186,29 @@ void test_da_server_destroy_uaf_window(AbstractThread *poolOwner) {
     if (n.load() == 0) {
       ++stuck;
       lsError() << "uaf-window iter" << i << ": server did not accept client";
-      client.destroySocket(cs);
+      client->destroySocket(cs);
       g_ledger.onDestroy(cs, 10000 + i);
       g = {};
       poolOwner->invoke([&]() { delete server; }, true);
       continue;
     }
 
-    // ---- Destroy the server BEFORE the client FIN arrives ---------------
-    // The worker is still alive right after delete returns; ~disconnected
-    // is now destroyed but ~AbstractThreadPool::quit()'s trailing barrier
-    // guarantees the worker is stopped before ~disconnected runs — as long
-    // as ~DataArrayTcpServer::quit() was called from the body, which the
-    // current tree does. This test exists to catch regressions of that
-    // invariant.
+    // Destroy the server while client socket is still live
     poolOwner->invoke([&]() { delete server; }, true);
     server = nullptr;
 
-    // ---- Immediately send FIN from the client --------------------------
-    client.destroySocket(cs);
+    // Immediately send FIN from the client
+    client->destroySocket(cs);
     g_ledger.onDestroy(cs, 10000 + i);
 
-    // Let the owner drain stop-tasks for this iteration before the next.
+    // Drain any deferred tasks on poolOwner before next iteration
     poolOwner->invoke([&]() {}, true);
 
     foreignTotal += foreign.load();
     g = {};
   }
+
+  poolOwner->invoke([&]() { delete client; }, true);
 
   lsNotice() << "uaf-window summary: iterations=" << kIterations << " stuck=" << stuck << " foreign=" << foreignTotal;
   EXPECT_MSG(stuck == 0, "server never accepted in " + std::to_string(stuck) + "/" + std::to_string(kIterations) + " iterations");
@@ -1645,7 +1652,7 @@ int main(int, char **) {
     // Must run last among the server tests: it tears the workers down by
     // deleting the server, then immediately FINs the client. Kept after
     // all sockets() probes so it doesn't pollute their shared state.
-//    test_da_server_destroy_uaf_window(&poolOwner); // !!! надо исправить
+    test_da_server_destroy_uaf_window(&poolOwner);
 
     // ---- AddressResolver multi-socket regression (mock DNS) -------
     // Must run on testMain (not poolOwner): both MockDnsServer's

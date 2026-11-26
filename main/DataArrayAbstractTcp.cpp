@@ -17,24 +17,20 @@ DataArrayAbstractTcp::DataArrayAbstractTcp(const std::string &name) : AbstractTh
 
 DataArrayAbstractTcp::Thread *DataArrayAbstractTcp::findMinimalSocketsThread() {
   AbstractThread *t = nullptr;
-  thread_->invoke([this, &t]() {
-    int index = -1;
-    for (int i = 0, n = threads_.size(), m = maxSockets; i != n; ++i) {
-      {  //lock scope
-        Thread::LockGuard lock = threads_.at(i)->lockGuard();
-        int size = static_cast<Thread *>(threads_.at(i))->sockets_.size();
-        if (size < m) {
-          m = size;
-          index = i;
-          if (m == 0) {
-            lsError("empty sockets list in thread");
-            break;
-          }
-        }
+  int index = -1;
+  for (int i = 0, n = threads_.size(), m = maxSockets; i != n; ++i) {
+    int size = 0;
+    threads_.at(i)->invoke([&size, _t = static_cast<Thread *>(threads_.at(i))]() { size = _t->sockets_.size(); }, true);
+    if (size < m) {
+      m = size;
+      index = i;
+      if (m == 0) {
+        lsError("empty sockets list in thread");
+        break;
       }
     }
-    t = (index >= 0) ? threads_.at(index) : nullptr;
-  }, true);
+  }
+  t = (index >= 0) ? threads_.at(index) : nullptr;
   return static_cast<Thread *>(t);
 }
 

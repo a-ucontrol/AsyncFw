@@ -24,11 +24,9 @@ public:
   class Thread : public AsyncFw::Thread {
     friend class AbstractThreadPool;
 
-  public:
+  protected:
     /** @brief Gracefully destroys the thread, ensuring all tasks are flushed. */
     virtual void destroy();
-
-  protected:
     /** @brief Constructs a pool-managed thread. */
     Thread(const std::string &name, AbstractThreadPool *);
     /** @brief Pointer to the parent thread pool that owns this thread. */
