@@ -109,14 +109,16 @@ AbstractThreadPool::Thread::Thread(const std::string &name, AbstractThreadPool *
 
 void AbstractThreadPool::Thread::destroy() {
   lsTrace() << '(' + name() + ')';
-  AbstractTask *_t = new Invocable<void()>::Function([p = this]() {
+  if (!pool->thread_->invoke([p = this]() {
     p->stop();
     delete p;
-  });
-  if (!pool->thread_->invokeTask(_t)) {
+  })) {
     lsTrace() << LogStream::Color::DarkRed << "pool thread already finished" << '(' + pool->thread_->name() + ')';
-    (*_t)();
-    delete _t;
+    // Owner stopped after removeThread(), re-register so AbstractThreadPool::quit() stops and deletes this thread.
+    {
+      std::lock_guard<std::mutex> lock(pool->mutex);
+      pool->appendThread(this);
+    }
   }
 }
 
