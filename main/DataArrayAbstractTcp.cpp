@@ -53,6 +53,7 @@ void DataArrayAbstractTcp::setTlsContext(DataArraySocket *socket, const TlsConte
 int DataArrayAbstractTcp::sockets(Invocable<void(const DataArraySocket *)>::Abstract *fun) {
   int count = 0;
   if (!thread_->invoke([this, fun, &count]() {
+    // Copy the thread list so LockData's mutex is released before  C++23 destroys range-for temporaries.
     std::vector<AbstractThreadPool::Thread *> list = *threads();
     for (AsyncFw::Thread *thread : list) {
       thread->invoke([thread, fun, &count]() {
