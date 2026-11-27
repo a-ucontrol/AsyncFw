@@ -117,13 +117,12 @@ Protected Member Functions</h2></td></tr>
 <tr class="memdesc:aca7c5fcf08cc257de061af63342cd466"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures timeouts, buffer sizes, and signal bounds for a new socket context.  <br /></td></tr>
 <tr class="memitem:ab6df6de1f9828a772e5968477ce5dffa" id="r_ab6df6de1f9828a772e5968477ce5dffa"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ab6df6de1f9828a772e5968477ce5dffa">destroySocket</a> (<a class="el" href="classAsyncFw_1_1DataArraySocket.html">DataArraySocket</a> *)</td></tr>
 <tr class="memdesc:ab6df6de1f9828a772e5968477ce5dffa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs cleanup routines and safely removes a socket from the thread loop.  <br /></td></tr>
+<tr class="memitem:a0ef6c2c43fc57448b73a5ba266ff4040" id="r_a0ef6c2c43fc57448b73a5ba266ff4040"><td class="memItemLeft">virtual void&#160;</td><td class="memItemRight"><a class="el" href="#a0ef6c2c43fc57448b73a5ba266ff4040">destroy</a> () override</td></tr>
+<tr class="memdesc:a0ef6c2c43fc57448b73a5ba266ff4040"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gracefully destroys the thread, ensuring all tasks are flushed.  <br /></td></tr>
 <tr class="memitem:a787b048ddebfd8b5d5d6c3988d0d90d3" id="r_a787b048ddebfd8b5d5d6c3988d0d90d3"><td class="memItemLeft"><a id="a787b048ddebfd8b5d5d6c3988d0d90d3" name="a787b048ddebfd8b5d5d6c3988d0d90d3"></a>
 &#160;</td><td class="memItemRight"><b>Thread</b> (const std::string &amp;<a class="el" href="classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd">name</a>, AbstractThreadPool *)</td></tr>
 <tr class="memdesc:a787b048ddebfd8b5d5d6c3988d0d90d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a pool-managed thread. <br /></td></tr>
 <tr class="inherit_header pro_methods_classAsyncFw_1_1AbstractThreadPool_1_1Thread"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_methods_classAsyncFw_1_1AbstractThreadPool_1_1Thread')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Protected Member Functions inherited from <a class="el" href="classAsyncFw_1_1AbstractThreadPool_1_1Thread.html">AsyncFw::AbstractThreadPool::Thread</a></td></tr>
-<tr class="memitem:aa4a8873e426f02286f1082de4083cb01 inherit pro_methods_classAsyncFw_1_1AbstractThreadPool_1_1Thread" id="r_aa4a8873e426f02286f1082de4083cb01"><td class="memItemLeft">
-virtual void&#160;</td><td class="memItemRight"><b>destroy</b> ()</td></tr>
-<tr class="memdesc:aa4a8873e426f02286f1082de4083cb01 inherit pro_methods_classAsyncFw_1_1AbstractThreadPool_1_1Thread"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gracefully destroys the thread, ensuring all tasks are flushed. <br /></td></tr>
 <tr class="memitem:a787b048ddebfd8b5d5d6c3988d0d90d3 inherit pro_methods_classAsyncFw_1_1AbstractThreadPool_1_1Thread" id="r_a787b048ddebfd8b5d5d6c3988d0d90d3"><td class="memItemLeft">
 &#160;</td><td class="memItemRight"><b>Thread</b> (const std::string &amp;<a class="el" href="classAsyncFw_1_1AbstractThread.html#a0cd916251e061aaf3d456575ef052edd">name</a>, AbstractThreadPool *)</td></tr>
 <tr class="memdesc:a787b048ddebfd8b5d5d6c3988d0d90d3 inherit pro_methods_classAsyncFw_1_1AbstractThreadPool_1_1Thread"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a pool-managed thread. <br /></td></tr>
@@ -148,8 +147,10 @@ void&#160;</td><td class="memItemRight"><b>stop</b> ()</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-friends" class="groupheader"><a id="friends" name="friends"></a>
 Friends</h2></td></tr>
-<tr class="memitem:a86d227636724fdd318c0e8457b0185d9" id="r_a86d227636724fdd318c0e8457b0185d9"><td class="memItemLeft"><a id="a86d227636724fdd318c0e8457b0185d9" name="a86d227636724fdd318c0e8457b0185d9"></a>
-class&#160;</td><td class="memItemRight"><b>DataArrayAbstractTcp</b></td></tr>
+<tr class="memitem:a53501b33e611bcd756a72f837988e52f" id="r_a53501b33e611bcd756a72f837988e52f"><td class="memItemLeft"><a id="a53501b33e611bcd756a72f837988e52f" name="a53501b33e611bcd756a72f837988e52f"></a>
+class&#160;</td><td class="memItemRight"><b>DataArrayTcpClient</b></td></tr>
+<tr class="memitem:aa6c100d8828b4f46ddf6ecf9a2f3affa" id="r_aa6c100d8828b4f46ddf6ecf9a2f3affa"><td class="memItemLeft"><a id="aa6c100d8828b4f46ddf6ecf9a2f3affa" name="aa6c100d8828b4f46ddf6ecf9a2f3affa"></a>
+class&#160;</td><td class="memItemRight"><b>DataArrayTcpServer</b></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-inherited" class="groupheader"><a id="inherited" name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -335,7 +336,42 @@ AbstractThreadPool *&#160;</td><td class="memItemRight"><b>pool</b></td></tr>
 <div id="dynsection-3-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-3-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1DataArrayAbstractTcp_1_1Thread_ab6df6de1f9828a772e5968477ce5dffa_cgraph.svg" width="888" height="120"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1DataArrayAbstractTcp_1_1Thread_ab6df6de1f9828a772e5968477ce5dffa_cgraph.svg" width="1338" height="268"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<a id="a0ef6c2c43fc57448b73a5ba266ff4040" name="a0ef6c2c43fc57448b73a5ba266ff4040"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0ef6c2c43fc57448b73a5ba266ff4040">&#9670;&#160;</a></span>destroy()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DataArrayAbstractTcp::Thread::destroy </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel override">override</span><span class="mlabel protected">protected</span><span class="mlabel virtual">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gracefully destroys the thread, ensuring all tasks are flushed. </p>
+
+<p>Reimplemented from <a class="el" href="classAsyncFw_1_1AbstractThreadPool_1_1Thread.html#aa4a8873e426f02286f1082de4083cb01">AsyncFw::AbstractThreadPool::Thread</a>.</p>
+<div id="dynsection-4" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Here is the call graph for this function:</div>
+<div id="dynsection-4-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-4-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classAsyncFw_1_1DataArrayAbstractTcp_1_1Thread_a0ef6c2c43fc57448b73a5ba266ff4040_cgraph.svg" width="698" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>

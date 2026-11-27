@@ -1,0 +1,5 @@
+<map id="AsyncFw::AbstractThreadPool::Thread::destroy" name="AsyncFw::AbstractThreadPool::Thread::destroy">
+<area shape="rect" id="Node000001" title="Gracefully destroys the thread, ensuring all tasks are flushed." alt="" coords="5,5,205,48"/>
+<area shape="rect" id="Node000002" href="$classAsyncFw_1_1AbstractThreadPool.html#ac312e723c2e0fa3e4cc18e518853bdf2" title="Returns the identifier name of the thread pool." alt="" coords="253,5,452,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="205,24,240,26,235,27,205,29"/>
+</map>

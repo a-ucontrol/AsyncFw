@@ -132,32 +132,13 @@
 </a>
 </g>
 </g>
-<!-- Node11 -->
-<g id="Node000011" class="node">
-<title>Node11</title>
-<g id="a_Node000011"><a xlink:href="classAsyncFw_1_1DataArrayTcpClient.html#afb856fb1b426dd583fc46062f347b3f9" target="_top" xlink:title="Safely shuts down, unregisters, and deletes a managed socket.">
-<polygon fill="white" stroke="#666666" points="487.5,-182 339.5,-182 339.5,-150 487.5,-150 487.5,-182"/>
-<text xml:space="preserve" text-anchor="start" x="347.5" y="-168.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::DataArrayTcpClient</text>
-<text xml:space="preserve" text-anchor="middle" x="413.5" y="-156.5" font-family="Helvetica,sans-Serif" font-size="10.00">::destroySocket</text>
-</a>
-</g>
-</g>
-<!-- Node1&#45;&gt;Node11 -->
-<g id="edge12_Node000001_Node000011" class="edge">
-<title>Node1&#45;&gt;Node11</title>
-<g id="a_edge12_Node000001_Node000011"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M547.21,-219.32C529.2,-210.03 507.55,-199.4 487.5,-191 480.46,-188.05 472.93,-185.17 465.49,-182.48"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="545.53,-222.39 556.02,-223.91 548.77,-216.18 545.53,-222.39"/>
-</a>
-</g>
-</g>
 <!-- Node12 -->
 <g id="Node000012" class="node">
 <title>Node12</title>
-<g id="a_Node000012"><a xlink:href="classAsyncFw_1_1DataArrayAbstractTcp.html#aa9d59be7845d746853397e1905880434" target="_top" xlink:title="Signals a specific managed socket to disconnect from its remote peer.">
-<polygon fill="white" stroke="#666666" points="485.62,-132 341.38,-132 341.38,-100 485.62,-100 485.62,-132"/>
-<text xml:space="preserve" text-anchor="start" x="349.38" y="-118.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::DataArrayAbstract</text>
-<text xml:space="preserve" text-anchor="middle" x="413.5" y="-106.5" font-family="Helvetica,sans-Serif" font-size="10.00">Tcp::disconnectFromHost</text>
+<g id="a_Node000012"><a xlink:href="classAsyncFw_1_1DataArrayTcpClient.html#afb856fb1b426dd583fc46062f347b3f9" target="_top" xlink:title="Safely shuts down, unregisters, and deletes a managed socket.">
+<polygon fill="white" stroke="#666666" points="487.5,-182 339.5,-182 339.5,-150 487.5,-150 487.5,-182"/>
+<text xml:space="preserve" text-anchor="start" x="347.5" y="-168.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::DataArrayTcpClient</text>
+<text xml:space="preserve" text-anchor="middle" x="413.5" y="-156.5" font-family="Helvetica,sans-Serif" font-size="10.00">::destroySocket</text>
 </a>
 </g>
 </g>
@@ -165,18 +146,18 @@
 <g id="edge13_Node000001_Node000012" class="edge">
 <title>Node1&#45;&gt;Node12</title>
 <g id="a_edge13_Node000001_Node000012"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M568.05,-215.85C549.52,-193.42 519.73,-161.1 487.5,-141 482.39,-137.81 476.81,-134.97 471.1,-132.45"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="565.09,-217.75 574.1,-223.33 570.53,-213.35 565.09,-217.75"/>
+<path fill="none" stroke="#63b8ff" d="M547.21,-219.32C529.2,-210.03 507.55,-199.4 487.5,-191 480.46,-188.05 472.93,-185.17 465.49,-182.48"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="545.53,-222.39 556.02,-223.91 548.77,-216.18 545.53,-222.39"/>
 </a>
 </g>
 </g>
 <!-- Node13 -->
 <g id="Node000013" class="node">
 <title>Node13</title>
-<g id="a_Node000013"><a xlink:href="classAsyncFw_1_1DataArrayAbstractTcp_1_1Thread.html#aca7c5fcf08cc257de061af63342cd466" target="_top" xlink:title="Configures timeouts, buffer sizes, and signal bounds for a new socket context.">
-<polygon fill="white" stroke="#666666" points="485.62,-82 341.38,-82 341.38,-50 485.62,-50 485.62,-82"/>
-<text xml:space="preserve" text-anchor="start" x="349.38" y="-68.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::DataArrayAbstract</text>
-<text xml:space="preserve" text-anchor="middle" x="413.5" y="-56.5" font-family="Helvetica,sans-Serif" font-size="10.00">Tcp::Thread::initSocket</text>
+<g id="a_Node000013"><a xlink:href="classAsyncFw_1_1DataArrayAbstractTcp.html#aa9d59be7845d746853397e1905880434" target="_top" xlink:title="Signals a specific managed socket to disconnect from its remote peer.">
+<polygon fill="white" stroke="#666666" points="485.62,-132 341.38,-132 341.38,-100 485.62,-100 485.62,-132"/>
+<text xml:space="preserve" text-anchor="start" x="349.38" y="-118.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::DataArrayAbstract</text>
+<text xml:space="preserve" text-anchor="middle" x="413.5" y="-106.5" font-family="Helvetica,sans-Serif" font-size="10.00">Tcp::disconnectFromHost</text>
 </a>
 </g>
 </g>
@@ -184,18 +165,18 @@
 <g id="edge14_Node000001_Node000013" class="edge">
 <title>Node1&#45;&gt;Node13</title>
 <g id="a_edge14_Node000001_Node000013"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M576.41,-214.57C561.12,-181.19 530.49,-124.12 487.5,-91 483.25,-87.73 478.55,-84.87 473.64,-82.38"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="573.14,-215.81 580.39,-223.53 579.53,-212.97 573.14,-215.81"/>
+<path fill="none" stroke="#63b8ff" d="M568.05,-215.85C549.52,-193.42 519.73,-161.1 487.5,-141 482.39,-137.81 476.81,-134.97 471.1,-132.45"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="565.09,-217.75 574.1,-223.33 570.53,-213.35 565.09,-217.75"/>
 </a>
 </g>
 </g>
 <!-- Node14 -->
 <g id="Node000014" class="node">
 <title>Node14</title>
-<g id="a_Node000014"><a xlink:href="classAsyncFw_1_1ThreadPool.html#add8ee85dd7581acb117a805ff5a8c18a" target="_top" xlink:title="Synchronously invokes a function in the given thread&#39;s event loop (blocks the caller).">
-<polygon fill="white" stroke="#666666" points="469.88,-32 357.12,-32 357.12,0 469.88,0 469.88,-32"/>
-<text xml:space="preserve" text-anchor="start" x="365.12" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::ThreadPool</text>
-<text xml:space="preserve" text-anchor="middle" x="413.5" y="-6.5" font-family="Helvetica,sans-Serif" font-size="10.00">::sync</text>
+<g id="a_Node000014"><a xlink:href="classAsyncFw_1_1DataArrayAbstractTcp_1_1Thread.html#aca7c5fcf08cc257de061af63342cd466" target="_top" xlink:title="Configures timeouts, buffer sizes, and signal bounds for a new socket context.">
+<polygon fill="white" stroke="#666666" points="485.62,-82 341.38,-82 341.38,-50 485.62,-50 485.62,-82"/>
+<text xml:space="preserve" text-anchor="start" x="349.38" y="-68.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::DataArrayAbstract</text>
+<text xml:space="preserve" text-anchor="middle" x="413.5" y="-56.5" font-family="Helvetica,sans-Serif" font-size="10.00">Tcp::Thread::initSocket</text>
 </a>
 </g>
 </g>
@@ -203,6 +184,25 @@
 <g id="edge15_Node000001_Node000014" class="edge">
 <title>Node1&#45;&gt;Node14</title>
 <g id="a_edge15_Node000001_Node000014"><a xlink:title=" ">
+<path fill="none" stroke="#63b8ff" d="M576.41,-214.57C561.12,-181.19 530.49,-124.12 487.5,-91 483.25,-87.73 478.55,-84.87 473.64,-82.38"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="573.14,-215.81 580.39,-223.53 579.53,-212.97 573.14,-215.81"/>
+</a>
+</g>
+</g>
+<!-- Node15 -->
+<g id="Node000015" class="node">
+<title>Node15</title>
+<g id="a_Node000015"><a xlink:href="classAsyncFw_1_1ThreadPool.html#add8ee85dd7581acb117a805ff5a8c18a" target="_top" xlink:title="Synchronously invokes a function in the given thread&#39;s event loop (blocks the caller).">
+<polygon fill="white" stroke="#666666" points="469.88,-32 357.12,-32 357.12,0 469.88,0 469.88,-32"/>
+<text xml:space="preserve" text-anchor="start" x="365.12" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::ThreadPool</text>
+<text xml:space="preserve" text-anchor="middle" x="413.5" y="-6.5" font-family="Helvetica,sans-Serif" font-size="10.00">::sync</text>
+</a>
+</g>
+</g>
+<!-- Node1&#45;&gt;Node15 -->
+<g id="edge16_Node000001_Node000015" class="edge">
+<title>Node1&#45;&gt;Node15</title>
+<g id="a_edge16_Node000001_Node000015"><a xlink:title=" ">
 <path fill="none" stroke="#63b8ff" d="M581.01,-213.72C569.46,-170.94 541.32,-88.07 487.5,-41 482.36,-36.5 476.37,-32.8 470.07,-29.77"/>
 <polygon fill="#63b8ff" stroke="#63b8ff" points="577.57,-214.39 583.46,-223.2 584.35,-212.64 577.57,-214.39"/>
 </a>
@@ -249,9 +249,9 @@
 <g id="Node000009" class="node">
 <title>Node9</title>
 <g id="a_Node000009"><a xlink:href="classAsyncFw_1_1HttpSocket.html#a8268467d3581a4d393e9ccd288de32ff" target="_top" xlink:title="Schedules the socket for deferred asynchronous destruction.">
-<polygon fill="white" stroke="#666666" points="285.88,-232 173.12,-232 173.12,-200 285.88,-200 285.88,-232"/>
-<text xml:space="preserve" text-anchor="start" x="181.12" y="-218.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::HttpSocket</text>
-<text xml:space="preserve" text-anchor="middle" x="229.5" y="-206.5" font-family="Helvetica,sans-Serif" font-size="10.00">::destroy</text>
+<polygon fill="white" stroke="#666666" points="285.88,-257 173.12,-257 173.12,-225 285.88,-225 285.88,-257"/>
+<text xml:space="preserve" text-anchor="start" x="181.12" y="-243.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::HttpSocket</text>
+<text xml:space="preserve" text-anchor="middle" x="229.5" y="-231.5" font-family="Helvetica,sans-Serif" font-size="10.00">::destroy</text>
 </a>
 </g>
 </g>
@@ -259,8 +259,27 @@
 <g id="edge10_Node000008_Node000009" class="edge">
 <title>Node8&#45;&gt;Node9</title>
 <g id="a_edge10_Node000008_Node000009"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M336.33,-216C319.53,-216 302.04,-216 286.22,-216"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="336.31,-219.5 346.31,-216 336.31,-212.5 336.31,-219.5"/>
+<path fill="none" stroke="#63b8ff" d="M336.81,-226.4C319.87,-228.72 302.19,-231.15 286.22,-233.35"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="336.89,-229.92 346.32,-225.09 335.94,-222.98 336.89,-229.92"/>
+</a>
+</g>
+</g>
+<!-- Node11 -->
+<g id="Node000011" class="node">
+<title>Node11</title>
+<g id="a_Node000011"><a xlink:href="classAsyncFw_1_1DataArrayAbstractTcp_1_1Thread.html#ab6df6de1f9828a772e5968477ce5dffa" target="_top" xlink:title="Performs cleanup routines and safely removes a socket from the thread loop.">
+<polygon fill="white" stroke="#666666" points="301.62,-207 157.38,-207 157.38,-175 301.62,-175 301.62,-207"/>
+<text xml:space="preserve" text-anchor="start" x="165.38" y="-193.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::DataArrayAbstract</text>
+<text xml:space="preserve" text-anchor="middle" x="229.5" y="-181.5" font-family="Helvetica,sans-Serif" font-size="10.00">Tcp::Thread::destroySocket</text>
+</a>
+</g>
+</g>
+<!-- Node8&#45;&gt;Node11 -->
+<g id="edge12_Node000008_Node000011" class="edge">
+<title>Node8&#45;&gt;Node11</title>
+<g id="a_edge12_Node000008_Node000011"><a xlink:title=" ">
+<path fill="none" stroke="#63b8ff" d="M336.55,-205.57C325.14,-204 313.4,-202.39 302.09,-200.83"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="335.94,-209.02 346.32,-206.91 336.89,-202.08 335.94,-209.02"/>
 </a>
 </g>
 </g>
@@ -268,9 +287,9 @@
 <g id="Node000010" class="node">
 <title>Node10</title>
 <g id="a_Node000010"><a xlink:href="classAsyncFw_1_1HttpServer_1_1TcpSocket.html#a41557b69e30e25b97cbdda210afb7657" target="_top" xlink:title="Constructs a new TcpSocket associated with the parent server.">
-<polygon fill="white" stroke="#666666" points="119.5,-232 0,-232 0,-200 119.5,-200 119.5,-232"/>
-<text xml:space="preserve" text-anchor="start" x="8" y="-218.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::HttpServer</text>
-<text xml:space="preserve" text-anchor="middle" x="59.75" y="-206.5" font-family="Helvetica,sans-Serif" font-size="10.00">::TcpSocket::TcpSocket</text>
+<polygon fill="white" stroke="#666666" points="119.5,-257 0,-257 0,-225 119.5,-225 119.5,-257"/>
+<text xml:space="preserve" text-anchor="start" x="8" y="-243.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::HttpServer</text>
+<text xml:space="preserve" text-anchor="middle" x="59.75" y="-231.5" font-family="Helvetica,sans-Serif" font-size="10.00">::TcpSocket::TcpSocket</text>
 </a>
 </g>
 </g>
@@ -278,8 +297,8 @@
 <g id="edge11_Node000009_Node000010" class="edge">
 <title>Node9&#45;&gt;Node10</title>
 <g id="a_edge11_Node000009_Node000010"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M161.29,-216C147.57,-216 133.23,-216 119.81,-216"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="161.13,-219.5 171.13,-216 161.13,-212.5 161.13,-219.5"/>
+<path fill="none" stroke="#63b8ff" d="M161.29,-241C147.57,-241 133.23,-241 119.81,-241"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="161.13,-244.5 171.13,-241 161.13,-237.5 161.13,-244.5"/>
 </a>
 </g>
 </g>
