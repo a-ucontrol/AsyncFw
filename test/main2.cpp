@@ -1216,6 +1216,105 @@ void test_da_server_destroy_uaf_window(AbstractThread *poolOwner) {
 }
 
 // ============================================================================
+// ===============  Concurrent worker churn & findMinimalSocketsThread  =======
+// ============================================================================
+//
+// Exercises concurrent connect/close cycles with maxThreads = 2 while thread 1
+// holds an anchor socket and thread 2 is repeatedly spawned and reaped as its
+// sole socket connects and closes. Catches:
+//   - double destroy() / UAF on worker Thread when sockets_count_ hits 0
+//   - findMinimalSocketsThread() / removeThread() races under pool->mutex
+//   - stale socket->thread_ / disconnected delivery races during worker churn
+void test_da_concurrent_worker_churn(AbstractThread *poolOwner) {
+  lsNotice() << "=== concurrent worker churn (findMinimalSocketsThread / destroy) ===";
+  constexpr uint16_t kPort = 18998;
+  constexpr int kIterations = 300;
+
+  DataArrayTcpServer *server = nullptr;
+  bool listenOk = false;
+  poolOwner->invoke([&]() {
+    server = new DataArrayTcpServer("ChurnServer");
+    server->init(30000, 0, 10000, 2, 64);
+    listenOk = server->listen("127.0.0.1", kPort);
+  }, true);
+  EXPECT_MSG(server && listenOk, "ChurnServer listen failed");
+  if (!server || !listenOk) {
+    if (server) poolOwner->invoke([&]() { delete server; }, true);
+    return;
+  }
+
+  DataArrayTcpClient *client = nullptr;
+  poolOwner->invoke([&]() {
+    client = new DataArrayTcpClient("ChurnClient");
+    client->init(30000, 0, 10000, 4, 64);
+    client->setReconnectTimeout(0);
+  }, true);
+  EXPECT_MSG(client != nullptr, "ChurnClient alloc failed");
+  if (!client) {
+    poolOwner->invoke([&]() { delete server; }, true);
+    return;
+  }
+
+  // Anchor socket occupies worker 1 on the server so threads_.size() >= 1
+  DataArraySocket *anchor = client->createSocket();
+  EXPECT_MSG(anchor != nullptr, "anchor createSocket failed");
+  std::atomic<bool> anchorActive {false};
+  FunctionConnectionGuard anchorGuard;
+  poolOwner->invoke([&]() {
+    anchorGuard = client->connectionStateChanged.connect([&](const DataArraySocket *s) {
+      if (s == anchor && s->state() == AbstractSocket::State::Active) anchorActive.store(true);
+    });
+  }, true);
+  client->connectToHost(anchor, "127.0.0.1", kPort);
+  EXPECT_MSG(wait_for([&] { return anchorActive.load(); }, 2000), "anchor socket did not reach Active");
+
+  std::atomic<bool> stop {false};
+  std::atomic<int> completed {0};
+
+  std::thread racer([&]() {
+    while (!stop.load(std::memory_order_relaxed)) {
+      DataArraySocket *s = client->createSocket();
+      if (!s) continue;
+      client->connectToHost(s, "127.0.0.1", kPort);
+      std::this_thread::sleep_for(std::chrono::milliseconds(1));
+      client->destroySocket(s);
+    }
+  });
+
+  for (int i = 0; i < kIterations; ++i) {
+    DataArraySocket *s = client->createSocket();
+    if (s) {
+      client->connectToHost(s, "127.0.0.1", kPort);
+      std::this_thread::sleep_for(std::chrono::milliseconds(1));
+      client->destroySocket(s);
+    }
+    completed.fetch_add(1, std::memory_order_relaxed);
+  }
+
+  stop.store(true, std::memory_order_relaxed);
+  racer.join();
+
+  poolOwner->invoke([&]() { anchorGuard = {}; }, true);
+  client->destroySocket(anchor);
+
+  EXPECT_MSG(wait_for([&] { return client->sockets() == 0; }, 2000), "client sockets did not drain");
+  EXPECT_MSG(wait_for(
+                 [&] {
+    int n = -1;
+    poolOwner->invoke([&]() { n = server->sockets(); }, true);
+    return n == 0;
+  }, 2000),
+             "server sockets did not drain");
+
+  poolOwner->invoke([&]() {
+    delete client;
+    delete server;
+  }, true);
+
+  EXPECT(completed.load() == kIterations);
+}
+
+// ============================================================================
 // MockDnsServer — UDP+TCP DNS responder for AddressResolver regression tests.
 //
 // Config.udp_tc = true  → UDP query answered with TC=1 (truncated)
@@ -1653,6 +1752,9 @@ int main(int, char **) {
     // deleting the server, then immediately FINs the client. Kept after
     // all sockets() probes so it doesn't pollute their shared state.
     test_da_server_destroy_uaf_window(&poolOwner);
+
+    // ---- Concurrent worker churn & findMinimalSocketsThread -------
+    test_da_concurrent_worker_churn(&poolOwner);
 
     // ---- AddressResolver multi-socket regression (mock DNS) -------
     // Must run on testMain (not poolOwner): both MockDnsServer's

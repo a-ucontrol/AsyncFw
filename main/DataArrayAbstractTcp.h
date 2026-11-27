@@ -68,7 +68,9 @@ public:
 protected:
   /** @class Thread @brief Worker thread context customized for handling specific groups of DataArraySockets. */
   class Thread : public AbstractThreadPool::Thread {
-    friend class DataArrayAbstractTcp;
+    friend DataArrayAbstractTcp;
+    friend class DataArrayTcpClient;
+    friend class DataArrayTcpServer;
 
   protected:
     using AbstractThreadPool::Thread::Thread;
@@ -76,10 +78,10 @@ protected:
     void initSocket(DataArraySocket *);
     /** @brief Performs cleanup routines and safely removes a socket from the thread loop. @param socket Pointer to the target DataArraySocket. */
     void destroySocket(DataArraySocket *);
+    virtual void destroy() override;
 
   private:
-    std::atomic_flag destroying_;
-    std::atomic_int sockets_count_;
+    int sockets_count_ = 0;
   };
   /** @brief Locates the worker thread currently hosting the lowest number of socket contexts. @return Pointer to the least occupied Thread, or nullptr if no threads are running. */
   Thread *findMinimalSocketsThread();

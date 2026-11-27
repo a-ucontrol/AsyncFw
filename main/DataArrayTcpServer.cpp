@@ -40,25 +40,25 @@ bool DataArrayTcpServer::listening() { return listener->port() != 0; }
 
 bool DataArrayTcpServer::incomingConnection(int socketDescriptor, const std::string &address) {
   lsTrace("readTimeout: {}, waitKeepAliveAnswerTimeout: {}, waitForEncryptionTimeout: {}, maxThreads: {}, maxSockets: {}, maxReadBuffers = {}, maxReadSize = {}, maxWriteBuffers = {}, maxWriteSize = {}", readTimeout, waitKeepAliveAnswerTimeout, waitForEncryptionTimeout, maxThreads, maxSockets, maxReadBuffers, maxReadSize, maxWriteBuffers, maxWriteSize);
-  Thread *serverThread;
-  mutex.lock();
-  bool b = (threads_.size() < maxThreads);
-  if (b) {
-    serverThread = new Thread(name() + " thread", this);
-    mutex.unlock();
-    serverThread->start();
-  } else {
-    serverThread = static_cast<Thread *>(findMinimalSocketsThread());
-    if (!serverThread && std::find(alwaysConnect_.begin(), alwaysConnect_.end(), address) != alwaysConnect_.end()) serverThread = static_cast<Thread *>(threads_.at(0));
-    mutex.unlock();
-    if (!serverThread) {
-      lsError() << "many connections";
-      return false;
+  Thread *serverThread = nullptr;
+  bool _start = false;
+  {  //lock scope
+    Thread::LockGuard lock(mutex);
+    if (threads_.size() < maxThreads) {
+      serverThread = new Thread(name() + " thread", this);
+      _start = true;
+    } else {
+      serverThread = static_cast<Thread *>(findMinimalSocketsThread());
+      if (!serverThread && std::find(alwaysConnect_.begin(), alwaysConnect_.end(), address) != alwaysConnect_.end()) serverThread = static_cast<Thread *>(threads_.at(0));
+      if (!serverThread) {
+        lsError() << "many connections";
+        return false;
+      }
     }
+    ++serverThread->sockets_count_;
   }
-
+  if (_start) serverThread->start();
   bool encrypt = std::find(disabledEncryptionHosts_.begin(), disabledEncryptionHosts_.end(), address) == disabledEncryptionHosts_.end() && !tlsContext.empty();
-
   serverThread->invoke([serverThread, socketDescriptor, encrypt]() { serverThread->createSocket(socketDescriptor, encrypt); }, true);
   return true;
 }
@@ -70,8 +70,16 @@ void DataArrayTcpServer::Thread::createSocket(int socketDescriptor, bool encrypt
   DataArrayTcpServer *_server = server();
   tcpSocket->stateChanged.connect([this, _server, tcpSocket](AbstractSocket::State state) {
     if (state != AbstractSocket::State::Unconnected) return;
-    _server->thread_->invoke([_server, tcpSocket]() { _server->disconnected(tcpSocket); });
+    tcpSocket->thread_->invoke([_server, tcpSocket]() { _server->disconnected(tcpSocket); });
+    Thread *thread = static_cast<Thread *>(tcpSocket->thread());
+    bool e;
+    {  //lock scope
+      Thread::LockGuard lock = Thread::LockGuard(_server->mutex);
+      e = --thread->sockets_count_ == 0;
+      if (e) _server->removeThread(thread);
+    }
     destroySocket(tcpSocket);
+    if (e) thread->destroy();
   });
 
   if (encrypt) _server->setTlsContext(tcpSocket, _server->tlsContext);

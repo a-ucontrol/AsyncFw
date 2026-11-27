@@ -19,7 +19,7 @@ DataArrayAbstractTcp::Thread *DataArrayAbstractTcp::findMinimalSocketsThread() {
   AbstractThread *t = nullptr;
   int index = -1;
   for (int i = 0, n = threads_.size(), m = maxSockets; i != n; ++i) {
-    int size = static_cast<Thread *>(threads_.at(i))->sockets_count_.load(std::memory_order_relaxed);
+    int size = static_cast<Thread *>(threads_.at(i))->sockets_count_;
     if (!size) {
       lsDebug() << "empty sockets list, skip thread";
       continue;
@@ -77,7 +77,6 @@ int DataArrayAbstractTcp::sockets(Invocable<void(const DataArraySocket *)>::Abst
 #endif
 
 void DataArrayAbstractTcp::Thread::initSocket(DataArraySocket *socket) {
-  sockets_count_.fetch_add(1, std::memory_order_relaxed);
   DataArrayAbstractTcp *tcp = static_cast<DataArrayAbstractTcp *>(pool);
   socket->setReadTimeout(tcp->readTimeout);
   socket->setWaitKeepAliveResponseTimeout(tcp->waitKeepAliveAnswerTimeout);
@@ -98,18 +97,11 @@ void DataArrayAbstractTcp::Thread::destroySocket(DataArraySocket *socket) {
   socket->close();
   socket->removeTimer();
   socket->removeFromThread();
-  sockets_count_.fetch_sub(1, std::memory_order_relaxed);
-  bool e = sockets_.empty() && !destroying_.test_and_set(std::memory_order_relaxed);
-  if (e) { OPENSSL_thread_stop(); }
-  if (!pool->thread()->invoke([p = this, socket, e]() {
-    socket->destroy();
-    if (e) {
-      LockGuard lock = LockGuard(static_cast<DataArrayAbstractTcp *>(p->pool)->mutex);
-      static_cast<DataArrayAbstractTcp *>(p->pool)->removeThread(p);
-      p->stop();
-      delete p;
-    }
-  }))
-    socket->destroy();
+  if (!pool->thread()->invoke([socket]() { socket->destroy(); })) socket->destroy();
   lsTrace() << LogStream::Color::Green << '(' + name() + ')' << LogStream::Color::Magenta << sockets_.size();
+}
+
+void DataArrayAbstractTcp::Thread::destroy() {
+  OPENSSL_thread_stop();
+  AbstractThreadPool::Thread::destroy();
 }

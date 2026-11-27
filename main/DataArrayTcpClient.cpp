@@ -21,25 +21,25 @@ DataArrayTcpClient::~DataArrayTcpClient() {
 }
 
 DataArraySocket *DataArrayTcpClient::createSocket(Thread *thread) {
-  bool b = false;
-  Thread *clientThread;
-  if (thread == nullptr) {
-    mutex.lock();
-    if (threads_.size() < maxThreads) b = true;
-    if (b) {
-      clientThread = new Thread(name() + " thread", this);
-      mutex.unlock();
-      clientThread->start();
-    } else {
-      clientThread = static_cast<Thread *>(findMinimalSocketsThread());
-      mutex.unlock();
-      if (!clientThread) {
-        lsError() << "many connections";
-        return nullptr;
+  Thread *clientThread = thread;
+  bool _start = false;
+  {  //lock scope
+    Thread::LockGuard lock(mutex);
+    if (clientThread == nullptr) {
+      if (threads_.size() < maxThreads) {
+        clientThread = new Thread(name() + " thread", this);
+        _start = true;
+      } else {
+        clientThread = static_cast<Thread *>(findMinimalSocketsThread());
+        if (!clientThread) {
+          lsError() << "many connections";
+          return nullptr;
+        }
       }
     }
-  } else clientThread = thread;
-
+    ++clientThread->sockets_count_;
+  }
+  if (_start) clientThread->start();
   DataArraySocket *socket;
   clientThread->invoke([clientThread, &socket]() { socket = clientThread->createSocket(); }, true);
   return socket;
@@ -47,7 +47,15 @@ DataArraySocket *DataArrayTcpClient::createSocket(Thread *thread) {
 
 void DataArrayTcpClient::destroySocket(DataArraySocket *socket) {
   Thread *thread = static_cast<Thread *>(socket->thread());
-  if (thread) thread->invoke([thread, socket]() { thread->destroySocket(socket); }, true);
+  if (!thread) return;
+  bool e;
+  {  // lock scope
+    Thread::LockGuard lock = Thread::LockGuard(mutex);
+    e = --thread->sockets_count_ == 0;
+    if (e) removeThread(thread);
+  }
+  thread->invoke([thread, socket]() { thread->destroySocket(socket); }, true);
+  if (e) thread->destroy();
 }
 
 void DataArrayTcpClient::connectToHost(DataArraySocket *socket, const std::string &address, uint16_t port) {

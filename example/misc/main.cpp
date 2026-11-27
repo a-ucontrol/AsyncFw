@@ -11,7 +11,7 @@ using namespace AsyncFw;
 
 int main(int, char **) {
   constexpr uint16_t kPort = 18998;
-  constexpr int kIterations = 10;
+  constexpr int kIterations = 1000;
 
   Thread serverOwner("ServerOwner");
   Thread clientOwner("ClientOwner");
@@ -67,7 +67,7 @@ int main(int, char **) {
       DataArraySocket *s = client->createSocket();
       if (!s) continue;
       client->connectToHost(s, "127.0.0.1", kPort);
-      //std::this_thread::sleep_for(std::chrono::milliseconds(10));
+      std::this_thread::sleep_for(std::chrono::milliseconds(1));
       client->destroySocket(s);
     }
   });
@@ -77,7 +77,7 @@ int main(int, char **) {
     DataArraySocket *s = client->createSocket();
     if (s) {
       client->connectToHost(s, "127.0.0.1", kPort);
-      //std::this_thread::sleep_for(std::chrono::milliseconds(10));
+      std::this_thread::sleep_for(std::chrono::milliseconds(1));
       client->destroySocket(s);
     }
     completed.fetch_add(1, std::memory_order_relaxed);
