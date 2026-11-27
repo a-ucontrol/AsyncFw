@@ -112,14 +112,8 @@ void AbstractThreadPool::Thread::destroy() {
   if (!pool->thread_->invoke([p = this]() {
     p->stop();
     delete p;
-  })) {
-    lsTrace() << LogStream::Color::DarkRed << "pool thread already finished" << '(' + pool->thread_->name() + ')';
-    // Owner stopped after removeThread(), re-register so AbstractThreadPool::quit() stops and deletes this thread.
-    {
-      std::lock_guard<std::mutex> lock(pool->mutex);
-      pool->appendThread(this);
-    }
-  }
+  }))
+    lsError() << "pool thread already finished" << '(' + pool->thread_->name() + ')';
 }
 
 Instance<ThreadPool> ThreadPool::instance_;

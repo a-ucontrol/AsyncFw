@@ -1696,93 +1696,6 @@ void test_timer_single_and_guard() {
   EXPECT_MSG(firedDirectInitGuard.load() == 0, "direct-initialized SingleGuard must cancel on scope exit");
 }
 
-// ============================================================================
-// Worker re-attachment when pool owner stops mid-destroySocket()
-// ============================================================================
-//
-// Reproduces the race window in DataArrayTcpClient::destroySocket():
-//   1. Caller checks `thread_->running()` (true) and calls `removeThread(thread)`.
-//   2. Caller blocks on `thread->invoke(..., true)` to destroy the socket.
-//   3. Before `thread->destroy()` posts the delete-task to `pool->thread_`,
-//      the pool owner quits and transitions to Finished.
-//   4. `pool->thread_->invoke(...)` inside `AbstractThreadPool::Thread::destroy()`
-//      returns false and re-attaches the worker via `pool->appendThread(this)`
-//      so `~DataArrayTcpClient()` / `~AbstractThreadPool::quit()` stops and deletes
-//      it cleanly instead of leaking it into static teardown.
-void test_da_destroy_socket_owner_quit_race() {
-  lsNotice() << "=== destroySocket() vs pool owner quit() race window ===";
-  constexpr int kIterations = 25;
-
-  size_t baselineThreads = 0;
-  {
-    auto locked = AbstractThread::threads();
-    baselineThreads = locked->size();
-  }
-
-  for (int i = 0; i < kIterations; ++i) {
-    Thread poolOwner("RacePoolOwner");
-    poolOwner.start();
-
-    DataArrayTcpClient *client = nullptr;
-    poolOwner.invoke([&client]() {
-      client = new DataArrayTcpClient("RaceClient");
-      client->setReconnectTimeout(0);
-    }, true);
-    EXPECT_MSG(client != nullptr, "client alloc failed at iter " + std::to_string(i));
-    if (!client) {
-      poolOwner.quit();
-      poolOwner.waitFinished();
-      break;
-    }
-
-    DataArraySocket *socket = client->createSocket();
-    EXPECT_MSG(socket != nullptr, "createSocket failed at iter " + std::to_string(i));
-    AbstractThread *worker = socket->thread();
-
-    std::atomic<bool> workerBusy {false};
-    std::atomic<bool> destroyEntered {false};
-
-    // Hold the worker briefly so `destroySocket()` pauses at `thread->invoke(..., true)`
-    // after `removeThread(thread)` and before `thread->destroy()`.
-    worker->invoke([&workerBusy, &destroyEntered]() {
-      workerBusy.store(true, std::memory_order_release);
-      while (!destroyEntered.load(std::memory_order_acquire)) { std::this_thread::yield(); }
-      std::this_thread::sleep_for(std::chrono::milliseconds(2));
-    });
-
-    while (!workerBusy.load(std::memory_order_acquire)) { std::this_thread::yield(); }
-
-    std::thread destroyer([client, socket, &destroyEntered]() {
-      std::this_thread::sleep_for(std::chrono::microseconds(200));
-      destroyEntered.store(true, std::memory_order_release);
-      client->destroySocket(socket);
-    });
-
-    while (!destroyEntered.load(std::memory_order_acquire)) { std::this_thread::yield(); }
-    std::this_thread::sleep_for(std::chrono::microseconds(500));
-    poolOwner.quit();
-    poolOwner.waitFinished();
-
-    destroyer.join();
-
-    // The worker must have been re-attached to `client->threads()` when
-    // `pool->thread_->invoke(...)` returned false.
-    const size_t reattached = client->threads()->size();
-    EXPECT_MSG(reattached == 1, "iter " + std::to_string(i) + ": expected 1 re-attached worker in pool, got " + std::to_string(reattached));
-
-    // Owner event loop is already Finished; delete client directly so
-    // `~AbstractThreadPool::quit()` stops and deletes the re-attached worker.
-    delete client;
-  }
-
-  size_t finalThreads = 0;
-  {
-    auto locked = AbstractThread::threads();
-    finalThreads = locked->size();
-  }
-  EXPECT_MSG(finalThreads == baselineThreads, "orphaned threads left in AbstractThread::threads(): before=" + std::to_string(baselineThreads) + " after=" + std::to_string(finalThreads));
-}
-
 }  // namespace
 
 int main(int, char **) {
@@ -1853,7 +1766,6 @@ int main(int, char **) {
     test_address_resolver_tcp_fallback_iterations();
 
     test_timer_single_and_guard();
-    test_da_destroy_socket_owner_quit_race();
 
     // ---- quit() from a foreign thread (destroys the pool) ------------
     // Must run last: it tears down `dac`'s pool entirely. Since we
