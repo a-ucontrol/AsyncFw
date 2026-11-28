@@ -1863,9 +1863,7 @@ int main(int, char **) {
       poolOwner.invoke([&]() { delete quitClient; }, true);
     }
 
-    poolOwner.invoke([]() {
-      if (ThreadPool *pool = ThreadPool::instance()) pool->quit();
-    }, true);
+    poolOwner.invoke([]() { Instance<ThreadPool>::destroy(); }, true);
   }, true);
 
   if (g_failed.load()) {
