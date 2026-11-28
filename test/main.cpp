@@ -510,7 +510,7 @@ void test_filesystemwatcher_recreate_in_debounce_window() {
   // After debounce(1000ms) from the second write, we_ must be empty
   // (both IN_MODIFY entries were cancelled by their IN_CLOSE_WRITE).
   // Give some margin so we also catch a hypothetical late fire.
-  Timer::single(1500, [&]() {
+  Timer::single(1250, [&]() {
     lsNotice() << "recreate-in-debounce: Changed(f) count =" << changedCount.load();
     EXPECT_MSG(changedCount.load() == 2, "Changed(f) count=" + std::to_string(changedCount.load()) +
                                              " (expected 2: one per write() — IN_CLOSE_WRITE bypasses debounce "
@@ -575,7 +575,7 @@ void test_filesystemwatcher_scenarios() {
   }
 
   // ---- Scenario B (deferred) ------------------------------------------
-  Timer::single(300, [&, f3]() {
+  Timer::single(100, [&, f3]() {
     phase = 1;
     {
       File _f {f3};
@@ -598,13 +598,13 @@ void test_filesystemwatcher_scenarios() {
   }
   watcher.addPath(f4);
   std::filesystem::remove(f4);
-  Timer::single(300, [f4]() {
+  Timer::single(100, [f4]() {
     File _f {f4};
     _f.open(std::ios::binary | std::ios::out);
   });
 
   // ---- Final report ---------------------------------------------------
-  Timer::single(1500, [&]() {
+  Timer::single(1250, [&]() {
     lsNotice() << "Scenario A:" << (scenarioAOk.load() ? "OK" : "BUG (Created(f2) not received)");
     lsNotice() << "Scenario B: Changed(f3) count =" << scenarioBNotify.load();
     lsNotice() << "Scenario C: Removed(f4) =" << scenarioCRemoved.load() << "Created(f4) =" << scenarioCCreated.load();

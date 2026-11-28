@@ -1785,7 +1785,7 @@ void test_connect_refused(Done next) {
   auto *s = new ProbeSocket();
   s->connect("127.0.0.1", port);
 
-  Timer::single(400, [s, next]() {
+  Timer::single(50, [s, next]() {
     lsNotice() << "  trace: " << s->trace.dump();
     EXPECT(!s->trace.sawConnected);
     EXPECT(s->trace.sawRefused);
@@ -1805,7 +1805,7 @@ void test_graceful_close(Done next) {
   auto *s = new ProbeSocket();
   s->connect("127.0.0.1", port);
 
-  Timer::single(200, [s, listen_fd, next]() {
+  Timer::single(50, [s, listen_fd, next]() {
     int client_fd = rawAccept(listen_fd, 200);
     EXPECT(client_fd >= 0);
     EXPECT(s->trace.sawActive);
@@ -1813,7 +1813,7 @@ void test_graceful_close(Done next) {
     ::close(client_fd);
     ::close(listen_fd);
 
-    Timer::single(400, [s, next]() {
+    Timer::single(50, [s, next]() {
       lsNotice() << "  trace: " << s->trace.dump();
       EXPECT(!s->trace.sawRefused);
       EXPECT(s->trace.sawClosed);
@@ -1832,7 +1832,7 @@ void test_rst_close(Done next) {
   auto *s = new ProbeSocket();
   s->connect("127.0.0.1", port);
 
-  Timer::single(200, [s, listen_fd, next]() {
+  Timer::single(50, [s, listen_fd, next]() {
     int client_fd = rawAccept(listen_fd, 200);
     EXPECT(client_fd >= 0);
     EXPECT(s->trace.sawActive);
@@ -1842,7 +1842,7 @@ void test_rst_close(Done next) {
     ::close(client_fd);
     ::close(listen_fd);
 
-    Timer::single(400, [s, next]() {
+    Timer::single(50, [s, next]() {
       lsNotice() << "  trace: " << s->trace.dump();
       EXPECT(!s->trace.sawRefused);
       EXPECT(s->trace.sawClosed);
@@ -1953,7 +1953,7 @@ void test_stale_cqe_after_close(Done next) {
 
   // Let the event loop tick: any in-flight cqe for the cancelled poll
   // is delivered here. The task must not be invoked.
-  Timer::single(100, [s, listen_fd, next]() {
+  Timer::single(50, [s, listen_fd, next]() {
     EXPECT_MSG(s->st() == AbstractSocket::Unconnected, "state_ = " + std::to_string((int)s->st()) + " after event loop tick (stale cqe reached the task?)");
     delete s;
     ::close(listen_fd);
