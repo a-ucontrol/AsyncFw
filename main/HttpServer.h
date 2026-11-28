@@ -312,6 +312,9 @@ public:
   /** @brief Toggles whether automatic default responses for CORS validation logic (OPTIONS requests) are enabled globally. */
   void setEnableCorsRequests(bool);
 
+  void setReadTimeout(int timeout) { readTimeout_ = timeout; }
+  void setMaxReadSize(std::size_t size) { maxReadSize_ = size; }
+
   /** @brief Accessor to fetch the globally managed singleton instance reference of the active HttpServer. */
   static HttpServer *instance() { return instance_.value; }
   /** @brief Signal connector emitted whenever a fresh client socket establishes a network link. */
@@ -335,6 +338,8 @@ private:
   RulesMap::iterator findRule(const std::string &, const Request::Method);
   std::vector<TcpSocket *> sockets;
   bool cors_request_enabled = true;
+  int readTimeout_ = 10000;
+  std::size_t maxReadSize_ = 16 * 1024 * 1024;
   AsyncFw_INSTANCE<HttpServer> instance_;
   Invocable<bool(const Request &, std::any)>::Abstract *peek = nullptr;
   struct Private;

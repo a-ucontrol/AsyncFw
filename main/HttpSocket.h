@@ -38,6 +38,9 @@ public:
   DataArrayView content();
   void sendFile(const std::string &);
 
+  void setReadTimeout(int timeout) { readTimeout_ = timeout; }
+  void setMaxReadSize(std::size_t size) { maxReadSize_ = size; }
+
   FunctionConnector<const AbstractSocket::State>::Protected<HttpSocket> stateChanged;
   FunctionConnector<const DataArray &>::Protected<HttpSocket> received;
   FunctionConnector<>::Protected<HttpSocket> writeContent;
@@ -56,6 +59,8 @@ private:
   int progress_;
   std::size_t headerSize_;
   std::size_t contentLength_ = std::string::npos;
+  int readTimeout_ = 10000;
+  std::size_t maxReadSize_ = 16 * 1024 * 1024;
   int tid_ = -1;
   bool full_ = false;
 };

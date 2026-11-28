@@ -506,6 +506,8 @@ bool HttpServer::listen(uint16_t port) {
       incoming(descriptor, address, accept);
       if (!*accept) {
         TcpSocket *socket = new TcpSocket(this);
+        socket->setReadTimeout(readTimeout_);
+        socket->setMaxReadSize(maxReadSize_);
         sockets.emplace_back(socket);
         trace() << "(incoming) socket created, total:" << sockets.size() << "tls data" << !private_.tlsContext.empty();
         if (!private_.tlsContext.empty()) {

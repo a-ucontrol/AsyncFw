@@ -41,15 +41,15 @@ void HttpSocket::stateEvent() {
       received(received_);
     }
   } else if (state_ == State::Active) {
-    if (tid_ != -1) thread_->modifyTimer(tid_, 5000);
+    if (tid_ != -1) thread_->modifyTimer(tid_, readTimeout_);
   }
   stateChanged(state_);
 }
 
 void HttpSocket::activateEvent() {
   AbstractTlsSocket::activateEvent();
-  if (tid_ != -1) return;
-  tid_ = thread_->appendTimerTask((state_ != Active) ? 10000 : 5000, [this]() {
+  if (tid_ != -1 || readTimeout_ <= 0) return;
+  tid_ = thread_->appendTimerTask(readTimeout_, [this]() {
     thread_->removeTimer(tid_);
     tid_ = -1;
     close();
@@ -61,14 +61,19 @@ void HttpSocket::readEvent() {
   trace();
 
   AsyncFw::DataArray &_da = peek();
+  if (received_.size() + _da.size() > maxReadSize_) {
+    lsWarning() << "read size limit exceeded:" << received_.size() + _da.size() << ">" << maxReadSize_;
+    setErrorString("Read size limit exceeded");
+    disconnect();
+    return;
+  }
+
+  if (tid_ != -1) thread_->modifyTimer(tid_, readTimeout_);
 
   if (received_.empty()) {
-    if (tid_ != -1) {
-      thread_->removeTimer(tid_);
-      tid_ = -1;
-    }
     std::size_t i = _da.view().find("\r\n\r\n");
     if (i == std::string::npos) return;
+
     headerSize_ = i;
 
     received_ += read(headerSize_ + 4);  // received_ contains only the header section here
@@ -109,6 +114,12 @@ void HttpSocket::readEvent() {
           return;
         }
         value = value * 10 + static_cast<std::size_t>(c - '0');
+      }
+      if (received_.size() + value > maxReadSize_) {
+        lsWarning() << "content-length exceeds maxReadSize:" << received_.size() + value << ">" << maxReadSize_;
+        setErrorString("Payload too large");
+        disconnect();
+        return;
       }
       contentLength_ = value;
       if (contentLength_ == 0) {
@@ -155,7 +166,13 @@ void HttpSocket::readEvent() {
 
   for (;;) {
     std::size_t _s = _da.view().find("\r\n");
-    if (_s == std::string::npos) return;
+    if (_s == std::string::npos) {
+      if (_da.size() > 64) {
+        lsWarning("chunk header too long");
+        disconnect();
+      }
+      return;
+    }
     std::string str(_da.begin(), _da.begin() + _s);
 
     std::stringstream _stream;
@@ -220,7 +237,14 @@ void HttpSocket::disconnect() {
 }
 
 void HttpSocket::close() {
-  thread_->invoke([this]() { AbstractTlsSocket::close(); }, true);
+  auto _f = [this]() {
+    if (tid_ != -1) {
+      thread_->removeTimer(tid_);
+      tid_ = -1;
+    }
+    AbstractTlsSocket::close();
+  };
+  if (!thread_->invoke(_f, true)) _f();
 }
 
 void HttpSocket::destroy() {
