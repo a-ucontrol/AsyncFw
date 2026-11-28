@@ -48,14 +48,14 @@ DataArraySocket *DataArrayTcpClient::createSocket(Thread *thread) {
 void DataArrayTcpClient::destroySocket(DataArraySocket *socket) {
   Thread *thread = static_cast<Thread *>(socket->thread());
   if (!thread) return;
-  bool d;
+  bool e;
   {  // lock scope
     Thread::LockGuard lock = Thread::LockGuard(mutex);
-    d = --thread->sockets_count_ == 0 && thread->running();
-    if (d) removeThread(thread);
+    e = --thread->sockets_count_ == 0;
+    if (e) removeThread(thread);
   }
   thread->invoke([thread, socket]() { thread->destroySocket(socket); }, true);
-  if (d) thread->destroy();
+  if (e) thread->destroy();
 }
 
 void DataArrayTcpClient::connectToHost(DataArraySocket *socket, const std::string &address, uint16_t port) {
