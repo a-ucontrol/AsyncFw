@@ -26,6 +26,7 @@ struct AbstractThreadPool::Private {
   };
   std::string name;
   std::queue<Thread::AbstractTask *> quit_tasks;
+  FunctionConnectionGuard guard;
 };
 
 InitPriority(AbstractThreadPool::Private::List, AbstractThreadPool::Private::list, 2);
@@ -44,7 +45,8 @@ AbstractThreadPool::Private::List::~List() {
 LockData<const std::vector<AbstractThreadPool *>> AbstractThreadPool::pools() { return {Private::list, Private::list.mutex}; }
 
 AbstractThreadPool::AbstractThreadPool(const std::string &name) : private_(*new Private) {
-  thread_ = AbstractThread::current();
+  thread_ = Thread::current();
+  private_.guard = thread_->destroying.connect([]() { lsError() << "owner thread destroyed before pool"; });
   private_.name = name;
   {  //lock scope
     std::lock_guard<std::mutex> lock(Private::list.mutex);
@@ -67,6 +69,10 @@ AbstractThreadPool::~AbstractThreadPool() {
 }
 
 void AbstractThreadPool::quit() {
+  {  //lock scope
+    std::lock_guard<std::mutex> lock(mutex);
+    if (threads_.empty() && private_.quit_tasks.empty()) return;
+  }
   auto _f = [this]() {
     Thread *t;
     for (;;) {

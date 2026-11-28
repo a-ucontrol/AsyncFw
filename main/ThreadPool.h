@@ -38,7 +38,7 @@ public:
   AbstractThreadPool(const std::string &);
   virtual ~AbstractThreadPool() = 0;
   virtual void quit();
-  AbstractThread *thread() { return thread_; }
+  AsyncFw::Thread *thread() { return thread_; }
   /** @brief Returns the identifier name of the thread pool. */
   std::string name() const;
   /** @brief Thread-safely returns the internal list of threads managed by this pool. */
@@ -51,9 +51,9 @@ protected:
   /** @brief Unregisters a thread from the pool.
   @warning Caller MUST hold mutex. */
   virtual void removeThread(AbstractThreadPool::Thread *);
-  std::vector<AbstractThreadPool::Thread *> threads_;
   std::mutex mutex;
-  AbstractThread *thread_;
+  std::vector<AbstractThreadPool::Thread *> threads_;
+  AsyncFw::Thread *thread_;
 
 private:
   struct Private;
