@@ -38,8 +38,8 @@ public:
   DataArrayView content();
   void sendFile(const std::string &);
 
-  void setReadTimeout(int timeout) { readTimeout_ = timeout; }
-  void setMaxReadSize(std::size_t size) { maxReadSize_ = size; }
+  void setReadTimeout(int);
+  void setMaxReadSize(std::size_t);
 
   FunctionConnector<const AbstractSocket::State>::Protected<HttpSocket> stateChanged;
   FunctionConnector<const DataArray &>::Protected<HttpSocket> received;
@@ -54,14 +54,7 @@ protected:
   bool connectionClose = false;
 
 private:
-  DataArray received_;
-  File file_;
-  int progress_;
-  std::size_t headerSize_;
-  std::size_t contentLength_ = std::string::npos;
-  int readTimeout_ = 10000;
-  std::size_t maxReadSize_ = 16 * 1024 * 1024;
-  int tid_ = -1;
-  bool full_ = false;
+  struct Private;
+  Private &private_;
 };
 }  // namespace AsyncFw

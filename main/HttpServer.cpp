@@ -352,6 +352,8 @@ struct HttpServer::Private {
   AsyncFw::TlsContext tlsContext;
   AsyncFw::ListenSocket listener;
   FunctionConnectionGuard listenerGuard;
+  int readTimeout_ = 10000;
+  std::size_t maxReadSize_ = 16 * 1024 * 1024;
 };
 
 struct HttpServer::Request::Private {
@@ -506,8 +508,8 @@ bool HttpServer::listen(uint16_t port) {
       incoming(descriptor, address, accept);
       if (!*accept) {
         TcpSocket *socket = new TcpSocket(this);
-        socket->setReadTimeout(readTimeout_);
-        socket->setMaxReadSize(maxReadSize_);
+        socket->setReadTimeout(private_.readTimeout_);
+        socket->setMaxReadSize(private_.maxReadSize_);
         sockets.emplace_back(socket);
         trace() << "(incoming) socket created, total:" << sockets.size() << "tls data" << !private_.tlsContext.empty();
         if (!private_.tlsContext.empty()) {
@@ -604,6 +606,10 @@ HttpServer::RulesMap::iterator HttpServer::findRule(const std::string &path, con
 }
 
 void HttpServer::setEnableCorsRequests(bool state) { cors_request_enabled = state; }
+
+void HttpServer::setReadTimeout(int timeout) { private_.readTimeout_ = timeout; }
+
+void HttpServer::setMaxReadSize(std::size_t size) { private_.maxReadSize_ = size; }
 
 bool HttpServer::hasTls() { return !private_.tlsContext.empty(); }
 
