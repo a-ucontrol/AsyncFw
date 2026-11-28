@@ -67,9 +67,9 @@
 </g>
 </g>
 <!-- Node1&#45;&gt;Node5 -->
-<g id="edge5_Node000001_Node000005" class="edge">
+<g id="edge4_Node000001_Node000005" class="edge">
 <title>Node1&#45;&gt;Node5</title>
-<g id="a_edge5_Node000001_Node000005"><a xlink:title=" ">
+<g id="a_edge4_Node000001_Node000005"><a xlink:title=" ">
 <path fill="none" stroke="#63b8ff" d="M331,-46.61C314.38,-41.95 296.78,-37.01 280.68,-32.49"/>
 <polygon fill="#63b8ff" stroke="#63b8ff" points="329.73,-49.89 340.3,-49.22 331.62,-43.15 329.73,-49.89"/>
 </a>
@@ -79,9 +79,9 @@
 <g id="Node000003" class="node">
 <title>Node3</title>
 <g id="a_Node000003"><a xlink:href="classAsyncFw_1_1HttpSocket.html#ad51bb1bf5880c3037c7ad70231c0767d" target="_top" xlink:title="Core internal event handler reacting to raw descriptor readiness signals.">
-<polygon fill="white" stroke="#666666" points="112.75,-107 0,-107 0,-75 112.75,-75 112.75,-107"/>
-<text xml:space="preserve" text-anchor="start" x="8" y="-93.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::HttpSocket</text>
-<text xml:space="preserve" text-anchor="middle" x="56.38" y="-81.5" font-family="Helvetica,sans-Serif" font-size="10.00">::activateEvent</text>
+<polygon fill="white" stroke="#666666" points="112.75,-132 0,-132 0,-100 112.75,-100 112.75,-132"/>
+<text xml:space="preserve" text-anchor="start" x="8" y="-118.5" font-family="Helvetica,sans-Serif" font-size="10.00">AsyncFw::HttpSocket</text>
+<text xml:space="preserve" text-anchor="middle" x="56.38" y="-106.5" font-family="Helvetica,sans-Serif" font-size="10.00">::activateEvent</text>
 </a>
 </g>
 </g>
@@ -89,17 +89,8 @@
 <g id="edge2_Node000002_Node000003" class="edge">
 <title>Node2&#45;&gt;Node3</title>
 <g id="a_edge2_Node000002_Node000003"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M137.35,-103.3C129.09,-102.03 120.85,-100.76 112.96,-99.55"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="136.69,-106.74 147.1,-104.8 137.75,-99.82 136.69,-106.74"/>
-</a>
-</g>
-</g>
-<!-- Node4&#45;&gt;Node3 -->
-<g id="edge4_Node000004_Node000003" class="edge">
-<title>Node4&#45;&gt;Node3</title>
-<g id="a_edge4_Node000004_Node000003"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M153.35,-76.23C139.99,-78.29 126.09,-80.43 113.15,-82.42"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="153.56,-79.74 162.91,-74.76 152.49,-72.83 153.56,-79.74"/>
+<path fill="none" stroke="#63b8ff" d="M137.35,-116C129.09,-116 120.85,-116 112.96,-116"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="137.09,-119.5 147.09,-116 137.09,-112.5 137.09,-119.5"/>
 </a>
 </g>
 </g>
