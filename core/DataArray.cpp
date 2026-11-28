@@ -131,7 +131,7 @@ DataArrayView::DataArrayView(const DataArray &da) : DataArrayView(da.data(), da.
 DataArrayList DataArrayView::split(const char c) const {
   if (empty()) return {};
   DataArrayList l;
-  int i = 0;
+  size_t i = 0;
   for (;;) {
     size_t j = find(c, i);
     l.push_back({data() + i, (j == std::string::npos) ? data() + size() : data() + j});
