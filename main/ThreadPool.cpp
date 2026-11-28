@@ -6,6 +6,7 @@ See {Link: LICENSE file https://mit-license.org} in the project root for full li
 */
 
 #include <algorithm>
+#include <queue>
 #include "core/init_priority.hpp"
 #include "core/LogStream.h"
 #include "ThreadPool.h"
@@ -24,6 +25,7 @@ struct AbstractThreadPool::Private {
     bool operator()(const AbstractThreadPool *p1, const AbstractThreadPool *p2) const { return p1 < p2; }
   };
   std::string name;
+  std::queue<Thread::AbstractTask *> quit_tasks;
 };
 
 InitPriority(AbstractThreadPool::Private::List, AbstractThreadPool::Private::list, 2);
@@ -53,10 +55,7 @@ AbstractThreadPool::AbstractThreadPool(const std::string &name) : private_(*new 
 }
 
 AbstractThreadPool::~AbstractThreadPool() {
-  if (threads_.size() > 0) {
-    lsTrace() << LogStream::Color::DarkRed << "destroyed with threads";
-    AbstractThreadPool::quit();
-  }
+  AbstractThreadPool::quit();
   {  //lock scope
     std::lock_guard<std::mutex> lock(Private::list.mutex);
     std::vector<AbstractThreadPool *>::iterator it = std::lower_bound(Private::list.begin(), Private::list.end(), this, Private::Compare());
@@ -79,6 +78,17 @@ void AbstractThreadPool::quit() {
       }
       t->stop();  // ~Thread()'s vptr reset must not race with a running exec() on another thread. stop() blocks until exec() returns.
       delete t;
+    }
+    Thread::AbstractTask *_t;
+    for (;;) {
+      {  //lock scope
+        std::lock_guard<std::mutex> lock(mutex);
+        if (private_.quit_tasks.empty()) break;
+        _t = private_.quit_tasks.front();
+        private_.quit_tasks.pop();
+      }
+      (*_t)();
+      delete _t;
     }
   };
   if (!thread_->invoke(_f, true)) _f();
@@ -109,16 +119,13 @@ AbstractThreadPool::Thread::Thread(const std::string &name, AbstractThreadPool *
 
 void AbstractThreadPool::Thread::destroy() {
   lsTrace() << '(' + name() + ')';
-  if (!pool->thread_->invoke([p = this]() {
+  AbstractTask *_t = new Invocable<void()>::Function([p = this]() {
     p->stop();
     delete p;
-  })) {
+  });
+  if (!pool->thread_->invokeTask(_t)) {
     lsTrace() << LogStream::Color::DarkRed << "pool thread already finished" << '(' + pool->thread_->name() + ')';
-    // Owner stopped after removeThread(), re-register so AbstractThreadPool::quit() stops and deletes this thread.
-    {
-      std::lock_guard<std::mutex> lock(pool->mutex);
-      pool->appendThread(this);
-    }
+    pool->private_.quit_tasks.push(_t);
   }
 }
 
@@ -180,9 +187,7 @@ AbstractThreadPool::Thread *ThreadPool::getThread() {
 }
 
 void ThreadPool::Thread::destroy() {
-  {  //lock scope
-    AbstractThread::LockGuard lock(pool->mutex);
-    pool->removeThread(this);
-  }
+  AbstractThread::LockGuard lock(pool->mutex);
+  pool->removeThread(this);
   AbstractThreadPool::Thread::destroy();
 }

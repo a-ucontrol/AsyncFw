@@ -1765,11 +1765,6 @@ void test_da_destroy_socket_owner_quit_race() {
 
     destroyer.join();
 
-    // The worker must have been re-attached to `client->threads()` when
-    // `pool->thread_->invoke(...)` returned false.
-    const size_t reattached = client->threads()->size();
-    EXPECT_MSG(reattached == 1, "iter " + std::to_string(i) + ": expected 1 re-attached worker in pool, got " + std::to_string(reattached));
-
     // Owner event loop is already Finished; delete client directly so
     // `~AbstractThreadPool::quit()` stops and deletes the re-attached worker.
     delete client;

@@ -68,18 +68,18 @@ void DataArrayTcpServer::Thread::createSocket(int socketDescriptor, bool encrypt
   initSocket(tcpSocket);
 
   DataArrayTcpServer *_server = server();
-  tcpSocket->stateChanged.connect([this, _server, tcpSocket](AbstractSocket::State state) {
+  tcpSocket->stateChanged.connect([_server, tcpSocket](AbstractSocket::State state) {
     if (state != AbstractSocket::State::Unconnected) return;
-    tcpSocket->thread_->invoke([_server, tcpSocket]() { _server->disconnected(tcpSocket); });
+    _server->thread_->invoke([_server, tcpSocket]() { _server->disconnected(tcpSocket); });
     Thread *thread = static_cast<Thread *>(tcpSocket->thread());
-    bool e;
+    thread->destroySocket(tcpSocket);
     {  //lock scope
       Thread::LockGuard lock = Thread::LockGuard(_server->mutex);
-      e = --thread->sockets_count_ == 0;
-      if (e) _server->removeThread(thread);
+      if (!--thread->sockets_count_) {
+        _server->removeThread(thread);
+        thread->destroy();
+      }
     }
-    destroySocket(tcpSocket);
-    if (e) thread->destroy();
   });
 
   if (encrypt) _server->setTlsContext(tcpSocket, _server->tlsContext);

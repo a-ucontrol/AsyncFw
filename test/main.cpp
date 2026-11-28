@@ -2514,9 +2514,7 @@ int main(int, char **) {
   // --- Cleanup --------------------------------------------------------
   // Stop workers on their own thread so any pending sync-invokes from the
   // pool are served before we tear it down.
-  poolOwner.invoke([]() {
-    if (ThreadPool *pool = ThreadPool::instance()) pool->quit();
-  }, true);
+  poolOwner.invoke([]() { Instance<ThreadPool>::destroy(); }, true);
 
   // --- Report ---------------------------------------------------------
   if (g_failed.load()) {
